@@ -75,6 +75,7 @@
 <script lang="ts">
 // libraries
 import { defineComponent } from 'vue';
+import EventCountdown from 'components/EventCountdown.vue';
 
 // import components
 import EventCountdown from 'components/EventCountdown.vue';
