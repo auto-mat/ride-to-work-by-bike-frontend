@@ -6,6 +6,8 @@
   "author": "Auto*Mat, z. s. auto-mat@auto-mat.cz",
   "private": true,
   "scripts": {
+    "dev": "npx quasar dev",
+    "build": "npx quasar build",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",

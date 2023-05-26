@@ -80,6 +80,7 @@ const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(
 );
 
 setCssVar('primary', rideToWorkByBikeConfig.primaryColor);
+setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'RideToWorkByBike',
