@@ -5,6 +5,8 @@ export default defineComponent({
   name: 'UserSelect',
   setup() {
     const user = ref({ label: 'User 1', value: '1' });
+
+    // TODO: add option model
     const options = [
       { label: 'User 1', value: '1' },
       { label: 'User 2', value: '2' },
@@ -31,7 +33,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.user-select >>> .q-field__inner .q-field__control {
+.user-select :deep(.q-field__inner .q-field__control) {
   padding-left: 0;
 }
 .rounded {
