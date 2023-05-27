@@ -18,3 +18,6 @@ days = "dní"
 hours = "hodin"
 minutes = "minut"
 seconds = "sekund"
+
+[index.cardList]
+title = "Budoucí výzvy"

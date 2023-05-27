@@ -14,7 +14,6 @@
     "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress open --e2e\"",
     "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress run --e2e\"",
     "test:component": "npx cypress run --component",
-    "test:component:open": "npx cypress open --component",
     "test:component:ci": "cross-env NODE_ENV=test cypress run --component"
   },
   "dependencies": {
@@ -38,7 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "autoprefixer": "^10.4.2",
-    "cypress": "11.0.0",
+    "cypress": "^10.10.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-cypress": "^2.12.1",

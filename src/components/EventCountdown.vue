@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref, computed, watchEffect, onBeforeUnmount } from 'vue';
-import { ComputedRef } from 'vue';
+import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 import { useDateFormat } from '@vueuse/core';
+import { Countdown } from 'components/types';
 
 export default defineComponent({
   name: 'EventCountdown',
@@ -12,12 +12,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    interface Countdown {
-      days: number;
-      hours: number;
-      minutes: number;
-      seconds: number;
-    }
+
 
     const countdown = ref<Countdown>({
       days: 0,
@@ -71,25 +66,25 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card square flat class="row items-center justify-evenly q-py-xl">
+  <q-card square flat class="row items-center justify-evenly q-py-xl" data-testid="countdown-component">
     <div class="text-center">
       <div class="text-weight-medium">{{ $t('index.countdown.title', { date: formattedDate }) }}</div>
       <div class="row items-center justify-evenly	q-mt-md">
         <div class="q-px-md">
           <div class="text-h3 text-weight-bold">{{ countdown.days }}</div>
-          <div class="q-mt-xs">{{ $t('index.countdown.days') }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-days">{{ $t('index.countdown.days') }}</div>
         </div>
         <div class="q-px-md">
           <div class="text-h3 text-weight-bold">{{ countdown.hours }}</div>
-          <div class="q-mt-xs">{{ $t('index.countdown.hours') }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-hours">{{ $t('index.countdown.hours') }}</div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold">{{ countdown.minutes }}</div>
-          <div class="q-mt-xs">{{ $t('index.countdown.minutes') }}</div>
+          <div class="text-h3 text-weight-bold" data-testid="countdown-minutes">{{ countdown.minutes }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-minutes">{{ $t('index.countdown.minutes') }}</div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold">{{ countdown.seconds }}</div>
-          <div class="q-mt-xs">{{ $t('index.countdown.seconds') }}</div>
+          <div class="text-h3 text-weight-bold" data-testid="countdown-seconds">{{ countdown.seconds }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-seconds">{{ $t('index.countdown.seconds') }}</div>
         </div>
       </div>
     </div>
