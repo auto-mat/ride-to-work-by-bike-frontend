@@ -56,7 +56,7 @@ export default defineComponent({
     ]
 
     return {
-      menuTop,menuBottom
+      menuTop, menuBottom
     }
   }
 })
@@ -64,12 +64,12 @@ export default defineComponent({
 
 <template>
   <q-list>
-    <q-item v-for="item in menuTop" :key="item.name" class="flex items-center gap-sm" clickable>
+    <q-item v-for="item in menuTop" :key="item.name" class="flex items-center gap-8" clickable>
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
     <hr>
-    <q-item v-for="item in menuBottom" :key="item.name" class="flex items-center gap-sm" clickable>
+    <q-item v-for="item in menuBottom" :key="item.name" class="flex items-center gap-8" clickable>
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
@@ -77,7 +77,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.gap-sm {
+.gap-8 {
   gap: 8px;
 }
 </style>
