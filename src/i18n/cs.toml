@@ -11,6 +11,9 @@ donate = "Darujte"
 
 [index]
 title = "Domov"
+
+[index.countdown]
+title = "Říjnová výzva začíná {date}, to je za"
 days = "dní"
 hours = "hodin"
 minutes = "minut"
