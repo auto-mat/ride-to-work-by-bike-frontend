@@ -24,3 +24,7 @@ seconds = "seconds"
 
 [index.cardList]
 title = "Future challenges"
+
+[index.cardChallenge]
+company = "Company challenge"
+dates = "Challenge period:"

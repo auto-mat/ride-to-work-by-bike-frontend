@@ -21,29 +21,39 @@ export default defineComponent({
 
     const cards: CardChallenge[] = [
       {
-        title: 'Challenge 1',
+        title: 'Týmová pravidelnost',
         url: '#',
-        dates: '1. říj.–31. říj. 2022'
+        image: 'https://picsum.photos/300/340',
+        dates: '1. říj.–31. říj. 2022',
+        company: false,
       },
       {
-        title: 'Challenge 2',
+        title: 'Vaše pravidelnost',
         url: '#',
-        dates: '1. říj.–31. říj. 2022'
+        image: 'https://picsum.photos/300/330',
+        dates: '1. říj.–31. říj. 2022',
+        company: false,
       },
       {
-        title: 'Challenge 3',
+        title: 'Vaše zelené kilometry',
         url: '#',
-        dates: '1. říj.–31. říj. 2022'
+        image: 'https://picsum.photos/300/350',
+        dates: '1. říj.–31. říj. 2022',
+        company: true,
       },
       {
-        title: 'Challenge 4',
+        title: 'Zelené kilometry týmu',
         url: '#',
-        dates: '1. říj.–31. říj. 2022'
+        image: 'https://picsum.photos/300/320',
+        dates: '1. říj.–31. říj. 2022',
+        company: true,
       },
       {
-        title: 'Challenge 5',
+        title: 'Zelené kilometry pobočky',
         url: '#',
-        dates: '1. říj.–31. říj. 2022'
+        image: 'https://picsum.photos/300/350',
+        dates: '1. říj.–31. říj. 2022',
+        company: false,
       }
     ]
 
