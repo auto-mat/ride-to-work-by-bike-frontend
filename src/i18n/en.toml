@@ -14,6 +14,9 @@ donate = "Donate"
 
 [index]
 title = "Home"
+
+[index.countdown]
+title = "October challenge starts {date}, that is in"
 days = "days"
 hours = "hours"
 minutes = "minutes"
