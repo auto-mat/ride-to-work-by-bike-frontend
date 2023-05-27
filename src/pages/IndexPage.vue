@@ -76,6 +76,9 @@
 // libraries
 import { defineComponent } from 'vue';
 import EventCountdown from 'components/EventCountdown.vue';
+import CardList from 'components/CardList.vue';
+
+import { CardChallenge } from 'components/types';
 
 // import components
 import EventCountdown from 'components/EventCountdown.vue';
