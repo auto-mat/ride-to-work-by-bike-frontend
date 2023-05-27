@@ -21,3 +21,6 @@ days = "days"
 hours = "hours"
 minutes = "minutes"
 seconds = "seconds"
+
+[index.cardList]
+title = "Future challenges"

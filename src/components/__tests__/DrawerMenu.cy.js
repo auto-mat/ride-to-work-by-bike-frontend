@@ -9,7 +9,7 @@ describe('DrawerMenu', () => {
     cy.window()
       .then(() => {
         cy.get('.q-item')
-          .should('have.length', 7)
+          .should('have.length', 9)
       })
   })
 
