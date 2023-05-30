@@ -78,6 +78,7 @@ import { defineComponent } from 'vue';
 import EventCountdown from 'components/EventCountdown.vue';
 import CardList from 'components/CardList.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
+import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 
 import { CardChallenge } from 'components/types';
 import { BannerImage } from 'components/types';
