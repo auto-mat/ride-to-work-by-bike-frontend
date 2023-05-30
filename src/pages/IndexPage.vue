@@ -3,7 +3,8 @@
     <h1 class="text-h6 q-mt-none q-pt-lg text-weight-bold">{{ $t('index.title') }}</h1>
     <event-countdown :release-date="releaseDate"></event-countdown>
     <card-list :cards="cards" class="q-pt-xl q-pb-xl"></card-list>
-    <vue-banner-image :banner="banner" class="q-pt-xl"></vue-banner-image>
+    <vue-banner-image :banner="banner" class="q-pt-xl q-pb-xl"></vue-banner-image>
+    <vue-heading-background :title="headingBgTitle" class="q-pt-xl"></vue-heading-background>
   </q-page>
 </template>
 
@@ -12,13 +13,14 @@ import { defineComponent } from 'vue';
 import EventCountdown from 'components/EventCountdown.vue';
 import CardList from 'components/CardList.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
+import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 
 import { CardChallenge } from 'components/types';
 import { BannerImage } from 'components/types';
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { EventCountdown, CardList, VueBannerImage },
+  components: { EventCountdown, CardList, VueBannerImage, VueHeadingBackground },
   setup() {
     const releaseDate = '2023-10-01T12:00:00'
 
@@ -66,8 +68,10 @@ export default defineComponent({
       image: 'https://picsum.photos/600/200',
     }
 
+    const headingBgTitle = "Zapojte se do komunity Do práce na kole ve svém městě"
+
     return {
-      releaseDate, cards, banner
+      releaseDate, cards, banner, headingBgTitle
     };
   }
 });
