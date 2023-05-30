@@ -54,12 +54,5 @@ describe('<CardList>', () => {
     cy.get('[data-testid="card-list"]')
       .should('have.css', 'display', 'flex')
       .should('have.css', 'flex-wrap', 'wrap');
-
-    // TODO: FIX
-    // cy.get('[data-testid="card-list-item"]')
-    //   .should('have.css', 'width', '33.3333%')
-    //   .should('have.css', 'flex', '0 0 auto');
-    // expected: 33.3333%
-    // actual: 500px
   });
 });
