@@ -20,12 +20,12 @@ export default defineComponent({
 
 <template>
   <div>
-    <h2 class="text-h6 q-mt-none q-pt-lg text-weight-bold" data-testid="card-list-title">{{ $t('index.cardList.title') }}
+    <h2 class="text-h6 q-mt-none text-weight-bold" data-testid="card-list-title">{{ $t('index.cardList.title') }}
     </h2>
-  </div>
-  <div class="row q-col-gutter-lg" data-testid="card-list">
-    <div v-for="card in cards" :key="card.title" class="col-12 col-sm-6 col-lg-4" data-testid="card-list-item">
-      <vue-card-challenge :card="card"></vue-card-challenge>
+    <div class="row q-col-gutter-lg" data-testid="card-list">
+      <div v-for="card in cards" :key="card.title" class="col-12 col-sm-6 col-lg-4" data-testid="card-list-item">
+        <vue-card-challenge :card="card"></vue-card-challenge>
+      </div>
     </div>
   </div>
 </template>
