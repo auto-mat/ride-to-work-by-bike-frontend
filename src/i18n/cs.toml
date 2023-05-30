@@ -25,3 +25,7 @@ title = "Budoucí výzvy"
 [index.cardChallenge]
 company = "Firemní výzva"
 dates = "Období výzvy:"
+
+[index.bannerImage]
+title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
+perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
