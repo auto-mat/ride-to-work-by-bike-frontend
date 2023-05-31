@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { CardChallenge } from "components/types";
+import { defineComponent } from 'vue';
+import { CardChallenge } from 'components/types';
 
 export default defineComponent({
   name: 'VueCardChallenge',
@@ -8,33 +8,54 @@ export default defineComponent({
     card: {
       type: Object as () => CardChallenge,
       required: true,
-    }
+    },
   },
   setup() {
-    return {}
-  }
-})
+    return {};
+  },
+});
 </script>
 
 <template>
-  <q-card :dark="true" :flat="true" :bordered="true" class="rounded-20" data-testid="card">
+  <q-card
+    :dark="true"
+    :flat="true"
+    :bordered="true"
+    class="rounded-20"
+    data-testid="card"
+  >
     <q-img :src="card?.image" :ratio="7 / 8" class="rounded-20">
-      <q-card-section class="text-subtitle1 absolute-top flex items-center justify-center gap-8" data-testid="card-title">
+      <q-card-section
+        class="text-subtitle1 absolute-top flex items-center justify-center gap-8"
+        data-testid="card-title"
+      >
         <q-icon name="person" size="xs" />
-        <component :is="card?.url ? 'a' : 'div'" :href="card?.url" class="text-white text-weight-bold"
-          data-testid="card-link">
+        <component
+          :is="card?.url ? 'a' : 'div'"
+          :href="card?.url"
+          class="text-white text-weight-bold"
+          data-testid="card-link"
+        >
           {{ card?.title }}
         </component>
       </q-card-section>
-      <div v-if="card?.dates" class=" absolute-bottom text-center text-body2" data-testid="card-dates">
+      <div
+        v-if="card?.dates"
+        class="absolute-bottom text-center text-body2"
+        data-testid="card-dates"
+      >
         {{ $t('index.cardChallenge.dates') }}
         <span class="text-weight-bold">{{ card?.dates }}</span>
       </div>
     </q-img>
 
-
     <div class="badge-wrapper">
-      <q-badge v-if="card?.company" class="text-caption q-px-sm bg-blue-grey-4" text-color="white" rounded>
+      <q-badge
+        v-if="card?.company"
+        class="text-caption q-px-sm bg-blue-grey-4"
+        text-color="white"
+        rounded
+      >
         {{ $t('index.cardChallenge.company') }}
       </q-badge>
     </div>
@@ -54,7 +75,7 @@ a:hover {
   border-radius: 20px;
 }
 
-.q-card>div:first-child {
+.q-card > div:first-child {
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
 }
@@ -63,14 +84,13 @@ a:hover {
   height: 100%;
   width: 100%;
   overflow: hidden;
-
 }
 
-.q-img__content>div {
+.q-img__content > div {
   padding: 32px 12px;
 }
 
-.q-img__content>div:nth-child(2) {
+.q-img__content > div:nth-child(2) {
   padding: 20px 12px;
   background: transparent;
 }

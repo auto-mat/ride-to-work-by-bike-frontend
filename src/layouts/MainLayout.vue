@@ -13,7 +13,7 @@ setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 export default defineComponent({
   name: 'MainLayout',
 
-  components: {DrawerHeader,UserSelect,DrawerMenu},
+  components: { DrawerHeader, UserSelect, DrawerMenu },
 
   setup() {
     const leftDrawerOpen = ref(true);
@@ -26,10 +26,16 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="360" class="q-py-lg q-px-lg">
-     <drawer-header></drawer-header>
-     <user-select class="q-pt-lg"></user-select>
-     <drawer-menu class="q-pt-lg"></drawer-menu>
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      :width="360"
+      class="q-py-lg q-px-lg"
+    >
+      <drawer-header></drawer-header>
+      <user-select class="q-pt-lg"></user-select>
+      <drawer-menu class="q-pt-lg"></drawer-menu>
     </q-drawer>
 
     <q-page-container>

@@ -6,9 +6,9 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <template>
