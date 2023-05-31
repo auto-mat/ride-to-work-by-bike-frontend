@@ -3,7 +3,7 @@ import UserSelect from '../UserSelect.vue';
 describe('<UserSelect>', () => {
   beforeEach(() => {
     cy.mount(UserSelect, {});
-  })
+  });
 
   it('renders select', () => {
     cy.mount(UserSelect, {}).then(() => {
@@ -12,5 +12,4 @@ describe('<UserSelect>', () => {
         .and('have.css', 'height', '56px');
     });
   });
-
-})
+});
