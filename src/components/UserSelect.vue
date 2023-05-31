@@ -14,10 +14,11 @@ export default defineComponent({
     ];
 
     return {
-      user, options
-    }
-  }
-})
+      user,
+      options,
+    };
+  },
+});
 </script>
 
 <template>

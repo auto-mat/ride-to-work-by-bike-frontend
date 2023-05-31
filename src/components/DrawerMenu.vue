@@ -8,68 +8,79 @@ export default defineComponent({
       {
         url: '/',
         icon: 'home',
-        name: 'home'
+        name: 'home',
       },
       {
         url: '/cesty',
         icon: 'route',
-        name: 'routes'
+        name: 'routes',
       },
       {
         url: '/vysledky',
         icon: 'emoji_events',
-        name: 'results'
+        name: 'results',
       },
       {
         url: '/komunita',
         icon: 'people',
-        name: 'community'
+        name: 'community',
       },
       {
         url: '/slevy',
         icon: 'verified',
-        name: 'discounts'
+        name: 'discounts',
       },
       {
         url: '/firemni-koordinator',
         icon: 'business',
-        name: 'coordinator'
+        name: 'coordinator',
       },
       {
         url: '/profil',
         icon: 'account_circle',
-        name: 'profile'
-      }
-    ]
+        name: 'profile',
+      },
+    ];
 
     const menuBottom = [
       {
         url: '/',
         icon: 'email',
-        name: 'inviteFriends'
+        name: 'inviteFriends',
       },
       {
         url: '/cesty',
         icon: 'volunteer_activism',
-        name: 'donate'
+        name: 'donate',
       },
-    ]
+    ];
 
     return {
-      menuTop, menuBottom
-    }
-  }
-})
+      menuTop,
+      menuBottom,
+    };
+  },
+});
 </script>
 
 <template>
   <q-list>
-    <q-item v-for="item in menuTop" :key="item.name" class="flex items-center gap-8" clickable>
+    <q-item
+      v-for="item in menuTop"
+      :key="item.name"
+      class="flex items-center gap-8"
+      clickable
+    >
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
-    <hr>
-    <q-item v-for="item in menuBottom" :key="item.name" class="flex items-center gap-8" clickable>
+    <hr />
+    <q-item
+      v-for="item in menuBottom"
+      :key="item.name"
+      class="flex items-center gap-8"
+      clickable
+    >
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>

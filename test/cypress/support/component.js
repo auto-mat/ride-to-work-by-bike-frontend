@@ -16,7 +16,7 @@
 import './commands';
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
-addMatchImageSnapshotCommand()
+addMatchImageSnapshotCommand();
 
 // Change this if you have a different entrypoint for the main scss.
 import 'src/css/app.scss';
@@ -54,8 +54,8 @@ installQuasarPlugin({ plugins: { Dialog } });
 
 import VueLogger from 'vuejs3-logger';
 
-import { options as loggerOptions } from '../../../src/boot/logger'
-import { i18n as i18nApp }  from '../../../src/boot/i18n'
+import { options as loggerOptions } from '../../../src/boot/logger';
+import { i18n as i18nApp } from '../../../src/boot/i18n';
 
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object

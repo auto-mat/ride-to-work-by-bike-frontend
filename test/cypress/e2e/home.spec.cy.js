@@ -6,7 +6,7 @@ describe('Home page', () => {
     cy.task('getAppConfig', process).then((config) => {
       cy.dataCy('q-drawer')
         .should('be.visible')
-        .and('have.css', 'background-color', config.colorGrayLight);
+        .and('have.css', 'background-color', config.colorGrayLight)
         .and('have.css', 'width', '360px');
     });
   });
