@@ -1,18 +1,17 @@
 <template>
-  <q-page class="q-px-lg">
-    <h1 class="text-h6 q-mt-none q-pt-lg text-weight-bold">
-      {{ $t('index.title') }}
-    </h1>
-    <event-countdown :release-date="releaseDate"></event-countdown>
-    <card-list :cards="cards" class="q-pt-xl q-pb-xl"></card-list>
-    <vue-banner-image
-      :banner="banner"
-      class="q-pt-xl q-pb-xl"
-    ></vue-banner-image>
-    <vue-heading-background
-      :title="headingBgTitle"
-      class="q-pt-xl"
-    ></vue-heading-background>
+  <q-page>
+    <div class="q-px-lg">
+      <h1 class="text-h6 q-mt-none q-pt-lg text-weight-bold">
+        {{ $t('index.title') }}
+      </h1>
+      <event-countdown :release-date="releaseDate"></event-countdown>
+      <card-list :cards="cards" class="q-pt-xl q-pb-xl"></card-list>
+      <vue-banner-image :banner="banner" class="q-pt-xl q-pb-xl"></vue-banner-image>
+    </div>
+    <vue-heading-background :title="headingBgTitle" class="q-pt-xl"></vue-heading-background>
+    <div class="bg-gray-light q-px-lg">
+      <card-list-event :cards="cardsEvent" class="q-pt-xl"></card-list-event>
+    </div>
   </q-page>
 </template>
 
@@ -22,8 +21,9 @@ import EventCountdown from 'components/EventCountdown.vue';
 import CardList from 'components/CardList.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
 import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
+import CardListEvent from 'src/components/CardListEvent.vue';
 
-import { CardChallenge } from 'components/types';
+import { CardChallenge, CardEvent } from 'components/types';
 import { BannerImage } from 'components/types';
 
 export default defineComponent({
@@ -33,6 +33,7 @@ export default defineComponent({
     CardList,
     VueBannerImage,
     VueHeadingBackground,
+    CardListEvent,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
@@ -85,11 +86,27 @@ export default defineComponent({
     const headingBgTitle =
       'Zapojte se do komunity Do práce na kole ve svém městě';
 
+    const cardsEvent: CardEvent[] = [
+      {
+        title: 'Opening Ceremony Bike to Work 2022',
+        thumbnail: 'https://picsum.photos/340/200',
+        image: 'https://picsum.photos/380/380',
+        dates: new Date('2023-10-01T12:00:00'),
+        location: 'Prague',
+        content: 'We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle! You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams. Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony. We will also announce the traditional Brno cycling employer of the year.<br />The main prize will be a City Bike HERKA from our partner Cyklospeciality.<br />We are looking forward to seeing you!',
+        links: [
+          'meet.google.com/anr-pvfs-opf',
+          'meet.google.com/anr-pvfs-opf',
+        ],
+      }
+    ]
+
     return {
       releaseDate,
       cards,
       banner,
       headingBgTitle,
+      cardsEvent
     };
   },
 });

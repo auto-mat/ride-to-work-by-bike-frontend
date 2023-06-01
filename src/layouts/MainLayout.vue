@@ -26,13 +26,7 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-drawer
-      show-if-above
-      v-model="leftDrawerOpen"
-      side="left"
-      :width="360"
-      class="q-py-lg q-px-lg"
-    >
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="360" class="bg-gray-light q-py-lg q-px-lg">
       <drawer-header></drawer-header>
       <user-select class="q-pt-lg"></user-select>
       <drawer-menu class="q-pt-lg"></drawer-menu>
@@ -49,7 +43,7 @@ export default defineComponent({
 </template>
 
 <style>
-.q-drawer {
+.bg-gray-light {
   background-color: var(--q-gray-light);
 }
 </style>

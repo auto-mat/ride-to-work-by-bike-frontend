@@ -18,36 +18,14 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card
-      :dark="true"
-      :flat="true"
-      :bordered="true"
-      class="rounded-20 row"
-      data-testid="banner"
-    >
-      <q-img
-        :src="banner?.image"
-        :ratio="3 / 1"
-        class="col-6"
-        data-testid="banner-half"
-      />
-      <div
-        class="col-6 flex items-center q-px-md q-py-lg"
-        data-testid="banner-half"
-      >
+    <q-card :flat="true" class="rounded-20 row" data-testid="banner">
+      <q-img :src="banner?.image" :ratio="3 / 1" class="col-6" data-testid="banner-half" />
+      <div class="col-6 flex items-center q-px-md q-py-lg" data-testid="banner-half">
         <div>
-          <div
-            v-if="banner.title"
-            class="text-dark text-subtitle1"
-            data-testid="banner-title"
-          >
+          <div v-if="banner.title" class="text-dark text-subtitle1" data-testid="banner-title">
             {{ banner.title }}
           </div>
-          <div
-            v-if="banner.perex"
-            class="text-dark text-caption"
-            data-testid="banner-perex"
-          >
+          <div v-if="banner.perex" class="text-dark text-caption" data-testid="banner-perex">
             {{ banner.perex }}
           </div>
         </div>
@@ -61,7 +39,7 @@ export default defineComponent({
   border-radius: 20px;
 }
 
-.q-card > div:first-child {
+.q-card>div:first-child {
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
   border-top-right-radius: 0;

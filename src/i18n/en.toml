@@ -32,3 +32,6 @@ dates = "Challenge period:"
 [index.bannerImage]
 title = "Fill in our questionnaire and win one of our great prizes!"
 perex = "You can help us decide what to spend more time on next time and what should stay the same."
+
+[index.event]
+addToCalendar = "Add to calendar"
