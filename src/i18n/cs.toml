@@ -29,3 +29,6 @@ dates = "Období výzvy:"
 [index.bannerImage]
 title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
 perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
+
+[index.event]
+addToCalendar = "Přidat do kalendáře"
