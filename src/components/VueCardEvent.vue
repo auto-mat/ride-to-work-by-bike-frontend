@@ -54,7 +54,7 @@ export default defineComponent({
 
 
       <q-dialog v-model="modalOpened" square>
-        <q-card>
+        <q-card class="relative-position overflow-visible">
 
           <q-card-section class="q-pt-none">
             <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">{{ card?.title }}</h3>
@@ -73,10 +73,10 @@ export default defineComponent({
           <q-separator />
 
 
-          <q-card-section horizontal>
-            <div class="q-px-md q-py-md">
+          <q-card-section horizontal class="q-gutter-lg q-px-md q-py-md">
+            <div class="col">
               <div v-if="card?.content" v-html="card?.content"></div>
-              <q-btn color="black" unelevated rounded>
+              <q-btn color="black" unelevated rounded class="q-mt-md">
                 <div class="flex items-center no-wrap">
                   <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
                   <div class="text-center">
@@ -85,28 +85,13 @@ export default defineComponent({
                 </div>
               </q-btn>
             </div>
-          </q-card-section>
-
-          <q-img src="https://picsum.photos/380/380" />
-
-          <q-card-section>
-            <q-btn fab color="primary" icon="place" class="absolute"
-              style="top: 0; right: 12px; transform: translateY(-50%);" />
-
-            <div class="row no-wrap items-center">
-              <div class="col text-h6 ellipsis">
-                Cafe Basilico
-              </div>
-              <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-                <q-icon name="place" />
-                250 ft
-              </div>
+            <div class="col">
+              <q-img src="https://picsum.photos/380/380" :ratio="1" />
             </div>
           </q-card-section>
 
-          <q-card-actions align="right">
-            <q-btn v-close-popup flat color="primary" label="Reserve" />
-            <q-btn v-close-popup flat color="primary" round icon="event" />
+          <q-card-actions class="dialog-close inline-block absolute-top-right q-px-none q-py-none">
+            <q-btn v-close-popup flat round color="blue-grey-8" icon="close" class="bg-blue-grey-2" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -124,11 +109,20 @@ export default defineComponent({
   overflow: hidden;
 }
 
+.q-dialog__inner>div {
+  overflow: visible !important;
+}
+
 .card-link {
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
+}
+
+.dialog-close {
+  top: -21px;
+  right: -21px;
 }
 </style>
