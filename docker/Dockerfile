@@ -3,7 +3,7 @@ FROM alpine:3.18
 LABEL authors="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 LABEL maintainer="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 
-ENV APP_PATH=/tmp/nginx/ride-to-work-by-bike
+ENV APP_PATH=/tmp/nginx/ride-to-work-by-bike-app
 RUN apk add --update --no-cache nginx nodejs yarn
 
 # Create the directories we will need
