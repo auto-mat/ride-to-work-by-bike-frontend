@@ -15,7 +15,10 @@ export default defineComponent({
   <div class="wrapper relative-position">
     <q-img src="~assets/svg/bg-community.svg" class="w-100"></q-img>
     <div class="absolute-center flex justify-center">
-      <h2 class="text-h5 text-weight-bold q-pt-xl q-pr-xl text-center" data-testid="heading-bg-title">
+      <h2
+        class="text-h5 text-weight-bold q-pt-xl q-pr-xl text-center"
+        data-testid="heading-bg-title"
+      >
         {{ title }}
       </h2>
     </div>
