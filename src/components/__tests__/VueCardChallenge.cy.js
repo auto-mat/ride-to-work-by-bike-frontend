@@ -29,7 +29,10 @@ describe('<VueCardChallenge>', () => {
         .should('have.css', 'background-color', 'rgba(0, 0, 0, 0.47)')
         .should('contain', title);
 
-      cy.dataCy('card-title').find('i').should('contain', 'person');
+      cy.dataCy('card-title')
+        .find('i')
+        .should('be.visible')
+        .should('contain', 'person');
 
       cy.dataCy('card-title')
         .find('a')
