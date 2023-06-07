@@ -1,47 +1,82 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref } from 'vue';
 
-import { CardEvent } from "./types";
+import { CardEvent } from './types';
 
-import { useDateFormat } from "@vueuse/core";
+import { useDateFormat } from '@vueuse/core';
 
 export default defineComponent({
   name: 'VueCardEvent',
   props: {
     card: {
-      type: Object as () => CardEvent
-    }
+      type: Object as () => CardEvent,
+    },
   },
   setup(props) {
-    const modalOpened = ref(false)
-    const eventDateTime = useDateFormat(props?.card?.dates, 'ddd D. MMM. YYYY, HH:mm')
+    const modalOpened = ref(false);
+    const eventDateTime = useDateFormat(
+      props?.card?.dates,
+      'ddd D. MMM. YYYY, HH:mm'
+    );
 
     return {
-      modalOpened, eventDateTime
+      modalOpened,
+      eventDateTime,
     };
-  }
-})
+  },
+});
 </script>
 
 <template>
   <div>
     <q-card flat class="rounded-20 bg-white">
       <q-card-section horizontal>
-        <q-img v-if="card?.thumbnail" class="col-2" :src="card?.thumbnail" data-testid="card-image" />
+        <q-img
+          v-if="card?.thumbnail"
+          class="col-2"
+          :src="card?.thumbnail"
+          data-testid="card-image"
+        />
         <q-card-section horizontal class="col-grow">
           <div class="col-grow q-px-md q-py-lg">
             <div class="text-h6 text-bold" data-testid="card-title">
-              <a href="#" class="card-link text-dark block" @click.prevent="modalOpened = true" data-testid="card-link">
+              <a
+                href="#"
+                class="card-link text-dark block"
+                @click.prevent="modalOpened = true"
+                data-testid="card-link"
+              >
                 {{ card?.title }}
               </a>
             </div>
-            <div v-if="eventDateTime || card?.location" class="meta flex items-center q-mt-sm">
-              <div v-if="eventDateTime" class="dates flex items-center q-pr-md" data-testid="card-dates">
-                <q-icon name="event" size="sm" class="q-pr-xs" color="blue-grey-2" />
+            <div
+              v-if="eventDateTime || card?.location"
+              class="meta flex items-center q-mt-sm"
+            >
+              <div
+                v-if="eventDateTime"
+                class="dates flex items-center q-pr-md"
+                data-testid="card-dates"
+              >
+                <q-icon
+                  name="event"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ eventDateTime }}
               </div>
-              <div v-if="card?.location" class="location flex items-center" data-testid="card-location">
-                <q-icon name="place" size="sm" class="q-pr-xs" color="blue-grey-2" />
+              <div
+                v-if="card?.location"
+                class="location flex items-center"
+                data-testid="card-location"
+              >
+                <q-icon
+                  name="place"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ card?.location }}
               </div>
             </div>
@@ -52,26 +87,46 @@ export default defineComponent({
         </q-card-section>
       </q-card-section>
 
-
       <q-dialog v-model="modalOpened" square>
         <q-card class="relative-position overflow-visible">
-
           <q-card-section class="q-pt-none">
-            <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">{{ card?.title }}</h3>
-            <div v-if="eventDateTime || card?.location" class="meta flex items-center q-mt-sm">
-              <div v-if="eventDateTime" class="dates flex items-center q-pr-md" data-testid="card-dates">
-                <q-icon name="event" size="sm" class="q-pr-xs" color="blue-grey-2" />
+            <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
+              {{ card?.title }}
+            </h3>
+            <div
+              v-if="eventDateTime || card?.location"
+              class="meta flex items-center q-mt-sm"
+            >
+              <div
+                v-if="eventDateTime"
+                class="dates flex items-center q-pr-md"
+                data-testid="card-dates"
+              >
+                <q-icon
+                  name="event"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ eventDateTime }}
               </div>
-              <div v-if="card?.location" class="location flex items-center" data-testid="card-location">
-                <q-icon name="place" size="sm" class="q-pr-xs" color="blue-grey-2" />
+              <div
+                v-if="card?.location"
+                class="location flex items-center"
+                data-testid="card-location"
+              >
+                <q-icon
+                  name="place"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ card?.location }}
               </div>
             </div>
           </q-card-section>
 
           <q-separator />
-
 
           <q-card-section horizontal class="q-gutter-lg q-px-md q-py-md">
             <div class="col">
@@ -90,12 +145,20 @@ export default defineComponent({
             </div>
           </q-card-section>
 
-          <q-card-actions class="dialog-close inline-block absolute-top-right q-px-none q-py-none">
-            <q-btn v-close-popup flat round color="blue-grey-8" icon="close" class="bg-blue-grey-2" />
+          <q-card-actions
+            class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
+          >
+            <q-btn
+              v-close-popup
+              flat
+              round
+              color="blue-grey-8"
+              icon="close"
+              class="bg-blue-grey-2"
+            />
           </q-card-actions>
         </q-card>
       </q-dialog>
-
     </q-card>
   </div>
 </template>
@@ -109,7 +172,7 @@ export default defineComponent({
   overflow: hidden;
 }
 
-.q-dialog__inner>div {
+.q-dialog__inner > div {
   overflow: visible !important;
 }
 
