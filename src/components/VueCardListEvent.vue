@@ -22,6 +22,11 @@ export default defineComponent({
 
 <template>
   <div>
-    <vue-card-event v-for="card in cards" :key="card.title" :card="card" class="q-mt-lg"></vue-card-event>
+    <vue-card-event
+      v-for="card in cards"
+      :key="card.title"
+      :card="card"
+      class="q-mt-lg"
+    ></vue-card-event>
   </div>
 </template>

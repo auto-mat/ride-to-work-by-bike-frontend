@@ -6,11 +6,20 @@
       </h1>
       <vue-event-countdown :release-date="releaseDate"></vue-event-countdown>
       <vue-card-list :cards="cards" class="q-pt-xl q-pb-xl"></vue-card-list>
-      <vue-banner-image :banner="banner" class="q-pt-xl q-pb-xl"></vue-banner-image>
+      <vue-banner-image
+        :banner="banner"
+        class="q-pt-xl q-pb-xl"
+      ></vue-banner-image>
     </div>
-    <vue-heading-background :title="headingBgTitle" class="q-pt-xl"></vue-heading-background>
+    <vue-heading-background
+      :title="headingBgTitle"
+      class="q-pt-xl"
+    ></vue-heading-background>
     <div class="bg-gray-light q-px-lg">
-      <vue-card-list-event :cards="cardsEvent" class="q-pt-xl"></vue-card-list-event>
+      <vue-card-list-event
+        :cards="cardsEvent"
+        class="q-pt-xl"
+      ></vue-card-list-event>
     </div>
   </q-page>
 </template>
@@ -93,20 +102,18 @@ export default defineComponent({
         image: 'https://picsum.photos/380/380',
         dates: new Date('2023-10-01T12:00:00'),
         location: 'Prague',
-        content: 'We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle! You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams. Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony. We will also announce the traditional Brno cycling employer of the year.<br />The main prize will be a City Bike HERKA from our partner Cyklospeciality.<br />We are looking forward to seeing you!',
-        links: [
-          'meet.google.com/anr-pvfs-opf',
-          'meet.google.com/anr-pvfs-opf',
-        ],
-      }
-    ]
+        content:
+          'We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle! You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams. Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony. We will also announce the traditional Brno cycling employer of the year.<br />The main prize will be a City Bike HERKA from our partner Cyklospeciality.<br />We are looking forward to seeing you!',
+        links: ['meet.google.com/anr-pvfs-opf', 'meet.google.com/anr-pvfs-opf'],
+      },
+    ];
 
     return {
       releaseDate,
       cards,
       banner,
       headingBgTitle,
-      cardsEvent
+      cardsEvent,
     };
   },
 });

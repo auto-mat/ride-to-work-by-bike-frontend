@@ -29,9 +29,7 @@ describe('<VueCardChallenge>', () => {
         .should('have.css', 'background-color', 'rgba(0, 0, 0, 0.47)')
         .should('contain', title);
 
-      cy.dataCy('card-title')
-        .find('i')
-        .should('contain', 'person');
+      cy.dataCy('card-title').find('i').should('contain', 'person');
 
       cy.dataCy('card-title')
         .find('a')
@@ -54,12 +52,13 @@ describe('<VueCardChallenge>', () => {
   it('renders image', () => {
     cy.window().then(() => {
       cy.dataCy('card')
-        .find('img').then(($img) => {
+        .find('img')
+        .then(($img) => {
           const naturalHeight = $img[0].naturalHeight;
           expect(naturalHeight).to.be.greaterThan(0);
           expect($img.attr('src')).to.equal(image);
         });
-    })
+    });
   });
 
   it('renders dates', () => {

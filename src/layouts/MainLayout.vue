@@ -26,7 +26,13 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="360" class="bg-gray-light q-py-lg q-px-lg">
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      :width="360"
+      class="bg-gray-light q-py-lg q-px-lg"
+    >
       <vue-drawer-header></vue-drawer-header>
       <vue-user-select class="q-pt-lg"></vue-user-select>
       <vue-drawer-menu class="q-pt-lg"></vue-drawer-menu>
