@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 import { BannerImage } from 'components/types';
 
 export default defineComponent({

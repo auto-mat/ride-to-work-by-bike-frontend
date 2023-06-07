@@ -5,7 +5,7 @@ import VueCardChallenge from 'components/VueCardChallenge.vue';
 import { CardChallenge } from 'components/types';
 
 export default defineComponent({
-  name: 'CardList',
+  name: 'VueCardList',
   props: {
     cards: {
       type: Array as () => CardChallenge[],
@@ -20,7 +20,7 @@ export default defineComponent({
 <template>
   <div>
     <h2 class="text-h6 q-mt-none text-weight-bold" data-testid="card-list-title">
-      {{ $t('index.cardList.title') }}
+      {{ $t('index.VueCardList.title') }}
     </h2>
     <div class="row q-col-gutter-lg" data-testid="card-list">
       <div v-for="card in cards" :key="card.title" class="col-12 col-sm-6 col-lg-4" data-testid="card-list-item">
