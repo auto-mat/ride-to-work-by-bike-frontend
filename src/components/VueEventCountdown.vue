@@ -1,14 +1,7 @@
 <script lang="ts">
-import { setCssVar } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
-// import { useI18n } from 'vue-i18n'
 import { useDateFormat } from '@vueuse/core';
 import { Countdown } from 'components/types';
-
-const rideToWorkByBikeConfig: object = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
-);
-setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueEventCountdown',
@@ -26,16 +19,7 @@ export default defineComponent({
       seconds: 0,
     });
 
-    // currently not working see https://github.com/intlify/vue-i18n-next/issues/1193
-    // const { locale } = useI18n({ useScope: 'global' })
-    let formatString = 'D. M.';
-    // if (locale.value === 'en') {
-    //   formatString = 'D MMM';
-    // }
-    const formattedDate = useDateFormat(
-      new Date(props.releaseDate),
-      formatString
-    );
+    const formattedDate = useDateFormat(new Date(props.releaseDate), 'D. M.');
 
     let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -88,42 +72,38 @@ export default defineComponent({
     square
     flat
     class="row items-center justify-evenly q-py-xl"
-    data-cy="card"
+    data-testid="countdown-component"
   >
     <div class="text-center">
-      <div class="text-weight-bold q-px-lg" data-cy="title">
+      <div class="text-weight-medium">
         {{ $t('index.countdown.title', { date: formattedDate }) }}
       </div>
       <div class="row items-center justify-evenly q-mt-md">
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-days">
-            {{ countdown.days }}
-          </div>
-          <div class="q-mt-xs" data-cy="countdown-label-days">
+          <div class="text-h3 text-weight-bold">{{ countdown.days }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-days">
             {{ $t('index.countdown.days') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-hours">
-            {{ countdown.hours }}
-          </div>
-          <div class="q-mt-xs" data-cy="countdown-label-hours">
+          <div class="text-h3 text-weight-bold">{{ countdown.hours }}</div>
+          <div class="q-mt-xs" data-testid="countdown-label-hours">
             {{ $t('index.countdown.hours') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-minutes">
+          <div class="text-h3 text-weight-bold" data-testid="countdown-minutes">
             {{ countdown.minutes }}
           </div>
-          <div class="q-mt-xs" data-cy="countdown-label-minutes">
+          <div class="q-mt-xs" data-testid="countdown-label-minutes">
             {{ $t('index.countdown.minutes') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-seconds">
+          <div class="text-h3 text-weight-bold" data-testid="countdown-seconds">
             {{ countdown.seconds }}
           </div>
-          <div class="q-mt-xs" data-cy="countdown-label-seconds">
+          <div class="q-mt-xs" data-testid="countdown-label-seconds">
             {{ $t('index.countdown.seconds') }}
           </div>
         </div>
@@ -135,11 +115,5 @@ export default defineComponent({
 <style>
 .q-card {
   background-color: var(--q-gray-light);
-}
-.text-64 {
-  font-size: 64px;
-  @media (min-width: $breakpoint-lg-min) {
-    font-size: 48px;
-  }
 }
 </style>

@@ -1,8 +1,8 @@
-import CardList from '../CardList.vue';
+import VueCardList from '../VueCardList.vue';
 
-describe('<CardList>', () => {
+describe('<VueCardList>', () => {
   beforeEach(() => {
-    cy.mount(CardList, {
+    cy.mount(VueCardList, {
       props: {
         cards: [
           {
