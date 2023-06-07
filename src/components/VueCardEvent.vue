@@ -1,9 +1,8 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useDateFormat } from '@vueuse/core';
 
 import { CardEvent } from './types';
-
-import { useDateFormat } from '@vueuse/core';
 
 export default defineComponent({
   name: 'VueCardEvent',
@@ -29,22 +28,22 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card flat class="rounded-20 bg-white">
+    <q-card flat class="rounded-20 bg-white" data-cy="card">
       <q-card-section horizontal>
         <q-img
           v-if="card?.thumbnail"
           class="col-2"
           :src="card?.thumbnail"
-          data-testid="card-image"
+          data-cy="card-image"
         />
         <q-card-section horizontal class="col-grow">
           <div class="col-grow q-px-md q-py-lg">
-            <div class="text-h6 text-bold" data-testid="card-title">
+            <div class="text-subtitle1 text-bold" data-cy="card-title">
               <a
                 href="#"
                 class="card-link text-dark block"
                 @click.prevent="modalOpened = true"
-                data-testid="card-link"
+                data-cy="card-link"
               >
                 {{ card?.title }}
               </a>
@@ -56,7 +55,7 @@ export default defineComponent({
               <div
                 v-if="eventDateTime"
                 class="dates flex items-center q-pr-md"
-                data-testid="card-dates"
+                data-cy="card-dates"
               >
                 <q-icon
                   name="event"
@@ -69,7 +68,7 @@ export default defineComponent({
               <div
                 v-if="card?.location"
                 class="location flex items-center"
-                data-testid="card-location"
+                data-cy="card-location"
               >
                 <q-icon
                   name="place"
@@ -81,13 +80,17 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="overflow-hidden">
-            <q-btn flat round outline icon="calendar_plus" />
+          <div class="overflow-hidden flex items-center">
+            <div class="q-px-md">
+              <q-btn round outline data-cy="calendar-button">
+                <q-icon name="fa-solid fa-calendar-plus" size="xs"></q-icon>
+              </q-btn>
+            </div>
           </div>
         </q-card-section>
       </q-card-section>
 
-      <q-dialog v-model="modalOpened" square>
+      <q-dialog v-model="modalOpened" square data-cy="card-dialog">
         <q-card class="relative-position overflow-visible">
           <q-card-section class="q-pt-none">
             <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
@@ -100,7 +103,7 @@ export default defineComponent({
               <div
                 v-if="eventDateTime"
                 class="dates flex items-center q-pr-md"
-                data-testid="card-dates"
+                data-cy="card-dates"
               >
                 <q-icon
                   name="event"
@@ -113,7 +116,7 @@ export default defineComponent({
               <div
                 v-if="card?.location"
                 class="location flex items-center"
-                data-testid="card-location"
+                data-cy="card-location"
               >
                 <q-icon
                   name="place"
