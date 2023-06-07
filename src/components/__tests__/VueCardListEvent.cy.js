@@ -1,10 +1,10 @@
-import CardListEvent from 'components/CardListEvent.vue';
+import VueCardListEvent from 'components/VueCardListEvent.vue';
 
-describe('<CardListEvent>', () => {
+describe('<VueCardListEvent>', () => {
   const heading = 'Budoucí výzvy';
 
   beforeEach(() => {
-    cy.mount(CardListEvent, {
+    cy.mount(VueCardListEvent, {
       props: {
         cards: [
           {

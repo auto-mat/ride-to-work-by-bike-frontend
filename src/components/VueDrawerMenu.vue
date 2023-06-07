@@ -5,7 +5,7 @@ import { defineComponent } from 'vue';
 import { menuBottom, menuTop } from 'src/mocks/layout';
 
 export default defineComponent({
-  name: 'DrawerMenu',
+  name: 'VueDrawerMenu',
   setup() {
     return {
       menuTop,
