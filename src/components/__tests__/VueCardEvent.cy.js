@@ -36,7 +36,10 @@ describe('<VueCardEvent>', () => {
         .should('be.visible')
         .should('have.css', 'font-size', '16px')
         .should('have.css', 'font-weight', '700')
-        .should('contain', title);
+        .should('contain', title)
+        .then((titleNode) => {
+          expect(titleNode.text()).to.equal(title);
+        });
 
       cy.dataCy('card-link')
         .should('be.visible')
@@ -46,14 +49,23 @@ describe('<VueCardEvent>', () => {
 
   it('renders image', () => {
     cy.window().then(() => {
-      cy.dataCy('card-image')
-        .should('be.visible')
+      cy.dataCy('card')
         .find('img')
+        .should('be.visible')
         .then(($img) => {
           const naturalHeight = $img[0].naturalHeight;
           expect(naturalHeight).to.be.greaterThan(0);
           expect($img.attr('src')).to.equal(thumbnail);
         });
+    });
+  });
+
+
+  it('has correct background color', () => {
+    cy.window().then(() => {
+      cy.dataCy('card')
+        .should('be.visible')
+        .should('have.css', 'background-color', hexToRgb('#ffffff'));
     });
   });
 
@@ -120,5 +132,107 @@ describe('<VueCardEvent>', () => {
             .should('be.visible');
         })
     });
+  });
+
+  it('shows modal title, location and date', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-link')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-header')
+            .find('h3')
+            .should('be.visible')
+            .should('have.css', 'font-size', '20px')
+            .should('have.css', 'font-weight', '500')
+            .should('contain', title)
+            .then((titleNode) => {
+              expect(titleNode.text()).to.equal(title);
+            });
+
+          cy.dataCy('dialog-header')
+            .find('h3')
+            .should('be.visible')
+            .should('have.css', 'font-size', '20px')
+            .should('have.css', 'font-weight', '500')
+            .should('contain', title)
+            .then((titleNode) => {
+              expect(titleNode.text()).to.equal(title);
+            });
+
+          cy.dataCy('dialog-dates')
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('contain', 'Sun 1. Oct. 2023, 12:00');
+
+          cy.dataCy('dialog-dates')
+            .find('i')
+            .should('be.visible')
+            .should('have.css', 'color', hexToRgb('#cfd8dc'))
+            .should('contain', 'event');
+
+          cy.dataCy('dialog-location')
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('contain', location);
+
+          cy.dataCy('dialog-location')
+            .find('i')
+            .should('be.visible')
+            .should('have.css', 'color', hexToRgb('#cfd8dc'))
+            .should('contain', 'place');
+        })
+    });
+  });
+
+  it('shows content with image and action button with correct layout', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-link')
+        .click()
+        .then(() => {
+
+          cy.dataCy('dialog-text')
+            .should('be.visible')
+            .should('contain', "We want to reward you for your support")
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400');
+
+          cy.dataCy('dialog-content')
+            .scrollTo('bottom')
+            .find('img')
+            .should('be.visible')
+            .then(($img) => {
+              const naturalHeight = $img[0].naturalHeight;
+              expect(naturalHeight).to.be.greaterThan(0);
+              expect($img.attr('src')).to.equal(image);
+            });
+
+          cy.dataCy('dialog-content')
+            .scrollTo('center')
+            .find('.q-btn')
+            .should('be.visible')
+            .should('have.css', 'border-radius', '28px')
+            .should('have.css', 'background-color', hexToRgb('#000000'))
+            .should('have.css', 'color', hexToRgb('#ffffff'))
+            .should('contain', 'Add to calendar');
+
+          // test for phone
+          cy.viewport('iphone-6');
+
+          cy.dataCy('dialog-content')
+            .find('.col-12')
+            .first()
+            .should('have.css', 'width', '312px');
+
+          // test for desktop
+          cy.viewport('macbook-13');
+
+          cy.dataCy('dialog-content')
+            .find('.col-12')
+            .first()
+            .should('have.css', 'width', '272.5px');
+        })
+    })
   });
 });

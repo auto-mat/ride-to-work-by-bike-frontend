@@ -31,7 +31,6 @@ export default defineComponent({
     <q-card flat class="rounded-20 bg-white" data-cy="card">
       <q-card-section horizontal>
         <q-img
-          v-if="card?.thumbnail"
           class="col-2"
           :src="card?.thumbnail"
           data-cy="card-image"
@@ -92,7 +91,7 @@ export default defineComponent({
 
       <q-dialog v-model="modalOpened" square data-cy="card-dialog">
         <q-card class="relative-position overflow-visible">
-          <q-card-section class="q-pt-none">
+          <q-card-section class="q-pt-none" data-cy="dialog-header">
             <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
               {{ card?.title }}
             </h3>
@@ -103,7 +102,7 @@ export default defineComponent({
               <div
                 v-if="eventDateTime"
                 class="dates flex items-center q-pr-md"
-                data-cy="card-dates"
+                data-cy="dialog-dates"
               >
                 <q-icon
                   name="event"
@@ -116,7 +115,7 @@ export default defineComponent({
               <div
                 v-if="card?.location"
                 class="location flex items-center"
-                data-cy="card-location"
+                data-cy="dialog-location"
               >
                 <q-icon
                   name="place"
@@ -131,10 +130,10 @@ export default defineComponent({
 
           <q-separator />
 
-          <q-card-section horizontal class="q-gutter-lg q-px-md q-py-md">
-            <div class="col">
-              <div v-if="card?.content" v-html="card?.content"></div>
-              <q-btn color="black" unelevated rounded class="q-mt-md">
+          <q-card-section horizontal class="scroll" data-cy="dialog-content" style="max-height: 50vh; flex-wrap: wrap;">
+            <div class="col-12 col-md-6 q-px-md q-py-md">
+              <div v-if="card?.content" v-html="card?.content" data-cy="dialog-text"></div>
+              <q-btn color="black" unelevated rounded class="q-mt-md" data-cy="dialog-button">
                 <div class="flex items-center no-wrap">
                   <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
                   <div class="text-center">
@@ -143,17 +142,16 @@ export default defineComponent({
                 </div>
               </q-btn>
             </div>
-            <div class="col">
-              <q-img src="https://picsum.photos/380/380" :ratio="1" />
+            <div class="col-12 col-md-6 q-px-md q-py-md">
+              <q-img src="https://picsum.photos/380/380" :ratio="1" data-cy="dialog-image" />
             </div>
           </q-card-section>
 
           <q-card-actions
-            class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
+            class="dialog-close inline-block absolute-top-right q-px-none q-py-none" data-cy="dialog-close"
           >
             <q-btn
               v-close-popup
-              flat
               round
               color="blue-grey-8"
               icon="close"
