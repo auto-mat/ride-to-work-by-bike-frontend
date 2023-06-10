@@ -123,6 +123,46 @@ describe('<VueCardEvent>', () => {
     });
   });
 
+  it('renders responsive content', () => {
+    let parentWidth;
+
+    cy.viewport('iphone-6');
+
+    cy.dataCy('card-section')
+      .should('be.visible')
+      .then($parentElement => {
+        parentWidth = $parentElement[0].clientWidth
+
+        cy.dataCy('card-image')
+          .then($element => {
+            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
+          });
+
+        cy.dataCy('card-content')
+          .then($element => {
+            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
+          });
+    });
+
+    cy.viewport('macbook-13');
+
+    cy.dataCy('card-section')
+      .should('be.visible')
+      .then($parentElement => {
+        parentWidth = $parentElement[0].clientWidth
+
+        cy.dataCy('card-image')
+          .then($element => {
+            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
+          });
+
+        cy.dataCy('card-content')
+          .then($element => {
+            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
+          });
+      });
+  })
+
   it('shows modal dialog on click', () => {
     cy.window().then(() => {
       cy.dataCy('card-link')
@@ -221,16 +261,25 @@ describe('<VueCardEvent>', () => {
 
           cy.dataCy('dialog-content')
             .find('.col-12')
-            .first()
-            .should('have.css', 'width', '312px');
+            .then($element => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
+            });
 
           cy.viewport('macbook-13');
 
           cy.dataCy('dialog-content')
             .find('.col-12')
             .first()
-            .should('have.css', 'width', '272.5px');
+            .then($element => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
+            });
         })
     })
   });
+
+  function calculatePercentageWidth($element, width) {
+    const elementWidth = $element[0].clientWidth;
+    const parentWidth = width ? width : $element[0].parentNode.clientWidth;
+    return (elementWidth / parentWidth) * 100;
+  }
 });
