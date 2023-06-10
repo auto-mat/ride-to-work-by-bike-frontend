@@ -312,11 +312,11 @@ describe('<CardEvent>', () => {
           cy.dataCy('dialog-content')
             .children()
             .first()
-            .then($element => {
+            .then(($element) => {
               expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
             });
-        })
-    })
+        });
+    });
   });
 
   function calculatePercentageWidth($element, width) {

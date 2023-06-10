@@ -268,11 +268,11 @@ export default defineComponent({
 }
 
 @media (min-width: $breakpoint-sm-min) {
-.q-card > div:first-child > .q-img {
-  border-top-left-radius: inherit;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: 0;
-}
+  .q-card > div:first-child > .q-img {
+    border-top-left-radius: inherit;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: 0;
+  }
 }
 </style>
