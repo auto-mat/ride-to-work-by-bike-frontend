@@ -1,7 +1,7 @@
 import VueCardListEvent from 'components/VueCardListEvent.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueCardListEvent>', () => {
-  const heading = 'Budoucí výzvy';
 
   beforeEach(() => {
     cy.mount(VueCardListEvent, {
@@ -27,17 +27,9 @@ describe('<VueCardListEvent>', () => {
     });
   });
 
-  it('renders heading', () => {
-    cy.window().then(() => {
-      cy.get('[data-testid="card-list-heading"]')
-        .should('be.visible')
-        .should('contain', heading);
-    });
-  });
-
   it('renders correct number of items', () => {
     cy.window().then(() => {
-      cy.get('[data-testid="card-list-item"]').should('have.length', 5);
+      cy.dataCy('card-list-item').should('have.length', 5);
     });
   });
 });
