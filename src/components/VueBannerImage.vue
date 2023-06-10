@@ -65,15 +65,16 @@ export default defineComponent({
 
 .q-card > div:first-child {
   border-top-left-radius: inherit;
-  border-bottom-left-radius: inherit;
-  border-top-right-radius: 0;
+  border-top-right-radius: inherit;
+  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-@media (max-width: $breakpoint-sm-max) {
+
+@media (min-width: $breakpoint-sm-min) {
   .q-card > div:first-child {
     border-top-left-radius: inherit;
-    border-bottom-left-radius: 0;
-    border-top-right-radius: inherit;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: inherit;
     border-bottom-right-radius: 0;
   }
 }
