@@ -5,7 +5,10 @@
         {{ $t('index.title') }}
       </h1>
       <vue-event-countdown :release-date="releaseDate"></vue-event-countdown>
-      <vue-card-list-challenge :cards="cards" class="q-pt-xl q-pb-xl"></vue-card-list-challenge>
+      <vue-card-list-challenge
+        :cards="cards"
+        class="q-pt-xl q-pb-xl"
+      ></vue-card-list-challenge>
       <vue-banner-image
         :banner="banner"
         class="q-pt-xl q-pb-xl"
