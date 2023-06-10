@@ -82,7 +82,6 @@ describe('<VueBannerImage>', () => {
         .should('be.visible')
         .should('have.css', 'border-radius', '20px');
 
-      // test for phone
       cy.viewport('iphone-6');
 
       cy.dataCy('banner-half')
@@ -90,7 +89,6 @@ describe('<VueBannerImage>', () => {
         .should('have.css', 'border-top-left-radius', '20px')
         .should('have.css', 'border-top-right-radius', '20px');
 
-      // test for desktop
       cy.viewport('macbook-13');
 
       cy.dataCy('banner-half')
