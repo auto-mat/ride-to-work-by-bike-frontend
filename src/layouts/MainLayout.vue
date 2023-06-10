@@ -30,6 +30,7 @@ export default defineComponent({
       show-if-above
       v-model="leftDrawerOpen"
       side="left"
+      :width="320"
       class="bg-gray-light q-py-lg q-px-lg"
     >
       <vue-drawer-header></vue-drawer-header>
