@@ -1,9 +1,8 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
-// import types
-import { CardEvent } from 'components/types';
+import { CardEvent } from './types';
 
 export default defineComponent({
   name: 'VueCardEvent',
@@ -18,7 +17,7 @@ export default defineComponent({
       props?.card?.dates,
       'ddd D. MMM. YYYY, HH:mm'
     );
-    const isLargeScreen = useMediaQuery('(min-width: 600px)');
+    const isLargeScreen = useMediaQuery('(min-width: 600px)')
 
     return {
       modalOpened,
@@ -32,22 +31,14 @@ export default defineComponent({
 <template>
   <div>
     <q-card flat class="rounded-20 bg-white" data-cy="card">
-      <q-card-section
-        :horizontal="isLargeScreen"
-        class="q-pa-none"
-        data-cy="card-section"
-      >
+      <q-card-section :horizontal="isLargeScreen" class="q-pa-none" data-cy="card-section">
         <q-img
           :ratio="3 / 2"
           class="col-sm-2"
           :src="card?.thumbnail"
           data-cy="card-image"
         />
-        <q-card-section
-          horizontal
-          class="col-grow flex items-center"
-          data-cy="card-content"
-        >
+        <q-card-section horizontal class="col-grow flex items-center" data-cy="card-content">
           <div class="col-grow q-px-md q-py-lg">
             <div class="text-subtitle1 text-bold" data-cy="card-title">
               <a
@@ -142,45 +133,25 @@ export default defineComponent({
 
           <q-separator />
 
-          <q-card-section
-            horizontal
-            class="scroll"
-            data-cy="dialog-content"
-            style="max-height: 50vh; flex-wrap: wrap"
-          >
+          <q-card-section horizontal class="scroll" data-cy="dialog-content" style="max-height: 50vh; flex-wrap: wrap;">
             <div class="col-12 col-md-6 q-px-md q-py-md">
-              <div
-                v-if="card?.content"
-                v-html="card?.content"
-                data-cy="dialog-text"
-              ></div>
-              <q-btn
-                color="black"
-                unelevated
-                rounded
-                class="q-mt-md"
-                data-cy="dialog-button"
-              >
+              <div v-if="card?.content" v-html="card?.content" data-cy="dialog-text"></div>
+              <q-btn color="black" unelevated rounded class="q-mt-md" data-cy="dialog-button">
                 <div class="flex items-center no-wrap">
                   <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
                   <div class="text-center">
-                    {{ $t('index.cardEvent.addToCalendar') }}
+                    {{ $t('index.event.addToCalendar') }}
                   </div>
                 </div>
               </q-btn>
             </div>
             <div class="col-12 col-md-6 q-px-md q-py-md">
-              <q-img
-                src="https://picsum.photos/380/380"
-                :ratio="1"
-                data-cy="dialog-image"
-              />
+              <q-img src="https://picsum.photos/380/380" :ratio="1" data-cy="dialog-image" />
             </div>
           </q-card-section>
 
           <q-card-actions
-            class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
-            data-cy="dialog-close"
+            class="dialog-close inline-block absolute-top-right q-px-none q-py-none" data-cy="dialog-close"
           >
             <q-btn
               v-close-popup
@@ -234,11 +205,11 @@ export default defineComponent({
 }
 
 @media (min-width: $breakpoint-sm-min) {
-  .q-card > div:first-child > .q-img {
-    border-top-left-radius: inherit;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: 0;
-  }
+.q-card > div:first-child > .q-img {
+  border-top-left-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: 0;
+}
 }
 </style>
