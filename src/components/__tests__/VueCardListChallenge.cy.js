@@ -52,7 +52,6 @@ describe('<VueCardListChallenge>', () => {
           .and('not.equal', defaultEnglishString);
       })
     })
-
   })
 
   it('renders title', () => {
