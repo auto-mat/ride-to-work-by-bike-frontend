@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useDateFormat } from '@vueuse/core';
+import { defineComponent, ref, computed } from 'vue';
+import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
 import { CardEvent } from './types';
 
@@ -17,10 +17,12 @@ export default defineComponent({
       props?.card?.dates,
       'ddd D. MMM. YYYY, HH:mm'
     );
+    const isLargeScreen = useMediaQuery('(min-width: 600px)')
 
     return {
       modalOpened,
       eventDateTime,
+      isLargeScreen,
     };
   },
 });
@@ -29,13 +31,14 @@ export default defineComponent({
 <template>
   <div>
     <q-card flat class="rounded-20 bg-white" data-cy="card">
-      <q-card-section horizontal>
+      <q-card-section :horizontal="isLargeScreen" class="q-pa-none" data-cy="card-section">
         <q-img
-          class="col-2"
+          :ratio="3 / 2"
+          class="col-sm-2"
           :src="card?.thumbnail"
           data-cy="card-image"
         />
-        <q-card-section horizontal class="col-grow">
+        <q-card-section horizontal class="col-grow flex items-center" data-cy="card-content">
           <div class="col-grow q-px-md q-py-lg">
             <div class="text-subtitle1 text-bold" data-cy="card-title">
               <a
@@ -49,11 +52,11 @@ export default defineComponent({
             </div>
             <div
               v-if="eventDateTime || card?.location"
-              class="meta flex items-center q-mt-sm"
+              class="meta flex items-center gap-8 q-mt-sm"
             >
               <div
                 v-if="eventDateTime"
-                class="dates flex items-center q-pr-md"
+                class="dates flex items-center"
                 data-cy="card-dates"
               >
                 <q-icon
@@ -169,6 +172,10 @@ export default defineComponent({
   border-radius: 20px;
 }
 
+.gap-8 {
+  gap: 8px;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -188,5 +195,21 @@ export default defineComponent({
 .dialog-close {
   top: -21px;
   right: -21px;
+}
+
+.q-card > div:first-child > .q-img {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+@media (min-width: $breakpoint-sm-min) {
+.q-card > div:first-child > .q-img {
+  border-top-left-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: 0;
+}
 }
 </style>
