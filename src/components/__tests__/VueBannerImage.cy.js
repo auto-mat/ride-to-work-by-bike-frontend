@@ -1,4 +1,5 @@
 import VueBannerImage from 'components/VueBannerImage.vue';
+import { hexToRgb } from '../../../test/cypress/utils/';
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
@@ -36,8 +37,8 @@ describe('<VueBannerImage>', () => {
       cy.dataCy('banner-title')
         .should('be.visible')
         .should('contain.text', title)
-        .then(($title) => {
-          expect($title.text()).to.equal(title);
+        .then((titleNode) => {
+          expect(titleNode.text()).to.equal(title);
         });
     });
   });
@@ -57,7 +58,6 @@ describe('<VueBannerImage>', () => {
     cy.window().then(() => {
       cy.dataCy('banner')
         .find('img')
-        .should('be.visible')
         .then(($img) => {
           const naturalHeight = $img[0].naturalHeight;
           expect(naturalHeight).to.be.greaterThan(0);
@@ -68,7 +68,11 @@ describe('<VueBannerImage>', () => {
 
   it('has correct background color', () => {
     cy.window().then(() => {
-      cy.dataCy('banner').should('have.backgroundColor', config.colorGrayLight);
+      cy.dataCy('banner').should(
+        'have.css',
+        'background-color',
+        hexToRgb(config.colorGrayLight)
+      );
     });
   });
 

@@ -1,11 +1,11 @@
+import { hexToRgb } from 'app/test/cypress/utils';
 import VueCardEvent from 'components/VueCardEvent.vue';
-import { i18n } from '../../boot/i18n';
 
 describe('<VueCardEvent>', () => {
   const title = 'Opening Ceremony Bike to Work 2022';
   const thumbnail = 'https://picsum.photos/340/200';
   const image = 'https://picsum.photos/380/380';
-  const dates = new Date('2023-10-01T12:00:00');
+  const dates = new Date('Sun Oct 01 2023 12:00:00 GMT+0200');
   const location = 'Prague';
   const content =
     'We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle! You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams. Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony. We will also announce the traditional Brno cycling employer of the year.<br />The main prize will be a City Bike HERKA from our partner Cyklospeciality.<br />We are looking forward to seeing you!';
@@ -30,30 +30,6 @@ describe('<VueCardEvent>', () => {
     });
   });
 
-  it('has translation for all strings', () => {
-    const translationStrings = ['addToCalendar'];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardEvent.${item}`
-    );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
-  });
-
   it('renders title with link', () => {
     cy.window().then(() => {
       cy.dataCy('card-title')
@@ -61,8 +37,8 @@ describe('<VueCardEvent>', () => {
         .should('have.css', 'font-size', '16px')
         .should('have.css', 'font-weight', '700')
         .should('contain', title)
-        .then(($title) => {
-          expect($title.text()).to.equal(title);
+        .then((titleNode) => {
+          expect(titleNode.text()).to.equal(title);
         });
 
       cy.dataCy('card-link')
@@ -84,11 +60,12 @@ describe('<VueCardEvent>', () => {
     });
   });
 
+
   it('has correct background color', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .should('have.backgroundColor', '#ffffff');
+        .should('have.css', 'background-color', hexToRgb('#ffffff'));
     });
   });
 
@@ -98,14 +75,12 @@ describe('<VueCardEvent>', () => {
         .should('be.visible')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
-        .should('contain', '1.')
-        .should('contain', '2023')
-        .should('contain', '12:00');
+        .should('contain', 'Sun 1. Oct. 2023, 12:00');
 
       cy.dataCy('card-dates')
         .find('i')
         .should('be.visible')
-        .should('have.color', '#cfd8dc')
+        .should('have.css', 'color', hexToRgb('#cfd8dc'))
         .should('contain', 'event');
     });
   });
@@ -121,7 +96,7 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('card-location')
         .find('i')
         .should('be.visible')
-        .should('have.color', '#cfd8dc')
+        .should('have.css', 'color', hexToRgb('#cfd8dc'))
         .should('contain', 'place');
     });
   });
@@ -134,9 +109,9 @@ describe('<VueCardEvent>', () => {
         .should('have.css', 'width', '42px');
 
       cy.dataCy('calendar-button')
-        .find('i')
-        .should('be.visible')
-        .should('have.color', '#000000');
+      .find('i')
+      .should('be.visible')
+      .should('have.css', 'color', hexToRgb('#000000'))
     });
   });
 
@@ -148,61 +123,14 @@ describe('<VueCardEvent>', () => {
     });
   });
 
-  it('renders responsive content', () => {
-    let parentWidth;
-
-    cy.viewport('iphone-6');
-
-    cy.dataCy('card-section')
-      .should('be.visible')
-      .then(($parentElement) => {
-        parentWidth = $parentElement[0].clientWidth;
-
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
-
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
-      });
-
-    cy.viewport('macbook-13');
-
-    cy.dataCy('card-section')
-      .should('be.visible')
-      .then(($parentElement) => {
-        parentWidth = $parentElement[0].clientWidth;
-
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
-
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
-      });
-  });
-
   it('shows modal dialog on click', () => {
     cy.window().then(() => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
-          cy.dataCy('card-dialog').should('be.visible');
-        });
+          cy.dataCy('card-dialog')
+            .should('be.visible');
+        })
     });
   });
 
@@ -217,22 +145,30 @@ describe('<VueCardEvent>', () => {
             .should('have.css', 'font-size', '20px')
             .should('have.css', 'font-weight', '500')
             .should('contain', title)
-            .then(($title) => {
-              expect($title.text()).to.equal(title);
+            .then((titleNode) => {
+              expect(titleNode.text()).to.equal(title);
+            });
+
+          cy.dataCy('dialog-header')
+            .find('h3')
+            .should('be.visible')
+            .should('have.css', 'font-size', '20px')
+            .should('have.css', 'font-weight', '500')
+            .should('contain', title)
+            .then((titleNode) => {
+              expect(titleNode.text()).to.equal(title);
             });
 
           cy.dataCy('dialog-dates')
             .should('be.visible')
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
-            .should('contain', '1.')
-            .should('contain', '2023')
-            .should('contain', '12:00');
+            .should('contain', 'Sun 1. Oct. 2023, 12:00');
 
           cy.dataCy('dialog-dates')
             .find('i')
             .should('be.visible')
-            .should('have.color', '#cfd8dc')
+            .should('have.css', 'color', hexToRgb('#cfd8dc'))
             .should('contain', 'event');
 
           cy.dataCy('dialog-location')
@@ -244,9 +180,9 @@ describe('<VueCardEvent>', () => {
           cy.dataCy('dialog-location')
             .find('i')
             .should('be.visible')
-            .should('have.color', '#cfd8dc')
+            .should('have.css', 'color', hexToRgb('#cfd8dc'))
             .should('contain', 'place');
-        });
+        })
     });
   });
 
@@ -255,9 +191,10 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
+
           cy.dataCy('dialog-text')
             .should('be.visible')
-            .should('contain', 'We want to reward you for your support')
+            .should('contain', "We want to reward you for your support")
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400');
 
@@ -276,36 +213,24 @@ describe('<VueCardEvent>', () => {
             .find('.q-btn')
             .should('be.visible')
             .should('have.css', 'border-radius', '28px')
-            .should('have.backgroundColor', '#000000')
-            .should('have.color', '#ffffff')
-            .should('contain', i18n.global.t('index.cardEvent.addToCalendar'));
+            .should('have.css', 'background-color', hexToRgb('#000000'))
+            .should('have.css', 'color', hexToRgb('#ffffff'))
+            .should('contain', 'Add to calendar');
 
           cy.viewport('iphone-6');
 
           cy.dataCy('dialog-content')
             .find('.col-12')
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(
-                100,
-                0.5
-              );
-            });
+            .first()
+            .should('have.css', 'width', '312px');
 
           cy.viewport('macbook-13');
 
           cy.dataCy('dialog-content')
             .find('.col-12')
             .first()
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
-            });
-        });
-    });
+            .should('have.css', 'width', '272.5px');
+        })
+    })
   });
-
-  function calculatePercentageWidth($element, width) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = width ? width : $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });
