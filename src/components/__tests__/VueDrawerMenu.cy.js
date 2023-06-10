@@ -25,22 +25,26 @@ describe('VueDrawerMenu', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationKeyList = menuItems.map((item) => `drawerMenu.${ item.name }`);
+    const translationKeyList = menuItems.map(
+      (item) => `drawerMenu.${item.name}`
+    );
 
     translationKeyList.forEach((translationKey) => {
       const defaultEnglishString = i18n.global.t(translationKey, 'en');
 
       const locales = i18n.global.availableLocales;
-      locales.filter((locale) => locale !== 'en').forEach((locale) => {
-        i18n.global.locale = locale;
-        const translatedString = i18n.global.t(translationKey);
+      locales
+        .filter((locale) => locale !== 'en')
+        .forEach((locale) => {
+          i18n.global.locale = locale;
+          const translatedString = i18n.global.t(translationKey);
 
-        cy.wrap(translatedString)
-          .should('be.a', 'string')
-          .and('not.equal', defaultEnglishString);
-      })
-    })
-  })
+          cy.wrap(translatedString)
+            .should('be.a', 'string')
+            .and('not.equal', defaultEnglishString);
+        });
+    });
+  });
 
   it('should render the list with the correct number of items', () => {
     cy.window().then(() => {
@@ -49,7 +53,6 @@ describe('VueDrawerMenu', () => {
   });
 
   it('should render each item with the expected icon and text content', () => {
-
     cy.window().then(() => {
       menuItems.forEach((item, index) => {
         cy.get('.q-item')
