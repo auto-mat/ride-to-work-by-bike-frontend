@@ -217,7 +217,6 @@ describe('<VueCardEvent>', () => {
             .should('have.css', 'color', hexToRgb('#ffffff'))
             .should('contain', 'Add to calendar');
 
-          // test for phone
           cy.viewport('iphone-6');
 
           cy.dataCy('dialog-content')
@@ -225,7 +224,6 @@ describe('<VueCardEvent>', () => {
             .first()
             .should('have.css', 'width', '312px');
 
-          // test for desktop
           cy.viewport('macbook-13');
 
           cy.dataCy('dialog-content')

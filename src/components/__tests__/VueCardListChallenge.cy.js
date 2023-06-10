@@ -43,25 +43,25 @@ describe('<VueCardListChallenge>', () => {
       const defaultEnglishString = i18n.global.t(translationKey, 'en');
 
       const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
+      locales.filter((locale) => locale !== 'en').forEach((locale) => {
+        i18n.global.locale = locale;
+        const translatedString = i18n.global.t(translationKey);
 
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
-  });
+        cy.wrap(translatedString)
+          .should('be.a', 'string')
+          .and('not.equal', defaultEnglishString);
+      })
+    })
+
+  })
 
   it('renders title', () => {
     cy.window().then(() => {
       cy.dataCy('card-list-title')
         .should('be.visible')
-        .should('contain', i18n.global.t('index.cardList.title'));
+        .should('contain', i18n.global.t("index.cardList.title"));
     });
+
   });
 
   it('renders correct number of items', () => {
@@ -71,24 +71,28 @@ describe('<VueCardListChallenge>', () => {
   });
 
   it('renders cards in a responsive grid', () => {
+
     cy.dataCy('card-list')
       .should('have.css', 'display', 'flex')
       .should('have.css', 'flex-wrap', 'wrap');
 
-    cy.viewport('iphone-6');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
-    });
+      cy.viewport('iphone-6');
+      cy.dataCy('card-list-item')
+      .then($element => {
+        expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
+      });
 
-    cy.viewport('macbook-13');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
-    });
+      cy.viewport('macbook-13');
+      cy.dataCy('card-list-item')
+      .then($element => {
+        expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
+      });
 
-    cy.viewport('macbook-15');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(33, 0.5);
-    });
+      cy.viewport('macbook-15');
+      cy.dataCy('card-list-item')
+      .then($element => {
+        expect(calculatePercentageWidth($element)).to.be.closeTo(33, 0.5);
+      });
   });
 
   function calculatePercentageWidth($element) {
