@@ -303,14 +303,20 @@ describe('<CardEvent>', () => {
 
           cy.dataCy('dialog-content')
             .children()
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(
-                100,
-                0.5
-              );
+            .then($element => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
             });
-        });
-    });
+
+          cy.viewport('macbook-13');
+
+          cy.dataCy('dialog-content')
+            .children()
+            .first()
+            .then($element => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
+            });
+        })
+    })
   });
 
   function calculatePercentageWidth($element, width) {
