@@ -1,6 +1,8 @@
 import VueCardListEvent from 'components/VueCardListEvent.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueCardListEvent>', () => {
+
   beforeEach(() => {
     cy.mount(VueCardListEvent, {
       props: {
