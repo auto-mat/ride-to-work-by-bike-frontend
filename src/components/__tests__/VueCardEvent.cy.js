@@ -60,7 +60,6 @@ describe('<VueCardEvent>', () => {
     });
   });
 
-
   it('has correct background color', () => {
     cy.window().then(() => {
       cy.dataCy('card')
@@ -109,9 +108,9 @@ describe('<VueCardEvent>', () => {
         .should('have.css', 'width', '42px');
 
       cy.dataCy('calendar-button')
-      .find('i')
-      .should('be.visible')
-      .should('have.css', 'color', hexToRgb('#000000'))
+        .find('i')
+        .should('be.visible')
+        .should('have.css', 'color', hexToRgb('#000000'));
     });
   });
 
@@ -130,47 +129,54 @@ describe('<VueCardEvent>', () => {
 
     cy.dataCy('card-section')
       .should('be.visible')
-      .then($parentElement => {
-        parentWidth = $parentElement[0].clientWidth
+      .then(($parentElement) => {
+        parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image')
-          .then($element => {
-            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
-          });
+        cy.dataCy('card-image').then(($element) => {
+          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
+            100,
+            0.5
+          );
+        });
 
-        cy.dataCy('card-content')
-          .then($element => {
-            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
-          });
-    });
+        cy.dataCy('card-content').then(($element) => {
+          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
+            100,
+            0.5
+          );
+        });
+      });
 
     cy.viewport('macbook-13');
 
     cy.dataCy('card-section')
       .should('be.visible')
-      .then($parentElement => {
-        parentWidth = $parentElement[0].clientWidth
+      .then(($parentElement) => {
+        parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image')
-          .then($element => {
-            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
-          });
+        cy.dataCy('card-image').then(($element) => {
+          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
+            100,
+            0.5
+          );
+        });
 
-        cy.dataCy('card-content')
-          .then($element => {
-            expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(100, 0.5);
-          });
+        cy.dataCy('card-content').then(($element) => {
+          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
+            100,
+            0.5
+          );
+        });
       });
-  })
+  });
 
   it('shows modal dialog on click', () => {
     cy.window().then(() => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
-          cy.dataCy('card-dialog')
-            .should('be.visible');
-        })
+          cy.dataCy('card-dialog').should('be.visible');
+        });
     });
   });
 
@@ -222,7 +228,7 @@ describe('<VueCardEvent>', () => {
             .should('be.visible')
             .should('have.css', 'color', hexToRgb('#cfd8dc'))
             .should('contain', 'place');
-        })
+        });
     });
   });
 
@@ -231,10 +237,9 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
-
           cy.dataCy('dialog-text')
             .should('be.visible')
-            .should('contain', "We want to reward you for your support")
+            .should('contain', 'We want to reward you for your support')
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400');
 
@@ -261,8 +266,11 @@ describe('<VueCardEvent>', () => {
 
           cy.dataCy('dialog-content')
             .find('.col-12')
-            .then($element => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
+            .then(($element) => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(
+                100,
+                0.5
+              );
             });
 
           cy.viewport('macbook-13');
@@ -270,11 +278,11 @@ describe('<VueCardEvent>', () => {
           cy.dataCy('dialog-content')
             .find('.col-12')
             .first()
-            .then($element => {
+            .then(($element) => {
               expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
             });
-        })
-    })
+        });
+    });
   });
 
   function calculatePercentageWidth($element, width) {

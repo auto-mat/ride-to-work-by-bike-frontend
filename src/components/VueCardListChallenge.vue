@@ -19,10 +19,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <h2
-      class="text-h6 q-mt-none text-weight-bold"
-      data-cy="card-list-title"
-    >
+    <h2 class="text-h6 q-mt-none text-weight-bold" data-cy="card-list-title">
       {{ $t('index.cardList.title') }}
     </h2>
     <div class="row q-col-gutter-lg" data-cy="card-list">
