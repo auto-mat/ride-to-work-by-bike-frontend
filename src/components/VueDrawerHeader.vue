@@ -16,6 +16,7 @@ export default defineComponent({
       fill="none"
       viewBox="0 0 142 40"
       class="logo"
+      data-cy="logo"
     >
       <path
         fill="#212121"
@@ -26,10 +27,10 @@ export default defineComponent({
     </svg>
     <div class="flex gap-32">
       <a href="/">
-        <q-icon name="help" size="sm" color="dark" />
+        <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
       <a href="/">
-        <q-icon name="notifications" size="sm" color="dark" />
+        <q-icon name="notifications" size="sm" color="black" data-cy="icon-notification" />
       </a>
     </div>
   </div>
