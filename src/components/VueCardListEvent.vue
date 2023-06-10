@@ -27,6 +27,7 @@ export default defineComponent({
       :key="card.title"
       :card="card"
       class="q-mt-lg"
+      data-cy="card-list-item"
     ></vue-card-event>
   </div>
 </template>
