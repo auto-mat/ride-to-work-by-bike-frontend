@@ -9,8 +9,8 @@ describe('<VueDrawerHeader>', () => {
   it('renders logo', () => {
     cy.window().then(() => {
       cy.dataCy('logo')
-      .should('be.visible')
-      .should('have.css', 'height', '40px');
+        .should('be.visible')
+        .should('have.css', 'height', '40px');
     });
   });
 
