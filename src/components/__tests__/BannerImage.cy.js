@@ -82,6 +82,20 @@ describe('<BannerImage>', () => {
         .should('be.visible')
         .should('have.css', 'border-radius', '20px')
         .should('have.css', 'overflow', 'hidden');
+
+      cy.viewport('iphone-6');
+
+      cy.dataCy('banner-half')
+        .first()
+        .should('have.css', 'border-top-left-radius', '20px')
+        .should('have.css', 'border-top-right-radius', '20px');
+
+      cy.viewport('macbook-13');
+
+      cy.dataCy('banner-half')
+        .first()
+        .should('have.css', 'border-top-left-radius', '20px')
+        .should('have.css', 'border-bottom-left-radius', '20px');
     });
   });
 });
