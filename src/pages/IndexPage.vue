@@ -1,54 +1,37 @@
 <template>
-  <q-page data-cy="q-main">
+  <q-page>
     <div class="q-px-lg">
-      <h1
-        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
-        data-cy="index-title"
-      >
+      <h1 class="text-h6 q-mt-none q-pt-lg text-weight-bold">
         {{ $t('index.title') }}
       </h1>
-      <vue-event-countdown
-        :release-date="releaseDate"
-        data-cy="event-countdown"
-      ></vue-event-countdown>
-      <vue-card-list-challenge
-        :cards="cards"
-        class="q-pt-xl q-pb-xl"
-        data-cy="list-challenge"
-      ></vue-card-list-challenge>
+      <vue-event-countdown :release-date="releaseDate"></vue-event-countdown>
+      <vue-card-list-challenge :cards="cards" class="q-pt-xl q-pb-xl"></vue-card-list-challenge>
       <vue-banner-image
         :banner="banner"
         class="q-pt-xl q-pb-xl"
-        data-cy="banner-image"
       ></vue-banner-image>
     </div>
     <vue-heading-background
       :title="headingBgTitle"
       class="q-pt-xl"
-      data-cy="heading-background"
     ></vue-heading-background>
     <div class="bg-gray-light q-px-lg">
       <vue-card-list-event
         :cards="cardsEvent"
         class="q-pt-xl"
-        data-cy="list-event"
       ></vue-card-list-event>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-// import libraries
 import { defineComponent } from 'vue';
-
-// import components
 import VueEventCountdown from 'components/VueEventCountdown.vue';
 import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
 import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
 
-// import types
 import { CardChallenge, CardEvent } from 'components/types';
 import { BannerImage } from 'components/types';
 
