@@ -9,3 +9,6 @@ community = "Komunita"
 discounts = "Zľavy a ceny"
 coordinator = "Firemný koordinátor"
 profile = "Profil"
+
+[index.cardList]
+title = "Budúce výzvy"

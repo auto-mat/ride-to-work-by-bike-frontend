@@ -5,7 +5,7 @@
         {{ $t('index.title') }}
       </h1>
       <vue-event-countdown :release-date="releaseDate"></vue-event-countdown>
-      <vue-card-list :cards="cards" class="q-pt-xl q-pb-xl"></vue-card-list>
+      <vue-card-list-challenge :cards="cards" class="q-pt-xl q-pb-xl"></vue-card-list-challenge>
       <vue-banner-image
         :banner="banner"
         class="q-pt-xl q-pb-xl"
@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import VueEventCountdown from 'components/VueEventCountdown.vue';
-import VueCardList from 'components/VueCardList.vue';
+import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
 import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
@@ -39,7 +39,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     VueEventCountdown,
-    VueCardList,
+    VueCardListChallenge,
     VueBannerImage,
     VueHeadingBackground,
     VueCardListEvent,
