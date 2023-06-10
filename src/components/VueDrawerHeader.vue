@@ -30,7 +30,12 @@ export default defineComponent({
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
       <a href="/">
-        <q-icon name="notifications" size="sm" color="black" data-cy="icon-notification" />
+        <q-icon
+          name="notifications"
+          size="sm"
+          color="black"
+          data-cy="icon-notification"
+        />
       </a>
     </div>
   </div>
