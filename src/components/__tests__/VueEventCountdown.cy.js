@@ -1,4 +1,5 @@
 import VueEventCountdown from '../VueEventCountdown.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('Event Countdown', () => {
   const releaseDate = '2023-10-01T12:00:00';
@@ -11,26 +12,52 @@ describe('Event Countdown', () => {
     });
   });
 
-  it('should render the component', () => {
-    cy.get('[data-testid="countdown-component"]').should('exist');
+  it('has translation for all strings', () => {
+    const translationKeyList = [
+      'index.countdown.title',
+      'index.countdown.days',
+      'index.countdown.hours',
+      'index.countdown.minutes',
+      'index.countdown.seconds',
+    ]
+
+    translationKeyList.forEach((translationKey) => {
+      const defaultEnglishString = i18n.global.t(translationKey, 'en');
+
+      const locales = i18n.global.availableLocales;
+      locales
+        .filter((locale) => locale !== 'en')
+        .forEach((locale) => {
+          i18n.global.locale = locale;
+          const translatedString = i18n.global.t(translationKey);
+
+          cy.wrap(translatedString)
+            .should('be.a', 'string')
+            .and('not.equal', defaultEnglishString);
+        });
+    });
   });
 
-  it('should display correct values when a custom date is passed', () => {
-    cy.get('[data-testid="countdown-label-days"]').should(
+  it('should render the component', () => {
+    cy.dataCy("countdown-component").should('exist');
+  });
+
+  it('should display internationalized labels', () => {
+    cy.dataCy("countdown-label-days").should(
       'contain.text',
-      'days'
+      i18n.global.$t('index.countdown.days')
     );
-    cy.get('[data-testid="countdown-label-hours"]').should(
+    cy.dataCy("countdown-label-hours").should(
       'contain.text',
-      'hours'
+      i18n.global.$t('index.countdown.hours')
     );
-    cy.get('[data-testid="countdown-label-minutes"]').should(
+    cy.dataCy("countdown-label-minutes").should(
       'contain.text',
-      'minutes'
+      i18n.global.$t('index.countdown.minutes')
     );
-    cy.get('[data-testid="countdown-label-seconds"]').should(
+    cy.dataCy("countdown-label-seconds").should(
       'contain.text',
-      'seconds'
+      i18n.global.$t('index.countdown.seconds')
     );
   });
 });
