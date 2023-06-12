@@ -12,5 +12,15 @@ profile = "Profil"
 inviteFriends = "Pozvať priateľov"
 donate = "Darujte"
 
+[index]
+title = "Domovská stránka"
+
+[index.countdown]
+title = "Októbrová výzva začína {date}, to je pre"
+days = "dní"
+hours = "hodin"
+minutes = "minút"
+seconds = "sekund"
+
 [index.cardList]
 title = "Budúce výzvy"
