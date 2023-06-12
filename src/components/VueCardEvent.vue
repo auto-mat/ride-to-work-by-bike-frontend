@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
 import { CardEvent } from './types';
