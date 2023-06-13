@@ -82,18 +82,18 @@ export default defineComponent({
     data-cy="countdown-component"
   >
     <div class="text-center">
-      <div class="text-weight-medium">
+      <div class="text-weight-medium" data-cy="target-date">
         {{ $t('index.countdown.title', { date: formattedDate }) }}
       </div>
       <div class="row items-center justify-evenly q-mt-md">
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold">{{ countdown.days }}</div>
+          <div class="text-h3 text-weight-bold" data-cy="countdown-days">{{ countdown.days }}</div>
           <div class="q-mt-xs" data-cy="countdown-label-days">
             {{ $t('index.countdown.days') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold">{{ countdown.hours }}</div>
+          <div class="text-h3 text-weight-bold" data-cy="countdown-hours">{{ countdown.hours }}</div>
           <div class="q-mt-xs" data-cy="countdown-label-hours">
             {{ $t('index.countdown.hours') }}
           </div>
