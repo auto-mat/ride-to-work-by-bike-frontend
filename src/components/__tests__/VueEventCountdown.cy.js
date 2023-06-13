@@ -40,7 +40,7 @@ describe('Event Countdown', () => {
     });
   });
 
-  it('should display internationalized labels', () => {
+  it('displays internationalized labels', () => {
     cy.dataCy("countdown-label-days").should(
       'contain.text',
       i18n.global.t('index.countdown.days')
@@ -59,32 +59,63 @@ describe('Event Countdown', () => {
     );
   });
 
-  it('should render the date in correct format', () => {
-    cy.dataCy("target-date").should('be.visible').should('contain', '1. 10.');
+  it('renders a title with correct styles', () => {
+    cy.window().then(() => {
+      cy.dataCy('title')
+        .should('be.visible')
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '700');
+    });
   });
 
-  it('should count down', () => {
+  it('renders the date in correct format', () => {
+    cy.dataCy("title")
+      .should('be.visible')
+      .should('contain', '1. 10.');
+  });
+
+  it('renders the numbers in correct format', () => {
+    cy.dataCy('countdown-days').should('be.visible').should('have.css', 'font-size', '64px').should('have.css', 'font-weight', '700')
+    cy.dataCy('countdown-hours').should('be.visible').should('have.css', 'font-size', '64px').should('have.css', 'font-weight', '700')
+    cy.dataCy('countdown-minutes').should('be.visible').should('have.css', 'font-size', '64px').should('have.css', 'font-weight', '700')
+    cy.dataCy('countdown-seconds').should('be.visible').should('have.css', 'font-size', '64px').should('have.css', 'font-weight', '700')
+  });
+
+  it('renders the labels in correct format', () => {
+    cy.dataCy('countdown-label-days').should('be.visible').should('have.css', 'font-size', '14px').should('have.css', 'font-weight', '400')
+    cy.dataCy('countdown-label-hours').should('be.visible').should('have.css', 'font-size', '14px').should('have.css', 'font-weight', '400')
+    cy.dataCy('countdown-label-minutes').should('be.visible').should('have.css', 'font-size', '14px').should('have.css', 'font-weight', '400')
+    cy.dataCy('countdown-label-seconds').should('be.visible').should('have.css', 'font-size', '14px').should('have.css', 'font-weight', '400')
+  });
+
+  it('has gray background', () => {
+    cy.window().then(() => {
+      cy.dataCy('card')
+        .should('be.visible')
+        .should('have.css', 'background-color', 'rgb(243, 247, 255)')
+    });
+  });
+
+  it('counts down correctly', () => {
     cy.clock(currentTime.getTime()).then(() => {
-      cy.dataCy('countdown-days').should('be.visible').should('have.text', '1');
-      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '0');
-      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '0');
-      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '0');
+      cy.dataCy('countdown-days').should('have.text', '1');
+      cy.dataCy('countdown-hours').should('have.text', '0');
+      cy.dataCy('countdown-minutes').should('have.text', '0');
+      cy.dataCy('countdown-seconds').should('have.text', '0');
 
       cy.tick(1000);
 
-      cy.dataCy('countdown-days').should('be.visible').should('have.text', '0');
-      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '23');
-      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '59');
-      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '59');
+      cy.dataCy('countdown-days').should('have.text', '0');
+      cy.dataCy('countdown-hours').should('have.text', '23');
+      cy.dataCy('countdown-minutes').should('have.text', '59');
+      cy.dataCy('countdown-seconds').should('have.text', '59');
 
       cy.tick(60*60*1000);
 
-      cy.dataCy('countdown-days').should('be.visible').should('have.text', '0');
-      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '22');
-      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '59');
-      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '59');
+      cy.dataCy('countdown-days').should('have.text', '0');
+      cy.dataCy('countdown-hours').should('have.text', '22');
+      cy.dataCy('countdown-minutes').should('have.text', '59');
+      cy.dataCy('countdown-seconds').should('have.text', '59');
     });
-
-
   })
 });
