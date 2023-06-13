@@ -61,7 +61,6 @@ describe('Event Countdown', () => {
 
   it('should render the date in correct format', () => {
     cy.dataCy("target-date").should('be.visible').should('contain', '1. 10.');
-    // TODO test for other locales
   });
 
   it('should count down', () => {
