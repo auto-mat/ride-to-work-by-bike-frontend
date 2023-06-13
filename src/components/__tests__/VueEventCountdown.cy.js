@@ -2,9 +2,11 @@ import VueEventCountdown from '../VueEventCountdown.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('Event Countdown', () => {
-  const releaseDate = '2023-10-01T12:00:00';
+  const releaseDate = new Date('2023-10-01T12:00:00');
+  const currentTime = new Date('2023-09-30T12:00:00');
 
   beforeEach(() => {
+
     cy.mount(VueEventCountdown, {
       props: {
         releaseDate,
@@ -38,26 +40,52 @@ describe('Event Countdown', () => {
     });
   });
 
-  it('should render the component', () => {
-    cy.dataCy("countdown-component").should('exist');
-  });
-
   it('should display internationalized labels', () => {
     cy.dataCy("countdown-label-days").should(
       'contain.text',
-      i18n.global.$t('index.countdown.days')
+      i18n.global.t('index.countdown.days')
     );
     cy.dataCy("countdown-label-hours").should(
       'contain.text',
-      i18n.global.$t('index.countdown.hours')
+      i18n.global.t('index.countdown.hours')
     );
     cy.dataCy("countdown-label-minutes").should(
       'contain.text',
-      i18n.global.$t('index.countdown.minutes')
+      i18n.global.t('index.countdown.minutes')
     );
     cy.dataCy("countdown-label-seconds").should(
       'contain.text',
-      i18n.global.$t('index.countdown.seconds')
+      i18n.global.t('index.countdown.seconds')
     );
   });
+
+  it('should render the date in correct format', () => {
+    cy.dataCy("target-date").should('be.visible').should('contain', '1. 10.');
+    // TODO test for other locales
+  });
+
+  it('should count down', () => {
+    cy.clock(currentTime.getTime()).then(() => {
+      cy.dataCy('countdown-days').should('be.visible').should('have.text', '1');
+      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '0');
+      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '0');
+      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '0');
+
+      cy.tick(1000);
+
+      cy.dataCy('countdown-days').should('be.visible').should('have.text', '0');
+      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '23');
+      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '59');
+      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '59');
+
+      cy.tick(60*60*1000);
+
+      cy.dataCy('countdown-days').should('be.visible').should('have.text', '0');
+      cy.dataCy('countdown-hours').should('be.visible').should('have.text', '22');
+      cy.dataCy('countdown-minutes').should('be.visible').should('have.text', '59');
+      cy.dataCy('countdown-seconds').should('be.visible').should('have.text', '59');
+    });
+
+
+  })
 });
