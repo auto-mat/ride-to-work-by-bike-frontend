@@ -1,8 +1,14 @@
 <script lang="ts">
+import { setCssVar } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
 import { useDateFormat } from '@vueuse/core';
 import { Countdown } from 'components/types';
+
+const rideToWorkByBikeConfig: object = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueEventCountdown',
@@ -79,27 +85,27 @@ export default defineComponent({
     square
     flat
     class="row items-center justify-evenly q-py-xl"
-    data-cy="countdown-component"
+    data-cy="card"
   >
     <div class="text-center">
-      <div class="text-weight-medium" data-cy="target-date">
+      <div class="text-weight-bold q-px-lg" data-cy="title">
         {{ $t('index.countdown.title', { date: formattedDate }) }}
       </div>
       <div class="row items-center justify-evenly q-mt-md">
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold" data-cy="countdown-days">{{ countdown.days }}</div>
+          <div class="text-64 text-weight-bold" data-cy="countdown-days">{{ countdown.days }}</div>
           <div class="q-mt-xs" data-cy="countdown-label-days">
             {{ $t('index.countdown.days') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold" data-cy="countdown-hours">{{ countdown.hours }}</div>
+          <div class="text-64 text-weight-bold" data-cy="countdown-hours">{{ countdown.hours }}</div>
           <div class="q-mt-xs" data-cy="countdown-label-hours">
             {{ $t('index.countdown.hours') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold" data-cy="countdown-minutes">
+          <div class="text-64 text-weight-bold" data-cy="countdown-minutes">
             {{ countdown.minutes }}
           </div>
           <div class="q-mt-xs" data-cy="countdown-label-minutes">
@@ -107,7 +113,7 @@ export default defineComponent({
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-h3 text-weight-bold" data-cy="countdown-seconds">
+          <div class="text-64 text-weight-bold" data-cy="countdown-seconds">
             {{ countdown.seconds }}
           </div>
           <div class="q-mt-xs" data-cy="countdown-label-seconds">
@@ -122,5 +128,11 @@ export default defineComponent({
 <style>
 .q-card {
   background-color: var(--q-gray-light);
+}
+.text-64 {
+  font-size: 64px;
+  @media (min-width: $breakpoint-lg-min) {
+    font-size: 48px;
+  }
 }
 </style>
