@@ -11,20 +11,54 @@ describe('<VueHeadingBackground>', () => {
     });
   });
 
-  it('renders title', () => {
+  it('renders title with correct styling', () => {
     cy.window().then(() => {
-      cy.get('[data-testid="heading-bg-title"]')
+      cy.dataCy('heading-wrapper').should('be.visible');
+
+      cy.dataCy('heading')
         .should('be.visible')
         .should('contain', title)
         .then((titleNode) => {
           expect(titleNode.text()).to.equal(title);
         });
+
+      cy.dataCy('heading')
+        .should('have.css', 'font-size', '24px')
+        .should('have.css', 'font-weight', '700');
     });
   });
 
-  it('renders image', () => {
+  it('renders svg background', () => {
     cy.window().then(() => {
-      cy.get('.q-img__image').should('be.visible');
+      cy.dataCy('svg').should('be.visible')
+
+      cy.viewport('iphone-6');
+
+      cy.dataCy('svg').should('be.visible')
+        .then(($element) => {
+          expect($element.width()).to.be.closeTo(
+            375,
+            0.5
+          )
+          expect($element.height()).to.be.closeTo(
+            73,
+            1
+          )
+        });
+
+      cy.viewport('macbook-13');
+
+      cy.dataCy('svg').should('be.visible')
+      .then(($element) => {
+        expect($element.width()).to.be.closeTo(
+          1280,
+          0.5
+        )
+        expect($element.height()).to.be.closeTo(
+          250,
+          1
+        )
+      });
     });
   });
 });
