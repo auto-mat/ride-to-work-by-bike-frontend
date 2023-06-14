@@ -1,43 +1,32 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-// import types
-import { User } from 'components/types';
-
 export default defineComponent({
   name: 'VueUserSelect',
-  props: {
-    options: {
-      type: Array as () => User[],
-    },
-  },
   setup() {
-    const user = ref({
-      label: 'User 1',
-      value: '1',
-      image: 'https://picsum.photos/id/40/300/300',
-    });
+    const user = ref({ label: 'User 1', value: '1', image: 'https://picsum.photos/id/40/300/300' });
+
+    // TODO: add option model
+    const options = [
+      { label: 'User 1', value: '1', image: 'https://picsum.photos/id/40/300/300' },
+      { label: 'User 2', value: '2', image: 'https://picsum.photos/id/64/300/300' },
+      { label: 'User 3', value: '3', image: 'https://picsum.photos/id/91/300/300' },
+    ];
 
     return {
       user,
+      options,
     };
   },
 });
 </script>
 
 <template>
-  <div class="user-select" data-cy="user-select">
-    <q-select
-      rounded
-      standout
-      v-model="user"
-      :options="options"
-      class="pt-0"
-      data-cy="user-select-input"
-    >
+  <div class="user-select">
+    <q-select rounded standout v-model="user" :options="options" class="pt-0" data-cy="select">
       <template v-slot:prepend>
         <q-avatar size="56px" data-cy="avatar">
-          <img class="rounded" :src="user.image" :alt="user.label" />
+          <img class="rounded" :src="user.image" />
         </q-avatar>
       </template>
     </q-select>
