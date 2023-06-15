@@ -1,0 +1,44 @@
+[drawerMenu]
+home = "Domov"
+routes = "Cesty"
+results = "Výsledky"
+community = "Komunita"
+discounts = "Slevy a výhry"
+coordinator = "Firemní koordinátor*ka"
+profile = "Profil"
+inviteFriends = "Pozvat přátele"
+donate = "Darujte"
+
+[index]
+title = "Domov"
+
+[index.help]
+title = "Nápověda"
+titleParticipants = "Účastníci"
+titleGuide = "Průvodce aplikací"
+buttonGuide = "Shlédnout znovu"
+titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
+buttonContact = "Kontaktovat automat"
+titleLinks = "Užitečné odkazy"
+titleSocials = "Sledujte nás na sociálních sítích"
+
+[index.countdown]
+title = "Říjnová výzva začíná {date}, to je za"
+days = "dní"
+hours = "hodin"
+minutes = "minut"
+seconds = "sekund"
+
+[index.cardList]
+title = "Budoucí výzvy"
+
+[index.cardChallenge]
+company = "Firemní výzva"
+dates = "Období výzvy:"
+
+[index.bannerImage]
+title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
+perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
+
+[index.event]
+addToCalendar = "Přidat do kalendáře"

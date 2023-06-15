@@ -1,2 +1,47 @@
 totalQuestions = "Total questions"
 lang = "Language"
+
+[drawerMenu]
+home = "Home"
+routes = "Routes"
+results = "Results"
+community = "Community"
+discounts = "Discounts"
+coordinator = "Coordinator"
+profile = "Profile"
+inviteFriends = "Invite friends"
+donate = "Donate"
+
+[index]
+title = "Home"
+
+[index.help]
+title = "Help"
+titleParticipants = "Participants"
+titleGuide = "Application guide"
+buttonGuide = "Watch again"
+titleContact = "Didn't find the answer? Contact us!"
+buttonContact = "Contact automat"
+titleLinks = "Useful links"
+titleSocials = "Follow us on social media"
+
+[index.countdown]
+title = "October challenge starts {date}, that is in"
+days = "days"
+hours = "hours"
+minutes = "minutes"
+seconds = "seconds"
+
+[index.cardList]
+title = "Future challenges"
+
+[index.cardChallenge]
+company = "Company challenge"
+dates = "Challenge period:"
+
+[index.bannerImage]
+title = "Fill in our questionnaire and win one of our great prizes!"
+perex = "You can help us decide what to spend more time on next time and what should stay the same."
+
+[index.event]
+addToCalendar = "Add to calendar"
