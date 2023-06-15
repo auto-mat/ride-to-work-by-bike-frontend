@@ -1,6 +1,3 @@
-totalQuestions = "Počet otázek"
-lang = "Jazyk"
-
 [drawerMenu]
 home = "Domov"
 routes = "Cesty"
@@ -16,33 +13,14 @@ donate = "Darujte"
 title = "Domov"
 
 [index.help]
-titleStateDefault = "Nápověda"
-titleStateContact = "Kontaktujte nás"
+title = "Nápověda"
 titleParticipants = "Účastníci"
-titleCoordinators = "Firemní koordinátoři"
 titleGuide = "Průvodce aplikací"
 buttonGuide = "Shlédnout znovu"
 titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
 buttonContact = "Kontaktovat automat"
 titleLinks = "Užitečné odkazy"
 titleSocials = "Sledujte nás na sociálních sítích"
-
-# REMEMBER when testing these string: They are the same in all languages
-[index.menuLinks]
-instagram = "Instagram"
-facebook = "Facebook"
-twitter = "Twitter"
-youtube = "Youtube"
-
-[index.contact]
-subject = "Nadpis"
-subjectRequired = "Prosím, vyplňte nadpis zprávy"
-message = "Zpráva"
-messageRequired = "Prosím vyplňte obsah zprávy"
-file = "Přiložit soubor"
-email = "Vaše e-mailová adresa"
-emailRequired = "Prosím, zadejte e-mailovou adresu"
-submit = "Odeslat"
 
 [index.countdown]
 title = "Říjnová výzva začíná {date}, to je za"
@@ -62,5 +40,5 @@ dates = "Období výzvy:"
 title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
 perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
 
-[index.cardEvent]
+[index.event]
 addToCalendar = "Přidat do kalendáře"
