@@ -18,6 +18,7 @@ title = "Home"
 [index.help]
 title = "Help"
 titleParticipants = "Participants"
+titleCoordinators = "Company coordinators"
 titleGuide = "Application guide"
 buttonGuide = "Watch again"
 titleContact = "Didn't find the answer? Contact us!"
