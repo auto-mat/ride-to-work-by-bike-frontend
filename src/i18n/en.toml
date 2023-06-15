@@ -45,6 +45,16 @@ email = "Your email"
 emailRequired = "Please, fill in your email"
 submit = "Submit"
 
+[index.help]
+title = "Help"
+titleParticipants = "Participants"
+titleGuide = "Application guide"
+buttonGuide = "Watch again"
+titleContact = "Didn't find the answer? Contact us!"
+buttonContact = "Contact automat"
+titleLinks = "Useful links"
+titleSocials = "Follow us on social media"
+
 [index.countdown]
 title = "October challenge starts {date}, that is in"
 days = "days"

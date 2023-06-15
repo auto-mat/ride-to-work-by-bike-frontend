@@ -1,10 +1,102 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'VueDrawerHeader',
   setup() {
-    return {};
+    const modalOpened = ref(false);
+
+    const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    const itemsFAQ = [
+      {
+        title: 'Chci z toho vycouvat. Vrátite mi startovné?',
+        text: dummyText
+      },
+      {
+        title: 'Nechcete přijmout moji platbu startovného.',
+        text: dummyText
+      },
+      {
+        title: 'Do práce mi to na kole deska nějak nevyšlo. Můžu si místo toho zapsat víkendový vylet?',
+        text: dummyText
+      },
+      {
+        title: 'Jak se propojím se svojí mobilní aplikací?',
+        text: dummyText
+      },
+      {
+        title: 'Jak si zapíšu cestu na noční směnu?',
+        text: dummyText
+      },
+      {
+        title: 'Můžu na cestě do práce kombinovat dopravní prostředky?',
+        text: dummyText
+      },
+      {
+        title: 'Chci změnit adresu, na kterou mi pošlete startovní balíček.',
+        text: dummyText
+      },
+      {
+        title: 'Ještě nemám startovní balíček, safra.',
+        text: dummyText
+      },
+      {
+        title: 'Nechci to moc rozebírat, ale velikost trička mi nesedí.',
+        text: dummyText
+      },
+    ]
+    const itemsUsefulLinks = [
+      {
+        title: 'Auto-Mat.cz',
+        icon: 'link',
+        url: '#',
+      },
+      {
+        title: 'Podpořte nás',
+        icon: 'volunteer_activism',
+        url: '#',
+      },
+      {
+        title: 'Kód projektu',
+        icon: 'mdi-github',
+        url: '#',
+      },
+      {
+        title: 'Mobilní aplikace',
+        icon: 'smartphone',
+        url: '#',
+      },
+    ]
+
+    const itemsSocialLinks = [
+      {
+        title: 'Instagram',
+        icon: 'mdi-instagram',
+        url: '#',
+      },
+      {
+        title: 'Facebook',
+        icon: 'mdi-facebook',
+        url: '#',
+      },
+      {
+        title: 'Twitter',
+        icon: 'mdi-twitter',
+        url: '#',
+      },
+      {
+        title: 'Youtube',
+        icon: 'mdi-youtube',
+        url: '#',
+      }
+    ]
+
+    return {
+      modalOpened,
+      itemsFAQ,
+      itemsUsefulLinks,
+      itemsSocialLinks,
+    };
   },
 });
 </script>
@@ -26,10 +118,11 @@ export default defineComponent({
       />
     </svg>
     <div class="flex gap-32">
-      <a href="/">
+      <a href="#"
+        @click.prevent="modalOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
-      <a href="/">
+      <a href="#">
         <q-icon
           name="notifications"
           size="sm"
@@ -38,12 +131,125 @@ export default defineComponent({
         />
       </a>
     </div>
+
+
+    <q-dialog v-model="modalOpened" square data-cy="card-dialog" class="dialog-help">
+      <q-card class="relative-position overflow-visible bg-white">
+        <q-card-section data-cy="dialog-header">
+          <h3 class="text-h6 q-my-none">
+            {{ $t('index.help.title') }}
+          </h3>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section
+          class="scroll q-px-none"
+          data-cy="dialog-content"
+          style="max-height: 50vh"
+        >
+          <h4 class="text-h5 text-weight-bold q-my-none q-px-md">{{ $t('index.help.titleParticipants') }}</h4>
+          <q-list separator class="faq-list q-mt-md">
+            <q-expansion-item
+              v-for="item in itemsFAQ"
+              :key="item.title"
+              :label="item.title"
+            >
+              <q-card>
+                <q-card-section>
+                  {{ item.text }}
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+
+          <div class="q-px-md">
+            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleGuide') }}</h4>
+            <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md" />
+          </div>
+
+          <div class="q-px-md">
+            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleContact') }}</h4>
+            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" />
+          </div>
+
+          <div class="q-px-md">
+            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleLinks') }}</h4>
+            <div class="flex flex-wrap gap-x-24">
+              <q-btn v-for="item in itemsUsefulLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md">
+                <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
+                <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+              </q-btn>
+            </div>
+          </div>
+
+          <div class="q-px-md">
+            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleSocials') }}</h4>
+            <div class="flex flex-wrap gap-x-24">
+              <q-btn v-for="item in itemsSocialLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md">
+                <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
+                <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+              </q-btn>
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions
+          class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
+          data-cy="dialog-close"
+        >
+          <q-btn
+            v-close-popup
+            round
+            unelevated
+            color="blue-grey-2"
+            icon="close"
+            class="text-blue-grey-9"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.gap-x-24 {
+  column-gap: 24px;
+}
+
 .logo {
   height: 40px;
+}
+
+@media (min-width: $breakpoint-lg-min) {
+  .dialog-help .q-dialog__inner--minimized > div {
+    width: 100%;
+    max-width: 784px;
+  }
+}
+
+.q-btn{
+  &.q-btn-no-uppercase {
+    text-transform: none;
+  }
+  &.q-btn-underline {
+    span {
+      text-decoration: underline;
+    }
+    &:hover {
+      span {
+      text-decoration: none;}
+    }
+  }
+}
+
+.q-dialog__inner > div {
+  overflow: visible !important;
+}
+
+.dialog-close {
+  top: -21px;
+  right: -21px;
 }
 
 .gap-32 {
