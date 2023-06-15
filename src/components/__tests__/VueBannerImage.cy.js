@@ -37,8 +37,8 @@ describe('<VueBannerImage>', () => {
       cy.dataCy('banner-title')
         .should('be.visible')
         .should('contain.text', title)
-        .then((titleNode) => {
-          expect(titleNode.text()).to.equal(title);
+        .then(($title) => {
+          expect($title.text()).to.equal(title);
         });
     });
   });
