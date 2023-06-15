@@ -37,8 +37,8 @@ describe('<VueCardEvent>', () => {
         .should('have.css', 'font-size', '16px')
         .should('have.css', 'font-weight', '700')
         .should('contain', title)
-        .then((titleNode) => {
-          expect(titleNode.text()).to.equal(title);
+        .then(($title) => {
+          expect($title.text()).to.equal(title);
         });
 
       cy.dataCy('card-link')
@@ -191,18 +191,8 @@ describe('<VueCardEvent>', () => {
             .should('have.css', 'font-size', '20px')
             .should('have.css', 'font-weight', '500')
             .should('contain', title)
-            .then((titleNode) => {
-              expect(titleNode.text()).to.equal(title);
-            });
-
-          cy.dataCy('dialog-header')
-            .find('h3')
-            .should('be.visible')
-            .should('have.css', 'font-size', '20px')
-            .should('have.css', 'font-weight', '500')
-            .should('contain', title)
-            .then((titleNode) => {
-              expect(titleNode.text()).to.equal(title);
+            .then(($title) => {
+              expect($title.text()).to.equal(title);
             });
 
           cy.dataCy('dialog-dates')
