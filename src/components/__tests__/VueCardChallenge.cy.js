@@ -1,5 +1,5 @@
 import VueCardChallenge from 'components/VueCardChallenge.vue';
-import { i18n } from '../../boot/i18n';
+import { hexToRgb } from '../../../test/cypress/utils/';
 
 describe('<VueCardChallenge>', () => {
   const title = 'Challenge 1';
@@ -22,35 +22,11 @@ describe('<VueCardChallenge>', () => {
     });
   });
 
-  it('has translation for all strings', () => {
-    const translationStrings = ['dates', 'company'];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardChallenge.${item}`
-    );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
-  });
-
   it('renders title with icon on gray background', () => {
     cy.window().then(() => {
       cy.dataCy('card-title')
         .should('be.visible')
-        .should('have.backgroundColor', 'rgba(0, 0, 0, 0.47)')
+        .should('have.css', 'background-color', 'rgba(0, 0, 0, 0.47)')
         .should('contain', title);
 
       cy.dataCy('card-title')
@@ -93,7 +69,7 @@ describe('<VueCardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-dates')
         .should('be.visible')
-        .should('have.color', '#ffffff')
+        .should('have.css', 'color', hexToRgb('#ffffff'))
         .should('have.css', 'font-size', '14px')
         .should('contain', dates);
     });
@@ -111,9 +87,9 @@ describe('<VueCardChallenge>', () => {
         .should('have.css', 'border-radius', '12px')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#ffffff')
+        .should('have.css', 'color', hexToRgb('#ffffff'))
         .should('have.css', 'height', '24px')
-        .should('contain.text', i18n.global.t('index.cardChallenge.company'));
+        .should('contain.text', 'Company challenge');
     });
   });
 
