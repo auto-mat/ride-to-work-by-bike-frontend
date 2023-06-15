@@ -38,8 +38,8 @@ describe('<VueCardChallenge>', () => {
         .find('a')
         .should('have.css', 'font-size', '16px')
         .should('have.css', 'font-weight', '700')
-        .then((titleNode) => {
-          expect(titleNode.text()).to.equal(title);
+        .then(($title) => {
+          expect($title.text()).to.equal(title);
         });
     });
   });
