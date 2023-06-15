@@ -18,8 +18,8 @@ describe('<VueHeadingBackground>', () => {
       cy.dataCy('heading')
         .should('be.visible')
         .should('contain', title)
-        .then((titleNode) => {
-          expect(titleNode.text()).to.equal(title);
+        .then(($title) => {
+          expect($title.text()).to.equal(title);
         });
 
       cy.dataCy('heading')
