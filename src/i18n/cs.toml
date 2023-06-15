@@ -75,6 +75,16 @@ email = "Vaše e-mailová adresa"
 emailRequired = "Prosím, zadejte e-mailovou adresu"
 submit = "Odeslat"
 
+[index.help]
+title = "Nápověda"
+titleParticipants = "Účastníci"
+titleGuide = "Průvodce aplikací"
+buttonGuide = "Shlédnout znovu"
+titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
+buttonContact = "Kontaktovat automat"
+titleLinks = "Užitečné odkazy"
+titleSocials = "Sledujte nás na sociálních sítích"
+
 [index.countdown]
 title = "Říjnová výzva začíná {date}, to je za"
 days = "dní"
