@@ -15,6 +15,7 @@ title = "Domov"
 [index.help]
 title = "Nápověda"
 titleParticipants = "Účastníci"
+titleCoordinators = "Firemní koordinátoři"
 titleGuide = "Průvodce aplikací"
 buttonGuide = "Shlédnout znovu"
 titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
