@@ -7,7 +7,7 @@ export default defineComponent({
     const modalOpened = ref(false);
 
     const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-    const itemsFAQ = [
+    const itemsFAQParticipant = [
       {
         title: 'Chci z toho vycouvat. Vrátite mi startovné?',
         text: dummyText
@@ -45,6 +45,44 @@ export default defineComponent({
         text: dummyText
       },
     ]
+    const itemsFAQCoordinator = [
+      {
+        title: 'Jsem hodný šéf a chci zaplatit za své zaměstnance.',
+        text: dummyText
+      },
+      {
+        title: 'Chci predat břímě firemniho koordinátora někomu jinému.',
+        text: dummyText
+      },
+      {
+        title: 'Chci vidět výsledky výzev.',
+        text: dummyText
+      },
+      {
+        title: 'Jak se stanu hrdým firemním koordinátorem?',
+        text: dummyText
+      },
+      {
+        title: 'Jak se stát firemním koordinátorem a zároveň se účastnit výzvy Do práce na kole?',
+        text: dummyText
+      },
+      {
+        title: 'Nechcete se účastnit výzvy, ale chcete se stát firemním koordinátorem?',
+        text: dummyText
+      },
+      {
+        title: 'Jak uhradit startovné za kolegy?',
+        text: dummyText
+      },
+      {
+        title: 'Jak se hlásí kolegové?',
+        text: dummyText
+      },
+      {
+        title: 'Kde najdu fakturu?.',
+        text: dummyText
+      },
+    ]
     const itemsUsefulLinks = [
       {
         title: 'Auto-Mat.cz',
@@ -67,7 +105,6 @@ export default defineComponent({
         url: '#',
       },
     ]
-
     const itemsSocialLinks = [
       {
         title: 'Instagram',
@@ -93,7 +130,8 @@ export default defineComponent({
 
     return {
       modalOpened,
-      itemsFAQ,
+      itemsFAQParticipant,
+      itemsFAQCoordinator,
       itemsUsefulLinks,
       itemsSocialLinks,
     };
@@ -119,6 +157,7 @@ export default defineComponent({
     </svg>
     <div class="flex gap-32">
       <a href="#"
+        data-cy="link-help"
         @click.prevent="modalOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
@@ -132,8 +171,7 @@ export default defineComponent({
       </a>
     </div>
 
-
-    <q-dialog v-model="modalOpened" square data-cy="card-dialog" class="dialog-help">
+    <q-dialog v-model="modalOpened" square data-cy="dialog-help" class="dialog-help">
       <q-card class="relative-position overflow-visible bg-white">
         <q-card-section data-cy="dialog-header">
           <h3 class="text-h6 q-my-none">
@@ -148,10 +186,10 @@ export default defineComponent({
           data-cy="dialog-content"
           style="max-height: 50vh"
         >
-          <h4 class="text-h5 text-weight-bold q-my-none q-px-md">{{ $t('index.help.titleParticipants') }}</h4>
-          <q-list separator class="faq-list q-mt-md">
+          <h4 class="text-h5 text-weight-bold q-my-none q-px-md" data-cy="title-participants">{{ $t('index.help.titleParticipants') }}</h4>
+          <q-list separator class="faq-list q-mt-md" data-cy="faq-participants">
             <q-expansion-item
-              v-for="item in itemsFAQ"
+              v-for="item in itemsFAQParticipant"
               :key="item.title"
               :label="item.title"
             >
@@ -163,30 +201,45 @@ export default defineComponent({
             </q-expansion-item>
           </q-list>
 
-          <div class="q-px-md">
-            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleGuide') }}</h4>
-            <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md" />
+          <h4 class="text-h5 text-weight-bold q-my-none q-px-md q-mt-xl" data-cy="title-coordinators">{{ $t('index.help.titleCoordinators') }}</h4>
+          <q-list separator class="faq-list q-mt-md" data-cy="faq-coordinators">
+            <q-expansion-item
+              v-for="item in itemsFAQCoordinator"
+              :key="item.title"
+              :label="item.title"
+            >
+              <q-card>
+                <q-card-section>
+                  {{ item.text }}
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+
+          <div class="q-px-md q-mt-xl">
+            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-guide">{{ $t('index.help.titleGuide') }}</h4>
+            <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md" data-cy="button-guide" />
           </div>
 
-          <div class="q-px-md">
-            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleContact') }}</h4>
-            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" />
+          <div class="q-px-md q-mt-xl">
+            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-contact">{{ $t('index.help.titleContact') }}</h4>
+            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" data-cy="button-contact" />
           </div>
 
-          <div class="q-px-md">
-            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleLinks') }}</h4>
+          <div class="q-px-md q-mt-xl">
+            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-links">{{ $t('index.help.titleLinks') }}</h4>
             <div class="flex flex-wrap gap-x-24">
-              <q-btn v-for="item in itemsUsefulLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md">
+              <q-btn v-for="item in itemsUsefulLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md" data-cy="button-links">
                 <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
                 <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
               </q-btn>
             </div>
           </div>
 
-          <div class="q-px-md">
-            <h4 class="text-h5 text-weight-bold q-my-none q-mt-xl">{{ $t('index.help.titleSocials') }}</h4>
+          <div class="q-px-md q-mt-xl">
+            <h4 class="text-h5 text-weight-bold q-my-none">{{ $t('index.help.titleSocials') }}</h4>
             <div class="flex flex-wrap gap-x-24">
-              <q-btn v-for="item in itemsSocialLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md">
+              <q-btn v-for="item in itemsSocialLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md" data-cy="button-socials">
                 <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
                 <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
               </q-btn>

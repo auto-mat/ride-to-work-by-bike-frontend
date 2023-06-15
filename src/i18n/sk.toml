@@ -18,6 +18,7 @@ title = "Domovská stránka"
 [index.help]
 title = "Pomoc"
 titleParticipants = "Účastníci"
+titleCoordinators = "Firemní koordinátori"
 titleGuide = "Príručka k aplikácii"
 buttonGuide = "Pozrite si ju znova"
 titleContact = "Nenašli ste svoju požiadavku? Kontaktujte nás!"
