@@ -6,7 +6,6 @@ describe('Event Countdown', () => {
   const currentTime = new Date('2023-09-30T12:00:00');
 
   beforeEach(() => {
-
     cy.mount(VueEventCountdown, {
       props: {
         releaseDate,
