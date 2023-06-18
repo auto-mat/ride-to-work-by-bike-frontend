@@ -16,7 +16,7 @@ describe('<VueUserSelect>', () => {
   });
 
   it('renders select with default value', () => {
-    cy.dataCy('select')
+    cy.dataCy('user-select-input')
       .should('be.visible')
       .should('have.css', 'height', '56px')
       .should('contain', options[0].label);
@@ -34,7 +34,7 @@ describe('<VueUserSelect>', () => {
   })
 
   it ('shows dropdown on click', () => {
-    cy.dataCy('select').click().then(() => {
+    cy.dataCy('user-select-input').click().then(() => {
         cy.get(".q-item__label")
           .should('be.visible')
           .should('have.length', 3)
@@ -43,7 +43,7 @@ describe('<VueUserSelect>', () => {
   })
 
   it ('allows to change user', () => {
-    cy.dataCy('select').click().then(() => {
+    cy.dataCy('user-select-input').click().then(() => {
       cy.get(".q-item__label")
         .should('be.visible')
         .should('have.length', 3)
@@ -58,7 +58,7 @@ describe('<VueUserSelect>', () => {
               expect($img.attr('src')).to.equal(options[2].image);
             });
 
-          cy.dataCy('select')
+          cy.dataCy('user-select-input')
             .should('contain', options[2].label);
         })
     })
