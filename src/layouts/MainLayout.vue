@@ -2,6 +2,7 @@
 // import libraries
 import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
+import { i18n } from 'src/boot/i18n';
 
 // import components
 import VueDrawerHeader from 'components/VueDrawerHeader.vue';
@@ -10,6 +11,8 @@ import VueDrawerMenu from 'components/VueDrawerMenu.vue';
 
 // import types
 import { User } from 'components/types';
+
+if (window.Cypress) { window.i18n = i18n; }
 
 const rideToWorkByBikeConfig: object = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
@@ -23,13 +26,14 @@ export default defineComponent({
 
   setup() {
 
+    const leftDrawerOpen = ref(false);
+
     const users: User[] = [
       { label: 'User 1', value: '1', image: 'https://picsum.photos/id/40/300/300' },
       { label: 'User 2', value: '2', image: 'https://picsum.photos/id/64/300/300' },
       { label: 'User 3', value: '3', image: 'https://picsum.photos/id/91/300/300' },
     ];
 
-    const leftDrawerOpen = ref(true);
     return {
       leftDrawerOpen,
       users
@@ -46,10 +50,11 @@ export default defineComponent({
       side="left"
       :width="320"
       class="bg-gray-light q-py-lg q-px-lg"
+      data-cy="q-drawer"
     >
-      <vue-drawer-header></vue-drawer-header>
-      <vue-user-select :options="users" class="q-pt-lg"></vue-user-select>
-      <vue-drawer-menu class="q-pt-lg"></vue-drawer-menu>
+      <vue-drawer-header data-cy="drawer-header"></vue-drawer-header>
+      <vue-user-select :options="users" class="q-pt-lg" data-cy="user-select"></vue-user-select>
+      <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 
     <q-page-container>
