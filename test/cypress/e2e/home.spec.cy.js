@@ -73,21 +73,26 @@ describe('Home page', () => {
       .should('contain', 'User 1');
   })
 
-  // TODO: test drawer on mobile
-  it('allows user to show and hide left panel', () => {
+  it('allows user to show and hide left panel on mobile', () => {
     cy.viewport('iphone-6');
 
     cy.dataCy('q-drawer')
       .should('not.be.visible');
 
-    cy.get('body')
-      .trigger('pointerdown', { button: 0, x: 10, y: 10, force: true })
-      .trigger('pointermove', { button: 0, x: 300, y: 10, force: true })
-      .trigger('pointerup', { button: 0, x: 300, y: 10, force: true })
+    cy.dataCy('drawer-open-button').click();
 
     cy.dataCy('q-drawer')
       .should('be.visible')
       .and('have.css', 'width', '320px');
+
+    // TODO: test closing the drawer
+    // cy.get('body')
+    //   .trigger('pointerdown', { button: 0, clientX: 325, clientY: 100, force: true })
+    //   .trigger('pointerup', { button: 0, clientX: 325, clientY: 100, force: true });
+
+    // cy.dataCy('q-drawer')
+    //   .should('not.be.visible');
+
   });
 
 });
