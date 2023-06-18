@@ -23,7 +23,7 @@ export default defineComponent({
 
 <template>
   <div class="user-select">
-    <q-select rounded standout v-model="user" :options="options" class="pt-0" data-cy="select">
+    <q-select rounded standout v-model="user" :options="options" class="pt-0" data-cy="user-select-input">
       <template v-slot:prepend>
         <q-avatar size="56px" data-cy="avatar">
           <img class="rounded" :src="user.image" />
