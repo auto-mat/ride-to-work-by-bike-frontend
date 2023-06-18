@@ -1,9 +1,24 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
   name: 'VueDrawerHeader',
-  setup() {
+  props: {
+    showLogo: {
+      type: Boolean,
+      default: true,
+    },
+    showDrawerOpenButton: {
+      type: Boolean,
+      default: false,
+    },
+    modelValue: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
     const modalOpened = ref(false);
 
     const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
@@ -128,8 +143,21 @@ export default defineComponent({
       }
     ]
 
+    const classes = computed(() => {
+      return props.showLogo ? 'justify-between' : 'justify-end';
+    });
+
+    const drawerOpened = computed({
+      get: () => props.modelValue,
+      set: (value) => {
+        emit('update:modelValue', value);
+      }
+    })
+
     return {
+      classes,
       modalOpened,
+      drawerOpened,
       itemsFAQParticipant,
       itemsFAQCoordinator,
       itemsUsefulLinks,
@@ -140,8 +168,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex items-center justify-between">
+  <div class="full-width flex items-center" :class="classes">
     <svg
+      v-if="showLogo"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 142 40"
@@ -155,7 +184,7 @@ export default defineComponent({
         clip-rule="evenodd"
       />
     </svg>
-    <div class="flex gap-32">
+    <div class="flex items-center gap-32">
       <a href="#"
         data-cy="link-help"
         @click.prevent="modalOpened = true">
@@ -169,6 +198,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
+      <q-btn v-if="showDrawerOpenButton" dense flat round icon="menu" color="black" @click="drawerOpened = true" />
     </div>
 
     <q-dialog v-model="modalOpened" square data-cy="dialog-help" class="dialog-help">
@@ -274,13 +304,6 @@ export default defineComponent({
   height: 40px;
 }
 
-@media (min-width: $breakpoint-lg-min) {
-  .dialog-help .q-dialog__inner--minimized > div {
-    width: 100%;
-    max-width: 784px;
-  }
-}
-
 .q-btn{
   &.q-btn-no-uppercase {
     text-transform: none;
@@ -307,5 +330,12 @@ export default defineComponent({
 
 .gap-32 {
   gap: 32px;
+}
+
+@media (min-width: $breakpoint-lg-min) {
+  .dialog-help .q-dialog__inner--minimized > div {
+    width: 100%;
+    max-width: 784px;
+  }
 }
 </style>
