@@ -34,9 +34,14 @@ export default defineComponent({
       { label: 'User 3', value: '3', image: 'https://picsum.photos/id/91/300/300' },
     ];
 
+    const toggleLeftDrawer = () => {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+    }
+
     return {
       leftDrawerOpen,
-      users
+      users,
+      toggleLeftDrawer,
     };
   },
 });
@@ -44,6 +49,13 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
+    <q-header reveal class="lg-hidden bg-white">
+      <q-toolbar>
+        <vue-drawer-header v-model="leftDrawerOpen" data-cy="drawer-header-mobile" :show-logo="false" :show-drawer-open-button="true">
+        </vue-drawer-header>
+      </q-toolbar>
+    </q-header>
+
     <q-drawer
       show-if-above
       v-model="leftDrawerOpen"
@@ -52,7 +64,7 @@ export default defineComponent({
       class="bg-gray-light q-py-lg q-px-lg"
       data-cy="q-drawer"
     >
-      <vue-drawer-header data-cy="drawer-header"></vue-drawer-header>
+      <vue-drawer-header data-cy="drawer-header" :mobile="false"></vue-drawer-header>
       <vue-user-select :options="users" class="q-pt-lg" data-cy="user-select"></vue-user-select>
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
@@ -67,7 +79,12 @@ export default defineComponent({
   </q-layout>
 </template>
 
-<style>
+<style scoped lang="scss">
+@media (min-width: $breakpoint-md-min) {
+  .lg-hidden {
+    display: none;
+  }
+}
 .bg-gray-light {
   background-color: var(--q-gray-light);
 }
