@@ -1,7 +1,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// import components
 import VueCardChallenge from 'components/VueCardChallenge.vue';
 
+// import types
 import { CardChallenge } from 'components/types';
 
 export default defineComponent({
