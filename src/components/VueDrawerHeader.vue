@@ -53,6 +53,17 @@ export default defineComponent({
       dialogState.value = 'default';
     };
 
+    const classes = computed(() => {
+      return props.showLogo ? 'justify-between' : 'justify-end';
+    });
+
+    const drawerOpened = computed({
+      get: () => props.modelValue,
+      set: (value) => {
+        emit('update:modelValue', value);
+      }
+    })
+
     return {
       user,
       classes,
