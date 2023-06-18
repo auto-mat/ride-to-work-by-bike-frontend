@@ -1,21 +1,39 @@
-<template>
-  <q-layout view="hHh lpR fFf">
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
-</template>
-
 <script lang="ts">
-import { defineComponent } from 'vue';
+// import libraries
+import { setCssVar } from 'quasar';
+import { defineComponent, ref } from 'vue';
+
+// import components
+import VueDrawerHeader from 'components/VueDrawerHeader.vue';
+import VueUserSelect from 'components/VueUserSelect.vue';
+import VueDrawerMenu from 'components/VueDrawerMenu.vue';
+
+// import types
+import { User } from 'components/types';
+
+const rideToWorkByBikeConfig: object = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'MainLayout',
 
-  components: {},
+  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu },
 
   setup() {
-    return {};
+
+    const users: User[] = [
+      { label: 'User 1', value: '1', image: 'https://picsum.photos/id/40/300/300' },
+      { label: 'User 2', value: '2', image: 'https://picsum.photos/id/64/300/300' },
+      { label: 'User 3', value: '3', image: 'https://picsum.photos/id/91/300/300' },
+    ];
+
+    const leftDrawerOpen = ref(true);
+    return {
+      leftDrawerOpen,
+      users
+    };
   },
 });
 </script>
@@ -30,7 +48,7 @@ export default defineComponent({
       class="bg-gray-light q-py-lg q-px-lg"
     >
       <vue-drawer-header></vue-drawer-header>
-      <vue-user-select class="q-pt-lg"></vue-user-select>
+      <vue-user-select :options="users" class="q-pt-lg"></vue-user-select>
       <vue-drawer-menu class="q-pt-lg"></vue-drawer-menu>
     </q-drawer>
 
