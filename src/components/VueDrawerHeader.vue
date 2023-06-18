@@ -198,7 +198,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <q-btn v-if="showDrawerOpenButton" dense flat round icon="menu" color="black" @click="drawerOpened = true" />
+      <q-btn v-if="showDrawerOpenButton" flat round icon="menu" color="black" @click="drawerOpened = true" data-cy="drawer-open-button" />
     </div>
 
     <q-dialog v-model="modalOpened" square data-cy="dialog-help" class="dialog-help">
