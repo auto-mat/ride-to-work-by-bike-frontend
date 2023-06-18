@@ -30,6 +30,8 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
+    const leftDrawerOpen = ref(false);
+
     const users: User[] = [
       {
         label: 'User 1',

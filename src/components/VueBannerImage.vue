@@ -2,6 +2,7 @@
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
+// import types
 import { BannerImage } from 'components/types';
 
 const rideToWorkByBikeConfig: object = JSON.parse(
