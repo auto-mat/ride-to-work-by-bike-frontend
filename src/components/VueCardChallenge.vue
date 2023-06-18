@@ -1,5 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// import types
 import { CardChallenge } from 'components/types';
 
 export default defineComponent({

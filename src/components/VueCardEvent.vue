@@ -2,7 +2,8 @@
 import { defineComponent, ref } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
-import { CardEvent } from './types';
+// import types
+import { CardEvent } from 'components/types';
 
 export default defineComponent({
   name: 'VueCardEvent',
