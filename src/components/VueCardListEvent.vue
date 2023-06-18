@@ -1,7 +1,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// import components
 import VueCardEvent from 'components/VueCardEvent.vue';
 
+// import types
 import { CardEvent } from 'components/types';
 
 export default defineComponent({
