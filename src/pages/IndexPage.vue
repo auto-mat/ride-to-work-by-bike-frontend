@@ -28,14 +28,17 @@
 </template>
 
 <script lang="ts">
-import RideToWorkByBike from 'components/RideToWorkByBike.vue';
+// import libraries
 import { defineComponent } from 'vue';
+
+// import components
 import VueEventCountdown from 'components/VueEventCountdown.vue';
 import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
 import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
 
+// import types
 import { CardChallenge, CardEvent } from 'components/types';
 import { BannerImage } from 'components/types';
 
