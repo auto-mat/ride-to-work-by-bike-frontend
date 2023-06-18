@@ -4,6 +4,9 @@ import { defineComponent } from 'vue';
 // mocks
 import { user, userMenuTop, userMenuBottom } from 'src/mocks/layout';
 
+// import types
+import { User } from 'components/types';
+
 export default defineComponent({
   name: 'VueUserSelect',
   props: {
