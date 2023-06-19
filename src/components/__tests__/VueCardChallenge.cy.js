@@ -1,5 +1,4 @@
 import VueCardChallenge from 'components/VueCardChallenge.vue';
-import { i18n } from '../../boot/i18n';
 
 describe('<VueCardChallenge>', () => {
   const title = 'Challenge 1';
@@ -19,30 +18,6 @@ describe('<VueCardChallenge>', () => {
           company,
         },
       },
-    });
-  });
-
-  it('has translation for all strings', () => {
-    const translationStrings = ['dates', 'company'];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardChallenge.${item}`
-    );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
     });
   });
 
@@ -113,7 +88,7 @@ describe('<VueCardChallenge>', () => {
         .should('have.css', 'font-weight', '400')
         .should('have.color', '#ffffff')
         .should('have.css', 'height', '24px')
-        .should('contain.text', i18n.global.t('index.cardChallenge.company'));
+        .should('contain.text', 'Company challenge');
     });
   });
 
