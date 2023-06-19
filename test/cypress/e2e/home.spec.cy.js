@@ -1,5 +1,3 @@
-import { whiteColor, hexToRgb } from '../../../test/cypress/utils/';
-
 describe('Home page', () => {
 
   beforeEach(() => {
@@ -85,7 +83,7 @@ describe('Home page', () => {
       .should('be.visible')
       .and('have.css', 'width', '320px');
 
-    // TODO: test closing the drawer
+    // TODO: test closing the drawer; test opening the drawer with a swipe
     // cy.get('body')
     //   .trigger('pointerdown', { button: 0, clientX: 325, clientY: 100, force: true })
     //   .trigger('pointerup', { button: 0, clientX: 325, clientY: 100, force: true });
@@ -94,5 +92,68 @@ describe('Home page', () => {
     //   .should('not.be.visible');
 
   });
+
+  it('allows user to display help dialog and read all FAQ items', () => {
+    cy.viewport('macbook-13');
+
+    cy.dataCy('link-help')
+      .last()
+      .should('be.visible')
+      .click()
+
+    cy.dataCy('dialog-header')
+      .should('be.visible')
+
+    cy.dataCy('faq-participants')
+      .find('.q-card')
+      .each(($element) => {
+        cy.wrap($element).should('not.be.visible');
+      })
+
+    cy.dataCy('faq-participants')
+      .find('.q-expansion-item')
+      .each(($element) => {
+        cy.wrap($element).should('be.visible');
+
+        cy.wrap($element).click();
+
+        cy.wrap($element)
+          .find('.q-card__section')
+          .should('be.visible')
+          .should('not.be.empty');
+      })
+
+    cy.dataCy('faq-coordinators')
+      .find('.q-card')
+      .each(($element) => {
+        cy.wrap($element).should('not.be.visible');
+      })
+
+    cy.dataCy('faq-coordinators')
+      .find('.q-expansion-item')
+      .each(($element) => {
+        cy.wrap($element).should('be.visible');
+
+        cy.wrap($element).click();
+
+        cy.wrap($element)
+          .find('.q-card__section')
+          .should('be.visible')
+          .should('not.be.empty');
+      })
+
+      // TODO: test contacting through help
+
+      // TODO: test rewatching application guide
+
+      // TODO: test adding event to calendar
+
+      // TODO: test displaying notifications
+
+      // TODO: test redirecting to other pages through menu
+
+      // TODO: test outbound links to social media
+
+  })
 
 });
