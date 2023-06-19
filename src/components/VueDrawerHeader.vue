@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, reactive, computed } from 'vue';
 
 // components
 import VueMenuLinks from './VueMenuLinks.vue';
@@ -62,6 +62,13 @@ export default defineComponent({
       set: (value) => {
         emit('update:modelValue', value);
       }
+    })
+
+    const contactForm = reactive({
+      subject: '',
+      message: '',
+      file: null,
+      email: '',
     })
 
     return {
@@ -210,6 +217,75 @@ export default defineComponent({
           data-cy="dialog-body"
         >
           <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
+        </q-card-section>
+
+        <q-card-section
+          v-if="dialogState === 'contact'"
+          class="scroll"
+          style="max-height: 50vh"
+        >
+          <q-form class="q-gutter-md">
+            <div class="q-mt-lg">
+              <label for="contact-form-subject" class="text-caption text-bold">
+                {{ $t('index.contact.subject') }}
+              </label>
+              <q-input
+                v-model="contactForm.subject"
+                id="contact-form-subject"
+                name="subject"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || $t('index.contact.subjectRequired')]"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div class="q-mt-none">
+              <label for="contact-form-message" class="text-caption text-bold">
+                {{ $t('index.contact.message') }}
+              </label>
+              <q-input
+                v-model="contactForm.message"
+                id="contact-form-message"
+                name="message"
+                type="textarea"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div>
+              <q-file
+                v-model="contactForm.file"
+                :label="$t('index.contact.file')"
+                borderless
+                dense
+              >
+                <template v-slot:prepend>
+                  <q-icon name="attachment" size="xs" />
+                </template>
+              </q-file>
+            </div>
+            <div class="q-mt-none">
+              <label for="contact-form-email" class="text-caption text-bold">
+                {{ $t('index.contact.email') }}
+              </label>
+              <q-input
+                v-model="contactForm.email"
+                id="contact-form-email"
+                name="email"
+                type="email"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || $t('index.contact.emailRequired')]"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div class="flex justify-end">
+              <q-btn :label="$t('index.contact.submit')" type="submit" color="black" rounded unelevated />
+            </div>
+          </q-form>
         </q-card-section>
 
         <q-card-actions
