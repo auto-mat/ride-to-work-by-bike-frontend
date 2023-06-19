@@ -1,4 +1,3 @@
-import { hexToRgb } from 'app/test/cypress/utils';
 import VueDrawerHeader from '../VueDrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
 
@@ -53,7 +52,7 @@ describe('<VueDrawerHeader>', () => {
     cy.window().then(() => {
       cy.dataCy('icon-help')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#000000'))
+        .should('have.color', '#000000')
         .should('have.css', 'width', '24px')
         .should('contain.text', 'help');
     });
@@ -63,7 +62,7 @@ describe('<VueDrawerHeader>', () => {
     cy.window().then(() => {
       cy.dataCy('icon-notification')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#000000'))
+        .should('have.color', '#000000')
         .should('have.css', 'width', '24px')
         .should('contain.text', 'notifications');
     });
@@ -99,38 +98,36 @@ describe('<VueDrawerHeader>', () => {
 
   it('renders participant FAQ section with title and working accordion', () => {
     cy.window().then(() => {
-      cy.dataCy('link-help')
-        .click()
-        .then(() => {
-          cy.dataCy('title-participants')
-            .should('be.visible')
-            .should('have.css', 'font-size', '24px')
-            .should('have.css', 'font-weight', '700')
-            .should('contain', i18n.global.t('index.help.titleParticipants'))
-            .then(($title) => {
-              expect($title.text()).to.equal(i18n.global.t('index.help.titleParticipants'));
-            });
+      cy.dataCy('link-help').click()
 
+      cy.dataCy('title-participants')
+        .should('be.visible')
+        .should('have.css', 'font-size', '24px')
+        .should('have.css', 'font-weight', '700')
+        .should('contain', i18n.global.t('index.help.titleParticipants'))
+        .then(($title) => {
+          expect($title.text()).to.equal(i18n.global.t('index.help.titleParticipants'));
+        });
+
+      cy.dataCy('faq-participants')
+        .find('.q-card')
+        .first()
+        .should('not.be.visible');
+
+      cy.dataCy('faq-participants')
+        .find('.q-item')
+        .first()
+        .should('be.visible')
+        .click().then(() => {
           cy.dataCy('faq-participants')
             .find('.q-card')
             .first()
-            .should('not.be.visible');
-
-          cy.dataCy('faq-participants')
-            .find('.q-item')
-            .first()
             .should('be.visible')
-            .click().then(() => {
-              cy.dataCy('faq-participants')
-                .find('.q-card')
-                .first()
-                .should('be.visible')
-                .then($element => {
-                  expect($element.height()).to.be.greaterThan(0)
-                })
-            });
-
+            .then($element => {
+              expect($element.height()).to.be.greaterThan(0)
+            })
         });
+
     });
   });
 
