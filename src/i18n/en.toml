@@ -26,6 +26,15 @@ buttonContact = "Contact automat"
 titleLinks = "Useful links"
 titleSocials = "Follow us on social media"
 
+[index.contact]
+subject = "Subject"
+subjectRequired = "Please, fill in a subject"
+message = "Message"
+file = "Upload attachment"
+email = "Your email"
+emailRequired = "Please, fill in your email"
+submit = "Submit"
+
 [index.countdown]
 title = "October challenge starts {date}, that is in"
 days = "days"
