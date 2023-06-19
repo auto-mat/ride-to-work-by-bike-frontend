@@ -1,5 +1,5 @@
 import RideToWorkByBike from '../RideToWorkByBike.vue';
-import { whiteColor, hexToRgb } from '../../../test/cypress/utils/';
+import { whiteColor } from '../../../test/cypress/utils/';
 
 describe('<RideToWorkByBike>', () => {
   it('render <q-card>', () => {
@@ -27,7 +27,7 @@ describe('<RideToWorkByBike>', () => {
         cy.dataCy('q-card-section')
           .should('be.visible')
           .and('have.class', 'bg-primary', 'text-white')
-          .and('have.css', 'background-color', hexToRgb(config.primaryColor));
+          .and('have.backgroundColor', config.primaryColor);
       });
   });
 
