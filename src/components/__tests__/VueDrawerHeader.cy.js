@@ -1,4 +1,3 @@
-import { hexToRgb } from 'app/test/cypress/utils';
 import VueDrawerHeader from '../VueDrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
 

@@ -1,5 +1,4 @@
 import VueCardChallenge from 'components/VueCardChallenge.vue';
-import { hexToRgb } from '../../../test/cypress/utils/';
 
 describe('<VueCardChallenge>', () => {
   const title = 'Challenge 1';
@@ -26,7 +25,7 @@ describe('<VueCardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-title')
         .should('be.visible')
-        .should('have.css', 'background-color', 'rgba(0, 0, 0, 0.47)')
+        .should('have.backgroundColor', 'rgba(0, 0, 0, 0.47)')
         .should('contain', title);
 
       cy.dataCy('card-title')
@@ -69,7 +68,7 @@ describe('<VueCardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-dates')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#ffffff'))
+        .should('have.color', '#ffffff')
         .should('have.css', 'font-size', '14px')
         .should('contain', dates);
     });
@@ -87,7 +86,7 @@ describe('<VueCardChallenge>', () => {
         .should('have.css', 'border-radius', '12px')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.css', 'color', hexToRgb('#ffffff'))
+        .should('have.color', '#ffffff')
         .should('have.css', 'height', '24px')
         .should('contain.text', 'Company challenge');
     });
