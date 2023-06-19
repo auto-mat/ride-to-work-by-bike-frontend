@@ -56,6 +56,15 @@ buttonContact = "Kontaktovať automat"
 titleLinks = "Užitočné odkazy"
 titleSocials = "Sledujte nás na sociálnych sieťach"
 
+[index.contact]
+subject = "Názov"
+subjectRequired = "Vyplňte názov správy"
+message = "Správa"
+file = "Pripojte súbor"
+email = "Vaša e-mailová adresa"
+emailRequired = "Zadajte svoju e-mailovú adresu"
+submit = "Odoslať"
+
 [index.countdown]
 title = "Októbrová výzva začína {date}, to je pre"
 days = "dní"
