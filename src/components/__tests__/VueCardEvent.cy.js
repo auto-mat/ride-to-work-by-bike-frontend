@@ -1,4 +1,3 @@
-import { hexToRgb } from 'app/test/cypress/utils';
 import VueCardEvent from 'components/VueCardEvent.vue';
 
 describe('<VueCardEvent>', () => {
@@ -64,7 +63,7 @@ describe('<VueCardEvent>', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .should('have.css', 'background-color', hexToRgb('#ffffff'));
+        .should('have.backgroundColor', '#ffffff');
     });
   });
 
@@ -79,7 +78,7 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('card-dates')
         .find('i')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#cfd8dc'))
+        .should('have.color', '#cfd8dc')
         .should('contain', 'event');
     });
   });
@@ -95,7 +94,7 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('card-location')
         .find('i')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#cfd8dc'))
+        .should('have.color', '#cfd8dc')
         .should('contain', 'place');
     });
   });
@@ -110,7 +109,7 @@ describe('<VueCardEvent>', () => {
       cy.dataCy('calendar-button')
         .find('i')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb('#000000'));
+        .should('have.color', '#000000');
     });
   });
 
@@ -204,7 +203,7 @@ describe('<VueCardEvent>', () => {
           cy.dataCy('dialog-dates')
             .find('i')
             .should('be.visible')
-            .should('have.css', 'color', hexToRgb('#cfd8dc'))
+            .should('have.color', '#cfd8dc')
             .should('contain', 'event');
 
           cy.dataCy('dialog-location')
@@ -216,7 +215,7 @@ describe('<VueCardEvent>', () => {
           cy.dataCy('dialog-location')
             .find('i')
             .should('be.visible')
-            .should('have.css', 'color', hexToRgb('#cfd8dc'))
+            .should('have.color', '#cfd8dc')
             .should('contain', 'place');
         });
     });
@@ -248,8 +247,8 @@ describe('<VueCardEvent>', () => {
             .find('.q-btn')
             .should('be.visible')
             .should('have.css', 'border-radius', '28px')
-            .should('have.css', 'background-color', hexToRgb('#000000'))
-            .should('have.css', 'color', hexToRgb('#ffffff'))
+            .should('have.backgroundColor', '#000000')
+            .should('have.color', '#ffffff')
             .should('contain', 'Add to calendar');
 
           cy.viewport('iphone-6');
