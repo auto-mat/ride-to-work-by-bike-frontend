@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, reactive, computed } from 'vue';
 
 export default defineComponent({
   name: 'VueDrawerHeader',
@@ -19,7 +19,8 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const modalOpened = ref(false);
+    const dialogOpened = ref(false);
+    const dialogState = ref('contact');
 
     const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
     const itemsFAQParticipant = [
@@ -154,14 +155,23 @@ export default defineComponent({
       }
     })
 
+    const contactForm = reactive({
+      subject: '',
+      message: '',
+      file: null,
+      email: '',
+    })
+
     return {
       classes,
-      modalOpened,
       drawerOpened,
+      dialogOpened,
+      dialogState,
       itemsFAQParticipant,
       itemsFAQCoordinator,
       itemsUsefulLinks,
       itemsSocialLinks,
+      contactForm,
     };
   },
 });
@@ -187,7 +197,7 @@ export default defineComponent({
     <div class="flex items-center gap-32">
       <a href="#"
         data-cy="link-help"
-        @click.prevent="modalOpened = true">
+        @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
       <a href="#">
@@ -201,7 +211,7 @@ export default defineComponent({
       <q-btn v-if="showDrawerOpenButton" flat round icon="menu" color="black" @click="drawerOpened = true" data-cy="drawer-open-button" />
     </div>
 
-    <q-dialog v-model="modalOpened" square data-cy="dialog-help" class="dialog-help">
+    <q-dialog v-model="dialogOpened" square data-cy="dialog-help" class="dialog-help">
       <q-card class="relative-position overflow-visible bg-white">
         <q-card-section data-cy="dialog-header">
           <h3 class="text-h6 q-my-none">
@@ -212,6 +222,7 @@ export default defineComponent({
         <q-separator />
 
         <q-card-section
+          v-if="dialogState === 'faq'"
           class="scroll q-px-none"
           data-cy="dialog-content"
           style="max-height: 50vh"
@@ -275,6 +286,75 @@ export default defineComponent({
               </q-btn>
             </div>
           </div>
+        </q-card-section>
+
+        <q-card-section
+          v-if="dialogState === 'contact'"
+          class="scroll"
+          style="max-height: 50vh"
+        >
+          <q-form class="q-gutter-md">
+            <div class="q-mt-lg">
+              <label for="contact-form-subject" class="text-caption text-bold">
+                {{ $t('index.contact.subject') }}
+              </label>
+              <q-input
+                v-model="contactForm.subject"
+                id="contact-form-subject"
+                name="subject"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || $t('index.contact.subjectRequired')]"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div class="q-mt-none">
+              <label for="contact-form-message" class="text-caption text-bold">
+                {{ $t('index.contact.message') }}
+              </label>
+              <q-input
+                v-model="contactForm.message"
+                id="contact-form-message"
+                name="message"
+                type="textarea"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div>
+              <q-file
+                v-model="contactForm.file"
+                :label="$t('index.contact.file')"
+                borderless
+                dense
+              >
+                <template v-slot:prepend>
+                  <q-icon name="attachment" size="xs" />
+                </template>
+              </q-file>
+            </div>
+            <div class="q-mt-none">
+              <label for="contact-form-email" class="text-caption text-bold">
+                {{ $t('index.contact.email') }}
+              </label>
+              <q-input
+                v-model="contactForm.email"
+                id="contact-form-email"
+                name="email"
+                type="email"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || $t('index.contact.emailRequired')]"
+                class="q-mt-sm"
+                outlined
+                dense
+              />
+            </div>
+            <div class="flex justify-end">
+              <q-btn :label="$t('index.contact.submit')" type="submit" color="black" rounded unelevated />
+            </div>
+          </q-form>
         </q-card-section>
 
         <q-card-actions
