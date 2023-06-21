@@ -46,7 +46,8 @@ emailRequired = "Zadajte svoju e-mailovú adresu"
 submit = "Odoslať"
 
 [index.help]
-title = "Pomoc"
+titleStateDefault = "Pomoc"
+titleStateContact = "Kontaktujte nás"
 titleParticipants = "Účastníci"
 titleCoordinators = "Firemní koordinátori"
 titleGuide = "Príručka k aplikácii"
