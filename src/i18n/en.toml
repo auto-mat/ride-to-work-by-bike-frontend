@@ -16,7 +16,8 @@ donate = "Donate"
 title = "Home"
 
 [index.help]
-title = "Help"
+titleStateDefault = "Help"
+titleStateContact = "Contact us"
 titleParticipants = "Participants"
 titleCoordinators = "Company coordinators"
 titleGuide = "Application guide"
