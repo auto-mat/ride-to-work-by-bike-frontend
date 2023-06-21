@@ -13,7 +13,8 @@ donate = "Darujte"
 title = "Domov"
 
 [index.help]
-title = "Nápověda"
+titleStateDefault = "Nápověda"
+titleStateContact = "Kontaktujte nás"
 titleParticipants = "Účastníci"
 titleCoordinators = "Firemní koordinátoři"
 titleGuide = "Průvodce aplikací"

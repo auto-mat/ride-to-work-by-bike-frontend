@@ -16,7 +16,8 @@ donate = "Darujte"
 title = "Domovská stránka"
 
 [index.help]
-title = "Pomoc"
+titleStateDefault = "Pomoc"
+titleStateContact = "Kontaktujte nás"
 titleParticipants = "Účastníci"
 titleCoordinators = "Firemní koordinátori"
 titleGuide = "Príručka k aplikácii"
