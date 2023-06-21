@@ -103,7 +103,7 @@ export default defineComponent({
       {
         title: 'Auto-Mat.cz',
         icon: 'link',
-        url: '#',
+        url: 'https://auto-mat.cz/',
       },
       {
         title: 'Podpořte nás',
@@ -113,7 +113,7 @@ export default defineComponent({
       {
         title: 'Kód projektu',
         icon: 'mdi-github',
-        url: '#',
+        url: 'https://github.com/auto-mat/ride-to-work-by-bike-frontend',
       },
       {
         title: 'Mobilní aplikace',
@@ -125,22 +125,22 @@ export default defineComponent({
       {
         title: 'Instagram',
         icon: 'mdi-instagram',
-        url: '#',
+        url: 'https://www.instagram.com/spolekautomat',
       },
       {
         title: 'Facebook',
         icon: 'mdi-facebook',
-        url: '#',
+        url: 'https://www.facebook.com/spolekautomat',
       },
       {
         title: 'Twitter',
         icon: 'mdi-twitter',
-        url: '#',
+        url: 'https://twitter.com/spolekautomat',
       },
       {
         title: 'Youtube',
         icon: 'mdi-youtube',
-        url: '#',
+        url: 'https://www.youtube.com/@spolekautomat',
       }
     ]
 
