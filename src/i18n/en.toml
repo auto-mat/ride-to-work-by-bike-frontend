@@ -76,7 +76,8 @@ emailRequired = "Please, fill in your email"
 submit = "Submit"
 
 [index.help]
-title = "Help"
+titleStateDefault = "Help"
+titleStateContact = "Contact us"
 titleParticipants = "Participants"
 titleCoordinators = "Company coordinators"
 titleGuide = "Application guide"
