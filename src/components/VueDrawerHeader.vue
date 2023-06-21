@@ -327,11 +327,13 @@ export default defineComponent({
               <q-file
                 v-model="contactForm.file"
                 :label="$t('index.contact.file')"
+                label-color="black"
+                class="file-input text-body2 text-uppercase"
                 borderless
                 dense
               >
                 <template v-slot:prepend>
-                  <q-icon name="attachment" size="xs" />
+                  <q-icon name="attachment" color="black" size="xs" />
                 </template>
               </q-file>
             </div>
@@ -382,6 +384,10 @@ export default defineComponent({
 
 .logo {
   height: 40px;
+}
+
+.file-input :deep(.q-field__label) {
+  font-weight: 600;
 }
 
 .q-btn{
