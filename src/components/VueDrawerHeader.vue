@@ -20,7 +20,7 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const dialogOpened = ref(false);
-    const dialogState = ref('contact');
+    const dialogState = ref('default');
 
     const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
     const itemsFAQParticipant = [
@@ -95,7 +95,7 @@ export default defineComponent({
         text: dummyText
       },
       {
-        title: 'Kde najdu fakturu?.',
+        title: 'Kde najdu fakturu?',
         text: dummyText
       },
     ]
@@ -213,16 +213,24 @@ export default defineComponent({
 
     <q-dialog v-model="dialogOpened" square data-cy="dialog-help" class="dialog-help">
       <q-card class="relative-position overflow-visible bg-white">
-        <q-card-section data-cy="dialog-header">
+        <q-card-section data-cy="dialog-header" class="flex items-center gap-12">
+          <q-btn v-if="dialogState !== 'default'" round color="transparent" size="xs" unelevated @click.prevent="dialogState = 'default'">
+            <q-icon name="west" size="xs" color="black" />
+          </q-btn>
           <h3 class="text-h6 q-my-none">
-            {{ $t('index.help.title') }}
+            <template v-if="dialogState === 'default'">
+              {{ $t('index.help.titleStateDefault') }}
+            </template>
+            <template v-if="dialogState === 'contact'">
+              {{ $t('index.help.titleStateContact') }}
+            </template>
           </h3>
         </q-card-section>
 
         <q-separator />
 
         <q-card-section
-          v-if="dialogState === 'faq'"
+          v-if="dialogState === 'default'"
           class="scroll q-px-none"
           data-cy="dialog-content"
           style="max-height: 50vh"
@@ -264,7 +272,7 @@ export default defineComponent({
 
           <div class="q-px-md q-mt-xl">
             <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-contact">{{ $t('index.help.titleContact') }}</h4>
-            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" data-cy="button-contact" />
+            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" data-cy="button-contact" @click.prevent="dialogState = 'contact'" />
           </div>
 
           <div class="q-px-md q-mt-xl">
@@ -378,6 +386,10 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+.gap-12 {
+  gap: 12px;
+}
+
 .gap-x-24 {
   column-gap: 24px;
 }
