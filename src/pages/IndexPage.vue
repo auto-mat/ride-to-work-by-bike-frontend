@@ -1,10 +1,16 @@
 <template>
   <q-page data-cy="q-main">
     <div class="q-px-lg">
-      <h1 class="text-h5 q-mt-none q-pt-lg text-weight-bold" data-cy="index-title">
+      <h1
+        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
+        data-cy="index-title"
+      >
         {{ $t('index.title') }}
       </h1>
-      <vue-event-countdown :release-date="releaseDate" data-cy="event-countdown"></vue-event-countdown>
+      <vue-event-countdown
+        :release-date="releaseDate"
+        data-cy="event-countdown"
+      ></vue-event-countdown>
       <vue-card-list-challenge
         :cards="cards"
         class="q-pt-xl q-pb-xl"
@@ -19,7 +25,7 @@
     <vue-heading-background
       :title="headingBgTitle"
       class="q-pt-xl"
-        data-cy="heading-background"
+      data-cy="heading-background"
     ></vue-heading-background>
     <div class="bg-gray-light q-px-lg">
       <vue-card-list-event

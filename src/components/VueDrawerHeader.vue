@@ -15,90 +15,94 @@ export default defineComponent({
     modelValue: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const dialogOpened = ref(false);
     const dialogState = ref('default');
 
-    const dummyText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+    const dummyText =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
     const itemsFAQParticipant = [
       {
         title: 'Chci z toho vycouvat. Vrátite mi startovné?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Nechcete přijmout moji platbu startovného.',
-        text: dummyText
+        text: dummyText,
       },
       {
-        title: 'Do práce mi to na kole deska nějak nevyšlo. Můžu si místo toho zapsat víkendový vylet?',
-        text: dummyText
+        title:
+          'Do práce mi to na kole deska nějak nevyšlo. Můžu si místo toho zapsat víkendový vylet?',
+        text: dummyText,
       },
       {
         title: 'Jak se propojím se svojí mobilní aplikací?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Jak si zapíšu cestu na noční směnu?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Můžu na cestě do práce kombinovat dopravní prostředky?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Chci změnit adresu, na kterou mi pošlete startovní balíček.',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Ještě nemám startovní balíček, safra.',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Nechci to moc rozebírat, ale velikost trička mi nesedí.',
-        text: dummyText
+        text: dummyText,
       },
-    ]
+    ];
     const itemsFAQCoordinator = [
       {
         title: 'Jsem hodný šéf a chci zaplatit za své zaměstnance.',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Chci predat břímě firemniho koordinátora někomu jinému.',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Chci vidět výsledky výzev.',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Jak se stanu hrdým firemním koordinátorem?',
-        text: dummyText
+        text: dummyText,
       },
       {
-        title: 'Jak se stát firemním koordinátorem a zároveň se účastnit výzvy Do práce na kole?',
-        text: dummyText
+        title:
+          'Jak se stát firemním koordinátorem a zároveň se účastnit výzvy Do práce na kole?',
+        text: dummyText,
       },
       {
-        title: 'Nechcete se účastnit výzvy, ale chcete se stát firemním koordinátorem?',
-        text: dummyText
+        title:
+          'Nechcete se účastnit výzvy, ale chcete se stát firemním koordinátorem?',
+        text: dummyText,
       },
       {
         title: 'Jak uhradit startovné za kolegy?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Jak se hlásí kolegové?',
-        text: dummyText
+        text: dummyText,
       },
       {
         title: 'Kde najdu fakturu?',
-        text: dummyText
+        text: dummyText,
       },
-    ]
+    ];
     const itemsUsefulLinks = [
       {
         title: 'Auto-Mat.cz',
@@ -120,7 +124,7 @@ export default defineComponent({
         icon: 'smartphone',
         url: '#',
       },
-    ]
+    ];
     const itemsSocialLinks = [
       {
         title: 'Instagram',
@@ -141,8 +145,8 @@ export default defineComponent({
         title: 'Youtube',
         icon: 'mdi-youtube',
         url: 'https://www.youtube.com/@spolekautomat',
-      }
-    ]
+      },
+    ];
 
     const classes = computed(() => {
       return props.showLogo ? 'justify-between' : 'justify-end';
@@ -152,15 +156,15 @@ export default defineComponent({
       get: () => props.modelValue,
       set: (value) => {
         emit('update:modelValue', value);
-      }
-    })
+      },
+    });
 
     const contactForm = reactive({
       subject: '',
       message: '',
       file: null,
       email: '',
-    })
+    });
 
     return {
       classes,
@@ -195,9 +199,7 @@ export default defineComponent({
       />
     </svg>
     <div class="flex items-center gap-32">
-      <a href="#"
-        data-cy="link-help"
-        @click.prevent="dialogOpened = true">
+      <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
       <a href="#">
@@ -208,13 +210,36 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <q-btn v-if="showDrawerOpenButton" flat round icon="menu" color="black" @click="drawerOpened = true" data-cy="drawer-open-button" />
+      <q-btn
+        v-if="showDrawerOpenButton"
+        flat
+        round
+        icon="menu"
+        color="black"
+        @click="drawerOpened = true"
+        data-cy="drawer-open-button"
+      />
     </div>
 
-    <q-dialog v-model="dialogOpened" square data-cy="dialog-help" class="dialog-help">
+    <q-dialog
+      v-model="dialogOpened"
+      square
+      data-cy="dialog-help"
+      class="dialog-help"
+    >
       <q-card class="relative-position overflow-visible bg-white">
-        <q-card-section data-cy="dialog-header" class="flex items-center gap-12">
-          <q-btn v-if="dialogState !== 'default'" round color="transparent" size="xs" unelevated @click.prevent="dialogState = 'default'">
+        <q-card-section
+          data-cy="dialog-header"
+          class="flex items-center gap-12"
+        >
+          <q-btn
+            v-if="dialogState !== 'default'"
+            round
+            color="transparent"
+            size="xs"
+            unelevated
+            @click.prevent="dialogState = 'default'"
+          >
             <q-icon name="west" size="xs" color="black" />
           </q-btn>
           <h3 class="text-h6 q-my-none">
@@ -235,7 +260,12 @@ export default defineComponent({
           data-cy="dialog-content"
           style="max-height: 50vh"
         >
-          <h4 class="text-h5 text-weight-bold q-my-none q-px-md" data-cy="title-participants">{{ $t('index.help.titleParticipants') }}</h4>
+          <h4
+            class="text-h5 text-weight-bold q-my-none q-px-md"
+            data-cy="title-participants"
+          >
+            {{ $t('index.help.titleParticipants') }}
+          </h4>
           <q-list separator class="faq-list q-mt-md" data-cy="faq-participants">
             <q-expansion-item
               v-for="item in itemsFAQParticipant"
@@ -250,7 +280,12 @@ export default defineComponent({
             </q-expansion-item>
           </q-list>
 
-          <h4 class="text-h5 text-weight-bold q-my-none q-px-md q-mt-xl" data-cy="title-coordinators">{{ $t('index.help.titleCoordinators') }}</h4>
+          <h4
+            class="text-h5 text-weight-bold q-my-none q-px-md q-mt-xl"
+            data-cy="title-coordinators"
+          >
+            {{ $t('index.help.titleCoordinators') }}
+          </h4>
           <q-list separator class="faq-list q-mt-md" data-cy="faq-coordinators">
             <q-expansion-item
               v-for="item in itemsFAQCoordinator"
@@ -266,31 +301,94 @@ export default defineComponent({
           </q-list>
 
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-guide">{{ $t('index.help.titleGuide') }}</h4>
-            <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md" data-cy="button-guide" />
+            <h4
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-guide"
+            >
+              {{ $t('index.help.titleGuide') }}
+            </h4>
+            <q-btn
+              rounded
+              color="black"
+              unelevated
+              outline
+              :label="$t('index.help.buttonGuide')"
+              class="q-mt-md"
+              data-cy="button-guide"
+            />
           </div>
 
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-contact">{{ $t('index.help.titleContact') }}</h4>
-            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md" data-cy="button-contact" @click.prevent="dialogState = 'contact'" />
+            <h4
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-contact"
+            >
+              {{ $t('index.help.titleContact') }}
+            </h4>
+            <q-btn
+              rounded
+              color="black"
+              unelevated
+              :label="$t('index.help.buttonContact')"
+              class="q-mt-md"
+              data-cy="button-contact"
+              @click.prevent="dialogState = 'contact'"
+            />
           </div>
 
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-links">{{ $t('index.help.titleLinks') }}</h4>
+            <h4
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-links"
+            >
+              {{ $t('index.help.titleLinks') }}
+            </h4>
             <div class="flex flex-wrap gap-x-24">
-              <q-btn v-for="item in itemsUsefulLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md" data-cy="button-links">
-                <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
-                <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+              <q-btn
+                v-for="item in itemsUsefulLinks"
+                :key="item.title"
+                :href="item.url"
+                rounded
+                color="blue-grey-1"
+                unelevated
+                class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
+                data-cy="button-links"
+              >
+                <q-icon
+                  :name="item.icon"
+                  size="xs"
+                  color="blue-grey-3"
+                ></q-icon>
+                <span class="inline-block text-black q-pl-sm">{{
+                  item.title
+                }}</span>
               </q-btn>
             </div>
           </div>
 
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none">{{ $t('index.help.titleSocials') }}</h4>
+            <h4 class="text-h5 text-weight-bold q-my-none">
+              {{ $t('index.help.titleSocials') }}
+            </h4>
             <div class="flex flex-wrap gap-x-24">
-              <q-btn v-for="item in itemsSocialLinks" :key="item.title" :href="item.url" rounded color="blue-grey-1" unelevated class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md" data-cy="button-socials">
-                <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
-                <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+              <q-btn
+                v-for="item in itemsSocialLinks"
+                :key="item.title"
+                :href="item.url"
+                rounded
+                color="blue-grey-1"
+                unelevated
+                class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
+                data-cy="button-socials"
+              >
+                <q-icon
+                  :name="item.icon"
+                  size="xs"
+                  color="blue-grey-3"
+                ></q-icon>
+                <span class="inline-block text-black q-pl-sm">{{
+                  item.title
+                }}</span>
               </q-btn>
             </div>
           </div>
@@ -303,8 +401,7 @@ export default defineComponent({
           data-cy="dialog-content"
         >
           <q-form class="q-gutter-md">
-            <div class="q-mt-lg"
-                data-cy="contact-form-subject">
+            <div class="q-mt-lg" data-cy="contact-form-subject">
               <label for="contact-form-subject" class="text-caption text-bold">
                 {{ $t('index.contact.subject') }}
               </label>
@@ -313,15 +410,18 @@ export default defineComponent({
                 id="contact-form-subject"
                 name="subject"
                 lazy-rules
-                :rules="[ val => val && val.length > 0 || $t('index.contact.subjectRequired')]"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('index.contact.subjectRequired'),
+                ]"
                 class="q-mt-sm"
                 outlined
                 dense
                 data-cy="contact-form-subject-input"
               />
             </div>
-            <div class="q-mt-none"
-                data-cy="contact-form-message">
+            <div class="q-mt-none" data-cy="contact-form-message">
               <label for="contact-form-message" class="text-caption text-bold">
                 {{ $t('index.contact.message') }}
               </label>
@@ -336,8 +436,7 @@ export default defineComponent({
                 data-cy="contact-form-message-input"
               />
             </div>
-            <div
-                data-cy="contact-form-file">
+            <div data-cy="contact-form-file">
               <q-file
                 v-model="contactForm.file"
                 :label="$t('index.contact.file')"
@@ -352,8 +451,7 @@ export default defineComponent({
                 </template>
               </q-file>
             </div>
-            <div class="q-mt-none"
-                data-cy="contact-form-email">
+            <div class="q-mt-none" data-cy="contact-form-email">
               <label for="contact-form-email" class="text-caption text-bold">
                 {{ $t('index.contact.email') }}
               </label>
@@ -363,7 +461,11 @@ export default defineComponent({
                 name="email"
                 type="email"
                 lazy-rules
-                :rules="[ val => val && val.length > 0 || $t('index.contact.emailRequired')]"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('index.contact.emailRequired'),
+                ]"
                 class="q-mt-sm"
                 outlined
                 dense
@@ -371,7 +473,14 @@ export default defineComponent({
               />
             </div>
             <div class="flex justify-end">
-              <q-btn :label="$t('index.contact.submit')" type="submit" color="black" rounded unelevated data-cy="contact-form-submit" />
+              <q-btn
+                :label="$t('index.contact.submit')"
+                type="submit"
+                color="black"
+                rounded
+                unelevated
+                data-cy="contact-form-submit"
+              />
             </div>
           </q-form>
         </q-card-section>
@@ -411,7 +520,7 @@ export default defineComponent({
   font-weight: 600;
 }
 
-.q-btn{
+.q-btn {
   &.q-btn-no-uppercase {
     text-transform: none;
   }
@@ -421,7 +530,8 @@ export default defineComponent({
     }
     &:hover {
       span {
-      text-decoration: none;}
+        text-decoration: none;
+      }
     }
   }
 }
@@ -439,10 +549,12 @@ export default defineComponent({
   gap: 32px;
 }
 
-@media (min-width: $breakpoint-lg-min) {
-  .dialog-help .q-dialog__inner--minimized > div {
-    width: 100%;
-    max-width: 784px;
+.dialog-help {
+  .q-dialog__inner--minimized > div {
+    @media (min-width: $breakpoint-md-min) {
+      width: 100%;
+      max-width: 784px;
+    }
   }
 }
 </style>
