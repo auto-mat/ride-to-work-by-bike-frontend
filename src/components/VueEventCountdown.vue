@@ -32,7 +32,10 @@ export default defineComponent({
     // if (locale.value === 'en') {
     //   formatString = 'D MMM';
     // }
-    const formattedDate = useDateFormat(new Date(props.releaseDate), formatString);
+    const formattedDate = useDateFormat(
+      new Date(props.releaseDate),
+      formatString
+    );
 
     let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -93,13 +96,17 @@ export default defineComponent({
       </div>
       <div class="row items-center justify-evenly q-mt-md">
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-days">{{ countdown.days }}</div>
+          <div class="text-64 text-weight-bold" data-cy="countdown-days">
+            {{ countdown.days }}
+          </div>
           <div class="q-mt-xs" data-cy="countdown-label-days">
             {{ $t('index.countdown.days') }}
           </div>
         </div>
         <div class="q-px-md">
-          <div class="text-64 text-weight-bold" data-cy="countdown-hours">{{ countdown.hours }}</div>
+          <div class="text-64 text-weight-bold" data-cy="countdown-hours">
+            {{ countdown.hours }}
+          </div>
           <div class="q-mt-xs" data-cy="countdown-label-hours">
             {{ $t('index.countdown.hours') }}
           </div>
