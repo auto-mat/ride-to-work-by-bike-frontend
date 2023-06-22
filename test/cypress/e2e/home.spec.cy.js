@@ -1,5 +1,4 @@
 describe('Home page', () => {
-
   beforeEach(() => {
     cy.visit(Cypress.config('baseUrl'));
   });
@@ -7,10 +6,12 @@ describe('Home page', () => {
   it('renders all components', () => {
     let i18n;
     cy.window().should('have.property', 'i18n');
-    cy.window().then((win) => { i18n = win.i18n; })
+    cy.window()
+      .then((win) => {
+        i18n = win.i18n;
+      })
       .then(() => {
-        cy.dataCy('q-main')
-          .should('be.visible');
+        cy.dataCy('q-main').should('be.visible');
 
         cy.dataCy('index-title')
           .should('be.visible')
@@ -18,64 +19,54 @@ describe('Home page', () => {
           .should('have.css', 'font-weight', '700')
           .should('contain', i18n.global.t('index.title'));
 
-        cy.dataCy('event-countdown')
-          .should('be.visible');
+        cy.dataCy('event-countdown').should('be.visible');
 
-        cy.dataCy('list-challenge')
-          .should('be.visible');
+        cy.dataCy('list-challenge').should('be.visible');
 
-        cy.dataCy('banner-image')
-          .should('be.visible');
+        cy.dataCy('banner-image').should('be.visible');
 
-        cy.dataCy('heading-background')
-          .should('be.visible');
+        cy.dataCy('heading-background').should('be.visible');
 
-        cy.dataCy('list-event')
-          .should('be.visible');
-
-      })
+        cy.dataCy('list-event').should('be.visible');
+      });
   });
 
   it('renders left drawer on desktop', () => {
     cy.viewport('macbook-13');
 
-    cy.dataCy('q-drawer')
-      .should('be.visible');
-  })
+    cy.dataCy('q-drawer').should('be.visible');
+  });
 
   it('allows user to change profile to "User 3" and back to "User 1"', () => {
     cy.viewport('macbook-13');
 
     cy.dataCy('user-select-input').click();
 
-    cy.get(".q-item__label")
+    cy.get('.q-item__label')
       .should('be.visible')
       .should('have.length', 3)
       .should('contain.text', 'User')
       .last()
-      .click()
+      .click();
 
-    cy.dataCy('user-select-input')
-      .should('contain', 'User 3');
+    cy.dataCy('user-select-input').should('contain', 'User 3');
 
     cy.dataCy('user-select-input').click();
 
-    cy.get(".q-item__label")
+    cy.get('.q-item__label')
       .should('be.visible')
       .should('have.length', 3)
       .should('contain.text', 'User')
       .first()
-      .click()
+      .click();
 
-    cy.dataCy('user-select-input')
-      .should('contain', 'User 1');
-  })
+    cy.dataCy('user-select-input').should('contain', 'User 1');
+  });
 
   it('allows user to show and hide left panel on mobile', () => {
     cy.viewport('iphone-6');
 
-    cy.dataCy('q-drawer')
-      .should('not.be.visible');
+    cy.dataCy('q-drawer').should('not.be.visible');
 
     cy.dataCy('drawer-open-button').click();
 
@@ -90,7 +81,6 @@ describe('Home page', () => {
 
     // cy.dataCy('q-drawer')
     //   .should('not.be.visible');
-
   });
 
   // it('allows user to display help dialog and read all FAQ items', () => {
@@ -144,100 +134,94 @@ describe('Home page', () => {
   // })
 
   it('allows user to display and submit contact form', () => {
-      cy.viewport('macbook-13');
+    cy.viewport('macbook-13');
 
-      cy.dataCy('link-help')
-        .last()
-        .should('be.visible')
-        .click()
+    cy.dataCy('link-help').last().should('be.visible').click();
 
-      cy.dataCy('dialog-header')
-        .should('be.visible')
+    cy.dataCy('dialog-header').should('be.visible');
 
-      cy.dataCy('dialog-content')
-        .scrollTo(0, 1200)
+    cy.dataCy('dialog-content').scrollTo(0, 1200);
 
-      cy.dataCy('button-contact')
-        .should('be.visible')
-        .click()
+    cy.dataCy('button-contact').should('be.visible').click();
 
-      cy.dataCy('dialog-header')
-        .find('h3')
-        .should('be.visible')
+    cy.dataCy('dialog-header').find('h3').should('be.visible');
 
-      cy.dataCy('contact-form-subject-input')
-        .should('be.visible')
-        .type('question')
+    cy.dataCy('contact-form-subject-input')
+      .should('be.visible')
+      .type('question');
 
-      cy.dataCy('contact-form-message-input')
-        .should('be.visible')
-        .type('what is the minimum distance to ride to work?')
+    cy.dataCy('contact-form-message-input')
+      .should('be.visible')
+      .type('what is the minimum distance to ride to work?');
 
-      cy.dataCy('contact-form-email-input')
-        .should('be.visible')
-        .type('P7LlQ@example.com')
+    cy.dataCy('contact-form-email-input')
+      .should('be.visible')
+      .type('P7LlQ@example.com');
 
-      cy.dataCy('contact-form-submit')
-        .should('be.visible')
-        .click()
+    cy.dataCy('contact-form-submit').should('be.visible').click();
 
-      // TODO: test successful submission
-  })
+    // TODO: test successful submission
+  });
 
   it('allows validates contact form if there are errors', () => {
     cy.viewport('macbook-13');
 
-    cy.dataCy('link-help')
-      .last()
-      .should('be.visible')
-      .click()
+    let i18n;
+    cy.window().should('have.property', 'i18n');
+    cy.window()
+      .then((win) => {
+        i18n = win.i18n;
+      })
+      .then(() => {
+        cy.dataCy('link-help').last().should('be.visible').click();
 
-    cy.dataCy('dialog-header')
-      .should('be.visible')
+        cy.dataCy('dialog-header').should('be.visible');
 
-    cy.dataCy('dialog-content')
-      .scrollTo(0, 1200)
+        cy.dataCy('dialog-content').scrollTo(0, 1200);
 
-    cy.dataCy('button-contact')
-      .should('be.visible')
-      .click()
+        cy.dataCy('button-contact').should('be.visible').click();
 
-    cy.dataCy('dialog-header')
-      .find('h3')
-      .should('be.visible')
+        cy.dataCy('dialog-header').find('h3').should('be.visible');
 
-    cy.dataCy('dialog-content')
-      .scrollTo('bottom')
+        cy.dataCy('dialog-content').scrollTo('bottom');
 
-    cy.dataCy('contact-form-submit')
-      .should('be.visible')
-      .click()
+        cy.dataCy('contact-form-submit').should('be.visible').click();
 
-    cy.dataCy('contact-form-subject')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .should('contain', 'Please, fill in a subject')
+        cy.dataCy('contact-form-subject')
+          .find('.q-field__messages')
+          .should('be.visible')
+          .should('contain', i18n.global.t('index.contact.subjectRequired'));
 
-    cy.dataCy('contact-form-subject')
-      .find('.q-field__control')
-      .should('have.class', 'text-negative');
+        cy.dataCy('contact-form-subject')
+          .find('.q-field__control')
+          .should('have.class', 'text-negative');
 
-    cy.dataCy('dialog-content')
-      .scrollTo('top')
+        cy.dataCy('dialog-content').scrollTo('top');
 
-    cy.dataCy('contact-form-subject-input')
-      .should('be.visible')
-      .type('question')
+        cy.dataCy('contact-form-subject-input')
+          .should('be.visible')
+          .type('question');
 
-    cy.dataCy('contact-form-subject')
-      .find('.q-field__messages')
-      .should('not.be.visible')
+        cy.dataCy('contact-form-subject')
+          .find('.q-field__messages')
+          .should('not.be.visible');
 
-    cy.dataCy('contact-form-subject')
-      .find('.q-field__control')
-      .should('not.have.class', 'text-negative');
+        cy.dataCy('contact-form-subject')
+          .find('.q-field__control')
+          .should('not.have.class', 'text-negative');
 
-  })
+        cy.dataCy('contact-form-submit').should('be.visible').click();
+
+        cy.dataCy('contact-form-email')
+          .find('.q-field__messages')
+          .should('be.visible')
+          .should('contain', i18n.global.t('index.contact.emailRequired'));
+
+        cy.dataCy('contact-form-email')
+          .find('.q-field__control')
+          .should('have.class', 'text-negative');
+      });
+  });
 
   // TODO: test contacting through help
 
@@ -250,6 +234,4 @@ describe('Home page', () => {
   // TODO: test redirecting to other pages through menu
 
   // TODO: test outbound links to social media
-
-
 });
