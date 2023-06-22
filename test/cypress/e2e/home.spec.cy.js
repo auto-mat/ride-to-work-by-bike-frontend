@@ -83,55 +83,55 @@ describe('Home page', () => {
     //   .should('not.be.visible');
   });
 
-  // it('allows user to display help dialog and read all FAQ items', () => {
-  //   cy.viewport('macbook-13');
+  it('allows user to display help dialog and read all FAQ items', () => {
+    cy.viewport('macbook-13');
 
-  //   cy.dataCy('link-help')
-  //     .last()
-  //     .should('be.visible')
-  //     .click()
+    cy.dataCy('link-help')
+      .last()
+      .should('be.visible')
+      .click()
 
-  //   cy.dataCy('dialog-header')
-  //     .should('be.visible')
+    cy.dataCy('dialog-header')
+      .should('be.visible')
 
-  //   cy.dataCy('faq-participants')
-  //     .find('.q-card')
-  //     .each(($element) => {
-  //       cy.wrap($element).should('not.be.visible');
-  //     })
+    cy.dataCy('faq-participants')
+      .find('.q-card')
+      .each(($element) => {
+        cy.wrap($element).should('not.be.visible');
+      })
 
-  //   cy.dataCy('faq-participants')
-  //     .find('.q-expansion-item')
-  //     .each(($element) => {
-  //       cy.wrap($element).should('be.visible');
+    cy.dataCy('faq-participants')
+      .find('.q-expansion-item')
+      .each(($element) => {
+        cy.wrap($element).should('be.visible');
 
-  //       cy.wrap($element).click();
+        cy.wrap($element).click();
 
-  //       cy.wrap($element)
-  //         .find('.q-card__section')
-  //         .should('be.visible')
-  //         .should('not.be.empty');
-  //     })
+        cy.wrap($element)
+          .find('.q-card__section')
+          .should('be.visible')
+          .should('not.be.empty');
+      })
 
-  //   cy.dataCy('faq-coordinators')
-  //     .find('.q-card')
-  //     .each(($element) => {
-  //       cy.wrap($element).should('not.be.visible');
-  //     })
+    cy.dataCy('faq-coordinators')
+      .find('.q-card')
+      .each(($element) => {
+        cy.wrap($element).should('not.be.visible');
+      })
 
-  //   cy.dataCy('faq-coordinators')
-  //     .find('.q-expansion-item')
-  //     .each(($element) => {
-  //       cy.wrap($element).should('be.visible');
+    cy.dataCy('faq-coordinators')
+      .find('.q-expansion-item')
+      .each(($element) => {
+        cy.wrap($element).should('be.visible');
 
-  //       cy.wrap($element).click();
+        cy.wrap($element).click();
 
-  //       cy.wrap($element)
-  //         .find('.q-card__section')
-  //         .should('be.visible')
-  //         .should('not.be.empty');
-  //     })
-  // })
+        cy.wrap($element)
+          .find('.q-card__section')
+          .should('be.visible')
+          .should('not.be.empty');
+      })
+  })
 
   it('allows user to display and submit contact form', () => {
     cy.viewport('macbook-13');
