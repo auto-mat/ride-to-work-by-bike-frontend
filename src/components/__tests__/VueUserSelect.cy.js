@@ -10,8 +10,8 @@ describe('<VueUserSelect>', () => {
   beforeEach(() => {
     cy.mount(VueUserSelect, {
       props: {
-        options
-      }
+        options,
+      },
     });
   });
 
@@ -31,36 +31,40 @@ describe('<VueUserSelect>', () => {
         expect($img[0].naturalWidth).to.be.greaterThan(0);
         expect($img.attr('src')).to.equal(options[0].image);
       });
-  })
+  });
 
-  it ('shows dropdown on click', () => {
-    cy.dataCy('user-select-input').click().then(() => {
-        cy.get(".q-item__label")
+  it('shows dropdown on click', () => {
+    cy.dataCy('user-select-input')
+      .click()
+      .then(() => {
+        cy.get('.q-item__label')
           .should('be.visible')
           .should('have.length', 3)
           .should('contain.text', 'User');
-    })
-  })
+      });
+  });
 
-  it ('allows to change user', () => {
-    cy.dataCy('user-select-input').click().then(() => {
-      cy.get(".q-item__label")
-        .should('be.visible')
-        .should('have.length', 3)
-        .should('contain.text', 'User')
-        .last()
-        .click().then(() => {
-          cy.dataCy('avatar')
-            .should('be.visible')
-            .find('img')
-            .should(($img) => {
-              expect($img[0].naturalWidth).to.be.greaterThan(0);
-              expect($img.attr('src')).to.equal(options[2].image);
-            });
+  it('allows to change user', () => {
+    cy.dataCy('user-select-input')
+      .click()
+      .then(() => {
+        cy.get('.q-item__label')
+          .should('be.visible')
+          .should('have.length', 3)
+          .should('contain.text', 'User')
+          .last()
+          .click()
+          .then(() => {
+            cy.dataCy('avatar')
+              .should('be.visible')
+              .find('img')
+              .should(($img) => {
+                expect($img[0].naturalWidth).to.be.greaterThan(0);
+                expect($img.attr('src')).to.equal(options[2].image);
+              });
 
-          cy.dataCy('user-select-input')
-            .should('contain', options[2].label);
-        })
-    })
-  })
+            cy.dataCy('user-select-input').should('contain', options[2].label);
+          });
+      });
+  });
 });
