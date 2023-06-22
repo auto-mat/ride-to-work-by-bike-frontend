@@ -17,7 +17,7 @@ describe('<VueDrawerHeader>', () => {
       'buttonContact',
       'titleLinks',
       'titleSocials',
-    ]
+    ];
 
     const translationKeyList = translationStrings.map(
       (item) => `index.help.${item}`
@@ -98,7 +98,7 @@ describe('<VueDrawerHeader>', () => {
 
   it('renders participant FAQ section with title and working accordion', () => {
     cy.window().then(() => {
-      cy.dataCy('link-help').click()
+      cy.dataCy('link-help').click();
 
       cy.dataCy('title-participants')
         .should('be.visible')
@@ -106,7 +106,9 @@ describe('<VueDrawerHeader>', () => {
         .should('have.css', 'font-weight', '700')
         .should('contain', i18n.global.t('index.help.titleParticipants'))
         .then(($title) => {
-          expect($title.text()).to.equal(i18n.global.t('index.help.titleParticipants'));
+          expect($title.text()).to.equal(
+            i18n.global.t('index.help.titleParticipants')
+          );
         });
 
       cy.dataCy('faq-participants')
@@ -118,16 +120,16 @@ describe('<VueDrawerHeader>', () => {
         .find('.q-item')
         .first()
         .should('be.visible')
-        .click().then(() => {
+        .click()
+        .then(() => {
           cy.dataCy('faq-participants')
             .find('.q-card')
             .first()
             .should('be.visible')
-            .then($element => {
-              expect($element.height()).to.be.greaterThan(0)
-            })
+            .then(($element) => {
+              expect($element.height()).to.be.greaterThan(0);
+            });
         });
-
     });
   });
 
@@ -137,15 +139,16 @@ describe('<VueDrawerHeader>', () => {
         .click()
         .then(() => {
           // TODO: Find if you can calculate height exact height of the sections
-          cy.dataCy('dialog-content')
-            .scrollTo(0, 530)
+          cy.dataCy('dialog-content').scrollTo(0, 530);
 
           cy.dataCy('title-coordinators')
             .should('have.css', 'font-size', '24px')
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('index.help.titleCoordinators'))
             .then(($title) => {
-              expect($title.text()).to.equal(i18n.global.t('index.help.titleCoordinators'));
+              expect($title.text()).to.equal(
+                i18n.global.t('index.help.titleCoordinators')
+              );
             });
 
           cy.dataCy('faq-coordinators')
@@ -157,16 +160,16 @@ describe('<VueDrawerHeader>', () => {
             .find('.q-item')
             .first()
             .should('be.visible')
-            .click().then(() => {
+            .click()
+            .then(() => {
               cy.dataCy('faq-coordinators')
                 .find('.q-card')
                 .first()
                 .should('be.visible')
-                .then($element => {
-                  expect($element.height()).to.be.greaterThan(0)
-                })
+                .then(($element) => {
+                  expect($element.height()).to.be.greaterThan(0);
+                });
             });
-
         });
     });
   });
@@ -177,8 +180,7 @@ describe('<VueDrawerHeader>', () => {
         .click()
         .then(() => {
           // TODO: Find if you can calculate height exact height of the sections
-          cy.dataCy('dialog-content')
-            .scrollTo(0, 1060)
+          cy.dataCy('dialog-content').scrollTo(0, 1060);
 
           cy.dataCy('title-guide')
             .should('be.visible')
@@ -186,17 +188,20 @@ describe('<VueDrawerHeader>', () => {
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('index.help.titleGuide'))
             .then(($title) => {
-              expect($title.text()).to.equal(i18n.global.t('index.help.titleGuide'));
+              expect($title.text()).to.equal(
+                i18n.global.t('index.help.titleGuide')
+              );
             });
 
           cy.dataCy('button-guide')
             .should('be.visible')
             .should('contain.text', i18n.global.t('index.help.buttonGuide'))
             .then(($button) => {
-              expect($button.text()).to.equal(i18n.global.t('index.help.buttonGuide'));
+              expect($button.text()).to.equal(
+                i18n.global.t('index.help.buttonGuide')
+              );
             });
-      })
-    })
+        });
+    });
   });
-
 });
