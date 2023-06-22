@@ -68,9 +68,7 @@ describe('<VueBannerImage>', () => {
 
   it('has correct background color', () => {
     cy.window().then(() => {
-      cy.dataCy('banner').should(
-        'have.backgroundColor', config.colorGrayLight
-      );
+      cy.dataCy('banner').should('have.backgroundColor', config.colorGrayLight);
     });
   });
 
