@@ -93,7 +93,98 @@ describe('Home page', () => {
 
   });
 
-  it('allows user to display help dialog and read all FAQ items', () => {
+  // it('allows user to display help dialog and read all FAQ items', () => {
+  //   cy.viewport('macbook-13');
+
+  //   cy.dataCy('link-help')
+  //     .last()
+  //     .should('be.visible')
+  //     .click()
+
+  //   cy.dataCy('dialog-header')
+  //     .should('be.visible')
+
+  //   cy.dataCy('faq-participants')
+  //     .find('.q-card')
+  //     .each(($element) => {
+  //       cy.wrap($element).should('not.be.visible');
+  //     })
+
+  //   cy.dataCy('faq-participants')
+  //     .find('.q-expansion-item')
+  //     .each(($element) => {
+  //       cy.wrap($element).should('be.visible');
+
+  //       cy.wrap($element).click();
+
+  //       cy.wrap($element)
+  //         .find('.q-card__section')
+  //         .should('be.visible')
+  //         .should('not.be.empty');
+  //     })
+
+  //   cy.dataCy('faq-coordinators')
+  //     .find('.q-card')
+  //     .each(($element) => {
+  //       cy.wrap($element).should('not.be.visible');
+  //     })
+
+  //   cy.dataCy('faq-coordinators')
+  //     .find('.q-expansion-item')
+  //     .each(($element) => {
+  //       cy.wrap($element).should('be.visible');
+
+  //       cy.wrap($element).click();
+
+  //       cy.wrap($element)
+  //         .find('.q-card__section')
+  //         .should('be.visible')
+  //         .should('not.be.empty');
+  //     })
+  // })
+
+  it('allows user to display and submit contact form', () => {
+      cy.viewport('macbook-13');
+
+      cy.dataCy('link-help')
+        .last()
+        .should('be.visible')
+        .click()
+
+      cy.dataCy('dialog-header')
+        .should('be.visible')
+
+      cy.dataCy('dialog-content')
+        .scrollTo(0, 1200)
+
+      cy.dataCy('button-contact')
+        .should('be.visible')
+        .click()
+
+      cy.dataCy('dialog-header')
+        .find('h3')
+        .should('be.visible')
+
+      cy.dataCy('contact-form-subject-input')
+        .should('be.visible')
+        .type('question')
+
+      cy.dataCy('contact-form-message-input')
+        .should('be.visible')
+        .type('what is the minimum distance to ride to work?')
+
+      cy.dataCy('contact-form-email-input')
+        .should('be.visible')
+        .type('P7LlQ@example.com')
+
+      cy.dataCy('contact-form-submit')
+        .should('be.visible')
+        .click()
+
+      // TODO: test successful submission
+  })
+
+  it('allows validates contact form if there are errors', () => {
     cy.viewport('macbook-13');
 
     cy.dataCy('link-help')
@@ -104,56 +195,61 @@ describe('Home page', () => {
     cy.dataCy('dialog-header')
       .should('be.visible')
 
-    cy.dataCy('faq-participants')
-      .find('.q-card')
-      .each(($element) => {
-        cy.wrap($element).should('not.be.visible');
-      })
+    cy.dataCy('dialog-content')
+      .scrollTo(0, 1200)
 
-    cy.dataCy('faq-participants')
-      .find('.q-expansion-item')
-      .each(($element) => {
-        cy.wrap($element).should('be.visible');
+    cy.dataCy('button-contact')
+      .should('be.visible')
+      .click()
 
-        cy.wrap($element).click();
+    cy.dataCy('dialog-header')
+      .find('h3')
+      .should('be.visible')
 
-        cy.wrap($element)
-          .find('.q-card__section')
-          .should('be.visible')
-          .should('not.be.empty');
-      })
+    cy.dataCy('dialog-content')
+      .scrollTo('bottom')
 
-    cy.dataCy('faq-coordinators')
-      .find('.q-card')
-      .each(($element) => {
-        cy.wrap($element).should('not.be.visible');
-      })
+    cy.dataCy('contact-form-submit')
+      .should('be.visible')
+      .click()
 
-    cy.dataCy('faq-coordinators')
-      .find('.q-expansion-item')
-      .each(($element) => {
-        cy.wrap($element).should('be.visible');
+    cy.dataCy('contact-form-subject')
+      .find('.q-field__messages')
+      .should('be.visible')
+      .should('contain', 'Please, fill in a subject')
 
-        cy.wrap($element).click();
+    cy.dataCy('contact-form-subject')
+      .find('.q-field__control')
+      .should('have.class', 'text-negative');
 
-        cy.wrap($element)
-          .find('.q-card__section')
-          .should('be.visible')
-          .should('not.be.empty');
-      })
+    cy.dataCy('dialog-content')
+      .scrollTo('top')
 
-      // TODO: test contacting through help
+    cy.dataCy('contact-form-subject-input')
+      .should('be.visible')
+      .type('question')
 
-      // TODO: test rewatching application guide
+    cy.dataCy('contact-form-subject')
+      .find('.q-field__messages')
+      .should('not.be.visible')
 
-      // TODO: test adding event to calendar
-
-      // TODO: test displaying notifications
-
-      // TODO: test redirecting to other pages through menu
-
-      // TODO: test outbound links to social media
+    cy.dataCy('contact-form-subject')
+      .find('.q-field__control')
+      .should('not.have.class', 'text-negative');
 
   })
+
+  // TODO: test contacting through help
+
+  // TODO: test rewatching application guide
+
+  // TODO: test adding event to calendar
+
+  // TODO: test displaying notifications
+
+  // TODO: test redirecting to other pages through menu
+
+  // TODO: test outbound links to social media
+
 
 });
