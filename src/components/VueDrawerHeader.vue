@@ -300,9 +300,11 @@ export default defineComponent({
           v-if="dialogState === 'contact'"
           class="scroll"
           style="max-height: 50vh"
+          data-cy="dialog-content"
         >
           <q-form class="q-gutter-md">
-            <div class="q-mt-lg">
+            <div class="q-mt-lg"
+                data-cy="contact-form-subject">
               <label for="contact-form-subject" class="text-caption text-bold">
                 {{ $t('index.contact.subject') }}
               </label>
@@ -315,9 +317,11 @@ export default defineComponent({
                 class="q-mt-sm"
                 outlined
                 dense
+                data-cy="contact-form-subject-input"
               />
             </div>
-            <div class="q-mt-none">
+            <div class="q-mt-none"
+                data-cy="contact-form-message">
               <label for="contact-form-message" class="text-caption text-bold">
                 {{ $t('index.contact.message') }}
               </label>
@@ -329,9 +333,11 @@ export default defineComponent({
                 class="q-mt-sm"
                 outlined
                 dense
+                data-cy="contact-form-message-input"
               />
             </div>
-            <div>
+            <div
+                data-cy="contact-form-file">
               <q-file
                 v-model="contactForm.file"
                 :label="$t('index.contact.file')"
@@ -339,13 +345,15 @@ export default defineComponent({
                 class="file-input text-body2 text-uppercase"
                 borderless
                 dense
+                data-cy="contact-form-file-input"
               >
                 <template v-slot:prepend>
                   <q-icon name="attachment" color="black" size="xs" />
                 </template>
               </q-file>
             </div>
-            <div class="q-mt-none">
+            <div class="q-mt-none"
+                data-cy="contact-form-email">
               <label for="contact-form-email" class="text-caption text-bold">
                 {{ $t('index.contact.email') }}
               </label>
@@ -359,10 +367,11 @@ export default defineComponent({
                 class="q-mt-sm"
                 outlined
                 dense
+                data-cy="contact-form-email-input"
               />
             </div>
             <div class="flex justify-end">
-              <q-btn :label="$t('index.contact.submit')" type="submit" color="black" rounded unelevated />
+              <q-btn :label="$t('index.contact.submit')" type="submit" color="black" rounded unelevated data-cy="contact-form-submit" />
             </div>
           </q-form>
         </q-card-section>
