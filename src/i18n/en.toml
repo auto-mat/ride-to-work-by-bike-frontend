@@ -27,6 +27,7 @@ buttonContact = "Contact automat"
 titleLinks = "Useful links"
 titleSocials = "Follow us on social media"
 
+# REMEMBER when testing these string: They are the same in all languages
 [index.menuLinks]
 instagram = "Instagram"
 facebook = "Facebook"
