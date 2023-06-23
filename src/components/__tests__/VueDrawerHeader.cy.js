@@ -100,7 +100,7 @@ describe('<VueDrawerHeader>', () => {
     cy.window().then(() => {
       cy.dataCy('link-help').click();
 
-      cy.dataCy('title-participants')
+      cy.dataCy('list-faq-title')
         .should('be.visible')
         .should('have.css', 'font-size', '24px')
         .should('have.css', 'font-weight', '700')
@@ -111,18 +111,18 @@ describe('<VueDrawerHeader>', () => {
           );
         });
 
-      cy.dataCy('faq-participants')
+      cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
         .should('not.be.visible');
 
-      cy.dataCy('faq-participants')
+      cy.dataCy('list-faq-list')
         .find('.q-item')
         .first()
         .should('be.visible')
         .click()
         .then(() => {
-          cy.dataCy('faq-participants')
+          cy.dataCy('list-faq-list')
             .find('.q-card')
             .first()
             .should('be.visible')
@@ -141,7 +141,7 @@ describe('<VueDrawerHeader>', () => {
           // TODO: Find if you can calculate height exact height of the sections
           cy.dataCy('dialog-content').scrollTo(0, 530);
 
-          cy.dataCy('title-coordinators')
+          cy.dataCy('list-faq-title')
             .should('have.css', 'font-size', '24px')
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('index.help.titleCoordinators'))
@@ -151,18 +151,18 @@ describe('<VueDrawerHeader>', () => {
               );
             });
 
-          cy.dataCy('faq-coordinators')
+          cy.dataCy('list-faq-list')
             .find('.q-card')
             .first()
             .should('not.be.visible');
 
-          cy.dataCy('faq-coordinators')
+          cy.dataCy('list-faq-list')
             .find('.q-item')
             .first()
             .should('be.visible')
             .click()
             .then(() => {
-              cy.dataCy('faq-coordinators')
+              cy.dataCy('list-faq-list')
                 .find('.q-card')
                 .first()
                 .should('be.visible')
