@@ -8,7 +8,7 @@ export default defineComponent({
       type: String
     },
     variant: {
-      type: String
+      type: String as () => 'social' | 'useful'
     }
   },
   setup(props) {
@@ -77,7 +77,7 @@ export default defineComponent({
 
 <template>
   <div class="q-px-md q-mt-xl">
-    <h4 class="text-h5 text-weight-bold q-my-none">
+    <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-menu-links">
       {{ title }}
     </h4>
     <div class="flex flex-wrap gap-x-24">
@@ -89,7 +89,7 @@ export default defineComponent({
         color="blue-grey-1"
         unelevated
         class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
-        data-cy="button-socials"
+        data-cy="button-menu-links"
       >
         <q-icon
           :name="item.icon"
