@@ -1,36 +1,35 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
   name: 'VueMenuLinks',
   props: {
     title: {
-      type: String,
+      type: String
     },
     variant: {
-      type: String as () => 'social' | 'useful',
-    },
+      type: String
+    }
   },
   setup(props) {
     const itemsSocialLinks = [
       {
-        title: i18n.global.t('index.menuLinks.instagram'),
+        title: 'Instagram',
         icon: 'mdi-instagram',
         url: 'https://www.instagram.com/spolekautomat',
       },
       {
-        title: i18n.global.t('index.menuLinks.facebook'),
+        title: 'Facebook',
         icon: 'mdi-facebook',
         url: 'https://www.facebook.com/spolekautomat',
       },
       {
-        title: i18n.global.t('index.menuLinks.twitter'),
+        title: 'Twitter',
         icon: 'mdi-twitter',
         url: 'https://twitter.com/spolekautomat',
       },
       {
-        title: i18n.global.t('index.menuLinks.youtube'),
+        title: 'Youtube',
         icon: 'mdi-youtube',
         url: 'https://www.youtube.com/@spolekautomat',
       },
@@ -61,27 +60,27 @@ export default defineComponent({
 
     const items = computed(() => {
       if (props.variant === 'social') {
-        return itemsSocialLinks;
+        return itemsSocialLinks
       }
       if (props.variant === 'useful') {
-        return itemsUsefulLinks;
+        return itemsUsefulLinks
       }
-      return [];
-    });
+      return []
+    })
 
     return {
-      items,
-    };
-  },
-});
+      items
+    }
+  }
+})
 </script>
 
 <template>
   <div class="q-px-md q-mt-xl">
-    <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-menu-links">
+    <h4 class="text-h5 text-weight-bold q-my-none">
       {{ title }}
     </h4>
-    <div class="flex flex-wrap gap-x-24" data-cy="menu-links-list">
+    <div class="flex flex-wrap gap-x-24">
       <q-btn
         v-for="item in items"
         :key="item.title"
@@ -90,14 +89,21 @@ export default defineComponent({
         color="blue-grey-1"
         unelevated
         class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
-        data-cy="button-menu-links"
+        data-cy="button-socials"
       >
-        <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
-        <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+        <q-icon
+          :name="item.icon"
+          size="xs"
+          color="blue-grey-3"
+        ></q-icon>
+        <span class="inline-block text-black q-pl-sm">{{
+          item.title
+        }}</span>
       </q-btn>
     </div>
   </div>
 </template>
+
 
 <style scoped lang="scss">
 .gap-x-24 {
