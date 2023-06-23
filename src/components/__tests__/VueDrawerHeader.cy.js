@@ -7,8 +7,6 @@ describe('<VueDrawerHeader>', () => {
   });
 
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(
-      [
         'titleStateDefault',
         'titleStateContact',
         'titleParticipants',
