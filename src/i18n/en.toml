@@ -57,6 +57,12 @@ buttonContact = "Contact automat"
 titleLinks = "Useful links"
 titleSocials = "Follow us on social media"
 
+[index.menuLinks]
+instagram = "Instagram"
+facebook = "Facebook"
+twitter = "Twitter"
+youtube = "Youtube"
+
 [index.contact]
 subject = "Subject"
 subjectRequired = "Please, fill in a subject"
