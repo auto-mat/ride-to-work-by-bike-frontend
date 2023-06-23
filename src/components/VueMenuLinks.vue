@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
   name: 'VueMenuLinks',
@@ -14,22 +15,22 @@ export default defineComponent({
   setup(props) {
     const itemsSocialLinks = [
       {
-        title: 'Instagram',
+        title: i18n.global.t('index.menuLinks.instagram'),
         icon: 'mdi-instagram',
         url: 'https://www.instagram.com/spolekautomat',
       },
       {
-        title: 'Facebook',
+        title: i18n.global.t('index.menuLinks.facebook'),
         icon: 'mdi-facebook',
         url: 'https://www.facebook.com/spolekautomat',
       },
       {
-        title: 'Twitter',
+        title: i18n.global.t('index.menuLinks.twitter'),
         icon: 'mdi-twitter',
         url: 'https://twitter.com/spolekautomat',
       },
       {
-        title: 'Youtube',
+        title: i18n.global.t('index.menuLinks.youtube'),
         icon: 'mdi-youtube',
         url: 'https://www.youtube.com/@spolekautomat',
       },
@@ -80,7 +81,7 @@ export default defineComponent({
     <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-menu-links">
       {{ title }}
     </h4>
-    <div class="flex flex-wrap gap-x-24">
+    <div class="flex flex-wrap gap-x-24" data-cy="menu-links-list">
       <q-btn
         v-for="item in items"
         :key="item.title"
