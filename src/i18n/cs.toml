@@ -87,6 +87,13 @@ buttonContact = "Kontaktovat automat"
 titleLinks = "Užitečné odkazy"
 titleSocials = "Sledujte nás na sociálních sítích"
 
+# REMEMBER when testing these string: They are the same in all languages
+[index.menuLinks]
+instagram = "Instagram"
+facebook = "Facebook"
+twitter = "Twitter"
+youtube = "Youtube"
+
 [index.contact]
 subject = "Nadpis"
 subjectRequired = "Prosím, vyplňte nadpis zprávy"
