@@ -253,6 +253,11 @@ export default defineComponent({
                 id="contact-form-message"
                 name="message"
                 type="textarea"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('index.contact.messageRequired'),
+                ]"
                 class="q-mt-sm"
                 outlined
                 dense
