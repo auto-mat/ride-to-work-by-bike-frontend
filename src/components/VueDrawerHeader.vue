@@ -1,8 +1,14 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, computed } from 'vue';
 
+// import components
+import VueMenuLinks from "./VueMenuLinks.vue"
+
 export default defineComponent({
   name: 'VueDrawerHeader',
+  components: {
+    VueMenuLinks
+  },
   props: {
     showLogo: {
       type: Boolean,
@@ -103,50 +109,6 @@ export default defineComponent({
         text: dummyText,
       },
     ];
-    const itemsUsefulLinks = [
-      {
-        title: 'Auto-Mat.cz',
-        icon: 'link',
-        url: 'https://auto-mat.cz/',
-      },
-      {
-        title: 'Podpořte nás',
-        icon: 'volunteer_activism',
-        url: '#',
-      },
-      {
-        title: 'Kód projektu',
-        icon: 'mdi-github',
-        url: 'https://github.com/auto-mat/ride-to-work-by-bike-frontend',
-      },
-      {
-        title: 'Mobilní aplikace',
-        icon: 'smartphone',
-        url: '#',
-      },
-    ];
-    const itemsSocialLinks = [
-      {
-        title: 'Instagram',
-        icon: 'mdi-instagram',
-        url: 'https://www.instagram.com/spolekautomat',
-      },
-      {
-        title: 'Facebook',
-        icon: 'mdi-facebook',
-        url: 'https://www.facebook.com/spolekautomat',
-      },
-      {
-        title: 'Twitter',
-        icon: 'mdi-twitter',
-        url: 'https://twitter.com/spolekautomat',
-      },
-      {
-        title: 'Youtube',
-        icon: 'mdi-youtube',
-        url: 'https://www.youtube.com/@spolekautomat',
-      },
-    ];
 
     const classes = computed(() => {
       return props.showLogo ? 'justify-between' : 'justify-end';
@@ -173,8 +135,6 @@ export default defineComponent({
       dialogState,
       itemsFAQParticipant,
       itemsFAQCoordinator,
-      itemsUsefulLinks,
-      itemsSocialLinks,
       contactForm,
     };
   },
@@ -336,62 +296,8 @@ export default defineComponent({
             />
           </div>
 
-          <div class="q-px-md q-mt-xl">
-            <h4
-              class="text-h5 text-weight-bold q-my-none"
-              data-cy="title-links"
-            >
-              {{ $t('index.help.titleLinks') }}
-            </h4>
-            <div class="flex flex-wrap gap-x-24">
-              <q-btn
-                v-for="item in itemsUsefulLinks"
-                :key="item.title"
-                :href="item.url"
-                rounded
-                color="blue-grey-1"
-                unelevated
-                class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
-                data-cy="button-links"
-              >
-                <q-icon
-                  :name="item.icon"
-                  size="xs"
-                  color="blue-grey-3"
-                ></q-icon>
-                <span class="inline-block text-black q-pl-sm">{{
-                  item.title
-                }}</span>
-              </q-btn>
-            </div>
-          </div>
-
-          <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none">
-              {{ $t('index.help.titleSocials') }}
-            </h4>
-            <div class="flex flex-wrap gap-x-24">
-              <q-btn
-                v-for="item in itemsSocialLinks"
-                :key="item.title"
-                :href="item.url"
-                rounded
-                color="blue-grey-1"
-                unelevated
-                class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
-                data-cy="button-socials"
-              >
-                <q-icon
-                  :name="item.icon"
-                  size="xs"
-                  color="blue-grey-3"
-                ></q-icon>
-                <span class="inline-block text-black q-pl-sm">{{
-                  item.title
-                }}</span>
-              </q-btn>
-            </div>
-          </div>
+          <vue-menu-links :title="$t('index.help.titleLinks')" variant="useful"></vue-menu-links>
+          <vue-menu-links :title="$t('index.help.titleSocials')" variant="social"></vue-menu-links>
         </q-card-section>
 
         <q-card-section
@@ -430,6 +336,11 @@ export default defineComponent({
                 id="contact-form-message"
                 name="message"
                 type="textarea"
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('index.contact.messageRequired'),
+                ]"
                 class="q-mt-sm"
                 outlined
                 dense
