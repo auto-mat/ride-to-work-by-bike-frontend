@@ -53,3 +53,14 @@ seconds = "sekund"
 
 [index.cardList]
 title = "Budúce výzvy"
+
+[index.cardChallenge]
+company = "Výzva spoločnosti"
+dates = "Obdobie výzvy:"
+
+[index.bannerImage]
+title = "Fill in our questionnaire and win one of our great prizes!"
+perex = "You can help us decide what to spend more time on next time and what should stay the same."
+
+[index.cardEvent]
+addToCalendar = "Pridať do kalendára"
