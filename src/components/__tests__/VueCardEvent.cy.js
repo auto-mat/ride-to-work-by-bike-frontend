@@ -1,4 +1,5 @@
 import VueCardEvent from 'components/VueCardEvent.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueCardEvent>', () => {
   const title = 'Opening Ceremony Bike to Work 2022';
@@ -26,6 +27,32 @@ describe('<VueCardEvent>', () => {
           links,
         },
       },
+    });
+  });
+
+  it('has translation for all strings', () => {
+    const translationStrings = [
+      'addToCalendar',
+    ];
+
+    const translationKeyList = translationStrings.map(
+      (item) => `index.cardEvent.${item}`
+    );
+
+    translationKeyList.forEach((translationKey) => {
+      const defaultEnglishString = i18n.global.t(translationKey, 'en');
+
+      const locales = i18n.global.availableLocales;
+      locales
+        .filter((locale) => locale !== 'en')
+        .forEach((locale) => {
+          i18n.global.locale = locale;
+          const translatedString = i18n.global.t(translationKey);
+
+          cy.wrap(translatedString)
+            .should('be.a', 'string')
+            .and('not.equal', defaultEnglishString);
+        });
     });
   });
 
@@ -249,7 +276,7 @@ describe('<VueCardEvent>', () => {
             .should('have.css', 'border-radius', '28px')
             .should('have.backgroundColor', '#000000')
             .should('have.color', '#ffffff')
-            .should('contain', 'Add to calendar');
+            .should('contain', i18n.global.t('index.cardEvent.addToCalendar'));
 
           cy.viewport('iphone-6');
 
