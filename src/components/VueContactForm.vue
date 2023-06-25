@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
   name: 'ContactForm',
   emits: ['formSubmit'],
   setup(props, { emit }) {
+
     const contactForm = reactive({
       subject: '',
       message: '',
@@ -16,14 +17,14 @@ export default defineComponent({
       emit('formSubmit');
 
       // TODO: add api call
-    };
+    }
 
     return {
       contactForm,
       onSubmit,
-    };
-  },
-});
+    }
+  }
+})
 </script>
 
 <template>
@@ -39,7 +40,8 @@ export default defineComponent({
         lazy-rules
         :rules="[
           (val) =>
-            (val && val.length > 0) || $t('index.contact.subjectRequired'),
+            (val && val.length > 0) ||
+            $t('index.contact.subjectRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -58,7 +60,8 @@ export default defineComponent({
         type="textarea"
         :rules="[
           (val) =>
-            (val && val.length > 0) || $t('index.contact.messageRequired'),
+            (val && val.length > 0) ||
+            $t('index.contact.messageRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -92,7 +95,9 @@ export default defineComponent({
         type="email"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || $t('index.contact.emailRequired'),
+          (val) =>
+            (val && val.length > 0) ||
+            $t('index.contact.emailRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -112,9 +117,3 @@ export default defineComponent({
     </div>
   </q-form>
 </template>
-
-<style scoped>
-form :deep(.q-field__control) {
-  border-radius: 8px;
-}
-</style>
