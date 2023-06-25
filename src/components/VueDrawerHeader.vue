@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 
 // components
 import VueMenuLinks from './VueMenuLinks.vue';
