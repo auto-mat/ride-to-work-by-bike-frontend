@@ -164,7 +164,7 @@ export default defineComponent({
                 <div class="flex items-center no-wrap">
                   <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
                   <div class="text-center">
-                    {{ $t('index.event.addToCalendar') }}
+                    {{ $t('index.cardEvent.addToCalendar') }}
                   </div>
                 </div>
               </q-btn>
