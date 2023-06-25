@@ -1,5 +1,4 @@
 import VueListFaq from 'components/VueListFaq.vue';
-import { i18n } from '../../boot/i18n';
 
 describe('<VueListFaq>', () => {
   const title = 'Participants';
