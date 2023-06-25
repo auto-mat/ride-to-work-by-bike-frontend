@@ -117,7 +117,7 @@ export default defineComponent({
   <div>
     <h4
       class="text-h5 text-weight-bold q-my-none q-px-md"
-      data-cy="title-participants"
+      data-cy="list-faq-title"
     >
       {{ title }}
     </h4>
