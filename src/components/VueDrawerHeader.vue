@@ -1,15 +1,17 @@
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 
 // import components
 import VueMenuLinks from "./VueMenuLinks.vue"
 import VueListFaq from './VueListFaq.vue';
+import VueContactForm from './VueContactForm.vue';
 
 export default defineComponent({
   name: 'VueDrawerHeader',
   components: {
     VueMenuLinks,
     VueListFaq,
+    VueContactForm,
   },
   props: {
     showLogo: {
@@ -41,19 +43,17 @@ export default defineComponent({
       },
     });
 
-    const contactForm = reactive({
-      subject: '',
-      message: '',
-      file: null,
-      email: '',
-    });
+    const resetDialog = () => {
+      dialogOpened.value = false;
+      dialogState.value = 'default';
+    }
 
     return {
       classes,
       drawerOpened,
       dialogOpened,
       dialogState,
-      contactForm,
+      resetDialog,
     };
   },
 });
@@ -105,7 +105,7 @@ export default defineComponent({
       data-cy="dialog-help"
       class="dialog-help"
     >
-      <q-card class="relative-position overflow-visible bg-white">
+      <q-card class="w-100 relative-position overflow-visible bg-white">
         <q-card-section
           data-cy="dialog-header"
           class="flex items-center gap-12"
@@ -187,94 +187,7 @@ export default defineComponent({
           style="max-height: 50vh"
           data-cy="dialog-content"
         >
-          <q-form class="q-gutter-md">
-            <div class="q-mt-lg" data-cy="contact-form-subject">
-              <label for="contact-form-subject" class="text-caption text-bold">
-                {{ $t('index.contact.subject') }}
-              </label>
-              <q-input
-                v-model="contactForm.subject"
-                id="contact-form-subject"
-                name="subject"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) ||
-                    $t('index.contact.subjectRequired'),
-                ]"
-                class="q-mt-sm"
-                outlined
-                dense
-                data-cy="contact-form-subject-input"
-              />
-            </div>
-            <div class="q-mt-none" data-cy="contact-form-message">
-              <label for="contact-form-message" class="text-caption text-bold">
-                {{ $t('index.contact.message') }}
-              </label>
-              <q-input
-                v-model="contactForm.message"
-                id="contact-form-message"
-                name="message"
-                type="textarea"
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) ||
-                    $t('index.contact.messageRequired'),
-                ]"
-                class="q-mt-sm"
-                outlined
-                dense
-                data-cy="contact-form-message-input"
-              />
-            </div>
-            <div data-cy="contact-form-file">
-              <q-file
-                v-model="contactForm.file"
-                :label="$t('index.contact.file')"
-                label-color="black"
-                class="file-input text-body2 text-uppercase"
-                borderless
-                dense
-                data-cy="contact-form-file-input"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="attachment" color="black" size="xs" />
-                </template>
-              </q-file>
-            </div>
-            <div class="q-mt-none" data-cy="contact-form-email">
-              <label for="contact-form-email" class="text-caption text-bold">
-                {{ $t('index.contact.email') }}
-              </label>
-              <q-input
-                v-model="contactForm.email"
-                id="contact-form-email"
-                name="email"
-                type="email"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) ||
-                    $t('index.contact.emailRequired'),
-                ]"
-                class="q-mt-sm"
-                outlined
-                dense
-                data-cy="contact-form-email-input"
-              />
-            </div>
-            <div class="flex justify-end">
-              <q-btn
-                :label="$t('index.contact.submit')"
-                type="submit"
-                color="black"
-                rounded
-                unelevated
-                data-cy="contact-form-submit"
-              />
-            </div>
-          </q-form>
+          <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
         </q-card-section>
 
         <q-card-actions
@@ -302,6 +215,10 @@ export default defineComponent({
 
 .gap-x-24 {
   column-gap: 24px;
+}
+
+.w-100 {
+  width: 100%;
 }
 
 .logo {
