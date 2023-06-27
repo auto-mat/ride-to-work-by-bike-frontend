@@ -8,7 +8,8 @@ describe('<VueDrawerHeader>', () => {
 
   it('has translation for all strings', () => {
     const translationStrings = [
-      'title',
+      'titleStateDefault',
+      'titleStateContact',
       'titleParticipants',
       'titleCoordinators',
       'titleGuide',
@@ -88,9 +89,9 @@ describe('<VueDrawerHeader>', () => {
             .should('be.visible')
             .should('have.css', 'font-size', '20px')
             .should('have.css', 'font-weight', '500')
-            .should('contain', i18n.global.t('index.help.title'))
+            .should('contain', i18n.global.t('index.help.titleStateDefault'))
             .then(($title) => {
-              expect($title.text()).to.equal(i18n.global.t('index.help.title'));
+              expect($title.text()).to.equal(i18n.global.t('index.help.titleStateDefault'));
             });
         });
     });
