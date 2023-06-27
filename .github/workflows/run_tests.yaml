@@ -153,6 +153,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Archive runned cypress tests result
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: cypress-tests-result
+          path: test/*
+
   push-docker-img:
     if: github.event.pull_request.merged == true || github.event.push.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
