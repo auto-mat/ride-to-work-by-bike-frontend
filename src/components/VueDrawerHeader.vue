@@ -2,7 +2,7 @@
 import { defineComponent, ref, computed } from 'vue';
 
 // import components
-import VueMenuLinks from "./VueMenuLinks.vue"
+import VueMenuLinks from './VueMenuLinks.vue';
 import VueListFaq from './VueListFaq.vue';
 import VueContactForm from './VueContactForm.vue';
 
@@ -46,7 +46,7 @@ export default defineComponent({
     const resetDialog = () => {
       dialogOpened.value = false;
       dialogState.value = 'default';
-    }
+    };
 
     return {
       classes,
@@ -138,8 +138,15 @@ export default defineComponent({
           data-cy="dialog-content"
           style="max-height: 50vh"
         >
-          <vue-list-faq :title="$t('index.help.titleParticipants')" variant="participant"></vue-list-faq>
-          <vue-list-faq :title="$t('index.help.titleCoordinators')" variant="coordinator" class="q-mt-xl"></vue-list-faq>
+          <vue-list-faq
+            :title="$t('index.help.titleParticipants')"
+            variant="participant"
+          ></vue-list-faq>
+          <vue-list-faq
+            :title="$t('index.help.titleCoordinators')"
+            variant="coordinator"
+            class="q-mt-xl"
+          ></vue-list-faq>
 
           <div class="q-px-md q-mt-xl">
             <h4
@@ -177,8 +184,14 @@ export default defineComponent({
             />
           </div>
 
-          <vue-menu-links :title="$t('index.help.titleLinks')" variant="useful"></vue-menu-links>
-          <vue-menu-links :title="$t('index.help.titleSocials')" variant="social"></vue-menu-links>
+          <vue-menu-links
+            :title="$t('index.help.titleLinks')"
+            variant="useful"
+          ></vue-menu-links>
+          <vue-menu-links
+            :title="$t('index.help.titleSocials')"
+            variant="social"
+          ></vue-menu-links>
         </q-card-section>
 
         <q-card-section

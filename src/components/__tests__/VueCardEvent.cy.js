@@ -31,9 +31,7 @@ describe('<VueCardEvent>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = [
-      'addToCalendar',
-    ];
+    const translationStrings = ['addToCalendar'];
 
     const translationKeyList = translationStrings.map(
       (item) => `index.cardEvent.${item}`
