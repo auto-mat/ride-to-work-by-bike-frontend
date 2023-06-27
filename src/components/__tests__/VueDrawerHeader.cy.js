@@ -7,19 +7,21 @@ describe('<VueDrawerHeader>', () => {
   });
 
   it('has translation for all strings', () => {
-        'titleStateDefault',
-        'titleStateContact',
-        'titleParticipants',
-        'titleCoordinators',
-        'titleGuide',
-        'buttonGuide',
-        'titleContact',
-        'buttonContact',
-        'titleLinks',
-        'titleSocials',
-      ],
-      'index.help',
-      i18n
+    const translationStrings = [
+      'titleStateDefault',
+      'titleStateContact',
+      'titleParticipants',
+      'titleCoordinators',
+      'titleGuide',
+      'buttonGuide',
+      'titleContact',
+      'buttonContact',
+      'titleLinks',
+      'titleSocials',
+    ];
+
+    const translationKeyList = translationStrings.map(
+      (item) => `index.help.${item}`
     );
   });
 
