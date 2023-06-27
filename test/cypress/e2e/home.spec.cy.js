@@ -90,32 +90,13 @@ describe('Home page', () => {
 
     cy.dataCy('dialog-header').should('be.visible');
 
-    cy.dataCy('faq-participants')
+    cy.dataCy('list-faq-list')
       .find('.q-card')
       .each(($element) => {
         cy.wrap($element).should('not.be.visible');
       });
 
-    cy.dataCy('faq-participants')
-      .find('.q-expansion-item')
-      .each(($element) => {
-        cy.wrap($element).should('be.visible');
-
-        cy.wrap($element).click();
-
-        cy.wrap($element)
-          .find('.q-card__section')
-          .should('be.visible')
-          .should('not.be.empty');
-      });
-
-    cy.dataCy('faq-coordinators')
-      .find('.q-card')
-      .each(($element) => {
-        cy.wrap($element).should('not.be.visible');
-      });
-
-    cy.dataCy('faq-coordinators')
+    cy.dataCy('list-faq-list')
       .find('.q-expansion-item')
       .each(($element) => {
         cy.wrap($element).should('be.visible');
@@ -205,6 +186,27 @@ describe('Home page', () => {
         cy.dataCy('contact-form-subject')
           .find('.q-field__control')
           .should('not.have.class', 'text-negative');
+
+        cy.dataCy('dialog-content').scrollTo('bottom');
+
+        cy.dataCy('contact-form-submit').should('be.visible').click();
+
+        cy.dataCy('dialog-content').scrollTo('top');
+
+        cy.dataCy('contact-form-message')
+          .find('.q-field__messages')
+          .should('be.visible')
+          .should('contain', i18n.global.t('index.contact.messageRequired'));
+
+        cy.dataCy('contact-form-message')
+          .find('.q-field__control')
+          .should('have.class', 'text-negative');
+
+        cy.dataCy('contact-form-message-input')
+          .should('be.visible')
+          .type('what is the minimum distance to ride to work?');
+
+        cy.dataCy('dialog-content').scrollTo('bottom');
 
         cy.dataCy('contact-form-submit').should('be.visible').click();
 
