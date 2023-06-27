@@ -23,10 +23,7 @@ describe('<VueCardChallenge>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = [
-      'dates',
-      'company',
-    ];
+    const translationStrings = ['dates', 'company'];
 
     const translationKeyList = translationStrings.map(
       (item) => `index.cardChallenge.${item}`
