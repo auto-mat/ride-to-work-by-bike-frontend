@@ -6,11 +6,11 @@ export default defineComponent({
   name: 'VueMenuLinks',
   props: {
     title: {
-      type: String
+      type: String,
     },
     variant: {
-      type: String as () => 'social' | 'useful'
-    }
+      type: String as () => 'social' | 'useful',
+    },
   },
   setup(props) {
     const itemsSocialLinks = [
@@ -61,19 +61,19 @@ export default defineComponent({
 
     const items = computed(() => {
       if (props.variant === 'social') {
-        return itemsSocialLinks
+        return itemsSocialLinks;
       }
       if (props.variant === 'useful') {
-        return itemsUsefulLinks
+        return itemsUsefulLinks;
       }
-      return []
-    })
+      return [];
+    });
 
     return {
-      items
-    }
-  }
-})
+      items,
+    };
+  },
+});
 </script>
 
 <template>
@@ -92,19 +92,12 @@ export default defineComponent({
         class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
         data-cy="button-menu-links"
       >
-        <q-icon
-          :name="item.icon"
-          size="xs"
-          color="blue-grey-3"
-        ></q-icon>
-        <span class="inline-block text-black q-pl-sm">{{
-          item.title
-        }}</span>
+        <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
+        <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
       </q-btn>
     </div>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 .gap-x-24 {
