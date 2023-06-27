@@ -167,6 +167,7 @@ jobs:
         with:
           name: cypress-tests-result
           path: test/*
+          retention-days: 3
 
   push-docker-img:
     if: github.event.pull_request.merged == true || github.event.push.ref == 'refs/heads/main'
