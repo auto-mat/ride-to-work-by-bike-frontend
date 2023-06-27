@@ -1,17 +1,17 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   name: 'VueListFaq',
   props: {
     title: {
-      type: String
+      type: String,
     },
     variant: {
-      type: String as () => 'participant' | 'coordinator'
-    }
+      type: String as () => 'participant' | 'coordinator',
+    },
   },
-  setup (props) {
+  setup(props) {
     const dummyText =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
@@ -98,19 +98,19 @@ export default defineComponent({
 
     const items = computed(() => {
       if (props.variant === 'participant') {
-        return itemsFAQParticipant
+        return itemsFAQParticipant;
       }
       if (props.variant === 'coordinator') {
-        return itemsFAQCoordinator
+        return itemsFAQCoordinator;
       }
-      return []
-    })
+      return [];
+    });
 
     return {
-      items
-    }
-  }
-})
+      items,
+    };
+  },
+});
 </script>
 
 <template>

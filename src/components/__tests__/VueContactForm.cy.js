@@ -63,21 +63,21 @@ describe('<VueContactForm>', () => {
       .find('.q-field__control')
       .should('be.visible')
       .should('have.css', 'border-radius', '8px');
-  })
+  });
 
   it('should render contact-form-file field', () => {
     cy.dataCy('contact-form-file')
       .find('i.q-icon')
       .should('be.visible')
-      .should('contain', 'attachment')
+      .should('contain', 'attachment');
 
     cy.dataCy('contact-form-file')
       .find('.q-field__label')
       .should('be.visible')
       .should('have.css', 'font-size', '14px')
       .should('have.color', '#000')
-      .should('have.text', i18n.global.t('index.contact.file'))
-  })
+      .should('have.text', i18n.global.t('index.contact.file'));
+  });
 
   it('should render contact-form-email field', () => {
     cy.dataCy('contact-form-email')
@@ -90,7 +90,7 @@ describe('<VueContactForm>', () => {
       .find('.q-field__control')
       .should('be.visible')
       .should('have.css', 'border-radius', '8px');
-  })
+  });
 
   it('should render a submit button', () => {
     cy.dataCy('contact-form-submit')
@@ -98,5 +98,5 @@ describe('<VueContactForm>', () => {
       .should('have.css', 'border-radius', '28px')
       .should('have.backgroundColor', '#000')
       .should('have.text', i18n.global.t('index.contact.submit'));
-  })
+  });
 });
