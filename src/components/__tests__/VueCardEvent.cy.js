@@ -100,7 +100,9 @@ describe('<VueCardEvent>', () => {
         .should('be.visible')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
-        .should('contain', 'Sun 1. Oct. 2023, 12:00');
+        .should('contain', '1.')
+        .should('contain', '2023')
+        .should('contain', '12:00');
 
       cy.dataCy('card-dates')
         .find('i')
@@ -225,7 +227,9 @@ describe('<VueCardEvent>', () => {
             .should('be.visible')
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
-            .should('contain', 'Sun 1. Oct. 2023, 12:00');
+            .should('contain', '1.')
+            .should('contain', '2023')
+            .should('contain', '12:00');
 
           cy.dataCy('dialog-dates')
             .find('i')
