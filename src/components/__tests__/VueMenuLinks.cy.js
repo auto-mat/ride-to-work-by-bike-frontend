@@ -55,9 +55,10 @@ describe('<VueMenuLinks>', () => {
       .should('have.backgroundColor', '#eceff1')
       .should('have.css', 'border-radius', '28px')
       .should('have.css', 'margin-top', '16px')
-      .find('.q-btn__content span').then($el => {
-        cy.wrap($el).should('have.color', '#000')
-    });
+      .find('.q-btn__content span')
+      .then(($el) => {
+        cy.wrap($el).should('have.color', '#000');
+      });
   });
 
   it('renders link buttons with correct styling (useful links variant)', () => {
@@ -77,11 +78,11 @@ describe('<VueMenuLinks>', () => {
       .should('have.backgroundColor', '#eceff1')
       .should('have.css', 'border-radius', '28px')
       .should('have.css', 'margin-top', '16px')
-      .find('.q-btn__content span').then($el => {
-        cy.wrap($el).should('have.color', '#000')
-    });
+      .find('.q-btn__content span')
+      .then(($el) => {
+        cy.wrap($el).should('have.color', '#000');
+      });
   });
 
   // TODO: Check for icons
-
 });
