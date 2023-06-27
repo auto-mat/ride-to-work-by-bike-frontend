@@ -214,6 +214,7 @@ export default defineComponent({
           v-if="dialogState === 'contact'"
           class="scroll"
           style="max-height: 50vh"
+          data-cy="dialog-content"
           data-cy="dialog-body"
         >
           <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
