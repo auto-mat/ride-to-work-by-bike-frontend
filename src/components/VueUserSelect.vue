@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="user-select">
+  <div class="user-select" data-cy="user-select">
     <q-select
       rounded
       standout
