@@ -91,7 +91,9 @@ describe('<VueDrawerHeader>', () => {
             .should('have.css', 'font-weight', '500')
             .should('contain', i18n.global.t('index.help.titleStateDefault'))
             .then(($title) => {
-              expect($title.text()).to.equal(i18n.global.t('index.help.titleStateDefault'));
+              expect($title.text()).to.equal(
+                i18n.global.t('index.help.titleStateDefault')
+              );
             });
         });
     });

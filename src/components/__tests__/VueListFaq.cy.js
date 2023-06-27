@@ -32,10 +32,7 @@ describe('<VueListFaq>', () => {
       .should('have.css', 'font-size', '14px')
       .should('have.css', 'font-weight', '400');
 
-    cy.dataCy('list-faq-list')
-      .find('.q-card')
-      .first()
-      .should('not.be.visible');
+    cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
 
     cy.dataCy('list-faq-list')
       .find('.q-item')
@@ -67,10 +64,7 @@ describe('<VueListFaq>', () => {
       .should('have.css', 'font-size', '14px')
       .should('have.css', 'font-weight', '400');
 
-    cy.dataCy('list-faq-list')
-      .find('.q-card')
-      .first()
-      .should('not.be.visible');
+    cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
 
     cy.dataCy('list-faq-list')
       .find('.q-item')
@@ -87,5 +81,4 @@ describe('<VueListFaq>', () => {
           });
       });
   });
-
 });
