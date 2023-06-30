@@ -31,9 +31,9 @@ registerCommands();
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
-const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
+const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/
 Cypress.on('uncaught:exception', (err) => {
-  if (resizeObserverLoopErrRe.test(err.message)) {
-    return false;
+    if (resizeObserverLoopErrRe.test(err.message)) {
+    return false
   }
-});
+})
