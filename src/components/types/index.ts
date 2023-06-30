@@ -6,3 +6,5 @@ export * from './Countdown';
 export * from './Config';
 export * from './Faq';
 export * from './User';
+export * from './Offer';
+export * from './Link';

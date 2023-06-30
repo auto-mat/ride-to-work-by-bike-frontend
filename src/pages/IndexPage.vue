@@ -155,12 +155,31 @@ export default defineComponent({
       },
     ];
 
+    const cardsOffer: Offer[] = [
+      {
+        title: '100 CZK voucher do e-shopu Automatu',
+        expirationDate: new Date('2023-10-01T12:00:00'),
+        issuer: 'Automat',
+        image: 'https://picsum.photos/380/380',
+        code: '65972834',
+        link: {
+          title: 'Navštívit e-shop',
+          url: '#',
+          target: '_blank',
+        },
+        icon: 'pedal_bike',
+        content:
+          'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.',
+      },
+    ];
+
     return {
       releaseDate,
       cards,
       banner,
       headingBgTitle,
       cardsEvent,
+      cardsOffer,
     };
   },
 });
