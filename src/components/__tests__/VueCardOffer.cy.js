@@ -3,7 +3,7 @@ import { i18n } from '../../boot/i18n';
 
 describe('<VueCardOffer>', () => {
   const title = '100 CZK voucher do e-shopu Automatu';
-  const expirationDate = new Date('2023-10-01T12:00:00');
+  const expirationDate = 'Platí po dobu výzvy (1. říj.–31. říj. 2022)';
   const issuer = 'Automat';
   const image = 'https://picsum.photos/380/380';
   const code = '65972834';
@@ -93,63 +93,113 @@ describe('<VueCardOffer>', () => {
     });
   });
 
-  // it('shows modal dialog on click', () => {
-  //   cy.window().then(() => {
-  //     cy.dataCy('card-link')
-  //       .click()
-  //       .then(() => {
-  //         cy.dataCy('card-dialog').should('be.visible');
-  //       });
-  //   });
-  // });
+  it('has border', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .should('have.css', 'border', '1px solid rgba(0, 0, 0, 0.12)');
+    });
+  });
 
-  // it('shows modal title, location and date', () => {
-  //   cy.window().then(() => {
-  //     cy.dataCy('card-link')
-  //       .click()
-  //       .then(() => {
-  //         cy.dataCy('dialog-header')
-  //           .find('h3')
-  //           .should('be.visible')
-  //           .should('have.css', 'font-size', '20px')
-  //           .should('have.css', 'font-weight', '500')
-  //           .should('contain', title)
-  //           .then(($title) => {
-  //             expect($title.text()).to.equal(title);
-  //           });
+  it('shows modal dialog on click', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('card-dialog').should('be.visible');
+        });
+    });
+  });
 
-  //         cy.dataCy('dialog-dates')
-  //           .should('be.visible')
-  //           .should('have.css', 'font-size', '14px')
-  //           .should('have.css', 'font-weight', '400')
-  //           .should('contain', '1.')
-  //           .should('contain', '2023')
-  //           .should('contain', '12:00');
+  it('shows modal with title', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-header')
+            .find('h3')
+            .should('be.visible')
+            .should('have.css', 'font-size', '20px')
+            .should('have.css', 'font-weight', '500')
+            .should('contain', title)
+            .then(($title) => {
+              expect($title.text()).to.equal(title);
+            });
+        });
+    });
+  });
 
-  //         cy.dataCy('dialog-dates')
-  //           .find('i')
-  //           .should('be.visible')
-  //           .should('have.color', '#cfd8dc')
-  //           .should('contain', 'event');
+  it('shows modal with date', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-date')
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('have.color', '#546e7a')
+            .should('contain', expirationDate)
+            .find('i')
+            .should('be.visible')
+            .should('have.color', '#b0bec5');
+        });
+    });
+  });
 
-  //         cy.dataCy('dialog-location')
-  //           .should('be.visible')
-  //           .should('have.css', 'font-size', '14px')
-  //           .should('have.css', 'font-weight', '400')
-  //           .should('contain', location);
+  it('shows modal with category', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-issuer')
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('have.color', '#546e7a')
+            .should('contain', issuer)
+            .find('i')
+            .should('be.visible')
+            .should('have.color', '#b0bec5');
+        });
+    });
+  });
 
-  //         cy.dataCy('dialog-location')
-  //           .find('i')
-  //           .should('be.visible')
-  //           .should('have.color', '#cfd8dc')
-  //           .should('contain', 'place');
-  //       });
-  //   });
-  // });
+  it('shows modal content', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-content')
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('have.color', '#000000')
+            .should('contain', content);
+        });
+    });
+  });
+
+  it('shows modal image', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .click()
+        .then(() => {
+          cy.dataCy('dialog-content')
+            .scrollTo('bottom')
+            .find('img')
+            .should('be.visible')
+            .then(($img) => {
+              const naturalHeight = $img[0].naturalHeight;
+              expect(naturalHeight).to.be.greaterThan(0);
+              expect($img.attr('src')).to.equal(image);
+            });
+        });
+    });
+  });
 
   // it('shows content with image and action button with correct layout', () => {
   //   cy.window().then(() => {
-  //     cy.dataCy('card-link')
+  //     cy.dataCy('card-offer')
   //       .click()
   //       .then(() => {
   //         cy.dataCy('dialog-text')
