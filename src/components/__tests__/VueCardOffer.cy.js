@@ -169,7 +169,7 @@ describe('<VueCardOffer>', () => {
       cy.dataCy('card-offer')
         .click()
         .then(() => {
-          cy.dataCy('dialog-content')
+          cy.dataCy('dialog-body')
             .should('be.visible')
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
@@ -184,7 +184,7 @@ describe('<VueCardOffer>', () => {
       cy.dataCy('card-offer')
         .click()
         .then(() => {
-          cy.dataCy('dialog-content')
+          cy.dataCy('dialog-body')
             .scrollTo('bottom')
             .find('img')
             .should('be.visible')
@@ -202,13 +202,13 @@ describe('<VueCardOffer>', () => {
   //     cy.dataCy('card-offer')
   //       .click()
   //       .then(() => {
-  //         cy.dataCy('dialog-text')
+  //         cy.dataCy('dialog-content')
   //           .should('be.visible')
   //           .should('contain', 'We want to reward you for your support')
   //           .should('have.css', 'font-size', '14px')
   //           .should('have.css', 'font-weight', '400');
 
-  //         cy.dataCy('dialog-content')
+  //         cy.dataCy('dialog-body')
   //           .scrollTo('bottom')
   //           .find('img')
   //           .should('be.visible')
@@ -218,7 +218,7 @@ describe('<VueCardOffer>', () => {
   //             expect($img.attr('src')).to.equal(image);
   //           });
 
-  //         cy.dataCy('dialog-content')
+  //         cy.dataCy('dialog-body')
   //           .scrollTo('center')
   //           .find('.q-btn')
   //           .should('be.visible')
@@ -229,7 +229,7 @@ describe('<VueCardOffer>', () => {
 
   //         cy.viewport('iphone-6');
 
-  //         cy.dataCy('dialog-content')
+  //         cy.dataCy('dialog-body')
   //           .find('.col-12')
   //           .then(($element) => {
   //             expect(calculatePercentageWidth($element)).to.be.closeTo(
@@ -240,7 +240,7 @@ describe('<VueCardOffer>', () => {
 
   //         cy.viewport('macbook-13');
 
-  //         cy.dataCy('dialog-content')
+  //         cy.dataCy('dialog-body')
   //           .find('.col-12')
   //           .first()
   //           .then(($element) => {

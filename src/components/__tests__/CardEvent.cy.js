@@ -263,13 +263,13 @@ describe('<CardEvent>', () => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
-          cy.dataCy('dialog-text')
+          cy.dataCy('dialog-content')
             .should('be.visible')
             .should('contain', 'We want to reward you for your support')
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400');
 
-          cy.dataCy('dialog-content')
+          cy.dataCy('dialog-body')
             .scrollTo('bottom')
 
           cy.dataCy('dialog-image')
