@@ -87,14 +87,14 @@ export default defineComponent({
         <q-card-section
           horizontal
           class="scroll"
-          data-cy="dialog-content"
+          data-cy="dialog-body"
           style="max-height: 50vh; flex-wrap: wrap"
         >
           <div class="col-12 col-md-6 q-px-md q-py-md">
             <div
               v-if="card?.content"
               v-html="card?.content"
-              data-cy="dialog-text"
+              data-cy="dialog-content"
             ></div>
           </div>
           <div class="col-12 col-md-6 q-px-md q-py-md">

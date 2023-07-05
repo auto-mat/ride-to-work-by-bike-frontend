@@ -105,7 +105,7 @@ describe('<VueDrawerHeader>', () => {
         .click()
         .then(() => {
           // TODO: Find if you can calculate height exact height of the sections
-          cy.dataCy('dialog-content').scrollTo(0, 1060);
+          cy.dataCy('dialog-body').scrollTo(0, 1060);
 
           cy.dataCy('title-guide')
             .should('be.visible')
