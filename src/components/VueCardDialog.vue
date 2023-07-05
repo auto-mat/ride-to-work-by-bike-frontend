@@ -40,15 +40,16 @@ export default defineComponent({
         </h3>
         <div
           v-if="dialog.meta.length"
-          class="meta flex items-center q-mt-sm"
+          class="meta flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm"
         >
           <div
             v-for="item in dialog.meta"
             :key="item.description"
-            class="dates flex items-center text-blue-grey-7 q-pr-md"
-            data-cy="dialog-date"
+            class="flex items-center text-blue-grey-7"
+            data-cy="dialog-meta"
           >
             <q-icon
+              v-if="item.icon"
               :name="item.icon"
               size="sm"
               class="q-pr-xs"
@@ -83,17 +84,40 @@ export default defineComponent({
       </q-card-section>
 
       <q-card-actions
-        class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
-        data-cy="dialog-close"
+        class="dialog-close__wrapper inline-block absolute-top-right q-px-none q-py-none"
       >
         <q-btn
           v-close-popup
           round
-          color="blue-grey-8"
+          unelevated
+          color="blue-grey-1"
           icon="close"
-          class="bg-blue-grey-2"
+          class="dialog-close text-grey-10"
+          data-cy="dialog-close"
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
+
+<style lang="scss" scoped>
+.q-dialog__inner > div {
+  overflow: visible !important;
+}
+.gap-y-8 {
+  row-gap: 8px;
+}
+.gap-x-32 {
+  column-gap: 32px;
+}
+.dialog-close__wrapper {
+  top: -19px;
+  right: -19px;
+}
+.dialog-close {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+}
+</style>
