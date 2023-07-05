@@ -135,7 +135,7 @@ export default defineComponent({
         <q-card-section
           v-if="dialogState === 'default'"
           class="scroll q-px-none"
-          data-cy="dialog-content"
+          data-cy="dialog-body"
           style="max-height: 50vh"
         >
           <vue-list-faq
@@ -198,7 +198,7 @@ export default defineComponent({
           v-if="dialogState === 'contact'"
           class="scroll"
           style="max-height: 50vh"
-          data-cy="dialog-content"
+          data-cy="dialog-body"
         >
           <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
         </q-card-section>
