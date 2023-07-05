@@ -2,7 +2,7 @@ import { Link } from './Link';
 
 export interface Offer {
   title: string;
-  expirationDate: Date;
+  expirationDate: string;
   issuer: string;
   image: string;
   code: string;
