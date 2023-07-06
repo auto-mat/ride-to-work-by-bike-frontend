@@ -69,6 +69,21 @@ export default defineComponent({
       >
         <div v-if="dialog.content" class="col-12 col-md-6 q-px-md q-py-md">
           <div v-html="dialog.content" data-cy="dialog-content"></div>
+          <q-btn
+            v-if="dialog.calendar"
+            color="black"
+            unelevated
+            rounded
+            class="q-mt-md"
+            data-cy="dialog-button"
+          >
+            <div class="flex items-center no-wrap">
+              <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
+              <div class="text-center">
+                {{ $t('index.cardEvent.addToCalendar') }}
+              </div>
+            </div>
+          </q-btn>
         </div>
         <div v-if="dialog.image" class="col-12 col-md-6 q-px-md q-py-md">
           <q-img :src="dialog.image" :ratio="1" data-cy="dialog-image" />
