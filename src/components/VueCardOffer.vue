@@ -39,9 +39,9 @@ export default defineComponent({
         code: '65972834',
         link: {
           title: 'Navštívit e-shop',
-          url: 'https://www.nextbike.de/en/'
+          url: 'https://www.nextbike.de/en/',
         },
-      }
+      },
     };
 
     return {

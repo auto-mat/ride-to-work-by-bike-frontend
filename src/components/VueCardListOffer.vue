@@ -22,24 +22,32 @@ export default defineComponent({
     const maxCards = 6;
     const renderedCards = computed(() => {
       return props.cards.slice(0, maxCards);
-    })
+    });
 
     const hasMoreCards = computed(() => {
       return props.cards.length > maxCards;
-    })
+    });
 
     return {
       renderedCards,
       hasMoreCards,
-    }
-  }
+    };
+  },
 });
 </script>
 
 <template>
   <div>
-    <div class="grid grid-cols-2 grid-cols-md-3 gap-x-24 gap-y-16" data-cy="card-list-offer">
-      <vue-card-offer v-for="card in renderedCards" :key="card.title" :card="card" data-cy="card-list-offer-item">
+    <div
+      class="grid grid-cols-2 grid-cols-md-3 gap-x-24 gap-y-16"
+      data-cy="card-list-offer"
+    >
+      <vue-card-offer
+        v-for="card in renderedCards"
+        :key="card.title"
+        :card="card"
+        data-cy="card-list-offer-item"
+      >
       </vue-card-offer>
     </div>
     <div v-if="hasMoreCards" class="text-center">
