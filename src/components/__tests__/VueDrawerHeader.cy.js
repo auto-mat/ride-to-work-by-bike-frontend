@@ -7,21 +7,20 @@ describe('<VueDrawerHeader>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = [
-      'titleStateDefault',
-      'titleStateContact',
-      'titleParticipants',
-      'titleCoordinators',
-      'titleGuide',
-      'buttonGuide',
-      'titleContact',
-      'buttonContact',
-      'titleLinks',
-      'titleSocials',
-    ];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.help.${item}`
+    cy.testLanguageStringsInContext(
+      [
+        'titleStateDefault',
+        'titleStateContact',
+        'titleParticipants',
+        'titleCoordinators',
+        'titleGuide',
+        'buttonGuide',
+        'titleContact',
+        'buttonContact',
+        'titleLinks',
+        'titleSocials',
+      ],
+      'index.help'
     );
   });
 
