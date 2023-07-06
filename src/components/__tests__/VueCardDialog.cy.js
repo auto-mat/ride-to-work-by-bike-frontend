@@ -13,7 +13,8 @@ describe('<VueCardDialog>', () => {
       description: 'Automat',
     },
   ];
-  const content = '';
+  const content =
+    'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu, včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.';
   const image = 'https://picsum.photos/id/100/500/550';
 
   context('desktop', () => {
@@ -30,7 +31,7 @@ describe('<VueCardDialog>', () => {
         },
       });
       cy.viewport('macbook-13');
-    })
+    });
 
     it('shows title', () => {
       cy.window().then(() => {
@@ -54,17 +55,18 @@ describe('<VueCardDialog>', () => {
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#546e7a')
           .each(($el, index, $list) => {
-            cy.wrap($el)
-              .should('contain', meta[index].description);
+            cy.wrap($el).should('contain', meta[index].description);
 
             const $icon = $el.find('i');
             if ($icon.length) {
               cy.wrap($icon)
                 .should('be.visible')
                 .should('have.color', '#b0bec5')
+                .should('have.css', 'width', '18px')
+                .should('have.css', 'height', '18px')
                 .should('contain', meta[index].icon);
             }
-          })
+          });
       });
     });
 
@@ -99,11 +101,10 @@ describe('<VueCardDialog>', () => {
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
           .should('have.backgroundColor', '#eceff1')
-          .should('have.color', '#212121')
+          .should('have.color', '#212121');
       });
     });
   });
-
 
   context('mobile', () => {
     beforeEach(() => {
@@ -119,7 +120,7 @@ describe('<VueCardDialog>', () => {
         },
       });
       cy.viewport('iphone-6');
-    })
+    });
 
     it('shows title', () => {
       cy.window().then(() => {
@@ -143,17 +144,18 @@ describe('<VueCardDialog>', () => {
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#546e7a')
           .each(($el, index, $list) => {
-            cy.wrap($el)
-              .should('contain', meta[index].description);
+            cy.wrap($el).should('contain', meta[index].description);
 
             const $icon = $el.find('i');
             if ($icon.length) {
               cy.wrap($icon)
                 .should('be.visible')
                 .should('have.color', '#b0bec5')
+                .should('have.css', 'width', '18px')
+                .should('have.css', 'height', '18px')
                 .should('contain', meta[index].icon);
             }
-          })
+          });
       });
     });
 
@@ -188,9 +190,8 @@ describe('<VueCardDialog>', () => {
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
           .should('have.backgroundColor', '#eceff1')
-          .should('have.color', '#212121')
+          .should('have.color', '#212121');
       });
     });
   });
-
 });

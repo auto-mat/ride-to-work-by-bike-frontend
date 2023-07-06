@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
   name: 'VueCardDialog',
@@ -8,32 +8,31 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    opened: {
+    modelValue: {
       type: Boolean,
       required: true,
-    }
+    },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
     const modalOpened = computed({
-      get() {
-        return props.opened
+      get: () => props.modelValue,
+      set: (value) => {
+        emit('update:modelValue', value);
+        emit('change');
       },
-      set(value) {
-        emit('update:modelValue', value)
-      }
-    })
+    });
 
     return {
-      modalOpened
-    }
-  }
-})
+      modalOpened,
+    };
+  },
+});
 </script>
 
 <template>
   <q-dialog v-model="modalOpened" square data-cy="card-dialog">
-    <q-card class="relative-position overflow-visible">
+    <q-card class="relative-position overflow-visible bg-white">
       <q-card-section class="q-pt-none" data-cy="dialog-header">
         <h3 v-if="dialog.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
           {{ dialog.title }}
@@ -51,7 +50,7 @@ export default defineComponent({
             <q-icon
               v-if="item.icon"
               :name="item.icon"
-              size="sm"
+              size="18px"
               class="q-pr-xs"
               color="blue-grey-3"
             />
@@ -64,22 +63,15 @@ export default defineComponent({
 
       <q-card-section
         horizontal
-        class="scroll"
+        class="scroll items-center"
         data-cy="dialog-body"
         style="max-height: 50vh; flex-wrap: wrap"
       >
         <div v-if="dialog.content" class="col-12 col-md-6 q-px-md q-py-md">
-          <div
-            v-html="dialog.content"
-            data-cy="dialog-content"
-          ></div>
+          <div v-html="dialog.content" data-cy="dialog-content"></div>
         </div>
         <div v-if="dialog.image" class="col-12 col-md-6 q-px-md q-py-md">
-          <q-img
-            :src="dialog.image"
-            :ratio="1"
-            data-cy="dialog-image"
-          />
+          <q-img :src="dialog.image" :ratio="1" data-cy="dialog-image" />
         </div>
       </q-card-section>
 
