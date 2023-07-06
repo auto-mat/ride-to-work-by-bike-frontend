@@ -97,3 +97,10 @@ addToCalendar = "Add to calendar"
 
 [index.headingBackground]
 imageAltText = "background image depicting urban community"
+
+[index.cardListOffer]
+allOffers = "All {count} offers"
+
+[index.cardOffer]
+unlimitedExpirationDate = "Unlimited validity"
+offerCode = "Voucher code"
