@@ -7,7 +7,7 @@ export interface DialogCard {
   content: string;
   calendar?: boolean;
   voucher?: {
-    code: string,
-    link: Link,
+    code: string;
+    link: Link;
   };
 }
