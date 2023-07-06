@@ -34,7 +34,7 @@ export default defineComponent({
           description: eventDateTime.value,
         },
         {
-          icon: 'location',
+          icon: 'place',
           description: props.card.location
         }
       ],
