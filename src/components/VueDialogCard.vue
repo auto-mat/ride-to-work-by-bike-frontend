@@ -1,11 +1,14 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
+// import types
+import { DialogCard } from 'components/types';
+
 export default defineComponent({
   name: 'VueDialogCard',
   props: {
     dialog: {
-      type: Object,
+      type: Object as () => DialogCard,
       required: true,
     },
     modelValue: {
