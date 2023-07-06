@@ -5,7 +5,7 @@ import { defineComponent, ref } from 'vue';
 import VueDialogCard from 'components/VueDialogCard.vue';
 
 // import types
-import { Offer } from 'components/types';
+import { Offer, DialogCard } from 'components/types';
 
 export default defineComponent({
   name: 'VueCardOffer',
@@ -20,7 +20,8 @@ export default defineComponent({
   },
   setup(props) {
     const modalOpened = ref(false);
-    const modalDialog = {
+
+    const modalDialog: DialogCard = {
       title: props.card.title,
       meta: [
         {
@@ -34,6 +35,13 @@ export default defineComponent({
       ],
       content: props.card.content,
       image: props.card.image,
+      voucher: {
+        code: '65972834',
+        link: {
+          title: 'Navštívit e-shop',
+          url: 'https://www.nextbike.de/en/'
+        },
+      }
     };
 
     return {
