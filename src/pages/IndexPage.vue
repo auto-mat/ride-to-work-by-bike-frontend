@@ -148,9 +148,15 @@ export default defineComponent({
       icon: 'pedal_bike',
       content:
         'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.',
-    }
+    };
     const cardsOffer: Offer[] = [
-      cardOffer,cardOffer,cardOffer,cardOffer,cardOffer,cardOffer,cardOffer
+      cardOffer,
+      cardOffer,
+      cardOffer,
+      cardOffer,
+      cardOffer,
+      cardOffer,
+      cardOffer,
     ];
 
     return {
