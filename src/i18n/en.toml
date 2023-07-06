@@ -81,7 +81,7 @@ hours = "hours"
 minutes = "minutes"
 seconds = "seconds"
 
-[index.cardList]
+[index.cardListChallenge]
 title = "Future challenges"
 
 [index.cardChallenge]
