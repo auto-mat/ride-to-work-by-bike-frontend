@@ -51,7 +51,7 @@ hours = "hodin"
 minutes = "minut"
 seconds = "sekund"
 
-[index.cardList]
+[index.cardListChallenge]
 title = "Budoucí výzvy"
 
 [index.cardChallenge]
