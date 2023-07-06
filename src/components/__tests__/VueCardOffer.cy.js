@@ -1,5 +1,4 @@
 import VueCardOffer from 'components/VueCardOffer.vue';
-import { i18n } from '../../boot/i18n';
 
 describe('<VueCardOffer>', () => {
   const title = '100 CZK voucher do e-shopu Automatu';
@@ -34,27 +33,10 @@ describe('<VueCardOffer>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = ['unlimitedExpirationDate', 'offerCode'];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardOffer.${item}`
+    cy.testLanguageStringsInContext(
+      ['unlimitedExpirationDate', 'offerCode'],
+      'index.cardOffer'
     );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
   });
 
   it('renders card with icon and title', () => {
@@ -163,10 +145,4 @@ describe('<VueCardOffer>', () => {
         });
     });
   });
-
-  function calculatePercentageWidth($element, width) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = width ? width : $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });

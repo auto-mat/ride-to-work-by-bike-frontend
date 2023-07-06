@@ -7,38 +7,21 @@ describe('<VueDrawerHeader>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = [
-      'titleStateDefault',
-      'titleStateContact',
-      'titleParticipants',
-      'titleCoordinators',
-      'titleGuide',
-      'buttonGuide',
-      'titleContact',
-      'buttonContact',
-      'titleLinks',
-      'titleSocials',
-    ];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.help.${item}`
+    cy.testLanguageStringsInContext(
+      [
+        'titleStateDefault',
+        'titleStateContact',
+        'titleParticipants',
+        'titleCoordinators',
+        'titleGuide',
+        'buttonGuide',
+        'titleContact',
+        'buttonContact',
+        'titleLinks',
+        'titleSocials',
+      ],
+      'index.help'
     );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
   });
 
   it('renders logo', () => {

@@ -27,6 +27,7 @@
 // DO NOT REMOVE
 // Imports Quasar Cypress AE predefined commands
 import { registerCommands } from '@quasar/quasar-app-extension-testing-e2e-cypress';
+import { i18n } from '../../../src/boot/i18n';
 registerCommands();
 
 // Fix for ResizeObserver loop issue in Firefox
@@ -37,3 +38,28 @@ Cypress.on('uncaught:exception', (err) => {
     return false;
   }
 });
+
+Cypress.Commands.add(
+  'testLanguageStringsInContext',
+  (translationStrings, translationContext) => {
+    const translationKeyList = translationStrings.map(
+      (item) => `${translationContext}.${item}`
+    );
+
+    translationKeyList.forEach((translationKey) => {
+      const defaultEnglishString = i18n.global.t(translationKey, 'en');
+
+      const locales = i18n.global.availableLocales;
+      locales
+        .filter((locale) => locale !== 'en')
+        .forEach((locale) => {
+          i18n.global.locale = locale;
+          const translatedString = i18n.global.t(translationKey);
+
+          cy.wrap(translatedString)
+            .should('be.a', 'string')
+            .and('not.equal', defaultEnglishString);
+        });
+    });
+  }
+);

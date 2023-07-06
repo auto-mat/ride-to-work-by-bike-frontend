@@ -14,29 +14,10 @@ describe('Event Countdown', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationKeyList = [
-      'index.countdown.title',
-      'index.countdown.days',
-      'index.countdown.hours',
-      'index.countdown.minutes',
-      'index.countdown.seconds',
-    ];
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
+    cy.testLanguageStringsInContext(
+      ['title', 'days', 'hours', 'minutes', 'seconds'],
+      'index.countdown'
+    );
   });
 
   it('displays internationalized labels', () => {
