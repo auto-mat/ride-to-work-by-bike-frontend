@@ -6,3 +6,4 @@ export * from './Countdown';
 export * from './User';
 export * from './Offer';
 export * from './Link';
+export * from './DialogCard';
