@@ -21,7 +21,7 @@ describe('<CardEvent>', () => {
   ];
   const icons = [
     'event',
-    'location',
+    'place',
   ]
 
   beforeEach(() => {
