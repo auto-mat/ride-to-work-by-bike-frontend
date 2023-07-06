@@ -65,6 +65,9 @@ perex = "You can help us decide what to spend more time on next time and what sh
 [index.cardEvent]
 addToCalendar = "Pridať do kalendára"
 
+[index.cardListOffer]
+allOffers = "Všetkých {count} zliav"
+
 [index.cardOffer]
 unlimitedExpirationDate = "Neobmedzené obdobie platnosti"
 offerCode = "Kód kupónu"

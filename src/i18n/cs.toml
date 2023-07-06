@@ -65,6 +65,9 @@ perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co 
 [index.cardEvent]
 addToCalendar = "Přidat do kalendáře"
 
+[index.cardListOffer]
+allOffers = "Všech {count} slev"
+
 [index.cardOffer]
 unlimitedExpirationDate = "Neomezená doba platnosti"
 offerCode = "Kód voucheru"
