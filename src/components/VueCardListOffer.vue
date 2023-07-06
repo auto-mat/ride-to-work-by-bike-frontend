@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue';
 
 // import components
-import VueCardOffer from "./VueCardOffer.vue";
+import VueCardOffer from './VueCardOffer.vue';
 
 // import types
 import { Offer } from 'components/types';
@@ -14,10 +14,10 @@ export default defineComponent({
   },
   props: {
     cards: {
-      type: Array as () => Offer[]
-    }
-  }
-})
+      type: Array as () => Offer[],
+    },
+  },
+});
 </script>
 
 <template>

@@ -1,21 +1,45 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
+// import components
+import VueCardDialog from 'components/VueCardDialog.vue';
+
 // import types
 import { Offer } from 'components/types';
+import { createDOMEvent } from 'cypress/vue/dist/@vue/test-utils/createDomEvent';
 
 export default defineComponent({
   name: 'VueCardOffer',
+  components: {
+    VueCardDialog,
+  },
   props: {
     card: {
       type: Object as () => Offer,
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const modalOpened = ref(false);
+    const modalDialog = {
+      title: props.card.title,
+      meta: [
+        {
+          icon: 'event',
+          description: props.card.expirationDate,
+        },
+        {
+          icon: 'pedal_bike',
+          description: props.card.issuer,
+        },
+      ],
+      content: props.card.content,
+      image: props.card.image,
+    };
+
     return {
       modalOpened,
+      modalDialog,
     };
   },
 });
@@ -23,12 +47,14 @@ export default defineComponent({
 
 <template>
   <q-card
+    v-ripple
     data-cy="card-offer"
-    class="rounded-20 bg-white"
+    class="rounded-20 bg-white cursor-pointer q-hoverable"
     flat
     bordered
     @click.prevent="modalOpened = true"
   >
+    <span class="q-focus-helper"></span>
     <q-card-section horizontal class="q-px-12 q-py-md items-center">
       <q-card-section class="col-auto items-center">
         <q-icon
@@ -43,83 +69,10 @@ export default defineComponent({
       </q-card-section>
     </q-card-section>
 
-    <q-dialog v-model="modalOpened" square data-cy="card-dialog">
-      <q-card class="relative-position overflow-visible">
-        <q-card-section class="q-pt-none" data-cy="dialog-header">
-          <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
-            {{ card?.title }}
-          </h3>
-          <div
-            v-if="card?.expirationDate || card?.issuer"
-            class="meta flex items-center q-mt-sm"
-          >
-            <div
-              v-if="card.expirationDate"
-              class="dates flex items-center text-blue-grey-7 q-pr-md"
-              data-cy="dialog-date"
-            >
-              <q-icon
-                name="event"
-                size="sm"
-                class="q-pr-xs"
-                color="blue-grey-3"
-              />
-              {{ card.expirationDate }}
-            </div>
-            <div
-              v-if="card?.issuer"
-              class="location flex items-center text-blue-grey-7"
-              data-cy="dialog-issuer"
-            >
-              <q-icon
-                name="place"
-                size="sm"
-                class="q-pr-xs"
-                color="blue-grey-3"
-              />
-              {{ card?.issuer }}
-            </div>
-          </div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-section
-          horizontal
-          class="scroll"
-          data-cy="dialog-body"
-          style="max-height: 50vh; flex-wrap: wrap"
-        >
-          <div class="col-12 col-md-6 q-px-md q-py-md">
-            <div
-              v-if="card?.content"
-              v-html="card?.content"
-              data-cy="dialog-content"
-            ></div>
-          </div>
-          <div class="col-12 col-md-6 q-px-md q-py-md">
-            <q-img
-              src="https://picsum.photos/380/380"
-              :ratio="1"
-              data-cy="dialog-image"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-actions
-          class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
-          data-cy="dialog-close"
-        >
-          <q-btn
-            v-close-popup
-            round
-            color="blue-grey-8"
-            icon="close"
-            class="bg-blue-grey-2"
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <vue-card-dialog
+      v-model="modalOpened"
+      :dialog="modalDialog"
+    ></vue-card-dialog>
   </q-card>
 </template>
 

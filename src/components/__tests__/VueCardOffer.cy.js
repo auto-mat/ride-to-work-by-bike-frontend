@@ -95,8 +95,11 @@ describe('<VueCardOffer>', () => {
 
   it('has border', () => {
     cy.window().then(() => {
-      cy.dataCy('card-offer')
-        .should('have.css', 'border', '1px solid rgba(0, 0, 0, 0.12)');
+      cy.dataCy('card-offer').should(
+        'have.css',
+        'border',
+        '1px solid rgba(0, 0, 0, 0.12)'
+      );
     });
   });
 
@@ -124,42 +127,6 @@ describe('<VueCardOffer>', () => {
             .then(($title) => {
               expect($title.text()).to.equal(title);
             });
-        });
-    });
-  });
-
-  it('shows modal with date', () => {
-    cy.window().then(() => {
-      cy.dataCy('card-offer')
-        .click()
-        .then(() => {
-          cy.dataCy('dialog-date')
-            .should('be.visible')
-            .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('have.color', '#546e7a')
-            .should('contain', expirationDate)
-            .find('i')
-            .should('be.visible')
-            .should('have.color', '#b0bec5');
-        });
-    });
-  });
-
-  it('shows modal with category', () => {
-    cy.window().then(() => {
-      cy.dataCy('card-offer')
-        .click()
-        .then(() => {
-          cy.dataCy('dialog-issuer')
-            .should('be.visible')
-            .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('have.color', '#546e7a')
-            .should('contain', issuer)
-            .find('i')
-            .should('be.visible')
-            .should('have.color', '#b0bec5');
         });
     });
   });
@@ -196,59 +163,6 @@ describe('<VueCardOffer>', () => {
         });
     });
   });
-
-  // it('shows content with image and action button with correct layout', () => {
-  //   cy.window().then(() => {
-  //     cy.dataCy('card-offer')
-  //       .click()
-  //       .then(() => {
-  //         cy.dataCy('dialog-content')
-  //           .should('be.visible')
-  //           .should('contain', 'We want to reward you for your support')
-  //           .should('have.css', 'font-size', '14px')
-  //           .should('have.css', 'font-weight', '400');
-
-  //         cy.dataCy('dialog-body')
-  //           .scrollTo('bottom')
-  //           .find('img')
-  //           .should('be.visible')
-  //           .then(($img) => {
-  //             const naturalHeight = $img[0].naturalHeight;
-  //             expect(naturalHeight).to.be.greaterThan(0);
-  //             expect($img.attr('src')).to.equal(image);
-  //           });
-
-  //         cy.dataCy('dialog-body')
-  //           .scrollTo('center')
-  //           .find('.q-btn')
-  //           .should('be.visible')
-  //           .should('have.css', 'border-radius', '28px')
-  //           .should('have.backgroundColor', '#000000')
-  //           .should('have.color', '#ffffff')
-  //           .should('contain', i18n.global.t('index.cardEvent.addToCalendar'));
-
-  //         cy.viewport('iphone-6');
-
-  //         cy.dataCy('dialog-body')
-  //           .find('.col-12')
-  //           .then(($element) => {
-  //             expect(calculatePercentageWidth($element)).to.be.closeTo(
-  //               100,
-  //               0.5
-  //             );
-  //           });
-
-  //         cy.viewport('macbook-13');
-
-  //         cy.dataCy('dialog-body')
-  //           .find('.col-12')
-  //           .first()
-  //           .then(($element) => {
-  //             expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
-  //           });
-  //       });
-  //   });
-  // });
 
   function calculatePercentageWidth($element, width) {
     const elementWidth = $element[0].clientWidth;

@@ -158,7 +158,7 @@ export default defineComponent({
     const cardsOffer: Offer[] = [
       {
         title: '100 CZK voucher do e-shopu Automatu',
-        expirationDate: new Date('2023-10-01T12:00:00'),
+        expirationDate: 'Some time later on',
         issuer: 'Automat',
         image: 'https://picsum.photos/380/380',
         code: '65972834',
