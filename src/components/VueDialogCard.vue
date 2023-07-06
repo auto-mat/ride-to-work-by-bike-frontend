@@ -2,7 +2,7 @@
 import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
-  name: 'VueCardDialog',
+  name: 'VueDialogCard',
   props: {
     dialog: {
       type: Object,
