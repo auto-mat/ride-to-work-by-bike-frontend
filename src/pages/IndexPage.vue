@@ -184,3 +184,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.bg-gray-light {
+  background-color: var(--q-gray-light);
+}
+</style>
