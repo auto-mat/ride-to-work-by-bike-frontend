@@ -1,5 +1,4 @@
 import VueDrawerMenu from '../VueDrawerMenu.vue';
-import { i18n } from '../../boot/i18n';
 
 const menuItems = [
   { icon: 'home', name: 'home' },
@@ -25,25 +24,10 @@ describe('VueDrawerMenu', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationKeyList = menuItems.map(
-      (item) => `drawerMenu.${item.name}`
+    cy.testLanguageStringsInContext(
+      menuItems.map((item) => item.name),
+      'drawerMenu'
     );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
   });
 
   it('should render the list with the correct number of items', () => {

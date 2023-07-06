@@ -37,29 +37,7 @@ describe('<VueCardListChallenge>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = [
-      'title',
-    ];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardListChallenge.${item}`
-    );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
+    cy.testLanguageStringsInContext(['title'], 'index.cardListChallenge');
   });
 
   it('renders title', () => {
