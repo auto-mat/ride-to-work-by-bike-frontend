@@ -2,6 +2,9 @@
 import { defineComponent, ref } from 'vue';
 import { date, Screen } from 'quasar';
 
+// import components
+import VueDialogCard from 'components/VueDialogCard.vue';
+
 // import types
 import { CardEvent as CardEventType, ConfigGlobal } from 'components/types';
 
@@ -31,6 +34,7 @@ export default defineComponent({
     return {
       borderRadius,
       modalOpened,
+      modalDialog,
       eventDateTime,
       setHorizontalPosition,
     };
