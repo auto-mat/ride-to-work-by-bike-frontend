@@ -1,7 +1,6 @@
-import VueCardDialog from 'components/VueCardDialog.vue';
-import { i18n } from '../../boot/i18n';
+import VueDialogCard from 'components/VueDialogCard.vue';
 
-describe('<VueCardDialog>', () => {
+describe('<VueDialogCard>', () => {
   const title = 'Dialog title';
   const meta = [
     {
@@ -19,7 +18,7 @@ describe('<VueCardDialog>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardDialog, {
+      cy.mount(VueDialogCard, {
         props: {
           dialog: {
             title,
@@ -108,7 +107,7 @@ describe('<VueCardDialog>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardDialog, {
+      cy.mount(VueDialogCard, {
         props: {
           dialog: {
             title,

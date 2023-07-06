@@ -2,16 +2,15 @@
 import { defineComponent, ref } from 'vue';
 
 // import components
-import VueCardDialog from 'components/VueCardDialog.vue';
+import VueDialogCard from 'components/VueDialogCard.vue';
 
 // import types
 import { Offer } from 'components/types';
-import { createDOMEvent } from 'cypress/vue/dist/@vue/test-utils/createDomEvent';
 
 export default defineComponent({
   name: 'VueCardOffer',
   components: {
-    VueCardDialog,
+    VueDialogCard,
   },
   props: {
     card: {
@@ -69,10 +68,10 @@ export default defineComponent({
       </q-card-section>
     </q-card-section>
 
-    <vue-card-dialog
+    <vue-dialog-card
       v-model="modalOpened"
       :dialog="modalDialog"
-    ></vue-card-dialog>
+    ></vue-dialog-card>
   </q-card>
 </template>
 
