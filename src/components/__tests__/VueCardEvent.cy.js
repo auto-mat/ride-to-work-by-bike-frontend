@@ -13,6 +13,10 @@ describe('<VueCardEvent>', () => {
     'meet.google.com/anr-pvfs-opf',
     'meet.google.com/anr-pvfs-opf',
   ];
+  const icons = [
+    'event',
+    'location',
+  ]
 
   beforeEach(() => {
     cy.mount(VueCardEvent, {
@@ -221,31 +225,44 @@ describe('<VueCardEvent>', () => {
               expect($title.text()).to.equal(title);
             });
 
-          cy.dataCy('dialog-dates')
-            .should('be.visible')
-            .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('contain', '1.')
-            .should('contain', '2023')
-            .should('contain', '12:00');
+          cy.dataCy('dialog-meta')
+          .should('be.visible')
+          .should('have.css', 'font-size', '14px')
+          .should('have.css', 'font-weight', '400')
+          .should('have.color', '#546e7a')
+          .each(($el, index, $list) => {
+            if (index === 0) {
+              cy.wrap($el)
+                .should('contain', '1.')
+                .should('contain', '2023')
+                .should('contain', '12:00');
 
-          cy.dataCy('dialog-dates')
-            .find('i')
-            .should('be.visible')
-            .should('have.color', '#cfd8dc')
-            .should('contain', 'event');
+              const $icon = $el.find('i');
+              if ($icon.length) {
+                cy.wrap($icon)
+                  .should('be.visible')
+                  .should('have.color', '#b0bec5')
+                  .should('have.css', 'width', '18px')
+                  .should('have.css', 'height', '18px')
+                  .should('contain', icons[index]);
+              }
+            }
+            if (index === 1) {
+              cy.wrap($el)
+                .should('contain', location);
 
-          cy.dataCy('dialog-location')
-            .should('be.visible')
-            .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('contain', location);
+              const $icon = $el.find('i');
+              if ($icon.length) {
+                cy.wrap($icon)
+                  .should('be.visible')
+                  .should('have.color', '#b0bec5')
+                  .should('have.css', 'width', '18px')
+                  .should('have.css', 'height', '18px')
+                  .should('contain', icons[index]);
+              }
+            }
 
-          cy.dataCy('dialog-location')
-            .find('i')
-            .should('be.visible')
-            .should('have.color', '#cfd8dc')
-            .should('contain', 'place');
+          });
         });
     });
   });

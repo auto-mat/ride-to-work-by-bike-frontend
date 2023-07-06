@@ -2,26 +2,52 @@
 import { defineComponent, ref } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
+// import components
+import VueDialogCard from 'components/VueDialogCard.vue';
+
 // import types
-import { CardEvent } from 'components/types';
+import { CardEvent, DialogCard } from 'components/types';
 
 export default defineComponent({
   name: 'VueCardEvent',
+  components: {
+    VueDialogCard,
+  },
   props: {
     card: {
       type: Object as () => CardEvent,
+      required: true,
     },
   },
   setup(props) {
     const modalOpened = ref(false);
+
     const eventDateTime = useDateFormat(
-      props?.card?.dates,
+      props.card.dates,
       'ddd D. MMM. YYYY, HH:mm'
     );
+    const modalDialog: DialogCard = {
+      title: props.card.title,
+      meta: [
+        {
+          icon: 'event',
+          description: eventDateTime.value,
+        },
+        {
+          icon: 'location',
+          description: props.card.location
+        }
+      ],
+      content: props.card.content,
+      image: props.card.image,
+      calendar: true, // TODO: how are we going to generate calendar links?
+    };
+
     const isLargeScreen = useMediaQuery('(min-width: 600px)');
 
     return {
       modalOpened,
+      modalDialog,
       eventDateTime,
       isLargeScreen,
     };
@@ -101,97 +127,7 @@ export default defineComponent({
         </q-card-section>
       </q-card-section>
 
-      <q-dialog v-model="modalOpened" square data-cy="card-dialog">
-        <q-card class="relative-position overflow-visible">
-          <q-card-section class="q-pt-none" data-cy="dialog-header">
-            <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
-              {{ card?.title }}
-            </h3>
-            <div
-              v-if="eventDateTime || card?.location"
-              class="meta flex items-center q-mt-sm"
-            >
-              <div
-                v-if="eventDateTime"
-                class="dates flex items-center q-pr-md"
-                data-cy="dialog-dates"
-              >
-                <q-icon
-                  name="event"
-                  size="sm"
-                  class="q-pr-xs"
-                  color="blue-grey-2"
-                />
-                {{ eventDateTime }}
-              </div>
-              <div
-                v-if="card?.location"
-                class="location flex items-center"
-                data-cy="dialog-location"
-              >
-                <q-icon
-                  name="place"
-                  size="sm"
-                  class="q-pr-xs"
-                  color="blue-grey-2"
-                />
-                {{ card?.location }}
-              </div>
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-section
-            horizontal
-            class="scroll"
-            data-cy="dialog-body"
-            style="max-height: 50vh; flex-wrap: wrap"
-          >
-            <div class="col-12 col-md-6 q-px-md q-py-md">
-              <div
-                v-if="card?.content"
-                v-html="card?.content"
-                data-cy="dialog-content"
-              ></div>
-              <q-btn
-                color="black"
-                unelevated
-                rounded
-                class="q-mt-md"
-                data-cy="dialog-button"
-              >
-                <div class="flex items-center no-wrap">
-                  <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
-                  <div class="text-center">
-                    {{ $t('index.cardEvent.addToCalendar') }}
-                  </div>
-                </div>
-              </q-btn>
-            </div>
-            <div class="col-12 col-md-6 q-px-md q-py-md">
-              <q-img
-                src="https://picsum.photos/380/380"
-                :ratio="1"
-                data-cy="dialog-image"
-              />
-            </div>
-          </q-card-section>
-
-          <q-card-actions
-            class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
-            data-cy="dialog-close"
-          >
-            <q-btn
-              v-close-popup
-              round
-              color="blue-grey-8"
-              icon="close"
-              class="bg-blue-grey-2"
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+      <vue-dialog-card v-model="modalOpened" :dialog="modalDialog"></vue-dialog-card>
     </q-card>
   </div>
 </template>
