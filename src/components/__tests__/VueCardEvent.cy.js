@@ -15,7 +15,7 @@ describe('<VueCardEvent>', () => {
   ];
   const icons = [
     'event',
-    'location',
+    'place',
   ]
 
   beforeEach(() => {
