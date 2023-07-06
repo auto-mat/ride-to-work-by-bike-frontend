@@ -35,8 +35,8 @@ export default defineComponent({
         },
         {
           icon: 'place',
-          description: props.card.location
-        }
+          description: props.card.location,
+        },
       ],
       content: props.card.content,
       image: props.card.image,
@@ -127,7 +127,10 @@ export default defineComponent({
         </q-card-section>
       </q-card-section>
 
-      <vue-dialog-card v-model="modalOpened" :dialog="modalDialog"></vue-dialog-card>
+      <vue-dialog-card
+        v-model="modalOpened"
+        :dialog="modalDialog"
+      ></vue-dialog-card>
     </q-card>
   </div>
 </template>
