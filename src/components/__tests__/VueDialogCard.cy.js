@@ -26,7 +26,7 @@ describe('<VueDialogCard>', () => {
             content,
             image,
           },
-          opened: true,
+          modelValue: true,
         },
       });
       cy.viewport('macbook-13');
@@ -53,7 +53,7 @@ describe('<VueDialogCard>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#546e7a')
-          .each(($el, index, $list) => {
+          .each(($el, index) => {
             cy.wrap($el).should('contain', meta[index].description);
 
             const $icon = $el.find('i');
@@ -115,7 +115,7 @@ describe('<VueDialogCard>', () => {
             content,
             image,
           },
-          opened: true,
+          modelValue: true,
         },
       });
       cy.viewport('iphone-6');
@@ -142,7 +142,7 @@ describe('<VueDialogCard>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#546e7a')
-          .each(($el, index, $list) => {
+          .each(($el, index) => {
             cy.wrap($el).should('contain', meta[index].description);
 
             const $icon = $el.find('i');

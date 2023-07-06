@@ -13,10 +13,7 @@ describe('<VueCardEvent>', () => {
     'meet.google.com/anr-pvfs-opf',
     'meet.google.com/anr-pvfs-opf',
   ];
-  const icons = [
-    'event',
-    'place',
-  ]
+  const icons = ['event', 'place'];
 
   beforeEach(() => {
     cy.mount(VueCardEvent, {
@@ -35,27 +32,7 @@ describe('<VueCardEvent>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationStrings = ['addToCalendar'];
-
-    const translationKeyList = translationStrings.map(
-      (item) => `index.cardEvent.${item}`
-    );
-
-    translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
-
-      const locales = i18n.global.availableLocales;
-      locales
-        .filter((locale) => locale !== 'en')
-        .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
-
-          cy.wrap(translatedString)
-            .should('be.a', 'string')
-            .and('not.equal', defaultEnglishString);
-        });
-    });
+    cy.testLanguageStringsInContext(['addToCalendar'], 'index.cardEvent');
   });
 
   it('renders title with link', () => {
@@ -226,43 +203,41 @@ describe('<VueCardEvent>', () => {
             });
 
           cy.dataCy('dialog-meta')
-          .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', '#546e7a')
-          .each(($el, index, $list) => {
-            if (index === 0) {
-              cy.wrap($el)
-                .should('contain', '1.')
-                .should('contain', '2023')
-                .should('contain', '12:00');
+            .should('be.visible')
+            .should('have.css', 'font-size', '14px')
+            .should('have.css', 'font-weight', '400')
+            .should('have.color', '#546e7a')
+            .each(($el, index) => {
+              if (index === 0) {
+                cy.wrap($el)
+                  .should('contain', '1.')
+                  .should('contain', '2023')
+                  .should('contain', '12:00');
 
-              const $icon = $el.find('i');
-              if ($icon.length) {
-                cy.wrap($icon)
-                  .should('be.visible')
-                  .should('have.color', '#b0bec5')
-                  .should('have.css', 'width', '18px')
-                  .should('have.css', 'height', '18px')
-                  .should('contain', icons[index]);
+                const $icon = $el.find('i');
+                if ($icon.length) {
+                  cy.wrap($icon)
+                    .should('be.visible')
+                    .should('have.color', '#b0bec5')
+                    .should('have.css', 'width', '18px')
+                    .should('have.css', 'height', '18px')
+                    .should('contain', icons[index]);
+                }
               }
-            }
-            if (index === 1) {
-              cy.wrap($el)
-                .should('contain', location);
+              if (index === 1) {
+                cy.wrap($el).should('contain', location);
 
-              const $icon = $el.find('i');
-              if ($icon.length) {
-                cy.wrap($icon)
-                  .should('be.visible')
-                  .should('have.color', '#b0bec5')
-                  .should('have.css', 'width', '18px')
-                  .should('have.css', 'height', '18px')
-                  .should('contain', icons[index]);
+                const $icon = $el.find('i');
+                if ($icon.length) {
+                  cy.wrap($icon)
+                    .should('be.visible')
+                    .should('have.color', '#b0bec5')
+                    .should('have.css', 'width', '18px')
+                    .should('have.css', 'height', '18px')
+                    .should('contain', icons[index]);
+                }
               }
-            }
-
-          });
+            });
         });
     });
   });
