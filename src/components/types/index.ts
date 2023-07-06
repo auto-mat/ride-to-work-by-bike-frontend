@@ -8,3 +8,4 @@ export * from './Faq';
 export * from './User';
 export * from './Offer';
 export * from './Link';
+export * from './DialogCard';
