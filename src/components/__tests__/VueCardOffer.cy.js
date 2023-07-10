@@ -4,7 +4,7 @@ describe('<VueCardOffer>', () => {
   const title = '100 CZK voucher do e-shopu Automatu';
   const expirationDate = 'Platí po dobu výzvy (1. říj.–31. říj. 2022)';
   const issuer = 'Automat';
-  const image = 'https://picsum.photos/380/380';
+  const image = 'https://picsum.photos/id/200/380/380';
   const code = '65972834';
   const link = {
     title: 'Navštívit e-shop',
@@ -30,6 +30,7 @@ describe('<VueCardOffer>', () => {
         },
       },
     });
+    cy.viewport('iphone-6');
   });
 
   it('has translation for all strings', () => {
@@ -37,34 +38,6 @@ describe('<VueCardOffer>', () => {
       ['unlimitedExpirationDate', 'offerCode'],
       'index.cardOffer'
     );
-  });
-
-  it('renders card with icon and title', () => {
-    cy.window().then(() => {
-      cy.dataCy('card-title')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', '#212121')
-        .should('contain', title)
-        .then(($title) => {
-          expect($title.text()).to.equal(title);
-        });
-
-      cy.dataCy('card-icon')
-        .should('be.visible')
-        .should('contain', icon)
-        .should('have.css', 'height', '48px')
-        .should('have.css', 'width', '48px')
-        .should('have.color', 'rgb(176, 190, 197)');
-    });
-  });
-
-  it('has correct background color', () => {
-    cy.window().then(() => {
-      cy.dataCy('card-offer')
-        .should('be.visible')
-        .should('have.backgroundColor', '#ffffff');
-    });
   });
 
   it('has rounded corners', () => {
@@ -82,6 +55,44 @@ describe('<VueCardOffer>', () => {
         'border',
         '1px solid rgba(0, 0, 0, 0.12)'
       );
+    });
+  });
+
+  it('has no shadow', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer').should('have.css', 'box-shadow', 'none');
+    });
+  });
+
+  it('renders title', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-title')
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '400')
+        .should('have.color', '#212121')
+        .should('contain', title)
+        .then(($title) => {
+          expect($title.text()).to.equal(title);
+        });
+    });
+  });
+
+  it('renders icon', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-icon')
+        .should('be.visible')
+        .should('contain', icon)
+        .should('have.css', 'height', '48px')
+        .should('have.css', 'width', '48px')
+        .should('have.color', 'rgb(176, 190, 197)');
+    });
+  });
+
+  it('has correct background color', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-offer')
+        .should('be.visible')
+        .should('have.backgroundColor', '#ffffff');
     });
   });
 
@@ -141,6 +152,11 @@ describe('<VueCardOffer>', () => {
               const naturalHeight = $img[0].naturalHeight;
               expect(naturalHeight).to.be.greaterThan(0);
               expect($img.attr('src')).to.equal(image);
+            });
+
+            cy.dataCy('dialog-body').find('img').matchImageSnapshot({
+              failureThreshold: 0.5,
+              failureThresholdType: 'percent',
             });
         });
     });
