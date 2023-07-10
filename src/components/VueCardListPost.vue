@@ -7,7 +7,7 @@ import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 
 // import types
-import { CardPost } from './types';
+import { CardPost, Link } from './types';
 
 export default defineComponent({
   name: 'VueCardListPost',
@@ -17,10 +17,18 @@ export default defineComponent({
     SwiperSlide,
   },
   props: {
+    title: {
+      type: String,
+      required: true,
+    },
     cards: {
       type: Array as () => CardPost[],
       required: true,
     },
+    button: {
+      type: Object as () => Link,
+      required: false,
+    }
   },
   setup() {
     return {
@@ -31,11 +39,24 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="card-list-post relative-position">
+  <div class="card-list-post relative-position" data-cy="card-list-post">
+    <h2 class="text-h6 q-mt-none text-weight-semibold" data-cy="card-list-post-title">{{ title }}</h2>
     <swiper
       :modules="modules"
       :slides-per-view="4"
       :space-between="24"
+      :breakpoints="{
+        0: {
+          slidesPerView: 2,
+          spaceBetween: 24,
+        },
+        600: {
+          slidesPerView: 3,
+        },
+        1024: {
+          slidesPerView: 4,
+        }
+      }"
       navigation
     >
       <swiper-slide
@@ -46,13 +67,15 @@ export default defineComponent({
         <vue-card-post :card="card" data-cy="card-list-post-item" />
       </swiper-slide>
     </swiper>
-    <div class="text-center absolute-bottom">
+    <div v-if="button" class="text-sm-center absolute-bottom" data-cy="card-list-post-buttons">
       <q-btn
         rounded
-        color="black"
+        color="grey-10"
         unelevated
         outline
-        :label="$t('index.cardListPost.goToBlog')"
+        :to="button.url"
+        :label="button.title"
+        class="z-1"
         data-cy="card-list-post-button"
       />
     </div>
@@ -60,8 +83,18 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+.z-1 {
+  z-index: 1;
+}
+.text-sm-center {
+  text-align: left;
+  @media (min-width: $breakpoint-sm-min) {
+    text-align: center;
+  }
+}
 .card-list-post :deep(.swiper) {
   padding-bottom: 64px;
+  overflow: hidden;
 }
 .card-list-post :deep(.swiper-button) {
   position: absolute;
@@ -76,8 +109,8 @@ export default defineComponent({
   border-radius: 9999px;
   top: auto;
   bottom: 0;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   color: $grey-10;
   background-color: #fff;
   border: 1px solid $grey-10;
