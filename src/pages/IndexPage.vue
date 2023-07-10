@@ -34,6 +34,7 @@
         data-cy="list-event"
       ></vue-card-list-event>
       <vue-card-list-offer
+        :title="$t('index.cardListOffer.title')"
         :cards="cardsOffer"
         class="q-pt-xl"
         data-cy="list-offer"
