@@ -42,6 +42,10 @@
       <vue-card-list-post
         :title="$t('index.cardListPost.title')"
         :cards="cardsPost"
+        :button="{
+          title: $t('index.cardListPost.button'),
+          url: '/blog',
+        }"
         class="q-pt-xl"
         data-cy="list-post"
       >
