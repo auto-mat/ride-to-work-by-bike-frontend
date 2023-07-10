@@ -2,7 +2,7 @@ import VueCardPost from 'components/VueCardPost.vue';
 
 describe('<VueCardPost>', () => {
   const title = 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?';
-  const date = new Date(2023, 8, 1);;
+  const date = new Date(2023, 8, 1);
   const image = 'https://picsum.photos/id/100/380/380';
 
   beforeEach(() => {
@@ -18,10 +18,7 @@ describe('<VueCardPost>', () => {
   });
 
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(
-      [],
-      'index.cardPost'
-    );
+    cy.testLanguageStringsInContext([], 'index.cardPost');
   });
 
   it('has correct background color', () => {
@@ -52,13 +49,9 @@ describe('<VueCardPost>', () => {
 
   it('has no shadow', () => {
     cy.window().then(() => {
-      cy.dataCy('card-post').should(
-        'have.css',
-        'box-shadow',
-        'none'
-      );
+      cy.dataCy('card-post').should('have.css', 'box-shadow', 'none');
     });
-  })
+  });
 
   it('renders title', () => {
     cy.window().then(() => {
