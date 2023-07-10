@@ -99,7 +99,8 @@ addToCalendar = "Přidat do kalendáře"
 imageAltText = "obrázek na pozadí zobrazující městskou komunitu"
 
 [index.cardListOffer]
-allOffers = "Všech {count} slev"
+title = "Akční nabídky"
+button = "Všech {count} slev"
 
 [index.cardOffer]
 unlimitedExpirationDate = "Neomezená doba platnosti"
