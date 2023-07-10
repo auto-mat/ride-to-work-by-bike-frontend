@@ -99,7 +99,8 @@ addToCalendar = "Add to calendar"
 imageAltText = "background image depicting urban community"
 
 [index.cardListOffer]
-allOffers = "All {count} offers"
+title = "Special offers"
+button = "All {count} offers"
 
 [index.cardOffer]
 unlimitedExpirationDate = "Unlimited validity"
