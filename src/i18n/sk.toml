@@ -104,3 +104,6 @@ allOffers = "Všetkých {count} zliav"
 [index.cardOffer]
 unlimitedExpirationDate = "Neobmedzené obdobie platnosti"
 offerCode = "Kód kupónu"
+
+[index.cardListPost]
+title = "Novinky"
