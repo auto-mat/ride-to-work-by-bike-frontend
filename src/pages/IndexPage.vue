@@ -33,6 +33,18 @@
         class="q-pt-xl"
         data-cy="list-event"
       ></list-card-event>
+      <vue-card-list-offer
+        :cards="cardsOffer"
+        class="q-pt-xl"
+        data-cy="list-offer"
+      >
+      </vue-card-list-offer>
+      <vue-card-list-post
+        :cards="cardsPost"
+        class="q-pt-xl"
+        data-cy="list-post"
+      >
+      </vue-card-list-post>
     </div>
   </q-page>
 </template>
@@ -47,10 +59,14 @@ import ListCardChallenge from 'components/ListCardChallenge.vue';
 import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
+import VueCardListOffer from 'src/components/VueCardListOffer.vue';
+import VueCardListPost from 'src/components/VueCardListPost.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType } from 'components/types';
 import { BannerImage as BannerImageType } from 'components/types';
+import { CardPost } from 'components/types';
+import { Offer } from 'components/types';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -60,6 +76,8 @@ export default defineComponent({
     BannerImage,
     HeadingBackground,
     ListCardEvent,
+    VueCardListOffer,
+    VueCardListPost,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
@@ -180,6 +198,20 @@ export default defineComponent({
       cardOffer,
     ];
 
+    const cardPost: CardPost = {
+      title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
+      date: new Date(2023, 8, 1),
+      image: 'https://picsum.photos/id/100/380/380',
+      url: '/blog/1',
+    };
+    const cardsPost: CardPost[] = [
+      cardPost,
+      cardPost,
+      cardPost,
+      cardPost,
+      cardPost,
+    ];
+
     return {
       releaseDate,
       cards,
@@ -187,6 +219,7 @@ export default defineComponent({
       headingBgTitle,
       cardsEvent,
       cardsOffer,
+      cardsPost,
     };
   },
 });
