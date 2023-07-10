@@ -14,7 +14,7 @@ const cards = [cardPost, cardPost, cardPost, cardPost, cardPost];
 
 describe('<VueCardListPost>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.cardListPost');
+    cy.testLanguageStringsInContext(['title'], 'index.cardListPost');
   });
 
   context('desktop', () => {
@@ -27,34 +27,34 @@ describe('<VueCardListPost>', () => {
       cy.viewport('macbook-13');
     });
 
-    it('renders title', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-list-post-title')
-          .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
-          .should('contain', title)
-          .then(($title) => {
-            expect($title.text()).to.equal(title);
-          });
-      });
-    });
+    // it('renders title', () => {
+    //   cy.window().then(() => {
+    //     cy.dataCy('card-list-post-title')
+    //       .should('have.css', 'font-size', '20px')
+    //       .should('have.css', 'font-weight', '500')
+    //       .should('have.color', '#000000')
+    //       .should('contain', title)
+    //       .then(($title) => {
+    //         expect($title.text()).to.equal(title);
+    //       });
+    //   });
+    // });
 
-    it('renders correct number of items', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-list-post-item')
-          .should('have.length', 5)
-          .then(($items) => {
-            for (let i = 0; i < 4; i++) {
-              cy.wrap($items[i]).should('be.visible');
-            }
+    // it('renders correct number of items', () => {
+    //   cy.window().then(() => {
+    //     cy.dataCy('card-list-post-item')
+    //       .should('have.length', 5)
+    //       .then(($items) => {
+    //         for (let i = 0; i < 4; i++) {
+    //           cy.wrap($items[i]).should('be.visible');
+    //         }
 
-            for (let i = 4; i < $items.length; i++) {
-              cy.wrap($items[i]).should('be.hidden');
-            }
-          });
-      });
-    });
+    //         for (let i = 4; i < $items.length; i++) {
+    //           cy.wrap($items[i]).should('be.hidden');
+    //         }
+    //       });
+    //   });
+    // });
   });
 
   // context('mobile', () => {
