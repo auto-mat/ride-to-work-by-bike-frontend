@@ -58,6 +58,7 @@ Cypress.Commands.add(
 
           cy.wrap(translatedString)
             .should('be.a', 'string')
+            .should('have.length.at.least', 1)
             .and('not.equal', defaultEnglishString);
         });
     });
