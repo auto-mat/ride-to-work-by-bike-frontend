@@ -40,6 +40,7 @@
       >
       </vue-card-list-offer>
       <vue-card-list-post
+        :title="$t('index.cardListPost.title')"
         :cards="cardsPost"
         class="q-pt-xl"
         data-cy="list-post"

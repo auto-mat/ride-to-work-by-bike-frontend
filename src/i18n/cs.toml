@@ -71,3 +71,6 @@ allOffers = "Všech {count} slev"
 [index.cardOffer]
 unlimitedExpirationDate = "Neomezená doba platnosti"
 offerCode = "Kód voucheru"
+
+[index.cardListPost]
+title = "Novinky"
