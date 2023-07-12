@@ -9,3 +9,6 @@ export * from './Faq';
 export * from './User';
 export * from './Offer';
 export * from './Link';
+export * from './NewsletterItem';
+export * from './Offer';
+export * from './User';
