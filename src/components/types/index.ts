@@ -1,6 +1,7 @@
 export * from './BannerImage';
 export * from './CardChallenge';
 export * from './CardEvent';
+export * from './CardFollow';
 export * from './CardOffer';
 export * from './CardPost';
 export * from './Countdown';
