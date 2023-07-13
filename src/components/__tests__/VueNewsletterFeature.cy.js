@@ -1,7 +1,12 @@
 import VueNewsletterFeature from 'components/VueNewsletterFeature.vue';
+import { i18n } from '../../boot/i18n';
 
-const title = '';
-const description = '';
+const image = 'https://picsum.photos/id/100/210/190';
+const itemTitles = [
+  i18n.global.t('index.newsletterFeature.aboutChallenges'),
+  i18n.global.t('index.newsletterFeature.aboutEvents'),
+  i18n.global.t('index.newsletterFeature.aboutMobility'),
+]
 
 describe('<VueNewsletterFeature>', () => {
   it('has translation for all strings', () => {
@@ -22,7 +27,9 @@ describe('<VueNewsletterFeature>', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(VueNewsletterFeature, {
-        props: {},
+        props: {
+          image,
+        },
       });
       cy.viewport('macbook-16');
     });
@@ -33,9 +40,9 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
           .should('have.color', '#000000')
-          .should('contain', title)
+          .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(title);
+            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.title'));
           });
       });
     });
@@ -44,27 +51,51 @@ describe('<VueNewsletterFeature>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-feature-description')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
+          .should('have.css', 'font-weight', '400')
           .should('have.color', '#000000')
-          .should('contain', description)
+          .should('contain', i18n.global.t('index.newsletterFeature.description'))
           .then(($title) => {
-            expect($title.text()).to.equal(description);
+            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.description'));
           });
       });
     });
 
-    it('renders description', () => {
+    it('renders image', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-description')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
-          .should('contain', description)
-          .then(($title) => {
-            expect($title.text()).to.equal(description);
-          });
+        cy.dataCy('newsletter-feature-image')
+          .should('be.visible')
+          .find('img')
+          .should(($img) => {
+            expect($img[0].naturalWidth).to.be.greaterThan(0);
+          })
+          .invoke('attr', 'src')
+          .should('contains', image);
+
+        cy.dataCy('newsletter-feature-image').matchImageSnapshot({
+          failureThreshold: 0.5,
+          failureThresholdType: 'percent',
+        });
+      });
+    })
+
+    it('renders correct number of items', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-feature-item')
+          .should('have.length', 3)
+          .each(($item) => {
+            cy.wrap($item).should('be.visible');
+          })
       });
     });
+
+    it('renders divider between items', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-feature-divider').should('be.visible')
+          .should('have.length', 2)
+          .should('have.css', 'margin-top', '16px')
+          .should('have.css', 'margin-bottom', '16px');
+      });
+    })
   });
 
   context('mobile', () => {
@@ -74,5 +105,39 @@ describe('<VueNewsletterFeature>', () => {
       });
       cy.viewport('iphone-6');
     });
+
+    it('renders title', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-feature-title')
+          .should('have.css', 'font-size', '20px')
+          .should('have.css', 'font-weight', '500')
+          .should('have.color', '#000000')
+          .should('contain', i18n.global.t('index.newsletterFeature.title'))
+          .then(($title) => {
+            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.title'));
+          });
+      });
+    });
+
+    it('renders description', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-feature-description')
+          .should('have.css', 'font-size', '14px')
+          .should('have.css', 'font-weight', '400')
+          .should('have.color', '#000000')
+          .should('contain', i18n.global.t('index.newsletterFeature.description'))
+          .then(($title) => {
+            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.description'));
+          });
+      });
+    });
+
+    it('does not render image', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-feature-image')
+          .should('not.be.visible');
+      });
+    })
+
   });
 });
