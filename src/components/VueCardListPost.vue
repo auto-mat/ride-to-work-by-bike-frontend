@@ -28,7 +28,7 @@ export default defineComponent({
     button: {
       type: Object as () => Link,
       required: false,
-    }
+    },
   },
   setup() {
     return {
@@ -40,7 +40,12 @@ export default defineComponent({
 
 <template>
   <div class="card-list-post relative-position" data-cy="card-list-post">
-    <h2 class="text-h6 q-mt-none text-weight-semibold" data-cy="card-list-post-title">{{ title }}</h2>
+    <h2
+      class="text-h6 q-mt-none text-weight-semibold"
+      data-cy="card-list-post-title"
+    >
+      {{ title }}
+    </h2>
     <swiper
       :modules="modules"
       :slides-per-view="4"
@@ -55,7 +60,7 @@ export default defineComponent({
         },
         1024: {
           slidesPerView: 4,
-        }
+        },
       }"
       navigation
     >
@@ -67,7 +72,11 @@ export default defineComponent({
         <vue-card-post :card="card" data-cy="card-list-post-item" />
       </swiper-slide>
     </swiper>
-    <div v-if="button" class="text-sm-center absolute-bottom" data-cy="card-list-post-buttons">
+    <div
+      v-if="button"
+      class="text-sm-center absolute-bottom"
+      data-cy="card-list-post-buttons"
+    >
       <q-btn
         rounded
         color="grey-10"
