@@ -51,6 +51,7 @@ export default defineComponent({
       unelevated
       :outline="item.following"
       data-cy="newsletter-item-button"
+      class="min-w-200"
     >
       <q-icon
         v-show="item.following"
@@ -77,5 +78,8 @@ export default defineComponent({
   @media (min-width: $breakpoint-sm-min) {
     justify-content: space-between;
   }
+}
+.min-w-200 {
+  min-width: 200px;
 }
 </style>

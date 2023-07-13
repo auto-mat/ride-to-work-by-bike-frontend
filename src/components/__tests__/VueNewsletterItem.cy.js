@@ -70,8 +70,9 @@ describe('<VueNewsletterItem>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
-          .should('have.color', '#212121')
           .should('have.css', 'border-radius', '28px')
+          .should('have.css', 'width', '200px')
+          .should('have.color', '#212121')
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.following')
@@ -134,8 +135,9 @@ describe('<VueNewsletterItem>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
-          .should('have.color', '#212121')
           .should('have.css', 'border-radius', '28px')
+          .should('have.css', 'width', '200px')
+          .should('have.color', '#212121')
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.following')
