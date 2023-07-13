@@ -53,10 +53,10 @@ export default defineComponent({
     data-cy="newsletter-feature"
     class="row q-col-gutter-lg items-center justify-between"
   >
-    <div class="gt-sm col-md-3">
+    <div class="gt-sm col-md-3" data-cy="newsletter-col-image">
       <q-img :src="image" data-cy="newsletter-feature-image" />
     </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-9" data-cy="newsletter-col-content">
       <h2 class="q-mb-md text-h6" data-cy="newsletter-feature-title">{{ $t('index.newsletterFeature.title') }}</h2>
       <p class="q-my-md" v-html="$t('index.newsletterFeature.description')" data-cy="newsletter-feature-description"></p>
       <div v-for="(item, index) in newsletterItems" :key="item.title">
