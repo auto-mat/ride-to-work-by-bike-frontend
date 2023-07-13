@@ -30,7 +30,7 @@ describe('<VueCardListPost>', () => {
           button: {
             title: buttonTitle,
             url: buttonUrl,
-          }
+          },
         },
       });
       cy.viewport('macbook-13');
@@ -51,8 +51,7 @@ describe('<VueCardListPost>', () => {
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-post-item')
-          .should('have.length', 5);
+        cy.dataCy('card-list-post-item').should('have.length', 5);
 
         cy.get('.swiper-slide:nth-child(1)').should('be.visible');
         cy.get('.swiper-slide:nth-child(2)').should('be.visible');
@@ -64,8 +63,16 @@ describe('<VueCardListPost>', () => {
 
     it('renders swiper navigation buttons', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev').should('be.visible').should('have.css', 'width', '38px').should('have.css', 'height', '38px').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('be.visible').should('have.css', 'width', '38px').should('have.css', 'height', '38px').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev')
+          .should('be.visible')
+          .should('have.css', 'width', '38px')
+          .should('have.css', 'height', '38px')
+          .should('have.css', 'border', `1px solid ${hexToRgb('#bdbdbd')}`);
+        cy.get('.swiper-button-next')
+          .should('be.visible')
+          .should('have.css', 'width', '38px')
+          .should('have.css', 'height', '38px')
+          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
       });
     });
 
@@ -80,20 +87,44 @@ describe('<VueCardListPost>', () => {
         cy.get('.swiper-slide:nth-child(1)').should('be.visible');
         cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
       });
-    })
+    });
 
     it('changes button disabled state after navigation', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#bdbdbd')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
         cy.get('.swiper-button-next').click();
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#bdbdbd')}`
+        );
         cy.get('.swiper-button-prev').click();
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#bdbdbd')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
       });
-    })
+    });
 
     it('renders button container', () => {
       cy.window().then(() => {
@@ -101,7 +132,7 @@ describe('<VueCardListPost>', () => {
           .should('be.visible')
           .should('have.css', 'text-align', 'center');
       });
-    })
+    });
 
     it('renders button', () => {
       cy.window().then(() => {
@@ -111,7 +142,7 @@ describe('<VueCardListPost>', () => {
           .should('have.css', 'border-radius', '28px')
           .should('contain', buttonTitle);
       });
-    })
+    });
   });
 
   context('mobile', () => {
@@ -123,7 +154,7 @@ describe('<VueCardListPost>', () => {
           button: {
             title: buttonTitle,
             url: buttonUrl,
-          }
+          },
         },
       });
       cy.viewport('iphone-6');
@@ -144,8 +175,7 @@ describe('<VueCardListPost>', () => {
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-post-item')
-          .should('have.length', 5);
+        cy.dataCy('card-list-post-item').should('have.length', 5);
 
         cy.get('.swiper-slide:nth-child(1)').should('be.visible');
         cy.get('.swiper-slide:nth-child(2)').should('be.visible');
@@ -157,8 +187,16 @@ describe('<VueCardListPost>', () => {
 
     it('renders swiper navigation buttons', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev').should('be.visible').should('have.css', 'width', '38px').should('have.css', 'height', '38px').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('be.visible').should('have.css', 'width', '38px').should('have.css', 'height', '38px').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev')
+          .should('be.visible')
+          .should('have.css', 'width', '38px')
+          .should('have.css', 'height', '38px')
+          .should('have.css', 'border', `1px solid ${hexToRgb('#bdbdbd')}`);
+        cy.get('.swiper-button-next')
+          .should('be.visible')
+          .should('have.css', 'width', '38px')
+          .should('have.css', 'height', '38px')
+          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
       });
     });
 
@@ -173,20 +211,44 @@ describe('<VueCardListPost>', () => {
         cy.get('.swiper-slide:nth-child(1)').should('be.visible');
         cy.get('.swiper-slide:nth-child(3)').should('not.be.visible');
       });
-    })
+    });
 
     it('changes button disabled state after navigation', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#bdbdbd')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
         cy.get('.swiper-button-next').click();
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
         cy.get('.swiper-button-prev').click();
-        cy.get('.swiper-button-prev').should('have.css', 'border', `1px solid ${ hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next').should('have.css', 'border', `1px solid ${ hexToRgb('#212121')}`);
+        cy.get('.swiper-button-prev').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#bdbdbd')}`
+        );
+        cy.get('.swiper-button-next').should(
+          'have.css',
+          'border',
+          `1px solid ${hexToRgb('#212121')}`
+        );
       });
-    })
+    });
 
     it('renders button container', () => {
       cy.window().then(() => {
@@ -194,7 +256,7 @@ describe('<VueCardListPost>', () => {
           .should('be.visible')
           .should('have.css', 'text-align', 'left');
       });
-    })
+    });
 
     it('renders button', () => {
       cy.window().then(() => {
@@ -204,7 +266,6 @@ describe('<VueCardListPost>', () => {
           .should('have.css', 'border-radius', '28px')
           .should('contain', buttonTitle);
       });
-    })
-
+    });
   });
 });

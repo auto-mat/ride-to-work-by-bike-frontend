@@ -79,7 +79,7 @@ button = "Navštívit blog"
 
 [index.newsletterFeature]
 title = "Odebírejte od nás novinky, ať vám nic neuteče"
-subtitle = "Newsletter vám budeme posílat na e-mail jana.anonymni@dopracenakole.cz."
+description = "Newsletter vám budeme posílat na e-mail jana.anonymni@dopracenakole.cz."
 aboutChallenges = "O budoucích výzvách"
 aboutEvents = "O doprovodných akcích (cyklojízdách, snídaních...), Akcích na triko a slevách"
 aboutMobility = "O udržitelné mobilitě"

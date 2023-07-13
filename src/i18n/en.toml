@@ -79,7 +79,7 @@ button = "Visit blog"
 
 [index.newsletterFeature]
 title = "Subscribe to our newsletter so you don't miss anything"
-subtitle = "The newsletter will be sent to your email jana.anonymni@dopracenakole.cz."
+description = "The newsletter will be sent to your email jana.anonymni@dopracenakole.cz."
 aboutChallenges = "About future challenges"
 aboutEvents = "About accompanying events (bike rides, breakfasts...), T-shirt events and discounts"
 aboutMobility = "About sustainable mobility"

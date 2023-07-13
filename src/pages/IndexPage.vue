@@ -51,6 +51,7 @@
         data-cy="list-post"
       >
       </vue-card-list-post>
+      <vue-newsletter-feature />
     </div>
   </q-page>
 </template>
@@ -67,6 +68,7 @@ import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
+import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 
 // import types
 import { CardChallenge, CardEvent, CardPost } from 'components/types';
@@ -83,6 +85,7 @@ export default defineComponent({
     VueCardListEvent,
     VueCardListOffer,
     VueCardListPost,
+    VueNewsletterFeature,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
