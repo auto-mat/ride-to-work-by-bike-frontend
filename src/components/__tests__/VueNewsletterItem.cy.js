@@ -2,7 +2,7 @@ import VueNewsletterItem from 'components/VueNewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const icon = 'people';
-const title = 'O budoucích výzvách';
+const title = i18n.global.t('index.newsletterFeature.aboutEvents');
 const url = '#';
 
 describe('<VueNewsletterItem>', () => {
@@ -23,7 +23,7 @@ describe('<VueNewsletterItem>', () => {
 
     it('has display flex', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-item')
+        cy.dataCy('newsletter-item')
           .should('be.visible')
           .should('have.css', 'display', 'flex')
           .should('have.css', 'flex-wrap', 'wrap')
@@ -32,20 +32,16 @@ describe('<VueNewsletterItem>', () => {
       });
     });
 
-    it('renders icon', () => {
+    it('aligns content to the sides', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-icon')
-          .should('be.visible')
-          .should('have.css', 'width', '32px')
-          .should('have.css', 'height', '32px')
-          .should('have.color', '#607d8b')
-          .should('contain', icon);
-      });
-    });
+        cy.dataCy('newsletter-item')
+          .should('have.css', 'justify-content', 'space-between');
+      })
+    })
 
     it('renders title', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-title')
+        cy.dataCy('newsletter-item-title')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#212121')
@@ -56,9 +52,20 @@ describe('<VueNewsletterItem>', () => {
       });
     });
 
+    it('renders icon', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item-icon')
+          .should('be.visible')
+          .should('have.css', 'width', '32px')
+          .should('have.css', 'height', '32px')
+          .should('have.color', '#607d8b')
+          .should('contain', icon);
+      });
+    });
+
     it('renders button with icon', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-button')
+        cy.dataCy('newsletter-item-button')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
@@ -70,7 +77,7 @@ describe('<VueNewsletterItem>', () => {
             i18n.global.t('index.newsletterFeature.following')
           );
 
-        cy.dataCy('newsletter-feature-button')
+        cy.dataCy('newsletter-item-button')
           .find('.q-icon')
           .should('be.visible')
           .should('have.css', 'width', '18px')
@@ -84,10 +91,79 @@ describe('<VueNewsletterItem>', () => {
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(VueNewsletterItem, {
-        props: {},
+        props: {
+          item: {
+            title,
+            icon,
+            url,
+            following: true,
+          },
+        },
       });
       cy.viewport('iphone-6');
     });
+
+    it('renders title', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item-title')
+          .should('have.css', 'font-size', '14px')
+          .should('have.css', 'font-weight', '400')
+          .should('have.color', '#212121')
+          .should('contain', title)
+          .then(($title) => {
+            expect($title.text()).to.equal(title);
+          });
+      });
+    });
+
+    it('renders icon', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item-icon')
+          .should('be.visible')
+          .should('have.css', 'width', '32px')
+          .should('have.css', 'height', '32px')
+          .should('have.color', '#607d8b')
+          .should('contain', icon);
+      });
+    });
+
+    it('renders button with icon', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item-button')
+          .should('be.visible')
+          .should('have.css', 'font-size', '14px')
+          .should('have.css', 'font-weight', '500')
+          .should('have.css', 'text-transform', 'uppercase')
+          .should('have.color', '#212121')
+          .should('have.css', 'border-radius', '28px')
+          .should(
+            'contain',
+            i18n.global.t('index.newsletterFeature.following')
+          );
+
+        cy.dataCy('newsletter-item-button')
+          .find('.q-icon')
+          .should('be.visible')
+          .should('have.css', 'width', '18px')
+          .should('have.css', 'height', '18px')
+          .should('have.color', '#212121')
+          .should('contain', 'check');
+      });
+    });
+
+    it('aligns content to the right', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item')
+          .should('have.css', 'justify-content', 'flex-end');
+      })
+    })
+
+    it('does not wrap icon and title', () => {
+      cy.window().then(() => {
+        cy.dataCy('newsletter-item-content')
+          .should('have.css', 'flex-wrap', 'nowrap');
+      })
+    })
   });
 
   context('not following', () => {
@@ -107,7 +183,7 @@ describe('<VueNewsletterItem>', () => {
 
     it('renders bold title', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-title')
+        cy.dataCy('newsletter-item-title')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '700')
           .should('have.color', '#212121')
@@ -120,7 +196,7 @@ describe('<VueNewsletterItem>', () => {
 
     it('renders black button', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-button')
+        cy.dataCy('newsletter-item-button')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
@@ -129,7 +205,7 @@ describe('<VueNewsletterItem>', () => {
           .should('have.backgroundColor', '#212121')
           .should('contain', i18n.global.t('index.newsletterFeature.follow'));
 
-        cy.dataCy('newsletter-feature-button')
+        cy.dataCy('newsletter-item-button')
           .find('.q-icon')
           .should('not.be.visible');
       });
