@@ -154,10 +154,10 @@ describe('<VueCardOffer>', () => {
               expect($img.attr('src')).to.equal(image);
             });
 
-            cy.dataCy('dialog-body').find('img').matchImageSnapshot({
-              failureThreshold: 0.5,
-              failureThresholdType: 'percent',
-            });
+          cy.dataCy('dialog-body').find('img').matchImageSnapshot({
+            failureThreshold: 0.5,
+            failureThresholdType: 'percent',
+          });
         });
     });
   });

@@ -141,7 +141,6 @@ describe('<VueCardListOffer>', () => {
           );
       });
     });
-
   });
 
   function calculatePercentageWidth($element) {

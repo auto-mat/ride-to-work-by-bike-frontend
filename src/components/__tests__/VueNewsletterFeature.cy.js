@@ -5,7 +5,18 @@ const description = '';
 
 describe('<VueNewsletterFeature>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(["title","subtitle","aboutChallenges","aboutEvents","aboutMobility","following","follow"], 'index.newsletterFeature');
+    cy.testLanguageStringsInContext(
+      [
+        'title',
+        'description',
+        'aboutChallenges',
+        'aboutEvents',
+        'aboutMobility',
+        'following',
+        'follow',
+      ],
+      'index.newsletterFeature'
+    );
   });
 
   context('desktop', () => {

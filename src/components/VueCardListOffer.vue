@@ -42,7 +42,12 @@ export default defineComponent({
 
 <template>
   <div>
-    <h2 class="text-h6 q-mt-none text-weight-semibold" data-cy="card-list-post-title">{{ title }}</h2>
+    <h2
+      class="text-h6 q-mt-none text-weight-semibold"
+      data-cy="card-list-post-title"
+    >
+      {{ title }}
+    </h2>
     <div
       class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3 gap-x-24 gap-y-16"
       data-cy="card-list-offer"
