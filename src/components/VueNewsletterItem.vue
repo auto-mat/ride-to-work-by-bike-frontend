@@ -26,20 +26,20 @@ export default defineComponent({
 
 <template>
   <div
-    class="flex items-center justify-between gap-8"
-    data-cy="newsletter-feature-item"
+    class="flex items-center justify-end justify-sm-between gap-8"
+    data-cy="newsletter-item"
   >
-    <div class="flex items-center justify-between gap-8">
+    <div class="flex no-wrap items-center justify-between gap-8" data-cy="newsletter-item-content">
       <q-icon
         :name="item.icon"
         size="32px"
         color="blue-grey-6"
-        data-cy="newsletter-feature-icon"
+        data-cy="newsletter-item-icon"
       ></q-icon>
       <div
         class="text-body2 text-grey-10"
         :class="{ 'text-bold': !item.following }"
-        data-cy="newsletter-feature-title"
+        data-cy="newsletter-item-title"
       >
         {{ item.title }}
       </div>
@@ -50,13 +50,14 @@ export default defineComponent({
       :text-color="buttonTextColor"
       unelevated
       :outline="item.following"
-      data-cy="newsletter-feature-button"
+      data-cy="newsletter-item-button"
     >
       <q-icon
         v-show="item.following"
         name="check"
         size="18px"
         color="grey-10"
+        class="q-mr-xs"
       />
       <span v-if="item.following">
         {{ $t('index.newsletterFeature.following') }}
@@ -71,5 +72,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .gap-8 {
   gap: 8px;
+}
+.justify-sm-between {
+  @media (min-width: $breakpoint-sm-min) {
+    justify-content: space-between;
+  }
 }
 </style>
