@@ -8,6 +8,7 @@ import { i18n } from 'src/boot/i18n';
 import VueDrawerHeader from 'components/VueDrawerHeader.vue';
 import VueUserSelect from 'components/VueUserSelect.vue';
 import VueDrawerMenu from 'components/VueDrawerMenu.vue';
+import VueFooter from 'components/VueFooter.vue';
 
 // import types
 import { User } from 'components/types';
@@ -24,7 +25,7 @@ setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
 export default defineComponent({
   name: 'MainLayout',
 
-  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu },
+  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu,VueFooter },
 
   setup() {
     const leftDrawerOpen = ref(false);
@@ -98,8 +99,9 @@ export default defineComponent({
       <router-view />
     </q-page-container>
 
-    <q-footer>
+    <q-footer class="bg-transparent absolute-bottom">
       <!-- footer content -->
+      <vue-footer />
     </q-footer>
   </q-layout>
 </template>

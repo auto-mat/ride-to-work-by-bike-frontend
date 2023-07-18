@@ -88,3 +88,7 @@ follow = "Follow"
 
 [index.cardListFollow]
 title = "Follow us on Facebook"
+
+[index.footer]
+copyrightOpenSource = "This app is open source."
+copyrightAuthor = "The Bike to Work Challenge is organized by <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, n.g.o.</a>"
