@@ -13,10 +13,6 @@ export default defineComponent({
     VueCardFollow
   },
   props: {
-    title: {
-      type: String,
-      required: true,
-    },
     cards: {
       type: Array as () => CardFollow[],
       required: true,

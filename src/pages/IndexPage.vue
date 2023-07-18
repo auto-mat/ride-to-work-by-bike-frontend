@@ -56,6 +56,7 @@
         class="q-pt-xl"
         data-cy="newsletter-feature"
       />
+      <vue-card-list-follow :cards="cardFollow" class="q-pt-xl" />
     </div>
   </q-page>
 </template>
@@ -73,11 +74,10 @@ import VueCardListEvent from 'src/components/VueCardListEvent.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
+import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 
 // import types
-import { CardChallenge, CardEvent, CardPost } from 'components/types';
-import { BannerImage } from 'components/types';
-import { Offer } from 'components/types';
+import { CardChallenge, CardEvent, CardPost, BannerImage, Offer, CardFollow } from 'components/types';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -90,6 +90,7 @@ export default defineComponent({
     VueCardListOffer,
     VueCardListPost,
     VueNewsletterFeature,
+    VueCardListFollow,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
@@ -194,6 +195,21 @@ export default defineComponent({
       cardPost,
     ];
 
+    const cardFollow: CardFollow[] = [
+      {
+        title: 'Do práce na kole – Brno',
+        handle: '@DPNKBrno',
+        image: 'https://picsum.photos/id/76/300/300',
+        url: '#',
+      },
+      {
+        title: 'Do práce na kole – Brno',
+        handle: '@DPNKBrno',
+        image: 'https://picsum.photos/id/76/300/300',
+        url: '#',
+      }
+    ]
+
     return {
       releaseDate,
       cards,
@@ -202,6 +218,7 @@ export default defineComponent({
       cardsEvent,
       cardsOffer,
       cardsPost,
+      cardFollow,
     };
   },
 });
