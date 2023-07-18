@@ -121,3 +121,7 @@ follow = "Začít sledovat"
 
 [index.cardListFollow]
 title = "Sledujte nás na Facebooku"
+
+[index.footer]
+copyrightOpenSource = "Tato aplikace je svobodný software."
+copyrightAuthor = "Výzvu Do práce na kole pořádá <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, z.s.</a>"
