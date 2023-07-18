@@ -14,12 +14,12 @@ describe('<VueCardFollow>', () => {
     beforeEach(() => {
       cy.mount(VueCardFollow, {
         props: {
-          card:{
+          card: {
             title,
             handle,
             image,
             url,
-          }
+          },
         },
       });
       cy.viewport('macbook-16');
@@ -27,24 +27,25 @@ describe('<VueCardFollow>', () => {
 
     it('has white background', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow')
-          .should('have.backgroundColor', '#ffffff') // blue-grey-2
+        cy.dataCy('card-follow').should('have.backgroundColor', '#ffffff'); // blue-grey-2
       });
-    })
+    });
 
     it('has rounded corners', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow')
-          .should('have.css', 'border-radius', '20px')
+        cy.dataCy('card-follow').should('have.css', 'border-radius', '20px');
       });
-    })
+    });
 
     it('has border', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow')
-          .should('have.css', 'border', '1px solid rgb(207, 216, 220)') // blue-grey-2
+        cy.dataCy('card-follow').should(
+          'have.css',
+          'border',
+          '1px solid rgb(207, 216, 220)'
+        ); // blue-grey-2
       });
-    })
+    });
 
     it('has no shadow', () => {
       cy.window().then(() => {
@@ -54,17 +55,19 @@ describe('<VueCardFollow>', () => {
 
     it('has padding 16px', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow')
-          .should('have.css', 'padding', '16px')
+        cy.dataCy('card-follow').should('have.css', 'padding', '16px');
       });
-    })
+    });
 
     it('has wrapper with top padding', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow-wrapper')
-          .should('have.css', 'padding-top', '48px')
+        cy.dataCy('card-follow-wrapper').should(
+          'have.css',
+          'padding-top',
+          '48px'
+        );
       });
-    })
+    });
 
     it('renders title', () => {
       cy.window().then(() => {
@@ -77,7 +80,7 @@ describe('<VueCardFollow>', () => {
             expect($title.text()).to.equal(title);
           });
       });
-    })
+    });
 
     it('renders handle', () => {
       cy.window().then(() => {
@@ -90,7 +93,7 @@ describe('<VueCardFollow>', () => {
             expect($title.text()).to.equal(handle);
           });
       });
-    })
+    });
 
     it('renders image', () => {
       cy.window().then(() => {
@@ -100,7 +103,7 @@ describe('<VueCardFollow>', () => {
           .should('have.css', 'border-radius', '50%')
           .should('have.css', 'width', '96px')
           .should('have.css', 'height', '96px')
-          .should('have.css', 'margin-top', '-64px')
+          .should('have.css', 'margin-top', '-64px');
 
         cy.dataCy('card-follow-image')
           .should('be.visible')
@@ -116,7 +119,6 @@ describe('<VueCardFollow>', () => {
         });
       });
     });
-
   });
 
   context('mobile', () => {

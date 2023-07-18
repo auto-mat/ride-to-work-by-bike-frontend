@@ -29,7 +29,10 @@ export default defineComponent({
     class="flex items-center justify-end justify-sm-between gap-8"
     data-cy="newsletter-item"
   >
-    <div class="flex no-wrap items-center justify-between gap-8" data-cy="newsletter-item-content">
+    <div
+      class="flex no-wrap items-center justify-between gap-8"
+      data-cy="newsletter-item-content"
+    >
       <q-icon
         :name="item.icon"
         size="32px"
