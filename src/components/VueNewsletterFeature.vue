@@ -17,7 +17,7 @@ export default defineComponent({
     image: {
       type: String,
       required: false,
-    }
+    },
   },
   setup() {
     const newsletterItems: NewsletterItem[] = [
@@ -57,11 +57,24 @@ export default defineComponent({
       <q-img :src="image" data-cy="newsletter-feature-image" />
     </div>
     <div class="col-12 col-md-9" data-cy="newsletter-col-content">
-      <h2 class="q-mb-md q-mt-none text-h6" data-cy="newsletter-feature-title">{{ $t('index.newsletterFeature.title') }}</h2>
-      <p class="q-my-md" v-html="$t('index.newsletterFeature.description')" data-cy="newsletter-feature-description"></p>
+      <h2 class="q-mb-md q-mt-none text-h6" data-cy="newsletter-feature-title">
+        {{ $t('index.newsletterFeature.title') }}
+      </h2>
+      <p
+        class="q-my-md"
+        v-html="$t('index.newsletterFeature.description')"
+        data-cy="newsletter-feature-description"
+      ></p>
       <div v-for="(item, index) in newsletterItems" :key="item.title">
-        <vue-newsletter-item :item="item" data-cy="newsletter-feature-item"></vue-newsletter-item>
-        <hr v-if="index < newsletterItems.length - 1" class="q-my-md" data-cy="newsletter-feature-divider" />
+        <vue-newsletter-item
+          :item="item"
+          data-cy="newsletter-feature-item"
+        ></vue-newsletter-item>
+        <hr
+          v-if="index < newsletterItems.length - 1"
+          class="q-my-md"
+          data-cy="newsletter-feature-divider"
+        />
       </div>
     </div>
   </div>

@@ -54,7 +54,8 @@
       <vue-newsletter-feature
         image="https://picsum.photos/id/100/210/190"
         class="q-pt-xl"
-        data-cy="newsletter-feature" />
+        data-cy="newsletter-feature"
+      />
     </div>
   </q-page>
 </template>
