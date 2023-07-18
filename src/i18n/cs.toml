@@ -118,3 +118,6 @@ aboutEvents = "O doprovodných akcích (cyklojízdách, snídaních...), Akcích
 aboutMobility = "O udržitelné mobilitě"
 following = "Již sledujete"
 follow = "Začít sledovat"
+
+[index.cardListFollow]
+title = "Sledujte nás na Facebooku"

@@ -6,7 +6,7 @@ const itemTitles = [
   i18n.global.t('index.newsletterFeature.aboutChallenges'),
   i18n.global.t('index.newsletterFeature.aboutEvents'),
   i18n.global.t('index.newsletterFeature.aboutMobility'),
-]
+];
 
 describe('<VueNewsletterFeature>', () => {
   it('has translation for all strings', () => {
@@ -42,7 +42,9 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.color', '#000000')
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.title'));
+            expect($title.text()).to.equal(
+              i18n.global.t('index.newsletterFeature.title')
+            );
           });
       });
     });
@@ -53,9 +55,14 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#000000')
-          .should('contain', i18n.global.t('index.newsletterFeature.description'))
+          .should(
+            'contain',
+            i18n.global.t('index.newsletterFeature.description')
+          )
           .then(($title) => {
-            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.description'));
+            expect($title.text()).to.equal(
+              i18n.global.t('index.newsletterFeature.description')
+            );
           });
       });
     });
@@ -76,7 +83,7 @@ describe('<VueNewsletterFeature>', () => {
           failureThresholdType: 'percent',
         });
       });
-    })
+    });
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
@@ -84,18 +91,19 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.length', 3)
           .each(($item) => {
             cy.wrap($item).should('be.visible');
-          })
+          });
       });
     });
 
     it('renders divider between items', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-divider').should('be.visible')
+        cy.dataCy('newsletter-feature-divider')
+          .should('be.visible')
           .should('have.length', 2)
           .should('have.css', 'margin-top', '16px')
           .should('have.css', 'margin-bottom', '16px');
       });
-    })
+    });
 
     it('renders grid', () => {
       cy.window().then(() => {
@@ -126,7 +134,9 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.color', '#000000')
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.title'));
+            expect($title.text()).to.equal(
+              i18n.global.t('index.newsletterFeature.title')
+            );
           });
       });
     });
@@ -137,19 +147,23 @@ describe('<VueNewsletterFeature>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#000000')
-          .should('contain', i18n.global.t('index.newsletterFeature.description'))
+          .should(
+            'contain',
+            i18n.global.t('index.newsletterFeature.description')
+          )
           .then(($title) => {
-            expect($title.text()).to.equal(i18n.global.t('index.newsletterFeature.description'));
+            expect($title.text()).to.equal(
+              i18n.global.t('index.newsletterFeature.description')
+            );
           });
       });
     });
 
     it('does not render image', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-image')
-          .should('not.be.visible');
+        cy.dataCy('newsletter-feature-image').should('not.be.visible');
       });
-    })
+    });
 
     it('renders grid', () => {
       cy.window().then(() => {
@@ -158,7 +172,6 @@ describe('<VueNewsletterFeature>', () => {
         });
       });
     });
-
   });
 
   function calculatePercentageWidth($element) {

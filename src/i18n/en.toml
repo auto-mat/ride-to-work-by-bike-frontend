@@ -118,3 +118,6 @@ aboutEvents = "About accompanying events (bike rides, breakfasts...), T-shirt ev
 aboutMobility = "About sustainable mobility"
 following = "Following"
 follow = "Follow"
+
+[index.cardListFollow]
+title = "Follow us on Facebook"

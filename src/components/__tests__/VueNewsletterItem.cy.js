@@ -34,10 +34,13 @@ describe('<VueNewsletterItem>', () => {
 
     it('aligns content to the sides', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-item')
-          .should('have.css', 'justify-content', 'space-between');
-      })
-    })
+        cy.dataCy('newsletter-item').should(
+          'have.css',
+          'justify-content',
+          'space-between'
+        );
+      });
+    });
 
     it('renders title', () => {
       cy.window().then(() => {
@@ -155,17 +158,23 @@ describe('<VueNewsletterItem>', () => {
 
     it('aligns content to the right', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-item')
-          .should('have.css', 'justify-content', 'flex-end');
-      })
-    })
+        cy.dataCy('newsletter-item').should(
+          'have.css',
+          'justify-content',
+          'flex-end'
+        );
+      });
+    });
 
     it('does not wrap icon and title', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-item-content')
-          .should('have.css', 'flex-wrap', 'nowrap');
-      })
-    })
+        cy.dataCy('newsletter-item-content').should(
+          'have.css',
+          'flex-wrap',
+          'nowrap'
+        );
+      });
+    });
   });
 
   context('not following', () => {
