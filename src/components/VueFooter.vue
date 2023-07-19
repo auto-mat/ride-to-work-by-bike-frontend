@@ -42,7 +42,7 @@ export default defineComponent({
               </ul>
             </div>
           </div>
-          <div class="h-38 flex flex-wrap items-center gap-12 copyright">
+          <div class="h-38 flex flex-wrap items-center gap-12 copyright" data-cy="footer-copyright-list">
             <div v-for="(message, index) in copyrightList" :key="message" class="text-white flex items-center gap-12">
               <span v-html="$t('index.footer.' + message)"></span>
               <span v-if="index < copyrightList.length - 1">|</span>
