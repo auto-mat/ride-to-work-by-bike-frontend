@@ -48,10 +48,10 @@ describe('<VueFooter>', () => {
 
     it('renders language switcher', () => {
       cy.window().then(() => {
-        cy.dataCy('footer-lanaguage-switcher')
+        cy.dataCy('footer-language-switcher')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
+          .should('have.css', 'font-weight', '400')
           .should('have.color', '#ffffff');
       });
     })
