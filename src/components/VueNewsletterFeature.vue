@@ -13,12 +13,6 @@ export default defineComponent({
   components: {
     VueNewsletterItem,
   },
-  props: {
-    image: {
-      type: String,
-      required: false,
-    },
-  },
   setup() {
     const newsletterItems: NewsletterItem[] = [
       {
@@ -54,7 +48,9 @@ export default defineComponent({
     class="row q-col-gutter-lg items-center justify-between"
   >
     <div class="gt-sm col-md-3" data-cy="newsletter-col-image">
-      <q-img :src="image" data-cy="newsletter-feature-image" />
+      <div class="q-px-xl">
+        <q-img src="~assets/image/newsletter-envelope.png" data-cy="newsletter-feature-image" />
+      </div>
     </div>
     <div class="col-12 col-md-9" data-cy="newsletter-col-content">
       <h2 class="q-mb-md q-mt-none text-h6" data-cy="newsletter-feature-title">
