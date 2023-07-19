@@ -1,7 +1,6 @@
 import VueNewsletterFeature from 'components/VueNewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
 
-const image = 'https://picsum.photos/id/100/210/190';
 const itemTitles = [
   i18n.global.t('index.newsletterFeature.aboutChallenges'),
   i18n.global.t('index.newsletterFeature.aboutEvents'),
@@ -27,9 +26,7 @@ describe('<VueNewsletterFeature>', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(VueNewsletterFeature, {
-        props: {
-          image,
-        },
+        props: {},
       });
       cy.viewport('macbook-16');
     });
@@ -74,9 +71,7 @@ describe('<VueNewsletterFeature>', () => {
           .find('img')
           .should(($img) => {
             expect($img[0].naturalWidth).to.be.greaterThan(0);
-          })
-          .invoke('attr', 'src')
-          .should('contains', image);
+          });
 
         cy.dataCy('newsletter-feature-image').matchImageSnapshot({
           failureThreshold: 0.5,
