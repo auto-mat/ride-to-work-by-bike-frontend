@@ -2,7 +2,7 @@ describe('Home page', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.visit(Cypress.config('baseUrl'));
-      cy.viewport('macbook-13');
+      cy.viewport('macbook-16');
     });
 
     it('renders all components', () => {
@@ -372,9 +372,10 @@ describe('Home page', () => {
           cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-subject')
-            .find('.q-field__messages')
-            .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.subjectRequired'));
+            .find('.q-field__messages').then(($message) => {
+              cy.wrap($message).should('be.visible')
+              .should('contain', i18n.global.t('index.contact.subjectRequired'));
+            });
 
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
