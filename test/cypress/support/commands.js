@@ -64,3 +64,13 @@ Cypress.Commands.add(
     });
   }
 );
+
+Cypress.Commands.add('testElementPercentageWidth', ($element, expectedPercentage) => {
+  $element.then(($el) => {
+    const actualWidth = $el.outerWidth();
+    const parentWidth = $el.parent().outerWidth();
+    const calculatedPercentage = (actualWidth / parentWidth) * 100;
+
+    expect(calculatedPercentage).to.be.closeTo(Number(expectedPercentage), 1);
+  });
+});
