@@ -46,13 +46,9 @@ describe('<VueCardListFollow>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-follow-col-title').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(33, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-col-title'), 33);
 
-        cy.dataCy('card-list-follow-item').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(33, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 33);
       });
     });
 
@@ -79,20 +75,10 @@ describe('<VueCardListFollow>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-follow-col-title').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(100, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-col-title'), 100);
 
-        cy.dataCy('card-list-follow-item').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(100, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 100);
       });
     });
   });
-
-  function calculatePercentageWidth($element) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });

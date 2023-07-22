@@ -102,13 +102,9 @@ describe('<VueNewsletterFeature>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-col-image').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(25, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-image'), 25);
 
-        cy.dataCy('newsletter-col-content').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(75, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-content'), 75);
       });
     });
   });
@@ -162,16 +158,8 @@ describe('<VueNewsletterFeature>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-col-content').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(100, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-content'), 100);
       });
     });
   });
-
-  function calculatePercentageWidth($element) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });
