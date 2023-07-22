@@ -40,7 +40,7 @@ export default defineComponent({
         <div>
           <div
             v-if="banner.title"
-            class="text-dark text-subtitle1"
+            class="text-weight-medium text-subtitle1"
             data-cy="banner-title"
           >
             {{ banner.title }}

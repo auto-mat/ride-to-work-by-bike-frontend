@@ -6,7 +6,7 @@ describe('<VueBannerImage>', () => {
   const title = 'Fill in our questionnaire and win one of our great prizes!';
   const perex =
     'You can help us decide what to spend more time on next time and what should stay the same.';
-  const image = 'https://picsum.photos/600/200';
+  const image = 'https://picsum.photos/id/200/600/200';
 
   context('desktop', () => {
     beforeEach(() => {
