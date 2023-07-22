@@ -139,19 +139,9 @@ describe('<VueCardEvent>', () => {
       .then(($parentElement) => {
         parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
 
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
 
     cy.viewport('macbook-13');
@@ -161,19 +151,9 @@ describe('<VueCardEvent>', () => {
       .then(($parentElement) => {
         parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
 
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
   });
 
@@ -274,30 +254,12 @@ describe('<VueCardEvent>', () => {
 
           cy.viewport('iphone-6');
 
-          cy.dataCy('dialog-body')
-            .find('.col-12')
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(
-                100,
-                0.5
-              );
-            });
+          cy.testElementPercentageWidth(cy.dataCy('dialog-body'), 100);
 
           cy.viewport('macbook-13');
 
-          cy.dataCy('dialog-body')
-            .find('.col-12')
-            .first()
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
-            });
+          cy.testElementPercentageWidth(cy.dataCy('dialog-body'), 100);
         });
     });
   });
-
-  function calculatePercentageWidth($element, width) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = width ? width : $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });
