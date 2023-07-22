@@ -47,7 +47,7 @@ export default defineComponent({
           </div>
           <div
             v-if="banner.perex"
-            class="text-dark text-caption q-mt-sm"
+            class="text-caption q-mt-sm"
             data-cy="banner-perex"
           >
             {{ banner.perex }}
