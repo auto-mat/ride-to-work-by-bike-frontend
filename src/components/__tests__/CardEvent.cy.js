@@ -145,19 +145,9 @@ describe('<CardEvent>', () => {
       .then(($parentElement) => {
         parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
 
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
 
     cy.viewport('macbook-13');
@@ -167,19 +157,9 @@ describe('<CardEvent>', () => {
       .then(($parentElement) => {
         parentWidth = $parentElement[0].clientWidth;
 
-        cy.dataCy('card-image').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
 
-        cy.dataCy('card-content').then(($element) => {
-          expect(calculatePercentageWidth($element, parentWidth)).to.be.closeTo(
-            100,
-            0.5
-          );
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
   });
 
@@ -310,10 +290,4 @@ describe('<CardEvent>', () => {
         });
     });
   });
-
-  function calculatePercentageWidth($element, width) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = width ? width : $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });

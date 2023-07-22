@@ -60,24 +60,15 @@ describe('<VueCardListChallenge>', () => {
       .should('have.css', 'flex-wrap', 'wrap');
 
     cy.viewport('iphone-6');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
-    });
+
+    cy.testElementPercentageWidth(cy.dataCy('card-list-item'), 100);
 
     cy.viewport('macbook-13');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
-    });
+
+    cy.testElementPercentageWidth(cy.dataCy('card-list-item'), 50);
 
     cy.viewport('macbook-15');
-    cy.dataCy('card-list-item').then(($element) => {
-      expect(calculatePercentageWidth($element)).to.be.closeTo(33, 0.5);
-    });
-  });
 
-  function calculatePercentageWidth($element) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
+    cy.testElementPercentageWidth(cy.dataCy('card-list-item'), 33);
+  });
 });

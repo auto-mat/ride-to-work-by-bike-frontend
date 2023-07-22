@@ -69,9 +69,8 @@ describe('<VueCardListOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-offer').should('have.css', 'display', 'grid');
 
-        cy.dataCy('card-list-offer-item').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(33, 5);
-        });
+
+        cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 33);
       });
     });
 
@@ -122,10 +121,7 @@ describe('<VueCardListOffer>', () => {
     it('renders items in a 1 col grid', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-offer').should('have.css', 'display', 'grid');
-
-        cy.dataCy('card-list-offer-item').then(($element) => {
-          expect(calculatePercentageWidth($element)).to.be.closeTo(100, 5);
-        });
+        cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 100);
       });
     });
 
@@ -142,10 +138,4 @@ describe('<VueCardListOffer>', () => {
       });
     });
   });
-
-  function calculatePercentageWidth($element) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });
