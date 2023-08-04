@@ -21,7 +21,7 @@ export default defineComponent({
       data-cy="footer-background"
     />
     <div class="relative-position pt-112">
-      <div class="h-lg-142 max-w-lg-90perc flex items-end bg-grey-10 q-px-md">
+      <div class="footer-wrapper h-lg-142 max-w-lg-90perc flex items-end q-px-md">
         <div class="footer-scroll-top shrink-0">
           <q-btn
             class="w-38 h-38 gt-xs"
@@ -41,17 +41,15 @@ export default defineComponent({
               height="40px"
               data-cy="footer-logo"
             />
-            <div class="mobile-only">
-              <q-btn
-                class="w-38 h-38 xs"
-                color="white"
-                outline
-                round
-                data-cy="footer-top-button"
-              >
-                <q-icon name="arrow_upward" size="18px" />
-              </q-btn>
-            </div>
+            <q-btn
+              class="w-38 h-38 xs"
+              color="white"
+              outline
+              round
+              data-cy="footer-top-button"
+            >
+              <q-icon name="arrow_upward" size="18px" />
+            </q-btn>
             <div class="flex items-center">
               <div
                 class="flex items-center gap-32"
@@ -149,6 +147,12 @@ export default defineComponent({
 .gap-32 {
   gap: 32px;
 }
+.footer-wrapper {
+  background-color: $grey-10;
+  @media (min-width: $breakpoint-sm-min) {
+    background-color: transparent;
+  }
+}
 .footer-scroll-top {
   padding-top: 16px;
   @media (min-width: $breakpoint-sm-min) {
@@ -174,7 +178,7 @@ export default defineComponent({
   padding-inline-start: 0;
 }
 .copyright {
-  padding-bottom: 8px;
+  padding-bottom: 16px;
   @media (min-width: $breakpoint-sm-min) {
     height: 38px;
     min-height: 0;
