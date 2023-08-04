@@ -136,8 +136,10 @@ export default defineComponent({
 .q-card {
   background-color: var(--q-gray-light);
 }
+
 .text-64 {
   font-size: 64px;
+
   @media (min-width: $breakpoint-lg-min) {
     font-size: 48px;
   }

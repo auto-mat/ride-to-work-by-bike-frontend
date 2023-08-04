@@ -49,7 +49,10 @@ export default defineComponent({
   >
     <div class="gt-sm col-md-3" data-cy="newsletter-col-image">
       <div class="q-px-xl">
-        <q-img src="~assets/image/newsletter-envelope.png" data-cy="newsletter-feature-image" />
+        <q-img
+          src="~assets/image/newsletter-envelope.png"
+          data-cy="newsletter-feature-image"
+        />
       </div>
     </div>
     <div class="col-12 col-md-9" data-cy="newsletter-col-content">

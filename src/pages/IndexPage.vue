@@ -1,6 +1,6 @@
 <template>
   <q-page data-cy="q-main">
-    <div class="q-px-lg">
+    <div class="q-px-lg bg-white">
       <h1
         class="text-h5 q-mt-none q-pt-lg text-weight-bold"
         data-cy="index-title"
@@ -24,7 +24,7 @@
     </div>
     <heading-background
       :title="headingBgTitle"
-      class="q-pt-xl"
+      class="bg-white q-pt-xl"
       data-cy="heading-background"
     ></heading-background>
     <div class="bg-gray-light q-px-lg">
@@ -51,10 +51,7 @@
         data-cy="list-post"
       >
       </vue-card-list-post>
-      <vue-newsletter-feature
-        class="q-pt-xl"
-        data-cy="newsletter-feature"
-      />
+      <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
       <vue-card-list-follow :cards="cardFollow" class="q-pt-xl" />
     </div>
   </q-page>
@@ -237,8 +234,8 @@ export default defineComponent({
         handle: '@DPNKBrno',
         image: 'https://picsum.photos/id/76/300/300',
         url: '#',
-      }
-    ]
+      },
+    ];
 
     return {
       releaseDate,
@@ -255,7 +252,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.bg-gray-light {
-  background-color: var(--q-gray-light);
+.bg-gray-lighter {
+  background-color: var(--q-gray-lighter);
 }
 </style>

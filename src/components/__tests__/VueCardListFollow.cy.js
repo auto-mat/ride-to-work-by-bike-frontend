@@ -6,9 +6,9 @@ const card = {
   handle: '@DPNKBrno',
   image: 'https://picsum.photos/id/76/300/300',
   url: '#',
-}
+};
 
-const cards = [card, card]
+const cards = [card, card];
 
 describe('<VueCardListFollow>', () => {
   it('has translation for all strings', () => {
@@ -33,7 +33,9 @@ describe('<VueCardListFollow>', () => {
           .should('have.color', '#000000')
           .should('contain', i18n.global.t('index.cardListFollow.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(i18n.global.t('index.cardListFollow.title'));
+            expect($title.text()).to.equal(
+              i18n.global.t('index.cardListFollow.title')
+            );
           });
       });
     });
@@ -46,7 +48,10 @@ describe('<VueCardListFollow>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-col-title'), 33);
+        cy.testElementPercentageWidth(
+          cy.dataCy('card-list-follow-col-title'),
+          33
+        );
 
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 33);
       });
@@ -75,7 +80,10 @@ describe('<VueCardListFollow>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('card-list-follow-col-title'), 100);
+        cy.testElementPercentageWidth(
+          cy.dataCy('card-list-follow-col-title'),
+          100
+        );
 
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 100);
       });

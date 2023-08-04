@@ -12,7 +12,7 @@ describe('<VueFooter>', () => {
           copyright: [
             'Tato aplikace je svobodný software.',
             'Výzvu Do práce na kole pořádá <a href="https://auto-mat.cz" target="_blank">Auto*Mat, z.s.</a>',
-          ]
+          ],
         },
       });
       cy.viewport('macbook-16');
@@ -26,7 +26,7 @@ describe('<VueFooter>', () => {
           .should('have.css', 'top', '0px')
           .should('have.css', 'left', '0px');
       });
-    })
+    });
 
     it('renders logo', () => {
       cy.window().then(() => {
@@ -35,7 +35,7 @@ describe('<VueFooter>', () => {
           .should('have.css', 'height', '40px')
           .should('have.color', '#ffffff');
       });
-    })
+    });
 
     it('renders social menu', () => {
       cy.window().then(() => {
@@ -44,7 +44,7 @@ describe('<VueFooter>', () => {
           .should('have.css', 'display', 'flex')
           .should('have.css', 'align-items', 'center');
       });
-    })
+    });
 
     it('renders language switcher', () => {
       cy.window().then(() => {
@@ -54,7 +54,7 @@ describe('<VueFooter>', () => {
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#ffffff');
       });
-    })
+    });
 
     it('renders a go to top button', () => {
       cy.window().then(() => {
@@ -63,8 +63,8 @@ describe('<VueFooter>', () => {
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
           .should('have.color', '#ffffff');
-      })
-    })
+      });
+    });
 
     it('renders copyright list', () => {
       cy.window().then(() => {
@@ -76,7 +76,7 @@ describe('<VueFooter>', () => {
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#ffffff');
       });
-    })
+    });
   });
 
   context('mobile', () => {

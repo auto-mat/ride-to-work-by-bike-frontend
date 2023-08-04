@@ -69,7 +69,6 @@ describe('<VueCardListOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-offer').should('have.css', 'display', 'grid');
 
-
         cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 33);
       });
     });
