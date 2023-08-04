@@ -34,7 +34,7 @@ export default defineComponent({
           </q-btn>
         </div>
         <div class="footer-content h-full grow">
-          <div class="grow flex flex-wrap items-start justify-between">
+          <div class="grow flex flex-wrap gap-8 items-start justify-between">
             <q-img
               src="~assets/svg/logo-white.svg"
               width="142px"
@@ -137,6 +137,9 @@ export default defineComponent({
 .h-38 {
   height: 38px;
   min-height: 0;
+}
+.gap-8 {
+  gap: 8px;
 }
 .gap-12 {
   gap: 12px;
