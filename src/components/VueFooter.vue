@@ -1,8 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import VueLanguageSwitcher from 'components/VueLanguageSwitcher.vue';
 
 export default defineComponent({
   name: 'VueFooter',
+  components: {
+    VueLanguageSwitcher,
+  },
   setup() {
     const copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
 
@@ -60,25 +64,7 @@ export default defineComponent({
                 <q-icon name="mdi-youtube" size="18px" />
               </div>
               <span class="q-mx-lg">|</span>
-              <ul
-                class="language-list flex items-center text-subtitle1 gap-24"
-                data-cy="footer-language-switcher"
-              >
-                <li
-                  v-for="item in Object.keys($i18n.messages)"
-                  :key="item"
-                  class="text-uppercase"
-                >
-                  <a
-                    href="#"
-                    @click.prevent="$i18n.locale = item"
-                    class="text-white"
-                    :class="{ 'text-bold': item === $i18n.locale }"
-                  >
-                    {{ item }}
-                  </a>
-                </li>
-              </ul>
+              <vue-language-switcher />
             </div>
           </div>
           <div
