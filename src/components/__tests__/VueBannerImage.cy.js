@@ -84,7 +84,10 @@ describe('<VueBannerImage>', () => {
 
     it('has correct background color', () => {
       cy.window().then(() => {
-        cy.dataCy('banner').should('have.backgroundColor', config.colorGrayLight);
+        cy.dataCy('banner').should(
+          'have.backgroundColor',
+          config.colorGray - 3
+        );
       });
     });
 
@@ -100,7 +103,7 @@ describe('<VueBannerImage>', () => {
           .should('have.css', 'border-bottom-left-radius', '20px');
       });
     });
-  })
+  });
 
   context('mobile', () => {
     beforeEach(() => {
@@ -178,7 +181,10 @@ describe('<VueBannerImage>', () => {
 
     it('has correct background color', () => {
       cy.window().then(() => {
-        cy.dataCy('banner').should('have.backgroundColor', config.colorGrayLight);
+        cy.dataCy('banner').should(
+          'have.backgroundColor',
+          config.colorGray - 3
+        );
       });
     });
 
@@ -194,5 +200,5 @@ describe('<VueBannerImage>', () => {
           .should('have.css', 'border-top-right-radius', '20px');
       });
     });
-  })
+  });
 });

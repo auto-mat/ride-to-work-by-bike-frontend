@@ -21,11 +21,12 @@ const rideToWorkByBikeConfig: object = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('gray-lighter', '#f7faff');
 
 export default defineComponent({
   name: 'MainLayout',
 
-  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu,VueFooter },
+  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu, VueFooter },
 
   setup() {
     const leftDrawerOpen = ref(false);
@@ -80,7 +81,7 @@ export default defineComponent({
       v-model="leftDrawerOpen"
       side="left"
       :width="320"
-      class="bg-gray-light q-py-lg q-px-lg"
+      class="bg-gray-light q-py-lg q-px-lg pb-footer"
       data-cy="q-drawer"
     >
       <vue-drawer-header
@@ -95,7 +96,7 @@ export default defineComponent({
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="bg-gray-lighter pb-footer">
       <router-view />
     </q-page-container>
 
@@ -106,13 +107,19 @@ export default defineComponent({
   </q-layout>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+.bg-gray-light {
+  background-color: var(--q-gray-light);
+}
+.bg-gray-lighter {
+  background-color: var(--q-gray-lighter);
+}
+.pb-footer {
+  padding-bottom: 20rem !important;
+}
 @media (min-width: $breakpoint-md-min) {
   .lg-hidden {
     display: none;
   }
-}
-.bg-gray-light {
-  background-color: var(--q-gray-light);
 }
 </style>
