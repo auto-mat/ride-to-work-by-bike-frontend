@@ -82,6 +82,14 @@ jobs:
           microsoft-edge --version
           npx cypress run --e2e --browser $(which microsoft-edge)
 
+      - name: Archive runned cypress tests result
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: cypress-tests-result
+          path: test/*
+          retention-days: 3
+
   push-docker-img:
     runs-on: ubuntu-22.04
     needs: [build-and-test]

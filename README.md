@@ -1,6 +1,8 @@
 # Ride to work by bike frontend (ride-to-work-by-bike)
 
-A Ride to work by bike web app is based on the [Quasar framework](https://quasar.dev/) ([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/), [TOML](https://toml.io)).
+A Ride to work by bike web app is based on the [Quasar framework](https://quasar.dev/)
+([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/),
+[TOML](https://toml.io)).
 
 Tested with Node version
 
@@ -108,22 +110,20 @@ test@test:~$ xdg-open https://rtwbb-test.dopracenakole.net
 ### Develoment app with build Docker image/container
 
 ```bash
-APP_DIR=ride-to-work-by-bike
+APP_NAME=ride-to-work-by-bike-app
+APP_DIR=/home/dev/$APP_NAME
 
 # Build Docker image
-docker buildx build -f ./docker/dev/Dockerfile .
+docker buildx build --build-arg="UID=$(id -u)" -f ./docker/dev/Dockerfile .
 
 # Run Docker app container
-docker run -it --rm -e "PS1=\u@\h:\w$ " -p 9000:9000 -v $(pwd):/$APP_DIR --name ride-to-work-by-bike <YOUR_BUILDED_DOCKER_IMAGE_ID>
+docker run -it --rm -e "PS1=\u@\h:\w$ " -p 9000:9000 -v $(pwd):$APP_DIR --name $APP_NAME <YOUR_BUILDED_DOCKER_IMAGE_ID>
 
 # Or if you want override some Docker app container ENV variables (-e flag)
-docker run -it --rm -e "PS1=\u@\h:\w$ " -e "PRIMARY_COLOR=red" -p 9000:9000 -v $(pwd):/$APP_DIR --name ride-to-work-by-bike <YOUR_BUILDED_DOCKER_IMAGE_ID>
-
-# Install app dependencies under Docker app container from emulator terminal
-root@abe3e4f9c401:/ride-to-work-by-bike$ ./docker/dev/install.sh
+docker run -it --rm -e "PS1=\u@\h:\w$ " -e "PRIMARY_COLOR=red" -p 9000:9000 -v $(pwd):$APP_DIR --name $APP_NAME <YOUR_BUILDED_DOCKER_IMAGE_ID>
 
 # Run quasar app dev server from emulator terminal
-root@abe3e4f9c401:/ride-to-work-by-bike$ npx quasar dev
+dev@61b150727994:~/ride-to-work-by-bike-app$ npx quasar dev
 
 # Check web app from your host OS via web browser
 # Open default web browser with URL http://localhost:9000 from host OS emulator terminal
