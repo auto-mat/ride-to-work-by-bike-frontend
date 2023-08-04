@@ -246,10 +246,12 @@ export default defineComponent({
   &.q-btn-no-uppercase {
     text-transform: none;
   }
+
   &.q-btn-underline {
     span {
       text-decoration: underline;
     }
+
     &:hover {
       span {
         text-decoration: none;

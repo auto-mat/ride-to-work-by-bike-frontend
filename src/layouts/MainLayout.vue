@@ -84,7 +84,7 @@ export default defineComponent({
       v-model="leftDrawerOpen"
       side="left"
       :width="320"
-      class="bg-info q-py-lg q-px-lg"
+      class="bg-info q-py-lg q-px-lg pb-footer"
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
@@ -102,8 +102,7 @@ export default defineComponent({
       <drawer-menu class="q-pt-lg" data-cy="drawer-menu"></drawer-menu>
     </q-drawer>
 
-    <!-- Page content -->
-    <q-page-container>
+    <q-page-container class="bg-info pb-footer">
       <router-view />
     </q-page-container>
 
@@ -113,3 +112,9 @@ export default defineComponent({
     </q-footer>
   </q-layout>
 </template>
+
+<style lang="scss">
+.pb-footer {
+  padding-bottom: 20rem !important;
+}
+</style>
