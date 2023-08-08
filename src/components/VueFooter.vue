@@ -10,8 +10,16 @@ export default defineComponent({
   setup() {
     const copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
 
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+
     return {
       copyrightList,
+      scrollToTop,
     };
   },
 });
@@ -33,6 +41,7 @@ export default defineComponent({
             outline
             round
             data-cy="footer-top-button"
+            @click.prevent="scrollToTop"
           >
             <q-icon name="arrow_upward" size="18px" />
           </q-btn>
@@ -51,6 +60,7 @@ export default defineComponent({
               outline
               round
               data-cy="footer-top-button"
+              @click.prevent="scrollToTop"
             >
               <q-icon name="arrow_upward" size="18px" />
             </q-btn>
