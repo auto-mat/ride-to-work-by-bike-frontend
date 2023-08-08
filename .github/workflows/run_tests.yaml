@@ -1,4 +1,3 @@
----
 name: Run tests
 
 # Run tests
@@ -13,74 +12,133 @@ on:
 
 jobs:
   build-and-test:
-    name: ${{ matrix.node-version }}
+    name: Cypress componenets/e2e tests
 
     concurrency:
       group:
-        ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}-${{
-        matrix.name }}
+        ${{ github.workflow }}-${{ github.event_name == 'push' && github.head_ref || github.sha }}-${{
+        matrix.name }}-${{ matrix.os }}
       cancel-in-progress: true
 
     runs-on: ${{ matrix.os }}
     strategy:
+      max-parallel: 1
       matrix:
-        node-version: [18.x]
-        include:
-          - name: '22.04'
-            os: ubuntu-22.04
-            config: ubuntu-22.04
+        node: [18.x]
+        os: [windows-latest] # [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
+    timeout-minutes: 35
+
+    env:
+      timeout: 120
+      dev_server_url: "http://localhost:9000"
+      browser_connect_timeout: 180000
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Git code
+        uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
+      - run: node -v
 
-      - name: Get app dependencies
-        run: |
-          .github/workflows/install_dependencies.sh
+      - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          start: npx quasar dev
+          component: true
+          browser: firefox
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --component --browser firefox
 
-      - name: Get app JavaScript dependencies
-        run: |
-          yarn global add @quasar/cli npx
-          yarn
+      - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          component: true
+          browser: chrome
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --component --browser chrome
 
-      - name: Run component tests with Mozilla Firefox web browser
-        run: |
-          firefox --version
-          npx cypress run --component --browser $(which firefox)
+      - name: Run Cypress component test on MS Edge/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          component: true
+          browser: edge
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --component --browser edge
 
-      - name: Run component tests with Google Chrome web browser
-        run: |
-          google-chrome-stable --version
-          npx cypress run --component --browser $(which google-chrome-stable)
+      - name: Run Cypress e2e test on Mozilla Firefox/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: firefox
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --e2e --browser firefox
 
-      - name: Run component tests with Microsoft Edge web browser
-        run: |
-          microsoft-edge --version
-          npx cypress run --component --browser $(which microsoft-edge)
+      - name: Run Cypress e2e test on Google Chrome/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: chrome
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --e2e --browser chrome
 
-      - name: Run app web server in background for e2e tests
-        run: |
-          npx quasar dev &
+      - name: Run Cypress e2e test on MS Edge/OS ${{ matrix.os }}
+        uses: cypress-io/github-action@v5
+        env:
+          DEBUG: "cypress:*"
+          CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+        with:
+          install: false
+          browser: edge
+          wait-on-timeout: ${{ env.timeout }}
+          wait-on: ${{ env.dev_server_url }}
+          command: npx cypress run --e2e --browser edge
 
-      - name: Run e2e/unit tests with Mozilla Firefox web browser
-        run: |
-          firefox --version
-          npx cypress run --e2e --browser $(which firefox)
+      - name: Build app
+        run: npx quasar build
 
-      - name: Run e2e/unit tests with Google Chrome web browser
-        run: |
-          google-chrome-stable --version
-          npx cypress run --e2e --browser $(which google-chrome-stable)
+      - name: Archive runned cypress tests screenshots result
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-screenshots
+          path: test/cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 3
 
-      - name: Run e2e/unit tests with Microsoft Edge web browser
-        run: |
-          microsoft-edge --version
-          npx cypress run --e2e --browser $(which microsoft-edge)
+      - name: Archive runned cypress tests videos result
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-videos
+          path: test/cypress/videos
+          if-no-files-found: ignore
+          retention-days: 3
 
       - name: Archive runned cypress tests result
         uses: actions/upload-artifact@v3
@@ -91,7 +149,8 @@ jobs:
           retention-days: 3
 
   push-docker-img:
-    runs-on: ubuntu-22.04
+    if: github.event.pull_request.merged == true || github.event.push.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
     needs: [build-and-test]
 
     outputs:
@@ -134,8 +193,9 @@ jobs:
         run: |
           echo "dockerhub_image_version=${{ env.DOCKERHUB_IMAGE_VERSION }}" >> "$GITHUB_OUTPUT"
 
-  bump-k8-ride-to-work-by-bike-frontend-app-docker-image-version:
-    runs-on: ubuntu-22.04
+  deploy-app-to-k8:
+    if: github.event.pull_request.merged == true || github.event.push.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
     needs: [push-docker-img]
 
     steps:
