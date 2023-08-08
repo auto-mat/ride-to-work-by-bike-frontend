@@ -241,6 +241,15 @@ describe('Home page', () => {
         })
       });
     });
+
+    it.only('allows user to scroll to top using the footer button', () => {
+      cy.dataCy('footer-top-button')
+        .first()
+        .should('be.visible')
+        .click();
+
+      cy.window().its('scrollY').should('equal', 0);
+    })
   });
 
   context('mobile', () => {
@@ -510,7 +519,7 @@ describe('Home page', () => {
       });
     });
 
-    it.only('allows user to scroll to top using the footer button', () => {
+    it('allows user to scroll to top using the footer button', () => {
       cy.dataCy('footer-top-button')
         .last()
         .should('be.visible')
