@@ -40,7 +40,7 @@ describe('Home page', () => {
     it('allows user to change profile to "User 3" and back to "User 1"', () => {
       cy.dataCy('user-select').should('be.visible').click();
 
-      cy.get('.q-item__label')
+      cy.get('.q-virtual-scroll__content .q-item__label')
         .should('be.visible')
         .should('have.length', 3)
         .should('contain.text', 'User')
@@ -51,7 +51,7 @@ describe('Home page', () => {
 
       cy.dataCy('user-select-input').click();
 
-      cy.get('.q-item__label')
+      cy.get('.q-virtual-scroll__content .q-item__label')
         .should('be.visible')
         .should('have.length', 3)
         .should('contain.text', 'User')
@@ -259,7 +259,7 @@ describe('Home page', () => {
 
       cy.dataCy('user-select').should('be.visible').click();
 
-      cy.get('.q-item__label')
+      cy.get('.q-virtual-scroll__content .q-item__label')
         .should('be.visible')
         .should('have.length', 3)
         .should('contain.text', 'User')
@@ -270,7 +270,7 @@ describe('Home page', () => {
 
       cy.dataCy('user-select-input').click();
 
-      cy.get('.q-item__label')
+      cy.get('.q-virtual-scroll__content .q-item__label')
         .should('be.visible')
         .should('have.length', 3)
         .should('contain.text', 'User')
