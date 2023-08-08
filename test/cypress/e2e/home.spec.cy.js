@@ -242,7 +242,7 @@ describe('Home page', () => {
       });
     });
 
-    it.only('allows user to scroll to top using the footer button', () => {
+    it('allows user to scroll to top using the footer button', () => {
       cy.dataCy('footer-top-button')
         .first()
         .should('be.visible')
