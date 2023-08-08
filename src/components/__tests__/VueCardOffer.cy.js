@@ -1,4 +1,5 @@
 import VueCardOffer from 'components/VueCardOffer.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueCardOffer>', () => {
   const title = '100 CZK voucher do e-shopu Automatu';
@@ -36,7 +37,8 @@ describe('<VueCardOffer>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['unlimitedExpirationDate', 'offerCode'],
-      'index.cardOffer'
+      'index.cardOffer',
+      i18n
     );
   });
 

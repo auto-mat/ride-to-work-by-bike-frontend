@@ -12,7 +12,7 @@ const cards = [card, card];
 
 describe('<VueCardListFollow>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title'], 'index.cardListFollow');
+    cy.testLanguageStringsInContext(['title'], 'index.cardListFollow', i18n);
   });
 
   context('desktop', () => {

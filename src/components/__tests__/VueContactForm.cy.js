@@ -18,7 +18,8 @@ describe('<VueContactForm>', () => {
         'emailRequired',
         'submit',
       ],
-      'index.contact'
+      'index.contact',
+      i18n
     );
   });
 

@@ -1,8 +1,9 @@
 import VueFooter from 'components/VueFooter.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueFooter>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component');
+    cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {

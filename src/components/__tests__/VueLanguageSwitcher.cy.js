@@ -3,7 +3,7 @@ import { i18n } from '../../../src/boot/i18n';
 
 describe('<VueLanguageSwitcher>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.vueLanguageSwitcher');
+    cy.testLanguageStringsInContext([], 'index.vueLanguageSwitcher', i18n);
   });
 
   context('desktop', () => {
