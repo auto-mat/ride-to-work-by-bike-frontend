@@ -201,7 +201,7 @@ describe('Home page', () => {
         });
     });
 
-    it.only('allows user to switch language', () => {
+    it('allows user to switch language', () => {
       let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
@@ -240,7 +240,7 @@ describe('Home page', () => {
             .should('contain', i18n.global.messages[locale].index.title)
         })
       });
-    })
+    });
   });
 
   context('mobile', () => {
@@ -470,9 +470,53 @@ describe('Home page', () => {
     });
 
     it('allows user to switch language', () => {
-      cy.dataCy('index-title')
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+        cy.dataCy('index-title')
+          .should('be.visible')
+          .should('contain', i18n.global.t('index.title'));
+
+        const locales = i18n.global.availableLocales;
+        locales.forEach((locale) => {
+          let initialActiveLocale = i18n.global.locale;
+
+          if (locale === initialActiveLocale) {
+            return
+          }
+
+          cy.dataCy('switcher-' + locale)
+            .should('exist')
+            .should('be.visible')
+            .find('a')
+            .click()
+
+          cy.dataCy('switcher-' + initialActiveLocale)
+            .find('a')
+            .should('not.have', 'font-weight', '400');
+
+          cy.dataCy('switcher-' + locale)
+            .find('a')
+            .should('have.css', 'font-weight', '700');
+
+          cy.dataCy('index-title')
+            .should('be.visible')
+            .should('contain', i18n.global.messages[locale].index.title)
+        })
+      });
+    });
+
+    it.only('allows user to scroll to top using the footer button', () => {
+      cy.dataCy('footer-top-button')
+        .last()
         .should('be.visible')
-        .should('contain', i18n.global.t('index.title'));
+        .click();
+
+      cy.window().its('scrollY').should('equal', 0);
     })
   });
 
