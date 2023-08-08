@@ -11,7 +11,7 @@ import VueDrawerMenu from 'components/VueDrawerMenu.vue';
 import VueFooter from 'components/VueFooter.vue';
 
 // import types
-import { User } from 'components/types';
+import { Link } from 'components/types';
 
 if (window.Cypress) {
   window.i18n = i18n;
@@ -31,23 +31,36 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
-    const users: User[] = [
+    const userMenuTop: Link[] = [
       {
-        label: 'User 1',
-        value: '1',
-        image: 'https://picsum.photos/id/40/300/300',
+        title: 'Vaše údaje',
+        url: '#',
       },
       {
-        label: 'User 2',
-        value: '2',
-        image: 'https://picsum.photos/id/64/300/300',
+        title: 'Odebírat newsletter',
+        url: '#',
       },
       {
-        label: 'User 3',
-        value: '3',
-        image: 'https://picsum.photos/id/91/300/300',
+        title: 'Propojit aplikace',
+        url: '#',
+      },
+      {
+        title: 'Historie notifikací',
+        url: '#',
       },
     ];
+
+    const userMenuBottom: Link[] = [
+      {
+        title: 'Stát se firemním koordinátorem',
+        url: '#',
+      },
+      {
+        title: 'Odhlásit se',
+        url: '#',
+      },
+    ]
+
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -55,7 +68,8 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
-      users,
+      userMenuTop,
+      userMenuBottom,
       toggleLeftDrawer,
     };
   },
@@ -66,33 +80,17 @@ export default defineComponent({
   <q-layout view="hHh lpR fFf">
     <q-header reveal class="lg-hidden bg-white">
       <q-toolbar>
-        <vue-drawer-header
-          v-model="leftDrawerOpen"
-          data-cy="drawer-header-mobile"
-          :show-logo="false"
-          :show-drawer-open-button="true"
-        >
+        <vue-drawer-header v-model="leftDrawerOpen" data-cy="drawer-header-mobile" :show-logo="false"
+          :show-drawer-open-button="true">
         </vue-drawer-header>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      show-if-above
-      v-model="leftDrawerOpen"
-      side="left"
-      :width="320"
-      class="bg-gray-light q-py-lg q-px-lg pb-footer"
-      data-cy="q-drawer"
-    >
-      <vue-drawer-header
-        data-cy="drawer-header"
-        :mobile="false"
-      ></vue-drawer-header>
-      <vue-user-select
-        :options="users"
-        class="q-pt-lg"
-        data-cy="user-select"
-      ></vue-user-select>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" :width="320"
+      class="bg-gray-light q-py-lg q-px-lg pb-footer" data-cy="q-drawer">
+      <vue-drawer-header data-cy="drawer-header" :mobile="false"></vue-drawer-header>
+      <vue-user-select :menu-top="userMenuTop" :menu-bottom="userMenuBottom" class="q-pt-lg"
+        data-cy="user-select"></vue-user-select>
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 
@@ -111,12 +109,15 @@ export default defineComponent({
 .bg-gray-light {
   background-color: var(--q-gray-light);
 }
+
 .bg-gray-lighter {
   background-color: var(--q-gray-lighter);
 }
+
 .pb-footer {
   padding-bottom: 20rem !important;
 }
+
 @media (min-width: $breakpoint-md-min) {
   .lg-hidden {
     display: none;
