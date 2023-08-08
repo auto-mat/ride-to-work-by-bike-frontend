@@ -1,4 +1,5 @@
 import VueCardFollow from 'components/VueCardFollow.vue';
+import { i18n } from '../../boot/i18n';
 
 const title = 'Do práce na kole – Brno';
 const handle = '@DPNKBrno';
@@ -7,7 +8,7 @@ const url = '#';
 
 describe('<VueCardFollow>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.cardFollow');
+    cy.testLanguageStringsInContext([], 'index.cardFollow', i18n);
   });
 
   context('desktop', () => {

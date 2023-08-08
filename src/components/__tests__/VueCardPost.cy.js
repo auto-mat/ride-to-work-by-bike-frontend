@@ -1,4 +1,5 @@
 import VueCardPost from 'components/VueCardPost.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<VueCardPost>', () => {
   const title = 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?';
@@ -18,7 +19,7 @@ describe('<VueCardPost>', () => {
   });
 
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.cardPost');
+    cy.testLanguageStringsInContext([], 'index.cardPost', i18n);
   });
 
   it('has correct background color', () => {

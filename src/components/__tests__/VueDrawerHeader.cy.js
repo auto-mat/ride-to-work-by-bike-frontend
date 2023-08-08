@@ -20,7 +20,8 @@ describe('<VueDrawerHeader>', () => {
         'titleLinks',
         'titleSocials',
       ],
-      'index.help'
+      'index.help',
+      i18n
     );
   });
 

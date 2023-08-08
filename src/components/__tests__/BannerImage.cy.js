@@ -185,7 +185,7 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner').should(
           'have.backgroundColor',
-          config.colorGray - 3
+          config.colorGrayLight
         );
       });
     });

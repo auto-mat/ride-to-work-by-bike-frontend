@@ -32,7 +32,7 @@ const cards = [
 
 describe('<VueCardListOffer>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title', 'button'], 'index.cardListOffer');
+    cy.testLanguageStringsInContext(['title', 'button'], 'index.cardListOffer', i18n);
   });
 
   context('desktop', () => {
