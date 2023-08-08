@@ -16,7 +16,7 @@ describe('Event Countdown', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['title', 'days', 'hours', 'minutes', 'seconds'],
-      'index.countdown'
+      'index.countdown', i18n
     );
   });
 

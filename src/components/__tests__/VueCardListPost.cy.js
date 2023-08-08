@@ -1,5 +1,6 @@
 import VueCardListPost from 'components/VueCardListPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
+import { i18n } from '../../boot/i18n';
 
 const listTitle = 'Novinky';
 const buttonTitle = 'Navštívit blog';
@@ -18,7 +19,7 @@ const cards = [cardPost, cardPost, cardPost, cardPost, cardPost];
 
 describe('<VueCardListPost>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title', 'button'], 'index.cardListPost');
+    cy.testLanguageStringsInContext(['title', 'button'], 'index.cardListPost', i18n);
   });
 
   context('desktop', () => {

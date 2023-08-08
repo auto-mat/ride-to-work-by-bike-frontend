@@ -37,7 +37,7 @@ describe('<VueCardListChallenge>', () => {
   });
 
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title'], 'index.cardListChallenge');
+    cy.testLanguageStringsInContext(['title'], 'index.cardListChallenge', i18n);
   });
 
   it('renders title', () => {

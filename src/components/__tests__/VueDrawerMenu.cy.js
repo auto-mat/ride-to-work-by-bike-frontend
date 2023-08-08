@@ -1,4 +1,5 @@
 import VueDrawerMenu from '../VueDrawerMenu.vue';
+import { i18n } from '../../boot/i18n';
 
 const menuItems = [
   { icon: 'home', name: 'home' },
@@ -26,7 +27,7 @@ describe('VueDrawerMenu', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       menuItems.map((item) => item.name),
-      'drawerMenu'
+      'drawerMenu', i18n
     );
   });
 

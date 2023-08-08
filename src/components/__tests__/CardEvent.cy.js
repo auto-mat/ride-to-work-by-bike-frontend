@@ -38,7 +38,7 @@ describe('<CardEvent>', () => {
   });
 
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['addToCalendar'], 'index.cardEvent');
+    cy.testLanguageStringsInContext(['addToCalendar'], 'index.cardEvent', i18n);
   });
 
   it('renders title with link', () => {
