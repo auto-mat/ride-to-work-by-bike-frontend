@@ -716,6 +716,12 @@ describe('Home page', () => {
             .should('have.class', 'text-negative');
         });
     });
+
+    it('allows user to switch language', () => {
+      cy.dataCy('index-title')
+        .should('be.visible')
+        .should('contain', i18n.global.t('index.title'));
+    })
   });
 
   // TODO: test links
