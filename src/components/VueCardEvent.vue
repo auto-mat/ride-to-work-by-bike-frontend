@@ -130,6 +130,7 @@ export default defineComponent({
       <vue-dialog-card
         v-model="modalOpened"
         :dialog="modalDialog"
+        data-cy="dialog-card-event"
       ></vue-dialog-card>
     </q-card>
   </div>
