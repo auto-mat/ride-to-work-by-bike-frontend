@@ -201,6 +201,53 @@ describe('Home page', () => {
         });
     });
 
+    it('allows user to display event modal', () => {
+      cy.dataCy('dialog-card-event')
+        .should('not.exist');
+
+      cy.dataCy('list-event')
+        .should('be.visible')
+        .find('.card-link')
+        .should('be.visible')
+        .click();
+
+      cy.dataCy('dialog-card-event')
+        .should('be.visible');
+    })
+
+    it('allows user to display offer modal', () => {
+      cy.dataCy('dialog-card-offer')
+        .should('not.exist');
+
+      cy.dataCy('card-list-offer-item')
+        .first()
+        .should('be.visible')
+        .click();
+
+      cy.dataCy('dialog-card-offer')
+        .should('be.visible');
+    })
+
+    it.only('allows user to see all news items', () => {
+      cy.dataCy('list-post')
+        .should('be.visible');
+
+      cy.get('.swiper-slide:nth-child(1)').should('be.visible');
+      cy.get('.swiper-slide:nth-child(2)').should('be.visible');
+      cy.get('.swiper-slide:nth-child(3)').should('be.visible');
+      cy.get('.swiper-slide:nth-child(4)').should('be.visible');
+      cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
+
+      let postsNumber = cy.dataCy('card-list-post-item').length
+
+      // for (let i = 0; i < postsNumber; i++) {
+      // }
+      cy.get('.swiper-button-next').click();
+
+      cy.get('.swiper-slide:last-child').should('be.visible');
+
+    })
+
     it('allows user to switch language', () => {
       let i18n;
       cy.window().should('have.property', 'i18n');
@@ -484,6 +531,33 @@ describe('Home page', () => {
         });
     });
 
+    it('allows user to display event modal', () => {
+      cy.dataCy('dialog-card-event')
+        .should('not.exist');
+
+      cy.dataCy('list-event')
+        .should('be.visible')
+        .find('.card-link')
+        .should('be.visible')
+        .click();
+
+      cy.dataCy('dialog-card-event')
+        .should('be.visible');
+    })
+
+    it('allows user to display offer modal', () => {
+      cy.dataCy('dialog-card-offer')
+        .should('not.exist');
+
+      cy.dataCy('card-list-offer-item')
+        .first()
+        .should('be.visible')
+        .click();
+
+      cy.dataCy('dialog-card-offer')
+        .should('be.visible');
+    })
+
     it('allows user to switch language', () => {
       let i18n;
       cy.window().should('have.property', 'i18n');
@@ -535,13 +609,9 @@ describe('Home page', () => {
     })
   });
 
-  // TODO: test displaying HP modals
-
   // TODO: test links
 
   // TODO: test switching language
-
-  // TODO: test contacting through help
 
   // TODO: test rewatching application guide
 
