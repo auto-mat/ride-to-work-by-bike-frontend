@@ -37,30 +37,6 @@ describe('Home page', () => {
       cy.dataCy('q-drawer').should('be.visible');
     });
 
-    it('allows user to change profile to "User 3" and back to "User 1"', () => {
-      cy.dataCy('user-select').should('be.visible').click();
-
-      cy.get('.q-virtual-scroll__content .q-item__label')
-        .should('be.visible')
-        .should('have.length', 3)
-        .should('contain.text', 'User')
-        .last()
-        .click();
-
-      cy.dataCy('user-select-input').should('contain', 'User 3');
-
-      cy.dataCy('user-select-input').click();
-
-      cy.get('.q-virtual-scroll__content .q-item__label')
-        .should('be.visible')
-        .should('have.length', 3)
-        .should('contain.text', 'User')
-        .first()
-        .click();
-
-      cy.dataCy('user-select-input').should('contain', 'User 1');
-    });
-
     it('allows user to display help dialog and read all FAQ items', () => {
       cy.dataCy('link-help').last().should('be.visible').click();
 
@@ -202,8 +178,7 @@ describe('Home page', () => {
     });
 
     it('allows user to display event modal', () => {
-      cy.dataCy('dialog-card-event')
-        .should('not.exist');
+      cy.dataCy('dialog-card-event').should('not.exist');
 
       cy.dataCy('list-event')
         .should('be.visible')
@@ -211,26 +186,19 @@ describe('Home page', () => {
         .should('be.visible')
         .click();
 
-      cy.dataCy('dialog-card-event')
-        .should('be.visible');
-    })
+      cy.dataCy('dialog-card-event').should('be.visible');
+    });
 
     it('allows user to display offer modal', () => {
-      cy.dataCy('dialog-card-offer')
-        .should('not.exist');
+      cy.dataCy('dialog-card-offer').should('not.exist');
 
-      cy.dataCy('card-list-offer-item')
-        .first()
-        .should('be.visible')
-        .click();
+      cy.dataCy('card-list-offer-item').first().should('be.visible').click();
 
-      cy.dataCy('dialog-card-offer')
-        .should('be.visible');
-    })
+      cy.dataCy('dialog-card-offer').should('be.visible');
+    });
 
-    it.only('allows user to see all news items', () => {
-      cy.dataCy('list-post')
-        .should('be.visible');
+    it('allows user to see all news items', () => {
+      cy.dataCy('list-post').should('be.visible');
 
       cy.get('.swiper-slide:nth-child(1)').should('be.visible');
       cy.get('.swiper-slide:nth-child(2)').should('be.visible');
@@ -238,15 +206,14 @@ describe('Home page', () => {
       cy.get('.swiper-slide:nth-child(4)').should('be.visible');
       cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
 
-      let postsNumber = cy.dataCy('card-list-post-item').length
+      let postsNumber = cy.dataCy('card-list-post-item').length;
 
       // for (let i = 0; i < postsNumber; i++) {
       // }
       cy.get('.swiper-button-next').click();
 
       cy.get('.swiper-slide:last-child').should('be.visible');
-
-    })
+    });
 
     it('allows user to switch language', () => {
       let i18n;
@@ -256,47 +223,44 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-        cy.dataCy('index-title')
-          .should('be.visible')
-          .should('contain', i18n.global.t('index.title'));
-
-        const locales = i18n.global.availableLocales;
-        locales.forEach((locale) => {
-          let initialActiveLocale = i18n.global.locale;
-
-          if (locale === initialActiveLocale) {
-            return
-          }
-
-          cy.dataCy('switcher-' + locale)
-            .should('exist')
-            .should('be.visible')
-            .find('a')
-            .click()
-
-          cy.dataCy('switcher-' + initialActiveLocale)
-            .find('a')
-            .should('not.have', 'font-weight', '400');
-
-          cy.dataCy('switcher-' + locale)
-            .find('a')
-            .should('have.css', 'font-weight', '700');
-
           cy.dataCy('index-title')
             .should('be.visible')
-            .should('contain', i18n.global.messages[locale].index.title)
-        })
-      });
+            .should('contain', i18n.global.t('index.title'));
+
+          const locales = i18n.global.availableLocales;
+          locales.forEach((locale) => {
+            let initialActiveLocale = i18n.global.locale;
+
+            if (locale === initialActiveLocale) {
+              return;
+            }
+
+            cy.dataCy('switcher-' + locale)
+              .should('exist')
+              .should('be.visible')
+              .find('a')
+              .click();
+
+            cy.dataCy('switcher-' + initialActiveLocale)
+              .find('a')
+              .should('not.have', 'font-weight', '400');
+
+            cy.dataCy('switcher-' + locale)
+              .find('a')
+              .should('have.css', 'font-weight', '700');
+
+            cy.dataCy('index-title')
+              .should('be.visible')
+              .should('contain', i18n.global.messages[locale].index.title);
+          });
+        });
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button')
-        .first()
-        .should('be.visible')
-        .click();
+      cy.dataCy('footer-top-button').first().should('be.visible').click();
 
       cy.window().its('scrollY').should('equal', 0);
-    })
+    });
   });
 
   context('mobile', () => {
@@ -349,32 +313,6 @@ describe('Home page', () => {
 
       // cy.dataCy('q-drawer')
       //   .should('not.be.visible');
-    });
-
-    it('allows user to change profile to "User 3" and back to "User 1"', () => {
-      cy.dataCy('drawer-open-button').should('be.visible').click();
-
-      cy.dataCy('user-select').should('be.visible').click();
-
-      cy.get('.q-virtual-scroll__content .q-item__label')
-        .should('be.visible')
-        .should('have.length', 3)
-        .should('contain.text', 'User')
-        .last()
-        .click();
-
-      cy.dataCy('user-select-input').should('contain', 'User 3');
-
-      cy.dataCy('user-select-input').click();
-
-      cy.get('.q-virtual-scroll__content .q-item__label')
-        .should('be.visible')
-        .should('have.length', 3)
-        .should('contain.text', 'User')
-        .first()
-        .click();
-
-      cy.dataCy('user-select-input').should('contain', 'User 1');
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
@@ -532,8 +470,7 @@ describe('Home page', () => {
     });
 
     it('allows user to display event modal', () => {
-      cy.dataCy('dialog-card-event')
-        .should('not.exist');
+      cy.dataCy('dialog-card-event').should('not.exist');
 
       cy.dataCy('list-event')
         .should('be.visible')
@@ -541,22 +478,16 @@ describe('Home page', () => {
         .should('be.visible')
         .click();
 
-      cy.dataCy('dialog-card-event')
-        .should('be.visible');
-    })
+      cy.dataCy('dialog-card-event').should('be.visible');
+    });
 
     it('allows user to display offer modal', () => {
-      cy.dataCy('dialog-card-offer')
-        .should('not.exist');
+      cy.dataCy('dialog-card-offer').should('not.exist');
 
-      cy.dataCy('card-list-offer-item')
-        .first()
-        .should('be.visible')
-        .click();
+      cy.dataCy('card-list-offer-item').first().should('be.visible').click();
 
-      cy.dataCy('dialog-card-offer')
-        .should('be.visible');
-    })
+      cy.dataCy('dialog-card-offer').should('be.visible');
+    });
 
     it('allows user to switch language', () => {
       let i18n;
@@ -566,47 +497,44 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-        cy.dataCy('index-title')
-          .should('be.visible')
-          .should('contain', i18n.global.t('index.title'));
-
-        const locales = i18n.global.availableLocales;
-        locales.forEach((locale) => {
-          let initialActiveLocale = i18n.global.locale;
-
-          if (locale === initialActiveLocale) {
-            return
-          }
-
-          cy.dataCy('switcher-' + locale)
-            .should('exist')
-            .should('be.visible')
-            .find('a')
-            .click()
-
-          cy.dataCy('switcher-' + initialActiveLocale)
-            .find('a')
-            .should('not.have', 'font-weight', '400');
-
-          cy.dataCy('switcher-' + locale)
-            .find('a')
-            .should('have.css', 'font-weight', '700');
-
           cy.dataCy('index-title')
             .should('be.visible')
-            .should('contain', i18n.global.messages[locale].index.title)
-        })
-      });
+            .should('contain', i18n.global.t('index.title'));
+
+          const locales = i18n.global.availableLocales;
+          locales.forEach((locale) => {
+            let initialActiveLocale = i18n.global.locale;
+
+            if (locale === initialActiveLocale) {
+              return;
+            }
+
+            cy.dataCy('switcher-' + locale)
+              .should('exist')
+              .should('be.visible')
+              .find('a')
+              .click();
+
+            cy.dataCy('switcher-' + initialActiveLocale)
+              .find('a')
+              .should('not.have', 'font-weight', '400');
+
+            cy.dataCy('switcher-' + locale)
+              .find('a')
+              .should('have.css', 'font-weight', '700');
+
+            cy.dataCy('index-title')
+              .should('be.visible')
+              .should('contain', i18n.global.messages[locale].index.title);
+          });
+        });
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button')
-        .last()
-        .should('be.visible')
-        .click();
+      cy.dataCy('footer-top-button').last().should('be.visible').click();
 
       cy.window().its('scrollY').should('equal', 0);
-    })
+    });
   });
 
   // TODO: test links

@@ -31,23 +31,36 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
-    const users: User[] = [
+    const userMenuTop: Link[] = [
       {
-        label: 'User 1',
-        value: '1',
-        image: 'https://picsum.photos/id/40/300/300',
+        title: 'Vaše údaje',
+        url: '#',
       },
       {
-        label: 'User 2',
-        value: '2',
-        image: 'https://picsum.photos/id/64/300/300',
+        title: 'Odebírat newsletter',
+        url: '#',
       },
       {
-        label: 'User 3',
-        value: '3',
-        image: 'https://picsum.photos/id/91/300/300',
+        title: 'Propojit aplikace',
+        url: '#',
+      },
+      {
+        title: 'Historie notifikací',
+        url: '#',
       },
     ];
+
+    const userMenuBottom: Link[] = [
+      {
+        title: 'Stát se firemním koordinátorem',
+        url: '#',
+      },
+      {
+        title: 'Odhlásit se',
+        url: '#',
+      },
+    ]
+
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -55,7 +68,8 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
-      users,
+      userMenuTop,
+      userMenuBottom,
       toggleLeftDrawer,
     };
   },
