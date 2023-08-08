@@ -200,6 +200,47 @@ describe('Home page', () => {
             .should('have.class', 'text-negative');
         });
     });
+
+    it.only('allows user to switch language', () => {
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+        cy.dataCy('index-title')
+          .should('be.visible')
+          .should('contain', i18n.global.t('index.title'));
+
+        const locales = i18n.global.availableLocales;
+        locales.forEach((locale) => {
+          let initialActiveLocale = i18n.global.locale;
+
+          if (locale === initialActiveLocale) {
+            return
+          }
+
+          cy.dataCy('switcher-' + locale)
+            .should('exist')
+            .should('be.visible')
+            .find('a')
+            .click()
+
+          cy.dataCy('switcher-' + initialActiveLocale)
+            .find('a')
+            .should('not.have', 'font-weight', '400');
+
+          cy.dataCy('switcher-' + locale)
+            .find('a')
+            .should('have.css', 'font-weight', '700');
+
+          cy.dataCy('index-title')
+            .should('be.visible')
+            .should('contain', i18n.global.messages[locale].index.title)
+        })
+      });
+    })
   });
 
   context('mobile', () => {
@@ -427,7 +468,19 @@ describe('Home page', () => {
             .should('have.class', 'text-negative');
         });
     });
+
+    it('allows user to switch language', () => {
+      cy.dataCy('index-title')
+        .should('be.visible')
+        .should('contain', i18n.global.t('index.title'));
+    })
   });
+
+  // TODO: test displaying HP modals
+
+  // TODO: test links
+
+  // TODO: test switching language
 
   // TODO: test contacting through help
 
