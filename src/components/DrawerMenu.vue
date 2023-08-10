@@ -44,7 +44,7 @@ export default defineComponent({
 
     const menuBottom = [
       {
-        url: '/',
+        url: '/invite',
         icon: 'email',
         name: 'inviteFriends',
       },
