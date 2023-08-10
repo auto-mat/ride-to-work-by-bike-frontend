@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
-// import types
+// types
 import { NewsletterItem } from 'components/types';
 
 export default defineComponent({

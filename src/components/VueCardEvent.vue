@@ -1,11 +1,12 @@
 <script lang="ts">
+// libraries
 import { defineComponent, ref } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
-// import components
+// components
 import VueDialogCard from 'components/VueDialogCard.vue';
 
-// import types
+// types
 import { CardEvent, DialogCard } from 'components/types';
 
 export default defineComponent({

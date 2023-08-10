@@ -58,10 +58,10 @@
 </template>
 
 <script lang="ts">
-// import libraries
+// libraries
 import { defineComponent } from 'vue';
 
-// import components
+// components
 import VueEventCountdown from 'components/VueEventCountdown.vue';
 import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
@@ -72,7 +72,7 @@ import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 
-// import types
+// types
 import {
   CardChallenge,
   CardEvent,

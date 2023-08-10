@@ -27,7 +27,8 @@ describe('VueDrawerMenu', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       menuItems.map((item) => item.name),
-      'drawerMenu', i18n
+      'drawerMenu',
+      i18n
     );
   });
 

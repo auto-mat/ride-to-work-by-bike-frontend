@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-// import types
+// types
 import { CardFollow } from 'components/types';
 
 export default defineComponent({

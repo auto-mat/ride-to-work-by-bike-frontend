@@ -1,8 +1,10 @@
 <script lang="ts">
+// libraries
 import { setCssVar } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
-// import { useI18n } from 'vue-i18n'
 import { useDateFormat } from '@vueuse/core';
+
+// types
 import { Countdown } from 'components/types';
 
 const rideToWorkByBikeConfig: object = JSON.parse(
@@ -132,7 +134,7 @@ export default defineComponent({
   </q-card>
 </template>
 
-<style>
+<style lang="scss">
 .q-card {
   background-color: var(--q-gray-light);
 }
