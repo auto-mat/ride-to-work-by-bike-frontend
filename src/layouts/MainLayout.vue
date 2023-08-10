@@ -1,5 +1,5 @@
 <script lang="ts">
-// import libraries
+// libraries
 import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
 import { i18n } from 'src/boot/i18n';
@@ -59,8 +59,7 @@ export default defineComponent({
         title: 'Odhlásit se',
         url: '#',
       },
-    ]
-
+    ];
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;

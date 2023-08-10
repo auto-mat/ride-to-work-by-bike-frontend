@@ -17,9 +17,11 @@ describe('<VueLanguageSwitcher>', () => {
     it('renders link for each locale', () => {
       const locales = i18n.global.availableLocales;
       locales.forEach((locale) => {
-        cy.dataCy('switcher-' + locale).should('exist').should('be.visible');
-      })
-    })
+        cy.dataCy('switcher-' + locale)
+          .should('exist')
+          .should('be.visible');
+      });
+    });
 
     it('renders links with correct formatting', () => {
       const locales = i18n.global.availableLocales;
@@ -30,8 +32,8 @@ describe('<VueLanguageSwitcher>', () => {
           .find('a')
           .should('have.css', 'text-decoration-line', 'none')
           .should('have.color', '#fff');
-      })
-    })
+      });
+    });
 
     it('highlights the active language', () => {
       const activeLocale = i18n.global.locale;
@@ -39,7 +41,7 @@ describe('<VueLanguageSwitcher>', () => {
         .find('a')
         .should('be.visible')
         .should('have.css', 'font-weight', '700');
-    })
+    });
   });
 
   context('mobile', () => {
@@ -53,9 +55,11 @@ describe('<VueLanguageSwitcher>', () => {
     it('renders link for each locale', () => {
       const locales = i18n.global.availableLocales;
       locales.forEach((locale) => {
-        cy.dataCy('switcher-' + locale).should('exist').should('be.visible');
-      })
-    })
+        cy.dataCy('switcher-' + locale)
+          .should('exist')
+          .should('be.visible');
+      });
+    });
 
     it('renders links with correct formatting', () => {
       const locales = i18n.global.availableLocales;
@@ -66,8 +70,8 @@ describe('<VueLanguageSwitcher>', () => {
           .find('a')
           .should('have.css', 'text-decoration-line', 'none')
           .should('have.color', '#fff');
-      })
-    })
+      });
+    });
 
     it('highlights the active language', () => {
       const activeLocale = i18n.global.locale;
@@ -75,6 +79,6 @@ describe('<VueLanguageSwitcher>', () => {
         .should('be.visible')
         .find('a')
         .should('have.css', 'font-weight', '700');
-    })
+    });
   });
 });

@@ -19,7 +19,11 @@ const cards = [cardPost, cardPost, cardPost, cardPost, cardPost];
 
 describe('<VueCardListPost>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title', 'button'], 'index.cardListPost', i18n);
+    cy.testLanguageStringsInContext(
+      ['title', 'button'],
+      'index.cardListPost',
+      i18n
+    );
   });
 
   context('desktop', () => {

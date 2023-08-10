@@ -19,7 +19,8 @@ describe('<VueNewsletterFeature>', () => {
         'following',
         'follow',
       ],
-      'index.newsletterFeature', i18n
+      'index.newsletterFeature',
+      i18n
     );
   });
 

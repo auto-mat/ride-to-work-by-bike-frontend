@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-// import components
+// components
 import VueCardFollow from './VueCardFollow.vue';
 
-// import styles
+// types
 import { CardFollow } from 'components/types';
 
 export default defineComponent({

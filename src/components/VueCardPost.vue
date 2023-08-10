@@ -1,8 +1,9 @@
 <script lang="ts">
+// libraries
 import { defineComponent } from 'vue';
 import { useDateFormat } from '@vueuse/core';
 
-// import types
+// types
 import { CardPost } from 'components/types';
 
 export default defineComponent({

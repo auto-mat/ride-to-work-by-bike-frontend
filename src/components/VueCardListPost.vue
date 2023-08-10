@@ -1,12 +1,13 @@
 <script lang="ts">
+// libraries
 import { defineComponent } from 'vue';
-
-// import components
-import VueCardPost from './VueCardPost.vue';
-import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, A11y } from 'swiper/modules';
 
-// import types
+// components
+import VueCardPost from './VueCardPost.vue';
+
+// types
 import { CardPost, Link } from './types';
 
 export default defineComponent({
