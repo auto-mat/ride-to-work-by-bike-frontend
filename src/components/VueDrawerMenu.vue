@@ -1,10 +1,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+// types
+import { Link } from 'components/types';
+
 export default defineComponent({
   name: 'VueDrawerMenu',
   setup() {
-    const menuTop = [
+    const menuTop: Link[] = [
       {
         url: '/',
         icon: 'home',
@@ -42,7 +45,7 @@ export default defineComponent({
       },
     ];
 
-    const menuBottom = [
+    const menuBottom: Link[] = [
       {
         url: '/invite',
         icon: 'email',
