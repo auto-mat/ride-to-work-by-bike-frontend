@@ -2,7 +2,6 @@
 // libraries
 import { setCssVar } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
-// import { useI18n } from 'vue-i18n'
 import { useDateFormat } from '@vueuse/core';
 
 // types
