@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-// import components
+// components
 import VueDialogCard from 'components/VueDialogCard.vue';
 
-// import types
+// types
 import { Offer, DialogCard } from 'components/types';
 
 export default defineComponent({

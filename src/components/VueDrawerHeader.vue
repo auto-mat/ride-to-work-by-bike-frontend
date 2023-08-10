@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 
-// import components
+// components
 import VueMenuLinks from './VueMenuLinks.vue';
 import VueListFaq from './VueListFaq.vue';
 import VueContactForm from './VueContactForm.vue';

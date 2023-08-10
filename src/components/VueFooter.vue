@@ -1,5 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// components
 import VueLanguageSwitcher from 'components/VueLanguageSwitcher.vue';
 
 export default defineComponent({
@@ -33,7 +35,9 @@ export default defineComponent({
       data-cy="footer-background"
     />
     <div class="relative-position pt-112">
-      <div class="footer-wrapper h-lg-142 max-w-lg-90perc flex items-end q-px-md">
+      <div
+        class="footer-wrapper h-lg-142 max-w-lg-90perc flex items-end q-px-md"
+      >
         <div class="footer-scroll-top shrink-0">
           <q-btn
             class="w-38 h-38 gt-xs"

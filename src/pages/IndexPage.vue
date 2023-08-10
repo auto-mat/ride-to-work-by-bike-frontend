@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-// import libraries
+// libraries
 import { defineComponent } from 'vue';
 
 // import components

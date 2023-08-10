@@ -4,8 +4,8 @@ import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'VueLanguageSwitcher',
   setup() {
-    return {}
-  }
+    return {};
+  },
 });
 </script>
 

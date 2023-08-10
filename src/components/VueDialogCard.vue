@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
-// import types
+// types
 import { DialogCard } from 'components/types';
 
 export default defineComponent({

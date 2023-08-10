@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
-// import types
+// types
 import { Link, User } from 'components/types';
 
 export default defineComponent({
@@ -12,7 +12,7 @@ export default defineComponent({
     },
     menuBottom: {
       type: Array as () => Link[],
-    }
+    },
   },
   setup() {
     const user: User = {
@@ -30,7 +30,12 @@ export default defineComponent({
 
 <template>
   <div class="user-select" data-cy="user-select">
-    <q-btn-dropdown rounded flat class="user-dropdown" data-cy="user-select-input">
+    <q-btn-dropdown
+      rounded
+      flat
+      class="user-dropdown"
+      data-cy="user-select-input"
+    >
       <template v-slot:label>
         <q-avatar size="56px" data-cy="avatar">
           <img class="rounded" :src="user.image" />
@@ -41,16 +46,34 @@ export default defineComponent({
       </template>
 
       <q-list>
-        <q-item v-for="option in menuTop" :key="option.title" tag="a" :to="option.url" clickable v-close-popup
-          class="text-grey-10">
-          <q-item-label class="flex items-center">{{ option.title }}</q-item-label>
+        <q-item
+          v-for="option in menuTop"
+          :key="option.title"
+          tag="a"
+          :to="option.url"
+          clickable
+          v-close-popup
+          class="text-grey-10"
+        >
+          <q-item-label class="flex items-center">{{
+            option.title
+          }}</q-item-label>
         </q-item>
       </q-list>
       <hr />
       <q-list>
-        <q-item v-for="option in menuBottom" :key="option.title" tag="a" :to="option.url" clickable v-close-popup
-          class="text-grey-10">
-          <q-item-label class="flex items-center">{{ option.title }}</q-item-label>
+        <q-item
+          v-for="option in menuBottom"
+          :key="option.title"
+          tag="a"
+          :to="option.url"
+          clickable
+          v-close-popup
+          class="text-grey-10"
+        >
+          <q-item-label class="flex items-center">{{
+            option.title
+          }}</q-item-label>
         </q-item>
       </q-list>
     </q-btn-dropdown>

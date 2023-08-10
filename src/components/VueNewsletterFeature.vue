@@ -2,10 +2,10 @@
 import { defineComponent } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
-// import types
+// types
 import { NewsletterItem } from 'components/types';
 
-// import components
+// components
 import VueNewsletterItem from 'components/VueNewsletterItem.vue';
 
 export default defineComponent({
