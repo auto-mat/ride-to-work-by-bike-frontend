@@ -110,6 +110,10 @@ offerCode = "Kód voucheru"
 title = "Novinky"
 button = "Navštívit blog"
 
+[index.progressSlider]
+title = "Vaše výsledky"
+button = "Všechny výsledky"
+
 [index.newsletterFeature]
 title = "Odebírejte od nás novinky, ať vám nic neuteče"
 description = "Newsletter vám budeme posílat na e-mail jana.anonymni@dopracenakole.cz."
