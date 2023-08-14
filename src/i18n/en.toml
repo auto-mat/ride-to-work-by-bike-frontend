@@ -77,6 +77,10 @@ offerCode = "Voucher code"
 title = "News"
 button = "Visit blog"
 
+[index.progressSlider]
+title = "Your results"
+button = "All results"
+
 [index.newsletterFeature]
 title = "Subscribe to our newsletter so you don't miss anything"
 description = "The newsletter will be sent to your email jana.anonymni@dopracenakole.cz."

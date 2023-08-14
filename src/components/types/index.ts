@@ -6,6 +6,7 @@ export * from './CardOffer';
 export * from './CardPost';
 export * from './Countdown';
 export * from './DialogCard';
+export * from './Item';
 export * from './Link';
 export * from './NewsletterItem';
 export * from './Offer';
