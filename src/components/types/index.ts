@@ -9,6 +9,8 @@ export * from './Config';
 export * from './Faq';
 export * from './User';
 export * from './Offer';
+export * from './DialogCard';
+export * from './Item';
 export * from './Link';
 export * from './NewsletterItem';
 export * from './Offer';

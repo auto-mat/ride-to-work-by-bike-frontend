@@ -1,10 +1,7 @@
 <template>
   <q-page data-cy="q-main">
     <div class="q-px-lg bg-white">
-      <h1
-        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
-        data-cy="index-title"
-      >
+      <h1 class="text-h5 q-mt-none q-pt-lg text-weight-bold" data-cy="index-title">
         {{ $t('index.title') }}
       </h1>
       <event-countdown
@@ -38,18 +35,19 @@
         :cards="cardsOffer"
         class="q-pt-xl"
         data-cy="list-offer"
-      >
+      ></vue-card-list-offer>
+      <vue-progress-slider :title="$t('index.progressSlider.title')" :cards="cardsPost" :stats="progressStats"
+        :button="{ title: $t('index.progressSlider.button'), url: '/blog' }">
+      </vue-progress-slider>
+    </div>
+    <div class="q-px-lg">
+      <vue-card-list-offer :title="$t('index.cardListOffer.title')" :cards="cardsOffer" class="q-pt-xl"
+        data-cy="list-offer">
       </vue-card-list-offer>
-      <vue-card-list-post
-        :title="$t('index.cardListPost.title')"
-        :cards="cardsPost"
-        :button="{
-          title: $t('index.cardListPost.button'),
-          url: '/blog',
-        }"
-        class="q-pt-xl"
-        data-cy="list-post"
-      >
+      <vue-card-list-post :title="$t('index.cardListPost.title')" :cards="cardsPost" :button="{
+        title: $t('index.cardListPost.button'),
+        url: '/blog',
+      }" class="q-pt-xl" data-cy="list-post">
       </vue-card-list-post>
       <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
       <vue-card-list-follow :cards="cardFollow" class="q-pt-xl" />
@@ -71,10 +69,11 @@ import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
+import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
-import { CardPost, Offer, CardFollow } from 'components/types';
+import { CardPost, Offer, CardFollow, ItemStatistics } from 'components/types';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -88,6 +87,7 @@ export default defineComponent({
     VueCardListPost,
     VueNewsletterFeature,
     VueCardListFollow,
+    VueProgressSlider,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
@@ -237,6 +237,24 @@ export default defineComponent({
       },
     ];
 
+    const progressStats: ItemStatistics[] = [
+      {
+        icon: 'route',
+        label: 'udržitelných cest',
+        value: '18',
+      },
+      {
+        icon: 'distance',
+        label: '312,25 km',
+        value: '',
+      },
+      {
+        icon: 'leaf',
+        label: 'ušetřeno',
+        value: '420 g CO2',
+      },
+    ];
+
     return {
       releaseDate,
       cards,
@@ -246,6 +264,7 @@ export default defineComponent({
       cardsOffer,
       cardsPost,
       cardFollow,
+      progressStats,
     };
   },
 });
