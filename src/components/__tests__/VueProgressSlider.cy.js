@@ -40,7 +40,7 @@ const button = {
 
 describe('<VueProgressSlider>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(['title', 'button'], 'index.progressSlider', i18n);
   });
 
   context('desktop', () => {
