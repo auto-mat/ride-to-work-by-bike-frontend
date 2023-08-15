@@ -4,7 +4,7 @@ import { defineComponent } from 'vue';
 import { Navigation, A11y } from 'swiper/modules';
 
 // types
-import { CardPost, Link, ItemStatistics } from './types';
+import { CardProgress, Link, ItemStatistics } from './types';
 
 // components
 import { Swiper, SwiperSlide } from 'swiper/vue';
@@ -24,7 +24,7 @@ export default defineComponent({
       type: Array as () => ItemStatistics[],
     },
     cards: {
-      type: Array as () => CardPost[],
+      type: Array as () => CardProgress[],
       required: true,
     },
     button: {
