@@ -42,7 +42,7 @@ export interface CardProgress {
   icon: string;
   url: string;
   image: string;
-  percentage: number;
+  progress: number;
   stats: [
     {
       title: string;
@@ -51,7 +51,7 @@ export interface CardProgress {
           id: string;
           text: string;
         }
-      ]
+      ];
     },
     {
       title: string;
@@ -60,7 +60,7 @@ export interface CardProgress {
           id: string;
           text: string;
         }
-      ]
+      ];
     }
   ];
   duration: {

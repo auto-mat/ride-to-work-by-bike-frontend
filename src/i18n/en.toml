@@ -83,6 +83,7 @@ button = "All results"
 
 [index.cardProgress]
 timeline = "days completed"
+toDate = "To date"
 
 [index.newsletterFeature]
 title = "Subscribe to our newsletter so you don't miss anything"

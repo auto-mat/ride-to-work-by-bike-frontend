@@ -18,7 +18,7 @@ export default defineComponent({
     })
 
     return {
-      timelineValue
+      timelineValue,
     }
   }
 })
@@ -29,12 +29,12 @@ export default defineComponent({
     :dark="true"
     :flat="true"
     :bordered="true"
-    class="rounded-20"
+    class="bg-blue-grey-1 rounded-20"
     data-cy="card"
   >
-    <q-img :src="card?.image" :ratio="7 / 8">
+    <q-img :src="card?.image">
       <q-card-section
-        class="absolute-top flex items-center justify-between gap-16"
+        class="absolute-top flex items-center justify-between gap-16 z-1"
         data-cy="card-progress-header"
       >
         <div class="flex items-center gap-16 text-body1">
@@ -52,38 +52,56 @@ export default defineComponent({
           <div class="text-subtitle2 text-right">
             {{ card.duration.current }} / {{ card.duration.total }} {{ $t('index.cardProgress.timeline') }}
           </div>
-          <q-linear-progress :value="timelineValue" color="white" />
+          <q-linear-progress :value="timelineValue" color="white" rounded />
         </div>
       </q-card-section>
-      <div
-        v-if="card.dates"
-        class="absolute-bottom text-center text-body2"
-        data-cy="card-dates"
+      <q-card-section class="w-full h-full flex !q-pa-none"
       >
-        {{ $t('index.cardChallenge.dates') }}
-        <span class="text-weight-bold">{{ card.dates }}</span>
-      </div>
+        <div class="gap-16 flex flex-wrap items-center q-pa-xl">
+          <div class="relative-position" data-cy="card-progress-percentage">
+            <q-circular-progress
+                rounded
+                class="text-white q-ma-md"
+                :value="card.progress"
+                size="220px"
+                :thickness="0.05"
+                color="white"
+                track-color="blue-grey-10"
+                data-cy="card-progress-circular"
+              >
+            </q-circular-progress>
+            <div class="text-white absolute-center text-center">
+              <div class="text-caption">{{ $t('index.cardProgress.toDate') }}</div>
+              <div class="text-h3 q-mt-xs">{{ card.progress }}&nbsp;%</div>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
     </q-img>
-
-    <div class="badge-wrapper" data-cy="card-company-wrapper">
-      <q-badge
-        v-if="card.company"
-        class="text-caption q-px-sm bg-blue-grey-4"
-        text-color="white"
-        rounded
-        data-cy="card-company"
-      >
-        {{ $t('index.cardChallenge.company') }}
-      </q-badge>
-    </div>
   </q-card>
 </template>
 
 <style scoped>
+.z-1 {
+  z-index: 1;
+}
+.rounded-20 {
+  border-radius: 20px;
+  background-color: var(--q-gray-light);
+}
 .gap-16 {
   gap: 16px;
 }
 .min-w-180 {
   min-width: 180px;
+}
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.\!q-pa-none {
+  padding: 0 !important;
 }
 </style>

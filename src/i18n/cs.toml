@@ -83,6 +83,7 @@ button = "Všechny výsledky"
 
 [index.cardProgress]
 timeline = "dnů absolvováno"
+toDate = "Dosavadní"
 
 [index.newsletterFeature]
 title = "Odebírejte od nás novinky, ať vám nic neuteče"
