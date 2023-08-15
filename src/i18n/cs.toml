@@ -114,6 +114,9 @@ button = "Navštívit blog"
 title = "Vaše výsledky"
 button = "Všechny výsledky"
 
+[index.cardProgress]
+timeline = "dnů absolvováno"
+
 [index.newsletterFeature]
 title = "Odebírejte od nás novinky, ať vám nic neuteče"
 description = "Newsletter vám budeme posílat na e-mail jana.anonymni@dopracenakole.cz."
