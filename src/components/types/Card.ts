@@ -40,6 +40,8 @@ export interface CardPost {
 export interface CardProgress {
   title: string;
   icon: string;
+  url: string;
+  image: string;
   percentage: number;
   stats: [
     {
