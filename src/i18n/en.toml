@@ -114,6 +114,9 @@ button = "Visit blog"
 title = "Your results"
 button = "All results"
 
+[index.cardProgress]
+timeline = "days completed"
+
 [index.newsletterFeature]
 title = "Subscribe to our newsletter so you don't miss anything"
 description = "The newsletter will be sent to your email jana.anonymni@dopracenakole.cz."
