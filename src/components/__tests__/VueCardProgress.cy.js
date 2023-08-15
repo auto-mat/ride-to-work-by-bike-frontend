@@ -5,24 +5,24 @@ const card = {
   title: 'Týmová pravidelnost',
   icon: 'person',
   url: '#',
-  percentage: 60,
+  progress: 60,
   stats: [],
   duration: {
     current: 14,
-    total: 30
-  }
-}
+    total: 30,
+  },
+};
 
 describe('<VueCardProgress>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['timeline'], 'index.cardProgress', i18n);
+    cy.testLanguageStringsInContext(['timeline', 'toDate'], 'index.cardProgress', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(VueCardProgress, {
         props: {
-          card
+          card,
         },
       });
       cy.viewport('macbook-16');
@@ -39,7 +39,7 @@ describe('<VueCardProgress>', () => {
             expect($title.text()).to.equal(card.title);
           });
       });
-    })
+    });
 
     it('renders title icon', () => {
       cy.dataCy('card-progress-header')
@@ -48,7 +48,7 @@ describe('<VueCardProgress>', () => {
         .should('have.color', '#eceff1') // blue-grey-1
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
-    })
+    });
 
     it('renders timeline', () => {
       cy.dataCy('card-progress-timeline')
@@ -62,25 +62,18 @@ describe('<VueCardProgress>', () => {
 
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
-        .should('be.visible')
-    })
+        .should('be.visible');
+    });
 
     it.only('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.percentage)
-        .should('contain', i18n.global.t('index.cardProgress.current'))
+        .should('contain', card.progress)
+        .should('contain', i18n.global.t('index.cardProgress.toDate'));
 
-      cy.dataCy('card-progress-percentage')
-        .find('progress-circle')
-        .should('be.visible')
-        .should('have.backgroundColor', '#212121');
-
-      cy.dataCy('card-progress-percentage')
-        .find('.progress-indicator')
-        .should('be.visible')
-        .should('have.backgroundColor', '#fff');
-    })
+      cy.dataCy('card-progress-circular')
+        .should('be.visible');
+    });
 
     it('renders stats', () => {
       cy.dataCy('card-progress-stats')
@@ -90,17 +83,17 @@ describe('<VueCardProgress>', () => {
         .should('contain', card.stats[0].title)
         .should('have.color', '#fff')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-size', '12px')
+        .should('have.css', 'font-size', '12px');
 
       cy.dataCy('card-progress-stats')
-      .should('be.visible')
+        .should('be.visible')
         .find('.stats-value')
         .first()
         .should('contain', card.stats[0].value)
         .should('have.color', '#fff')
         .should('have.css', 'font-weight', '400')
-        .should('have.css', 'font-size', '14px')
-    })
+        .should('have.css', 'font-size', '14px');
+    });
 
     // layout
     it('renders card header horizontally', () => {
@@ -111,7 +104,7 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'justify-content', 'space-between')
         .should('have.css', 'align-items', 'center')
         .should('have.css', 'gap', '16px');
-    })
+    });
 
     it('renders card content horizontally', () => {
       cy.dataCy('card-progress-content')
@@ -120,15 +113,14 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'flex-direction', 'row')
         .should('have.css', 'justify-content', 'space-between')
         .should('have.css', 'align-items', 'center');
-    })
-
+    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(VueCardProgress, {
         props: {
-          card
+          card,
         },
       });
       cy.viewport('iphone-6');
@@ -145,7 +137,7 @@ describe('<VueCardProgress>', () => {
             expect($title.text()).to.equal(card.title);
           });
       });
-    })
+    });
 
     it('renders title icon', () => {
       cy.dataCy('card-progress-title')
@@ -154,7 +146,7 @@ describe('<VueCardProgress>', () => {
         .should('have.color', '#eceff1') // blue-grey-1
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
-    })
+    });
 
     it('renders timeline', () => {
       cy.dataCy('card-progress-timeline')
@@ -174,13 +166,13 @@ describe('<VueCardProgress>', () => {
         .find('.progress-indicator')
         .should('be.visible')
         .should('have.backgroundColor', '#fff');
-    })
+    });
 
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
         .should('contain', card.percentage)
-        .should('contain', i18n.t('index.cardProgress.current'))
+        .should('contain', i18n.t('index.cardProgress.current'));
 
       cy.dataCy('card-progress-percentage')
         .find('progress-circle')
@@ -191,7 +183,7 @@ describe('<VueCardProgress>', () => {
         .find('.progress-indicator')
         .should('be.visible')
         .should('have.backgroundColor', '#fff');
-    })
+    });
 
     it('renders stats', () => {
       cy.dataCy('card-progress-stats')
@@ -201,17 +193,17 @@ describe('<VueCardProgress>', () => {
         .should('contain', card.stats[0].title)
         .should('have.color', '#fff')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-size', '12px')
+        .should('have.css', 'font-size', '12px');
 
       cy.dataCy('card-progress-stats')
-      .should('be.visible')
+        .should('be.visible')
         .find('.stats-value')
         .first()
         .should('contain', card.stats[0].value)
         .should('have.color', '#fff')
         .should('have.css', 'font-weight', '400')
-        .should('have.css', 'font-size', '14px')
-    })
+        .should('have.css', 'font-size', '14px');
+    });
 
     // layout
     it('wraps items in card header', () => {
@@ -221,7 +213,7 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'flex-direction', 'row')
         .should('have.css', 'flex-wrap', 'wrap')
         .should('have.css', 'gap', '16px');
-    })
+    });
 
     it('wraps items in card content', () => {
       cy.dataCy('card-progress-content')
@@ -230,7 +222,6 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'flex-direction', 'row')
         .should('have.css', 'flex-wrap', 'wrap')
         .should('have.css', 'gap', '16px');
-    })
-
+    });
   });
 });
