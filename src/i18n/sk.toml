@@ -116,6 +116,7 @@ button = "Všetky výsledky"
 
 [index.cardProgress]
 timeline = "dokončených dní"
+toDate = "Doteraz"
 
 [index.newsletterFeature]
 title = "Prihláste sa na odber nášho newslettera, aby vám nič neuniklo"
