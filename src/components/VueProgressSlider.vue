@@ -15,7 +15,7 @@ export default defineComponent({
   components: {
     Swiper,
     SwiperSlide,
-    VueCardProgress
+    VueCardProgress,
   },
   props: {
     title: {
