@@ -108,7 +108,6 @@ export default defineComponent({
     VueProgressSlider,
   },
   setup() {
-
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
