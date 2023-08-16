@@ -1,5 +1,5 @@
 const getString = (text: string): string => {
-    return text
-}
+  return text;
+};
 
-export { getString }
+export { getString };

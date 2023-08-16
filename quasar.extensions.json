@@ -3,8 +3,6 @@
     "harnesses": []
   },
   "@quasar/testing-e2e-cypress": {
-    "options": [
-      "scripts"
-    ]
+    "options": ["scripts"]
   }
 }
