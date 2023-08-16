@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { useMediaQuery } from '@vueuse/core';
 
 // types
 import { CardProgress } from './types';
@@ -13,12 +14,19 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const isLargeScreen = useMediaQuery('(min-width: 600px)')
+
     const timelineValue = computed(() => {
       return props.card.duration.current / props.card.duration.total;
     });
 
+    const circleSize = computed(() => {
+      return isLargeScreen.value ? '220px' : '128px';
+    })
+
     return {
       timelineValue,
+      circleSize
     };
   },
 });
@@ -29,10 +37,10 @@ export default defineComponent({
     :dark="true"
     :flat="true"
     :bordered="true"
-    class="bg-blue-grey-1 rounded-20"
+    class="bg-blue-grey-3 rounded-20"
     data-cy="card"
   >
-    <q-img :src="card?.image">
+    <q-img :src="card?.image" class="card-image">
       <q-card-section
         class="absolute-top flex items-center justify-between gap-16 z-1"
         data-cy="card-progress-header"
@@ -45,10 +53,10 @@ export default defineComponent({
             class="text-white text-weight-bold"
             data-cy="card-progress-title"
           >
-            {{ card.title }}
+            <h3 class="text-body1 text-weight-bold">{{ card.title }}</h3>
           </component>
         </div>
-        <div clas="min-w-180" data-cy="card-progress-timeline">
+        <div data-cy="card-progress-timeline" class="min-w-180 gt-xs">
           <div class="text-subtitle2 text-right">
             {{ card.duration.current }} / {{ card.duration.total }}
             {{ $t('index.cardProgress.timeline') }}
@@ -56,14 +64,14 @@ export default defineComponent({
           <q-linear-progress :value="timelineValue" color="white" rounded />
         </div>
       </q-card-section>
-      <q-card-section class="w-full h-full flex !q-pa-none">
-        <div class="gap-16 flex flex-wrap items-center q-pa-xl">
+      <q-card-section class="card-image-section-content w-full h-full !q-pa-none !q-pt-92">
+        <div class="gap-16 gap-sm-72 flex flex-wrap justify-center justify-sm-start items-center q-pa-xl" data-cy="card-progress-content">
           <div class="relative-position" data-cy="card-progress-percentage">
             <q-circular-progress
               rounded
               class="text-white q-ma-md"
               :value="card.progress"
-              size="220px"
+              :size="circleSize"
               :thickness="0.05"
               color="white"
               track-color="blue-grey-10"
@@ -74,16 +82,58 @@ export default defineComponent({
               <div class="text-caption">
                 {{ $t('index.cardProgress.toDate') }}
               </div>
-              <div class="text-h3 q-mt-xs">{{ card.progress }}&nbsp;%</div>
+              <div class="text-circular-progress q-mt-xs">{{ card.progress }}%</div>
             </div>
           </div>
+          <div class="flex column gap-16 gt-xs">
+            <div v-for="stat in card.stats" :key="stat.title" data-cy="card-progress-stats">
+              <div class="stats-title text-uppercase text-caption">{{ stat.title }}</div>
+              <q-list dark dense class="q-mt-lg">
+                <q-item v-for="item in stat.items" :key="item.id" class="stats-value !q-pa-none">
+                  {{ item.text }}
+                </q-item>
+              </q-list>
+            </div>
+          </div>
+        </div>
+      </q-card-section>
+
+      <q-separator color="blue-grey-8" />
+
+      <q-card-section class="card-image-section-content lt-sm" data-cy="card-progress-footer-mobile">
+        <div class="min-w-180" data-cy="card-progress-timeline">
+          <div class="text-subtitle2 text-center">
+            {{ card.duration.current }} / {{ card.duration.total }}
+            {{ $t('index.cardProgress.timeline') }}
+          </div>
+          <q-linear-progress class="q-mt-sm" :value="timelineValue" color="white" rounded />
         </div>
       </q-card-section>
     </q-img>
   </q-card>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+:deep(.q-list--dense > .q-item) {
+  min-height: 24px;
+}
+:deep(.card-image > div) {
+  padding-bottom: 0 !important;
+}
+:deep(.card-image > *) {
+  position: relative !important;
+}
+:deep(.card-image > * > .card-image-section-content) {
+  position: relative !important;
+}
+.text-circular-progress {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  @media (min-width: $breakpoint-sm-min) {
+    font-size: 48px;
+  }
+}
 .z-1 {
   z-index: 1;
 }
@@ -93,6 +143,19 @@ export default defineComponent({
 }
 .gap-16 {
   gap: 16px;
+}
+.gap-sm-72 {
+  @media (min-width: $breakpoint-sm-min) {
+    gap: 72px;
+  }
+}
+.justify-sm-start {
+  @media (min-width: $breakpoint-sm-min) {
+    justify-content: flex-start;
+  }
+}
+.min-w-128 {
+  min-width: 128px;
 }
 .min-w-180 {
   min-width: 180px;
@@ -105,5 +168,8 @@ export default defineComponent({
 }
 .\!q-pa-none {
   padding: 0 !important;
+}
+.\!q-pt-92 {
+  padding-top: 92px !important;
 }
 </style>

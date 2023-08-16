@@ -229,12 +229,16 @@ export const cardsProgress: CardProgress[] = [
     progress: 60,
     stats: [
       {
-        title: '',
-        items: [{ id: '1', text: '' }],
+        title: 'Váš podíl na výsledku',
+        items: [{ id: '1', text: '80% pravidelnost' }],
       },
       {
-        title: '',
-        items: [{ id: '1', text: '' }],
+        title: 'Postavení v žebříčku',
+        items: [
+          { id: '1', text: '2. Automati a 1 další (80 %)' },
+          { id: '2', text: '3. Váš tým a 2 další (60 %)' },
+          { id: '3', text: '4. Tygři a 2 další (40 %)' },
+        ],
       },
     ],
     duration: {
