@@ -55,12 +55,8 @@ export interface CardProgress {
     },
     {
       title: string;
-      items: [
-        {
-          id: string;
-          text: string;
-        }
-      ];
+      items:
+        { id: string; text: string }[];
     }
   ];
   duration: {
