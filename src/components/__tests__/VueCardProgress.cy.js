@@ -15,7 +15,11 @@ const card = {
 
 describe('<VueCardProgress>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['timeline', 'toDate'], 'index.cardProgress', i18n);
+    cy.testLanguageStringsInContext(
+      ['timeline', 'toDate'],
+      'index.cardProgress',
+      i18n
+    );
   });
 
   context('desktop', () => {
@@ -71,8 +75,7 @@ describe('<VueCardProgress>', () => {
         .should('contain', card.progress)
         .should('contain', i18n.global.t('index.cardProgress.toDate'));
 
-      cy.dataCy('card-progress-circular')
-        .should('be.visible');
+      cy.dataCy('card-progress-circular').should('be.visible');
     });
 
     it('renders stats', () => {

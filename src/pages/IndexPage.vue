@@ -66,7 +66,7 @@
       >
       </vue-card-list-post>
       <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
-      <vue-card-list-follow :cards="cardFollow" class="q-pt-xl" />
+      <vue-card-list-follow :cards="cardsFollow" class="q-pt-xl" />
     </div>
   </q-page>
 </template>
@@ -90,6 +90,8 @@ import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
 import { CardPost, Offer, CardFollow, ItemStatistics, CardProgress } from 'components/types';
+// data
+import * as homepage from '../mocks/homepage';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -106,227 +108,18 @@ export default defineComponent({
     VueProgressSlider,
   },
   setup() {
-    const releaseDate = '2023-10-01T12:00:00';
-
-    const cards: CardChallengeType[] = [
-      {
-        title: 'Týmová pravidelnost',
-        url: '#',
-        image: {
-          src: 'https://picsum.photos/id/70/500/540',
-          alt: 'road lined with trees',
-        },
-        dates: '1. říj.–31. říj. 2022',
-        company: false,
-      },
-      {
-        title: 'Vaše pravidelnost',
-        url: '#',
-        image: {
-          src: 'https://picsum.photos/id/70/500/530',
-          alt: 'road lined with trees',
-        },
-        dates: '1. říj.–31. říj. 2022',
-        company: false,
-      },
-      {
-        title: 'Vaše zelené kilometry',
-        url: '#',
-        image: {
-          src: 'https://picsum.photos/id/70/500/550',
-          alt: 'road lined with trees',
-        },
-        dates: '1. říj.–31. říj. 2022',
-        company: true,
-      },
-      {
-        title: 'Zelené kilometry týmu',
-        url: '#',
-        image: {
-          src: 'https://picsum.photos/id/70/500/520',
-          alt: 'road lined with trees',
-        },
-        dates: '1. říj.–31. říj. 2022',
-        company: true,
-      },
-      {
-        title: 'Zelené kilometry pobočky',
-        url: '#',
-        image: {
-          src: 'https://picsum.photos/id/70/500/540',
-          alt: 'road lined with trees',
-        },
-        dates: '1. říj.–31. říj. 2022',
-        company: false,
-      },
-    ];
-
-    const banner: BannerImageType = {
-      title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
-      perex:
-        'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
-      image: {
-        src: 'https://picsum.photos/id/70/600/200',
-        alt: 'road lined with trees',
-      },
-    };
-
-    const headingBgTitle =
-      'Zapojte se do komunity Do práce na kole ve svém městě';
-
-    const cardsEvent: CardEventType[] = [
-      {
-        title: 'Opening Ceremony Bike to Work 2022',
-        thumbnail: {
-          src: 'https://picsum.photos/id/70/340/200',
-          alt: 'road lined with trees',
-        },
-        image: {
-          src: 'https://picsum.photos/id/70/380/380',
-          alt: 'road lined with trees',
-        },
-        dates: new Date('2023-10-01T12:00:00'),
-        location: 'Prague',
-        content: `We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle!
-          You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams.
-          Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony.
-          We will also announce the traditional Brno cycling employer of the year.
-          <br />
-          The main prize will be a City Bike HERKA from our partner Cyklospeciality.
-          <br />
-          We are looking forward to seeing you!`,
-        links: ['meet.google.com/anr-pvfs-opf', 'meet.google.com/anr-pvfs-opf'],
-      },
-    ];
-
-    const cardOffer: Offer = {
-      title: '100 CZK voucher do e-shopu Automatu',
-      expirationDate: 'Some time later on',
-      issuer: 'Automat',
-      image: 'https://picsum.photos/380/380',
-      code: '65972834',
-      link: {
-        title: 'Navštívit e-shop',
-        url: '#',
-        target: '_blank',
-      },
-      icon: 'pedal_bike',
-      content:
-        'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.',
-    };
-    const cardsOffer: Offer[] = [
-      cardOffer,
-      cardOffer,
-      cardOffer,
-      cardOffer,
-      cardOffer,
-      cardOffer,
-      cardOffer,
-    ];
-
-    const cardPost: CardPost = {
-      title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-      date: new Date(2023, 8, 1),
-      image: 'https://picsum.photos/id/100/380/380',
-      url: '/blog/1',
-    };
-    const cardsPost: CardPost[] = [
-      cardPost,
-      cardPost,
-      cardPost,
-      cardPost,
-      cardPost,
-    ];
-
-    const cardFollow: CardFollow[] = [
-      {
-        title: 'Do práce na kole – Brno',
-        handle: '@DPNKBrno',
-        image: 'https://picsum.photos/id/76/300/300',
-        url: '#',
-      },
-      {
-        title: 'Do práce na kole – Brno',
-        handle: '@DPNKBrno',
-        image: 'https://picsum.photos/id/76/300/300',
-        url: '#',
-      },
-    ];
-
-    const cardsProgress: CardProgress[] = [
-      {
-        title: 'Týmová pravidelnost',
-        icon: 'person',
-        url: '#',
-        image: '',
-        progress: 60,
-        stats: [
-          {
-            title: '',
-            items: [{ id: '1', text: '' }],
-          },
-          {
-            title: '',
-            items: [{ id: '1', text: '' }],
-          },
-        ],
-        duration: {
-          current: 14,
-          total: 30,
-        },
-      },
-      {
-        title: 'Žebříčky',
-        icon: 'person',
-        url: '#',
-        image: '',
-        progress: 60,
-        stats: [
-          {
-            title: '',
-            items: [{ id: '1', text: '' }],
-          },
-          {
-            title: '',
-            items: [{ id: '1', text: '' }],
-          },
-        ],
-        duration: {
-          current: 14,
-          total: 30,
-        },
-      },
-    ];
-
-    const progressStats: ItemStatistics[] = [
-      {
-        icon: 'route',
-        label: 'udržitelných cest',
-        value: '18',
-      },
-      {
-        icon: 'distance',
-        label: '312,25 km',
-        value: '',
-      },
-      {
-        icon: 'leaf',
-        label: 'ušetřeno',
-        value: '420 g CO2',
-      },
-    ];
 
     return {
-      releaseDate,
-      cards,
-      banner,
-      headingBgTitle,
-      cardsEvent,
-      cardsOffer,
-      cardsPost,
-      cardFollow,
-      cardsProgress,
-      progressStats,
+      releaseDate: homepage.releaseDate,
+      cardsChallenge: homepage.cardsChallenge,
+      bannerImage: homepage.bannerImage,
+      headingBgTitle: homepage.headingBgTitle,
+      cardsEvent: homepage.cardsEvent,
+      cardsOffer: homepage.cardsOffer,
+      cardsPost: homepage.cardsPost,
+      cardsFollow: homepage.cardsFollow,
+      cardsProgress: homepage.cardsProgress,
+      progressStats: homepage.progressStats,
     };
   },
 });
