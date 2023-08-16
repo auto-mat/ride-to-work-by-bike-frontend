@@ -37,7 +37,7 @@ export default defineComponent({
     >
       <template v-slot:prepend>
         <q-avatar size="56px" data-cy="avatar">
-          <img class="rounded" :src="user.image" />
+          <img class="rounded" :src="user.image" :alt="user.label" />
         </q-avatar>
       </template>
     </q-select>
