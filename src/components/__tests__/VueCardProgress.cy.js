@@ -1,17 +1,8 @@
 import VueCardProgress from 'components/VueCardProgress.vue';
 import { i18n } from '../../boot/i18n';
+import { cardsProgress } from '../../mocks/homepage';
 
-const card = {
-  title: 'Týmová pravidelnost',
-  icon: 'person',
-  url: '#',
-  progress: 60,
-  stats: [],
-  duration: {
-    current: 14,
-    total: 30,
-  },
-};
+const card = cardsProgress[0]
 
 describe('<VueCardProgress>', () => {
   it('has translation for all strings', () => {
@@ -66,16 +57,29 @@ describe('<VueCardProgress>', () => {
 
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
+        .first()
         .should('be.visible');
+
+      cy.dataCy('card-progress-timeline')
+        .find('.q-linear-progress')
+        .last()
+        .should('not.be.visible');
     });
 
-    it.only('renders percentage', () => {
+    it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
         .should('contain', card.progress)
         .should('contain', i18n.global.t('index.cardProgress.toDate'));
 
-      cy.dataCy('card-progress-circular').should('be.visible');
+      cy.dataCy('card-progress-circular').should('be.visible')
+        .should('have.css', 'width', '220px')
+        .should('have.css', 'height', '220px');
+
+      cy.dataCy('card-progress-percentage')
+        .find('.text-circular-progress')
+        .should('be.visible')
+        .should('have.css', 'font-size', '48px');
     });
 
     it('renders stats', () => {
@@ -92,10 +96,15 @@ describe('<VueCardProgress>', () => {
         .should('be.visible')
         .find('.stats-value')
         .first()
-        .should('contain', card.stats[0].value)
+        .should('contain', card.stats[0].items[0].text)
         .should('have.color', '#fff')
         .should('have.css', 'font-weight', '400')
         .should('have.css', 'font-size', '14px');
+    });
+
+    it('does not render card footer with timeline', () => {
+      cy.dataCy('card-progress-footer-mobile')
+        .should('not.be.visible');
     });
 
     // layout
@@ -114,7 +123,6 @@ describe('<VueCardProgress>', () => {
         .should('be.visible')
         .should('have.css', 'display', 'flex')
         .should('have.css', 'flex-direction', 'row')
-        .should('have.css', 'justify-content', 'space-between')
         .should('have.css', 'align-items', 'center');
     });
   });
@@ -143,9 +151,9 @@ describe('<VueCardProgress>', () => {
     });
 
     it('renders title icon', () => {
-      cy.dataCy('card-progress-title')
+      cy.dataCy('card-progress-header')
         .find('.q-icon')
-        .should('contain', icon)
+        .should('contain', card.icon)
         .should('have.color', '#eceff1') // blue-grey-1
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
@@ -156,56 +164,41 @@ describe('<VueCardProgress>', () => {
         .should('be.visible')
         .should('contain', card.duration.current)
         .should('contain', card.duration.total)
+        .should('contain', i18n.global.t('index.cardProgress.timeline'))
         .should('have.color', '#fff')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
 
       cy.dataCy('card-progress-timeline')
-        .find('.progress-bar')
-        .should('be.visible')
-        .should('have.backgroundColor', '#212121');
+        .find('.q-linear-progress')
+        .first()
+        .should('not.be.visible');
 
       cy.dataCy('card-progress-timeline')
-        .find('.progress-indicator')
-        .should('be.visible')
-        .should('have.backgroundColor', '#fff');
+        .find('.q-linear-progress')
+        .last()
+        .should('be.visible');
     });
 
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.percentage)
-        .should('contain', i18n.t('index.cardProgress.current'));
+        .should('contain', card.progress)
+        .should('contain', i18n.global.t('index.cardProgress.toDate'));
+
+      cy.dataCy('card-progress-circular').should('be.visible')
+        .should('have.css', 'width', '128px')
+        .should('have.css', 'height', '128px');
 
       cy.dataCy('card-progress-percentage')
-        .find('progress-circle')
+        .find('.text-circular-progress')
         .should('be.visible')
-        .should('have.backgroundColor', '#212121');
-
-      cy.dataCy('card-progress-percentage')
-        .find('.progress-indicator')
-        .should('be.visible')
-        .should('have.backgroundColor', '#fff');
+        .should('have.css', 'font-size', '40px');
     });
 
     it('renders stats', () => {
       cy.dataCy('card-progress-stats')
-        .should('be.visible')
-        .find('.stats-title')
-        .first()
-        .should('contain', card.stats[0].title)
-        .should('have.color', '#fff')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-size', '12px');
-
-      cy.dataCy('card-progress-stats')
-        .should('be.visible')
-        .find('.stats-value')
-        .first()
-        .should('contain', card.stats[0].value)
-        .should('have.color', '#fff')
-        .should('have.css', 'font-weight', '400')
-        .should('have.css', 'font-size', '14px');
+        .should('not.be.visible')
     });
 
     // layout
