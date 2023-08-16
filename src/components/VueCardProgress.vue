@@ -61,7 +61,7 @@ export default defineComponent({
             {{ card.duration.current }} / {{ card.duration.total }}
             {{ $t('index.cardProgress.timeline') }}
           </div>
-          <q-linear-progress :value="timelineValue" color="white" rounded />
+          <q-linear-progress :value="timelineValue" color="white" rounded class="q-mt-xs" />
         </div>
       </q-card-section>
       <q-card-section class="card-image-section-content w-full h-full !q-pa-none !q-pt-92">
@@ -106,7 +106,7 @@ export default defineComponent({
             {{ card.duration.current }} / {{ card.duration.total }}
             {{ $t('index.cardProgress.timeline') }}
           </div>
-          <q-linear-progress class="q-mt-sm" :value="timelineValue" color="white" rounded />
+          <q-linear-progress class="q-mt-xs" :value="timelineValue" color="white" rounded />
         </div>
       </q-card-section>
     </q-img>
