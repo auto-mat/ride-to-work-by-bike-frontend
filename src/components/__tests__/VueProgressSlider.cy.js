@@ -1,42 +1,7 @@
 import VueProgressSlider from 'components/VueProgressSlider.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
-
-const title = 'Vaše výsledky';
-const stats = [
-  {
-    icon: 'route',
-    label: 'udržitelných cest',
-    value: '18',
-  },
-  {
-    icon: 'distance',
-    label: '312,25 km',
-    value: '',
-  },
-  {
-    icon: 'leaf',
-    label: 'ušetřeno',
-    value: '420 g CO2',
-  },
-];
-const cards = [
-  {
-    id: 1,
-  },
-  {
-    id: 2,
-  },
-  {
-    id: 3,
-  },
-  {
-    id: 4,
-  },
-];
-const button = {
-  title: 'Všechny výsledky',
-};
+import { progressStats, cardsProgress } from 'src/mocks/homepage';
 
 describe('<VueProgressSlider>', () => {
   it('has translation for all strings', () => {
@@ -51,10 +16,10 @@ describe('<VueProgressSlider>', () => {
     beforeEach(() => {
       cy.mount(VueProgressSlider, {
         props: {
-          title,
-          stats,
-          cards,
-          button,
+          title: i18n.global.t('index.progressSlider.title'),
+          stats: progressStats,
+          cards: cardsProgress,
+          button: { title: i18n.global.t('index.progressSlider.button') },
         },
       });
       cy.viewport('macbook-16');
@@ -66,9 +31,11 @@ describe('<VueProgressSlider>', () => {
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
           .should('have.color', '#000')
-          .should('contain', title)
+          .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(title);
+            expect($title.text()).to.equal(
+              i18n.global.t('index.progressSlider.title')
+            );
           });
       });
     });
@@ -85,19 +52,19 @@ describe('<VueProgressSlider>', () => {
 
           cy.wrap($item)
             .find('.q-icon')
-            .should('contain', stats[index].icon)
+            .should('contain', progressStats[index].icon)
             .should('have.color', '#b0bec5')
             .should('have.css', 'width', '18px')
             .should('have.css', 'height', '18px');
 
           cy.wrap($item)
             .find('span')
-            .should('contain', stats[index].label)
+            .should('contain', progressStats[index].label)
             .should('have.color', '#212121');
 
           cy.wrap($item)
             .find('strong')
-            .should('contain', stats[index].value)
+            .should('contain', progressStats[index].value)
             .should('have.color', '#212121')
             .should('have.css', 'font-weight', '700');
         });
@@ -159,7 +126,7 @@ describe('<VueProgressSlider>', () => {
         cy.get('.swiper-button-next').should(
           'have.css',
           'border',
-          `1px solid ${hexToRgb('#212121')}`
+          `1px solid ${hexToRgb('#bdbdbd')}`
         );
         cy.get('.swiper-button-prev').click();
         cy.get('.swiper-button-prev').should(
@@ -183,9 +150,11 @@ describe('<VueProgressSlider>', () => {
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.color', '#212121')
         .should('have.css', 'border-radius', '28px')
-        .should('contain', button.title)
+        .should('contain', i18n.global.t('index.progressSlider.button'))
         .then(($title) => {
-          expect($title.text()).to.equal(button.title);
+          expect($title.text()).to.equal(
+            i18n.global.t('index.progressSlider.button')
+          );
         });
     });
   });
