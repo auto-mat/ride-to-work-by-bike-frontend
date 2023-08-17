@@ -292,7 +292,7 @@ export const cardsProgress: CardProgress[] = [
     title: 'Týmová pravidelnost',
     icon: 'people',
     url: '#',
-    progress: 100,
+    progress: 95,
     prizes: [
       {
         icon: 'emoji_events',

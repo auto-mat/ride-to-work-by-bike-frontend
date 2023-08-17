@@ -21,8 +21,10 @@ export default defineComponent({
       return isLargeScreen.value ? '220px' : '128px';
     })
 
-    const isFirst = (prize: ItemPrize) => {
-      return prize.placement === 1
+    const isFirst = (card: CardProgress): boolean => {
+      const prizes = card.prizes
+      const firstPrize = prizes?.filter((item: ItemPrize) => item.placement === 1).length
+      return firstPrize ? true : false
     }
 
     return {
@@ -36,8 +38,10 @@ export default defineComponent({
 <template>
   <q-card
     :flat="true"
+    :dark="isFirst(card)"
     :bordered="true"
-    class="bg-white text-grey-10 rounded-20"
+    class="rounded-20"
+    :class="isFirst(card) ? 'bg-blue-grey-6 text-white' : 'bg-white text-grey-10'"
     data-cy="card"
   >
     <q-card-section
@@ -45,18 +49,19 @@ export default defineComponent({
       data-cy="card-progress-header"
     >
       <div class="flex items-center gap-16 text-body1">
-        <q-icon :name="card.icon" size="18px" color="blue-grey-5" />
+        <q-icon :name="card.icon" size="18px" :color="isFirst(card) ? 'white' : 'blue-grey-5'" />
         <component
           :is="card.url ? 'a' : 'div'"
           :href="card.url"
-          class="text-grey-10 text-weight-bold"
+          class="text-weight-bold"
+          :class="isFirst(card) ? 'text-white' : 'text-grey-10'"
           data-cy="card-progress-title"
         >
           <h3 class="text-body1 text-weight-bold">{{ card.title }}</h3>
         </component>
       </div>
     </q-card-section>
-    <q-card-section class="w-full card-image-section-content">
+    <q-card-section>
       <div class="gap-16 justify-center items-center" data-cy="card-progress-content">
         <div class="relative-position" data-cy="card-progress-percentage">
           <q-circular-progress
@@ -65,8 +70,8 @@ export default defineComponent({
             :value="card.progress"
             :size="circleSize"
             :thickness="0.08"
-            color="blue-grey-6"
-            track-color="blue-grey-2"
+            :color="isFirst(card) ? 'white' : 'blue-grey-6'"
+            :track-color="isFirst(card) ? 'blue-grey-4' :'blue-grey-2'"
             data-cy="card-progress-circular"
           >
           </q-circular-progress>
@@ -74,21 +79,26 @@ export default defineComponent({
             <div class="text-circular-progress q-mt-xs">{{ card.progress }}%</div>
           </div>
         </div>
-        <q-list dense>
+        <q-list dense class="q-mb-sm">
           <q-item v-for="(prize, index) in card.prizes" :key="'prize' + index" class="prizes-value min-h-36 flex items-center justify-center !q-pa-none" data-cy="card-progress-prizes">
-            <q-icon :name="prize.icon" size="24px" color="blue-grey-5" />&nbsp;
+            <q-icon :name="prize.icon" size="24px" color="white" data-cy="card-progress-prize-icon" />&nbsp;
             <div class="flex items-baseline">
-              <span class="text-weight-bold" :class="{ 'text-h5': isFirst(prize) }" data-cy="card-progress-prize-placement">{{ prize.placement }}</span>.&nbsp;
-              {{ prize.label }}&nbsp;
+              <span class="text-weight-bold" :class="{ 'text-h5': isFirst(card) }" data-cy="card-progress-prize-placement">{{ prize.placement }}</span>.&nbsp;
+              <span data-cy="card-progress-prize-label">{{ prize.label }}</span>&nbsp;
             </div>
           </q-item>
         </q-list>
       </div>
 
-      <q-separator color="blue-grey-8" />
+      <q-separator :color="isFirst(card) ? 'blue-grey-7' : 'blue-grey-1'" />
 
-      <div class="card-image-section-content" data-cy="card-progress-footer-mobile">
-        Share
+      <div>
+        <q-list>
+          <q-item clickable :to="card.url" class="!q-pa-none">
+            <q-icon name="share" size="18px" :color="isFirst(card) ? 'white' : 'grey-10'" class="q-mr-xs" />
+            <span :class="isFirst(card) ? 'text-white' : 'text-grey-10'">{{ $t('index.cardProgress.share') }}</span>
+          </q-item>
+        </q-list>
       </div>
     </q-card-section>
   </q-card>
@@ -132,5 +142,8 @@ export default defineComponent({
 }
 .h-full {
   height: 100%;
+}
+.\!q-pa-none {
+  padding: 0 !important;
 }
 </style>
