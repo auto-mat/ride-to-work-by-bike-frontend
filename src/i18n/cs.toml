@@ -85,6 +85,9 @@ button = "Všechny výsledky"
 timeline = "dnů absolvováno"
 toDate = "Dosavadní"
 
+[index.cardProgress]
+share = "Sdílet"
+
 [index.newsletterFeature]
 title = "Odebírejte od nás novinky, ať vám nic neuteče"
 description = "Newsletter vám budeme posílat na e-mail jana.anonymni@dopracenakole.cz."

@@ -92,14 +92,12 @@ export default defineComponent({
 
       <q-separator :color="isFirst(card) ? 'blue-grey-7' : 'blue-grey-1'" />
 
-      <div>
-        <q-list>
-          <q-item clickable :to="card.url" class="!q-pa-none">
+        <q-list dense class="q-mt-md">
+          <q-item clickable :to="card.url" class="justify-center items-center q-py-sm rounded-20">
             <q-icon name="share" size="18px" :color="isFirst(card) ? 'white' : 'grey-10'" class="q-mr-xs" />
-            <span :class="isFirst(card) ? 'text-white' : 'text-grey-10'">{{ $t('index.cardProgress.share') }}</span>
+            <span class="leading-1" :class="isFirst(card) ? 'text-white' : 'text-grey-10'">{{ $t('index.cardProgress.share') }}</span>
           </q-item>
         </q-list>
-      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -113,12 +111,14 @@ export default defineComponent({
     font-size: 48px;
   }
 }
+.leading-1 {
+  line-height: 1;
+}
 .z-1 {
   z-index: 1;
 }
 .rounded-20 {
   border-radius: 20px;
-  background-color: var(--q-gray-light);
 }
 .gap-16 {
   gap: 16px;
