@@ -1,14 +1,14 @@
 import VueCardProgressSlider from 'components/VueCardProgressSlider.vue';
 import { i18n } from '../../boot/i18n';
-import { cardsProgress } from '../../mocks/homepage';
+import { cardsProgressSlider } from '../../mocks/homepage';
 
-const card = cardsProgress[0]
+const card = cardsProgressSlider[0]
 
 describe('<VueCardProgressSlider>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['timeline', 'toDate'],
-      'index.cardProgress',
+      'index.cardProgressSlider',
       i18n
     );
   });
@@ -50,7 +50,7 @@ describe('<VueCardProgressSlider>', () => {
         .should('be.visible')
         .should('contain', card.duration.current)
         .should('contain', card.duration.total)
-        .should('contain', i18n.global.t('index.cardProgress.timeline'))
+        .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
         .should('have.color', '#fff')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
@@ -70,7 +70,7 @@ describe('<VueCardProgressSlider>', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
         .should('contain', card.progress)
-        .should('contain', i18n.global.t('index.cardProgress.toDate'));
+        .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
 
       cy.dataCy('card-progress-circular').should('be.visible')
         .should('have.css', 'width', '220px')
@@ -164,7 +164,7 @@ describe('<VueCardProgressSlider>', () => {
         .should('be.visible')
         .should('contain', card.duration.current)
         .should('contain', card.duration.total)
-        .should('contain', i18n.global.t('index.cardProgress.timeline'))
+        .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
         .should('have.color', '#fff')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
@@ -184,7 +184,7 @@ describe('<VueCardProgressSlider>', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
         .should('contain', card.progress)
-        .should('contain', i18n.global.t('index.cardProgress.toDate'));
+        .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
 
       cy.dataCy('card-progress-circular').should('be.visible')
         .should('have.css', 'width', '128px')
