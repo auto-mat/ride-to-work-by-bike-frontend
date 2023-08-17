@@ -6,7 +6,7 @@ import { useMediaQuery } from '@vueuse/core';
 import { CardProgress } from './types';
 
 export default defineComponent({
-  name: 'VueCardProgress',
+  name: 'VueCardProgressSlider',
   props: {
     card: {
       type: Object as () => CardProgress,
