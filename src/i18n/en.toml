@@ -114,7 +114,7 @@ button = "Visit blog"
 title = "Your results"
 button = "All results"
 
-[index.cardProgress]
+[index.cardProgressSlider]
 timeline = "days completed"
 toDate = "To date"
 
