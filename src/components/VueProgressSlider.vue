@@ -1,5 +1,4 @@
 <script lang="ts">
-import { title } from 'process';
 import { defineComponent } from 'vue';
 import { Navigation, A11y } from 'swiper/modules';
 

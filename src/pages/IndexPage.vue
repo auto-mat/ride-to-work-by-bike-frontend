@@ -23,11 +23,14 @@
       ></banner-image>
       <vue-progress-slider
         :title="$t('index.progressSlider.title')"
-        :cards="cardsProgress"
+        :cards="cardsProgressSlider"
         :stats="progressStats"
         :button="{ title: $t('index.progressSlider.button'), url: '/blog' }"
       >
       </vue-progress-slider>
+      <div class="flex">
+        <vue-card-progress v-for="card in cardsProgress" :key="card.title" :card="card" />
+      </div>
     </div>
     <heading-background
       :title="headingBgTitle"
@@ -86,6 +89,7 @@ import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
+import VueCardProgress from 'src/components/VueCardProgress.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
@@ -106,6 +110,7 @@ export default defineComponent({
     VueNewsletterFeature,
     VueCardListFollow,
     VueProgressSlider,
+    VueCardProgress,
   },
   setup() {
     return {
@@ -117,8 +122,9 @@ export default defineComponent({
       cardsOffer: homepage.cardsOffer,
       cardsPost: homepage.cardsPost,
       cardsFollow: homepage.cardsFollow,
-      cardsProgress: homepage.cardsProgress,
+      cardsProgressSlider: homepage.cardsProgressSlider,
       progressStats: homepage.progressStats,
+      cardsProgress: homepage.cardsProgress,
     };
   },
 });

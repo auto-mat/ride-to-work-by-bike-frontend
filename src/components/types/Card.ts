@@ -1,3 +1,5 @@
+import { ItemPrize } from './Item';
+
 export interface CardChallenge {
   title: string;
   image: string;
@@ -41,9 +43,10 @@ export interface CardProgress {
   title: string;
   icon: string;
   url: string;
-  image: string;
+  image?: string;
   progress: number;
-  stats: [
+  prizes?: ItemPrize[],
+  stats?: [
     {
       title: string;
       items: [
@@ -59,7 +62,7 @@ export interface CardProgress {
         { id: string; text: string }[];
     }
   ];
-  duration: {
+  duration?: {
     current: number;
     total: number;
   };

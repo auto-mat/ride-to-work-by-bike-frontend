@@ -220,7 +220,7 @@ export const cardsFollow: CardFollow[] = [
   },
 ];
 
-export const cardsProgress: CardProgress[] = [
+export const cardsProgressSlider: CardProgress[] = [
   {
     title: 'Týmová pravidelnost',
     icon: 'person',
@@ -286,3 +286,45 @@ export const progressStats: ItemStatistics[] = [
     value: '420 g CO2',
   },
 ];
+
+export const cardsProgress: CardProgress[] = [
+  {
+    title: 'Týmová pravidelnost',
+    icon: 'people',
+    url: '#',
+    progress: 100,
+    prizes: [
+      {
+        icon: 'emoji_events',
+        placement: 1,
+        label: 'místo'
+      }
+    ]
+  },
+  {
+    title: 'Vaše pravidelnost',
+    icon: 'person',
+    url: '#',
+    progress: 80,
+    prizes: [
+      {
+        icon: '',
+        placement: 4,
+        label: 'místo'
+      }
+    ]
+  },
+  {
+    title: 'Vaše zelené kilometry',
+    icon: 'person',
+    url: '#',
+    progress: 48,
+    prizes: [
+      {
+        icon: '',
+        placement: 5,
+        label: 'místo'
+      }
+    ]
+  }
+]
