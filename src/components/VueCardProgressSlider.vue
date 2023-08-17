@@ -59,7 +59,7 @@ export default defineComponent({
         <div data-cy="card-progress-timeline" class="min-w-180 gt-xs">
           <div class="text-subtitle2 text-right">
             {{ card.duration.current }} / {{ card.duration.total }}
-            {{ $t('index.cardProgress.timeline') }}
+            {{ $t('index.cardProgressSlider.timeline') }}
           </div>
           <q-linear-progress :value="timelineValue" color="white" rounded class="q-mt-xs" />
         </div>
@@ -80,7 +80,7 @@ export default defineComponent({
             </q-circular-progress>
             <div class="text-white absolute-center text-center">
               <div class="text-caption">
-                {{ $t('index.cardProgress.toDate') }}
+                {{ $t('index.cardProgressSlider.toDate') }}
               </div>
               <div class="text-circular-progress q-mt-xs">{{ card.progress }}%</div>
             </div>
@@ -104,7 +104,7 @@ export default defineComponent({
         <div class="min-w-180" data-cy="card-progress-timeline">
           <div class="text-subtitle2 text-center">
             {{ card.duration.current }} / {{ card.duration.total }}
-            {{ $t('index.cardProgress.timeline') }}
+            {{ $t('index.cardProgressSlider.timeline') }}
           </div>
           <q-linear-progress class="q-mt-xs" :value="timelineValue" color="white" rounded />
         </div>

@@ -81,7 +81,7 @@ button = "Navštívte blog"
 title = "Vaše výsledky"
 button = "Všetky výsledky"
 
-[index.cardProgress]
+[index.cardProgressSlider]
 timeline = "dokončených dní"
 toDate = "Doteraz"
 
