@@ -17,7 +17,10 @@ export default defineComponent({
     const isLargeScreen = useMediaQuery('(min-width: 600px)')
 
     const timelineValue = computed(() => {
-      return props.card.duration.current / props.card.duration.total;
+      if (!props.card.duration?.current || !props.card.duration?.total) {
+        return 0;
+      }
+      return props.card.duration?.current / props.card.duration?.total;
     });
 
     const circleSize = computed(() => {
@@ -58,7 +61,7 @@ export default defineComponent({
         </div>
         <div data-cy="card-progress-timeline" class="min-w-180 gt-xs">
           <div class="text-subtitle2 text-right">
-            {{ card.duration.current }} / {{ card.duration.total }}
+            {{ card.duration?.current }} / {{ card.duration?.total }}
             {{ $t('index.cardProgressSlider.timeline') }}
           </div>
           <q-linear-progress :value="timelineValue" color="white" rounded class="q-mt-xs" />
@@ -103,7 +106,7 @@ export default defineComponent({
       <q-card-section class="card-image-section-content lt-sm" data-cy="card-progress-footer-mobile">
         <div class="min-w-180" data-cy="card-progress-timeline">
           <div class="text-subtitle2 text-center">
-            {{ card.duration.current }} / {{ card.duration.total }}
+            {{ card.duration?.current }} / {{ card.duration?.total }}
             {{ $t('index.cardProgressSlider.timeline') }}
           </div>
           <q-linear-progress class="q-mt-xs" :value="timelineValue" color="white" rounded />
