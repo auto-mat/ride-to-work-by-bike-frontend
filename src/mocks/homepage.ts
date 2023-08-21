@@ -4,6 +4,7 @@ import {
   CardEvent,
   CardPost,
   BannerImage,
+  BannerApp,
   Offer,
   CardFollow,
   ItemStatistics,
@@ -109,7 +110,16 @@ export const bannerImage: BannerImage = {
   title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
   perex:
     'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
-  image: 'https://picsum.photos/600/200',
+  image: 'https://picsum.photos/id/500/600/200',
+};
+
+export const bannerApp: BannerApp = {
+  title: 'Zaznamenávejte cesty automaticky s aplikací Cyclers!',
+  button: {
+    title: 'Stáhnout aplikaci',
+    url: '#',
+  },
+  image: 'https://picsum.photos/id/500/600/200',
 };
 
 export const cardsOffer: Offer[] = [
@@ -297,9 +307,9 @@ export const cardsProgress: CardProgress[] = [
       {
         icon: 'emoji_events',
         placement: 1,
-        label: 'místo'
-      }
-    ]
+        label: 'místo',
+      },
+    ],
   },
   {
     title: 'Vaše pravidelnost',
@@ -310,9 +320,9 @@ export const cardsProgress: CardProgress[] = [
       {
         icon: '',
         placement: 4,
-        label: 'místo'
-      }
-    ]
+        label: 'místo',
+      },
+    ],
   },
   {
     title: 'Vaše zelené kilometry',
@@ -323,8 +333,8 @@ export const cardsProgress: CardProgress[] = [
       {
         icon: '',
         placement: 5,
-        label: 'místo'
-      }
-    ]
-  }
-]
+        label: 'místo',
+      },
+    ],
+  },
+];
