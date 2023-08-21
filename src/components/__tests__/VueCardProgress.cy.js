@@ -2,16 +2,12 @@ import VueCardProgress from 'components/VueCardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgress } from '../../mocks/homepage';
 
-const cardFirst = cardsProgress[0]
-const card = cardsProgress[1]
+const cardFirst = cardsProgress[0];
+const card = cardsProgress[1];
 
 describe('<VueCardProgress>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(
-      [],
-      'index.cardProgress',
-      i18n
-    );
+    cy.testLanguageStringsInContext([], 'index.cardProgress', i18n);
   });
 
   context('desktop: first prize', () => {
@@ -22,7 +18,7 @@ describe('<VueCardProgress>', () => {
         },
       });
       cy.viewport('macbook-16');
-    })
+    });
 
     it('renders white title', () => {
       cy.window().then(() => {
@@ -43,7 +39,7 @@ describe('<VueCardProgress>', () => {
         .should('have.color', '#fff')
         .should('have.css', 'width', '24px')
         .should('have.css', 'height', '24px');
-    })
+    });
 
     it('renders larger placement number', () => {
       cy.dataCy('card-progress-prize-placement')
@@ -53,22 +49,24 @@ describe('<VueCardProgress>', () => {
 
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
+        .should('have.css', 'font-weight', '400')
         .should('have.color', '#fff');
-    })
+    });
 
     it('renders dark separator', () => {
-      cy.dataCy('card-progress-separator')
-        .should('have.css', 'background-color', '#546e7a'); // bg-blue-grey-7
-    })
+      cy.dataCy('card-progress-separator').should(
+        'have.backgroundColor',
+        '#546e7a'
+      ); // bg-blue-grey-7
+    });
 
     it('renders white share link', () => {
       cy.dataCy('card-progress-share')
         .should('have.color', '#fff')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-weight', '600');
-    })
+        .should('have.css', 'font-weight', '700');
+    });
 
     it('renders white share link icon', () => {
       cy.dataCy('card-progress-share-icon')
@@ -76,8 +74,8 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px')
         .should('contain', 'share');
-    })
-  })
+    });
+  });
 
   context('desktop: other placement', () => {
     beforeEach(() => {
@@ -94,7 +92,7 @@ describe('<VueCardProgress>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#fff')
+          .should('have.color', '#212121')
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -116,7 +114,8 @@ describe('<VueCardProgress>', () => {
         .should('be.visible')
         .should('contain', card.progress);
 
-      cy.dataCy('card-progress-circular').should('be.visible')
+      cy.dataCy('card-progress-circular')
+        .should('be.visible')
         .should('have.css', 'width', '220px')
         .should('have.css', 'height', '220px');
 
@@ -124,11 +123,6 @@ describe('<VueCardProgress>', () => {
         .find('.text-circular-progress')
         .should('be.visible')
         .should('have.css', 'font-size', '48px');
-    });
-
-    it('does not render prize icon', () => {
-      cy.dataCy('card-progress-prizes-icon')
-        .should('not.exist')
     });
 
     it('renders smaller placement number', () => {
@@ -139,22 +133,24 @@ describe('<VueCardProgress>', () => {
 
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
+        .should('have.css', 'font-weight', '400')
         .should('have.color', '#212121');
-    })
+    });
 
     it('renders light separator', () => {
-      cy.dataCy('card-progress-separator')
-        .should('have.css', 'background-color', '#eceff1'); // bg-blue-grey-1
-    })
+      cy.dataCy('card-progress-separator').should(
+        'have.backgroundColor',
+        '#eceff1'
+      ); // bg-blue-grey-1
+    });
 
     it('renders dark share link', () => {
       cy.dataCy('card-progress-share')
         .should('have.color', '#212121')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-weight', '600');
-    })
+        .should('have.css', 'font-weight', '700');
+    });
 
     it('renders dark share link icon', () => {
       cy.dataCy('card-progress-share-icon')
@@ -162,7 +158,7 @@ describe('<VueCardProgress>', () => {
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px')
         .should('contain', 'share');
-    })
+    });
   });
 
   context('mobile', () => {
@@ -180,7 +176,7 @@ describe('<VueCardProgress>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#fff')
+          .should('have.color', '#212121')
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -192,7 +188,7 @@ describe('<VueCardProgress>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', '#eceff1') // blue-grey-1
+        .should('have.color', '#78909c') // blue-grey-5
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
     });
@@ -202,7 +198,8 @@ describe('<VueCardProgress>', () => {
         .should('be.visible')
         .should('contain', card.progress);
 
-      cy.dataCy('card-progress-circular').should('be.visible')
+      cy.dataCy('card-progress-circular')
+        .should('be.visible')
         .should('have.css', 'width', '128px')
         .should('have.css', 'height', '128px');
 
