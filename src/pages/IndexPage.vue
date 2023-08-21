@@ -1,10 +1,7 @@
 <template>
   <q-page data-cy="q-main">
     <div class="q-px-lg bg-white">
-      <h1
-        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
-        data-cy="index-title"
-      >
+      <h1 class="text-h5 q-mt-none q-pt-lg text-weight-bold" data-cy="index-title">
         {{ $t('index.title') }}
       </h1>
       <event-countdown
@@ -43,30 +40,13 @@
         class="q-pt-xl"
         data-cy="list-event"
       ></list-card-event>
-      <vue-card-list-offer
-        :title="$t('index.cardListOffer.title')"
-        :cards="cardsOffer"
-        class="q-pt-xl"
-        data-cy="list-offer"
-      ></vue-card-list-offer>
-      <vue-progress-slider :title="$t('index.progressSlider.title')" :cards="cardsPost" :stats="progressStats"
-        :button="{ title: $t('index.progressSlider.button'), url: '/blog' }">
-      </vue-progress-slider>
-    </div>
-    <div class="q-px-lg">
       <vue-card-list-offer :title="$t('index.cardListOffer.title')" :cards="cardsOffer" class="q-pt-xl"
         data-cy="list-offer">
       </vue-card-list-offer>
-      <vue-card-list-post
-        :title="$t('index.cardListPost.title')"
-        :cards="cardsPost"
-        :button="{
-          title: $t('index.cardListPost.button'),
-          url: '/blog',
-        }"
-        class="q-pt-xl"
-        data-cy="list-post"
-      >
+      <vue-card-list-post :title="$t('index.cardListPost.title')" :cards="cardsPost" :button="{
+        title: $t('index.cardListPost.button'),
+        url: '/blog',
+      }" class="q-pt-xl" data-cy="list-post">
       </vue-card-list-post>
       <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
       <vue-card-list-follow :cards="cardsFollow" class="q-pt-xl" />
@@ -89,7 +69,7 @@ import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
-import VueCardProgress from 'src/components/VueCardProgress.vue';
+import VueCardListProgress from 'src/components/VueCardListProgress.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
@@ -110,7 +90,7 @@ export default defineComponent({
     VueNewsletterFeature,
     VueCardListFollow,
     VueProgressSlider,
-    VueCardProgress,
+    VueCardListProgress,
   },
   setup() {
     return {
