@@ -88,6 +88,10 @@ toDate = "Doteraz"
 [index.cardProgress]
 share = "Zdieľať"
 
+[index.cardListProgress]
+title = "Vaše výsledky"
+button = "Všetky výsledky"
+
 [index.newsletterFeature]
 title = "Prihláste sa na odber nášho newslettera, aby vám nič neuniklo"
 description = "Newsletter vám bude zaslaný na e-mailovú adresu jana.anonymni@dopracenakole.cz."
