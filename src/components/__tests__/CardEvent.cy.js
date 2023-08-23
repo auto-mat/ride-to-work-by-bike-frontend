@@ -168,7 +168,7 @@ describe('<CardEvent>', () => {
       cy.dataCy('card-link')
         .click()
         .then(() => {
-          cy.dataCy('card-dialog').should('be.visible');
+          cy.dataCy('dialog-card-event').should('be.visible');
         });
     });
   });
