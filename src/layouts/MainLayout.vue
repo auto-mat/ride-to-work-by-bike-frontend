@@ -9,6 +9,7 @@ import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
 import VueFooter from 'components/VueFooter.vue';
+import VueFooterPanel from 'src/components/VueFooterPanel.vue';
 
 // import types
 import { ConfigGlobal, User } from 'components/types';
@@ -28,7 +29,7 @@ setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 export default defineComponent({
   name: 'MainLayout',
 
-  components: { DrawerHeader, UserSelect, DrawerMenu, VueFooter },
+  components: { DrawerHeader, UserSelect, DrawerMenu, VueFooter, VueFooterPanel },
 
   setup() {
     const leftDrawerOpen = ref(false);
@@ -93,15 +94,24 @@ export default defineComponent({
     <q-page-container class="bg-info pb-footer">
       <router-view />
     </q-page-container>
-
-    <q-footer class="bg-transparent absolute-bottom">
+    <q-footer class="bg-transparent lg-absolute-bottom">
       <!-- footer content -->
-      <vue-footer />
+      <vue-footer-panel></vue-footer-panel>
+      <vue-footer class="gt-md" />
     </q-footer>
   </q-layout>
 </template>
 
 <style lang="scss">
+.lg-absolute-bottom {
+  @media (min-width: $breakpoint-lg-min) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
 .pb-footer {
   padding-bottom: 20rem !important;
 }
