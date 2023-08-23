@@ -14,7 +14,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isLargeScreen = useMediaQuery('(min-width: 600px)')
+    const isLargeScreen = useMediaQuery('(min-width: 600px)');
 
     const timelineValue = computed(() => {
       if (!props.card.duration?.current || !props.card.duration?.total) {
@@ -25,11 +25,11 @@ export default defineComponent({
 
     const circleSize = computed(() => {
       return isLargeScreen.value ? '220px' : '128px';
-    })
+    });
 
     return {
       timelineValue,
-      circleSize
+      circleSize,
     };
   },
 });
@@ -64,11 +64,21 @@ export default defineComponent({
             {{ card.duration?.current }} / {{ card.duration?.total }}
             {{ $t('index.cardProgressSlider.timeline') }}
           </div>
-          <q-linear-progress :value="timelineValue" color="white" rounded class="q-mt-xs" />
+          <q-linear-progress
+            :value="timelineValue"
+            color="white"
+            rounded
+            class="q-mt-xs"
+          />
         </div>
       </q-card-section>
-      <q-card-section class="card-image-section-content w-full h-full !q-pa-none !q-pt-92">
-        <div class="gap-16 gap-sm-72 flex flex-wrap justify-center justify-sm-start items-center q-pa-xl" data-cy="card-progress-content">
+      <q-card-section
+        class="card-image-section-content w-full h-full !q-pa-none !q-pt-92"
+      >
+        <div
+          class="gap-16 gap-sm-72 flex flex-wrap justify-center justify-sm-start items-center q-pa-xl"
+          data-cy="card-progress-content"
+        >
           <div class="relative-position" data-cy="card-progress-percentage">
             <q-circular-progress
               rounded
@@ -85,14 +95,26 @@ export default defineComponent({
               <div class="text-caption">
                 {{ $t('index.cardProgressSlider.toDate') }}
               </div>
-              <div class="text-circular-progress q-mt-xs">{{ card.progress }}%</div>
+              <div class="text-circular-progress q-mt-xs">
+                {{ card.progress }}%
+              </div>
             </div>
           </div>
           <div class="flex column gap-16 gt-xs">
-            <div v-for="stat in card.stats" :key="stat.title" data-cy="card-progress-stats">
-              <div class="stats-title text-uppercase text-caption">{{ stat.title }}</div>
+            <div
+              v-for="stat in card.stats"
+              :key="stat.title"
+              data-cy="card-progress-stats"
+            >
+              <div class="stats-title text-uppercase text-caption">
+                {{ stat.title }}
+              </div>
               <q-list dark dense class="q-mt-lg">
-                <q-item v-for="item in stat.items" :key="item.id" class="stats-value !q-pa-none">
+                <q-item
+                  v-for="item in stat.items"
+                  :key="item.id"
+                  class="stats-value !q-pa-none"
+                >
                   {{ item.text }}
                 </q-item>
               </q-list>
@@ -103,13 +125,21 @@ export default defineComponent({
 
       <q-separator color="blue-grey-8" />
 
-      <q-card-section class="card-image-section-content lt-sm" data-cy="card-progress-footer-mobile">
+      <q-card-section
+        class="card-image-section-content lt-sm"
+        data-cy="card-progress-footer-mobile"
+      >
         <div class="min-w-180" data-cy="card-progress-timeline">
           <div class="text-subtitle2 text-center">
             {{ card.duration?.current }} / {{ card.duration?.total }}
             {{ $t('index.cardProgressSlider.timeline') }}
           </div>
-          <q-linear-progress class="q-mt-xs" :value="timelineValue" color="white" rounded />
+          <q-linear-progress
+            class="q-mt-xs"
+            :value="timelineValue"
+            color="white"
+            rounded
+          />
         </div>
       </q-card-section>
     </q-img>

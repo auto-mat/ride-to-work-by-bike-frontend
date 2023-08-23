@@ -45,24 +45,50 @@ export default defineComponent({
   <div class="progress-slider relative-position" data-cy="progress-slider">
     <div class="flex flex-wrap items-center justify-between gap-x-40 gap-y-16">
       <h2 class="text-h6" data-cy="progress-slider-title">{{ title }}</h2>
-      <q-list class="list-unstyled flex flex-wrap items-center q-p-none gap-x-40 gap-y-16">
-        <q-item v-for="item in stats" :key="item.icon" data-cy="progress-slider-stats-item" class="text-grey-10">
+      <q-list
+        class="list-unstyled flex flex-wrap items-center q-p-none gap-x-40 gap-y-16"
+      >
+        <q-item
+          v-for="item in stats"
+          :key="item.icon"
+          data-cy="progress-slider-stats-item"
+          class="text-grey-10"
+        >
           <q-icon :name="item.icon" color="blue-grey-3" size="18px" />&nbsp;
-          <strong>{{ item.value }}</strong>&nbsp;
+          <strong>{{ item.value }}</strong
+          >&nbsp;
           <span>{{ item.label }}</span>
         </q-item>
       </q-list>
     </div>
     <div>
-      <swiper :modules="modules" :slides-per-view="1" :space-between="24" navigation data-cy="progress-slider-swiper">
-        <swiper-slide v-for="card in cards" :key="card.title" class="swiper-slide">
+      <swiper
+        :modules="modules"
+        :slides-per-view="1"
+        :space-between="24"
+        navigation
+        data-cy="progress-slider-swiper"
+      >
+        <swiper-slide
+          v-for="card in cards"
+          :key="card.title"
+          class="swiper-slide"
+        >
           <vue-card-progress-slider :card="card" />
         </swiper-slide>
       </swiper>
     </div>
     <div v-if="button" class="text-sm-center absolute-bottom">
-      <q-btn rounded color="grey-10" unelevated outline :to="button.url" :label="button.title" class="z-1"
-        data-cy="progress-slider-button" />
+      <q-btn
+        rounded
+        color="grey-10"
+        unelevated
+        outline
+        :to="button.url"
+        :label="button.title"
+        class="z-1"
+        data-cy="progress-slider-button"
+      />
     </div>
   </div>
 </template>
