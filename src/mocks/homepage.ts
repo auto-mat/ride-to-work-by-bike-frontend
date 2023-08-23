@@ -127,7 +127,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -142,7 +142,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -157,7 +157,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -172,7 +172,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -187,7 +187,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -202,7 +202,7 @@ export const cardsOffer: Offer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/380/380',
+    image: 'https://picsum.photos/id/200/380/380',
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
