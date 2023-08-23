@@ -134,6 +134,12 @@ aboutMobility = "About sustainable mobility"
 following = "Following"
 follow = "Follow"
 
+[index.newsletterSwitch]
+title = "Stay informed about everything around Ride to Work by Bike"
+description = "We will not spam you, we will always send you only relevant information. Currently, you follow information about future challenges and accompanying events (bike rides, breakfasts, ...) and special offers."
+groupTitle = "What other information would you like to receive?"
+message = "You can manage your preferences at any time in your profile."
+
 [index.cardListFollow]
 title = "Follow us on Facebook"
 
