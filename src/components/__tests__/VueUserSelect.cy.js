@@ -1,43 +1,13 @@
 import VueUserSelect from '../VueUserSelect.vue';
-
-const user = {
-  label: 'User 1',
-  value: '1',
-  image: 'https://picsum.photos/id/40/300/300',
-};
-
-const options = [
-  {
-    title: 'Vaše údaje',
-    url: '#',
-  },
-  {
-    title: 'Odebírat newsletter',
-    url: '#',
-  },
-  {
-    title: 'Propojit aplikace',
-    url: '#',
-  },
-  {
-    title: 'Historie notifikací',
-    url: '#',
-  },
-  {
-    title: 'Stát se firemním koordinátorem',
-    url: '#',
-  },
-  {
-    title: 'Odhlásit se',
-    url: '#',
-  },
-];
+import { user, userMenuTop, userMenuBottom } from 'src/mocks/layout';
 
 describe('<VueUserSelect>', () => {
   beforeEach(() => {
     cy.mount(VueUserSelect, {
       props: {
-        options,
+        menuTop: userMenuTop,
+        menuBottom: userMenuBottom,
+        user
       },
     });
   });

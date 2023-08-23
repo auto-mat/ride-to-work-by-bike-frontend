@@ -9,21 +9,19 @@ export default defineComponent({
   props: {
     menuTop: {
       type: Array as () => Link[],
+      required: true,
     },
     menuBottom: {
       type: Array as () => Link[],
+      required: true,
     },
+    user: {
+      type: Object as () => User,
+      required: true,
+    }
   },
   setup() {
-    const user: User = {
-      label: 'User 1',
-      value: '1',
-      image: 'https://picsum.photos/id/40/300/300',
-    };
-
-    return {
-      user,
-    };
+    return {};
   },
 });
 </script>

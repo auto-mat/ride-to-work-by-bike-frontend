@@ -10,8 +10,8 @@ import VueUserSelect from 'components/VueUserSelect.vue';
 import VueDrawerMenu from 'components/VueDrawerMenu.vue';
 import VueFooter from 'components/VueFooter.vue';
 
-// types
-import { Link } from 'components/types';
+// mocks
+import * as layout from 'src/mocks/layout';
 
 if (window.Cypress) {
   window.i18n = i18n;
@@ -25,41 +25,9 @@ setCssVar('gray-lighter', '#f7faff');
 
 export default defineComponent({
   name: 'MainLayout',
-
   components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu, VueFooter },
-
   setup() {
     const leftDrawerOpen = ref(false);
-
-    const userMenuTop: Link[] = [
-      {
-        title: 'Vaše údaje',
-        url: '#',
-      },
-      {
-        title: 'Odebírat newsletter',
-        url: '#',
-      },
-      {
-        title: 'Propojit aplikace',
-        url: '#',
-      },
-      {
-        title: 'Historie notifikací',
-        url: '#',
-      },
-    ];
-
-    const userMenuBottom: Link[] = [
-      {
-        title: 'Stát se firemním koordinátorem',
-        url: '#',
-      },
-      {
-        title: 'Odhlásit se',
-        url: '#',
-      },
-    ];
 
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -67,8 +35,9 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
-      userMenuTop,
-      userMenuBottom,
+      userMenuTop: layout.userMenuTop,
+      userMenuBottom: layout.userMenuBottom,
+      user: layout.user,
       toggleLeftDrawer,
     };
   },
@@ -104,6 +73,7 @@ export default defineComponent({
       <vue-user-select
         :menu-top="userMenuTop"
         :menu-bottom="userMenuBottom"
+        :user="user"
         class="q-pt-lg"
         data-cy="user-select"
       ></vue-user-select>
