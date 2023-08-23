@@ -204,15 +204,17 @@ describe('Home page', () => {
       cy.get('.card-list-post .swiper-slide:nth-child(2)').should('be.visible');
       cy.get('.card-list-post .swiper-slide:nth-child(3)').should('be.visible');
       cy.get('.card-list-post .swiper-slide:nth-child(4)').should('be.visible');
-      cy.get('.card-list-post .swiper-slide:nth-child(5)').should('not.be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(5)').should(
+        'not.be.visible'
+      );
 
       cy.get('.card-list-post .swiper-slide').then(($el) => {
         $el.each(() => {
-          cy.get('.card-list-post .swiper-button-next').click({force: true});
-        })
+          cy.get('.card-list-post .swiper-button-next').click({ force: true });
+        });
 
         cy.get('.card-list-post .swiper-slide:last-child').should('be.visible');
-      })
+      });
     });
 
     it('allows user to switch language', () => {
