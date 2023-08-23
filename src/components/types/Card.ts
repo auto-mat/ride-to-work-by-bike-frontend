@@ -45,7 +45,7 @@ export interface CardProgress {
   url: string;
   image?: string;
   progress: number;
-  prizes?: ItemPrize[],
+  prizes?: ItemPrize[];
   stats?: [
     {
       title: string;
@@ -58,8 +58,7 @@ export interface CardProgress {
     },
     {
       title: string;
-      items:
-        { id: string; text: string }[];
+      items: { id: string; text: string }[];
     }
   ];
   duration?: {

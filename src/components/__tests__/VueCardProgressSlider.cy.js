@@ -2,7 +2,7 @@ import VueCardProgressSlider from 'components/VueCardProgressSlider.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgressSlider } from '../../mocks/homepage';
 
-const card = cardsProgressSlider[0]
+const card = cardsProgressSlider[0];
 
 describe('<VueCardProgressSlider>', () => {
   it('has translation for all strings', () => {
@@ -72,7 +72,8 @@ describe('<VueCardProgressSlider>', () => {
         .should('contain', card.progress)
         .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
 
-      cy.dataCy('card-progress-circular').should('be.visible')
+      cy.dataCy('card-progress-circular')
+        .should('be.visible')
         .should('have.css', 'width', '220px')
         .should('have.css', 'height', '220px');
 
@@ -103,8 +104,7 @@ describe('<VueCardProgressSlider>', () => {
     });
 
     it('does not render card footer with timeline', () => {
-      cy.dataCy('card-progress-footer-mobile')
-        .should('not.be.visible');
+      cy.dataCy('card-progress-footer-mobile').should('not.be.visible');
     });
 
     // layout
@@ -186,7 +186,8 @@ describe('<VueCardProgressSlider>', () => {
         .should('contain', card.progress)
         .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
 
-      cy.dataCy('card-progress-circular').should('be.visible')
+      cy.dataCy('card-progress-circular')
+        .should('be.visible')
         .should('have.css', 'width', '128px')
         .should('have.css', 'height', '128px');
 
@@ -197,8 +198,7 @@ describe('<VueCardProgressSlider>', () => {
     });
 
     it('renders stats', () => {
-      cy.dataCy('card-progress-stats')
-        .should('not.be.visible')
+      cy.dataCy('card-progress-stats').should('not.be.visible');
     });
 
     // layout
