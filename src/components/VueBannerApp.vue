@@ -31,7 +31,7 @@ export default defineComponent({
       <q-card-actions vertical class="absolute-top-right q-p-md">
         <q-btn flat round color="white" icon="close" @click.prevent="state.showAppBanner = false" />
       </q-card-actions>
-      <div>
+      <div class="q-pr-sm-lg">
         <div v-if="banner.title" class="text-weight-medium text-subtitle1" data-cy="banner-app-title">
           {{ banner.title }}
         </div>
@@ -60,6 +60,9 @@ export default defineComponent({
     border-top-right-radius: 0;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: 0;
+  }
+  .q-pr-sm-lg {
+    padding-right: 24px;
   }
 }
 

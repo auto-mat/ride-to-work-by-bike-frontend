@@ -5,6 +5,7 @@
         {{ $t('index.title') }}
       </h1>
       <vue-event-countdown :release-date="releaseDate" data-cy="event-countdown"></vue-event-countdown>
+      <vue-banner-app :banner="bannerApp"></vue-banner-app>
       <vue-progress-slider :title="$t('index.progressSlider.title')" :cards="cardsProgressSlider" :stats="progressStats"
         class="q-pt-xl q-pb-xl" :button="{ title: $t('index.progressSlider.button'), url: '/blog' }">
       </vue-progress-slider>
@@ -49,6 +50,7 @@ import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
+import VueBannerApp from 'src/components/VueBannerApp.vue';
 
 // data
 import * as homepage from '../mocks/homepage';
@@ -67,12 +69,14 @@ export default defineComponent({
     VueCardListFollow,
     VueProgressSlider,
     VueCardListProgress,
+    VueBannerApp,
   },
   setup() {
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
       bannerImage: homepage.bannerImage,
+      bannerApp: homepage.bannerApp,
       headingBgTitle: homepage.headingBgTitle,
       cardsEvent: homepage.cardsEvent,
       cardsOffer: homepage.cardsOffer,
