@@ -200,19 +200,19 @@ describe('Home page', () => {
     it('allows user to see all news items', () => {
       cy.dataCy('list-post').should('be.visible');
 
-      cy.get('.swiper-slide:nth-child(1)').should('be.visible');
-      cy.get('.swiper-slide:nth-child(2)').should('be.visible');
-      cy.get('.swiper-slide:nth-child(3)').should('be.visible');
-      cy.get('.swiper-slide:nth-child(4)').should('be.visible');
-      cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(1)').should('be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(2)').should('be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(3)').should('be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(4)').should('be.visible');
+      cy.get('.card-list-post .swiper-slide:nth-child(5)').should('not.be.visible');
 
-      let postsNumber = cy.dataCy('card-list-post-item').length;
+      cy.get('.card-list-post .swiper-slide').then(($el) => {
+        $el.each(() => {
+          cy.get('.card-list-post .swiper-button-next').click({force: true});
+        })
 
-      // for (let i = 0; i < postsNumber; i++) {
-      // }
-      cy.get('.swiper-button-next').click();
-
-      cy.get('.swiper-slide:last-child').should('be.visible');
+        cy.get('.card-list-post .swiper-slide:last-child').should('be.visible');
+      })
     });
 
     it('allows user to switch language', () => {
