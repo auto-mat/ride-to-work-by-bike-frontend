@@ -1,10 +1,61 @@
-import { Link, User } from "src/components/types";
+import { Link, User } from 'src/components/types';
 
 export const user: User = {
   label: 'User 1',
   value: '1',
   image: 'https://picsum.photos/id/40/300/300',
 };
+
+export const menuTop: Link[] = [
+  {
+    url: '/',
+    icon: 'home',
+    name: 'home',
+  },
+  {
+    url: '/cesty',
+    icon: 'route',
+    name: 'routes',
+  },
+  {
+    url: '/vysledky',
+    icon: 'emoji_events',
+    name: 'results',
+  },
+  {
+    url: '/komunita',
+    icon: 'people',
+    name: 'community',
+  },
+  {
+    url: '/slevy',
+    icon: 'verified',
+    name: 'discounts',
+  },
+  {
+    url: '/firemni-koordinator',
+    icon: 'business',
+    name: 'coordinator',
+  },
+  {
+    url: '/profil',
+    icon: 'account_circle',
+    name: 'profile',
+  },
+];
+
+export const menuBottom: Link[] = [
+  {
+    url: '/invite',
+    icon: 'email',
+    name: 'inviteFriends',
+  },
+  {
+    url: '/cesty',
+    icon: 'volunteer_activism',
+    name: 'donate',
+  },
+];
 
 export const userMenuTop: Link[] = [
   {
