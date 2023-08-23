@@ -1,63 +1,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-// types
-import { Link } from 'components/types';
+// mocks
+import { menuBottom, menuTop } from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'VueDrawerMenu',
   setup() {
-    const menuTop: Link[] = [
-      {
-        url: '/',
-        icon: 'home',
-        name: 'home',
-      },
-      {
-        url: '/cesty',
-        icon: 'route',
-        name: 'routes',
-      },
-      {
-        url: '/vysledky',
-        icon: 'emoji_events',
-        name: 'results',
-      },
-      {
-        url: '/komunita',
-        icon: 'people',
-        name: 'community',
-      },
-      {
-        url: '/slevy',
-        icon: 'verified',
-        name: 'discounts',
-      },
-      {
-        url: '/firemni-koordinator',
-        icon: 'business',
-        name: 'coordinator',
-      },
-      {
-        url: '/profil',
-        icon: 'account_circle',
-        name: 'profile',
-      },
-    ];
-
-    const menuBottom: Link[] = [
-      {
-        url: '/invite',
-        icon: 'email',
-        name: 'inviteFriends',
-      },
-      {
-        url: '/cesty',
-        icon: 'volunteer_activism',
-        name: 'donate',
-      },
-    ];
-
     return {
       menuTop,
       menuBottom,
@@ -68,24 +17,12 @@ export default defineComponent({
 
 <template>
   <q-list>
-    <q-item
-      v-for="item in menuTop"
-      :key="item.name"
-      :to="item.url"
-      class="flex items-center gap-8"
-      clickable
-    >
+    <q-item v-for="item in menuTop" :key="item.name" :to="item.url" class="flex items-center gap-8" clickable>
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
     <hr class="hr-blue-gray-2" />
-    <q-item
-      v-for="item in menuBottom"
-      :key="item.name"
-      :to="item.url"
-      class="flex items-center gap-8"
-      clickable
-    >
+    <q-item v-for="item in menuBottom" :key="item.name" :to="item.url" class="flex items-center gap-8" clickable>
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>

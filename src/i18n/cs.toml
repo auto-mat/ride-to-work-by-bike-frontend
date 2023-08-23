@@ -11,6 +11,7 @@ coordinator = "Firemní koordinátor*ka"
 profile = "Profil"
 inviteFriends = "Pozvat přátele"
 donate = "Darujte"
+more = "Více"
 
 [index]
 title = "Domov"

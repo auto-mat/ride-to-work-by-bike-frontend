@@ -11,6 +11,7 @@ coordinator = "Coordinator"
 profile = "Profile"
 inviteFriends = "Invite friends"
 donate = "Donate"
+more = "More"
 
 [index]
 title = "Home"
