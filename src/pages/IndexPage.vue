@@ -79,13 +79,13 @@ import ListCardChallenge from 'components/ListCardChallenge.vue';
 import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
+import VueBannerApp from 'src/components/VueBannerApp.vue';
+import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
-import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
-import VueCardListFollow from 'src/components/VueCardListFollow.vue';
-import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
-import VueBannerApp from 'src/components/VueBannerApp.vue';
+import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
+import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
