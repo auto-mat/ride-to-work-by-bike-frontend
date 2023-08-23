@@ -79,18 +79,18 @@
 import { defineComponent } from 'vue';
 
 // components
-import VueEventCountdown from 'components/VueEventCountdown.vue';
-import VueCardListChallenge from 'components/VueCardListChallenge.vue';
+import VueBannerApp from 'src/components/VueBannerApp.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
-import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
+import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
+import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
-import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
-import VueCardListFollow from 'src/components/VueCardListFollow.vue';
-import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
-import VueBannerApp from 'src/components/VueBannerApp.vue';
+import VueEventCountdown from 'components/VueEventCountdown.vue';
+import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
+import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
+import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 
 // data
 import * as homepage from '../mocks/homepage';
