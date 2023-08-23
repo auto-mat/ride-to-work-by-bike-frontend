@@ -4,6 +4,6 @@ export * from './Countdown';
 export * from './DialogCard';
 export * from './Item';
 export * from './Link';
-export * from './NewsletterItem';
+export * from './Newsletter';
 export * from './Offer';
 export * from './User';

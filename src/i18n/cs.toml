@@ -101,6 +101,12 @@ aboutMobility = "O udržitelné mobilitě"
 following = "Již sledujete"
 follow = "Začít sledovat"
 
+[index.newsletterSwitch]
+title = "Zůstaňte informováni o všem kolem Do práce na kole"
+description = "Nebudeme vás spamovat, budeme posílat vždy jen relevantní informace. Momentálně sledujete informace o budoucích výzvách a o doprovodných akcích (cyklojízdách, snídaních, ...) a akčních nabídkách."
+groupTitle = "Jaké další informace chcete získávat?"
+message = "Své preference můžete kdykoliv spravovat v Profilu."
+
 [index.cardListFollow]
 title = "Sledujte nás na Facebooku"
 
