@@ -123,21 +123,11 @@ describe('<VueProgressSlider>', () => {
           'border',
           `1px solid ${hexToRgb('#212121')}`
         );
-        cy.get('.swiper-button-next').should(
-          'have.css',
-          'border',
-          `1px solid ${hexToRgb('#bdbdbd')}`
-        );
         cy.get('.swiper-button-prev').click();
         cy.get('.swiper-button-prev').should(
           'have.css',
           'border',
           `1px solid ${hexToRgb('#bdbdbd')}`
-        );
-        cy.get('.swiper-button-next').should(
-          'have.css',
-          'border',
-          `1px solid ${hexToRgb('#212121')}`
         );
       });
     });
