@@ -18,12 +18,9 @@
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
       ></banner-image>
-      <vue-progress-slider
-        :title="$t('index.progressSlider.title')"
-        :cards="cardsProgressSlider"
-        :stats="progressStats"
-        :button="{ title: $t('index.progressSlider.button'), url: '/blog' }"
-      >
+      <vue-banner-app :banner="bannerApp"></vue-banner-app>
+      <vue-progress-slider :title="$t('index.progressSlider.title')" :cards="cardsProgressSlider" :stats="progressStats"
+        class="q-pt-xl q-pb-xl" :button="{ title: $t('index.progressSlider.button'), url: '/blog' }">
       </vue-progress-slider>
       <div class="flex">
         <vue-card-progress v-for="card in cardsProgress" :key="card.title" :card="card" />
@@ -70,6 +67,7 @@ import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
+import VueBannerApp from 'src/components/VueBannerApp.vue';
 
 // import types
 import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
@@ -91,12 +89,14 @@ export default defineComponent({
     VueCardListFollow,
     VueProgressSlider,
     VueCardListProgress,
+    VueBannerApp,
   },
   setup() {
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
       bannerImage: homepage.bannerImage,
+      bannerApp: homepage.bannerApp,
       headingBgTitle: homepage.headingBgTitle,
       cardsEvent: homepage.cardsEvent,
       cardsOffer: homepage.cardsOffer,
