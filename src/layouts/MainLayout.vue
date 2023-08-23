@@ -12,6 +12,8 @@ import VueFooter from 'components/VueFooter.vue';
 
 // import types
 import { ConfigGlobal, User } from 'components/types';
+// mocks
+import * as layout from 'src/mocks/layout';
 
 if (window.Cypress) {
   window.i18n = i18n;
@@ -31,44 +33,15 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
 
-    const userMenuTop: Link[] = [
-      {
-        title: 'Vaše údaje',
-        url: '#',
-      },
-      {
-        title: 'Odebírat newsletter',
-        url: '#',
-      },
-      {
-        title: 'Propojit aplikace',
-        url: '#',
-      },
-      {
-        title: 'Historie notifikací',
-        url: '#',
-      },
-    ];
-
-    const userMenuBottom: Link[] = [
-      {
-        title: 'Stát se firemním koordinátorem',
-        url: '#',
-      },
-      {
-        title: 'Odhlásit se',
-        url: '#',
-      },
-    ];
-
     const toggleLeftDrawer = () => {
       leftDrawerOpen.value = !leftDrawerOpen.value;
     };
 
     return {
       leftDrawerOpen,
-      userMenuTop,
-      userMenuBottom,
+      userMenuTop: layout.userMenuTop,
+      userMenuBottom: layout.userMenuBottom,
+      user: layout.user,
       toggleLeftDrawer,
     };
   },
@@ -107,7 +80,9 @@ export default defineComponent({
       ></drawer-header>
       <!-- User options dropdown -->
       <user-select
-        :options="users"
+        :menu-top="userMenuTop"
+        :menu-bottom="userMenuBottom"
+        :user="user"
         class="q-pt-lg"
         data-cy="user-select"
       ></user-select>
