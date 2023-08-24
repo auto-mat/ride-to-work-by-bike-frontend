@@ -26,7 +26,13 @@ setCssVar('gray-lighter', '#f7faff');
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu, VueFooter, VueFooterPanel },
+  components: {
+    VueDrawerHeader,
+    VueUserSelect,
+    VueDrawerMenu,
+    VueFooter,
+    VueFooterPanel,
+  },
   setup() {
     const leftDrawerOpen = ref(false);
 
@@ -49,17 +55,34 @@ export default defineComponent({
   <q-layout view="hHh lpR fFf">
     <q-header reveal class="lt-lg bg-white">
       <q-toolbar>
-        <vue-drawer-header v-model="leftDrawerOpen" data-cy="drawer-header-mobile" :show-logo="false"
-          :show-drawer-open-button="true">
+        <vue-drawer-header
+          v-model="leftDrawerOpen"
+          data-cy="drawer-header-mobile"
+          :show-logo="false"
+          :show-drawer-open-button="true"
+        >
         </vue-drawer-header>
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above side="left" :width="320" class="gt-md bg-gray-light q-py-lg q-px-lg pb-footer"
-      data-cy="q-drawer">
-      <vue-drawer-header data-cy="drawer-header" :mobile="false"></vue-drawer-header>
-      <vue-user-select :menu-top="userMenuTop" :menu-bottom="userMenuBottom" :user="user" class="q-pt-lg"
-        data-cy="user-select"></vue-user-select>
+    <q-drawer
+      show-if-above
+      side="left"
+      :width="320"
+      class="gt-md bg-gray-light q-py-lg q-px-lg pb-footer"
+      data-cy="q-drawer"
+    >
+      <vue-drawer-header
+        data-cy="drawer-header"
+        :mobile="false"
+      ></vue-drawer-header>
+      <vue-user-select
+        :menu-top="userMenuTop"
+        :menu-bottom="userMenuBottom"
+        :user="user"
+        class="q-pt-lg"
+        data-cy="user-select"
+      ></vue-user-select>
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 

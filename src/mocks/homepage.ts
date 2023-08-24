@@ -10,7 +10,6 @@ import {
   ItemStatistics,
   NewsletterOption,
   Offer,
-
 } from 'components/types';
 
 export const releaseDate = '2023-10-01T12:00:00';
@@ -346,5 +345,5 @@ export const newsletterOptions: NewsletterOption[] = [
     id: 'mobility',
     label: 'O udržitelné mobilitě',
     active: true,
-  }
-]
+  },
+];

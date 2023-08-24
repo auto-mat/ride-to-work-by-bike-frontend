@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 // types
@@ -10,9 +10,9 @@ export default defineComponent({
     options: {
       type: Array as () => NewsletterOption[],
       required: true,
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <template>
@@ -38,13 +38,32 @@ export default defineComponent({
         data-cy="newsletter-switch-description"
       ></div>
       <div>
-        <h3 class="text-caption text-weight-bold" data-cy="newsletter-switch-group-title">{{ $t('index.newsletterSwitch.groupTitle') }}</h3>
-        <div v-for="option in options" :key="option.id" data-cy="newsletter-switch-group">
+        <h3
+          class="text-caption text-weight-bold"
+          data-cy="newsletter-switch-group-title"
+        >
+          {{ $t('index.newsletterSwitch.groupTitle') }}
+        </h3>
+        <div
+          v-for="option in options"
+          :key="option.id"
+          data-cy="newsletter-switch-group"
+        >
           <div>
-            <q-toggle size="sm" v-model="option.id" val="sm" :label="option.label" />
+            <q-toggle
+              size="sm"
+              v-model="option.id"
+              val="sm"
+              :label="option.label"
+            />
           </div>
         </div>
-        <p class="text-caption text-blue-grey-7" data-cy="newsletter-switch-group-message">{{ $t('index.newsletterSwitch.message') }}</p>
+        <p
+          class="text-caption text-blue-grey-7"
+          data-cy="newsletter-switch-group-message"
+        >
+          {{ $t('index.newsletterSwitch.message') }}
+        </p>
       </div>
     </div>
   </div>

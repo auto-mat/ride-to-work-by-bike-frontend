@@ -6,7 +6,7 @@ export interface NewsletterItem {
 }
 
 export interface NewsletterOption {
-  id: string
-  label: string
-  active: boolean
+  id: string;
+  label: string;
+  active: boolean;
 }

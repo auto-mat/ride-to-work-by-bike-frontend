@@ -18,7 +18,7 @@ export default defineComponent({
     user: {
       type: Object as () => User,
       required: true,
-    }
+    },
   },
   setup() {
     return {};
