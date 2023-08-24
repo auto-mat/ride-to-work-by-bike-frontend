@@ -14,4 +14,5 @@ export interface ItemBadge {
   image: string;
   title: string;
   description: string;
+  variant: 'dark' | 'light';
 }
