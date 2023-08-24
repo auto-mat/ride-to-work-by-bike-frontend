@@ -9,3 +9,9 @@ export interface ItemPrize {
   label: string;
   placement: number;
 }
+
+export interface ItemBadge {
+  image: string;
+  title: string;
+  description: string;
+}
