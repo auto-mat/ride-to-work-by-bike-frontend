@@ -7,6 +7,7 @@ import {
   CardFollow,
   CardPost,
   CardProgress,
+  ItemBadge,
   ItemStatistics,
   NewsletterOption,
   Offer,
@@ -347,3 +348,31 @@ export const newsletterOptions: NewsletterOption[] = [
     active: true,
   },
 ];
+
+export const badgeList: ItemBadge[] = [
+  {
+    image: 'https://picsum.photos/id/40/100/100',
+    title: 'Jarní jezdec',
+    description: 'Alespoň 1 jízda na kole na jaře',
+  },
+  {
+    image: 'https://picsum.photos/id/40/100/100',
+    title: 'Podzimní jezdec',
+    description: 'Alespoň 1 jízda na kole na podzim',
+  },
+  {
+    image: 'https://picsum.photos/id/40/100/100',
+    title: 'Zimní jezdec',
+    description: 'Alespoň 1 jízda na kole v zimě',
+  },
+  {
+    image: 'https://picsum.photos/id/40/100/100',
+    title: 'Omezovač emisí',
+    description: 'Žádné ježdění autem po dobu alespoň 1 měsíce',
+  },
+  {
+    image: 'https://picsum.photos/id/40/100/100',
+    title: 'Společenský tvor',
+    description: 'Alespoň 1 komunitní událost přidána do kalendáře',
+  }
+]
