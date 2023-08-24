@@ -5,7 +5,11 @@ import { newsletterOptions } from 'src/mocks/homepage';
 
 describe('<VueNewsletterSwitch>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title', 'description', 'groupTitle', 'message'], 'index.newsletterSwitch', i18n);
+    cy.testLanguageStringsInContext(
+      ['title', 'description', 'groupTitle', 'message'],
+      'index.newsletterSwitch',
+      i18n
+    );
   });
 
   context('desktop', () => {
@@ -42,7 +46,7 @@ describe('<VueNewsletterSwitch>', () => {
           .should(
             'contain',
             i18n.global.t('index.newsletterSwitch.description')
-          )
+          );
       });
     });
 
@@ -72,12 +76,12 @@ describe('<VueNewsletterSwitch>', () => {
           .should(
             'contain',
             i18n.global.t('index.newsletterSwitch.groupTitle')
-          )
+          );
 
         cy.dataCy('newsletter-switch-group')
           .first()
           .find('.q-toggle__track')
-          .should('be.visible')
+          .should('be.visible');
 
         cy.dataCy('newsletter-switch-group')
           .first()
@@ -86,10 +90,7 @@ describe('<VueNewsletterSwitch>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#212121')
-          .should(
-            'contain',
-            newsletterOptions[0].label
-          )
+          .should('contain', newsletterOptions[0].label);
       });
     });
 
@@ -98,8 +99,8 @@ describe('<VueNewsletterSwitch>', () => {
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
         .should('have.color', '#546e7a') // blue-grey-7
-        .should('contain', i18n.global.t('index.newsletterSwitch.message'))
-    })
+        .should('contain', i18n.global.t('index.newsletterSwitch.message'));
+    });
 
     it('renders grid', () => {
       cy.window().then(() => {
@@ -144,7 +145,7 @@ describe('<VueNewsletterSwitch>', () => {
           .should(
             'contain',
             i18n.global.t('index.newsletterSwitch.description')
-          )
+          );
       });
     });
 
@@ -158,12 +159,12 @@ describe('<VueNewsletterSwitch>', () => {
           .should(
             'contain',
             i18n.global.t('index.newsletterSwitch.groupTitle')
-          )
+          );
 
         cy.dataCy('newsletter-switch-group')
           .first()
           .find('.q-toggle__track')
-          .should('be.visible')
+          .should('be.visible');
 
         cy.dataCy('newsletter-switch-group')
           .first()
@@ -172,10 +173,7 @@ describe('<VueNewsletterSwitch>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#212121')
-          .should(
-            'contain',
-            newsletterOptions[0].label
-          )
+          .should('contain', newsletterOptions[0].label);
       });
     });
 
@@ -184,8 +182,8 @@ describe('<VueNewsletterSwitch>', () => {
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
         .should('have.color', '#546e7a') // blue-grey-7
-        .should('contain', i18n.global.t('index.newsletterSwitch.message'))
-    })
+        .should('contain', i18n.global.t('index.newsletterSwitch.message'));
+    });
 
     it('does not render image', () => {
       cy.window().then(() => {

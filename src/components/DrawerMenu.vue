@@ -29,7 +29,13 @@ export default defineComponent({
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
     <hr class="hr-blue-gray-2" />
-    <q-item v-for="item in menuBottom" :key="item.name" :to="item.url" class="flex items-center gap-8" clickable>
+    <q-item
+      v-for="item in menuBottom"
+      :key="item.name"
+      :to="item.url"
+      class="flex items-center gap-8"
+      clickable
+    >
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
