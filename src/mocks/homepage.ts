@@ -11,7 +11,7 @@ import {
   ItemBadge,
   ItemStatistics,
   NewsletterOption,
-  CardOffer,
+  Offer,
 } from 'components/types';
 
 export const releaseDate = '2023-10-01T12:00:00';
@@ -125,7 +125,7 @@ export const bannerApp: BannerApp = {
   image: 'https://picsum.photos/id/500/600/200',
 };
 
-export const cardsOffer: CardOffer[] = [
+export const cardsOffer: Offer[] = [
   {
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
@@ -289,12 +289,12 @@ export const progressStats: ItemStatistics[] = [
     value: '18',
   },
   {
-    icon: 'open_in_full',
+    icon: 'distance',
     label: '312,25 km',
     value: '',
   },
   {
-    icon: 'eco',
+    icon: 'mdi-leaf',
     label: 'ušetřeno',
     value: '420 g CO2',
   },
@@ -380,8 +380,8 @@ export const badgeList: ItemBadge[] = [
     title: 'Společenský tvor',
     description: 'Alespoň 1 komunitní událost přidána do kalendáře',
     variant: 'light',
-  },
-];
+  }
+]
 
 export const cardsStats: CardStats[] = [
   {
@@ -391,23 +391,23 @@ export const cardsStats: CardStats[] = [
       {
         id: 'regularity',
         icon: '',
-        text: '80% pravidelnost',
+        text: '80% pravidelnost'
       },
       {
         id: 'routes',
         icon: 'route',
-        text: '18 cest',
+        text: '18 cest'
       },
       {
         id: 'distance',
         icon: '',
-        text: '312,25 km',
+        text: '312,25 km'
       },
       {
         id: 'emissions',
         icon: '',
-        text: '420 g CO2 ušetřeno',
-      },
-    ],
+        text: '420 g CO2 ušetřeno'
+      }
+    ]
   },
-];
+]

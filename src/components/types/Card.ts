@@ -1,5 +1,4 @@
 import { ItemPrize } from './Item';
-import { Link } from './Link';
 
 export interface CardChallenge {
   title: string;
@@ -26,14 +25,13 @@ export interface CardFollow {
 }
 export interface CardOffer {
   title: string;
-  expirationDate: string;
-  issuer: string;
   image: string;
-  code: string;
-  link: Link;
-  icon: string;
+  validFrom: Date;
+  validTo: Date;
+  issuer: string;
   content: string;
-
+  code: string;
+  url: string;
 }
 export interface CardPost {
   title: string;
@@ -72,5 +70,5 @@ export interface CardProgress {
 export interface CardStats {
   title: string;
   icon: string;
-  stats: { id: string; icon: string; text: string }[];
+  stats: { id: string; icon: string, text: string }[]
 }
