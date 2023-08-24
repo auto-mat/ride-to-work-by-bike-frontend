@@ -7,7 +7,7 @@ describe('<VueUserSelect>', () => {
       props: {
         menuTop: userMenuTop,
         menuBottom: userMenuBottom,
-        user
+        user,
       },
     });
   });

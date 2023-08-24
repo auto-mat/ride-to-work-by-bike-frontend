@@ -68,10 +68,9 @@ export default defineComponent({
     <!-- Left-side drawer (desktop) -->
     <q-drawer
       show-if-above
-      v-model="leftDrawerOpen"
       side="left"
       :width="320"
-      class="bg-info q-py-lg q-px-lg pb-footer"
+      class="gt-md bg-info q-py-lg q-px-lg pb-footer"
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
