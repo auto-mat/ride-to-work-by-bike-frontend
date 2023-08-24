@@ -7,6 +7,7 @@ import {
   CardFollow,
   CardPost,
   CardProgress,
+  CardStats,
   ItemBadge,
   ItemStatistics,
   NewsletterOption,
@@ -293,7 +294,7 @@ export const progressStats: ItemStatistics[] = [
     value: '',
   },
   {
-    icon: 'leaf',
+    icon: 'mdi-leaf',
     label: 'ušetřeno',
     value: '420 g CO2',
   },
@@ -380,4 +381,33 @@ export const badgeList: ItemBadge[] = [
     description: 'Alespoň 1 komunitní událost přidána do kalendáře',
     variant: 'light',
   }
+]
+
+export const cardsStats: CardStats[] = [
+  {
+    title: 'Vy',
+    icon: 'person',
+    stats: [
+      {
+        id: 'regularity',
+        icon: '',
+        text: '80% pravidelnost'
+      },
+      {
+        id: 'routes',
+        icon: 'route',
+        text: '18 cest'
+      },
+      {
+        id: 'distance',
+        icon: '',
+        text: '312,25 km'
+      },
+      {
+        id: 'emissions',
+        icon: '',
+        text: '420 g CO2 ušetřeno'
+      }
+    ]
+  },
 ]

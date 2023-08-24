@@ -66,3 +66,9 @@ export interface CardProgress {
     total: number;
   };
 }
+
+export interface CardStats {
+  title: string;
+  icon: string;
+  stats: { id: string; icon: string, text: string }[]
+}
