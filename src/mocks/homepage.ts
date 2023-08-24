@@ -354,25 +354,30 @@ export const badgeList: ItemBadge[] = [
     image: 'https://picsum.photos/id/40/100/100',
     title: 'Jarní jezdec',
     description: 'Alespoň 1 jízda na kole na jaře',
+    variant: 'light',
   },
   {
     image: 'https://picsum.photos/id/40/100/100',
     title: 'Podzimní jezdec',
     description: 'Alespoň 1 jízda na kole na podzim',
+    variant: 'dark',
   },
   {
     image: 'https://picsum.photos/id/40/100/100',
     title: 'Zimní jezdec',
     description: 'Alespoň 1 jízda na kole v zimě',
+    variant: 'light',
   },
   {
     image: 'https://picsum.photos/id/40/100/100',
     title: 'Omezovač emisí',
     description: 'Žádné ježdění autem po dobu alespoň 1 měsíce',
+    variant: 'light',
   },
   {
     image: 'https://picsum.photos/id/40/100/100',
     title: 'Společenský tvor',
     description: 'Alespoň 1 komunitní událost přidána do kalendáře',
+    variant: 'light',
   }
 ]
