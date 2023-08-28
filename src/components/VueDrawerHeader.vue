@@ -82,7 +82,7 @@ export default defineComponent({
         clip-rule="evenodd"
       />
     </svg>
-    <div class="flex items-center gap-32 lt-md">
+    <div class="flex items-center gap-32">
       <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
@@ -94,7 +94,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <vue-user-select variant="mobile" />
+      <vue-user-select variant="mobile" class="lt-md" />
     </div>
 
     <q-dialog
