@@ -40,7 +40,7 @@ export default defineComponent({
       >
         <div class="footer-scroll-top shrink-0">
           <q-btn
-            class="w-38 h-38 gt-xs"
+            class="w-38 h-38 gt-sm"
             color="white"
             outline
             round
@@ -51,7 +51,7 @@ export default defineComponent({
           </q-btn>
         </div>
         <div class="footer-content h-full grow">
-          <div class="grow flex flex-wrap gap-8 items-start justify-between">
+          <div class="grow flex flex-wrap items-start justify-between gap-8">
             <q-img
               src="~assets/svg/logo-white.svg"
               width="142px"
@@ -59,7 +59,7 @@ export default defineComponent({
               data-cy="footer-logo"
             />
             <q-btn
-              class="w-38 h-38 xs"
+              class="w-38 h-38 lt-md"
               color="white"
               outline
               round
@@ -68,7 +68,20 @@ export default defineComponent({
             >
               <q-icon name="arrow_upward" size="18px" />
             </q-btn>
-            <div class="flex items-center">
+            <div
+              class="flex w-full w-md-auto flex-wrap items-center justify-center text-center gap-12 copyright lt-md"
+              data-cy="footer-copyright-list"
+            >
+              <div
+                v-for="(message, index) in copyrightList"
+                :key="message"
+                class="text-white flex items-center gap-12"
+              >
+                <span v-html="$t('index.footer.' + message)"></span>
+                <span v-if="index < copyrightList.length - 1" class="gt-sm">|</span>
+              </div>
+            </div>
+            <div class="flex column items-center md-row w-full w-md-auto">
               <div
                 class="flex items-center gap-32"
                 data-cy="footer-social-menu"
@@ -82,7 +95,7 @@ export default defineComponent({
             </div>
           </div>
           <div
-            class="flex flex-wrap items-center gap-12 copyright"
+            class="flex flex-wrap items-center gap-12 copyright gt-sm"
             data-cy="footer-copyright-list"
           >
             <div
@@ -113,6 +126,11 @@ export default defineComponent({
 }
 .w-full {
   width: 100%;
+}
+.w-md-auto {
+  @media (min-width: $breakpoint-md-min) {
+    width: auto;
+  }
 }
 .max-w-lg-90perc {
   @media (min-width: $breakpoint-lg-min) {
@@ -155,15 +173,20 @@ export default defineComponent({
     display: flex;
   }
 }
+.md-row {
+  @media (min-width: $breakpoint-md-min) {
+    flex-direction: row;
+  }
+}
 .footer-wrapper {
   background-color: $grey-10;
-  @media (min-width: $breakpoint-sm-min) {
+  @media (min-width: $breakpoint-md-min) {
     background-color: transparent;
   }
 }
 .footer-scroll-top {
   padding-top: 16px;
-  @media (min-width: $breakpoint-sm-min) {
+  @media (min-width: $breakpoint-md-min) {
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 8px;
@@ -176,7 +199,7 @@ export default defineComponent({
 .footer-content {
   padding-top: 16px;
   padding-bottom: 70px;
-  @media (min-width: $breakpoint-sm-min) {
+  @media (min-width: $breakpoint-md-min) {
     padding-top: 32px;
   }
   @media (min-width: $breakpoint-md-min) {
