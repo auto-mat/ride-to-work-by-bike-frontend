@@ -163,7 +163,7 @@ export default defineComponent({
     padding-right: 16px;
     padding-bottom: 8px;
   }
-  @media (min-width: $breakpoint-lg-min) {
+  @media (min-width: $breakpoint-md-min) {
     padding-top: 0;
     padding-bottom: 24px;
   }

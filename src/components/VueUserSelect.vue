@@ -1,27 +1,25 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-// types
-import { Link, User } from 'components/types';
+// mocks
+import {user, userMenuTop, userMenuBottom} from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'VueUserSelect',
   props: {
-    menuTop: {
-      type: Array as () => Link[],
-      required: true,
-    },
-    menuBottom: {
-      type: Array as () => Link[],
-      required: true,
-    },
-    user: {
-      type: Object as () => User,
-      required: true,
-    },
+    variant: {
+      type: String as () => ('mobile' | 'desktop'),
+      required: false,
+      default: 'desktop',
+    }
   },
-  setup() {
-    return {};
+  setup(props) {
+    const size = props.variant === 'mobile' ? '32px' : '56px';
+
+    return {
+      size,
+      user, menuTop: userMenuTop, menuBottom: userMenuBottom
+    };
   },
 });
 </script>
@@ -32,13 +30,14 @@ export default defineComponent({
       rounded
       flat
       class="user-dropdown"
+      :class="{ 'mobile': variant === 'mobile' }"
       data-cy="user-select-input"
     >
       <template v-slot:label>
-        <q-avatar size="56px" data-cy="avatar">
-          <img class="rounded" :src="user.image" />
+        <q-avatar :size="size" data-cy="avatar">
+          <img :src="user.image" />
         </q-avatar>
-        <span class="flex-grow inline-block text-left q-ml-md">
+        <span v-if="variant !== 'mobile'" class="flex-grow inline-block text-left q-ml-md">
           {{ user.label }}
         </span>
       </template>
@@ -92,6 +91,13 @@ export default defineComponent({
 .user-dropdown :deep(.q-btn__content) {
   width: 100%;
   flex-grow: 1;
+}
+.user-dropdown.mobile {
+  padding-right: 0;
+}
+
+.user-dropdown.mobile :deep(.q-btn-dropdown__arrow-container) {
+  display: none;
 }
 
 .rounded {

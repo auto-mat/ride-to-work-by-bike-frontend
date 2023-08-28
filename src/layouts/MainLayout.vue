@@ -40,9 +40,6 @@ export default defineComponent({
 
     return {
       leftDrawerOpen,
-      userMenuTop: layout.userMenuTop,
-      userMenuBottom: layout.userMenuBottom,
-      user: layout.user,
       toggleLeftDrawer,
     };
   },
@@ -93,17 +90,17 @@ export default defineComponent({
     <q-page-container class="bg-info pb-footer">
       <router-view />
     </q-page-container>
-    <q-footer class="bg-transparent lg-absolute-bottom">
+    <q-footer class="bg-transparent md-absolute-bottom">
       <!-- footer content -->
       <vue-footer-panel></vue-footer-panel>
-      <vue-footer class="gt-md" />
+      <vue-footer class="gt-sm" />
     </q-footer>
   </q-layout>
 </template>
 
 <style lang="scss">
-.lg-absolute-bottom {
-  @media (min-width: $breakpoint-lg-min) {
+.md-absolute-bottom {
+  @media (min-width: $breakpoint-md-min) {
     position: absolute;
     bottom: 0;
     left: 0;

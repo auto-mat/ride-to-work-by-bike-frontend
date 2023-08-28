@@ -5,6 +5,10 @@ import { defineComponent, ref, computed } from 'vue';
 import VueMenuLinks from './VueMenuLinks.vue';
 import VueListFaq from './VueListFaq.vue';
 import VueContactForm from './VueContactForm.vue';
+import VueUserSelect from './VueUserSelect.vue';
+
+// mocks
+import { user } from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'VueDrawerHeader',
@@ -12,6 +16,7 @@ export default defineComponent({
     VueMenuLinks,
     VueListFaq,
     VueContactForm,
+    VueUserSelect,
   },
   props: {
     showLogo: {
@@ -49,6 +54,7 @@ export default defineComponent({
     };
 
     return {
+      user,
       classes,
       drawerOpened,
       dialogOpened,
@@ -60,7 +66,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="full-width flex items-center" :class="classes">
+  <div class="full-width flex items-centers" :class="classes">
     <svg
       v-if="showLogo"
       xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +82,7 @@ export default defineComponent({
         clip-rule="evenodd"
       />
     </svg>
-    <div class="flex items-center gap-32">
+    <div class="flex items-center gap-32 lt-md">
       <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
@@ -88,15 +94,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <q-btn
-        v-if="showDrawerOpenButton"
-        flat
-        round
-        icon="menu"
-        color="black"
-        @click="drawerOpened = true"
-        data-cy="drawer-open-button"
-      />
+      <vue-user-select variant="mobile" />
     </div>
 
     <q-dialog
