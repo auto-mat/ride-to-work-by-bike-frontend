@@ -77,7 +77,7 @@ export default defineComponent({
                 <q-icon name="mdi-instagram" size="18px" />
                 <q-icon name="mdi-youtube" size="18px" />
               </div>
-              <span class="q-mx-lg">|</span>
+              <span class="q-mx-lg gt-sm">|</span>
               <vue-language-switcher />
             </div>
           </div>
@@ -91,7 +91,7 @@ export default defineComponent({
               class="text-white flex items-center gap-12"
             >
               <span v-html="$t('index.footer.' + message)"></span>
-              <span v-if="index < copyrightList.length - 1">|</span>
+              <span v-if="index < copyrightList.length - 1" class="gt-sm">|</span>
             </div>
           </div>
         </div>
@@ -150,6 +150,11 @@ export default defineComponent({
 .gap-32 {
   gap: 32px;
 }
+.md-flex {
+  @media (min-width: $breakpoint-md-min) {
+    display: flex;
+  }
+}
 .footer-wrapper {
   background-color: $grey-10;
   @media (min-width: $breakpoint-sm-min) {
@@ -170,8 +175,12 @@ export default defineComponent({
 }
 .footer-content {
   padding-top: 16px;
+  padding-bottom: 70px;
   @media (min-width: $breakpoint-sm-min) {
     padding-top: 32px;
+  }
+  @media (min-width: $breakpoint-md-min) {
+    padding-bottom: 0;
   }
 }
 .language-list {

@@ -20,7 +20,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-toolbar class="lt-md bg-grey-2 text-gray-10" style="z-index: 1000;">
+  <q-toolbar class="lt-md bg-grey-2 text-gray-10 fixed-bottom" style="z-index: 1000;">
     <q-list padding class="w-full flex justify-around text-grey-6" data-cy="footer-panel-menu">
       <q-item
         v-for="item in menuPanel"
