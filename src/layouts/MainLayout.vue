@@ -90,10 +90,10 @@ export default defineComponent({
     <q-page-container class="bg-info pb-footer">
       <router-view />
     </q-page-container>
-    <q-footer class="bg-transparent md-absolute-bottom">
+    <q-footer class="md-position-static bg-transparent">
       <!-- footer content -->
       <vue-footer-panel></vue-footer-panel>
-      <vue-footer class="gt-sm" />
+      <vue-footer />
     </q-footer>
   </q-layout>
 </template>
@@ -107,8 +107,16 @@ export default defineComponent({
     right: 0;
   }
 }
+.md-position-static {
+  @media (max-width: $breakpoint-sm-max) {
+    position: static;
+  }
+}
 
 .pb-footer {
-  padding-bottom: 20rem !important;
+  padding-bottom: 390px !important;
+  @media (min-width: $breakpoint-md-min) {
+    padding-bottom: 320px;
+  }
 }
 </style>

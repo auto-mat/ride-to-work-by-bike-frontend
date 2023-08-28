@@ -94,6 +94,10 @@ export default defineComponent({
 }
 .user-dropdown.mobile {
   padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  min-height: none;
+  height: 32px;
 }
 
 .user-dropdown.mobile :deep(.q-btn-dropdown__arrow-container) {
