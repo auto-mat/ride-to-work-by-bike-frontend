@@ -20,7 +20,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-toolbar class="lt-lg bg-grey-2 text-gray-10">
+  <q-toolbar class="lt-md bg-grey-2 text-gray-10" style="z-index: 1000;">
     <q-list padding class="w-full flex justify-around text-grey-6">
       <q-item
         v-for="item in menuPanel"
@@ -56,18 +56,18 @@ export default defineComponent({
   </q-toolbar>
 
   <q-dialog v-model="dialog" position="bottom">
-    <q-list padding class="bg-white">
+    <q-list padding class="bg-white w-full">
       <q-item
         v-for="item in menuTop.slice(4)"
         :key="item.name"
         :to="item.url"
         clickable
         v-ripple
-        class="q-pa-sm"
+        class="q-py-sm q-px-md"
         active-class="text-grey-10"
       >
         <q-item-section avatar>
-          <q-icon :name="item.icon" size="24px"></q-icon>
+          <q-icon :name="item.icon" size="24px" color="grey-6"></q-icon>
         </q-item-section>
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
@@ -82,11 +82,11 @@ export default defineComponent({
         :to="item.url"
         clickable
         v-ripple
-        class="q-pa-sm items-center"
+        class="q-py-sm q-px-md items-center"
         active-class="text-grey-10"
       >
         <q-item-section avatar>
-          <q-icon :name="item.icon" size="24px"></q-icon>
+          <q-icon :name="item.icon" size="24px" color="grey-6"></q-icon>
         </q-item-section>
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
