@@ -477,52 +477,65 @@ describe('Home page', () => {
       cy.dataCy('dialog-card-offer').should('be.visible');
     });
 
-    // it('allows user to switch language', () => {
-    //   let i18n;
-    //   cy.window().should('have.property', 'i18n');
-    //   cy.window()
-    //     .then((win) => {
-    //       i18n = win.i18n;
-    //     })
-    //     .then(() => {
-    //       cy.dataCy('index-title')
-    //         .should('be.visible')
-    //         .should('contain', i18n.global.t('index.title'));
+    it('allows user to switch language', () => {
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+          cy.dataCy('index-title')
+            .should('be.visible')
+            .should('contain', i18n.global.t('index.title'));
 
-    //       const locales = i18n.global.availableLocales;
-    //       locales.forEach((locale) => {
-    //         let initialActiveLocale = i18n.global.locale;
+          const locales = i18n.global.availableLocales;
+          locales.forEach((locale) => {
+            let initialActiveLocale = i18n.global.locale;
 
-    //         if (locale === initialActiveLocale) {
-    //           return;
-    //         }
+            if (locale === initialActiveLocale) {
+              return;
+            }
 
-    //         cy.dataCy('switcher-' + locale)
-    //           .should('exist')
-    //           .should('be.visible')
-    //           .find('a')
-    //           .click();
+            cy.dataCy('switcher-' + locale)
+              .should('exist')
+              .should('be.visible')
+              .find('a')
+              .click();
 
-    //         cy.dataCy('switcher-' + initialActiveLocale)
-    //           .find('a')
-    //           .should('not.have', 'font-weight', '400');
+            cy.dataCy('switcher-' + initialActiveLocale)
+              .find('a')
+              .should('not.have', 'font-weight', '400');
 
-    //         cy.dataCy('switcher-' + locale)
-    //           .find('a')
-    //           .should('have.css', 'font-weight', '700');
+            cy.dataCy('switcher-' + locale)
+              .find('a')
+              .should('have.css', 'font-weight', '700');
 
-    //         cy.dataCy('index-title')
-    //           .should('be.visible')
-    //           .should('contain', i18n.global.messages[locale].index.title);
-    //       });
-    //     });
-    // });
+            cy.dataCy('index-title')
+              .should('be.visible')
+              .should('contain', i18n.global.messages[locale].index.title);
+          });
+        });
+    });
 
-    // it('allows user to scroll to top using the footer button', () => {
-    //   cy.dataCy('footer-top-button').last().should('be.visible').click();
+    it('allows user to scroll to top using the footer button', () => {
+      cy.dataCy('footer-top-button').last().should('be.visible').click();
 
-    //   cy.window().its('scrollY').should('equal', 0);
-    // });
+      cy.window().its('scrollY').should('equal', 0);
+    });
+
+    it.only('allows user to access menu in bottom panel', () => {
+      cy.dataCy('footer-panel').should('be.visible');
+
+      cy.dataCy('footer-panel-menu').should('be.visible');
+
+      cy.dataCy('footer-panel-menu-hamburger').should('be.visible').click();
+
+      cy.dataCy('footer-panel-menu-dialog')
+        .should('be.visible')
+        .find('.q-item')
+        .should('have.length', 5);
+    });
   });
 
   // TODO: test links
