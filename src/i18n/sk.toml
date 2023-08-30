@@ -93,6 +93,10 @@ dates = "Obdobie výzvy:"
 title = "Fill in our questionnaire and win one of our great prizes!"
 perex = "You can help us decide what to spend more time on next time and what should stay the same."
 
+[index.bannerRoutes]
+title = "Za posledný týždeň vám zostáva zapísať {routesCount} výlet | Za posledný týždeň vám zostáva zapísať {routesCount} cesty | Za posledný týždeň vám zostáva zapísať {routesCount} ciest"
+addRoutes = "Zapíšte trasy"
+
 [index.cardEvent]
 addToCalendar = "Pridať do kalendára"
 

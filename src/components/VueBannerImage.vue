@@ -26,7 +26,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card :flat="true" class="rounded-20 row" data-cy="banner">
+    <q-card flat class="rounded-20 row" data-cy="banner">
       <q-img
         :src="banner?.image"
         :ratio="3 / 1"
