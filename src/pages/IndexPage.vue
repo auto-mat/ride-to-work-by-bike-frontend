@@ -22,6 +22,8 @@
         data-cy="banner-image"
       ></banner-image>
       <vue-banner-app :banner="bannerApp"></vue-banner-app>
+      <vue-banner-routes :routes-count="3"
+        class="q-mt-xl q-mb-xl"></vue-banner-routes>
       <vue-progress-slider
         :title="$t('index.progressSlider.title')"
         :cards="cardsProgressSlider"
@@ -80,6 +82,7 @@ import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
 import VueBannerApp from 'src/components/VueBannerApp.vue';
+import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
@@ -101,6 +104,7 @@ export default defineComponent({
     BannerImage,
     HeadingBackground,
     ListCardEvent,
+    VueBannerRoutes,
     VueCardListOffer,
     VueCardListPost,
     VueNewsletterFeature,
