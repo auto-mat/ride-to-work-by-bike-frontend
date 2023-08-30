@@ -94,8 +94,8 @@ title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
 perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
 
 [index.bannerRoutes]
-title = "Za poslední týden vám zbývá zapsat {routesCount} cesta | Za poslední týden vám zbývá zapsat {routesCount} cesty | Za poslední týden vám zbývá zapsat {routesCount} cest"
-addRoutes = "Zapsat cesty"
+title = "Za poslední týden máte zapsané všechny cesty | Za poslední týden vám zbývá zapsat {n} cesta | Za poslední týden vám zbývá zapsat {n} cesty | Za poslední týden vám zbývá zapsat {n} cest"
+addRoutes = "Zapište trasy"
 
 [index.cardEvent]
 addToCalendar = "Přidat do kalendáře"
