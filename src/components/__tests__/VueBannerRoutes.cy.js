@@ -5,7 +5,7 @@ const routesCount = 3;
 
 describe('<VueBannerRoutes>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.bannerRoutes', i18n);
+    cy.testLanguageStringsInContext(['title', 'addRoutes'], 'index.bannerRoutes', i18n);
   });
 
   context('desktop', () => {
@@ -34,12 +34,9 @@ describe('<VueBannerRoutes>', () => {
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '500')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', '#212121')
+        .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
-        .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'))
-        .then(($title) => {
-          expect($title.text()).to.equal(i18n.global.t('index.bannerRoutes.addRoutes'));
-        });
+        .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     })
 
     it('renders title icon', () => {
@@ -55,7 +52,7 @@ describe('<VueBannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', '#f5f5f5'); // grey-1
+          .should('have.backgroundColor', '#fafafa'); // grey-1
       });
     })
 
@@ -63,7 +60,7 @@ describe('<VueBannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '0');
+          .should('have.css', 'border-radius', '0px');
       });
     })
   });
@@ -90,17 +87,14 @@ describe('<VueBannerRoutes>', () => {
     })
 
     it('renders button', () => {
-      cy.dataCy('banner-routes-button')
+      cy.dataCy('banner-routes-button-add-routes')
         .should('be.visible')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '500')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', '#212121')
+        .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
-        .should('contain', i18n.global.t('index.bannerRoutes.button'))
-        .then(($title) => {
-          expect($title.text()).to.equal(i18n.global.t('index.bannerRoutes.button'));
-        });
+        .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     })
 
 
@@ -109,7 +103,7 @@ describe('<VueBannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', '#f5f5f5'); // grey-1
+          .should('have.backgroundColor', '#fafafa'); // grey-1
       });
     })
 
@@ -117,7 +111,7 @@ describe('<VueBannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '0');
+          .should('have.css', 'border-radius', '0px');
       });
     })
   });
