@@ -64,7 +64,7 @@ title = "Fill in our questionnaire and win one of our great prizes!"
 perex = "You can help us decide what to spend more time on next time and what should stay the same."
 
 [index.bannerRoutes]
-title = "Za posledný týždeň vám zostáva zapísať {routesCount} výlet | Za posledný týždeň vám zostáva zapísať {routesCount} cesty | Za posledný týždeň vám zostáva zapísať {routesCount} ciest"
+title = "Máte zapísané všetky cesty za posledný týždeň | Za posledný týždeň vám zostáva zapísať {n} výlet | Za posledný týždeň vám zostáva zapísať {n} cesty | Za posledný týždeň vám zostáva zapísať {n} ciest"
 addRoutes = "Zapíšte trasy"
 
 [index.cardEvent]

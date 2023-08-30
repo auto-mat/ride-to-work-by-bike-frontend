@@ -22,7 +22,8 @@ export default defineComponent({
   >
     <q-card-section horizontal class="justify-between flex-wrap">
       <q-card-section class="row items-center">
-        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">{{ $tc('index.bannerRoutes.title', { routesCount: routesCount }) }}</h3>
+        <!-- TODO: fix conjugation in CZ and SK -->
+        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">{{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}</h3>
       </q-card-section>
       <q-card-section class="row items-center">
         <q-btn
