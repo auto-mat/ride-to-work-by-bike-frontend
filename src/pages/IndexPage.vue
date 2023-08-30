@@ -12,6 +12,8 @@
         data-cy="event-countdown"
       ></vue-event-countdown>
       <vue-banner-app :banner="bannerApp"></vue-banner-app>
+      <vue-banner-routes :routes-count="3"
+        class="q-mt-xl q-mb-xl"></vue-banner-routes>
       <vue-progress-slider
         :title="$t('index.progressSlider.title')"
         :cards="cardsProgressSlider"
@@ -81,6 +83,7 @@ import { defineComponent } from 'vue';
 // components
 import VueBannerApp from 'src/components/VueBannerApp.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
+import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
 import VueCardListChallenge from 'components/VueCardListChallenge.vue';
 import VueCardListEvent from 'src/components/VueCardListEvent.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
@@ -101,6 +104,7 @@ export default defineComponent({
     VueEventCountdown,
     VueCardListChallenge,
     VueBannerImage,
+    VueBannerRoutes,
     VueHeadingBackground,
     VueCardListEvent,
     VueCardListOffer,

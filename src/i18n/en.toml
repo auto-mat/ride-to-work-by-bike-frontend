@@ -63,6 +63,10 @@ dates = "Challenge period:"
 title = "Fill in our questionnaire and win one of our great prizes!"
 perex = "You can help us decide what to spend more time on next time and what should stay the same."
 
+[index.bannerRoutes]
+title = "You have {routesCount} route left to log in the last week. | You have {routesCount} routes left to log in the last week."
+addRoutes = "Log routes"
+
 [index.cardEvent]
 addToCalendar = "Add to calendar"
 
