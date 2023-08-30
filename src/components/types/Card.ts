@@ -70,5 +70,5 @@ export interface CardProgress {
 export interface CardStats {
   title: string;
   icon: string;
-  stats: { id: string; icon: string, text: string }[]
+  stats: { id: string; icon: string; text: string }[];
 }
