@@ -22,6 +22,7 @@ export default defineComponent({
   <q-toolbar
     class="lt-md bg-grey-2 text-gray-10 fixed-bottom"
     style="z-index: 1000"
+    data-cy="footer-panel"
   >
     <q-list
       padding
