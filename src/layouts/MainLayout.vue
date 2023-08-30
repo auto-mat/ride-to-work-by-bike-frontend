@@ -70,10 +70,7 @@ export default defineComponent({
         data-cy="drawer-header"
         :mobile="false"
       ></vue-drawer-header>
-      <vue-user-select
-        class="q-pt-lg"
-        data-cy="user-select"
-      ></vue-user-select>
+      <vue-user-select class="q-pt-lg" data-cy="user-select"></vue-user-select>
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 

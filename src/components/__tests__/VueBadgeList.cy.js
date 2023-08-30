@@ -11,7 +11,7 @@ describe('<VueBadgeList>', () => {
     beforeEach(() => {
       cy.mount(VueBadgeList, {
         props: {
-          items: badgeList
+          items: badgeList,
         },
       });
       cy.viewport('macbook-16');
@@ -19,20 +19,16 @@ describe('<VueBadgeList>', () => {
 
     it('renders 4 column grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(
-          cy.dataCy('badge-item'),
-          25
-        );
+        cy.testElementPercentageWidth(cy.dataCy('badge-item'), 25);
       });
     });
-
   });
 
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(VueBadgeList, {
         props: {
-          items: badgeList
+          items: badgeList,
         },
       });
       cy.viewport('iphone-6');
@@ -40,12 +36,8 @@ describe('<VueBadgeList>', () => {
 
     it('renders 2 column grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(
-          cy.dataCy('badge-item'),
-          50
-        );
+        cy.testElementPercentageWidth(cy.dataCy('badge-item'), 50);
       });
     });
-
   });
 });
