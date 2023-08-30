@@ -78,7 +78,9 @@ export default defineComponent({
                 class="text-white flex items-center gap-12"
               >
                 <span v-html="$t('index.footer.' + message)"></span>
-                <span v-if="index < copyrightList.length - 1" class="gt-sm">|</span>
+                <span v-if="index < copyrightList.length - 1" class="gt-sm"
+                  >|</span
+                >
               </div>
             </div>
             <div class="flex column items-center md-row w-full w-md-auto">
@@ -104,7 +106,9 @@ export default defineComponent({
               class="text-white flex items-center gap-12"
             >
               <span v-html="$t('index.footer.' + message)"></span>
-              <span v-if="index < copyrightList.length - 1" class="gt-sm">|</span>
+              <span v-if="index < copyrightList.length - 1" class="gt-sm"
+                >|</span
+              >
             </div>
           </div>
         </div>

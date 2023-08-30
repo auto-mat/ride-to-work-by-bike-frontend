@@ -2,23 +2,25 @@
 import { defineComponent } from 'vue';
 
 // mocks
-import {user, userMenuTop, userMenuBottom} from 'src/mocks/layout';
+import { user, userMenuTop, userMenuBottom } from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'VueUserSelect',
   props: {
     variant: {
-      type: String as () => ('mobile' | 'desktop'),
+      type: String as () => 'mobile' | 'desktop',
       required: false,
       default: 'desktop',
-    }
+    },
   },
   setup(props) {
     const size = props.variant === 'mobile' ? '32px' : '56px';
 
     return {
       size,
-      user, menuTop: userMenuTop, menuBottom: userMenuBottom
+      user,
+      menuTop: userMenuTop,
+      menuBottom: userMenuBottom,
     };
   },
 });
@@ -30,14 +32,17 @@ export default defineComponent({
       rounded
       flat
       class="user-dropdown"
-      :class="{ 'mobile': variant === 'mobile' }"
+      :class="{ mobile: variant === 'mobile' }"
       data-cy="user-select-input"
     >
       <template v-slot:label>
         <q-avatar :size="size" data-cy="avatar">
           <img :src="user.image" />
         </q-avatar>
-        <span v-if="variant !== 'mobile'" class="flex-grow inline-block text-left q-ml-md">
+        <span
+          v-if="variant !== 'mobile'"
+          class="flex-grow inline-block text-left q-ml-md"
+        >
           {{ user.label }}
         </span>
       </template>

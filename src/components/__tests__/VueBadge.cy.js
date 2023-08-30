@@ -14,7 +14,7 @@ describe('<VueBadge>', () => {
     beforeEach(() => {
       cy.mount(VueBadge, {
         props: {
-          badge
+          badge,
         },
       });
       cy.viewport('macbook-16');
@@ -32,7 +32,7 @@ describe('<VueBadge>', () => {
             expect($title.text()).to.equal(badge.title);
           });
       });
-    })
+    });
 
     it('renders image', () => {
       cy.window().then(() => {
@@ -50,7 +50,7 @@ describe('<VueBadge>', () => {
           failureThresholdType: 'percent',
         });
       });
-    })
+    });
 
     it('renders description', () => {
       cy.window().then(() => {
@@ -71,16 +71,15 @@ describe('<VueBadge>', () => {
     beforeEach(() => {
       cy.mount(VueBadge, {
         props: {
-          badge: badgeDark
+          badge: badgeDark,
         },
       });
       cy.viewport('iphone-6');
     });
 
     it('has dark background', () => {
-      cy.dataCy('badge-card')
-        .should('have.backgroundColor', '#546e7a'); // bg-blue-grey-7
-    })
+      cy.dataCy('badge-card').should('have.backgroundColor', '#546e7a'); // bg-blue-grey-7
+    });
 
     it('renders title', () => {
       cy.window().then(() => {
