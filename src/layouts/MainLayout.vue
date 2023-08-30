@@ -80,7 +80,7 @@ export default defineComponent({
     <q-page-container class="bg-gray-lighter pb-footer">
       <router-view />
     </q-page-container>
-    <q-footer class="md-position-static bg-transparent">
+    <q-footer class="position-static md-position-absolute bg-transparent">
       <!-- footer content -->
       <vue-footer-panel></vue-footer-panel>
       <vue-footer />
@@ -105,9 +105,12 @@ export default defineComponent({
     right: 0;
   }
 }
-.md-position-static {
-  @media (max-width: $breakpoint-sm-max) {
-    position: static;
+.position-static {
+  position: static;
+}
+.md-position-absolute {
+  @media (min-width: $breakpoint-md-min) {
+    position: absolute;
   }
 }
 
