@@ -17,10 +17,12 @@ export default defineComponent({
     square
     flat
     :bordered="false"
+    class="bg-grey-1"
+    data-cy="banner-routes-card"
   >
-    <q-card-section horizontal class="justify-between gap-16">
-      <q-card-section>
-        <h3 class="text-subtitle2 text-weight-bold" data-cy="banner-routes-title">{{ $tc('index.bannerRoutes.title', { routesCount: routesCount }) }}</h3>
+    <q-card-section horizontal class="justify-between flex-wrap">
+      <q-card-section class="row items-center">
+        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">{{ $tc('index.bannerRoutes.title', { routesCount: routesCount }) }}</h3>
       </q-card-section>
       <q-card-section class="row items-center">
         <q-btn
@@ -40,7 +42,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.gap-16 {
-  gap: 16px;
+.flex-wrap {
+  flex-wrap: wrap;
 }
 </style>
