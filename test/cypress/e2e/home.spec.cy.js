@@ -300,17 +300,16 @@ describe('Home page', () => {
     });
 
     it('allows user to show and hide bottom panel on mobile', () => {
-      cy.dataCy('footer-panel-menu')
-        .should('be.visible');
+      cy.dataCy('footer-panel-menu').should('be.visible');
 
-      cy.dataCy('footer-panel-menu').should('be.visible')
+      cy.dataCy('footer-panel-menu')
+        .should('be.visible')
         .find('.q-item')
         .should('have.length', 5);
 
       cy.dataCy('footer-panel-menu-hamburger').click();
 
-      cy.dataCy('footer-panel-menu-dialog')
-        .should('be.visible');
+      cy.dataCy('footer-panel-menu-dialog').should('be.visible');
 
       cy.dataCy('footer-panel-menu-dialog')
         .should('be.visible')
@@ -319,7 +318,6 @@ describe('Home page', () => {
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
-
       cy.dataCy('link-help').first().should('be.visible').click();
 
       cy.dataCy('list-faq-list')

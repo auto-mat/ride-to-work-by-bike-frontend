@@ -1,7 +1,6 @@
 <script lang="ts">
 // libraries
 import { defineComponent, ref, computed } from 'vue';
-import { useQuasar } from 'quasar';
 
 import { menuBottom, menuTop } from 'src/mocks/layout';
 
@@ -20,8 +19,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-toolbar class="lt-md bg-grey-2 text-gray-10 fixed-bottom" style="z-index: 1000;">
-    <q-list padding class="w-full flex justify-around text-grey-6" data-cy="footer-panel-menu">
+  <q-toolbar
+    class="lt-md bg-grey-2 text-gray-10 fixed-bottom"
+    style="z-index: 1000"
+  >
+    <q-list
+      padding
+      class="w-full flex justify-around text-grey-6"
+      data-cy="footer-panel-menu"
+    >
       <q-item
         v-for="item in menuPanel"
         :key="item.name"
@@ -56,7 +62,11 @@ export default defineComponent({
     </q-list>
   </q-toolbar>
 
-  <q-dialog v-model="dialog" position="bottom" data-cy="footer-panel-menu-dialog">
+  <q-dialog
+    v-model="dialog"
+    position="bottom"
+    data-cy="footer-panel-menu-dialog"
+  >
     <q-list padding class="bg-white w-full">
       <q-item
         v-for="item in menuTop.slice(4)"
