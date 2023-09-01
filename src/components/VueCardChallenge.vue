@@ -25,7 +25,7 @@ export default defineComponent({
     class="rounded-20"
     data-cy="card"
   >
-    <q-img :src="card?.image" :ratio="7 / 8" class="rounded-20">
+    <q-img :src="card?.image" :ratio="7 / 8" :alt="card?.title" class="rounded-20">
       <q-card-section
         class="text-subtitle1 absolute-top flex items-center justify-center gap-8"
         data-cy="card-title"

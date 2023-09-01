@@ -41,6 +41,7 @@ export default defineComponent({
           :ratio="3 / 2"
           class="col-sm-2"
           :src="card?.thumbnail"
+          :alt="card?.title"
           data-cy="card-image"
         />
         <q-card-section
