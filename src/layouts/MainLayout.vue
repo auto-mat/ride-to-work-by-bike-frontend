@@ -16,6 +16,7 @@ if (window.Cypress) {
   window.i18n = i18n;
 }
 
+// import config
 const rideToWorkByBikeConfig: object = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );

@@ -5,6 +5,7 @@ import { defineComponent } from 'vue';
 // import types
 import { BannerImage } from 'components/types';
 
+// import config
 const rideToWorkByBikeConfig: object = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
@@ -19,14 +20,19 @@ export default defineComponent({
     },
   },
   setup() {
-    return {};
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
+    return { borderRadius };
   },
 });
 </script>
 
 <template>
   <div>
-    <div class="rounded-20 overflow-hidden row bg-grey-2" data-cy="banner">
+    <div
+      class="overflow-hidden row bg-grey-2"
+      :style="{ 'border-radius' : borderRadius }"
+      data-cy="banner"
+    >
       <q-img
         :src="banner?.image?.src"
         :ratio="3 / 1"
@@ -58,9 +64,3 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.rounded-20 {
-  border-radius: 20px;
-}
-</style>

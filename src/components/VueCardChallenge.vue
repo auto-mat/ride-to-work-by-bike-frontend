@@ -4,6 +4,11 @@ import { defineComponent } from 'vue';
 // import types
 import { CardChallenge } from 'components/types';
 
+// import config
+const rideToWorkByBikeConfig: object = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+
 export default defineComponent({
   name: 'VueCardChallenge',
   props: {
@@ -12,25 +17,35 @@ export default defineComponent({
     },
   },
   setup() {
-    return {};
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
+    return { borderRadius };
   },
 });
 </script>
 
 <template>
   <q-card
-    :dark="true"
-    :flat="true"
-    :bordered="true"
-    class="rounded-20"
+    dark
+    flat
+    bordered
     data-cy="card"
+    :style="{ 'border-radius' : borderRadius }"
   >
-    <q-img :src="card?.image.src" :ratio="7 / 8" :alt="card?.image.alt" class="rounded-20">
+    <!-- Bg image -->
+    <q-img
+      :img-style="{ 'borderRadius' : borderRadius }"
+      :src="card?.image?.src"
+      :alt="card?.image?.alt"
+      :ratio="7 / 8"
+    >
+      <!-- Header -->
       <q-card-section
         class="text-subtitle1 absolute-top flex items-center justify-center gap-8"
         data-cy="card-title"
       >
+        <!-- Person icon -->
         <q-icon name="person" size="xs" />
+       <!-- Title link -->
         <component
           :is="card?.url ? 'a' : 'div'"
           :href="card?.url"
@@ -40,17 +55,20 @@ export default defineComponent({
           {{ card?.title }}
         </component>
       </q-card-section>
-      <div
-        v-if="card?.dates"
-        class="absolute-bottom text-center text-body2"
-        data-cy="card-dates"
-      >
-        {{ $t('index.cardChallenge.dates') }}
-        <span class="text-weight-bold">{{ card?.dates }}</span>
-      </div>
     </q-img>
 
-    <div class="badge-wrapper" data-cy="card-company-wrapper">
+    <!-- Date -->
+    <q-card-section
+      v-if="card?.dates"
+      class="absolute-bottom text-center text-body2"
+      data-cy="card-dates"
+    >
+      {{ $t('index.cardChallenge.dates') }}
+      <span class="text-weight-bold">{{ card?.dates }}</span>
+    </q-card-section>
+
+    <!-- Company challenge label -->
+    <div class="badge-wrapper center" data-cy="card-company-wrapper">
       <q-badge
         v-if="card?.company"
         class="text-caption q-px-sm bg-blue-grey-4"
