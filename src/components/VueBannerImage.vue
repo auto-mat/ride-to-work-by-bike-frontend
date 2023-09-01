@@ -8,7 +8,7 @@ import { BannerImage } from 'components/types';
 const rideToWorkByBikeConfig: object = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('grey-2', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueBannerImage',
@@ -26,7 +26,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card :flat="true" class="rounded-20 row" data-cy="banner">
+    <div class="rounded-20 overflow-hidden row bg-grey-2" data-cy="banner">
       <q-img
         :src="banner?.image"
         :ratio="3 / 1"
@@ -55,35 +55,12 @@ export default defineComponent({
           </div>
         </div>
       </div>
-    </q-card>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .rounded-20 {
   border-radius: 20px;
-  background-color: var(--q-gray-light);
-}
-
-.q-card > div:first-child {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-@media (min-width: $breakpoint-sm-min) {
-  .q-card > div:first-child {
-    border-top-left-radius: inherit;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: 0;
-  }
-}
-
-@media (min-width: $breakpoint-lg-min) {
-  .q-card > div:last-child {
-    padding: 48px;
-  }
 }
 </style>
