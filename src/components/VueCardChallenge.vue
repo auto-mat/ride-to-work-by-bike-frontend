@@ -43,17 +43,19 @@ export default defineComponent({
         class="text-subtitle1 absolute-top flex items-center justify-center gap-8"
         data-cy="card-title"
       >
-        <!-- Person icon -->
-        <q-icon name="person" size="xs" />
-       <!-- Title link -->
-        <component
-          :is="card?.url ? 'a' : 'div'"
-          :href="card?.url"
-          class="text-white text-weight-bold"
-          data-cy="card-link"
-        >
-          {{ card?.title }}
-        </component>
+        <div class="q-py-md">
+          <!-- Person icon -->
+          <q-icon name="person" size="xs" />
+        <!-- Title link -->
+          <component
+            :is="card?.url ? 'a' : 'div'"
+            :href="card?.url"
+            class="text-white text-weight-bold"
+            data-cy="card-link"
+          >
+            {{ card?.title }}
+          </component>
+        </div>
       </q-card-section>
     </q-img>
 
@@ -89,30 +91,6 @@ a:hover {
 
 .gap-8 {
   gap: 8px;
-}
-
-.rounded-20 {
-  border-radius: 20px;
-}
-
-.q-card > div:first-child {
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
-}
-
-.q-img__content {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-.q-img__content > div {
-  padding: 32px 12px;
-}
-
-.q-img__content > div:nth-child(2) {
-  padding: 20px 12px;
-  background: transparent;
 }
 
 .badge-wrapper {
