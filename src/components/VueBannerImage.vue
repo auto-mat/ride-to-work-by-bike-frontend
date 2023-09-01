@@ -3,10 +3,10 @@ import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
 // import types
-import { BannerImage } from 'components/types';
+import { BannerImage, ConfigGlobal } from 'components/types';
 
 // import config
-const rideToWorkByBikeConfig: object = JSON.parse(
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 setCssVar('grey-2', rideToWorkByBikeConfig.colorGrayLight);

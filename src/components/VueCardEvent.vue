@@ -3,10 +3,10 @@ import { defineComponent, ref } from 'vue';
 import { useDateFormat, useMediaQuery } from '@vueuse/core';
 
 // import types
-import { CardEvent } from 'components/types';
+import { CardEvent, ConfigGlobal } from 'components/types';
 
 // import config
-const rideToWorkByBikeConfig: object = JSON.parse(
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 

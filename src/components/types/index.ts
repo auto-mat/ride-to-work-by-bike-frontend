@@ -3,4 +3,5 @@ export * from './CardChallenge';
 export * from './CardEvent';
 export * from './CardOffer';
 export * from './Countdown';
+export * from './Config';
 export * from './User';

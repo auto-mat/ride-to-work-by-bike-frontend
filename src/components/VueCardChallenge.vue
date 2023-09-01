@@ -2,10 +2,10 @@
 import { defineComponent } from 'vue';
 
 // import types
-import { CardChallenge } from 'components/types';
+import { CardChallenge, ConfigGlobal } from 'components/types';
 
 // import config
-const rideToWorkByBikeConfig: object = JSON.parse(
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 

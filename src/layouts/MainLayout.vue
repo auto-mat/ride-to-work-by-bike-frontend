@@ -10,14 +10,14 @@ import VueUserSelect from 'components/VueUserSelect.vue';
 import VueDrawerMenu from 'components/VueDrawerMenu.vue';
 
 // import types
-import { User } from 'components/types';
+import { ConfigGlobal, User } from 'components/types';
 
 if (window.Cypress) {
   window.i18n = i18n;
 }
 
 // import config
-const rideToWorkByBikeConfig: object = JSON.parse(
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);

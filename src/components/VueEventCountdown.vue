@@ -3,9 +3,11 @@ import { setCssVar } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
 import { useDateFormat } from '@vueuse/core';
-import { Countdown } from 'components/types';
 
-const rideToWorkByBikeConfig: object = JSON.parse(
+// import types
+import { Countdown, ConfigGlobal } from 'components/types';
+
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
