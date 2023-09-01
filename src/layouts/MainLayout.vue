@@ -20,7 +20,7 @@ if (window.Cypress) {
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('gray-2', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'MainLayout',
@@ -63,7 +63,7 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header reveal class="lg-hidden bg-white">
+    <q-header reveal class="lt-md bg-white">
       <q-toolbar>
         <vue-drawer-header
           v-model="leftDrawerOpen"
@@ -80,7 +80,7 @@ export default defineComponent({
       v-model="leftDrawerOpen"
       side="left"
       :width="320"
-      class="bg-gray-light q-py-lg q-px-lg"
+      class="bg-gray-2 q-py-lg q-px-lg"
       data-cy="q-drawer"
     >
       <vue-drawer-header
@@ -104,14 +104,3 @@ export default defineComponent({
     </q-footer>
   </q-layout>
 </template>
-
-<style scoped lang="scss">
-@media (min-width: $breakpoint-md-min) {
-  .lg-hidden {
-    display: none;
-  }
-}
-.bg-gray-light {
-  background-color: var(--q-gray-light);
-}
-</style>
