@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useDateFormat, useMediaQuery } from '@vueuse/core';
+import { date, Screen } from 'quasar';
 
 // import types
 import { CardEvent, ConfigGlobal } from 'components/types';
@@ -9,6 +9,8 @@ import { CardEvent, ConfigGlobal } from 'components/types';
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
+
+const { formatDate } = date
 
 export default defineComponent({
   name: 'VueCardEvent',
@@ -19,11 +21,8 @@ export default defineComponent({
   },
   setup(props) {
     const modalOpened = ref(false);
-    const eventDateTime = useDateFormat(
-      props?.card?.dates,
-      'ddd D. MMM. YYYY, HH:mm'
-    );
-    const isLargeScreen = useMediaQuery('(min-width: 600px)');
+    const eventDateTime = formatDate(props?.card?.dates, 'ddd D. MMM. YYYY, HH:mm');
+    const isLargeScreen = Screen.gt.sm;
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
@@ -44,14 +43,22 @@ export default defineComponent({
       :style="{ 'border-radius' : borderRadius }"
       data-cy="card"
     >
+      <q-img
+        v-if="!isLargeScreen"
+        :ratio="3 / 2"
+        :src="card?.thumbnail?.src"
+        :alt="card?.thumbnail?.alt"
+        class="lt-md"
+        data-cy="card-image"
+      />
       <q-card-section
-        :horizontal="isLargeScreen"
+        horizontal
         class="q-pa-none"
         data-cy="card-section"
       >
         <q-img
           :ratio="3 / 2"
-          class="col-sm-2"
+          class="col-sm-2 gt-sm"
           :src="card?.thumbnail?.src"
           :alt="card?.thumbnail?.alt"
           data-cy="card-image"
@@ -114,7 +121,7 @@ export default defineComponent({
         </q-card-section>
       </q-card-section>
 
-      <q-dialog v-model="modalOpened" square data-cy="card-dialog">
+      <q-dialog square persistent v-model="modalOpened" data-cy="card-dialog">
         <q-card class="relative-position overflow-visible">
           <q-card-section class="q-pt-none" data-cy="dialog-header">
             <h3 v-if="card?.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
@@ -216,10 +223,6 @@ export default defineComponent({
   gap: 8px;
 }
 
-.q-dialog__inner > div {
-  overflow: visible !important;
-}
-
 .card-link {
   text-decoration: none;
 
@@ -228,24 +231,12 @@ export default defineComponent({
   }
 }
 
+.q-dialog__inner > div {
+  overflow: visible !important;
+}
+
 .dialog-close {
   top: -21px;
   right: -21px;
-}
-
-.q-card > div:first-child > .q-img {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-@media (min-width: $breakpoint-sm-min) {
-  .q-card > div:first-child > .q-img {
-    border-top-left-radius: inherit;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: 0;
-  }
 }
 </style>
