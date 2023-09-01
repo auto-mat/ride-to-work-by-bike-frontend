@@ -37,18 +37,15 @@ export default defineComponent({
     >
       <template v-slot:prepend>
         <q-avatar size="56px" data-cy="avatar">
-          <img class="rounded" :src="user.image" :alt="user.label" />
+          <img :src="user.image" :alt="user.label" />
         </q-avatar>
       </template>
     </q-select>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .user-select :deep(.q-field__inner .q-field__control) {
   padding-left: 0;
-}
-.rounded {
-  border-radius: 9999px;
 }
 </style>
