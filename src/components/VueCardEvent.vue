@@ -5,6 +5,11 @@ import { useDateFormat, useMediaQuery } from '@vueuse/core';
 // import types
 import { CardEvent } from 'components/types';
 
+// import config
+const rideToWorkByBikeConfig: object = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+
 export default defineComponent({
   name: 'VueCardEvent',
   props: {
@@ -19,8 +24,10 @@ export default defineComponent({
       'ddd D. MMM. YYYY, HH:mm'
     );
     const isLargeScreen = useMediaQuery('(min-width: 600px)');
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
+      borderRadius,
       modalOpened,
       eventDateTime,
       isLargeScreen,
@@ -31,7 +38,12 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card flat class="rounded-20 bg-white" data-cy="card">
+    <q-card
+      flat
+      class="bg-white"
+      :style="{ 'border-radius' : borderRadius }"
+      data-cy="card"
+    >
       <q-card-section
         :horizontal="isLargeScreen"
         class="q-pa-none"
@@ -199,16 +211,9 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.rounded-20 {
-  border-radius: 20px;
-}
 
 .gap-8 {
   gap: 8px;
-}
-
-.overflow-hidden {
-  overflow: hidden;
 }
 
 .q-dialog__inner > div {
