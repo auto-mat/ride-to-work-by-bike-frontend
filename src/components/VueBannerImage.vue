@@ -28,9 +28,9 @@ export default defineComponent({
   <div>
     <div class="rounded-20 overflow-hidden row bg-grey-2" data-cy="banner">
       <q-img
-        :src="banner?.image"
+        :src="banner?.image?.src"
         :ratio="3 / 1"
-        :alt="banner?.title"
+        :alt="banner?.image?.alt"
         class="col-sm-6"
         data-cy="banner-half"
       />

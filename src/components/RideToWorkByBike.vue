@@ -57,6 +57,7 @@
     <!-- Image -->
     <q-img
       :src="`/${rideToWorkByBikeConfig.image}`"
+      alt="test"
       width="100%"
       fit="contain"
       spinner-color="primary"

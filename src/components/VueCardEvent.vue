@@ -40,8 +40,8 @@ export default defineComponent({
         <q-img
           :ratio="3 / 2"
           class="col-sm-2"
-          :src="card?.thumbnail"
-          :alt="card?.title"
+          :src="card?.thumbnail?.src"
+          :alt="card?.thumbnail?.alt"
           data-cy="card-image"
         />
         <q-card-section
@@ -172,7 +172,8 @@ export default defineComponent({
             </div>
             <div class="col-12 col-md-6 q-px-md q-py-md">
               <q-img
-                src="https://picsum.photos/380/380"
+                :src="card?.image?.src"
+                :alt="card?.image?.alt"
                 :ratio="1"
                 data-cy="dialog-image"
               />

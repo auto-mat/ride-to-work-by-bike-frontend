@@ -121,7 +121,10 @@ export default defineComponent({
       title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
       perex:
         'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
-      image: 'https://picsum.photos/600/200',
+      image: {
+        src: 'https://picsum.photos/id/70/600/200',
+        alt: 'road lined with trees',
+      },
     };
 
     const headingBgTitle =
@@ -130,8 +133,14 @@ export default defineComponent({
     const cardsEvent: CardEvent[] = [
       {
         title: 'Opening Ceremony Bike to Work 2022',
-        thumbnail: 'https://picsum.photos/340/200',
-        image: 'https://picsum.photos/380/380',
+        thumbnail: {
+          src: 'https://picsum.photos/id/70/340/200',
+          alt: 'road lined with trees',
+        },
+        image: {
+          src: 'https://picsum.photos/id/70/380/380',
+          alt: 'road lined with trees',
+        },
         dates: new Date('2023-10-01T12:00:00'),
         location: 'Prague',
         content:

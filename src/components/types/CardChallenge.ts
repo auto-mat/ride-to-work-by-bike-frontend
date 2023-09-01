@@ -1,9 +1,8 @@
+import { Image } from "./Image";
+
 export interface CardChallenge {
   title: string;
-  image: {
-    src: string;
-    alt: string;
-  };
+  image: Image;
   url: string;
   dates: string;
   company: boolean;
