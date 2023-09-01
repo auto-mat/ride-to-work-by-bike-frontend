@@ -10,7 +10,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 
-const { formatDate } = date
+const { formatDate } = date;
 
 export default defineComponent({
   name: 'VueCardEvent',
@@ -21,7 +21,10 @@ export default defineComponent({
   },
   setup(props) {
     const modalOpened = ref(false);
-    const eventDateTime = formatDate(props?.card?.dates, 'ddd D. MMM. YYYY, HH:mm');
+    const eventDateTime = formatDate(
+      props?.card?.dates,
+      'ddd D. MMM. YYYY, HH:mm'
+    );
     const setHorizontalPosition = (): boolean => (Screen.xs ? false : true);
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
@@ -40,28 +43,28 @@ export default defineComponent({
     <q-card
       flat
       class="bg-white"
-      :style="{ 'border-radius' : borderRadius }"
+      :style="{ 'border-radius': borderRadius }"
       data-cy="card"
     >
       <q-card-section
-          :horizontal="setHorizontalPosition()"
-          class="q-pa-none"
-          data-cy="card-section"
-        >
-          <!-- Bg image -->
-          <q-img
-            :ratio="3 / 2"
-            :img-style="{
-              'borderRadius': setHorizontalPosition()
-                ? `${borderRadius} 0 0 ${borderRadius}`
-                : `${borderRadius} ${borderRadius} 0 0`,
-            }"
-            class="col-sm-2"
-            :src="card?.thumbnail?.src"
-            :alt="card?.thumbnail?.alt"
-            data-cy="card-image"
-          />
-          <!-- Content -->
+        :horizontal="setHorizontalPosition()"
+        class="q-pa-none"
+        data-cy="card-section"
+      >
+        <!-- Bg image -->
+        <q-img
+          :ratio="3 / 2"
+          :img-style="{
+            borderRadius: setHorizontalPosition()
+              ? `${borderRadius} 0 0 ${borderRadius}`
+              : `${borderRadius} ${borderRadius} 0 0`,
+          }"
+          class="col-sm-2"
+          :src="card?.thumbnail?.src"
+          :alt="card?.thumbnail?.alt"
+          data-cy="card-image"
+        />
+        <!-- Content -->
         <q-card-section
           horizontal
           class="col-grow flex items-center"
