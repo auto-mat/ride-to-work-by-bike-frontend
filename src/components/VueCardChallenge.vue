@@ -29,11 +29,11 @@ export default defineComponent({
     flat
     bordered
     data-cy="card"
-    :style="{ 'border-radius' : borderRadius }"
+    :style="{ 'border-radius': borderRadius }"
   >
     <!-- Bg image -->
     <q-img
-      :img-style="{ 'borderRadius' : borderRadius }"
+      :img-style="{ borderRadius: borderRadius }"
       :src="card?.image?.src"
       :alt="card?.image?.alt"
       :ratio="7 / 8"
@@ -46,7 +46,7 @@ export default defineComponent({
         <div class="q-py-md">
           <!-- Person icon -->
           <q-icon name="person" size="xs" />
-        <!-- Title link -->
+          <!-- Title link -->
           <component
             :is="card?.url ? 'a' : 'div'"
             :href="card?.url"

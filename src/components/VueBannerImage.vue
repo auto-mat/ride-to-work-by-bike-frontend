@@ -30,7 +30,7 @@ export default defineComponent({
   <div>
     <div
       class="overflow-hidden row bg-grey-2"
-      :style="{ 'border-radius' : borderRadius }"
+      :style="{ 'border-radius': borderRadius }"
       data-cy="banner"
     >
       <q-img
