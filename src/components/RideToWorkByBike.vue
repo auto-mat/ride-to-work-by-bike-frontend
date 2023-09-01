@@ -70,9 +70,11 @@
 import { setCssVar } from 'quasar';
 import { defineComponent, inject } from 'vue';
 
+import { ConfigGlobal } from './types';
+
 import { getString } from '../utils';
 
-const rideToWorkByBikeConfig: object = JSON.parse(
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 
