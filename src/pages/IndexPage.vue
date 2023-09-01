@@ -68,35 +68,50 @@ export default defineComponent({
       {
         title: 'Týmová pravidelnost',
         url: '#',
-        image: 'https://picsum.photos/500/540',
+        image: {
+          src: 'https://picsum.photos/id/70/500/540',
+          alt: 'road lined with trees',
+        },
         dates: '1. říj.–31. říj. 2022',
         company: false,
       },
       {
         title: 'Vaše pravidelnost',
         url: '#',
-        image: 'https://picsum.photos/500/530',
+        image: {
+          src: 'https://picsum.photos/id/70/500/530',
+          alt: 'road lined with trees',
+        },
         dates: '1. říj.–31. říj. 2022',
         company: false,
       },
       {
         title: 'Vaše zelené kilometry',
         url: '#',
-        image: 'https://picsum.photos/500/550',
+        image: {
+          src: 'https://picsum.photos/id/70/500/550',
+          alt: 'road lined with trees',
+        },
         dates: '1. říj.–31. říj. 2022',
         company: true,
       },
       {
         title: 'Zelené kilometry týmu',
         url: '#',
-        image: 'https://picsum.photos/500/520',
+        image: {
+          src: 'https://picsum.photos/id/70/500/520',
+          alt: 'road lined with trees',
+        },
         dates: '1. říj.–31. říj. 2022',
         company: true,
       },
       {
         title: 'Zelené kilometry pobočky',
         url: '#',
-        image: 'https://picsum.photos/500/550',
+        image: {
+          src: 'https://picsum.photos/id/70/500/540',
+          alt: 'road lined with trees',
+        },
         dates: '1. říj.–31. říj. 2022',
         company: false,
       },
