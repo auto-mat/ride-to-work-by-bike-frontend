@@ -24,6 +24,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Cards are stacked vertically -->
   <div>
     <vue-card-event
       v-for="card in cards"

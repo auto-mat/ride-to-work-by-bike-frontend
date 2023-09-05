@@ -28,6 +28,7 @@ export default defineComponent({
 
 <template>
   <q-form class="q-gutter-md" @submit.prevent="onSubmit">
+    <!-- Field: E-mail subject -->
     <div class="q-mt-lg" data-cy="contact-form-subject">
       <label for="contact-form-subject" class="text-caption text-bold">
         {{ $t('index.contact.subject') }}
@@ -47,6 +48,7 @@ export default defineComponent({
         data-cy="contact-form-subject-input"
       />
     </div>
+    <!-- Field: Message content -->
     <div class="q-mt-none" data-cy="contact-form-message">
       <label for="contact-form-message" class="text-caption text-bold">
         {{ $t('index.contact.message') }}
@@ -66,6 +68,7 @@ export default defineComponent({
         data-cy="contact-form-message-input"
       />
     </div>
+    <!-- Field: Attachment -->
     <div data-cy="contact-form-file">
       <q-file
         v-model="contactForm.file"
@@ -81,6 +84,7 @@ export default defineComponent({
         </template>
       </q-file>
     </div>
+    <!-- Field: E-mail address -->
     <div class="q-mt-none" data-cy="contact-form-email">
       <label for="contact-form-email" class="text-caption text-bold">
         {{ $t('index.contact.email') }}
@@ -101,6 +105,7 @@ export default defineComponent({
       />
     </div>
     <div class="flex justify-end">
+      <!-- Submit button -->
       <q-btn
         :label="$t('index.contact.submit')"
         type="submit"

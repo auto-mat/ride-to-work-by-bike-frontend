@@ -33,6 +33,7 @@ export default defineComponent({
       :style="{ 'border-radius': borderRadius }"
       data-cy="banner"
     >
+      <!-- Image (half) -->
       <q-img
         :src="banner?.image?.src"
         :ratio="3 / 1"
@@ -40,11 +41,13 @@ export default defineComponent({
         class="col-sm-6"
         data-cy="banner-half"
       />
+      <!-- Text (half) -->
       <div
         class="col-sm-6 flex items-center q-px-md q-py-lg"
         data-cy="banner-half"
       >
         <div>
+          <!-- Title -->
           <div
             v-if="banner.title"
             class="text-dark text-subtitle1"
@@ -52,6 +55,7 @@ export default defineComponent({
           >
             {{ banner.title }}
           </div>
+          <!-- Description -->
           <div
             v-if="banner.perex"
             class="text-dark text-caption q-mt-sm"
