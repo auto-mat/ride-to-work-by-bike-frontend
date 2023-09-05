@@ -115,21 +115,22 @@ export default defineComponent({
 
 <template>
   <div>
-    <!-- Heading -->
+    <!-- Title -->
     <h4
       class="text-h5 text-weight-bold q-my-none q-px-md"
       data-cy="list-faq-title"
     >
       {{ title }}
     </h4>
+    <!-- Questions list -->
     <q-list separator class="faq-list q-mt-md" data-cy="list-faq-list">
-      <!-- Dropdown item -->
+      <!-- Question - dropdown item button -->
       <q-expansion-item
         v-for="item in items"
         :key="item.title"
         :label="item.title"
       >
-        <!-- Dropdown content -->
+        <!-- Answer - dropdown item content -->
         <q-card>
           <q-card-section>
             {{ item.text }}
