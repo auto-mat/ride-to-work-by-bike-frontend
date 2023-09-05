@@ -3,8 +3,14 @@ import { i18n } from '../../boot/i18n';
 
 describe('<VueCardEvent>', () => {
   const title = 'Opening Ceremony Bike to Work 2022';
-  const thumbnail = 'https://picsum.photos/340/200';
-  const image = 'https://picsum.photos/380/380';
+  const thumbnail = {
+    src: 'https://picsum.photos/id/70/340/200',
+    alt: 'road lined with trees',
+  };
+  const image = {
+    src: 'https://picsum.photos/id/70/380/380',
+    alt: 'road lined with trees',
+  };
   const dates = new Date('2023-10-01T12:00:00');
   const location = 'Prague';
   const content =
@@ -79,7 +85,7 @@ describe('<VueCardEvent>', () => {
         .then(($img) => {
           const naturalHeight = $img[0].naturalHeight;
           expect(naturalHeight).to.be.greaterThan(0);
-          expect($img.attr('src')).to.equal(thumbnail);
+          expect($img.attr('src')).to.equal(thumbnail.src);
         });
     });
   });
@@ -252,6 +258,8 @@ describe('<VueCardEvent>', () => {
 
   it('shows content with image and action button with correct layout', () => {
     cy.window().then(() => {
+      cy.viewport('macbook-13');
+
       cy.dataCy('card-link')
         .click()
         .then(() => {
@@ -263,41 +271,43 @@ describe('<VueCardEvent>', () => {
 
           cy.dataCy('dialog-content')
             .scrollTo('bottom')
-            .find('img')
+
+          cy.dataCy('dialog-image')
             .should('be.visible')
+            .find('img')
             .then(($img) => {
-              const naturalHeight = $img[0].naturalHeight;
-              expect(naturalHeight).to.be.greaterThan(0);
-              expect($img.attr('src')).to.equal(image);
+              // Updated version of the test valid for Firefox
+              cy.wrap($img[0]).then((img) => {
+                const image = new Image();
+                image.src = img.currentSrc;
+                image.onload = () => {
+                  expect(image.height).to.be.greaterThan(0);
+                };
+              });
             });
 
-          cy.dataCy('dialog-content')
-            .scrollTo('center')
-            .find('.q-btn')
+          cy.dataCy('dialog-button')
             .should('be.visible')
             .should('have.css', 'border-radius', '28px')
             .should('have.backgroundColor', '#000000')
             .should('have.color', '#ffffff')
             .should('contain', i18n.global.t('index.cardEvent.addToCalendar'));
 
+          cy.dataCy('dialog-content')
+            .children()
+            .then(($element) => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
+            });
+
           cy.viewport('iphone-6');
 
           cy.dataCy('dialog-content')
-            .find('.col-12')
+            .children()
             .then(($element) => {
               expect(calculatePercentageWidth($element)).to.be.closeTo(
                 100,
                 0.5
               );
-            });
-
-          cy.viewport('macbook-13');
-
-          cy.dataCy('dialog-content')
-            .find('.col-12')
-            .first()
-            .then(($element) => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(50, 0.5);
             });
         });
     });

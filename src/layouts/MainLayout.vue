@@ -20,7 +20,7 @@ if (window.Cypress) {
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('gray-2', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'MainLayout',
@@ -80,7 +80,7 @@ export default defineComponent({
       v-model="leftDrawerOpen"
       side="left"
       :width="320"
-      class="bg-gray-2 q-py-lg q-px-lg"
+      class="bg-info q-py-lg q-px-lg"
       data-cy="q-drawer"
     >
       <vue-drawer-header

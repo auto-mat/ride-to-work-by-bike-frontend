@@ -11,7 +11,7 @@ const { formatDate } = date;
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('grey-2', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueEventCountdown',
@@ -102,7 +102,7 @@ export default defineComponent({
   <q-card
     square
     flat
-    class="row items-center justify-evenly q-py-xl bg-grey-2"
+    class="row items-center justify-evenly q-py-xl bg-info"
     data-cy="card"
   >
     <div class="text-center">
