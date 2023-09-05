@@ -78,7 +78,7 @@ export default defineComponent({
 
 <template>
   <div class="q-px-md q-mt-xl">
-    <!-- Heading -->
+    <!-- Btns group title -->
     <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-menu-links">
       {{ title }}
     </h4>
