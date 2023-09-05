@@ -27,6 +27,7 @@ export default defineComponent({
 
 <template>
   <div class="user-select" data-cy="user-select">
+    <!-- User dropdown -->
     <q-select
       rounded
       standout
@@ -36,6 +37,7 @@ export default defineComponent({
       data-cy="user-select-input"
     >
       <template v-slot:prepend>
+        <!-- User image -->
         <q-avatar size="56px" data-cy="avatar">
           <img :src="user.image" :alt="user.label" />
         </q-avatar>
