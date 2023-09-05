@@ -9,7 +9,7 @@ import { BannerImage, ConfigGlobal } from 'components/types';
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('grey-2', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueBannerImage',
@@ -29,7 +29,7 @@ export default defineComponent({
 <template>
   <div>
     <div
-      class="overflow-hidden row bg-grey-2"
+      class="overflow-hidden row bg-info"
       :style="{ 'border-radius': borderRadius }"
       data-cy="banner"
     >

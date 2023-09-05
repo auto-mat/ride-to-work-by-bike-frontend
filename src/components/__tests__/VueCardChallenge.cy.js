@@ -5,7 +5,10 @@ describe('<VueCardChallenge>', () => {
   const title = 'Challenge 1';
   const url = '#';
   const dates = '1. říj.–31. říj. 2022';
-  const image = 'https://picsum.photos/500/550';
+  const image = {
+    src: 'https://picsum.photos/id/70/500/550',
+    alt: 'road lined with trees',
+  };
   const company = true;
 
   beforeEach(() => {
@@ -84,7 +87,7 @@ describe('<VueCardChallenge>', () => {
         .then(($img) => {
           const naturalHeight = $img[0].naturalHeight;
           expect(naturalHeight).to.be.greaterThan(0);
-          expect($img.attr('src')).to.equal(image);
+          expect($img.attr('src')).to.equal(image.src);
         });
     });
   });
