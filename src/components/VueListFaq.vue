@@ -96,7 +96,7 @@ export default defineComponent({
       },
     ];
 
-    const items = computed(() => {
+    const items = computed((): Array<object> => {
       if (props.variant === 'participant') {
         return itemsFAQParticipant;
       }
