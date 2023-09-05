@@ -11,7 +11,7 @@ const { formatDate } = date;
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
-setCssVar('gray-light', rideToWorkByBikeConfig.colorGrayLight);
+setCssVar('grey-2', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'VueEventCountdown',
@@ -47,26 +47,38 @@ export default defineComponent({
 
       countdownInterval = setInterval(() => {
         const now = new Date().getTime();
-        const timeDifference = targetDate - now;
+        const timeDifference = getTimeDifference(now, targetDate);
 
-        if (timeDifference > 0) {
-          countdown.value = {
-            days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
-            hours: Math.floor(
-              (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-            ),
-            minutes: Math.floor(
-              (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-            ),
-            seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
-          };
-        } else {
-          if (countdownInterval) {
-            clearInterval(countdownInterval);
-          }
-        }
+        computeCountdownInterval(timeDifference);
       }, 1000);
     };
+
+    function getTimeDifference(now: number, date: number): number {
+      return date - now;
+    }
+
+    function computeCountdownInterval(timeDifference: number) {
+      if (timeDifference > 0) {
+        setCountdownValues(timeDifference);
+      } else {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+        }
+      }
+    }
+
+    function setCountdownValues(timeDifference: number): void {
+      countdown.value = {
+        days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor(
+          (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+        ),
+        seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
+      };
+    }
 
     watchEffect(() => {
       startCountdown();
@@ -90,7 +102,7 @@ export default defineComponent({
   <q-card
     square
     flat
-    class="row items-center justify-evenly q-py-xl"
+    class="row items-center justify-evenly q-py-xl bg-grey-2"
     data-cy="card"
   >
     <div class="text-center">
@@ -135,10 +147,7 @@ export default defineComponent({
   </q-card>
 </template>
 
-<style>
-.q-card {
-  background-color: var(--q-gray-light);
-}
+<style scoped lang="scss">
 .text-64 {
   font-size: 64px;
   @media (min-width: $breakpoint-lg-min) {
