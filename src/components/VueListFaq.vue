@@ -1,6 +1,9 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
+// types
+import { ItemFAQ } from 'components/types';
+
 export default defineComponent({
   name: 'VueListFaq',
   props: {
@@ -96,7 +99,7 @@ export default defineComponent({
       },
     ];
 
-    const items = computed((): Array<object> => {
+    const items = computed((): Array<ItemFAQ> => {
       if (props.variant === 'participant') {
         return itemsFAQParticipant;
       }
