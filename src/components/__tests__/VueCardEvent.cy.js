@@ -58,8 +58,7 @@ describe('<VueCardEvent>', () => {
         .find('img')
         .should('be.visible')
         .then(($img) => {
-          const naturalHeight = $img[0].naturalHeight;
-          expect(naturalHeight).to.be.greaterThan(0);
+          cy.testImageHeight($img);
           expect($img.attr('src')).to.equal(thumbnail);
         });
     });
@@ -149,10 +148,7 @@ describe('<VueCardEvent>', () => {
     cy.dataCy('card-section')
       .should('be.visible')
       .then(($parentElement) => {
-        parentWidth = $parentElement[0].clientWidth;
-
         cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
-
         cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
   });
@@ -238,8 +234,7 @@ describe('<VueCardEvent>', () => {
             .find('img')
             .should('be.visible')
             .then(($img) => {
-              const naturalHeight = $img[0].naturalHeight;
-              expect(naturalHeight).to.be.greaterThan(0);
+              cy.testImageHeight($img);
               expect($img.attr('src')).to.equal(image);
             });
 

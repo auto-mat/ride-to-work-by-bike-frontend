@@ -289,12 +289,12 @@ export const progressStats: ItemStatistics[] = [
     value: '18',
   },
   {
-    icon: 'distance',
+    icon: 'open_in_full',
     label: '312,25 km',
     value: '',
   },
   {
-    icon: 'mdi-leaf',
+    icon: 'eco',
     label: 'ušetřeno',
     value: '420 g CO2',
   },

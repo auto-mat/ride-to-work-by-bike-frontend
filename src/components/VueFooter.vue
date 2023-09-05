@@ -70,7 +70,7 @@ export default defineComponent({
             </q-btn>
             <div
               class="flex w-full w-md-auto flex-wrap items-center justify-center text-center gap-12 copyright lt-md"
-              data-cy="footer-copyright-list"
+              data-cy="footer-copyright-list-mobile"
             >
               <div
                 v-for="(message, index) in copyrightList"
@@ -98,7 +98,7 @@ export default defineComponent({
           </div>
           <div
             class="flex flex-wrap items-center gap-12 copyright gt-sm"
-            data-cy="footer-copyright-list"
+            data-cy="footer-copyright-list-desktop"
           >
             <div
               v-for="(message, index) in copyrightList"
