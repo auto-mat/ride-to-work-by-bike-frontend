@@ -63,8 +63,10 @@ export default defineComponent({
 
 <template>
   <q-layout view="hHh lpR fFf">
+    <!-- Top bar: (mobile) -->
     <q-header reveal class="lt-md bg-white">
       <q-toolbar>
+        <!-- Logo + Buttons (help, notification) -->
         <vue-drawer-header
           v-model="leftDrawerOpen"
           data-cy="drawer-header-mobile"
@@ -75,6 +77,7 @@ export default defineComponent({
       </q-toolbar>
     </q-header>
 
+    <!-- Left-side drawer (desktop) -->
     <q-drawer
       show-if-above
       v-model="leftDrawerOpen"
@@ -83,24 +86,28 @@ export default defineComponent({
       class="bg-info q-py-lg q-px-lg"
       data-cy="q-drawer"
     >
+      <!-- Logo + Buttons (help, notification) -->
       <vue-drawer-header
         data-cy="drawer-header"
         :mobile="false"
       ></vue-drawer-header>
+      <!-- User options dropdown -->
       <vue-user-select
         :options="users"
         class="q-pt-lg"
         data-cy="user-select"
       ></vue-user-select>
+      <!-- Navigation menu -->
       <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
     </q-drawer>
 
+    <!-- Page content -->
     <q-page-container>
       <router-view />
     </q-page-container>
 
     <q-footer>
-      <!-- footer content -->
+      <!-- Footer content -->
     </q-footer>
   </q-layout>
 </template>
