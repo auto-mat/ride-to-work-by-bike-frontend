@@ -78,10 +78,12 @@ export default defineComponent({
 
 <template>
   <div class="q-px-md q-mt-xl">
+    <!-- Heading -->
     <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-menu-links">
       {{ title }}
     </h4>
     <div class="flex flex-wrap gap-x-24" data-cy="menu-links-list">
+      <!-- Links -->
       <q-btn
         v-for="item in items"
         :key="item.title"
