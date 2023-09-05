@@ -12,6 +12,8 @@ export default defineComponent({
       email: '',
     });
 
+    const isContactFormValid = (val: string): boolean => val?.length > 0;
+
     const onSubmit = () => {
       emit('formSubmit');
 
@@ -21,6 +23,7 @@ export default defineComponent({
     return {
       contactForm,
       onSubmit,
+      isContactFormValid,
     };
   },
 });
@@ -28,7 +31,7 @@ export default defineComponent({
 
 <template>
   <q-form class="q-gutter-md" @submit.prevent="onSubmit">
-    <!-- Field: E-mail subject -->
+    <!-- Subject input widget -->
     <div class="q-mt-lg" data-cy="contact-form-subject">
       <label for="contact-form-subject" class="text-caption text-bold">
         {{ $t('index.contact.subject') }}
@@ -40,7 +43,7 @@ export default defineComponent({
         lazy-rules
         :rules="[
           (val) =>
-            (val && val.length > 0) || $t('index.contact.subjectRequired'),
+            isContactFormValid(val) || $t('index.contact.subjectRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -48,7 +51,7 @@ export default defineComponent({
         data-cy="contact-form-subject-input"
       />
     </div>
-    <!-- Field: Message content -->
+    <!-- Message input widget -->
     <div class="q-mt-none" data-cy="contact-form-message">
       <label for="contact-form-message" class="text-caption text-bold">
         {{ $t('index.contact.message') }}
@@ -60,7 +63,7 @@ export default defineComponent({
         type="textarea"
         :rules="[
           (val) =>
-            (val && val.length > 0) || $t('index.contact.messageRequired'),
+            isContactFormValid(val) || $t('index.contact.messageRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -68,7 +71,7 @@ export default defineComponent({
         data-cy="contact-form-message-input"
       />
     </div>
-    <!-- Field: Attachment -->
+    <!-- File input widget -->
     <div data-cy="contact-form-file">
       <q-file
         v-model="contactForm.file"
@@ -84,7 +87,7 @@ export default defineComponent({
         </template>
       </q-file>
     </div>
-    <!-- Field: E-mail address -->
+    <!-- Email input widget -->
     <div class="q-mt-none" data-cy="contact-form-email">
       <label for="contact-form-email" class="text-caption text-bold">
         {{ $t('index.contact.email') }}
@@ -96,7 +99,7 @@ export default defineComponent({
         type="email"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || $t('index.contact.emailRequired'),
+          (val) => isContactFormValid(val) || $t('index.contact.emailRequired'),
         ]"
         class="q-mt-sm"
         outlined
@@ -104,8 +107,8 @@ export default defineComponent({
         data-cy="contact-form-email-input"
       />
     </div>
+    <!-- Submit button -->
     <div class="flex justify-end">
-      <!-- Submit button -->
       <q-btn
         :label="$t('index.contact.submit')"
         type="submit"
