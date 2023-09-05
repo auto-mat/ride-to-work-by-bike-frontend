@@ -1,11 +1,12 @@
 <script lang="ts">
-import { setCssVar } from 'quasar';
+import { setCssVar, date } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
-import { useDateFormat } from '@vueuse/core';
 
 // import types
 import { Countdown, ConfigGlobal } from 'components/types';
+
+const { formatDate } = date;
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
@@ -34,7 +35,7 @@ export default defineComponent({
     // if (locale.value === 'en') {
     //   formatString = 'D MMM';
     // }
-    const formattedDate = useDateFormat(
+    const formattedDate = formatDate(
       new Date(props.releaseDate),
       formatString
     );
