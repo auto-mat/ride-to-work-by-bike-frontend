@@ -61,6 +61,7 @@ export default defineComponent({
 
 <template>
   <div class="full-width flex items-center" :class="classes">
+    <!-- Logo -->
     <svg
       v-if="showLogo"
       xmlns="http://www.w3.org/2000/svg"
@@ -76,10 +77,13 @@ export default defineComponent({
         clip-rule="evenodd"
       />
     </svg>
+
     <div class="flex items-center gap-32">
+      <!-- Button: Help -->
       <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
+      <!-- Button: Notifications -->
       <a href="#">
         <q-icon
           name="notifications"
@@ -88,6 +92,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
+      <!-- Button: Mobile menu -->
       <q-btn
         v-if="showDrawerOpenButton"
         flat
@@ -99,6 +104,7 @@ export default defineComponent({
       />
     </div>
 
+    <!-- Modal dialog -->
     <q-dialog
       v-model="dialogOpened"
       square
@@ -110,6 +116,7 @@ export default defineComponent({
           data-cy="dialog-header"
           class="flex items-center gap-12"
         >
+          <!-- Navigation button: Back -->
           <q-btn
             v-if="dialogState !== 'default'"
             round
@@ -120,6 +127,7 @@ export default defineComponent({
           >
             <q-icon name="west" size="xs" color="black" />
           </q-btn>
+          <!-- Dialog heading -->
           <h3 class="text-h6 q-my-none">
             <template v-if="dialogState === 'default'">
               {{ $t('index.help.titleStateDefault') }}
@@ -132,22 +140,26 @@ export default defineComponent({
 
         <q-separator />
 
+        <!-- Dialog content: Default state -->
         <q-card-section
           v-if="dialogState === 'default'"
           class="scroll q-px-none"
           data-cy="dialog-content"
           style="max-height: 50vh"
         >
+          <!-- FAQ for pariticipants -->
           <vue-list-faq
             :title="$t('index.help.titleParticipants')"
             variant="participant"
           ></vue-list-faq>
+          <!-- FAQ for coordinators -->
           <vue-list-faq
             :title="$t('index.help.titleCoordinators')"
             variant="coordinator"
             class="q-mt-xl"
           ></vue-list-faq>
 
+          <!-- Section: Guide -->
           <div class="q-px-md q-mt-xl">
             <h4
               class="text-h5 text-weight-bold q-my-none"
@@ -155,6 +167,7 @@ export default defineComponent({
             >
               {{ $t('index.help.titleGuide') }}
             </h4>
+            <!-- Button: Replay guide -->
             <q-btn
               rounded
               color="black"
@@ -166,6 +179,7 @@ export default defineComponent({
             />
           </div>
 
+          <!-- Section: Contact -->
           <div class="q-px-md q-mt-xl">
             <h4
               class="text-h5 text-weight-bold q-my-none"
@@ -173,6 +187,7 @@ export default defineComponent({
             >
               {{ $t('index.help.titleContact') }}
             </h4>
+            <!-- Button: Switch to contact form -->
             <q-btn
               rounded
               color="black"
@@ -184,25 +199,30 @@ export default defineComponent({
             />
           </div>
 
+          <!-- Section: Useful links -->
           <vue-menu-links
             :title="$t('index.help.titleLinks')"
             variant="useful"
           ></vue-menu-links>
+          <!-- Section: Social links -->
           <vue-menu-links
             :title="$t('index.help.titleSocials')"
             variant="social"
           ></vue-menu-links>
         </q-card-section>
 
+        <!-- Dialog content: Contact form state -->
         <q-card-section
           v-if="dialogState === 'contact'"
           class="scroll"
           style="max-height: 50vh"
           data-cy="dialog-content"
         >
+          <!-- Contact form -->
           <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
         </q-card-section>
 
+        <!-- Dialog: Button close -->
         <q-card-actions
           class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
           data-cy="dialog-close"

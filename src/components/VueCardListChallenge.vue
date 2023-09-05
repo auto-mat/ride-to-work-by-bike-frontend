@@ -25,6 +25,7 @@ export default defineComponent({
     <h2 class="text-h6 q-mt-none text-weight-bold" data-cy="card-list-title">
       {{ $t('index.cardList.title') }}
     </h2>
+    <!-- 3 col grid on desktop -->
     <div class="row q-col-gutter-lg" data-cy="card-list">
       <div
         v-for="card in cards"
@@ -32,7 +33,8 @@ export default defineComponent({
         class="col-12 col-sm-6 col-lg-4"
         data-cy="card-list-item"
       >
-        <vue-card-challenge :card="card"></vue-card-challenge>
+        <!-- Card -->
+        <vue-card-challenge :card="card" />
       </div>
     </div>
   </div>

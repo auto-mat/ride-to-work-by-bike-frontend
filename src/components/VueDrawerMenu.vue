@@ -65,6 +65,7 @@ export default defineComponent({
 
 <template>
   <q-list>
+    <!-- Menu: Top -->
     <q-item
       v-for="item in menuTop"
       :key="item.name"
@@ -74,7 +75,10 @@ export default defineComponent({
       <q-icon :name="item.icon" size="xs"></q-icon>
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
+
     <hr />
+
+    <!-- Menu: Bottom -->
     <q-item
       v-for="item in menuBottom"
       :key="item.name"
