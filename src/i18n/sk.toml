@@ -65,3 +65,6 @@ perex = "You can help us decide what to spend more time on next time and what sh
 
 [index.cardEvent]
 addToCalendar = "Pridať do kalendára"
+
+[index.headingBackground]
+imageAltText = "obrázok na pozadí zobrazujúci mestskú komunitu"

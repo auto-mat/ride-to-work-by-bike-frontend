@@ -65,3 +65,6 @@ perex = "You can help us decide what to spend more time on next time and what sh
 
 [index.cardEvent]
 addToCalendar = "Add to calendar"
+
+[index.headingBackground]
+imageAltText = "background image depicting urban community"

@@ -65,3 +65,6 @@ perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co 
 
 [index.cardEvent]
 addToCalendar = "Přidat do kalendáře"
+
+[index.headingBackground]
+imageAltText = "obrázek na pozadí zobrazující městskou komunitu"
