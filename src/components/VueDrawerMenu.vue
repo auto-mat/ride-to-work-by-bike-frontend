@@ -65,7 +65,7 @@ export default defineComponent({
 
 <template>
   <q-list>
-    <!-- Menu: Top -->
+    <!-- Menu: Top items -->
     <q-item
       v-for="item in menuTop"
       :key="item.name"
@@ -78,7 +78,7 @@ export default defineComponent({
 
     <hr />
 
-    <!-- Menu: Bottom -->
+    <!-- Menu: Bottom items -->
     <q-item
       v-for="item in menuBottom"
       :key="item.name"
