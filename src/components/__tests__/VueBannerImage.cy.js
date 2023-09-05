@@ -70,15 +70,16 @@ describe('<VueBannerImage>', () => {
           .find('img')
           .should('be.visible')
           .then(($img) => {
-            const naturalHeight = $img[0].naturalHeight;
-            expect(naturalHeight).to.be.greaterThan(0);
+            cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(image);
           });
 
-        cy.dataCy('banner').find('img').matchImageSnapshot({
-          failureThreshold: 0.5,
-          failureThresholdType: 'percent',
-        });
+        cy.dataCy('banner')
+          .find('img')
+          .matchImageSnapshot({
+            failureThreshold: 0.5,
+            failureThresholdType: 'percent',
+          });
       });
     });
 
@@ -167,8 +168,7 @@ describe('<VueBannerImage>', () => {
           .find('img')
           .should('be.visible')
           .then(($img) => {
-            const naturalHeight = $img[0].naturalHeight;
-            expect(naturalHeight).to.be.greaterThan(0);
+            cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(image);
           });
 
