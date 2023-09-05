@@ -106,10 +106,13 @@ export default defineComponent({
     data-cy="card"
   >
     <div class="text-center">
+      <!-- Title -->
       <div class="text-weight-bold q-px-lg" data-cy="title">
         {{ $t('index.countdown.title', { date: formattedDate }) }}
       </div>
+      <!-- Countdown -->
       <div class="row items-center justify-evenly q-mt-md">
+        <!-- Days -->
         <div class="q-px-md">
           <div class="text-64 text-weight-bold" data-cy="countdown-days">
             {{ countdown.days }}
@@ -118,6 +121,7 @@ export default defineComponent({
             {{ $t('index.countdown.days') }}
           </div>
         </div>
+        <!-- Hours -->
         <div class="q-px-md">
           <div class="text-64 text-weight-bold" data-cy="countdown-hours">
             {{ countdown.hours }}
@@ -126,6 +130,7 @@ export default defineComponent({
             {{ $t('index.countdown.hours') }}
           </div>
         </div>
+        <!-- Minutes -->
         <div class="q-px-md">
           <div class="text-64 text-weight-bold" data-cy="countdown-minutes">
             {{ countdown.minutes }}
@@ -134,6 +139,7 @@ export default defineComponent({
             {{ $t('index.countdown.minutes') }}
           </div>
         </div>
+        <!-- Seconds -->
         <div class="q-px-md">
           <div class="text-64 text-weight-bold" data-cy="countdown-seconds">
             {{ countdown.seconds }}
