@@ -62,7 +62,7 @@ export default defineComponent({
 <template>
   <div class="full-width flex items-center" :class="classes">
     <!-- RTWBB logo -->
-    <img class="logo" src="/logo.svg" :alt="$t('index.logoAltText')" />
+    <img class="logo" src="/logo.svg" :alt="$t('index.logoAltText')" data-cy="logo" />
     <!-- Content -->
     <div class="flex items-center gap-32">
       <!-- Help icon link for displaying modal dialog-->
