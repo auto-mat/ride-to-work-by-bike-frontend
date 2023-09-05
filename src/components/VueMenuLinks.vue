@@ -89,9 +89,10 @@ export default defineComponent({
         :key="item.title"
         :href="item.url"
         rounded
+        no-caps
         color="blue-grey-1"
         unelevated
-        class="q-btn-no-uppercase q-btn-underline text-body2 q-mt-md"
+        class="q-btn-underline text-body2 q-mt-md"
         data-cy="button-menu-links"
       >
         <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
@@ -107,9 +108,6 @@ export default defineComponent({
 }
 
 .q-btn {
-  &.q-btn-no-uppercase {
-    text-transform: none;
-  }
   &.q-btn-underline {
     span {
       text-decoration: underline;
