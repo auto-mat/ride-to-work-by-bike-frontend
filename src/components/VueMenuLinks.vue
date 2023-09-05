@@ -83,7 +83,7 @@ export default defineComponent({
       {{ title }}
     </h4>
     <div class="flex flex-wrap gap-x-24" data-cy="menu-links-list">
-      <!-- Links -->
+      <!-- Button -->
       <q-btn
         v-for="item in items"
         :key="item.title"
