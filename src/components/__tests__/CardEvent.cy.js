@@ -64,9 +64,8 @@ describe('<CardEvent>', () => {
         .find('img')
         .should('be.visible')
         .then(($img) => {
-          const naturalHeight = $img[0].naturalHeight;
-          expect(naturalHeight).to.be.greaterThan(0);
-          expect($img.attr('src')).to.equal(thumbnail.src);
+          cy.testImageHeight($img);
+          expect($img.attr('src')).to.equal(thumbnail);
         });
     });
   });
@@ -155,10 +154,7 @@ describe('<CardEvent>', () => {
     cy.dataCy('card-section')
       .should('be.visible')
       .then(($parentElement) => {
-        parentWidth = $parentElement[0].clientWidth;
-
         cy.testElementPercentageWidth(cy.dataCy('card-image'), 100);
-
         cy.testElementPercentageWidth(cy.dataCy('card-content'), 100);
       });
   });
@@ -249,13 +245,8 @@ describe('<CardEvent>', () => {
             .find('img')
             .then(($img) => {
               // Updated version of the test valid for Firefox
-              cy.wrap($img[0]).then((img) => {
-                const image = new Image();
-                image.src = img.currentSrc;
-                image.onload = () => {
-                  expect(image.height).to.be.greaterThan(0);
-                };
-              });
+              cy.testImageHeight($img);
+              expect($img.attr('src')).to.equal(image);
             });
 
           cy.dataCy('dialog-button')
