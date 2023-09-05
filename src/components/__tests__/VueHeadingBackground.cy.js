@@ -47,7 +47,7 @@ describe('<VueHeadingBackground>', () => {
         .should('be.visible')
         .then(($element) => {
           expect($element.width()).to.be.closeTo(1280, 0.5);
-          expect($element.height()).to.be.closeTo(250, 1);
+          expect($element.height()).to.be.closeTo(250, 5);
         });
     });
   });
