@@ -61,15 +61,15 @@ export default defineComponent({
 
 <template>
   <div class="full-width flex items-center" :class="classes">
-    <!-- Logo -->
+    <!-- RTWBB logo -->
     <img class="logo" src="/logo.svg" :alt="$t('index.logoAltText')" />
-
+    <!-- Content -->
     <div class="flex items-center gap-32">
-      <!-- Button: Help -->
+      <!-- Help icon link for displaying modal dialog-->
       <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
       </a>
-      <!-- Button: Notifications -->
+      <!-- Notification icon link -->
       <a href="#">
         <q-icon
           name="notifications"
@@ -78,7 +78,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <!-- Button: Mobile menu -->
+      <!-- Show menu btn (mobile) -->
       <q-btn
         v-if="showDrawerOpenButton"
         flat
@@ -92,17 +92,19 @@ export default defineComponent({
 
     <!-- Modal dialog -->
     <q-dialog
-      v-model="dialogOpened"
       square
+      persistent
+      v-model="dialogOpened"
       data-cy="dialog-help"
       class="dialog-help"
     >
-      <q-card class="w-100 relative-position overflow-visible bg-white">
+      <!-- Header -->
+      <q-card class="relative-position overflow-visible bg-white">
         <q-card-section
           data-cy="dialog-header"
           class="flex items-center gap-12"
         >
-          <!-- Navigation button: Back -->
+          <!-- Navigation button: Back (arrow) -->
           <q-btn
             v-if="dialogState !== 'default'"
             round
@@ -138,14 +140,14 @@ export default defineComponent({
             :title="$t('index.help.titleParticipants')"
             variant="participant"
           ></vue-list-faq>
-          <!-- FAQ for coordinators -->
+          <!-- FAQ for Company coordinators -->
           <vue-list-faq
             :title="$t('index.help.titleCoordinators')"
             variant="coordinator"
             class="q-mt-xl"
           ></vue-list-faq>
 
-          <!-- Section: Guide -->
+          <!-- Section: App Guide -->
           <div class="q-px-md q-mt-xl">
             <h4
               class="text-h5 text-weight-bold q-my-none"
@@ -165,7 +167,7 @@ export default defineComponent({
             />
           </div>
 
-          <!-- Section: Contact -->
+          <!-- Section: Contact us via form modal dialog -->
           <div class="q-px-md q-mt-xl">
             <h4
               class="text-h5 text-weight-bold q-my-none"
@@ -190,7 +192,7 @@ export default defineComponent({
             :title="$t('index.help.titleLinks')"
             variant="useful"
           ></vue-menu-links>
-          <!-- Section: Social links -->
+          <!-- Section: Social media links -->
           <vue-menu-links
             :title="$t('index.help.titleSocials')"
             variant="social"
@@ -232,36 +234,12 @@ export default defineComponent({
   gap: 12px;
 }
 
-.gap-x-24 {
-  column-gap: 24px;
-}
-
-.w-100 {
-  width: 100%;
+.gap-32 {
+  gap: 32px;
 }
 
 .logo {
   height: 40px;
-}
-
-.file-input :deep(.q-field__label) {
-  font-weight: 600;
-}
-
-.q-btn {
-  &.q-btn-no-uppercase {
-    text-transform: none;
-  }
-  &.q-btn-underline {
-    span {
-      text-decoration: underline;
-    }
-    &:hover {
-      span {
-        text-decoration: none;
-      }
-    }
-  }
 }
 
 .q-dialog__inner > div {
@@ -271,18 +249,5 @@ export default defineComponent({
 .dialog-close {
   top: -21px;
   right: -21px;
-}
-
-.gap-32 {
-  gap: 32px;
-}
-
-.dialog-help {
-  .q-dialog__inner--minimized > div {
-    @media (min-width: $breakpoint-md-min) {
-      width: 100%;
-      max-width: 784px;
-    }
-  }
 }
 </style>
