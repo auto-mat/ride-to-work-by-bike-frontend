@@ -20,8 +20,8 @@ export default defineComponent({
       :alt="$t('index.headingBackground.imageAltText')"
       data-cy="svg"
     />
-    <!-- Content: heading -->
     <div class="heading-wrapper" data-cy="heading-wrapper">
+      <!-- Title -->
       <h2
         class="text-h5 text-weight-bold text-center q-my-none"
         data-cy="heading"
