@@ -132,8 +132,7 @@ describe('<VueCardOffer>', () => {
               .find('img')
               .should('be.visible')
               .then(($img) => {
-                const naturalHeight = $img[0].naturalHeight;
-                expect(naturalHeight).to.be.greaterThan(0);
+                cy.testImageHeight($img);
                 expect($img.attr('src')).to.equal(card.image);
               });
 

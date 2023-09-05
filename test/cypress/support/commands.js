@@ -76,3 +76,10 @@ Cypress.Commands.add(
     });
   }
 );
+
+Cypress.Commands.add(
+  'testImageHeight',
+  ($img) => {
+    cy.wrap($img[0]).should('have.prop', 'naturalHeight').should('be.gt', 0);
+  }
+);

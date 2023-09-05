@@ -3,7 +3,7 @@
 import { defineComponent } from 'vue';
 
 // types
-import { CardProgress } from './types/Card';
+import { CardProgress, ItemStatistics, Link } from './types';
 
 // components
 import VueCardProgress from './VueCardProgress.vue';

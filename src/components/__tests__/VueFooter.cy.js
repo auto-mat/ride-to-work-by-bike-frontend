@@ -69,7 +69,7 @@ describe('<VueFooter>', () => {
 
     it('renders copyright list', () => {
       cy.window().then(() => {
-        cy.dataCy('footer-copyright-list')
+        cy.dataCy('footer-copyright-list-desktop')
           .should('be.visible')
           .should('have.css', 'display', 'flex')
           .should('have.css', 'flex-wrap', 'wrap')
