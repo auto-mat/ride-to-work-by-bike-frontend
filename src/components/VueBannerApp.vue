@@ -1,6 +1,7 @@
 <script lang="ts">
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
+import { Screen } from 'quasar';
 import { useStorage } from '@vueuse/core';
 
 // types
@@ -21,22 +22,23 @@ export default defineComponent({
   setup() {
     const state = useStorage('ride-to-work-by-bike', { showAppBanner: true });
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
+    const isHorizontal = computed(() => {
+      return Screen.gt.xs
+    })
 
     return {
-      state,
       borderRadius,
+      isHorizontal,
+      state,
     };
   },
 });
 </script>
 
 <template>
-  <q-card
+  <div
     v-if="state.showAppBanner"
-    flat
-    dark
-    persistent
-    class="row bg-blue-grey-8"
+    class="row relative-position bg-blue-grey-8 text-white"
     data-cy="banner-app"
     :style="{'border-radius': borderRadius}"
   >
@@ -44,6 +46,11 @@ export default defineComponent({
     <q-img
       :src="banner.image"
       :ratio="3 / 1"
+      :img-style="{
+        borderRadius: isHorizontal
+          ? `${borderRadius} 0 0 ${borderRadius}`
+          : `${borderRadius} ${borderRadius} 0 0`,
+      }"
       class="col-sm-6"
       data-cy="banner-app-half"
     />
@@ -52,7 +59,7 @@ export default defineComponent({
       data-cy="banner-app-half"
     >
       <!-- Close button -->
-      <q-card-actions vertical class="absolute-top-right q-p-md">
+      <div class="absolute-top-right q-p-md">
         <q-btn
           flat
           round
@@ -60,7 +67,7 @@ export default defineComponent({
           icon="close"
           @click.prevent="state.showAppBanner = false"
         />
-      </q-card-actions>
+      </div>
       <div class="q-pr-sm-lg">
         <!-- Title -->
         <div
@@ -82,36 +89,11 @@ export default defineComponent({
         />
       </div>
     </div>
-  </q-card>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.rounded-20 {
-  border-radius: 20px;
-}
-
-.q-card > div:first-child {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-@media (min-width: $breakpoint-sm-min) {
-  .q-card > div:first-child {
-    border-top-left-radius: inherit;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: 0;
-  }
-  .q-pr-sm-lg {
-    padding-right: 24px;
-  }
-}
-
-@media (min-width: $breakpoint-lg-min) {
-  .q-card > div:last-child {
-    padding: 48px;
-  }
+.q-pr-sm-lg {
+  padding-right: 24px;
 }
 </style>
