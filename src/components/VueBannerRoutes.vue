@@ -20,11 +20,15 @@ export default defineComponent({
     class="bg-grey-1"
     data-cy="banner-routes-card"
   >
-    <q-card-section horizontal class="justify-between flex-wrap">
+    <q-card-section horizontal class="flex-wrap justify-between">
+      <!-- Title -->
       <q-card-section class="row items-center">
-        <!-- TODO: fix conjugation in CZ and SK -->
-        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">{{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}</h3>
+        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">
+          <!-- TODO: fix conjugation in CZ and SK -->
+          {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
+        </h3>
       </q-card-section>
+      <!-- Link to Route log -->
       <q-card-section class="row items-center">
         <q-btn
         rounded
@@ -32,7 +36,9 @@ export default defineComponent({
         text-color="white"
         unelevated
         data-cy="banner-routes-button-add-routes">
+          <!-- Plus icon -->
           <q-icon name="add" size="24px" color="white" />
+          <!-- Button text -->
           <span class="inline-block q-px-sm">
             {{ $t('index.bannerRoutes.addRoutes') }}
           </span>
