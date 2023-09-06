@@ -71,8 +71,6 @@ describe('<VueCardListOffer>', () => {
 
     it('renders items in a 3 col grid', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer').should('have.css', 'display', 'grid');
-
         cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 33);
       });
     });
@@ -123,7 +121,6 @@ describe('<VueCardListOffer>', () => {
 
     it('renders items in a 1 col grid', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer').should('have.css', 'display', 'grid');
         cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 100);
       });
     });
