@@ -35,6 +35,7 @@
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
       ></vue-card-list-challenge>
+      <vue-badge-list :items="badgeList" class="q-pt-xl q-pb-xl" data-cy="list-badges"></vue-badge-list>
       <vue-banner-image
         :banner="bannerImage"
         class="q-pt-xl q-pb-xl"
@@ -81,6 +82,7 @@
 import { defineComponent } from 'vue';
 
 // components
+import VueBadgeList from 'src/components/VueBadgeList.vue'
 import VueBannerApp from 'src/components/VueBannerApp.vue';
 import VueBannerImage from 'components/VueBannerImage.vue';
 import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
@@ -101,6 +103,7 @@ import * as homepage from '../mocks/homepage';
 export default defineComponent({
   name: 'IndexPage',
   components: {
+    VueBadgeList,
     VueEventCountdown,
     VueCardListChallenge,
     VueBannerImage,
@@ -119,6 +122,7 @@ export default defineComponent({
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
+      badgeList: homepage.badgeList,
       bannerImage: homepage.bannerImage,
       bannerApp: homepage.bannerApp,
       headingBgTitle: homepage.headingBgTitle,

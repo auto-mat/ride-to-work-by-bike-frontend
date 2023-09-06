@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="row">
+  <div class="row q-gutter-lg">
     <vue-badge
       v-for="item in items"
       :key="item.title"
