@@ -1,5 +1,6 @@
 export * from './Banner';
 export * from './Card';
+export * from './Config';
 export * from './Countdown';
 export * from './DialogCard';
 export * from './Item';

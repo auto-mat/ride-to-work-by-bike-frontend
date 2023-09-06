@@ -4,7 +4,11 @@ import { defineComponent } from 'vue';
 import { useStorage } from '@vueuse/core';
 
 // types
-import { BannerApp } from 'components/types';
+import { BannerApp, ConfigGlobal } from 'components/types';
+
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
 
 export default defineComponent({
   name: 'VueBannerImage',
@@ -16,9 +20,11 @@ export default defineComponent({
   },
   setup() {
     const state = useStorage('ride-to-work-by-bike', { showAppBanner: true });
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
       state,
+      borderRadius,
     };
   },
 });
@@ -29,9 +35,12 @@ export default defineComponent({
     v-if="state.showAppBanner"
     flat
     dark
-    class="rounded-20 row bg-blue-grey-8"
+    persistent
+    class="row bg-blue-grey-8"
     data-cy="banner-app"
+    :style="{'border-radius': borderRadius}"
   >
+    <!-- Image -->
     <q-img
       :src="banner.image"
       :ratio="3 / 1"
@@ -42,6 +51,7 @@ export default defineComponent({
       class="col-sm-6 flex items-center q-px-md q-py-lg"
       data-cy="banner-app-half"
     >
+      <!-- Close button -->
       <q-card-actions vertical class="absolute-top-right q-p-md">
         <q-btn
           flat
@@ -52,6 +62,7 @@ export default defineComponent({
         />
       </q-card-actions>
       <div class="q-pr-sm-lg">
+        <!-- Title -->
         <div
           v-if="banner.title"
           class="text-weight-medium text-subtitle1"
@@ -59,6 +70,7 @@ export default defineComponent({
         >
           {{ banner.title }}
         </div>
+        <!-- Link to mobile app -->
         <q-btn
           rounded
           color="white"

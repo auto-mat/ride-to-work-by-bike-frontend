@@ -11,7 +11,7 @@
         :release-date="releaseDate"
         data-cy="event-countdown"
       ></vue-event-countdown>
-      <vue-banner-app :banner="bannerApp"></vue-banner-app>
+      <vue-banner-app :banner="bannerApp" class="q-mt-xl"></vue-banner-app>
       <vue-banner-routes :routes-count="14"
         class="q-mt-xl q-mb-xl"></vue-banner-routes>
       <vue-progress-slider

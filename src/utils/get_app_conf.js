@@ -17,6 +17,8 @@ const getAppConfig = (process) => {
     config['title'] = process.env.TITLE;
   } else if (process.env.SUBTITLE) {
     config['subtitle'] = process.env.SUBTITLE;
+  } else if (process.env.BORDER_RADIUS_CARD) {
+    config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
   }
   return config;
 };
