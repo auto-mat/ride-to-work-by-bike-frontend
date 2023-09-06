@@ -43,8 +43,8 @@ describe('<VueCardFollow>', () => {
         cy.dataCy('card-follow').should(
           'have.css',
           'border',
-          '1px solid rgb(207, 216, 220)'
-        ); // blue-grey-2
+          '1px solid rgb(220, 225, 237)' // config colorGrayMiddle
+        );
       });
     });
 
