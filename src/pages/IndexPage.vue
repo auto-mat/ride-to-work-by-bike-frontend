@@ -39,6 +39,7 @@
         class="q-pt-xl q-pb-xl"
         data-cy="list-progress"
       ></vue-card-list-progress>
+      <vue-badge-list :items="badgeList" class="q-pt-xl q-pb-xl" data-cy="list-badges"></vue-badge-list>
     </div>
     <heading-background
       :title="headingBgTitle"
@@ -81,6 +82,7 @@ import ListCardChallenge from 'components/ListCardChallenge.vue';
 import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
+import VueBadgeList from 'src/components/VueBadgeList.vue'
 import VueBannerApp from 'src/components/VueBannerApp.vue';
 import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
@@ -104,6 +106,7 @@ export default defineComponent({
     BannerImage,
     HeadingBackground,
     ListCardEvent,
+    VueBadgeList,
     VueBannerRoutes,
     VueCardListOffer,
     VueCardListPost,
@@ -117,6 +120,7 @@ export default defineComponent({
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
+      badgeList: homepage.badgeList,
       bannerImage: homepage.bannerImage,
       bannerApp: homepage.bannerApp,
       headingBgTitle: homepage.headingBgTitle,
