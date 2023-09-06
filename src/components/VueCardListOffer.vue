@@ -42,24 +42,32 @@ export default defineComponent({
 
 <template>
   <div>
+    <!-- Title -->
     <h2
       class="text-h6 q-mt-none text-weight-semibold"
       data-cy="card-list-post-title"
     >
       {{ title }}
     </h2>
+    <!-- Cards grid -->
     <div
-      class="grid grid-cols-1 grid-cols-sm-2 grid-cols-lg-3 gap-x-24 gap-y-16"
+      class="row q-col-gutter-lg q-row-gutter-md"
       data-cy="card-list-offer"
     >
-      <vue-card-offer
+      <div
         v-for="card in renderedCards"
         :key="card.title"
-        :card="card"
-        data-cy="card-list-offer-item"
+        class="col-12 col-sm-6 col-lg-4"
       >
-      </vue-card-offer>
+        <!-- Card -->
+        <vue-card-offer
+          :card="card"
+          data-cy="card-list-offer-item"
+          >
+        </vue-card-offer>
+      </div>
     </div>
+    <!-- Link more offers -->
     <div v-if="hasMoreCards" class="text-center">
       <q-btn
         rounded
@@ -73,28 +81,3 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-.grid {
-  display: grid;
-}
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-.grid-cols-sm-2 {
-  @media (min-width: $breakpoint-sm-min) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-.grid-cols-lg-3 {
-  @media (min-width: $breakpoint-lg-min) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-.gap-x-24 {
-  column-gap: 24px;
-}
-.gap-y-16 {
-  row-gap: 16px;
-}
-</style>
