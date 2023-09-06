@@ -2,6 +2,7 @@
 # Define Colors
 primaryColor = "#000000"
 colorGrayLight = "#F3F7FF"
+colorGrayMiddle = "#DCE1ED"
 image = "image.png"
 width = "850px"
 title = "Title"
