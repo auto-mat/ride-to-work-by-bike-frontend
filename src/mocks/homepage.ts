@@ -11,7 +11,7 @@ import {
   ItemBadge,
   ItemStatistics,
   NewsletterOption,
-  Offer,
+  CardOffer,
 } from 'components/types';
 
 export const releaseDate = '2023-10-01T12:00:00';
@@ -125,7 +125,7 @@ export const bannerApp: BannerApp = {
   image: 'https://picsum.photos/id/500/600/200',
 };
 
-export const cardsOffer: Offer[] = [
+export const cardsOffer: CardOffer[] = [
   {
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
