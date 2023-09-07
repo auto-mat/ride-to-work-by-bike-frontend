@@ -5,7 +5,7 @@ import { defineComponent, computed } from 'vue';
 import VueCardOffer from './VueCardOffer.vue';
 
 // types
-import { Offer } from 'components/types';
+import { CardOffer } from 'components/types';
 
 export default defineComponent({
   name: 'VueCardListOffer',
@@ -18,7 +18,7 @@ export default defineComponent({
       required: false,
     },
     cards: {
-      type: Array as () => Offer[],
+      type: Array as () => CardOffer[],
       required: true,
     },
   },
