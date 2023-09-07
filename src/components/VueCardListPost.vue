@@ -40,14 +40,19 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Component displaying the news -->
+  <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105611&mode=design&t=x3DpoanmIFk5i6MU-1 -->
   <div class="card-list-post relative-position" data-cy="card-list-post">
+    <!-- Title -->
     <h2
       class="text-h6 q-mt-none text-weight-semibold"
       data-cy="card-list-post-title"
     >
       {{ title }}
     </h2>
+    <!-- Swiper for news cards -->
     <swiper
+      navigation
       :modules="modules"
       :slides-per-view="4"
       :space-between="24"
@@ -63,7 +68,6 @@ export default defineComponent({
           slidesPerView: 4,
         },
       }"
-      navigation
     >
       <swiper-slide
         v-for="card in cards"
@@ -73,6 +77,7 @@ export default defineComponent({
         <vue-card-post :card="card" data-cy="card-list-post-item" />
       </swiper-slide>
     </swiper>
+    <!-- Link to more news -->
     <div
       v-if="button"
       class="text-sm-center absolute-bottom"
@@ -80,12 +85,12 @@ export default defineComponent({
     >
       <q-btn
         rounded
-        color="grey-10"
         unelevated
         outline
+        color="grey-10"
+        class="z-1"
         :to="button.url"
         :label="button.title"
-        class="z-1"
         data-cy="card-list-post-button"
       />
     </div>
@@ -102,6 +107,8 @@ export default defineComponent({
     text-align: center;
   }
 }
+
+// Styles for Swiper.js
 .card-list-post :deep(.swiper) {
   padding-bottom: 64px;
   overflow: hidden;
