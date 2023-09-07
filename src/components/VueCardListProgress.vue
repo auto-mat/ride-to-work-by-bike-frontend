@@ -35,28 +35,33 @@ export default defineComponent({
 <template>
   <div>
     <div
-      class="flex flex-wrap items-center justify-between gap-x-40 gap-y-16"
+      class="row q-col-gutter-lg"
       data-cy="card-list-progress"
     >
-      <h2 class="text-h6" data-cy="card-list-progress-title">
+      <!-- Title -->
+      <h2 class="col-12 col-sm-6 text-h6" data-cy="card-list-progress-title">
         {{ title }}
       </h2>
+      <!-- List of statistics -->
       <q-list
-        class="list-unstyled flex flex-wrap items-center q-p-none gap-x-40 gap-y-16"
+        class="col-12 col-sm-6 flex flex-wrap items-center justify-end q-p-none gap-x-40"
       >
         <q-item
           v-for="item in stats"
           :key="item.icon"
           data-cy="card-list-progress-stats-item"
-          class="text-grey-10"
+          class="text-grey-10 q-px-none"
         >
+          <!-- Icon -->
           <q-icon :name="item.icon" color="blue-grey-3" size="18px" />&nbsp;
-          <strong>{{ item.value }}</strong
-          >&nbsp;
+          <!-- Value -->
+          <strong>{{ item.value }}</strong>&nbsp;
+          <!-- Label -->
           <span>{{ item.label }}</span>
         </q-item>
       </q-list>
     </div>
+    <!-- Result cards -->
     <div class="row q-col-gutter-lg" data-cy="card-list-progress-wrapper">
       <div
         v-for="card in cards"
@@ -67,7 +72,8 @@ export default defineComponent({
         <vue-card-progress :card="card"></vue-card-progress>
       </div>
     </div>
-    <div v-if="button" class="text-sm-center">
+    <!-- Link to all results -->
+    <div v-if="button" class="text-center q-pt-md">
       <q-btn
         rounded
         color="grey-10"
@@ -75,7 +81,6 @@ export default defineComponent({
         outline
         :to="button.url"
         :label="button.title"
-        class="z-1"
         data-cy="card-list-progress-button"
       />
     </div>
@@ -83,33 +88,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.z-1 {
-  z-index: 1;
-}
-
-.text-sm-center {
-  text-align: left;
-
-  @media (min-width: $breakpoint-sm-min) {
-    text-align: center;
-  }
-}
-
-.justify-sm-center {
-  @media (min-width: $breakpoint-sm-min) {
-    justify-content: center;
-  }
-}
-
-.list-unstyled {
-  list-style: none;
-}
-
 .gap-x-40 {
-  row-gap: 40px;
-}
-
-.gap-y-16 {
-  column-gap: 16px;
+  column-gap: 40px;
 }
 </style>
