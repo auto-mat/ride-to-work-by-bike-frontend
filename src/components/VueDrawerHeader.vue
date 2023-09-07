@@ -99,7 +99,7 @@ export default defineComponent({
       class="dialog-help"
     >
       <!-- Header -->
-      <q-card class="relative-position overflow-visible bg-white">
+      <q-card class="full-width relative-position overflow-visible bg-white">
         <q-card-section
           data-cy="dialog-header"
           class="flex items-center gap-12"

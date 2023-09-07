@@ -121,7 +121,7 @@ export default defineComponent({
   </q-form>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 form :deep(.q-field__control) {
   border-radius: 8px;
 }
