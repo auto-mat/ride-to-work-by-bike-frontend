@@ -1,6 +1,7 @@
 <script lang="ts">
 // libraries
 import { defineComponent, computed } from 'vue';
+import { Screen } from 'quasar';
 import { useMediaQuery } from '@vueuse/core';
 
 // types
@@ -15,10 +16,10 @@ export default defineComponent({
     },
   },
   setup() {
-    const isLargeScreen = useMediaQuery('(min-width: 600px)');
+    const isLargeScreen = Screen.gt.xs;
 
     const circleSize = computed(() => {
-      return isLargeScreen.value ? '220px' : '128px';
+      return isLargeScreen ? '220px' : '128px';
     });
 
     const isFirst = (card: CardProgress): boolean => {
