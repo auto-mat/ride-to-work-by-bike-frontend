@@ -33,6 +33,8 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Component displaying challenge statistics with progress loaders -->
+  <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106399&mode=design&t=x3DpoanmIFk5i6MU-1 -->
   <div>
     <div
       class="row q-col-gutter-lg"
