@@ -73,9 +73,9 @@ describe('<VueCardPost>', () => {
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
         .should('have.color', '#78909c')
-        .should('contain', '1. Sept. 2023')
+        .should('contain', '1. Sep. 2023')
         .then(($date) => {
-          expect($date.text()).to.equal('1. Sept. 2023');
+          expect($date.text()).to.equal('1. Sep. 2023');
         });
     });
   });

@@ -1,10 +1,16 @@
 <script lang="ts">
 // libraries
 import { defineComponent } from 'vue';
-import { useDateFormat } from '@vueuse/core';
+import { date } from 'quasar';
 
 // types
-import { CardPost } from 'components/types';
+import { CardPost, ConfigGlobal } from 'components/types';
+
+const { formatDate } = date;
+
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
 
 export default defineComponent({
   name: 'VueCardPost',
@@ -15,26 +21,33 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formattedDate = useDateFormat(props.card.date, 'D. MMM. YYYY');
+    const formattedDate = formatDate(props.card.date, 'D. MMM. YYYY');
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard
 
     return {
       formattedDate,
+      borderRadius,
     };
   },
 });
 </script>
 
 <template>
+  <!-- Link to news post -->
   <router-link :to="card.url">
+    <!-- Card -->
     <q-card
-      class="rounded-20 bg-white cursor-pointer q-hoverable"
-      data-cy="card-post"
-      bordered
       flat
+      bordered
+      class="bg-white cursor-pointer q-hoverable"
+      :style="{ 'border-radius': borderRadius }"
+      data-cy="card-post"
     >
+      <!-- Image -->
       <q-img :src="card.image" ratio="1.25" data-cy="card-post-image" />
-
+      <!-- Content -->
       <q-card-section>
+        <!-- Date -->
         <div
           class="card-post-date text-caption text-blue-grey-5"
           data-cy="card-post-date"
@@ -53,9 +66,6 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.rounded-20 {
-  border-radius: 20px;
-}
 a {
   text-decoration: none;
 }
