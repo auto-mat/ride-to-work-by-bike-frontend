@@ -5,7 +5,11 @@ import { defineComponent, ref } from 'vue';
 import VueDialogCard from 'components/VueDialogCard.vue';
 
 // types
-import { Offer, DialogCard } from 'components/types';
+import { CardOffer, DialogCard, ConfigGlobal } from 'components/types';
+
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
 
 export default defineComponent({
   name: 'VueCardOffer',
@@ -14,13 +18,16 @@ export default defineComponent({
   },
   props: {
     card: {
-      type: Object as () => Offer,
+      type: Object as () => CardOffer,
       required: true,
     },
   },
   setup(props) {
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard
     const modalOpened = ref(false);
 
+    // Build data object for Dialog
+    // TODO: finalize the data handling
     const modalDialog: DialogCard = {
       title: props.card.title,
       meta: [
@@ -45,6 +52,7 @@ export default defineComponent({
     };
 
     return {
+      borderRadius,
       modalOpened,
       modalDialog,
     };
@@ -53,17 +61,20 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Card (hoverable) -->
   <q-card
     v-ripple
-    data-cy="card-offer"
-    class="rounded-20 bg-white cursor-pointer q-hoverable"
     flat
     bordered
+    data-cy="card-offer"
+    class="bg-white cursor-pointer q-hoverable"
+    :style="{ 'border-radius': borderRadius }"
     @click.prevent="modalOpened = true"
   >
     <span class="q-focus-helper"></span>
-    <q-card-section horizontal class="q-px-12 q-py-md items-center">
+    <q-card-section horizontal class="q-px-md q-py-md items-center">
       <q-card-section class="col-auto items-center">
+        <!-- Icon -->
         <q-icon
           :name="card.icon"
           color="blue-grey-3"
@@ -72,10 +83,12 @@ export default defineComponent({
         />
       </q-card-section>
       <q-card-section class="col items-center">
+        <!-- Title -->
         <div class="text-grey-10" data-cy="card-title">{{ card.title }}</div>
       </q-card-section>
     </q-card-section>
 
+    <!-- Modal dialog -->
     <vue-dialog-card
       v-model="modalOpened"
       :dialog="modalDialog"
@@ -83,22 +96,3 @@ export default defineComponent({
     ></vue-dialog-card>
   </q-card>
 </template>
-
-<style lang="scss" scoped>
-.rounded-20 {
-  border-radius: 20px;
-}
-
-.q-px-12 {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.q-dialog__inner > div {
-  overflow: visible !important;
-}
-.dialog-close {
-  top: -21px;
-  right: -21px;
-}
-</style>
