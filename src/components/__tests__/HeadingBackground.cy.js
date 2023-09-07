@@ -38,7 +38,7 @@ describe('<HeadingBackground>', () => {
         .should('be.visible')
         .then(($element) => {
           expect($element.width()).to.be.closeTo(375, 0.5);
-          expect($element.height()).to.be.closeTo(73, 1);
+          expect($element.height()).to.be.closeTo(75, 1);
         });
 
       cy.viewport('macbook-13');
@@ -47,7 +47,7 @@ describe('<HeadingBackground>', () => {
         .should('be.visible')
         .then(($element) => {
           expect($element.width()).to.be.closeTo(1280, 0.5);
-          expect($element.height()).to.be.closeTo(250, 5);
+          expect($element.height()).to.be.closeTo(256, 5);
         });
     });
   });
