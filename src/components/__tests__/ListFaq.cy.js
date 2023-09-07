@@ -1,10 +1,10 @@
-import VueListFaq from 'components/VueListFaq.vue';
+import ListFaq from 'components/ListFaq.vue';
 
-describe('<VueListFaq>', () => {
+describe('<ListFaq>', () => {
   const title = 'Participants';
 
   it('renders title with correct styling', () => {
-    cy.mount(VueListFaq, {
+    cy.mount(ListFaq, {
       props: {
         title,
         variant: 'participant',
@@ -19,7 +19,7 @@ describe('<VueListFaq>', () => {
   });
 
   it('renders participant FAQ with working accordion', () => {
-    cy.mount(VueListFaq, {
+    cy.mount(ListFaq, {
       props: {
         title,
         variant: 'participant',
@@ -51,7 +51,7 @@ describe('<VueListFaq>', () => {
   });
 
   it('renders coordinator FAQ section with working accordion', () => {
-    cy.mount(VueListFaq, {
+    cy.mount(ListFaq, {
       props: {
         title,
         variant: 'coordinator',

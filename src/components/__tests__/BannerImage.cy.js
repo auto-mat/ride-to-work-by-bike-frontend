@@ -1,8 +1,8 @@
-import VueBannerImage from 'components/VueBannerImage.vue';
+import BannerImage from 'components/BannerImage.vue';
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
-describe('<VueBannerImage>', () => {
+describe('<BannerImage>', () => {
   const title = 'Fill in our questionnaire and win one of our great prizes!';
   const perex =
     'You can help us decide what to spend more time on next time and what should stay the same.';
@@ -12,7 +12,7 @@ describe('<VueBannerImage>', () => {
   };
 
   beforeEach(() => {
-    cy.mount(VueBannerImage, {
+    cy.mount(BannerImage, {
       props: {
         banner: {
           title,

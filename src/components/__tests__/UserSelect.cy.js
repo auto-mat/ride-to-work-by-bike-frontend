@@ -1,4 +1,4 @@
-import VueUserSelect from '../VueUserSelect.vue';
+import UserSelect from '../UserSelect.vue';
 
 const options = [
   { label: 'User 1', value: '1', image: 'https://picsum.photos/id/40/300/300' },
@@ -6,9 +6,9 @@ const options = [
   { label: 'User 3', value: '3', image: 'https://picsum.photos/id/91/300/300' },
 ];
 
-describe('<VueUserSelect>', () => {
+describe('<UserSelect>', () => {
   beforeEach(() => {
-    cy.mount(VueUserSelect, {
+    cy.mount(UserSelect, {
       props: {
         options,
       },

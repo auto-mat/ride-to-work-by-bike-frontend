@@ -1,7 +1,7 @@
-import VueCardChallenge from 'components/VueCardChallenge.vue';
+import CardChallenge from 'components/CardChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueCardChallenge>', () => {
+describe('<CardChallenge>', () => {
   const title = 'Challenge 1';
   const url = '#';
   const dates = '1. říj.–31. říj. 2022';
@@ -12,7 +12,7 @@ describe('<VueCardChallenge>', () => {
   const company = true;
 
   beforeEach(() => {
-    cy.mount(VueCardChallenge, {
+    cy.mount(CardChallenge, {
       props: {
         card: {
           title,

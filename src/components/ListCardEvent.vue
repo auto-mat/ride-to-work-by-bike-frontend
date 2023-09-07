@@ -2,23 +2,23 @@
 import { defineComponent } from 'vue';
 
 // import components
-import VueCardEvent from 'components/VueCardEvent.vue';
+import CardEvent from 'components/CardEvent.vue';
 
 // import types
-import { CardEvent } from 'components/types';
+import { CardEvent as CardEventType } from 'components/types';
 
 export default defineComponent({
-  name: 'VueCardListEvent',
+  name: 'ListCardEvent',
   props: {
     heading: {
       type: String,
     },
     cards: {
-      type: Array as () => CardEvent[],
+      type: Array as () => CardEventType[],
     },
   },
   components: {
-    VueCardEvent,
+    CardEvent,
   },
 });
 </script>
@@ -26,12 +26,12 @@ export default defineComponent({
 <template>
   <!-- Cards are stacked vertically -->
   <div>
-    <vue-card-event
+    <card-event
       v-for="card in cards"
       :key="card.title"
       :card="card"
       class="q-mt-lg"
       data-cy="card-list-item"
-    ></vue-card-event>
+    ></card-event>
   </div>
 </template>

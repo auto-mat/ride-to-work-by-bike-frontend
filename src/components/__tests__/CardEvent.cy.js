@@ -1,7 +1,7 @@
-import VueCardEvent from 'components/VueCardEvent.vue';
+import CardEvent from 'components/CardEvent.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueCardEvent>', () => {
+describe('<CardEvent>', () => {
   const title = 'Opening Ceremony Bike to Work 2022';
   const thumbnail = {
     src: 'https://picsum.photos/id/70/340/200',
@@ -21,7 +21,7 @@ describe('<VueCardEvent>', () => {
   ];
 
   beforeEach(() => {
-    cy.mount(VueCardEvent, {
+    cy.mount(CardEvent, {
       props: {
         card: {
           title,

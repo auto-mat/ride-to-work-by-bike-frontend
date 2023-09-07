@@ -3,7 +3,7 @@ import { defineComponent, ref } from 'vue';
 import { date, Screen } from 'quasar';
 
 // import types
-import { CardEvent, ConfigGlobal } from 'components/types';
+import { CardEvent as CardEventType, ConfigGlobal } from 'components/types';
 
 // import config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -13,10 +13,10 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 const { formatDate } = date;
 
 export default defineComponent({
-  name: 'VueCardEvent',
+  name: 'CardEvent',
   props: {
     card: {
-      type: Object as () => CardEvent,
+      type: Object as () => CardEventType,
     },
   },
   setup(props) {

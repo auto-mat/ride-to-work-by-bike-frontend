@@ -1,9 +1,9 @@
-import VueDrawerHeader from '../VueDrawerHeader.vue';
+import DrawerHeader from '../DrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueDrawerHeader>', () => {
+describe('<DrawerHeader>', () => {
   beforeEach(() => {
-    cy.mount(VueDrawerHeader, {});
+    cy.mount(DrawerHeader, {});
   });
 
   it('has translation for all strings', () => {

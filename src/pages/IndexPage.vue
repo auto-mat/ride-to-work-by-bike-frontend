@@ -7,32 +7,32 @@
       >
         {{ $t('index.title') }}
       </h1>
-      <vue-event-countdown
+      <event-countdown
         :release-date="releaseDate"
         data-cy="event-countdown"
-      ></vue-event-countdown>
-      <vue-card-list-challenge
+      ></event-countdown>
+      <list-card-challenge
         :cards="cards"
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
-      ></vue-card-list-challenge>
-      <vue-banner-image
+      ></list-card-challenge>
+      <banner-image
         :banner="banner"
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
-      ></vue-banner-image>
+      ></banner-image>
     </div>
-    <vue-heading-background
+    <heading-background
       :title="headingBgTitle"
       class="q-pt-xl"
       data-cy="heading-background"
-    ></vue-heading-background>
+    ></heading-background>
     <div class="bg-gray-light q-px-lg">
-      <vue-card-list-event
+      <list-card-event
         :cards="cardsEvent"
         class="q-pt-xl"
         data-cy="list-event"
-      ></vue-card-list-event>
+      ></list-card-event>
     </div>
   </q-page>
 </template>
@@ -42,29 +42,29 @@
 import { defineComponent } from 'vue';
 
 // import components
-import VueEventCountdown from 'components/VueEventCountdown.vue';
-import VueCardListChallenge from 'components/VueCardListChallenge.vue';
-import VueBannerImage from 'components/VueBannerImage.vue';
-import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
-import VueCardListEvent from 'src/components/VueCardListEvent.vue';
+import EventCountdown from 'components/EventCountdown.vue';
+import ListCardChallenge from 'components/ListCardChallenge.vue';
+import BannerImage from 'components/BannerImage.vue';
+import HeadingBackground from 'src/components/HeadingBackground.vue';
+import ListCardEvent from 'src/components/ListCardEvent.vue';
 
 // import types
-import { CardChallenge, CardEvent } from 'components/types';
-import { BannerImage } from 'components/types';
+import { CardChallenge as CardChallengeType, CardEvent as CardEventType } from 'components/types';
+import { BannerImage as BannerImageType } from 'components/types';
 
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    VueEventCountdown,
-    VueCardListChallenge,
-    VueBannerImage,
-    VueHeadingBackground,
-    VueCardListEvent,
+    EventCountdown,
+    ListCardChallenge,
+    BannerImage,
+    HeadingBackground,
+    ListCardEvent,
   },
   setup() {
     const releaseDate = '2023-10-01T12:00:00';
 
-    const cards: CardChallenge[] = [
+    const cards: CardChallengeType[] = [
       {
         title: 'Týmová pravidelnost',
         url: '#',
@@ -117,7 +117,7 @@ export default defineComponent({
       },
     ];
 
-    const banner: BannerImage = {
+    const banner: BannerImageType = {
       title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
       perex:
         'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
@@ -130,7 +130,7 @@ export default defineComponent({
     const headingBgTitle =
       'Zapojte se do komunity Do práce na kole ve svém městě';
 
-    const cardsEvent: CardEvent[] = [
+    const cardsEvent: CardEventType[] = [
       {
         title: 'Opening Ceremony Bike to Work 2022',
         thumbnail: {

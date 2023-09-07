@@ -1,8 +1,8 @@
-import VueCardListEvent from 'components/VueCardListEvent.vue';
+import ListCardEvent from 'components/ListCardEvent.vue';
 
-describe('<VueCardListEvent>', () => {
+describe('<ListCardEvent>', () => {
   beforeEach(() => {
-    cy.mount(VueCardListEvent, {
+    cy.mount(ListCardEvent, {
       props: {
         cards: [
           {

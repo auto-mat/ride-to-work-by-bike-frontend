@@ -3,7 +3,7 @@ import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
 // import types
-import { BannerImage, ConfigGlobal } from 'components/types';
+import { BannerImage as BannerImageType, ConfigGlobal } from 'components/types';
 
 // import config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -12,10 +12,10 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
-  name: 'VueBannerImage',
+  name: 'BannerImage',
   props: {
     banner: {
-      type: Object as () => BannerImage,
+      type: Object as () => BannerImageType,
       required: true,
     },
   },

@@ -1,9 +1,9 @@
-import VueContactForm from '../VueContactForm.vue';
+import ContactForm from '../ContactForm.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueContactForm>', () => {
+describe('<ContactForm>', () => {
   beforeEach(() => {
-    cy.mount(VueContactForm, {});
+    cy.mount(ContactForm, {});
   });
 
   it('has translation for all strings', () => {

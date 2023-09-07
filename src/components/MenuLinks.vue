@@ -3,7 +3,7 @@ import { defineComponent, computed } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
-  name: 'VueMenuLinks',
+  name: 'MenuLinks',
   props: {
     title: {
       type: String,

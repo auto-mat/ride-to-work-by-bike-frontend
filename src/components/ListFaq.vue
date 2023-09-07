@@ -5,7 +5,7 @@ import { defineComponent, computed } from 'vue';
 import { ItemFAQ } from 'components/types';
 
 export default defineComponent({
-  name: 'VueListFaq',
+  name: 'ListFaq',
   props: {
     title: {
       type: String,

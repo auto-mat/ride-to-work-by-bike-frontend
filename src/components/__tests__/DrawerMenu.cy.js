@@ -1,4 +1,4 @@
-import VueDrawerMenu from '../VueDrawerMenu.vue';
+import DrawerMenu from '../DrawerMenu.vue';
 import { i18n } from '../../boot/i18n';
 
 const menuItems = [
@@ -19,9 +19,9 @@ const menuItems = [
   },
 ];
 
-describe('VueDrawerMenu', () => {
+describe('DrawerMenu', () => {
   beforeEach(() => {
-    cy.mount(VueDrawerMenu, {});
+    cy.mount(DrawerMenu, {});
   });
 
   it('has translation for all strings', () => {

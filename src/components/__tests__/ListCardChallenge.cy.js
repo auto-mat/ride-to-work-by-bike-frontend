@@ -1,9 +1,9 @@
-import VueCardListChallenge from '../VueCardListChallenge.vue';
+import ListCardChallenge from '../ListCardChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueCardListChallenge>', () => {
+describe('<ListCardChallenge>', () => {
   beforeEach(() => {
-    cy.mount(VueCardListChallenge, {
+    cy.mount(ListCardChallenge, {
       props: {
         cards: [
           {

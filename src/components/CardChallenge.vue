@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 
 // import types
-import { CardChallenge, ConfigGlobal } from 'components/types';
+import { CardChallenge as CardChallengeType, ConfigGlobal } from 'components/types';
 
 // import config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -10,10 +10,10 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 );
 
 export default defineComponent({
-  name: 'VueCardChallenge',
+  name: 'CardChallenge',
   props: {
     card: {
-      type: Object as () => CardChallenge,
+      type: Object as () => CardChallengeType,
     },
   },
   setup() {

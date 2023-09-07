@@ -14,7 +14,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
-  name: 'VueEventCountdown',
+  name: 'EventCountdown',
   props: {
     releaseDate: {
       type: String,

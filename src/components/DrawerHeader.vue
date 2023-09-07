@@ -2,16 +2,16 @@
 import { defineComponent, ref, computed } from 'vue';
 
 // import components
-import VueMenuLinks from './VueMenuLinks.vue';
-import VueListFaq from './VueListFaq.vue';
-import VueContactForm from './VueContactForm.vue';
+import MenuLinks from './MenuLinks.vue';
+import ListFaq from './ListFaq.vue';
+import ContactForm from './ContactForm.vue';
 
 export default defineComponent({
-  name: 'VueDrawerHeader',
+  name: 'DrawerHeader',
   components: {
-    VueMenuLinks,
-    VueListFaq,
-    VueContactForm,
+    MenuLinks,
+    ListFaq,
+    ContactForm,
   },
   props: {
     showLogo: {
@@ -136,16 +136,16 @@ export default defineComponent({
           style="max-height: 50vh"
         >
           <!-- FAQ for pariticipants -->
-          <vue-list-faq
+          <list-faq
             :title="$t('index.help.titleParticipants')"
             variant="participant"
-          ></vue-list-faq>
+          ></list-faq>
           <!-- FAQ for Company coordinators -->
-          <vue-list-faq
+          <list-faq
             :title="$t('index.help.titleCoordinators')"
             variant="coordinator"
             class="q-mt-xl"
-          ></vue-list-faq>
+          ></list-faq>
 
           <!-- Section: App Guide -->
           <div class="q-px-md q-mt-xl">
@@ -188,15 +188,15 @@ export default defineComponent({
           </div>
 
           <!-- Section: Useful links -->
-          <vue-menu-links
+          <menu-links
             :title="$t('index.help.titleLinks')"
             variant="useful"
-          ></vue-menu-links>
+          ></menu-links>
           <!-- Section: Social media links -->
-          <vue-menu-links
+          <menu-links
             :title="$t('index.help.titleSocials')"
             variant="social"
-          ></vue-menu-links>
+          ></menu-links>
         </q-card-section>
 
         <!-- Dialog content: Contact form state -->
@@ -207,7 +207,7 @@ export default defineComponent({
           data-cy="dialog-content"
         >
           <!-- Contact form -->
-          <vue-contact-form @formSubmit="resetDialog"></vue-contact-form>
+          <contact-form @formSubmit="resetDialog"></contact-form>
         </q-card-section>
 
         <!-- Dialog: Button close -->

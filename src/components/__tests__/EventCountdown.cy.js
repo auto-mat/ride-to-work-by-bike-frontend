@@ -1,4 +1,4 @@
-import VueEventCountdown from '../VueEventCountdown.vue';
+import EventCountdown from '../EventCountdown.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('Event Countdown', () => {
@@ -6,7 +6,7 @@ describe('Event Countdown', () => {
   const currentTime = new Date('2023-09-30T12:00:00');
 
   beforeEach(() => {
-    cy.mount(VueEventCountdown, {
+    cy.mount(EventCountdown, {
       props: {
         releaseDate,
       },

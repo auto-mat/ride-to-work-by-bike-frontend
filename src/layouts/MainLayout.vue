@@ -5,9 +5,9 @@ import { defineComponent, ref } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // import components
-import VueDrawerHeader from 'components/VueDrawerHeader.vue';
-import VueUserSelect from 'components/VueUserSelect.vue';
-import VueDrawerMenu from 'components/VueDrawerMenu.vue';
+import DrawerHeader from 'components/DrawerHeader.vue';
+import UserSelect from 'components/UserSelect.vue';
+import DrawerMenu from 'components/DrawerMenu.vue';
 
 // import types
 import { ConfigGlobal, User } from 'components/types';
@@ -25,7 +25,7 @@ setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 export default defineComponent({
   name: 'MainLayout',
 
-  components: { VueDrawerHeader, VueUserSelect, VueDrawerMenu },
+  components: { DrawerHeader, UserSelect, DrawerMenu },
 
   setup() {
     const leftDrawerOpen = ref(false);
@@ -67,13 +67,13 @@ export default defineComponent({
     <q-header reveal class="lt-md bg-white">
       <q-toolbar>
         <!-- Logo + Buttons (help, notification) -->
-        <vue-drawer-header
+        <drawer-header
           v-model="leftDrawerOpen"
           data-cy="drawer-header-mobile"
           :show-logo="false"
           :show-drawer-open-button="true"
         >
-        </vue-drawer-header>
+        </drawer-header>
       </q-toolbar>
     </q-header>
 
@@ -87,18 +87,18 @@ export default defineComponent({
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
-      <vue-drawer-header
+      <drawer-header
         data-cy="drawer-header"
         :mobile="false"
-      ></vue-drawer-header>
+      ></drawer-header>
       <!-- User options dropdown -->
-      <vue-user-select
+      <user-select
         :options="users"
         class="q-pt-lg"
         data-cy="user-select"
-      ></vue-user-select>
+      ></user-select>
       <!-- Navigation menu -->
-      <vue-drawer-menu class="q-pt-lg" data-cy="drawer-menu"></vue-drawer-menu>
+      <drawer-menu class="q-pt-lg" data-cy="drawer-menu"></drawer-menu>
     </q-drawer>
 
     <!-- Page content -->

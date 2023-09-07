@@ -1,11 +1,11 @@
-import VueMenuLinks from 'components/VueMenuLinks.vue';
+import MenuLinks from 'components/MenuLinks.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueMenuLinks>', () => {
+describe('<MenuLinks>', () => {
   const title = 'Find us on social media';
 
   it('renders title with correct styling', () => {
-    cy.mount(VueMenuLinks, {
+    cy.mount(MenuLinks, {
       props: {
         title,
         variant: 'social',
@@ -20,7 +20,7 @@ describe('<VueMenuLinks>', () => {
   });
 
   it('renders buttons in a grid', () => {
-    cy.mount(VueMenuLinks, {
+    cy.mount(MenuLinks, {
       props: {
         title,
         variant: 'social',
@@ -35,7 +35,7 @@ describe('<VueMenuLinks>', () => {
   });
 
   it('renders social buttons with correct styling (social variant)', () => {
-    cy.mount(VueMenuLinks, {
+    cy.mount(MenuLinks, {
       props: {
         title,
         variant: 'social',
@@ -62,7 +62,7 @@ describe('<VueMenuLinks>', () => {
   });
 
   it('renders link buttons with correct styling (useful links variant)', () => {
-    cy.mount(VueMenuLinks, {
+    cy.mount(MenuLinks, {
       props: {
         title,
         variant: 'useful',

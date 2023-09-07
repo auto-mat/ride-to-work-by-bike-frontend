@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'VueDrawerMenu',
+  name: 'DrawerMenu',
   setup() {
     const menuTop = [
       {

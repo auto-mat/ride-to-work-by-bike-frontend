@@ -5,7 +5,7 @@ import { defineComponent, ref } from 'vue';
 import { User } from 'components/types';
 
 export default defineComponent({
-  name: 'VueUserSelect',
+  name: 'UserSelect',
   props: {
     options: {
       type: Array as () => User[],

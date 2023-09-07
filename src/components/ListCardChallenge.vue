@@ -2,20 +2,20 @@
 import { defineComponent } from 'vue';
 
 // import components
-import VueCardChallenge from 'components/VueCardChallenge.vue';
+import CardChallenge from 'components/CardChallenge.vue';
 
 // import types
-import { CardChallenge } from 'components/types';
+import { CardChallenge as CardChallengeType } from 'components/types';
 
 export default defineComponent({
-  name: 'VueCardListChallenge',
+  name: 'ListCardChallenge',
   props: {
     cards: {
-      type: Array as () => CardChallenge[],
+      type: Array as () => CardChallengeType[],
     },
   },
   components: {
-    VueCardChallenge,
+    CardChallenge,
   },
 });
 </script>
@@ -34,7 +34,7 @@ export default defineComponent({
         data-cy="card-list-item"
       >
         <!-- Card -->
-        <vue-card-challenge :card="card" />
+        <card-challenge :card="card" />
       </div>
     </div>
   </div>
