@@ -15,8 +15,8 @@ export default defineComponent({
   <div class="wrapper relative-position">
     <!-- Background image -->
     <q-img
-      class="flex column w-full"
       src="~assets/svg/bg-community.svg"
+      :ratio="5"
       :alt="$t('index.headingBackground.imageAltText')"
       data-cy="svg"
     />
