@@ -25,10 +25,15 @@ export default defineComponent({
       class="flex items-center gap-8"
       clickable
     >
-      <q-icon :name="item.icon" size="xs"></q-icon>
+      <!-- Link icon -->
+      <q-icon :name="item.icon" size="xs" color="blue-grey-4" />
+      <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
-    <hr class="hr-blue-gray-2" />
+
+    <q-separator color="blue-grey-2 q-my-sm" />
+
+    <!-- Menu: Bottom items -->
     <q-item
       v-for="item in menuBottom"
       :key="item.name"
@@ -36,7 +41,9 @@ export default defineComponent({
       class="flex items-center gap-8"
       clickable
     >
-      <q-icon :name="item.icon" size="xs"></q-icon>
+      <!-- Link icon -->
+      <q-icon :name="item.icon" size="xs" color="blue-grey-4" />
+      <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
   </q-list>
@@ -47,19 +54,11 @@ export default defineComponent({
   gap: 8px;
 }
 
-.q-item .q-icon {
-  color: $blue-grey-4;
-}
-
 .q-router-link--active {
-  color: $blue-grey-10;
+  color: $blue-grey-10 !important;
 }
 
 .q-router-link--active .q-icon {
-  color: $blue-grey-10;
-}
-
-.hr-blue-gray-2 {
-  border-top: 1px solid $blue-grey-2;
+  color: $blue-grey-10 !important;
 }
 </style>
