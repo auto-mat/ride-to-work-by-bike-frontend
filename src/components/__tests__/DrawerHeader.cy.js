@@ -129,4 +129,6 @@ describe('<DrawerHeader>', () => {
         });
     });
   });
+
+  // Run E2E tests to ensure that the interaction with dialog works as expected
 });
