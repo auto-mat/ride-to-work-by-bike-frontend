@@ -2,10 +2,10 @@
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
-// import types
+// types
 import { BannerImage as BannerImageType, ConfigGlobal } from 'components/types';
 
-// import config
+// config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
@@ -50,7 +50,7 @@ export default defineComponent({
           <!-- Title -->
           <div
             v-if="banner.title"
-            class="text-dark text-subtitle1"
+            class="text-weight-medium text-subtitle1"
             data-cy="banner-title"
           >
             {{ banner.title }}
@@ -58,7 +58,7 @@ export default defineComponent({
           <!-- Description -->
           <div
             v-if="banner.perex"
-            class="text-dark text-caption q-mt-sm"
+            class="text-caption q-mt-sm"
             data-cy="banner-perex"
           >
             {{ banner.perex }}
