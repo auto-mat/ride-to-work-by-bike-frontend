@@ -112,7 +112,7 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <vue-user-select variant="mobile" class="lt-md" />
+      <user-select variant="mobile" class="lt-md" />
     </div>
 
     <q-dialog
