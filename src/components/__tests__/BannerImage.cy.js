@@ -1,9 +1,6 @@
 import BannerImage from 'components/BannerImage.vue';
-
-// mocks
 import { bannerImage } from 'src/mocks/homepage';
 
-// config
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
 describe('<BannerImage>', () => {
@@ -88,13 +85,13 @@ describe('<BannerImage>', () => {
         cy.window().then(() => {
           cy.dataCy('banner')
             .should('be.visible')
-            .should('have.css', 'border-radius', '20px')
+            .should('have.css', 'border-radius', config.borderRadiusCard)
             .should('have.css', 'overflow', 'hidden');
 
           cy.dataCy('banner-half')
             .first()
-            .should('have.css', 'border-top-left-radius', '20px')
-            .should('have.css', 'border-bottom-left-radius', '20px');
+            .should('have.css', 'border-top-left-radius', config.borderRadiusCard)
+            .should('have.css', 'border-bottom-left-radius', config.borderRadiusCard);
         });
       });
     });
@@ -182,7 +179,7 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px')
+          .should('have.css', 'border-radius', config.borderRadiusCard)
           .should('have.css', 'overflow', 'hidden');
       });
     });
