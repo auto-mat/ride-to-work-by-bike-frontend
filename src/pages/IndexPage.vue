@@ -25,7 +25,7 @@
         class="q-mt-xl"
         data-cy="banner-app"
       />
-      <vue-banner-routes
+      <banner-routes
         :routes-count="14"
         class="q-mt-xl q-mb-xl"
         data-cy="banner-routes"
@@ -98,7 +98,7 @@ import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
 import VueBadgeList from 'src/components/VueBadgeList.vue';
 import BannerApp from 'src/components/BannerApp.vue';
-import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
+import BannerRoutes from 'src/components/BannerRoutes.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
@@ -118,7 +118,7 @@ export default defineComponent({
     HeadingBackground,
     ListCardEvent,
     VueBadgeList,
-    VueBannerRoutes,
+    BannerRoutes,
     VueCardListOffer,
     VueCardListPost,
     VueNewsletterFeature,
