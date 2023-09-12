@@ -3,7 +3,7 @@ import { setCssVar, date } from 'quasar';
 import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
-// import types
+// types
 import { Countdown, ConfigGlobal } from 'components/types';
 
 const { formatDate } = date;
@@ -35,10 +35,7 @@ export default defineComponent({
     // if (locale.value === 'en') {
     //   formatString = 'D MMM';
     // }
-    const formattedDate = formatDate(
-      new Date(props.releaseDate),
-      formatString
-    );
+    const formattedDate = formatDate(new Date(props.releaseDate), formatString);
 
     let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
@@ -73,9 +70,7 @@ export default defineComponent({
         hours: Math.floor(
           (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
         ),
-        minutes: Math.floor(
-          (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
-        ),
+        minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
         seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
       };
     }
