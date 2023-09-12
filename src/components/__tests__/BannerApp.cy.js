@@ -1,10 +1,12 @@
-import VueBannerApp from 'components/VueBannerApp.vue';
+import BannerApp from 'components/BannerApp.vue';
 import { bannerApp } from 'src/mocks/homepage';
 
-describe('<VueBannerApp>', () => {
+const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
+
+describe('<BannerApp>', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueBannerApp, {
+      cy.mount(BannerApp, {
         props: {
           banner: bannerApp,
         },
@@ -49,7 +51,7 @@ describe('<VueBannerApp>', () => {
           .should('be.visible')
           .then(($img) => {
             cy.testImageHeight($img);
-            expect($img.attr('src')).to.equal(bannerApp.image);
+            expect($img.attr('src')).to.equal(bannerApp.image.src);
           });
 
         cy.dataCy('banner-app').find('img').matchImageSnapshot({
@@ -82,19 +84,15 @@ describe('<VueBannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px');
-
-        cy.dataCy('banner-app-half')
-          .first()
-          .should('have.css', 'border-top-left-radius', '20px')
-          .should('have.css', 'border-bottom-left-radius', '20px');
+          .should('have.css', 'border-radius', config.borderRadiusCard)
+          .should('have.css', 'overflow', 'hidden');
       });
     });
   });
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueBannerApp, {
+      cy.mount(BannerApp, {
         props: {
           banner: bannerApp,
         },
@@ -139,7 +137,7 @@ describe('<VueBannerApp>', () => {
           .should('be.visible')
           .then(($img) => {
             cy.testImageHeight($img);
-            expect($img.attr('src')).to.equal(bannerApp.image);
+            expect($img.attr('src')).to.equal(bannerApp.image.src);
           });
 
         cy.dataCy('banner-app').find('img').matchImageSnapshot({
@@ -172,12 +170,8 @@ describe('<VueBannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px');
-
-        cy.dataCy('banner-app-half')
-          .first()
-          .should('have.css', 'border-top-left-radius', '20px')
-          .should('have.css', 'border-top-right-radius', '20px');
+          .should('have.css', 'border-radius', config.borderRadiusCard)
+          .should('have.css', 'overflow', 'hidden');
       });
     });
   });

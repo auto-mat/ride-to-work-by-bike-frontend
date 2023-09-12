@@ -5,7 +5,7 @@ import { Screen } from 'quasar';
 import { useStorage } from '@vueuse/core';
 
 // types
-import { BannerApp, ConfigGlobal } from 'components/types';
+import { BannerApp as BannerAppType, ConfigGlobal } from 'components/types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
@@ -15,7 +15,7 @@ export default defineComponent({
   name: 'VueBannerImage',
   props: {
     banner: {
-      type: Object as () => BannerApp,
+      type: Object as () => BannerAppType,
       required: true,
     },
   },
@@ -23,8 +23,8 @@ export default defineComponent({
     const state = useStorage('ride-to-work-by-bike', { showAppBanner: true });
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const isHorizontal = computed(() => {
-      return Screen.gt.xs
-    })
+      return Screen.gt.xs;
+    });
 
     return {
       borderRadius,
@@ -38,19 +38,20 @@ export default defineComponent({
 <template>
   <div
     v-if="state.showAppBanner"
-    class="row relative-position bg-blue-grey-8 text-white"
+    class="row relative-position overflow-hidden bg-blue-grey-8 text-white"
     data-cy="banner-app"
-    :style="{'border-radius': borderRadius}"
+    :style="{ 'border-radius': borderRadius }"
   >
     <!-- Image -->
     <q-img
-      :src="banner.image"
-      :ratio="3 / 1"
+      :src="banner.image.src"
+      :alt="banner.image.alt"
       :img-style="{
         borderRadius: isHorizontal
           ? `${borderRadius} 0 0 ${borderRadius}`
           : `${borderRadius} ${borderRadius} 0 0`,
       }"
+      :ratio="3 / 1"
       class="col-sm-6"
       data-cy="banner-app-half"
     />
@@ -79,6 +80,7 @@ export default defineComponent({
         </div>
         <!-- Link to mobile app -->
         <q-btn
+          v-if="banner.button && banner.button.url"
           rounded
           color="white"
           unelevated
@@ -94,6 +96,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .q-pr-sm-lg {
-  padding-right: 24px;
+  @media (min-width: $breakpoint-sm-min) {
+    padding-right: 24px;
+  }
 }
 </style>
