@@ -5,6 +5,7 @@ import { defineComponent, ref, computed } from 'vue';
 import MenuLinks from './MenuLinks.vue';
 import ListFaq from './ListFaq.vue';
 import ContactForm from './ContactForm.vue';
+import UserSelect from './UserSelect.vue';
 
 export default defineComponent({
   name: 'DrawerHeader',
@@ -12,6 +13,7 @@ export default defineComponent({
     MenuLinks,
     ListFaq,
     ContactForm,
+    UserSelect,
   },
   props: {
     showLogo: {
@@ -60,11 +62,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="full-width flex items-center" :class="classes">
+  <div class="full-width flex items-center justify-between q-py-sm" :class="classes">
     <!-- RTWBB logo -->
     <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" data-cy="logo" />
     <!-- Content -->
-    <div class="flex items-center gap-32">
+    <div class="flex items-center gap-24">
       <!-- Help icon link for displaying modal dialog-->
       <a href="#" data-cy="link-help" @click.prevent="dialogOpened = true">
         <q-icon name="help" size="sm" color="black" data-cy="icon-help" />
@@ -78,16 +80,8 @@ export default defineComponent({
           data-cy="icon-notification"
         />
       </a>
-      <!-- Show menu btn (mobile) -->
-      <q-btn
-        v-if="showDrawerOpenButton"
-        flat
-        round
-        icon="menu"
-        color="black"
-        @click="drawerOpened = true"
-        data-cy="drawer-open-button"
-      />
+      <!-- User menu dropdown -->
+      <user-select variant="mobile" class="lt-md" />
     </div>
 
     <!-- Modal dialog -->
@@ -234,8 +228,8 @@ export default defineComponent({
   gap: 12px;
 }
 
-.gap-32 {
-  gap: 32px;
+.gap-24 {
+  gap: 24px;
 }
 
 .logo {

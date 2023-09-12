@@ -39,7 +39,7 @@ export default defineComponent({
       <template v-slot:label>
         <!-- User image -->
         <q-avatar :size="size" data-cy="avatar">
-          <img :src="user.image" />
+          <q-img :src="user.image.src" :alt="user.image.alt" />
         </q-avatar>
         <!-- User name -->
         <span
