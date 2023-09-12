@@ -12,7 +12,7 @@ import VueFooter from 'components/VueFooter.vue';
 import VueFooterPanel from 'src/components/VueFooterPanel.vue';
 
 // import types
-import { ConfigGlobal, User } from 'components/types';
+import { ConfigGlobal } from 'components/types';
 // mocks
 import * as layout from 'src/mocks/layout';
 
@@ -77,9 +77,6 @@ export default defineComponent({
       ></drawer-header>
       <!-- User options dropdown -->
       <user-select
-        :menu-top="userMenuTop"
-        :menu-bottom="userMenuBottom"
-        :user="user"
         class="q-pt-lg"
         data-cy="user-select"
       ></user-select>
