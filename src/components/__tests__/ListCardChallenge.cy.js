@@ -37,7 +37,7 @@ describe('<ListCardChallenge>', () => {
   });
 
   it('has translation for all strings', () => {
-    const translationKeyList = ['index.cardList.title'];
+    const translationKeyList = ['index.cardListChallenge.title'];
 
     translationKeyList.forEach((translationKey) => {
       const defaultEnglishString = i18n.global.t(translationKey, 'en');
@@ -60,7 +60,7 @@ describe('<ListCardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-list-title')
         .should('be.visible')
-        .should('contain', i18n.global.t('index.cardList.title'));
+        .should('contain', i18n.global.t('index.cardListChallenge.title'));
     });
   });
 
