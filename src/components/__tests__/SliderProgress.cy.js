@@ -1,9 +1,9 @@
-import VueProgressSlider from 'components/VueProgressSlider.vue';
+import SliderProgress from 'components/SliderProgress.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { progressStats, cardsProgress } from 'src/mocks/homepage';
 
-describe('<VueProgressSlider>', () => {
+describe('<SliderProgress>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
@@ -14,7 +14,7 @@ describe('<VueProgressSlider>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueProgressSlider, {
+      cy.mount(SliderProgress, {
         props: {
           title: i18n.global.t('index.progressSlider.title'),
           stats: progressStats,
@@ -151,7 +151,7 @@ describe('<VueProgressSlider>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueProgressSlider, {
+      cy.mount(SliderProgress, {
         props: {
           title,
           stats,

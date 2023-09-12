@@ -1,5 +1,5 @@
 <template>
-  <q-page data-cy="q-main">
+  <q-page class="overflow-hidden" data-cy="q-main">
     <div class="q-px-lg bg-white">
       <h1
         class="text-h5 q-mt-none q-pt-lg text-weight-bold"
@@ -30,14 +30,14 @@
         class="q-mt-xl q-mb-xl"
         data-cy="banner-routes"
       />
-      <vue-progress-slider
+      <slider-progress
         :title="$t('index.progressSlider.title')"
         :cards="cardsProgressSlider"
         :stats="progressStats"
-        class="q-pt-xl q-pb-xl"
+        class="q-pt-xl q-mb-md"
         :button="{ title: $t('index.progressSlider.button'), url: '/blog' }"
       >
-      </vue-progress-slider>
+      </slider-progress>
       <vue-card-list-progress
         :title="$t('index.cardListProgress.title')"
         :cards="cardsProgress"
@@ -104,7 +104,7 @@ import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
-import VueProgressSlider from 'src/components/VueProgressSlider.vue';
+import SliderProgress from 'src/components/SliderProgress.vue';
 
 // mocks
 import * as homepage from '../mocks/homepage';
@@ -123,7 +123,7 @@ export default defineComponent({
     VueCardListPost,
     VueNewsletterFeature,
     VueCardListFollow,
-    VueProgressSlider,
+    SliderProgress,
     VueCardListProgress,
     BannerApp,
   },
