@@ -74,7 +74,7 @@ describe('Home page', () => {
 
           cy.dataCy('dialog-header').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo(0, 1200);
+          cy.dataCy('dialog-content').scrollTo(0, 1200);
 
           cy.dataCy('button-contact').should('be.visible').click();
 
@@ -110,13 +110,13 @@ describe('Home page', () => {
 
           cy.dataCy('dialog-header').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo(0, 1200);
+          cy.dataCy('dialog-content').scrollTo(0, 1200);
 
           cy.dataCy('button-contact').should('be.visible').click();
 
           cy.dataCy('dialog-header').find('h3').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
@@ -129,7 +129,7 @@ describe('Home page', () => {
             .find('.q-field__control')
             .should('have.class', 'text-negative');
 
-          cy.dataCy('dialog-body').scrollTo('top');
+          cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
@@ -143,11 +143,11 @@ describe('Home page', () => {
             .find('.q-field__control')
             .should('not.have.class', 'text-negative');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
-          cy.dataCy('dialog-body').scrollTo('top');
+          cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
@@ -162,7 +162,7 @@ describe('Home page', () => {
             .should('be.visible')
             .type('what is the minimum distance to ride to work?');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
@@ -352,7 +352,7 @@ describe('Home page', () => {
 
           cy.dataCy('dialog-header').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo(0, 1200);
+          cy.dataCy('dialog-content').scrollTo(0, 1200);
 
           cy.dataCy('button-contact').should('be.visible').click();
 
@@ -388,17 +388,17 @@ describe('Home page', () => {
 
           cy.dataCy('dialog-header').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo(0, 1200);
+          cy.dataCy('dialog-content').scrollTo(0, 1200);
 
           cy.dataCy('button-contact').should('be.visible').click();
 
           cy.dataCy('dialog-header').find('h3').should('be.visible');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
-          cy.dataCy('dialog-body').scrollTo('top');
+          cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
@@ -409,7 +409,7 @@ describe('Home page', () => {
             .find('.q-field__control')
             .should('have.class', 'text-negative');
 
-          cy.dataCy('dialog-body').scrollTo('top');
+          cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
@@ -423,11 +423,11 @@ describe('Home page', () => {
             .find('.q-field__control')
             .should('not.have.class', 'text-negative');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
-          cy.dataCy('dialog-body').scrollTo('top');
+          cy.dataCy('dialog-content').scrollTo('top');
 
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
@@ -442,7 +442,7 @@ describe('Home page', () => {
             .should('be.visible')
             .type('what is the minimum distance to ride to work?');
 
-          cy.dataCy('dialog-body').scrollTo('bottom');
+          cy.dataCy('dialog-content').scrollTo('bottom');
 
           cy.dataCy('contact-form-submit').should('be.visible').click();
 
@@ -524,7 +524,7 @@ describe('Home page', () => {
       cy.window().its('scrollY').should('equal', 0);
     });
 
-    it.only('allows user to access menu in bottom panel', () => {
+    it('allows user to access menu in bottom panel', () => {
       cy.dataCy('footer-panel').should('be.visible');
 
       cy.dataCy('footer-panel-menu').should('be.visible');
