@@ -12,12 +12,12 @@
         data-cy="event-countdown"
       ></event-countdown>
       <list-card-challenge
-        :cards="cards"
+        :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
       ></list-card-challenge>
       <banner-image
-        :banner="banner"
+        :banner="bannerImage"
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
       ></banner-image>
