@@ -1,15 +1,15 @@
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'VueBannerRoutes',
+  name: 'BannerRoutes',
   props: {
     routesCount: {
       type: Number,
       required: true,
-    }
-  }
-})
+    },
+  },
+});
 </script>
 
 <template>
@@ -23,7 +23,10 @@ export default defineComponent({
     <q-card-section horizontal class="flex-wrap justify-between">
       <!-- Title -->
       <q-card-section class="row items-center">
-        <h3 class="text-subtitle2 text-weight-bold q-my-none" data-cy="banner-routes-title">
+        <h3
+          class="text-subtitle2 text-weight-bold q-my-none"
+          data-cy="banner-routes-title"
+        >
           <!-- TODO: fix conjugation in CZ and SK -->
           {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
         </h3>
@@ -31,11 +34,12 @@ export default defineComponent({
       <!-- Link to Route log -->
       <q-card-section class="row items-center">
         <q-btn
-        rounded
-        color="grey-10"
-        text-color="white"
-        unelevated
-        data-cy="banner-routes-button-add-routes">
+          rounded
+          color="grey-10"
+          text-color="white"
+          unelevated
+          data-cy="banner-routes-button-add-routes"
+        >
           <!-- Plus icon -->
           <q-icon name="add" size="24px" color="white" />
           <!-- Button text -->

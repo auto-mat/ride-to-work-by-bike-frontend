@@ -10,20 +10,26 @@
       <event-countdown
         :release-date="releaseDate"
         data-cy="event-countdown"
-      ></event-countdown>
+      />
       <list-card-challenge
         :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
-      ></list-card-challenge>
+        />
       <banner-image
-        :banner="bannerImage"
+        :banner="bannerImageData"
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
-      ></banner-image>
-      <vue-banner-app :banner="bannerApp" class="q-mt-xl"></vue-banner-app>
-      <vue-banner-routes :routes-count="14"
-        class="q-mt-xl q-mb-xl"></vue-banner-routes>
+      />
+      <banner-app :banner="bannerAppData"
+        class="q-mt-xl"
+        data-cy="banner-app"
+      />
+      <banner-routes
+        :routes-count="14"
+        class="q-mt-xl q-mb-xl"
+        data-cy="banner-routes"
+      />
       <vue-progress-slider
         :title="$t('index.progressSlider.title')"
         :cards="cardsProgressSlider"
@@ -39,7 +45,11 @@
         class="q-pt-xl q-pb-xl"
         data-cy="list-progress"
       ></vue-card-list-progress>
-      <vue-badge-list :items="badgeList" class="q-pt-xl q-pb-xl" data-cy="list-badges"></vue-badge-list>
+      <vue-badge-list
+        :items="badgeList"
+        class="q-pt-xl q-pb-xl"
+        data-cy="list-badges"
+      ></vue-badge-list>
     </div>
     <heading-background
       :title="headingBgTitle"
@@ -52,8 +62,12 @@
         class="q-pt-xl"
         data-cy="list-event"
       ></list-card-event>
-      <vue-card-list-offer :title="$t('index.cardListOffer.title')" :cards="cardsOffer" class="q-pt-xl"
-        data-cy="list-offer">
+      <vue-card-list-offer
+        :title="$t('index.cardListOffer.title')"
+        :cards="cardsOffer"
+        class="q-pt-xl"
+        data-cy="list-offer"
+      >
       </vue-card-list-offer>
       <vue-card-list-post
         :title="$t('index.cardListPost.title')"
@@ -75,13 +89,6 @@
 <script lang="ts">
 // libraries
 import { defineComponent } from 'vue';
-import EventCountdown from 'components/EventCountdown.vue';
-import CardList from 'components/CardList.vue';
-import VueBannerImage from 'components/VueBannerImage.vue';
-import VueHeadingBackground from 'src/components/VueHeadingBackground.vue';
-
-import { CardChallenge } from 'components/types';
-import { BannerImage } from 'components/types';
 
 // import components
 import EventCountdown from 'components/EventCountdown.vue';
@@ -89,9 +96,9 @@ import ListCardChallenge from 'components/ListCardChallenge.vue';
 import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
-import VueBadgeList from 'src/components/VueBadgeList.vue'
-import VueBannerApp from 'src/components/VueBannerApp.vue';
-import VueBannerRoutes from 'src/components/VueBannerRoutes.vue';
+import VueBadgeList from 'src/components/VueBadgeList.vue';
+import BannerApp from 'src/components/BannerApp.vue';
+import BannerRoutes from 'src/components/BannerRoutes.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
@@ -99,10 +106,7 @@ import VueCardListProgress from 'src/components/VueCardListProgress.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 
-// import types
-import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
-import { CardPost, Offer, CardFollow, ItemStatistics, CardProgress } from 'components/types';
-// data
+// mocks
 import * as homepage from '../mocks/homepage';
 
 export default defineComponent({
@@ -114,22 +118,22 @@ export default defineComponent({
     HeadingBackground,
     ListCardEvent,
     VueBadgeList,
-    VueBannerRoutes,
+    BannerRoutes,
     VueCardListOffer,
     VueCardListPost,
     VueNewsletterFeature,
     VueCardListFollow,
     VueProgressSlider,
     VueCardListProgress,
-    VueBannerApp,
+    BannerApp,
   },
   setup() {
     return {
       releaseDate: homepage.releaseDate,
       cardsChallenge: homepage.cardsChallenge,
       badgeList: homepage.badgeList,
-      bannerImage: homepage.bannerImage,
-      bannerApp: homepage.bannerApp,
+      bannerImageData: homepage.bannerImage,
+      bannerAppData: homepage.bannerApp,
       headingBgTitle: homepage.headingBgTitle,
       cardsEvent: homepage.cardsEvent,
       cardsOffer: homepage.cardsOffer,
