@@ -65,10 +65,11 @@ export default defineComponent({
         <q-btn
           v-if="activeState !== 'default'"
           round
-          color="transparent"
-          size="xs"
           unelevated
-          @click.prevent="activeState = 'default'"
+          size="xs"
+          color="transparent"
+          class="q-mr-sm"
+          @click.prevent="setState('default')"
         >
           <q-icon name="west" size="xs" color="black" />
         </q-btn>
@@ -104,7 +105,7 @@ export default defineComponent({
 
       <!-- Button close dialog -->
       <q-card-actions
-        class="dialog-close inline-block absolute-top-right q-px-none q-py-none"
+        class="-top-21 -right-21 inline-block absolute-top-right q-px-none q-py-none"
         data-cy="dialog-close"
       >
         <q-btn
@@ -113,6 +114,7 @@ export default defineComponent({
           unelevated
           color="blue-grey-1"
           icon="close"
+          size="14px"
           class="text-blue-grey-10"
         />
       </q-card-actions>
@@ -121,25 +123,14 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+// show overlapping close button
 .q-dialog__inner > div {
   overflow: visible !important;
 }
-.gap-y-8 {
-  row-gap: 8px;
+.-top-21 {
+  top: -21px;
 }
-.gap-x-32 {
-  column-gap: 32px;
-}
-.dialog-close__wrapper {
-  top: -19px;
-  right: -19px;
-}
-.dialog-close {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  min-height: 38px;
-  top: -18px;
-  right: -18px;
+.-right-21 {
+  right: -21px;
 }
 </style>
