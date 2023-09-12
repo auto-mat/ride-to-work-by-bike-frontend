@@ -4,7 +4,7 @@ import { Link } from './Link';
 
 export interface CardChallenge {
   title: string;
-  image: string;
+  image: Image;
   url: string;
   dates: string;
   company: boolean;
@@ -34,7 +34,6 @@ export interface CardOffer {
   link: Link;
   icon: string;
   content: string;
-
 }
 export interface CardPost {
   title: string;
