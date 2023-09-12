@@ -3,7 +3,10 @@ import { Link, User } from 'src/components/types';
 export const user: User = {
   label: 'User 1',
   value: '1',
-  image: 'https://picsum.photos/id/40/300/300',
+  image: {
+    src: 'https://picsum.photos/id/40/300/300',
+    alt: 'User Name',
+  },
 };
 
 export const menuTop: Link[] = [
