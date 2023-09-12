@@ -39,7 +39,7 @@ export default defineComponent({
       <template v-slot:label>
         <!-- User image -->
         <q-avatar :size="size" data-cy="avatar">
-          <q-img :src="user.image.src" :alt="user.image.alt" />
+          <q-img :src="user.image.src" :alt="user.image.alt" :size="size" />
         </q-avatar>
         <!-- User name -->
         <span
@@ -87,6 +87,10 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+// hide button edges overlapping the avatar (when height = 32px)
+.q-btn-dropdown {
+  min-height: 0;
+}
 // hide dropdown arrow for mobile variant
 .dropdown-arrow-hidden :deep(.q-btn-dropdown__arrow) {
   display: none;
