@@ -12,12 +12,12 @@
         data-cy="event-countdown"
       ></event-countdown>
       <list-card-challenge
-        :cards="cards"
+        :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
       ></list-card-challenge>
       <banner-image
-        :banner="banner"
+        :banner="bannerImage"
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
       ></banner-image>
@@ -89,10 +89,6 @@ import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import VueCardListProgress from 'src/components/VueCardListProgress.vue';
-
-// import types
-import { CardChallenge as CardChallengeType, CardEvent as CardEventType, BannerImage as BannerImageType } from 'components/types';
-import { CardPost, CardFollow, ItemStatistics, CardProgress } from 'components/types';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import VueProgressSlider from 'src/components/VueProgressSlider.vue';
 
