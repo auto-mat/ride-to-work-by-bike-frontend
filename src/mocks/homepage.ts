@@ -23,35 +23,50 @@ export const cardsChallenge: CardChallenge[] = [
   {
     title: 'Týmová pravidelnost',
     url: '#',
-    image: 'https://picsum.photos/500/540',
+    image: {
+      src: 'https://picsum.photos/id/70/500/540',
+      alt: 'road lined with trees',
+    },
     dates: '1. říj.–31. říj. 2022',
     company: false,
   },
   {
     title: 'Vaše pravidelnost',
     url: '#',
-    image: 'https://picsum.photos/500/530',
+    image: {
+      src: 'https://picsum.photos/id/70/500/530',
+      alt: 'road lined with trees',
+    },
     dates: '1. říj.–31. říj. 2022',
     company: false,
   },
   {
     title: 'Vaše zelené kilometry',
     url: '#',
-    image: 'https://picsum.photos/500/550',
+    image: {
+      src: 'https://picsum.photos/id/70/500/550',
+      alt: 'road lined with trees',
+    },
     dates: '1. říj.–31. říj. 2022',
     company: true,
   },
   {
     title: 'Zelené kilometry týmu',
     url: '#',
-    image: 'https://picsum.photos/500/520',
+    image: {
+      src: 'https://picsum.photos/id/70/500/520',
+      alt: 'road lined with trees',
+    },
     dates: '1. říj.–31. říj. 2022',
     company: true,
   },
   {
     title: 'Zelené kilometry pobočky',
     url: '#',
-    image: 'https://picsum.photos/500/550',
+    image: {
+      src: 'https://picsum.photos/id/70/500/550',
+      alt: 'road lined with trees',
+    },
     dates: '1. říj.–31. říj. 2022',
     company: false,
   },
@@ -119,7 +134,10 @@ export const bannerImage: BannerImage = {
   title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
   perex:
     'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
-  image: 'https://picsum.photos/id/500/600/200',
+  image: {
+    src: 'https://picsum.photos/id/70/600/200',
+    alt: 'road lined with trees',
+  },
 };
 
 export const bannerApp: BannerApp = {
@@ -128,7 +146,10 @@ export const bannerApp: BannerApp = {
     title: 'Stáhnout aplikaci',
     url: '#',
   },
-  image: 'https://picsum.photos/id/500/600/200',
+  image: {
+    src: 'https://picsum.photos/id/70/600/200',
+    alt: 'road lined with trees',
+  },
 };
 
 export const cardsOffer: CardOffer[] = [
