@@ -402,14 +402,8 @@ describe('Home page', () => {
 
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
-            .then(($message) => {
-              cy.wrap($message)
-                .should('be.visible')
-                .should(
-                  'contain',
-                  i18n.global.t('index.contact.subjectRequired')
-                );
-            });
+            .should('be.visible')
+            .should('contain', i18n.global.t('index.contact.subjectRequired'));
 
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
