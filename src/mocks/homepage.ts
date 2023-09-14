@@ -13,7 +13,6 @@ import {
   ItemBadge,
   ItemStatistics,
   NewsletterItem,
-  NewsletterOption,
   CardOffer,
 } from 'components/types';
 
@@ -384,14 +383,6 @@ export const cardsProgress: CardProgress[] = [
         label: 'místo',
       },
     ],
-  },
-];
-
-export const newsletterOptions: NewsletterOption[] = [
-  {
-    id: 'mobility',
-    label: 'O udržitelné mobilitě',
-    active: true,
   },
 ];
 

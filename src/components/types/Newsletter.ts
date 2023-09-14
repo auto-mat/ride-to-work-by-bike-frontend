@@ -4,9 +4,3 @@ export interface NewsletterItem {
   url: string;
   following: boolean;
 }
-
-export interface NewsletterOption {
-  id: string;
-  label: string;
-  active: boolean;
-}
