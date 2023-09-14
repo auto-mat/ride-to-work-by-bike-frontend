@@ -43,12 +43,17 @@ export default defineComponent({
 
 <template>
   <div class="progress-slider relative-position" data-cy="progress-slider">
-    <div class="flex flex-wrap items-center justify-between gap-x-40">
-      <h2 class="text-h6" data-cy="progress-slider-title">{{ title }}</h2>
-      <q-list class="flex flex-wrap items-center q-p-none gap-x-40">
-        <q-item v-for="item in stats" :key="item.icon" data-cy="progress-slider-stats-item" class="text-grey-10">
+    <div class="row q-col-gutter-lg">
+      <!-- Title -->
+      <h2 class="col-sm-5 text-h6" data-cy="progress-slider-title">{{ title }}</h2>
+      <!-- List of statistics -->
+      <q-list class="col-sm-7 flex flex-wrap items-center justify-end q-pr-md gap-x-40">
+        <q-item v-for="item in stats" :key="item.icon" data-cy="progress-slider-stats-item" class="text-grey-10 q-px-none">
+          <!-- Icon -->
           <q-icon :name="item.icon" color="blue-grey-3" size="18px" />&nbsp;
+          <!-- Value -->
           <strong>{{ item.value }}</strong>&nbsp;
+          <!-- Label -->
           <span>{{ item.label }}</span>
         </q-item>
       </q-list>
@@ -56,11 +61,13 @@ export default defineComponent({
     <div>
       <swiper navigation :modules="modules" :slides-per-view="1" :space-between="24" class="overflow-visible overflow-lg-hidden"
         data-cy="progress-slider-swiper">
+        <!-- Slider cards -->
         <swiper-slide v-for="card in cards" :key="card.title" class="swiper-slide">
           <vue-card-progress-slider :card="card" />
         </swiper-slide>
       </swiper>
     </div>
+    <!-- Link to all results -->
     <div v-if="button" class="text-center absolute-bottom">
       <q-btn rounded color="grey-10" unelevated outline :to="button.url" :label="button.title"
         data-cy="progress-slider-button" />
@@ -69,20 +76,20 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+.gap-x-40 {
+  column-gap: 40px;
+}
+// Display overflowing: next card indication (mobile)
 .overflow-visible {
   overflow: visible;
 }
+// Default overflow to test as standalone (desktop)
 .overflow-lg-hidden {
   @media (min-width: $breakpoint-lg-min) {
     overflow: hidden;
   }
 }
-
-.gap-x-40 {
-  column-gap: 40px;
-}
-
-// Progress slider: next card indication (mobile)
+// Progress slider CSS: next card indication (mobile)
 .progress-slider :deep(.swiper) {
   max-width: 90%;
   margin-left: 0;
