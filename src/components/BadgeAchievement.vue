@@ -1,11 +1,12 @@
 <script lang="ts">
+// libraries
 import { defineComponent, computed } from 'vue';
 
 // types
 import { ItemBadge } from './types';
 
 export default defineComponent({
-  name: 'VueBadge',
+  name: 'BadgeAchievement',
   props: {
     badge: {
       type: Object as () => ItemBadge,

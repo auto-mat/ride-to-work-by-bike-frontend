@@ -1,15 +1,15 @@
-import VueBadgeList from 'components/VueBadgeList.vue';
+import ListBadgeAchievement from 'components/ListBadgeAchievement.vue';
 import { i18n } from '../../boot/i18n';
 import { badgeList } from 'src/mocks/homepage';
 
-describe('<VueBadgeList>', () => {
+describe('<ListBadgeAchievement>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.badgeList', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueBadgeList, {
+      cy.mount(ListBadgeAchievement, {
         props: {
           items: badgeList,
         },
@@ -26,7 +26,7 @@ describe('<VueBadgeList>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueBadgeList, {
+      cy.mount(ListBadgeAchievement, {
         props: {
           items: badgeList,
         },
