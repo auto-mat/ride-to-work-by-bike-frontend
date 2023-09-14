@@ -237,8 +237,7 @@ describe('<CardEvent>', () => {
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400');
 
-          cy.dataCy('dialog-body')
-            .scrollTo('bottom')
+          cy.dataCy('dialog-body').scrollTo('bottom');
 
           cy.dataCy('dialog-image')
             .should('be.visible')
@@ -266,8 +265,11 @@ describe('<CardEvent>', () => {
 
           cy.dataCy('dialog-content')
             .children()
-            .then($element => {
-              expect(calculatePercentageWidth($element)).to.be.closeTo(100, 0.5);
+            .then(($element) => {
+              expect(calculatePercentageWidth($element)).to.be.closeTo(
+                100,
+                0.5
+              );
             });
 
           cy.viewport('macbook-13');

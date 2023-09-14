@@ -87,7 +87,7 @@ export default defineComponent({
     </div>
 
     <!-- Dialog -->
-    <dialog-states v-model="isDialogOpen">
+    <dialog-states v-model="isDialogOpen" data-cy="dialog-help">
       <template #title="{ state }">
         <span v-if="state === 'default'">
           {{ $t('index.help.titleStateDefault') }}

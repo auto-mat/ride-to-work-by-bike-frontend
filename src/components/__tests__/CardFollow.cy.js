@@ -106,7 +106,7 @@ describe('<CardFollow>', () => {
           .then(($img) => {
             cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(card.image);
-          })
+          });
 
         cy.dataCy('card-follow-image').matchImageSnapshot({
           failureThreshold: 0.5,
@@ -120,7 +120,7 @@ describe('<CardFollow>', () => {
     beforeEach(() => {
       cy.mount(CardFollow, {
         props: {
-          card
+          card,
         },
       });
       cy.viewport('iphone-6');

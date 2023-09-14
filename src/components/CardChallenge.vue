@@ -2,7 +2,10 @@
 import { defineComponent } from 'vue';
 
 // import types
-import { CardChallenge as CardChallengeType, ConfigGlobal } from 'components/types';
+import {
+  CardChallenge as CardChallengeType,
+  ConfigGlobal,
+} from 'components/types';
 
 // import config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

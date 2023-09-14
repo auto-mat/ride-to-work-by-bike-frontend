@@ -28,7 +28,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
+          .should('have.css', 'font-weight', '400');
       });
     });
 
@@ -63,14 +63,13 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
+          .should('have.css', 'font-weight', '400');
       });
     });
 
     it('highlights the active language', () => {
       const activeLocale = i18n.global.locale;
-      cy.dataCy('switcher-' + activeLocale)
-        .should('be.visible')
+      cy.dataCy('switcher-' + activeLocale).should('be.visible');
     });
   });
 });

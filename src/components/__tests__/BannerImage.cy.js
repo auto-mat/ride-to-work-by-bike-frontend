@@ -4,7 +4,6 @@ import { bannerImage } from 'src/mocks/homepage';
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
 describe('<BannerImage>', () => {
-
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(BannerImage, {
@@ -90,8 +89,16 @@ describe('<BannerImage>', () => {
 
           cy.dataCy('banner-half')
             .first()
-            .should('have.css', 'border-top-left-radius', config.borderRadiusCard)
-            .should('have.css', 'border-bottom-left-radius', config.borderRadiusCard);
+            .should(
+              'have.css',
+              'border-top-left-radius',
+              config.borderRadiusCard
+            )
+            .should(
+              'have.css',
+              'border-bottom-left-radius',
+              config.borderRadiusCard
+            );
         });
       });
     });

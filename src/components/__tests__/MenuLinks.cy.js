@@ -50,7 +50,7 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', '#000');
         });
     });
-  })
+  });
 
   context('useful', () => {
     const title = 'Useful links';
@@ -63,7 +63,7 @@ describe('<MenuLinks>', () => {
         },
       });
       cy.viewport('macbook-16');
-    })
+    });
 
     it('renders link buttons with correct styling (useful links variant)', () => {
       cy.dataCy('button-menu-links')
@@ -80,7 +80,7 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', '#000');
         });
     });
-  })
+  });
 
   // TODO: Check for icons
 });

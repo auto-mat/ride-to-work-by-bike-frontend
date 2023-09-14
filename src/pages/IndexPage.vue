@@ -7,21 +7,19 @@
       >
         {{ $t('index.title') }}
       </h1>
-      <event-countdown
-        :release-date="releaseDate"
-        data-cy="event-countdown"
-      />
+      <event-countdown :release-date="releaseDate" data-cy="event-countdown" />
       <list-card-challenge
         :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
         data-cy="list-challenge"
-        />
+      />
       <banner-image
         :banner="bannerImageData"
         class="q-pt-xl q-pb-xl"
         data-cy="banner-image"
       />
-      <banner-app :banner="bannerAppData"
+      <banner-app
+        :banner="bannerAppData"
         class="q-mt-xl"
         data-cy="banner-app"
       />

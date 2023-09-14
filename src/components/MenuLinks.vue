@@ -53,7 +53,9 @@ export default defineComponent({
         class="q-btn-underline text-body2 q-mt-md"
         data-cy="button-menu-links"
       >
+        <!-- Icon -->
         <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
+        <!-- Label -->
         <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
       </q-btn>
     </div>
