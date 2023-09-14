@@ -54,7 +54,7 @@ export default defineComponent({
       </q-list>
     </div>
     <div>
-      <swiper navigation :modules="modules" :slides-per-view="1" :space-between="24" class="overflow-visible"
+      <swiper navigation :modules="modules" :slides-per-view="1" :space-between="24" class="overflow-visible overflow-lg-hidden"
         data-cy="progress-slider-swiper">
         <swiper-slide v-for="card in cards" :key="card.title" class="swiper-slide">
           <vue-card-progress-slider :card="card" />
@@ -69,9 +69,14 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-// .overflow-visible {
-//   overflow: visible;
-// }
+.overflow-visible {
+  overflow: visible;
+}
+.overflow-lg-hidden {
+  @media (min-width: $breakpoint-lg-min) {
+    overflow: hidden;
+  }
+}
 
 .gap-x-40 {
   column-gap: 40px;
