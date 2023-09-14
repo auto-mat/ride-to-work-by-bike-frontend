@@ -1,14 +1,15 @@
 <script lang="ts">
+// libraries
 import { defineComponent, computed } from 'vue';
 
 // types
-import { NewsletterItem } from 'components/types';
+import { NewsletterItem as NewsletterItemType } from 'components/types';
 
 export default defineComponent({
-  name: 'VueNewsletterItem',
+  name: 'NewsletterItem',
   props: {
     item: {
-      type: Object as () => NewsletterItem,
+      type: Object as () => NewsletterItemType,
       required: true,
     },
   },
@@ -29,16 +30,19 @@ export default defineComponent({
     class="flex items-center justify-end justify-sm-between gap-8"
     data-cy="newsletter-item"
   >
+    <!-- Label section -->
     <div
       class="flex no-wrap items-center justify-between gap-8"
       data-cy="newsletter-item-content"
     >
+      <!-- Icon -->
       <q-icon
         :name="item.icon"
         size="32px"
         color="blue-grey-6"
         data-cy="newsletter-item-icon"
       ></q-icon>
+      <!-- Title -->
       <div
         class="text-body2 text-grey-10"
         :class="{ 'text-bold': !item.following }"
@@ -47,6 +51,8 @@ export default defineComponent({
         {{ item.title }}
       </div>
     </div>
+
+    <!-- Button -->
     <q-btn
       rounded
       color="grey-10"
@@ -56,6 +62,7 @@ export default defineComponent({
       data-cy="newsletter-item-button"
       class="min-w-200"
     >
+      <!-- Icon -->
       <q-icon
         v-show="item.following"
         name="check"
@@ -63,6 +70,7 @@ export default defineComponent({
         color="grey-10"
         class="q-mr-xs"
       />
+      <!-- Label -->
       <span v-if="item.following">
         {{ $t('index.newsletterFeature.following') }}
       </span>

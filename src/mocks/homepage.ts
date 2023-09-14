@@ -1,3 +1,5 @@
+import { i18n } from 'src/boot/i18n';
+
 // types
 import {
   BannerApp,
@@ -10,6 +12,7 @@ import {
   CardStats,
   ItemBadge,
   ItemStatistics,
+  NewsletterItem,
   NewsletterOption,
   CardOffer,
 } from 'components/types';
@@ -389,6 +392,27 @@ export const newsletterOptions: NewsletterOption[] = [
     id: 'mobility',
     label: 'O udržitelné mobilitě',
     active: true,
+  },
+];
+
+export const newsletterItems: NewsletterItem[] = [
+  {
+    title: i18n.global.t('index.newsletterFeature.aboutChallenges'),
+    icon: 'ion-bicycle',
+    url: '#',
+    following: true,
+  },
+  {
+    title: i18n.global.t('index.newsletterFeature.aboutEvents'),
+    icon: 'people',
+    url: '#',
+    following: true,
+  },
+  {
+    title: i18n.global.t('index.newsletterFeature.aboutMobility'),
+    icon: 'mdi-leaf',
+    url: '#',
+    following: false,
   },
 ];
 
