@@ -6,7 +6,7 @@ import { defineComponent } from 'vue';
 import { CardProgress, ItemStatistics, Link } from './types';
 
 // components
-import VueCardProgress from './VueCardProgress.vue';
+import CardProgress from './CardProgress.vue';
 
 export default defineComponent({
   name: 'ListCardProgress',
@@ -27,7 +27,7 @@ export default defineComponent({
     },
   },
   components: {
-    VueCardProgress,
+    CardProgress,
   },
 });
 </script>
@@ -69,7 +69,7 @@ export default defineComponent({
         class="col-12 col-sm-6 col-lg-4"
         data-cy="card-list-progress-item"
       >
-        <vue-card-progress :card="card"></vue-card-progress>
+        <card-progress :card="card"></card-progress>
       </div>
     </div>
     <!-- Link to all results -->
