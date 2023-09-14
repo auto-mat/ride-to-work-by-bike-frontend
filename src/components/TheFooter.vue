@@ -5,7 +5,7 @@ import { defineComponent } from 'vue';
 import VueLanguageSwitcher from 'components/VueLanguageSwitcher.vue';
 
 export default defineComponent({
-  name: 'VueFooter',
+  name: 'TheFooter',
   components: {
     VueLanguageSwitcher,
   },
@@ -69,7 +69,7 @@ export default defineComponent({
               <q-icon name="arrow_upward" size="18px" />
             </q-btn>
             <div
-              class="flex w-full w-md-auto flex-wrap items-center justify-center text-center gap-12 copyright lt-md"
+              class="w-full w-md-auto flex flex-wrap items-center justify-center gap-12 text-center q-py-md lt-md copyright"
               data-cy="footer-copyright-list-mobile"
             >
               <div
@@ -217,7 +217,6 @@ export default defineComponent({
   padding-inline-start: 0;
 }
 .copyright {
-  padding-bottom: 16px;
   @media (min-width: $breakpoint-sm-min) {
     height: 38px;
     min-height: 0;

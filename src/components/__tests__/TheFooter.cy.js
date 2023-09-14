@@ -1,14 +1,14 @@
-import VueFooter from 'components/VueFooter.vue';
+import TheFooter from 'components/TheFooter.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueFooter>', () => {
+describe('<TheFooter>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueFooter, {
+      cy.mount(TheFooter, {
         props: {
           copyright: [
             'Tato aplikace je svobodný software.',
@@ -82,7 +82,7 @@ describe('<VueFooter>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueFooter, {
+      cy.mount(TheFooter, {
         props: {},
       });
       cy.viewport('iphone-6');
