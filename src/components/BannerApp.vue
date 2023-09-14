@@ -12,7 +12,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 );
 
 export default defineComponent({
-  name: 'VueBannerImage',
+  name: 'BannerApp',
   props: {
     banner: {
       type: Object as () => BannerAppType,
