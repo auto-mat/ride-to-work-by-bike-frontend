@@ -1,10 +1,10 @@
-import VueCardProgressSlider from 'components/VueCardProgressSlider.vue';
+import CardProgressSlider from 'components/CardProgressSlider.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgressSlider } from '../../mocks/homepage';
 
 const card = cardsProgressSlider[0];
 
-describe('<VueCardProgressSlider>', () => {
+describe('<CardProgressSlider>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['timeline', 'toDate'],
@@ -15,7 +15,7 @@ describe('<VueCardProgressSlider>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardProgressSlider, {
+      cy.mount(CardProgressSlider, {
         props: {
           card,
         },
@@ -129,7 +129,7 @@ describe('<VueCardProgressSlider>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardProgressSlider, {
+      cy.mount(CardProgressSlider, {
         props: {
           card,
         },
