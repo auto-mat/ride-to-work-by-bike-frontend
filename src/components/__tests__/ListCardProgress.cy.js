@@ -1,8 +1,8 @@
-import VueCardListProgress from 'components/VueCardListProgress.vue';
+import ListCardProgress from 'components/ListCardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { progressStats, cardsProgress } from 'src/mocks/homepage';
 
-describe('<VueCardListProgress>', () => {
+describe('<ListCardProgress>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
@@ -13,7 +13,7 @@ describe('<VueCardListProgress>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardListProgress, {
+      cy.mount(ListCardProgress, {
         props: {
           title: i18n.global.t('index.cardListProgress.title'),
           stats: progressStats,
@@ -93,7 +93,7 @@ describe('<VueCardListProgress>', () => {
 
   context('tablet', () => {
     beforeEach(() => {
-      cy.mount(VueCardListProgress, {
+      cy.mount(ListCardProgress, {
         props: {
           title: i18n.global.t('index.cardListProgress.title'),
           stats: progressStats,
@@ -115,7 +115,7 @@ describe('<VueCardListProgress>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardListProgress, {
+      cy.mount(ListCardProgress, {
         props: {
           title: i18n.global.t('index.cardListProgress.title'),
           stats: progressStats,
