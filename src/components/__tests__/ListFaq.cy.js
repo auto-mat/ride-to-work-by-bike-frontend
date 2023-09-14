@@ -1,84 +1,88 @@
 import ListFaq from 'components/ListFaq.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<ListFaq>', () => {
-  const title = 'Participants';
+  context('participant', () => {
+    const title = i18n.global.t('index.help.titleParticipants');
 
-  it('renders title with correct styling', () => {
-    cy.mount(ListFaq, {
-      props: {
-        title,
-        variant: 'participant',
-      },
-    });
-
-    cy.dataCy('list-faq-title')
-      .should('be.visible')
-      .should('contain', title)
-      .should('have.css', 'font-size', '24px')
-      .should('have.css', 'font-weight', '700');
-  });
-
-  it('renders participant FAQ with working accordion', () => {
-    cy.mount(ListFaq, {
-      props: {
-        title,
-        variant: 'participant',
-      },
-    });
-
-    cy.dataCy('list-faq-list')
-      .find('.q-item__label')
-      .first()
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
-
-    cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
-
-    cy.dataCy('list-faq-list')
-      .find('.q-item')
-      .first()
-      .should('be.visible')
-      .click()
-      .then(() => {
-        cy.dataCy('list-faq-list')
-          .find('.q-card')
-          .first()
-          .should('be.visible')
-          .then(($element) => {
-            expect($element.height()).to.be.greaterThan(0);
-          });
+    beforeEach(() => {
+      cy.mount(ListFaq, {
+        props: {
+          title,
+          variant: 'participant',
+        },
       });
-  });
+    })
 
-  it('renders coordinator FAQ section with working accordion', () => {
-    cy.mount(ListFaq, {
-      props: {
-        title,
-        variant: 'coordinator',
-      },
+    it('renders title with correct styling', () => {
+      cy.dataCy('list-faq-title')
+        .should('be.visible')
+        .should('contain', title)
+        .should('have.css', 'font-size', '24px')
+        .should('have.css', 'font-weight', '700');
     });
 
-    cy.dataCy('list-faq-list')
-      .find('.q-item__label')
-      .first()
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
+    it('renders participant FAQ with working accordion', () => {
+      cy.dataCy('list-faq-list')
+        .find('.q-item__label')
+        .first()
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '400');
 
-    cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
+      cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
 
-    cy.dataCy('list-faq-list')
-      .find('.q-item')
-      .first()
-      .should('be.visible')
-      .click()
-      .then(() => {
-        cy.dataCy('list-faq-list')
-          .find('.q-card')
-          .first()
-          .should('be.visible')
-          .then(($element) => {
-            expect($element.height()).to.be.greaterThan(0);
-          });
-      });
+      cy.dataCy('list-faq-list')
+        .find('.q-item')
+        .first()
+        .should('be.visible')
+        .click()
+        .then(() => {
+          cy.dataCy('list-faq-list')
+            .find('.q-card')
+            .first()
+            .should('be.visible')
+            .then(($element) => {
+              expect($element.height()).to.be.greaterThan(0);
+            });
+        });
+    });
   });
+
+  context('coordinator', () => {
+    const title = i18n.global.t('index.help.titleCoordinators');
+
+    beforeEach(() => {
+      cy.mount(ListFaq, {
+        props: {
+          title,
+          variant: 'coordinator',
+        },
+      });
+    })
+
+    it('renders coordinator FAQ section with working accordion', () => {
+      cy.dataCy('list-faq-list')
+        .find('.q-item__label')
+        .first()
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '400');
+
+      cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
+
+      cy.dataCy('list-faq-list')
+        .find('.q-item')
+        .first()
+        .should('be.visible')
+        .click()
+        .then(() => {
+          cy.dataCy('list-faq-list')
+            .find('.q-card')
+            .first()
+            .should('be.visible')
+            .then(($element) => {
+              expect($element.height()).to.be.greaterThan(0);
+            });
+        });
+    });
+  })
 });
