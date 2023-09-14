@@ -1,13 +1,7 @@
-import VueNewsletterFeature from 'components/VueNewsletterFeature.vue';
+import NewsletterFeature from 'components/NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
 
-const itemTitles = [
-  i18n.global.t('index.newsletterFeature.aboutChallenges'),
-  i18n.global.t('index.newsletterFeature.aboutEvents'),
-  i18n.global.t('index.newsletterFeature.aboutMobility'),
-];
-
-describe('<VueNewsletterFeature>', () => {
+describe('<NewsletterFeature>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
@@ -26,7 +20,7 @@ describe('<VueNewsletterFeature>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueNewsletterFeature, {
+      cy.mount(NewsletterFeature, {
         props: {},
       });
       cy.viewport('macbook-16');
@@ -93,7 +87,7 @@ describe('<VueNewsletterFeature>', () => {
 
     it('renders divider between items', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-divider')
+        cy.dataCy('newsletter-feature-separator')
           .should('be.visible')
           .should('have.length', 2)
           .should('have.css', 'margin-top', '16px')
@@ -112,7 +106,7 @@ describe('<VueNewsletterFeature>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueNewsletterFeature, {
+      cy.mount(NewsletterFeature, {
         props: {},
       });
       cy.viewport('iphone-6');

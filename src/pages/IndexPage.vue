@@ -80,7 +80,7 @@
         data-cy="list-post"
       >
       </vue-card-list-post>
-      <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
+      <newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
       <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
     </div>
   </q-page>
@@ -103,7 +103,7 @@ import ListCardFollow from 'src/components/ListCardFollow.vue';
 import ListCardOffer from 'src/components/ListCardOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import ListCardProgress from 'src/components/ListCardProgress.vue';
-import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
+import NewsletterFeature from 'src/components/NewsletterFeature.vue';
 import SliderProgress from 'src/components/SliderProgress.vue';
 
 // mocks
@@ -125,7 +125,7 @@ export default defineComponent({
     ListCardProgress,
     SliderProgress,
     VueCardListPost,
-    VueNewsletterFeature,
+    NewsletterFeature,
   },
   setup() {
     return {

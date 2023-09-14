@@ -1,14 +1,14 @@
-import VueNewsletterItem from 'components/VueNewsletterItem.vue';
+import NewsletterItem from 'components/NewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const icon = 'people';
 const title = i18n.global.t('index.newsletterFeature.aboutEvents');
 const url = '#';
 
-describe('<VueNewsletterItem>', () => {
+describe('<NewsletterItem>', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueNewsletterItem, {
+      cy.mount(NewsletterItem, {
         props: {
           item: {
             title,
@@ -94,7 +94,7 @@ describe('<VueNewsletterItem>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueNewsletterItem, {
+      cy.mount(NewsletterItem, {
         props: {
           item: {
             title,
@@ -179,7 +179,7 @@ describe('<VueNewsletterItem>', () => {
 
   context('not following', () => {
     beforeEach(() => {
-      cy.mount(VueNewsletterItem, {
+      cy.mount(NewsletterItem, {
         props: {
           item: {
             title,
