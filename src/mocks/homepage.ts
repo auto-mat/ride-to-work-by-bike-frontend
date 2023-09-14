@@ -432,7 +432,7 @@ export const cardsStats: CardStats[] = [
     stats: [
       {
         id: 'regularity',
-        icon: '',
+        icon: 'lens',
         text: '80% pravidelnost',
       },
       {
@@ -442,12 +442,12 @@ export const cardsStats: CardStats[] = [
       },
       {
         id: 'distance',
-        icon: '',
+        icon: 'sync_alt',
         text: '312,25 km',
       },
       {
         id: 'emissions',
-        icon: '',
+        icon: 'eco',
         text: '420 g CO2 ušetřeno',
       },
     ],

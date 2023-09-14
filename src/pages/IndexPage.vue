@@ -45,11 +45,11 @@
         class="q-pt-xl q-pb-xl"
         data-cy="list-progress"
       ></list-card-progress>
-      <vue-badge-list
+      <list-badge-achievement
         :items="badgeList"
         class="q-pt-xl q-pb-xl"
         data-cy="list-badges"
-      ></vue-badge-list>
+      ></list-badge-achievement>
     </div>
     <heading-background
       :title="headingBgTitle"
@@ -62,13 +62,13 @@
         class="q-pt-xl"
         data-cy="list-event"
       ></list-card-event>
-      <vue-card-list-offer
+      <list-card-offer
         :title="$t('index.cardListOffer.title')"
         :cards="cardsOffer"
         class="q-pt-xl"
         data-cy="list-offer"
       >
-      </vue-card-list-offer>
+      </list-card-offer>
       <vue-card-list-post
         :title="$t('index.cardListPost.title')"
         :cards="cardsPost"
@@ -81,7 +81,7 @@
       >
       </vue-card-list-post>
       <vue-newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
-      <vue-card-list-follow :cards="cardsFollow" class="q-pt-xl" />
+      <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
     </div>
   </q-page>
 </template>
@@ -96,11 +96,11 @@ import ListCardChallenge from 'components/ListCardChallenge.vue';
 import BannerImage from 'components/BannerImage.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
-import VueBadgeList from 'src/components/VueBadgeList.vue';
+import ListBadgeAchievement from 'src/components/ListBadgeAchievement.vue';
 import BannerApp from 'src/components/BannerApp.vue';
 import BannerRoutes from 'src/components/BannerRoutes.vue';
-import VueCardListFollow from 'src/components/VueCardListFollow.vue';
-import VueCardListOffer from 'src/components/VueCardListOffer.vue';
+import ListCardFollow from 'src/components/ListCardFollow.vue';
+import ListCardOffer from 'src/components/ListCardOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
 import ListCardProgress from 'src/components/ListCardProgress.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
@@ -112,20 +112,20 @@ import * as homepage from '../mocks/homepage';
 export default defineComponent({
   name: 'IndexPage',
   components: {
-    EventCountdown,
-    ListCardChallenge,
+    BannerApp,
     BannerImage,
-    HeadingBackground,
-    ListCardEvent,
-    VueBadgeList,
     BannerRoutes,
-    VueCardListOffer,
+    EventCountdown,
+    HeadingBackground,
+    ListBadgeAchievement,
+    ListCardChallenge,
+    ListCardEvent,
+    ListCardFollow,
+    ListCardOffer,
+    ListCardProgress,
+    SliderProgress,
     VueCardListPost,
     VueNewsletterFeature,
-    VueCardListFollow,
-    SliderProgress,
-    ListCardProgress,
-    BannerApp,
   },
   setup() {
     return {

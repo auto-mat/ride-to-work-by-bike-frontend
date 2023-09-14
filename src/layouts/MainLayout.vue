@@ -8,13 +8,11 @@ import { i18n } from 'src/boot/i18n';
 import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
-import VueFooter from 'components/VueFooter.vue';
+import TheFooter from 'components/TheFooter.vue';
 import VueFooterPanel from 'src/components/VueFooterPanel.vue';
 
 // import types
 import { ConfigGlobal } from 'components/types';
-// mocks
-import * as layout from 'src/mocks/layout';
 
 if (window.Cypress) {
   window.i18n = i18n;
@@ -29,7 +27,13 @@ setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 export default defineComponent({
   name: 'MainLayout',
 
-  components: { DrawerHeader, UserSelect, DrawerMenu, VueFooter, VueFooterPanel },
+  components: {
+    DrawerHeader,
+    UserSelect,
+    DrawerMenu,
+    TheFooter,
+    VueFooterPanel,
+  },
 
   setup() {
     const leftDrawerOpen = ref(false);
@@ -71,15 +75,9 @@ export default defineComponent({
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
-      <drawer-header
-        data-cy="drawer-header"
-        :mobile="false"
-      ></drawer-header>
+      <drawer-header data-cy="drawer-header" :mobile="false"></drawer-header>
       <!-- User options dropdown -->
-      <user-select
-        class="q-pt-lg"
-        data-cy="user-select"
-      ></user-select>
+      <user-select class="q-pt-lg" data-cy="user-select"></user-select>
       <!-- Navigation menu -->
       <drawer-menu class="q-pt-lg" data-cy="drawer-menu"></drawer-menu>
     </q-drawer>
@@ -90,7 +88,7 @@ export default defineComponent({
     <q-footer class="position-static md-position-absolute bg-transparent">
       <!-- footer content -->
       <vue-footer-panel></vue-footer-panel>
-      <vue-footer />
+      <the-footer />
     </q-footer>
   </q-layout>
 </template>
