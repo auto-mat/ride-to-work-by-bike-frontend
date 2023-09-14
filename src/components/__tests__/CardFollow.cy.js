@@ -1,4 +1,4 @@
-import VueCardFollow from 'components/VueCardFollow.vue';
+import CardFollow from 'components/CardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 const title = 'Do práce na kole – Brno';
@@ -6,14 +6,14 @@ const handle = '@DPNKBrno';
 const image = 'https://picsum.photos/id/76/300/300';
 const url = '#';
 
-describe('<VueCardFollow>', () => {
+describe('<CardFollow>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.cardFollow', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardFollow, {
+      cy.mount(CardFollow, {
         props: {
           card: {
             title,
@@ -124,7 +124,7 @@ describe('<VueCardFollow>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardFollow, {
+      cy.mount(CardFollow, {
         props: {
           title,
           handle,

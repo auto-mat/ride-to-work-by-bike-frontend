@@ -1,15 +1,17 @@
 <script lang="ts">
+// libraires
 import { defineComponent } from 'vue';
 
 // types
 import { CardFollow, ConfigGlobal } from 'components/types';
 
+// config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 
 export default defineComponent({
-  name: 'VueCardFollow',
+  name: 'CardFollow',
   props: {
     card: {
       type: Object as () => CardFollow,
@@ -23,8 +25,8 @@ export default defineComponent({
     return {
       borderRadius,
       borderColor,
-    }
-  }
+    };
+  },
 });
 </script>
 
@@ -37,9 +39,10 @@ export default defineComponent({
       flat
       :style="{
         'border-radius': borderRadius,
-        'border': `1px solid ${ borderColor }`
+        border: `1px solid ${borderColor}`,
       }"
     >
+      <!-- Card avatar -->
       <q-item-section avatar data-cy="card-follow-avatar">
         <!-- Image -->
         <q-avatar size="96px" class="-mt-64">
@@ -47,6 +50,7 @@ export default defineComponent({
         </q-avatar>
       </q-item-section>
 
+      <!-- Card content -->
       <q-item-section class="q-pt-sm">
         <!-- Link follow on social media -->
         <a :href="card.url" target="_blank" data-cy="card-follow-link">
