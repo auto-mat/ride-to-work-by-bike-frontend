@@ -1,7 +1,11 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { i18n } from 'src/boot/i18n';
 
+// mocks
+import { socialLinks, usefulLinks } from 'src/mocks/layout';
+
+// Component used inside the Help Dialog window to show buttons with various outbound links
+// Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103859&mode=design&t=5BJSgOjKefPXcv0w-1
 export default defineComponent({
   name: 'MenuLinks',
   props: {
@@ -13,58 +17,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const itemsSocialLinks = [
-      {
-        title: i18n.global.t('index.menuLinks.instagram'),
-        icon: 'mdi-instagram',
-        url: 'https://www.instagram.com/spolekautomat',
-      },
-      {
-        title: i18n.global.t('index.menuLinks.facebook'),
-        icon: 'mdi-facebook',
-        url: 'https://www.facebook.com/spolekautomat',
-      },
-      {
-        title: i18n.global.t('index.menuLinks.twitter'),
-        icon: 'mdi-twitter',
-        url: 'https://twitter.com/spolekautomat',
-      },
-      {
-        title: i18n.global.t('index.menuLinks.youtube'),
-        icon: 'mdi-youtube',
-        url: 'https://www.youtube.com/@spolekautomat',
-      },
-    ];
-
-    const itemsUsefulLinks = [
-      {
-        title: 'Auto-Mat.cz',
-        icon: 'link',
-        url: 'https://auto-mat.cz/',
-      },
-      {
-        title: 'Podpořte nás',
-        icon: 'volunteer_activism',
-        url: '#',
-      },
-      {
-        title: 'Kód projektu',
-        icon: 'mdi-github',
-        url: 'https://github.com/auto-mat/ride-to-work-by-bike-frontend',
-      },
-      {
-        title: 'Mobilní aplikace',
-        icon: 'smartphone',
-        url: '#',
-      },
-    ];
-
     const items = computed(() => {
       if (props.variant === 'social') {
-        return itemsSocialLinks;
+        return socialLinks;
       }
       if (props.variant === 'useful') {
-        return itemsUsefulLinks;
+        return usefulLinks;
       }
       return [];
     });
@@ -86,12 +44,12 @@ export default defineComponent({
       <!-- Button -->
       <q-btn
         v-for="item in items"
-        :key="item.title"
-        :href="item.url"
         rounded
         no-caps
-        color="blue-grey-1"
         unelevated
+        :key="item.title"
+        :href="item.url"
+        color="blue-grey-1"
         class="q-btn-underline text-body2 q-mt-md"
         data-cy="button-menu-links"
       >
