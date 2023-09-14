@@ -3,7 +3,7 @@
 import { defineComponent, computed } from 'vue';
 
 // mocks
-import { faqParticipant, faqCoordinator } from 'src/mocks/homepage';
+import { faqParticipant, faqCoordinator } from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'ListFaq',
