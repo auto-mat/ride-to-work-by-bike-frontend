@@ -1,19 +1,15 @@
-import VueCardPost from 'components/VueCardPost.vue';
+import CardPost from 'components/CardPost.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<VueCardPost>', () => {
-  const title = 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?';
-  const date = new Date(2023, 8, 1);
-  const image = 'https://picsum.photos/id/100/380/380';
+// mocks
+import { cardsPost } from 'src/mocks/homepage';
+const card = cardsPost[0];
 
+describe('<CardPost>', () => {
   beforeEach(() => {
-    cy.mount(VueCardPost, {
+    cy.mount(CardPost, {
       props: {
-        card: {
-          title,
-          date,
-          image,
-        },
+        card,
       },
     });
   });
@@ -60,9 +56,9 @@ describe('<VueCardPost>', () => {
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
         .should('have.color', '#212121')
-        .should('contain', title)
+        .should('contain', card.title)
         .then(($title) => {
-          expect($title.text()).to.equal(title);
+          expect($title.text()).to.equal(card.title);
         });
     });
   });
@@ -75,6 +71,7 @@ describe('<VueCardPost>', () => {
         .should('have.color', '#78909c')
         .should('contain', '1. Sep. 2023')
         .then(($date) => {
+          // manual workaround to avoid having to calculate dynamic date
           expect($date.text()).to.equal('1. Sep. 2023');
         });
     });
@@ -83,13 +80,12 @@ describe('<VueCardPost>', () => {
   it('renders image', () => {
     cy.window().then(() => {
       cy.dataCy('card-post-image')
-        .should('be.visible')
         .find('img')
-        .should(($img) => {
-          expect($img[0].naturalWidth).to.be.greaterThan(0);
+        .should('be.visible')
+        .then(($img) => {
+          cy.testImageHeight($img);
+          expect($img.attr('src')).to.equal(card.image);
         })
-        .invoke('attr', 'src')
-        .should('contains', image);
 
       cy.dataCy('card-post-image').matchImageSnapshot({
         failureThreshold: 0.5,

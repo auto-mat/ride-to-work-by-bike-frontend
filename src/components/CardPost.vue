@@ -4,25 +4,26 @@ import { defineComponent } from 'vue';
 import { date } from 'quasar';
 
 // types
-import { CardPost, ConfigGlobal } from 'components/types';
+import { CardPost as CardPostType, ConfigGlobal } from 'components/types';
 
-const { formatDate } = date;
-
+// config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 
+const { formatDate } = date;
+
 export default defineComponent({
-  name: 'VueCardPost',
+  name: 'CardPost',
   props: {
     card: {
-      type: Object as () => CardPost,
+      type: Object as () => CardPostType,
       required: true,
     },
   },
   setup(props) {
     const formattedDate = formatDate(props.card.date, 'D. MMM. YYYY');
-    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
       formattedDate,
@@ -54,6 +55,7 @@ export default defineComponent({
         >
           {{ formattedDate }}
         </div>
+        <!-- Title -->
         <div
           class="card-post-title text-body text-grey-10"
           data-cy="card-post-title"
