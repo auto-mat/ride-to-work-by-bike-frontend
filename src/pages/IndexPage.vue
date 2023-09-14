@@ -38,13 +38,13 @@
         :button="{ title: $t('index.progressSlider.button'), url: '/blog' }"
       >
       </slider-progress>
-      <vue-card-list-progress
+      <list-card-progress
         :title="$t('index.cardListProgress.title')"
         :cards="cardsProgress"
         :stats="progressStats"
         class="q-pt-xl q-pb-xl"
         data-cy="list-progress"
-      ></vue-card-list-progress>
+      ></list-card-progress>
       <vue-badge-list
         :items="badgeList"
         class="q-pt-xl q-pb-xl"
@@ -102,7 +102,7 @@ import BannerRoutes from 'src/components/BannerRoutes.vue';
 import VueCardListFollow from 'src/components/VueCardListFollow.vue';
 import VueCardListOffer from 'src/components/VueCardListOffer.vue';
 import VueCardListPost from 'src/components/VueCardListPost.vue';
-import VueCardListProgress from 'src/components/VueCardListProgress.vue';
+import ListCardProgress from 'src/components/ListCardProgress.vue';
 import VueNewsletterFeature from 'src/components/VueNewsletterFeature.vue';
 import SliderProgress from 'src/components/SliderProgress.vue';
 
@@ -124,7 +124,7 @@ export default defineComponent({
     VueNewsletterFeature,
     VueCardListFollow,
     SliderProgress,
-    VueCardListProgress,
+    ListCardProgress,
     BannerApp,
   },
   setup() {
