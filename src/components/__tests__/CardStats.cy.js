@@ -1,17 +1,17 @@
-import VueCardStats from 'components/VueCardStats.vue';
+import CardStats from 'components/CardStats.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsStats } from 'src/mocks/homepage';
 
 const card = cardsStats[0];
 
-describe('<VueCardStats>', () => {
+describe('<CardStats>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardStats, {
+      cy.mount(CardStats, {
         props: {
           card,
         },
@@ -70,7 +70,7 @@ describe('<VueCardStats>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardStats, {
+      cy.mount(CardStats, {
         props: {
           card,
         },
