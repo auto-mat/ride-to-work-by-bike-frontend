@@ -1,36 +1,12 @@
-import VueCardListOffer from 'components/VueCardListOffer.vue';
+import ListCardOffer from 'components/ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
 
-const listTitle = 'Akční nabídky';
+// mocks
+import { cardsOffer } from 'src/mocks/homepage';
+const title = i18n.global.t('cardListOffer.title');
+const cards = cardsOffer;
 
-const cardOffer = {
-  title: '100 CZK voucher do e-shopu Automatu',
-  expirationDate: 'Some time later on',
-  issuer: 'Automat',
-  image: 'https://picsum.photos/380/380',
-  code: '65972834',
-  link: {
-    title: 'Navštívit e-shop',
-    url: '#',
-    target: '_blank',
-  },
-  icon: 'pedal_bike',
-  content:
-    'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.',
-};
-
-const cards = [
-  cardOffer,
-  cardOffer,
-  cardOffer,
-  cardOffer,
-  cardOffer,
-  cardOffer,
-  cardOffer,
-  cardOffer,
-];
-
-describe('<VueCardListOffer>', () => {
+describe('<ListCardOffer>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
@@ -41,10 +17,10 @@ describe('<VueCardListOffer>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardListOffer, {
+      cy.mount(ListCardOffer, {
         props: {
-          title: listTitle,
-          cards: cards,
+          title,
+          cards,
         },
       });
       cy.viewport('macbook-16');
@@ -56,28 +32,28 @@ describe('<VueCardListOffer>', () => {
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
           .should('have.color', '#000000')
-          .should('contain', listTitle)
+          .should('contain', title)
           .then(($title) => {
-            expect($title.text()).to.equal(listTitle);
+            expect($title.text()).to.equal(title);
           });
       });
     });
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer-item').should('have.length', 6);
+        cy.dataCy('list-card-offer-item').should('have.length', 6);
       });
     });
 
     it('renders items in a 3 col grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 33);
+        cy.testElementPercentageWidth(cy.dataCy('list-card-offer-item'), 33);
       });
     });
 
     it('renders show more button', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer-button')
+        cy.dataCy('list-card-offer-button')
           .should('be.visible')
           .should(
             'contain',
@@ -91,10 +67,10 @@ describe('<VueCardListOffer>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardListOffer, {
+      cy.mount(ListCardOffer, {
         props: {
-          title: listTitle,
-          cards: cards,
+          title,
+          cards,
         },
       });
       cy.viewport('iphone-6');
@@ -106,28 +82,28 @@ describe('<VueCardListOffer>', () => {
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
           .should('have.color', '#000000')
-          .should('contain', listTitle)
+          .should('contain', title)
           .then(($title) => {
-            expect($title.text()).to.equal(listTitle);
+            expect($title.text()).to.equal(title);
           });
       });
     });
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer-item').should('have.length', 6);
+        cy.dataCy('list-card-offer-item').should('have.length', 6);
       });
     });
 
     it('renders items in a 1 col grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('card-list-offer-item'), 100);
+        cy.testElementPercentageWidth(cy.dataCy('list-card-offer-item'), 100);
       });
     });
 
     it('renders show more button', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-offer-button')
+        cy.dataCy('list-card-offer-button')
           .should('be.visible')
           .should(
             'contain',
