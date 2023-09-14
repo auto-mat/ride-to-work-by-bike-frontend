@@ -192,7 +192,7 @@ describe('Home page', () => {
     it('allows user to display offer modal', () => {
       cy.dataCy('dialog-card-offer').should('not.exist');
 
-      cy.dataCy('card-list-offer-item').first().should('be.visible').click();
+      cy.dataCy('list-card-offer-item').first().should('be.visible').click();
 
       cy.dataCy('dialog-card-offer').should('be.visible');
     });
@@ -472,7 +472,7 @@ describe('Home page', () => {
     it('allows user to display offer modal', () => {
       cy.dataCy('dialog-card-offer').should('not.exist');
 
-      cy.dataCy('card-list-offer-item').first().should('be.visible').click();
+      cy.dataCy('list-card-offer-item').first().should('be.visible').click();
 
       cy.dataCy('dialog-card-offer').should('be.visible');
     });
