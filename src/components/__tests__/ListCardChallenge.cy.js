@@ -13,7 +13,7 @@ describe('<ListCardChallenge>', () => {
     beforeEach(() => {
       cy.mount(ListCardChallenge, {
         props: {
-          cards: cardsChallenge
+          cards: cardsChallenge,
         },
       });
       cy.viewport('macbook-16');
@@ -42,7 +42,7 @@ describe('<ListCardChallenge>', () => {
     beforeEach(() => {
       cy.mount(ListCardChallenge, {
         props: {
-          cards: cardsChallenge
+          cards: cardsChallenge,
         },
       });
       cy.viewport('macbook-13');
@@ -57,7 +57,7 @@ describe('<ListCardChallenge>', () => {
     beforeEach(() => {
       cy.mount(ListCardChallenge, {
         props: {
-          cards: cardsChallenge
+          cards: cardsChallenge,
         },
       });
       cy.viewport('iphone-6');

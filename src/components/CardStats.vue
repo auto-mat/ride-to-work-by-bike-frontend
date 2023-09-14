@@ -23,14 +23,19 @@ export default defineComponent({
 
     return {
       borderRadius,
-    }
-  }
+    };
+  },
 });
 </script>
 
 <template>
   <div class="q-pt-lg max-w-420">
-    <q-card flat bordered :style="{'border-radius': borderRadius}" data-cy="card-stats">
+    <q-card
+      flat
+      bordered
+      :style="{ 'border-radius': borderRadius }"
+      data-cy="card-stats"
+    >
       <!-- Card icon -->
       <q-card-section avatar class="q-py-none">
         <!-- Icon -->

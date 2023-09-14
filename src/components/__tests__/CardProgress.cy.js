@@ -134,7 +134,7 @@ describe('<CardProgress>', () => {
         .should('have.css', 'width', '220px')
         .should('have.css', 'height', '220px');
 
-        cy.dataCy('circular-progress-number')
+      cy.dataCy('circular-progress-number')
         .should('be.visible')
         .should('have.css', 'font-size', '48px');
     });

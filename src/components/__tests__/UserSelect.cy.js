@@ -45,7 +45,9 @@ describe('<UserSelect>', () => {
       cy.dataCy('user-select-input')
         .click()
         .then(() => {
-          cy.get('.q-item__label').should('be.visible').should('have.length', 6);
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .should('have.length', 6);
         });
     });
   });
@@ -63,7 +65,7 @@ describe('<UserSelect>', () => {
     it('renders select with default value', () => {
       cy.dataCy('user-select-input')
         .should('be.visible')
-        .should('have.css', 'width', '32px')
+        .should('have.css', 'width', '32px');
     });
 
     it('renders rounded avatar with alt text', () => {
@@ -89,7 +91,9 @@ describe('<UserSelect>', () => {
       cy.dataCy('user-select-input')
         .click()
         .then(() => {
-          cy.get('.q-item__label').should('be.visible').should('have.length', 6);
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .should('have.length', 6);
         });
     });
   });

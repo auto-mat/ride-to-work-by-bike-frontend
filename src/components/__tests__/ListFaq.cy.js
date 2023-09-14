@@ -12,7 +12,7 @@ describe('<ListFaq>', () => {
           variant: 'participant',
         },
       });
-    })
+    });
 
     it('renders title with correct styling', () => {
       cy.dataCy('list-faq-title')
@@ -29,7 +29,10 @@ describe('<ListFaq>', () => {
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
 
-      cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
+      cy.dataCy('list-faq-list')
+        .find('.q-card')
+        .first()
+        .should('not.be.visible');
 
       cy.dataCy('list-faq-list')
         .find('.q-item')
@@ -58,7 +61,7 @@ describe('<ListFaq>', () => {
           variant: 'coordinator',
         },
       });
-    })
+    });
 
     it('renders coordinator FAQ section with working accordion', () => {
       cy.dataCy('list-faq-list')
@@ -67,7 +70,10 @@ describe('<ListFaq>', () => {
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
 
-      cy.dataCy('list-faq-list').find('.q-card').first().should('not.be.visible');
+      cy.dataCy('list-faq-list')
+        .find('.q-card')
+        .first()
+        .should('not.be.visible');
 
       cy.dataCy('list-faq-list')
         .find('.q-item')
@@ -84,5 +90,5 @@ describe('<ListFaq>', () => {
             });
         });
     });
-  })
+  });
 });

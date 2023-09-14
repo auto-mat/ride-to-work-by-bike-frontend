@@ -51,10 +51,7 @@ export default defineComponent({
       ></p>
       <div v-for="(item, index) in newsletterItems" :key="item.title">
         <!-- Item - subscription variant -->
-        <newsletter-item
-          :item="item"
-          data-cy="newsletter-feature-item"
-        />
+        <newsletter-item :item="item" data-cy="newsletter-feature-item" />
         <!-- Separator -->
         <q-separator
           v-if="index < newsletterItems.length - 1"

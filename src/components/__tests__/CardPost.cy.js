@@ -85,7 +85,7 @@ describe('<CardPost>', () => {
         .then(($img) => {
           cy.testImageHeight($img);
           expect($img.attr('src')).to.equal(card.image);
-        })
+        });
 
       cy.dataCy('card-post-image').matchImageSnapshot({
         failureThreshold: 0.5,

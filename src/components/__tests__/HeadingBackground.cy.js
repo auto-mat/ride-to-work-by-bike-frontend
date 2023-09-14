@@ -1,8 +1,8 @@
 import HeadingBackground from 'components/HeadingBackground.vue';
 
-describe('<HeadingBackground>', () => {
-  const title = 'Join the Bike to Work community in your city';
+const title = 'Join the Bike to Work community in your city';
 
+describe('<HeadingBackground>', () => {
   beforeEach(() => {
     cy.mount(HeadingBackground, {
       props: {

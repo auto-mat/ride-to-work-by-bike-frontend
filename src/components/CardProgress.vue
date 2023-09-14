@@ -4,7 +4,11 @@ import { defineComponent, computed } from 'vue';
 import { Screen } from 'quasar';
 
 // types
-import { CardProgress as CardProgressType, ConfigGlobal, ItemPrize } from './types';
+import {
+  CardProgress as CardProgressType,
+  ConfigGlobal,
+  ItemPrize,
+} from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -22,10 +26,10 @@ export default defineComponent({
   setup() {
     const isMediumScreen = computed(() => {
       return Screen.gt.xs;
-    })
+    });
     const isLargeScreen = computed(() => {
       return Screen.gt.md;
-    })
+    });
     // responsive sizing for q-circular-progress
     const circleSize = computed(() => {
       let size = '128px';
@@ -115,7 +119,10 @@ export default defineComponent({
           <!-- Progress label -->
           <div class="absolute-center text-center">
             <!-- Number -->
-            <div class="circular-progress-number q-mt-xs" data-cy="circular-progress-number">
+            <div
+              class="circular-progress-number q-mt-xs"
+              data-cy="circular-progress-number"
+            >
               {{ card.progress }}%
             </div>
           </div>
@@ -126,7 +133,7 @@ export default defineComponent({
             v-for="(prize, index) in card.prizes"
             :key="'prize' + index"
             class="min-h-36 flex items-center justify-center"
-            style="padding: 0;"
+            style="padding: 0"
             data-cy="card-progress-prizes"
           >
             <q-icon

@@ -20,9 +20,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isMediumScreen = Screen.gt.xs;
-    const isLargeScreen = Screen.gt.md;
-
     const timelineValue = computed(() => {
       if (!props.card.duration?.current || !props.card.duration?.total) {
         return 0;
@@ -30,6 +27,8 @@ export default defineComponent({
       return props.card.duration?.current / props.card.duration?.total;
     });
 
+    const isMediumScreen = Screen.gt.xs;
+    const isLargeScreen = Screen.gt.md;
     // responsive sizing for q-circular-progress
     const circleSize = computed(() => {
       let size = '128px';
@@ -98,14 +97,14 @@ export default defineComponent({
       <!-- Card body -->
       <q-card-section
         class="card-image-section-content full-width"
-        style="padding: 92px 0 0;"
+        style="padding: 92px 0 0"
       >
-        <div
-          class="row items-center q-pa-xl"
-          data-cy="card-progress-content"
-        >
+        <div class="row items-center q-pa-xl" data-cy="card-progress-content">
           <!-- Section progress -->
-          <div class="col-lg-4 flex justify-center justify-sm-start" data-cy="card-progress-percentage">
+          <div
+            class="col-lg-4 flex justify-center justify-sm-start"
+            data-cy="card-progress-percentage"
+          >
             <div class="relative-position">
               <!-- Progress bar -->
               <q-circular-progress
@@ -149,7 +148,7 @@ export default defineComponent({
                   v-for="item in stat.items"
                   :key="item.id"
                   class="stats-value"
-                  style="padding: 0;"
+                  style="padding: 0"
                 >
                   {{ item.text }}
                 </q-item>

@@ -33,7 +33,9 @@ export default defineComponent({
       rounded
       flat
       class="bg-blue-grey-2 q-px-none q-py-none"
-      :class="[ variant === 'mobile' ? 'dropdown-arrow-hidden' : 'q-pr-md full-width' ]"
+      :class="[
+        variant === 'mobile' ? 'dropdown-arrow-hidden' : 'q-pr-md full-width',
+      ]"
       data-cy="user-select-input"
     >
       <template v-slot:label>
