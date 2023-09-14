@@ -1,18 +1,18 @@
-import VueBadge from 'components/VueBadge.vue';
+import BadgeAchievement from 'components/BadgeAchievement.vue';
 import { i18n } from '../../boot/i18n';
 import { badgeList } from 'src/mocks/homepage';
 
 const badge = badgeList[0];
 const badgeDark = badgeList[1];
 
-describe('<VueBadge>', () => {
+describe('<BadgeAchievement>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueBadge, {
+      cy.mount(BadgeAchievement, {
         props: {
           badge,
         },
@@ -69,7 +69,7 @@ describe('<VueBadge>', () => {
 
   context('variant dark', () => {
     beforeEach(() => {
-      cy.mount(VueBadge, {
+      cy.mount(BadgeAchievement, {
         props: {
           badge: badgeDark,
         },

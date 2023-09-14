@@ -5,12 +5,12 @@ import { defineComponent } from 'vue';
 import { ItemBadge } from './types';
 
 // components
-import VueBadge from './VueBadge.vue';
+import BadgeAchievement from './BadgeAchievement.vue';
 
 export default defineComponent({
-  name: 'VueBadgeList',
+  name: 'ListBadgeAchievement',
   components: {
-    VueBadge,
+    BadgeAchievement,
   },
   props: {
     items: {
@@ -23,7 +23,7 @@ export default defineComponent({
 
 <template>
   <div class="row q-gutter-lg">
-    <vue-badge
+    <badge-achievement
       v-for="item in items"
       :key="item.title"
       :badge="item"
