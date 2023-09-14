@@ -9,7 +9,7 @@ import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
 import TheFooter from 'components/TheFooter.vue';
-import VueFooterPanel from 'src/components/VueFooterPanel.vue';
+import MobileBottomPanel from 'src/components/MobileBottomPanel.vue';
 
 // import types
 import { ConfigGlobal } from 'components/types';
@@ -32,7 +32,7 @@ export default defineComponent({
     UserSelect,
     DrawerMenu,
     TheFooter,
-    VueFooterPanel,
+    MobileBottomPanel,
   },
 
   setup() {
@@ -87,7 +87,7 @@ export default defineComponent({
     </q-page-container>
     <q-footer class="position-static md-position-absolute bg-transparent">
       <!-- footer content -->
-      <vue-footer-panel></vue-footer-panel>
+      <mobile-bottom-panel></mobile-bottom-panel>
       <the-footer />
     </q-footer>
   </q-layout>
