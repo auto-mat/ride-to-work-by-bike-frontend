@@ -1,20 +1,21 @@
 <script lang="ts">
+// libraries
 import { defineComponent } from 'vue';
 
 // components
-import VueCardFollow from './VueCardFollow.vue';
+import CardFollow from './CardFollow.vue';
 
 // types
-import { CardFollow } from 'components/types';
+import { CardFollow as CardFollowType } from 'components/types';
 
 export default defineComponent({
-  name: 'VueCardListFollow',
+  name: 'ListCardFollow',
   components: {
-    VueCardFollow,
+    CardFollow,
   },
   props: {
     cards: {
-      type: Array as () => CardFollow[],
+      type: Array as () => CardFollowType[],
       required: true,
     },
   },
@@ -38,7 +39,7 @@ export default defineComponent({
       class="col-12 col-sm-6 col-lg-4"
       data-cy="card-list-follow-item"
     >
-      <vue-card-follow :card="card" />
+      <card-follow :card="card" />
     </div>
   </div>
 </template>

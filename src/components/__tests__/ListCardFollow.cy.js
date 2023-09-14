@@ -1,25 +1,19 @@
-import VueCardListFollow from 'components/VueCardListFollow.vue';
+import ListCardFollow from 'components/ListCardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
-const card = {
-  title: 'Do práce na kole – Brno',
-  handle: '@DPNKBrno',
-  image: 'https://picsum.photos/id/76/300/300',
-  url: '#',
-};
+// mocks
+import { cardsFollow } from 'src/mocks/homepage';
 
-const cards = [card, card];
-
-describe('<VueCardListFollow>', () => {
+describe('<ListCardFollow>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['title'], 'index.cardListFollow', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(VueCardListFollow, {
+      cy.mount(ListCardFollow, {
         props: {
-          cards: cards,
+          cards: cardsFollow,
         },
       });
       cy.viewport('macbook-16');
@@ -70,9 +64,9 @@ describe('<VueCardListFollow>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(VueCardListFollow, {
+      cy.mount(ListCardFollow, {
         props: {
-          cards: cards,
+          cards: cardsFollow,
         },
       });
       cy.viewport('iphone-6');
