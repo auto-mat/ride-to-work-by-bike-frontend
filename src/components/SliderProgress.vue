@@ -7,14 +7,14 @@ import { CardProgress, Link, ItemStatistics } from './types';
 
 // components
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import VueCardProgressSlider from './VueCardProgressSlider.vue';
+import CardProgressSlider from './CardProgressSlider.vue';
 
 export default defineComponent({
   name: 'SliderProgress',
   components: {
     Swiper,
     SwiperSlide,
-    VueCardProgressSlider,
+    CardProgressSlider,
   },
   props: {
     title: {
@@ -63,7 +63,7 @@ export default defineComponent({
         data-cy="progress-slider-swiper">
         <!-- Slider cards -->
         <swiper-slide v-for="card in cards" :key="card.title" class="swiper-slide">
-          <vue-card-progress-slider :card="card" />
+          <card-progress-slider :card="card" />
         </swiper-slide>
       </swiper>
     </div>
