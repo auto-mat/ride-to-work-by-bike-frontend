@@ -1,10 +1,9 @@
 import CardFollow from 'components/CardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
-const title = 'Do práce na kole – Brno';
-const handle = '@DPNKBrno';
-const image = 'https://picsum.photos/id/76/300/300';
-const url = '#';
+// mocks
+import { cardsFollow } from 'src/mocks/homepage';
+const card = cardsFollow[0];
 
 describe('<CardFollow>', () => {
   it('has translation for all strings', () => {
@@ -15,12 +14,7 @@ describe('<CardFollow>', () => {
     beforeEach(() => {
       cy.mount(CardFollow, {
         props: {
-          card: {
-            title,
-            handle,
-            image,
-            url,
-          },
+          card,
         },
       });
       cy.viewport('macbook-16');
@@ -76,9 +70,9 @@ describe('<CardFollow>', () => {
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
           .should('have.color', '#212121')
-          .should('contain', title)
+          .should('contain', card.title)
           .then(($title) => {
-            expect($title.text()).to.equal(title);
+            expect($title.text()).to.equal(card.title);
           });
       });
     });
@@ -89,9 +83,9 @@ describe('<CardFollow>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('have.color', '#546e7a') // blue-grey-7
-          .should('contain', handle)
+          .should('contain', card.handle)
           .then(($title) => {
-            expect($title.text()).to.equal(handle);
+            expect($title.text()).to.equal(card.handle);
           });
       });
     });
@@ -107,12 +101,12 @@ describe('<CardFollow>', () => {
           .should('have.css', 'margin-top', '-64px');
 
         cy.dataCy('card-follow-image')
+          .find('img')
           .should('be.visible')
-          .should(($img) => {
-            expect($img[0].naturalWidth).to.be.greaterThan(0);
+          .then(($img) => {
+            cy.testImageHeight($img);
+            expect($img.attr('src')).to.equal(card.image);
           })
-          .invoke('attr', 'src')
-          .should('contains', image);
 
         cy.dataCy('card-follow-image').matchImageSnapshot({
           failureThreshold: 0.5,
@@ -126,10 +120,7 @@ describe('<CardFollow>', () => {
     beforeEach(() => {
       cy.mount(CardFollow, {
         props: {
-          title,
-          handle,
-          image,
-          url,
+          card
         },
       });
       cy.viewport('iphone-6');
