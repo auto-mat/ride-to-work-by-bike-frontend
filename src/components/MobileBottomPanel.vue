@@ -2,18 +2,19 @@
 // libraries
 import { defineComponent, ref, computed } from 'vue';
 
+// mocks
 import { menuBottom, menuTop } from 'src/mocks/layout';
 
 export default defineComponent({
-  name: 'VueFooterPanel',
+  name: 'MobileBottomPanel',
   setup() {
     const menuPanel = computed(() => {
       return menuTop.slice(0, 4);
     });
 
-    const dialog = ref(false);
+    const isDialogOpen = ref(false);
 
-    return { dialog, menuPanel, menuBottom, menuTop };
+    return { isDialogOpen, menuPanel, menuBottom, menuTop };
   },
 });
 </script>
@@ -24,11 +25,13 @@ export default defineComponent({
     style="z-index: 1000"
     data-cy="footer-panel"
   >
+    <!-- Panel menu -->
     <q-list
       padding
       class="w-full flex justify-around text-grey-6"
       data-cy="footer-panel-menu"
     >
+      <!-- Top menu (first 4 items) -->
       <q-item
         v-for="item in menuPanel"
         :key="item.name"
@@ -39,17 +42,21 @@ export default defineComponent({
         active-class="text-grey-10"
       >
         <div class="text-center">
+          <!-- Icon -->
           <q-icon :name="item.icon" size="24px"></q-icon>
+          <!-- Label -->
           <q-item-label class="text-caption text-grey-10">{{
             $t(`drawerMenu.${item.name}`)
           }}</q-item-label>
         </div>
       </q-item>
+
+      <!-- Button show menu -->
       <q-item
         clickable
         v-ripple
         active-class="bottom-sheet-up"
-        @click="dialog = true"
+        @click="isDialogOpen = true"
         class="q-pa-sm"
         data-cy="footer-panel-menu-hamburger"
       >
@@ -63,12 +70,15 @@ export default defineComponent({
     </q-list>
   </q-toolbar>
 
+  <!-- Dialog -->
   <q-dialog
-    v-model="dialog"
+    v-model="isDialogOpen"
     position="bottom"
     data-cy="footer-panel-menu-dialog"
   >
+    <!-- Dialog menu -->
     <q-list padding class="bg-white w-full">
+      <!-- Top menu (remaining items) -->
       <q-item
         v-for="item in menuTop.slice(4)"
         :key="item.name"
@@ -78,16 +88,21 @@ export default defineComponent({
         class="q-py-sm q-px-md"
         active-class="text-grey-10"
       >
+        <!-- Icon -->
         <q-item-section avatar>
           <q-icon :name="item.icon" size="24px" color="grey-6"></q-icon>
         </q-item-section>
+        <!-- Label -->
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
             $t(`drawerMenu.${item.name}`)
           }}</q-item-label>
         </q-item-section>
       </q-item>
-      <hr />
+
+      <q-separator />
+
+      <!-- Bottom menu items -->
       <q-item
         v-for="item in menuBottom"
         :key="item.name"
@@ -97,9 +112,11 @@ export default defineComponent({
         class="q-py-sm q-px-md items-center"
         active-class="text-grey-10"
       >
+        <!-- Icon -->
         <q-item-section avatar>
           <q-icon :name="item.icon" size="24px" color="grey-6"></q-icon>
         </q-item-section>
+        <!-- Label -->
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
             $t(`drawerMenu.${item.name}`)
