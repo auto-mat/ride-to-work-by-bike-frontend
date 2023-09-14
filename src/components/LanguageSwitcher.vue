@@ -2,32 +2,31 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'VueLanguageSwitcher',
-  setup() {
-    return {};
-  },
+  name: 'LanguageSwitcher',
 });
 </script>
 
 <template>
   <ul
-    class="language-list flex items-center text-subtitle1 gap-24"
+    class="language-list flex items-center text-subtitle1"
     data-cy="footer-language-switcher"
   >
+    <!-- Language switcher items -->
     <li
       v-for="item in Object.keys($i18n.messages)"
       :key="item"
       class="text-uppercase"
       :data-cy="'switcher-' + item"
     >
-      <a
-        href="#"
+      <q-btn
+        flat
+        round
         @click.prevent="$i18n.locale = item"
         class="text-white"
         :class="{ 'text-bold': item === $i18n.locale }"
       >
         {{ item }}
-      </a>
+      </q-btn>
     </li>
   </ul>
 </template>
@@ -36,10 +35,6 @@ export default defineComponent({
 .language-list {
   list-style: none;
   font-size: 14px;
-  padding-left: 0;
   padding-inline-start: 0;
-}
-.language-list a {
-  text-decoration: none;
 }
 </style>

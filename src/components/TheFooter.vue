@@ -2,12 +2,12 @@
 import { defineComponent } from 'vue';
 
 // components
-import VueLanguageSwitcher from 'components/VueLanguageSwitcher.vue';
+import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 
 export default defineComponent({
   name: 'TheFooter',
   components: {
-    VueLanguageSwitcher,
+    LanguageSwitcher,
   },
   setup() {
     const copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
@@ -93,7 +93,7 @@ export default defineComponent({
                 <q-icon name="mdi-youtube" size="18px" />
               </div>
               <span class="q-mx-lg gt-sm">|</span>
-              <vue-language-switcher />
+              <language-switcher />
             </div>
           </div>
           <div
