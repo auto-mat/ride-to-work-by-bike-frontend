@@ -82,10 +82,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.gap-8 {
-  gap: 8px;
-}
-
 .row-sm {
   @media (min-width: $breakpoint-sm-min) {
     flex-direction: row !important;

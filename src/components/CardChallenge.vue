@@ -46,19 +46,17 @@ export default defineComponent({
         class="text-subtitle1 absolute-top flex items-center justify-center gap-8"
         data-cy="card-title"
       >
-        <div class="q-py-md">
-          <!-- Person icon -->
-          <q-icon name="person" size="xs" />
-          <!-- Title link -->
-          <component
-            :is="card?.url ? 'a' : 'div'"
-            :href="card?.url"
-            class="text-white text-weight-bold"
-            data-cy="card-link"
-          >
-            {{ card?.title }}
-          </component>
-        </div>
+        <!-- Person icon -->
+        <q-icon class="q-py-md" name="person" size="xs" />
+        <!-- Title link -->
+        <component
+          :is="card?.url ? 'a' : 'div'"
+          :href="card?.url"
+          class="text-white text-weight-bold q-py-md"
+          data-cy="card-link"
+        >
+          {{ card?.title }}
+        </component>
       </q-card-section>
     </q-img>
 
@@ -90,10 +88,6 @@ export default defineComponent({
 <style scoped>
 a:hover {
   text-decoration: none;
-}
-
-.gap-8 {
-  gap: 8px;
 }
 
 .badge-wrapper {
