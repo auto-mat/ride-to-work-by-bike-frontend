@@ -6,10 +6,7 @@ import { defineComponent, ref } from 'vue';
 import DialogCard from 'components/DialogCard.vue';
 
 // types
-import {
-  CardOffer as CardOfferType,
-  ConfigGlobal,
-} from 'components/types';
+import { CardOffer as CardOfferType, ConfigGlobal } from 'components/types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -41,13 +38,25 @@ export default defineComponent({
 
 <template>
   <!-- Card (hoverable) -->
-  <q-card v-ripple flat bordered data-cy="card-offer" class="bg-white cursor-pointer q-hoverable"
-    :style="{ 'border-radius': borderRadius }" @click.prevent="modalOpened = true">
+  <q-card
+    v-ripple
+    flat
+    bordered
+    data-cy="card-offer"
+    class="bg-white cursor-pointer q-hoverable"
+    :style="{ 'border-radius': borderRadius }"
+    @click.prevent="modalOpened = true"
+  >
     <span class="q-focus-helper"></span>
     <q-card-section horizontal class="q-px-md q-py-md items-center">
       <q-card-section class="col-auto items-center">
         <!-- Icon -->
-        <q-icon :name="card.icon" color="blue-grey-3" size="48px" data-cy="card-icon" />
+        <q-icon
+          :name="card.icon"
+          color="blue-grey-3"
+          size="48px"
+          data-cy="card-icon"
+        />
       </q-card-section>
       <q-card-section class="col items-center">
         <!-- Title -->
@@ -64,12 +73,30 @@ export default defineComponent({
       <!-- Metadata -->
       <template #metadata>
         <div class="flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm">
-          <div v-if="card.expirationDate" class="flex items-center text-blue-grey-7" data-cy="dialog-meta">
-            <q-icon name="event" size="18px" class="q-pr-xs" color="blue-grey-3" />
+          <div
+            v-if="card.expirationDate"
+            class="flex items-center text-blue-grey-7"
+            data-cy="dialog-meta"
+          >
+            <q-icon
+              name="event"
+              size="18px"
+              class="q-pr-xs"
+              color="blue-grey-3"
+            />
             {{ card.expirationDate }}
           </div>
-          <div v-if="card.issuer" class="flex items-center text-blue-grey-7" data-cy="dialog-meta">
-            <q-icon name="pedal_bike" size="18px" class="q-pr-xs" color="blue-grey-3" />
+          <div
+            v-if="card.issuer"
+            class="flex items-center text-blue-grey-7"
+            data-cy="dialog-meta"
+          >
+            <q-icon
+              name="pedal_bike"
+              size="18px"
+              class="q-pr-xs"
+              color="blue-grey-3"
+            />
             {{ card.issuer }}
           </div>
         </div>
@@ -80,8 +107,15 @@ export default defineComponent({
       </template>
       <!-- Buttons -->
       <template #buttons>
-        <q-btn v-if="card.link" :to="card.link.url" color="black" unelevated rounded class="q-mt-md"
-          data-cy="dialog-offer-link">
+        <q-btn
+          v-if="card.link"
+          :to="card.link.url"
+          color="black"
+          unelevated
+          rounded
+          class="q-mt-md"
+          data-cy="dialog-offer-link"
+        >
           <div class="flex items-center no-wrap">
             {{ card.link.title }}
           </div>

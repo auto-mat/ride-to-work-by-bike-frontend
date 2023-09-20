@@ -4,6 +4,14 @@ import { defineComponent, computed } from 'vue';
 // types
 import { DialogCard } from 'components/types';
 
+// Component used to render dialog window which you can fill with custom content
+// Available slots:
+// - title
+// - metadata
+// - content
+// - buttons
+// - image
+// The content and image are rendered side by side in a scrollable dialog window
 export default defineComponent({
   name: 'VueDialogCard',
   props: {
@@ -37,14 +45,12 @@ export default defineComponent({
   <q-dialog v-model="modalOpened" square data-cy="card-dialog">
     <q-card class="relative-position overflow-visible bg-white">
       <q-card-section class="q-pt-none" data-cy="dialog-header">
-        <h3 v-if="dialog.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
-          {{ dialog.title }}
+        <h3 class="text-h6 q-mt-sm q-pt-xs q-mb-none">
+          <slot name="title" />
         </h3>
-        <div
-          v-if="dialog.meta.length"
-          class="meta flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm"
-        >
-          <div
+        <div class="meta flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm">
+          <slot name="metadata" />
+          <!-- <div
             v-for="item in dialog.meta"
             :key="item.description"
             class="flex items-center text-blue-grey-7"
@@ -58,7 +64,7 @@ export default defineComponent({
               color="blue-grey-3"
             />
             {{ item.description }}
-          </div>
+          </div> -->
         </div>
       </q-card-section>
 
@@ -70,7 +76,9 @@ export default defineComponent({
         data-cy="dialog-body"
         style="max-height: 50vh; flex-wrap: wrap"
       >
-        <div v-if="dialog.content" class="col-12 col-md-6 q-px-md q-py-md">
+        <div class="col-12 col-md-6 q-px-md q-py-md">
+          <slot name="content"></slot>
+          <slot name="buttons"></slot>
           <div v-html="dialog.content" data-cy="dialog-content"></div>
           <q-btn
             v-if="dialog.calendar"
@@ -89,6 +97,7 @@ export default defineComponent({
           </q-btn>
         </div>
         <div v-if="dialog.image" class="col-12 col-md-6 q-px-md q-py-md">
+          <slot name="image"></slot>
           <q-img :src="dialog.image" :ratio="1" data-cy="dialog-image" />
         </div>
       </q-card-section>
@@ -114,16 +123,20 @@ export default defineComponent({
 .q-dialog__inner > div {
   overflow: visible !important;
 }
+
 .gap-y-8 {
   row-gap: 8px;
 }
+
 .gap-x-32 {
   column-gap: 32px;
 }
+
 .dialog-close__wrapper {
   top: -19px;
   right: -19px;
 }
+
 .dialog-close {
   width: 38px;
   height: 38px;
