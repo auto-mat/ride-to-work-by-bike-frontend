@@ -22,13 +22,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="row q-gutter-lg">
-    <badge-achievement
+  <div class="row q-col-gutter-lg">
+    <div
       v-for="item in items"
       :key="item.title"
-      :badge="item"
-      class="col-6 col-md-3"
-      data-cy="badge-item"
-    />
+      class="col-12 col-sm-6 col-lg-3"
+    >
+      <badge-achievement
+        :badge="item"
+        data-cy="badge-item"
+        class="full-width"
+      />
+    </div>
   </div>
 </template>
