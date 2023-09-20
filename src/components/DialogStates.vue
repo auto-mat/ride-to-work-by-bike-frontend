@@ -57,7 +57,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-dialog square persistent v-model="dialogOpen" data-cy="card-dialog">
+  <q-dialog square persistent v-model="dialogOpen" data-cy="dialog-states">
     <q-card class="full-width relative-position overflow-visible bg-white">
       <!-- Dialog header -->
       <q-card-section data-cy="dialog-header" class="row">
@@ -127,9 +127,11 @@ export default defineComponent({
 .q-dialog__inner > div {
   overflow: visible !important;
 }
+
 .-top-21 {
   top: -21px;
 }
+
 .-right-21 {
   right: -21px;
 }

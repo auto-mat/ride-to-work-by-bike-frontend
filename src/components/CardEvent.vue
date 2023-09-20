@@ -18,7 +18,7 @@ const { formatDate } = date;
 export default defineComponent({
   name: 'CardEvent',
   components: {
-    DialogCard
+    DialogCard,
   },
   props: {
     card: {
@@ -46,33 +46,78 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-card flat class="bg-white" :style="{ 'border-radius': borderRadius }" data-cy="card">
-      <q-card-section :horizontal="setHorizontalPosition()" class="q-pa-none" data-cy="card-section">
+    <q-card
+      flat
+      class="bg-white"
+      :style="{ 'border-radius': borderRadius }"
+      data-cy="card"
+    >
+      <q-card-section
+        :horizontal="setHorizontalPosition()"
+        class="q-pa-none"
+        data-cy="card-section"
+      >
         <!-- Bg image -->
-        <q-img :ratio="3 / 2" :img-style="{
-          borderRadius: setHorizontalPosition()
-            ? `${borderRadius} 0 0 ${borderRadius}`
-            : `${borderRadius} ${borderRadius} 0 0`,
-        }" class="col-sm-2" :src="card?.thumbnail?.src" :alt="card?.thumbnail?.alt" data-cy="card-image" />
+        <q-img
+          :ratio="3 / 2"
+          :img-style="{
+            borderRadius: setHorizontalPosition()
+              ? `${borderRadius} 0 0 ${borderRadius}`
+              : `${borderRadius} ${borderRadius} 0 0`,
+          }"
+          class="col-sm-2"
+          :src="card?.thumbnail?.src"
+          :alt="card?.thumbnail?.alt"
+          data-cy="card-image"
+        />
         <!-- Content -->
-        <div class="col-grow flex wrap items-center q-py-lg" data-cy="card-content">
+        <div
+          class="col-grow flex wrap items-center q-py-lg"
+          data-cy="card-content"
+        >
           <div class="col-grow q-px-md">
             <!-- Event name link for open modal dialog -->
             <div class="text-subtitle1 text-bold" data-cy="card-title">
-              <a href="#" class="card-link text-dark block" @click.prevent="modalOpened = true" data-cy="card-link">
+              <a
+                href="#"
+                class="card-link text-dark block"
+                @click.prevent="modalOpened = true"
+                data-cy="card-link"
+              >
                 {{ card?.title }}
               </a>
             </div>
             <!-- Event date and place description -->
-            <div v-if="eventDateTime || card?.location" class="meta flex items-center gap-8 q-mt-sm">
-              <div v-if="eventDateTime" class="dates flex items-center" data-cy="card-dates">
+            <div
+              v-if="eventDateTime || card?.location"
+              class="meta flex items-center gap-8 q-mt-sm"
+            >
+              <div
+                v-if="eventDateTime"
+                class="dates flex items-center"
+                data-cy="card-dates"
+              >
                 <!-- Event calendar icon -->
-                <q-icon name="event" size="sm" class="q-pr-xs" color="blue-grey-2" />
+                <q-icon
+                  name="event"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ eventDateTime }}
               </div>
-              <div v-if="card?.location" class="location flex items-center" data-cy="card-location">
+              <div
+                v-if="card?.location"
+                class="location flex items-center"
+                data-cy="card-location"
+              >
                 <!-- Event place icon -->
-                <q-icon name="place" size="sm" class="q-pr-xs" color="blue-grey-2" />
+                <q-icon
+                  name="place"
+                  size="sm"
+                  class="q-pr-xs"
+                  color="blue-grey-2"
+                />
                 {{ card?.location }}
               </div>
             </div>
@@ -97,12 +142,30 @@ export default defineComponent({
         <!-- Metadata -->
         <template v-if="eventDateTime || card?.location" #metadata>
           <div class="flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm">
-            <div v-if="eventDateTime" class="flex items-center text-blue-grey-7" data-cy="dialog-meta">
-              <q-icon name="event" size="18px" class="q-pr-xs" color="blue-grey-3" />
+            <div
+              v-if="eventDateTime"
+              class="flex items-center text-blue-grey-7"
+              data-cy="dialog-meta"
+            >
+              <q-icon
+                name="event"
+                size="18px"
+                class="q-pr-xs"
+                color="blue-grey-3"
+              />
               {{ eventDateTime }}
             </div>
-            <div v-if="card?.location" class="flex items-center text-blue-grey-7" data-cy="dialog-meta">
-              <q-icon name="pedal_bike" size="18px" class="q-pr-xs" color="blue-grey-3" />
+            <div
+              v-if="card?.location"
+              class="flex items-center text-blue-grey-7"
+              data-cy="dialog-meta"
+            >
+              <q-icon
+                name="pedal_bike"
+                size="18px"
+                class="q-pr-xs"
+                color="blue-grey-3"
+              />
               {{ card?.location }}
             </div>
           </div>
@@ -112,7 +175,13 @@ export default defineComponent({
           <div v-html="card.content" data-cy="dialog-content" />
         </template>
         <template #buttons>
-          <q-btn color="black" unelevated rounded class="q-mt-md" data-cy="dialog-button">
+          <q-btn
+            color="black"
+            unelevated
+            rounded
+            class="q-mt-md"
+            data-cy="dialog-button"
+          >
             <div class="flex items-center no-wrap">
               <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
               <div class="text-center">
@@ -123,7 +192,12 @@ export default defineComponent({
         </template>
         <!-- Image -->
         <template v-if="card?.image" #image>
-          <q-img :src="card.image.src" :alt="card.image.alt" :ratio="1" data-cy="dialog-image" />
+          <q-img
+            :src="card.image.src"
+            :alt="card.image.alt"
+            :ratio="1"
+            data-cy="dialog-image"
+          />
         </template>
       </dialog-card>
     </q-card>
@@ -143,7 +217,7 @@ export default defineComponent({
   column-gap: 32px;
 }
 
-.q-dialog__inner>div {
+.q-dialog__inner > div {
   overflow: visible !important;
 }
 
@@ -160,7 +234,7 @@ export default defineComponent({
   right: -21px;
 }
 
-.q-card>div:first-child>.q-img {
+.q-card > div:first-child > .q-img {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   border-bottom-left-radius: 0;
@@ -168,7 +242,7 @@ export default defineComponent({
 }
 
 @media (min-width: $breakpoint-sm-min) {
-  .q-card>div:first-child>.q-img {
+  .q-card > div:first-child > .q-img {
     border-top-left-radius: inherit;
     border-top-right-radius: 0;
     border-bottom-left-radius: inherit;

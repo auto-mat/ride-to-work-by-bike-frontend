@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent, ref, computed, Ref } from 'vue';
 
 // Component used to render dialog window which you can fill with custom content
@@ -28,8 +28,8 @@ export default defineComponent({
     });
 
     return {
-      dialogOpen
-    }
+      dialogOpen,
+    };
   },
 });
 </script>
@@ -52,8 +52,12 @@ export default defineComponent({
       <q-separator />
 
       <!-- Section: Card body -->
-      <q-card-section horizontal class="scroll items-center" data-cy="dialog-body"
-        style="max-height: 50vh; flex-wrap: wrap">
+      <q-card-section
+        horizontal
+        class="scroll items-center"
+        data-cy="dialog-body"
+        style="max-height: 50vh; flex-wrap: wrap"
+      >
         <!-- Left column: Content -->
         <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-left">
           <!-- Content -->
@@ -69,16 +73,25 @@ export default defineComponent({
       </q-card-section>
 
       <!-- Button: Close dialog -->
-      <q-card-actions class="dialog-close__wrapper inline-block absolute-top-right q-px-none q-py-none">
-        <q-btn v-close-popup round unelevated color="blue-grey-1" icon="close" class="dialog-close text-grey-10"
-          data-cy="dialog-close" />
+      <q-card-actions
+        class="dialog-close__wrapper inline-block absolute-top-right q-px-none q-py-none"
+      >
+        <q-btn
+          v-close-popup
+          round
+          unelevated
+          color="blue-grey-1"
+          icon="close"
+          class="dialog-close text-grey-10"
+          data-cy="dialog-close"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <style lang="scss" scoped>
-.q-dialog__inner>div {
+.q-dialog__inner > div {
   overflow: visible !important;
 }
 
