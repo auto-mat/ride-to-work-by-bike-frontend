@@ -22,11 +22,11 @@ export default defineComponent({
       v-for="item in menuTop"
       :key="item.name"
       :to="item.url"
-      class="flex items-center gap-8"
+      class="flex items-center"
       clickable
     >
       <!-- Link icon -->
-      <q-icon :name="item.icon" size="xs" color="blue-grey-4" />
+      <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
       <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
@@ -38,11 +38,11 @@ export default defineComponent({
       v-for="item in menuBottom"
       :key="item.name"
       :to="item.url"
-      class="flex items-center gap-8"
+      class="flex items-center"
       clickable
     >
       <!-- Link icon -->
-      <q-icon :name="item.icon" size="xs" color="blue-grey-4" />
+      <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
       <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
@@ -50,10 +50,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.gap-8 {
-  gap: 8px;
-}
-
 .q-router-link--active {
   color: $blue-grey-10 !important;
 }

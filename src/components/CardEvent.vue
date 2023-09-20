@@ -205,10 +205,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.gap-8 {
-  row-gap: 8px;
-}
-
 .gap-y-8 {
   row-gap: 8px;
 }

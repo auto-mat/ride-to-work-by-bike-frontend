@@ -50,8 +50,10 @@ export default defineComponent({
             <q-icon name="arrow_upward" size="18px" />
           </q-btn>
         </div>
-        <div class="footer-content h-full grow">
-          <div class="grow flex flex-wrap items-start justify-between gap-8">
+        <div class="footer-content h-full col-grow">
+          <div
+            class="col-grow flex flex-wrap items-start justify-between gap-8"
+          >
             <q-img
               src="~assets/svg/logo-white.svg"
               width="142px"
@@ -83,7 +85,7 @@ export default defineComponent({
                 >
               </div>
             </div>
-            <div class="flex column items-center md-row w-full w-md-auto">
+            <div class="flex column items-center row-md w-full w-md-auto">
               <div
                 class="flex items-center gap-32"
                 data-cy="footer-social-menu"
@@ -119,34 +121,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.pt-112 {
-  padding-top: 112px;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-.shrink-0 {
-  flex-shrink: 0;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.w-md-auto {
-  @media (min-width: $breakpoint-md-min) {
-    width: auto;
-  }
-}
-
-.max-w-lg-90perc {
-  @media (min-width: $breakpoint-lg-min) {
-    max-width: 90%;
-  }
-}
-
 .h-full {
   height: 100%;
 }
@@ -171,29 +145,27 @@ export default defineComponent({
   min-height: 0;
 }
 
-.gap-8 {
-  gap: 8px;
+.pt-112 {
+  padding-top: 112px;
 }
 
-.gap-12 {
-  gap: 12px;
+.w-full {
+  width: 100%;
 }
 
-.gap-24 {
-  gap: 24px;
-}
-
-.gap-32 {
-  gap: 32px;
-}
-
-.md-flex {
+.w-md-auto {
   @media (min-width: $breakpoint-md-min) {
-    display: flex;
+    width: auto;
   }
 }
 
-.md-row {
+.max-w-lg-90perc {
+  @media (min-width: $breakpoint-lg-min) {
+    max-width: 90%;
+  }
+}
+
+.row-md {
   @media (min-width: $breakpoint-md-min) {
     flex-direction: row;
   }
@@ -242,14 +214,7 @@ export default defineComponent({
   padding-inline-start: 0;
 }
 
-.copyright {
-  @media (min-width: $breakpoint-sm-min) {
-    height: 38px;
-    min-height: 0;
-  }
-
-  :deep(a) {
-    color: #fff;
-  }
+.copyright :deep(a) {
+  color: #fff;
 }
 </style>

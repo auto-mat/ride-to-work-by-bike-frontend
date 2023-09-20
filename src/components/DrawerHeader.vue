@@ -164,7 +164,4 @@ export default defineComponent({
 .logo {
   height: 40px;
 }
-.gap-24 {
-  gap: 24px;
-}
 </style>
