@@ -34,7 +34,7 @@ export default defineComponent({
   },
   setup() {
     const isLargeScreen = computed(() => {
-      return Screen.gt.md
+      return Screen.gt.sm
     })
 
     const buttonWidth = computed(() => {
@@ -60,15 +60,18 @@ export default defineComponent({
     <!-- Swiper for news cards -->
     <swiper navigation :modules="modules" :slides-per-view="4" :space-between="24" :breakpoints="{
       0: {
-        slidesPerView: 2,
+        slidesPerView: 1,
         spaceBetween: 24,
       },
       600: {
-        slidesPerView: 3,
+        slidesPerView: 2,
       },
       1024: {
-        slidesPerView: 4,
+        slidesPerView: 3,
       },
+      1440: {
+        slidesPerView: 4,
+      }
     }" class="overflow-visible overflow-lg-hidden">
       <swiper-slide v-for="(card, index) in cards" :key="`${card.title}-${index}`" class="swiper-slide">
         <card-post :card="card" data-cy="card-list-post-item" />
@@ -88,14 +91,24 @@ export default defineComponent({
 }
 
 // Display overflowing: next card indication (mobile)
-.overflow-visible {
+.swiper.overflow-visible {
   overflow: visible;
 }
 
 // Default overflow to test as standalone (desktop)
-.overflow-lg-hidden {
+.swiper.overflow-lg-hidden {
   @media (min-width: $breakpoint-lg-min) {
     overflow: hidden;
+  }
+}
+
+.swiper {
+  max-width: 90%;
+  margin-left: 0;
+  padding-bottom: 64px;
+
+  @media (min-width: $breakpoint-md-min) {
+    max-width: 100%;
   }
 }
 
