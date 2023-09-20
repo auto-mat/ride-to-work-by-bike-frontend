@@ -67,7 +67,7 @@
         data-cy="list-offer"
       >
       </list-card-offer>
-      <vue-card-list-post
+      <list-card-post
         :title="$t('index.cardListPost.title')"
         :cards="cardsPost"
         :button="{
@@ -77,7 +77,7 @@
         class="q-pt-xl"
         data-cy="list-post"
       >
-      </vue-card-list-post>
+      </list-card-post>
       <newsletter-feature class="q-pt-xl" data-cy="newsletter-feature" />
       <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
     </div>
@@ -99,7 +99,7 @@ import BannerApp from 'src/components/BannerApp.vue';
 import BannerRoutes from 'src/components/BannerRoutes.vue';
 import ListCardFollow from 'src/components/ListCardFollow.vue';
 import ListCardOffer from 'src/components/ListCardOffer.vue';
-import VueCardListPost from 'src/components/VueCardListPost.vue';
+import ListCardPost from 'src/components/ListCardPost.vue';
 import ListCardProgress from 'src/components/ListCardProgress.vue';
 import NewsletterFeature from 'src/components/NewsletterFeature.vue';
 import SliderProgress from 'src/components/SliderProgress.vue';
@@ -122,7 +122,7 @@ export default defineComponent({
     ListCardOffer,
     ListCardProgress,
     SliderProgress,
-    VueCardListPost,
+    ListCardPost,
     NewsletterFeature,
   },
   setup() {
