@@ -26,13 +26,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex column pt-48">
+  <div class="full-width flex column pt-48">
     <q-card
       :dark="isDark"
       square
       :bordered="false"
       flat
-      class="col-grow max-w-40ch text-center"
+      class="full-width col-grow text-center"
       :class="[isDark ? 'bg-blue-grey-7 text-white' : 'text-grey-9']"
       data-cy="badge-card"
     >
@@ -70,12 +70,10 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.max-w-40ch {
-  max-width: 36ch;
-}
 .pt-48 {
   padding-top: 48px;
 }
+
 .-mt-48 {
   margin-top: -48px;
 }
