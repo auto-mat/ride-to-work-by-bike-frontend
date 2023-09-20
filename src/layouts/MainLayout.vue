@@ -102,9 +102,11 @@ export default defineComponent({
     right: 0;
   }
 }
+
 .position-static {
   position: static;
 }
+
 .md-position-absolute {
   @media (min-width: $breakpoint-md-min) {
     position: absolute;
@@ -112,9 +114,10 @@ export default defineComponent({
 }
 
 .pb-footer {
-  padding-bottom: 390px !important;
+  padding-bottom: 420px !important;
+
   @media (min-width: $breakpoint-md-min) {
-    padding-bottom: 320px;
+    padding-bottom: 320px !important;
   }
 }
 </style>

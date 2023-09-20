@@ -122,105 +122,132 @@ export default defineComponent({
 .pt-112 {
   padding-top: 112px;
 }
+
 .grow {
   flex-grow: 1;
 }
+
 .shrink-0 {
   flex-shrink: 0;
 }
+
 .w-full {
   width: 100%;
 }
+
 .w-md-auto {
   @media (min-width: $breakpoint-md-min) {
     width: auto;
   }
 }
+
 .max-w-lg-90perc {
   @media (min-width: $breakpoint-lg-min) {
     max-width: 90%;
   }
 }
+
 .h-full {
   height: 100%;
 }
+
 .h-lg-142 {
   @media (min-width: $breakpoint-lg-min) {
     height: 142px;
   }
 }
+
 .h-254 {
   height: 254px;
 }
+
 .w-38 {
   width: 38px;
   min-width: 0;
 }
+
 .h-38 {
   height: 38px;
   min-height: 0;
 }
+
 .gap-8 {
   gap: 8px;
 }
+
 .gap-12 {
   gap: 12px;
 }
+
 .gap-24 {
   gap: 24px;
 }
+
 .gap-32 {
   gap: 32px;
 }
+
 .md-flex {
   @media (min-width: $breakpoint-md-min) {
     display: flex;
   }
 }
+
 .md-row {
   @media (min-width: $breakpoint-md-min) {
     flex-direction: row;
   }
 }
+
 .footer-wrapper {
   background-color: $grey-10;
+
   @media (min-width: $breakpoint-md-min) {
     background-color: transparent;
   }
 }
+
 .footer-scroll-top {
   padding-top: 16px;
+
   @media (min-width: $breakpoint-md-min) {
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 8px;
   }
+
   @media (min-width: $breakpoint-md-min) {
     padding-top: 0;
     padding-bottom: 24px;
   }
 }
+
 .footer-content {
   padding-top: 16px;
   padding-bottom: 70px;
+
   @media (min-width: $breakpoint-md-min) {
     padding-top: 32px;
   }
+
   @media (min-width: $breakpoint-md-min) {
     padding-bottom: 0;
   }
 }
+
 .language-list {
   list-style: none;
   font-size: 14px;
   padding-left: 0;
   padding-inline-start: 0;
 }
+
 .copyright {
   @media (min-width: $breakpoint-sm-min) {
     height: 38px;
     min-height: 0;
   }
+
   :deep(a) {
     color: #fff;
   }
