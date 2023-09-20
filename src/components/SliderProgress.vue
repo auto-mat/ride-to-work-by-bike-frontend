@@ -53,15 +53,14 @@ export default defineComponent({
 
 <template>
   <div class="progress-slider relative-position" data-cy="progress-slider">
-    <div class="row items-center q-col-gutter-lg">
+    <div class="row q-col-gutter-lg">
       <!-- Title -->
       <h2 class="col-sm-5 text-h6 q-my-none" data-cy="progress-slider-title">
         {{ title }}
       </h2>
       <!-- List of statistics -->
       <q-list class="col-sm-7 flex flex-wrap items-center justify-end q-pr-md gap-x-40">
-        <q-item v-for="item in stats" :key="item.icon" data-cy="progress-slider-stats-item"
-          class="text-grey-10 q-px-none">
+        <q-item v-for="item in stats" :key="item.icon" data-cy="progress-slider-stats-item" class="text-grey-10 q-p-none">
           <!-- Icon -->
           <q-icon :name="item.icon" color="blue-grey-3" size="18px" />&nbsp;
           <!-- Value -->
