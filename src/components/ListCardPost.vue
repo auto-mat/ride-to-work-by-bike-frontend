@@ -14,9 +14,9 @@ import { CardPost as CardPostType, Link } from './types';
 export default defineComponent({
   name: 'ListCardPost',
   components: {
-    CardPost,
     Swiper,
     SwiperSlide,
+    CardPost,
   },
   props: {
     title: {
@@ -102,6 +102,7 @@ export default defineComponent({
   }
 }
 
+// Styles for Swiper.js
 .swiper {
   max-width: 90%;
   margin-left: 0;
@@ -110,12 +111,6 @@ export default defineComponent({
   @media (min-width: $breakpoint-md-min) {
     max-width: 100%;
   }
-}
-
-// Styles for Swiper.js
-:deep(.swiper) {
-  padding-bottom: 64px;
-  overflow: hidden;
 }
 
 :deep(.swiper-button) {
