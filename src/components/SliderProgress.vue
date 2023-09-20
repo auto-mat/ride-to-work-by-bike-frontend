@@ -52,6 +52,8 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Component displaying a slider with progress cards -->
+  <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103888&mode=design&t=UUK9mlZ2h5xWmQ1F-1 -->
   <div class="progress-slider relative-position" data-cy="progress-slider">
     <div class="row q-col-gutter-lg">
       <!-- Title -->
