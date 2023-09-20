@@ -1,19 +1,20 @@
 <script lang="ts">
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
+import { Screen } from 'quasar';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, A11y } from 'swiper/modules';
 
 // components
-import VueCardPost from './VueCardPost.vue';
+import CardPost from './CardPost.vue';
 
 // types
-import { CardPost, Link } from './types';
+import { CardPost as CardPostType, Link } from './types';
 
 export default defineComponent({
-  name: 'VueCardListPost',
+  name: 'ListCardPost',
   components: {
-    VueCardPost,
+    CardPost,
     Swiper,
     SwiperSlide,
   },
@@ -23,7 +24,7 @@ export default defineComponent({
       required: true,
     },
     cards: {
-      type: Array as () => CardPost[],
+      type: Array as () => CardPostType[],
       required: true,
     },
     button: {
@@ -32,7 +33,16 @@ export default defineComponent({
     },
   },
   setup() {
+    const isLargeScreen = computed(() => {
+      return Screen.gt.md
+    })
+
+    const buttonWidth = computed(() => {
+      return isLargeScreen.value ? 'auto' : '100%'
+    })
+
     return {
+      buttonWidth,
       modules: [Navigation, A11y],
     };
   },
@@ -40,59 +50,34 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- Component displaying the news -->
+  <!-- Component displaying a slider with news -->
   <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105611&mode=design&t=x3DpoanmIFk5i6MU-1 -->
-  <div class="card-list-post relative-position" data-cy="card-list-post">
+  <div class="relative-position" data-cy="card-list-post">
     <!-- Title -->
-    <h2
-      class="text-h6 q-mt-none text-weight-semibold"
-      data-cy="card-list-post-title"
-    >
+    <h2 class="text-h6 q-mt-none text-weight-semibold" data-cy="card-list-post-title">
       {{ title }}
     </h2>
     <!-- Swiper for news cards -->
-    <swiper
-      navigation
-      :modules="modules"
-      :slides-per-view="4"
-      :space-between="24"
-      :breakpoints="{
-        0: {
-          slidesPerView: 2,
-          spaceBetween: 24,
-        },
-        600: {
-          slidesPerView: 3,
-        },
-        1024: {
-          slidesPerView: 4,
-        },
-      }"
-    >
-      <swiper-slide
-        v-for="card in cards"
-        :key="card.title"
-        class="swiper-slide"
-      >
-        <vue-card-post :card="card" data-cy="card-list-post-item" />
+    <swiper navigation :modules="modules" :slides-per-view="4" :space-between="24" :breakpoints="{
+      0: {
+        slidesPerView: 2,
+        spaceBetween: 24,
+      },
+      600: {
+        slidesPerView: 3,
+      },
+      1024: {
+        slidesPerView: 4,
+      },
+    }" class="overflow-visible overflow-lg-hidden">
+      <swiper-slide v-for="(card, index) in cards" :key="`${card.title}-${index}`" class="swiper-slide">
+        <card-post :card="card" data-cy="card-list-post-item" />
       </swiper-slide>
     </swiper>
     <!-- Link to more news -->
-    <div
-      v-if="button"
-      class="text-sm-center absolute-bottom"
-      data-cy="card-list-post-buttons"
-    >
-      <q-btn
-        rounded
-        unelevated
-        outline
-        color="grey-10"
-        class="z-1"
-        :to="button.url"
-        :label="button.title"
-        data-cy="card-list-post-button"
-      />
+    <div v-if="button" class="text-center absolute-bottom" data-cy="card-list-post-buttons">
+      <q-btn rounded unelevated outline color="grey-10" class="z-1" :to="button.url" :label="button.title"
+        :style="{ 'width': buttonWidth }" data-cy="card-list-post-button" />
     </div>
   </div>
 </template>
@@ -101,19 +86,26 @@ export default defineComponent({
 .z-1 {
   z-index: 1;
 }
-.text-sm-center {
-  text-align: left;
-  @media (min-width: $breakpoint-sm-min) {
-    text-align: center;
+
+// Display overflowing: next card indication (mobile)
+.overflow-visible {
+  overflow: visible;
+}
+
+// Default overflow to test as standalone (desktop)
+.overflow-lg-hidden {
+  @media (min-width: $breakpoint-lg-min) {
+    overflow: hidden;
   }
 }
 
 // Styles for Swiper.js
-.card-list-post :deep(.swiper) {
+:deep(.swiper) {
   padding-bottom: 64px;
   overflow: hidden;
 }
-.card-list-post :deep(.swiper-button) {
+
+:deep(.swiper-button) {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -121,8 +113,8 @@ export default defineComponent({
   text-align: center;
 }
 
-.card-list-post :deep(.swiper-button-next),
-.card-list-post :deep(.swiper-button-prev) {
+:deep(.swiper-button-next),
+:deep(.swiper-button-prev) {
   border-radius: 9999px;
   top: auto;
   bottom: 0;
@@ -131,6 +123,12 @@ export default defineComponent({
   color: $grey-10;
   background-color: #fff;
   border: 1px solid $grey-10;
+
+  visibility: hidden;
+
+  @media (min-width: $breakpoint-md-min) {
+    visibility: visible;
+  }
 
   &:after {
     width: 32px;
@@ -148,7 +146,7 @@ export default defineComponent({
   }
 }
 
-.card-list-post :deep(.swiper-button-prev) {
+:deep(.swiper-button-prev) {
   left: auto;
   right: 56px;
 
@@ -158,7 +156,8 @@ export default defineComponent({
     background-position: center;
   }
 }
-.card-list-post :deep(.swiper-button-next) {
+
+:deep(.swiper-button-next) {
   left: auto;
   right: 0;
 
