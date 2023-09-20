@@ -190,11 +190,11 @@ describe('Home page', () => {
     });
 
     it('allows user to display offer modal', () => {
-      cy.dataCy('dialog-card-offer').should('not.exist');
+      cy.dataCy('dialog-offer').should('not.exist');
 
       cy.dataCy('list-card-offer-item').first().should('be.visible').click();
 
-      cy.dataCy('dialog-card-offer').should('be.visible');
+      cy.dataCy('dialog-offer').should('be.visible');
     });
 
     it('allows user to see all news items', () => {
@@ -470,11 +470,11 @@ describe('Home page', () => {
     });
 
     it('allows user to display offer modal', () => {
-      cy.dataCy('dialog-card-offer').should('not.exist');
+      cy.dataCy('dialog-offer').should('not.exist');
 
       cy.dataCy('list-card-offer-item').first().should('be.visible').click();
 
-      cy.dataCy('dialog-card-offer').should('be.visible');
+      cy.dataCy('dialog-offer').should('be.visible');
     });
 
     it('allows user to switch language', () => {
