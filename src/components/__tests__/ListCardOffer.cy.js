@@ -3,7 +3,7 @@ import { i18n } from '../../boot/i18n';
 
 // mocks
 import { cardsOffer } from 'src/mocks/homepage';
-const title = i18n.global.t('cardListOffer.title');
+const title = i18n.global.t('index.cardListOffer.title');
 const cards = cardsOffer;
 
 describe('<ListCardOffer>', () => {
