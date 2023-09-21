@@ -34,9 +34,9 @@ describe('<ListBadgeAchievement>', () => {
       cy.viewport('iphone-6');
     });
 
-    it('renders 2 column grid', () => {
+    it('renders 1 column grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('badge-item'), 50);
+        cy.testElementPercentageWidth(cy.dataCy('badge-item'), 100);
       });
     });
   });

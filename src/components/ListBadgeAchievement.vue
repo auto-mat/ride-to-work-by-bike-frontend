@@ -27,10 +27,10 @@ export default defineComponent({
       v-for="item in items"
       :key="item.title"
       class="col-12 col-sm-6 col-lg-3"
+      data-cy="badge-item"
     >
       <badge-achievement
         :badge="item"
-        data-cy="badge-item"
         class="full-width"
       />
     </div>
