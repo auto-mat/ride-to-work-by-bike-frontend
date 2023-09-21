@@ -200,20 +200,20 @@ describe('Home page', () => {
     it('allows user to see all news items', () => {
       cy.dataCy('list-post').should('be.visible');
 
-      cy.get('.card-list-post .swiper-slide:nth-child(1)').should('be.visible');
-      cy.get('.card-list-post .swiper-slide:nth-child(2)').should('be.visible');
-      cy.get('.card-list-post .swiper-slide:nth-child(3)').should('be.visible');
-      cy.get('.card-list-post .swiper-slide:nth-child(4)').should('be.visible');
-      cy.get('.card-list-post .swiper-slide:nth-child(5)').should(
+      cy.dataCy('list-post').find('.swiper-slide:nth-child(1)').should('be.visible');
+      cy.dataCy('list-post').find('.swiper-slide:nth-child(2)').should('be.visible');
+      cy.dataCy('list-post').find('.swiper-slide:nth-child(3)').should('be.visible');
+      cy.dataCy('list-post').find('.swiper-slide:nth-child(4)').should('be.visible');
+      cy.dataCy('list-post').find('.swiper-slide:nth-child(5)').should(
         'not.be.visible'
       );
 
-      cy.get('.card-list-post .swiper-slide').then(($el) => {
+      cy.dataCy('list-post').find('.swiper-slide').then(($el) => {
         $el.each(() => {
-          cy.get('.card-list-post .swiper-button-next').click({ force: true });
+          cy.dataCy('list-post').find('.swiper-button-next').click({ force: true });
         });
 
-        cy.get('.card-list-post .swiper-slide:last-child').should('be.visible');
+        cy.dataCy('list-post').find('.swiper-slide:last-child').should('be.visible');
       });
     });
 
@@ -240,15 +240,15 @@ describe('Home page', () => {
             cy.dataCy('switcher-' + locale)
               .should('exist')
               .should('be.visible')
-              .find('a')
+              .find('.q-btn')
               .click();
 
             cy.dataCy('switcher-' + initialActiveLocale)
-              .find('a')
+              .find('.q-btn')
               .should('not.have', 'font-weight', '400');
 
             cy.dataCy('switcher-' + locale)
-              .find('a')
+              .find('.q-btn')
               .should('have.css', 'font-weight', '700');
 
             cy.dataCy('index-title')
@@ -357,6 +357,8 @@ describe('Home page', () => {
           cy.dataCy('button-contact').should('be.visible').click();
 
           cy.dataCy('dialog-header').find('h3').should('be.visible');
+
+          cy.dataCy('dialog-content').scrollTo(0, 0);
 
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
@@ -500,15 +502,15 @@ describe('Home page', () => {
             cy.dataCy('switcher-' + locale)
               .should('exist')
               .should('be.visible')
-              .find('a')
+              .find('.q-btn')
               .click();
 
             cy.dataCy('switcher-' + initialActiveLocale)
-              .find('a')
+              .find('.q-btn')
               .should('not.have', 'font-weight', '400');
 
             cy.dataCy('switcher-' + locale)
-              .find('a')
+              .find('.q-btn')
               .should('have.css', 'font-weight', '700');
 
             cy.dataCy('index-title')
