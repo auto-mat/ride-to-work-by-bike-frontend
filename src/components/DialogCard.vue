@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, computed, Ref } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // Component used to render dialog window which you can fill with custom content
 // Available slots:
