@@ -21,14 +21,12 @@ describe('<NewsletterItem>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('has display flex', () => {
+    it('has display flex column', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item')
           .should('be.visible')
           .should('have.css', 'display', 'flex')
-          .should('have.css', 'flex-wrap', 'wrap')
-          .should('have.css', 'gap', '8px')
-          .should('have.css', 'align-items', 'center');
+          .should('have.css', 'flex-direction', 'row');
       });
     });
 
@@ -74,7 +72,6 @@ describe('<NewsletterItem>', () => {
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
           .should('have.css', 'border-radius', '28px')
-          .should('have.css', 'width', '200px')
           .should('have.color', '#212121')
           .should(
             'contain',
@@ -139,7 +136,6 @@ describe('<NewsletterItem>', () => {
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
           .should('have.css', 'border-radius', '28px')
-          .should('have.css', 'width', '200px')
           .should('have.color', '#212121')
           .should(
             'contain',
@@ -154,6 +150,8 @@ describe('<NewsletterItem>', () => {
           .should('have.color', '#212121')
           .should('contain', 'check');
       });
+
+      cy.testElementPercentageWidth(cy.dataCy('newsletter-item-button'), 100)
     });
 
     it('aligns content to the right', () => {
