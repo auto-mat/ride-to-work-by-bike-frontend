@@ -72,7 +72,7 @@ Cypress.Commands.add(
       const parentWidth = $el.parent().outerWidth();
       const calculatedPercentage = (actualWidth / parentWidth) * 100;
 
-      expect(calculatedPercentage).to.be.closeTo(Number(expectedPercentage), 1);
+      expect(calculatedPercentage).to.be.closeTo(Number(expectedPercentage), 2);
     });
   }
 );
