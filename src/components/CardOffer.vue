@@ -24,7 +24,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const modalOpened = ref(false);
 
