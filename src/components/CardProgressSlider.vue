@@ -27,13 +27,19 @@ export default defineComponent({
       return props.card.duration?.current / props.card.duration?.total;
     });
 
-    const isMediumScreen = Screen.gt.xs;
-    const isLargeScreen = Screen.gt.md;
+    const isMediumScreen = computed(() => {
+      return Screen.gt.xs
+    });
+
+    const isLargeScreen = computed(() => {
+      return Screen.gt.md;
+    });
+
     // responsive sizing for q-circular-progress
     const circleSize = computed(() => {
       let size = '128px';
-      size = isMediumScreen ? '180px' : size;
-      size = isLargeScreen ? '220px' : size;
+      size = isMediumScreen.value ? '180px' : size;
+      size = isLargeScreen.value ? '220px' : size;
       return size;
     });
 

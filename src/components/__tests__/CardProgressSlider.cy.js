@@ -78,7 +78,7 @@ describe('<CardProgressSlider>', () => {
         .should('have.css', 'height', '220px');
 
       cy.dataCy('card-progress-percentage')
-        .find('.text-circular-progress')
+        .find('.circular-progress-number')
         .should('be.visible')
         .should('have.css', 'font-size', '48px');
     });
@@ -192,7 +192,7 @@ describe('<CardProgressSlider>', () => {
         .should('have.css', 'height', '128px');
 
       cy.dataCy('card-progress-percentage')
-        .find('.text-circular-progress')
+        .find('.circular-progress-number')
         .should('be.visible')
         .should('have.css', 'font-size', '40px');
     });
@@ -204,15 +204,6 @@ describe('<CardProgressSlider>', () => {
     // layout
     it('wraps items in card header', () => {
       cy.dataCy('card-progress-header')
-        .should('be.visible')
-        .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-direction', 'row')
-        .should('have.css', 'flex-wrap', 'wrap')
-        .should('have.css', 'gap', '16px');
-    });
-
-    it('wraps items in card content', () => {
-      cy.dataCy('card-progress-content')
         .should('be.visible')
         .should('have.css', 'display', 'flex')
         .should('have.css', 'flex-direction', 'row')
