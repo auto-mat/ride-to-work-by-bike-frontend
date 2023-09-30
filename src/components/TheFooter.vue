@@ -1,8 +1,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { i18n } from 'src/boot/i18n';
 
 // components
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+
+// types
+import { ConfigGlobal } from 'components/types';
+
+// config
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
 
 export default defineComponent({
   name: 'TheFooter',
@@ -19,7 +28,32 @@ export default defineComponent({
       });
     }
 
+    const socialLinksList = [
+      {
+        title: i18n.global.t('index.menuLinks.instagram'),
+        icon: 'mdi-instagram',
+        url: rideToWorkByBikeConfig.instagramUrl,
+      },
+      {
+        title: i18n.global.t('index.menuLinks.facebook'),
+        icon: 'mdi-facebook',
+        url: rideToWorkByBikeConfig.facebookUrl,
+      },
+      {
+        title: i18n.global.t('index.menuLinks.twitter'),
+        icon: 'mdi-twitter',
+        url: rideToWorkByBikeConfig.twitterUrl,
+      },
+      {
+        title: i18n.global.t('index.menuLinks.youtube'),
+        icon: 'mdi-youtube',
+        url: rideToWorkByBikeConfig.youtubeUrl,
+      },
+    ]
+
+
     return {
+      socialLinksList,
       copyrightList,
       scrollToTop,
     };
@@ -29,15 +63,18 @@ export default defineComponent({
 
 <template>
   <div class="absolute-bottom text-white overflow-hidden" data-cy="footer">
+    <!-- Background image (cityscape) -->
     <q-img
       class="absolute-top-left h-254"
       src="~assets/svg/bg-footer.svg"
       data-cy="footer-background"
     />
+    <!-- Footer content (leave space above for graphics) -->
     <div class="relative-position pt-112">
       <div
         class="footer-wrapper h-lg-142 max-w-lg-90perc flex items-end q-px-md"
       >
+        <!-- Scroll to top button (desktop) -->
         <div class="footer-scroll-top shrink-0">
           <q-btn
             class="w-38 h-38 gt-sm"
@@ -50,16 +87,20 @@ export default defineComponent({
             <q-icon name="arrow_upward" size="18px" />
           </q-btn>
         </div>
+
         <div class="footer-content h-full col-grow">
           <div
             class="col-grow flex flex-wrap items-start justify-between gap-8"
           >
+            <!-- Logo -->
             <q-img
               src="~assets/svg/logo-white.svg"
               width="142px"
               height="40px"
               data-cy="footer-logo"
             />
+
+            <!-- Scroll to top button (mobile) -->
             <q-btn
               class="w-38 h-38 lt-md"
               color="white"
@@ -70,6 +111,8 @@ export default defineComponent({
             >
               <q-icon name="arrow_upward" size="18px" />
             </q-btn>
+
+            <!-- License + Owner information (mobile) -->
             <div
               class="w-full w-md-auto flex flex-wrap items-center justify-center gap-12 text-center q-py-md lt-md copyright"
               data-cy="footer-copyright-list-mobile"
@@ -86,18 +129,24 @@ export default defineComponent({
               </div>
             </div>
             <div class="flex column items-center row-md w-full w-md-auto">
-              <div
-                class="flex items-center gap-32"
-                data-cy="footer-social-menu"
-              >
-                <q-icon name="mdi-facebook" size="18px" />
-                <q-icon name="mdi-instagram" size="18px" />
-                <q-icon name="mdi-youtube" size="18px" />
+              <!-- List: Social links -->
+              <div>
+                <ul class="flex items-center gap-32" data-cy="footer-social-menu" style="list-style: none">
+                  <li>
+                    <q-btn flat round v-for="(link) in socialLinksList" :key="link.icon" :title="link.title">
+                      <a :href="link.url" class="text-white" target="_blank">
+                        <q-icon :name="link.icon" size="18px" />
+                      </a>
+                    </q-btn>
+                  </li>
+                </ul>
               </div>
               <span class="q-mx-lg gt-sm">|</span>
+              <!-- Language switcher component -->
               <language-switcher />
             </div>
           </div>
+          <!-- License + Owner information (desktop) -->
           <div
             class="flex flex-wrap items-center gap-12 copyright gt-sm"
             data-cy="footer-copyright-list-desktop"
