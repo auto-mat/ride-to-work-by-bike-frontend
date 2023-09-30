@@ -146,40 +146,4 @@ export default defineComponent({
 .gap-x-40 {
   column-gap: 40px;
 }
-
-// Styles for Swiper.js
-swiper-container::part(container) {
-  overflow: visible;
-}
-
-swiper-container::part(button-prev),
-swiper-container::part(button-next) {
-  border-radius: 9999px;
-  top: auto;
-  bottom: -54px;
-  width: 38px;
-  height: 38px;
-  color: transparent;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 1px solid $grey-10;
-  visibility: hidden;
-
-  @media (min-width: $breakpoint-md-min) {
-    visibility: visible;
-  }
-}
-
-swiper-container::part(button-prev) {
-  left: auto;
-  right: 56px;
-  background-image: url("../assets/svg/mdi-arrow-back.svg");
-}
-
-swiper-container::part(button-next) {
-  left: auto;
-  right: 0;
-  background-image: url("../assets/svg/mdi-arrow-forward.svg");
-}
 </style>
