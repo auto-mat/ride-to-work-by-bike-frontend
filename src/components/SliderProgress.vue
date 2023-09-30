@@ -35,11 +35,11 @@ export default defineComponent({
     },
   },
   setup() {
-    const isLargeScreen = computed(() => {
+    const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
 
-    const buttonWidth = computed(() => {
+    const buttonWidth = computed((): string => {
       return isLargeScreen.value ? 'auto' : '100%';
     });
 
