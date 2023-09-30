@@ -1,14 +1,42 @@
 <script lang="ts">
+/**
+ * DialogCard Component
+ *
+ * The `DialogCard` component is used to render a dialog window that can be customized with various slots. It provides slots for the following content:
+ *
+ * - `title`: For the title of the dialog.
+ * - `metadata`: For additional metadata or information.
+ * - `content`: For the main content of the dialog.
+ * - `buttons`: For action buttons.
+ * - `image`: For displaying an image alongside the content.
+ *
+ * The `content` and `image` slots are rendered side by side within a scrollable dialog window (on desktop screens).
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104737&mode=dev)
+ *
+ * @example
+ * <dialog-card>
+ *   <template #title>
+ *     <!-- Title content here -->
+ *   </template>
+ *   <template #metadata>
+ *     <!-- Metadata content here -->
+ *   </template>
+ *   <template #content>
+ *     <!-- Main content here -->
+ *   </template>
+ *   <template #buttons>
+ *     <!-- Action buttons here -->
+ *   </template>
+ *   <template #image>
+ *     <!-- Image content here -->
+ *   </template>
+ * </dialog-card>
+ */
+
+// libraries
 import { defineComponent, computed } from 'vue';
 
-// Component used to render dialog window which you can fill with custom content
-// Available slots:
-// - title
-// - metadata
-// - content
-// - buttons
-// - image
-// The content and image are rendered side by side in a scrollable dialog window
 export default defineComponent({
   name: 'DialogCard',
   props: {
