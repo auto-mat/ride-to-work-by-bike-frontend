@@ -27,18 +27,19 @@ export default defineComponent({
     class="row q-col-gutter-lg items-center justify-between"
   >
     <!-- Section image -->
-    <div class="gt-sm col-md-3" data-cy="newsletter-col-image">
-      <div class="q-px-xl">
+    <div class="gt-sm col-md-3 col-lg-2" data-cy="newsletter-col-image">
+      <div class="q-px-lg">
         <!-- Image -->
         <q-img
-          src="~assets/image/newsletter-envelope.png"
+          src="~assets/image/newsletter-envelope.svg"
+          class="newsletter-feature-image"
           data-cy="newsletter-feature-image"
         />
       </div>
     </div>
 
     <!-- Section content -->
-    <div class="col-12 col-md-9" data-cy="newsletter-col-content">
+    <div class="col-12 col-md-9 col-lg-10" data-cy="newsletter-col-content">
       <!-- Title -->
       <h2 class="q-mb-md q-mt-none text-h6" data-cy="newsletter-feature-title">
         {{ $t('index.newsletterFeature.title') }}
@@ -62,3 +63,10 @@ export default defineComponent({
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.newsletter-feature-image {
+  max-width: 140px;
+  margin: 0 auto;
+}
+</style>
