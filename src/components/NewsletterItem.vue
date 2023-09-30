@@ -14,7 +14,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const buttonTextColor = computed(() => {
+    const buttonTextColor = computed((): string => {
       return props.item.following ? 'grey-10' : 'white';
     });
 
