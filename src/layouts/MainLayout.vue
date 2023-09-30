@@ -1,7 +1,7 @@
 <script lang="ts">
 // libraries
 import { setCssVar } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // import components
@@ -34,19 +34,6 @@ export default defineComponent({
     TheFooter,
     MobileBottomPanel,
   },
-
-  setup() {
-    const leftDrawerOpen = ref(false);
-
-    const toggleLeftDrawer = () => {
-      leftDrawerOpen.value = !leftDrawerOpen.value;
-    };
-
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer,
-    };
-  },
 });
 </script>
 
@@ -57,10 +44,9 @@ export default defineComponent({
       <q-toolbar>
         <!-- Logo + Buttons (help, notification) -->
         <drawer-header
-          v-model="leftDrawerOpen"
-          data-cy="drawer-header-mobile"
           :show-logo="false"
           :show-drawer-open-button="true"
+          data-cy="drawer-header-mobile"
         >
         </drawer-header>
       </q-toolbar>
@@ -75,7 +61,7 @@ export default defineComponent({
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
-      <drawer-header data-cy="drawer-header" :mobile="false"></drawer-header>
+      <drawer-header :mobile="false" data-cy="drawer-header"></drawer-header>
       <!-- User options dropdown -->
       <user-select class="q-pt-lg" data-cy="user-select"></user-select>
       <!-- Navigation menu -->
