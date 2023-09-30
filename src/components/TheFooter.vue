@@ -21,7 +21,7 @@ export default defineComponent({
   setup() {
     const copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
 
-    function scrollToTop() {
+    function scrollToTop(): void {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
