@@ -51,11 +51,7 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.menu-active-item {
-  color: $blue-grey-10 !important;
-}
-
-.menu-active-item .q-icon {
+.menu-active-item, .menu-active-item .q-icon {
   color: $blue-grey-10 !important;
 }
 </style>
