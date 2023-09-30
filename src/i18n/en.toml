@@ -178,5 +178,5 @@ message = "You can manage your preferences at any time in your profile."
 title = "Follow us on Facebook"
 
 [index.footer]
-copyrightOpenSource = "This app is open source."
+copyrightOpenSource = "This app is free software."
 copyrightAuthor = "The Bike to Work Challenge is organized by <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, n.g.o.</a>"
