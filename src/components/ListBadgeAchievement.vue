@@ -29,10 +29,7 @@ export default defineComponent({
       class="col-12 col-sm-6 col-lg-3"
       data-cy="badge-item"
     >
-      <badge-achievement
-        :badge="item"
-        class="full-width"
-      />
+      <badge-achievement :badge="item" class="full-width" />
     </div>
   </div>
 </template>

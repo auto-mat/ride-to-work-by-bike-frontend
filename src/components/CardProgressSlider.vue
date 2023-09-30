@@ -28,7 +28,7 @@ export default defineComponent({
     });
 
     const isMediumScreen = computed(() => {
-      return Screen.gt.xs
+      return Screen.gt.xs;
     });
 
     const isLargeScreen = computed(() => {

@@ -151,7 +151,7 @@ describe('<NewsletterItem>', () => {
           .should('contain', 'check');
       });
 
-      cy.testElementPercentageWidth(cy.dataCy('newsletter-item-button'), 100)
+      cy.testElementPercentageWidth(cy.dataCy('newsletter-item-button'), 100);
     });
 
     it('aligns content to the right', () => {
