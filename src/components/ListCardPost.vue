@@ -1,4 +1,27 @@
 <script lang="ts">
+/**
+ * ListCardPost Component
+ *
+ * The `ListCardPost` component displays a slider with news cards.
+ *
+ * @description
+ * Use this component to create a list of news cards with a slider. On mobile screens, it will show a part of the last element to indicate swipe action.
+ *
+ * @props
+ * - `title` (String, required): The title for the list of news cards.
+ * - `cards` (Array, required): An array of news card objects.
+ * - `button` (Object, optional): An object representing a link/button to navigate to more news.
+ *
+ * @example
+ * <list-card-post
+ *   title="Latest News"
+ *   :cards="newsCards"
+ *   :button="readMoreLink"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105611&mode=design&t=x3DpoanmIFk5i6MU-1)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 import { Screen } from 'quasar';
@@ -30,6 +53,7 @@ export default defineComponent({
     },
   },
   setup() {
+    // initialize swiper
     register();
 
     const isLargeScreen = computed((): boolean => {
@@ -48,8 +72,6 @@ export default defineComponent({
 </script>
 
 <template>
-  <!-- Component displaying a slider with news -->
-  <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105611&mode=design&t=x3DpoanmIFk5i6MU-1 -->
   <div class="relative-position" data-cy="card-list-post">
     <!-- Title -->
     <h2
@@ -65,11 +87,11 @@ export default defineComponent({
       :space-between="24"
       :breakpoints="{
         0: {
-          slidesPerView: 1.25,
+          slidesPerView: 1.2,
           spaceBetween: 24,
         },
         600: {
-          slidesPerView: 2.25,
+          slidesPerView: 2.2,
         },
         1024: {
           slidesPerView: 3,
@@ -99,7 +121,6 @@ export default defineComponent({
         unelevated
         outline
         color="grey-10"
-        class="z-1"
         :to="button.url"
         :label="button.title"
         :style="{ width: buttonWidth }"
@@ -110,13 +131,10 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.z-1 {
-  z-index: 1;
-}
 
 // Styles for Swiper.js
 swiper-container::part(container) {
-  overflow-y: visible;
+  overflow: visible;
 }
 
 swiper-container::part(button-prev),
