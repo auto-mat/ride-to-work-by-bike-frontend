@@ -33,6 +33,7 @@ export default defineComponent({
         {{ $t('index.cardListFollow.title') }}
       </h2>
     </div>
+    <!-- List of folow cards -->
     <div
       v-for="card in cards"
       :key="card.title"
