@@ -200,21 +200,35 @@ describe('Home page', () => {
     it('allows user to see all news items', () => {
       cy.dataCy('list-post').should('be.visible');
 
-      cy.dataCy('list-post').find('.swiper-slide:nth-child(1)').should('be.visible');
-      cy.dataCy('list-post').find('.swiper-slide:nth-child(2)').should('be.visible');
-      cy.dataCy('list-post').find('.swiper-slide:nth-child(3)').should('be.visible');
-      cy.dataCy('list-post').find('.swiper-slide:nth-child(4)').should('be.visible');
-      cy.dataCy('list-post').find('.swiper-slide:nth-child(5)').should(
-        'not.be.visible'
-      );
+      cy.dataCy('list-post')
+        .find('.swiper-slide:nth-child(1)')
+        .should('be.visible');
+      cy.dataCy('list-post')
+        .find('.swiper-slide:nth-child(2)')
+        .should('be.visible');
+      cy.dataCy('list-post')
+        .find('.swiper-slide:nth-child(3)')
+        .should('be.visible');
+      cy.dataCy('list-post')
+        .find('.swiper-slide:nth-child(4)')
+        .should('be.visible');
+      cy.dataCy('list-post')
+        .find('.swiper-slide:nth-child(5)')
+        .should('not.be.visible');
 
-      cy.dataCy('list-post').find('.swiper-slide').then(($el) => {
-        $el.each(() => {
-          cy.dataCy('list-post').find('.swiper-button-next').click({ force: true });
+      cy.dataCy('list-post')
+        .find('.swiper-slide')
+        .then(($el) => {
+          $el.each(() => {
+            cy.dataCy('list-post')
+              .find('.swiper-button-next')
+              .click({ force: true });
+          });
+
+          cy.dataCy('list-post')
+            .find('.swiper-slide:last-child')
+            .should('be.visible');
         });
-
-        cy.dataCy('list-post').find('.swiper-slide:last-child').should('be.visible');
-      });
     });
 
     it('allows user to switch language', () => {
