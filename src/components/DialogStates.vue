@@ -40,7 +40,7 @@ export default defineComponent({
       activeState.value = value;
     };
 
-    const reset = () => {
+    const reset = (): void => {
       setState('default');
       dialogOpen.value = false;
     };
