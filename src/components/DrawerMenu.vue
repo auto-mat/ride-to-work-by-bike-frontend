@@ -22,6 +22,7 @@ export default defineComponent({
       v-for="item in menuTop"
       :key="item.name"
       :to="item.url"
+      active-class="menu-active-item"
       class="flex items-center"
       clickable
     >
@@ -50,11 +51,11 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.q-router-link--active {
+.menu-active-item {
   color: $blue-grey-10 !important;
 }
 
-.q-router-link--active .q-icon {
+.menu-active-item .q-icon {
   color: $blue-grey-10 !important;
 }
 </style>
