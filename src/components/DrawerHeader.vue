@@ -32,24 +32,16 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup(props, { emit }) {
+  setup(props) {
     const isDialogOpen = ref(false);
 
-    const classes = computed(() => {
+    const classes = computed((): string => {
       return props.showLogo ? 'justify-between' : 'justify-end';
-    });
-
-    const drawerOpened = computed({
-      get: () => props.modelValue,
-      set: (value) => {
-        emit('update:modelValue', value);
-      },
     });
 
     return {
       classes,
       isDialogOpen,
-      drawerOpened,
     };
   },
 });
