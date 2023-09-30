@@ -26,11 +26,11 @@ export default defineComponent({
   setup(props) {
     const MAX_CARDS = 6;
 
-    const renderedCards = computed(() => {
+    const renderedCards = computed((): CardOfferType[] => {
       return props.cards.slice(0, MAX_CARDS);
     });
 
-    const hasMoreCards = computed(() => {
+    const hasMoreCards = computed((): boolean => {
       return props.cards.length > MAX_CARDS;
     });
 
