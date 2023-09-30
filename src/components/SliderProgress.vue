@@ -115,7 +115,7 @@ export default defineComponent({
           slidesPerView: 1,
         },
       }"
-      data-cy="progress-slider-swiper"
+      data-cy="swiper-container"
     >
       <!-- Slider cards -->
       <swiper-slide
