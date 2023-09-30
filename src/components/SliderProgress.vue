@@ -1,10 +1,35 @@
 <script lang="ts">
+/**
+ * SliderProgress Component
+ *
+ * The `SliderProgress` component displays a slider with progress cards.
+ *
+ * @description
+ * Use this component to create a slider of progress cards with an optional title, statistics, and navigation button. On mobile screens, it will show a part of the last element to indicate swipe action.
+ *
+ * @props
+ * - `title` (String, required): The title for the slider.
+ * - `stats` (Array): An array of item statistics objects.
+ * - `cards` (Array, required): An array of progress card objects.
+ * - `button` (Object, optional): An object representing a link/button to navigate to more progress items.
+ *
+ * @example
+ * <slider-progress
+ *   title="Progress Updates"
+ *   :stats="itemStats"
+ *   :cards="progressCards"
+ *   :button="viewAllButton"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103888&mode=design&t=UUK9mlZ2h5xWmQ1F-1)
+ */
+
+// libraries
 import { defineComponent, computed } from 'vue';
 import { Screen } from 'quasar';
-import { Navigation, A11y } from 'swiper/modules';
+import { register } from 'swiper/element/bundle';
 
 // components
-import { Swiper, SwiperSlide } from 'swiper/vue';
 import CardProgressSlider from './CardProgressSlider.vue';
 
 // types
@@ -13,8 +38,6 @@ import { CardProgress, Link, ItemStatistics } from './types';
 export default defineComponent({
   name: 'SliderProgress',
   components: {
-    Swiper,
-    SwiperSlide,
     CardProgressSlider,
   },
   props: {
@@ -35,6 +58,9 @@ export default defineComponent({
     },
   },
   setup() {
+    // initialize swiper
+    register();
+
     const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
@@ -45,15 +71,12 @@ export default defineComponent({
 
     return {
       buttonWidth,
-      modules: [Navigation, A11y],
     };
   },
 });
 </script>
 
 <template>
-  <!-- Component displaying a slider with progress cards -->
-  <!-- Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103888&mode=design&t=UUK9mlZ2h5xWmQ1F-1 -->
   <div class="progress-slider relative-position" data-cy="progress-slider">
     <div class="row q-col-gutter-lg">
       <!-- Title -->
@@ -80,12 +103,18 @@ export default defineComponent({
         </q-item>
       </q-list>
     </div>
-    <swiper
-      navigation
-      :modules="modules"
+    <swiper-container
+      :navigation="true"
       :slides-per-view="1"
       :space-between="24"
-      class="overflow-visible overflow-lg-hidden"
+      :breakpoints="{
+        0: {
+          slidesPerView: 1.2,
+        },
+        1024: {
+          slidesPerView: 1,
+        },
+      }"
       data-cy="progress-slider-swiper"
     >
       <!-- Slider cards -->
@@ -94,16 +123,16 @@ export default defineComponent({
         :key="card.title"
         class="swiper-slide"
       >
-        <card-progress-slider :card="card" />
+        <card-progress-slider :card="card" data-cy="slider-progress-item" />
       </swiper-slide>
-    </swiper>
+    </swiper-container>
     <!-- Link to all results -->
-    <div v-if="button" class="text-center absolute-bottom">
+    <div v-if="button" class="text-center q-pt-md">
       <q-btn
         rounded
-        color="grey-10"
         unelevated
         outline
+        color="grey-10"
         :to="button.url"
         :label="button.title"
         :style="{ width: buttonWidth }"
@@ -118,89 +147,39 @@ export default defineComponent({
   column-gap: 40px;
 }
 
-// Display overflowing: next card indication (mobile)
-.overflow-visible {
+// Styles for Swiper.js
+swiper-container::part(container) {
   overflow: visible;
 }
 
-// Default overflow to test as standalone (desktop)
-.overflow-lg-hidden {
-  @media (min-width: $breakpoint-lg-min) {
-    overflow: hidden;
-  }
-}
-
-// Styles for Swiper.js
-.swiper {
-  max-width: 90%;
-  margin-left: 0;
-  padding-bottom: 64px;
-
-  @media (min-width: $breakpoint-md-min) {
-    max-width: 100%;
-  }
-}
-
-:deep(.swiper-button) {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
-}
-
-:deep(.swiper-button-next),
-:deep(.swiper-button-prev) {
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
   border-radius: 9999px;
   top: auto;
-  bottom: 0;
+  bottom: -54px;
   width: 38px;
   height: 38px;
-  color: $grey-10;
+  color: transparent;
   background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
   border: 1px solid $grey-10;
-
   visibility: hidden;
 
   @media (min-width: $breakpoint-md-min) {
     visibility: visible;
   }
-
-  &:after {
-    width: 32px;
-    height: 32px;
-    content: '';
-  }
-
-  &.swiper-button-disabled {
-    opacity: 1;
-    border-color: $grey-5;
-
-    &:after {
-      opacity: 0.35;
-    }
-  }
 }
 
-:deep(.swiper-button-prev) {
+swiper-container::part(button-prev) {
   left: auto;
   right: 56px;
-
-  &:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 16 16'%3E%3Cpath fill='currentColor' fill-rule='evenodd' d='M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+  background-image: url("../assets/svg/mdi-arrow-back.svg");
 }
 
-:deep(.swiper-button-next) {
+swiper-container::part(button-next) {
   left: auto;
   right: 0;
-
-  &:after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 16 16'%3E%3Cpath fill='currentColor' fill-rule='evenodd' d='M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+  background-image: url("../assets/svg/mdi-arrow-forward.svg");
 }
 </style>
