@@ -2,13 +2,16 @@
 // libraries
 import { defineComponent, ref, computed } from 'vue';
 
+// types
+import { Link } from 'components/types';
+
 // mocks
 import { menuBottom, menuTop } from 'src/mocks/layout';
 
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
-    const menuPanel = computed(() => {
+    const menuPanel = computed((): Link[] => {
       return menuTop.slice(0, 4);
     });
 
