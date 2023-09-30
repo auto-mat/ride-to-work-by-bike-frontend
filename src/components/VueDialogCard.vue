@@ -1,17 +1,20 @@
 <script lang="ts">
+/* Component used to render dialog window which you can fill with custom content
+Available slots:
+- title
+- metadata
+- content
+- buttons
+- image
+The content and image are rendered side by side in a scrollable dialog window
+Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104737&mode=dev
+*/
+
 import { defineComponent, computed } from 'vue';
 
 // types
 import { DialogCard } from 'components/types';
 
-// Component used to render dialog window which you can fill with custom content
-// Available slots:
-// - title
-// - metadata
-// - content
-// - buttons
-// - image
-// The content and image are rendered side by side in a scrollable dialog window
 export default defineComponent({
   name: 'VueDialogCard',
   props: {
