@@ -36,7 +36,7 @@ export default defineComponent({
       },
     });
 
-    const setState = (value: 'form' | 'default') => {
+    const setState = (value: 'form' | 'default'): void => {
       activeState.value = value;
     };
 
