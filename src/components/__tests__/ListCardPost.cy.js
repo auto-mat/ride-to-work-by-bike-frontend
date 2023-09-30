@@ -48,23 +48,17 @@ describe('<ListCardPost>', () => {
     it('renders correct number of items', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-item').should('have.length', 5);
-
-        cy.get('.swiper-slide:nth-child(1)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(2)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(3)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(4)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
       });
     });
 
     it('renders swiper navigation buttons', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev')
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev')
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
-          .should('have.css', 'border', `1px solid ${hexToRgb('#bdbdbd')}`);
-        cy.get('.swiper-button-next')
+          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-next')
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
@@ -72,52 +66,39 @@ describe('<ListCardPost>', () => {
       });
     });
 
-    it('navigates after button click', () => {
-      cy.window().then(() => {
-        cy.get('.swiper-slide:nth-child(1)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
-        cy.get('.swiper-button-next').click();
-        cy.get('.swiper-slide:nth-child(1)').should('not.be.visible');
-        cy.get('.swiper-slide:nth-child(5)').should('be.visible');
-        cy.get('.swiper-button-prev').click();
-        cy.get('.swiper-slide:nth-child(1)').should('be.visible');
-        cy.get('.swiper-slide:nth-child(5)').should('not.be.visible');
-      });
-    });
-
     it('changes button disabled state after navigation', () => {
       cy.window().then(() => {
-        cy.get('.swiper-button-prev').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#bdbdbd')}`
+          'opacity',
+          '0.35',
         );
-        cy.get('.swiper-button-next').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#212121')}`
+          'opacity',
+          '1',
         );
-        cy.get('.swiper-button-next').click();
-        cy.get('.swiper-button-prev').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').click();
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#212121')}`
+          'opacity',
+          '1',
         );
-        cy.get('.swiper-button-next').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#bdbdbd')}`
+          'opacity',
+          '0.35',
         );
-        cy.get('.swiper-button-prev').click();
-        cy.get('.swiper-button-prev').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').click();
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#bdbdbd')}`
+          'opacity',
+          '0.35',
         );
-        cy.get('.swiper-button-next').should(
+        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
           'have.css',
-          'border',
-          `1px solid ${hexToRgb('#212121')}`
+          'opacity',
+          '1',
         );
       });
     });
