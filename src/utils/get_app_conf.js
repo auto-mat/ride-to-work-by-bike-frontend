@@ -22,6 +22,14 @@ const getAppConfig = (process) => {
     config['subtitle'] = process.env.SUBTITLE;
   } else if (process.env.BORDER_RADIUS_CARD) {
     config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
+  } else if (process.env.FACEBOOK_URL) {
+    config['facebookUrl'] = process.env.FACEBOOK_URL;
+  } else if (process.env.INSTAGRAM_URL) {
+    config['instagramUrl'] = process.env.INSTAGRAM_URL;
+  } else if (process.env.TWITTER_URL) {
+    config['twitterUrl'] = process.env.TWITTER_URL;
+  } else if (process.env.YOUTUBE_URL) {
+    config['youtubeUrl'] = process.env.YOUTUBE_URL;
   }
 
   return config;

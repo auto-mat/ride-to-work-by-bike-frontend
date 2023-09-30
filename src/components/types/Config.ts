@@ -7,4 +7,8 @@ export interface ConfigGlobal {
   title: string;
   subtitle: string;
   borderRadiusCard: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  twitterUrl: string;
+  youtubeUrl: string;
 }
