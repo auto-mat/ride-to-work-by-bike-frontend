@@ -190,14 +190,6 @@ export default defineComponent({
 :deep(.q-img > * > .card-image-section-content) {
   position: relative !important;
 }
-.circular-progress-number {
-  font-size: 40px;
-  font-weight: 500;
-  line-height: 1;
-  @media (min-width: $breakpoint-sm-min) {
-    font-size: 48px;
-  }
-}
 .z-1 {
   z-index: 1;
 }

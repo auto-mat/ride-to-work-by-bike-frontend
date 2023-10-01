@@ -1,0 +1,13 @@
+/*
+* Used by:
+* - CardProgress.vue
+* - CardProgressSlider.vue
+*/
+.circular-progress-number {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  @media (min-width: $breakpoint-sm-min) {
+    font-size: 48px;
+  }
+}

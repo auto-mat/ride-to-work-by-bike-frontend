@@ -180,15 +180,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.circular-progress-number {
-  font-size: 40px;
-  font-weight: 500;
-  line-height: 1;
-
-  @media (min-width: $breakpoint-sm-min) {
-    font-size: 48px;
-  }
-}
 
 .leading-1 {
   line-height: 1;
