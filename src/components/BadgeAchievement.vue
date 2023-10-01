@@ -14,7 +14,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isDark = computed(() => {
+    const isDark = computed((): boolean => {
       return props.badge.variant === 'dark';
     });
 
@@ -39,7 +39,7 @@ export default defineComponent({
       <!-- Image -->
       <q-card-section avatar class="q-pa-none">
         <q-avatar
-          class="-mt-48"
+          class="mt--48"
           size="96px"
           color="grey-3"
           data-cy="badge-image"
@@ -74,7 +74,7 @@ export default defineComponent({
   padding-top: 48px;
 }
 
-.-mt-48 {
+.mt--48 {
   margin-top: -48px;
 }
 </style>
