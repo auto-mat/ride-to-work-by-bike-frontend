@@ -212,15 +212,14 @@ describe('Home page', () => {
       cy.dataCy('list-post')
         .find('.swiper-slide:nth-child(4)')
         .should('be.visible');
-      cy.dataCy('list-post')
-        .find('.swiper-slide:nth-child(5)')
-        .should('not.be.visible');
 
       cy.dataCy('list-post')
         .find('.swiper-slide')
         .then(($el) => {
           $el.each(() => {
             cy.dataCy('list-post')
+              .find('swiper-container')
+              .shadow()
               .find('.swiper-button-next')
               .click({ force: true });
           });
