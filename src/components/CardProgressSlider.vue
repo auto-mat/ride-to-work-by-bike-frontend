@@ -42,7 +42,7 @@ export default defineComponent({
 
 <template>
   <q-card
-    :dark="true"
+    dark
     :flat="true"
     :bordered="true"
     :style="{ 'border-radius': borderRadius }"
