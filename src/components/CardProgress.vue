@@ -1,7 +1,7 @@
 <script lang="ts">
 // libraries
-import { defineComponent, computed } from 'vue';
-import { Screen } from 'quasar';
+import { defineComponent } from 'vue';
+import { useCircleSize } from 'src/composables/useCircleSize';
 
 // types
 import {
@@ -24,19 +24,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const isMediumScreen = computed((): boolean => {
-      return Screen.gt.xs;
-    });
-    const isLargeScreen = computed((): boolean => {
-      return Screen.gt.md;
-    });
-    // responsive sizing for q-circular-progress
-    const circleSize = computed((): string => {
-      let size = '128px';
-      size = isMediumScreen.value ? '180px' : size;
-      size = isLargeScreen.value ? '220px' : size;
-      return size;
-    });
+    const { circleSize } = useCircleSize();
 
     // first prize card is highlighted
     const isDark = (card: CardProgressType): boolean => {

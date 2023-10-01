@@ -1,7 +1,7 @@
 <script lang="ts">
 // libraries
 import { defineComponent, computed } from 'vue';
-import { Screen } from 'quasar';
+import { useCircleSize } from 'src/composables/useCircleSize';
 
 // types
 import { CardProgress as CardProgressType, ConfigGlobal } from './types';
@@ -20,28 +20,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const timelineValue = computed(() => {
+    const timelineValue = computed((): number => {
       if (!props.card.duration?.current || !props.card.duration?.total) {
         return 0;
       }
       return props.card.duration?.current / props.card.duration?.total;
     });
 
-    const isMediumScreen = computed(() => {
-      return Screen.gt.xs;
-    });
-
-    const isLargeScreen = computed(() => {
-      return Screen.gt.md;
-    });
-
-    // responsive sizing for q-circular-progress
-    const circleSize = computed(() => {
-      let size = '128px';
-      size = isMediumScreen.value ? '180px' : size;
-      size = isLargeScreen.value ? '220px' : size;
-      return size;
-    });
+    const { circleSize } = useCircleSize();
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
