@@ -159,7 +159,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -174,7 +177,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -189,7 +195,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -204,7 +213,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -219,7 +231,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -234,7 +249,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -249,7 +267,10 @@ export const cardsOffer: CardOffer[] = [
     title: '100 CZK voucher do e-shopu Automatu',
     expirationDate: 'Some time later on',
     issuer: 'Automat',
-    image: 'https://picsum.photos/id/200/380/380',
+    image: {
+      src: 'https://picsum.photos/id/200/380/380',
+      alt: 'road lined with trees',
+    },
     code: '65972834',
     link: {
       title: 'Navštívit e-shop',
@@ -266,13 +287,19 @@ export const cardsFollow: CardFollow[] = [
   {
     title: 'Do práce na kole – Brno',
     handle: '@DPNKBrno',
-    image: 'https://picsum.photos/id/76/300/300',
+    image: {
+      src: 'https://picsum.photos/id/76/300/300',
+      alt: 'road lined with trees',
+    },
     url: '#',
   },
   {
     title: 'Do práce na kole – Brno',
     handle: '@DPNKBrno',
-    image: 'https://picsum.photos/id/76/300/300',
+    image: {
+      src: 'https://picsum.photos/id/76/300/300',
+      alt: 'road lined with trees',
+    },
     url: '#',
   },
 ];

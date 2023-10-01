@@ -123,7 +123,7 @@ export default defineComponent({
       </template>
       <!-- Image -->
       <template #image>
-        <q-img :src="card.image" />
+        <q-img :src="card.image.src" :alt="card.image.alt" />
       </template>
     </dialog-card>
   </q-card>

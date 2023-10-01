@@ -45,7 +45,7 @@ export default defineComponent({
       data-cy="card-post"
     >
       <!-- Image -->
-      <q-img :src="card.image" ratio="1.25" data-cy="card-post-image" />
+      <q-img :src="card.image" ratio="1.25" data-cy="card-post-image" alt="" />
       <!-- Content -->
       <q-card-section>
         <!-- Date -->

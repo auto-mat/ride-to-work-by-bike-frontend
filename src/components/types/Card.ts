@@ -22,14 +22,14 @@ export interface CardEvent {
 export interface CardFollow {
   title: string;
   handle: string;
-  image: string;
+  image: Image;
   url: string;
 }
 export interface CardOffer {
   title: string;
   expirationDate: string;
   issuer: string;
-  image: string;
+  image: Image;
   code: string;
   link: Link;
   icon: string;
