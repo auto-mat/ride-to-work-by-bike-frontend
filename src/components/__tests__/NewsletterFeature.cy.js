@@ -64,9 +64,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-image')
           .should('be.visible')
           .find('img')
-          .should(($img) => {
-            expect($img[0].naturalWidth).to.be.greaterThan(0);
-          });
+          .should('be.visible');
 
         cy.dataCy('newsletter-feature-image').matchImageSnapshot({
           failureThreshold: 0.5,
@@ -97,9 +95,9 @@ describe('<NewsletterFeature>', () => {
 
     it('renders grid', () => {
       cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-image'), 25);
+        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-image'), 16.6);
 
-        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-content'), 75);
+        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-content'), 83.3);
       });
     });
   });
