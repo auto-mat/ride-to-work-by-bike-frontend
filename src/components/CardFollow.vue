@@ -45,7 +45,7 @@ export default defineComponent({
       <!-- Card avatar -->
       <q-item-section avatar data-cy="card-follow-avatar">
         <!-- Image -->
-        <q-avatar size="96px" class="-mt-64">
+        <q-avatar size="96px" class="mt--64">
           <q-img :src="card.image" data-cy="card-follow-image" />
         </q-avatar>
       </q-item-section>
@@ -75,7 +75,7 @@ export default defineComponent({
 .pt-48 {
   padding-top: 48px;
 }
-.-mt-64 {
+.mt--64 {
   margin-top: -64px;
 }
 </style>
