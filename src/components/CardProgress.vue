@@ -24,14 +24,14 @@ export default defineComponent({
     },
   },
   setup() {
-    const isMediumScreen = computed(() => {
+    const isMediumScreen = computed((): boolean => {
       return Screen.gt.xs;
     });
-    const isLargeScreen = computed(() => {
+    const isLargeScreen = computed((): boolean => {
       return Screen.gt.md;
     });
     // responsive sizing for q-circular-progress
-    const circleSize = computed(() => {
+    const circleSize = computed((): string => {
       let size = '128px';
       size = isMediumScreen.value ? '180px' : size;
       size = isLargeScreen.value ? '220px' : size;
@@ -42,7 +42,7 @@ export default defineComponent({
     const isDark = (card: CardProgressType): boolean => {
       const prizes = card.prizes;
       const firstPrize = prizes?.filter(
-        (item: ItemPrize) => item.placement === 1
+        (item: ItemPrize): boolean => item.placement === 1
       ).length;
       return firstPrize ? true : false;
     };
