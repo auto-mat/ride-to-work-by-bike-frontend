@@ -13,16 +13,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card
-    square
-    flat
-    :bordered="false"
-    class="bg-grey-1"
+  <div
+    class="bg-grey-1 q-py-sm"
     data-cy="banner-routes-card"
   >
-    <q-card-section horizontal class="flex-wrap justify-between">
+    <div class="row justify-between">
       <!-- Title -->
-      <q-card-section class="row items-center">
+      <div class="col-12 col-sm-8 flex items-center q-py-sm q-px-md">
         <h3
           class="text-subtitle2 text-weight-bold q-my-none"
           data-cy="banner-routes-title"
@@ -30,9 +27,9 @@ export default defineComponent({
           <!-- TODO: fix conjugation in CZ and SK -->
           {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
         </h3>
-      </q-card-section>
+      </div>
       <!-- Link to Route log -->
-      <q-card-section class="row items-center">
+      <div class="col-12 col-sm-4 flex items-center justify-end q-py-sm q-px-md">
         <q-btn
           rounded
           color="grey-10"
@@ -47,9 +44,9 @@ export default defineComponent({
             {{ $t('index.bannerRoutes.addRoutes') }}
           </span>
         </q-btn>
-      </q-card-section>
-    </q-card-section>
-  </q-card>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
