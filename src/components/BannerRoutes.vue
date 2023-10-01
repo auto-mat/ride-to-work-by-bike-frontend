@@ -13,10 +13,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    class="bg-grey-1 q-py-sm"
-    data-cy="banner-routes-card"
-  >
+  <div class="bg-grey-1 q-py-sm" data-cy="banner-routes-card">
     <div class="row justify-between">
       <!-- Title -->
       <div class="col-12 col-sm-8 flex items-center q-py-sm q-px-md">
@@ -29,7 +26,9 @@ export default defineComponent({
         </h3>
       </div>
       <!-- Link to Route log -->
-      <div class="col-12 col-sm-4 flex items-center justify-end q-py-sm q-px-md">
+      <div
+        class="col-12 col-sm-4 flex items-center justify-end q-py-sm q-px-md"
+      >
         <q-btn
           rounded
           color="grey-10"

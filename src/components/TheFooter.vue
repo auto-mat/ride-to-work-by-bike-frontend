@@ -49,8 +49,7 @@ export default defineComponent({
         icon: 'mdi-youtube',
         url: rideToWorkByBikeConfig.youtubeUrl,
       },
-    ]
-
+    ];
 
     return {
       socialLinksList,
@@ -131,9 +130,19 @@ export default defineComponent({
             <div class="flex column items-center row-md w-full w-md-auto">
               <!-- List: Social links -->
               <div>
-                <ul class="flex items-center gap-32" data-cy="footer-social-menu" style="list-style: none">
+                <ul
+                  class="flex items-center gap-32"
+                  data-cy="footer-social-menu"
+                  style="list-style: none"
+                >
                   <li>
-                    <q-btn flat round v-for="(link) in socialLinksList" :key="link.icon" :title="link.title">
+                    <q-btn
+                      flat
+                      round
+                      v-for="link in socialLinksList"
+                      :key="link.icon"
+                      :title="link.title"
+                    >
                       <a :href="link.url" class="text-white" target="_blank">
                         <q-icon :name="link.icon" size="18px" />
                       </a>

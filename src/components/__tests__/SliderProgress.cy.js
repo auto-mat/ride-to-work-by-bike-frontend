@@ -85,12 +85,16 @@ describe('<SliderProgress>', () => {
 
     it('renders swiper navigation buttons', () => {
       cy.window().then(() => {
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev')
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
           .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-next')
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
@@ -100,38 +104,38 @@ describe('<SliderProgress>', () => {
 
     it('changes button disabled state after navigation', () => {
       cy.window().then(() => {
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
-          'have.css',
-          'opacity',
-          '0.35',
-        );
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
-          'have.css',
-          'opacity',
-          '1',
-        );
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').click();
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
-          'have.css',
-          'opacity',
-          '1',
-        );
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
-          'have.css',
-          'opacity',
-          '1',
-        );
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').click();
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-prev').should(
-          'have.css',
-          'opacity',
-          '0.35',
-        );
-        cy.dataCy('swiper-container').shadow().find('.swiper-button-next').should(
-          'have.css',
-          'opacity',
-          '1',
-        );
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '0.35');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .click();
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .click();
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '0.35');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
       });
     });
 

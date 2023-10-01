@@ -10,7 +10,6 @@ const isLargeScreen = computed((): boolean => {
 });
 
 export function useCircleSize() {
-
   const circleSize = computed((): string => {
     let size = '128px';
     size = isMediumScreen.value ? '180px' : size;
@@ -19,6 +18,6 @@ export function useCircleSize() {
   });
 
   return {
-    circleSize
+    circleSize,
   };
 }

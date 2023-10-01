@@ -180,7 +180,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-
 .leading-1 {
   line-height: 1;
 }

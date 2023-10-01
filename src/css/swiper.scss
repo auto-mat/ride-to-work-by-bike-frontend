@@ -24,11 +24,11 @@ swiper-container::part(button-next) {
 swiper-container::part(button-prev) {
   left: auto;
   right: 56px;
-  background-image: url("../assets/svg/mdi-arrow-back.svg");
+  background-image: url('../assets/svg/mdi-arrow-back.svg');
 }
 
 swiper-container::part(button-next) {
   left: auto;
   right: 0;
-  background-image: url("../assets/svg/mdi-arrow-forward.svg");
+  background-image: url('../assets/svg/mdi-arrow-forward.svg');
 }
