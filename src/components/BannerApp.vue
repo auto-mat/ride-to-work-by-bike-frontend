@@ -22,7 +22,7 @@ export default defineComponent({
   setup() {
     const state = useStorage('ride-to-work-by-bike', { showAppBanner: true });
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
-    const isHorizontal = computed(() => {
+    const isHorizontal = computed((): boolean => {
       return Screen.gt.xs;
     });
 
