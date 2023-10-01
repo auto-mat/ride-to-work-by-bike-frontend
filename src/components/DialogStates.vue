@@ -49,8 +49,8 @@ export default defineComponent({
     const activeState: Ref<'default' | 'form'> = ref('default');
 
     const dialogOpen = computed({
-      get: () => props.modelValue,
-      set: (value) => {
+      get: (): boolean => props.modelValue,
+      set: (value: boolean): void => {
         emit('update:modelValue', value);
         emit('change');
       },
