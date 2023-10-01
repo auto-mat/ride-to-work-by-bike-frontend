@@ -114,10 +114,4 @@ describe('<ListCardOffer>', () => {
       });
     });
   });
-
-  function calculatePercentageWidth($element) {
-    const elementWidth = $element[0].clientWidth;
-    const parentWidth = $element[0].parentNode.clientWidth;
-    return (elementWidth / parentWidth) * 100;
-  }
 });
