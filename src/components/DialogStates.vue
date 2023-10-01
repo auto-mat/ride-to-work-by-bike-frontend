@@ -1,19 +1,39 @@
 <script lang="ts">
+/**
+ * DialogStates Component
+ *
+ * Renders a dialog with customizable content and switchable states.
+ *
+ * **States**:
+ * - default
+ * - form
+ *
+ * **Slots**:
+ * - title
+ * - content
+ *
+ * **v-slot Props**:
+ * - state
+ * - setState
+ * - reset
+ *
+ * Note: `content` and `image` side by side in a scrollable window.
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=1611%3A17872&mode=dev)
+ *
+ * @example
+ * <dialog-states v-model="isOpen">
+ *   <template #title>
+ *     <!-- Title here -->
+ *   </template>
+ *   <template #content="{ state, setState, reset }">
+ *     <!-- Content here -->
+ *   </template>
+ * </dialog-states>
+ */
+
 import { defineComponent, ref, computed, Ref } from 'vue';
 
-// Component used to render dialog window which you can fill with custom content
-// Allows to switch between states
-// Available states:
-// - default
-// - form
-// Available slots:
-// - title
-// - content
-// Exposed v-slot props
-// - state
-// - setState
-// - reset
-// The content and image are rendered side by side in a scrollable dialog window
 export default defineComponent({
   name: 'DialogStates',
   props: {
