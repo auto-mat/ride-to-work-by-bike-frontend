@@ -46,64 +46,6 @@ email = "Your email"
 emailRequired = "Please, fill in your email"
 submit = "Submit"
 
-[index.help]
-titleStateDefault = "Help"
-titleStateContact = "Contact us"
-titleParticipants = "Participants"
-titleCoordinators = "Company coordinators"
-titleGuide = "Application guide"
-buttonGuide = "Watch again"
-titleContact = "Didn't find the answer? Contact us!"
-buttonContact = "Contact automat"
-titleLinks = "Useful links"
-titleSocials = "Follow us on social media"
-
-# REMEMBER when testing these string: They are the same in all languages
-[index.menuLinks]
-instagram = "Instagram"
-facebook = "Facebook"
-twitter = "Twitter"
-youtube = "Youtube"
-
-[index.contact]
-subject = "Subject"
-subjectRequired = "Please, fill in a subject"
-message = "Message"
-messageRequired = "Please, fill in the message"
-file = "Upload attachment"
-email = "Your email"
-emailRequired = "Please, fill in your email"
-submit = "Submit"
-
-[index.help]
-titleStateDefault = "Help"
-titleStateContact = "Contact us"
-titleParticipants = "Participants"
-titleCoordinators = "Company coordinators"
-titleGuide = "Application guide"
-buttonGuide = "Watch again"
-titleContact = "Didn't find the answer? Contact us!"
-buttonContact = "Contact automat"
-titleLinks = "Useful links"
-titleSocials = "Follow us on social media"
-
-# REMEMBER when testing these string: They are the same in all languages
-[index.menuLinks]
-instagram = "Instagram"
-facebook = "Facebook"
-twitter = "Twitter"
-youtube = "Youtube"
-
-[index.contact]
-subject = "Subject"
-subjectRequired = "Please, fill in a subject"
-message = "Message"
-messageRequired = "Please, fill in the message"
-file = "Upload attachment"
-email = "Your email"
-emailRequired = "Please, fill in your email"
-submit = "Submit"
-
 [index.countdown]
 title = "October challenge starts {date}, that is in"
 days = "days"
