@@ -27,7 +27,6 @@
 // libraries
 import { defineComponent, computed } from 'vue';
 import { Screen } from 'quasar';
-import { register } from 'swiper/element/bundle';
 
 // components
 import CardProgressSlider from './CardProgressSlider.vue';
@@ -58,9 +57,6 @@ export default defineComponent({
     },
   },
   setup() {
-    // initialize swiper
-    register();
-
     const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
