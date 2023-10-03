@@ -177,6 +177,9 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
+.q-img__content > div {
+  padding: 0; // fixes card padding
+}
 .z-1 {
   z-index: 1;
 }
