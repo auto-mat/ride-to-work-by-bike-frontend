@@ -1,8 +1,7 @@
 <script lang="ts">
 // libraries
-import { defineComponent, computed } from 'vue';
+import { defineComponent, ref, computed, onMounted } from 'vue';
 import { Screen } from 'quasar';
-import { useStorage } from '@vueuse/core';
 
 // types
 import { BannerApp as BannerAppType, ConfigGlobal } from 'components/types';
@@ -20,7 +19,42 @@ export default defineComponent({
     },
   },
   setup() {
-    const state = useStorage('ride-to-work-by-bike', { showAppBanner: true });
+    const isBannerAppShown = ref(true);
+
+    const getBannerData = (): boolean => {
+      // load from local storage
+      const localStorageData = localStorage.getItem('ride-to-work-by-bike');
+      if (!localStorageData) return true
+
+      // try parsing data as JSON
+      let parsedStorageData = null
+      try {
+        parsedStorageData = JSON.parse(localStorageData);
+      }
+      catch {
+        return true
+      }
+
+      // check if banner data exists
+      if (!parsedStorageData.hasOwnProperty('showAppBanner')) {
+        return true
+      }
+
+      // return showAppBanner key
+      return parsedStorageData.showAppBanner
+    }
+
+    onMounted(() => {
+      isBannerAppShown.value = getBannerData();
+    })
+
+    const hideBanner = (): void => {
+      // update UI
+      isBannerAppShown.value = false
+      // set persistant value
+      localStorage.setItem('ride-to-work-by-bike', JSON.stringify({ showAppBanner: false }));
+    }
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const isHorizontal = computed((): boolean => {
       return Screen.gt.xs;
@@ -29,7 +63,8 @@ export default defineComponent({
     return {
       borderRadius,
       isHorizontal,
-      state,
+      isBannerAppShown,
+      hideBanner,
     };
   },
 });
@@ -37,7 +72,7 @@ export default defineComponent({
 
 <template>
   <div
-    v-if="state.showAppBanner"
+    v-if="isBannerAppShown"
     class="row relative-position overflow-hidden bg-blue-grey-8 text-white"
     data-cy="banner-app"
     :style="{ 'border-radius': borderRadius }"
@@ -66,7 +101,7 @@ export default defineComponent({
           round
           color="white"
           icon="close"
-          @click.prevent="state.showAppBanner = false"
+          @click.prevent="hideBanner"
         />
       </div>
       <div class="q-pr-sm-lg">
