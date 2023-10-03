@@ -82,7 +82,13 @@ module.exports = configure(function (ctx) {
       // distDir
 
       // extendViteConf (viteConf) {},
-      // viteVuePluginOptions: {},
+      viteVuePluginOptions: {
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => ['swiper-slide', 'swiper-container'].includes(tag),
+          }
+        }
+      },
 
       vitePlugins: [['@originjs/vite-plugin-content', {}]],
     },
