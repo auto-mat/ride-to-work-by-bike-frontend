@@ -201,7 +201,7 @@ describe('<CardOffer>', () => {
               .should('be.visible')
               .then(($img) => {
                 cy.testImageHeight($img);
-                expect($img.attr('src')).to.equal(card.image);
+                expect($img.attr('src')).to.equal(card.image.src);
               });
 
             cy.dataCy('dialog-body').find('img').matchImageSnapshot({
