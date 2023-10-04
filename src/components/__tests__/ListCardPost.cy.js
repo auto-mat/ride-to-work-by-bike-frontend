@@ -1,6 +1,8 @@
 import ListCardPost from 'components/ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
+import { register } from 'swiper/element/bundle';
+register();
 
 // mocks
 import { cardsPost } from 'src/mocks/homepage';
