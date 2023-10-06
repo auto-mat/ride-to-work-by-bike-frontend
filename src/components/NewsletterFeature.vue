@@ -33,6 +33,9 @@ export default defineComponent({
         <q-img
           src="~assets/svg/newsletter-envelope.svg"
           class="newsletter-feature-image"
+          width="512"
+          height="512"
+          ratio="1"
           data-cy="newsletter-feature-image"
         />
       </div>
