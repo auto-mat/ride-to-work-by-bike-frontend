@@ -34,7 +34,9 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -88,7 +90,7 @@ jobs:
           browser: firefox
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: npx cypress run --e2e --browser firefox
+          command: npx cypress run --component --browser firefox
 
       - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -153,8 +155,9 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
       - name: SonarCloud Scan
@@ -173,7 +176,7 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -215,7 +218,7 @@ jobs:
 
     steps:
       - name: Checkout k8 repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: auto-mat/k8s
           token: ${{ secrets.GH_PAT }}
