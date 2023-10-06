@@ -44,7 +44,7 @@ export default defineComponent({
           color="grey-3"
           data-cy="badge-image"
         >
-          <img :src="badge.image" alt="" />
+          <q-img :src="badge.image" alt="" ratio="1" />
         </q-avatar>
       </q-card-section>
       <!-- Share link -->

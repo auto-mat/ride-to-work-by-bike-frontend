@@ -17,7 +17,7 @@ describe('<BadgeAchievement>', () => {
           badge,
         },
       });
-      cy.viewport('macbook-16');
+      cy.viewport('macbook-16', { deviceScaleFactor: 1 });
     });
 
     it('renders title', () => {
@@ -74,7 +74,7 @@ describe('<BadgeAchievement>', () => {
           badge: badgeDark,
         },
       });
-      cy.viewport('iphone-6');
+      cy.viewport('iphone-6', { deviceScaleFactor: 1 });
     });
 
     it('has dark background', () => {
