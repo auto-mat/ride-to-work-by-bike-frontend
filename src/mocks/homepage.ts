@@ -78,11 +78,11 @@ export const cardsEvent: CardEvent[] = [
   {
     title: 'Opening Ceremony Bike to Work 2022',
     thumbnail: {
-      src: 'https://picsum.photos/340/200',
+      src: 'https://picsum.photos/id/70/340/200',
       alt: '',
     },
     image: {
-      src: 'https://picsum.photos/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: '',
     },
     dates: new Date('2023-10-01T12:00:00'),
@@ -97,37 +97,37 @@ export const cardsPost: CardPost[] = [
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
     date: new Date(2023, 8, 1),
-    image: 'https://picsum.photos/id/100/380/380',
+    image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
 ];
@@ -160,7 +160,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -178,7 +178,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -196,7 +196,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -214,7 +214,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -232,7 +232,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -250,7 +250,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
@@ -268,7 +268,7 @@ export const cardsOffer: CardOffer[] = [
     expirationDate: 'Some time later on',
     issuer: 'Automat',
     image: {
-      src: 'https://picsum.photos/id/200/380/380',
+      src: 'https://picsum.photos/id/70/380/380',
       alt: 'road lined with trees',
     },
     code: '65972834',
