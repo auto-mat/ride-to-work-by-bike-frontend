@@ -204,11 +204,12 @@ describe('<CardOffer>', () => {
                 expect($img.attr('src')).to.equal(card.image.src);
               });
 
-            cy.dataCy('dialog-body').find('img').matchImageSnapshot({
-              failureThreshold: 0.5,
-              failureThresholdType: 'percent',
-            });
-          });
+            cy.matchImageSnapshotWithHiddenScroolbars(
+              'dialog-body',
+              0.5,
+              'percent',
+            );
+         });
       });
     });
 

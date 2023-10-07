@@ -80,3 +80,32 @@ Cypress.Commands.add(
 Cypress.Commands.add('testImageHeight', ($img) => {
   cy.wrap($img[0]).should('have.prop', 'naturalHeight').should('be.gt', 0);
 });
+
+/**
+ * Custom matchImageSnapshot command that disables the vertical and
+ * horizontal scroolbar before the snaphost is taken and then enables
+ * them after the snapshot is taken.
+ *
+ * It ensures the same size of the snaphot image during the creation of
+ * the snaphot in different web browsers by disabling the scrollbar,
+ * due different width which is the source of the different size of
+ * the snapshot across web browsers e.g. Mozilla Firefox vs. Google
+ * Chrome.
+ *
+ * @param {string} el - HTML element which hold scroolbar
+ * @param {number} failureThreshold - matchImageSnapshot func failureThreshold
+ *                                    param arg
+ * @param {string} failureThresholdType - matchImageSnapshot func
+ *                                        failureThresholdType param arg
+ *
+*/
+Cypress.Commands.add(
+  'matchImageSnapshotWithHiddenScroolbars',
+  (element, failureThreshold, failureThresholdType) => {
+    cy.dataCy(element).invoke('attr', 'style', 'overflow: hidden')
+      .find('img').matchImageSnapshot({
+        failureThreshold: failureThreshold,
+        failureThresholdType: failureThresholdType,
+      });
+    cy.dataCy(element).invoke('attr', 'style', 'overflow: auto');
+});
