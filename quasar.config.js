@@ -81,13 +81,18 @@ module.exports = configure(function (ctx) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf(viteConf) {
+        // Fix dynamic module import error during Cypress component tests on the OS MS Windows
+        viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
+      },
+
       viteVuePluginOptions: {
         template: {
           compilerOptions: {
-            isCustomElement: (tag) => ['swiper-slide', 'swiper-container'].includes(tag),
-          }
-        }
+            isCustomElement: (tag) =>
+              ['swiper-slide', 'swiper-container'].includes(tag),
+          },
+        },
       },
 
       vitePlugins: [['@originjs/vite-plugin-content', {}]],
