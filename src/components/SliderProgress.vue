@@ -2,27 +2,35 @@
 /**
  * SliderProgress Component
  *
- * The `SliderProgress` component displays a slider with progress cards.
+ * The `SliderProgress` component renders a slider that showcases progress
+ * cards with an optional title, statistics, and navigation button.
  *
  * @description
- * Use this component to create a slider of progress cards with an optional title, statistics, and navigation button. On mobile screens, it will show a part of the last element to indicate swipe action.
+ * On mobile screens, a part of the last element is shown to indicate
+ * the swipe action. Use this component to display a series of progress
+ * cards in a slider format.
  *
  * @props
- * - `title` (String, required): The title for the slider.
- * - `stats` (Array): An array of item statistics objects.
- * - `cards` (Array, required): An array of progress card objects.
- * - `button` (Object, optional): An object representing a link/button to navigate to more progress items.
+ * - `title` (String, required): The heading or title for the slider.
+ * - `stats` (Array of ItemStatistics): An array of item statistics objects.
+ * - `cards` (Array of CardProgress, required): An array of progress card objects.
+ * - `button` (Link, optional): A navigation button object to
+ *   view more progress items.
+ *
+ * @components
+ * - `CardProgressSlider`: Component to render individual progress cards.
  *
  * @example
  * <slider-progress
- *   title="Progress Updates"
+ *   title="sliderProgressTitle"
  *   :stats="itemStats"
  *   :cards="progressCards"
  *   :button="viewAllButton"
  * />
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103888&mode=design&t=UUK9mlZ2h5xWmQ1F-1)
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=5317%3A125505&mode=dev)
  */
+
 
 // libraries
 import { defineComponent, computed } from 'vue';
