@@ -10,7 +10,7 @@
  * to the challenge.
  *
  * @props
- * - `card` (Object): The card object with details for display. It should be of
+ * - `card` (Object, required): The card object with details for display. It should be of
  *   type `CardChallengeType`.
  *
  * @example
@@ -40,6 +40,7 @@ export default defineComponent({
   props: {
     card: {
       type: Object as () => CardChallengeType,
+      required: true,
     },
   },
   setup() {

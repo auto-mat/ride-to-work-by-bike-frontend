@@ -49,6 +49,7 @@ export default defineComponent({
   props: {
     card: {
       type: Object as () => CardEventType,
+      required: true,
     },
   },
   setup(props) {
