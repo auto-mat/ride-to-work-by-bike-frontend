@@ -7,6 +7,10 @@
  * @description
  * This component is used to display event details, such as date and time. It
  * also integrates with a modal dialog for displaying additional event details.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * Note: This component is commonly used within the `ListCardEvent`
+ * component.
  *
  * @props
  * - `card` (Object): The card object containing event details. It should be of

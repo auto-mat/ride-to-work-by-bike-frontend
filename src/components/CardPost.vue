@@ -2,12 +2,15 @@
 /**
  * CardPost Component
  *
- * The `CardPost` component displays a card with post-related details.
+ * The `CardPost` component displays a post in a card form.
  *
  * @description
- * This component presents details related to a post or an update. It can
- * showcase information such as post content, author, date, and other relevant
- * details.
+ * This component presents information such as post content, author, date, and
+ * other relevant details. Border radius can be controlled by `config`
+ * parameter.
+ *
+ * Note: This component is commonly used within the `ListCardPost`
+ * component.
  *
  * @props
  * - `card`: (Object, required) An object containing details related to the post.

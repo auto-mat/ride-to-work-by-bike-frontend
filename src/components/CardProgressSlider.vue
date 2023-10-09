@@ -10,6 +10,9 @@
  * circular slider showing the current progress relative to the total.
  * Border radius can be controlled by `config` parameter.
  *
+ * Note: This component is commonly used within the `SliderProgress`
+ * component.
+ *
  * @props
  * - `card` (Object, required): The card object containing progress details.
  *   It should be of type `CardProgressType`.
