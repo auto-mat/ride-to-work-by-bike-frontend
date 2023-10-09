@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * BannerApp Component
+ *
+ * The `BannerApp` component displays an application banner.
+ *
+ * @description
+ * Use this component to showcase application-specific banners. The visibility
+ * and content of the banner can be controlled via props and local storage.
+ *
+ * @props
+ * - `banner` (Object, required): The banner object with details for display.
+ *   It should be of type `BannerAppType`.
+ *
+ * @example
+ * <banner-app
+ *   :banner="appBannerDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=5308%3A125428&mode=dev)
+ */
+
 // libraries
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { Screen } from 'quasar';
