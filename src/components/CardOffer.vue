@@ -22,7 +22,7 @@
  *   :card="offerDetails"
  * />
  *
- * @see [Figma Design](#) // Placeholder link, replace with an actual link.
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105637&mode=dev)
  */
 
 // libraries
