@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * CardProgress Component
+ *
+ * The `CardPost` component displays progress details in a card format.
+ *
+ * @description
+ * This component uses `useCircleSize` composable and presents progress
+ * data based on the `card` prop. It can have a default or dark variant.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * @props
+ * - `card`: (Object, required) The card object detailing progress.
+ *
+ * @example
+ * <card-progress
+ *   :card="progressDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106437&mode=dev)
+ */
+
 // libraries
 import { defineComponent } from 'vue';
 import { useCircleSize } from 'src/composables/useCircleSize';
