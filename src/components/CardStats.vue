@@ -1,4 +1,29 @@
 <script lang="ts">
+/**
+ * CardStats Component
+ *
+ * The `CardStats` component is designed to present statistics or metrics
+ * in a card format.
+ *
+ * @description
+ * This component presents statistics for a user, team or an organization.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * Note: This component is commonly used within the `ListCardStats`
+ * component.
+ *
+ * @props
+ * - `card` (Object, required): The card object containing statistics details.
+ *   It should be of type `CardStats`.
+ *
+ * @example
+ * <card-stats
+ *   :card="statsDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104243&mode=dev)
+ */
+
 // libraries
 import { defineComponent } from 'vue';
 
