@@ -1,4 +1,26 @@
 <script lang="ts">
+/**
+ * ListFaq Component
+ *
+ * The `ListFaq` component renders a list of frequently asked questions
+ * (FAQs) based on the specified variant.
+ *
+ * @description
+ * This component displays a list of FAQs, which can be for either
+ * participants or coordinators. The FAQ items are collapsible and can
+ * be expanded to view the answers.
+ *
+ * @props
+ * - `title` (String): The heading or title for the list of FAQs.
+ * - `variant` (String: 'participant' | 'coordinator'): Determines the
+ *   type of FAQs to display, either for participants or coordinators.
+ *
+ * @example
+ * <list-faq :title="faqTitle" variant="participant" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103853&mode=dev)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 
