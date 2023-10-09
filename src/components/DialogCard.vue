@@ -2,7 +2,10 @@
 /**
  * DialogCard Component
  *
- * The `DialogCard` component is used to render a dialog window that can be customized with various slots. It provides slots for the following content:
+ * The `DialogCard` component is used to render a dialog window that can be
+ * customized with various slots.
+ *
+ * It provides slots for the following content:
  *
  * - `title`: For the title of the dialog.
  * - `metadata`: For additional metadata or information.
@@ -10,9 +13,15 @@
  * - `buttons`: For action buttons.
  * - `image`: For displaying an image alongside the content.
  *
- * The `content` and `image` slots are rendered side by side within a scrollable dialog window (on desktop screens).
+ * The `content` and `image` slots are rendered side by side within
+ * a scrollable dialog window (on desktop screens).
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104737&mode=dev)
+ * @props
+ * - `modelValue` (Boolean, required): Controls the visibility of the dialog.
+ *
+ * @events
+ * - `update:modelValue`: Emitted as a part of v-model structure
+ * - `change`: Emitted when the dialog is closed or opened
  *
  * @example
  * <dialog-card>
@@ -32,6 +41,8 @@
  *     <!-- Image content here -->
  *   </template>
  * </dialog-card>
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104737&mode=dev)
  */
 
 // libraries
