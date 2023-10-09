@@ -1,4 +1,26 @@
 <script lang="ts">
+/**
+ * DrawerMenu Component
+ *
+ * The `DrawerMenu` component renders a list of menu items for a drawer or
+ * sidebar navigation. The menu items are divided into top and bottom sections.
+ *
+ * @description
+ * This component uses shows two menu sections.
+ * Each menu item consists of an icon and a text label, and they are
+ * displayed in a list format.
+ *
+ * @data
+ * - `menuTop`: Array of menu items to be displayed at the top section.
+ * - `menuBottom`: Array of menu items to be displayed at the bottom section.
+ *
+ * @example
+ * <drawer-menu />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=5753%3A124675&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 
 // mocks
