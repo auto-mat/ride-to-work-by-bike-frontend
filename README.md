@@ -1,14 +1,37 @@
-# Ride to work by bike frontend (ride-to-work-by-bike)
+qq# Ride to work by bike frontend (ride-to-work-by-bike)
 
 A Ride to work by bike web app is based on the [Quasar framework](https://quasar.dev/)
 ([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/),
 [TOML](https://toml.io)).
 
-Tested with Node version
+Tested with Node.js [LTS Hydrogen](https://nodejs.org/en/download/releases) version.
+
+Installing and activating Node Version Manager `nvm`:
+
+Installing `nvm`:
 
 ```bash
-root@63a1a367d282:/ride-to-work-by-bike$ node --version
-v18.16.0
+export NVM_DIR="$HOME/.nvm" && (
+  git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+) && \. "$NVM_DIR/nvm.sh"
+```
+
+Activating `nvm`:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+```
+
+Using `nvm`:
+
+```bash
+nmv list
+nvm install lts/hydrogen
+nmv use lts/hydrogen
 ```
 
 ## Install the dependencies
@@ -61,15 +84,23 @@ yarn format
 ### Run app tests
 
 ```bash
-# Component tests with default Electron web browser
+# Component tests
+
+# component tests with default Electron web browser
 npx cypress run --component
+# or test only one test
+npx cypress run --component -s src/components/__tests__/CardOffer.cy.js
 # or
 npx cypress open --component
 
-# Component tests with Mozilla Firefox web browser
+# component tests with Mozilla Firefox web browser
 npx cypress run --component --browser $(which firefox-bin)
+# or test only one test
+npx cypress run --component --browser $(which firefox-bin) -s src/components/__tests__/CardOffer.cy.js
 # or
 npx cypress open --browser $(which firefox-bin)
+
+# E2e tests
 
 # e2e and unit tests with default Electron web browser
 npx cypress run --e2e
@@ -80,7 +111,6 @@ npx cypress open --e2e
 npx cypress run --e2e --browser $(which firefox-bin)
 # or
 npx cypress open --browser $(which firefox-bin)
-
 ```
 
 ### Build the app for production
