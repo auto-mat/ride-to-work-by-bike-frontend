@@ -1,11 +1,32 @@
 <script lang="ts">
+/**
+ * MenuLinks Component
+ *
+ * The `MenuLinks` component is used inside the Help Dialog window to
+ * show buttons with various outbound links.
+ *
+ * @description
+ * This component displays a list of links based on the specified variant
+ * (either social or useful links). The links are sourced from predefined
+ * mock data.
+ *
+ * @props
+ * - `title` (String): The heading or title for the list of links.
+ * - `variant` (String: 'social' | 'useful'): Determines the type of links
+ *   to display.
+ *
+ * @example
+ * <menu-links :title="linkTitle" variant="social" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103853&mode=dev)
+ */
+
+// libraries
 import { defineComponent, computed } from 'vue';
 
 // mocks
 import { socialLinks, usefulLinks } from 'src/mocks/layout';
 
-// Component used inside the Help Dialog window to show buttons with various outbound links
-// Internal Figma link: https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103859&mode=design&t=5BJSgOjKefPXcv0w-1
 export default defineComponent({
   name: 'MenuLinks',
   props: {
