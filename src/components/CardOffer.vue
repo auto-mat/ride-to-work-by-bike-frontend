@@ -1,4 +1,30 @@
 <script lang="ts">
+/**
+ * CardOffer Component
+ *
+ * The `CardOffer` component displays a card with details about an offer.
+ *
+ * @description
+ * This component is designed to present special offers or promotions in a card
+ * format. When clicked, it triggers a modal dialog with more detailed
+ * information about the offer.
+ *
+ * @props
+ * - `card` (Object, required): The card object containing offer details. It
+ *   should be of type `CardOfferType`.
+ *
+ * @components
+ * - `DialogCard`: Used to display detailed information about the offer in a
+ *   modal dialog.
+ *
+ * @example
+ * <card-offer
+ *   :card="offerDetails"
+ * />
+ *
+ * @see [Figma Design](#) // Placeholder link, replace with an actual link.
+ */
+
 // libraries
 import { defineComponent, ref } from 'vue';
 
