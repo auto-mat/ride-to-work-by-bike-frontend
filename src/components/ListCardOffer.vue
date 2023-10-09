@@ -10,6 +10,7 @@
  * the `CardOffer` component. Items are displayed in 3 col grid.
  *
  * @props
+ * - `title` (String): The heading or title for the list of offer cards.
  * - `cards` (Array of CardOfferType, required): An array of card items to be
  *   displayed. Each item is of type `CardOfferType`.
  *

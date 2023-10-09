@@ -2,24 +2,30 @@
 /**
  * ListCardPost Component
  *
- * The `ListCardPost` component displays a slider with news cards.
+ * The `ListCardPost` component renders a list of cards that showcase
+ * various offers. The items are displayed in a 3-column grid.
  *
  * @description
- * Use this component to create a list of news cards with a slider. On mobile screens, it will show a part of the last element to indicate swipe action.
+ * This component takes an array of card items and displays each card using
+ * the `CardPost` component inside a carousel slider. Shows 4 slides per view.
  *
  * @props
- * - `title` (String, required): The title for the list of news cards.
- * - `cards` (Array, required): An array of news card objects.
- * - `button` (Object, optional): An object representing a link/button to navigate to more news.
+ * - `title` (String): The heading or title for the list of offer cards.
+ * - `cards` (Array of CardOfferType, required): An array of card items to be
+ *   displayed. Each item is of type `CardOfferType`.
+ * - `button` (Object of Link type): An object defining the button properties.
+ *
+ * @components
+ * - `CardPost`: Component to render individual post cards.
  *
  * @example
  * <list-card-post
- *   title="Latest News"
- *   :cards="newsCards"
- *   :button="readMoreLink"
+ *  :cards="postList"
+ *  :title="postsTitle"
+ *  :button="buttonDetails"
  * />
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105611&mode=design&t=x3DpoanmIFk5i6MU-1)
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105645&mode=dev)
  */
 
 // libraries
