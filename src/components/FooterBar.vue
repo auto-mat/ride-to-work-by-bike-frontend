@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * TheFooter Component
+ *
+ * The `TheFooter` component renders the website footer, which includes
+ * social links, a language switcher, and a scroll to top functionality.
+ *
+ * @description
+ * This footer displays a set of social links, a language switcher
+ * for changing the website language, and a button to smoothly scroll back
+ * to the top of the page. Link urls are taken from global config.
+ *
+ * @components
+ * - `LanguageSwitcher`: Component to switch the website's language.
+ *
+ * @example
+ * <the-footer />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103891&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
