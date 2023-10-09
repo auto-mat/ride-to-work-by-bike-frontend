@@ -1,4 +1,21 @@
 <script lang="ts">
+/**
+ * MobileBottomPanel Component
+ *
+ * The `MobileBottomPanel` component renders a bottom navigation panel
+ * for mobile viewports.
+ *
+ * @description
+ * This component provides a toolbar at the bottom of the viewport,
+ * featuring menu links. The menu items are sourced from
+ * predefined mock data.
+ *
+ * @example
+ * <mobile-bottom-panel />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=1653%3A20591&mode=dev)
+ */
+
 // libraries
 import { defineComponent, ref, computed } from 'vue';
 
