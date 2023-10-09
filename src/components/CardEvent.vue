@@ -12,6 +12,10 @@
  * - `card` (Object): The card object containing event details. It should be of
  *   type `CardEventType`.
  *
+ * @components
+ * - `DialogCard`: Used to display detailed information about the offer in a
+ *   modal dialog.
+ *
  * @example
  * <card-event
  *   :card="eventDetails"
