@@ -1,4 +1,24 @@
 <script lang="ts">
+/**
+ * NewsletterFeature Component
+ *
+ * The `NewsletterFeature` component displays a newsletter section,
+ * with various newsletter option items.
+ *
+ * @description
+ * This component provides a visually appealing section to promote newsletters.
+ * It uses predefined mock data to display a list of newsletter items using the
+ * `NewsletterItem` child component.
+ *
+ * @components
+ * - `NewsletterItem`: Component to render individual newsletter details.
+ *
+ * @example
+ * <newsletter-feature />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105656&mode=dev)
+ */
+
 // libraries
 import { defineComponent } from 'vue';
 
