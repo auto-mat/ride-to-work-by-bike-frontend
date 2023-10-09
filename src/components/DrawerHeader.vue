@@ -1,4 +1,31 @@
 <script lang="ts">
+/**
+ * DrawerHeader Component
+ *
+ * The `DrawerHeader` component represents the header section of the sidebar.
+ * It primarily controls modal help dialog and displays notifications.
+ *
+ * @description
+ * This component is used at the top of the sidebar drawer (on desktop)
+ * or in the header section (on mobile).
+ *
+ * @props
+ * - `showLogo` (Boolean, default: true): Determines if the logo should be displayed.
+ *
+ * @components
+ * - `MenuLinks`: Component to display navigation links.
+ * - `ListFaq`: Component to display a list of frequently asked questions.
+ * - `ContactForm`: Component for a contact form.
+ * - `UserSelect`: Component to allow user selection or user-related actions.
+ * - `DialogStates`: Component for displaying dialogs with switchable states.
+ *
+ * @example
+ * <drawer-header :showLogo="isLogoShown" />
+ *
+ * @see [Figma Design]()
+ */
+
+// libraries
 import { defineComponent, ref, computed } from 'vue';
 
 // import components
