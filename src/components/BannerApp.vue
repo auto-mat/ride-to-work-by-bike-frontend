@@ -27,6 +27,7 @@ import { Screen } from 'quasar';
 // types
 import { BannerApp as BannerAppType, ConfigGlobal } from 'components/types';
 
+// config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );

@@ -20,6 +20,7 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105621&mode=dev)
  */
 
+// libraries
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
