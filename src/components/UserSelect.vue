@@ -1,4 +1,26 @@
 <script lang="ts">
+/**
+ * UserSelect Component
+ *
+ * The `UserSelect` component provides a dropdown for user-specific
+ * actions and settings.
+ *
+ * @description
+ * This component renders a dropdown select (on desktop) and
+ * a user avatar (on mobile). These elements trigger dropdown menu.
+ * Items in menu are sourced from predefined mock data.
+ *
+ * @props
+ * - `variant` (String: 'mobile' | 'desktop', default: 'desktop'):
+ *   Determines the display style of the component.
+ *
+ * @example
+ * <user-select variant="desktop" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103890&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 
 // mocks
