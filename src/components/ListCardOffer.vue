@@ -1,4 +1,27 @@
 <script lang="ts">
+/**
+ * ListCardOffer Component
+ *
+ * The `ListCardOffer` component renders a list of cards that represent
+ * various offers.
+ *
+ * @description
+ * This component takes an array of card items and displays each card using
+ * the `CardOffer` component. Items are displayed in 3 col grid.
+ *
+ * @props
+ * - `cards` (Array of CardOfferType, required): An array of card items to be
+ *   displayed. Each item is of type `CardOfferType`.
+ *
+ * @components
+ * - `CardOffer`: Component to render individual follow cards.
+ *
+ * @example
+ * <list-card-offer :cards="followList" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105632&mode=dev)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 
