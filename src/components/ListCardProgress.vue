@@ -1,9 +1,43 @@
 <script lang="ts">
+/**
+ * ListCardProgress Component
+ *
+ * The `ListCardProgress` component renders a list of cards that display
+ * progress statistics related to challenges.
+ *
+ * @description
+ * This component showcases progress statistics in card format.
+ * The list can show additional statistics in top bar and a button.
+ * Items are displayed in a 3 col grid.
+ *
+ * @props
+ * - `title` (String, required): The heading or title for the list of
+ *   progress cards.
+ * - `cards` (Array of CardProgressType, required): An array of card items to
+ *   be displayed, each representing progress statistics.
+ * - `stats` (Array of ItemStatisticsType): An array of statistical items.
+ * - `button` (Object of Link type): An object defining the button properties.
+ *
+ * @components
+ * - `CardProgress`: Component to render individual progress cards.
+ *
+ * @example
+ * <list-card-progress
+ *  :title="progressTitle"
+ *  :cards="progressList"
+ *  :stats="statisticsItems"
+ *  :button="buttonDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106436&mode=dev)
+ */
+
+
 // libraries
 import { defineComponent } from 'vue';
 
 // types
-import { CardProgress, ItemStatistics, Link } from './types';
+import { CardProgress as CardProgressType, ItemStatistics, Link } from './types';
 
 // components
 import CardProgress from './CardProgress.vue';
@@ -16,7 +50,8 @@ export default defineComponent({
       required: true,
     },
     cards: {
-      type: Array as () => CardProgress[],
+      type: Array as () => CardProgressType[],
+      required: true,
     },
     stats: {
       type: Array as () => ItemStatistics[],
