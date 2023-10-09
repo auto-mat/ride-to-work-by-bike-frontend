@@ -1,4 +1,28 @@
 <script lang="ts">
+/**
+ * ListCardChallenge Component
+ *
+ * The `ListCardChallenge` component renders a list of cards that represent
+ * different challenges.
+ *
+ * @description
+ * This component takes an array of card items and displays each card using
+ * the `CardChallenge` component. Items are displayed in a 3 col grid.
+ *
+ * @props
+ * - `cards` (Array of CardChallengeType): An array of card items to be
+ *   displayed. Each item is of type `CardChallengeType`.
+ *
+ * @components
+ * - `CardChallenge`: Component to render individual challenge cards.
+ *
+ * @example
+ * <list-card-challenge :cards="challengeList" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6178%3A131627&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 
 // components
