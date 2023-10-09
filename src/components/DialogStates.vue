@@ -1,36 +1,42 @@
 <script lang="ts">
-/**
+ /**
  * DialogStates Component
  *
- * Renders a dialog with customizable content and switchable states.
+ * The `DialogStates` component renders a dialog with customizable content and
+ * switchable states.
  *
- * **States**:
- * - default
- * - form
+ * @description
+ * This component offers slots for title and content, and exposes methods to
+ * control and switch between different dialog states.
  *
- * **Slots**:
- * - title
- * - content
+ * @slots
+ * - `title`: For the title of the dialog.
+ * - `content`: For the main content of the dialog. This slot also provides
+ *   props for managing dialog states:
+ *     - `state`
+ *     - `setState`
+ *     - `reset`
  *
- * **v-slot Props**:
- * - state
- * - setState
- * - reset
+ * @props
+ * - `modelValue` (Boolean, required): Controls the visibility of the dialog.
  *
- * Note: `content` and `image` side by side in a scrollable window.
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=1611%3A17872&mode=dev)
+ * @events
+ * - `update:modelValue`: Emitted when the dialog's visibility changes.
+ * - `change`: Generic event for state changes.
  *
  * @example
  * <dialog-states v-model="isOpen">
  *   <template #title>
- *     <!-- Title here -->
+ *     <!-- Title content here -->
  *   </template>
  *   <template #content="{ state, setState, reset }">
- *     <!-- Content here -->
+ *     <!-- Main content here -->
  *   </template>
  * </dialog-states>
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=1611%3A17872&mode=dev)
  */
+
 
 import { defineComponent, ref, computed, Ref } from 'vue';
 
