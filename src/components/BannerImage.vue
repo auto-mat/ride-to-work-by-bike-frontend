@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * BannerImage Component
+ *
+ * The `BannerImage` component displays a banner with a specified image.
+ *
+ * @description
+ * Use this component to showcase banners with images. The appearance, including
+ * the border radius, can be customized via configuration variables.
+ *
+ * @props
+ * - `banner` (Object, required): The banner object with details, including the
+ *   image to display. It should be of type `BannerImageType`.
+ *
+ * @example
+ * <banner-image
+ *   :banner="imageBannerDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105621&mode=dev)
+ */
+
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
