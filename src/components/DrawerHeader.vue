@@ -49,16 +49,7 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    showDrawerOpenButton: {
-      type: Boolean,
-      default: false,
-    },
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
   },
-  emits: ['update:modelValue'],
   setup(props) {
     const isDialogOpen = ref(false);
 
