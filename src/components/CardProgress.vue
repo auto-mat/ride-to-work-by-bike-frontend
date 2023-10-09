@@ -9,6 +9,9 @@
  * data based on the `card` prop. It can have a default or dark variant.
  * Border radius can be controlled by `config` parameter.
  *
+ * Note: This component is commonly used within the `ListCardProgress`
+ * component.
+ *
  * @props
  * - `card`: (Object, required) The card object detailing progress.
  *

@@ -5,8 +5,11 @@
  * The `CardFollow` component displays a card with social media details.
  *
  * @description
- * This component is designed to showcase links to organization's social
- * media accounts.
+ * This component presents links to organization's social media accounts.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * Note: This component is commonly used within the `ListCardFollow`
+ * component.
  *
  * @props
  * - `card` (Object, required): The card object containing details related to

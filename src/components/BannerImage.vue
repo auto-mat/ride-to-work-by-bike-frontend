@@ -5,8 +5,8 @@
  * The `BannerImage` component displays a banner with a specified image.
  *
  * @description
- * Use this component to showcase banners with images. The appearance, including
- * the border radius, can be customized via configuration variables.
+ * Use this component to showcase banners with images.
+ * Border radius can be controlled by `config` parameter.
  *
  * @props
  * - `banner` (Object, required): The banner object with details, including the

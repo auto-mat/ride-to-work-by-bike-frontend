@@ -7,6 +7,7 @@
  * @description
  * Use this component to showcase application-specific banners. The visibility
  * and content of the banner can be controlled via props and local storage.
+ * Border radius can be controlled by `config` parameter.
  *
  * @props
  * - `banner` (Object, required): The banner object with details for display.

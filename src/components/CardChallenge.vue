@@ -5,9 +5,12 @@
  * The `CardChallenge` component displays a challenge card with relevant details.
  *
  * @description
- * This component showcases a card that represents a challenge within the biking
- * initiative. The card may contain an image, title, and other details related
- * to the challenge.
+ * This component presents information about a challenge within the biking
+ * initiative. The card may contain an image, title, and other details.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * Note: This component is commonly used within the `ListCardChallenge`
+ * component.
  *
  * @props
  * - `card` (Object, required): The card object with details for display. It should be of
