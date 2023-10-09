@@ -1,4 +1,30 @@
 <script lang="ts">
+/**
+ * BadgeAchievement Component
+ *
+ * The `BadgeAchievement` component displays a badge to represent an
+ * achievement.
+ *
+ * @description
+ * Use this component to show a badge for various achievements. It can adjust
+ * its appearance based on the badge's variant.
+ * Badge has an image and a link for sharing.
+ *
+ * Note: This component is commonly used within the `ListBadgeAchievement`
+ * component.
+ *
+ * @props
+ * - `badge` (Object, required): The badge object representing the achievement.
+ *   It should be of type `ItemBadge`.
+ *
+ * @example
+ * <badge-achievement
+ *   :badge="achievementBadge"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104259&mode=dev)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 
