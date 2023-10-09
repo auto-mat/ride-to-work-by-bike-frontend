@@ -1,4 +1,26 @@
 <script lang="ts">
+/**
+ * BannerRoutes Component
+ *
+ * The `BannerRoutes` component acts as a reminder to log biking routes.
+ *
+ * @description
+ * Displayed as a banner, this component highlights the number of biking routes
+ * that have not been logged by the user.
+ *
+ * @props
+ * - `routesCount` (Number, required): The number of biking routes that are yet
+ *   to be logged by the user.
+ *
+ * @example
+ * <banner-routes
+ *   :routesCount="unloggedRoutesCount"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22990&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 
 export default defineComponent({
