@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * CardPost Component
+ *
+ * The `CardPost` component displays a card with post-related details.
+ *
+ * @description
+ * This component presents details related to a post or an update. It can
+ * showcase information such as post content, author, date, and other relevant
+ * details.
+ *
+ * @props
+ * - `card`: (Object, required) An object containing details related to the post.
+ *
+ * @example
+ * <card-post
+ *   :card="postDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105647&mode=dev)
+ */
+
 // libraries
 import { defineComponent } from 'vue';
 import { date } from 'quasar';
