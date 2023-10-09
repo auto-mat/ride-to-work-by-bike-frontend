@@ -204,7 +204,7 @@ describe('<CardOffer>', () => {
                 expect($img.attr('src')).to.equal(card.image.src);
               });
 
-            cy.matchImageSnapshotWithHiddenScroolbars(
+            cy.matchImageSnapshotWithHiddenScrollbars(
               'dialog-body',
               0.5,
               'percent',

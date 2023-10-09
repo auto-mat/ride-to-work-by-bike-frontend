@@ -83,7 +83,7 @@ Cypress.Commands.add('testImageHeight', ($img) => {
 
 /**
  * Custom matchImageSnapshot command that disables the vertical and
- * horizontal scroolbar before the snaphost is taken and then enables
+ * horizontal scrollbar before the snaphost is taken and then enables
  * them after the snapshot is taken.
  *
  * It ensures the same size of the snaphot image during the creation of
@@ -92,7 +92,8 @@ Cypress.Commands.add('testImageHeight', ($img) => {
  * the snapshot across web browsers e.g. Mozilla Firefox vs. Google
  * Chrome.
  *
- * @param {string} el - HTML element which hold scroolbar
+ * @param {string} dataCySelector - data-cy-selector of the HTML element
+                                    which hold scrollbar
  * @param {number} failureThreshold - matchImageSnapshot func failureThreshold
  *                                    param arg
  * @param {string} failureThresholdType - matchImageSnapshot func
@@ -100,12 +101,12 @@ Cypress.Commands.add('testImageHeight', ($img) => {
  *
 */
 Cypress.Commands.add(
-  'matchImageSnapshotWithHiddenScroolbars',
-  (element, failureThreshold, failureThresholdType) => {
-    cy.dataCy(element).invoke('attr', 'style', 'overflow: hidden')
+  'matchImageSnapshotWithHiddenScrollbars',
+  (dataCySelector, failureThreshold, failureThresholdType) => {
+    cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: hidden')
       .find('img').matchImageSnapshot({
         failureThreshold: failureThreshold,
         failureThresholdType: failureThresholdType,
       });
-    cy.dataCy(element).invoke('attr', 'style', 'overflow: auto');
+    cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: auto');
 });
