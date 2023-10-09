@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * NewsletterItem Component
+ *
+ * The `NewsletterItem` component displays individual newsletter option
+ * with an icon, title, and follow button.
+ *
+ * @description
+ * This component takes in a newsletter item object as a prop and displays
+ * details, including an icon, title, and a button indicating whether
+ * the user is following the newsletter.
+ *
+ * @props
+ * - `item` (NewsletterItemType, required): The newsletter item to be
+ *   displayed. It includes properties like icon, title, and following status.
+ *
+ * @example
+ * <newsletter-item :item="singleNewsletter" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105656&mode=dev)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 
