@@ -10,7 +10,7 @@
  * the `CardChallenge` component. Items are displayed in a 3 col grid.
  *
  * @props
- * - `cards` (Array of CardChallengeType): An array of card items to be
+ * - `cards` (Array of CardChallengeType, required): An array of card items to be
  *   displayed. Each item is of type `CardChallengeType`.
  *
  * @components
@@ -36,6 +36,7 @@ export default defineComponent({
   props: {
     cards: {
       type: Array as () => CardChallengeType[],
+      required: true,
     },
   },
   components: {

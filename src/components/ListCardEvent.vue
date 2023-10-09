@@ -11,7 +11,7 @@
  *
  * @props
  * - `heading` (String): The heading or title for the list of event cards.
- * - `cards` (Array of CardEventType): An array of card items to be
+ * - `cards` (Array of CardEventType, required): An array of card items to be
  *   displayed. Each item is of type `CardEventType`.
  *
  * @components
@@ -40,6 +40,7 @@ export default defineComponent({
     },
     cards: {
       type: Array as () => CardEventType[],
+      required: true,
     },
   },
   components: {
