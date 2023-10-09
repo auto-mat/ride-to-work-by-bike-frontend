@@ -1,4 +1,25 @@
 <script lang="ts">
+/**
+ * HeadingBackground Component
+ *
+ * The `HeadingBackground` component renders a heading title with a
+ * decorative background image.
+ *
+ * @description
+ * This component presents a heading on a custom background.
+ * The title text is displayed centrally on top of the background image.
+ *
+ * @props
+ * - `title` (String): The text to be displayed as the title on top of the
+ *   background image.
+ *
+ * @example
+ * <heading-background :title="sectionTitle" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105612&mode=dev)
+ */
+
+// libraries
 import { defineComponent } from 'vue';
 
 export default defineComponent({
