@@ -1,4 +1,26 @@
 <script lang="ts">
+/**
+ * ContactForm Component
+ *
+ * The `ContactForm` component provides a user interface for visitors to
+ * send messages or queries through a contact form.
+ *
+ * @description
+ * This component manages a reactive contact form with fields for subject,
+ * message, file attachment, and email. The form data can be submitted,
+ * and upon submission, an event is emitted to allow parent components
+ * to handle the data, e.g., sending it to an API.
+ *
+ * @events
+ * - `formSubmit`: Emitted when the form is submitted.
+ *
+ * @example
+ * <contact-form @formSubmit="handleFormSubmit" />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103862&mode=dev)
+ */
+
+// libraries
 import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
