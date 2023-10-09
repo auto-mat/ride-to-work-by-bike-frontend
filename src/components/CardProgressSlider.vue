@@ -1,4 +1,27 @@
 <script lang="ts">
+/**
+ * CardProgressSlider Component
+ *
+ * The `CardProgressSlider` component shows a card with circular progress.
+ *
+ * @description
+ * This component takes a card object with progress details and calculates
+ * the progress percentage to be displayed. The visual representation is a
+ * circular slider showing the current progress relative to the total.
+ * Border radius can be controlled by `config` parameter.
+ *
+ * @props
+ * - `card` (Object, required): The card object containing progress details.
+ *   It should be of type `CardProgressType`.
+ *
+ * @example
+ * <card-progress-slider
+ *   :card="progressDetails"
+ * />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106437&mode=dev)
+ */
+
 // libraries
 import { defineComponent, computed } from 'vue';
 import { useCircleSize } from 'src/composables/useCircleSize';
