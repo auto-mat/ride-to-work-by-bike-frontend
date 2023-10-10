@@ -105,7 +105,7 @@ export default defineComponent({
               color="white"
               outline
               round
-              data-cy="footer-top-button"
+              data-cy="footer-top-button-mobile"
               @click.prevent="scrollToTop"
             >
               <q-icon name="arrow_upward" size="18px" />
