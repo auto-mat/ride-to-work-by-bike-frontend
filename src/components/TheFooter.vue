@@ -136,7 +136,19 @@ export default defineComponent({
                 :key="message"
                 class="text-white flex items-center gap-12"
               >
-                <span v-html="$t('index.footer.' + message)"></span>
+                <span
+                  v-if="message !== 'deployedAppVersion'"
+                  v-html="$t('index.footer.' + message)"
+                ></span>
+                <!-- Deployed app version -->
+                <span
+                  v-else-if="rideToWorkByBikeDeployedAppVersion.version"
+                  v-html="
+                    `${$t('index.footer.' + message)}: ${
+                      rideToWorkByBikeDeployedAppVersion.version
+                    }`
+                  "
+                ></span>
                 <span v-if="index < copyrightList.length - 1" class="gt-sm"
                   >|</span
                 >
