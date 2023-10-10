@@ -275,7 +275,11 @@ describe('Home page', () => {
       cy.dataCy('footer-top-button')
         .should('be.visible')
         .click()
-        .click(); // second click helps to overcome a ResizeObserver loop bug.
+        .click();
+        /**
+         * Second click helps to overcome a ResizeObserver loop completed
+         * with undelivered notifications error
+         */
       cy.window().its('scrollY').should('equal', 0);
     });
   });
@@ -539,7 +543,11 @@ describe('Home page', () => {
       cy.dataCy('footer-top-button-mobile')
         .should('be.visible')
         .click()
-        .click(); // second click helps to overcome a ResizeObserver loop bug.
+        .click();
+        /**
+         * Second click helps to overcome a ResizeObserver loop completed
+         * with undelivered notifications error
+         */
       cy.window().its('scrollY').should('equal', 0);
     });
 
