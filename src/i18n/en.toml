@@ -122,3 +122,4 @@ title = "Follow us on Facebook"
 [index.footer]
 copyrightOpenSource = "This app is free software."
 copyrightAuthor = "The Bike to Work Challenge is organized by <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, n.g.o.</a>"
+deployedAppVersion = "Deployed app version"

@@ -13,13 +13,27 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 
+// Deployed app version
+const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION
+);
+
 export default defineComponent({
   name: 'TheFooter',
   components: {
     LanguageSwitcher,
   },
   setup() {
-    const copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
+    let copyrightList: string[];
+    if (rideToWorkByBikeDeployedAppVersion.version) {
+      copyrightList = [
+        'copyrightOpenSource',
+        'deployedAppVersion',
+        'copyrightAuthor',
+      ];
+    } else {
+      copyrightList = ['copyrightOpenSource', 'copyrightAuthor'];
+    }
 
     function scrollToTop(): void {
       window.scrollTo({
@@ -55,6 +69,7 @@ export default defineComponent({
       socialLinksList,
       copyrightList,
       scrollToTop,
+      rideToWorkByBikeDeployedAppVersion,
     };
   },
 });
@@ -165,7 +180,19 @@ export default defineComponent({
               :key="message"
               class="text-white flex items-center gap-12"
             >
-              <span v-html="$t('index.footer.' + message)"></span>
+              <span
+                v-if="message !== 'deployedAppVersion'"
+                v-html="$t('index.footer.' + message)"
+              ></span>
+              <!-- Deployed app version -->
+              <span
+                v-else-if="rideToWorkByBikeDeployedAppVersion.version"
+                v-html="
+                  `${$t('index.footer.' + message)}: ${
+                    rideToWorkByBikeDeployedAppVersion.version
+                  }`
+                "
+              ></span>
               <span v-if="index < copyrightList.length - 1" class="gt-sm"
                 >|</span
               >
