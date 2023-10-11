@@ -1,14 +1,14 @@
-import TheFooter from 'components/TheFooter.vue';
+import FooterBar from 'components/FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<TheFooter>', () => {
+describe('<FooterBar>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(TheFooter, {
+      cy.mount(FooterBar, {
         props: {
           copyright: [
             'Tato aplikace je svobodný software.',
@@ -82,7 +82,7 @@ describe('<TheFooter>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(TheFooter, {
+      cy.mount(FooterBar, {
         props: {},
       });
       cy.viewport('iphone-6');

@@ -19,7 +19,7 @@ const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(
 );
 
 export default defineComponent({
-  name: 'TheFooter',
+  name: 'FooterBar',
   components: {
     LanguageSwitcher,
   },

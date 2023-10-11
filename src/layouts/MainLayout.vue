@@ -8,7 +8,7 @@ import { i18n } from 'src/boot/i18n';
 import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
-import TheFooter from 'components/TheFooter.vue';
+import FooterBar from 'components/FooterBar.vue';
 import MobileBottomPanel from 'src/components/MobileBottomPanel.vue';
 
 // import types
@@ -31,7 +31,7 @@ export default defineComponent({
     DrawerHeader,
     UserSelect,
     DrawerMenu,
-    TheFooter,
+    FooterBar,
     MobileBottomPanel,
   },
 });
@@ -74,7 +74,7 @@ export default defineComponent({
     <q-footer class="position-static md-position-absolute bg-transparent">
       <!-- footer content -->
       <mobile-bottom-panel></mobile-bottom-panel>
-      <the-footer />
+      <footer-bar />
     </q-footer>
   </q-layout>
 </template>
