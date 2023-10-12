@@ -13,7 +13,7 @@
  * component.
  *
  * @props
- * - `card`: (Object, required) An object containing details related to the post.
+ * - `card` (Object, required): An object containing details related to the post.
  *
  * @example
  * <card-post

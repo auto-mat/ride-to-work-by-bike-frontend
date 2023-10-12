@@ -13,7 +13,7 @@
  * component.
  *
  * @props
- * - `card`: (Object, required) The card object detailing progress.
+ * - `card` (Object, required): The card object detailing progress.
  *
  * @example
  * <card-progress
