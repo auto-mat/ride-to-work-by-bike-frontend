@@ -56,7 +56,7 @@ export default defineComponent({
     modelValue: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   emits: ['update:modelValue'],
   setup(props) {
@@ -75,9 +75,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="full-width flex items-center justify-between q-py-sm" :class="classes">
+  <div
+    class="full-width flex items-center justify-between q-py-sm"
+    :class="classes"
+  >
     <!-- RTWBB logo -->
-    <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" data-cy="logo" />
+    <img
+      class="logo"
+      src="~assets/svg/logo.svg"
+      :alt="$t('index.logoAltText')"
+      data-cy="logo"
+    />
     <!-- Content -->
     <div class="flex items-center gap-24">
       <!-- Help icon link for displaying modal dialog-->
@@ -86,7 +94,12 @@ export default defineComponent({
       </a>
       <!-- Notification icon link -->
       <a href="#">
-        <q-icon name="notifications" size="sm" color="black" data-cy="icon-notification" />
+        <q-icon
+          name="notifications"
+          size="sm"
+          color="black"
+          data-cy="icon-notification"
+        />
       </a>
       <!-- User menu dropdown -->
       <user-select variant="mobile" class="lt-md" />
@@ -105,26 +118,53 @@ export default defineComponent({
       <template #content="{ state, setState, reset }">
         <div v-if="state === 'default'">
           <!-- FAQ for pariticipants -->
-          <list-faq :title="$t('index.help.titleParticipants')" variant="participant" />
+          <list-faq
+            :title="$t('index.help.titleParticipants')"
+            variant="participant"
+          />
           <!-- FAQ for Company coordinators -->
-          <list-faq :title="$t('index.help.titleCoordinators')" variant="coordinator" class="q-mt-xl" />
+          <list-faq
+            :title="$t('index.help.titleCoordinators')"
+            variant="coordinator"
+            class="q-mt-xl"
+          />
           <!-- Section: App Guide -->
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-guide">
+            <h4
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-guide"
+            >
               {{ $t('index.help.titleGuide') }}
             </h4>
             <!-- Button: Replay guide -->
-            <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md"
-              data-cy="button-guide" />
+            <q-btn
+              rounded
+              color="black"
+              unelevated
+              outline
+              :label="$t('index.help.buttonGuide')"
+              class="q-mt-md"
+              data-cy="button-guide"
+            />
           </div>
           <!-- Section: Contact us via form modal dialog -->
           <div class="q-px-md q-mt-xl">
-            <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-contact">
+            <h4
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-contact"
+            >
               {{ $t('index.help.titleContact') }}
             </h4>
             <!-- Button: Switch to contact form -->
-            <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md"
-              data-cy="button-contact" @click.prevent="setState('form')" />
+            <q-btn
+              rounded
+              color="black"
+              unelevated
+              :label="$t('index.help.buttonContact')"
+              class="q-mt-md"
+              data-cy="button-contact"
+              @click.prevent="setState('form')"
+            />
           </div>
           <!-- Section: Useful links -->
           <menu-links :title="$t('index.help.titleLinks')" variant="useful" />

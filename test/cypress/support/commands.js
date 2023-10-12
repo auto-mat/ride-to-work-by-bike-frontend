@@ -32,9 +32,13 @@ registerCommands();
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
 const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
-const resizeObserverLoopCompletedRe = /^[^(ResizeObserver loop completed with undelivered notifications)]/;
+const resizeObserverLoopCompletedRe =
+  /^[^(ResizeObserver loop completed with undelivered notifications)]/;
 Cypress.on('uncaught:exception', (err) => {
-  if (resizeObserverLoopErrRe.test(err.message) || resizeObserverLoopCompletedRe.test(err.message)) {
+  if (
+    resizeObserverLoopErrRe.test(err.message) ||
+    resizeObserverLoopCompletedRe.test(err.message)
+  ) {
     return false;
   }
 });
@@ -104,10 +108,13 @@ Cypress.Commands.add('testImageHeight', ($img) => {
 Cypress.Commands.add(
   'matchImageSnapshotWithHiddenScrollbars',
   (dataCySelector, failureThreshold, failureThresholdType) => {
-    cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: hidden')
-      .find('img').matchImageSnapshot({
+    cy.dataCy(dataCySelector)
+      .invoke('attr', 'style', 'overflow: hidden')
+      .find('img')
+      .matchImageSnapshot({
         failureThreshold: failureThreshold,
         failureThresholdType: failureThresholdType,
       });
     cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: auto');
-});
+  }
+);

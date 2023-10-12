@@ -272,14 +272,11 @@ describe('Home page', () => {
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button')
-        .should('be.visible')
-        .click()
-        .click();
-        /**
-         * Second click helps to overcome a ResizeObserver loop completed
-         * with undelivered notifications error
-         */
+      cy.dataCy('footer-top-button').should('be.visible').click().click();
+      /**
+       * Second click helps to overcome a ResizeObserver loop completed
+       * with undelivered notifications error
+       */
       cy.window().its('scrollY').should('equal', 0);
     });
   });
@@ -544,10 +541,10 @@ describe('Home page', () => {
         .should('be.visible')
         .click()
         .click();
-        /**
-         * Second click helps to overcome a ResizeObserver loop completed
-         * with undelivered notifications error
-         */
+      /**
+       * Second click helps to overcome a ResizeObserver loop completed
+       * with undelivered notifications error
+       */
       cy.window().its('scrollY').should('equal', 0);
     });
 

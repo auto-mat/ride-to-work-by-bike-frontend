@@ -32,12 +32,15 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106436&mode=dev)
  */
 
-
 // libraries
 import { defineComponent } from 'vue';
 
 // types
-import { CardProgress as CardProgressType, ItemStatistics, Link } from './types';
+import {
+  CardProgress as CardProgressType,
+  ItemStatistics,
+  Link,
+} from './types';
 
 // components
 import CardProgress from './CardProgress.vue';

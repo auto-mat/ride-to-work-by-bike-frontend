@@ -47,36 +47,38 @@ export default defineComponent({
     const getBannerData = (): boolean => {
       // load from local storage
       const localStorageData = localStorage.getItem('ride-to-work-by-bike');
-      if (!localStorageData) return true
+      if (!localStorageData) return true;
 
       // try parsing data as JSON
-      let parsedStorageData = null
+      let parsedStorageData = null;
       try {
         parsedStorageData = JSON.parse(localStorageData);
-      }
-      catch {
-        return true
+      } catch {
+        return true;
       }
 
       // check if banner data exists
       if (!parsedStorageData.hasOwnProperty('showAppBanner')) {
-        return true
+        return true;
       }
 
       // return showAppBanner key
-      return parsedStorageData.showAppBanner
-    }
+      return parsedStorageData.showAppBanner;
+    };
 
     onMounted(() => {
       isBannerAppShown.value = getBannerData();
-    })
+    });
 
     const hideBanner = (): void => {
       // update UI
-      isBannerAppShown.value = false
+      isBannerAppShown.value = false;
       // set persistant value
-      localStorage.setItem('ride-to-work-by-bike', JSON.stringify({ showAppBanner: false }));
-    }
+      localStorage.setItem(
+        'ride-to-work-by-bike',
+        JSON.stringify({ showAppBanner: false })
+      );
+    };
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const isHorizontal = computed((): boolean => {

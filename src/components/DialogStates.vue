@@ -1,5 +1,5 @@
 <script lang="ts">
- /**
+/**
  * DialogStates Component
  *
  * The `DialogStates` component renders a dialog with customizable content and
@@ -36,7 +36,6 @@
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=1611%3A17872&mode=dev)
  */
-
 
 import { defineComponent, ref, computed, Ref } from 'vue';
 

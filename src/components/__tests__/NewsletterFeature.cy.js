@@ -97,7 +97,10 @@ describe('<NewsletterFeature>', () => {
       cy.window().then(() => {
         cy.testElementPercentageWidth(cy.dataCy('newsletter-col-image'), 16.6);
 
-        cy.testElementPercentageWidth(cy.dataCy('newsletter-col-content'), 83.3);
+        cy.testElementPercentageWidth(
+          cy.dataCy('newsletter-col-content'),
+          83.3
+        );
       });
     });
   });

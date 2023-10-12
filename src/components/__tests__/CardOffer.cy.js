@@ -207,9 +207,9 @@ describe('<CardOffer>', () => {
             cy.matchImageSnapshotWithHiddenScrollbars(
               'dialog-body',
               0.5,
-              'percent',
+              'percent'
             );
-         });
+          });
       });
     });
 
