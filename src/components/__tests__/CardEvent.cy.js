@@ -15,7 +15,7 @@ const location = 'Prague';
 const content =
   'We want to reward you for your support and activity this year with a closing party with prizes and the promised raffle! You can look forward to the announcement of the results in the regularity category and green kilometres for individuals and teams. Other attractive prizes will be drawn by raffle only from the individuals and teams that will have at least one representative at the closing ceremony. We will also announce the traditional Brno cycling employer of the year.<br />The main prize will be a City Bike HERKA from our partner Cyklospeciality.<br />We are looking forward to seeing you!';
 const links = ['meet.google.com/anr-pvfs-opf', 'meet.google.com/anr-pvfs-opf'];
-const icons = ['event', 'place'];
+// const icons = ['event', 'place'];
 
 describe('<CardEvent>', () => {
   context('desktop', () => {
