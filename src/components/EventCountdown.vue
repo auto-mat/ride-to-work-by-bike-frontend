@@ -15,7 +15,7 @@
  * - `releaseDate` (String, required): The target date for the countdown.
  *   This date is expected to be in a specific format.
  *
- * @see [Figma Design]()
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22974&mode=dev)
  *
  * @example
  * <event-countdown :releaseDate="targetDate" />
@@ -116,12 +116,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card
-    square
-    flat
-    class="row items-center justify-evenly q-py-xl bg-info"
-    data-cy="card"
-  >
+  <q-card square flat class="row items-center justify-evenly q-py-xl bg-info" data-cy="card">
     <div class="text-center">
       <!-- Title -->
       <div class="text-weight-bold q-px-lg" data-cy="title">
@@ -173,6 +168,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .text-64 {
   font-size: 64px;
+
   @media (min-width: $breakpoint-lg-min) {
     font-size: 48px;
   }
