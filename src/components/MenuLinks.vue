@@ -11,8 +11,8 @@
  * mock data.
  *
  * @props
- * - `title` (String): The heading or title for the list of links.
- * - `variant` (String: 'social' | 'useful'): Determines the type of links
+ * - `title` (String, required): The heading or title for the list of links.
+ * - `variant` (String: 'social' | 'useful', required): Determines the type of links
  *   to display.
  *
  * @example
@@ -32,9 +32,11 @@ export default defineComponent({
   props: {
     title: {
       type: String,
+      required: true,
     },
     variant: {
       type: String as () => 'social' | 'useful',
+      required: true,
     },
   },
   setup(props) {
