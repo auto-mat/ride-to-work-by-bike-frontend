@@ -6,8 +6,10 @@ const getAppConfig = (process) => {
     readFileSync('./ride_to_work_by_bike_config.toml').toString()
   );
 
-  if (process.env.PRIMARY_COLOR) {
-    config['primaryColor'] = process.env.PRIMARY_COLOR;
+  if (process.env.COLOR_PRIMARY) {
+    config['primaryColor'] = process.env.COLOR_PRIMARY;
+  } else if (process.env.COLOR_SECONDARY) {
+    config['secondaryColor'] = process.env.COLOR_SECONDARY;
   } else if (process.env.COLOR_GRAY_LIGHT) {
     config['colorGrayLight'] = process.env.COLOR_GRAY_LIGHT;
   } else if (process.env.COLOR_GRAY_MIDDLE) {

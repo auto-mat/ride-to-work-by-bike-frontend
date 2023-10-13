@@ -1,8 +1,11 @@
 # Quiz
 # Define Colors
-primaryColor = "#000000"
+
+colorPrimary = "#43449C"
+colorSecondary = "#A0D7C4"
 colorGrayLight = "#F3F7FF"
 colorGrayMiddle = "#DCE1ED"
+
 image = "image.png"
 width = "850px"
 title = "Title"
