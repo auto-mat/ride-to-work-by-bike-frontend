@@ -1,39 +1,49 @@
 <script lang="ts">
 /**
-* HelpButton Component
-*
-* The `HelpButton`
-* You can adjust its appearance by passing in `color` and `size` props.
-*
-* @description * Use this component to render help icon with help dialog .
-*
-* Note: This component is commonly used in `DrawerHeader` and `PageHeader`.
-*
-* @props
-* - `color`: Color of the help button.
-* - `size`: Size of the help button.
-*
-* @components
-* - `ContactForm`: Component to display contact for inside the dialog.
-* - `DialogStates`: Component to render help dialog with slots.
-* - `ListFaq`: Component to display FAQ list inside the dialog.
-* - `MenuLinks`: Component to display social links and useful links inside
-*   the dialog.
-*
-* @example
-* <HelpButton />
-*
-* @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6269%3A24768&mode=dev)
-*/
+ * HelpButton Component
+ *
+ * The `HelpButton`
+ * You can adjust its appearance by passing in `color` and `size` props.
+ *
+ * @description * Use this component to render help icon with help dialog .
+ *
+ * Note: This component is commonly used in `DrawerHeader` and `PageHeader`.
+ *
+ * @props
+ * - `color`: Color of the help button.
+ * - `size`: Size of the help button.
+ *
+ * @components
+ * - `ContactForm`: Component to display contact for inside the dialog.
+ * - `DialogStates`: Component to render help dialog with slots.
+ * - `ListFaq`: Component to display FAQ list inside the dialog.
+ * - `MenuLinks`: Component to display social links and useful links inside
+ *   the dialog.
+ *
+ * @example
+ * <HelpButton />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6269%3A24768&mode=dev)
+ */
 
 // libraries
+import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
+
+// types
+import { ConfigGlobal } from 'components/types'
 
 // components
 import ContactForm from './ContactForm.vue';
 import DialogStates from './DialogStates.vue';
 import ListFaq from './ListFaq.vue';
 import MenuLinks from './MenuLinks.vue';
+
+// config
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
 
 export default defineComponent({
   name: 'HelpButton',
@@ -45,12 +55,12 @@ export default defineComponent({
   },
   props: {
     color: {
-      type: String,
+      type: String as () => 'grey-10' | 'primary',
       default: 'grey-10',
     },
     size: {
       type: String,
-      default: 'sm',
+      default: '11px',
     },
   },
   setup() {
@@ -64,7 +74,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-btn unelevated round data-cy="link-help" :size="size" :color="color" @click.prevent="isDialogOpen = true">
+  <q-btn unelevated round :size="size" :color="color" @click.prevent="isDialogOpen = true" data-cy="button-help">
     <q-icon name="question_mark" color="white" data-cy="icon-help" />
   </q-btn>
   <!-- Dialog -->
