@@ -4,7 +4,8 @@
       <!-- Page header -->
       <div class="flex items-center justify-between q-py-lg">
         <!-- RTWBB logo -->
-        <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" data-cy="logo" />
+        <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" :title="$t('header.siteTitle')"
+          data-cy="logo" />
         <div class="flex items-center gap-32">
           <!-- Help icon link for displaying modal dialog -->
           <help-button size="13px" color="primary" />

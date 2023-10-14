@@ -1,6 +1,9 @@
 totalQuestions = "Total questions"
 lang = "Language"
 
+[header]
+siteTitle = "Ride to Work by Bike"
+
 [drawerMenu]
 home = "Home"
 routes = "Routes"

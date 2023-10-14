@@ -1,6 +1,9 @@
 totalQuestions = "Počet otázek"
 lang = "Jazyk"
 
+[header]
+siteTitle = "Do práce na kole"
+
 [drawerMenu]
 home = "Domov"
 routes = "Cesty"
