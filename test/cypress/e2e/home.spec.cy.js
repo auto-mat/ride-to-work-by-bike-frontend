@@ -38,7 +38,7 @@ describe('Home page', () => {
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
-      cy.dataCy('link-help').last().should('be.visible').click();
+      cy.dataCy('button-help').last().should('be.visible').click();
 
       cy.dataCy('dialog-header').should('be.visible');
 
@@ -70,7 +70,7 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-          cy.dataCy('link-help').last().should('be.visible').click();
+          cy.dataCy('button-help').last().should('be.visible').click();
 
           cy.dataCy('dialog-header').should('be.visible');
 
@@ -106,7 +106,7 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-          cy.dataCy('link-help').last().should('be.visible').click();
+          cy.dataCy('button-help').last().should('be.visible').click();
 
           cy.dataCy('dialog-header').should('be.visible');
 
@@ -335,7 +335,7 @@ describe('Home page', () => {
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
-      cy.dataCy('link-help').first().should('be.visible').click();
+      cy.dataCy('button-help').first().should('be.visible').click();
 
       cy.dataCy('list-faq-list')
         .find('.q-card')
@@ -365,7 +365,7 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-          cy.dataCy('link-help').first().should('be.visible').click();
+          cy.dataCy('button-help').first().should('be.visible').click();
 
           cy.dataCy('dialog-header').should('be.visible');
 
@@ -403,7 +403,7 @@ describe('Home page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-          cy.dataCy('link-help').first().should('be.visible').click();
+          cy.dataCy('button-help').first().should('be.visible').click();
 
           cy.dataCy('dialog-header').should('be.visible');
 
@@ -538,9 +538,6 @@ describe('Home page', () => {
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button-mobile')
-        .should('be.visible')
-        .click();
       cy.dataCy('footer-top-button-mobile')
         .should('be.visible')
         .click();
