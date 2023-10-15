@@ -14,6 +14,7 @@ import MobileBottomPanel from 'src/components/MobileBottomPanel.vue';
 // import types
 import { ConfigGlobal } from 'components/types';
 
+// set global i18n object (for test purposes)
 if (window.Cypress) {
   window.i18n = i18n;
 }
