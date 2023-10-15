@@ -49,7 +49,7 @@ describe('<FooterBar>', () => {
 
     it('renders language switcher', () => {
       cy.window().then(() => {
-        cy.dataCy('footer-language-switcher')
+        cy.dataCy('language-switcher-footer')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')

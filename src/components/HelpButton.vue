@@ -31,7 +31,7 @@ import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // types
-import { ConfigGlobal } from 'components/types'
+import { ConfigGlobal } from 'components/types';
 
 // components
 import ContactForm from './ContactForm.vue';
@@ -68,13 +68,20 @@ export default defineComponent({
 
     return {
       isDialogOpen,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 
 <template>
-  <q-btn unelevated round :size="size" :color="color" @click.prevent="isDialogOpen = true" data-cy="button-help">
+  <q-btn
+    unelevated
+    round
+    :size="size"
+    :color="color"
+    @click.prevent="isDialogOpen = true"
+    data-cy="button-help"
+  >
     <q-icon name="question_mark" color="white" data-cy="icon-help" />
   </q-btn>
   <!-- Dialog -->
@@ -90,26 +97,50 @@ export default defineComponent({
     <template #content="{ state, setState, reset }">
       <div v-if="state === 'default'">
         <!-- FAQ for pariticipants -->
-        <list-faq :title="$t('index.help.titleParticipants')" variant="participant" />
+        <list-faq
+          :title="$t('index.help.titleParticipants')"
+          variant="participant"
+        />
         <!-- FAQ for Company coordinators -->
-        <list-faq :title="$t('index.help.titleCoordinators')" variant="coordinator" class="q-mt-xl" />
+        <list-faq
+          :title="$t('index.help.titleCoordinators')"
+          variant="coordinator"
+          class="q-mt-xl"
+        />
         <!-- Section: App Guide -->
         <div class="q-px-md q-mt-xl">
           <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-guide">
             {{ $t('index.help.titleGuide') }}
           </h4>
           <!-- Button: Replay guide -->
-          <q-btn rounded color="black" unelevated outline :label="$t('index.help.buttonGuide')" class="q-mt-md"
-            data-cy="button-guide" />
+          <q-btn
+            rounded
+            color="black"
+            unelevated
+            outline
+            :label="$t('index.help.buttonGuide')"
+            class="q-mt-md"
+            data-cy="button-guide"
+          />
         </div>
         <!-- Section: Contact us via form modal dialog -->
         <div class="q-px-md q-mt-xl">
-          <h4 class="text-h5 text-weight-bold q-my-none" data-cy="title-contact">
+          <h4
+            class="text-h5 text-weight-bold q-my-none"
+            data-cy="title-contact"
+          >
             {{ $t('index.help.titleContact') }}
           </h4>
           <!-- Button: Switch to contact form -->
-          <q-btn rounded color="black" unelevated :label="$t('index.help.buttonContact')" class="q-mt-md"
-            data-cy="button-contact" @click.prevent="setState('form')" />
+          <q-btn
+            rounded
+            color="black"
+            unelevated
+            :label="$t('index.help.buttonContact')"
+            class="q-mt-md"
+            data-cy="button-contact"
+            @click.prevent="setState('form')"
+          />
         </div>
         <!-- Section: Useful links -->
         <menu-links :title="$t('index.help.titleLinks')" variant="useful" />

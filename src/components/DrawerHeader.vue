@@ -54,7 +54,6 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props) {
-
     const classes = computed((): string => {
       return props.showLogo ? 'justify-between' : 'justify-end';
     });
@@ -67,16 +66,29 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="full-width flex items-center justify-between q-py-sm" :class="classes">
+  <div
+    class="full-width flex items-center justify-between q-py-sm"
+    :class="classes"
+  >
     <!-- RTWBB logo -->
-    <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" data-cy="logo" />
+    <img
+      class="logo"
+      src="~assets/svg/logo.svg"
+      :alt="$t('index.logoAltText')"
+      data-cy="logo"
+    />
     <!-- Content -->
     <div class="flex items-center gap-24">
       <!-- Help icon link for displaying modal dialog-->
       <help-button size="8px" />
       <!-- Notification icon link -->
       <a href="#">
-        <q-icon name="notifications" size="sm" color="black" data-cy="icon-notification" />
+        <q-icon
+          name="notifications"
+          size="sm"
+          color="black"
+          data-cy="icon-notification"
+        />
       </a>
       <!-- User menu dropdown -->
       <user-select variant="mobile" class="lt-md" />

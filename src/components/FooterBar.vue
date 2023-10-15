@@ -205,7 +205,7 @@ export default defineComponent({
               </div>
               <span class="q-mx-lg gt-sm">|</span>
               <!-- Language switcher component -->
-              <language-switcher />
+              <language-switcher cy-data="language-switcher-footer" />
             </div>
           </div>
           <!-- License + Owner information (desktop) -->

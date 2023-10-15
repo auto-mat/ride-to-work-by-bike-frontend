@@ -4,8 +4,13 @@
       <!-- Page header -->
       <div class="flex items-center justify-between q-py-lg">
         <!-- RTWBB logo -->
-        <img class="logo" src="~assets/svg/logo.svg" :alt="$t('index.logoAltText')" :title="$t('header.siteTitle')"
-          data-cy="logo" />
+        <img
+          class="logo"
+          src="~assets/svg/logo.svg"
+          :alt="$t('index.logoAltText')"
+          :title="$t('header.siteTitle')"
+          data-cy="logo"
+        />
         <div class="flex items-center gap-32">
           <!-- Help icon link for displaying modal dialog -->
           <help-button size="13px" color="primary" />
@@ -20,13 +25,13 @@
 <script lang="ts">
 // libraries
 import { setCssVar } from 'quasar';
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 // types
-import { ConfigGlobal } from 'components/types'
+import { ConfigGlobal } from 'components/types';
 
 // components
-import HelpButton from 'components/HelpButton.vue'
+import HelpButton from 'components/HelpButton.vue';
 import LanguageSwitcher from 'src/components/LanguageSwitcher.vue';
 
 // config
@@ -40,8 +45,8 @@ export default defineComponent({
   components: {
     HelpButton,
     LanguageSwitcher,
-  }
-})
+  },
+});
 </script>
 
 <style scoped lang="scss">

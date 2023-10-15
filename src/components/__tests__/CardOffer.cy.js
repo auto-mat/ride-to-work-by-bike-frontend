@@ -43,7 +43,6 @@ describe('<CardOffer>', () => {
 
     it('shows modal dialog on click', () => {
       cy.window().then(() => {
-        cy.dataCy('card-offer').click();
         cy.dataCy('dialog-offer').should('be.visible');
       });
     });

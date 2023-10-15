@@ -5,7 +5,6 @@ const rideToWorkByBikeConfig = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
-console.log(colorPrimary);
 
 describe('<HelpButton>', () => {
   it('has translation for all strings', () => {
