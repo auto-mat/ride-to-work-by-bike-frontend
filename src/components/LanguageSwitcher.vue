@@ -29,7 +29,7 @@ import { defineComponent } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // types
-import { ConfigGlobal } from 'components/types'
+import { ConfigGlobal } from 'components/types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
@@ -41,43 +41,61 @@ export default defineComponent({
   props: {
     variant: {
       type: String as () => 'dark' | 'light',
-      default: 'dark'
+      default: 'dark',
     },
   },
   setup(props) {
     const isActive = (item: string) => {
-      return i18n.global.locale === item
-    }
+      return i18n.global.locale === item;
+    };
 
     const getButtonClasses = (item: string) => {
       if (props.variant === 'light') {
+        // Variant: light
         if (isActive(item)) {
-          return 'bg-secondary text-primary text-bold'
+          // Active classes
+          return 'bg-secondary text-primary text-bold';
         }
-        return 'bg-white text-primary text-bold'
-      }
-      else {
+        // Inactive classes
+        return 'bg-white text-primary text-bold';
+      } else {
+        // Variant: dark
         if (isActive(item)) {
-          return 'bg-grey-10 text-white text-bold'
+          // Active classes
+          return 'bg-grey-10 text-white text-bold';
         }
-        return 'bg-grey-10 text-white'
+        // Inactive classes
+        return 'bg-grey-10 text-white';
       }
-    }
+    };
 
     return {
       isActive,
       getButtonClasses,
-    }
-  }
+    };
+  },
 });
 </script>
 
 <template>
-  <ul class="language-list flex items-center text-subtitle1 gap-4" :class="{ 'q-pa-xs bg-white': variant === 'light' }"
-    data-cy="footer-language-switcher" style="border-radius: 999px;">
+  <ul
+    class="language-list flex items-center text-subtitle1 gap-4"
+    :class="{ 'q-pa-xs bg-white': variant === 'light' }"
+  >
     <!-- Language switcher items -->
-    <li v-for=" item  in  Object.keys($i18n.messages) " :key="item" class="text-uppercase" :data-cy="'switcher-' + item">
-      <q-btn unelevated round @click.prevent="$i18n.locale = item" :class="getButtonClasses(item)" size="13px">
+    <li
+      v-for="item in Object.keys($i18n.messages)"
+      :key="item"
+      class="text-uppercase"
+      :data-cy="'switcher-' + item"
+    >
+      <q-btn
+        unelevated
+        round
+        @click.prevent="$i18n.locale = item"
+        :class="getButtonClasses(item)"
+        size="13px"
+      >
         {{ item }}
       </q-btn>
     </li>
@@ -88,5 +106,6 @@ export default defineComponent({
 .language-list {
   list-style: none;
   font-size: 14px;
+  border-radius: 999px;
 }
 </style>
