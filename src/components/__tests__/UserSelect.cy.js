@@ -84,9 +84,11 @@ describe('<UserSelect>', () => {
     });
 
     it('shows dropdown on click', () => {
-      cy.dataCy('user-select-input').click();
+      cy.dataCy('user-select-input').click()
 
-      cy.get('.q-item__label').should('be.visible').should('have.length', 6);
+      cy.get('.q-item__label')
+        .should('be.visible')
+        .should('have.length', 6);
     });
   });
 });
