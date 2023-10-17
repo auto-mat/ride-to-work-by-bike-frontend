@@ -28,18 +28,15 @@ describe('<ListFaq>', () => {
         .first()
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
-
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
         .should('not.be.visible');
-
       cy.dataCy('list-faq-list')
         .find('.q-item')
         .first()
         .should('be.visible')
         .click();
-
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
@@ -68,18 +65,15 @@ describe('<ListFaq>', () => {
         .first()
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
-
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
         .should('not.be.visible');
-
       cy.dataCy('list-faq-list')
         .find('.q-item')
         .first()
         .should('be.visible')
         .click();
-
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
