@@ -54,7 +54,6 @@ describe('<CardEvent>', () => {
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
-
         cy.dataCy('card-link')
           .should('be.visible')
           .should('have.attr', 'href', '#');
@@ -90,7 +89,6 @@ describe('<CardEvent>', () => {
           .should('contain', '1.')
           .should('contain', '2023')
           .should('contain', '12:00');
-
         cy.dataCy('card-dates')
           .find('i')
           .should('be.visible')
@@ -106,7 +104,6 @@ describe('<CardEvent>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
           .should('contain', location);
-
         cy.dataCy('card-location')
           .find('i')
           .should('be.visible')
@@ -121,7 +118,6 @@ describe('<CardEvent>', () => {
           .should('be.visible')
           .should('have.css', 'height', '42px')
           .should('have.css', 'width', '42px');
-
         cy.dataCy('calendar-button')
           .find('i')
           .should('be.visible')
@@ -156,7 +152,6 @@ describe('<CardEvent>', () => {
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
-
         cy.dataCy('dialog-meta')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
