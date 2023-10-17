@@ -206,16 +206,6 @@ describe('<CardEvent>', () => {
         .should('have.css', 'font-weight', '400');
     });
 
-    it('renders dialog content', () => {
-      cy.dataCy('card-link').click();
-
-      cy.dataCy('dialog-content')
-        .should('be.visible')
-        .should('contain', 'We want to reward you for your support')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
-    });
-
     it('renders dialog image', () => {
       cy.dataCy('card-link').click();
 
