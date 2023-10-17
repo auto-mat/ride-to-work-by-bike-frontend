@@ -140,7 +140,6 @@ describe('<CardEvent>', () => {
     it('renders modal dialog on click', () => {
       cy.window().then(() => {
         cy.dataCy('card-link').click();
-
         cy.dataCy('dialog-card-event').should('be.visible');
       });
     });
@@ -148,7 +147,6 @@ describe('<CardEvent>', () => {
     it('renders modal title, location and date', () => {
       cy.window().then(() => {
         cy.dataCy('card-link').click();
-
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
@@ -198,7 +196,6 @@ describe('<CardEvent>', () => {
 
     it('renders dialog content', () => {
       cy.dataCy('card-link').click();
-
       cy.dataCy('dialog-content')
         .should('be.visible')
         .should('contain', 'We want to reward you for your support')
@@ -208,7 +205,6 @@ describe('<CardEvent>', () => {
 
     it('renders dialog image', () => {
       cy.dataCy('card-link').click();
-
       cy.dataCy('dialog-image')
         .should('be.visible')
         .find('img')
@@ -221,7 +217,6 @@ describe('<CardEvent>', () => {
 
     it('shows modal with two columns', () => {
       cy.dataCy('card-link').click();
-
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 50);
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 50);
     });
@@ -247,7 +242,6 @@ describe('<CardEvent>', () => {
 
     it('shows modal with one column', () => {
       cy.dataCy('card-link').click();
-
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 95);
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 95);
     });
