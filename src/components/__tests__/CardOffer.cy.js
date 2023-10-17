@@ -44,7 +44,6 @@ describe('<CardOffer>', () => {
     it('shows modal dialog on click', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.dataCy('dialog-offer').should('be.visible');
       });
     });
@@ -52,7 +51,6 @@ describe('<CardOffer>', () => {
     it('shows modal with title', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
@@ -68,7 +66,6 @@ describe('<CardOffer>', () => {
     it('shows modal with two columns', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 50);
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 50);
       });
@@ -144,7 +141,6 @@ describe('<CardOffer>', () => {
     it('shows modal dialog on click', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.dataCy('dialog-offer').should('be.visible');
       });
     });
@@ -152,7 +148,6 @@ describe('<CardOffer>', () => {
     it('shows modal with title', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
@@ -168,7 +163,6 @@ describe('<CardOffer>', () => {
     it('shows modal content', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.dataCy('dialog-body')
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
@@ -181,16 +175,13 @@ describe('<CardOffer>', () => {
     it('shows modal image', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
-        cy.dataCy('dialog-body')
-          .scrollTo('bottom')
-          .find('img')
+        cy.dataCy('dialog-body').scrollTo('bottom')
+        cy.dataCy('dialog-body').find('img')
           .should('be.visible')
           .then(($img) => {
             cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(card.image.src);
           });
-
         cy.matchImageSnapshotWithHiddenScrollbars(
           'dialog-body',
           0.5,
@@ -202,7 +193,6 @@ describe('<CardOffer>', () => {
     it('shows modal with one column', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 95);
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 95);
       });
