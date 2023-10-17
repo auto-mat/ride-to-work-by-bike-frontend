@@ -138,58 +138,62 @@ describe('<CardEvent>', () => {
     });
 
     it('renders modal dialog on click', () => {
-      cy.dataCy('card-link').click();
+      cy.window().then(() => {
+        cy.dataCy('card-link').click();
 
-      cy.dataCy('dialog-card-event').should('be.visible');
+        cy.dataCy('dialog-card-event').should('be.visible');
+      });
     });
 
     it('renders modal title, location and date', () => {
-      cy.dataCy('card-link').click();
+      cy.window().then(() => {
+        cy.dataCy('card-link').click();
 
-      cy.dataCy('dialog-header')
-        .find('h3')
-        .should('be.visible')
-        .should('have.css', 'font-size', '20px')
-        .should('have.css', 'font-weight', '500')
-        .should('contain', title)
-        .then(($title) => {
-          expect($title.text()).to.equal(title);
-        });
+        cy.dataCy('dialog-header')
+          .find('h3')
+          .should('be.visible')
+          .should('have.css', 'font-size', '20px')
+          .should('have.css', 'font-weight', '500')
+          .should('contain', title)
+          .then(($title) => {
+            expect($title.text()).to.equal(title);
+          });
 
-      cy.dataCy('dialog-meta')
-        .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', '#546e7a')
-        .each(($el, index) => {
-          if (index === 0) {
-            cy.wrap($el)
-              .should('contain', '1.')
-              .should('contain', '2023')
-              .should('contain', '12:00');
+        cy.dataCy('dialog-meta')
+          .should('be.visible')
+          .should('have.css', 'font-size', '14px')
+          .should('have.css', 'font-weight', '400')
+          .should('have.color', '#546e7a')
+          .each(($el, index) => {
+            if (index === 0) {
+              cy.wrap($el)
+                .should('contain', '1.')
+                .should('contain', '2023')
+                .should('contain', '12:00');
 
-            const $icon = $el.find('i');
-            if ($icon.length) {
-              cy.wrap($icon)
-                .should('be.visible')
-                .should('have.color', '#b0bec5')
-                .should('have.css', 'width', '18px')
-                .should('have.css', 'height', '18px');
+              const $icon = $el.find('i');
+              if ($icon.length) {
+                cy.wrap($icon)
+                  .should('be.visible')
+                  .should('have.color', '#b0bec5')
+                  .should('have.css', 'width', '18px')
+                  .should('have.css', 'height', '18px');
+              }
             }
-          }
-          if (index === 1) {
-            cy.wrap($el).should('contain', location);
+            if (index === 1) {
+              cy.wrap($el).should('contain', location);
 
-            const $icon = $el.find('i');
-            if ($icon.length) {
-              cy.wrap($icon)
-                .should('be.visible')
-                .should('have.color', '#b0bec5')
-                .should('have.css', 'width', '18px')
-                .should('have.css', 'height', '18px');
+              const $icon = $el.find('i');
+              if ($icon.length) {
+                cy.wrap($icon)
+                  .should('be.visible')
+                  .should('have.color', '#b0bec5')
+                  .should('have.css', 'width', '18px')
+                  .should('have.css', 'height', '18px');
+              }
             }
-          }
-        });
+          });
+      });
     });
 
     it('renders dialog content', () => {
