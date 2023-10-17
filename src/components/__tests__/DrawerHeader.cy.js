@@ -72,7 +72,6 @@ describe('<DrawerHeader>', () => {
   it('shows modal dialog on click', () => {
     cy.window().then(() => {
       cy.dataCy('link-help').click();
-
       cy.dataCy('dialog-help').should('be.visible');
     });
   });
@@ -80,7 +79,6 @@ describe('<DrawerHeader>', () => {
   it('renders modal title', () => {
     cy.window().then(() => {
       cy.dataCy('link-help').click();
-
       cy.dataCy('dialog-header')
         .find('h3')
         .should('be.visible')
@@ -98,10 +96,8 @@ describe('<DrawerHeader>', () => {
   it('renders guide section with title and button', () => {
     cy.window().then(() => {
       cy.dataCy('link-help').click();
-
       // TODO: Find if you can calculate height exact height of the sections
       cy.dataCy('dialog-content').scrollTo(0, 1060);
-
       cy.dataCy('title-guide')
         .should('be.visible')
         .should('have.css', 'font-size', '24px')
@@ -112,7 +108,6 @@ describe('<DrawerHeader>', () => {
             i18n.global.t('index.help.titleGuide')
           );
         });
-
       cy.dataCy('button-guide')
         .should('be.visible')
         .should('contain.text', i18n.global.t('index.help.buttonGuide'))
