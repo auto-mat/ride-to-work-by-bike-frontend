@@ -494,4 +494,30 @@ export const cardsStats: CardStats[] = [
       },
     ],
   },
+  {
+    title: 'Vy',
+    icon: 'people',
+    stats: [
+      {
+        id: 'regularity',
+        icon: 'lens',
+        text: '80% pravidelnost',
+      },
+      {
+        id: 'routes',
+        icon: 'route',
+        text: '18 cest',
+      },
+      {
+        id: 'distance',
+        icon: 'sync_alt',
+        text: '312,25 km',
+      },
+      {
+        id: 'emissions',
+        icon: 'eco',
+        text: '420 g CO2 ušetřeno',
+      },
+    ],
+  },
 ];
