@@ -272,7 +272,8 @@ describe('Home page', () => {
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button').should('be.visible').click().click();
+      cy.dataCy('footer-top-button').should('be.visible').click();
+      cy.dataCy('footer-top-button').should('be.visible').click();
       /**
        * Second click helps to overcome a ResizeObserver loop completed
        * with undelivered notifications error
@@ -539,7 +540,9 @@ describe('Home page', () => {
     it('allows user to scroll to top using the footer button', () => {
       cy.dataCy('footer-top-button-mobile')
         .should('be.visible')
-        .click()
+        .click();
+      cy.dataCy('footer-top-button-mobile')
+        .should('be.visible')
         .click();
       /**
        * Second click helps to overcome a ResizeObserver loop completed
