@@ -26,7 +26,7 @@
  */
 
 // libraries
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // import components
 import HelpButton from './HelpButton.vue';
@@ -42,10 +42,6 @@ export default defineComponent({
     showLogo: {
       type: Boolean,
       default: true,
-    },
-    showDrawerOpenButton: {
-      type: Boolean,
-      default: false,
     },
     modelValue: {
       type: Boolean,
