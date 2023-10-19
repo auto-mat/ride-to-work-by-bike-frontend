@@ -8,9 +8,12 @@
  * Displayed as a banner, this component highlights the number of biking routes
  * that have not been logged by the user.
  *
+ *
  * @props
  * - `routesCount` (Number, required): The number of biking routes that are yet
  *   to be logged by the user.
+ * - `variant` (String: 'default' | 'start', required): Determines the
+ *   appearance based on whether user has already started logging routes.
  *
  * @example
  * <banner-routes
@@ -30,6 +33,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    variant: {
+      type: String as () => 'default' | 'start',
+      required: true,
+    }
   },
 });
 </script>
