@@ -68,6 +68,11 @@ describe('<BannerRoutes>', () => {
           .should('have.css', 'border-radius', '0px');
       });
     });
+
+    it('renders title section and button section side to side', () => {
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 67);
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 33);
+    })
   });
 
   context('desktop start variant', () => {
@@ -90,6 +95,11 @@ describe('<BannerRoutes>', () => {
         .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
         .should('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
+    });
+
+    it('renders title section and button section stacked', () => {
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
     });
   });
 
