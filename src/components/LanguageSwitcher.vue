@@ -45,11 +45,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isActive = (item: string) => {
+    const isActive = (item: string): boolean => {
       return i18n.global.locale === item;
     };
 
-    const getButtonClasses = (item: string) => {
+    const getButtonClasses = (item: string): string => {
       if (props.variant === 'light') {
         // Variant: light
         const baseCssClass = 'text-primary text-bold';
