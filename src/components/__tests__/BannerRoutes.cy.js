@@ -6,7 +6,7 @@ const routesCount = 3;
 describe('<BannerRoutes>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['title', 'addRoutes', 'addFirstRoutes'],
+      ['title', 'titleStart', 'addRoutes', 'addFirstRoutes'],
       'index.bannerRoutes',
       i18n
     );
@@ -26,9 +26,6 @@ describe('<BannerRoutes>', () => {
     it('renders title with the number of missing routes', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-title')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', '#000000')
           .should('contain', routesCount);
       });
     });
@@ -91,6 +88,13 @@ describe('<BannerRoutes>', () => {
         },
       });
       cy.viewport('macbook-16');
+    });
+
+    it('renders title width the "start" message', () => {
+      cy.window().then(() => {
+        cy.dataCy('banner-routes-title')
+          .should('contain', i18n.global.t('index.bannerRoutes.titleStart'));
+      });
     });
 
     it('renders title with correct styling', () => {
