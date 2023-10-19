@@ -25,6 +25,7 @@
       />
       <banner-routes
         :routes-count="14"
+        variant="default"
         class="q-mt-xl q-mb-xl"
         data-cy="banner-routes"
       />
