@@ -42,7 +42,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-grey-1 q-py-sm" data-cy="banner-routes-card">
+  <div
+    class="bg-grey-1"
+    :class="[variant === 'default' ? 'q-py-sm' : 'q-py-lg']"
+    data-cy="banner-routes-card"
+  >
     <div class="row justify-between">
       <!-- Title -->
       <div
