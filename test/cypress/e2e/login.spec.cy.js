@@ -172,6 +172,7 @@ describe('Login page', () => {
 
     it('allows user to switch language', () => {
       let i18n;
+      cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
           i18n = win.i18n;
