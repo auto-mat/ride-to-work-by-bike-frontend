@@ -45,7 +45,10 @@ export default defineComponent({
   <div class="bg-grey-1 q-py-sm" data-cy="banner-routes-card">
     <div class="row justify-between">
       <!-- Title -->
-      <div class="col-12 col-sm-8 flex items-center q-py-sm q-px-md">
+      <div
+        class="col-12 flex items-center q-py-sm q-px-md"
+        :class="[variant === 'default' ? 'col-sm-8' : 'justify-center']"
+      >
         <h3
           class="text-subtitle2 text-weight-bold q-my-none"
           data-cy="banner-routes-title"
@@ -56,7 +59,8 @@ export default defineComponent({
       </div>
       <!-- Link to Route log -->
       <div
-        class="col-12 col-sm-4 flex items-center justify-end q-py-sm q-px-md"
+        class="col-12 flex items-center justify-end q-py-sm q-px-md"
+        :class="[variant === 'default' ? 'col-sm-4' : 'justify-center']"
       >
         <q-btn
           rounded
