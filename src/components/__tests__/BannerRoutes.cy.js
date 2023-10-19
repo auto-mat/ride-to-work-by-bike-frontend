@@ -12,7 +12,7 @@ describe('<BannerRoutes>', () => {
     );
   });
 
-  context('desktop start variant', () => {
+  context('desktop default variant', () => {
     beforeEach(() => {
       cy.mount(BannerRoutes, {
         props: {
