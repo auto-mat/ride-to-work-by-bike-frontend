@@ -52,20 +52,12 @@ export default defineComponent({
     const getButtonClasses = (item: string) => {
       if (props.variant === 'light') {
         // Variant: light
-        if (isActive(item)) {
-          // Active classes
-          return 'bg-secondary text-primary text-bold';
-        }
-        // Inactive classes
-        return 'bg-white text-primary text-bold';
+        const baseCssClass = 'text-primary text-bold';
+        return isActive(item) ? `bg-secondary ${baseCssClass}` : `bg-white ${baseCssClass}`;
       } else {
         // Variant: dark
-        if (isActive(item)) {
-          // Active classes
-          return 'bg-grey-10 text-white text-bold';
-        }
-        // Inactive classes
-        return 'bg-grey-10 text-white';
+        const baseCssClass = 'bg-grey-10 text-white';
+        return isActive(item) ? `text-bold ${baseCssClass}` : baseCssClass;
       }
     };
 
