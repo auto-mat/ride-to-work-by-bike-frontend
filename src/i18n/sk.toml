@@ -69,6 +69,7 @@ perex = "You can help us decide what to spend more time on next time and what sh
 
 [index.bannerRoutes]
 title = "Máte zapísané všetky cesty za posledný týždeň | Za posledný týždeň vám zostáva zapísať {n} výlet | Za posledný týždeň vám zostáva zapísať {n} cesty | Za posledný týždeň vám zostáva zapísať {n} ciest"
+titleStart = "Októbrová výzva je otvorená!"
 addRoutes = "Zapíšte trasy"
 addFirstRoutes = "Zapíšte prvé trasy"
 

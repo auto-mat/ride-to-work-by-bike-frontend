@@ -55,8 +55,13 @@ export default defineComponent({
           :class="[variant === 'default' ? 'text-subtitle2' : 'text-h6']"
           data-cy="banner-routes-title"
         >
-          <!-- TODO: fix conjugation in CZ and SK -->
-          {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
+          <span v-if="variant === 'default'">
+            <!-- TODO: fix conjugation in CZ and SK -->
+            {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
+          </span>
+          <span v-else-if="variant === 'start'">
+            {{ $t('index.bannerRoutes.titleStart') }}
+          </span>
         </h3>
       </div>
       <!-- Link to Route log -->

@@ -69,6 +69,7 @@ perex = "You can help us decide what to spend more time on next time and what sh
 
 [index.bannerRoutes]
 title = "You have {n} route left to log in the last week. | You have {n} routes left to log in the last week."
+titleStart = "The October challenge has started!"
 addRoutes = "Log routes"
 addFirstRoutes = "Log first routes"
 
