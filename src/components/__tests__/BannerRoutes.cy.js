@@ -55,6 +55,7 @@ describe('<BannerRoutes>', () => {
     it('renders button icon with correct spacing', () => {
       cy.dataCy('banner-routes-button-icon')
         .should('be.visible')
+        .should('have.color', '#fff')
         .should('have.css', 'margin-right', '8px')
         .should('contain', 'add');
       cy.dataCy('banner-routes-button-icon')
@@ -64,15 +65,6 @@ describe('<BannerRoutes>', () => {
         .invoke('width')
         .should('equal', 24);
     })
-
-    it('renders title icon', () => {
-      cy.dataCy('banner-routes-button-add-routes')
-        .find('.q-icon')
-        .should('contain', 'add')
-        .should('have.color', '#fff')
-        .should('have.css', 'width', '24px')
-        .should('have.css', 'height', '24px');
-    });
 
     it('has gray background', () => {
       cy.window().then(() => {
@@ -136,6 +128,20 @@ describe('<BannerRoutes>', () => {
         .should('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
     });
 
+    it('renders button icon with correct spacing', () => {
+      cy.dataCy('banner-routes-button-icon')
+        .should('be.visible')
+        .should('have.color', '#fff')
+        .should('have.css', 'margin-right', '8px')
+        .should('contain', 'add');
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('height')
+        .should('equal', 24);
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('width')
+        .should('equal', 24);
+    })
+
     it('renders title section and button section stacked', () => {
       cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
       cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
@@ -177,6 +183,20 @@ describe('<BannerRoutes>', () => {
         .should('have.css', 'padding-right', '24px')
         .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
+
+    it('renders button icon with correct spacing', () => {
+      cy.dataCy('banner-routes-button-icon')
+        .should('be.visible')
+        .should('have.color', '#fff')
+        .should('have.css', 'margin-right', '8px')
+        .should('contain', 'add');
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('height')
+        .should('equal', 24);
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('width')
+        .should('equal', 24);
+    })
 
     it('has gray background', () => {
       cy.window().then(() => {
