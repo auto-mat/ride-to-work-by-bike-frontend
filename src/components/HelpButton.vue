@@ -147,7 +147,7 @@ export default defineComponent({
         <!-- Section: Social media links -->
         <menu-links :title="$t('index.help.titleSocials')" variant="social" />
       </div>
-      <div v-if="state === 'form'">
+      <div v-else-if="state === 'form'">
         <contact-form @formSubmit="reset" class="q-px-md"></contact-form>
       </div>
     </template>
