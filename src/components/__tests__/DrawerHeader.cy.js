@@ -50,20 +50,17 @@ describe('<DrawerHeader>', () => {
   });
 
   it('renders help button', () => {
-    cy.dataCy('button-help').should('be.visible');
-
     cy.dataCy('button-help')
+      .should('be.visible')
       .should('have.css', 'font-size', '8px')
       .should('have.css', 'font-weight', '500')
       .should('have.backgroundColor', '#212121')
       .should('have.css', 'border-radius', '50%'); // round
-
     cy.dataCy('button-help').should('contain', 'question_mark');
   });
 
   it('renders help button with correct size', () => {
     cy.dataCy('button-help').should('be.visible');
-
     cy.dataCy('button-help').invoke('height').should('be.equal', 24);
     cy.dataCy('button-help').invoke('width').should('be.equal', 24);
   });
@@ -72,12 +69,10 @@ describe('<DrawerHeader>', () => {
     cy.dataCy('icon-help')
       .should('contain', 'question_mark')
       .should('have.color', '#fff');
-
     cy.dataCy('icon-help')
       .invoke('height')
       .should('be.gt', 12)
       .should('be.lt', 14);
-
     cy.dataCy('icon-help')
       .invoke('width')
       .should('be.gt', 12)
