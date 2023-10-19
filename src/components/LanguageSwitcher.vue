@@ -50,15 +50,19 @@ export default defineComponent({
     };
 
     const getButtonClasses = (item: string): string => {
+      // Default black variant
+      let baseCssClass = 'bg-grey-10 text-white';
+      let extendedCssClass = isActive(item)
+        ? `text-bold ${baseCssClass}`
+        : baseCssClass;
+      // Light variant
       if (props.variant === 'light') {
-        // Variant: light
-        const baseCssClass = 'text-primary text-bold';
-        return isActive(item) ? `bg-secondary ${baseCssClass}` : `bg-white ${baseCssClass}`;
-      } else {
-        // Variant: dark
-        const baseCssClass = 'bg-grey-10 text-white';
-        return isActive(item) ? `text-bold ${baseCssClass}` : baseCssClass;
+        baseCssClass = 'text-primary text-bold';
+        extendedCssClass = isActive(item)
+          ? `bg-secondary ${baseCssClass}`
+          : `bg-white ${baseCssClass}`;
       }
+      return extendedCssClass;
     };
 
     return {
