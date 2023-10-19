@@ -70,6 +70,7 @@ perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co 
 [index.bannerRoutes]
 title = "Za poslední týden máte zapsané všechny cesty | Za poslední týden vám zbývá zapsat {n} cesta | Za poslední týden vám zbývá zapsat {n} cesty | Za poslední týden vám zbývá zapsat {n} cest"
 addRoutes = "Zapište trasy"
+addFirstRoutes = "Zapište první trasy"
 
 [index.cardEvent]
 addToCalendar = "Přidat do kalendáře"

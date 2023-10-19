@@ -68,8 +68,11 @@ export default defineComponent({
           <!-- Plus icon -->
           <q-icon name="add" size="24px" color="white" />
           <!-- Button text -->
-          <span class="inline-block q-px-sm">
+          <span v-if="variant === 'default'" class="inline-block q-px-sm">
             {{ $t('index.bannerRoutes.addRoutes') }}
+          </span>
+          <span v-else-if="variant == 'start'">
+            {{ $t('index.bannerRoutes.addFirstRoutes') }}
           </span>
         </q-btn>
       </div>

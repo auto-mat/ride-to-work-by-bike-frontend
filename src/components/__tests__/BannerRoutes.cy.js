@@ -6,7 +6,7 @@ const routesCount = 3;
 describe('<BannerRoutes>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['title', 'addRoutes'],
+      ['title', 'addRoutes', 'addFirstRoutes'],
       'index.bannerRoutes',
       i18n
     );
@@ -17,6 +17,7 @@ describe('<BannerRoutes>', () => {
       cy.mount(BannerRoutes, {
         props: {
           routesCount,
+          variant: 'default',
         },
       });
       cy.viewport('macbook-16');
@@ -74,6 +75,7 @@ describe('<BannerRoutes>', () => {
       cy.mount(BannerRoutes, {
         props: {
           routesCount,
+          variant: 'default',
         },
       });
       cy.viewport('iphone-6');
