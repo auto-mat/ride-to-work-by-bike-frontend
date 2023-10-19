@@ -90,7 +90,7 @@ export default defineComponent({
       <span v-if="state === 'default'">
         {{ $t('index.help.titleStateDefault') }}
       </span>
-      <span v-if="state === 'form'">
+      <span v-else-if="state === 'form'">
         {{ $t('index.help.titleStateContact') }}
       </span>
     </template>
