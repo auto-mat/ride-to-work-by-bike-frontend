@@ -142,6 +142,22 @@ describe('<BannerRoutes>', () => {
         .should('equal', 24);
     })
 
+    it('has gray background', () => {
+      cy.window().then(() => {
+        cy.dataCy('banner-routes-card')
+          .should('be.visible')
+          .should('have.backgroundColor', '#fafafa'); // grey-1
+      });
+    });
+
+    it('has sharp corners', () => {
+      cy.window().then(() => {
+        cy.dataCy('banner-routes-card')
+          .should('be.visible')
+          .should('have.css', 'border-radius', '0px');
+      });
+    });
+
     it('renders title section and button section stacked', () => {
       cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
       cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
@@ -212,6 +228,11 @@ describe('<BannerRoutes>', () => {
           .should('be.visible')
           .should('have.css', 'border-radius', '0px');
       });
+    });
+
+    it('renders title section and button section stacked', () => {
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
+      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
     });
   });
 });
