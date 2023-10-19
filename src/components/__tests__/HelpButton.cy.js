@@ -24,13 +24,13 @@ describe('<HelpButton>', () => {
 
     it('renders help button', () => {
       cy.window().then(() => {
-        cy.dataCy('button-help').should('be.visible');
         cy.dataCy('button-help')
+          .should('be.visible')
           .should('have.css', 'font-size', '13px')
           .should('have.css', 'font-weight', '500')
           .should('have.backgroundColor', '#212121')
-          .should('have.css', 'border-radius', '50%'); // round
-        cy.dataCy('button-help').should('contain', 'question_mark');
+          .should('have.css', 'border-radius', '50%') // round
+          .should('contain', 'question_mark');
       });
     });
 
@@ -68,8 +68,8 @@ describe('<HelpButton>', () => {
 
     it('renders help button', () => {
       cy.window().then(() => {
-        cy.dataCy('button-help').should('be.visible');
         cy.dataCy('button-help')
+          .should('be.visible')
           .should('have.css', 'font-size', '13px')
           .should('have.css', 'font-weight', '500')
           .should('have.backgroundColor', `${colorPrimary}`)
@@ -111,8 +111,8 @@ describe('<HelpButton>', () => {
     });
 
     it('renders help button', () => {
-      cy.dataCy('button-help').should('be.visible');
       cy.dataCy('button-help')
+        .should('be.visible')
         .should('have.css', 'font-size', '8px')
         .should('have.css', 'font-weight', '500')
         .should('have.backgroundColor', '#212121')
@@ -155,7 +155,7 @@ describe('<HelpButton>', () => {
     it('shows modal dialog on click', () => {
       cy.window().then(() => {
         cy.dataCy('button-help').should('be.visible');
-        cy.dataCy('button-help').click()
+        cy.dataCy('button-help').click();
         cy.dataCy('dialog-help').should('be.visible');
       });
     });
@@ -163,7 +163,7 @@ describe('<HelpButton>', () => {
     it('renders modal title', () => {
       cy.window().then(() => {
         cy.dataCy('button-help').should('be.visible');
-        cy.dataCy('button-help').click()
+        cy.dataCy('button-help').click();
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
@@ -181,7 +181,7 @@ describe('<HelpButton>', () => {
     it('renders guide section with title and button', () => {
       cy.window().then(() => {
         cy.dataCy('button-help').should('be.visible');
-        cy.dataCy('button-help').click()
+        cy.dataCy('button-help').click();
         // TODO: Find if you can calculate height exact height of the sections
         cy.dataCy('dialog-content').scrollTo(0, 1060);
         cy.dataCy('title-guide')
