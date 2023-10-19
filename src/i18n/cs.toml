@@ -68,7 +68,7 @@ title = "Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!"
 perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné."
 
 [index.bannerRoutes]
-title = "Za poslední týden máte zapsané všechny cesty | Za poslední týden vám zbývá zapsat {n} cesta | Za poslední týden vám zbývá zapsat {n} cesty | Za poslední týden vám zbývá zapsat {n} cest"
+title = "Za poslední týden vám zbývá zapsat {n} cesta | Za poslední týden vám zbývá zapsat {n} cest"
 titleStart = "Říjnová výzva byla zahájena!"
 addRoutes = "Zapište trasy"
 addFirstRoutes = "Zapište první trasy"
