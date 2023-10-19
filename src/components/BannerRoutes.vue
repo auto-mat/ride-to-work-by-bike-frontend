@@ -51,7 +51,7 @@ export default defineComponent({
       <!-- Title -->
       <div
         class="col-12 flex items-center q-py-sm q-px-md"
-        :class="[variant === 'default' ? 'col-sm-8' : 'justify-center']"
+        :class="[variant === 'default' ? 'col-md-8' : 'justify-center']"
         data-cy="banner-routes-section-title"
       >
         <h3
@@ -71,7 +71,7 @@ export default defineComponent({
       <!-- Link to Route log -->
       <div
         class="col-12 flex items-center justify-end q-py-sm q-px-md"
-        :class="[variant === 'default' ? 'col-sm-4' : 'justify-center']"
+        :class="[variant === 'default' ? 'col-md-4' : 'justify-center']"
         data-cy="banner-routes-section-button"
       >
         <q-btn
