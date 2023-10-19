@@ -184,26 +184,24 @@ describe('Login page', () => {
             .should('have.class', 'bg-secondary');
 
           locales.forEach((locale) => {
-            if (locale === initialActiveLocale) {
-              return;
+            if (locale !== initialActiveLocale) {
+              // changing the language
+              cy.dataCy('switcher-' + locale)
+                .should('exist')
+                .should('be.visible')
+                .find('.q-btn')
+                .click();
+
+              // old language becomes inactive
+              cy.dataCy('switcher-' + initialActiveLocale)
+                .find('.q-btn')
+                .should('have.class', 'bg-white');
+
+              // new language becomes active
+              cy.dataCy('switcher-' + locale)
+                .find('.q-btn')
+                .should('have.class', 'bg-secondary');
             }
-
-            // changing the language
-            cy.dataCy('switcher-' + locale)
-              .should('exist')
-              .should('be.visible')
-              .find('.q-btn')
-              .click();
-
-            // old language becomes inactive
-            cy.dataCy('switcher-' + initialActiveLocale)
-              .find('.q-btn')
-              .should('have.class', 'bg-white');
-
-            // new language becomes active
-            cy.dataCy('switcher-' + locale)
-              .find('.q-btn')
-              .should('have.class', 'bg-secondary');
           });
         });
     });
