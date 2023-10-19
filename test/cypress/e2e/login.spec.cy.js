@@ -7,7 +7,6 @@ describe('Login page', () => {
 
     it('renders logo', () => {
       cy.dataCy('logo').should('be.visible');
-
       cy.dataCy('logo').invoke('height').should('be.equal', 80);
     });
 
@@ -18,43 +17,35 @@ describe('Login page', () => {
         config = JSON.parse(win.process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
       });
       cy.window().then(() => {
-        cy.dataCy('button-help').should('be.visible');
-
         cy.dataCy('button-help')
+          .should('be.visible')
           .should('have.css', 'font-size', '13px')
           .should('have.css', 'font-weight', '500')
           .should('have.backgroundColor', `${config.colorPrimary}`)
           .should('have.css', 'border-radius', '50%'); // round
-
         cy.dataCy('button-help').should('contain', 'question_mark');
       });
     });
 
     it('renders help button with correct size', () => {
       cy.dataCy('button-help').should('be.visible');
-
       cy.dataCy('button-help').invoke('height').should('be.equal', 39);
       cy.dataCy('button-help').invoke('width').should('be.equal', 39);
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
-
       cy.dataCy('dialog-header').should('be.visible');
-
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .each(($element) => {
           cy.wrap($element).should('not.be.visible');
         });
-
       cy.dataCy('list-faq-list')
         .find('.q-expansion-item')
         .each(($element) => {
           cy.wrap($element).should('be.visible');
-
           cy.wrap($element).click();
-
           cy.wrap($element)
             .find('.q-card__section')
             .should('be.visible')
