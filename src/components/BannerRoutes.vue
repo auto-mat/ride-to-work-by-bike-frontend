@@ -83,7 +83,7 @@ export default defineComponent({
           data-cy="banner-routes-button-add-routes"
         >
           <!-- Plus icon -->
-          <q-icon name="add" size="24px" color="white" class="q-mr-sm" />
+          <q-icon name="add" size="24px" color="white" class="q-mr-sm" data-cy="banner-routes-button-icon" />
           <!-- Button text -->
           <span v-if="variant === 'default'" class="inline-block q-px-sm">
             {{ $t('index.bannerRoutes.addRoutes') }}

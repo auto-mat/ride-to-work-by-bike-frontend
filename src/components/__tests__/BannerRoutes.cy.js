@@ -48,6 +48,19 @@ describe('<BannerRoutes>', () => {
         .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
 
+    it('renders button icon with correct spacing', () => {
+      cy.dataCy('banner-routes-button-icon')
+        .should('be.visible')
+        .should('have.css', 'margin-right', '8px')
+        .should('contain', 'add');
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('height')
+        .should('equal', 24);
+      cy.dataCy('banner-routes-button-icon')
+        .invoke('width')
+        .should('equal', 24);
+    })
+
     it('renders title icon', () => {
       cy.dataCy('banner-routes-button-add-routes')
         .find('.q-icon')
