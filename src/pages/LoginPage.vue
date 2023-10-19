@@ -13,7 +13,7 @@
  * - `HelpButton`: Component to render help icon with modal dialog.
  * - `LanguageSwitcher`: Component that allows user to change language.
  *
- * @template
+ * @layout
  * - `LoginLayout`: Displayed within the `LoginLayout` template.
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6269%3A24768&mode=dev)
