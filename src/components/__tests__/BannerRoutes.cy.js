@@ -33,6 +33,13 @@ describe('<BannerRoutes>', () => {
       });
     });
 
+    it('renders title with correct styling', () => {
+      cy.dataCy('banner-routes-title')
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '700')
+        .should('have.color', '#000000')
+    });
+
     it('renders button', () => {
       cy.dataCy('banner-routes-button-add-routes')
         .should('be.visible')
@@ -84,6 +91,13 @@ describe('<BannerRoutes>', () => {
         },
       });
       cy.viewport('macbook-16');
+    });
+
+    it('renders title with correct styling', () => {
+      cy.dataCy('banner-routes-title')
+        .should('have.css', 'font-size', '20px')
+        .should('have.css', 'font-weight', '700')
+        .should('have.color', '#000000')
     });
 
     it('renders button', () => {
