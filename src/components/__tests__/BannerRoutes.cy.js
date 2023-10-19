@@ -45,6 +45,10 @@ describe('<BannerRoutes>', () => {
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
+        .should('have.css', 'padding-top', '16px')
+        .should('have.css', 'padding-left', '16px')
+        .should('have.css', 'padding-bottom', '16px')
+        .should('have.css', 'padding-right', '24px')
         .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
 
@@ -125,6 +129,10 @@ describe('<BannerRoutes>', () => {
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
+        .should('have.css', 'padding-top', '16px')
+        .should('have.css', 'padding-left', '16px')
+        .should('have.css', 'padding-bottom', '16px')
+        .should('have.css', 'padding-right', '24px')
         .should('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
     });
 
@@ -163,6 +171,10 @@ describe('<BannerRoutes>', () => {
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.color', '#fff')
         .should('have.css', 'border-radius', '28px')
+        .should('have.css', 'padding-top', '16px')
+        .should('have.css', 'padding-left', '16px')
+        .should('have.css', 'padding-bottom', '16px')
+        .should('have.css', 'padding-right', '24px')
         .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
 
