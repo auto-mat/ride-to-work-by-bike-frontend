@@ -12,7 +12,7 @@
  *
  * @props
  * - `title` (String): The heading or title for the list of FAQs.
- * - `variant` (String: 'participant' | 'coordinator'): Determines the
+ * - `variant` (String: 'participant' | 'coordinator', required): Determines the
  *   type of FAQs to display, either for participants or coordinators.
  *
  * @example
@@ -35,6 +35,7 @@ export default defineComponent({
     },
     variant: {
       type: String as () => 'participant' | 'coordinator',
+      required: true,
     },
   },
   setup(props) {
