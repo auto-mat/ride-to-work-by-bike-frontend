@@ -51,7 +51,8 @@ export default defineComponent({
         data-cy="banner-routes-section-title"
       >
         <h3
-          class="text-subtitle2 text-weight-bold q-my-none"
+          class="text-weight-bold q-my-none"
+          :class="[variant === 'default' ? 'text-subtitle2' : 'text-h6']"
           data-cy="banner-routes-title"
         >
           <!-- TODO: fix conjugation in CZ and SK -->
