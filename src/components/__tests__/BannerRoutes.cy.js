@@ -12,7 +12,7 @@ describe('<BannerRoutes>', () => {
     );
   });
 
-  context('desktop', () => {
+  context('desktop start variant', () => {
     beforeEach(() => {
       cy.mount(BannerRoutes, {
         props: {
@@ -67,6 +67,29 @@ describe('<BannerRoutes>', () => {
           .should('be.visible')
           .should('have.css', 'border-radius', '0px');
       });
+    });
+  });
+
+  context('desktop start variant', () => {
+    beforeEach(() => {
+      cy.mount(BannerRoutes, {
+        props: {
+          routesCount,
+          variant: 'start',
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders button', () => {
+      cy.dataCy('banner-routes-button-add-routes')
+        .should('be.visible')
+        .should('have.css', 'font-size', '14px')
+        .should('have.css', 'font-weight', '500')
+        .should('have.css', 'text-transform', 'uppercase')
+        .should('have.color', '#fff')
+        .should('have.css', 'border-radius', '28px')
+        .should('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
     });
   });
 
