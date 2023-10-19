@@ -12,7 +12,7 @@ describe('Login page', () => {
         .should('be.equal', 80);
     });
 
-    it.only('renders help button', () => {
+    it('renders help button', () => {
       let config;
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
