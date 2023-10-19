@@ -113,7 +113,7 @@ describe('<LanguageSwitcher>', () => {
             .find('.q-btn')
             .should('have.class', 'bg-white')
             .should('have.class', 'text-primary')
-            .should('not.have.class', 'text-bold');
+            .should('have.class', 'text-bold');
         }
       });
     });
