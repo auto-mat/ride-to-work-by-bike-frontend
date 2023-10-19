@@ -48,6 +48,7 @@ export default defineComponent({
       <div
         class="col-12 flex items-center q-py-sm q-px-md"
         :class="[variant === 'default' ? 'col-sm-8' : 'justify-center']"
+        data-cy="banner-routes-section-title"
       >
         <h3
           class="text-subtitle2 text-weight-bold q-my-none"
@@ -61,6 +62,7 @@ export default defineComponent({
       <div
         class="col-12 flex items-center justify-end q-py-sm q-px-md"
         :class="[variant === 'default' ? 'col-sm-4' : 'justify-center']"
+        data-cy="banner-routes-section-button"
       >
         <q-btn
           rounded
