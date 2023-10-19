@@ -6,8 +6,10 @@ describe('Login page', () => {
     });
 
     it('renders logo', () => {
-      cy.dataCy('logo').should('be.visible');
-      cy.dataCy('logo').invoke('height').should('be.equal', 80);
+      cy.dataCy('logo')
+        .should('be.visible')
+        .invoke('height')
+        .should('be.equal', 80);
     });
 
     it.only('renders help button', () => {
