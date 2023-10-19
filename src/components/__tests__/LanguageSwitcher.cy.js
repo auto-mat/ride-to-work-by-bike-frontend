@@ -49,16 +49,14 @@ describe('<LanguageSwitcher>', () => {
         .should('have.class', 'text-bold');
 
       locales.forEach((locale) => {
-        if (locale === initialActiveLocale) {
-          return;
+        if (locale !== initialActiveLocale) {
+          // other languages have inactive classes
+          cy.dataCy('switcher-' + locale)
+            .find('.q-btn')
+            .should('have.class', 'bg-grey-10')
+            .should('have.class', 'text-white')
+            .should('not.have.class', 'text-bold');
         }
-
-        // other languages have inactive classes
-        cy.dataCy('switcher-' + locale)
-          .find('.q-btn')
-          .should('have.class', 'bg-grey-10')
-          .should('have.class', 'text-white')
-          .should('not.have.class', 'text-bold');
       });
     });
   });
