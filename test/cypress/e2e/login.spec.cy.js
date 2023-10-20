@@ -208,5 +208,22 @@ describe('Login page', () => {
           });
         });
     });
+
+    it('renders page title', () => {
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+          cy.dataCy('login-page-title')
+            .should('be.visible')
+            .should('have.color', '#fff')
+            .should('have.css', 'font-size', '24px')
+            .should('have.css', 'font-weight', '700')
+            .should('contain', i18n.global.t('login.title'))
+        });
+    });
   });
 });

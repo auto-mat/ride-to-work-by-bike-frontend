@@ -66,7 +66,7 @@ export default defineComponent({
         </div>
       </div>
       <div class="q-py-lg">
-        <h1 class="text-h5 text-bold text-white">
+        <h1 class="text-h5 text-bold text-white" data-cy="login-page-title">
           {{ $t('login.title') }}
         </h1>
       </div>
