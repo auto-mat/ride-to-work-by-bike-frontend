@@ -46,7 +46,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding>
+  <q-page padding class="bg-primary">
     <div class="q-px-lg">
       <!-- Page header -->
       <div class="flex items-center justify-between q-py-lg">
