@@ -222,7 +222,7 @@ describe('Login page', () => {
             .should('have.color', '#fff')
             .should('have.css', 'font-size', '24px')
             .should('have.css', 'font-weight', '700')
-            .should('contain', i18n.global.t('login.title'))
+            .should('contain', i18n.global.t('login.title'));
         });
     });
   });
