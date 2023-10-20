@@ -65,6 +65,11 @@ export default defineComponent({
           <language-switcher variant="light" />
         </div>
       </div>
+      <div class="q-py-lg">
+        <h1 class="text-h5 text-bold text-white">
+          {{ $t('login.title') }}
+        </h1>
+      </div>
     </div>
   </q-page>
 </template>

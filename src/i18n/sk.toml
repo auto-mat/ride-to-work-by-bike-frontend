@@ -126,3 +126,6 @@ title = "Sledujte nás na Facebooku"
 copyrightOpenSource = "Táto aplikácia je open source softvér."
 copyrightAuthor = "Výzvu Do práce na kole organizuje <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, z.s.</a>"
 deployedAppVersion = "Nasadená verzia aplikácie"
+
+[login]
+title = "Prihlásenie"
