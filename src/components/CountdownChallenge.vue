@@ -23,6 +23,9 @@
 import { defineComponent } from 'vue';
 import { setCssVar } from 'quasar';
 
+// composables
+import { useCountdown } from 'src/composables/useCountdown';
+
 // types
 import { ConfigGlobal } from 'components/types';
 
@@ -38,15 +41,20 @@ export default defineComponent({
       type: String,
       required: true,
     }
+  },
+  setup(props) {
+    const { countdown } = useCountdown(props.dateEnd)
+
+    return {
+      countdown
+    }
   }
 })
 </script>
 
 <template>
   <div class="q-pa-lg bg-info" data-cy="countdown-challenge">
-    <h2
-      class="q-my-md text-center text-h6 text-bold" data-cy="countdown-challenge-title"
-    >
+    <h2 class="q-my-md text-center text-h6 text-bold" data-cy="countdown-challenge-title">
       {{ $t('index.countdownChallenge.title') }}
     </h2>
   </div>
