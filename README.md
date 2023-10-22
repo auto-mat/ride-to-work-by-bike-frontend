@@ -18,6 +18,7 @@ Activating `nvm` (add these lines to your `~/.bashrc`, `~/.profile`, or `~/.zshr
 
 ```bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
 
@@ -61,7 +62,7 @@ and here [ride-to-work-by-bike-frontend.lib.yaml](https://github.com/auto-mat/k8
 Start dev server with
 
 ```bash
-npx qusar dev
+yarn dev
 ```
 
 ### Lint the files
@@ -79,33 +80,32 @@ yarn format
 ### Run app tests
 
 ```bash
+######################################################################
 # Component tests
+######################################################################
 
-# component tests with default Electron web browser
-npx cypress run --component
-# or test only one test
-npx cypress run --component -s src/components/__tests__/CardOffer.cy.js
-# or
-npx cypress open --component
+WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
+# Run component tests
+yarn test:component:$WEB_BROWSER
+# Or test only one component file tests
+yarn test:component:$WEB_BROWSER -s ./src/components/__tests__/CardOffer.cy.js
+# Or interactively open web browser and run tests
+yarn test:component:open:$WEB_BROWSER
 
-# component tests with Mozilla Firefox web browser
-npx cypress run --component --browser $(which firefox-bin)
-# or test only one test
-npx cypress run --component --browser $(which firefox-bin) -s src/components/__tests__/CardOffer.cy.js
-# or
-npx cypress open --browser $(which firefox-bin)
-
+######################################################################
 # E2e tests
+######################################################################
 
-# e2e and unit tests with default Electron web browser
-npx cypress run --e2e
-# or
-npx cypress open --e2e
-
-# e2e and unit tests with Mozilla Firefox web browser
-npx cypress run --e2e --browser $(which firefox-bin)
-# or
-npx cypress open --browser $(which firefox-bin)
+# Start web dev server in another emulator terminal
+yarn dev
+# Inside another emulator terminal run tests
+WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
+# Run e2e tests
+yarn test:e2e:$WEB_BROWSER
+# Or test only one e2e file tests
+yarn test:e2e:$WEB_BROWSER -s ./test/cypress/e2e/home.spec.cy.js
+# Or interactively open web browser and run tests
+yarn test:e2e:open:$WEB_BROWSER
 ```
 
 ### Build the app for production
@@ -116,7 +116,7 @@ via SHELL/ENV variables (check vars with `cat ./src/utils/get_app_conf.js`).
 Build app with
 
 ```bash
-npx quasar build
+yarn build
 ```
 
 Copy content of the `dist/spa/*` dir into webserver Apache/NGINX dir.
