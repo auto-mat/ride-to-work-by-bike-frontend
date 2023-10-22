@@ -55,7 +55,9 @@ export default defineComponent({
 <template>
   <div class="q-pa-lg bg-info" data-cy="countdown-challenge">
     <h2 class="q-my-md text-center text-h6 text-bold" data-cy="countdown-challenge-title">
-      {{ $t('index.countdownChallenge.title') }}
+      {{ $tc('index.countdownChallenge.title', countdown.days) }} {{ countdown.days }} {{ $tc('time.day', countdown.days)
+      }} {{ countdown.hours }} {{ $t('time.hourShort') }} {{ countdown.minutes }} {{ $t('time.minuteShort') }} {{
+  countdown.seconds }} {{ $t('time.secondShort') }}
     </h2>
   </div>
 </template>

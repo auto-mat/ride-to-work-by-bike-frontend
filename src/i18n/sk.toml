@@ -67,7 +67,7 @@ minutes = "minút"
 seconds = "sekund"
 
 [index.countdownChallenge]
-title = "Do konca výzvy zostávajú už len 2 dni 11 h. 58 m. 20 s."
+title = "Do konca výzvy zostáva už len | Do konca výzvy zostávajú už len"
 
 [index.cardListChallenge]
 title = "Budúce výzvy"
