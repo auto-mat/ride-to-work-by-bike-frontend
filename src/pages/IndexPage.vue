@@ -52,6 +52,10 @@
       <section-columns :columns="3" class="q-col-gutter-lg q-pt-xl q-pb-xl">
         <card-stats v-for="card in cardsStats" :key="card.title" :card="card" />
       </section-columns>
+      <countdown-challenge
+        date-end="2023-10-24"
+        class="q-pt-xl"
+      />
     </div>
     <heading-background
       :title="headingBgTitle"
@@ -96,6 +100,7 @@ import { defineComponent } from 'vue';
 import BannerApp from 'src/components/BannerApp.vue';
 import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'src/components/BannerRoutes.vue';
+import CountdownChallenge from 'src/components/CountdownChallenge.vue';
 import EventCountdown from 'components/EventCountdown.vue';
 import HeadingBackground from 'src/components/HeadingBackground.vue';
 import ListBadgeAchievement from 'src/components/ListBadgeAchievement.vue';
@@ -119,6 +124,7 @@ export default defineComponent({
     BannerApp,
     BannerImage,
     BannerRoutes,
+    CountdownChallenge,
     EventCountdown,
     HeadingBackground,
     ListBadgeAchievement,
