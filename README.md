@@ -79,6 +79,8 @@ yarn format
 
 ### Run app tests
 
+UNIX-like OS:
+
 ```bash
 ######################################################################
 # Component tests
@@ -106,6 +108,37 @@ yarn test:e2e:$WEB_BROWSER
 yarn test:e2e:$WEB_BROWSER -s ./test/cypress/e2e/home.spec.cy.js
 # Or interactively open web browser and run tests
 yarn test:e2e:open:$WEB_BROWSER
+```
+
+MS Windows OS:
+
+```cmd
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Component tests
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+set WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
+:: Run component tests
+yarn test:component:win:%WEB_BROWSER%
+:: Or test only one component file tests
+yarn test:component:win:%WEB_BROWSER% -s \src\components\__tests__\CardOffer.cy.js
+:: Or interactively open web browser and run tests
+yarn test:component:open:win:%WEB_BROWSER%
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: E2e tests
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: Start web dev server in another emulator terminal
+yarn dev
+:: Inside another emulator terminal run tests
+set WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
+:: Run e2e tests
+yarn test:e2e:win:%WEB_BROWSER%
+:: Or test only one e2e file tests
+yarn test:e2e:win:%WEB_BROWSER% -s \test\cypress\e2e\home.spec.cy.js
+:: Or interactively open web browser and run tests
+yarn test:e2e:open:win:$WEB_BROWSER
 ```
 
 ### Build the app for production

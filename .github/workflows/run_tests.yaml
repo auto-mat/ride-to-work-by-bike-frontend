@@ -54,7 +54,7 @@ jobs:
           browser: firefox
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:firefox
+          command: yarn test:e2e:ci:firefox
 
       - name: Run Cypress e2e test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -66,7 +66,7 @@ jobs:
           browser: chrome
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:chrome
+          command: yarn test:e2e:ci:chrome
 
       - name: Run Cypress e2e test on MS Edge/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -78,7 +78,7 @@ jobs:
           browser: edge
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:edge
+          command: yarn test:e2e:ci:edge
 
       - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -90,7 +90,7 @@ jobs:
           browser: firefox
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:firefox
+          command: yarn test:component:ci:firefox
 
       - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -102,7 +102,7 @@ jobs:
           browser: chrome
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:chrome
+          command: yarn test:component:ci:chrome
 
       - name: Run Cypress component test on MS Edge/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -114,7 +114,7 @@ jobs:
           browser: edge
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:edge
+          command: yarn test:component:ci:edge
 
       - name: Build app
         run: npx quasar build
