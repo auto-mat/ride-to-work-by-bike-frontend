@@ -19,7 +19,17 @@
 * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22987&mode=dev)
 */
 
+// libraries
 import { defineComponent } from 'vue';
+import { setCssVar } from 'quasar';
+
+// types
+import { ConfigGlobal } from 'components/types';
+
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+setCssVar('info', rideToWorkByBikeConfig.colorGrayLight)
 
 export default defineComponent({
   name: 'CountdownChallenge',
@@ -33,8 +43,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
-    {{ $t('index.countdownChallenge') }}
+  <div class="q-py-lg bg-info">
+    <h2 class="q-py-none text-center text-h6 text-bold">
+      {{ $t('index.countdownChallenge.title') }}
+    </h2>
   </div>
 </template>
 

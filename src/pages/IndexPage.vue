@@ -54,7 +54,6 @@
       </section-columns>
       <countdown-challenge
         date-end="2023-10-24"
-        class="q-pt-xl"
       />
     </div>
     <heading-background
