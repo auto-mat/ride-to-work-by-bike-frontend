@@ -7,8 +7,12 @@ const rideToWorkByBikeConfig = JSON.parse(
 const colorInfo = rideToWorkByBikeConfig.colorGrayLight;
 
 describe('<CountdownChallenge>', () => {
-  it('has translation for all strings', () => {
+  it('has translation for component strings', () => {
     cy.testLanguageStringsInContext(['title'], 'index.countdownChallenge', i18n);
+  });
+
+  it('has translation for time strings', () => {
+    cy.testLanguageStringsInContext(['day'], 'time', i18n);
   });
 
   context('desktop', () => {
@@ -63,18 +67,19 @@ describe('<CountdownChallenge>', () => {
           .should('have.css', 'margin-top', '16px')
           .should('have.css', 'margin-bottom', '16px')
           .should('have.color', '#000')
-    });
+      });
 
-    it('renders wrapper with padding', () => {
-      cy.dataCy('countdown-challenge')
-        .should('have.css', 'padding', '24px')
+      it('renders wrapper with padding', () => {
+        cy.dataCy('countdown-challenge')
+          .should('have.css', 'padding', '24px')
+          .should('have.backgroundColor', `${colorInfo}`);
+      });
+
+      it('renders gray background', () => {
+        cy.dataCy('countdown-challenge')
+        .should('have.class', 'bg-info')
         .should('have.backgroundColor', `${colorInfo}`);
-    });
-
-    it('renders gray background', () => {
-      cy.dataCy('countdown-challenge')
-      .should('have.class', 'bg-info')
-      .should('have.backgroundColor', `${colorInfo}`);
+      });
     });
   });
 });
