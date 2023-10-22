@@ -21,16 +21,14 @@
  * <event-countdown :releaseDate="targetDate" />
  */
 
-// libraries
 import { setCssVar, date } from 'quasar';
-import { defineComponent } from 'vue';
+import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
-// composables
-import { useCountdown } from 'src/composables/useCountdown';
-
 // types
-import { ConfigGlobal } from 'components/types';
+import { Countdown, ConfigGlobal } from 'components/types';
+
+const { formatDate } = date;
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
@@ -46,16 +44,68 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const countdown = ref<Countdown>({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
+
     // currently not working see https://github.com/intlify/vue-i18n-next/issues/1193
     // const { locale } = useI18n({ useScope: 'global' })
     let formatString = 'D. M.';
     // if (locale.value === 'en') {
     //   formatString = 'D MMM';
     // }
-    const { formatDate } = date;
     const formattedDate = formatDate(new Date(props.releaseDate), formatString);
 
-    const { countdown } = useCountdown(props.releaseDate);
+    let countdownInterval: ReturnType<typeof setInterval> | null = null;
+
+    const startCountdown = () => {
+      const targetDate = new Date(props.releaseDate).getTime();
+
+      countdownInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const timeDifference = getTimeDifference(now, targetDate);
+
+        computeCountdownInterval(timeDifference);
+      }, 1000);
+    };
+
+    function getTimeDifference(now: number, date: number): number {
+      return date - now;
+    }
+
+    function computeCountdownInterval(timeDifference: number) {
+      if (timeDifference > 0) {
+        setCountdownValues(timeDifference);
+      } else {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+        }
+      }
+    }
+
+    function setCountdownValues(timeDifference: number): void {
+      countdown.value = {
+        days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        ),
+        minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
+      };
+    }
+
+    watchEffect(() => {
+      startCountdown();
+    });
+
+    onBeforeUnmount(() => {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+    });
 
     return {
       countdown,
