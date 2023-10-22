@@ -43,8 +43,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="q-py-lg bg-info">
-    <h2 class="q-py-none text-center text-h6 text-bold">
+  <div class="q-pa-lg bg-info" data-cy="countdown-challenge">
+    <h2
+      class="q-my-md text-center text-h6 text-bold" data-cy="countdown-challenge-title"
+    >
       {{ $t('index.countdownChallenge.title') }}
     </h2>
   </div>
