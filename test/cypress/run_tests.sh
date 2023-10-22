@@ -14,13 +14,15 @@ CYPRESS_E2E_OPEN_TEST="$CYPRESS_BASE_CMD open $E2E_FLAG"
 
 # Web browsers
 ELECTRON="electron"
-FIREFOX=$(which firefox || which firefox-bin)
+FIREFOX=$(which firefox || which firefox-bin || echo "firefox")
 CHROME=$(which google-chrome-stable \
   || which google-chrome-beta \
-  || which google-chrome-unstable)
+  || which google-chrome-unstable \
+  || echo "chrome")
 EDGE=$(which microsoft-edge-stable \
   || which microsoft-edge-stable-beta \
-  || which microsoft-edge-stable-dev)
+  || which microsoft-edge-stable-dev \
+  || echo "edge")
 
 
 case $1 in
