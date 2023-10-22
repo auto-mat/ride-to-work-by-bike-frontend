@@ -56,6 +56,9 @@ hours = "hodin"
 minutes = "minut"
 seconds = "sekund"
 
+[index.countdownChallenge]
+title = "Do konce výzvy zbývají jen 2 dny 11 h. 58 m. 20 s."
+
 [index.cardListChallenge]
 title = "Budoucí výzvy"
 

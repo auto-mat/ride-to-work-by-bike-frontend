@@ -34,7 +34,7 @@ export default defineComponent({
 
 <template>
   <div>
-
+    {{ $t('index.countdownChallenge') }}
   </div>
 </template>
 
