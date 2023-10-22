@@ -116,7 +116,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card square flat class="row items-center justify-evenly q-py-xl bg-info" data-cy="card">
+  <q-card
+    square
+    flat
+    class="row items-center justify-evenly q-py-xl bg-info"
+    data-cy="card"
+  >
     <div class="text-center">
       <!-- Title -->
       <div class="text-weight-bold q-px-lg" data-cy="title">
