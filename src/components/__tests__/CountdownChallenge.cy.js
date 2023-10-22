@@ -7,6 +7,9 @@ const rideToWorkByBikeConfig = JSON.parse(
 const colorInfo = rideToWorkByBikeConfig.colorGrayLight;
 
 describe('<CountdownChallenge>', () => {
+  const currentTime = new Date('2023-10-24T12:00:00');
+  const dateEnd = new Date('2023-10-27T12:00:00');
+
   it('has translation for component strings', () => {
     cy.testLanguageStringsInContext(['title'], 'index.countdownChallenge', i18n);
   });
@@ -19,7 +22,7 @@ describe('<CountdownChallenge>', () => {
     beforeEach(() => {
       cy.mount(CountdownChallenge, {
         props: {
-          dateEnd: '2023-10-24',
+          dateEnd,
         },
       });
       cy.viewport('macbook-16');
@@ -47,13 +50,42 @@ describe('<CountdownChallenge>', () => {
         .should('have.class', 'bg-info')
         .should('have.backgroundColor', `${colorInfo}`);
     });
+
+    it('counts down correctly', () => {
+      // set local time to get correct values
+      cy.clock(currentTime.getTime())
+        .then(() => {
+          cy.dataCy('countdown-days').should('have.text', '3');
+          cy.dataCy('countdown-hours').should('have.text', '0');
+          cy.dataCy('countdown-minutes').should('have.text', '0');
+          cy.dataCy('countdown-seconds').should('have.text', '0');
+          // wait 1 second
+          cy.tick(1000);
+          cy.dataCy('countdown-days').should('have.text', '2');
+          cy.dataCy('countdown-hours').should('have.text', '23');
+          cy.dataCy('countdown-minutes').should('have.text', '59');
+          cy.dataCy('countdown-seconds').should('have.text', '59');
+          // wait 1 minute
+          cy.tick(60 * 1000);
+          cy.dataCy('countdown-days').should('have.text', '2');
+          cy.dataCy('countdown-hours').should('have.text', '23');
+          cy.dataCy('countdown-minutes').should('have.text', '58');
+          cy.dataCy('countdown-seconds').should('have.text', '59');
+          // wait 1 hour
+          cy.tick(60 * 60 * 1000);
+          cy.dataCy('countdown-days').should('have.text', '2');
+          cy.dataCy('countdown-hours').should('have.text', '22');
+          cy.dataCy('countdown-minutes').should('have.text', '58');
+          cy.dataCy('countdown-seconds').should('have.text', '59');
+        });
+    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(CountdownChallenge, {
         props: {
-          dateEnd: '2023-10-24',
+          dateEnd,
         },
       });
       cy.viewport('iphone-6');
