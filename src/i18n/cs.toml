@@ -16,6 +16,16 @@ inviteFriends = "Pozvat přátele"
 donate = "Darujte"
 more = "Více"
 
+[time]
+day = "den | dní"
+hour = "hodina | hodin"
+minute = "minuta | minut"
+second = "sekunda | sekund"
+dayShort = "d."
+hourShort = "h."
+minuteShort = "m."
+secondShort = "s."
+
 [index]
 title = "Domov"
 logoAltText = "Logo Do práce na kole"

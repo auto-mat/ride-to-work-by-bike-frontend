@@ -16,6 +16,16 @@ inviteFriends = "Invite friends"
 donate = "Donate"
 more = "More"
 
+[time]
+day = "day | days"
+hour = "hour | hours"
+minute = "minute | minutes"
+second = "second | seconds"
+dayShort = "d."
+hourShort = "h."
+minuteShort = "m."
+secondShort = "s."
+
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"
