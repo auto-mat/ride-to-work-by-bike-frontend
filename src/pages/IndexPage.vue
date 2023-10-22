@@ -93,14 +93,14 @@
 import { defineComponent } from 'vue';
 
 // import components
-import EventCountdown from 'components/EventCountdown.vue';
-import ListCardChallenge from 'components/ListCardChallenge.vue';
-import BannerImage from 'components/BannerImage.vue';
-import HeadingBackground from 'src/components/HeadingBackground.vue';
-import ListCardEvent from 'src/components/ListCardEvent.vue';
-import ListBadgeAchievement from 'src/components/ListBadgeAchievement.vue';
 import BannerApp from 'src/components/BannerApp.vue';
+import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'src/components/BannerRoutes.vue';
+import EventCountdown from 'components/EventCountdown.vue';
+import HeadingBackground from 'src/components/HeadingBackground.vue';
+import ListBadgeAchievement from 'src/components/ListBadgeAchievement.vue';
+import ListCardChallenge from 'components/ListCardChallenge.vue';
+import ListCardEvent from 'src/components/ListCardEvent.vue';
 import ListCardFollow from 'src/components/ListCardFollow.vue';
 import ListCardOffer from 'src/components/ListCardOffer.vue';
 import ListCardPost from 'src/components/ListCardPost.vue';
