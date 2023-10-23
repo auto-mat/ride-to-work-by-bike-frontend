@@ -27,7 +27,7 @@
  */
 
 // libraries
-import { h, VNode, RendererNode, RendererElement } from 'vue';
+import { h, VNode, RendererNode, RendererElement, VNodeChild } from 'vue';
 
 export default {
   name: 'SectionColumns',
@@ -47,11 +47,13 @@ export default {
 
     // Map over each child in the default slot
     const childrenWithClass = defaultSlot.map(
-      (slot): VNode<RendererNode, RendererElement>[] => {
+      (
+        slot: VNode<RendererNode, RendererElement>,
+      ): VNode<RendererNode, RendererElement>[] => {
         // If children are VNodes
         if (Array.isArray(slot.children)) {
           return slot.children.map(
-            (child): VNode<RendererNode, RendererElement> => {
+            (child: VNodeChild): VNode<RendererNode, RendererElement> => {
               // Render each child with the appropriate column classes
               return h(
                 'div',
