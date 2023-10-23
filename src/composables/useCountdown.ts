@@ -14,10 +14,10 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
 
   let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
-  const startCountdown = () => {
+  const startCountdown = (): void => {
     const targetDate = new Date(releaseDate).getTime();
 
-    countdownInterval = setInterval(() => {
+    countdownInterval = setInterval((): void => {
       const now = new Date().getTime();
       const timeDifference = getTimeDifference(now, targetDate);
 
@@ -29,7 +29,7 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     return date - now;
   }
 
-  function computeCountdownInterval(timeDifference: number) {
+  function computeCountdownInterval(timeDifference: number): void {
     if (timeDifference > 0) {
       setCountdownValues(timeDifference);
     } else {
@@ -50,11 +50,11 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     };
   }
 
-  watchEffect(() => {
+  watchEffect((): void => {
     startCountdown();
   });
 
-  onBeforeUnmount(() => {
+  onBeforeUnmount((): void => {
     if (countdownInterval) {
       clearInterval(countdownInterval);
     }
