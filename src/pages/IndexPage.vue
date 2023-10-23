@@ -96,13 +96,14 @@
 import { defineComponent } from 'vue';
 
 // import components
-import BannerApp from 'src/components/BannerApp.vue';
+import BannerApp from 'components/BannerApp.vue';
 import BannerImage from 'components/BannerImage.vue';
-import BannerRoutes from 'src/components/BannerRoutes.vue';
-import CountdownChallenge from 'src/components/CountdownChallenge.vue';
+import BannerRoutes from 'components/BannerRoutes.vue';
+import CardStats from 'src/components/CardStats.vue';
+import CountdownChallenge from 'components/CountdownChallenge.vue';
 import EventCountdown from 'components/EventCountdown.vue';
-import HeadingBackground from 'src/components/HeadingBackground.vue';
-import ListBadgeAchievement from 'src/components/ListBadgeAchievement.vue';
+import HeadingBackground from 'components/HeadingBackground.vue';
+import ListBadgeAchievement from 'components/ListBadgeAchievement.vue';
 import ListCardChallenge from 'components/ListCardChallenge.vue';
 import ListCardEvent from 'src/components/ListCardEvent.vue';
 import ListCardFollow from 'src/components/ListCardFollow.vue';
@@ -110,9 +111,8 @@ import ListCardOffer from 'src/components/ListCardOffer.vue';
 import ListCardPost from 'src/components/ListCardPost.vue';
 import ListCardProgress from 'src/components/ListCardProgress.vue';
 import NewsletterFeature from 'src/components/NewsletterFeature.vue';
-import SliderProgress from 'src/components/SliderProgress.vue';
 import SectionColumns from 'src/components/SectionColumns.vue';
-import CardStats from 'src/components/CardStats.vue';
+import SliderProgress from 'src/components/SliderProgress.vue';
 
 // mocks
 import * as homepage from '../mocks/homepage';
