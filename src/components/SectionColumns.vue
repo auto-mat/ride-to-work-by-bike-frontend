@@ -27,7 +27,7 @@
  */
 
 // libraries
-import { h } from 'vue';
+import { h, VNode, RendererNode, RendererElement } from 'vue';
 
 export default {
   name: 'SectionColumns',
@@ -46,34 +46,36 @@ export default {
     }
 
     // Map over each child in the default slot
-    const childrenWithClass = defaultSlot.map((slot) => {
-      // If children are VNodes
-      if (Array.isArray(slot.children)) {
-        return slot.children.map((child) => {
-          // Render each child with the appropriate column classes
-          return h(
-            'div',
-            {
-              'class': [`col-12 col-sm-6 col-lg-${12 / this.columns}`],
-              'data-cy': 'section-columns-column',
-            },
-            [child]
-          );
-        });
-      }
+    const childrenWithClass = defaultSlot.map(
+      (slot): VNode<RendererNode, RendererElement>[] => {
+        // If children are VNodes
+        if (Array.isArray(slot.children)) {
+          return slot.children.map((child) => {
+            // Render each child with the appropriate column classes
+            return h(
+              'div',
+              {
+                class: [`col-12 col-sm-6 col-lg-${12 / this.columns}`],
+                'data-cy': 'section-columns-column',
+              },
+              [child],
+            );
+          });
+        }
 
-      // Render content
-      return h('div', {}, slot);
-    });
+        // Render content
+        return [h('div', {}, slot)];
+      },
+    );
 
     // Return the component VNode
     return h(
       'div',
       {
-        'class': ['row'],
+        class: ['row'],
         'data-cy': 'section-columns-row',
       },
-      childrenWithClass
+      childrenWithClass,
     );
   },
 };
