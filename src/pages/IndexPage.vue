@@ -52,9 +52,7 @@
       <section-columns :columns="3" class="q-col-gutter-lg q-pt-xl q-pb-xl">
         <card-stats v-for="card in cardsStats" :key="card.title" :card="card" />
       </section-columns>
-      <countdown-challenge
-        date-end="2023-10-24"
-      />
+      <countdown-challenge date-end="2023-10-24" />
     </div>
     <heading-background
       :title="headingBgTitle"

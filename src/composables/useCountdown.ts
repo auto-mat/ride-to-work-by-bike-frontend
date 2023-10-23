@@ -4,7 +4,9 @@ import { ref, watchEffect, onBeforeUnmount, Ref } from 'vue';
 // types
 import { Countdown } from 'src/components/types';
 
-export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> } => {
+export const useCountdown = (
+  releaseDate: string,
+): { countdown: Ref<Countdown> } => {
   const countdown = ref<Countdown>({
     days: 0,
     hours: 0,
@@ -29,7 +31,10 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     return date - now;
   }
 
-  function computeCountdownInterval(timeDifference: number, countdownInterval: NodeJS.Timeout | null): void {
+  function computeCountdownInterval(
+    timeDifference: number,
+    countdownInterval: NodeJS.Timeout | null,
+  ): void {
     if (timeDifference > 0) {
       setCountdownValues(timeDifference);
     } else {
@@ -43,7 +48,7 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     countdown.value = {
       days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
       hours: Math.floor(
-        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       ),
       minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
       seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
@@ -61,5 +66,4 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
   });
 
   return { countdown };
-
-}
+};

@@ -1,23 +1,23 @@
-<script lang='ts'>
+<script lang="ts">
 /**
-* CountdownChallenge Component
-*
-* The `CountdownChallenge` displays a countdown to the end of the challenge.
-*
-* @description * Use this component to display countdown when the challenge
-* is about to end.
-*
-* Note: This component is commonly used on Homepage.
-*
-* @props
-* - `dateEnd` (String, required): Date when challenge ends.
-*   It should be a string represenation of date object.
-*
-* @example
-* <countdown-challenge />
-*
-* @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22987&mode=dev)
-*/
+ * CountdownChallenge Component
+ *
+ * The `CountdownChallenge` displays a countdown to the end of the challenge.
+ *
+ * @description * Use this component to display countdown when the challenge
+ * is about to end.
+ *
+ * Note: This component is commonly used on Homepage.
+ *
+ * @props
+ * - `dateEnd` (String, required): Date when challenge ends.
+ *   It should be a string represenation of date object.
+ *
+ * @example
+ * <countdown-challenge />
+ *
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22987&mode=dev)
+ */
 
 // libraries
 import { defineComponent } from 'vue';
@@ -30,9 +30,9 @@ import { useCountdown } from 'src/composables/useCountdown';
 import { ConfigGlobal } from 'components/types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
-setCssVar('info', rideToWorkByBikeConfig.colorGrayLight)
+setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'CountdownChallenge',
@@ -40,21 +40,24 @@ export default defineComponent({
     dateEnd: {
       type: String,
       required: true,
-    }
+    },
   },
   setup(props) {
-    const { countdown } = useCountdown(props.dateEnd)
+    const { countdown } = useCountdown(props.dateEnd);
 
     return {
-      countdown
-    }
-  }
-})
+      countdown,
+    };
+  },
+});
 </script>
 
 <template>
   <div class="q-pa-lg bg-info" data-cy="countdown-challenge">
-    <h2 class="q-my-md text-center text-h6 text-bold" data-cy="countdown-challenge-title">
+    <h2
+      class="q-my-md text-center text-h6 text-bold"
+      data-cy="countdown-challenge-title"
+    >
       {{ $tc('index.countdownChallenge.title', countdown.days) }}
       <span data-cy="countdown-days">{{ countdown.days }}</span>
       {{ $tc('time.day', countdown.days) }}
@@ -68,5 +71,4 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
