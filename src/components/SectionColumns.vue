@@ -50,17 +50,19 @@ export default {
       (slot): VNode<RendererNode, RendererElement>[] => {
         // If children are VNodes
         if (Array.isArray(slot.children)) {
-          return slot.children.map((child) => {
-            // Render each child with the appropriate column classes
-            return h(
-              'div',
-              {
-                class: [`col-12 col-sm-6 col-lg-${12 / this.columns}`],
-                'data-cy': 'section-columns-column',
-              },
-              [child],
-            );
-          });
+          return slot.children.map(
+            (child): VNode<RendererNode, RendererElement> => {
+              // Render each child with the appropriate column classes
+              return h(
+                'div',
+                {
+                  class: [`col-12 col-sm-6 col-lg-${12 / this.columns}`],
+                  'data-cy': 'section-columns-column',
+                },
+                [child],
+              );
+            },
+          );
         }
 
         // Render content
