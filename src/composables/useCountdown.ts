@@ -12,7 +12,7 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     seconds: 0,
   });
 
-  let countdownInterval: ReturnType<typeof setInterval> | null = null;
+  let countdownInterval: NodeJS.Timeout | null = null;
 
   const startCountdown = (): void => {
     const targetDate = new Date(releaseDate).getTime();
@@ -21,7 +21,7 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
       const now = new Date().getTime();
       const timeDifference = getTimeDifference(now, targetDate);
 
-      computeCountdownInterval(timeDifference);
+      computeCountdownInterval(timeDifference, countdownInterval);
     }, 1000);
   };
 
@@ -29,7 +29,7 @@ export const useCountdown = (releaseDate: string): { countdown: Ref<Countdown> }
     return date - now;
   }
 
-  function computeCountdownInterval(timeDifference: number): void {
+  function computeCountdownInterval(timeDifference: number, countdownInterval: NodeJS.Timeout | null): void {
     if (timeDifference > 0) {
       setCountdownValues(timeDifference);
     } else {
