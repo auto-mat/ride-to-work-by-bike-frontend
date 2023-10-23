@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
+
 import BannerRoutes from 'components/BannerRoutes.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
 
 const routesCount = 3;
 
@@ -70,7 +74,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', '#fafafa'); // grey-1
+          .should('have.backgroundColor', getPaletteColor('grey-1'));
       });
     });
 
@@ -146,7 +150,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', '#fafafa'); // grey-1
+          .should('have.backgroundColor', getPaletteColor('grey-1'));
       });
     });
 
@@ -218,7 +222,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', '#fafafa'); // grey-1
+          .should('have.backgroundColor', getPaletteColor('grey-1'));
       });
     });
 
