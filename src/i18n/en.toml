@@ -144,3 +144,9 @@ deployedAppVersion = "Deployed app version"
 
 [login]
 title = "Login"
+
+[login.form]
+email = "E-mail"
+password = "Password"
+emailReqired = "Please fill in your e-mail"
+passwordRequired = "Please fill in the password"

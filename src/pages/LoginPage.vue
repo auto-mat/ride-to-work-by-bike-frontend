@@ -29,6 +29,7 @@ import { ConfigGlobal } from 'components/types';
 // components
 import HelpButton from 'components/HelpButton.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import FormLogin from 'components/FormLogin.vue';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -41,7 +42,17 @@ export default defineComponent({
   components: {
     HelpButton,
     LanguageSwitcher,
+    FormLogin,
   },
+  setup() {
+    const onSubmit = () => {
+      // noop
+    }
+
+    return {
+      onSubmit,
+    };
+  }
 });
 </script>
 
@@ -69,6 +80,9 @@ export default defineComponent({
         <h1 class="text-h5 text-bold text-white" data-cy="login-page-title">
           {{ $t('login.title') }}
         </h1>
+      </div>
+      <div>
+        <form-login @formSubmit="onSubmit" />
       </div>
     </div>
   </q-page>
