@@ -1,3 +1,6 @@
+import { colors } from 'quasar';
+const { getPaletteColor } = colors;
+
 describe('Login page', () => {
   context('desktop', () => {
     beforeEach(() => {
@@ -219,7 +222,7 @@ describe('Login page', () => {
         .then(() => {
           cy.dataCy('login-page-title')
             .should('be.visible')
-            .should('have.color', '#fff')
+            .should('have.color', getPaletteColor('grey-10'))
             .should('have.css', 'font-size', '24px')
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('login.title'));
