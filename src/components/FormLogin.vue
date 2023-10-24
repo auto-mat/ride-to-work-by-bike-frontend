@@ -103,7 +103,7 @@ export default defineComponent({
       </q-input>
       <!-- Link: fogotten password -->
       <div class="flex justify-end q-mt-sm">
-        <a href="#" class="text-caption">Forgotten password?</a>
+        <a href="#" class="text-primary text-caption" data-cy="form-login-forgotten-password">{{ $t('login.form.forgottenPassword') }}</a>
       </div>
     </div>
   </q-form>
