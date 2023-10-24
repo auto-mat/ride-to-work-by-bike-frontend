@@ -2,14 +2,14 @@
 // libraries
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '../boot/i18n';
 
 // import components
 import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
 import FooterBar from 'components/FooterBar.vue';
-import MobileBottomPanel from 'src/components/MobileBottomPanel.vue';
+import MobileBottomPanel from 'components/MobileBottomPanel.vue';
 
 // import types
 import { ConfigGlobal } from 'components/types';

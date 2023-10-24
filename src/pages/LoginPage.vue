@@ -28,7 +28,7 @@ import { ConfigGlobal } from 'components/types';
 
 // components
 import HelpButton from 'components/HelpButton.vue';
-import LanguageSwitcher from 'src/components/LanguageSwitcher.vue';
+import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
