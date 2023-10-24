@@ -57,6 +57,30 @@ describe('<FormLogin>', () => {
         .invoke('width')
         .should('be.equal', 18);
     })
+
+    it('should allow user to reveal and hide password', () => {
+      cy.dataCy('form-login-password')
+        .find('input')
+        .should('have.attr', 'type', 'password')
+      cy.dataCy('form-login-password-icon').click();
+      cy.dataCy('form-login-password')
+        .find('input')
+        .should('have.attr', 'type', 'text')
+      cy.dataCy('form-login-password-icon').click();
+      cy.dataCy('form-login-password')
+        .find('input')
+        .should('have.attr', 'type', 'password')
+    })
+
+    it('displays forgotten password link', () => {
+      cy.dataCy('form-login-forgotten-password')
+        .should('be.visible')
+        .should('have.color', `${colorPrimary}`)
+        .should('have.css', 'text-decoration-line', 'underline')
+        .should('have.css', 'font-size', '12px')
+        .should('have.css', 'font-weight', '400')
+        .should('have.text', i18n.global.t('login.form.forgottenPassword'));
+    })
   });
 
   context('mobile', () => {
