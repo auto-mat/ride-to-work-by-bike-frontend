@@ -16,7 +16,18 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28441&mode=dev)
  */
 
+// libraries
 import { defineComponent, ref, reactive } from 'vue';
+import { setCssVar } from 'quasar';
+
+// types
+import { ConfigGlobal } from 'components/types';
+
+// config
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+);
+setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
 
 export default defineComponent({
   name: 'FormLogin',
@@ -87,7 +98,7 @@ export default defineComponent({
       >
         <!-- Icon: show password -->
         <template v-slot:append>
-          <q-icon color="primary" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+          <q-icon color="primary" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" size="18px" @click="isPwd = !isPwd" data-cy="form-login-password-icon" />
         </template>
       </q-input>
       <!-- Link: fogotten password -->
@@ -97,3 +108,12 @@ export default defineComponent({
     </div>
   </q-form>
 </template>
+
+<style scoped lang="scss">
+:deep(.q-field__control) {
+  border-radius: 8px;
+  &:before {
+    border-color: transparent;
+  }
+}
+</style>
