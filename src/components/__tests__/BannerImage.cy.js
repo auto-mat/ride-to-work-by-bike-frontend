@@ -1,5 +1,5 @@
-import BannerImage from 'components/BannerImage.vue';
-import { bannerImage } from 'src/mocks/homepage';
+import BannerImage from '../BannerImage.vue';
+import { bannerImage } from '../../mocks/homepage';
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
@@ -76,7 +76,7 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner').should(
           'have.backgroundColor',
-          config.colorGrayLight
+          config.colorGrayLight,
         );
       });
 
@@ -92,12 +92,12 @@ describe('<BannerImage>', () => {
             .should(
               'have.css',
               'border-top-left-radius',
-              config.borderRadiusCard
+              config.borderRadiusCard,
             )
             .should(
               'have.css',
               'border-bottom-left-radius',
-              config.borderRadiusCard
+              config.borderRadiusCard,
             );
         });
       });
@@ -177,7 +177,7 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner').should(
           'have.backgroundColor',
-          config.colorGrayLight
+          config.colorGrayLight,
         );
       });
     });

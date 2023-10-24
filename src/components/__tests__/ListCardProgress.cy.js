@@ -1,13 +1,13 @@
-import ListCardProgress from 'components/ListCardProgress.vue';
+import ListCardProgress from '../ListCardProgress.vue';
 import { i18n } from '../../boot/i18n';
-import { progressStats, cardsProgress } from 'src/mocks/homepage';
+import { progressStats, cardsProgress } from '../../mocks/homepage';
 
 describe('<ListCardProgress>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
       'index.cardListProgress',
-      i18n
+      i18n,
     );
   });
 
@@ -33,7 +33,7 @@ describe('<ListCardProgress>', () => {
           .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.progressSlider.title')
+              i18n.global.t('index.progressSlider.title'),
             );
           });
       });

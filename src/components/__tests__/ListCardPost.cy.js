@@ -1,4 +1,4 @@
-import ListCardPost from 'components/ListCardPost.vue';
+import ListCardPost from '../ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 
@@ -16,7 +16,7 @@ describe('<ListCardPost>', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
       'index.cardListPost',
-      i18n
+      i18n,
     );
   });
 

@@ -21,13 +21,13 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '../boot/i18n';
 
 // components
-import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import LanguageSwitcher from './LanguageSwitcher.vue';
 
 // types
-import { ConfigGlobal } from 'components/types';
+import { ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

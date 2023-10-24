@@ -1,5 +1,5 @@
-import LanguageSwitcher from 'components/LanguageSwitcher.vue';
-import { i18n } from '../../../src/boot/i18n';
+import LanguageSwitcher from '../LanguageSwitcher.vue';
+import { i18n } from '../../boot/i18n';
 
 describe('<LanguageSwitcher>', () => {
   it('has translation for all strings', () => {

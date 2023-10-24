@@ -1,6 +1,6 @@
-import CardOffer from 'components/CardOffer.vue';
+import CardOffer from '../CardOffer.vue';
 import { i18n } from '../../boot/i18n';
-import { cardsOffer } from 'src/mocks/homepage';
+import { cardsOffer } from '../../mocks/homepage';
 
 const card = cardsOffer[0];
 
@@ -9,7 +9,7 @@ describe('<CardOffer>', () => {
     cy.testLanguageStringsInContext(
       ['unlimitedExpirationDate', 'offerCode'],
       'index.cardOffer',
-      i18n
+      i18n,
     );
   });
 
@@ -36,7 +36,7 @@ describe('<CardOffer>', () => {
         cy.dataCy('card-offer').should(
           'have.css',
           'border',
-          '1px solid rgba(0, 0, 0, 0.12)'
+          '1px solid rgba(0, 0, 0, 0.12)',
         );
       });
     });
@@ -95,7 +95,7 @@ describe('<CardOffer>', () => {
         cy.dataCy('card-offer').should(
           'have.css',
           'border',
-          '1px solid rgba(0, 0, 0, 0.12)'
+          '1px solid rgba(0, 0, 0, 0.12)',
         );
       });
     });
@@ -175,8 +175,9 @@ describe('<CardOffer>', () => {
     it('shows modal image', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-        cy.dataCy('dialog-body').scrollTo('bottom')
-        cy.dataCy('dialog-body').find('img')
+        cy.dataCy('dialog-body').scrollTo('bottom');
+        cy.dataCy('dialog-body')
+          .find('img')
           .should('be.visible')
           .then(($img) => {
             cy.testImageHeight($img);
@@ -185,7 +186,7 @@ describe('<CardOffer>', () => {
         cy.matchImageSnapshotWithHiddenScrollbars(
           'dialog-body',
           0.5,
-          'percent'
+          'percent',
         );
       });
     });

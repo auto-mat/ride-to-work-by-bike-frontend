@@ -1,4 +1,4 @@
-import NewsletterItem from 'components/NewsletterItem.vue';
+import NewsletterItem from '../NewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const icon = 'people';
@@ -35,7 +35,7 @@ describe('<NewsletterItem>', () => {
         cy.dataCy('newsletter-item').should(
           'have.css',
           'justify-content',
-          'space-between'
+          'space-between',
         );
       });
     });
@@ -75,7 +75,7 @@ describe('<NewsletterItem>', () => {
           .should('have.color', '#212121')
           .should(
             'contain',
-            i18n.global.t('index.newsletterFeature.following')
+            i18n.global.t('index.newsletterFeature.following'),
           );
 
         cy.dataCy('newsletter-item-button')
@@ -139,7 +139,7 @@ describe('<NewsletterItem>', () => {
           .should('have.color', '#212121')
           .should(
             'contain',
-            i18n.global.t('index.newsletterFeature.following')
+            i18n.global.t('index.newsletterFeature.following'),
           );
 
         cy.dataCy('newsletter-item-button')
@@ -159,7 +159,7 @@ describe('<NewsletterItem>', () => {
         cy.dataCy('newsletter-item').should(
           'have.css',
           'justify-content',
-          'flex-end'
+          'flex-end',
         );
       });
     });
@@ -169,7 +169,7 @@ describe('<NewsletterItem>', () => {
         cy.dataCy('newsletter-item-content').should(
           'have.css',
           'flex-wrap',
-          'nowrap'
+          'nowrap',
         );
       });
     });

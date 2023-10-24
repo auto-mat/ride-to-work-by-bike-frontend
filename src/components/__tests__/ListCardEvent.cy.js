@@ -1,4 +1,4 @@
-import ListCardEvent from 'components/ListCardEvent.vue';
+import ListCardEvent from '../ListCardEvent.vue';
 
 describe('<ListCardEvent>', () => {
   beforeEach(() => {

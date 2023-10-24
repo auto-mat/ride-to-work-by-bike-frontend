@@ -31,7 +31,7 @@ import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // types
-import { ConfigGlobal } from 'components/types';
+import { ConfigGlobal } from './types';
 
 // components
 import ContactForm from './ContactForm.vue';

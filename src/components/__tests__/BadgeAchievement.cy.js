@@ -1,6 +1,6 @@
-import BadgeAchievement from 'components/BadgeAchievement.vue';
+import BadgeAchievement from '../BadgeAchievement.vue';
 import { i18n } from '../../boot/i18n';
-import { badgeList } from 'src/mocks/homepage';
+import { badgeList } from '../../mocks/homepage';
 
 const badge = badgeList[0];
 const badgeDark = badgeList[1];

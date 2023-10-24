@@ -27,10 +27,10 @@
 import { defineComponent } from 'vue';
 
 // components
-import CardEvent from 'components/CardEvent.vue';
+import CardEvent from './CardEvent.vue';
 
 // types
-import { CardEvent as CardEventType } from 'components/types';
+import { CardEvent as CardEventType } from './types';
 
 export default defineComponent({
   name: 'ListCardEvent',

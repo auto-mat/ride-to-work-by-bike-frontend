@@ -1,4 +1,4 @@
-import SliderProgress from 'components/SliderProgress.vue';
+import SliderProgress from '../SliderProgress.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 
@@ -11,7 +11,7 @@ describe('<SliderProgress>', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
       'index.progressSlider',
-      i18n
+      i18n,
     );
   });
 
@@ -40,7 +40,7 @@ describe('<SliderProgress>', () => {
           .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.progressSlider.title')
+              i18n.global.t('index.progressSlider.title'),
             );
           });
       });
@@ -150,7 +150,7 @@ describe('<SliderProgress>', () => {
         .should('contain', i18n.global.t('index.progressSlider.button'))
         .then(($title) => {
           expect($title.text()).to.equal(
-            i18n.global.t('index.progressSlider.button')
+            i18n.global.t('index.progressSlider.button'),
           );
         });
     });
@@ -181,7 +181,7 @@ describe('<SliderProgress>', () => {
           .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.progressSlider.title')
+              i18n.global.t('index.progressSlider.title'),
             );
           });
       });

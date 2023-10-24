@@ -31,7 +31,7 @@ import { defineComponent } from 'vue';
 import {
   CardChallenge as CardChallengeType,
   ConfigGlobal,
-} from 'components/types';
+} from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

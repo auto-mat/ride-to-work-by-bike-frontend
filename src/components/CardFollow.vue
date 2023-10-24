@@ -27,7 +27,7 @@
 import { defineComponent } from 'vue';
 
 // types
-import { CardFollow, ConfigGlobal } from 'components/types';
+import { CardFollow, ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

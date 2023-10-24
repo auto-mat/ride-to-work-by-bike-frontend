@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 
 // mocks
-import { user, userMenuTop, userMenuBottom } from 'src/mocks/layout';
+import { user, userMenuTop, userMenuBottom } from '../mocks/layout';
 
 export default defineComponent({
   name: 'UserSelect',

@@ -1,4 +1,4 @@
-import CardFollow from 'components/CardFollow.vue';
+import CardFollow from '../CardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks
@@ -37,7 +37,7 @@ describe('<CardFollow>', () => {
         cy.dataCy('card-follow').should(
           'have.css',
           'border',
-          '1px solid rgb(220, 225, 237)' // config colorGrayMiddle
+          '1px solid rgb(220, 225, 237)', // config colorGrayMiddle
         );
       });
     });
@@ -59,7 +59,7 @@ describe('<CardFollow>', () => {
         cy.dataCy('card-follow-wrapper').should(
           'have.css',
           'padding-top',
-          '48px'
+          '48px',
         );
       });
     });

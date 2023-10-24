@@ -26,7 +26,7 @@ import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
 // types
-import { Countdown, ConfigGlobal } from 'components/types';
+import { Countdown, ConfigGlobal } from './types';
 
 const { formatDate } = date;
 

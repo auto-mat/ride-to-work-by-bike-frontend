@@ -1,4 +1,4 @@
-import FooterBar from 'components/FooterBar.vue';
+import FooterBar from '../FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FooterBar>', () => {

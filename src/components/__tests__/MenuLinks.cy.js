@@ -1,4 +1,4 @@
-import MenuLinks from 'components/MenuLinks.vue';
+import MenuLinks from '../MenuLinks.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<MenuLinks>', () => {

@@ -26,7 +26,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue';
 import { Screen } from 'quasar';
 
 // types
-import { BannerApp as BannerAppType, ConfigGlobal } from 'components/types';
+import { BannerApp as BannerAppType, ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

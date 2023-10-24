@@ -1,5 +1,5 @@
-import BannerApp from 'components/BannerApp.vue';
-import { bannerApp } from 'src/mocks/homepage';
+import BannerApp from '../BannerApp.vue';
+import { bannerApp } from '../../mocks/homepage';
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 

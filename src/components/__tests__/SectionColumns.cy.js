@@ -1,4 +1,4 @@
-import SectionColumnsTest from 'components/SectionColumnsTest.vue';
+import SectionColumnsTest from '../SectionColumnsTest.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<SectionColumnsTest>', () => {
@@ -17,9 +17,9 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 2 columns', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 50);
-    })
+    });
   });
 
   context('desktop 3 columns', () => {
@@ -33,9 +33,9 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 3 columns', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 33);
-    })
+    });
   });
 
   context('desktop 4 columns', () => {
@@ -49,9 +49,9 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 4 columns', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 25);
-    })
+    });
   });
 
   context('desktop 6 columns', () => {
@@ -65,9 +65,9 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 6 columns', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 17);
-    })
+    });
   });
 
   context('tablet', () => {
@@ -81,9 +81,9 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 2 columns', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 50);
-    })
+    });
   });
 
   context('mobile', () => {
@@ -97,8 +97,8 @@ describe('<SectionColumnsTest>', () => {
     });
 
     it('renders 1 column', () => {
-      cy.dataCy('section-columns-row').should('be.visible')
+      cy.dataCy('section-columns-row').should('be.visible');
       cy.testElementPercentageWidth(cy.dataCy('section-columns-column'), 100);
-    })
+    });
   });
 });

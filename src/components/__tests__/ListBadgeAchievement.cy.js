@@ -1,6 +1,6 @@
-import ListBadgeAchievement from 'components/ListBadgeAchievement.vue';
+import ListBadgeAchievement from '../ListBadgeAchievement.vue';
 import { i18n } from '../../boot/i18n';
-import { badgeList } from 'src/mocks/homepage';
+import { badgeList } from '../../mocks/homepage';
 
 describe('<ListBadgeAchievement>', () => {
   it('has translation for all strings', () => {

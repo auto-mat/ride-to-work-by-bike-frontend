@@ -1,5 +1,5 @@
 import UserSelect from '../UserSelect.vue';
-import { user } from 'src/mocks/layout';
+import { user } from '../../mocks/layout';
 import { i18n } from '../../boot/i18n';
 
 describe('<UserSelect>', () => {

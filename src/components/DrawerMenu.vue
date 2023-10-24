@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 
 // mocks
-import { menuBottom, menuTop } from 'src/mocks/layout';
+import { menuBottom, menuTop } from '../mocks/layout';
 
 export default defineComponent({
   name: 'DrawerMenu',

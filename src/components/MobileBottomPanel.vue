@@ -23,7 +23,7 @@ import { defineComponent, ref, computed } from 'vue';
 import { Link } from 'components/types';
 
 // mocks
-import { menuBottom, menuTop } from 'src/mocks/layout';
+import { menuBottom, menuTop } from '../mocks/layout';
 
 export default defineComponent({
   name: 'MobileBottomPanel',

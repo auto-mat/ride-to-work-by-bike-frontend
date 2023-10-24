@@ -1,4 +1,4 @@
-import CardEvent from 'components/CardEvent.vue';
+import CardEvent from '../CardEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 const title = 'Opening Ceremony Bike to Work 2022';
@@ -40,7 +40,7 @@ describe('<CardEvent>', () => {
       cy.testLanguageStringsInContext(
         ['addToCalendar'],
         'index.cardEvent',
-        i18n
+        i18n,
       );
     });
 

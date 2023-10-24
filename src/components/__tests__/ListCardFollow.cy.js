@@ -1,4 +1,4 @@
-import ListCardFollow from 'components/ListCardFollow.vue';
+import ListCardFollow from '../ListCardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks
@@ -28,7 +28,7 @@ describe('<ListCardFollow>', () => {
           .should('contain', i18n.global.t('index.cardListFollow.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.cardListFollow.title')
+              i18n.global.t('index.cardListFollow.title'),
             );
           });
       });
@@ -44,7 +44,7 @@ describe('<ListCardFollow>', () => {
       cy.window().then(() => {
         cy.testElementPercentageWidth(
           cy.dataCy('card-list-follow-col-title'),
-          33
+          33,
         );
 
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 33);
@@ -56,7 +56,7 @@ describe('<ListCardFollow>', () => {
         cy.dataCy('card-list-follow').should(
           'have.css',
           'align-items',
-          'center'
+          'center',
         );
       });
     });
@@ -76,7 +76,7 @@ describe('<ListCardFollow>', () => {
       cy.window().then(() => {
         cy.testElementPercentageWidth(
           cy.dataCy('card-list-follow-col-title'),
-          100
+          100,
         );
 
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 100);

@@ -23,10 +23,10 @@
 import { defineComponent } from 'vue';
 
 // mocks
-import { newsletterItems } from 'src/mocks/homepage';
+import { newsletterItems } from '../mocks/homepage';
 
 // components
-import NewsletterItem from 'components/NewsletterItem.vue';
+import NewsletterItem from './NewsletterItem.vue';
 
 export default defineComponent({
   name: 'NewsletterFeature',

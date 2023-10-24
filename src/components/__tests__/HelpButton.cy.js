@@ -1,8 +1,8 @@
-import HelpButton from 'components/HelpButton.vue';
+import HelpButton from '../HelpButton.vue';
 import { i18n } from '../../boot/i18n';
 
 const rideToWorkByBikeConfig = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
 
@@ -172,7 +172,7 @@ describe('<HelpButton>', () => {
           .should('contain', i18n.global.t('index.help.titleStateDefault'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.help.titleStateDefault')
+              i18n.global.t('index.help.titleStateDefault'),
             );
           });
       });
@@ -191,7 +191,7 @@ describe('<HelpButton>', () => {
           .should('contain', i18n.global.t('index.help.titleGuide'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.help.titleGuide')
+              i18n.global.t('index.help.titleGuide'),
             );
           });
         cy.dataCy('button-guide')
@@ -199,7 +199,7 @@ describe('<HelpButton>', () => {
           .should('contain.text', i18n.global.t('index.help.buttonGuide'))
           .then(($button) => {
             expect($button.text()).to.equal(
-              i18n.global.t('index.help.buttonGuide')
+              i18n.global.t('index.help.buttonGuide'),
             );
           });
       });

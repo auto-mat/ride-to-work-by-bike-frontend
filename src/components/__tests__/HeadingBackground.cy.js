@@ -1,4 +1,4 @@
-import HeadingBackground from 'components/HeadingBackground.vue';
+import HeadingBackground from '../HeadingBackground.vue';
 
 const title = 'Join the Bike to Work community in your city';
 

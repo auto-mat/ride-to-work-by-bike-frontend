@@ -1,4 +1,4 @@
-import CountdownChallenge from 'components/CountdownChallenge.vue';
+import CountdownChallenge from '../CountdownChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
 const rideToWorkByBikeConfig = JSON.parse(

@@ -1,4 +1,4 @@
-import CardProgressSlider from 'components/CardProgressSlider.vue';
+import CardProgressSlider from '../CardProgressSlider.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgressSlider } from '../../mocks/homepage';
 
@@ -9,7 +9,7 @@ describe('<CardProgressSlider>', () => {
     cy.testLanguageStringsInContext(
       ['timeline', 'toDate'],
       'index.cardProgressSlider',
-      i18n
+      i18n,
     );
   });
 

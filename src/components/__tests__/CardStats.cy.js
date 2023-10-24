@@ -1,6 +1,6 @@
-import CardStats from 'components/CardStats.vue';
+import CardStats from '../CardStats.vue';
 import { i18n } from '../../boot/i18n';
-import { cardsStats } from 'src/mocks/homepage';
+import { cardsStats } from '../../mocks/homepage';
 
 const card = cardsStats[0];
 

@@ -30,7 +30,7 @@ import { defineComponent, computed } from 'vue';
 import CardOffer from './CardOffer.vue';
 
 // types
-import { CardOffer as CardOfferType } from 'components/types';
+import { CardOffer as CardOfferType } from './types';
 
 export default defineComponent({
   name: 'ListCardOffer',

@@ -27,7 +27,7 @@
 
 // libraries
 import { defineComponent, computed } from 'vue';
-import { useCircleSize } from 'src/composables/useCircleSize';
+import { useCircleSize } from '../composables/useCircleSize';
 
 // types
 import { CardProgress as CardProgressType, ConfigGlobal } from './types';

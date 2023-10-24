@@ -1,4 +1,4 @@
-import CardChallenge from 'components/CardChallenge.vue';
+import CardChallenge from '../CardChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<CardChallenge>', () => {
@@ -29,7 +29,7 @@ describe('<CardChallenge>', () => {
     cy.testLanguageStringsInContext(
       ['dates', 'company'],
       'index.cardChallenge',
-      i18n
+      i18n,
     );
   });
 

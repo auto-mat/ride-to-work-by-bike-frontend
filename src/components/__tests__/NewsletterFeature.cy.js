@@ -1,4 +1,4 @@
-import NewsletterFeature from 'components/NewsletterFeature.vue';
+import NewsletterFeature from '../NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<NewsletterFeature>', () => {
@@ -14,7 +14,7 @@ describe('<NewsletterFeature>', () => {
         'follow',
       ],
       'index.newsletterFeature',
-      i18n
+      i18n,
     );
   });
 
@@ -35,7 +35,7 @@ describe('<NewsletterFeature>', () => {
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.newsletterFeature.title')
+              i18n.global.t('index.newsletterFeature.title'),
             );
           });
       });
@@ -49,11 +49,11 @@ describe('<NewsletterFeature>', () => {
           .should('have.color', '#000000')
           .should(
             'contain',
-            i18n.global.t('index.newsletterFeature.description')
+            i18n.global.t('index.newsletterFeature.description'),
           )
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.newsletterFeature.description')
+              i18n.global.t('index.newsletterFeature.description'),
             );
           });
       });
@@ -99,7 +99,7 @@ describe('<NewsletterFeature>', () => {
 
         cy.testElementPercentageWidth(
           cy.dataCy('newsletter-col-content'),
-          83.3
+          83.3,
         );
       });
     });
@@ -122,7 +122,7 @@ describe('<NewsletterFeature>', () => {
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.newsletterFeature.title')
+              i18n.global.t('index.newsletterFeature.title'),
             );
           });
       });
@@ -136,11 +136,11 @@ describe('<NewsletterFeature>', () => {
           .should('have.color', '#000000')
           .should(
             'contain',
-            i18n.global.t('index.newsletterFeature.description')
+            i18n.global.t('index.newsletterFeature.description'),
           )
           .then(($title) => {
             expect($title.text()).to.equal(
-              i18n.global.t('index.newsletterFeature.description')
+              i18n.global.t('index.newsletterFeature.description'),
             );
           });
       });

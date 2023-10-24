@@ -24,7 +24,7 @@
 import { defineComponent, computed } from 'vue';
 
 // types
-import { NewsletterItem as NewsletterItemType } from 'components/types';
+import { NewsletterItem as NewsletterItemType } from './types';
 
 export default defineComponent({
   name: 'NewsletterItem',

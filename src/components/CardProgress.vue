@@ -25,7 +25,7 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { useCircleSize } from 'src/composables/useCircleSize';
+import { useCircleSize } from '../composables/useCircleSize';
 
 // types
 import {

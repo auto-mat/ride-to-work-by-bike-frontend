@@ -1,4 +1,4 @@
-import ListCardOffer from 'components/ListCardOffer.vue';
+import ListCardOffer from '../ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks
@@ -11,7 +11,7 @@ describe('<ListCardOffer>', () => {
     cy.testLanguageStringsInContext(
       ['title', 'button'],
       'index.cardListOffer',
-      i18n
+      i18n,
     );
   });
 
@@ -59,7 +59,7 @@ describe('<ListCardOffer>', () => {
             'contain',
             i18n.global.t('index.cardListOffer.button', {
               count: cards.length,
-            })
+            }),
           );
       });
     });
@@ -109,7 +109,7 @@ describe('<ListCardOffer>', () => {
             'contain',
             i18n.global.t('index.cardListOffer.button', {
               count: cards.length,
-            })
+            }),
           );
       });
     });

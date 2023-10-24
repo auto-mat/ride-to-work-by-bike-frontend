@@ -22,8 +22,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import SectionColumns from 'src/components/SectionColumns.vue';
-import CardStats from 'src/components/CardStats.vue';
+import SectionColumns from './SectionColumns.vue';
+import CardStats from './CardStats.vue';
 
 // mocks
 import { cardsStats } from 'src/mocks/homepage';

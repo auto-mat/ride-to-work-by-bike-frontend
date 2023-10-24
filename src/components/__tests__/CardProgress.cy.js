@@ -1,4 +1,4 @@
-import CardProgress from 'components/CardProgress.vue';
+import CardProgress from '../CardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgress } from '../../mocks/homepage';
 
@@ -71,7 +71,7 @@ describe('<CardProgress>', () => {
     it('renders dark separator', () => {
       cy.dataCy('card-progress-separator').should(
         'have.backgroundColor',
-        '#546e7a'
+        '#546e7a',
       ); // bg-blue-grey-7
     });
 
@@ -154,7 +154,7 @@ describe('<CardProgress>', () => {
     it('renders light separator', () => {
       cy.dataCy('card-progress-separator').should(
         'have.backgroundColor',
-        '#eceff1'
+        '#eceff1',
       ); // bg-blue-grey-1
     });
 

@@ -26,10 +26,10 @@
 import { defineComponent } from 'vue';
 
 // components
-import CardChallenge from 'components/CardChallenge.vue';
+import CardChallenge from './CardChallenge.vue';
 
 // types
-import { CardChallenge as CardChallengeType } from 'components/types';
+import { CardChallenge as CardChallengeType } from './types';
 
 export default defineComponent({
   name: 'ListCardChallenge',

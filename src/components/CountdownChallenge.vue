@@ -24,10 +24,10 @@ import { defineComponent } from 'vue';
 import { setCssVar } from 'quasar';
 
 // composables
-import { useCountdown } from 'src/composables/useCountdown';
+import { useCountdown } from '../composables/useCountdown';
 
 // types
-import { ConfigGlobal } from 'components/types';
+import { ConfigGlobal } from './types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,

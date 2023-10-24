@@ -26,10 +26,10 @@
 // libraries
 import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '../boot/i18n';
 
 // types
-import { ConfigGlobal } from 'components/types';
+import { ConfigGlobal } from './types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG

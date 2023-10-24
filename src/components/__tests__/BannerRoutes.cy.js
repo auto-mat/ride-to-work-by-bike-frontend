@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import BannerRoutes from 'components/BannerRoutes.vue';
+import BannerRoutes from '../BannerRoutes.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
@@ -12,7 +12,7 @@ describe('<BannerRoutes>', () => {
     cy.testLanguageStringsInContext(
       ['title', 'titleStart', 'addRoutes', 'addFirstRoutes'],
       'index.bannerRoutes',
-      i18n
+      i18n,
     );
   });
 
@@ -29,8 +29,7 @@ describe('<BannerRoutes>', () => {
 
     it('renders title with the number of missing routes', () => {
       cy.window().then(() => {
-        cy.dataCy('banner-routes-title')
-          .should('contain', routesCount);
+        cy.dataCy('banner-routes-title').should('contain', routesCount);
       });
     });
 
@@ -38,7 +37,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000000')
+        .should('have.color', '#000000');
     });
 
     it('renders button', () => {
@@ -68,7 +67,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-button-icon')
         .invoke('width')
         .should('equal', 24);
-    })
+    });
 
     it('has gray background', () => {
       cy.window().then(() => {
@@ -87,9 +86,15 @@ describe('<BannerRoutes>', () => {
     });
 
     it('renders title section and button section side to side', () => {
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 67);
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 33);
-    })
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-title'),
+        67,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-button'),
+        33,
+      );
+    });
   });
 
   context('desktop start variant', () => {
@@ -105,8 +110,10 @@ describe('<BannerRoutes>', () => {
 
     it('renders title width the "start" message', () => {
       cy.window().then(() => {
-        cy.dataCy('banner-routes-title')
-          .should('contain', i18n.global.t('index.bannerRoutes.titleStart'));
+        cy.dataCy('banner-routes-title').should(
+          'contain',
+          i18n.global.t('index.bannerRoutes.titleStart'),
+        );
       });
     });
 
@@ -114,7 +121,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '20px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000000')
+        .should('have.color', '#000000');
     });
 
     it('renders button', () => {
@@ -144,7 +151,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-button-icon')
         .invoke('width')
         .should('equal', 24);
-    })
+    });
 
     it('has gray background', () => {
       cy.window().then(() => {
@@ -163,8 +170,14 @@ describe('<BannerRoutes>', () => {
     });
 
     it('renders title section and button section stacked', () => {
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-title'),
+        100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-button'),
+        100,
+      );
     });
   });
 
@@ -216,7 +229,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-button-icon')
         .invoke('width')
         .should('equal', 24);
-    })
+    });
 
     it('has gray background', () => {
       cy.window().then(() => {
@@ -235,8 +248,14 @@ describe('<BannerRoutes>', () => {
     });
 
     it('renders title section and button section stacked', () => {
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-title'), 100);
-      cy.testElementPercentageWidth(cy.dataCy('banner-routes-section-button'), 100);
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-title'),
+        100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('banner-routes-section-button'),
+        100,
+      );
     });
   });
 });

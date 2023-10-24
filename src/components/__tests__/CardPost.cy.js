@@ -1,4 +1,4 @@
-import CardPost from 'components/CardPost.vue';
+import CardPost from '../CardPost.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks
@@ -39,7 +39,7 @@ describe('<CardPost>', () => {
       cy.dataCy('card-post').should(
         'have.css',
         'border',
-        '1px solid rgba(0, 0, 0, 0.12)'
+        '1px solid rgba(0, 0, 0, 0.12)',
       );
     });
   });
