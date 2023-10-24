@@ -65,7 +65,7 @@ export default defineComponent({
         <!-- RTWBB logo -->
         <img
           class="logo"
-          src="~assets/svg/logo-white.svg"
+          src="~assets/svg/logo.svg"
           :alt="$t('index.logoAltText')"
           :title="$t('header.siteTitle')"
           data-cy="logo"
@@ -78,12 +78,14 @@ export default defineComponent({
         </div>
       </div>
       <div class="q-py-lg">
-        <h1 class="text-h5 text-bold text-white" data-cy="login-page-title">
+        <h1 class="text-h5 text-bold" data-cy="login-page-title">
           {{ $t('login.title') }}
         </h1>
       </div>
-      <div>
-        <form-login @formSubmit="onSubmit" />
+      <div class="row">
+        <div class="col-12 col-lg-4">
+          <form-login @formSubmit="onSubmit" />
+        </div>
       </div>
     </div>
   </q-page>
