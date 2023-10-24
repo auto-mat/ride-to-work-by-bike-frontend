@@ -4,7 +4,7 @@ A Ride to work by bike web app is based on the [Quasar framework](https://quasar
 ([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/),
 [TOML](https://toml.io)).
 
-Tested with Node.js [LTS Hydrogen](https://nodejs.org/en/download/releases) version.
+Tested with Node.js [LTS Iron](https://nodejs.org/en/download/releases) version.
 
 Installing and activating [Node Version Manager](https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating) `nvm`:
 
@@ -26,8 +26,8 @@ Using `nvm`:
 
 ```bash
 nmv list
-nvm install lts/hydrogen
-nmv use lts/hydrogen
+nvm install lts/iron
+nmv use lts/iron
 ```
 
 ## Install the dependencies
