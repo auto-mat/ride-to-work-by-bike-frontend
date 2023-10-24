@@ -36,6 +36,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
 );
 setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
+setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
 
 export default defineComponent({
   name: 'LoginPage',
@@ -57,7 +58,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding class="bg-primary">
+  <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
       <div class="flex items-center justify-between q-py-lg">
