@@ -52,7 +52,8 @@
     "test:component:open:win:electron": "cypress open --component --browser electron",
     "test:component:open:win:firefox": "cypress open --component --browser firefox",
     "test:component:open:win:chrome": "cypress open --component --browser chrome",
-    "test:component:open:win:edge": "cypress open --component --browser edge"
+    "test:component:open:win:edge": "cypress open --component --browser edge",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@originjs/vite-plugin-content": "^1.0.1",
@@ -80,6 +81,8 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-vue": "^9.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
     "prettier": "^3.0.0",
     "typescript": "^5.0.0"
   },
