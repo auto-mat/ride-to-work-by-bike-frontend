@@ -160,7 +160,7 @@ App is automatically deployed into k8 repository.
 Open web app URL https://rtwbb-test.dopracenakole.net/ with your default browser.
 
 ```bash
-# Open default web browser with URL https://rtwbb-test.dopracenakole.net/ from emulator terminal
+# Open default web browser with URL https://rtwbb-test.dopracenakole.net/ from the emulator terminal
 test@test:~$ xdg-open https://rtwbb-test.dopracenakole.net
 ```
 
@@ -174,13 +174,51 @@ APP_DIR=/home/dev/$APP_NAME
 docker buildx build --build-arg="UID=$(id -u)" -f ./docker/dev/Dockerfile .
 
 # Run Docker app container
-docker run -it --rm -e "PS1=\u@\h:\w$ " -p 9000:9000 -v $(pwd):$APP_DIR --name $APP_NAME <YOUR_BUILDED_DOCKER_IMAGE_ID>
+xhost local:$(id -u)
+
+docker run -it --rm \
+--env "PS1=\u@\h:\w$ " \
+--env "DISPLAY=$DISPLAY" \
+--publish 9000:9000 \
+--volume $(pwd):$APP_DIR \
+--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+--device="/dev/dri/card0:/dev/dri/card0" \
+--name $APP_NAME \
+<YOUR_BUILDED_DOCKER_IMAGE_ID>
 
 # Or if you want override some Docker app container ENV variables (-e flag)
-docker run -it --rm -e "PS1=\u@\h:\w$ " -e "PRIMARY_COLOR=red" -p 9000:9000 -v $(pwd):$APP_DIR --name $APP_NAME <YOUR_BUILDED_DOCKER_IMAGE_ID>
+xhost local:$(id -u)
+
+docker run -it --rm  \
+--env "PS1=\u@\h:\w$ " \
+--env "PRIMARY_COLOR=red" \
+--env "DISPLAY=$DISPLAY" \
+--publish 9000:9000 \
+--volume $(pwd):$APP_DIR
+--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+--device="/dev/dri/card0:/dev/dri/card0" \
+--name $APP_NAME
+<YOUR_BUILDED_DOCKER_IMAGE_ID>
+
+# Install app JS dependencies
+dev@61b150727994:~/ride-to-work-by-bike-app$ ./docker/dev/install_app_dependencies.sh
 
 # Run quasar app dev server from emulator terminal
-dev@61b150727994:~/ride-to-work-by-bike-app$ npx quasar dev
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn dev
+
+# Run app component/e2e tests, see Run app tests section
+#
+# Run quasar app dev server on the background from emulator terminal
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn dev &
+# Run component tests
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:component:firefox
+# Open component tests
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:component:open:firefox
+# Run e2e tests
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:e2e:firefox
+# Open e2e tests
+dev@61b150727994:~/ride-to-work-by-bike-app$ yarn test:e2e:open:firefox
+
 
 # Check web app from your host OS via web browser
 # Open default web browser with URL http://localhost:9000 from host OS emulator terminal
