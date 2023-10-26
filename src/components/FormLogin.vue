@@ -21,7 +21,7 @@ import { defineComponent, ref, reactive } from 'vue';
 import { setCssVar } from 'quasar';
 
 // types
-import { ConfigGlobal } from 'components/types';
+import { ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
@@ -38,7 +38,7 @@ export default defineComponent({
       password: '',
     });
 
-    const isPwd = ref(true)
+    const isPassword = ref(true)
 
     const isValid = (val: string): boolean => val?.length > 0;
 
@@ -49,7 +49,7 @@ export default defineComponent({
 
     return {
       formLogin,
-      isPwd,
+      isPassword,
       isValid,
       onSubmit,
     };
@@ -91,14 +91,14 @@ export default defineComponent({
         bg-color="grey-1"
         v-model="formLogin.password"
         id="form-login-password"
-        :type="isPwd ? 'password' : 'text'"
+        :type="isPassword ? 'password' : 'text'"
         :rules="[(val) => isValid(val) || $t('login.form.passwordRequired')]"
         class="q-mt-sm"
         data-cy="form-login-password-input"
       >
         <!-- Icon: show password -->
         <template v-slot:append>
-          <q-icon color="primary" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" size="18px" @click="isPwd = !isPwd" data-cy="form-login-password-icon" />
+          <q-icon color="primary" :name="isPassword ? 'visibility_off' : 'visibility'" class="cursor-pointer" size="18px" @click="isPassword = !isPassword" data-cy="form-login-password-icon" />
         </template>
       </q-input>
       <!-- Link: fogotten password -->

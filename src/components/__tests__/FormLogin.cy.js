@@ -1,4 +1,4 @@
-import FormLogin from 'components/FormLogin.vue';
+import FormLogin from '../FormLogin.vue';
 import { i18n } from '../../boot/i18n';
 
 const rideToWorkByBikeConfig = JSON.parse(

@@ -77,6 +77,7 @@ export default defineComponent({
           <language-switcher variant="light" />
         </div>
       </div>
+      <!-- Title -->
       <div class="q-py-lg">
         <h1 class="text-h5 text-bold" data-cy="login-page-title">
           {{ $t('login.title') }}
@@ -84,6 +85,7 @@ export default defineComponent({
       </div>
       <div class="row">
         <div class="col-12 col-lg-4">
+          <!-- Form -->
           <form-login @formSubmit="onSubmit" />
         </div>
       </div>
