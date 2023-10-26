@@ -2,6 +2,8 @@
 #
 # Run/open Cypress component/e2e tests with different web browsers.
 
+# Args from the position 2 to the last item
+ARGS_FROM_POS_2_TO_LAST="${@:2:$#}"
 
 # Cypress
 CYPRESS_BASE_CMD="npx cypress"
@@ -26,21 +28,21 @@ EDGE=$(which microsoft-edge-stable \
 
 
 case $1 in
-  "component:electron") $CYPRESS_COMPONENT_TEST $ELECTRON ;;
-  "component:firefox") $CYPRESS_COMPONENT_TEST $FIREFOX ;;
-  "component:chrome") $CYPRESS_COMPONENT_TEST $CHROME ;;
-  "component:edge") $CYPRESS_COMPONENT_TEST $EDGE ;;
-  "component:open:electron") $CYPRESS_COMPONENT_OPEN_TEST $ELECTRON ;;
-  "component:open:firefox") $CYPRESS_COMPONENT_OPEN_TEST $FIREFOX ;;
-  "component:open:chrome") $CYPRESS_COMPONENT_OPEN_TEST $CHROME ;;
-  "component:open:edge") $CYPRESS_COMPONENT_OPEN_TEST $EDGE ;;
-  "e2e:electron") $CYPRESS_E2E_TEST $ELECTRON ;;
-  "e2e:firefox") $CYPRESS_E2E_TEST $FIREFOX ;;
-  "e2e:chrome") $CYPRESS_E2E_TEST $CHROME ;;
-  "e2e:edge") $CYPRESS_E2E_TEST $EDGE ;;
-  "e2e:open:electron") $CYPRESS_E2E_OPEN_TEST $ELECTRON ;;
-  "e2e:open:firefox") $CYPRESS_E2E_OPEN_TEST $FIREFOX ;;
-  "e2e:open:chrome") $CYPRESS_E2E_OPEN_TEST $CHROME ;;
-  "e2e:open:edge") $CYPRESS_E2E_OPEN_TEST $EDGE ;;
+  "component:electron") $CYPRESS_COMPONENT_TEST $ELECTRON $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:firefox") $CYPRESS_COMPONENT_TEST $FIREFOX $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:chrome") $CYPRESS_COMPONENT_TEST $CHROME $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:edge") $CYPRESS_COMPONENT_TEST $EDGE $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:open:electron") $CYPRESS_COMPONENT_OPEN_TEST $ELECTRON $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:open:firefox") $CYPRESS_COMPONENT_OPEN_TEST $FIREFOX $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:open:chrome") $CYPRESS_COMPONENT_OPEN_TEST $CHROME $ARGS_FROM_POS_2_TO_LAST ;;
+  "component:open:edge") $CYPRESS_COMPONENT_OPEN_TEST $EDGE $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:electron") $CYPRESS_E2E_TEST $ELECTRON $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:firefox") $CYPRESS_E2E_TEST $FIREFOX $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:chrome") $CYPRESS_E2E_TEST $CHROME $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:edge") $CYPRESS_E2E_TEST $EDGE $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:open:electron") $CYPRESS_E2E_OPEN_TEST $ELECTRON $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:open:firefox") $CYPRESS_E2E_OPEN_TEST $FIREFOX $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:open:chrome") $CYPRESS_E2E_OPEN_TEST $CHROME $ARGS_FROM_POS_2_TO_LAST ;;
+  "e2e:open:edge") $CYPRESS_E2E_OPEN_TEST $EDGE $ARGS_FROM_POS_2_TO_LAST ;;
   *) error "Unexpected option ${1}";;
 esac
