@@ -152,10 +152,13 @@ export default defineComponent({
         <q-icon name="arrow_back" size="24px" />
       </q-btn>
     </div>
-    <div class="q-my-lg">
+    <div class="q-my-sm">
       <h1 class="text-h5 text-bold q-my-none" data-cy="login-page-title">
         {{ $t('login.titlePasswordReset') }}
       </h1>
+    </div>
+    <div class="q-mt-sm q-mb-lg">
+      <p>{{ $t('login.descriptionPasswordReset') }}</p>
     </div>
     <!-- Form: password reset -->
     <q-form @submit.prevent="onSubmitPasswordReset">

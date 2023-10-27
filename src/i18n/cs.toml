@@ -145,6 +145,7 @@ deployedAppVersion = "Nasazená verze aplikace"
 [login]
 titleLogin = "Přihlášení"
 titlePasswordReset = "Zapomenuté heslo"
+descriptionPasswordReset = "Na e-mail vám pošleme odkaz na obnovení hesla."
 
 [login.form]
 email = "E-mail"
