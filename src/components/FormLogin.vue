@@ -138,6 +138,16 @@ export default defineComponent({
           >
         </div>
       </div>
+      <!-- Button: submit -->
+      <q-btn
+        unelevated
+        rounded
+        class="full-width"
+        type="submit"
+        color="primary q-mt-lg"
+        :label="$t('login.form.submitLogin')"
+        data-cy="form-login-submit-login"
+      />
     </q-form>
   </div>
   <div v-else-if="formState === 'password-reset'">
@@ -183,6 +193,16 @@ export default defineComponent({
           data-cy="form-login-email-input"
         />
       </div>
+      <!-- Button: submit -->
+      <q-btn
+        unelevated
+        rounded
+        class="full-width q-mt-lg"
+        type="submit"
+        color="primary"
+        :label="$t('login.form.submitPasswordReset')"
+        data-cy="form-login-submit-password-reset"
+      />
     </q-form>
   </div>
 </template>
