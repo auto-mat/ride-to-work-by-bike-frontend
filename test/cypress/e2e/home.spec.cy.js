@@ -22,7 +22,7 @@ describe('Home page', () => {
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('index.title'));
 
-          cy.dataCy('event-countdown').should('be.visible');
+          cy.dataCy('countdown-event').should('be.visible');
 
           cy.dataCy('list-challenge').should('be.visible');
 
@@ -306,7 +306,7 @@ describe('Home page', () => {
             .should('have.css', 'font-weight', '700')
             .should('contain', i18n.global.t('index.title'));
 
-          cy.dataCy('event-countdown').should('be.visible');
+          cy.dataCy('countdown-event').should('be.visible');
 
           cy.dataCy('list-challenge').should('be.visible');
 

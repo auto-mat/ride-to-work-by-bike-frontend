@@ -57,20 +57,30 @@ describe('Login page', () => {
 
     it('allows user to display and submit contact form', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
+
       cy.dataCy('dialog-header').should('be.visible');
+
       cy.dataCy('dialog-content').scrollTo(0, 1200);
+
       cy.dataCy('button-contact').should('be.visible').click();
+
       cy.dataCy('dialog-header').find('h3').should('be.visible');
+
       cy.dataCy('contact-form-subject-input')
         .should('be.visible')
         .type('question');
+
       cy.dataCy('contact-form-message-input')
         .should('be.visible')
         .type('what is the minimum distance to ride to work?');
+
       cy.dataCy('contact-form-email-input')
         .should('be.visible')
         .type('P7LlQ@example.com');
+
       cy.dataCy('contact-form-submit').should('be.visible').click();
+
+      // TODO: test successful submission
     });
 
     it('validates contact form if there are errors', () => {
