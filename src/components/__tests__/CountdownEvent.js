@@ -1,4 +1,4 @@
-import EventCountdown from '../EventCountdown.vue';
+import CountdownEvent from '../CountdownEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('Event Countdown', () => {
@@ -6,7 +6,7 @@ describe('Event Countdown', () => {
   const currentTime = new Date('2023-09-30T12:00:00');
 
   beforeEach(() => {
-    cy.mount(EventCountdown, {
+    cy.mount(CountdownEvent, {
       props: {
         releaseDate,
       },
@@ -42,19 +42,19 @@ describe('Event Countdown', () => {
   it('displays internationalized labels', () => {
     cy.dataCy('countdown-label-days').should(
       'contain.text',
-      i18n.global.t('index.countdown.days')
+      i18n.global.t('index.countdown.days'),
     );
     cy.dataCy('countdown-label-hours').should(
       'contain.text',
-      i18n.global.t('index.countdown.hours')
+      i18n.global.t('index.countdown.hours'),
     );
     cy.dataCy('countdown-label-minutes').should(
       'contain.text',
-      i18n.global.t('index.countdown.minutes')
+      i18n.global.t('index.countdown.minutes'),
     );
     cy.dataCy('countdown-label-seconds').should(
       'contain.text',
-      i18n.global.t('index.countdown.seconds')
+      i18n.global.t('index.countdown.seconds'),
     );
   });
 

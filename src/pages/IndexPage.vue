@@ -7,7 +7,7 @@
       >
         {{ $t('index.title') }}
       </h1>
-      <event-countdown :release-date="releaseDate" data-cy="event-countdown" />
+      <countdown-event :release-date="releaseDate" data-cy="countdown-event" />
       <list-card-challenge
         :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
@@ -99,7 +99,7 @@ import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'components/BannerRoutes.vue';
 import CardStats from 'components/CardStats.vue';
 import CountdownChallenge from 'components/CountdownChallenge.vue';
-import EventCountdown from 'components/EventCountdown.vue';
+import CountdownEvent from 'components/CountdownEvent.vue';
 import HeadingBackground from 'components/HeadingBackground.vue';
 import ListBadgeAchievement from 'components/ListBadgeAchievement.vue';
 import ListCardChallenge from 'components/ListCardChallenge.vue';
@@ -122,7 +122,7 @@ export default defineComponent({
     BannerImage,
     BannerRoutes,
     CountdownChallenge,
-    EventCountdown,
+    CountdownEvent,
     HeadingBackground,
     ListBadgeAchievement,
     ListCardChallenge,

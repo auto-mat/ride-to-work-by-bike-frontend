@@ -27,7 +27,7 @@ import { setCssVar } from 'quasar';
 import { useCountdown } from '../composables/useCountdown';
 
 // types
-import { ConfigGlobal } from './types';
+import type { ConfigGlobal } from './types';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,

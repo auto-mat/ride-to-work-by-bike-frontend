@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * EventCountdown Component
+ * CountdownEvent Component
  *
- * The `EventCountdown` component provides a countdown mechanism that
+ * The `CountdownEvent` component provides a countdown mechanism that
  * displays the remaining time until a specified event or release date.
  *
  * @description
@@ -18,25 +18,28 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6021%3A22974&mode=dev)
  *
  * @example
- * <event-countdown :releaseDate="targetDate" />
+ * <countdown-event :releaseDate="targetDate" />
  */
 
 import { setCssVar, date } from 'quasar';
-import { defineComponent, ref, watchEffect, onBeforeUnmount } from 'vue';
+import { defineComponent } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
+// composables
+import { useCountdown } from '../composables/useCountdown';
+
 // types
-import { Countdown, ConfigGlobal } from './types';
+import type { ConfigGlobal } from './types';
 
 const { formatDate } = date;
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
-  name: 'EventCountdown',
+  name: 'CountdownEvent',
   props: {
     releaseDate: {
       type: String,
@@ -44,12 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const countdown = ref<Countdown>({
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    });
+    const { countdown } = useCountdown(props.releaseDate);
 
     // currently not working see https://github.com/intlify/vue-i18n-next/issues/1193
     // const { locale } = useI18n({ useScope: 'global' })
@@ -58,54 +56,6 @@ export default defineComponent({
     //   formatString = 'D MMM';
     // }
     const formattedDate = formatDate(new Date(props.releaseDate), formatString);
-
-    let countdownInterval: ReturnType<typeof setInterval> | null = null;
-
-    const startCountdown = () => {
-      const targetDate = new Date(props.releaseDate).getTime();
-
-      countdownInterval = setInterval(() => {
-        const now = new Date().getTime();
-        const timeDifference = getTimeDifference(now, targetDate);
-
-        computeCountdownInterval(timeDifference);
-      }, 1000);
-    };
-
-    function getTimeDifference(now: number, date: number): number {
-      return date - now;
-    }
-
-    function computeCountdownInterval(timeDifference: number) {
-      if (timeDifference > 0) {
-        setCountdownValues(timeDifference);
-      } else {
-        if (countdownInterval) {
-          clearInterval(countdownInterval);
-        }
-      }
-    }
-
-    function setCountdownValues(timeDifference: number): void {
-      countdown.value = {
-        days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor(
-          (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        ),
-        minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
-      };
-    }
-
-    watchEffect(() => {
-      startCountdown();
-    });
-
-    onBeforeUnmount(() => {
-      if (countdownInterval) {
-        clearInterval(countdownInterval);
-      }
-    });
 
     return {
       countdown,
