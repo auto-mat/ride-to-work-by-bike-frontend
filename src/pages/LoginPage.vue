@@ -33,7 +33,7 @@ import FormLogin from 'components/FormLogin.vue';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
 setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
@@ -46,14 +46,8 @@ export default defineComponent({
     FormLogin,
   },
   setup() {
-    const onSubmit = () => {
-      // noop
-    }
-
-    return {
-      onSubmit,
-    };
-  }
+    return {};
+  },
 });
 </script>
 
@@ -77,16 +71,10 @@ export default defineComponent({
           <language-switcher variant="light" />
         </div>
       </div>
-      <!-- Title -->
-      <div class="q-py-lg">
-        <h1 class="text-h5 text-bold" data-cy="login-page-title">
-          {{ $t('login.title') }}
-        </h1>
-      </div>
+
       <div class="row">
         <div class="col-12 col-lg-4">
-          <!-- Form -->
-          <form-login @formSubmit="onSubmit" />
+          <form-login />
         </div>
       </div>
     </div>

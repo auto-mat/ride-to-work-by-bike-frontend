@@ -143,11 +143,14 @@ copyrightAuthor = "Výzvu Do práce na kole pořádá <a href='https://auto-mat.
 deployedAppVersion = "Nasazená verze aplikace"
 
 [login]
-title = "Přihlášení"
+titleLogin = "Přihlášení"
+titlePasswordReset = "Zapomenuté heslo"
 
 [login.form]
 email = "E-mail"
+emailPasswordReset = "E-mail"
 password = "Heslo"
 emailReqired = "Prosím vyplňte e-mail"
+emailPasswordResetReqired = "Prosím vyplňte e-mail"
 passwordRequired = "Prosím vyplňte heslo"
 forgottenPassword = "Zapomenuté heslo?"
