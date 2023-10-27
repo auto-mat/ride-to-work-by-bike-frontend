@@ -58,7 +58,6 @@
   "dependencies": {
     "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/extras": "^1.0.0",
-    "cypress-image-snapshot": "^4.0.1",
     "fs": "^0.0.1-security",
     "quasar": "^2.6.0",
     "swiper": "^11.0.0",
@@ -77,6 +76,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "autoprefixer": "^10.4.2",
     "cypress": "^13.2.0",
+    "cypress-image-snapshot": "^4.0.1",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.12.1",
