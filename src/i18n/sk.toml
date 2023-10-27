@@ -142,18 +142,16 @@ copyrightOpenSource = "Táto aplikácia je open source softvér."
 copyrightAuthor = "Výzvu Do práce na kole organizuje <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, z.s.</a>"
 deployedAppVersion = "Nasadená verzia aplikácie"
 
-[login]
+[login.form]
 titleLogin = "Prihlásenie"
 titlePasswordReset = "Zabudnuté heslo"
 descriptionPasswordReset = "Na váš e-mail vám pošleme odkaz na obnovenie hesla."
-
-[login.form]
-emailPasswordReset = "E-mail"
-email = "E-mail"
-password = "Heslo"
-emailReqired = "Vyplňte prosím svoj e-mail"
-emailPasswordResetReqired = "Vyplňte prosím svoj e-mail"
-passwordRequired = "Vyplňte prosím heslo"
+labelEmail = "E-mail"
+labelPassword = "Heslo"
+labelPasswordReset = "E-mail"
+messageEmailReqired = "Vyplňte prosím svoj e-mail"
+messagePasswordResetReqired = "Vyplňte prosím svoj e-mail"
+messagePasswordRequired = "Vyplňte prosím heslo"
 forgottenPassword = "Zabudli ste heslo?"
 submitLogin = "Prihlásiť sa"
 submitPasswordReset = "Obnovenie hesla"

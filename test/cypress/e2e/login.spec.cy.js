@@ -1,6 +1,3 @@
-import { colors } from 'quasar';
-const { getPaletteColor } = colors;
-
 describe('Login page', () => {
   context('desktop', () => {
     beforeEach(() => {
@@ -59,39 +56,21 @@ describe('Login page', () => {
     });
 
     it('allows user to display and submit contact form', () => {
-      let i18n;
-      cy.window().should('have.property', 'i18n');
-      cy.window()
-        .then((win) => {
-          i18n = win.i18n;
-        })
-        .then(() => {
-          cy.dataCy('button-help').last().should('be.visible').click();
-
-          cy.dataCy('dialog-header').should('be.visible');
-
-          cy.dataCy('dialog-content').scrollTo(0, 1200);
-
-          cy.dataCy('button-contact').should('be.visible').click();
-
-          cy.dataCy('dialog-header').find('h3').should('be.visible');
-
-          cy.dataCy('contact-form-subject-input')
-            .should('be.visible')
-            .type('question');
-
-          cy.dataCy('contact-form-message-input')
-            .should('be.visible')
-            .type('what is the minimum distance to ride to work?');
-
-          cy.dataCy('contact-form-email-input')
-            .should('be.visible')
-            .type('P7LlQ@example.com');
-
-          cy.dataCy('contact-form-submit').should('be.visible').click();
-
-          // TODO: test successful submission
-        });
+      cy.dataCy('button-help').last().should('be.visible').click();
+      cy.dataCy('dialog-header').should('be.visible');
+      cy.dataCy('dialog-content').scrollTo(0, 1200);
+      cy.dataCy('button-contact').should('be.visible').click();
+      cy.dataCy('dialog-header').find('h3').should('be.visible');
+      cy.dataCy('contact-form-subject-input')
+        .should('be.visible')
+        .type('question');
+      cy.dataCy('contact-form-message-input')
+        .should('be.visible')
+        .type('what is the minimum distance to ride to work?');
+      cy.dataCy('contact-form-email-input')
+        .should('be.visible')
+        .type('P7LlQ@example.com');
+      cy.dataCy('contact-form-submit').should('be.visible').click();
     });
 
     it('validates contact form if there are errors', () => {
@@ -103,70 +82,48 @@ describe('Login page', () => {
         })
         .then(() => {
           cy.dataCy('button-help').last().should('be.visible').click();
-
           cy.dataCy('dialog-header').should('be.visible');
-
           cy.dataCy('dialog-content').scrollTo(0, 1200);
-
           cy.dataCy('button-contact').should('be.visible').click();
-
           cy.dataCy('dialog-header').find('h3').should('be.visible');
-
           cy.dataCy('dialog-content').scrollTo('bottom');
-
           cy.dataCy('contact-form-submit').should('be.visible').click();
-
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
             .should('be.visible')
             .should('contain', i18n.global.t('index.contact.subjectRequired'));
-
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
-
           cy.dataCy('dialog-content').scrollTo('top');
-
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
             .type('question');
-
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
             .should('not.be.visible');
-
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('not.have.class', 'text-negative');
-
           cy.dataCy('dialog-content').scrollTo('bottom');
-
           cy.dataCy('contact-form-submit').should('be.visible').click();
-
           cy.dataCy('dialog-content').scrollTo('top');
-
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
             .should('be.visible')
             .should('contain', i18n.global.t('index.contact.messageRequired'));
-
           cy.dataCy('contact-form-message')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
-
           cy.dataCy('contact-form-message-input')
             .should('be.visible')
             .type('what is the minimum distance to ride to work?');
-
           cy.dataCy('dialog-content').scrollTo('bottom');
-
           cy.dataCy('contact-form-submit').should('be.visible').click();
-
           cy.dataCy('contact-form-email')
             .find('.q-field__messages')
             .should('be.visible')
             .should('contain', i18n.global.t('index.contact.emailRequired'));
-
           cy.dataCy('contact-form-email')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -197,12 +154,10 @@ describe('Login page', () => {
                 .should('be.visible')
                 .find('.q-btn')
                 .click();
-
               // old language becomes inactive
               cy.dataCy('switcher-' + initialActiveLocale)
                 .find('.q-btn')
                 .should('have.class', 'bg-white');
-
               // new language becomes active
               cy.dataCy('switcher-' + locale)
                 .find('.q-btn')
@@ -212,7 +167,7 @@ describe('Login page', () => {
         });
     });
 
-    it('renders page title', () => {
+    it('renders form title', () => {
       let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
@@ -220,12 +175,12 @@ describe('Login page', () => {
           i18n = win.i18n;
         })
         .then(() => {
-          cy.dataCy('login-page-title')
+          cy.dataCy('form-title-login')
             .should('be.visible')
-            .should('have.color', getPaletteColor('grey-10'))
+            .should('have.class', 'grey-10')
             .should('have.css', 'font-size', '24px')
             .should('have.css', 'font-weight', '700')
-            .should('contain', i18n.global.t('login.title'));
+            .should('contain', i18n.global.t('login.form.titleLogin'));
         });
     });
   });

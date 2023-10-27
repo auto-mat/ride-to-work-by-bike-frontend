@@ -142,18 +142,16 @@ copyrightOpenSource = "This app is free software."
 copyrightAuthor = "The Bike to Work Challenge is organized by <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, n.g.o.</a>"
 deployedAppVersion = "Deployed app version"
 
-[login]
+[login.form]
 titleLogin = "Login"
 titlePasswordReset = "Forgotten password"
 descriptionPasswordReset = "We will email you a link to reset your password."
-
-[login.form]
-emailPasswordReset = "E-mail"
-email = "E-mail"
-password = "Password"
-emailReqired = "Please fill in your e-mail"
-emailPasswordResetReqired = "Please fill in your e-mail"
-passwordRequired = "Please fill in the password"
+labelEmail = "E-mail"
+labelPassword = "Password"
+labelPasswordReset = "E-mail"
+messageEmailReqired = "Please fill in your e-mail"
+messagePasswordResetReqired = "Please fill in your e-mail"
+messagePasswordRequired = "Please fill in the password"
 forgottenPassword = "Forgot your password?"
 submitLogin = "Log in"
 submitPasswordReset = "Reset password"

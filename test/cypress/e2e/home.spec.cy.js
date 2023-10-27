@@ -1,4 +1,5 @@
 describe('Home page', () => {
+  let i18n;
   context('desktop', () => {
     beforeEach(() => {
       cy.visit(Cypress.config('baseUrl'));
@@ -6,7 +7,6 @@ describe('Home page', () => {
     });
 
     it('renders all components', () => {
-      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
@@ -63,7 +63,6 @@ describe('Home page', () => {
     });
 
     it('allows user to display and submit contact form', () => {
-      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
@@ -358,7 +357,6 @@ describe('Home page', () => {
     });
 
     it('allows user to display and submit contact form', () => {
-      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
@@ -538,9 +536,7 @@ describe('Home page', () => {
     });
 
     it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button-mobile')
-        .should('be.visible')
-        .click();
+      cy.dataCy('footer-top-button-mobile').should('be.visible').click();
       /**
        * Second click helps to overcome a ResizeObserver loop completed
        * with undelivered notifications error

@@ -69,10 +69,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-if="formState === 'login'">
+  <div v-if="formState === 'login'" class="text-grey-10" data-cy="form-login">
     <div class="q-my-lg">
-      <h1 class="text-h5 text-bold q-my-none" data-cy="login-page-title">
-        {{ $t('login.titleLogin') }}
+      <h1
+        class="text-h5 text-bold grey-10 q-my-none"
+        data-cy="form-title-login"
+      >
+        {{ $t('login.form.titleLogin') }}
       </h1>
     </div>
     <!-- Form: login -->
@@ -81,14 +84,16 @@ export default defineComponent({
       <div data-cy="form-login-email">
         <!-- Label -->
         <label for="form-login-email" class="text-caption text-bold">
-          {{ $t('login.form.email') }}
+          {{ $t('login.form.labelEmail') }}
         </label>
         <!-- Input -->
         <q-input
           dense
           outlined
           v-model="formLogin.email"
-          :rules="[(val) => isValid(val) || $t('login.form.emailReqired')]"
+          :rules="[
+            (val) => isValid(val) || $t('login.form.messageEmailReqired'),
+          ]"
           bg-color="grey-1"
           id="form-login-email"
           name="subject"
@@ -100,7 +105,7 @@ export default defineComponent({
       <div data-cy="form-login-password">
         <!-- Label -->
         <label for="form-login-password" class="text-caption text-bold">
-          {{ $t('login.form.password') }}
+          {{ $t('login.form.labelPassword') }}
         </label>
         <!-- Input -->
         <q-input
@@ -111,7 +116,9 @@ export default defineComponent({
           v-model="formLogin.password"
           id="form-login-password"
           :type="isPassword ? 'password' : 'text'"
-          :rules="[(val) => isValid(val) || $t('login.form.passwordRequired')]"
+          :rules="[
+            (val) => isValid(val) || $t('login.form.messagePasswordRequired'),
+          ]"
           class="q-mt-sm"
           data-cy="form-login-password-input"
         >
@@ -132,10 +139,11 @@ export default defineComponent({
           <a
             href="#"
             class="text-primary text-caption"
-            data-cy="form-login-forgotten-password"
             @click.prevent="formState = 'password-reset'"
-            >{{ $t('login.form.forgottenPassword') }}</a
+            data-cy="form-login-forgotten-password"
           >
+            {{ $t('login.form.forgottenPassword') }}
+          </a>
         </div>
       </div>
       <!-- Button: submit -->
@@ -150,7 +158,11 @@ export default defineComponent({
       />
     </q-form>
   </div>
-  <div v-else-if="formState === 'password-reset'">
+  <div
+    v-else-if="formState === 'password-reset'"
+    class="text-grey-10"
+    data-cy="form-password-reset"
+  >
     <div class="q-my-lg">
       <q-btn
         round
@@ -158,25 +170,31 @@ export default defineComponent({
         color="primary"
         size="13px"
         @click.prevent="formState = 'login'"
+        data-cy="form-password-reset-button-back"
       >
         <q-icon name="arrow_back" size="24px" />
       </q-btn>
     </div>
     <div class="q-my-sm">
-      <h1 class="text-h5 text-bold q-my-none" data-cy="login-page-title">
-        {{ $t('login.titlePasswordReset') }}
+      <h1
+        class="text-h5 text-bold grey-10 q-my-none"
+        data-cy="form-password-reset-title"
+      >
+        {{ $t('login.form.titlePasswordReset') }}
       </h1>
     </div>
     <div class="q-mt-sm q-mb-lg">
-      <p>{{ $t('login.descriptionPasswordReset') }}</p>
+      <p data-cy="form-password-reset-description">
+        {{ $t('login.form.descriptionPasswordReset') }}
+      </p>
     </div>
     <!-- Form: password reset -->
     <q-form @submit.prevent="onSubmitPasswordReset">
       <!-- Input: email -->
-      <div data-cy="form-login-email">
+      <div data-cy="form-password-reset-input">
         <!-- Label -->
-        <label for="form-login-email" class="text-caption text-bold">
-          {{ $t('login.form.emailPasswordReset') }}
+        <label for="form-login-password-reset" class="text-caption text-bold">
+          {{ $t('login.form.labelPasswordReset') }}
         </label>
         <!-- Input -->
         <q-input
@@ -184,13 +202,13 @@ export default defineComponent({
           outlined
           v-model="formPasswordReset.email"
           :rules="[
-            (val) => isValid(val) || $t('login.form.emailPasswordResetReqired'),
+            (val) =>
+              isValid(val) || $t('login.form.messagePasswordResetReqired'),
           ]"
           bg-color="grey-1"
-          id="form-login-email"
+          id="form-login-password-reset"
           name="subject"
           class="q-mt-sm"
-          data-cy="form-login-email-input"
         />
       </div>
       <!-- Button: submit -->
@@ -201,7 +219,7 @@ export default defineComponent({
         type="submit"
         color="primary"
         :label="$t('login.form.submitPasswordReset')"
-        data-cy="form-login-submit-password-reset"
+        data-cy="form-password-reset-submit"
       />
     </q-form>
   </div>

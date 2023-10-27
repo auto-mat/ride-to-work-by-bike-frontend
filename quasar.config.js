@@ -15,7 +15,7 @@ const {
   getDeployedAppVersion,
 } = require('./src/utils/get_deployed_app_version');
 
-module.exports = configure(function (ctx) {
+module.exports = configure(function () {
   return {
     eslint: {
       // fix: true,
@@ -61,7 +61,7 @@ module.exports = configure(function (ctx) {
       env: {
         RIDE_TO_WORK_BY_BIKE_CONFIG: JSON.stringify(getAppConfig(process)),
         RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION: JSON.stringify(
-          getDeployedAppVersion()
+          getDeployedAppVersion(),
         ),
       },
 
