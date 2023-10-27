@@ -1,0 +1,40 @@
+name: Build and push development Dockerfile Docker ride-to-work-by-bike-frontend-dev image
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+# Run once per week on Monday
+
+jobs:
+  push-docker-img:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout app repository code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Get Docker image version
+        run: |
+          .github/workflows/get_docker_image_tag_number.sh \
+          ${{ secrets.DOCKERHUB_REPO_OWNER }} ${{ secrets.DOCKERHUB_REPO_DEV_DOCKERFILE_REPO_NAME }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./
+          file: ./docker/dev/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_REPO_OWNER }}/${{ secrets.DOCKERHUB_DEV_DOCKERFILE_REPO_NAME }}:${{ env.DOCKERHUB_IMAGE_VERSION }}
+            ${{ secrets.DOCKERHUB_REPO_OWNER }}/${{ secrets.DOCKERHUB_DEV_DOCKERFILE_REPO_NAME }}:latest
