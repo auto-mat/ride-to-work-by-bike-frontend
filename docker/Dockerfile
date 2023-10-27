@@ -18,7 +18,8 @@ WORKDIR $APP_PATH
 COPY . .
 
 # Install Quasar framework and build app
-RUN yarn global add @quasar/cli; yarn; cp ./docker/run.sh /usr/local/bin/; \
+RUN yarn global add @quasar/cli; yarn --production; \
+    cp ./docker/run.sh /usr/local/bin/; \
     chmod +x /usr/local/bin/run.sh;
 
 ENTRYPOINT ["run.sh"]
