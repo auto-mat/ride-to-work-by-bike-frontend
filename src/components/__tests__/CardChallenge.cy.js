@@ -80,7 +80,7 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-dates')
         .should('be.visible')
-        .should('have.color', '#ffffff')
+        .should('have.color', '#fff')
         .should('have.css', 'font-size', '14px')
         .should('contain', dates);
     });
@@ -98,7 +98,7 @@ describe('<CardChallenge>', () => {
         .should('have.css', 'border-radius', '12px')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#ffffff')
+        .should('have.color', '#fff')
         .should('have.css', 'height', '24px')
         .should('contain.text', i18n.global.t('index.cardChallenge.company'));
     });

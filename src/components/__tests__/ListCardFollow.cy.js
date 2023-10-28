@@ -24,7 +24,7 @@ describe('<ListCardFollow>', () => {
         cy.dataCy('card-list-follow-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain', i18n.global.t('index.cardListFollow.title'))
           .then(($title) => {
             expect($title.text()).to.equal(

@@ -34,7 +34,7 @@ describe('<FooterBar>', () => {
         cy.dataCy('footer-logo')
           .should('be.visible')
           .should('have.css', 'height', '40px')
-          .should('have.color', '#ffffff');
+          .should('have.color', '#fff');
       });
     });
 
@@ -53,7 +53,7 @@ describe('<FooterBar>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#ffffff');
+          .should('have.color', '#fff');
       });
     });
 
@@ -63,7 +63,7 @@ describe('<FooterBar>', () => {
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
-          .should('have.color', '#ffffff');
+          .should('have.color', '#fff');
       });
     });
 
@@ -75,7 +75,7 @@ describe('<FooterBar>', () => {
           .should('have.css', 'flex-wrap', 'wrap')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#ffffff');
+          .should('have.color', '#fff');
       });
     });
   });

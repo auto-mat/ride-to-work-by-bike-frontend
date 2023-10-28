@@ -31,7 +31,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
@@ -46,7 +46,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-description')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.description'),
@@ -118,7 +118,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
@@ -133,7 +133,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-description')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.description'),

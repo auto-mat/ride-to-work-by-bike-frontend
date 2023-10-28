@@ -33,7 +33,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain.text', bannerImage.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerImage.title);
@@ -47,7 +47,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '12px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain.text', bannerImage.perex)
           .then(($perex) => {
             expect($perex.text()).to.equal(bannerImage.perex);
@@ -134,7 +134,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain.text', bannerImage.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerImage.title);
@@ -148,7 +148,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '12px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain.text', bannerImage.perex)
           .then(($perex) => {
             expect($perex.text()).to.equal(bannerImage.perex);

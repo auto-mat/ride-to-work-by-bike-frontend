@@ -26,7 +26,7 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post')
         .should('be.visible')
-        .should('have.backgroundColor', '#ffffff');
+        .should('have.backgroundColor', '#fff');
     });
   });
 

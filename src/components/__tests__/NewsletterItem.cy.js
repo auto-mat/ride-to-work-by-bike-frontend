@@ -214,7 +214,7 @@ describe('<NewsletterItem>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
-          .should('have.color', '#ffffff')
+          .should('have.color', '#fff')
           .should('have.backgroundColor', getPaletteColor('grey-10'))
           .should('contain', i18n.global.t('index.newsletterFeature.follow'));
 

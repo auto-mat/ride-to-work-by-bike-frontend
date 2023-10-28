@@ -87,7 +87,7 @@ describe('<DrawerHeader>', () => {
     cy.window().then(() => {
       cy.dataCy('icon-notification')
         .should('be.visible')
-        .should('have.color', '#000000')
+        .should('have.color', '#000')
         .should('have.css', 'width', '24px')
         .should('contain.text', 'notifications');
     });

@@ -80,7 +80,7 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card')
           .should('be.visible')
-          .should('have.backgroundColor', '#ffffff');
+          .should('have.backgroundColor', '#fff');
       });
     });
 
@@ -125,7 +125,7 @@ describe('<CardEvent>', () => {
         cy.dataCy('calendar-button')
           .find('i')
           .should('be.visible')
-          .should('have.color', '#000000');
+          .should('have.color', '#000');
       });
     });
 

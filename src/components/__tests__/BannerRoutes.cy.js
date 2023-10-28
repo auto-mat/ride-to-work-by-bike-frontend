@@ -37,7 +37,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000000');
+        .should('have.color', '#000');
     });
 
     it('renders button', () => {
@@ -121,7 +121,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '20px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000000');
+        .should('have.color', '#000');
     });
 
     it('renders button', () => {
@@ -197,7 +197,7 @@ describe('<BannerRoutes>', () => {
         cy.dataCy('banner-routes-title')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#000000')
+          .should('have.color', '#000')
           .should('contain', routesCount);
       });
     });
