@@ -72,7 +72,7 @@ describe('<CardPost>', () => {
       cy.dataCy('card-post-date')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#78909c')
+        .should('have.color', getPaletteColor('blue-grey-5'))
         .should('contain', '1. Sep. 2023')
         .then(($date) => {
           // manual workaround to avoid having to calculate dynamic date

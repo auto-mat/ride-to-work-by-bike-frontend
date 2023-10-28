@@ -82,7 +82,10 @@ describe('<BadgeAchievement>', () => {
     });
 
     it('has dark background', () => {
-      cy.dataCy('badge-card').should('have.backgroundColor', '#546e7a'); // bg-blue-grey-7
+      cy.dataCy('badge-card').should(
+        'have.backgroundColor',
+        getPaletteColor('blue-grey-7'),
+      );
     });
 
     it('renders title', () => {
@@ -91,7 +94,7 @@ describe('<BadgeAchievement>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '700')
           .should('have.css', 'text-align', 'center')
-          .should('have.color', '#fff') // bg-grey-9
+          .should('have.color', '#fff')
           .should('contain', badgeDark.title)
           .then(($title) => {
             expect($title.text()).to.equal(badgeDark.title);
@@ -105,7 +108,7 @@ describe('<BadgeAchievement>', () => {
           .should('have.css', 'font-size', '12px')
           .should('have.css', 'font-weight', '400')
           .should('have.css', 'text-align', 'center')
-          .should('have.color', '#fff') // bg-grey-9
+          .should('have.color', '#fff')
           .should('contain', badgeDark.description)
           .then(($description) => {
             expect($description.text()).to.equal(badgeDark.description);

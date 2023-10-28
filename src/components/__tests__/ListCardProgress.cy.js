@@ -56,7 +56,7 @@ describe('<ListCardProgress>', () => {
           cy.wrap($item)
             .find('.q-icon')
             .should('contain', progressStats[index].icon)
-            .should('have.color', '#b0bec5')
+            .should('have.color', getPaletteColor('blue-grey-3'))
             .should('have.css', 'width', '18px')
             .should('have.css', 'height', '18px');
 

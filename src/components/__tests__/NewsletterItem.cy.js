@@ -63,7 +63,7 @@ describe('<NewsletterItem>', () => {
           .should('be.visible')
           .should('have.css', 'width', '32px')
           .should('have.css', 'height', '32px')
-          .should('have.color', '#607d8b')
+          .should('have.color', getPaletteColor('blue-grey-6'))
           .should('contain', icon);
       });
     });
@@ -127,7 +127,7 @@ describe('<NewsletterItem>', () => {
           .should('be.visible')
           .should('have.css', 'width', '32px')
           .should('have.css', 'height', '32px')
-          .should('have.color', '#607d8b')
+          .should('have.color', getPaletteColor('blue-grey-6'))
           .should('contain', icon);
       });
     });

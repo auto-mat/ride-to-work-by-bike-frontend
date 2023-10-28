@@ -26,7 +26,7 @@ describe('<CardFollow>', () => {
 
     it('has white background', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.backgroundColor', '#ffffff'); // blue-grey-2
+        cy.dataCy('card-follow').should('have.backgroundColor', '#fff');
       });
     });
 
@@ -86,7 +86,7 @@ describe('<CardFollow>', () => {
         cy.dataCy('card-follow-handle')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#546e7a') // blue-grey-7
+          .should('have.color', getPaletteColor('blue-grey-7'))
           .should('contain', card.handle)
           .then(($title) => {
             expect($title.text()).to.equal(card.handle);
