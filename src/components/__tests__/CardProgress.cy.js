@@ -1,6 +1,10 @@
+import { colors } from 'quasar';
+
 import CardProgress from '../CardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgress } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
 
 const cardFirst = cardsProgress[0];
 const card = cardsProgress[1];
@@ -71,8 +75,8 @@ describe('<CardProgress>', () => {
     it('renders dark separator', () => {
       cy.dataCy('card-progress-separator').should(
         'have.backgroundColor',
-        '#546e7a',
-      ); // bg-blue-grey-7
+        getPaletteColor('blue-grey-7'),
+      );
     });
 
     it('renders white share link', () => {
@@ -107,7 +111,7 @@ describe('<CardProgress>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#212121')
+          .should('have.color', getPaletteColor('grey-10'))
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -119,7 +123,7 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', '#78909c') // blue-grey-5
+        .should('have.color', getPaletteColor('blue-grey-5'))
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
     });
@@ -143,24 +147,24 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-prize-placement')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#212121');
+        .should('have.color', getPaletteColor('grey-10'));
 
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#212121');
+        .should('have.color', getPaletteColor('grey-10'));
     });
 
     it('renders light separator', () => {
       cy.dataCy('card-progress-separator').should(
         'have.backgroundColor',
-        '#eceff1',
-      ); // bg-blue-grey-1
+        getPaletteColor('blue-grey-1'),
+      );
     });
 
     it('renders dark share link', () => {
       cy.dataCy('card-progress-share')
-        .should('have.color', '#212121')
+        .should('have.color', getPaletteColor('grey-10'))
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.css', 'font-weight', '700');
@@ -168,7 +172,7 @@ describe('<CardProgress>', () => {
 
     it('renders dark share link icon', () => {
       cy.dataCy('card-progress-share-icon')
-        .should('have.color', '#212121')
+        .should('have.color', getPaletteColor('grey-10'))
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px')
         .should('contain', 'share');
@@ -190,7 +194,7 @@ describe('<CardProgress>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#212121')
+          .should('have.color', getPaletteColor('grey-10'))
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -202,7 +206,7 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', '#78909c') // blue-grey-5
+        .should('have.color', getPaletteColor('blue-grey-5'))
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
     });

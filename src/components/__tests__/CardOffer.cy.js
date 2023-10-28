@@ -1,6 +1,10 @@
+import { colors } from 'quasar';
+
 import CardOffer from '../CardOffer.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsOffer } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
 
 const card = cardsOffer[0];
 
@@ -111,7 +115,7 @@ describe('<CardOffer>', () => {
         cy.dataCy('card-title')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#212121')
+          .should('have.color', getPaletteColor('grey-10'))
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);

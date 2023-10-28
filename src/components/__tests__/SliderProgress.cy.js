@@ -1,6 +1,10 @@
+import { colors } from 'quasar';
+
 import SliderProgress from '../SliderProgress.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
 
 // mocks
 import { progressStats, cardsProgress } from 'src/mocks/homepage';
@@ -54,7 +58,7 @@ describe('<SliderProgress>', () => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('.q-icon')
@@ -66,12 +70,12 @@ describe('<SliderProgress>', () => {
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', '#212121')
+            .should('have.color', getPaletteColor('grey-10'))
             .should('have.css', 'font-weight', '700');
         });
       });
@@ -145,7 +149,7 @@ describe('<SliderProgress>', () => {
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '500')
         .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', '#212121')
+        .should('have.color', getPaletteColor('grey-10'))
         .should('have.css', 'border-radius', '28px')
         .should('contain', i18n.global.t('index.progressSlider.button'))
         .then(($title) => {
@@ -195,7 +199,7 @@ describe('<SliderProgress>', () => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('.q-icon')
@@ -207,12 +211,12 @@ describe('<SliderProgress>', () => {
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', '#212121')
+            .should('have.color', getPaletteColor('grey-10'))
             .should('have.css', 'font-weight', '700');
         });
       });

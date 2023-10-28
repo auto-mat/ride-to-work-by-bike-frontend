@@ -1,6 +1,10 @@
+import { colors } from 'quasar';
+
 import CardProgressSlider from '../CardProgressSlider.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgressSlider } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
 
 const card = cardsProgressSlider[0];
 
@@ -40,7 +44,7 @@ describe('<CardProgressSlider>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', '#eceff1') // blue-grey-1
+        .should('have.color', getPaletteColor('blue-grey-1'))
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
     });
@@ -154,7 +158,7 @@ describe('<CardProgressSlider>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', '#eceff1') // blue-grey-1
+        .should('have.color', getPaletteColor('blue-grey-1'))
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px');
     });

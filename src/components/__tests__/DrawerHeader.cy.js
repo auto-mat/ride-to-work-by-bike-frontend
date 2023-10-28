@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
+
 import DrawerHeader from '../DrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
 
 describe('<DrawerHeader>', () => {
   beforeEach(() => {
@@ -21,7 +25,7 @@ describe('<DrawerHeader>', () => {
     ];
 
     const translationKeyList = translationStrings.map(
-      (item) => `index.help.${item}`
+      (item) => `index.help.${item}`,
     );
 
     translationKeyList.forEach((translationKey) => {
@@ -54,7 +58,7 @@ describe('<DrawerHeader>', () => {
       .should('be.visible')
       .should('have.css', 'font-size', '8px')
       .should('have.css', 'font-weight', '500')
-      .should('have.backgroundColor', '#212121')
+      .should('have.backgroundColor', getPaletteColor('grey-10'))
       .should('have.css', 'border-radius', '50%'); // round
     cy.dataCy('button-help').should('contain', 'question_mark');
   });

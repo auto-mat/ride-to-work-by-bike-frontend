@@ -15,6 +15,7 @@ const {
   getDeployedAppVersion,
 } = require('./src/utils/get_deployed_app_version');
 
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 module.exports = configure(function (ctx) {
   return {

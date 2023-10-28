@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
+
 import BannerApp from '../BannerApp.vue';
 import { bannerApp } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
@@ -76,7 +80,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.backgroundColor', '#455a64'); // blue-grey-8
+          .should('have.backgroundColor', getPaletteColor('blue-grey-8'));
       });
     });
 
@@ -162,7 +166,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.backgroundColor', '#455a64'); // blue-grey-8
+          .should('have.backgroundColor', getPaletteColor('blue-grey-8'));
       });
     });
 

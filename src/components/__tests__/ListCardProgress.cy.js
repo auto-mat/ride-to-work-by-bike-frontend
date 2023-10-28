@@ -1,6 +1,10 @@
+import { colors } from 'quasar';
+
 import ListCardProgress from '../ListCardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { progressStats, cardsProgress } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
 
 describe('<ListCardProgress>', () => {
   it('has translation for all strings', () => {
@@ -47,7 +51,7 @@ describe('<ListCardProgress>', () => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
             .should('have.css', 'font-weight', '400')
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('.q-icon')
@@ -59,12 +63,12 @@ describe('<ListCardProgress>', () => {
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', '#212121');
+            .should('have.color', getPaletteColor('grey-10'));
 
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', '#212121')
+            .should('have.color', getPaletteColor('grey-10'))
             .should('have.css', 'font-weight', '700');
         });
       });

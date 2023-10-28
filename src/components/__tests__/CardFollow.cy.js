@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
+
 import CardFollow from '../CardFollow.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
 
 // mocks
 import { cardsFollow } from 'src/mocks/homepage';
@@ -69,7 +73,7 @@ describe('<CardFollow>', () => {
         cy.dataCy('card-follow-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#212121')
+          .should('have.color', getPaletteColor('grey-10'))
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
