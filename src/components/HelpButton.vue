@@ -27,23 +27,13 @@
  */
 
 // libraries
-import { setCssVar } from 'quasar';
 import { defineComponent, ref } from 'vue';
-
-// types
-import { ConfigGlobal } from './types';
 
 // components
 import ContactForm from './ContactForm.vue';
 import DialogStates from './DialogStates.vue';
 import ListFaq from './ListFaq.vue';
 import MenuLinks from './MenuLinks.vue';
-
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
 
 export default defineComponent({
   name: 'HelpButton',

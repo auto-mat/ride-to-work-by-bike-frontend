@@ -21,7 +21,6 @@
  */
 
 // libraries
-import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 
 // types
@@ -31,7 +30,6 @@ import { BannerImage as BannerImageType, ConfigGlobal } from './types';
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
-setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'BannerImage',

@@ -21,22 +21,14 @@
  * <countdown-event :releaseDate="targetDate" />
  */
 
-import { setCssVar, date } from 'quasar';
+import { date } from 'quasar';
 import { defineComponent } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
 // composables
 import { useCountdown } from '../composables/useCountdown';
 
-// types
-import type { ConfigGlobal } from './types';
-
 const { formatDate } = date;
-
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'CountdownEvent',

@@ -18,16 +18,6 @@
 
 // libraries
 import { defineComponent, ref, reactive } from 'vue';
-import { setCssVar } from 'quasar';
-
-// types
-import type { ConfigGlobal } from './types';
-
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
 
 export default defineComponent({
   name: 'FormLogin',

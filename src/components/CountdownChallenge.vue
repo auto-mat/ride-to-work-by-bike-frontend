@@ -21,18 +21,9 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { setCssVar } from 'quasar';
 
 // composables
 import { useCountdown } from '../composables/useCountdown';
-
-// types
-import type { ConfigGlobal } from './types';
-
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'CountdownChallenge',
