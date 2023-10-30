@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsOffer } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
 const card = cardsOffer[0];
@@ -139,7 +140,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .should('have.backgroundColor', '#fff');
+          .should('have.backgroundColor', white);
       });
     });
 

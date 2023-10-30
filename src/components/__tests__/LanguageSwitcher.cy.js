@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import LanguageSwitcher from '../LanguageSwitcher.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 
 describe('<LanguageSwitcher>', () => {
   it('has translation for all strings', () => {
@@ -82,7 +86,7 @@ describe('<LanguageSwitcher>', () => {
 
     it('renders a wrapper with white background', () => {
       cy.get('.language-list')
-        .should('have.backgroundColor', '#fff')
+        .should('have.backgroundColor', white)
         .should('have.css', 'border-radius', '999px');
     });
 

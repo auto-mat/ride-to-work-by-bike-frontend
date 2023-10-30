@@ -4,6 +4,7 @@ import NewsletterItem from '../NewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey6 = getPaletteColor('blue-grey-6');
 
@@ -216,7 +217,7 @@ describe('<NewsletterItem>', () => {
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '500')
           .should('have.css', 'text-transform', 'uppercase')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('have.backgroundColor', grey10)
           .should('contain', i18n.global.t('index.newsletterFeature.follow'));
 

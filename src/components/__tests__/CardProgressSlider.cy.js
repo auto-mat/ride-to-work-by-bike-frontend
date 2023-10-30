@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsProgressSlider } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const blueGrey1 = getPaletteColor('blue-grey-1');
 
 const card = cardsProgressSlider[0];
@@ -33,7 +34,7 @@ describe('<CardProgressSlider>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -56,7 +57,7 @@ describe('<CardProgressSlider>', () => {
         .should('contain', card.duration.current)
         .should('contain', card.duration.total)
         .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
 
@@ -94,7 +95,7 @@ describe('<CardProgressSlider>', () => {
         .find('.stats-title')
         .first()
         .should('contain', card.stats[0].title)
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.css', 'font-size', '12px');
 
@@ -103,7 +104,7 @@ describe('<CardProgressSlider>', () => {
         .find('.stats-value')
         .first()
         .should('contain', card.stats[0].items[0].text)
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'font-weight', '400')
         .should('have.css', 'font-size', '14px');
     });
@@ -147,7 +148,7 @@ describe('<CardProgressSlider>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -170,7 +171,7 @@ describe('<CardProgressSlider>', () => {
         .should('contain', card.duration.current)
         .should('contain', card.duration.total)
         .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400');
 

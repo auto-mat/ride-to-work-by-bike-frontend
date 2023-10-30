@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import CardChallenge from '../CardChallenge.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 
 describe('<CardChallenge>', () => {
   const title = 'Challenge 1';
@@ -80,7 +84,7 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-dates')
         .should('be.visible')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'font-size', '14px')
         .should('contain', dates);
     });
@@ -98,7 +102,7 @@ describe('<CardChallenge>', () => {
         .should('have.css', 'border-radius', '12px')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'height', '24px')
         .should('contain.text', i18n.global.t('index.cardChallenge.company'));
     });

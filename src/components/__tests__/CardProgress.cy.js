@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsProgress } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey1 = getPaletteColor('blue-grey-1');
 const blueGrey5 = getPaletteColor('blue-grey-5');
@@ -33,7 +34,7 @@ describe('<CardProgress>', () => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('contain', cardFirst.title)
           .then(($title) => {
             expect($title.text()).to.equal(cardFirst.title);
@@ -44,7 +45,7 @@ describe('<CardProgress>', () => {
     it('renders prize icon', () => {
       cy.dataCy('card-progress-prizes-icon')
         .should('contain', cardFirst.prizes[0].icon)
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'width', '24px')
         .should('have.css', 'height', '24px');
     });
@@ -68,12 +69,12 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-prize-placement')
         .should('have.css', 'font-size', '24px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#fff');
+        .should('have.color', white);
 
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', '#fff');
+        .should('have.color', white);
     });
 
     it('renders dark separator', () => {
@@ -85,7 +86,7 @@ describe('<CardProgress>', () => {
 
     it('renders white share link', () => {
       cy.dataCy('card-progress-share')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.css', 'font-weight', '700');
@@ -93,7 +94,7 @@ describe('<CardProgress>', () => {
 
     it('renders white share link icon', () => {
       cy.dataCy('card-progress-share-icon')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.css', 'width', '18px')
         .should('have.css', 'height', '18px')
         .should('contain', 'share');

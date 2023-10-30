@@ -4,6 +4,7 @@ import BannerApp from '../BannerApp.vue';
 import { bannerApp } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const blueGrey8 = getPaletteColor('blue-grey-8');
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
@@ -41,7 +42,7 @@ describe('<BannerApp>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('contain.text', bannerApp.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerApp.title);
@@ -127,7 +128,7 @@ describe('<BannerApp>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#fff')
+          .should('have.color', white)
           .should('contain.text', bannerApp.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerApp.title);

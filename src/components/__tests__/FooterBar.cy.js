@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import FooterBar from '../FooterBar.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 
 describe('<FooterBar>', () => {
   it('has translation for all strings', () => {
@@ -34,7 +38,7 @@ describe('<FooterBar>', () => {
         cy.dataCy('footer-logo')
           .should('be.visible')
           .should('have.css', 'height', '40px')
-          .should('have.color', '#fff');
+          .should('have.color', white);
       });
     });
 
@@ -53,7 +57,7 @@ describe('<FooterBar>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#fff');
+          .should('have.color', white);
       });
     });
 
@@ -63,7 +67,7 @@ describe('<FooterBar>', () => {
           .should('be.visible')
           .should('have.css', 'width', '38px')
           .should('have.css', 'height', '38px')
-          .should('have.color', '#fff');
+          .should('have.color', white);
       });
     });
 
@@ -75,7 +79,7 @@ describe('<FooterBar>', () => {
           .should('have.css', 'flex-wrap', 'wrap')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#fff');
+          .should('have.color', white);
       });
     });
   });

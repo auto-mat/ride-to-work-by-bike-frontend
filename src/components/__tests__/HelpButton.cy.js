@@ -4,6 +4,7 @@ import HelpButton from '../HelpButton.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
 const rideToWorkByBikeConfig = JSON.parse(
@@ -48,7 +49,7 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', '#fff');
+        .should('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 22)
@@ -92,7 +93,7 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', '#fff');
+        .should('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 22)
@@ -134,7 +135,7 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', '#fff');
+        .should('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 12)

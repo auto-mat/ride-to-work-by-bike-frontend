@@ -4,6 +4,7 @@ import CardEvent from '../CardEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const blueGrey2 = getPaletteColor('blue-grey-2');
 const blueGrey3 = getPaletteColor('blue-grey-3');
 const blueGrey7 = getPaletteColor('blue-grey-7');
@@ -83,7 +84,7 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card')
           .should('be.visible')
-          .should('have.backgroundColor', '#fff');
+          .should('have.backgroundColor', white);
       });
     });
 

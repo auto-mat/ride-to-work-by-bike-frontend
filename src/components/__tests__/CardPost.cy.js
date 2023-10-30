@@ -4,6 +4,7 @@ import CardPost from '../CardPost.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey5 = getPaletteColor('blue-grey-5');
 
@@ -28,7 +29,7 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post')
         .should('be.visible')
-        .should('have.backgroundColor', '#fff');
+        .should('have.backgroundColor', white);
     });
   });
 

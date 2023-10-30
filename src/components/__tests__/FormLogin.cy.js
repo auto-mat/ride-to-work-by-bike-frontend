@@ -4,6 +4,7 @@ import FormLogin from '../FormLogin.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
 const rideToWorkByBikeConfig = JSON.parse(
@@ -112,7 +113,7 @@ describe('<FormLogin>', () => {
     it('renders a submit button', () => {
       cy.dataCy('form-login-submit-login')
         .should('be.visible')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.backgroundColor', `${colorPrimary}`)
         .should('have.css', 'border-radius', '28px')
         .should('have.css', 'text-transform', 'uppercase')
@@ -166,7 +167,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-submit')
         .should('be.visible')
-        .should('have.color', '#fff')
+        .should('have.color', white)
         .should('have.backgroundColor', `${colorPrimary}`)
         .should('have.css', 'border-radius', '28px')
         .should('have.css', 'text-transform', 'uppercase')

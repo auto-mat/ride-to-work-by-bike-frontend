@@ -4,6 +4,7 @@ import CardFollow from '../CardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey7 = getPaletteColor('blue-grey-7');
 
@@ -28,7 +29,7 @@ describe('<CardFollow>', () => {
 
     it('has white background', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.backgroundColor', '#fff');
+        cy.dataCy('card-follow').should('have.backgroundColor', white);
       });
     });
 
