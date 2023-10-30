@@ -1,3 +1,4 @@
+import { colors } from 'quasar';
 import ListCardPost from '../ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
@@ -10,6 +11,9 @@ const button = {
   title: i18n.global.t('index.cardListPost.button'),
   url: '/blog',
 };
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 describe('<ListCardPost>', () => {
   it('has translation for all strings', () => {
@@ -37,7 +41,7 @@ describe('<ListCardPost>', () => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
@@ -143,7 +147,7 @@ describe('<ListCardPost>', () => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);

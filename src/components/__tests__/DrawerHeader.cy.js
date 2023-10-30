@@ -4,6 +4,7 @@ import DrawerHeader from '../DrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
@@ -89,7 +90,7 @@ describe('<DrawerHeader>', () => {
     cy.window().then(() => {
       cy.dataCy('icon-notification')
         .should('be.visible')
-        .should('have.color', '#000')
+        .should('have.color', black)
         .should('have.css', 'width', '24px')
         .should('contain.text', 'notifications');
     });

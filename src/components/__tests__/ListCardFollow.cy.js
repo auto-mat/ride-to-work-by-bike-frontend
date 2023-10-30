@@ -1,8 +1,12 @@
+import { colors } from 'quasar';
 import ListCardFollow from '../ListCardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks
 import { cardsFollow } from 'src/mocks/homepage';
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 describe('<ListCardFollow>', () => {
   it('has translation for all strings', () => {
@@ -24,7 +28,7 @@ describe('<ListCardFollow>', () => {
         cy.dataCy('card-list-follow-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', i18n.global.t('index.cardListFollow.title'))
           .then(($title) => {
             expect($title.text()).to.equal(

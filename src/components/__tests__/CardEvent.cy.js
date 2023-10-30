@@ -4,6 +4,7 @@ import CardEvent from '../CardEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const white = getPaletteColor('white');
 const blueGrey2 = getPaletteColor('blue-grey-2');
 const blueGrey3 = getPaletteColor('blue-grey-3');
@@ -129,7 +130,7 @@ describe('<CardEvent>', () => {
         cy.dataCy('calendar-button')
           .find('i')
           .should('be.visible')
-          .should('have.color', '#000');
+          .should('have.color', black);
       });
     });
 

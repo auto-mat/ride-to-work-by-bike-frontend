@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsStats } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const blueGrey3 = getPaletteColor('blue-grey-3');
 
 const card = cardsStats[0];
@@ -29,7 +30,7 @@ describe('<CardStats>', () => {
         cy.dataCy('card-stats-title')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -52,7 +53,7 @@ describe('<CardStats>', () => {
         cy.wrap($item)
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', card.stats[index].text);
       });
 

@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import NewsletterFeature from '../NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 describe('<NewsletterFeature>', () => {
   it('has translation for all strings', () => {
@@ -31,7 +35,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
@@ -46,7 +50,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-description')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.description'),
@@ -118,7 +122,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
@@ -133,7 +137,7 @@ describe('<NewsletterFeature>', () => {
         cy.dataCy('newsletter-feature-description')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should(
             'contain',
             i18n.global.t('index.newsletterFeature.description'),

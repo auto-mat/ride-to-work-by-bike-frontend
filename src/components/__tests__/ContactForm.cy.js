@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import ContactForm from '../ContactForm.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 describe('<ContactForm>', () => {
   it('has translation for all strings', () => {
@@ -60,7 +64,7 @@ describe('<ContactForm>', () => {
         .find('.q-field__label')
         .should('be.visible')
         .should('have.css', 'font-size', '14px')
-        .should('have.color', '#000')
+        .should('have.color', black)
         .should('have.text', i18n.global.t('index.contact.file'));
     });
 
@@ -81,7 +85,7 @@ describe('<ContactForm>', () => {
       cy.dataCy('contact-form-submit')
         .should('be.visible')
         .should('have.css', 'border-radius', '28px')
-        .should('have.backgroundColor', '#000')
+        .should('have.backgroundColor', black)
         .should('have.text', i18n.global.t('index.contact.submit'));
     });
   });

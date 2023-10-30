@@ -1,3 +1,4 @@
+import { colors } from 'quasar';
 import ListCardOffer from '../ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
 
@@ -5,6 +6,9 @@ import { i18n } from '../../boot/i18n';
 import { cardsOffer } from 'src/mocks/homepage';
 const title = i18n.global.t('index.cardListOffer.title');
 const cards = cardsOffer;
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 describe('<ListCardOffer>', () => {
   it('has translation for all strings', () => {
@@ -31,7 +35,7 @@ describe('<ListCardOffer>', () => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
@@ -81,7 +85,7 @@ describe('<ListCardOffer>', () => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);

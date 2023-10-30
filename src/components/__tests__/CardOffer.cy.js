@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsOffer } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
@@ -173,7 +174,7 @@ describe('<CardOffer>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', card.content);
       });
     });

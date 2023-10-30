@@ -4,6 +4,7 @@ import MenuLinks from '../MenuLinks.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const blueGrey1 = getPaletteColor('blue-grey-1');
 
 describe('<MenuLinks>', () => {
@@ -52,7 +53,7 @@ describe('<MenuLinks>', () => {
         .should('have.css', 'margin-top', '16px')
         .find('.q-btn__content span')
         .then(($el) => {
-          cy.wrap($el).should('have.color', '#000');
+          cy.wrap($el).should('have.color', black);
         });
     });
   });
@@ -82,7 +83,7 @@ describe('<MenuLinks>', () => {
         .should('have.css', 'margin-top', '16px')
         .find('.q-btn__content span')
         .then(($el) => {
-          cy.wrap($el).should('have.color', '#000');
+          cy.wrap($el).should('have.color', black);
         });
     });
   });

@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import BannerImage from '../BannerImage.vue';
 import { bannerImage } from '../../mocks/homepage';
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
 
@@ -33,7 +37,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain.text', bannerImage.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerImage.title);
@@ -47,7 +51,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '12px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain.text', bannerImage.perex)
           .then(($perex) => {
             expect($perex.text()).to.equal(bannerImage.perex);
@@ -134,7 +138,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '16px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain.text', bannerImage.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerImage.title);
@@ -148,7 +152,7 @@ describe('<BannerImage>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '12px')
           .should('have.css', 'font-weight', '400')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain.text', bannerImage.perex)
           .then(($perex) => {
             expect($perex.text()).to.equal(bannerImage.perex);

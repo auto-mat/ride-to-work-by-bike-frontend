@@ -1,5 +1,9 @@
+import { colors } from 'quasar';
 import CountdownChallenge from '../CountdownChallenge.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 
 const rideToWorkByBikeConfig = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
@@ -39,7 +43,7 @@ describe('<CountdownChallenge>', () => {
           .should('have.css', 'font-weight', '700')
           .should('have.css', 'margin-top', '16px')
           .should('have.css', 'margin-bottom', '16px')
-          .should('have.color', '#000');
+          .should('have.color', black);
       });
     });
 
@@ -101,7 +105,7 @@ describe('<CountdownChallenge>', () => {
           .should('have.css', 'font-weight', '700')
           .should('have.css', 'margin-top', '16px')
           .should('have.css', 'margin-bottom', '16px')
-          .should('have.color', '#000');
+          .should('have.color', black);
       });
 
       it('renders wrapper with padding', () => {

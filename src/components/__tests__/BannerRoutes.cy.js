@@ -4,6 +4,7 @@ import BannerRoutes from '../BannerRoutes.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const white = getPaletteColor('white');
 const grey1 = getPaletteColor('grey-1');
 
@@ -39,7 +40,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000');
+        .should('have.color', black);
     });
 
     it('renders button', () => {
@@ -123,7 +124,7 @@ describe('<BannerRoutes>', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '20px')
         .should('have.css', 'font-weight', '700')
-        .should('have.color', '#000');
+        .should('have.color', black);
     });
 
     it('renders button', () => {
@@ -199,7 +200,7 @@ describe('<BannerRoutes>', () => {
         cy.dataCy('banner-routes-title')
           .should('have.css', 'font-size', '14px')
           .should('have.css', 'font-weight', '700')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', routesCount);
       });
     });

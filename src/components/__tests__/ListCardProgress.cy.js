@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { progressStats, cardsProgress } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey3 = getPaletteColor('blue-grey-3');
 
@@ -35,7 +36,7 @@ describe('<ListCardProgress>', () => {
         cy.dataCy('card-list-progress-title')
           .should('have.css', 'font-size', '20px')
           .should('have.css', 'font-weight', '500')
-          .should('have.color', '#000')
+          .should('have.color', black)
           .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
