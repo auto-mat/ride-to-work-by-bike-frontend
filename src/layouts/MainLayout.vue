@@ -1,6 +1,5 @@
 <script lang="ts">
 // libraries
-import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
 import { i18n } from '../boot/i18n';
 
@@ -11,19 +10,10 @@ import DrawerMenu from 'components/DrawerMenu.vue';
 import FooterBar from 'components/FooterBar.vue';
 import MobileBottomPanel from 'components/MobileBottomPanel.vue';
 
-// import types
-import { ConfigGlobal } from 'components/types';
-
 // set global i18n object (for test purposes)
 if (window.Cypress) {
   window.i18n = i18n;
 }
-
-// import config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
 
 export default defineComponent({
   name: 'MainLayout',
