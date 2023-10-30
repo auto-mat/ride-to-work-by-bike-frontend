@@ -1,5 +1,4 @@
 describe('Home page', () => {
-  let i18n;
   context('desktop', () => {
     beforeEach(() => {
       cy.visit(Cypress.config('baseUrl'));
@@ -7,6 +6,8 @@ describe('Home page', () => {
     });
 
     it('renders all components', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
@@ -63,6 +64,8 @@ describe('Home page', () => {
     });
 
     it('allows user to display and submit contact form', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
@@ -357,6 +360,8 @@ describe('Home page', () => {
     });
 
     it('allows user to display and submit contact form', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()
         .then((win) => {
