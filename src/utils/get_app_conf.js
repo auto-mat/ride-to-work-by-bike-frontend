@@ -14,6 +14,10 @@ const getAppConfig = (process) => {
     config['colorGrayLight'] = process.env.COLOR_GRAY_LIGHT;
   } else if (process.env.COLOR_GRAY_MIDDLE) {
     config['colorGrayMiddle'] = process.env.COLOR_GRAY_MIDDLE;
+  } else if (process.env.COLOR_WHITE) {
+    config['colorWhite'] = process.env.COLOR_WHITE;
+  } else if (process.env.COLOR_BLACK) {
+    config['colorBlack'] = process.env.COLOR_BLACK;
   } else if (process.env.IMAGE) {
     config['image'] = process.env.IMAGE;
   } else if (process.env.WIDTH) {
