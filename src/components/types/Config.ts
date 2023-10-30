@@ -3,6 +3,8 @@ export interface ConfigGlobal {
   colorSecondary: string;
   colorGrayLight: string;
   colorGrayMiddle: string;
+  colorWhite: string;
+  colorBlack: string;
   image: string;
   width: string;
   title: string;
