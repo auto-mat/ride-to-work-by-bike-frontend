@@ -28,14 +28,11 @@
 import { defineComponent } from 'vue';
 
 // types
-import {
-  CardChallenge as CardChallengeType,
-  ConfigGlobal,
-} from './types';
+import { CardChallenge as CardChallengeType, ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 
 export default defineComponent({

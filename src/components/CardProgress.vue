@@ -36,7 +36,7 @@ import {
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 
 export default defineComponent({
@@ -54,7 +54,7 @@ export default defineComponent({
     const isDark = (card: CardProgressType): boolean => {
       const prizes = card.prizes;
       const firstPrize = prizes?.filter(
-        (item: ItemPrize): boolean => item.placement === 1
+        (item: ItemPrize): boolean => item.placement === 1,
       ).length;
       return firstPrize ? true : false;
     };

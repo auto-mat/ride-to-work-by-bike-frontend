@@ -47,7 +47,7 @@ Cypress.Commands.add(
   'testLanguageStringsInContext',
   (translationStrings, translationContext, i18n) => {
     const translationKeyList = translationStrings.map(
-      (item) => `${translationContext}.${item}`
+      (item) => `${translationContext}.${item}`,
     );
 
     translationKeyList.forEach((translationKey) => {
@@ -66,7 +66,7 @@ Cypress.Commands.add(
             .and('not.equal', defaultEnglishString);
         });
     });
-  }
+  },
 );
 
 Cypress.Commands.add(
@@ -79,7 +79,7 @@ Cypress.Commands.add(
 
       expect(calculatedPercentage).to.be.closeTo(Number(expectedPercentage), 2);
     });
-  }
+  },
 );
 
 Cypress.Commands.add('testImageHeight', ($img) => {
@@ -116,5 +116,5 @@ Cypress.Commands.add(
         failureThresholdType: failureThresholdType,
       });
     cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: auto');
-  }
+  },
 );

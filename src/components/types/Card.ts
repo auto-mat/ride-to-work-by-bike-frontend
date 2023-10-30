@@ -55,13 +55,13 @@ export interface CardProgress {
         {
           id: string;
           text: string;
-        }
+        },
       ];
     },
     {
       title: string;
       items: { id: string; text: string }[];
-    }
+    },
   ];
   duration?: {
     current: number;

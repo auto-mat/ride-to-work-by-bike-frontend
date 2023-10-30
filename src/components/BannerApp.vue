@@ -30,7 +30,7 @@ import { BannerApp as BannerAppType, ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 
 export default defineComponent({
@@ -76,7 +76,7 @@ export default defineComponent({
       // set persistant value
       localStorage.setItem(
         'ride-to-work-by-bike',
-        JSON.stringify({ showAppBanner: false })
+        JSON.stringify({ showAppBanner: false }),
       );
     };
 

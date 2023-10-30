@@ -1,22 +1,22 @@
-<script lang='ts'>
+<script lang="ts">
 /**
-* SectionColumnsTest Component
-*
-* The `SectionColumnsTest`
-*
-* @description * Use this component to test the SectionColumns component.
-*
-* @props
-* - `columns` (Number, required): The number of columns.
-*   It should be one of these options: 2 | 3 | 4 | 6.
-*
-* @components
-* - `SectionColumns`: Component to render content in columns.
-* - `CardStats`: Card which provides content for the component.
-*
-* @example
-* <SectionColumnsTest />
-*/
+ * SectionColumnsTest Component
+ *
+ * The `SectionColumnsTest`
+ *
+ * @description * Use this component to test the SectionColumns component.
+ *
+ * @props
+ * - `columns` (Number, required): The number of columns.
+ *   It should be one of these options: 2 | 3 | 4 | 6.
+ *
+ * @components
+ * - `SectionColumns`: Component to render content in columns.
+ * - `CardStats`: Card which provides content for the component.
+ *
+ * @example
+ * <SectionColumnsTest />
+ */
 
 // libraries
 import { defineComponent } from 'vue';
@@ -38,14 +38,14 @@ export default defineComponent({
     columns: {
       type: Number as () => 2 | 3 | 4 | 6,
       required: true,
-    }
+    },
   },
   setup() {
     return {
       cardsStats,
-    }
-  }
-})
+    };
+  },
+});
 </script>
 
 <template>

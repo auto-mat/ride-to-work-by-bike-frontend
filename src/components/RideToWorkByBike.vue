@@ -75,11 +75,11 @@ import { ConfigGlobal } from './types';
 import { getString } from '../utils';
 
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 
 const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION
+  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION,
 );
 
 setCssVar('primary', rideToWorkByBikeConfig.primaryColor);

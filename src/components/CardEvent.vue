@@ -40,7 +40,7 @@ import { CardEvent as CardEventType, ConfigGlobal } from './types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 
 const { formatDate } = date;
@@ -60,7 +60,7 @@ export default defineComponent({
     const modalOpened = ref(false);
     const eventDateTime = formatDate(
       props?.card?.dates,
-      'ddd D. MMM. YYYY, HH:mm'
+      'ddd D. MMM. YYYY, HH:mm',
     );
     const setHorizontalPosition = (): boolean => (Screen.xs ? false : true);
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;

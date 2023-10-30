@@ -28,7 +28,7 @@ describe('DrawerMenu', () => {
     cy.testLanguageStringsInContext(
       menuItems.map((item) => item.name),
       'drawerMenu',
-      i18n
+      i18n,
     );
   });
 

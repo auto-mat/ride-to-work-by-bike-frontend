@@ -38,7 +38,7 @@ export default defineComponent({
     variant: {
       type: String as () => 'default' | 'start',
       required: true,
-    }
+    },
   },
 });
 </script>
@@ -63,7 +63,9 @@ export default defineComponent({
         >
           <span v-if="variant === 'default'">
             <!-- TODO: fix conjugation in CZ and SK -->
-            {{ $tc('index.bannerRoutes.title', routesCount, { n: routesCount }) }}
+            {{
+              $tc('index.bannerRoutes.title', routesCount, { n: routesCount })
+            }}
           </span>
           <span v-else-if="variant === 'start'">
             {{ $t('index.bannerRoutes.titleStart') }}
@@ -85,7 +87,13 @@ export default defineComponent({
           data-cy="banner-routes-button-add-routes"
         >
           <!-- Plus icon -->
-          <q-icon name="add" size="24px" color="white" class="q-mr-sm" data-cy="banner-routes-button-icon" />
+          <q-icon
+            name="add"
+            size="24px"
+            color="white"
+            class="q-mr-sm"
+            data-cy="banner-routes-button-icon"
+          />
           <!-- Button text -->
           <span v-if="variant === 'default'" class="inline-block q-px-sm">
             {{ $t('index.bannerRoutes.addRoutes') }}

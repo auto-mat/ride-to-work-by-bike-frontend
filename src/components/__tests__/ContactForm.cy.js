@@ -15,7 +15,7 @@ describe('<ContactForm>', () => {
         'submit',
       ],
       'index.contact',
-      i18n
+      i18n,
     );
   });
 

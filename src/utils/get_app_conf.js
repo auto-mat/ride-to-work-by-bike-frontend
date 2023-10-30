@@ -3,7 +3,7 @@ const { readFileSync } = require('fs');
 
 const getAppConfig = (process) => {
   let config = parse(
-    readFileSync('./ride_to_work_by_bike_config.toml').toString()
+    readFileSync('./ride_to_work_by_bike_config.toml').toString(),
   );
 
   if (process.env.COLOR_PRIMARY) {
