@@ -38,6 +38,7 @@ const { config } = VueTestUtils;
 
 // Example to import i18n from boot and use as plugin
 // import { i18n } from 'src/boot/i18n';
+import { initVars } from 'src/boot/global_vars';
 
 // You can modify the global config here for all tests or pass in the configuration per test
 // For example use the actual i18n instance or mock it
@@ -63,6 +64,9 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   options.global = options.global || {};
   options.global.plugins = options.global.plugins || [];
 
+  // Initialize global variables
+  initVars();
+
   // Register Swiper third party lib component
   register();
 
@@ -71,6 +75,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
     install(app) {
       app.use(i18nApp);
       app.use(VueLogger, loggerOptions);
+      app.use();
     },
   });
 
