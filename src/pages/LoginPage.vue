@@ -20,23 +20,12 @@
  */
 
 // libraries
-import { setCssVar } from 'quasar';
 import { defineComponent } from 'vue';
-
-// types
-import { ConfigGlobal } from 'components/types';
 
 // components
 import HelpButton from 'components/HelpButton.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import FormLogin from 'components/FormLogin.vue';
-
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
-setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
 
 export default defineComponent({
   name: 'LoginPage',
