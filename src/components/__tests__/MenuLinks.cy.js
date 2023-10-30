@@ -4,6 +4,7 @@ import MenuLinks from '../MenuLinks.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const blueGrey1 = getPaletteColor('blue-grey-1');
 
 describe('<MenuLinks>', () => {
   context('social', () => {
@@ -46,7 +47,7 @@ describe('<MenuLinks>', () => {
         // .should('have.attr', 'href', 'https://twitter.com/spolekautomat')
         .should('contain', i18n.global.t('index.menuLinks.youtube'))
         // .should('have.attr', 'href', 'https://www.youtube.com/@spolekautomat')
-        .should('have.backgroundColor', getPaletteColor('blue-grey-1'))
+        .should('have.backgroundColor', blueGrey1)
         .should('have.css', 'border-radius', '28px')
         .should('have.css', 'margin-top', '16px')
         .find('.q-btn__content span')
@@ -76,7 +77,7 @@ describe('<MenuLinks>', () => {
         .should('contain', 'Podpořte nás')
         .should('contain', 'Kód projektu')
         .should('contain', 'Mobilní aplikace')
-        .should('have.backgroundColor', getPaletteColor('blue-grey-1'))
+        .should('have.backgroundColor', blueGrey1)
         .should('have.css', 'border-radius', '28px')
         .should('have.css', 'margin-top', '16px')
         .find('.q-btn__content span')

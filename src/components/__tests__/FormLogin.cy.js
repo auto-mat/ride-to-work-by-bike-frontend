@@ -1,8 +1,10 @@
 import { colors } from 'quasar';
-const { getPaletteColor } = colors;
 
 import FormLogin from '../FormLogin.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
 
 const rideToWorkByBikeConfig = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
@@ -40,7 +42,7 @@ describe('<FormLogin>', () => {
     it('renders title', () => {
       cy.dataCy('form-title-login')
         .should('be.visible')
-        .should('have.color', getPaletteColor('grey-10'))
+        .should('have.color', grey10)
         .should('have.css', 'font-size', '24px')
         .should('have.css', 'font-weight', '700')
         .should('contain', i18n.global.t('login.form.titleLogin'));
@@ -129,7 +131,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-title')
         .should('be.visible')
-        .should('have.color', getPaletteColor('grey-10'))
+        .should('have.color', grey10)
         .should('have.css', 'font-size', '24px')
         .should('have.css', 'font-weight', '700')
         .should('contain', i18n.global.t('login.form.titlePasswordReset'));
@@ -140,7 +142,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-description')
         .should('be.visible')
-        .should('have.color', getPaletteColor('grey-10'))
+        .should('have.color', grey10)
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
         .should(

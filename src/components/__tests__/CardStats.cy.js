@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { cardsStats } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
+const blueGrey3 = getPaletteColor('blue-grey-3');
 
 const card = cardsStats[0];
 
@@ -39,7 +40,7 @@ describe('<CardStats>', () => {
     it('renders icon', () => {
       cy.dataCy('card-stats-icon')
         .should('contain', card.icon)
-        .should('have.color', getPaletteColor('blue-grey-3'))
+        .should('have.color', blueGrey3)
         .should('have.css', 'width', '48px')
         .should('have.css', 'height', '48px');
     });
@@ -59,7 +60,7 @@ describe('<CardStats>', () => {
         cy.wrap($item)
           .find('.q-icon')
           .should('contain', card.stats[index].icon)
-          .should('have.color', getPaletteColor('blue-grey-3'))
+          .should('have.color', blueGrey3)
           .should('have.css', 'width', '14px')
           .should('have.css', 'height', '14px');
       });

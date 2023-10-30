@@ -4,6 +4,7 @@ import BannerRoutes from '../BannerRoutes.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const grey1 = getPaletteColor('grey-1');
 
 const routesCount = 3;
 
@@ -73,7 +74,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', getPaletteColor('grey-1'));
+          .should('have.backgroundColor', grey1);
       });
     });
 
@@ -157,7 +158,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', getPaletteColor('grey-1'));
+          .should('have.backgroundColor', grey1);
       });
     });
 
@@ -235,7 +236,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', getPaletteColor('grey-1'));
+          .should('have.backgroundColor', grey1);
       });
     });
 

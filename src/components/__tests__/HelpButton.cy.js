@@ -4,6 +4,7 @@ import HelpButton from '../HelpButton.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
 
 const rideToWorkByBikeConfig = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
@@ -32,7 +33,7 @@ describe('<HelpButton>', () => {
           .should('be.visible')
           .should('have.css', 'font-size', '13px')
           .should('have.css', 'font-weight', '500')
-          .should('have.backgroundColor', getPaletteColor('grey-10'))
+          .should('have.backgroundColor', grey10)
           .should('have.css', 'border-radius', '50%') // round
           .should('contain', 'question_mark');
       });
@@ -119,7 +120,7 @@ describe('<HelpButton>', () => {
         .should('be.visible')
         .should('have.css', 'font-size', '8px')
         .should('have.css', 'font-weight', '500')
-        .should('have.backgroundColor', getPaletteColor('grey-10'))
+        .should('have.backgroundColor', grey10)
         .should('have.css', 'border-radius', '50%'); // round
       cy.dataCy('button-help').should('contain', 'question_mark');
     });

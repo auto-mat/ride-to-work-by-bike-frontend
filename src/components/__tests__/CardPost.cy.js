@@ -4,6 +4,8 @@ import CardPost from '../CardPost.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
+const blueGrey5 = getPaletteColor('blue-grey-5');
 
 // mocks
 import { cardsPost } from 'src/mocks/homepage';
@@ -59,7 +61,7 @@ describe('<CardPost>', () => {
       cy.dataCy('card-post-title')
         .should('have.css', 'font-size', '14px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', getPaletteColor('grey-10'))
+        .should('have.color', grey10)
         .should('contain', card.title)
         .then(($title) => {
           expect($title.text()).to.equal(card.title);
@@ -72,7 +74,7 @@ describe('<CardPost>', () => {
       cy.dataCy('card-post-date')
         .should('have.css', 'font-size', '12px')
         .should('have.css', 'font-weight', '400')
-        .should('have.color', getPaletteColor('blue-grey-5'))
+        .should('have.color', blueGrey5)
         .should('contain', '1. Sep. 2023')
         .then(($date) => {
           // manual workaround to avoid having to calculate dynamic date
