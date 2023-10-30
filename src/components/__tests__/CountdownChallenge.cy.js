@@ -50,13 +50,13 @@ describe('<CountdownChallenge>', () => {
     it('renders wrapper with padding', () => {
       cy.dataCy('countdown-challenge')
         .should('have.css', 'padding', '24px')
-        .should('have.backgroundColor', `${colorInfo}`);
+        .should('have.backgroundColor', colorInfo);
     });
 
     it('renders gray background', () => {
       cy.dataCy('countdown-challenge')
         .should('have.class', 'bg-info')
-        .should('have.backgroundColor', `${colorInfo}`);
+        .should('have.backgroundColor', colorInfo);
     });
 
     it('counts down correctly', () => {
@@ -111,13 +111,13 @@ describe('<CountdownChallenge>', () => {
       it('renders wrapper with padding', () => {
         cy.dataCy('countdown-challenge')
           .should('have.css', 'padding', '24px')
-          .should('have.backgroundColor', `${colorInfo}`);
+          .should('have.backgroundColor', colorInfo);
       });
 
       it('renders gray background', () => {
         cy.dataCy('countdown-challenge')
           .should('have.class', 'bg-info')
-          .should('have.backgroundColor', `${colorInfo}`);
+          .should('have.backgroundColor', colorInfo);
       });
     });
   });
