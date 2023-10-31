@@ -26,19 +26,19 @@ describe('<LoginButtons>', () => {
     it('renders login button google', () => {
       cy.dataCy('login-button-google')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'border-radius', '28px')
-        .should('have.color', colorPrimary)
-        .should('contain', i18n.global.t('login.buttons.buttonGoogle'));
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'border-radius', '28px')
+        .and('have.color', colorPrimary)
+        .and('contain', i18n.global.t('login.buttons.buttonGoogle'));
     });
 
     it('renders google button icon', () => {
       cy.dataCy('login-button-google-icon')
         .should('have.class', 'fab')
-        .should('have.class', 'fa-google')
-        .should('have.color', colorPrimary);
+        .and('have.class', 'fa-google')
+        .and('have.color', colorPrimary);
       cy.dataCy('login-button-google-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -50,18 +50,18 @@ describe('<LoginButtons>', () => {
     it('renders login button facebook', () => {
       cy.dataCy('login-button-facebook')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'border-radius', '28px')
-        .should('have.color', colorPrimary)
-        .should('contain', i18n.global.t('login.buttons.buttonFacebook'));
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'border-radius', '28px')
+        .and('have.color', colorPrimary)
+        .and('contain', i18n.global.t('login.buttons.buttonFacebook'));
     });
 
     it('renders facebook button icon', () => {
       cy.dataCy('login-button-facebook-icon')
         .should('contain', 'facebook')
-        .should('have.color', colorPrimary);
+        .and('have.color', colorPrimary);
       cy.dataCy('login-button-facebook-icon')
         .invoke('height')
         .should('be.equal', 24);
