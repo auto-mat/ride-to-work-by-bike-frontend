@@ -40,6 +40,10 @@ const getAppConfig = (process) => {
     config['twitterUrl'] = process.env.TWITTER_URL;
   } else if (process.env.YOUTUBE_URL) {
     config['youtubeUrl'] = process.env.YOUTUBE_URL;
+  } else if (process.env.URL_APP_STORE) {
+    config['urlAppStore'] = process.env.URL_APP_STORE;
+  } else if (process.env.URL_GOOGLE_PLAY) {
+    config['urlGooglePlay'] = process.env.URL_GOOGLE_PLAY;
   }
 
   return config;

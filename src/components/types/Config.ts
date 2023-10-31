@@ -16,4 +16,6 @@ export interface ConfigGlobal {
   instagramUrl: string;
   twitterUrl: string;
   youtubeUrl: string;
+  urlGooglePlay: string;
+  urlAppStore: string;
 }
