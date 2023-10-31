@@ -161,3 +161,7 @@ linkRegister = "Zaregistrujte sa"
 [login.buttons]
 buttonGoogle = "Prihlásenie cez Google"
 buttonFacebook = "Prihlásenie cez Facebook"
+
+[login.bannerAppButtons]
+title = "Nahrávajte svoje jazdy z mobilného telefónu!"
+description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."

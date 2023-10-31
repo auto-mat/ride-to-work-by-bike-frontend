@@ -161,3 +161,7 @@ linkRegister = "Register"
 [login.buttons]
 buttonGoogle = "Login via Google"
 buttonFacebook = "Login via Facebook"
+
+[login.bannerAppButtons]
+title = "Log your rides from your mobile phone!"
+description = "Download the app and log rides from anywhere."
