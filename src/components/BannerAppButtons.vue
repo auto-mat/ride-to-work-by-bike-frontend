@@ -31,10 +31,14 @@ export default defineComponent({
   setup() {
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+    const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
+    const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
 
     return {
       backgroundColor,
       borderRadius,
+      urlGooglePlay,
+      urlAppStore,
     };
   },
 });
@@ -63,7 +67,11 @@ export default defineComponent({
     </p>
     <div class="flex item-center gap-16" data-cy="banner-app-buttons-container">
       <!-- Button: Google Play -->
-      <a href="#" data-cy="banner-app-buttons-google-play">
+      <a
+        :href="urlGooglePlay"
+        target="_blank"
+        data-cy="banner-app-buttons-google-play"
+      >
         <q-img
           src="~assets/svg/googleplay.svg"
           :ratio="3.375"
@@ -73,7 +81,11 @@ export default defineComponent({
         />
       </a>
       <!-- Button: App Store -->
-      <a href="#" data-cy="banner-app-buttons-app-store">
+      <a
+        :href="urlAppStore"
+        target="_blank"
+        data-cy="banner-app-buttons-app-store"
+      >
         <q-img
           src="~assets/svg/appstore.svg"
           :ratio="3"
