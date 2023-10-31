@@ -14,6 +14,7 @@ width = "850px"
 title = "Title"
 subtitle = "Subtitle"
 borderRadiusCard = "20px"
+borderRadiusCardSmall = "8px"
 
 # External URLs
 facebookUrl = "https://www.facebook.com/spolekautomat"

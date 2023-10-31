@@ -30,9 +30,11 @@ export default defineComponent({
   name: 'BannerAppButtons',
   setup() {
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       backgroundColor,
+      borderRadius,
     };
   },
 });
@@ -41,7 +43,10 @@ export default defineComponent({
 <template>
   <div
     class="q-pa-md text-grey-10"
-    :style="{ 'background-color': backgroundColor, 'border-radius': '8px' }"
+    :style="{
+      'background-color': backgroundColor,
+      'border-radius': borderRadius,
+    }"
     data-cy="banner-app-buttons"
   >
     <h2

@@ -30,6 +30,8 @@ const getAppConfig = (process) => {
     config['subtitle'] = process.env.SUBTITLE;
   } else if (process.env.BORDER_RADIUS_CARD) {
     config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
+  } else if (process.env.BORDER_RADIUS_CARD_SMALL) {
+    config['borderRadiusCardSmall'] = process.env.BORDER_RADIUS_CARD_SMALL;
   } else if (process.env.FACEBOOK_URL) {
     config['facebookUrl'] = process.env.FACEBOOK_URL;
   } else if (process.env.INSTAGRAM_URL) {
