@@ -25,16 +25,16 @@ describe('<BannerAppButtons>', () => {
     it('renders container with semi-transparent white background and rounded corners', () => {
       cy.dataCy('banner-app-buttons')
         .should('have.css', 'padding', '16px')
-        .should('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
-        .should('have.css', 'border-radius', '8px');
+        .and('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
+        .and('have.css', 'border-radius', '8px');
     });
 
     it('renders title', () => {
       cy.dataCy('banner-app-buttons-title')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '700')
-        .should('have.color', grey10)
-        .should('contain', i18n.global.t('login.bannerAppButtons.title'))
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', grey10)
+        .and('contain', i18n.global.t('login.bannerAppButtons.title'))
         .then(($title) => {
           expect($title.text()).to.equal(
             i18n.global.t('login.bannerAppButtons.title'),
@@ -45,9 +45,9 @@ describe('<BannerAppButtons>', () => {
     it('renders description', () => {
       cy.dataCy('banner-app-buttons-description')
         .should('have.css', 'font-size', '12px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', grey10)
-        .should('contain', i18n.global.t('login.bannerAppButtons.description'))
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', grey10)
+        .and('contain', i18n.global.t('login.bannerAppButtons.description'))
         .then(($description) => {
           expect($description.text()).to.equal(
             i18n.global.t('login.bannerAppButtons.description'),
@@ -58,11 +58,11 @@ describe('<BannerAppButtons>', () => {
     it('uses correct spacing', () => {
       cy.dataCy('banner-app-buttons-title')
         .should('have.css', 'margin-top', '0px')
-        .should('have.css', 'margin-bottom', '0px');
+        .and('have.css', 'margin-bottom', '0px');
 
       cy.dataCy('banner-app-buttons-description')
         .should('have.css', 'margin-top', '4px')
-        .should('have.css', 'margin-bottom', '16px');
+        .and('have.css', 'margin-bottom', '16px');
     });
 
     it('renders google play button', () => {
@@ -94,8 +94,8 @@ describe('<BannerAppButtons>', () => {
     it('renders button in a flexbox with gap', () => {
       cy.dataCy('banner-app-buttons-container')
         .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-wrap', 'wrap')
-        .should('have.css', 'gap', '16px');
+        .and('have.css', 'flex-wrap', 'wrap')
+        .and('have.css', 'gap', '16px');
     });
   });
 
