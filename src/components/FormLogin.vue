@@ -173,7 +173,9 @@ export default defineComponent({
       </p>
     </div>
     <!-- Links: Mobile app -->
-    <banner-app-buttons />
+    <div class="q-mt-xl">
+      <banner-app-buttons />
+    </div>
   </div>
   <div
     v-else-if="formState === 'password-reset'"
