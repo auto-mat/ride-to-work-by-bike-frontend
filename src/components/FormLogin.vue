@@ -12,6 +12,7 @@
  *
  * @components
  * - `LoginButtons`: Component to render third-party authentication buttons.
+ * - `BannerAppButtons`: Component to render download links for RTWBB app.
  *
  * @example
  * <form-login />
@@ -24,11 +25,13 @@ import { defineComponent, ref, reactive } from 'vue';
 
 // components
 import LoginButtons from './LoginButtons.vue';
+import BannerAppButtons from './BannerAppButtons.vue';
 
 export default defineComponent({
   name: 'FormLogin',
   components: {
     LoginButtons,
+    BannerAppButtons,
   },
   emits: ['formSubmit'],
   setup() {
@@ -160,6 +163,7 @@ export default defineComponent({
     <q-separator color="grey-2" class="q-my-lg" />
     <!-- Buttons: Login with 3rd party -->
     <login-buttons />
+    <!-- Link: Register -->
     <div class="q-mt-lg">
       <p>
         {{ $t('login.form.promptNoAccount') }}
@@ -168,6 +172,8 @@ export default defineComponent({
         >.
       </p>
     </div>
+    <!-- Links: Mobile app -->
+    <banner-app-buttons />
   </div>
   <div
     v-else-if="formState === 'password-reset'"
