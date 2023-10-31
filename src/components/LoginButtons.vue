@@ -37,9 +37,10 @@ export default defineComponent({
       <!-- Icon -->
       <q-icon
         name="fab fa-google"
-        size="20px"
+        size="18px"
         color="primary"
         class="q-mr-sm"
+        data-cy="login-button-google-icon"
       />
       <!-- Label -->
       {{ $t('login.buttons.buttonGoogle') }}
@@ -54,7 +55,13 @@ export default defineComponent({
       data-cy="login-button-facebook"
     >
       <!-- Icon -->
-      <q-icon name="facebook" size="24px" color="primary" class="q-mr-sm" />
+      <q-icon
+        name="facebook"
+        size="24px"
+        color="primary"
+        class="q-mr-sm"
+        data-cy="login-button-facebook-icon"
+      />
       <!-- Label -->
       {{ $t('login.buttons.buttonFacebook') }}
     </q-btn>
