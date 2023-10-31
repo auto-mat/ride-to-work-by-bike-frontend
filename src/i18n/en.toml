@@ -155,3 +155,9 @@ messagePasswordRequired = "Please fill in the password"
 forgottenPassword = "Forgot your password?"
 submitLogin = "Log in"
 submitPasswordReset = "Reset password"
+promptNoAccount = "Don't have an account yet?"
+linkRegister = "Register"
+
+[login.buttons]
+buttonGoogle = "Login via Google"
+buttonFacebook = "Login via Facebook"

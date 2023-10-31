@@ -155,3 +155,9 @@ messagePasswordRequired = "Vyplňte prosím heslo"
 forgottenPassword = "Zabudli ste heslo?"
 submitLogin = "Prihlásiť sa"
 submitPasswordReset = "Obnovenie hesla"
+promptNoAccount = "Nemáte ešte účet?"
+linkRegister = "Zaregistrujte sa"
+
+[login.buttons]
+buttonGoogle = "Prihlásenie cez Google"
+buttonFacebook = "Prihlásenie cez Facebook"

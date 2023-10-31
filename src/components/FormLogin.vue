@@ -10,6 +10,9 @@
  * @events
  * - `formSubmit`: Emitted on form submit.
  *
+ * @components
+ * - `LoginButtons`: Component to render third-party authentication buttons.
+ *
  * @example
  * <form-login />
  *
@@ -19,8 +22,14 @@
 // libraries
 import { defineComponent, ref, reactive } from 'vue';
 
+// components
+import LoginButtons from './LoginButtons.vue';
+
 export default defineComponent({
   name: 'FormLogin',
+  components: {
+    LoginButtons,
+  },
   emits: ['formSubmit'],
   setup() {
     const formLogin = reactive({
@@ -147,6 +156,18 @@ export default defineComponent({
         data-cy="form-login-submit-login"
       />
     </q-form>
+    <!-- Separator -->
+    <q-separator color="grey-2" class="q-my-lg" />
+    <!-- Buttons: Login with 3rd party -->
+    <login-buttons />
+    <div class="q-mt-lg">
+      <p>
+        {{ $t('login.form.promptNoAccount') }}
+        <a href="#" class="text-primary" data-cy="login-link-register">
+          {{ $t('login.form.linkRegister') }} </a
+        >.
+      </p>
+    </div>
   </div>
   <div
     v-else-if="formState === 'password-reset'"

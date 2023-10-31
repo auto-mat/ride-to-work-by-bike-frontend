@@ -155,3 +155,9 @@ messagePasswordResetReqired = "Prosím vyplňte e-mail"
 forgottenPassword = "Zapomenuté heslo?"
 submitLogin = "Přihlásit se"
 submitPasswordReset = "Obnovit heslo"
+promptNoAccount = "Nemáte zatím účet?"
+linkRegister = "Registrujte se."
+
+[login.buttons]
+buttonGoogle = "Přihlásit přes Facebook"
+buttonFacebook = "Přihlásit přes Google"
