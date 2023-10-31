@@ -23,7 +23,7 @@ describe('<BannerAppButtons>', () => {
     });
 
     it('renders container with semi-transparent white background and rounded corners', () => {
-      cy.dataCy('banner-app-buttons-container')
+      cy.dataCy('banner-app-buttons')
         .should('have.css', 'padding', '16px')
         .should('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
         .should('have.css', 'border-radius', '8px');
@@ -55,13 +55,23 @@ describe('<BannerAppButtons>', () => {
         });
     });
 
+    it('uses correct spacing', () => {
+      cy.dataCy('banner-app-buttons-title')
+        .should('have.css', 'margin-top', '0px')
+        .should('have.css', 'margin-bottom', '0px');
+
+      cy.dataCy('banner-app-buttons-description')
+        .should('have.css', 'margin-top', '4px')
+        .should('have.css', 'margin-bottom', '16px');
+    });
+
     it('renders google play button', () => {
       cy.dataCy('banner-app-buttons-google-play')
         .should('be.visible')
         .invoke('height')
         .should('be.equal', 40);
       cy.dataCy('banner-app-buttons-google-play')
-        .find('.q-img')
+        .find('img')
         .should('be.visible')
         .then(($img) => {
           cy.testImageHeight($img);
@@ -74,11 +84,18 @@ describe('<BannerAppButtons>', () => {
         .invoke('height')
         .should('be.equal', 40);
       cy.dataCy('banner-app-buttons-app-store')
-        .find('.q-img')
+        .find('img')
         .should('be.visible')
         .then(($img) => {
           cy.testImageHeight($img);
         });
+    });
+
+    it('renders button in a flexbox with gap', () => {
+      cy.dataCy('banner-app-buttons-container')
+        .should('have.css', 'display', 'flex')
+        .should('have.css', 'flex-wrap', 'wrap')
+        .should('have.css', 'gap', '16px');
     });
   });
 
