@@ -6,6 +6,7 @@ colorSecondary = "#A0D7C4"
 colorGrayLight = "#F3F7FF"
 colorGrayMiddle = "#DCE1ED"
 colorWhite = "#FFFFFF"
+colorWhiteOpacity = "rgba(255, 255, 255, 0.5)"
 colorBlack = "#000000"
 
 image = "image.png"

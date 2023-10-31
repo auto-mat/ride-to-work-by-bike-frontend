@@ -15,17 +15,33 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28824&mode=dev)
  */
 
+// libraries
 import { defineComponent } from 'vue';
+
+// types
+import { ConfigGlobal } from './types';
+
+// config
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
+);
 
 export default defineComponent({
   name: 'BannerAppButtons',
+  setup() {
+    const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+
+    return {
+      backgroundColor,
+    };
+  },
 });
 </script>
 
 <template>
   <div
     class="q-pa-md text-grey-10"
-    style="background-color: rgba(255, 255, 255, 0.5); border-radius: 8px"
+    :style="{ 'background-color': backgroundColor, 'border-radius': '8px' }"
     data-cy="banner-app-buttons"
   >
     <h2
