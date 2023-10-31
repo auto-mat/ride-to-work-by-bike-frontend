@@ -2,6 +2,12 @@ import { colors } from 'quasar';
 import BannerAppButtons from 'components/BannerAppButtons.vue';
 import { i18n } from '../../boot/i18n';
 
+const rideToWorkByBikeConfig = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
+);
+const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
+const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
+
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 
@@ -76,6 +82,9 @@ describe('<BannerAppButtons>', () => {
         .then(($img) => {
           cy.testImageHeight($img);
         });
+      cy.dataCy('banner-app-buttons-google-play')
+        .should('have.attr', 'href', urlGooglePlay)
+        .and('have.attr', 'target', '_blank');
     });
 
     it('renders app store button', () => {
@@ -89,6 +98,9 @@ describe('<BannerAppButtons>', () => {
         .then(($img) => {
           cy.testImageHeight($img);
         });
+      cy.dataCy('banner-app-buttons-app-store')
+        .should('have.attr', 'href', urlAppStore)
+        .and('have.attr', 'target', '_blank');
     });
 
     it('renders button in a flexbox with gap', () => {
