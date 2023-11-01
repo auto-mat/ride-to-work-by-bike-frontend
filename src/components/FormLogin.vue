@@ -27,6 +27,14 @@ import { defineComponent, ref, reactive } from 'vue';
 import LoginButtons from './LoginButtons.vue';
 import BannerAppButtons from './BannerAppButtons.vue';
 
+// types
+import { ConfigGlobal } from './types';
+
+// config
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
+);
+
 export default defineComponent({
   name: 'FormLogin',
   components: {
@@ -49,6 +57,8 @@ export default defineComponent({
       'login',
     );
 
+    const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+
     const isValid = (val: string): boolean => val?.length > 0;
 
     const onSubmitLogin = () => {
@@ -60,6 +70,7 @@ export default defineComponent({
     };
 
     return {
+      backgroundColor,
       formLogin,
       formPasswordReset,
       formState,
@@ -257,8 +268,8 @@ export default defineComponent({
       <!-- Icon: Email -->
       <div class="flex">
         <div
-          class="q-pa-sm"
-          style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50%"
+          class="q-pa-sm round"
+          :style="{ 'background-color': backgroundColor }"
           data-cy="form-reset-finished-icon-wrapper"
         >
           <q-icon
@@ -311,5 +322,9 @@ export default defineComponent({
   &:before {
     border-color: transparent;
   }
+}
+
+.round {
+  border-radius: 9999px;
 }
 </style>
