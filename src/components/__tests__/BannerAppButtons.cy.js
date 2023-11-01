@@ -109,6 +109,11 @@ describe('<BannerAppButtons>', () => {
         .and('have.css', 'flex-wrap', 'wrap')
         .and('have.css', 'gap', '16px');
     });
+
+    it('provides valid URLs for buttons', () => {
+      cy.request(urlGooglePlay).its('status').should('equal', 200);
+      cy.request(urlAppStore).its('status').should('equal', 200);
+    });
   });
 
   context('mobile', () => {
