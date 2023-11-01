@@ -173,6 +173,54 @@ describe('<FormLogin>', () => {
         .should('have.css', 'text-transform', 'uppercase')
         .should('have.text', i18n.global.t('login.form.submitPasswordReset'));
     });
+
+    it('renders final screen on password reset', () => {
+      cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+      cy.dataCy('form-password-reset-submit').should('be.visible').click();
+      cy.dataCy('form-reset-finished').should('be.visible');
+      // icon wrapper
+      cy.dataCy('form-reset-finished-icon-wrapper')
+        .should('be.visible')
+        .and('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
+        .and('have.css', 'border-radius', '50%');
+      // icon
+      cy.dataCy('form-reset-finished-icon')
+        .invoke('height')
+        .should('be.equal', 40);
+      cy.dataCy('form-reset-finished-icon')
+        .invoke('width')
+        .should('be.equal', 40);
+      cy.dataCy('form-reset-finished-icon').should('have.color', colorPrimary);
+      // title
+      cy.dataCy('form-reset-finished-title')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('have.css', 'margin-top', '24px')
+        .and('contain', i18n.global.t('login.form.titleResetFinished'));
+      // description
+      cy.dataCy('form-reset-finished-description')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '16px')
+        .and('have.css', 'font-weight', '400')
+        .and('contain', i18n.global.t('login.form.descriptionResetFinished'));
+      // prompt
+      cy.dataCy('form-reset-finished-prompt')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '16px')
+        .and('have.css', 'font-weight', '400')
+        .and('contain', i18n.global.t('login.form.promptWrongEmail'));
+      // button
+      cy.dataCy('form-reset-finished-submit')
+        .should('be.visible')
+        .and('have.color', colorPrimary)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.text', i18n.global.t('login.form.submitNewPassword'));
+    });
   });
 
   context('mobile', () => {
