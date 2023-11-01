@@ -255,16 +255,18 @@ export default defineComponent({
   >
     <div class="q-my-lg">
       <!-- Icon: Email -->
-      <div class="flex" data-cy="form-reset-finished-icon">
+      <div class="flex">
         <div
           class="q-pa-sm"
           style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50%"
+          data-cy="form-reset-finished-icon-wrapper"
         >
           <q-icon
             name="mdi-email-outline"
             size="40px"
             color="primary"
             class="q-ma-xs"
+            data-cy="form-reset-finished-icon"
           />
         </div>
       </div>
@@ -276,14 +278,14 @@ export default defineComponent({
         {{ $t('login.form.titleResetFinished') }}
       </h2>
       <p
+        v-html="$t('login.form.descriptionResetFinished')"
         class="text-body1 q-my-none q-mt-sm"
         data-cy="form-reset-finished-description"
-        v-html="$t('login.form.descriptionResetFinished')"
       ></p>
       <p
+        v-html="$t('login.form.promptWrongEmail')"
         class="text-body1 q-my-none q-mt-lg"
         data-cy="form-reset-finished-prompt"
-        v-html="$t('login.form.promptWrongEmail')"
       ></p>
       <q-btn
         unelevated
