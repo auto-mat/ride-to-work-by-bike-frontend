@@ -277,16 +277,19 @@ export default defineComponent({
       >
         {{ $t('login.form.titleResetFinished') }}
       </h2>
+      <!-- Description -->
       <p
         v-html="$t('login.form.descriptionResetFinished')"
         class="text-body1 q-my-none q-mt-sm"
         data-cy="form-reset-finished-description"
       ></p>
+      <!-- Prompt: wrong email -->
       <p
         v-html="$t('login.form.promptWrongEmail')"
         class="text-body1 q-my-none q-mt-lg"
         data-cy="form-reset-finished-prompt"
       ></p>
+      <!-- Button: new password -->
       <q-btn
         unelevated
         rounded
