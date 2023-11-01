@@ -182,7 +182,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-reset-finished-icon-wrapper')
         .should('be.visible')
         .and('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
-        .and('have.css', 'border-radius', '50%');
+        .and('have.css', 'border-radius', '9999px');
       // icon
       cy.dataCy('form-reset-finished-icon')
         .invoke('height')
