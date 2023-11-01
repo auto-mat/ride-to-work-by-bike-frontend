@@ -45,7 +45,9 @@ export default defineComponent({
     });
 
     const isPassword = ref(true);
-    const formState = ref<'login' | 'password-reset'>('login');
+    const formState = ref<'login' | 'password-reset' | 'reset-finished'>(
+      'login',
+    );
 
     const isValid = (val: string): boolean => val?.length > 0;
 
@@ -71,6 +73,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- State: Login -->
   <div v-if="formState === 'login'" class="text-grey-10" data-cy="form-login">
     <div class="q-my-lg">
       <h1
@@ -177,6 +180,7 @@ export default defineComponent({
       <banner-app-buttons />
     </div>
   </div>
+  <!-- State: Forgotten password -->
   <div
     v-else-if="formState === 'password-reset'"
     class="text-grey-10"
@@ -238,9 +242,61 @@ export default defineComponent({
         type="submit"
         color="primary"
         :label="$t('login.form.submitPasswordReset')"
+        @click="formState = 'reset-finished'"
         data-cy="form-password-reset-submit"
       />
     </q-form>
+  </div>
+  <!-- State: Password reset finished -->
+  <div
+    v-else-if="formState === 'reset-finished'"
+    class="text-grey-10"
+    data-cy="form-reset-finished"
+  >
+    <div class="q-my-lg">
+      <!-- Icon: Email -->
+      <div class="flex" data-cy="form-reset-finished-icon">
+        <div
+          class="q-pa-sm"
+          style="background-color: rgba(255, 255, 255, 0.5); border-radius: 50%"
+        >
+          <q-icon
+            name="mdi-email-outline"
+            size="40px"
+            color="primary"
+            class="q-ma-xs"
+          />
+        </div>
+      </div>
+      <!-- Title -->
+      <h2
+        class="text-h5 text-bold q-my-none q-mt-lg"
+        data-cy="form-reset-finished-title"
+      >
+        {{ $t('login.form.titleResetFinished') }}
+      </h2>
+      <p
+        class="text-body1 q-my-none q-mt-sm"
+        data-cy="form-reset-finished-description"
+        v-html="$t('login.form.descriptionResetFinished')"
+      ></p>
+      <p
+        class="text-body1 q-my-none q-mt-lg"
+        data-cy="form-reset-finished-prompt"
+        v-html="$t('login.form.promptWrongEmail')"
+      ></p>
+      <q-btn
+        unelevated
+        rounded
+        outline
+        class="full-width q-mt-lg"
+        type="submit"
+        color="primary"
+        :label="$t('login.form.submitNewPassword')"
+        @click="formState = 'password-reset'"
+        data-cy="form-reset-finished-submit"
+      />
+    </div>
   </div>
 </template>
 
