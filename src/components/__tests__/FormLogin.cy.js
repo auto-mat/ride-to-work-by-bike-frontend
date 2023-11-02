@@ -226,7 +226,7 @@ describe('<FormLogin>', () => {
         .and('have.text', i18n.global.t('login.form.submitNewPassword'));
     });
 
-    it('validates user inputs', () => {
+    it('validates login form user inputs', () => {
       cy.dataCy('form-login-submit-login').should('be.visible').click();
       // validate email required
       cy.dataCy('form-login-email')
@@ -247,6 +247,25 @@ describe('<FormLogin>', () => {
         .find('.q-field__messages')
         .should('be.visible')
         .should('contain', i18n.global.t('login.form.messagePasswordRequired'));
+    });
+
+    it('validates password reset form user inputs', () => {
+      cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+      cy.dataCy('form-password-reset-submit').should('be.visible').click();
+      // validate email required
+      cy.dataCy('form-password-reset-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .should(
+          'contain',
+          i18n.global.t('login.form.messagePasswordResetReqired'),
+        );
+      // validate email format
+      cy.dataCy('form-password-reset-email-input').type('qw123@qw');
+      cy.dataCy('form-password-reset-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .should('contain', i18n.global.t('login.form.messageEmailInvalid'));
     });
   });
 
