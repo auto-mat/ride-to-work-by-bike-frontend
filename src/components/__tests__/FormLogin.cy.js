@@ -156,7 +156,7 @@ describe('<FormLogin>', () => {
     it('renders password reset form email input', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
       cy.dataCy('form-password-reset').should('be.visible');
-      cy.dataCy('form-password-reset-input')
+      cy.dataCy('form-password-reset-email')
         .should('be.visible')
         .find('label[for="form-login-password-reset"]')
         .should('be.visible')
@@ -177,6 +177,9 @@ describe('<FormLogin>', () => {
 
     it('renders final screen on password reset', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+      cy.dataCy('form-password-reset-email-input')
+        .should('be.visible')
+        .type('qw123@qw.com');
       cy.dataCy('form-password-reset-submit').should('be.visible').click();
       cy.dataCy('form-reset-finished').should('be.visible');
       // icon wrapper
@@ -221,6 +224,29 @@ describe('<FormLogin>', () => {
         .and('have.css', 'border-radius', '28px')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.text', i18n.global.t('login.form.submitNewPassword'));
+    });
+
+    it('validates user inputs', () => {
+      cy.dataCy('form-login-submit-login').should('be.visible').click();
+      // validate email required
+      cy.dataCy('form-login-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .should('contain', i18n.global.t('login.form.messageEmailReqired'));
+      // validate email format
+      cy.dataCy('form-login-email-input').type('qw123@qw');
+      cy.dataCy('form-login-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .should('contain', i18n.global.t('login.form.messageEmailInvalid'));
+      // validate password required
+      // first make email pass
+      cy.dataCy('form-login-email-input').type('.com');
+      cy.dataCy('form-login-submit-login').should('be.visible').click();
+      cy.dataCy('form-login-password')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .should('contain', i18n.global.t('login.form.messagePasswordRequired'));
     });
   });
 
