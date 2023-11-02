@@ -61,6 +61,11 @@ export default defineComponent({
 
     const isValid = (val: string): boolean => val?.length > 0;
 
+    const isEmail = (value: string): boolean => {
+      const regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$/;
+      return regex.test(value);
+    };
+
     const onSubmitLogin = () => {
       // noop
     };
@@ -69,13 +74,25 @@ export default defineComponent({
       // noop
     };
 
+    const onClickFormPasswordResetBtn = (): void => {
+      if (!isValid(formPasswordReset.email)) {
+        return;
+      }
+      if (!isEmail(formPasswordReset.email)) {
+        return;
+      }
+      formState.value = 'reset-finished';
+    };
+
     return {
       backgroundColor,
       formLogin,
       formPasswordReset,
       formState,
       isPassword,
+      isEmail,
       isValid,
+      onClickFormPasswordResetBtn,
       onSubmitLogin,
       onSubmitPasswordReset,
     };
@@ -109,6 +126,7 @@ export default defineComponent({
           v-model="formLogin.email"
           :rules="[
             (val) => isValid(val) || $t('login.form.messageEmailReqired'),
+            (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
           ]"
           bg-color="grey-1"
           id="form-login-email"
@@ -238,6 +256,7 @@ export default defineComponent({
           :rules="[
             (val) =>
               isValid(val) || $t('login.form.messagePasswordResetReqired'),
+            (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
           ]"
           bg-color="grey-1"
           id="form-login-password-reset"
@@ -253,7 +272,7 @@ export default defineComponent({
         type="submit"
         color="primary"
         :label="$t('login.form.submitPasswordReset')"
-        @click="formState = 'reset-finished'"
+        @click="onClickFormPasswordResetBtn"
         data-cy="form-password-reset-submit"
       />
     </q-form>

@@ -21,6 +21,7 @@ describe('<FormLogin>', () => {
         'titlePasswordReset',
         'descriptionPasswordReset',
         'messageEmailReqired',
+        'messageEmailInvalid',
         'messagePasswordRequired',
         'messagePasswordResetReqired',
         'forgottenPassword',
