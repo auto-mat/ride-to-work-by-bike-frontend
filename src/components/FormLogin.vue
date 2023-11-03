@@ -75,13 +75,8 @@ export default defineComponent({
     };
 
     const onClickFormPasswordResetBtn = (): void => {
-      if (!isValid(formPasswordReset.email)) {
-        return;
-      }
-      if (!isEmail(formPasswordReset.email)) {
-        return;
-      }
-      formState.value = 'reset-finished';
+      if (isValid(formPasswordReset.email) && isEmail(formPasswordReset.email))
+        formState.value = 'reset-finished';
     };
 
     return {
