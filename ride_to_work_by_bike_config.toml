@@ -16,6 +16,9 @@ subtitle = "Subtitle"
 borderRadiusCard = "20px"
 borderRadiusCardSmall = "8px"
 
+# Emails
+contactEmail = "anonym@dopracenakole.cz"
+
 # External URLs
 facebookUrl = "https://www.facebook.com/spolekautomat"
 instagramUrl = "https://www.instagram.com/spolekautomat"

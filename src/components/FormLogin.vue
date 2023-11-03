@@ -58,6 +58,7 @@ export default defineComponent({
     );
 
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+    const contactEmail = rideToWorkByBikeConfig.contactEmail;
 
     const isValid = (val: string): boolean => val?.length > 0;
 
@@ -82,6 +83,7 @@ export default defineComponent({
 
     return {
       backgroundColor,
+      contactEmail,
       formLogin,
       formPasswordReset,
       formState,
@@ -306,7 +308,7 @@ export default defineComponent({
       </h2>
       <!-- Description -->
       <p
-        v-html="$t('login.form.descriptionResetFinished')"
+        v-html="$t('login.form.descriptionResetFinished', { contactEmail })"
         class="text-body1 q-my-none q-mt-sm"
         data-cy="form-reset-finished-description"
       ></p>

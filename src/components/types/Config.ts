@@ -12,6 +12,7 @@ export interface ConfigGlobal {
   subtitle: string;
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
+  contactEmail: string;
   facebookUrl: string;
   instagramUrl: string;
   twitterUrl: string;

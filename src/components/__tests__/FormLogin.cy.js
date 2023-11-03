@@ -11,6 +11,7 @@ const rideToWorkByBikeConfig = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
 );
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
+const contactEmail = rideToWorkByBikeConfig.contactEmail;
 
 describe('<FormLogin>', () => {
   it('has translation for all strings', () => {
@@ -209,7 +210,12 @@ describe('<FormLogin>', () => {
         .and('have.color', grey10)
         .and('have.css', 'font-size', '16px')
         .and('have.css', 'font-weight', '400')
-        .and('contain', i18n.global.t('login.form.descriptionResetFinished'));
+        .and(
+          'contain',
+          i18n.global.t('login.form.descriptionResetFinished', {
+            contactEmail,
+          }),
+        );
       // prompt
       cy.dataCy('form-reset-finished-prompt')
         .should('be.visible')
