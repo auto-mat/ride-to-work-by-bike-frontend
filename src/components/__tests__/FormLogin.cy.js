@@ -232,13 +232,13 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-login-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('login.form.messageEmailReqired'));
+        .and('contain', i18n.global.t('login.form.messageEmailReqired'));
       // validate email format
       cy.dataCy('form-login-email-input').type('qw123@qw');
       cy.dataCy('form-login-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('login.form.messageEmailInvalid'));
+        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
       // validate password required
       // first make email pass
       cy.dataCy('form-login-email-input').type('.com');
@@ -246,7 +246,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-login-password')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('login.form.messagePasswordRequired'));
+        .and('contain', i18n.global.t('login.form.messagePasswordRequired'));
     });
 
     it('validates password reset form user inputs', () => {
@@ -256,7 +256,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .should(
+        .and(
           'contain',
           i18n.global.t('login.form.messagePasswordResetReqired'),
         );
@@ -265,7 +265,7 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('login.form.messageEmailInvalid'));
+        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
     });
   });
 
