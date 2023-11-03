@@ -62,7 +62,8 @@ export default defineComponent({
     const isValid = (val: string): boolean => val?.length > 0;
 
     const isEmail = (value: string): boolean => {
-      const regex = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,3}$/;
+      const regex =
+        /^(?!.*\.\.)[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+(\.[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+)*@([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
       return regex.test(value);
     };
 
