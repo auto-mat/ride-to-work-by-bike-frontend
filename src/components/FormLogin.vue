@@ -131,6 +131,7 @@ export default defineComponent({
           dense
           outlined
           v-model="formLogin.email"
+          lazy-rules
           :rules="[
             (val) => isValid(val) || $t('login.form.messageEmailReqired'),
             (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
@@ -260,6 +261,7 @@ export default defineComponent({
           dense
           outlined
           v-model="formPasswordReset.email"
+          lazy-rules
           :rules="[
             (val) =>
               isValid(val) || $t('login.form.messagePasswordResetReqired'),
