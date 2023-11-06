@@ -54,6 +54,10 @@ export default defineComponent({
       return regex.test(value);
     };
 
+    const isIdentical = (confirm: string, password: string): boolean => {
+      return confirm === password;
+    };
+
     const onSubmitRegister = () => {
       // noop
     };
@@ -64,6 +68,7 @@ export default defineComponent({
       isPasswordConfirm,
       isValid,
       isEmail,
+      isIdentical,
       onSubmitRegister,
     };
   },
@@ -161,7 +166,9 @@ export default defineComponent({
             (val) =>
               isValid(val) ||
               $t('register.form.messagePasswordConfirmRequired'),
-            // TODO: add identical requirement
+            (val) =>
+              isIdentical(val, formRegister.password) ||
+              $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
           class="q-mt-sm"
           data-cy="form-register-password-confirm-input"
