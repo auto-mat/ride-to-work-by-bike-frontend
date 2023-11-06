@@ -149,14 +149,14 @@ describe('<FormRegister>', () => {
     });
 
     it('validates emails correctly', () => {
-      // invalid email abc.exam-ple.com
+      // invalid email
       cy.dataCy('form-register-email-input').type('abc.example.com');
       cy.dataCy('form-register-submit').should('be.visible').click();
       cy.dataCy('form-register-email')
         .find('.q-field__messages')
         .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
       cy.dataCy('form-register-email-input').clear();
-      // invalid email a@b@c@example.com
+      // invalid email
       cy.dataCy('form-register-email-input').type('a@b@c@example.com');
       cy.dataCy('form-register-submit').should('be.visible').click();
       cy.dataCy('form-register-email')
