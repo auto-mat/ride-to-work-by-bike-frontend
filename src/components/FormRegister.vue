@@ -54,6 +54,12 @@ export default defineComponent({
       return regex.test(value);
     };
 
+    const isStrong = (value: string): boolean => {
+      let isLong = value.length > 5;
+      let hasLetter = /[a-zA-Z]/.test(value);
+      return isLong && hasLetter;
+    };
+
     const isIdentical = (confirm: string, password: string): boolean => {
       return confirm === password;
     };
@@ -68,6 +74,7 @@ export default defineComponent({
       isPasswordConfirm,
       isValid,
       isEmail,
+      isStrong,
       isIdentical,
       onSubmitRegister,
     };
@@ -127,6 +134,7 @@ export default defineComponent({
           :rules="[
             (val) =>
               isValid(val) || $t('register.form.messagePasswordRequired'),
+            (val) => isStrong(val) || $t('register.form.messagePasswordStrong'),
           ]"
           class="q-mt-sm"
           data-cy="form-register-password-input"
