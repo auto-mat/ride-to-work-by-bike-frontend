@@ -83,10 +83,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="text-gray-10" data-cy="form-register">
+  <div class="text-grey-10" data-cy="form-register">
     <!-- Heading -->
     <div class="q-my-lg">
-      <h1 class="text-h5 text-bold q-my-none" data-cy="form-register-title">
+      <h1
+        class="text-h5 text-grey-10 text-bold q-my-none"
+        data-cy="form-register-title"
+      >
         {{ $t('register.form.titleRegister') }}
       </h1>
     </div>
@@ -194,6 +197,16 @@ export default defineComponent({
           </template>
         </q-input>
       </div>
+      <!-- Button: submit -->
+      <q-btn
+        unelevated
+        rounded
+        class="full-width"
+        type="submit"
+        color="primary q-mt-lg"
+        :label="$t('register.form.submitRegister')"
+        data-cy="form-register-submit"
+      />
     </q-form>
   </div>
 </template>
