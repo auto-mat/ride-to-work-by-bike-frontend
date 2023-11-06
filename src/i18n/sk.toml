@@ -170,3 +170,14 @@ buttonFacebook = "Prihlásenie cez Facebook"
 [login.bannerAppButtons]
 title = "Nahrávajte svoje jazdy z mobilného telefónu!"
 description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
+
+[register.form]
+titleRegister = "Registrácia"
+labelEmail = "E-mail"
+labelPassword = "Heslo"
+labelPasswordConfirm = "Potvrdenie hesla"
+hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
+messageEmailReqired = "Vyplňte prosím svoj e-mail"
+messageEmailInvalid = "Vyplňte prosím platný e-mail"
+messagePasswordRequired = "Vyplňte prosím heslo"
+messagePasswordConfirmReqired = "Vyplňte prosím heslo"

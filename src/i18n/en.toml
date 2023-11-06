@@ -170,3 +170,14 @@ buttonFacebook = "Login via Facebook"
 [login.bannerAppButtons]
 title = "Log your rides from your mobile phone!"
 description = "Download the app and log rides from anywhere."
+
+[register.form]
+titleRegister = "Registration"
+labelEmail = "E-mail"
+labelPassword = "Password"
+labelPasswordConfirm = "Password confirmation"
+hintPassword = "It must contain at least 6 characters and at least 1 letter."
+messageEmailReqired = "Please fill in your e-mail"
+messageEmailInvalid = "Please fill in a valid email"
+messagePasswordRequired = "Please fill in the password"
+messagePasswordConfirmReqired = "Please fill in the password"

@@ -26,6 +26,7 @@ import { defineComponent } from 'vue';
 import HelpButton from 'components/HelpButton.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import FormLogin from 'components/FormLogin.vue';
+import FormRegister from 'src/components/FormRegister.vue';
 
 export default defineComponent({
   name: 'LoginPage',
@@ -33,6 +34,7 @@ export default defineComponent({
     HelpButton,
     LanguageSwitcher,
     FormLogin,
+    FormRegister,
   },
   setup() {
     return {};
@@ -64,6 +66,7 @@ export default defineComponent({
       <div class="row">
         <div class="col-12 col-lg-4">
           <form-login />
+          <form-register />
         </div>
       </div>
     </div>
