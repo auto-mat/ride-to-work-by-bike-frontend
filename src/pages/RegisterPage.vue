@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * LoginPage Component
+ * RegisterPage Component
  *
- * The `LoginPage` renders the page with login form and password reset form.
+ * The `RegisterPage` renders the page with login form and password reset form.
  *
  * @description
  * This component is used to allow user to login into their account. Or
@@ -16,7 +16,7 @@
  * @layout
  * - `LoginLayout`: Displayed within the `LoginLayout` template.
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6269%3A24768&mode=dev)
+ * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
  */
 
 // libraries
@@ -25,14 +25,14 @@ import { defineComponent } from 'vue';
 // components
 import HelpButton from 'components/HelpButton.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
-import FormLogin from 'components/FormLogin.vue';
+import FormRegister from 'src/components/FormRegister.vue';
 
 export default defineComponent({
-  name: 'LoginPage',
+  name: 'RegisterPage',
   components: {
     HelpButton,
     LanguageSwitcher,
-    FormLogin,
+    FormRegister,
   },
   setup() {
     return {};
@@ -63,7 +63,7 @@ export default defineComponent({
 
       <div class="row">
         <div class="col-12 col-lg-4">
-          <form-login />
+          <form-register />
         </div>
       </div>
     </div>
