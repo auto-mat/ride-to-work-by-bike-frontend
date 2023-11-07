@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * LoginLayout Component
+ * LoginRegisterLayout Component
  *
- * The `LoginLayout` renders a simple template for login/registration.
+ * The `LoginRegisterLayout` renders a simple template for login/registration.
  *
  * @description
  * This component is used as a wrapper for login and registration pages.
@@ -11,13 +11,14 @@
  * @usage
  * This layout is currently used by the following pages:
  * - LoginPage
+ * - RegisterPage
  *
  * To utilize this layout in a page, specify it in the route configuration:
  * ```javascript
  * // routes.ts
  * {
  *   path: '/login',
- *   component: () => import('layouts/LoginLayout.vue'),
+ *   component: () => import('layouts/LoginRegisterLayout.vue'),
  *   children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
  * },
  * ```
