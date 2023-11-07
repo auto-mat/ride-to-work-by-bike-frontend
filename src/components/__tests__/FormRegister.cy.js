@@ -86,7 +86,7 @@ describe('<FormRegister>', () => {
       // password
       cy.dataCy('form-register-password-icon')
         .should('contain', 'visibility')
-        .should('have.color', `${colorPrimary}`);
+        .and('have.color', `${colorPrimary}`);
       cy.dataCy('form-register-password-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -96,7 +96,7 @@ describe('<FormRegister>', () => {
       // password confirm
       cy.dataCy('form-register-password-confirm-icon')
         .should('contain', 'visibility')
-        .should('have.color', `${colorPrimary}`);
+        .and('have.color', `${colorPrimary}`);
       cy.dataCy('form-register-password-confirm-icon')
         .invoke('height')
         .should('be.equal', 18);
