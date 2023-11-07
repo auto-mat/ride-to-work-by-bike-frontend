@@ -109,6 +109,7 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
+          lazy-rules
           bg-color="grey-1"
           v-model="formRegister.password"
           id="form-register-password"
@@ -151,6 +152,7 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
+          lazy-rules
           bg-color="grey-1"
           v-model="formRegister.passwordConfirm"
           id="form-register-password"
