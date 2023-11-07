@@ -109,7 +109,6 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
-          lazy-rules
           bg-color="grey-1"
           v-model="formRegister.password"
           id="form-register-password"
@@ -122,6 +121,7 @@ export default defineComponent({
               isStrongPassword(val) ||
               $t('register.form.messagePasswordStrong'),
           ]"
+          lazy-rules
           class="q-mt-sm"
           data-cy="form-register-password-input"
         >
@@ -152,7 +152,6 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
-          lazy-rules
           bg-color="grey-1"
           v-model="formRegister.passwordConfirm"
           id="form-register-password"
@@ -165,6 +164,7 @@ export default defineComponent({
               isIdentical(val, formRegister.password) ||
               $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
+          lazy-rules
           class="q-mt-sm"
           data-cy="form-register-password-confirm-input"
         >
