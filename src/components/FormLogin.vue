@@ -27,6 +27,9 @@ import { defineComponent, ref, reactive } from 'vue';
 import LoginButtons from './LoginButtons.vue';
 import BannerAppButtons from './BannerAppButtons.vue';
 
+// composables
+import { useValidation } from '../composables/useValidation';
+
 // types
 import { ConfigGlobal } from './types';
 
@@ -60,22 +63,7 @@ export default defineComponent({
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
     const contactEmail = rideToWorkByBikeConfig.contactEmail;
 
-    const isValid = (val: string): boolean => val?.length > 0;
-
-    const isEmail = (value: string): boolean => {
-      /**
-       * Match 99% of valid email addresses and will not pass validation
-       * for email addresses that have, for instance
-       * - Dots in the beginning
-       * - Multiple dots at the end
-       * But at the same time it will allow part after @ to be IP address.
-       *
-       * https://uibakery.io/regex-library/email
-       */
-      const regex =
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-      return regex.test(value);
-    };
+    const { isEmail, isFilled } = useValidation();
 
     const onSubmitLogin = () => {
       // noop
@@ -86,7 +74,7 @@ export default defineComponent({
     };
 
     const onClickFormPasswordResetBtn = (): void => {
-      if (isValid(formPasswordReset.email) && isEmail(formPasswordReset.email))
+      if (isFilled(formPasswordReset.email) && isEmail(formPasswordReset.email))
         formState.value = 'reset-finished';
     };
 
@@ -98,7 +86,7 @@ export default defineComponent({
       formState,
       isPassword,
       isEmail,
-      isValid,
+      isFilled,
       onClickFormPasswordResetBtn,
       onSubmitLogin,
       onSubmitPasswordReset,
@@ -133,7 +121,7 @@ export default defineComponent({
           v-model="formLogin.email"
           lazy-rules
           :rules="[
-            (val) => isValid(val) || $t('login.form.messageEmailReqired'),
+            (val) => isFilled(val) || $t('login.form.messageEmailReqired'),
             (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
           ]"
           bg-color="grey-1"
@@ -159,7 +147,7 @@ export default defineComponent({
           id="form-login-password"
           :type="isPassword ? 'password' : 'text'"
           :rules="[
-            (val) => isValid(val) || $t('login.form.messagePasswordRequired'),
+            (val) => isFilled(val) || $t('login.form.messagePasswordRequired'),
           ]"
           class="q-mt-sm"
           data-cy="form-login-password-input"
@@ -264,7 +252,7 @@ export default defineComponent({
           lazy-rules
           :rules="[
             (val) =>
-              isValid(val) || $t('login.form.messagePasswordResetReqired'),
+              isFilled(val) || $t('login.form.messagePasswordResetReqired'),
             (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
           ]"
           bg-color="grey-1"

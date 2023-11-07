@@ -22,7 +22,11 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
  */
 
+// libraries
 import { defineComponent, ref, reactive } from 'vue';
+
+// composables
+import { useValidation } from '../composables/useValidation';
 
 export default defineComponent({
   name: 'FormRegister',
@@ -37,32 +41,8 @@ export default defineComponent({
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
-    const isValid = (val: string): boolean => val?.length > 0;
-
-    const isEmail = (value: string): boolean => {
-      /**
-       * Match 99% of valid email addresses and will not pass validation
-       * for email addresses that have, for instance
-       * - Dots in the beginning
-       * - Multiple dots at the end
-       * But at the same time it will allow part after @ to be IP address.
-       *
-       * https://uibakery.io/regex-library/email
-       */
-      const regex =
-        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-      return regex.test(value);
-    };
-
-    const isStrong = (value: string): boolean => {
-      let isLong = value.length > 5;
-      let hasLetter = /[a-zA-Z]/.test(value);
-      return isLong && hasLetter;
-    };
-
-    const isIdentical = (confirm: string, password: string): boolean => {
-      return confirm === password;
-    };
+    const { isEmail, isFilled, isIdentical, isStrongPassword } =
+      useValidation();
 
     const onSubmitRegister = () => {
       // noop
@@ -72,10 +52,10 @@ export default defineComponent({
       formRegister,
       isPassword,
       isPasswordConfirm,
-      isValid,
       isEmail,
-      isStrong,
+      isFilled,
       isIdentical,
+      isStrongPassword,
       onSubmitRegister,
     };
   },
@@ -108,7 +88,7 @@ export default defineComponent({
           v-model="formRegister.email"
           lazy-rules
           :rules="[
-            (val) => isValid(val) || $t('register.form.messageEmailReqired'),
+            (val) => isFilled(val) || $t('register.form.messageEmailReqired'),
             (val) => isEmail(val) || $t('register.form.messageEmailInvalid'),
           ]"
           bg-color="grey-1"
@@ -136,8 +116,10 @@ export default defineComponent({
           :type="isPassword ? 'password' : 'text'"
           :rules="[
             (val) =>
-              isValid(val) || $t('register.form.messagePasswordRequired'),
-            (val) => isStrong(val) || $t('register.form.messagePasswordStrong'),
+              isFilled(val) || $t('register.form.messagePasswordRequired'),
+            (val) =>
+              isStrongPassword(val) ||
+              $t('register.form.messagePasswordStrong'),
           ]"
           class="q-mt-sm"
           data-cy="form-register-password-input"
@@ -175,7 +157,7 @@ export default defineComponent({
           :type="isPasswordConfirm ? 'password' : 'text'"
           :rules="[
             (val) =>
-              isValid(val) ||
+              isFilled(val) ||
               $t('register.form.messagePasswordConfirmRequired'),
             (val) =>
               isIdentical(val, formRegister.password) ||
