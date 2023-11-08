@@ -11,7 +11,8 @@
  * - `formSubmit`: Emitted on form submit.
  *
  * @components
- * - `LoginRegisterButtons`: Component to render third-party authentication buttons.
+ * - `LoginRegisterButtons`: Component to render third-party authentication
+ * buttons.
  * - `BannerAppButtons`: Component to render download links for RTWBB app.
  *
  * @example

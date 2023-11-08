@@ -15,9 +15,11 @@
  * @slots
  *
  * @components
+ * - `LoginRegisterButtons`: Component to render third-party authentication
+ * buttons.
  *
  * @example
- * <FormRegister />
+ * <form-register />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
  */
