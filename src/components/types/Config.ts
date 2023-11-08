@@ -13,10 +13,10 @@ export interface ConfigGlobal {
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
   contactEmail: string;
-  facebookUrl: string;
-  instagramUrl: string;
-  twitterUrl: string;
-  youtubeUrl: string;
+  urlFacebook: string;
+  urlInstagram: string;
+  urlTwitter: string;
+  urlYoutube: string;
   urlGooglePlay: string;
   urlAppStore: string;
 }

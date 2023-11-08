@@ -32,14 +32,14 @@ const getAppConfig = (process) => {
     config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
   } else if (process.env.BORDER_RADIUS_CARD_SMALL) {
     config['borderRadiusCardSmall'] = process.env.BORDER_RADIUS_CARD_SMALL;
-  } else if (process.env.FACEBOOK_URL) {
-    config['facebookUrl'] = process.env.FACEBOOK_URL;
-  } else if (process.env.INSTAGRAM_URL) {
-    config['instagramUrl'] = process.env.INSTAGRAM_URL;
-  } else if (process.env.TWITTER_URL) {
-    config['twitterUrl'] = process.env.TWITTER_URL;
-  } else if (process.env.YOUTUBE_URL) {
-    config['youtubeUrl'] = process.env.YOUTUBE_URL;
+  } else if (process.env.URL_FACEBOOK) {
+    config['urlFacebook'] = process.env.URL_FACEBOOK;
+  } else if (process.env.URL_INSTAGRAM) {
+    config['urlInstagram'] = process.env.URL_INSTAGRAM;
+  } else if (process.env.URL_TWITTER) {
+    config['urlTwitter'] = process.env.URL_TWITTER;
+  } else if (process.env.URL_YOUTUBE) {
+    config['urlYoutube'] = process.env.URL_YOUTUBE;
   } else if (process.env.URL_APP_STORE) {
     config['urlAppStore'] = process.env.URL_APP_STORE;
   } else if (process.env.URL_GOOGLE_PLAY) {
