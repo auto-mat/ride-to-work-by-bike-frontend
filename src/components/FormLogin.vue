@@ -11,7 +11,7 @@
  * - `formSubmit`: Emitted on form submit.
  *
  * @components
- * - `LoginButtons`: Component to render third-party authentication buttons.
+ * - `LoginRegisterButtons`: Component to render third-party authentication buttons.
  * - `BannerAppButtons`: Component to render download links for RTWBB app.
  *
  * @example
@@ -24,7 +24,7 @@
 import { defineComponent, ref, reactive } from 'vue';
 
 // components
-import LoginButtons from './LoginButtons.vue';
+import LoginRegisterButtons from './LoginRegisterButtons.vue';
 import BannerAppButtons from './BannerAppButtons.vue';
 
 // composables
@@ -41,7 +41,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 export default defineComponent({
   name: 'FormLogin',
   components: {
-    LoginButtons,
+    LoginRegisterButtons,
     BannerAppButtons,
   },
   emits: ['formSubmit'],
@@ -190,7 +190,7 @@ export default defineComponent({
     <!-- Separator -->
     <q-separator color="grey-2" class="q-my-lg" />
     <!-- Buttons: Login with 3rd party -->
-    <login-buttons />
+    <login-register-buttons variant="login" />
     <!-- Link: Register -->
     <div class="q-mt-lg">
       <p>

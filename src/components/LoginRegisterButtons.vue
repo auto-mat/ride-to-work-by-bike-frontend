@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * LoginButtons Component
+ * LoginRegisterButtons Component
  *
- * The `LoginButtons` component is used for login via external providers such
+ * The `LoginRegisterButtons` component is used for login via external providers such
  * as Google, Facebook, etc.
  *
  * @description * Use this component to render the buttons and handle
@@ -11,7 +11,7 @@
  * Note: This component is commonly used in `FormLogin`.
  *
  * @example
- * <login-buttons />
+ * <login-register-buttons />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28817&mode=dev)
  */
@@ -19,7 +19,13 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'LoginButtons',
+  name: 'LoginRegisterButtons',
+  props: {
+    variant: {
+      type: String as () => 'login' | 'register',
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -32,7 +38,7 @@ export default defineComponent({
       outline
       color="primary"
       class="full-width"
-      data-cy="login-button-google"
+      data-cy="login-register-button-google"
     >
       <!-- Icon -->
       <q-icon
@@ -40,10 +46,15 @@ export default defineComponent({
         size="18px"
         color="primary"
         class="q-mr-sm"
-        data-cy="login-button-google-icon"
+        data-cy="login-register-button-google-icon"
       />
       <!-- Label -->
-      {{ $t('login.buttons.buttonGoogle') }}
+      <span v-if="variant === 'login'">{{
+        $t('login.buttons.buttonGoogle')
+      }}</span>
+      <span v-else-if="variant === 'register'">{{
+        $t('register.buttons.buttonGoogle')
+      }}</span>
     </q-btn>
     <!-- Button: Login Facebook -->
     <q-btn
@@ -52,7 +63,7 @@ export default defineComponent({
       outline
       color="primary"
       class="full-width q-mt-md"
-      data-cy="login-button-facebook"
+      data-cy="login-register-button-facebook"
     >
       <!-- Icon -->
       <q-icon
@@ -60,10 +71,15 @@ export default defineComponent({
         size="24px"
         color="primary"
         class="q-mr-sm"
-        data-cy="login-button-facebook-icon"
+        data-cy="login-register-button-facebook-icon"
       />
       <!-- Label -->
-      {{ $t('login.buttons.buttonFacebook') }}
+      <span v-if="variant === 'login'">{{
+        $t('login.buttons.buttonFacebook')
+      }}</span>
+      <span v-else-if="variant === 'register'">{{
+        $t('register.buttons.buttonFacebook')
+      }}</span>
     </q-btn>
   </div>
 </template>

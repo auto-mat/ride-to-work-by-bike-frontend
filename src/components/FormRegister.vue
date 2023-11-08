@@ -28,8 +28,14 @@ import { defineComponent, ref, reactive } from 'vue';
 // composables
 import { useValidation } from '../composables/useValidation';
 
+// components
+import LoginRegisterButtons from './LoginRegisterButtons.vue';
+
 export default defineComponent({
   name: 'FormRegister',
+  components: {
+    LoginRegisterButtons,
+  },
   emits: ['formSubmit'],
   setup() {
     const formRegister = reactive({
@@ -191,6 +197,10 @@ export default defineComponent({
         :label="$t('register.form.submitRegister')"
         data-cy="form-register-submit"
       />
+      <!-- Separator -->
+      <q-separator color="grey-2" class="q-my-lg" />
+      <!-- Buttons: Register with 3rd party -->
+      <login-register-buttons variant="register" />
     </q-form>
   </div>
 </template>

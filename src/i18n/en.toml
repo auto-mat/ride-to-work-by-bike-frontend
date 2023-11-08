@@ -184,3 +184,7 @@ messagePasswordStrong = "Password must contain at least 6 characters and at leas
 messagePasswordConfirmRequired = "Please fill in the password"
 messagePasswordConfirmNotMatch = "Passwords don't match"
 submitRegister = "Register now"
+
+[register.buttons]
+buttonGoogle = "Register via Facebook"
+buttonFacebook = "Register via Google"

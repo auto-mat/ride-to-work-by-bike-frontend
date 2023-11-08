@@ -184,3 +184,7 @@ messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 p�
 messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
 submitRegister = "Registrovat se"
+
+[register.buttons]
+buttonGoogle = "Registrovat přes facebook"
+buttonFacebook = "Registrovat přes Google"
