@@ -1,10 +1,10 @@
+import { colors } from 'quasar';
+const { getPaletteColor } = colors;
+
 import LoginRegisterButtons from 'components/LoginRegisterButtons.vue';
 import { i18n } from '../../boot/i18n';
 
-const rideToWorkByBikeConfig = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
+const primary = getPaletteColor('primary');
 
 describe('<LoginRegisterButtons>', () => {
   it('has translation for all strings', () => {
@@ -37,7 +37,7 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', colorPrimary)
+        .and('have.color', primary)
         .and('contain', i18n.global.t('login.buttons.buttonGoogle'));
     });
 
@@ -45,7 +45,7 @@ describe('<LoginRegisterButtons>', () => {
       cy.dataCy('login-register-button-google-icon')
         .should('have.class', 'fab')
         .and('have.class', 'fa-google')
-        .and('have.color', colorPrimary);
+        .and('have.color', primary);
       cy.dataCy('login-register-button-google-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -61,14 +61,14 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', colorPrimary)
+        .and('have.color', primary)
         .and('contain', i18n.global.t('login.buttons.buttonFacebook'));
     });
 
     it('renders facebook button icon', () => {
       cy.dataCy('login-register-button-facebook-icon')
         .should('contain', 'facebook')
-        .and('have.color', colorPrimary);
+        .and('have.color', primary);
       cy.dataCy('login-register-button-facebook-icon')
         .invoke('height')
         .should('be.equal', 24);
@@ -103,7 +103,7 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', colorPrimary)
+        .and('have.color', primary)
         .and('contain', i18n.global.t('register.buttons.buttonGoogle'));
     });
 
@@ -111,7 +111,7 @@ describe('<LoginRegisterButtons>', () => {
       cy.dataCy('login-register-button-google-icon')
         .should('have.class', 'fab')
         .and('have.class', 'fa-google')
-        .and('have.color', colorPrimary);
+        .and('have.color', primary);
       cy.dataCy('login-register-button-google-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -127,14 +127,14 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', colorPrimary)
+        .and('have.color', primary)
         .and('contain', i18n.global.t('register.buttons.buttonFacebook'));
     });
 
     it('renders facebook button icon', () => {
       cy.dataCy('login-register-button-facebook-icon')
         .should('contain', 'facebook')
-        .and('have.color', colorPrimary);
+        .and('have.color', primary);
       cy.dataCy('login-register-button-facebook-icon')
         .invoke('height')
         .should('be.equal', 24);
