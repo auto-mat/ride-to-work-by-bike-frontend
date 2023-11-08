@@ -22,17 +22,10 @@
 // libraries
 import { defineComponent } from 'vue';
 import { i18n } from '../boot/i18n';
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
 import LanguageSwitcher from './LanguageSwitcher.vue';
-
-// types
-import { ConfigGlobal } from './types';
-
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
 
 // Deployed app version
 const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(

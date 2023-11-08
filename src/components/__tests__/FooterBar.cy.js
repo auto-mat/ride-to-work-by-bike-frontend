@@ -1,17 +1,10 @@
 import { colors } from 'quasar';
 import FooterBar from '../FooterBar.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
-
-const rideToWorkByBikeConfig = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
-const urlYoutube = rideToWorkByBikeConfig.urlYoutube;
-const urlTwitter = rideToWorkByBikeConfig.urlTwitter;
-const urlFacebook = rideToWorkByBikeConfig.urlFacebook;
-const urlInstagram = rideToWorkByBikeConfig.urlInstagram;
 
 describe('<FooterBar>', () => {
   it('has translation for all strings', () => {
@@ -67,16 +60,16 @@ describe('<FooterBar>', () => {
           .should('be.equal', 42);
         cy.dataCy('footer-social-menu-link-facebook')
           .should('be.visible')
-          .and('have.attr', 'href', urlFacebook);
+          .and('have.attr', 'href', rideToWorkByBikeConfig.urlFacebook);
         cy.dataCy('footer-social-menu-link-instagram')
           .should('be.visible')
-          .and('have.attr', 'href', urlInstagram);
+          .and('have.attr', 'href', rideToWorkByBikeConfig.urlInstagram);
         cy.dataCy('footer-social-menu-link-twitter')
           .should('be.visible')
-          .and('have.attr', 'href', urlTwitter);
+          .and('have.attr', 'href', rideToWorkByBikeConfig.urlTwitter);
         cy.dataCy('footer-social-menu-link-youtube')
           .should('be.visible')
-          .and('have.attr', 'href', urlYoutube);
+          .and('have.attr', 'href', rideToWorkByBikeConfig.urlYoutube);
         cy.dataCy('footer-social-menu-icon')
           .should('be.visible')
           .should('have.color', white);
@@ -90,10 +83,18 @@ describe('<FooterBar>', () => {
     });
 
     it('provides valid URLs for social links', () => {
-      cy.request(urlFacebook).its('status').should('equal', 200);
-      cy.request(urlInstagram).its('status').should('equal', 200);
-      cy.request(urlTwitter).its('status').should('equal', 200);
-      cy.request(urlYoutube).its('status').should('equal', 200);
+      cy.request(rideToWorkByBikeConfig.urlFacebook)
+        .its('status')
+        .should('equal', 200);
+      cy.request(rideToWorkByBikeConfig.urlInstagram)
+        .its('status')
+        .should('equal', 200);
+      cy.request(rideToWorkByBikeConfig.urlTwitter)
+        .its('status')
+        .should('equal', 200);
+      cy.request(rideToWorkByBikeConfig.urlYoutube)
+        .its('status')
+        .should('equal', 200);
     });
 
     it('renders language switcher', () => {
