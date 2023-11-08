@@ -2,13 +2,18 @@
 /**
  * LoginRegisterButtons Component
  *
- * The `LoginRegisterButtons` component is used for login via external providers such
- * as Google, Facebook, etc.
+ * The `LoginRegisterButtons` component is used for login or registration
+ * via external providers such as Google, Facebook, etc.
  *
  * @description * Use this component to render the buttons and handle
  * authentication.
  *
- * Note: This component is commonly used in `FormLogin`.
+ * Note: This component is commonly used in `FormLogin` and `FormRegister`.
+ *
+ * @props
+ * - `variant` (String: 'login' | 'register', required): Determines the
+ * function based on whether the component is used for login or
+ * registration.
  *
  * @example
  * <login-register-buttons />
