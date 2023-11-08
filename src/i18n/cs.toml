@@ -186,5 +186,5 @@ messagePasswordConfirmNotMatch = "Hesla se neshodují"
 submitRegister = "Registrovat se"
 
 [register.buttons]
-buttonGoogle = "Registrovat přes facebook"
+buttonGoogle = "Registrovat přes Facebook"
 buttonFacebook = "Registrovat přes Google"
