@@ -59,13 +59,13 @@ import { options as loggerOptions } from '../../../src/boot/logger';
 import { i18n as i18nApp } from '../../../src/boot/i18n';
 import { register } from 'swiper/element/bundle';
 
+// Initialize global variables
+initVars();
+
 Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {};
   options.global.plugins = options.global.plugins || [];
-
-  // Initialize global variables
-  initVars();
 
   // Register Swiper third party lib component
   register();
