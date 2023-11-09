@@ -51,7 +51,7 @@ describe('<FooterBar>', () => {
           .and('have.css', 'align-items', 'center');
         cy.dataCy('footer-social-menu-button')
           .should('be.visible')
-          .should('have.css', 'border-radius', '50%');
+          .and('have.css', 'border-radius', '50%');
         cy.dataCy('footer-social-menu-button')
           .invoke('height')
           .should('be.equal', 42);
@@ -72,7 +72,7 @@ describe('<FooterBar>', () => {
           .and('have.attr', 'href', rideToWorkByBikeConfig.urlYoutube);
         cy.dataCy('footer-social-menu-icon')
           .should('be.visible')
-          .should('have.color', white);
+          .and('have.color', white);
         cy.dataCy('footer-social-menu-icon')
           .invoke('height')
           .should('be.equal', 18);
