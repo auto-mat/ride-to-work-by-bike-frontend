@@ -184,6 +184,10 @@ messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 p�
 messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
 submitRegister = "Registrovat se"
+hintRegisterAsCoordinator = "Chcete se stát firemní*m či školní*m koordinátorem*kou, ale neúčastnit se výzvy?"
+linkRegisterAsCoordinator = "Registrujte se jako koordinátor*ka."
+hintLogin = "Již máte účet?"
+linkLogin = "Přihlašte se"
 
 [register.buttons]
 buttonGoogle = "Registrovat přes Facebook"

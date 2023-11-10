@@ -184,6 +184,10 @@ messagePasswordStrong = "Password must contain at least 6 characters and at leas
 messagePasswordConfirmRequired = "Please fill in the password"
 messagePasswordConfirmNotMatch = "Passwords don't match"
 submitRegister = "Register now"
+hintRegisterAsCoordinator = "Do you want to become a company or school coordinator but not participate in the challenge?"
+linkRegisterAsCoordinator = "Register as a coordinator"
+hintLogin = "Already have an account?"
+linkLogin = "Sign in"
 
 [register.buttons]
 buttonGoogle = "Register via Facebook"

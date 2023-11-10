@@ -26,6 +26,7 @@
 
 // libraries
 import { defineComponent, ref, reactive } from 'vue';
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // composables
 import { useValidation } from '../composables/useValidation';
@@ -56,7 +57,12 @@ export default defineComponent({
       // noop
     };
 
+    const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
     return {
+      backgroundColor,
+      borderRadius,
       formRegister,
       isPassword,
       isPasswordConfirm,
@@ -203,6 +209,39 @@ export default defineComponent({
       <q-separator color="grey-2" class="q-my-lg" />
       <!-- Buttons: Register with 3rd party -->
       <login-register-buttons variant="register" />
+      <!-- Link: Register Coordinator -->
+      <div class="q-mt-xl">
+        <div
+          class="q-pa-md text-body2 text-white"
+          :style="{
+            'background-color': backgroundColor,
+            'border-radius': borderRadius,
+          }"
+          data-cy="form-register-coordinator"
+        >
+          <p
+            class="q-mt-none q-mb-md"
+            data-cy="form-register-coordinator-description"
+          >
+            {{ $t('register.form.hintRegisterAsCoordinator') }}
+          </p>
+          <p class="q-mt-md q-mb-none">
+            <a href="/#/register-coordinator" class="text-white">{{
+              $t('register.form.linkRegisterAsCoordinator')
+            }}</a>
+          </p>
+        </div>
+      </div>
+      <!-- Link: Login -->
+      <div class="q-mt-lg text-body2 text-white">
+        <p class="q-my-none">
+          {{ $t('register.form.hintLogin') }}
+          <a class="text-white" href="/#/login">{{
+            $t('register.form.linkLogin')
+          }}</a
+          >.
+        </p>
+      </div>
     </q-form>
   </div>
 </template>
