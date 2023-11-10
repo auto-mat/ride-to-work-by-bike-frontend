@@ -2,14 +2,15 @@ import { colors } from 'quasar';
 
 import FormRegister from 'components/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
+const white = getPaletteColor('white');
 
-const rideToWorkByBikeConfig = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
+const colorWhiteOpacity = rideToWorkByBikeConfig.colorWhiteOpacity;
+const borderRadiusCardSmall = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
 describe('<FormRegister>', () => {
   it('has translation for all strings', () => {
@@ -106,28 +107,38 @@ describe('<FormRegister>', () => {
     });
 
     it('should allow user to reveal and hide password', () => {
+      // password hiden
       cy.dataCy('form-register-password')
         .find('input')
         .should('have.attr', 'type', 'password');
+      // reveal
       cy.dataCy('form-register-password-icon').click();
+      // password revealed
       cy.dataCy('form-register-password')
         .find('input')
         .should('have.attr', 'type', 'text');
+      // hide
       cy.dataCy('form-register-password-icon').click();
+      // password hiden
       cy.dataCy('form-register-password')
         .find('input')
         .should('have.attr', 'type', 'password');
     });
 
     it('should allow user to reveal and hide password confirmation', () => {
+      // password confirm hiden
       cy.dataCy('form-register-password-confirm')
         .find('input')
         .should('have.attr', 'type', 'password');
+      // reveal
       cy.dataCy('form-register-password-confirm-icon').click();
+      // password confirm revealed
       cy.dataCy('form-register-password-confirm')
         .find('input')
         .should('have.attr', 'type', 'text');
+      // hide
       cy.dataCy('form-register-password-confirm-icon').click();
+      // password confirm hiden
       cy.dataCy('form-register-password-confirm')
         .find('input')
         .should('have.attr', 'type', 'password');
@@ -323,7 +334,7 @@ describe('<FormRegister>', () => {
       ).should('not.exist');
     });
 
-    it.only('validates password confirm correctly', () => {
+    it('validates password confirm correctly', () => {
       // fill in email input to be able to test password
       cy.dataCy('form-register-email-input').type('qw123@qw.com');
       // fill in password input to be able to test password confirm
@@ -351,6 +362,57 @@ describe('<FormRegister>', () => {
       cy.get(
         '*[data-cy="form-register-password-confirm"] .q-field__messages [role="alert"]',
       ).should('not.exist');
+    });
+
+    it('renders box with coordinator registration link', () => {
+      // wrapper
+      cy.dataCy('form-register-coordinator')
+        .should('have.css', 'padding', '16px')
+        .and('have.backgroundColor', colorWhiteOpacity)
+        .and('have.css', 'border-radius', borderRadiusCardSmall);
+      // description
+      cy.dataCy('form-register-coordinator-description')
+        .should('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.css', 'margin-top', '0px')
+        .and('have.css', 'margin-bottom', '16px')
+        .and('have.color', white)
+        .and(
+          'contain',
+          i18n.global.t('register.form.hintRegisterAsCoordinator'),
+        )
+        .then(($description) => {
+          expect($description.text()).to.equal(
+            i18n.global.t('register.form.hintRegisterAsCoordinator'),
+          );
+        });
+      // spacing
+      cy.dataCy('form-register-coordinator-link-wrapper')
+        .should('have.css', 'margin-top', '16px')
+        .and('have.css', 'margin-bottom', '0px');
+      // link
+      cy.dataCy('form-register-coordinator-link')
+        .should('have.color', white)
+        .and('have.attr', 'href', '/#/register-coordinator')
+        .and(
+          'contain',
+          i18n.global.t('register.form.linkRegisterAsCoordinator'),
+        );
+    });
+
+    it('renders link to login page', () => {
+      // wrapper
+      cy.dataCy('form-register-login')
+        .should('have.color', white)
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'margin-top', '24px')
+        .and('contain', i18n.global.t('register.form.hintLogin'));
+      // link
+      cy.dataCy('form-register-login-link')
+        .should('have.color', white)
+        .and('have.css', 'font-size', '14px')
+        .and('have.attr', 'href', '/#/login')
+        .and('contain', i18n.global.t('register.form.linkLogin'));
     });
   });
 

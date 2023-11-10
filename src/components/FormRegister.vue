@@ -225,20 +225,30 @@ export default defineComponent({
           >
             {{ $t('register.form.hintRegisterAsCoordinator') }}
           </p>
-          <p class="q-mt-md q-mb-none">
-            <a href="/#/register-coordinator" class="text-white">{{
-              $t('register.form.linkRegisterAsCoordinator')
-            }}</a>
+          <p
+            class="q-mt-md q-mb-none"
+            data-cy="form-register-coordinator-link-wrapper"
+          >
+            <a
+              href="/#/register-coordinator"
+              class="text-white"
+              data-cy="form-register-coordinator-link"
+            >
+              {{ $t('register.form.linkRegisterAsCoordinator') }}
+            </a>
           </p>
         </div>
       </div>
       <!-- Link: Login -->
-      <div class="q-mt-lg text-body2 text-white">
+      <div class="q-mt-lg text-body2 text-white" data-cy="form-register-login">
         <p class="q-my-none">
           {{ $t('register.form.hintLogin') }}
-          <a class="text-white" href="/#/login">{{
-            $t('register.form.linkLogin')
-          }}</a
+          <a
+            href="/#/login"
+            class="text-white"
+            data-cy="form-register-login-link"
+          >
+            {{ $t('register.form.linkLogin') }} </a
           >.
         </p>
       </div>
