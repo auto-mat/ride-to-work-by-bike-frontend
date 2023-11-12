@@ -15,7 +15,11 @@
       >
         {{ $t('index.cardListChallenge.title') }}
       </h2>
-      <section-columns :columns="3" class="q-col-gutter-lg q-pb-xl">
+      <section-columns
+        :columns="3"
+        class="q-col-gutter-lg q-pb-xl"
+        data-cy="list-challenge"
+      >
         <card-challenge
           v-for="card in cardsChallenge"
           :key="card.title"
@@ -23,11 +27,6 @@
           data-cy="card-list-item"
         />
       </section-columns>
-      <list-card-challenge
-        :cards="cardsChallenge"
-        class="q-pt-xl q-pb-xl"
-        data-cy="list-challenge"
-      />
       <banner-image
         :banner="bannerImageData"
         class="q-pt-xl q-pb-xl"
