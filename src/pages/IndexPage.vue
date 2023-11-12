@@ -83,11 +83,15 @@
       data-cy="heading-background"
     ></heading-background>
     <div class="bg-gray-light q-px-lg">
-      <list-card-event
-        :cards="cardsEvent"
-        class="q-pt-xl"
-        data-cy="list-event"
-      ></list-card-event>
+      <div class="q-pt-xl" data-cy="list-event">
+        <card-event
+          v-for="card in cardsEvent"
+          :key="card.title"
+          :card="card"
+          class="q-mt-lg"
+          data-cy="card-list-item"
+        />
+      </div>
       <list-card-offer
         :title="$t('index.cardListOffer.title')"
         :cards="cardsOffer"
@@ -122,11 +126,11 @@ import BannerApp from 'components/BannerApp.vue';
 import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'components/BannerRoutes.vue';
 import CardChallenge from 'components/CardChallenge.vue';
+import CardEvent from 'components/CardEvent.vue';
 import CardStats from 'components/CardStats.vue';
 import CountdownChallenge from 'components/CountdownChallenge.vue';
 import CountdownEvent from 'components/CountdownEvent.vue';
 import HeadingBackground from 'components/HeadingBackground.vue';
-import ListCardEvent from 'components/ListCardEvent.vue';
 import ListCardFollow from 'components/ListCardFollow.vue';
 import ListCardOffer from 'components/ListCardOffer.vue';
 import ListCardPost from 'components/ListCardPost.vue';
@@ -146,10 +150,10 @@ export default defineComponent({
     BannerImage,
     BannerRoutes,
     CardChallenge,
+    CardEvent,
     CountdownChallenge,
     CountdownEvent,
     HeadingBackground,
-    ListCardEvent,
     ListCardFollow,
     ListCardOffer,
     ListCardProgress,
