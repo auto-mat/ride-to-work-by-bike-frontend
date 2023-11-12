@@ -44,11 +44,19 @@
         class="q-pt-xl q-pb-xl"
         data-cy="list-progress"
       ></list-card-progress>
-      <list-badge-achievement
-        :items="badgeList"
-        class="q-pt-xl q-pb-xl"
+      <section-columns
+        :columns="4"
+        class="q-col-gutter-lg q-pt-xl q-pb-xl"
         data-cy="list-badges"
-      ></list-badge-achievement>
+      >
+        <badge-achievement
+          v-for="badge in badgeList"
+          :key="badge.title"
+          :badge="badge"
+          class="full-width"
+          data-cy="badge-item"
+        />
+      </section-columns>
       <section-columns :columns="3" class="q-col-gutter-lg q-pt-xl q-pb-xl">
         <card-stats v-for="card in cardsStats" :key="card.title" :card="card" />
       </section-columns>
@@ -94,6 +102,7 @@
 import { defineComponent } from 'vue';
 
 // import components
+import BadgeAchievement from 'components/BadgeAchievement.vue';
 import BannerApp from 'components/BannerApp.vue';
 import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'components/BannerRoutes.vue';
@@ -101,7 +110,6 @@ import CardStats from 'components/CardStats.vue';
 import CountdownChallenge from 'components/CountdownChallenge.vue';
 import CountdownEvent from 'components/CountdownEvent.vue';
 import HeadingBackground from 'components/HeadingBackground.vue';
-import ListBadgeAchievement from 'components/ListBadgeAchievement.vue';
 import ListCardChallenge from 'components/ListCardChallenge.vue';
 import ListCardEvent from 'components/ListCardEvent.vue';
 import ListCardFollow from 'components/ListCardFollow.vue';
@@ -118,13 +126,13 @@ import * as homepage from '../mocks/homepage';
 export default defineComponent({
   name: 'IndexPage',
   components: {
+    BadgeAchievement,
     BannerApp,
     BannerImage,
     BannerRoutes,
     CountdownChallenge,
     CountdownEvent,
     HeadingBackground,
-    ListBadgeAchievement,
     ListCardChallenge,
     ListCardEvent,
     ListCardFollow,
