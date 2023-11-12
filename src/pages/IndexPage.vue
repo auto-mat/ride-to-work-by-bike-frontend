@@ -8,6 +8,21 @@
         {{ $t('index.title') }}
       </h1>
       <countdown-event :release-date="releaseDate" data-cy="countdown-event" />
+      <!-- Title -->
+      <h2
+        class="text-h6 q-mt-none text-weight-bold q-pt-xl"
+        data-cy="card-list-title"
+      >
+        {{ $t('index.cardListChallenge.title') }}
+      </h2>
+      <section-columns :columns="3" class="q-col-gutter-lg q-pb-xl">
+        <card-challenge
+          v-for="card in cardsChallenge"
+          :key="card.title"
+          :card="card"
+          data-cy="card-list-item"
+        />
+      </section-columns>
       <list-card-challenge
         :cards="cardsChallenge"
         class="q-pt-xl q-pb-xl"
@@ -106,11 +121,11 @@ import BadgeAchievement from 'components/BadgeAchievement.vue';
 import BannerApp from 'components/BannerApp.vue';
 import BannerImage from 'components/BannerImage.vue';
 import BannerRoutes from 'components/BannerRoutes.vue';
+import CardChallenge from 'components/CardChallenge.vue';
 import CardStats from 'components/CardStats.vue';
 import CountdownChallenge from 'components/CountdownChallenge.vue';
 import CountdownEvent from 'components/CountdownEvent.vue';
 import HeadingBackground from 'components/HeadingBackground.vue';
-import ListCardChallenge from 'components/ListCardChallenge.vue';
 import ListCardEvent from 'components/ListCardEvent.vue';
 import ListCardFollow from 'components/ListCardFollow.vue';
 import ListCardOffer from 'components/ListCardOffer.vue';
@@ -130,10 +145,10 @@ export default defineComponent({
     BannerApp,
     BannerImage,
     BannerRoutes,
+    CardChallenge,
     CountdownChallenge,
     CountdownEvent,
     HeadingBackground,
-    ListCardChallenge,
     ListCardEvent,
     ListCardFollow,
     ListCardOffer,
