@@ -201,8 +201,8 @@ describe('<CardOffer>', () => {
     it('shows modal with one column', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
-        cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 95);
-        cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 95);
+        cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 100);
+        cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 100);
       });
     });
   });

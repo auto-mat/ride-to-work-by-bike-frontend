@@ -246,8 +246,8 @@ describe('<CardEvent>', () => {
 
     it('shows modal with one column', () => {
       cy.dataCy('card-link').click();
-      cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 95);
-      cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 95);
+      cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 100);
+      cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 100);
     });
   });
 });
