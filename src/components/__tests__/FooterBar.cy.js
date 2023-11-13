@@ -83,16 +83,32 @@ describe('<FooterBar>', () => {
     });
 
     it('provides valid URLs for social links', () => {
-      cy.request(rideToWorkByBikeConfig.urlFacebook)
+      cy.request({
+        method: 'GET',
+        url: rideToWorkByBikeConfig.urlFacebook,
+      })
         .its('status')
         .should('equal', 200);
-      cy.request(rideToWorkByBikeConfig.urlInstagram)
+      cy.request({
+        method: 'GET',
+        url: rideToWorkByBikeConfig.urlInstagram,
+      })
         .its('status')
         .should('equal', 200);
-      cy.request(rideToWorkByBikeConfig.urlTwitter)
+      cy.request({
+        method: 'GET',
+        url: rideToWorkByBikeConfig.urlTwitter,
+        headers: {
+          'user-agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+        },
+      })
         .its('status')
         .should('equal', 200);
-      cy.request(rideToWorkByBikeConfig.urlYoutube)
+      cy.request({
+        method: 'GET',
+        url: rideToWorkByBikeConfig.urlYoutube,
+      })
         .its('status')
         .should('equal', 200);
     });
