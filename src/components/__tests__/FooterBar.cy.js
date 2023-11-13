@@ -5,6 +5,11 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
+// Fix make request user-agent header on the macOS with Google Chrome web browser
+const urlTwitterUserAgentHeader =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) \
+AppleWebKit/537.36 (KHTML, like Gecko) \
+Chrome/119.0.0.0 Safari/537.36';
 
 describe('<FooterBar>', () => {
   it('has translation for all strings', () => {
@@ -90,12 +95,8 @@ describe('<FooterBar>', () => {
         .its('status')
         .should('equal', 200);
       cy.request({
-        method: 'GET',
         url: rideToWorkByBikeConfig.urlTwitter,
-        headers: {
-          'user-agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
-        },
+        headers: { 'user-agent': urlTwitterUserAgentHeader },
       })
         .its('status')
         .should('equal', 200);
