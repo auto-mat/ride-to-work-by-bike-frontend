@@ -229,13 +229,13 @@ export default defineComponent({
             class="q-mt-md q-mb-none"
             data-cy="form-register-coordinator-link-wrapper"
           >
-            <a
-              href="/#/register-coordinator"
+            <router-link
+              :to="{ name: 'register-coordinator' }"
               class="text-white"
               data-cy="form-register-coordinator-link"
             >
               {{ $t('register.form.linkRegisterAsCoordinator') }}
-            </a>
+            </router-link>
           </p>
         </div>
       </div>
@@ -243,12 +243,12 @@ export default defineComponent({
       <div class="q-mt-lg text-body2 text-white" data-cy="form-register-login">
         <p class="q-my-none">
           {{ $t('register.form.hintLogin') }}
-          <a
-            href="/#/login"
+          <router-link
+            :to="{ name: 'login' }"
             class="text-white"
             data-cy="form-register-login-link"
           >
-            {{ $t('register.form.linkLogin') }} </a
+            {{ $t('register.form.linkLogin') }} </router-link
           >.
         </p>
       </div>

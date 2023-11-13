@@ -196,8 +196,12 @@ export default defineComponent({
     <div class="q-mt-lg">
       <p>
         {{ $t('login.form.promptNoAccount') }}
-        <a href="#" class="text-primary" data-cy="login-link-register">
-          {{ $t('login.form.linkRegister') }} </a
+        <router-link
+          :to="{ name: 'register' }"
+          class="text-primary"
+          data-cy="login-link-register"
+        >
+          {{ $t('login.form.linkRegister') }} </router-link
         >.
       </p>
     </div>
