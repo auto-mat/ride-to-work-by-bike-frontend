@@ -393,7 +393,7 @@ describe('<FormRegister>', () => {
       // link
       cy.dataCy('form-register-coordinator-link')
         .should('have.color', white)
-        .and('have.attr', 'href', '/#/register-coordinator')
+        .and('have.attr', 'href', '#/register-coordinator')
         .and(
           'contain',
           i18n.global.t('register.form.linkRegisterAsCoordinator'),
