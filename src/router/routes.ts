@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -7,8 +7,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('pages/IndexPage.vue'),
         name: 'home',
+        component: () => import('pages/IndexPage.vue'),
       },
     ],
   },
@@ -18,8 +18,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('pages/LoginPage.vue'),
         name: 'login',
+        component: () => import('pages/LoginPage.vue'),
       },
     ],
   },
@@ -29,8 +29,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('pages/RegisterPage.vue'),
         name: 'register',
+        component: () => import('pages/RegisterPage.vue'),
       },
     ],
   },
@@ -40,8 +40,8 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('pages/RegisterPage.vue'),
         name: 'register-coordinator',
+        component: () => import('pages/RegisterPage.vue'),
       },
     ],
   },
