@@ -83,16 +83,10 @@ describe('<FooterBar>', () => {
     });
 
     it('provides valid URLs for social links', () => {
-      cy.request({
-        method: 'GET',
-        url: rideToWorkByBikeConfig.urlFacebook,
-      })
+      cy.request(rideToWorkByBikeConfig.urlFacebook)
         .its('status')
         .should('equal', 200);
-      cy.request({
-        method: 'GET',
-        url: rideToWorkByBikeConfig.urlInstagram,
-      })
+      cy.request(rideToWorkByBikeConfig.urlInstagram)
         .its('status')
         .should('equal', 200);
       cy.request({
@@ -105,10 +99,7 @@ describe('<FooterBar>', () => {
       })
         .its('status')
         .should('equal', 200);
-      cy.request({
-        method: 'GET',
-        url: rideToWorkByBikeConfig.urlYoutube,
-      })
+      cy.request(rideToWorkByBikeConfig.urlYoutube)
         .its('status')
         .should('equal', 200);
     });
