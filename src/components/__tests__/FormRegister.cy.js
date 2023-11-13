@@ -4,6 +4,9 @@ import FormRegister from 'components/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import routes from '../../../src/router/routes';
+import { createMemoryHistory, createRouter } from 'vue-router';
+
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const white = getPaletteColor('white');
@@ -365,6 +368,13 @@ describe('<FormRegister>', () => {
     });
 
     it('renders box with coordinator registration link', () => {
+      const router = createRouter({
+        routes: routes,
+        history: createMemoryHistory(),
+      });
+      const urlRegisterCoordinator = router.resolve({
+        name: 'register-coordinator',
+      }).href;
       // wrapper
       cy.dataCy('form-register-coordinator')
         .should('have.css', 'padding', '16px')
@@ -393,7 +403,7 @@ describe('<FormRegister>', () => {
       // link
       cy.dataCy('form-register-coordinator-link')
         .should('have.color', white)
-        .and('have.attr', 'href', '#/register-coordinator')
+        .and('have.attr', 'href', urlRegisterCoordinator)
         .and(
           'contain',
           i18n.global.t('register.form.linkRegisterAsCoordinator'),
@@ -401,6 +411,11 @@ describe('<FormRegister>', () => {
     });
 
     it('renders link to login page', () => {
+      const router = createRouter({
+        routes: routes,
+        history: createMemoryHistory(),
+      });
+      const urlLogin = router.resolve({ name: 'login' }).href;
       // wrapper
       cy.dataCy('form-register-login')
         .should('have.color', white)
@@ -411,7 +426,7 @@ describe('<FormRegister>', () => {
       cy.dataCy('form-register-login-link')
         .should('have.color', white)
         .and('have.css', 'font-size', '14px')
-        .and('have.attr', 'href', '/#/login')
+        .and('have.attr', 'href', urlLogin)
         .and('contain', i18n.global.t('register.form.linkLogin'));
     });
   });

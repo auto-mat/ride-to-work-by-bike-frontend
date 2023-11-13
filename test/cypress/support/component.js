@@ -36,6 +36,10 @@ import { Dialog } from 'quasar';
 import { mount, VueTestUtils } from 'cypress/vue';
 const { config } = VueTestUtils;
 
+// Import Vue router
+import { createMemoryHistory, createRouter } from 'vue-router';
+import routes from '../../../src/router/routes';
+
 // Example to import i18n from boot and use as plugin
 // import { i18n } from 'src/boot/i18n';
 import { initVars } from 'src/boot/global_vars';
@@ -66,6 +70,21 @@ Cypress.Commands.add('mount', (component, options = {}) => {
   // Setup options object
   options.global = options.global || {};
   options.global.plugins = options.global.plugins || [];
+
+  // create router if one is not provided
+  if (!options.router) {
+    options.router = createRouter({
+      routes: routes,
+      history: createMemoryHistory(),
+    });
+  }
+
+  // Add router plugin
+  options.global.plugins.push({
+    install(app) {
+      app.use(options.router);
+    },
+  });
 
   // Register Swiper third party lib component
   register();
