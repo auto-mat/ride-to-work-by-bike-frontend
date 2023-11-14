@@ -180,6 +180,7 @@ export default defineComponent({
           clickable
           :to="card.url"
           class="justify-center items-center text-uppercase text-weight-bold q-py-sm"
+          :class="isDark(card) ? 'text-white' : 'text-grey-10'"
           :style="{ 'border-radius': borderRadius }"
           data-cy="card-progress-share"
         >
