@@ -88,7 +88,6 @@ Cypress.Commands.add('mount', (component, options = {}) => {
       app.use(options.router);
       app.use(i18nApp);
       app.use(VueLogger, loggerOptions);
-      app.use();
     },
   });
 
