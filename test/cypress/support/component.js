@@ -79,19 +79,13 @@ Cypress.Commands.add('mount', (component, options = {}) => {
     });
   }
 
-  // Add router plugin
-  options.global.plugins.push({
-    install(app) {
-      app.use(options.router);
-    },
-  });
-
   // Register Swiper third party lib component
   register();
 
   // Add i18n plugin
   options.global.plugins.push({
     install(app) {
+      app.use(options.router);
       app.use(i18nApp);
       app.use(VueLogger, loggerOptions);
       app.use();
