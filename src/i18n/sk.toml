@@ -26,6 +26,10 @@ hourShort = "h."
 minuteShort = "m."
 secondShort = "s."
 
+[navigation]
+continue = "Pokračovať"
+back = "Späť"
+
 [index]
 title = "Domovská stránka"
 logoAltText = "Logo Do práce na bicykli"
@@ -192,3 +196,8 @@ linkLogin = "Prihláste sa"
 [register.buttons]
 buttonGoogle = "Registrácia cez Facebook"
 buttonFacebook = "Registrácia cez Google"
+
+[register.challenge]
+titleStepPersonalDetails = "Osobné údaje"
+titleStepPayment = "Platba"
+titleStepParticipation = "Účasť"

@@ -26,6 +26,10 @@ hourShort = "h"
 minuteShort = "m"
 secondShort = "s"
 
+[navigation]
+continue = "Continue"
+back = "Back"
+
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"
@@ -192,3 +196,8 @@ linkLogin = "Sign in"
 [register.buttons]
 buttonGoogle = "Register via Facebook"
 buttonFacebook = "Register via Google"
+
+[register.challenge]
+titleStepPersonalDetails = "Personal details"
+titleStepPayment = "Payment"
+titleStepParticipation = "Participation"
