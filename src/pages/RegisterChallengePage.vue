@@ -70,6 +70,7 @@ export default defineComponent({
         class="bg-transparent"
         style="box-shadow: none"
         animated
+        data-cy="stepper"
       >
         <q-step
           :name="1"
@@ -79,6 +80,7 @@ export default defineComponent({
           done-icon="img:data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23A0D7C4' rx='19'/%3E%3Cpath stroke='%2343449C' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m11.5 19 5 4.5 10-9'/%3E%3C/svg%3E"
           :done="step > 1"
           class="bg-white"
+          data-cy="step-1"
         >
           Content of step 1
 
@@ -101,6 +103,7 @@ export default defineComponent({
           done-icon="img:data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23A0D7C4' rx='19'/%3E%3Cpath stroke='%2343449C' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m11.5 19 5 4.5 10-9'/%3E%3C/svg%3E"
           :done="step > 2"
           class="bg-white q-mt-lg"
+          data-cy="step-2"
         >
           Content of step 2
 
@@ -132,6 +135,7 @@ export default defineComponent({
           done-icon="img:data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 38 38'%3E%3Crect width='38' height='38' fill='%23A0D7C4' rx='19'/%3E%3Cpath stroke='%2343449C' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m11.5 19 5 4.5 10-9'/%3E%3C/svg%3E"
           :done="step > 3"
           class="bg-white q-mt-lg"
+          data-cy="step-3"
         >
           Content of step 3
 

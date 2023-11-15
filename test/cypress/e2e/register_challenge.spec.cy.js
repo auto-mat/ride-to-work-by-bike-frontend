@@ -193,5 +193,55 @@ describe('Register Challenge page', () => {
           });
         });
     });
+
+    it.only('renders stepper component', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+          // display stepper with correct styles
+          cy.dataCy('stepper')
+            .should('be.visible')
+            .and('have.backgroundColor', 'transparent')
+            .and('have.css', 'box-shadow', 'none');
+          // display first step with correct styles
+          cy.dataCy('step-1')
+            .should('be.visible')
+            .and('have.backgroundColor', '#fff') // TODO: use dynamic color
+            .and('have.css', 'border-radius', '16px');
+          // display first step as open
+          cy.dataCy('step-1')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+          // display first step with active icon
+          cy.dataCy('step-1')
+            .find('.q-stepper__dot')
+            .should('be.visible')
+            .and('have.css', 'margin-right', '16px');
+          // icon height
+          cy.dataCy('step-1')
+            .find('.q-stepper__dot')
+            .invoke('height')
+            .should('be.equal', 38);
+          // icon width
+          cy.dataCy('step-1')
+            .find('.q-stepper__dot')
+            .invoke('width')
+            .should('be.equal', 38);
+          // TODO: test correct icon based on state
+          // display title
+          cy.dataCy('step-1')
+            .find('.q-stepper__title')
+            .should('be.visible')
+            .should(
+              'contain',
+              i18n.global.t('register.challenge.titleStepPersonalDetails'),
+            );
+        });
+    });
   });
 });
