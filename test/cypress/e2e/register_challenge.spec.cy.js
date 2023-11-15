@@ -5,6 +5,32 @@ describe('Register Challenge page', () => {
       cy.viewport('macbook-16');
     });
 
+    it('has translation for all strings', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+          cy.testLanguageStringsInContext(
+            ['continue', 'back'],
+            'navigation',
+            i18n,
+          );
+          cy.testLanguageStringsInContext(
+            [
+              'titleStepPersonalDetails',
+              'titleStepPayment',
+              'titleStepParticipation',
+            ],
+            'register.challenge',
+            i18n,
+          );
+        });
+    });
+
     it('renders logo', () => {
       cy.dataCy('logo')
         .should('be.visible')
