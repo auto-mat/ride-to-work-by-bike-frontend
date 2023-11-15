@@ -146,7 +146,6 @@ export default defineComponent({
               unelevated
               rounded
               outline
-              flat
               @click="step = 2"
               color="primary"
               :label="$t('navigation.back')"
