@@ -36,13 +36,8 @@ import { Dialog } from 'quasar';
 import { mount, VueTestUtils } from 'cypress/vue';
 const { config } = VueTestUtils;
 
-// Import Vue router
-import { createMemoryHistory, createRouter } from 'vue-router';
-import routes from '../../../src/router/routes';
-
 // Example to import i18n from boot and use as plugin
 // import { i18n } from 'src/boot/i18n';
-import { initVars } from 'src/boot/global_vars';
 
 // You can modify the global config here for all tests or pass in the configuration per test
 // For example use the actual i18n instance or mock it
@@ -58,10 +53,13 @@ config.global.stubs = {};
 installQuasarPlugin({ plugins: { Dialog } });
 
 import VueLogger from 'vuejs3-logger';
+import { register } from 'swiper/element/bundle';
 
 import { options as loggerOptions } from '../../../src/boot/logger';
 import { i18n as i18nApp } from '../../../src/boot/i18n';
-import { register } from 'swiper/element/bundle';
+// Import Vue router
+import route from '../../../src/router';
+import { initVars } from 'src/boot/global_vars';
 
 // Initialize global variables
 initVars();
@@ -73,10 +71,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
 
   // create router if one is not provided
   if (!options.router) {
-    options.router = createRouter({
-      routes: routes,
-      history: createMemoryHistory(),
-    });
+    options.router = route();
   }
 
   // Register Swiper third party lib component

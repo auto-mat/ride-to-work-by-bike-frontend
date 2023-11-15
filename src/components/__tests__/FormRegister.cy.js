@@ -1,13 +1,14 @@
 import { colors } from 'quasar';
 
-import FormRegister from 'components/FormRegister.vue';
+import FormRegister from '../FormRegister.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-
-import routes from '../../../src/router/routes';
-import { createMemoryHistory, createRouter } from 'vue-router';
+import route from '../../../src/router';
 
 const { getPaletteColor } = colors;
+
+const router = route();
+
 const grey10 = getPaletteColor('grey-10');
 const white = getPaletteColor('white');
 
@@ -368,10 +369,6 @@ describe('<FormRegister>', () => {
     });
 
     it('renders box with coordinator registration link', () => {
-      const router = createRouter({
-        routes: routes,
-        history: createMemoryHistory(),
-      });
       const urlRegisterCoordinator = router.resolve({
         name: 'register-coordinator',
       }).href;
@@ -411,10 +408,6 @@ describe('<FormRegister>', () => {
     });
 
     it('renders link to login page', () => {
-      const router = createRouter({
-        routes: routes,
-        history: createMemoryHistory(),
-      });
       const urlLogin = router.resolve({ name: 'login' }).href;
       // wrapper
       cy.dataCy('form-register-login')
