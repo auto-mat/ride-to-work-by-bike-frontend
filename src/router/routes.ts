@@ -45,6 +45,13 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/register-challenge',
+    component: () => import('layouts/LoginRegisterLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/RegisterChallengePage.vue') },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
