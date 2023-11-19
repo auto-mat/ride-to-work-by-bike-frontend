@@ -10,11 +10,11 @@
  * It contains links to App stores.
  *
  * @components
- * - `HelpButton`: Component to render help icon with modal dialog.
- * - `LanguageSwitcher`: Component that allows user to change language.
+ * - `FormRegister`: Component to render registration form.
+ * - `LoginRegisterHeader`: Component to render page header.
  *
  * @layout
- * - `LoginLayout`: Displayed within the `LoginLayout` template.
+ * - `LoginRegisterLayout`: Displayed in the `LoginRegisterLayout` template.
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
  */
