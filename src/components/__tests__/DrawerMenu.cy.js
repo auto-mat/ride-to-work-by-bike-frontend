@@ -46,7 +46,7 @@ describe('DrawerMenu', () => {
           .within(() => {
             cy.get('.q-icon')
               .should('be.visible')
-              .should('contain.text', item.icon);
+              .and('contain.text', item.icon);
           });
       });
     });

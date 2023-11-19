@@ -29,7 +29,7 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post')
         .should('be.visible')
-        .should('have.backgroundColor', white);
+        .and('have.backgroundColor', white);
     });
   });
 
@@ -37,7 +37,7 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post')
         .should('be.visible')
-        .should('have.css', 'border-radius', '20px');
+        .and('have.css', 'border-radius', '20px');
     });
   });
 
@@ -61,9 +61,9 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post-title')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', grey10)
-        .should('contain', card.title)
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', grey10)
+        .and('contain', card.title)
         .then(($title) => {
           expect($title.text()).to.equal(card.title);
         });
@@ -74,9 +74,9 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post-date')
         .should('have.css', 'font-size', '12px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', blueGrey5)
-        .should('contain', '1. Sep. 2023')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', blueGrey5)
+        .and('contain', '1. Sep. 2023')
         .then(($date) => {
           // manual workaround to avoid having to calculate dynamic date
           expect($date.text()).to.equal('1. Sep. 2023');
@@ -93,7 +93,6 @@ describe('<CardPost>', () => {
           cy.testImageHeight($img);
           expect($img.attr('src')).to.equal(card.image);
         });
-
       cy.dataCy('card-post-image').matchImageSnapshot({
         failureThreshold: 0.5,
         failureThresholdType: 'percent',

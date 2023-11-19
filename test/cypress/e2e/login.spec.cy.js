@@ -21,10 +21,10 @@ describe('Login page', () => {
       cy.window().then(() => {
         cy.dataCy('button-help')
           .should('be.visible')
-          .should('have.css', 'font-size', '13px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.backgroundColor', `${config.colorPrimary}`)
-          .should('have.css', 'border-radius', '50%'); // round
+          .and('have.css', 'font-size', '13px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.backgroundColor', `${config.colorPrimary}`)
+          .and('have.css', 'border-radius', '50%'); // round
         cy.dataCy('button-help').should('contain', 'question_mark');
       });
     });
@@ -51,7 +51,7 @@ describe('Login page', () => {
           cy.wrap($element)
             .find('.q-card__section')
             .should('be.visible')
-            .should('not.be.empty');
+            .and('not.be.empty');
         });
     });
 
@@ -92,7 +92,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.subjectRequired'));
+            .and('contain', i18n.global.t('index.contact.subjectRequired'));
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -112,7 +112,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.messageRequired'));
+            .and('contain', i18n.global.t('index.contact.messageRequired'));
           cy.dataCy('contact-form-message')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -124,7 +124,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-email')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.emailRequired'));
+            .and('contain', i18n.global.t('index.contact.emailRequired'));
           cy.dataCy('contact-form-email')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -152,7 +152,7 @@ describe('Login page', () => {
               // changing the language
               cy.dataCy('switcher-' + locale)
                 .should('exist')
-                .should('be.visible')
+                .and('be.visible')
                 .find('.q-btn')
                 .click();
               // old language becomes inactive
@@ -178,10 +178,10 @@ describe('Login page', () => {
         .then(() => {
           cy.dataCy('form-title-login')
             .should('be.visible')
-            .should('have.class', 'grey-10')
-            .should('have.css', 'font-size', '24px')
-            .should('have.css', 'font-weight', '700')
-            .should('contain', i18n.global.t('login.form.titleLogin'));
+            .and('have.class', 'grey-10')
+            .and('have.css', 'font-size', '24px')
+            .and('have.css', 'font-weight', '700')
+            .and('contain', i18n.global.t('login.form.titleLogin'));
         });
     });
   });

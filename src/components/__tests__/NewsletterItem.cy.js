@@ -32,8 +32,8 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item')
           .should('be.visible')
-          .should('have.css', 'display', 'flex')
-          .should('have.css', 'flex-direction', 'row');
+          .and('have.css', 'display', 'flex')
+          .and('have.css', 'flex-direction', 'row');
       });
     });
 
@@ -51,9 +51,9 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', grey10)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', grey10)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -64,10 +64,10 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-icon')
           .should('be.visible')
-          .should('have.css', 'width', '32px')
-          .should('have.css', 'height', '32px')
-          .should('have.color', blueGrey6)
-          .should('contain', icon);
+          .and('have.css', 'width', '32px')
+          .and('have.css', 'height', '32px')
+          .and('have.color', blueGrey6)
+          .and('contain', icon);
       });
     });
 
@@ -75,23 +75,19 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-button')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.css', 'text-transform', 'uppercase')
-          .should('have.css', 'border-radius', '28px')
-          .should('have.color', grey10)
-          .should(
-            'contain',
-            i18n.global.t('index.newsletterFeature.following'),
-          );
-
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.css', 'text-transform', 'uppercase')
+          .and('have.css', 'border-radius', '28px')
+          .and('have.color', grey10)
+          .and('contain', i18n.global.t('index.newsletterFeature.following'));
         cy.dataCy('newsletter-item-button')
           .find('.q-icon')
           .should('be.visible')
-          .should('have.css', 'width', '18px')
-          .should('have.css', 'height', '18px')
-          .should('have.color', grey10)
-          .should('contain', 'check');
+          .and('have.css', 'width', '18px')
+          .and('have.css', 'height', '18px')
+          .and('have.color', grey10)
+          .and('contain', 'check');
       });
     });
   });
@@ -115,9 +111,9 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', grey10)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', grey10)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -128,10 +124,10 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-icon')
           .should('be.visible')
-          .should('have.css', 'width', '32px')
-          .should('have.css', 'height', '32px')
-          .should('have.color', blueGrey6)
-          .should('contain', icon);
+          .and('have.css', 'width', '32px')
+          .and('have.css', 'height', '32px')
+          .and('have.color', blueGrey6)
+          .and('contain', icon);
       });
     });
 
@@ -139,25 +135,20 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-button')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.css', 'text-transform', 'uppercase')
-          .should('have.css', 'border-radius', '28px')
-          .should('have.color', grey10)
-          .should(
-            'contain',
-            i18n.global.t('index.newsletterFeature.following'),
-          );
-
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.css', 'text-transform', 'uppercase')
+          .and('have.css', 'border-radius', '28px')
+          .and('have.color', grey10)
+          .and('contain', i18n.global.t('index.newsletterFeature.following'));
         cy.dataCy('newsletter-item-button')
           .find('.q-icon')
           .should('be.visible')
-          .should('have.css', 'width', '18px')
-          .should('have.css', 'height', '18px')
-          .should('have.color', grey10)
-          .should('contain', 'check');
+          .and('have.css', 'width', '18px')
+          .and('have.css', 'height', '18px')
+          .and('have.color', grey10)
+          .and('contain', 'check');
       });
-
       cy.testElementPercentageWidth(cy.dataCy('newsletter-item-button'), 100);
     });
 
@@ -201,9 +192,9 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', grey10)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', grey10)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -214,13 +205,12 @@ describe('<NewsletterItem>', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-button')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.css', 'text-transform', 'uppercase')
-          .should('have.color', white)
-          .should('have.backgroundColor', grey10)
-          .should('contain', i18n.global.t('index.newsletterFeature.follow'));
-
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.css', 'text-transform', 'uppercase')
+          .and('have.color', white)
+          .and('have.backgroundColor', grey10)
+          .and('contain', i18n.global.t('index.newsletterFeature.follow'));
         cy.dataCy('newsletter-item-button')
           .find('.q-icon')
           .should('not.be.visible');

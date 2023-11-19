@@ -31,7 +31,6 @@ describe('Event Countdown', () => {
         .forEach((locale) => {
           i18n.global.locale = locale;
           const translatedString = i18n.global.t(translationKey);
-
           cy.wrap(translatedString)
             .should('be.a', 'string')
             .and('not.equal', defaultEnglishString);
@@ -62,58 +61,58 @@ describe('Event Countdown', () => {
     cy.window().then(() => {
       cy.dataCy('title')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '700');
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '700');
     });
   });
 
   it('renders the date in correct format', () => {
-    cy.dataCy('title').should('be.visible').should('contain', '1. 10.');
+    cy.dataCy('title').should('be.visible').and('contain', '1. 10.');
   });
 
   it('renders the numbers in correct format', () => {
     cy.dataCy('countdown-days')
       .should('be.visible')
-      .should('have.css', 'font-size', '64px')
-      .should('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '64px')
+      .and('have.css', 'font-weight', '700');
     cy.dataCy('countdown-hours')
       .should('be.visible')
-      .should('have.css', 'font-size', '64px')
-      .should('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '64px')
+      .and('have.css', 'font-weight', '700');
     cy.dataCy('countdown-minutes')
       .should('be.visible')
-      .should('have.css', 'font-size', '64px')
-      .should('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '64px')
+      .and('have.css', 'font-weight', '700');
     cy.dataCy('countdown-seconds')
       .should('be.visible')
-      .should('have.css', 'font-size', '64px')
-      .should('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '64px')
+      .and('have.css', 'font-weight', '700');
   });
 
   it('renders the labels in correct format', () => {
     cy.dataCy('countdown-label-days')
       .should('be.visible')
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400');
     cy.dataCy('countdown-label-hours')
       .should('be.visible')
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400');
     cy.dataCy('countdown-label-minutes')
       .should('be.visible')
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400');
     cy.dataCy('countdown-label-seconds')
       .should('be.visible')
-      .should('have.css', 'font-size', '14px')
-      .should('have.css', 'font-weight', '400');
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400');
   });
 
   it('has gray background', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .should('have.css', 'background-color', 'rgb(243, 247, 255)');
+        .and('have.css', 'background-color', 'rgb(243, 247, 255)');
     });
   });
 
@@ -123,16 +122,12 @@ describe('Event Countdown', () => {
       cy.dataCy('countdown-hours').should('have.text', '0');
       cy.dataCy('countdown-minutes').should('have.text', '0');
       cy.dataCy('countdown-seconds').should('have.text', '0');
-
       cy.tick(1000);
-
       cy.dataCy('countdown-days').should('have.text', '0');
       cy.dataCy('countdown-hours').should('have.text', '23');
       cy.dataCy('countdown-minutes').should('have.text', '59');
       cy.dataCy('countdown-seconds').should('have.text', '59');
-
       cy.tick(60 * 60 * 1000);
-
       cy.dataCy('countdown-days').should('have.text', '0');
       cy.dataCy('countdown-hours').should('have.text', '22');
       cy.dataCy('countdown-minutes').should('have.text', '59');

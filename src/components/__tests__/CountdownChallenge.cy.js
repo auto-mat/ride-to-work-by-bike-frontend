@@ -40,23 +40,23 @@ describe('<CountdownChallenge>', () => {
       cy.window().then(() => {
         cy.dataCy('countdown-challenge-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.css', 'margin-top', '16px')
-          .should('have.css', 'margin-bottom', '16px')
-          .should('have.color', black);
+          .and('have.css', 'font-weight', '700')
+          .and('have.css', 'margin-top', '16px')
+          .and('have.css', 'margin-bottom', '16px')
+          .and('have.color', black);
       });
     });
 
     it('renders wrapper with padding', () => {
       cy.dataCy('countdown-challenge')
         .should('have.css', 'padding', '24px')
-        .should('have.backgroundColor', colorInfo);
+        .and('have.backgroundColor', colorInfo);
     });
 
     it('renders gray background', () => {
       cy.dataCy('countdown-challenge')
         .should('have.class', 'bg-info')
-        .should('have.backgroundColor', colorInfo);
+        .and('have.backgroundColor', colorInfo);
     });
 
     it('counts down correctly', () => {
@@ -102,22 +102,22 @@ describe('<CountdownChallenge>', () => {
       cy.window().then(() => {
         cy.dataCy('countdown-challenge-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.css', 'margin-top', '16px')
-          .should('have.css', 'margin-bottom', '16px')
-          .should('have.color', black);
+          .and('have.css', 'font-weight', '700')
+          .and('have.css', 'margin-top', '16px')
+          .and('have.css', 'margin-bottom', '16px')
+          .and('have.color', black);
       });
 
       it('renders wrapper with padding', () => {
         cy.dataCy('countdown-challenge')
           .should('have.css', 'padding', '24px')
-          .should('have.backgroundColor', colorInfo);
+          .and('have.backgroundColor', colorInfo);
       });
 
       it('renders gray background', () => {
         cy.dataCy('countdown-challenge')
           .should('have.class', 'bg-info')
-          .should('have.backgroundColor', colorInfo);
+          .and('have.backgroundColor', colorInfo);
       });
     });
   });

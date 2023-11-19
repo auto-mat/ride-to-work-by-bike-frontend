@@ -42,9 +42,9 @@ describe('<SliderProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', i18n.global.t('index.progressSlider.title'))
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.progressSlider.title'),
@@ -56,30 +56,26 @@ describe('<SliderProgress>', () => {
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-stats-item').should('have.length', 3);
-
         cy.dataCy('progress-slider-stats-item').each(($item, index) => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('have.color', grey10);
-
+            .and('have.css', 'font-weight', '400')
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('.q-icon')
             .should('contain', progressStats[index].icon)
-            .should('have.color', blueGrey3)
-            .should('have.css', 'width', '18px')
-            .should('have.css', 'height', '18px');
-
+            .and('have.color', blueGrey3)
+            .and('have.css', 'width', '18px')
+            .and('have.css', 'height', '18px');
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', grey10);
-
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', grey10)
-            .should('have.css', 'font-weight', '700');
+            .and('have.color', grey10)
+            .and('have.css', 'font-weight', '700');
         });
       });
     });
@@ -96,16 +92,16 @@ describe('<SliderProgress>', () => {
           .shadow()
           .find('.swiper-button-prev')
           .should('be.visible')
-          .should('have.css', 'width', '38px')
-          .should('have.css', 'height', '38px')
-          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px')
+          .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
         cy.dataCy('swiper-container')
           .shadow()
           .find('.swiper-button-next')
           .should('be.visible')
-          .should('have.css', 'width', '38px')
-          .should('have.css', 'height', '38px')
-          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px')
+          .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
       });
     });
 
@@ -149,12 +145,12 @@ describe('<SliderProgress>', () => {
     it('renders button with title', () => {
       cy.dataCy('progress-slider-button')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', grey10)
-        .should('have.css', 'border-radius', '28px')
-        .should('contain', i18n.global.t('index.progressSlider.button'))
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.color', grey10)
+        .and('have.css', 'border-radius', '28px')
+        .and('contain', i18n.global.t('index.progressSlider.button'))
         .then(($title) => {
           expect($title.text()).to.equal(
             i18n.global.t('index.progressSlider.button'),
@@ -183,9 +179,9 @@ describe('<SliderProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', i18n.global.t('index.progressSlider.title'))
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.progressSlider.title'),
@@ -197,30 +193,26 @@ describe('<SliderProgress>', () => {
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-stats-item').should('have.length', 3);
-
         cy.dataCy('progress-slider-stats-item').each(($item, index) => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('have.color', grey10);
-
+            .and('have.css', 'font-weight', '400')
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('.q-icon')
             .should('contain', progressStats[index].icon)
-            .should('have.color', blueGrey3)
-            .should('have.css', 'width', '18px')
-            .should('have.css', 'height', '18px');
-
+            .and('have.color', blueGrey3)
+            .and('have.css', 'width', '18px')
+            .and('have.css', 'height', '18px');
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', grey10);
-
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', grey10)
-            .should('have.css', 'font-weight', '700');
+            .and('have.color', grey10)
+            .and('have.css', 'font-weight', '700');
         });
       });
     });
@@ -235,10 +227,9 @@ describe('<SliderProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-button')
           .should('be.visible')
-          .should('have.css', 'border-color', hexToRgb('#212121'))
-          .should('have.css', 'border-radius', '28px')
-          .should('contain', i18n.global.t('index.progressSlider.button'));
-
+          .and('have.css', 'border-color', hexToRgb('#212121'))
+          .and('have.css', 'border-radius', '28px')
+          .and('contain', i18n.global.t('index.progressSlider.button'));
         cy.testElementPercentageWidth(cy.dataCy('progress-slider-button'), 100);
       });
     });

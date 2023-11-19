@@ -57,15 +57,15 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card-title')
           .should('be.visible')
-          .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('contain', title)
+          .and('have.css', 'font-size', '16px')
+          .and('have.css', 'font-weight', '700')
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
         cy.dataCy('card-link')
           .should('be.visible')
-          .should('have.attr', 'href', '#');
+          .and('have.attr', 'href', '#');
       });
     });
 
@@ -85,7 +85,7 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card')
           .should('be.visible')
-          .should('have.backgroundColor', white);
+          .and('have.backgroundColor', white);
       });
     });
 
@@ -93,16 +93,16 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card-dates')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('contain', '1.')
-          .should('contain', '2023')
-          .should('contain', '12:00');
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '400')
+          .and('contain', '1.')
+          .and('contain', '2023')
+          .and('contain', '12:00');
         cy.dataCy('card-dates')
           .find('i')
           .should('be.visible')
-          .should('have.color', blueGrey2)
-          .should('contain', 'event');
+          .and('have.color', blueGrey2)
+          .and('contain', 'event');
       });
     });
 
@@ -110,14 +110,14 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card-location')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('contain', location);
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '400')
+          .and('contain', location);
         cy.dataCy('card-location')
           .find('i')
           .should('be.visible')
-          .should('have.color', blueGrey2)
-          .should('contain', 'place');
+          .and('have.color', blueGrey2)
+          .and('contain', 'place');
       });
     });
 
@@ -125,12 +125,12 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('calendar-button')
           .should('be.visible')
-          .should('have.css', 'height', '42px')
-          .should('have.css', 'width', '42px');
+          .and('have.css', 'height', '42px')
+          .and('have.css', 'width', '42px');
         cy.dataCy('calendar-button')
           .find('i')
           .should('be.visible')
-          .should('have.color', black);
+          .and('have.color', black);
       });
     });
 
@@ -138,7 +138,7 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', '20px');
       });
     });
 
@@ -155,43 +155,41 @@ describe('<CardEvent>', () => {
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
-          .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('contain', title)
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
         cy.dataCy('dialog-meta')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', blueGrey7)
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', blueGrey7)
           .each(($el, index) => {
             if (index === 0) {
               cy.wrap($el)
                 .should('contain', '1.')
-                .should('contain', '2023')
-                .should('contain', '12:00');
-
+                .and('contain', '2023')
+                .and('contain', '12:00');
               const $icon = $el.find('i');
               if ($icon.length) {
                 cy.wrap($icon)
                   .should('be.visible')
-                  .should('have.color', blueGrey3)
-                  .should('have.css', 'width', '18px')
-                  .should('have.css', 'height', '18px');
+                  .and('have.color', blueGrey3)
+                  .and('have.css', 'width', '18px')
+                  .and('have.css', 'height', '18px');
               }
             }
             if (index === 1) {
               cy.wrap($el).should('contain', location);
-
               const $icon = $el.find('i');
               if ($icon.length) {
                 cy.wrap($icon)
                   .should('be.visible')
-                  .should('have.color', blueGrey3)
-                  .should('have.css', 'width', '18px')
-                  .should('have.css', 'height', '18px');
+                  .and('have.color', blueGrey3)
+                  .and('have.css', 'width', '18px')
+                  .and('have.css', 'height', '18px');
               }
             }
           });
@@ -202,9 +200,9 @@ describe('<CardEvent>', () => {
       cy.dataCy('card-link').click();
       cy.dataCy('dialog-content')
         .should('be.visible')
-        .should('contain', 'We want to reward you for your support')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
+        .and('contain', 'We want to reward you for your support')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400');
     });
 
     it('renders dialog image', () => {

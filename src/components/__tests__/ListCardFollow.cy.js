@@ -27,9 +27,9 @@ describe('<ListCardFollow>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-follow-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', i18n.global.t('index.cardListFollow.title'))
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', i18n.global.t('index.cardListFollow.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.cardListFollow.title'),
@@ -50,7 +50,6 @@ describe('<ListCardFollow>', () => {
           cy.dataCy('card-list-follow-col-title'),
           33,
         );
-
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 33);
       });
     });
@@ -82,7 +81,6 @@ describe('<ListCardFollow>', () => {
           cy.dataCy('card-list-follow-col-title'),
           100,
         );
-
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 100);
       });
     });

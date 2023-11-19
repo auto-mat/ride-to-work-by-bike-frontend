@@ -31,10 +31,10 @@ describe('<BadgeAchievement>', () => {
       cy.window().then(() => {
         cy.dataCy('badge-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.css', 'text-align', 'center')
-          .should('have.color', grey9)
-          .should('contain', badge.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.css', 'text-align', 'center')
+          .and('have.color', grey9)
+          .and('contain', badge.title)
           .then(($title) => {
             expect($title.text()).to.equal(badge.title);
           });
@@ -51,7 +51,6 @@ describe('<BadgeAchievement>', () => {
           })
           .invoke('attr', 'src')
           .should('contains', badge.image);
-
         cy.dataCy('badge-image').matchImageSnapshot({
           failureThreshold: 0.5,
           failureThresholdType: 'percent',
@@ -63,10 +62,10 @@ describe('<BadgeAchievement>', () => {
       cy.window().then(() => {
         cy.dataCy('badge-description')
           .should('have.css', 'font-size', '12px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.css', 'text-align', 'center')
-          .should('have.color', grey9)
-          .should('contain', badge.description)
+          .and('have.css', 'font-weight', '400')
+          .and('have.css', 'text-align', 'center')
+          .and('have.color', grey9)
+          .and('contain', badge.description)
           .then(($description) => {
             expect($description.text()).to.equal(badge.description);
           });
@@ -92,10 +91,10 @@ describe('<BadgeAchievement>', () => {
       cy.window().then(() => {
         cy.dataCy('badge-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.css', 'text-align', 'center')
-          .should('have.color', white)
-          .should('contain', badgeDark.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.css', 'text-align', 'center')
+          .and('have.color', white)
+          .and('contain', badgeDark.title)
           .then(($title) => {
             expect($title.text()).to.equal(badgeDark.title);
           });
@@ -106,10 +105,10 @@ describe('<BadgeAchievement>', () => {
       cy.window().then(() => {
         cy.dataCy('badge-description')
           .should('have.css', 'font-size', '12px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.css', 'text-align', 'center')
-          .should('have.color', white)
-          .should('contain', badgeDark.description)
+          .and('have.css', 'font-weight', '400')
+          .and('have.css', 'text-align', 'center')
+          .and('have.color', white)
+          .and('contain', badgeDark.description)
           .then(($description) => {
             expect($description.text()).to.equal(badgeDark.description);
           });

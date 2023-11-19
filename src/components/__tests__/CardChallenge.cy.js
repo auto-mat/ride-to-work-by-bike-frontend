@@ -41,18 +41,16 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-title')
         .should('be.visible')
-        .should('have.backgroundColor', 'rgba(0, 0, 0, 0.47)')
-        .should('contain', title);
-
+        .and('have.backgroundColor', 'rgba(0, 0, 0, 0.47)')
+        .and('contain', title);
       cy.dataCy('card-title')
         .find('i')
         .should('be.visible')
-        .should('contain', 'person');
-
+        .and('contain', 'person');
       cy.dataCy('card-title')
         .find('a')
         .should('have.css', 'font-size', '16px')
-        .should('have.css', 'font-weight', '700')
+        .and('have.css', 'font-weight', '700')
         .then(($title) => {
           expect($title.text()).to.equal(title);
         });
@@ -61,9 +59,7 @@ describe('<CardChallenge>', () => {
 
   it('renders title link', () => {
     cy.window().then(() => {
-      cy.dataCy('card-link')
-        .should('be.visible')
-        .should('have.attr', 'href', url);
+      cy.dataCy('card-link').should('be.visible').and('have.attr', 'href', url);
     });
   });
 
@@ -84,9 +80,9 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-dates')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.css', 'font-size', '14px')
-        .should('contain', dates);
+        .and('have.color', white)
+        .and('have.css', 'font-size', '14px')
+        .and('contain', dates);
     });
   });
 
@@ -94,17 +90,16 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card-company-wrapper')
         .should('be.visible')
-        .should('have.css', 'position', 'absolute')
-        .should('have.css', 'top', '-12px');
-
+        .and('have.css', 'position', 'absolute')
+        .and('have.css', 'top', '-12px');
       cy.dataCy('card-company')
         .should('be.visible')
-        .should('have.css', 'border-radius', '12px')
-        .should('have.css', 'font-size', '12px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', white)
-        .should('have.css', 'height', '24px')
-        .should('contain.text', i18n.global.t('index.cardChallenge.company'));
+        .and('have.css', 'border-radius', '12px')
+        .and('have.css', 'font-size', '12px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', white)
+        .and('have.css', 'height', '24px')
+        .and('contain.text', i18n.global.t('index.cardChallenge.company'));
     });
   });
 
@@ -112,7 +107,7 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .should('have.css', 'border-radius', '20px');
+        .and('have.css', 'border-radius', '20px');
     });
   });
 });

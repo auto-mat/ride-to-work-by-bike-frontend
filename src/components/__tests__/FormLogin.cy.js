@@ -45,10 +45,10 @@ describe('<FormLogin>', () => {
     it('renders title', () => {
       cy.dataCy('form-title-login')
         .should('be.visible')
-        .should('have.color', grey10)
-        .should('have.css', 'font-size', '24px')
-        .should('have.css', 'font-weight', '700')
-        .should('contain', i18n.global.t('login.form.titleLogin'));
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('contain', i18n.global.t('login.form.titleLogin'));
     });
 
     it('renders email field', () => {
@@ -56,11 +56,11 @@ describe('<FormLogin>', () => {
         .should('be.visible')
         .find('label[for="form-login-email"]')
         .should('be.visible')
-        .should('have.text', i18n.global.t('login.form.labelEmail'));
+        .and('have.text', i18n.global.t('login.form.labelEmail'));
       cy.dataCy('form-login-email')
         .find('.q-field__control')
         .should('be.visible')
-        .should('have.css', 'border-radius', '8px');
+        .and('have.css', 'border-radius', '8px');
     });
 
     it('renders password field', () => {
@@ -68,18 +68,17 @@ describe('<FormLogin>', () => {
         .should('be.visible')
         .find('label[for="form-login-password"]')
         .should('be.visible')
-        .should('have.text', i18n.global.t('login.form.labelPassword'));
-
+        .and('have.text', i18n.global.t('login.form.labelPassword'));
       cy.dataCy('form-login-password')
         .find('.q-field__control')
         .should('be.visible')
-        .should('have.css', 'border-radius', '8px');
+        .and('have.css', 'border-radius', '8px');
     });
 
     it('renders password show/hide icon', () => {
       cy.dataCy('form-login-password-icon')
         .should('contain', 'visibility')
-        .should('have.color', `${colorPrimary}`);
+        .and('have.color', `${colorPrimary}`);
       cy.dataCy('form-login-password-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -105,21 +104,21 @@ describe('<FormLogin>', () => {
     it('renders forgotten password link', () => {
       cy.dataCy('form-login-forgotten-password')
         .should('be.visible')
-        .should('have.color', `${colorPrimary}`)
-        .should('have.css', 'text-decoration-line', 'underline')
-        .should('have.css', 'font-size', '12px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.text', i18n.global.t('login.form.forgottenPassword'));
+        .and('have.color', `${colorPrimary}`)
+        .and('have.css', 'text-decoration-line', 'underline')
+        .and('have.css', 'font-size', '12px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.text', i18n.global.t('login.form.forgottenPassword'));
     });
 
     it('renders a submit button', () => {
       cy.dataCy('form-login-submit-login')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.backgroundColor', `${colorPrimary}`)
-        .should('have.css', 'border-radius', '28px')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.text', i18n.global.t('login.form.submitLogin'));
+        .and('have.color', white)
+        .and('have.backgroundColor', `${colorPrimary}`)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.text', i18n.global.t('login.form.submitLogin'));
     });
 
     it('allows to navigate between states', () => {
@@ -134,10 +133,10 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-title')
         .should('be.visible')
-        .should('have.color', grey10)
-        .should('have.css', 'font-size', '24px')
-        .should('have.css', 'font-weight', '700')
-        .should('contain', i18n.global.t('login.form.titlePasswordReset'));
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('contain', i18n.global.t('login.form.titlePasswordReset'));
     });
 
     it('renders password reset form description', () => {
@@ -145,13 +144,10 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-description')
         .should('be.visible')
-        .should('have.color', grey10)
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should(
-          'contain',
-          i18n.global.t('login.form.descriptionPasswordReset'),
-        );
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('contain', i18n.global.t('login.form.descriptionPasswordReset'));
     });
 
     it('renders password reset form email input', () => {
@@ -161,7 +157,7 @@ describe('<FormLogin>', () => {
         .should('be.visible')
         .find('label[for="form-login-password-reset"]')
         .should('be.visible')
-        .should('have.text', i18n.global.t('login.form.labelPasswordReset'));
+        .and('have.text', i18n.global.t('login.form.labelPasswordReset'));
     });
 
     it('renders password reset form submit button', () => {
@@ -169,11 +165,11 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset').should('be.visible');
       cy.dataCy('form-password-reset-submit')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.backgroundColor', `${colorPrimary}`)
-        .should('have.css', 'border-radius', '28px')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.text', i18n.global.t('login.form.submitPasswordReset'));
+        .and('have.color', white)
+        .and('have.backgroundColor', `${colorPrimary}`)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.text', i18n.global.t('login.form.submitPasswordReset'));
     });
 
     it('renders final screen on password reset', () => {

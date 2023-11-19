@@ -33,9 +33,9 @@ describe('<CardProgressSlider>', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', white)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', white)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -46,26 +46,24 @@ describe('<CardProgressSlider>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', blueGrey1)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px');
+        .and('have.color', blueGrey1)
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px');
     });
 
     it('renders timeline', () => {
       cy.dataCy('card-progress-timeline')
         .should('be.visible')
-        .should('contain', card.duration.current)
-        .should('contain', card.duration.total)
-        .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
-        .should('have.color', white)
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
-
+        .and('contain', card.duration.current)
+        .and('contain', card.duration.total)
+        .and('contain', i18n.global.t('index.cardProgressSlider.timeline'))
+        .and('have.color', white)
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400');
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
         .first()
         .should('be.visible');
-
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
         .last()
@@ -75,18 +73,16 @@ describe('<CardProgressSlider>', () => {
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.progress)
-        .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
-
+        .and('contain', card.progress)
+        .and('contain', i18n.global.t('index.cardProgressSlider.toDate'));
       cy.dataCy('card-progress-circular')
         .should('be.visible')
-        .should('have.css', 'width', '220px')
-        .should('have.css', 'height', '220px');
-
+        .and('have.css', 'width', '220px')
+        .and('have.css', 'height', '220px');
       cy.dataCy('card-progress-percentage')
         .find('.circular-progress-number')
         .should('be.visible')
-        .should('have.css', 'font-size', '48px');
+        .and('have.css', 'font-size', '48px');
     });
 
     it('renders stats', () => {
@@ -95,18 +91,17 @@ describe('<CardProgressSlider>', () => {
         .find('.stats-title')
         .first()
         .should('contain', card.stats[0].title)
-        .should('have.color', white)
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-size', '12px');
-
+        .and('have.color', white)
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'font-size', '12px');
       cy.dataCy('card-progress-stats')
         .should('be.visible')
         .find('.stats-value')
         .first()
         .should('contain', card.stats[0].items[0].text)
-        .should('have.color', white)
-        .should('have.css', 'font-weight', '400')
-        .should('have.css', 'font-size', '14px');
+        .and('have.color', white)
+        .and('have.css', 'font-weight', '400')
+        .and('have.css', 'font-size', '14px');
     });
 
     it('does not render card footer with timeline', () => {
@@ -117,19 +112,19 @@ describe('<CardProgressSlider>', () => {
     it('renders card header horizontally', () => {
       cy.dataCy('card-progress-header')
         .should('be.visible')
-        .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-direction', 'row')
-        .should('have.css', 'justify-content', 'space-between')
-        .should('have.css', 'align-items', 'center')
-        .should('have.css', 'gap', '16px');
+        .and('have.css', 'display', 'flex')
+        .and('have.css', 'flex-direction', 'row')
+        .and('have.css', 'justify-content', 'space-between')
+        .and('have.css', 'align-items', 'center')
+        .and('have.css', 'gap', '16px');
     });
 
     it('renders card content horizontally', () => {
       cy.dataCy('card-progress-content')
         .should('be.visible')
-        .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-direction', 'row')
-        .should('have.css', 'align-items', 'center');
+        .and('have.css', 'display', 'flex')
+        .and('have.css', 'flex-direction', 'row')
+        .and('have.css', 'align-items', 'center');
     });
   });
 
@@ -147,9 +142,9 @@ describe('<CardProgressSlider>', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', white)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', white)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -160,26 +155,24 @@ describe('<CardProgressSlider>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', blueGrey1)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px');
+        .and('have.color', blueGrey1)
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px');
     });
 
     it('renders timeline', () => {
       cy.dataCy('card-progress-timeline')
         .should('be.visible')
-        .should('contain', card.duration.current)
-        .should('contain', card.duration.total)
-        .should('contain', i18n.global.t('index.cardProgressSlider.timeline'))
-        .should('have.color', white)
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
-
+        .and('contain', card.duration.current)
+        .and('contain', card.duration.total)
+        .and('contain', i18n.global.t('index.cardProgressSlider.timeline'))
+        .and('have.color', white)
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400');
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
         .first()
         .should('not.be.visible');
-
       cy.dataCy('card-progress-timeline')
         .find('.q-linear-progress')
         .last()
@@ -189,18 +182,16 @@ describe('<CardProgressSlider>', () => {
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.progress)
-        .should('contain', i18n.global.t('index.cardProgressSlider.toDate'));
-
+        .and('contain', card.progress)
+        .and('contain', i18n.global.t('index.cardProgressSlider.toDate'));
       cy.dataCy('card-progress-circular')
         .should('be.visible')
-        .should('have.css', 'width', '128px')
-        .should('have.css', 'height', '128px');
-
+        .and('have.css', 'width', '128px')
+        .and('have.css', 'height', '128px');
       cy.dataCy('card-progress-percentage')
         .find('.circular-progress-number')
         .should('be.visible')
-        .should('have.css', 'font-size', '40px');
+        .and('have.css', 'font-size', '40px');
     });
 
     it('renders stats', () => {
@@ -211,10 +202,10 @@ describe('<CardProgressSlider>', () => {
     it('wraps items in card header', () => {
       cy.dataCy('card-progress-header')
         .should('be.visible')
-        .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-direction', 'row')
-        .should('have.css', 'flex-wrap', 'wrap')
-        .should('have.css', 'gap', '16px');
+        .and('have.css', 'display', 'flex')
+        .and('have.css', 'flex-direction', 'row')
+        .and('have.css', 'flex-wrap', 'wrap')
+        .and('have.css', 'gap', '16px');
     });
   });
 });

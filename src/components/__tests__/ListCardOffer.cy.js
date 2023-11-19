@@ -34,9 +34,9 @@ describe('<ListCardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -59,7 +59,7 @@ describe('<ListCardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('list-card-offer-button')
           .should('be.visible')
-          .should(
+          .and(
             'contain',
             i18n.global.t('index.cardListOffer.button', {
               count: cards.length,
@@ -84,9 +84,9 @@ describe('<ListCardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -109,7 +109,7 @@ describe('<ListCardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('list-card-offer-button')
           .should('be.visible')
-          .should(
+          .and(
             'contain',
             i18n.global.t('index.cardListOffer.button', {
               count: cards.length,

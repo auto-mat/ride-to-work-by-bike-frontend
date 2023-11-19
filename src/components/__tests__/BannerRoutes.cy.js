@@ -39,31 +39,31 @@ describe('<BannerRoutes>', () => {
     it('renders title with correct styling', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '700')
-        .should('have.color', black);
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', black);
     });
 
     it('renders button', () => {
       cy.dataCy('banner-routes-button-add-routes')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', white)
-        .should('have.css', 'border-radius', '28px')
-        .should('have.css', 'padding-top', '16px')
-        .should('have.css', 'padding-left', '16px')
-        .should('have.css', 'padding-bottom', '16px')
-        .should('have.css', 'padding-right', '24px')
-        .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.color', white)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'padding-top', '16px')
+        .and('have.css', 'padding-left', '16px')
+        .and('have.css', 'padding-bottom', '16px')
+        .and('have.css', 'padding-right', '24px')
+        .and('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
 
     it('renders button icon with correct spacing', () => {
       cy.dataCy('banner-routes-button-icon')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.css', 'margin-right', '8px')
-        .should('contain', 'add');
+        .and('have.color', white)
+        .and('have.css', 'margin-right', '8px')
+        .and('contain', 'add');
       cy.dataCy('banner-routes-button-icon')
         .invoke('height')
         .should('equal', 24);
@@ -76,7 +76,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', grey1);
+          .and('have.backgroundColor', grey1);
       });
     });
 
@@ -84,7 +84,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '0px');
+          .and('have.css', 'border-radius', '0px');
       });
     });
 
@@ -123,31 +123,31 @@ describe('<BannerRoutes>', () => {
     it('renders title with correct styling', () => {
       cy.dataCy('banner-routes-title')
         .should('have.css', 'font-size', '20px')
-        .should('have.css', 'font-weight', '700')
-        .should('have.color', black);
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', black);
     });
 
     it('renders button', () => {
       cy.dataCy('banner-routes-button-add-routes')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', white)
-        .should('have.css', 'border-radius', '28px')
-        .should('have.css', 'padding-top', '16px')
-        .should('have.css', 'padding-left', '16px')
-        .should('have.css', 'padding-bottom', '16px')
-        .should('have.css', 'padding-right', '24px')
-        .should('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.color', white)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'padding-top', '16px')
+        .and('have.css', 'padding-left', '16px')
+        .and('have.css', 'padding-bottom', '16px')
+        .and('have.css', 'padding-right', '24px')
+        .and('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
     });
 
     it('renders button icon with correct spacing', () => {
       cy.dataCy('banner-routes-button-icon')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.css', 'margin-right', '8px')
-        .should('contain', 'add');
+        .and('have.color', white)
+        .and('have.css', 'margin-right', '8px')
+        .and('contain', 'add');
       cy.dataCy('banner-routes-button-icon')
         .invoke('height')
         .should('equal', 24);
@@ -160,7 +160,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', grey1);
+          .and('have.backgroundColor', grey1);
       });
     });
 
@@ -168,7 +168,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '0px');
+          .and('have.css', 'border-radius', '0px');
       });
     });
 
@@ -199,33 +199,33 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', black)
-          .should('contain', routesCount);
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', black)
+          .and('contain', routesCount);
       });
     });
 
     it('renders button', () => {
       cy.dataCy('banner-routes-button-add-routes')
         .should('be.visible')
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.color', white)
-        .should('have.css', 'border-radius', '28px')
-        .should('have.css', 'padding-top', '16px')
-        .should('have.css', 'padding-left', '16px')
-        .should('have.css', 'padding-bottom', '16px')
-        .should('have.css', 'padding-right', '24px')
-        .should('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.color', white)
+        .and('have.css', 'border-radius', '28px')
+        .and('have.css', 'padding-top', '16px')
+        .and('have.css', 'padding-left', '16px')
+        .and('have.css', 'padding-bottom', '16px')
+        .and('have.css', 'padding-right', '24px')
+        .and('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
     });
 
     it('renders button icon with correct spacing', () => {
       cy.dataCy('banner-routes-button-icon')
         .should('be.visible')
-        .should('have.color', white)
-        .should('have.css', 'margin-right', '8px')
-        .should('contain', 'add');
+        .and('have.color', white)
+        .and('have.css', 'margin-right', '8px')
+        .and('contain', 'add');
       cy.dataCy('banner-routes-button-icon')
         .invoke('height')
         .should('equal', 24);
@@ -238,7 +238,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.backgroundColor', grey1);
+          .and('have.backgroundColor', grey1);
       });
     });
 
@@ -246,7 +246,7 @@ describe('<BannerRoutes>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-card')
           .should('be.visible')
-          .should('have.css', 'border-radius', '0px');
+          .and('have.css', 'border-radius', '0px');
       });
     });
 

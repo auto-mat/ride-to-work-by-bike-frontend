@@ -75,9 +75,9 @@ describe('<CardFollow>', () => {
       cy.window().then(() => {
         cy.dataCy('card-follow-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', grey10)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', grey10)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -88,9 +88,9 @@ describe('<CardFollow>', () => {
       cy.window().then(() => {
         cy.dataCy('card-follow-handle')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', blueGrey7)
-          .should('contain', card.handle)
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', blueGrey7)
+          .and('contain', card.handle)
           .then(($title) => {
             expect($title.text()).to.equal(card.handle);
           });
@@ -103,10 +103,9 @@ describe('<CardFollow>', () => {
           .should('be.visible')
           .find('.q-avatar')
           .should('have.css', 'border-radius', '50%')
-          .should('have.css', 'width', '96px')
-          .should('have.css', 'height', '96px')
-          .should('have.css', 'margin-top', '-64px');
-
+          .and('have.css', 'width', '96px')
+          .and('have.css', 'height', '96px')
+          .and('have.css', 'margin-top', '-64px');
         cy.dataCy('card-follow-image')
           .find('img')
           .should('be.visible')
@@ -114,7 +113,6 @@ describe('<CardFollow>', () => {
             cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(card.image.src);
           });
-
         cy.dataCy('card-follow-image').matchImageSnapshot({
           failureThreshold: 0.5,
           failureThresholdType: 'percent',

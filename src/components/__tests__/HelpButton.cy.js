@@ -32,11 +32,11 @@ describe('<HelpButton>', () => {
       cy.window().then(() => {
         cy.dataCy('button-help')
           .should('be.visible')
-          .should('have.css', 'font-size', '13px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.backgroundColor', grey10)
-          .should('have.css', 'border-radius', '50%') // round
-          .should('contain', 'question_mark');
+          .and('have.css', 'font-size', '13px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.backgroundColor', grey10)
+          .and('have.css', 'border-radius', '50%') // round
+          .and('contain', 'question_mark');
       });
     });
 
@@ -49,15 +49,15 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', white);
+        .and('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 22)
-        .should('be.lt', 24);
+        .and('be.lt', 24);
       cy.dataCy('icon-help')
         .invoke('width')
         .should('be.gt', 22)
-        .should('be.lt', 24);
+        .and('be.lt', 24);
     });
   });
 
@@ -76,10 +76,10 @@ describe('<HelpButton>', () => {
       cy.window().then(() => {
         cy.dataCy('button-help')
           .should('be.visible')
-          .should('have.css', 'font-size', '13px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.backgroundColor', `${colorPrimary}`)
-          .should('have.css', 'border-radius', '50%'); // round
+          .and('have.css', 'font-size', '13px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.backgroundColor', `${colorPrimary}`)
+          .and('have.css', 'border-radius', '50%'); // round
         cy.dataCy('button-help').should('contain', 'question_mark');
       });
     });
@@ -93,15 +93,15 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', white);
+        .and('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 22)
-        .should('be.lt', 24);
+        .and('be.lt', 24);
       cy.dataCy('icon-help')
         .invoke('width')
         .should('be.gt', 22)
-        .should('be.lt', 24);
+        .and('be.lt', 24);
     });
   });
 
@@ -119,10 +119,10 @@ describe('<HelpButton>', () => {
     it('renders help button', () => {
       cy.dataCy('button-help')
         .should('be.visible')
-        .should('have.css', 'font-size', '8px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.backgroundColor', grey10)
-        .should('have.css', 'border-radius', '50%'); // round
+        .and('have.css', 'font-size', '8px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.backgroundColor', grey10)
+        .and('have.css', 'border-radius', '50%'); // round
       cy.dataCy('button-help').should('contain', 'question_mark');
     });
 
@@ -135,15 +135,15 @@ describe('<HelpButton>', () => {
     it('renders help icon', () => {
       cy.dataCy('icon-help')
         .should('contain', 'question_mark')
-        .should('have.color', white);
+        .and('have.color', white);
       cy.dataCy('icon-help')
         .invoke('height')
         .should('be.gt', 12)
-        .should('be.lt', 14);
+        .and('be.lt', 14);
       cy.dataCy('icon-help')
         .invoke('width')
         .should('be.gt', 12)
-        .should('be.lt', 14);
+        .and('be.lt', 14);
     });
   });
 
@@ -173,9 +173,9 @@ describe('<HelpButton>', () => {
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
-          .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('contain', i18n.global.t('index.help.titleStateDefault'))
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', i18n.global.t('index.help.titleStateDefault'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.help.titleStateDefault'),
@@ -192,9 +192,9 @@ describe('<HelpButton>', () => {
         cy.dataCy('dialog-content').scrollTo(0, 1060);
         cy.dataCy('title-guide')
           .should('be.visible')
-          .should('have.css', 'font-size', '24px')
-          .should('have.css', 'font-weight', '700')
-          .should('contain', i18n.global.t('index.help.titleGuide'))
+          .and('have.css', 'font-size', '24px')
+          .and('have.css', 'font-weight', '700')
+          .and('contain', i18n.global.t('index.help.titleGuide'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.help.titleGuide'),
@@ -202,7 +202,7 @@ describe('<HelpButton>', () => {
           });
         cy.dataCy('button-guide')
           .should('be.visible')
-          .should('contain.text', i18n.global.t('index.help.buttonGuide'))
+          .and('contain.text', i18n.global.t('index.help.buttonGuide'))
           .then(($button) => {
             expect($button.text()).to.equal(
               i18n.global.t('index.help.buttonGuide'),

@@ -17,7 +17,6 @@ describe('<BannerApp>', () => {
           banner: bannerApp,
         },
       });
-
       cy.viewport('macbook-16');
     });
 
@@ -25,13 +24,9 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'display', 'flex')
-          .should('have.css', 'flex-wrap', 'wrap');
-
-        cy.dataCy('banner-app-half')
-          .should('have.length', 2)
-          .should('be.visible');
-
+          .and('have.css', 'display', 'flex')
+          .and('have.css', 'flex-wrap', 'wrap');
+        cy.dataCy('banner-app-half').should('have.length', 2).and('be.visible');
         cy.testElementPercentageWidth(cy.dataCy('banner-app-half'), 50);
       });
     });
@@ -40,10 +35,10 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app-title')
           .should('be.visible')
-          .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', white)
-          .should('contain.text', bannerApp.title)
+          .and('have.css', 'font-size', '16px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', white)
+          .and('contain.text', bannerApp.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerApp.title);
           });
@@ -59,7 +54,6 @@ describe('<BannerApp>', () => {
             cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(bannerApp.image.src);
           });
-
         cy.dataCy('banner-app').find('img').matchImageSnapshot({
           failureThreshold: 0.5,
           failureThresholdType: 'percent',
@@ -71,7 +65,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app-button')
           .should('be.visible')
-          .should('contain.text', bannerApp.button.title)
+          .and('contain.text', bannerApp.button.title)
           .then(($button) => {
             expect($button.text()).to.equal(bannerApp.button.title);
           });
@@ -82,7 +76,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.backgroundColor', blueGrey8);
+          .and('have.backgroundColor', blueGrey8);
       });
     });
 
@@ -90,8 +84,8 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'border-radius', config.borderRadiusCard)
-          .should('have.css', 'overflow', 'hidden');
+          .and('have.css', 'border-radius', config.borderRadiusCard)
+          .and('have.css', 'overflow', 'hidden');
       });
     });
   });
@@ -103,7 +97,6 @@ describe('<BannerApp>', () => {
           banner: bannerApp,
         },
       });
-
       cy.viewport('iphone-6');
     });
 
@@ -111,13 +104,9 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'display', 'flex')
-          .should('have.css', 'flex-wrap', 'wrap');
-
-        cy.dataCy('banner-app-half')
-          .should('have.length', 2)
-          .should('be.visible');
-
+          .and('have.css', 'display', 'flex')
+          .and('have.css', 'flex-wrap', 'wrap');
+        cy.dataCy('banner-app-half').should('have.length', 2).and('be.visible');
         cy.testElementPercentageWidth(cy.dataCy('banner-app-half'), 100);
       });
     });
@@ -126,10 +115,10 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app-title')
           .should('be.visible')
-          .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', white)
-          .should('contain.text', bannerApp.title)
+          .and('have.css', 'font-size', '16px')
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', white)
+          .and('contain.text', bannerApp.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerApp.title);
           });
@@ -145,7 +134,6 @@ describe('<BannerApp>', () => {
             cy.testImageHeight($img);
             expect($img.attr('src')).to.equal(bannerApp.image.src);
           });
-
         cy.dataCy('banner-app').find('img').matchImageSnapshot({
           failureThreshold: 0.5,
           failureThresholdType: 'percent',
@@ -157,7 +145,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app-button')
           .should('be.visible')
-          .should('contain.text', bannerApp.button.title)
+          .and('contain.text', bannerApp.button.title)
           .then(($button) => {
             expect($button.text()).to.equal(bannerApp.button.title);
           });
@@ -168,7 +156,7 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.backgroundColor', blueGrey8);
+          .and('have.backgroundColor', blueGrey8);
       });
     });
 
@@ -176,8 +164,8 @@ describe('<BannerApp>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-app')
           .should('be.visible')
-          .should('have.css', 'border-radius', config.borderRadiusCard)
-          .should('have.css', 'overflow', 'hidden');
+          .and('have.css', 'border-radius', config.borderRadiusCard)
+          .and('have.css', 'overflow', 'hidden');
       });
     });
   });

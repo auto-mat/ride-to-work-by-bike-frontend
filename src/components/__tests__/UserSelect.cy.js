@@ -18,14 +18,14 @@ describe('<UserSelect>', () => {
     it('renders select with default value', () => {
       cy.dataCy('user-select-input')
         .should('be.visible')
-        .should('have.css', 'height', '56px')
-        .should('contain', user.label);
+        .and('have.css', 'height', '56px')
+        .and('contain', user.label);
     });
 
     it('renders rounded avatar', () => {
       cy.dataCy('avatar')
         .should('be.visible')
-        .should('have.css', 'border-radius', '50%')
+        .and('have.css', 'border-radius', '50%')
         .find('img')
         .should('be.visible')
         .then(($img) => {
@@ -42,7 +42,7 @@ describe('<UserSelect>', () => {
 
     it('shows dropdown on click', () => {
       cy.dataCy('user-select-input').click();
-      cy.get('.q-item__label').should('be.visible').should('have.length', 6);
+      cy.get('.q-item__label').should('be.visible').and('have.length', 6);
     });
   });
 
@@ -59,13 +59,13 @@ describe('<UserSelect>', () => {
     it('renders select with default value', () => {
       cy.dataCy('user-select-input')
         .should('be.visible')
-        .should('have.css', 'width', '32px');
+        .and('have.css', 'width', '32px');
     });
 
     it('renders rounded avatar with alt text', () => {
       cy.dataCy('avatar')
         .should('be.visible')
-        .should('have.css', 'border-radius', '50%')
+        .and('have.css', 'border-radius', '50%')
         .find('img')
         .should('be.visible')
         .then(($img) => {
@@ -82,7 +82,7 @@ describe('<UserSelect>', () => {
 
     it('shows dropdown on click', () => {
       cy.dataCy('user-select-input').click();
-      cy.get('.q-item__label').should('be.visible').should('have.length', 6);
+      cy.get('.q-item__label').should('be.visible').and('have.length', 6);
     });
   });
 });

@@ -34,7 +34,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', '20px');
       });
     });
 
@@ -61,9 +61,9 @@ describe('<CardOffer>', () => {
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
-          .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('contain', card.title)
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -93,7 +93,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .should('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', '20px');
       });
     });
 
@@ -117,9 +117,9 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-title')
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', grey10)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', grey10)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -130,10 +130,10 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-icon')
           .should('be.visible')
-          .should('contain', card.icon)
-          .should('have.css', 'height', '48px')
-          .should('have.css', 'width', '48px')
-          .should('have.color', 'rgb(176, 190, 197)');
+          .and('contain', card.icon)
+          .and('have.css', 'height', '48px')
+          .and('have.css', 'width', '48px')
+          .and('have.color', 'rgb(176, 190, 197)');
       });
     });
 
@@ -141,7 +141,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .should('have.backgroundColor', white);
+          .and('have.backgroundColor', white);
       });
     });
 
@@ -158,9 +158,9 @@ describe('<CardOffer>', () => {
         cy.dataCy('dialog-header')
           .find('h3')
           .should('be.visible')
-          .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('contain', card.title)
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -172,10 +172,10 @@ describe('<CardOffer>', () => {
         cy.dataCy('card-offer').click();
         cy.dataCy('dialog-body')
           .should('be.visible')
-          .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400')
-          .should('have.color', black)
-          .should('contain', card.content);
+          .and('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', black)
+          .and('contain', card.content);
       });
     });
 

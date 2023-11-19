@@ -40,9 +40,9 @@ describe('<ListCardPost>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -61,16 +61,16 @@ describe('<ListCardPost>', () => {
           .shadow()
           .find('.swiper-button-prev')
           .should('be.visible')
-          .should('have.css', 'width', '38px')
-          .should('have.css', 'height', '38px')
-          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px')
+          .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
         cy.dataCy('swiper-container')
           .shadow()
           .find('.swiper-button-next')
           .should('be.visible')
-          .should('have.css', 'width', '38px')
-          .should('have.css', 'height', '38px')
-          .should('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px')
+          .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
       });
     });
 
@@ -115,7 +115,7 @@ describe('<ListCardPost>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-buttons')
           .should('be.visible')
-          .should('have.css', 'text-align', 'center');
+          .and('have.css', 'text-align', 'center');
       });
     });
 
@@ -123,9 +123,9 @@ describe('<ListCardPost>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-button')
           .should('be.visible')
-          .should('have.css', 'border-color', hexToRgb('#212121'))
-          .should('have.css', 'border-radius', '28px')
-          .should('contain', button.title);
+          .and('have.css', 'border-color', hexToRgb('#212121'))
+          .and('have.css', 'border-radius', '28px')
+          .and('contain', button.title);
       });
     });
   });
@@ -146,9 +146,9 @@ describe('<ListCardPost>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', title)
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -164,7 +164,6 @@ describe('<ListCardPost>', () => {
     it('renders button container', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-buttons').should('be.visible');
-
         cy.testElementPercentageWidth(cy.dataCy('card-list-post-buttons'), 100);
       });
     });
@@ -173,10 +172,9 @@ describe('<ListCardPost>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-post-button')
           .should('be.visible')
-          .should('have.css', 'border-color', hexToRgb('#212121'))
-          .should('have.css', 'border-radius', '28px')
-          .should('contain', button.title);
-
+          .and('have.css', 'border-color', hexToRgb('#212121'))
+          .and('have.css', 'border-radius', '28px')
+          .and('contain', button.title);
         cy.testElementPercentageWidth(cy.dataCy('card-list-post-button'), 100);
       });
     });

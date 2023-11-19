@@ -25,7 +25,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('exist')
-          .should('be.visible');
+          .and('be.visible');
       });
     });
 
@@ -38,7 +38,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400');
+          .and('have.css', 'font-weight', '400');
       });
     });
 
@@ -48,9 +48,9 @@ describe('<LanguageSwitcher>', () => {
       cy.dataCy('switcher-' + initialActiveLocale)
         .find('.q-btn')
         .should('be.visible')
-        .should('have.class', 'bg-grey-10')
-        .should('have.class', 'text-white')
-        .should('have.class', 'text-bold');
+        .and('have.class', 'bg-grey-10')
+        .and('have.class', 'text-white')
+        .and('have.class', 'text-bold');
 
       locales.forEach((locale) => {
         if (locale !== initialActiveLocale) {
@@ -80,14 +80,14 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('exist')
-          .should('be.visible');
+          .and('be.visible');
       });
     });
 
     it('renders a wrapper with white background', () => {
       cy.get('.language-list')
         .should('have.backgroundColor', white)
-        .should('have.css', 'border-radius', '999px');
+        .and('have.css', 'border-radius', '999px');
     });
 
     it('renders links with correct font', () => {
@@ -95,7 +95,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400');
+          .and('have.css', 'font-weight', '400');
       });
     });
 
@@ -107,8 +107,8 @@ describe('<LanguageSwitcher>', () => {
       cy.dataCy('switcher-' + initialActiveLocale)
         .find('.q-btn')
         .should('have.class', 'bg-secondary')
-        .should('have.class', 'text-primary')
-        .should('have.class', 'text-bold');
+        .and('have.class', 'text-primary')
+        .and('have.class', 'text-bold');
 
       locales.forEach((locale) => {
         if (locale !== initialActiveLocale) {
@@ -116,8 +116,8 @@ describe('<LanguageSwitcher>', () => {
           cy.dataCy('switcher-' + locale)
             .find('.q-btn')
             .should('have.class', 'bg-white')
-            .should('have.class', 'text-primary')
-            .should('have.class', 'text-bold');
+            .and('have.class', 'text-primary')
+            .and('have.class', 'text-bold');
         }
       });
     });
@@ -136,7 +136,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('exist')
-          .should('be.visible');
+          .and('be.visible');
       });
     });
 
@@ -145,7 +145,7 @@ describe('<LanguageSwitcher>', () => {
       locales.forEach((locale) => {
         cy.dataCy('switcher-' + locale)
           .should('have.css', 'font-size', '14px')
-          .should('have.css', 'font-weight', '400');
+          .and('have.css', 'font-weight', '400');
       });
     });
 

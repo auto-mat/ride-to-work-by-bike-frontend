@@ -33,9 +33,9 @@ describe('<CardProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', white)
-          .should('contain', cardFirst.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', white)
+          .and('contain', cardFirst.title)
           .then(($title) => {
             expect($title.text()).to.equal(cardFirst.title);
           });
@@ -45,36 +45,33 @@ describe('<CardProgress>', () => {
     it('renders prize icon', () => {
       cy.dataCy('card-progress-prizes-icon')
         .should('contain', cardFirst.prizes[0].icon)
-        .should('have.color', white)
-        .should('have.css', 'width', '24px')
-        .should('have.css', 'height', '24px');
+        .and('have.color', white)
+        .and('have.css', 'width', '24px')
+        .and('have.css', 'height', '24px');
     });
 
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', cardFirst.progress);
-
+        .and('contain', cardFirst.progress);
       cy.dataCy('card-progress-circular')
         .should('be.visible')
-        .should('have.css', 'width', '220px')
-        .should('have.css', 'height', '220px');
-
+        .and('have.css', 'width', '220px')
+        .and('have.css', 'height', '220px');
       cy.dataCy('circular-progress-number')
         .should('be.visible')
-        .should('have.css', 'font-size', '48px');
+        .and('have.css', 'font-size', '48px');
     });
 
     it('renders larger placement number', () => {
       cy.dataCy('card-progress-prize-placement')
         .should('have.css', 'font-size', '24px')
-        .should('have.css', 'font-weight', '700')
-        .should('have.color', white);
-
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', white);
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', white);
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', white);
     });
 
     it('renders dark separator', () => {
@@ -87,17 +84,17 @@ describe('<CardProgress>', () => {
     it('renders white share link', () => {
       cy.dataCy('card-progress-share')
         .should('have.color', white)
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-weight', '700');
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'font-weight', '700');
     });
 
     it('renders white share link icon', () => {
       cy.dataCy('card-progress-share-icon')
         .should('have.color', white)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px')
-        .should('contain', 'share');
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px')
+        .and('contain', 'share');
     });
   });
 
@@ -115,9 +112,9 @@ describe('<CardProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', grey10)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', grey10)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -128,36 +125,33 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', blueGrey5)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px');
+        .and('have.color', blueGrey5)
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px');
     });
 
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.progress);
-
+        .and('contain', card.progress);
       cy.dataCy('card-progress-circular')
         .should('be.visible')
-        .should('have.css', 'width', '220px')
-        .should('have.css', 'height', '220px');
-
+        .and('have.css', 'width', '220px')
+        .and('have.css', 'height', '220px');
       cy.dataCy('circular-progress-number')
         .should('be.visible')
-        .should('have.css', 'font-size', '48px');
+        .and('have.css', 'font-size', '48px');
     });
 
     it('renders smaller placement number', () => {
       cy.dataCy('card-progress-prize-placement')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '700')
-        .should('have.color', grey10);
-
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', grey10);
       cy.dataCy('card-progress-prize-label')
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400')
-        .should('have.color', grey10);
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', grey10);
     });
 
     it('renders light separator', () => {
@@ -170,17 +164,17 @@ describe('<CardProgress>', () => {
     it('renders dark share link', () => {
       cy.dataCy('card-progress-share')
         .should('have.color', grey10)
-        .should('have.css', 'font-size', '14px')
-        .should('have.css', 'text-transform', 'uppercase')
-        .should('have.css', 'font-weight', '700');
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'font-weight', '700');
     });
 
     it('renders dark share link icon', () => {
       cy.dataCy('card-progress-share-icon')
         .should('have.color', grey10)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px')
-        .should('contain', 'share');
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px')
+        .and('contain', 'share');
     });
   });
 
@@ -198,9 +192,9 @@ describe('<CardProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
           .should('have.css', 'font-size', '16px')
-          .should('have.css', 'font-weight', '700')
-          .should('have.color', grey10)
-          .should('contain', card.title)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', grey10)
+          .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
           });
@@ -211,24 +205,22 @@ describe('<CardProgress>', () => {
       cy.dataCy('card-progress-header')
         .find('.q-icon')
         .should('contain', card.icon)
-        .should('have.color', blueGrey5)
-        .should('have.css', 'width', '18px')
-        .should('have.css', 'height', '18px');
+        .and('have.color', blueGrey5)
+        .and('have.css', 'width', '18px')
+        .and('have.css', 'height', '18px');
     });
 
     it('renders percentage', () => {
       cy.dataCy('card-progress-percentage')
         .should('be.visible')
-        .should('contain', card.progress);
-
+        .and('contain', card.progress);
       cy.dataCy('card-progress-circular')
         .should('be.visible')
-        .should('have.css', 'width', '128px')
-        .should('have.css', 'height', '128px');
-
+        .and('have.css', 'width', '128px')
+        .and('have.css', 'height', '128px');
       cy.dataCy('circular-progress-number')
         .should('be.visible')
-        .should('have.css', 'font-size', '40px');
+        .and('have.css', 'font-size', '40px');
     });
   });
 });

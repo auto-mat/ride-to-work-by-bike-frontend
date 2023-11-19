@@ -35,9 +35,9 @@ describe('<ListCardProgress>', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-progress-title')
           .should('have.css', 'font-size', '20px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.color', black)
-          .should('contain', i18n.global.t('index.progressSlider.title'))
+          .and('have.css', 'font-weight', '500')
+          .and('have.color', black)
+          .and('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.progressSlider.title'),
@@ -49,30 +49,26 @@ describe('<ListCardProgress>', () => {
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('card-list-progress-stats-item').should('have.length', 3);
-
         cy.dataCy('card-list-progress-stats-item').each(($item, index) => {
           cy.wrap($item)
             .should('have.css', 'font-size', '14px')
-            .should('have.css', 'font-weight', '400')
-            .should('have.color', grey10);
-
+            .and('have.css', 'font-weight', '400')
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('.q-icon')
             .should('contain', progressStats[index].icon)
-            .should('have.color', blueGrey3)
-            .should('have.css', 'width', '18px')
-            .should('have.css', 'height', '18px');
-
+            .and('have.color', blueGrey3)
+            .and('have.css', 'width', '18px')
+            .and('have.css', 'height', '18px');
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
-            .should('have.color', grey10);
-
+            .and('have.color', grey10);
           cy.wrap($item)
             .find('strong')
             .should('contain', progressStats[index].value)
-            .should('have.color', grey10)
-            .should('have.css', 'font-weight', '700');
+            .and('have.color', grey10)
+            .and('have.css', 'font-weight', '700');
         });
       });
     });
@@ -86,14 +82,10 @@ describe('<ListCardProgress>', () => {
     it('renders cards in a 3 col grid', () => {
       cy.dataCy('card-list-progress-wrapper')
         .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-wrap', 'wrap');
-
+        .and('have.css', 'flex-wrap', 'wrap');
       cy.viewport('iphone-6');
-
       cy.testElementPercentageWidth(cy.dataCy('card-list-progress-item'), 100);
-
       cy.viewport('macbook-15');
-
       cy.testElementPercentageWidth(cy.dataCy('card-list-progress-item'), 33);
     });
   });
@@ -114,8 +106,7 @@ describe('<ListCardProgress>', () => {
     it('renders cards in a 2 col grid', () => {
       cy.dataCy('card-list-progress-wrapper')
         .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-wrap', 'wrap');
-
+        .and('have.css', 'flex-wrap', 'wrap');
       cy.testElementPercentageWidth(cy.dataCy('card-list-progress-item'), 50);
     });
   });
@@ -136,10 +127,8 @@ describe('<ListCardProgress>', () => {
     it('renders cards in a 1 col grid', () => {
       cy.dataCy('card-list-progress-wrapper')
         .should('have.css', 'display', 'flex')
-        .should('have.css', 'flex-wrap', 'wrap');
-
+        .and('have.css', 'flex-wrap', 'wrap');
       cy.viewport('iphone-6');
-
       cy.testElementPercentageWidth(cy.dataCy('card-list-progress-item'), 100);
     });
   });

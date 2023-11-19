@@ -50,19 +50,17 @@ describe('<DrawerHeader>', () => {
 
   it('renders logo', () => {
     cy.window().then(() => {
-      cy.dataCy('logo')
-        .should('be.visible')
-        .should('have.css', 'height', '40px');
+      cy.dataCy('logo').should('be.visible').and('have.css', 'height', '40px');
     });
   });
 
   it('renders help button', () => {
     cy.dataCy('button-help')
       .should('be.visible')
-      .should('have.css', 'font-size', '8px')
-      .should('have.css', 'font-weight', '500')
-      .should('have.backgroundColor', grey10)
-      .should('have.css', 'border-radius', '50%'); // round
+      .and('have.css', 'font-size', '8px')
+      .and('have.css', 'font-weight', '500')
+      .and('have.backgroundColor', grey10)
+      .and('have.css', 'border-radius', '50%'); // round
     cy.dataCy('button-help').should('contain', 'question_mark');
   });
 
@@ -75,24 +73,21 @@ describe('<DrawerHeader>', () => {
   it('renders help icon', () => {
     cy.dataCy('icon-help')
       .should('contain', 'question_mark')
-      .should('have.color', white);
+      .and('have.color', white);
     cy.dataCy('icon-help')
       .invoke('height')
       .should('be.gt', 12)
-      .should('be.lt', 14);
-    cy.dataCy('icon-help')
-      .invoke('width')
-      .should('be.gt', 12)
-      .should('be.lt', 14);
+      .and('be.lt', 14);
+    cy.dataCy('icon-help').invoke('width').should('be.gt', 12).and('be.lt', 14);
   });
 
   it('renders notifications icon', () => {
     cy.window().then(() => {
       cy.dataCy('icon-notification')
         .should('be.visible')
-        .should('have.color', black)
-        .should('have.css', 'width', '24px')
-        .should('contain.text', 'notifications');
+        .and('have.color', black)
+        .and('have.css', 'width', '24px')
+        .and('contain.text', 'notifications');
     });
   });
 

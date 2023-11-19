@@ -17,9 +17,9 @@ describe('<ListFaq>', () => {
     it('renders title with correct styling', () => {
       cy.dataCy('list-faq-title')
         .should('be.visible')
-        .should('contain', title)
-        .should('have.css', 'font-size', '24px')
-        .should('have.css', 'font-weight', '700');
+        .and('contain', title)
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700');
     });
 
     it('renders participant FAQ with working accordion', () => {
@@ -27,7 +27,7 @@ describe('<ListFaq>', () => {
         .find('.q-item__label')
         .first()
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
+        .and('have.css', 'font-weight', '400');
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
@@ -49,7 +49,6 @@ describe('<ListFaq>', () => {
 
   context('coordinator', () => {
     const title = i18n.global.t('index.help.titleCoordinators');
-
     beforeEach(() => {
       cy.mount(ListFaq, {
         props: {
@@ -64,7 +63,7 @@ describe('<ListFaq>', () => {
         .find('.q-item__label')
         .first()
         .should('have.css', 'font-size', '14px')
-        .should('have.css', 'font-weight', '400');
+        .and('have.css', 'font-weight', '400');
       cy.dataCy('list-faq-list')
         .find('.q-card')
         .first()
