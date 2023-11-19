@@ -194,7 +194,7 @@ describe('Register Challenge page', () => {
         });
     });
 
-    it.only('renders stepper component', () => {
+    it('renders stepper component', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let i18n;
       cy.window().should('have.property', 'i18n');
@@ -241,6 +241,23 @@ describe('Register Challenge page', () => {
               'contain',
               i18n.global.t('register.challenge.titleStepPersonalDetails'),
             );
+        });
+    });
+
+    it.only('allows user to pass through the registration process', () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let i18n;
+      cy.window().should('have.property', 'i18n');
+      cy.window()
+        .then((win) => {
+          i18n = win.i18n;
+        })
+        .then(() => {
+          // allows for a green route pass
+          cy.dataCy('step-1-continue').should('be.visible').click();
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible').click();
         });
     });
   });

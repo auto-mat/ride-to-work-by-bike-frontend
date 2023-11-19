@@ -91,6 +91,7 @@ export default defineComponent({
               @click="step = 2"
               color="primary"
               :label="$t('navigation.continue')"
+              data-cy="step-1-continue"
             />
           </q-stepper-navigation>
         </q-step>
@@ -114,6 +115,7 @@ export default defineComponent({
               @click="step = 3"
               color="primary"
               :label="$t('navigation.continue')"
+              data-cy="step-2-continue"
             />
             <q-btn
               unelevated
@@ -123,6 +125,7 @@ export default defineComponent({
               color="primary"
               :label="$t('navigation.back')"
               class="q-ml-sm"
+              data-cy="step-2-back"
             />
           </q-stepper-navigation>
         </q-step>
@@ -146,6 +149,7 @@ export default defineComponent({
               @click="step = 4"
               color="primary"
               :label="$t('navigation.continue')"
+              data-cy="step-3-continue"
             />
             <q-btn
               unelevated
@@ -155,6 +159,7 @@ export default defineComponent({
               color="primary"
               :label="$t('navigation.back')"
               class="q-ml-sm"
+              data-cy="step-3-back"
             />
           </q-stepper-navigation>
         </q-step>
@@ -177,6 +182,7 @@ export default defineComponent({
               rounded
               color="primary"
               :label="$t('navigation.continue')"
+              data-cy="step-4-continue"
             />
             <q-btn
               unelevated
@@ -186,6 +192,7 @@ export default defineComponent({
               color="primary"
               :label="$t('navigation.back')"
               class="q-ml-sm"
+              data-cy="step-4-back"
             />
           </q-stepper-navigation>
         </q-step>
