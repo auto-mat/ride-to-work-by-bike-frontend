@@ -42,7 +42,7 @@ export default defineComponent({
   <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
-      <login-register-header />
+      <login-register-header data-cy="login-register-header" />
 
       <div class="row">
         <div class="col-12 col-lg-4">

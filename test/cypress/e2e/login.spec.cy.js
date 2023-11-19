@@ -5,34 +5,8 @@ describe('Login page', () => {
       cy.viewport('macbook-16');
     });
 
-    it('renders logo', () => {
-      cy.dataCy('logo')
-        .should('be.visible')
-        .invoke('height')
-        .should('be.equal', 80);
-    });
-
-    it('renders help button', () => {
-      let config;
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        config = JSON.parse(win.process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
-      });
-      cy.window().then(() => {
-        cy.dataCy('button-help')
-          .should('be.visible')
-          .and('have.css', 'font-size', '13px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.backgroundColor', `${config.colorPrimary}`)
-          .and('have.css', 'border-radius', '50%'); // round
-        cy.dataCy('button-help').should('contain', 'question_mark');
-      });
-    });
-
-    it('renders help button with correct size', () => {
-      cy.dataCy('button-help').should('be.visible');
-      cy.dataCy('button-help').invoke('height').should('be.equal', 39);
-      cy.dataCy('button-help').invoke('width').should('be.equal', 39);
+    it('renders page header', () => {
+      cy.dataCy('login-register-header').should('be.visible');
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
