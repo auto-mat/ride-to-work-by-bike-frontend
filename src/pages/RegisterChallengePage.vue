@@ -132,6 +132,7 @@ export default defineComponent({
           :title="$t('register.challenge.titleStepParticipation')"
           icon="img:src/assets/svg/numeric-3-outline.svg"
           active-icon="img:src/assets/svg/numeric-3-fill.svg"
+          done-icon="img:src/assets/svg/check.svg"
           :done="step > 3"
           class="bg-white q-mt-lg"
           data-cy="step-3"
@@ -142,6 +143,7 @@ export default defineComponent({
             <q-btn
               unelevated
               rounded
+              @click="step = 4"
               color="primary"
               :label="$t('navigation.continue')"
             />
@@ -162,6 +164,7 @@ export default defineComponent({
           :title="$t('register.challenge.titleStepCompany')"
           icon="img:src/assets/svg/numeric-4-outline.svg"
           active-icon="img:src/assets/svg/numeric-4-fill.svg"
+          done-icon="img:src/assets/svg/check.svg"
           :done="step > 4"
           class="bg-white q-mt-lg"
           data-cy="step-4"
@@ -179,7 +182,7 @@ export default defineComponent({
               unelevated
               rounded
               outline
-              @click="step = 2"
+              @click="step = 3"
               color="primary"
               :label="$t('navigation.back')"
               class="q-ml-sm"
