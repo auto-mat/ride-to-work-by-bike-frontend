@@ -23,16 +23,14 @@
 import { defineComponent } from 'vue';
 
 // components
-import HelpButton from 'components/HelpButton.vue';
-import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import FormLogin from 'components/FormLogin.vue';
+import LoginRegisterHeader from 'src/components/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'LoginPage',
   components: {
-    HelpButton,
-    LanguageSwitcher,
     FormLogin,
+    LoginRegisterHeader,
   },
   setup() {
     return {};
@@ -44,22 +42,7 @@ export default defineComponent({
   <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
-      <div class="flex items-center justify-between q-py-lg">
-        <!-- RTWBB logo -->
-        <img
-          class="logo"
-          src="~assets/svg/logo.svg"
-          :alt="$t('index.logoAltText')"
-          :title="$t('header.siteTitle')"
-          data-cy="logo"
-        />
-        <div class="flex items-center gap-32">
-          <!-- Help icon link for displaying modal dialog -->
-          <help-button size="13px" color="primary" />
-          <!-- Language switcher -->
-          <language-switcher variant="light" />
-        </div>
-      </div>
+      <login-register-header />
 
       <div class="row">
         <div class="col-12 col-lg-4">
@@ -69,9 +52,3 @@ export default defineComponent({
     </div>
   </q-page>
 </template>
-
-<style scoped lang="scss">
-.logo {
-  height: 80px;
-}
-</style>
