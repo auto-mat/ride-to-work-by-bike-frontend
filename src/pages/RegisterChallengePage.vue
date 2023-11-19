@@ -156,6 +156,36 @@ export default defineComponent({
             />
           </q-stepper-navigation>
         </q-step>
+
+        <q-step
+          :name="4"
+          :title="$t('register.challenge.titleStepCompany')"
+          icon="img:src/assets/svg/numeric-4-outline.svg"
+          active-icon="img:src/assets/svg/numeric-4-fill.svg"
+          :done="step > 4"
+          class="bg-white q-mt-lg"
+          data-cy="step-4"
+        >
+          Content of step 4
+
+          <q-stepper-navigation>
+            <q-btn
+              unelevated
+              rounded
+              color="primary"
+              :label="$t('navigation.continue')"
+            />
+            <q-btn
+              unelevated
+              rounded
+              outline
+              @click="step = 2"
+              color="primary"
+              :label="$t('navigation.back')"
+              class="q-ml-sm"
+            />
+          </q-stepper-navigation>
+        </q-step>
       </q-stepper>
     </div>
   </q-page>
