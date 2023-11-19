@@ -30,10 +30,10 @@ describe('<LoginRegisterHeader>', () => {
     it('renders help button', () => {
       cy.dataCy('button-help')
         .should('be.visible')
-        .should('have.css', 'font-size', '13px')
-        .should('have.css', 'font-weight', '500')
-        .should('have.backgroundColor', primary)
-        .should('have.css', 'border-radius', '50%'); // round
+        .and('have.css', 'font-size', '13px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.backgroundColor', primary)
+        .and('have.css', 'border-radius', '50%'); // round
       cy.dataCy('button-help').should('contain', 'question_mark');
     });
 
@@ -59,7 +59,7 @@ describe('<LoginRegisterHeader>', () => {
           cy.wrap($element)
             .find('.q-card__section')
             .should('be.visible')
-            .should('not.be.empty');
+            .and('not.be.empty');
         });
     });
 
@@ -93,7 +93,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('index.contact.subjectRequired'));
+        .and('contain', i18n.global.t('index.contact.subjectRequired'));
       cy.dataCy('contact-form-subject')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
@@ -113,7 +113,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.dataCy('contact-form-message')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('index.contact.messageRequired'));
+        .and('contain', i18n.global.t('index.contact.messageRequired'));
       cy.dataCy('contact-form-message')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
@@ -125,7 +125,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.dataCy('contact-form-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .should('contain', i18n.global.t('index.contact.emailRequired'));
+        .and('contain', i18n.global.t('index.contact.emailRequired'));
       cy.dataCy('contact-form-email')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
