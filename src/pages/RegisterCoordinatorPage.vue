@@ -54,7 +54,7 @@ export default defineComponent({
       <!-- Page title -->
       <h1
         class="col-sm-6 text-h5 text-bold text-white q-my-none"
-        data-cy="login-register-title"
+        data-cy="register-coordinator-title"
         v-html="$t(`register.coordinator.title.${challengeMonth}`)"
       ></h1>
 
@@ -62,13 +62,15 @@ export default defineComponent({
       <div
         class="col-12 q-pa-lg q-mt-lg bg-secondary"
         :style="{ 'border-radius': borderRadius }"
+        data-cy="info-card"
       >
-        <h2 class="text-body1 text-bold q-my-none">
+        <h2 class="text-body1 text-bold q-my-none" data-cy="info-title">
           {{ $t('register.coordinator.titleInfo') }}
         </h2>
         <div
           class="text-subtitle2 text-weight-regular q-mt-sm"
           v-html="$t('register.coordinator.info')"
+          data-cy="info-content"
         ></div>
       </div>
     </div>
