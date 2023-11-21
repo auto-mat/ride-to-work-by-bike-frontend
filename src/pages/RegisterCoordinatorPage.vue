@@ -31,10 +31,12 @@ export default defineComponent({
     LoginRegisterHeader,
   },
   setup() {
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerWidth = rideToWorkByBikeConfig.containerWidth;
 
     return {
+      borderRadius,
       challengeMonth,
       containerWidth,
     };
@@ -43,7 +45,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-page padding class="bg-secondary">
+  <q-page padding class="bg-grey-6 text-grey-10">
     <!-- Page header -->
     <login-register-header data-cy="login-register-header" />
 
@@ -55,8 +57,27 @@ export default defineComponent({
         data-cy="login-register-title"
         v-html="$t(`register.coordinator.title.${challengeMonth}`)"
       ></h1>
+
+      <!-- Card: information -->
+      <div
+        class="col-12 q-pa-lg q-mt-lg bg-secondary"
+        :style="{ 'border-radius': borderRadius }"
+      >
+        <h2 class="text-body1 text-bold q-my-none">
+          {{ $t('register.coordinator.titleInfo') }}
+        </h2>
+        <div
+          class="text-subtitle2 text-weight-regular q-mt-sm"
+          v-html="$t('register.coordinator.info')"
+        ></div>
+      </div>
     </div>
   </q-page>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+// last paragraph of the card
+:deep(p:last-child) {
+  margin-bottom: 0;
+}
+</style>

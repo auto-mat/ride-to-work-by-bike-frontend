@@ -208,3 +208,5 @@ titleStepCompany = "Firma / škola / skupina"
 [register.coordinator]
 title.may = "Registrace koordinátora do&nbsp;Květnové výzvy"
 title.october = "Registrace koordinátora do&nbsp;Říjnové výzvy"
+titleInfo = "Povinnosti koordinátora*ky"
+info = "<p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat zaměstnavatele či ředitele školy, aby uhradil startovné.</li><li>Rozdělit startovní balíčky účastníkům.</li><li>Vypsat případné vnitrofiremní soutěže.</li><li>Průběžně schvalovat platby za vaše zaměstnance a následně vygenerovat fakturu.</li></ul><p>Také budete mít přístup do systému Do práce na kole, kde najdete informace o účasti a výsledcích vaší organizace, včetně týmů a jednotlivých účastníků*nic.</p><p><strong>Účastníky nebudete registrovat sám*sama, jen je můžete oslovit, aby se přihlásili.</strong></p>"
