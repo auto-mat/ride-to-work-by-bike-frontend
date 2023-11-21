@@ -33,9 +33,13 @@ export default defineComponent({
   setup() {
     const step = ref(1);
 
+    const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
+    const containerWidth = rideToWorkByBikeConfig.containerWidth;
+
     return {
+      challengeMonth,
+      containerWidth,
       step,
-      rideToWorkByBikeConfig,
     };
   },
 });
@@ -47,140 +51,146 @@ export default defineComponent({
       <!-- Page header -->
       <login-register-header data-cy="login-register-header" />
 
-      <q-stepper
-        v-model="step"
-        vertical
-        color="primary"
-        class="bg-transparent"
-        style="box-shadow: none"
-        animated
-        data-cy="stepper"
-      >
-        <q-step
-          :name="1"
-          :title="$t('register.challenge.titleStepPersonalDetails')"
-          icon="img:src/assets/svg/numeric-1-outline.svg"
-          active-icon="img:src/assets/svg/numeric-1-fill.svg"
-          done-icon="img:src/assets/svg/check.svg"
-          :done="step > 1"
-          class="bg-white"
-          data-cy="step-1"
+      <!-- Container -->
+      <div class="q-mx-auto q-mt-xl" :style="{ 'max-width': containerWidth }">
+        <!-- Page title -->
+        <h1 class="text-h5 text-bold q-my-none">
+          {{
+            $t(`register.challenge.titleRegisterToChallenge.${challengeMonth}`)
+          }}
+        </h1>
+        <q-stepper
+          v-model="step"
+          vertical
+          color="primary"
+          class="bg-transparent q-py-none q-mt-lg"
+          style="box-shadow: none"
+          animated
+          data-cy="stepper"
         >
-          Content of step 1
-
-          <q-stepper-navigation>
-            <q-btn
-              unelevated
-              rounded
-              @click="step = 2"
-              color="primary"
-              :label="$t('navigation.continue')"
-              data-cy="step-1-continue"
-            />
-          </q-stepper-navigation>
-        </q-step>
-
-        <q-step
-          :name="2"
-          :title="$t('register.challenge.titleStepPayment')"
-          icon="img:src/assets/svg/numeric-2-outline.svg"
-          active-icon="img:src/assets/svg/numeric-2-fill.svg"
-          done-icon="img:src/assets/svg/check.svg"
-          :done="step > 2"
-          class="bg-white q-mt-lg"
-          data-cy="step-2"
-        >
-          Content of step 2
-
-          <q-stepper-navigation>
-            <q-btn
-              unelevated
-              rounded
-              @click="step = 3"
-              color="primary"
-              :label="$t('navigation.continue')"
-              data-cy="step-2-continue"
-            />
-            <q-btn
-              unelevated
-              rounded
-              outline
-              @click="step = 1"
-              color="primary"
-              :label="$t('navigation.back')"
-              class="q-ml-sm"
-              data-cy="step-2-back"
-            />
-          </q-stepper-navigation>
-        </q-step>
-
-        <q-step
-          :name="3"
-          :title="$t('register.challenge.titleStepParticipation')"
-          icon="img:src/assets/svg/numeric-3-outline.svg"
-          active-icon="img:src/assets/svg/numeric-3-fill.svg"
-          done-icon="img:src/assets/svg/check.svg"
-          :done="step > 3"
-          class="bg-white q-mt-lg"
-          data-cy="step-3"
-        >
-          Content of step 3
-
-          <q-stepper-navigation>
-            <q-btn
-              unelevated
-              rounded
-              @click="step = 4"
-              color="primary"
-              :label="$t('navigation.continue')"
-              data-cy="step-3-continue"
-            />
-            <q-btn
-              unelevated
-              rounded
-              outline
-              @click="step = 2"
-              color="primary"
-              :label="$t('navigation.back')"
-              class="q-ml-sm"
-              data-cy="step-3-back"
-            />
-          </q-stepper-navigation>
-        </q-step>
-
-        <q-step
-          :name="4"
-          :title="$t('register.challenge.titleStepCompany')"
-          icon="img:src/assets/svg/numeric-4-outline.svg"
-          active-icon="img:src/assets/svg/numeric-4-fill.svg"
-          done-icon="img:src/assets/svg/check.svg"
-          :done="step > 4"
-          class="bg-white q-mt-lg"
-          data-cy="step-4"
-        >
-          Content of step 4
-
-          <q-stepper-navigation>
-            <q-btn
-              unelevated
-              rounded
-              color="primary"
-              :label="$t('navigation.continue')"
-              data-cy="step-4-continue"
-            />
-            <q-btn
-              unelevated
-              rounded
-              outline
-              @click="step = 3"
-              color="primary"
-              :label="$t('navigation.back')"
-              class="q-ml-sm"
-              data-cy="step-4-back"
-            />
-          </q-stepper-navigation>
-        </q-step>
-      </q-stepper>
+          <!-- Step: Personal details -->
+          <q-step
+            :name="1"
+            :title="$t('register.challenge.titleStepPersonalDetails')"
+            icon="img:src/assets/svg/numeric-1-outline.svg"
+            active-icon="img:src/assets/svg/numeric-1-fill.svg"
+            done-icon="img:src/assets/svg/check.svg"
+            :done="step > 1"
+            class="bg-white"
+            data-cy="step-1"
+          >
+            Content of step 1
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                @click="step = 2"
+                color="primary"
+                :label="$t('navigation.continue')"
+                data-cy="step-1-continue"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <!-- Step: Payment -->
+          <q-step
+            :name="2"
+            :title="$t('register.challenge.titleStepPayment')"
+            icon="img:src/assets/svg/numeric-2-outline.svg"
+            active-icon="img:src/assets/svg/numeric-2-fill.svg"
+            done-icon="img:src/assets/svg/check.svg"
+            :done="step > 2"
+            class="bg-white q-mt-lg"
+            data-cy="step-2"
+          >
+            Content of step 2
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                @click="step = 3"
+                color="primary"
+                :label="$t('navigation.continue')"
+                data-cy="step-2-continue"
+              />
+              <q-btn
+                unelevated
+                rounded
+                outline
+                @click="step = 1"
+                color="primary"
+                :label="$t('navigation.back')"
+                class="q-ml-sm"
+                data-cy="step-2-back"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <!-- Step: Participation -->
+          <q-step
+            :name="3"
+            :title="$t('register.challenge.titleStepParticipation')"
+            icon="img:src/assets/svg/numeric-3-outline.svg"
+            active-icon="img:src/assets/svg/numeric-3-fill.svg"
+            done-icon="img:src/assets/svg/check.svg"
+            :done="step > 3"
+            class="bg-white q-mt-lg"
+            data-cy="step-3"
+          >
+            Content of step 3
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                @click="step = 4"
+                color="primary"
+                :label="$t('navigation.continue')"
+                data-cy="step-3-continue"
+              />
+              <q-btn
+                unelevated
+                rounded
+                outline
+                @click="step = 2"
+                color="primary"
+                :label="$t('navigation.back')"
+                class="q-ml-sm"
+                data-cy="step-3-back"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <!-- Step: Company -->
+          <q-step
+            :name="4"
+            :title="$t('register.challenge.titleStepCompany')"
+            icon="img:src/assets/svg/numeric-4-outline.svg"
+            active-icon="img:src/assets/svg/numeric-4-fill.svg"
+            done-icon="img:src/assets/svg/check.svg"
+            :done="step > 4"
+            class="bg-white q-mt-lg"
+            data-cy="step-4"
+          >
+            Content of step 4
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                data-cy="step-4-continue"
+              />
+              <q-btn
+                unelevated
+                rounded
+                outline
+                @click="step = 3"
+                color="primary"
+                :label="$t('navigation.back')"
+                class="q-ml-sm"
+                data-cy="step-4-back"
+              />
+            </q-stepper-navigation>
+          </q-step>
+        </q-stepper>
+      </div>
     </div>
   </q-page>
 </template>
@@ -194,7 +204,7 @@ export default defineComponent({
 :deep(.q-stepper--vertical .q-stepper__dot:after) {
   display: none;
 }
-// rounded corners
+// add rounded corners
 :deep(.q-stepper__step) {
   border-radius: 16px;
 }
@@ -218,7 +228,7 @@ export default defineComponent({
   background-color: #fff;
   margin-right: 16px;
 }
-// step title
+// larger step title
 :deep(.q-stepper__title) {
   color: $grey-10;
   font-size: 16px;

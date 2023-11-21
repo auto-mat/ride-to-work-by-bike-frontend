@@ -19,4 +19,6 @@ export interface ConfigGlobal {
   urlYoutube: string;
   urlGooglePlay: string;
   urlAppStore: string;
+  challengeMonth: 'may' | 'october';
+  containerWidth: string;
 }

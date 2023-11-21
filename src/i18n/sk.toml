@@ -198,6 +198,8 @@ buttonGoogle = "Registrácia cez Facebook"
 buttonFacebook = "Registrácia cez Google"
 
 [register.challenge]
+titleRegisterToChallenge.may = "Registrácia na májovú výzvu"
+titleRegisterToChallenge.october = "Registrácia na októbrovú výzvu"
 titleStepPersonalDetails = "Osobné údaje"
 titleStepPayment = "Platba"
 titleStepParticipation = "Účasť"

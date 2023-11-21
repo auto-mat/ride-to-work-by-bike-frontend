@@ -198,6 +198,8 @@ buttonGoogle = "Register via Facebook"
 buttonFacebook = "Register via Google"
 
 [register.challenge]
+titleRegisterToChallenge.may = "Register for May challenge"
+titleRegisterToChallenge.october = "Register for October challenge"
 titleStepPersonalDetails = "Personal details"
 titleStepPayment = "Payment"
 titleStepParticipation = "Participation"
