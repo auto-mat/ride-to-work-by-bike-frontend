@@ -204,3 +204,7 @@ titleStepPersonalDetails = "Personal details"
 titleStepPayment = "Payment"
 titleStepParticipation = "Participation"
 titleStepCompany = "Company / school / group"
+
+[register.coordinator]
+title.may = "Coordinator registration for&nbsp;the&nbsp;May Challenge"
+title.october = "Coordinator registration for&nbsp;the&nbsp;October Challenge"

@@ -204,3 +204,7 @@ titleStepPersonalDetails = "Osobní údaje"
 titleStepPayment = "Platba"
 titleStepParticipation = "Účast"
 titleStepCompany = "Firma / škola / skupina"
+
+[register.coordinator]
+title.may = "Registrace koordinátora do&nbsp;Květnové výzvy"
+title.october = "Registrace koordinátora do&nbsp;Říjnové výzvy"
