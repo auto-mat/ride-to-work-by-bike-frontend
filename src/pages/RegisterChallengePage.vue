@@ -196,10 +196,7 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-.logo {
-  height: 80px;
-}
-// hide vertical line
+// hide vertical line between steps
 :deep(.q-stepper--vertical .q-stepper__dot:before),
 :deep(.q-stepper--vertical .q-stepper__dot:after) {
   display: none;
