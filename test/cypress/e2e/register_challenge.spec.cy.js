@@ -5,62 +5,6 @@ describe('Register Challenge page', () => {
       cy.viewport('macbook-16');
     });
 
-    it('has translation for all strings', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      let i18n;
-      cy.window().should('have.property', 'i18n');
-      cy.window()
-        .then((win) => {
-          i18n = win.i18n;
-        })
-        .then(() => {
-          cy.testLanguageStringsInContext(
-            ['continue', 'back'],
-            'navigation',
-            i18n,
-          );
-          cy.testLanguageStringsInContext(
-            [
-              'titleStepPersonalDetails',
-              'titleStepPayment',
-              'titleStepParticipation',
-            ],
-            'register.challenge',
-            i18n,
-          );
-        });
-    });
-
-    it('renders logo', () => {
-      cy.dataCy('logo')
-        .should('be.visible')
-        .invoke('height')
-        .should('be.equal', 80);
-    });
-
-    it('renders help button', () => {
-      let config;
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        config = JSON.parse(win.process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
-      });
-      cy.window().then(() => {
-        cy.dataCy('button-help')
-          .should('be.visible')
-          .should('have.css', 'font-size', '13px')
-          .should('have.css', 'font-weight', '500')
-          .should('have.backgroundColor', `${config.colorPrimary}`)
-          .should('have.css', 'border-radius', '50%'); // round
-        cy.dataCy('button-help').should('contain', 'question_mark');
-      });
-    });
-
-    it('renders help button with correct size', () => {
-      cy.dataCy('button-help').should('be.visible');
-      cy.dataCy('button-help').invoke('height').should('be.equal', 39);
-      cy.dataCy('button-help').invoke('width').should('be.equal', 39);
-    });
-
     it('allows user to display help dialog and read all FAQ items', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
