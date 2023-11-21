@@ -21,7 +21,7 @@ describe('Register Challenge page', () => {
           cy.wrap($element)
             .find('.q-card__section')
             .should('be.visible')
-            .should('not.be.empty');
+            .and('not.be.empty');
         });
     });
 
@@ -62,7 +62,7 @@ describe('Register Challenge page', () => {
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.subjectRequired'));
+            .and('contain', i18n.global.t('index.contact.subjectRequired'));
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -82,7 +82,7 @@ describe('Register Challenge page', () => {
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.messageRequired'));
+            .and('contain', i18n.global.t('index.contact.messageRequired'));
           cy.dataCy('contact-form-message')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -94,7 +94,7 @@ describe('Register Challenge page', () => {
           cy.dataCy('contact-form-email')
             .find('.q-field__messages')
             .should('be.visible')
-            .should('contain', i18n.global.t('index.contact.emailRequired'));
+            .and('contain', i18n.global.t('index.contact.emailRequired'));
           cy.dataCy('contact-form-email')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
@@ -209,7 +209,7 @@ describe('Register Challenge page', () => {
             cy.dataCy('step-1')
               .find('.q-stepper__title')
               .should('be.visible')
-              .should(
+              .and(
                 'contain',
                 i18n.global.t('register.challenge.titleStepPersonalDetails'),
               );
