@@ -8,6 +8,7 @@
  * individual challenge.
  *
  * @components
+ * - `LoginRegisterHeader`: Component to render page header.
  *
  * @layout
  * - `LoginRegisterLayout`: Displayed within the `LoginLayout` template.
@@ -22,14 +23,12 @@ import { defineComponent, ref } from 'vue';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
-import HelpButton from 'components/HelpButton.vue';
-import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import LoginRegisterHeader from 'src/components/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
-    HelpButton,
-    LanguageSwitcher,
+    LoginRegisterHeader,
   },
   setup() {
     const step = ref(1);
@@ -46,23 +45,8 @@ export default defineComponent({
   <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
-      <!-- TODO: Extract into a component -->
-      <div class="flex items-center justify-between q-py-lg">
-        <!-- RTWBB logo -->
-        <img
-          class="logo"
-          src="~assets/svg/logo.svg"
-          :alt="$t('index.logoAltText')"
-          :title="$t('header.siteTitle')"
-          data-cy="logo"
-        />
-        <div class="flex items-center gap-32">
-          <!-- Help icon link for displaying modal dialog -->
-          <help-button size="13px" color="primary" />
-          <!-- Language switcher -->
-          <language-switcher variant="light" />
-        </div>
-      </div>
+      <login-register-header data-cy="login-register-header" />
+
       <q-stepper
         v-model="step"
         vertical
