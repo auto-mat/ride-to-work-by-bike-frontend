@@ -54,7 +54,10 @@ export default defineComponent({
       <!-- Container -->
       <div class="q-mx-auto q-mt-xl" :style="{ 'max-width': containerWidth }">
         <!-- Page title -->
-        <h1 class="text-h5 text-bold q-my-none">
+        <h1
+          class="text-h5 text-bold text-white q-my-none"
+          data-cy="login-register-title"
+        >
           {{
             $t(`register.challenge.titleRegisterToChallenge.${challengeMonth}`)
           }}
