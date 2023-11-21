@@ -217,6 +217,67 @@ describe('Register Challenge page', () => {
       });
     });
 
+    it('changes icons when step changes', () => {
+      // active icon 1
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-1-fill.svg');
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-2-outline.svg');
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-3-outline.svg');
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+      // change step
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      // active icon 2
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-2-fill.svg');
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-3-outline.svg');
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+      // change step
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // active icon 3
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-3-fill.svg');
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+      // change step
+      cy.dataCy('step-3-continue').should('be.visible').click();
+      // active icon 4
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', 'src/assets/svg/numeric-4-fill.svg');
+    });
+
     it('allows user to pass through the registration process', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let i18n;
