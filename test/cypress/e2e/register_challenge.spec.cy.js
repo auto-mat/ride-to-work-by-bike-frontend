@@ -1,7 +1,11 @@
+import { testLanguageSwitcher } from '../support/commonTests';
+import { routesConf } from '../../../src/router/routes_conf';
+
 describe('Register Challenge page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit('/#/register-challenge');
+      // config is defined without hash in the URL
+      cy.visit('#' + routesConf['register-challenge']['path']);
       cy.viewport('macbook-16');
     });
 
