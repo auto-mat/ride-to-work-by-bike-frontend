@@ -1,55 +1,60 @@
 import type { RouteRecordRaw } from 'vue-router';
+import { routesConf } from './routes_conf';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: routesConf['home']['path'],
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        name: 'home',
+        name: routesConf['home']['children']['name'],
         component: () => import('pages/IndexPage.vue'),
       },
     ],
   },
   {
-    path: '/login',
+    path: routesConf['login']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: 'login',
+        name: routesConf['login']['children']['name'],
         component: () => import('pages/LoginPage.vue'),
       },
     ],
   },
   {
-    path: '/register',
+    path: routesConf['register']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: 'register',
+        name: routesConf['register']['children']['name'],
         component: () => import('pages/RegisterPage.vue'),
       },
     ],
   },
   {
-    path: '/register-coordinator',
+    path: routesConf['register-coordinator']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: 'register-coordinator',
+        name: routesConf['register-coordinator']['children']['name'],
         component: () => import('pages/RegisterPage.vue'),
       },
     ],
   },
   {
-    path: '/register-challenge',
+    path: routesConf['register-challenge']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/RegisterChallengePage.vue') },
+      {
+        path: '',
+        name: routesConf['register-challenge']['children']['name'],
+        component: () => import('pages/RegisterChallengePage.vue'),
+      },
     ],
   },
 
