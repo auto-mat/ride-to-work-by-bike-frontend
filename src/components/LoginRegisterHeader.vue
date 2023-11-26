@@ -50,9 +50,9 @@ export default defineComponent({
     />
     <div class="flex items-center gap-32">
       <!-- Help icon link for displaying modal dialog -->
-      <help-button size="13px" color="primary" />
+      <help-button size="13px" color="primary" data-cy="help-button" />
       <!-- Language switcher -->
-      <language-switcher variant="light" />
+      <language-switcher variant="light" data-cy="language-switcher" />
     </div>
   </div>
 </template>
