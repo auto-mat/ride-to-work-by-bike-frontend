@@ -1,7 +1,11 @@
+import { testLanguageSwitcher } from '../support/commonTests';
+import { routesConf } from '../../../src/router/routes_conf';
+
 describe('Login page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit('/#/register-coordinator');
+      // config is defined without hash in the URL
+      cy.visit('#' + routesConf['register-coordinator']['path']);
       cy.viewport('macbook-16');
     });
 
