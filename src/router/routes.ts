@@ -42,7 +42,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['register-coordinator']['children']['name'],
-        component: () => import('pages/RegisterPage.vue'),
+        component: () => import('pages/RegisterCoordinatorPage.vue'),
       },
     ],
   },
