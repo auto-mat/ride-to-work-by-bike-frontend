@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import SliderProgress from '../SliderProgress.vue';
+import SliderProgress from '../homepage/SliderProgress.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 

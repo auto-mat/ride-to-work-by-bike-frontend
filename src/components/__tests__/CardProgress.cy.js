@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardProgress from '../CardProgress.vue';
+import CardProgress from '../homepage/CardProgress.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsProgress } from '../../mocks/homepage';
 

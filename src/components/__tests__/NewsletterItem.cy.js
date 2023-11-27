@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import NewsletterItem from '../NewsletterItem.vue';
+import NewsletterItem from '../homepage/NewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

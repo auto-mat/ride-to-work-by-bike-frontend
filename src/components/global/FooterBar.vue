@@ -21,11 +21,11 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { i18n } from '../boot/i18n';
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
+import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // components
-import LanguageSwitcher from './LanguageSwitcher.vue';
+import LanguageSwitcher from '../LanguageSwitcher.vue';
 
 // Deployed app version
 const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(

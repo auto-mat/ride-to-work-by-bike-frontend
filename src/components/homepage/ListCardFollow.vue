@@ -29,7 +29,7 @@ import { defineComponent } from 'vue';
 import CardFollow from './CardFollow.vue';
 
 // types
-import { CardFollow as CardFollowType } from './types';
+import { CardFollow as CardFollowType } from '../types';
 
 export default defineComponent({
   name: 'ListCardFollow',

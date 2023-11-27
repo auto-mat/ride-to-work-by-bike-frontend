@@ -120,23 +120,23 @@
 import { defineComponent } from 'vue';
 
 // import components
-import BadgeAchievement from 'components/BadgeAchievement.vue';
-import BannerApp from 'components/BannerApp.vue';
-import BannerImage from 'components/BannerImage.vue';
-import BannerRoutes from 'components/BannerRoutes.vue';
-import CardChallenge from 'components/CardChallenge.vue';
-import CardEvent from 'components/CardEvent.vue';
-import CardStats from 'components/CardStats.vue';
-import CountdownChallenge from 'components/CountdownChallenge.vue';
-import CountdownEvent from 'components/CountdownEvent.vue';
-import HeadingBackground from 'components/HeadingBackground.vue';
-import ListCardFollow from 'components/ListCardFollow.vue';
-import ListCardOffer from 'components/ListCardOffer.vue';
-import ListCardPost from 'components/ListCardPost.vue';
-import ListCardProgress from 'components/ListCardProgress.vue';
-import NewsletterFeature from 'components/NewsletterFeature.vue';
-import SectionColumns from 'components/SectionColumns.vue';
-import SliderProgress from 'components/SliderProgress.vue';
+import BadgeAchievement from 'components/homepage/BadgeAchievement.vue';
+import BannerApp from 'components/homepage/BannerApp.vue';
+import BannerImage from 'components/homepage/BannerImage.vue';
+import BannerRoutes from 'components/homepage/BannerRoutes.vue';
+import CardChallenge from 'components/homepage/CardChallenge.vue';
+import CardEvent from 'components/homepage/CardEvent.vue';
+import CardStats from 'components/homepage/CardStats.vue';
+import CountdownChallenge from 'components/homepage/CountdownChallenge.vue';
+import CountdownEvent from 'components/homepage/CountdownEvent.vue';
+import HeadingBackground from 'components/homepage/HeadingBackground.vue';
+import ListCardFollow from 'components/homepage/ListCardFollow.vue';
+import ListCardOffer from 'components/homepage/ListCardOffer.vue';
+import ListCardPost from 'components/homepage/ListCardPost.vue';
+import ListCardProgress from 'components/homepage/ListCardProgress.vue';
+import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
+import SectionColumns from 'components/homepage/SectionColumns.vue';
+import SliderProgress from 'components/homepage/SliderProgress.vue';
 
 // mocks
 import * as homepage from '../mocks/homepage';

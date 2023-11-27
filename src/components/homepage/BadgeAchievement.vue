@@ -29,7 +29,7 @@
 import { defineComponent, computed } from 'vue';
 
 // types
-import { ItemBadge } from './types';
+import { ItemBadge } from '../types';
 
 export default defineComponent({
   name: 'BadgeAchievement',

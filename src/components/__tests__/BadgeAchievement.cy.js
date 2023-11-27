@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import BadgeAchievement from '../BadgeAchievement.vue';
+import BadgeAchievement from '../homepage/BadgeAchievement.vue';
 import { i18n } from '../../boot/i18n';
 import { badgeList } from '../../mocks/homepage';
 

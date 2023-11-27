@@ -39,7 +39,7 @@ import { Screen } from 'quasar';
 import CardProgressSlider from './CardProgressSlider.vue';
 
 // types
-import { CardProgress, Link, ItemStatistics } from './types';
+import { CardProgress, Link, ItemStatistics } from '../types';
 
 export default defineComponent({
   name: 'SliderProgress',

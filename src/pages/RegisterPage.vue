@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue';
 
 // components
-import FormRegister from 'src/components/FormRegister.vue';
+import FormRegister from 'src/components/register/FormRegister.vue';
 import LoginRegisterHeader from 'src/components/LoginRegisterHeader.vue';
 
 export default defineComponent({

@@ -28,7 +28,7 @@ import { defineComponent } from 'vue';
 import { date } from 'quasar';
 
 // types
-import { CardPost as CardPostType, ConfigGlobal } from './types';
+import { CardPost as CardPostType, ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

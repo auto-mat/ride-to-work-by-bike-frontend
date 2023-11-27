@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import CountdownChallenge from '../CountdownChallenge.vue';
+import CountdownChallenge from '../homepage/CountdownChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import ListCardOffer from '../ListCardOffer.vue';
+import ListCardOffer from '../homepage/ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
 
 // mocks

@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import FormRegister from '../FormRegister.vue';
+import FormRegister from '../register/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import route from '../../../src/router';

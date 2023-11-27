@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import FooterBar from '../FooterBar.vue';
+import FooterBar from '../global/FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

@@ -25,14 +25,14 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { useCircleSize } from '../composables/useCircleSize';
+import { useCircleSize } from '../../composables/useCircleSize';
 
 // types
 import {
   CardProgress as CardProgressType,
   ConfigGlobal,
   ItemPrize,
-} from './types';
+} from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

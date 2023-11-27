@@ -40,7 +40,7 @@ import {
   CardProgress as CardProgressType,
   ItemStatistics,
   Link,
-} from './types';
+} from '../types';
 
 // components
 import CardProgress from './CardProgress.vue';

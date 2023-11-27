@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardPost from '../CardPost.vue';
+import CardPost from '../homepage/CardPost.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

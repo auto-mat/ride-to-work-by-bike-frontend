@@ -26,7 +26,7 @@ import { defineComponent } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
 // composables
-import { useCountdown } from '../composables/useCountdown';
+import { useCountdown } from '../../composables/useCountdown';
 
 const { formatDate } = date;
 

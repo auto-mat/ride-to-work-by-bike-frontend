@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import CardChallenge from '../CardChallenge.vue';
+import CardChallenge from '../homepage/CardChallenge.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

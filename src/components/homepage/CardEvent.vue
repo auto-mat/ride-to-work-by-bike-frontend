@@ -33,10 +33,10 @@ import { defineComponent, ref } from 'vue';
 import { date, Screen } from 'quasar';
 
 // components
-import DialogCard from './DialogCard.vue';
+import DialogCard from '../global/DialogCard.vue';
 
 // types
-import { CardEvent as CardEventType, ConfigGlobal } from './types';
+import { CardEvent as CardEventType, ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

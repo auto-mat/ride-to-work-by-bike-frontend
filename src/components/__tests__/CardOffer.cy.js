@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardOffer from '../CardOffer.vue';
+import CardOffer from '../homepage/CardOffer.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsOffer } from '../../mocks/homepage';
 

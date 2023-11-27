@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import BannerImage from '../BannerImage.vue';
+import BannerImage from '../homepage/BannerImage.vue';
 import { bannerImage } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;

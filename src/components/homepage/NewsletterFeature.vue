@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue';
 
 // mocks
-import { newsletterItems } from '../mocks/homepage';
+import { newsletterItems } from '../../mocks/homepage';
 
 // components
 import NewsletterItem from './NewsletterItem.vue';

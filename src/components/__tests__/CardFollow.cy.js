@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardFollow from '../CardFollow.vue';
+import CardFollow from '../homepage/CardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

@@ -33,10 +33,10 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-import DialogCard from './DialogCard.vue';
+import DialogCard from '../global/DialogCard.vue';
 
 // types
-import { CardOffer as CardOfferType, ConfigGlobal } from './types';
+import { CardOffer as CardOfferType, ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import ListCardPost from '../ListCardPost.vue';
+import ListCardPost from '../homepage/ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 

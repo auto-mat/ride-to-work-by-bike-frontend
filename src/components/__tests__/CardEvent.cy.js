@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardEvent from '../CardEvent.vue';
+import CardEvent from '../homepage/CardEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

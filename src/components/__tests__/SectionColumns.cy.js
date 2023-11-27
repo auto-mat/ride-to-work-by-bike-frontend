@@ -1,4 +1,4 @@
-import SectionColumnsTest from '../SectionColumnsTest.vue';
+import SectionColumnsTest from '../homepage/SectionColumnsTest.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<SectionColumnsTest>', () => {

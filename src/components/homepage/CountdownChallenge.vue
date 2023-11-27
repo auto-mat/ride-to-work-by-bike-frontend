@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue';
 
 // composables
-import { useCountdown } from '../composables/useCountdown';
+import { useCountdown } from '../../composables/useCountdown';
 
 export default defineComponent({
   name: 'CountdownChallenge',

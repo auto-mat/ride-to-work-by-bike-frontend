@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import CardStats from '../CardStats.vue';
+import CardStats from '../homepage/CardStats.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsStats } from '../../mocks/homepage';
 

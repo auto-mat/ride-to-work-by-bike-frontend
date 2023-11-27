@@ -36,7 +36,7 @@ import { Screen } from 'quasar';
 import CardPost from './CardPost.vue';
 
 // types
-import { CardPost as CardPostType, Link } from './types';
+import { CardPost as CardPostType, Link } from '../types';
 
 export default defineComponent({
   name: 'ListCardPost',

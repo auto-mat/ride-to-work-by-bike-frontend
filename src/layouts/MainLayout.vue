@@ -7,7 +7,7 @@ import { i18n } from '../boot/i18n';
 import DrawerHeader from 'components/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
-import FooterBar from 'components/FooterBar.vue';
+import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/MobileBottomPanel.vue';
 
 // set global i18n object (for test purposes)

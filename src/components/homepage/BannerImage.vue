@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 
 // types
-import { BannerImage as BannerImageType, ConfigGlobal } from './types';
+import { BannerImage as BannerImageType, ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

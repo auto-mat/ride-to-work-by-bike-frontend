@@ -1,4 +1,4 @@
-import CountdownEvent from '../CountdownEvent.vue';
+import CountdownEvent from '../homepage/CountdownEvent.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('Event Countdown', () => {
