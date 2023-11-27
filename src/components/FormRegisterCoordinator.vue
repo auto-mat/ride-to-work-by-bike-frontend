@@ -27,7 +27,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
-  script() {
+  setup() {
     const onSubmit = (): void => {
       // noop
     };
@@ -46,7 +46,19 @@ export default defineComponent({
 
 <template>
   <div>
-    <q-form autofocus @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+    <q-form
+      autofocus
+      @submit="onSubmit"
+      @reset="onReset"
+      class="q-gutter-md text-grey-10"
+    >
+      <h2
+        class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
+        data-cy="register-coordinator-form-title"
+      >
+        {{ $t('register.coordinator.form.title') }}
+      </h2>
+      <div class="q-mt-lg"></div>
     </q-form>
   </div>
 </template>
