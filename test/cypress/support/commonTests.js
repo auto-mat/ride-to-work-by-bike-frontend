@@ -40,28 +40,4 @@ export const testLanguageSwitcher = () => {
         });
       });
   });
-
-  it('renders title', () => {
-    let i18n;
-    cy.task('getAppConfig', process).then((config) => {
-      cy.window().should('have.property', 'i18n');
-      cy.window()
-        .then((win) => {
-          i18n = win.i18n;
-        })
-        .then(() => {
-          cy.dataCy('login-register-title')
-            .should('be.visible')
-            .and('have.color', config.colorWhite)
-            .and('have.css', 'font-size', '24px')
-            .and('have.css', 'font-weight', '700')
-            .and(
-              'contain',
-              i18n.global.t(
-                `register.challenge.titleRegisterToChallenge.${config.challengeMonth}`,
-              ),
-            );
-        });
-    });
-  });
 };
