@@ -25,7 +25,7 @@
 import { defineComponent, computed } from 'vue';
 
 // mocks
-import { socialLinks, usefulLinks } from '../mocks/layout';
+import { socialLinks, usefulLinks } from '../../mocks/layout';
 
 export default defineComponent({
   name: 'MenuLinks',

@@ -25,7 +25,7 @@
 import { defineComponent, computed } from 'vue';
 
 // mocks
-import { faqParticipant, faqCoordinator } from '../mocks/layout';
+import { faqParticipant, faqCoordinator } from '../../mocks/layout';
 
 export default defineComponent({
   name: 'ListFaq',

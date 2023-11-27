@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import ContactForm from '../ContactForm.vue';
+import ContactForm from '../global/ContactForm.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

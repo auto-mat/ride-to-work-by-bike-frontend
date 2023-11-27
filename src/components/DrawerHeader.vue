@@ -29,7 +29,7 @@
 import { defineComponent, computed } from 'vue';
 
 // import components
-import HelpButton from './HelpButton.vue';
+import HelpButton from './global/HelpButton.vue';
 import UserSelect from './UserSelect.vue';
 
 export default defineComponent({

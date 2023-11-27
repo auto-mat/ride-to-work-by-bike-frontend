@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import LanguageSwitcher from '../LanguageSwitcher.vue';
+import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

@@ -25,7 +25,7 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { i18n } from '../boot/i18n';
+import { i18n } from '../../boot/i18n';
 
 export default defineComponent({
   name: 'LanguageSwitcher',

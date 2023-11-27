@@ -1,4 +1,4 @@
-import ListFaq from '../ListFaq.vue';
+import ListFaq from '../global/ListFaq.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ListFaq>', () => {

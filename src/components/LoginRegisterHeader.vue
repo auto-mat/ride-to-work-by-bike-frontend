@@ -23,8 +23,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import HelpButton from 'components/HelpButton.vue';
-import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import HelpButton from 'components/global/HelpButton.vue';
+import LanguageSwitcher from 'components/global/LanguageSwitcher.vue';
 
 export default defineComponent({
   name: 'LoginRegisterHeader',

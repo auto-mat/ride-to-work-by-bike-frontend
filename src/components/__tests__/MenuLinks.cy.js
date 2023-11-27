@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import MenuLinks from '../MenuLinks.vue';
+import MenuLinks from '../global/MenuLinks.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

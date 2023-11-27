@@ -25,7 +25,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // components
-import LanguageSwitcher from '../LanguageSwitcher.vue';
+import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 
 // Deployed app version
 const rideToWorkByBikeDeployedAppVersion: object = JSON.parse(
