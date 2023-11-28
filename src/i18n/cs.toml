@@ -215,4 +215,6 @@ info = "<p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat za
 title = "Registrace"
 labelFirstName = "Jméno"
 labelLastName = "Příjmení"
-messageFieldRequired = "{fieldName} je povinné"
+labelJobTitle = "Vaše pracovní pozice"
+labelJobTitleShort = "Pracovní pozice"
+messageFieldRequired = "Pole {fieldName} je povinné"

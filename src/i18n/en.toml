@@ -215,4 +215,6 @@ info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting 
 title = "Registration"
 labelFirstName = "First Name"
 labelLastName = "Surname"
+labelJobTitle = "Your job title"
+labelJobTitleShort = "Job title"
 messageFieldRequired = "{fieldName} is required"
