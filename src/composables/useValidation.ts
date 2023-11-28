@@ -14,6 +14,18 @@ export const useValidation = () => {
     return regex.test(value);
   };
 
+  const isPhone = (value: string): boolean => {
+    /**
+     * Match international phone number entered with delimiters
+     * (spaces, dots, brackets, etc.)
+     *
+     * https://uibakery.io/regex-library/email
+     */
+    const regex =
+      /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+    return regex.test(value);
+  };
+
   const isIdentical = (confirm: string, password: string): boolean => {
     return confirm === password;
   };
@@ -30,6 +42,7 @@ export const useValidation = () => {
     isEmail,
     isFilled,
     isIdentical,
+    isPhone,
     isStrongPassword,
   };
 };

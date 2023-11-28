@@ -45,7 +45,7 @@ export default defineComponent({
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
-    const { isEmail, isFilled, isIdentical, isStrongPassword } =
+    const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
       useValidation();
 
     const onSubmit = (): void => {
@@ -63,6 +63,7 @@ export default defineComponent({
       isEmail,
       isFilled,
       isIdentical,
+      isPhone,
       isStrongPassword,
       onReset,
       onSubmit,
@@ -186,6 +187,64 @@ export default defineComponent({
               id="form-register-coordinator-job-title"
               name="job_title"
               data-cy="form-register-coordinator-job-title-input"
+            />
+          </div>
+          <!-- Input: email -->
+          <div class="col-12 col-sm-6">
+            <!-- Label -->
+            <label for="form-register-coordinator-email" class="text-caption">
+              {{ $t('register.coordinator.form.labelEmail') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              v-model="formRegisterCoordinator.email"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  isFilled(val) ||
+                  $t('register.coordinator.form.messageFieldRequired', {
+                    fieldName: $t('register.coordinator.form.labelEmail'),
+                  }),
+                (val) =>
+                  isEmail(val) ||
+                  $t('register.coordinator.form.messageEmailInvalid'),
+              ]"
+              bg-color="grey-1"
+              class="q-mt-sm"
+              id="form-register-coordinator-email"
+              name="email"
+              data-cy="form-register-coordinator-email-input"
+            />
+          </div>
+          <!-- Input: phone-->
+          <div class="col-12 col-sm-6">
+            <!-- Label -->
+            <label for="form-register-coordinator-phone" class="text-caption">
+              {{ $t('register.coordinator.form.labelPhone') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              v-model="formRegisterCoordinator.phone"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  isFilled(val) ||
+                  $t('register.coordinator.form.messageFieldRequired', {
+                    fieldName: $t('register.coordinator.form.labelPhone'),
+                  }),
+                (val) =>
+                  isPhone(val) ||
+                  $t('register.coordinator.form.messagePhoneInvalid'),
+              ]"
+              bg-color="grey-1"
+              class="q-mt-sm"
+              id="form-register-coordinator-phone"
+              name="phone"
+              data-cy="form-register-coordinator-phone-input"
             />
           </div>
         </div>
