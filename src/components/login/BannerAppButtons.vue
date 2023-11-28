@@ -19,7 +19,7 @@
 import { defineComponent } from 'vue';
 
 // types
-import { ConfigGlobal } from './types';
+import { ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

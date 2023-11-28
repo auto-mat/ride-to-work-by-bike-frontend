@@ -26,7 +26,7 @@ import { defineComponent, ref, reactive } from 'vue';
 
 // components
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
-import BannerAppButtons from '../BannerAppButtons.vue';
+import BannerAppButtons from './BannerAppButtons.vue';
 
 // composables
 import { useValidation } from '../../composables/useValidation';
