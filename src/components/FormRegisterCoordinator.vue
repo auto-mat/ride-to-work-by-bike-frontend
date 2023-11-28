@@ -23,11 +23,31 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
-import { defineComponent } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
+
+// composables
+import { useValidation } from '../composables/useValidation';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   setup() {
+    const formRegisterCoordinator = reactive({
+      firstName: '',
+      lastName: '',
+      company: [],
+      jobTitle: '',
+      email: '',
+      phone: '',
+      password: '',
+      passwordConfirm: '',
+    });
+
+    const isPassword = ref(true);
+    const isPasswordConfirm = ref(true);
+
+    const { isEmail, isFilled, isIdentical, isStrongPassword } =
+      useValidation();
+
     const onSubmit = (): void => {
       // noop
     };
@@ -37,6 +57,13 @@ export default defineComponent({
     };
 
     return {
+      formRegisterCoordinator,
+      isPassword,
+      isPasswordConfirm,
+      isEmail,
+      isFilled,
+      isIdentical,
+      isStrongPassword,
       onReset,
       onSubmit,
     };
@@ -46,19 +73,88 @@ export default defineComponent({
 
 <template>
   <div>
+    <!-- Form: register coordinator -->
     <q-form
       autofocus
       @submit="onSubmit"
       @reset="onReset"
       class="q-gutter-md text-grey-10"
     >
+      <!-- Heading -->
       <h2
         class="q-mt-0 q-mb-sm text-body1 text-weight-bold"
         data-cy="register-coordinator-form-title"
       >
         {{ $t('register.coordinator.form.title') }}
       </h2>
-      <div class="q-mt-lg"></div>
+      <div class="q-mt-lg">
+        <div class="row q-col-gutter-md">
+          <!-- Input: first name -->
+          <div
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-first-name"
+          >
+            <!-- Label -->
+            <label
+              for="form-register-coordinator-first-name"
+              class="text-caption text-bold"
+            >
+              {{ $t('register.coordinator.form.labelFirstName') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              v-model="formRegisterCoordinator.firstName"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  isFilled(val) ||
+                  $t('register.coordinator.form.messageFieldRequired', {
+                    fieldName: $t('register.coordinator.form.labelFirstName'),
+                  }),
+              ]"
+              bg-color="grey-1"
+              class="q-mt-sm"
+              id="form-register-coordinator-first-name"
+              name="first_name"
+              data-cy="form-register-coordinator-first-name-input"
+            />
+          </div>
+          <!-- Input: last name -->
+          <div
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-last-name"
+          >
+            <!-- Label -->
+            <label
+              for="form-register-coordinator-last-name"
+              class="text-caption text-bold"
+            >
+              {{ $t('register.coordinator.form.labelLastName') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              v-model="formRegisterCoordinator.lastName"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  isFilled(val) ||
+                  $t('register.coordinator.form.messageFieldRequired', {
+                    fieldName: $t('register.coordinator.form.labelLastName'),
+                  }),
+              ]"
+              bg-color="grey-1"
+              class="q-mt-sm"
+              id="form-register-coordinator-last-name"
+              name="last_name"
+              data-cy="form-register-coordinator-last-name-input"
+            />
+          </div>
+        </div>
+      </div>
     </q-form>
   </div>
 </template>

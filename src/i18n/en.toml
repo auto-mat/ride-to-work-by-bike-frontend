@@ -213,3 +213,6 @@ info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting 
 
 [register.coordinator.form]
 title = "Registration"
+labelFirstName = "First Name"
+labelLastName = "Surname"
+messageFieldRequired = "{fieldName} is required"

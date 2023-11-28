@@ -213,3 +213,6 @@ info = "<p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat za
 
 [register.coordinator.form]
 title = "Registrace"
+labelFirstName = "Jméno"
+labelLastName = "Příjmení"
+messageFieldRequired = "{fieldName} je povinné"
