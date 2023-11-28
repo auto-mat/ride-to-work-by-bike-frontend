@@ -1,4 +1,4 @@
-import UserSelect from '../UserSelect.vue';
+import UserSelect from '../global/UserSelect.vue';
 import { user } from '../../mocks/layout';
 import { i18n } from '../../boot/i18n';
 
