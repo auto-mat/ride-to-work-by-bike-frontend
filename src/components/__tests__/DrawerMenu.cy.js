@@ -1,4 +1,4 @@
-import DrawerMenu from '../DrawerMenu.vue';
+import DrawerMenu from '../global/DrawerMenu.vue';
 import { i18n } from '../../boot/i18n';
 
 const menuItems = [
