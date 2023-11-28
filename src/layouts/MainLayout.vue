@@ -8,7 +8,7 @@ import DrawerHeader from 'components/global/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
-import MobileBottomPanel from 'components/MobileBottomPanel.vue';
+import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 
 // set global i18n object (for test purposes)
 if (window.Cypress) {
