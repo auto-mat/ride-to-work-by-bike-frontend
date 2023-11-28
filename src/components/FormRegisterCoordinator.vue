@@ -115,7 +115,6 @@ export default defineComponent({
                     fieldName: $t('register.coordinator.form.labelFirstName'),
                   }),
               ]"
-              bg-color="grey-1"
               class="q-mt-sm"
               id="form-register-coordinator-first-name"
               name="first_name"
@@ -147,7 +146,6 @@ export default defineComponent({
                     fieldName: $t('register.coordinator.form.labelLastName'),
                   }),
               ]"
-              bg-color="grey-1"
               class="q-mt-sm"
               id="form-register-coordinator-last-name"
               name="last_name"
@@ -182,7 +180,6 @@ export default defineComponent({
                     ),
                   }),
               ]"
-              bg-color="grey-1"
               class="q-mt-sm"
               id="form-register-coordinator-job-title"
               name="job_title"
@@ -214,7 +211,6 @@ export default defineComponent({
                   isEmail(val) ||
                   $t('register.coordinator.form.messageEmailInvalid'),
               ]"
-              bg-color="grey-1"
               class="q-mt-sm"
               id="form-register-coordinator-email"
               name="email"
@@ -246,7 +242,6 @@ export default defineComponent({
                   isPhone(val) ||
                   $t('register.coordinator.form.messagePhoneInvalid'),
               ]"
-              bg-color="grey-1"
               class="q-mt-sm"
               id="form-register-coordinator-phone"
               name="phone"
@@ -271,7 +266,6 @@ export default defineComponent({
               dense
               outlined
               hide-bottom-space
-              bg-color="grey-1"
               v-model="formRegisterCoordinator.password"
               id="form-register-coordinator-password"
               :hint="$t('register.coordinator.form.hintPassword')"
@@ -320,7 +314,6 @@ export default defineComponent({
               dense
               outlined
               hide-bottom-space
-              bg-color="grey-1"
               v-model="formRegisterCoordinator.passwordConfirm"
               id="form-register-coordinator-password"
               :type="isPasswordConfirm ? 'password' : 'text'"
@@ -364,9 +357,5 @@ export default defineComponent({
 <style scoped lang="scss">
 :deep(.q-field__control) {
   border-radius: 8px;
-
-  &:before {
-    border-color: transparent;
-  }
 }
 </style>
