@@ -361,4 +361,12 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.q-field__control) {
+  border-radius: 8px;
+
+  &:before {
+    border-color: transparent;
+  }
+}
+</style>
