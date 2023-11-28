@@ -393,9 +393,9 @@ export default defineComponent({
           <q-btn
             rounded
             unelevated
-            :label="$t('register.coordinator.form.buttonSubmit')"
             type="submit"
             color="primary"
+            :label="$t('register.coordinator.form.buttonSubmit')"
           />
         </div>
       </div>
@@ -406,5 +406,12 @@ export default defineComponent({
 <style scoped lang="scss">
 :deep(.q-field__control) {
   border-radius: 8px;
+}
+:deep(.q-checkbox__bg) {
+  border: 1px solid $grey-6;
+  border-radius: 4px;
+}
+:deep(.q-checkbox__svg) {
+  padding: 3px;
 }
 </style>
