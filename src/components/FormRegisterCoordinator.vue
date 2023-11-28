@@ -358,11 +358,33 @@ export default defineComponent({
             <q-checkbox
               v-model="formRegisterCoordinator.responsibility"
               color="primary"
-              :label="$t('register.coordinator.form.labelResponsibility')"
               :true-value="true"
               :false-value="false"
-              style="margin: 0 -10px"
-            />
+              style="margin: -10px"
+            >
+              {{ $t('register.coordinator.form.labelResponsibility') }}
+            </q-checkbox>
+          </div>
+          <!-- Input: confirm consent -->
+          <div
+            class="col-12"
+            data-cy="form-register-coordinator-responsibility"
+          >
+            <q-checkbox
+              id="form-register-coordinator-terms"
+              v-model="formRegisterCoordinator.terms"
+              color="primary"
+              :true-value="true"
+              :false-value="false"
+              style="margin: -10px"
+            >
+              <!-- Default slot: label -->
+              {{ $t('register.coordinator.form.labelTerms') }}
+              <!-- Link: terms -->
+              <a href="#" target="_blank" class="text-primary">
+                {{ $t('register.coordinator.form.linkTerms') }} </a
+              >.
+            </q-checkbox>
           </div>
         </div>
       </div>
