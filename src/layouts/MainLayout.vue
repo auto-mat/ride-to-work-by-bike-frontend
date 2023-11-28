@@ -4,7 +4,7 @@ import { defineComponent } from 'vue';
 import { i18n } from '../boot/i18n';
 
 // import components
-import DrawerHeader from 'components/DrawerHeader.vue';
+import DrawerHeader from 'components/global/DrawerHeader.vue';
 import UserSelect from 'components/UserSelect.vue';
 import DrawerMenu from 'components/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';

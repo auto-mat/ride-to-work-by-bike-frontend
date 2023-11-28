@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import DrawerHeader from '../DrawerHeader.vue';
+import DrawerHeader from '../global/DrawerHeader.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
