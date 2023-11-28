@@ -91,7 +91,7 @@ export default defineComponent({
         {{ $t('register.coordinator.form.title') }}
       </h2>
       <div class="q-mt-lg">
-        <div class="row q-col-gutter-md">
+        <div class="row q-col-gutter-md q-mb-sm">
           <!-- Input: first name -->
           <div
             class="col-12 col-sm-6"
@@ -381,11 +381,22 @@ export default defineComponent({
               <!-- Default slot: label -->
               {{ $t('register.coordinator.form.labelTerms') }}
               <!-- Link: terms -->
-              <a href="#" target="_blank" class="text-primary">
-                {{ $t('register.coordinator.form.linkTerms') }} </a
+              <a href="#" target="_blank" class="text-primary">{{
+                $t('register.coordinator.form.linkTerms')
+              }}</a
               >.
             </q-checkbox>
           </div>
+        </div>
+        <!-- Button: submit -->
+        <div class="flex justify-end q-mt-lg">
+          <q-btn
+            rounded
+            unelevated
+            :label="$t('register.coordinator.form.buttonSubmit')"
+            type="submit"
+            color="primary"
+          />
         </div>
       </div>
     </q-form>
