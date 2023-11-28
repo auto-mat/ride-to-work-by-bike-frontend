@@ -40,6 +40,8 @@ export default defineComponent({
       phone: '',
       password: '',
       passwordConfirm: '',
+      responsibility: false,
+      terms: false,
     });
 
     const isPassword = ref(true);
@@ -347,6 +349,20 @@ export default defineComponent({
                 />
               </template>
             </q-input>
+          </div>
+          <!-- Input: confirm responsibility -->
+          <div
+            class="col-12"
+            data-cy="form-register-coordinator-responsibility"
+          >
+            <q-checkbox
+              v-model="formRegisterCoordinator.responsibility"
+              color="primary"
+              :label="$t('register.coordinator.form.labelResponsibility')"
+              :true-value="true"
+              :false-value="false"
+              style="margin: 0 -10px"
+            />
           </div>
         </div>
       </div>
