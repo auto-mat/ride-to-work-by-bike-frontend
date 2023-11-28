@@ -192,7 +192,10 @@ export default defineComponent({
           <!-- Input: email -->
           <div class="col-12 col-sm-6">
             <!-- Label -->
-            <label for="form-register-coordinator-email" class="text-caption">
+            <label
+              for="form-register-coordinator-email"
+              class="text-caption text-bold"
+            >
               {{ $t('register.coordinator.form.labelEmail') }}
             </label>
             <!-- Input -->
@@ -221,7 +224,10 @@ export default defineComponent({
           <!-- Input: phone-->
           <div class="col-12 col-sm-6">
             <!-- Label -->
-            <label for="form-register-coordinator-phone" class="text-caption">
+            <label
+              for="form-register-coordinator-phone"
+              class="text-caption text-bold"
+            >
               {{ $t('register.coordinator.form.labelPhone') }}
             </label>
             <!-- Input -->
