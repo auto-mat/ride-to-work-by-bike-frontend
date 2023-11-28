@@ -20,7 +20,7 @@
 import { defineComponent } from 'vue';
 
 // components
-import LoginRegisterHeader from 'components/LoginRegisterHeader.vue';
+import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';

@@ -23,7 +23,7 @@ import { defineComponent, ref } from 'vue';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
-import LoginRegisterHeader from 'src/components/LoginRegisterHeader.vue';
+import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'RegisterChallengePage',

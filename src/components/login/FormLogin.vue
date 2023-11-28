@@ -25,14 +25,14 @@
 import { defineComponent, ref, reactive } from 'vue';
 
 // components
-import LoginRegisterButtons from './LoginRegisterButtons.vue';
-import BannerAppButtons from './BannerAppButtons.vue';
+import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
+import BannerAppButtons from '../BannerAppButtons.vue';
 
 // composables
-import { useValidation } from '../composables/useValidation';
+import { useValidation } from '../../composables/useValidation';
 
 // types
-import { ConfigGlobal } from './types';
+import { ConfigGlobal } from '../types';
 
 // config
 const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(

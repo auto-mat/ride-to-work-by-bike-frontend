@@ -32,7 +32,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useValidation } from '../../composables/useValidation';
 
 // components
-import LoginRegisterButtons from '../LoginRegisterButtons.vue';
+import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 
 export default defineComponent({
   name: 'FormRegister',

@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import FormLogin from '../FormLogin.vue';
+import FormLogin from '../login/FormLogin.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

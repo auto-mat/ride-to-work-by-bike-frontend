@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 const { getPaletteColor } = colors;
 
-import LoginRegisterButtons from 'components/LoginRegisterButtons.vue';
+import LoginRegisterButtons from 'components/global/LoginRegisterButtons.vue';
 import { i18n } from '../../boot/i18n';
 
 const primary = getPaletteColor('primary');

@@ -24,7 +24,7 @@ import { defineComponent } from 'vue';
 
 // components
 import FormRegister from 'components/register/FormRegister.vue';
-import LoginRegisterHeader from 'components/LoginRegisterHeader.vue';
+import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'RegisterPage',
