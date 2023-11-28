@@ -29,8 +29,8 @@
 import { defineComponent, computed } from 'vue';
 
 // import components
-import HelpButton from './global/HelpButton.vue';
-import UserSelect from './global/UserSelect.vue';
+import HelpButton from './HelpButton.vue';
+import UserSelect from './UserSelect.vue';
 
 export default defineComponent({
   name: 'DrawerHeader',
