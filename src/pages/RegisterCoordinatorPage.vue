@@ -21,6 +21,7 @@ import { defineComponent } from 'vue';
 
 // components
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import FormRegisterCoordinator from 'components/FormRegisterCoordinator.vue';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -29,6 +30,7 @@ export default defineComponent({
   name: 'RegisterCoordinatorPage',
   components: {
     LoginRegisterHeader,
+    FormRegisterCoordinator,
   },
   setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
@@ -72,6 +74,13 @@ export default defineComponent({
           v-html="$t('register.coordinator.info')"
           data-cy="info-content"
         ></div>
+      </div>
+
+      <div
+        class="col-12 q-pa-lg q-mt-lg bg-white"
+        :style="{ 'border-radius': borderRadius }"
+      >
+        <form-register-coordinator data-cy="register-coordinator-form" />
       </div>
     </div>
   </q-page>
