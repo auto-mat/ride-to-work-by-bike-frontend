@@ -281,8 +281,256 @@ describe('<FormRegisterCoordinator>', () => {
         .should('be.equal', 18);
     });
 
-    testPasswordInputReveal('form-register-coordinator-password');
-    testPasswordInputReveal('form-register-coordinator-password-confirm');
+    it('should allow user to reveal and hide password', () => {
+      testPasswordInputReveal({
+        identifierPassword: 'form-register-coordinator-password',
+      });
+    });
+
+    it('should allow user to reveal and hide password confirm', () => {
+      testPasswordInputReveal({
+        identifierPassword: 'form-register-coordinator-password-confirm',
+      });
+    });
+
+    it('validates email correctly', () => {
+      // fill in other parts of the form to be able to test email
+      cy.dataCy('form-register-coordinator-first-name-input').type('John');
+      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      // empty email
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageFieldRequired', {
+            fieldName: i18n.global.t('register.coordinator.form.labelEmail'),
+          }),
+        );
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type('qw123@qw');
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'abc.example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'a@b@c@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'a"b(c)d,e:f;g<h>i[jk]l@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'just"not"right@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'this is"notallowed@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'this still"not\\allowed@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        '1234567890123456789012345678901234567890123456789012345678901234+x@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'i.like.underscores@but_they_are_not_allowed_in_this_part',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__messages')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageEmailInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'simple@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'very.common@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type('x@example.com');
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'long.email-address-with-hyphens@and.subdomains.example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'user.name+tag+sorting@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'name/surname@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'mailhost!username@example.org',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'user%example.com@example.org',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+      // valid email
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'user-@example.org',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-email"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-email-input').clear();
+    });
   });
 
   context('mobile', () => {

@@ -399,6 +399,7 @@ export default defineComponent({
             type="submit"
             color="primary"
             :label="$t('register.coordinator.form.buttonSubmit')"
+            data-cy="form-register-coordinator-submit"
           />
         </div>
       </div>
