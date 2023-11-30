@@ -8,7 +8,27 @@ const grey10 = getPaletteColor('grey-10');
 describe('<FormRegisterCoordinator>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['title'],
+      [
+        'title',
+        'labelFirstName',
+        'labelLastName',
+        'labelJobTitle',
+        'labelJobTitleShort',
+        'labelEmail',
+        'labelPhone',
+        'labelPassword',
+        'labelPasswordConfirm',
+        'labelResponsibility',
+        'labelTerms',
+        'linkTerms',
+        'buttonSubmit',
+        'messageFieldRequired',
+        'messageEmailInvalid',
+        'messagePhoneInvalid',
+        'messagePasswordStrong',
+        'messagePasswordConfirmNotMatch',
+        'hintPassword',
+      ],
       'register.coordinator.form',
       i18n,
     );
