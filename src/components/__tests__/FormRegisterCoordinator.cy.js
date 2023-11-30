@@ -3,6 +3,7 @@ import { colors } from 'quasar';
 import FormRegisterCoordinator from 'components/FormRegisterCoordinator.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -279,6 +280,9 @@ describe('<FormRegisterCoordinator>', () => {
         .invoke('width')
         .should('be.equal', 18);
     });
+
+    testPasswordInputReveal('form-register-coordinator-password');
+    testPasswordInputReveal('form-register-coordinator-password-confirm');
   });
 
   context('mobile', () => {

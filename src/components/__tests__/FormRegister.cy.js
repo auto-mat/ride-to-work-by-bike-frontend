@@ -4,6 +4,7 @@ import FormRegister from '../register/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import route from '../../../src/router';
+import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 
@@ -110,43 +111,8 @@ describe('<FormRegister>', () => {
         .should('be.equal', 18);
     });
 
-    it('should allow user to reveal and hide password', () => {
-      // password hiden
-      cy.dataCy('form-register-password')
-        .find('input')
-        .should('have.attr', 'type', 'password');
-      // reveal
-      cy.dataCy('form-register-password-icon').click();
-      // password revealed
-      cy.dataCy('form-register-password')
-        .find('input')
-        .should('have.attr', 'type', 'text');
-      // hide
-      cy.dataCy('form-register-password-icon').click();
-      // password hiden
-      cy.dataCy('form-register-password')
-        .find('input')
-        .should('have.attr', 'type', 'password');
-    });
-
-    it('should allow user to reveal and hide password confirmation', () => {
-      // password confirm hiden
-      cy.dataCy('form-register-password-confirm')
-        .find('input')
-        .should('have.attr', 'type', 'password');
-      // reveal
-      cy.dataCy('form-register-password-confirm-icon').click();
-      // password confirm revealed
-      cy.dataCy('form-register-password-confirm')
-        .find('input')
-        .should('have.attr', 'type', 'text');
-      // hide
-      cy.dataCy('form-register-password-confirm-icon').click();
-      // password confirm hiden
-      cy.dataCy('form-register-password-confirm')
-        .find('input')
-        .should('have.attr', 'type', 'password');
-    });
+    testPasswordInputReveal('form-register-password');
+    testPasswordInputReveal('form-register-password-confirm');
 
     it('validates registration form inputs', () => {
       cy.dataCy('form-register-submit').should('be.visible').click();

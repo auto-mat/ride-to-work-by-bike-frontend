@@ -3,7 +3,7 @@
  *
  * Used in `register_challenge.spec.cy.js` and `login.spec.cy.js`
  */
-export const testLanguageSwitcher = () => {
+export const testLanguageSwitcher = (): void => {
   it('allows user to switch language', () => {
     let i18n;
     cy.window().should('have.property', 'i18n');
@@ -39,5 +39,20 @@ export const testLanguageSwitcher = () => {
           }
         });
       });
+  });
+};
+
+export const testPasswordInputReveal = (identifier: string): void => {
+  it('should allow user to reveal and hide password', () => {
+    // password hiden
+    cy.dataCy(identifier).find('input').should('have.attr', 'type', 'password');
+    // reveal
+    cy.dataCy(`${identifier}-icon`).click();
+    // password revealed
+    cy.dataCy(identifier).find('input').should('have.attr', 'type', 'text');
+    // hide
+    cy.dataCy(`${identifier}-icon`).click();
+    // password hiden
+    cy.dataCy(identifier).find('input').should('have.attr', 'type', 'password');
   });
 };
