@@ -664,6 +664,105 @@ describe('<FormRegisterCoordinator>', () => {
       ).should('not.exist');
       cy.dataCy('form-register-coordinator-phone-input').clear();
     });
+
+    it('validates password correctly', () => {
+      // fill in other parts of the form to be able to test password
+      cy.dataCy('form-register-coordinator-first-name-input').type('John');
+      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'simple@example.com',
+      );
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 123 456 789',
+      );
+      // test password
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-password')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageFieldRequired', {
+            fieldName: i18n.global.t('register.coordinator.form.labelPassword'),
+          }),
+        );
+      cy.dataCy('form-register-coordinator-password-input').clear();
+      cy.dataCy('form-register-coordinator-password-input').type('12345');
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-password')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePasswordStrong'),
+        );
+      cy.dataCy('form-register-coordinator-password-input').clear();
+      cy.dataCy('form-register-coordinator-password-input').type('123456789');
+      cy.dataCy('form-register-coordinator-password')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePasswordStrong'),
+        );
+      cy.dataCy('form-register-coordinator-password-input').clear();
+      cy.dataCy('form-register-coordinator-password-input').type('12345a');
+      cy.get(
+        '*[data-cy="form-register-coordinator-password"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+    });
+
+    it('validates password confirm correctly', () => {
+      // fill in other parts of the form to be able to test password
+      cy.dataCy('form-register-coordinator-first-name-input').type('John');
+      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'simple@example.com',
+      );
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 123 456 789',
+      );
+      // fill in password input to be able to test password confirm
+      cy.dataCy('form-register-coordinator-password-input').type('12345a');
+      // test password confirm empty
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-password-confirm')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageFieldRequired', {
+            fieldName: i18n.global.t(
+              'register.coordinator.form.labelPasswordConfirm',
+            ),
+          }),
+        );
+      cy.dataCy('form-register-coordinator-password-confirm-input').clear();
+      // test password confirm not matching
+      cy.dataCy('form-register-coordinator-password-confirm-input').type(
+        '12345b',
+      );
+      cy.dataCy('form-register-coordinator-password-confirm')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t(
+            'register.coordinator.form.messagePasswordConfirmNotMatch',
+          ),
+        );
+      cy.dataCy('form-register-coordinator-password-confirm-input').clear();
+      // test password confirm matching
+      cy.dataCy('form-register-coordinator-password-confirm-input').type(
+        '12345a',
+      );
+      cy.get(
+        '*[data-cy="form-register-coordinator-password-confirm"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+    });
   });
 
   context('mobile', () => {
