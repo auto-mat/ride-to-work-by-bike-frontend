@@ -1,9 +1,13 @@
 import { colors } from 'quasar';
+
 import FormRegisterCoordinator from 'components/FormRegisterCoordinator.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
+
+const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
 
 describe('<FormRegisterCoordinator>', () => {
   it('has translation for all strings', () => {
@@ -55,6 +59,225 @@ describe('<FormRegisterCoordinator>', () => {
             );
           });
       });
+    });
+
+    it('renders first name field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-first-name')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-first-name"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelFirstName'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-first-name')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-first-name-input').should(
+        'be.visible',
+      );
+    });
+
+    it('renders last name field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-last-name')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-last-name"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelLastName'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-last-name')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-last-name-input').should(
+        'be.visible',
+      );
+    });
+
+    it('renders job title field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-job-title')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-job-title"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelJobTitle'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-job-title')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-job-title-input').should(
+        'be.visible',
+      );
+    });
+
+    it('renders email field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-email')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-email"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelEmail'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-email')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-email-input').should('be.visible');
+    });
+
+    it('renders phone field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-phone')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-phone"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelPhone'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-phone-input').should('be.visible');
+    });
+
+    it('renders password field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-password')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-password"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelPassword'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-password')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-password-input').should(
+        'be.visible',
+      );
+      // icon
+      cy.dataCy('form-register-coordinator-password-icon')
+        .should('contain', 'visibility')
+        .and('have.color', colorPrimary);
+      cy.dataCy('form-register-coordinator-password-icon')
+        .invoke('height')
+        .should('be.equal', 18);
+      cy.dataCy('form-register-coordinator-password-icon')
+        .invoke('width')
+        .should('be.equal', 18);
+    });
+
+    it('renders password confirm field', () => {
+      // input label
+      cy.dataCy('form-register-coordinator-password-confirm')
+        .should('be.visible')
+        .find('label[for="form-register-coordinator-password-confirm"]')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'have.text',
+          i18n.global.t('register.coordinator.form.labelPasswordConfirm'),
+        );
+      // input wrapper
+      cy.dataCy('form-register-coordinator-password-confirm')
+        .find('.q-field__control')
+        .should('be.visible')
+        .and('have.css', 'border-radius', '8px');
+      // input
+      cy.dataCy('form-register-coordinator-password-confirm-input').should(
+        'be.visible',
+      );
+      // icon
+      cy.dataCy('form-register-coordinator-password-confirm-icon')
+        .should('contain', 'visibility')
+        .and('have.color', colorPrimary);
+      cy.dataCy('form-register-coordinator-password-confirm-icon')
+        .invoke('height')
+        .should('be.equal', 18);
+      cy.dataCy('form-register-coordinator-password-confirm-icon')
+        .invoke('width')
+        .should('be.equal', 18);
+    });
+
+    it('renders checkbox responsibility', () => {
+      cy.dataCy('form-register-coordinator-responsibility')
+        .should('be.visible')
+        .find('.q-checkbox__label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.labelResponsibility'),
+        );
+      // checkbox border
+      cy.dataCy('form-register-coordinator-responsibility')
+        .find('.q-checkbox__bg')
+        .should('have.css', 'border-radius', '4px');
+      // checkbox height
+      cy.dataCy('form-register-coordinator-responsibility')
+        .find('.q-checkbox__bg')
+        .invoke('height')
+        .should('be.equal', 18);
+      // checkbox width
+      cy.dataCy('form-register-coordinator-responsibility')
+        .find('.q-checkbox__bg')
+        .invoke('width')
+        .should('be.equal', 18);
+    });
+
+    it('renders checkbox terms', () => {
+      cy.dataCy('form-register-coordinator-terms')
+        .should('be.visible')
+        .find('.q-checkbox__label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('contain', i18n.global.t('register.coordinator.form.labelTerms'));
+      // checkbox border
+      cy.dataCy('form-register-coordinator-terms')
+        .find('.q-checkbox__bg')
+        .should('have.css', 'border-radius', '4px');
+      // checkbox height
+      cy.dataCy('form-register-coordinator-terms')
+        .find('.q-checkbox__bg')
+        .invoke('height')
+        .should('be.equal', 18);
+      // checkbox width
+      cy.dataCy('form-register-coordinator-terms')
+        .find('.q-checkbox__bg')
+        .invoke('width')
+        .should('be.equal', 18);
     });
   });
 

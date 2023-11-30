@@ -159,7 +159,7 @@ export default defineComponent({
             <!-- TODO: Add company input (perhaps another component?) -->
           </div>
           <!-- Input: job title -->
-          <div class="col-12">
+          <div class="col-12" data-cy="form-register-coordinator-job-title">
             <!-- Label -->
             <label
               for="form-register-coordinator-job-title"
@@ -189,7 +189,10 @@ export default defineComponent({
             />
           </div>
           <!-- Input: email -->
-          <div class="col-12 col-sm-6">
+          <div
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-email"
+          >
             <!-- Label -->
             <label
               for="form-register-coordinator-email"
@@ -220,7 +223,10 @@ export default defineComponent({
             />
           </div>
           <!-- Input: phone-->
-          <div class="col-12 col-sm-6">
+          <div
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-phone"
+          >
             <!-- Label -->
             <label
               for="form-register-coordinator-phone"
@@ -366,10 +372,7 @@ export default defineComponent({
             </q-checkbox>
           </div>
           <!-- Input: confirm consent -->
-          <div
-            class="col-12"
-            data-cy="form-register-coordinator-responsibility"
-          >
+          <div class="col-12" data-cy="form-register-coordinator-terms">
             <q-checkbox
               id="form-register-coordinator-terms"
               v-model="formRegisterCoordinator.terms"
