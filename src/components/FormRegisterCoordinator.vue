@@ -8,15 +8,6 @@
  *
  * Note: This component is commonly used in `RegisterCoordinatorPage`.
  *
- * @events
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
- *
- * @components
- *
  * @example
  * <form-register-coordinator />
  *
@@ -361,34 +352,60 @@ export default defineComponent({
             class="col-12"
             data-cy="form-register-coordinator-responsibility"
           >
-            <q-checkbox
-              v-model="formRegisterCoordinator.responsibility"
-              color="primary"
-              :true-value="true"
-              :false-value="false"
-              style="margin: -10px"
+            <q-field
+              dense
+              borderless
+              :model-value="formRegisterCoordinator.responsibility"
+              :rules="[
+                (val) =>
+                  !!val ||
+                  $t('register.coordinator.form.labelResponsibilityRequired'),
+              ]"
             >
-              {{ $t('register.coordinator.form.labelResponsibility') }}
-            </q-checkbox>
+              <q-checkbox
+                v-model="formRegisterCoordinator.responsibility"
+                color="primary"
+                :true-value="true"
+                :false-value="false"
+                style="margin: 0 -10px"
+              >
+                <span class="text-grey-10">{{
+                  $t('register.coordinator.form.labelResponsibility')
+                }}</span>
+              </q-checkbox>
+            </q-field>
           </div>
           <!-- Input: confirm consent -->
           <div class="col-12" data-cy="form-register-coordinator-terms">
-            <q-checkbox
-              id="form-register-coordinator-terms"
-              v-model="formRegisterCoordinator.terms"
-              color="primary"
-              :true-value="true"
-              :false-value="false"
-              style="margin: -10px"
+            <q-field
+              dense
+              borderless
+              :model-value="formRegisterCoordinator.terms"
+              :rules="[
+                (val) =>
+                  !!val || $t('register.coordinator.form.labelTermsRequired'),
+              ]"
             >
-              <!-- Default slot: label -->
-              {{ $t('register.coordinator.form.labelTerms') }}
-              <!-- Link: terms -->
-              <a href="#" target="_blank" class="text-primary">{{
-                $t('register.coordinator.form.linkTerms')
-              }}</a
-              >.
-            </q-checkbox>
+              <q-checkbox
+                id="form-register-coordinator-terms"
+                v-model="formRegisterCoordinator.terms"
+                color="primary"
+                :true-value="true"
+                :false-value="false"
+                rules="required"
+                style="margin: -10px"
+              >
+                <!-- Default slot: label -->
+                <span class="text-grey-10">
+                  {{ $t('register.coordinator.form.labelTerms') }}
+                  <!-- Link: terms -->
+                  <a href="#" target="_blank" class="text-primary">{{
+                    $t('register.coordinator.form.linkTerms')
+                  }}</a
+                  >.
+                </span>
+              </q-checkbox>
+            </q-field>
           </div>
         </div>
         <!-- Button: submit -->
