@@ -15,9 +15,21 @@ export const useValidation = () => {
   };
 
   const isPhone = (value: string): boolean => {
+    // 6-18 characters (extreme length with delimiters)
+    if (value.length < 6) {
+      return false;
+    }
+    if (value.length > 18) {
+      return false;
+    }
     /**
      * Match international phone number entered with delimiters
      * (spaces, dots, brackets, etc.)
+     *
+     * Note: does not account for specific mistakes such as:
+     * Leading Zero in Area Code: +420 012 345 678
+     * Too Many Digits: +420 123 456 7890
+     * Starts with an Invalid Country Code: +999 123 456 789
      *
      * https://uibakery.io/regex-library/email
      */

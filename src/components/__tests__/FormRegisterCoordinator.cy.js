@@ -531,6 +531,139 @@ describe('<FormRegisterCoordinator>', () => {
       ).should('not.exist');
       cy.dataCy('form-register-coordinator-email-input').clear();
     });
+
+    it('validates phone number correctly', () => {
+      // fill in other parts of the form to be able to test phone
+      cy.dataCy('form-register-coordinator-first-name-input').type('John');
+      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'simple@example.com',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      // invalid email
+      cy.dataCy('form-register-coordinator-phone-input').type('12345');
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '12345678901234567890',
+      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 ABC 123 456',
+      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+421 12#34 5678',
+      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // invalid email
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420-123.456/789',
+      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 123 456 789',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type('123 456 789');
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 (543) 123 456',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420-123-456-789',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420.123.456.789',
+      );
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // valid phone
+      cy.dataCy('form-register-coordinator-phone-input').type('+420 543123456');
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-phone"] .q-field__messages [role="alert"]',
+      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+    });
   });
 
   context('mobile', () => {
