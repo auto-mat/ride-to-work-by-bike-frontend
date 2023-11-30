@@ -359,7 +359,7 @@ export default defineComponent({
               :rules="[
                 (val) =>
                   !!val ||
-                  $t('register.coordinator.form.labelResponsibilityRequired'),
+                  $t('register.coordinator.form.messageResponsibilityRequired'),
               ]"
             >
               <q-checkbox
@@ -383,7 +383,7 @@ export default defineComponent({
               :model-value="formRegisterCoordinator.terms"
               :rules="[
                 (val) =>
-                  !!val || $t('register.coordinator.form.labelTermsRequired'),
+                  !!val || $t('register.coordinator.form.messageTermsRequired'),
               ]"
             >
               <q-checkbox
