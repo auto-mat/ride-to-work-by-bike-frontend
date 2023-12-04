@@ -281,13 +281,13 @@ describe('<FormRegisterCoordinator>', () => {
         .should('be.equal', 18);
     });
 
-    it('should allow user to reveal and hide password', () => {
+    it('allows user to reveal and hide password', () => {
       testPasswordInputReveal({
         identifierPassword: 'form-register-coordinator-password',
       });
     });
 
-    it('should allow user to reveal and hide password confirm', () => {
+    it('allows user to reveal and hide password confirm', () => {
       testPasswordInputReveal({
         identifierPassword: 'form-register-coordinator-password-confirm',
       });
