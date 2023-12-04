@@ -167,6 +167,7 @@ export default defineComponent({
             />
           </div>
           <!-- Input: company -->
+          <!-- TODO: add option to input new company -->
           <div class="col-12" data-cy="form-register-coordinator-company">
             <!-- Label -->
             <label
