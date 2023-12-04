@@ -146,8 +146,35 @@ export default defineComponent({
             />
           </div>
           <!-- Input: company -->
-          <div class="col-12 col-sm-6">
-            <!-- TODO: Add company input (perhaps another component?) -->
+          <div class="col-12" data-cy="form-register-coordinator-company">
+            <!-- Label -->
+            <label
+              for="form-register-coordinator-company"
+              class="text-caption text-bold"
+            >
+              {{ $t('register.coordinator.form.labelCompany') }}
+            </label>
+            <!-- Input -->
+            <q-select
+              dense
+              outlined
+              v-model="formRegisterCoordinator.company"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  isFilled(val) ||
+                  $t('register.coordinator.form.messageFieldRequired', {
+                    fieldName: $t(
+                      'register.coordinator.form.labelCompanyShort',
+                    ),
+                  }),
+              ]"
+              class="q-mt-sm"
+              id="form-register-coordinator-company"
+              name="company"
+              data-cy="form-register-coordinator-company-input"
+            >
+            </q-select>
           </div>
           <!-- Input: job title -->
           <div class="col-12" data-cy="form-register-coordinator-job-title">
