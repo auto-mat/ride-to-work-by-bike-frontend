@@ -355,6 +355,7 @@ export default defineComponent({
             <q-field
               dense
               borderless
+              hide-bottom-space
               :model-value="formRegisterCoordinator.responsibility"
               :rules="[
                 (val) =>
@@ -381,6 +382,7 @@ export default defineComponent({
             <q-field
               dense
               borderless
+              hide-bottom-space
               :model-value="formRegisterCoordinator.terms"
               :rules="[
                 (val) =>
