@@ -763,6 +763,57 @@ describe('<FormRegisterCoordinator>', () => {
         '*[data-cy="form-register-coordinator-password-confirm"] .q-field__messages [role="alert"]',
       ).should('not.exist');
     });
+
+    it('validates checkboxes correctly', () => {
+      // fill in other parts of the form to be able to test password
+      cy.dataCy('form-register-coordinator-first-name-input').type('John');
+      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-email-input').type(
+        'simple@example.com',
+      );
+      cy.dataCy('form-register-coordinator-phone-input').type(
+        '+420 123 456 789',
+      );
+      cy.dataCy('form-register-coordinator-password-input').type('12345a');
+      cy.dataCy('form-register-coordinator-password-confirm-input').type(
+        '12345a',
+      );
+      // test responsibility checkbox unchecked
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-responsibility')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t(
+            'register.coordinator.form.messageResponsibilityRequired',
+          ),
+        );
+      // test responsibility checkbox checked
+      cy.dataCy('form-register-coordinator-responsibility')
+        .find('.q-checkbox')
+        .click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-responsibility] .q-field__messages',
+      ).should('not.exist');
+      // test terms checkbox unchecked
+      cy.dataCy('form-register-coordinator-submit')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-register-coordinator-terms')
+        .find('.q-field__messages')
+        .should(
+          'contain',
+          i18n.global.t('register.coordinator.form.messageTermsRequired'),
+        );
+      // test terms checkbox checked
+      cy.dataCy('form-register-coordinator-terms').find('.q-checkbox').click();
+      cy.get(
+        '*[data-cy="form-register-coordinator-terms] .q-field__messages',
+      ).should('not.exist');
+    });
   });
 
   context('mobile', () => {
