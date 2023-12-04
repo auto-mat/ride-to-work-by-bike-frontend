@@ -368,8 +368,9 @@ export default defineComponent({
                 :true-value="true"
                 :false-value="false"
                 style="margin: 0 -10px"
+                class="text-grey-10"
               >
-                <span class="text-grey-10">{{
+                <span>{{
                   $t('register.coordinator.form.labelResponsibility')
                 }}</span>
               </q-checkbox>
@@ -394,11 +395,13 @@ export default defineComponent({
                 :false-value="false"
                 rules="required"
                 style="margin: -10px"
+                class="text-grey-10"
               >
                 <!-- Default slot: label -->
-                <span class="text-grey-10">
+                <span>
                   {{ $t('register.coordinator.form.labelTerms') }}
                   <!-- Link: terms -->
+                  <!-- TODO: Link to terms page -->
                   <a href="#" target="_blank" class="text-primary">{{
                     $t('register.coordinator.form.linkTerms')
                   }}</a
