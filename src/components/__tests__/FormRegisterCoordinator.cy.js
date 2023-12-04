@@ -814,6 +814,8 @@ describe('<FormRegisterCoordinator>', () => {
         '*[data-cy="form-register-coordinator-terms] .q-field__messages',
       ).should('not.exist');
     });
+
+    // TODO: Test successful submit
   });
 
   context('mobile', () => {
