@@ -35,11 +35,30 @@ export default defineComponent({
       terms: false,
     });
 
+    const stringOptions = ['Company 1', 'Company 2'];
+    const options = ref(stringOptions);
+
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
     const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
       useValidation();
+
+    const onFilter = (val: string, update): void => {
+      if (val === '') {
+        update(() => {
+          options.value = stringOptions;
+        });
+        return;
+      }
+
+      update(() => {
+        const needle = val.toLowerCase();
+        options.value = stringOptions.filter(
+          (v) => v.toLowerCase().indexOf(needle) > -1,
+        );
+      });
+    };
 
     const onSubmit = (): void => {
       // noop
@@ -53,11 +72,13 @@ export default defineComponent({
       formRegisterCoordinator,
       isPassword,
       isPasswordConfirm,
+      options,
       isEmail,
       isFilled,
       isIdentical,
       isPhone,
       isStrongPassword,
+      onFilter,
       onReset,
       onSubmit,
     };
@@ -158,7 +179,9 @@ export default defineComponent({
             <q-select
               dense
               outlined
+              use-input
               v-model="formRegisterCoordinator.company"
+              :options="options"
               lazy-rules
               :rules="[
                 (val) =>
@@ -169,11 +192,19 @@ export default defineComponent({
                     ),
                   }),
               ]"
+              @filter="onFilter"
               class="q-mt-sm"
               id="form-register-coordinator-company"
               name="company"
               data-cy="form-register-coordinator-company-input"
             >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    {{ $t('register.coordinator.form.messageNoCompany') }}
+                  </q-item-section>
+                </q-item>
+              </template>
             </q-select>
           </div>
           <!-- Input: job title -->
