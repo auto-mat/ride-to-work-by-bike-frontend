@@ -1,3 +1,4 @@
+import { testLanguageSwitcher } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
 describe('Login page', () => {
@@ -107,42 +108,8 @@ describe('Login page', () => {
         });
     });
 
-    it('allows user to switch language', () => {
-      let i18n;
-      cy.window().should('have.property', 'i18n');
-      cy.window()
-        .then((win) => {
-          i18n = win.i18n;
-        })
-        .then(() => {
-          const locales = i18n.global.availableLocales;
-          const initialActiveLocale = i18n.global.locale;
-
-          // active language has active class
-          cy.dataCy('switcher-' + initialActiveLocale)
-            .find('.q-btn')
-            .should('have.class', 'bg-secondary');
-
-          locales.forEach((locale) => {
-            if (locale !== initialActiveLocale) {
-              // changing the language
-              cy.dataCy('switcher-' + locale)
-                .should('exist')
-                .and('be.visible')
-                .find('.q-btn')
-                .click();
-              // old language becomes inactive
-              cy.dataCy('switcher-' + initialActiveLocale)
-                .find('.q-btn')
-                .should('have.class', 'bg-white');
-              // new language becomes active
-              cy.dataCy('switcher-' + locale)
-                .find('.q-btn')
-                .should('have.class', 'bg-secondary');
-            }
-          });
-        });
-    });
+    // switching between languages can only be tested in E2E context
+    testLanguageSwitcher();
 
     it('renders form title', () => {
       let i18n;
