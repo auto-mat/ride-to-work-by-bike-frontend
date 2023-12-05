@@ -1,7 +1,9 @@
+import { routesConf } from '../../../src/router/routes_conf';
+
 describe('Login page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit('/#/login');
+      cy.visit('#' + routesConf['login']['path']);
       cy.viewport('macbook-16');
     });
 
