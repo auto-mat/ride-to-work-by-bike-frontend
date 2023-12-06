@@ -31,7 +31,7 @@ export const useValidation = () => {
      * https://uibakery.io/regex-library/email
      */
     const regex =
-      /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+      /^(\+420\s?)?((5\d{2}|60[1-8]|70[2-5]|72\d|73[0-9]|77[0-9])\s?\d{3}\s?\d{3})$/;
     return regex.test(value);
   };
 
