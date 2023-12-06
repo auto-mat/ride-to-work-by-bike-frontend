@@ -593,7 +593,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
         .click();
-      // invalid email
+      // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type('12345');
       cy.dataCy('form-register-coordinator-phone')
         .find('.q-field__messages')
@@ -603,7 +603,7 @@ describe('<FormRegisterCoordinator>', () => {
           i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
         );
       cy.dataCy('form-register-coordinator-phone-input').clear();
-      // invalid email
+      // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type(
         '12345678901234567890',
       );
@@ -615,7 +615,7 @@ describe('<FormRegisterCoordinator>', () => {
           i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
         );
       cy.dataCy('form-register-coordinator-phone-input').clear();
-      // invalid email
+      // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type(
         '+420 ABC 123 456',
       );
@@ -627,7 +627,7 @@ describe('<FormRegisterCoordinator>', () => {
           i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
         );
       cy.dataCy('form-register-coordinator-phone-input').clear();
-      // invalid email
+      // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type(
         '+421 12#34 5678',
       );
@@ -639,7 +639,7 @@ describe('<FormRegisterCoordinator>', () => {
           i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
         );
       cy.dataCy('form-register-coordinator-phone-input').clear();
-      // invalid email
+      // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type(
         '+420-123.456/789',
       );
