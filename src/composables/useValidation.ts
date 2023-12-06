@@ -16,10 +16,7 @@ export const useValidation = () => {
 
   const isPhone = (value: string): boolean => {
     // 6-18 characters (extreme length with delimiters)
-    if (value.length < 6) {
-      return false;
-    }
-    if (value.length > 18) {
+    if (value.length < 6 || value.length > 18) {
       return false;
     }
     /**
