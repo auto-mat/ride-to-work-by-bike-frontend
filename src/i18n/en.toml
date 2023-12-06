@@ -30,6 +30,18 @@ secondShort = "s"
 continue = "Continue"
 back = "Back"
 
+[form]
+labelEmail = "E-mail"
+labelFirstName = "First Name"
+labelLastName = "Surname"
+labelPassword = "Password"
+labelPhone = "Phone"
+messageEmailInvalid = "Please fill in a valid email"
+messageFieldRequired = "{fieldName} is required"
+messagePhoneInvalid = "Please fill in a valid phone number"
+messagePasswordStrong = "Password must contain at least 6 characters and at least 1 letter."
+messagePasswordConfirmNotMatch = "Passwords don't match"
+
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"

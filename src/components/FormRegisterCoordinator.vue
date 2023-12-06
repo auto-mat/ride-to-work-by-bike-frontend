@@ -8,19 +8,29 @@
  *
  * Note: This component is commonly used in `RegisterCoordinatorPage`.
  *
+ * @components
+ * - `FormFieldEmail`: Component to render email input.
+ *
  * @example
  * <form-register-coordinator />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
+// libraries
 import { defineComponent, reactive, ref } from 'vue';
 
 // composables
 import { useValidation } from '../composables/useValidation';
 
+// components
+import FormFieldEmail from './global/FormFieldEmail.vue';
+
 export default defineComponent({
   name: 'FormRegisterCoordinator',
+  components: {
+    FormFieldEmail,
+  },
   setup() {
     const formRegisterCoordinator = reactive({
       firstName: '',
@@ -242,39 +252,7 @@ export default defineComponent({
             />
           </div>
           <!-- Input: email -->
-          <div
-            class="col-12 col-sm-6"
-            data-cy="form-register-coordinator-email"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-email"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelEmail') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              v-model="formRegisterCoordinator.email"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t('register.coordinator.form.labelEmail'),
-                  }),
-                (val) =>
-                  isEmail(val) ||
-                  $t('register.coordinator.form.messageEmailInvalid'),
-              ]"
-              class="q-mt-sm"
-              id="form-register-coordinator-email"
-              name="email"
-              data-cy="form-register-coordinator-email-input"
-            />
-          </div>
+          <form-field-email v-model="formRegisterCoordinator.email" />
           <!-- Input: phone-->
           <div
             class="col-12 col-sm-6"

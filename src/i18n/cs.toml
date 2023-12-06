@@ -30,6 +30,18 @@ secondShort = "s."
 continue = "Pokračovat"
 back = "Zpět"
 
+[form]
+labelEmail = "E-mail"
+labelFirstName = "Jméno"
+labelLastName = "Příjmení"
+labelPassword = "Heslo"
+labelPhone = "Telefon"
+messageEmailInvalid = "Prosím vyplňte platný e-mail"
+messageFieldRequired = "Pole {fieldName} je povinné"
+messagePhoneInvalid = "Prosím vyplňte platné telefonní číslo"
+messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
+messagePasswordConfirmNotMatch = "Hesla se neshodují"
+
 [index]
 title = "Domov"
 logoAltText = "Logo Do práce na kole"
