@@ -44,7 +44,10 @@ export default defineComponent({
     const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
       useValidation();
 
-    const onFilter = (val: string, update): void => {
+    // Quasar types are not implemented yet so we provide custom typing
+    // for update function.
+    // https://github.com/quasarframework/quasar/issues/8914#issuecomment-1313783889
+    const onFilter = (val: string, update: (fn: () => void) => void): void => {
       if (val === '') {
         update(() => {
           options.value = stringOptions;
