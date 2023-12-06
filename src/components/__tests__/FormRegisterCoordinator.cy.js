@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import FormRegisterCoordinator from 'components/FormRegisterCoordinator.vue';
+import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';

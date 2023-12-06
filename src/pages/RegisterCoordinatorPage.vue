@@ -21,7 +21,7 @@ import { defineComponent } from 'vue';
 
 // components
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
-import FormRegisterCoordinator from 'components/FormRegisterCoordinator.vue';
+import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';

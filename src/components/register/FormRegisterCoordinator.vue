@@ -21,10 +21,10 @@
 import { defineComponent, reactive, ref } from 'vue';
 
 // composables
-import { useValidation } from '../composables/useValidation';
+import { useValidation } from '../../composables/useValidation';
 
 // components
-import FormFieldEmail from './global/FormFieldEmail.vue';
+import FormFieldEmail from './../global/FormFieldEmail.vue';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
