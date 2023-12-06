@@ -25,11 +25,13 @@ import { useValidation } from '../../composables/useValidation';
 
 // components
 import FormFieldEmail from './../global/FormFieldEmail.vue';
+import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   components: {
     FormFieldEmail,
+    FormFieldPhone,
   },
   setup() {
     const formRegisterCoordinator = reactive({
@@ -257,40 +259,10 @@ export default defineComponent({
             data-cy="form-register-coordinator-email"
           />
           <!-- Input: phone-->
-          <div
-            class="col-12 col-sm-6"
+          <form-field-phone
+            v-model="formRegisterCoordinator.phone"
             data-cy="form-register-coordinator-phone"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-phone"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelPhone') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              v-model="formRegisterCoordinator.phone"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t('register.coordinator.form.labelPhone'),
-                  }),
-                (val) =>
-                  isPhone(val) ||
-                  $t('register.coordinator.form.messagePhoneInvalid'),
-              ]"
-              class="q-mt-sm"
-              id="form-register-coordinator-phone"
-              name="phone"
-              data-cy="form-register-coordinator-phone-input"
-            />
-          </div>
-
+          />
           <!-- Input: password -->
           <div
             class="col-12 col-sm-6"
