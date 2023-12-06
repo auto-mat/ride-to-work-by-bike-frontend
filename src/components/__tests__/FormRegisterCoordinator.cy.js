@@ -580,7 +580,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-email-input').clear();
     });
 
-    it.only('validates phone number correctly', () => {
+    it('validates phone number correctly', () => {
       // fill in other parts of the form to be able to test phone
       cy.dataCy('form-register-coordinator-first-name-input').type('John');
       cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
@@ -595,6 +595,16 @@ describe('<FormRegisterCoordinator>', () => {
         .click();
       // invalid phone
       cy.dataCy('form-register-coordinator-phone-input').type('12345');
+      cy.dataCy('form-register-coordinator-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-register-coordinator-phone-input').clear();
+      // invalid phone
+      cy.dataCy('form-register-coordinator-phone-input').type('00 00 00');
       cy.dataCy('form-register-coordinator-phone')
         .find('.q-field__messages')
         .should('be.visible')
