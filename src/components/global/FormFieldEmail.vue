@@ -34,6 +34,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    testing: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -58,9 +62,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="col-12 col-sm-6" data-cy="form-register-coordinator-email">
+  <div class="col-12 col-sm-6" data-cy="form-email">
     <!-- Label -->
-    <label for="form-register-coordinator-email" class="text-caption text-bold">
+    <label for="form-email" class="text-caption text-bold">
       {{ $t('form.labelEmail') }}
     </label>
     <!-- Input -->
@@ -68,7 +72,7 @@ export default defineComponent({
       dense
       outlined
       v-model="email"
-      lazy-rules
+      :lazy-rules="!testing"
       :rules="[
         (val) =>
           isFilled(val) ||
@@ -78,9 +82,9 @@ export default defineComponent({
         (val) => isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
       class="q-mt-sm"
-      id="form-register-coordinator-email"
+      id="form-email"
       name="email"
-      data-cy="form-register-coordinator-email-input"
+      data-cy="form-email-input"
     />
   </div>
 </template>
