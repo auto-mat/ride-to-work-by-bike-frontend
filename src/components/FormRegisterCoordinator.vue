@@ -53,9 +53,9 @@ export default defineComponent({
       }
 
       update(() => {
-        const needle = val.toLowerCase();
+        const valLowerCase = val.toLowerCase();
         options.value = stringOptions.filter(
-          (v) => v.toLowerCase().indexOf(needle) > -1,
+          (v) => v.toLowerCase().indexOf(valLowerCase) > -1,
         );
       });
     };
