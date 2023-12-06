@@ -174,7 +174,7 @@ describe('<FormRegisterCoordinator>', () => {
       // input label
       cy.dataCy('form-register-coordinator-phone')
         .should('be.visible')
-        .find('label[for="form-register-coordinator-phone"]')
+        .find('label')
         .should('be.visible')
         .and('have.color', grey10)
         .and(
@@ -187,7 +187,9 @@ describe('<FormRegisterCoordinator>', () => {
         .should('be.visible')
         .and('have.css', 'border-radius', '8px');
       // input
-      cy.dataCy('form-register-coordinator-phone-input').should('be.visible');
+      cy.dataCy('form-register-coordinator-phone')
+        .find('input')
+        .should('be.visible');
     });
 
     it('renders password field', () => {
@@ -351,9 +353,9 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');
-      cy.dataCy('form-register-coordinator-phone-input').type(
-        '+420 736 456 789',
-      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('input')
+        .type('+420 736 456 789');
       // test password
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
@@ -402,9 +404,9 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');
-      cy.dataCy('form-register-coordinator-phone-input').type(
-        '+420 736 456 789',
-      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('input')
+        .type('+420 736 456 789');
       // fill in password input to be able to test password confirm
       cy.dataCy('form-register-coordinator-password-input').type('12345a');
       // test password confirm empty
@@ -454,9 +456,9 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');
-      cy.dataCy('form-register-coordinator-phone-input').type(
-        '+420 736 456 789',
-      );
+      cy.dataCy('form-register-coordinator-phone')
+        .find('input')
+        .type('+420 736 456 789');
       cy.dataCy('form-register-coordinator-password-input').type('12345a');
       cy.dataCy('form-register-coordinator-password-confirm-input').type(
         '12345a',
