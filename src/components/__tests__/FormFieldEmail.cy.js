@@ -19,6 +19,7 @@ describe('<FormFieldEmail>', () => {
     it('validates email correctly', () => {
       // invalid email
       cy.dataCy('form-email-input').type('qw123@qw');
+      // first blur triggers validation
       cy.dataCy('form-email-input').blur();
       cy.dataCy('form-email')
         .find('.q-field__messages')
