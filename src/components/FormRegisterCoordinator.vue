@@ -252,7 +252,10 @@ export default defineComponent({
             />
           </div>
           <!-- Input: email -->
-          <form-field-email v-model="formRegisterCoordinator.email" />
+          <form-field-email
+            v-model="formRegisterCoordinator.email"
+            data-cy="form-register-coordinator-email"
+          />
           <!-- Input: phone-->
           <div
             class="col-12 col-sm-6"
