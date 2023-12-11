@@ -48,7 +48,7 @@ export default defineComponent({
     });
 
     const stringOptions = ['Company 1', 'Company 2'];
-    const options = ref(stringOptions);
+    const options = ref(null);
 
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
@@ -66,7 +66,7 @@ export default defineComponent({
         });
         return;
       }
-
+      // Filtering options based on text typing by the user
       update(() => {
         const valLowerCase = val.toLowerCase();
         options.value = stringOptions.filter(
