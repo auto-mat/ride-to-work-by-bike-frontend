@@ -32,11 +32,13 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useValidation } from '../../composables/useValidation';
 
 // components
+import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 
 export default defineComponent({
   name: 'FormRegister',
   components: {
+    FormFieldEmail,
     LoginRegisterButtons,
   },
   emits: ['formSubmit'],
@@ -90,28 +92,11 @@ export default defineComponent({
     <!-- Form: register -->
     <q-form @submit.prevent="onSubmitRegister">
       <!-- Input: email -->
-      <div data-cy="form-register-email">
-        <!-- Label -->
-        <label for="form-register-email" class="text-caption text-bold">
-          {{ $t('register.form.labelEmail') }}
-        </label>
-        <!-- Input -->
-        <q-input
-          dense
-          outlined
-          v-model="formRegister.email"
-          lazy-rules
-          :rules="[
-            (val) => isFilled(val) || $t('register.form.messageEmailReqired'),
-            (val) => isEmail(val) || $t('register.form.messageEmailInvalid'),
-          ]"
-          bg-color="grey-1"
-          id="form-register-email"
-          name="subject"
-          class="q-mt-sm"
-          data-cy="form-register-email-input"
-        />
-      </div>
+      <form-field-email
+        v-model="formRegister.email"
+        bg-color="white"
+        data-cy="form-register-email"
+      />
       <!-- Input: password -->
       <div data-cy="form-register-password">
         <!-- Label -->

@@ -53,15 +53,7 @@ describe('<FormRegister>', () => {
     });
 
     it('renders email field', () => {
-      cy.dataCy('form-register-email')
-        .should('be.visible')
-        .find('label[for="form-register-email"]')
-        .should('be.visible')
-        .and('have.text', i18n.global.t('register.form.labelEmail'));
-      cy.dataCy('form-register-email')
-        .find('.q-field__control')
-        .should('be.visible')
-        .and('have.css', 'border-radius', '8px');
+      cy.dataCy('form-register-email').should('be.visible');
     });
 
     it('renders password field', () => {
@@ -114,164 +106,9 @@ describe('<FormRegister>', () => {
     testPasswordInputReveal('form-register-password');
     testPasswordInputReveal('form-register-password-confirm');
 
-    it('validates registration form inputs', () => {
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      // validate email required
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and('contain', i18n.global.t('register.form.messageEmailReqired'));
-      // validate email format
-      cy.dataCy('form-register-email-input').type('qw123@qw');
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and('contain', i18n.global.t('register.form.messageEmailInvalid'));
-    });
-
-    it('validates emails correctly', () => {
-      // invalid email
-      cy.dataCy('form-register-email-input').type('abc.example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type('a@b@c@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type(
-        'a"b(c)d,e:f;g<h>i[jk]l@example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type('just"not"right@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type(
-        'this is"notallowed@example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type(
-        'this still"not\\allowed@example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type(
-        '1234567890123456789012345678901234567890123456789012345678901234+x@example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // invalid email
-      cy.dataCy('form-register-email-input').type(
-        'i.like.underscores@but_they_are_not_allowed_in_this_part',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.dataCy('form-register-email')
-        .find('.q-field__messages')
-        .and('contain', i18n.global.t('login.form.messageEmailInvalid'));
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type('simple@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type('very.common@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type('x@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type(
-        'long.email-address-with-hyphens@and.subdomains.example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type(
-        'user.name+tag+sorting@example.com',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type('name/surname@example.com');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type(
-        'mailhost!username@example.org',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type(
-        'user%example.com@example.org',
-      );
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-      // valid email
-      cy.dataCy('form-register-email-input').type('user-@example.org');
-      cy.dataCy('form-register-submit').should('be.visible').click();
-      cy.get(
-        '*[data-cy="form-register-email"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
-      cy.dataCy('form-register-email-input').clear();
-    });
-
     it('validates password correctly', () => {
       // fill in email input to be able to test password
-      cy.dataCy('form-register-email-input').type('qw123@qw.com');
+      cy.dataCy('form-register-email').find('input').type('qw123@qw.com');
       // test password
       cy.dataCy('form-register-submit').should('be.visible').click();
       cy.dataCy('form-register-password')
@@ -306,7 +143,7 @@ describe('<FormRegister>', () => {
 
     it('validates password confirm correctly', () => {
       // fill in email input to be able to test password
-      cy.dataCy('form-register-email-input').type('qw123@qw.com');
+      cy.dataCy('form-register-email').find('input').type('qw123@qw.com');
       // fill in password input to be able to test password confirm
       cy.dataCy('form-register-password-input').type('12345a');
       // test password confirm empty
