@@ -34,6 +34,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    bgColor: {
+      type: String as () => 'white' | 'transparent',
+      default: 'transparent',
+    },
     testing: {
       type: Boolean,
       default: false,
@@ -81,6 +85,7 @@ export default defineComponent({
           }),
         (val) => isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
+      :bg-color="bgColor"
       class="q-mt-sm"
       id="form-email"
       name="email"

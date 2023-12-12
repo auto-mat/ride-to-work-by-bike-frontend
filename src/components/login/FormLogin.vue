@@ -25,8 +25,9 @@
 import { defineComponent, ref, reactive } from 'vue';
 
 // components
-import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 import BannerAppButtons from './BannerAppButtons.vue';
+import FormFieldEmail from '../global/FormFieldEmail.vue';
+import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 
 // composables
 import { useValidation } from '../../composables/useValidation';
@@ -42,8 +43,9 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 export default defineComponent({
   name: 'FormLogin',
   components: {
-    LoginRegisterButtons,
     BannerAppButtons,
+    FormFieldEmail,
+    LoginRegisterButtons,
   },
   emits: ['formSubmit'],
   setup() {
@@ -110,28 +112,11 @@ export default defineComponent({
     <!-- Form: login -->
     <q-form @submit.prevent="onSubmitLogin">
       <!-- Input: email -->
-      <div data-cy="form-login-email">
-        <!-- Label -->
-        <label for="form-login-email" class="text-caption text-bold">
-          {{ $t('login.form.labelEmail') }}
-        </label>
-        <!-- Input -->
-        <q-input
-          dense
-          outlined
-          v-model="formLogin.email"
-          lazy-rules
-          :rules="[
-            (val) => isFilled(val) || $t('login.form.messageEmailReqired'),
-            (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
-          ]"
-          bg-color="grey-1"
-          id="form-login-email"
-          name="subject"
-          class="q-mt-sm"
-          data-cy="form-login-email-input"
-        />
-      </div>
+      <form-field-email
+        v-model="formLogin.email"
+        bg-color="white"
+        data-cy="form-login-email"
+      />
       <!-- Input: password -->
       <div data-cy="form-login-password">
         <!-- Label -->
