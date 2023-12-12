@@ -229,29 +229,11 @@ export default defineComponent({
     <!-- Form: password reset -->
     <q-form @submit.prevent="onSubmitPasswordReset">
       <!-- Input: email -->
-      <div data-cy="form-password-reset-email">
-        <!-- Label -->
-        <label for="form-login-password-reset" class="text-caption text-bold">
-          {{ $t('login.form.labelPasswordReset') }}
-        </label>
-        <!-- Input -->
-        <q-input
-          dense
-          outlined
-          v-model="formPasswordReset.email"
-          lazy-rules
-          :rules="[
-            (val) =>
-              isFilled(val) || $t('login.form.messagePasswordResetReqired'),
-            (val) => isEmail(val) || $t('login.form.messageEmailInvalid'),
-          ]"
-          bg-color="grey-1"
-          id="form-login-password-reset"
-          name="subject"
-          class="q-mt-sm"
-          data-cy="form-password-reset-email-input"
-        />
-      </div>
+      <form-field-email
+        v-model="formPasswordReset.email"
+        bg-color="white"
+        data-cy="form-password-reset-email"
+      />
       <!-- Button: submit -->
       <q-btn
         unelevated
