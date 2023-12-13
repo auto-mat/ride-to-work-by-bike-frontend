@@ -33,7 +33,7 @@ export default defineComponent({
   <div data-cy="form-company">
     <!-- Label -->
     <label for="form-company" class="text-caption text-bold">
-      {{ $t('register.coordinator.form.labelCompany') }}
+      {{ $t('form.labelCompany') }}
     </label>
     <!-- Input -->
     <q-select
@@ -46,8 +46,8 @@ export default defineComponent({
       :rules="[
         (val) =>
           isFilled(val) ||
-          $t('register.coordinator.form.messageFieldRequired', {
-            fieldName: $t('register.coordinator.form.labelCompanyShort'),
+          $t('form.messageFieldRequired', {
+            fieldName: $t('form.labelCompanyShort'),
           }),
       ]"
       @filter="onFilter"
@@ -59,7 +59,7 @@ export default defineComponent({
       <template v-slot:no-option>
         <q-item>
           <q-item-section class="text-grey">
-            {{ $t('register.coordinator.form.messageNoCompany') }}
+            {{ $t('form.messageNoCompany') }}
           </q-item-section>
         </q-item>
       </template>
