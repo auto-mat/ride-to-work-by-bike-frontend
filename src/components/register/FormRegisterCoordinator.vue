@@ -24,6 +24,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import { useValidation } from '../../composables/useValidation';
 
 // components
+import FormFieldCompany from '../global/FormFieldCompany.vue';
 import FormFieldEmail from './../global/FormFieldEmail.vue';
 import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
@@ -31,6 +32,7 @@ import FormFieldPhone from './../global/FormFieldPhone.vue';
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   components: {
+    FormFieldCompany,
     FormFieldEmail,
     FormFieldTextRequired,
     FormFieldPhone,
@@ -141,6 +143,7 @@ export default defineComponent({
           />
           <!-- Input: company -->
           <!-- TODO: add option to input new company -->
+          <form-field-company v-model="formRegisterCoordinator.company" />
           <div class="col-12" data-cy="form-register-coordinator-company">
             <!-- Label -->
             <label
