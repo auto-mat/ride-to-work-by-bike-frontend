@@ -22,10 +22,56 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25476&mode=dev)
  */
 
-import { defineComponent } from 'vue';
+// libraries
+import { defineComponent, ref } from 'vue';
+
+// composables
+import { useValidation } from 'src/composables/useValidation';
+
+// types
+import type { Ref } from 'vue';
+
+// constants
+const stringOptions: string[] = ['Company 1', 'Company 2'];
 
 export default defineComponent({
   name: 'FormFieldCompany',
+  setup() {
+    const company: Ref<string | null> = ref(null);
+    const options: Ref<string[] | null> = ref(null);
+
+    /**
+     * Provides autocomplete functionality
+     * Upon typing, find strings which contain query entered into the select
+     *
+     * Limitation: does not support fuzzy search
+     *
+     * See https://quasar.dev/vue-components/select#example--text-autocomplete
+     */
+    const onFilter = (val: string, update: (fn: () => void) => void) => {
+      update(() => {
+        const valLowerCase = val.toLocaleLowerCase();
+        options.value = stringOptions.filter(
+          (option) => option.toLocaleLowerCase().indexOf(valLowerCase) > -1,
+        );
+      });
+    };
+
+    // handles select input
+    const onInputValue = (val: string) => {
+      company.value = val;
+    };
+
+    const { isFilled } = useValidation();
+
+    return {
+      company,
+      options,
+      isFilled,
+      onFilter,
+      onInputValue,
+    };
+  },
 });
 </script>
 
@@ -40,8 +86,14 @@ export default defineComponent({
       dense
       outlined
       use-input
-      v-model="formRegisterCoordinator.company"
+      hide-selected
+      fill-input
+      input-debounce="0"
+      :model-value="company"
       :options="options"
+      class="q-mt-sm"
+      id="form-company"
+      name="company"
       lazy-rules
       :rules="[
         (val) =>
@@ -51,9 +103,7 @@ export default defineComponent({
           }),
       ]"
       @filter="onFilter"
-      class="q-mt-sm"
-      id="form-company"
-      name="company"
+      @input-value="onInputValue"
       data-cy="form-company-input"
     >
       <template v-slot:no-option>
