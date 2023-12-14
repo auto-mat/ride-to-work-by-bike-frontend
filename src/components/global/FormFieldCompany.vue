@@ -41,6 +41,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    testing: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const options: Ref<string[]> = ref([]);
@@ -111,7 +115,7 @@ export default defineComponent({
         class="q-mt-sm"
         id="form-company"
         name="company"
-        lazy-rules
+        :lazy-rules="!testing"
         :rules="[
           (val) =>
             isFilled(val) ||
