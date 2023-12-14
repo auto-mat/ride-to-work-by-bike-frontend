@@ -38,7 +38,7 @@ export default defineComponent({
   name: 'FormFieldCompany',
   setup() {
     const company: Ref<string | null> = ref(null);
-    const options: Ref<string[] | null> = ref(null);
+    const options: Ref<string[]> = ref([]);
 
     /**
      * Provides autocomplete functionality
