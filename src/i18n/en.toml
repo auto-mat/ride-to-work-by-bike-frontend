@@ -222,6 +222,7 @@ titleStepPersonalDetails = "Personal details"
 titleStepPayment = "Payment"
 titleStepParticipation = "Participation"
 titleStepCompany = "Company / school / group"
+buttonAddCompany = "Add new"
 
 [register.coordinator]
 title.may = "Coordinator registration for&nbsp;the&nbsp;May Challenge"

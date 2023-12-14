@@ -222,6 +222,7 @@ titleStepPersonalDetails = "Osobné údaje"
 titleStepPayment = "Platba"
 titleStepParticipation = "Účasť"
 titleStepCompany = "Spoločnosť / škola / skupina"
+buttonAddCompany = "Pridanie novej"
 
 [register.coordinator]
 title.may = "Registrácia koordinátora na&nbsp;Májovú výzvu"

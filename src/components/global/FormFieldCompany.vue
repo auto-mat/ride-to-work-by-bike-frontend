@@ -92,44 +92,53 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="form-company">
-    <!-- Label -->
-    <label for="form-company" class="text-caption text-bold">
-      {{ $t('form.labelCompany') }}
-    </label>
-    <!-- Input -->
-    <q-select
-      dense
-      outlined
-      use-input
-      hide-selected
-      fill-input
-      input-debounce="0"
-      :model-value="company"
-      :options="options"
-      class="q-mt-sm"
-      id="form-company"
-      name="company"
-      lazy-rules
-      :rules="[
-        (val) =>
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelCompanyShort'),
-          }),
-      ]"
-      @filter="onFilter"
-      @input-value="onInputValue"
-      data-cy="form-company-input"
-    >
-      <template v-slot:no-option>
-        <q-item>
-          <q-item-section class="text-grey">
-            {{ $t('form.messageNoCompany') }}
-          </q-item-section>
-        </q-item>
-      </template>
-    </q-select>
-    <!-- TODO: add option to input new company -->
+  <div class="row gap-24">
+    <div class="col" data-cy="form-company">
+      <!-- Label -->
+      <label for="form-company" class="text-caption text-bold">
+        {{ $t('form.labelCompany') }}
+      </label>
+      <!-- Input -->
+      <q-select
+        dense
+        outlined
+        use-input
+        hide-selected
+        fill-input
+        input-debounce="0"
+        :model-value="company"
+        :options="options"
+        class="q-mt-sm"
+        id="form-company"
+        name="company"
+        lazy-rules
+        :rules="[
+          (val) =>
+            isFilled(val) ||
+            $t('form.messageFieldRequired', {
+              fieldName: $t('form.labelCompanyShort'),
+            }),
+        ]"
+        @filter="onFilter"
+        @input-value="onInputValue"
+        data-cy="form-company-input"
+      >
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">
+              {{ $t('form.messageNoCompany') }}
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+      <!-- TODO: add option to input new company -->
+    </div>
+    <div class="col-auto flex items-center q-pt-sm">
+      <q-btn flat icon="mdi-plus" color="primary">
+        <span class="inline-block q-pl-xs">{{
+          $t('register.challenge.buttonAddCompany')
+        }}</span>
+      </q-btn>
+    </div>
   </div>
 </template>
