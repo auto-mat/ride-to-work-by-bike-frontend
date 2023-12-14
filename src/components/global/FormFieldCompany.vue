@@ -46,6 +46,10 @@ export default defineComponent({
      *
      * Limitation: does not support fuzzy search
      *
+     * Quasar types are not implemented yet so we provide custom typing
+     * for update function.
+     * See https://github.com/quasarframework/quasar/issues/8914#issuecomment-1313783889
+     *
      * See https://quasar.dev/vue-components/select#example--text-autocomplete
      */
     const onFilter = (val: string, update: (fn: () => void) => void) => {
