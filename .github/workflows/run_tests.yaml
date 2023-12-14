@@ -120,7 +120,7 @@ jobs:
         run: npx quasar build
 
       - name: Archive runned cypress tests screenshots result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ failure() }}
         with:
           name: cypress-tests-screenshots
@@ -129,7 +129,7 @@ jobs:
           retention-days: 3
 
       - name: Archive runned cypress tests videos result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ failure() }}
         with:
           name: cypress-tests-videos
