@@ -138,10 +138,16 @@ export default defineComponent({
       <!-- TODO: add option to input new company -->
     </div>
     <div class="col-auto flex items-center q-pt-sm">
-      <q-btn flat icon="mdi-plus" color="primary">
-        <span class="inline-block q-pl-xs">{{
-          $t('register.challenge.buttonAddCompany')
-        }}</span>
+      <q-btn
+        flat
+        rounded
+        icon="mdi-plus"
+        color="primary"
+        data-cy="button-add-company"
+      >
+        <span class="inline-block q-pl-xs">
+          {{ $t('register.challenge.buttonAddCompany') }}
+        </span>
       </q-btn>
     </div>
   </div>
