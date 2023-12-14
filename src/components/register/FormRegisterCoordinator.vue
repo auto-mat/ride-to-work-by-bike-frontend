@@ -41,7 +41,7 @@ export default defineComponent({
     const formRegisterCoordinator = reactive({
       firstName: '',
       lastName: '',
-      company: [],
+      company: '',
       jobTitle: '',
       email: '',
       phone: '',
@@ -51,33 +51,11 @@ export default defineComponent({
       terms: false,
     });
 
-    const stringOptions = ['Company 1', 'Company 2'];
-    const options = ref(null);
-
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
     const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
       useValidation();
-
-    // Quasar types are not implemented yet so we provide custom typing
-    // for update function.
-    // https://github.com/quasarframework/quasar/issues/8914#issuecomment-1313783889
-    const onFilter = (val: string, update: (fn: () => void) => void): void => {
-      if (val === '') {
-        update(() => {
-          options.value = stringOptions;
-        });
-        return;
-      }
-      // Filtering options based on text typing by the user
-      update(() => {
-        const valLowerCase = val.toLowerCase();
-        options.value = stringOptions.filter(
-          (v) => v.toLowerCase().indexOf(valLowerCase) > -1,
-        );
-      });
-    };
 
     const onSubmit = (): void => {
       // noop
@@ -91,13 +69,11 @@ export default defineComponent({
       formRegisterCoordinator,
       isPassword,
       isPasswordConfirm,
-      options,
       isEmail,
       isFilled,
       isIdentical,
       isPhone,
       isStrongPassword,
-      onFilter,
       onReset,
       onSubmit,
     };
