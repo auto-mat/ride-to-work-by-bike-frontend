@@ -118,48 +118,7 @@ export default defineComponent({
             data-cy="form-register-coordinator-last-name"
           />
           <!-- Input: company -->
-          <!-- TODO: add option to input new company -->
           <form-field-company v-model="formRegisterCoordinator.company" />
-          <div class="col-12" data-cy="form-register-coordinator-company">
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-company"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelCompany') }}
-            </label>
-            <!-- Input -->
-            <q-select
-              dense
-              outlined
-              use-input
-              v-model="formRegisterCoordinator.company"
-              :options="options"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t(
-                      'register.coordinator.form.labelCompanyShort',
-                    ),
-                  }),
-              ]"
-              @filter="onFilter"
-              class="q-mt-sm"
-              id="form-register-coordinator-company"
-              name="company"
-              data-cy="form-register-coordinator-company-input"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">
-                    {{ $t('register.coordinator.form.messageNoCompany') }}
-                  </q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-          </div>
           <!-- Input: job title -->
           <form-field-text-required
             v-model="formRegisterCoordinator.lastName"
