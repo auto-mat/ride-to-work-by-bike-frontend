@@ -118,7 +118,11 @@ export default defineComponent({
             data-cy="form-register-coordinator-last-name"
           />
           <!-- Input: company -->
-          <form-field-company v-model="formRegisterCoordinator.company" />
+          <form-field-company
+            v-model="formRegisterCoordinator.company"
+            class="col-12"
+            data-cy="form-register-coordinator-company"
+          />
           <!-- Input: job title -->
           <form-field-text-required
             v-model="formRegisterCoordinator.lastName"
