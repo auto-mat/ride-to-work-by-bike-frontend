@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
@@ -36,8 +36,19 @@ const stringOptions: string[] = ['Company 1', 'Company 2'];
 
 export default defineComponent({
   name: 'FormFieldCompany',
-  setup() {
-    const company: Ref<string | null> = ref(null);
+  props: {
+    modelValue: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
+    const company = computed({
+      get: () => props.modelValue,
+      set: (value: string) => {
+        emit('update:modelValue', value);
+      },
+    });
     const options: Ref<string[]> = ref([]);
 
     /**
@@ -118,5 +129,6 @@ export default defineComponent({
         </q-item>
       </template>
     </q-select>
+    <!-- TODO: add option to input new company -->
   </div>
 </template>
