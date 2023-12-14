@@ -43,13 +43,19 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const options: Ref<string[]> = ref([]);
+
     const company = computed({
       get: () => props.modelValue,
       set: (value: string) => {
         emit('update:modelValue', value);
       },
     });
-    const options: Ref<string[]> = ref([]);
+
+    // handles select input
+    const onInputValue = (val: string) => {
+      company.value = val;
+    };
 
     /**
      * Provides autocomplete functionality
@@ -70,11 +76,6 @@ export default defineComponent({
           (option) => option.toLocaleLowerCase().indexOf(valLowerCase) > -1,
         );
       });
-    };
-
-    // handles select input
-    const onInputValue = (val: string) => {
-      company.value = val;
     };
 
     const { isFilled } = useValidation();
