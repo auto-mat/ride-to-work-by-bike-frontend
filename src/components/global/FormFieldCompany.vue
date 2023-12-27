@@ -102,7 +102,7 @@ export default defineComponent({
       <label for="form-company" class="text-caption text-bold">
         {{ $t('form.labelCompany') }}
       </label>
-      <!-- Input -->
+      <!-- Input: Autocomplete -->
       <q-select
         dense
         outlined
@@ -127,6 +127,7 @@ export default defineComponent({
         @input-value="onInputValue"
         data-cy="form-company-input"
       >
+        <!-- Item: No option -->
         <template v-slot:no-option>
           <q-item>
             <q-item-section class="text-grey">
@@ -135,9 +136,9 @@ export default defineComponent({
           </q-item>
         </template>
       </q-select>
-      <!-- TODO: add option to input new company -->
     </div>
     <div class="col-auto flex items-center q-pt-sm">
+      <!-- Button: Add company -->
       <q-btn
         flat
         rounded
@@ -145,6 +146,7 @@ export default defineComponent({
         color="primary"
         data-cy="button-add-company"
       >
+        <!-- Label -->
         <span class="inline-block q-pl-xs">
           {{ $t('register.challenge.buttonAddCompany') }}
         </span>
