@@ -25,12 +25,14 @@ import { useValidation } from '../../composables/useValidation';
 
 // components
 import FormFieldEmail from './../global/FormFieldEmail.vue';
+import FormFieldFirstName from './../global/FormFieldFirstName.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   components: {
     FormFieldEmail,
+    FormFieldFirstName,
     FormFieldPhone,
   },
   setup() {
@@ -120,36 +122,10 @@ export default defineComponent({
       <div class="q-mt-lg">
         <div class="row q-col-gutter-md q-mb-sm">
           <!-- Input: first name -->
-          <div
-            class="col-12 col-sm-6"
+          <form-field-first-name
+            v-model="formRegisterCoordinator.firstName"
             data-cy="form-register-coordinator-first-name"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-first-name"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelFirstName') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              v-model="formRegisterCoordinator.firstName"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t('register.coordinator.form.labelFirstName'),
-                  }),
-              ]"
-              class="q-mt-sm"
-              id="form-register-coordinator-first-name"
-              name="first_name"
-              data-cy="form-register-coordinator-first-name-input"
-            />
-          </div>
+          />
           <!-- Input: last name -->
           <div
             class="col-12 col-sm-6"

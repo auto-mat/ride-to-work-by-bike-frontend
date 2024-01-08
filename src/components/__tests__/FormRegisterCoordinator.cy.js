@@ -64,24 +64,7 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('renders first name field', () => {
       // input label
-      cy.dataCy('form-register-coordinator-first-name')
-        .should('be.visible')
-        .find('label[for="form-register-coordinator-first-name"]')
-        .should('be.visible')
-        .and('have.color', grey10)
-        .and(
-          'have.text',
-          i18n.global.t('register.coordinator.form.labelFirstName'),
-        );
-      // input wrapper
-      cy.dataCy('form-register-coordinator-first-name')
-        .find('.q-field__control')
-        .should('be.visible')
-        .and('have.css', 'border-radius', '8px');
-      // input
-      cy.dataCy('form-register-coordinator-first-name-input').should(
-        'be.visible',
-      );
+      cy.dataCy('form-register-coordinator-first-name').should('be.visible');
     });
 
     it('renders last name field', () => {
