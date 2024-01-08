@@ -1,5 +1,10 @@
+import { colors } from 'quasar';
+
 import FormFieldFirstNameTest from 'components/global/FormFieldFirstNameTest.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
 
 describe('<FormFieldFirstName>', () => {
   it('has translation for all strings', () => {
