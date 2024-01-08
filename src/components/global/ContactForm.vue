@@ -23,6 +23,9 @@
 // libraries
 import { defineComponent, reactive } from 'vue';
 
+// composables
+import { useValidation } from 'src/composables/useValidation';
+
 export default defineComponent({
   name: 'ContactForm',
   emits: ['formSubmit'],
@@ -34,7 +37,7 @@ export default defineComponent({
       email: '',
     });
 
-    const isContactFormValid = (val: string): boolean => val?.length > 0;
+    const { isEmail, isFilled } = useValidation();
 
     const onSubmit = () => {
       emit('formSubmit');
@@ -45,7 +48,8 @@ export default defineComponent({
     return {
       contactForm,
       onSubmit,
-      isContactFormValid,
+      isEmail,
+      isFilled,
     };
   },
 });
@@ -59,17 +63,14 @@ export default defineComponent({
         {{ $t('index.contact.subject') }}
       </label>
       <q-input
+        dense
+        outlined
+        lazy-rules
         v-model="contactForm.subject"
         id="contact-form-subject"
         name="subject"
-        lazy-rules
-        :rules="[
-          (val) =>
-            isContactFormValid(val) || $t('index.contact.subjectRequired'),
-        ]"
+        :rules="[(val) => isFilled(val) || $t('index.contact.subjectRequired')]"
         class="q-mt-sm"
-        outlined
-        dense
         data-cy="contact-form-subject-input"
       />
     </div>
@@ -79,29 +80,27 @@ export default defineComponent({
         {{ $t('index.contact.message') }}
       </label>
       <q-input
+        dense
+        outlined
+        lazy-rules
         v-model="contactForm.message"
         id="contact-form-message"
         name="message"
         type="textarea"
-        :rules="[
-          (val) =>
-            isContactFormValid(val) || $t('index.contact.messageRequired'),
-        ]"
+        :rules="[(val) => isFilled(val) || $t('index.contact.messageRequired')]"
         class="q-mt-sm"
-        outlined
-        dense
         data-cy="contact-form-message-input"
       />
     </div>
     <!-- File input widget -->
     <div data-cy="contact-form-file">
       <q-file
+        dense
+        borderless
         v-model="contactForm.file"
         :label="$t('index.contact.file')"
         label-color="black"
         class="file-input text-body2 text-uppercase"
-        borderless
-        dense
         data-cy="contact-form-file-input"
       >
         <template v-slot:prepend>
@@ -115,17 +114,19 @@ export default defineComponent({
         {{ $t('index.contact.email') }}
       </label>
       <q-input
+        dense
+        outlined
+        lazy-rules
         v-model="contactForm.email"
         id="contact-form-email"
         name="email"
         type="email"
-        lazy-rules
         :rules="[
-          (val) => isContactFormValid(val) || $t('index.contact.emailRequired'),
+          (val) =>
+            (isFilled(val) && isEmail(val)) ||
+            $t('index.contact.emailRequired'),
         ]"
         class="q-mt-sm"
-        outlined
-        dense
         data-cy="contact-form-email-input"
       />
     </div>
