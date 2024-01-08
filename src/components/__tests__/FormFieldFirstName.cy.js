@@ -1,4 +1,4 @@
-import FormFieldFirstNameTest from 'components/FormFieldFirstNameTest.vue';
+import FormFieldFirstNameTest from 'components/global/FormFieldFirstNameTest.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldFirstName>', () => {
