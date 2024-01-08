@@ -72,6 +72,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.dataCy('contact-form-subject-input')
         .should('be.visible')
         .type('question');
+      cy.dataCy('contact-form-subject-input').blur();
       cy.dataCy('contact-form-message-input')
         .should('be.visible')
         .type('what is the minimum distance to ride to work?');
@@ -101,6 +102,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.dataCy('contact-form-subject-input')
         .should('be.visible')
         .type('question');
+      cy.dataCy('contact-form-subject-input').blur();
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
         .should('be.empty');

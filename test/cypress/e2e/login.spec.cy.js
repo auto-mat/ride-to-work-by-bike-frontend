@@ -77,6 +77,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
             .type('question');
+          cy.dataCy('contact-form-subject-input').blur();
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
             .should('be.empty');
