@@ -121,21 +121,15 @@ describe('<FormFieldPhone>', () => {
 
       // valid phone
       cy.dataCy('form-phone-input').type('+420 736 123 456');
-      cy.get(
-        '*[data-cy="form-phone"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-phone-input').clear();
       // valid phone
       cy.dataCy('form-phone-input').type('+420736123456');
-      cy.get(
-        '*[data-cy="form-phone"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-phone-input').clear();
       // valid phone
       cy.dataCy('form-phone-input').type('736123456');
-      cy.get(
-        '*[data-cy="form-phone"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.get('.q-field__messages').should('be.empty');
     });
   });
 });

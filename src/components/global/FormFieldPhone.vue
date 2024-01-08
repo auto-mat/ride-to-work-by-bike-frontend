@@ -72,7 +72,7 @@ export default defineComponent({
       dense
       outlined
       v-model="phone"
-      lazy-rules
+      :lazy-rules="!testing"
       :rules="[
         (val) =>
           isFilled(val) ||
