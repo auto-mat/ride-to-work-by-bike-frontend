@@ -65,9 +65,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="col-12 col-sm-6" data-cy="form-last-name">
+  <div data-cy="form-last-name">
     <!-- Label -->
-    <label for="form-last-name" class="text-caption text-bold">
+    <label for="form-last-name" class="text-grey-10 text-caption text-bold">
       {{ $t('form.labelLastName') }}
     </label>
     <!-- Input -->
@@ -92,3 +92,9 @@ export default defineComponent({
     />
   </div>
 </template>
+
+<style scoped lang="scss">
+:deep(.q-field__control) {
+  border-radius: 8px;
+}
+</style>

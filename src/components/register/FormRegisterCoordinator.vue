@@ -126,11 +126,13 @@ export default defineComponent({
           <!-- Input: first name -->
           <form-field-first-name
             v-model="formRegisterCoordinator.firstName"
+            class="col-12 col-sm-6"
             data-cy="form-register-coordinator-first-name"
           />
           <!-- Input: last name -->
           <form-field-last-name
             v-model="formRegisterCoordinator.lastName"
+            class="col-12 col-sm-6"
             data-cy="form-register-coordinator-last-name"
           />
           <!-- Input: company -->
