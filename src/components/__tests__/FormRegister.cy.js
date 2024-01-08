@@ -136,9 +136,10 @@ describe('<FormRegister>', () => {
         );
       cy.dataCy('form-register-password-input').clear();
       cy.dataCy('form-register-password-input').type('12345a');
-      cy.get(
-        '*[data-cy="form-register-password"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.dataCy('form-register-password-input').blur();
+      cy.dataCy('form-register-password')
+        .find('.q-field__messages')
+        .should('contain', i18n.global.t('register.form.hintPassword'));
     });
 
     it('validates password confirm correctly', () => {
@@ -157,6 +158,7 @@ describe('<FormRegister>', () => {
       cy.dataCy('form-register-password-confirm-input').clear();
       // test password confirm not matching
       cy.dataCy('form-register-password-confirm-input').type('12345b');
+      cy.dataCy('form-register-password-confirm-input').blur();
       cy.dataCy('form-register-password-confirm')
         .find('.q-field__messages')
         .should(
@@ -166,8 +168,10 @@ describe('<FormRegister>', () => {
       cy.dataCy('form-register-password-confirm-input').clear();
       // test password confirm matching
       cy.dataCy('form-register-password-confirm-input').type('12345a');
+      cy.dataCy('form-register-password-confirm-input').blur();
+      // testing non-existence of element fails on .find() method
       cy.get(
-        '*[data-cy="form-register-password-confirm"] .q-field__messages [role="alert"]',
+        '*[data-cy="form-register-coordinator-terms] .q-field__messages',
       ).should('not.exist');
     });
 

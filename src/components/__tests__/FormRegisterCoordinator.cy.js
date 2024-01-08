@@ -338,9 +338,9 @@ describe('<FormRegisterCoordinator>', () => {
         );
       cy.dataCy('form-register-coordinator-company').click();
       cy.get('.q-menu .q-item').first().click();
-      cy.get(
-        '*[data-cy="form-register-coordinator-company"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-company')
+        .find('.q-field__messages')
+        .should('be.empty');
     });
 
     it('validates password correctly', () => {
@@ -389,9 +389,10 @@ describe('<FormRegisterCoordinator>', () => {
         );
       cy.dataCy('form-register-coordinator-password-input').clear();
       cy.dataCy('form-register-coordinator-password-input').type('12345a');
-      cy.get(
-        '*[data-cy="form-register-coordinator-password"] .q-field__messages [role="alert"]',
-      ).should('not.exist');
+      cy.dataCy('form-register-coordinator-password-input').blur();
+      cy.dataCy('form-register-coordinator-password')
+        .find('.q-field__messages')
+        .should('contain', i18n.global.t('register.form.hintPassword'));
     });
 
     it('validates password confirm correctly', () => {
@@ -428,6 +429,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-password-confirm-input').type(
         '12345b',
       );
+      cy.dataCy('form-register-coordinator-password-confirm-input').blur();
       cy.dataCy('form-register-coordinator-password-confirm')
         .find('.q-field__messages')
         .should(
@@ -441,8 +443,10 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-password-confirm-input').type(
         '12345a',
       );
+      cy.dataCy('form-register-coordinator-password-confirm-input').blur();
+      // testing non-existence of element fails on .find() method
       cy.get(
-        '*[data-cy="form-register-coordinator-password-confirm"] .q-field__messages [role="alert"]',
+        '*[data-cy="form-register-coordinator-terms] .q-field__messages',
       ).should('not.exist');
     });
 
@@ -479,6 +483,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox')
         .click();
+      // testing non-existence of element fails on .find() method
       cy.get(
         '*[data-cy="form-register-coordinator-responsibility] .q-field__messages',
       ).should('not.exist');
@@ -494,6 +499,7 @@ describe('<FormRegisterCoordinator>', () => {
         );
       // test terms checkbox checked
       cy.dataCy('form-register-coordinator-terms').find('.q-checkbox').click();
+      // testing non-existence of element fails on .find() method
       cy.get(
         '*[data-cy="form-register-coordinator-terms] .q-field__messages',
       ).should('not.exist');
