@@ -22,7 +22,7 @@
  */
 
 // libraries
-import { defineComponent, defineModel } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
@@ -30,6 +30,10 @@ import { useValidation } from 'src/composables/useValidation';
 export default defineComponent({
   name: 'FormFieldFirstName',
   props: {
+    modelValue: {
+      type: String,
+      required: true,
+    },
     bgColor: {
       type: String as () => 'white' | 'transparent',
       default: 'transparent',
@@ -39,10 +43,15 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
-    const firstName = defineModel({
-      type: String,
-      required: true,
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const firstName = computed({
+      get() {
+        return props.modelValue;
+      },
+      set(value: string) {
+        emit('update:modelValue', value);
+      },
     });
 
     const { isFilled } = useValidation();
