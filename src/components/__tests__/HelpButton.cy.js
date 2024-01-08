@@ -271,7 +271,7 @@ describe('<HelpButton>', () => {
         .type('question');
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
-        .should('not.be.visible');
+        .should('be.empty');
       cy.dataCy('contact-form-subject')
         .find('.q-field__control')
         .should('not.have.class', 'text-negative');
