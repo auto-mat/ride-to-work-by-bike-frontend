@@ -26,6 +26,7 @@ import { useValidation } from '../../composables/useValidation';
 // components
 import FormFieldEmail from './../global/FormFieldEmail.vue';
 import FormFieldFirstName from './../global/FormFieldFirstName.vue';
+import FormFieldLastName from './../global/FormFieldLastName.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
@@ -33,6 +34,7 @@ export default defineComponent({
   components: {
     FormFieldEmail,
     FormFieldFirstName,
+    FormFieldLastName,
     FormFieldPhone,
   },
   setup() {
@@ -127,36 +129,10 @@ export default defineComponent({
             data-cy="form-register-coordinator-first-name"
           />
           <!-- Input: last name -->
-          <div
-            class="col-12 col-sm-6"
+          <form-field-last-name
+            v-model="formRegisterCoordinator.lastName"
             data-cy="form-register-coordinator-last-name"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-last-name"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelLastName') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              v-model="formRegisterCoordinator.lastName"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t('register.coordinator.form.labelLastName'),
-                  }),
-              ]"
-              class="q-mt-sm"
-              id="form-register-coordinator-last-name"
-              name="last_name"
-              data-cy="form-register-coordinator-last-name-input"
-            />
-          </div>
+          />
           <!-- Input: company -->
           <!-- TODO: add option to input new company -->
           <div class="col-12" data-cy="form-register-coordinator-company">
