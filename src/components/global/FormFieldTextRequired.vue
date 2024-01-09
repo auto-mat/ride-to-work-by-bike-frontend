@@ -79,7 +79,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="form-wrapper">
+  <div :data-cy="`form-${name}`">
     <!-- Label -->
     <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
       {{ $t(label) }}
@@ -102,7 +102,7 @@ export default defineComponent({
       :id="`form-${name}`"
       :name="name"
       :autocomplete="autocomplete"
-      data-cy="form-input"
+      :data-cy="`form-${name}-input`"
     />
   </div>
 </template>
