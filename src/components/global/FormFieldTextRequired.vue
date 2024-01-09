@@ -1,10 +1,10 @@
 <script lang="ts">
 /**
- * FormFieldFirstName Component
+ * FormFieldTextRequired Component
  *
- * The `FormFieldFirstName` displays first name input.
+ * The `FormFieldTextRequired` displays text required input.
  *
- * @description * Use this component to render first name input in forms.
+ * @description * Use this component to render text required input in forms.
  *
  * Note: This component is commonly used in `FormRegisterCoordinator`, `FormRegisterChallenge`.
  *
@@ -16,7 +16,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-first-name v-model="firstName" />
+ * <form-field-text-required v-model="value" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103756&mode=dev)
  */
@@ -28,7 +28,7 @@ import { defineComponent, computed } from 'vue';
 import { useValidation } from 'src/composables/useValidation';
 
 export default defineComponent({
-  name: 'FormFieldFirstName',
+  name: 'FormFieldTextRequired',
   props: {
     modelValue: {
       type: String,
@@ -38,6 +38,20 @@ export default defineComponent({
       type: String as () => 'white' | 'transparent',
       default: 'transparent',
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: true,
+    },
+    labelShort: {
+      type: String,
+    },
+    autocomplete: {
+      type: String,
+    },
     testing: {
       type: Boolean,
       default: false,
@@ -45,7 +59,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const firstName = computed({
+    const inputValue = computed({
       get() {
         return props.modelValue;
       },
@@ -57,7 +71,7 @@ export default defineComponent({
     const { isFilled } = useValidation();
 
     return {
-      firstName,
+      inputValue,
       isFilled,
     };
   },
@@ -65,30 +79,30 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="form-first-name">
+  <div data-cy="form-wrapper">
     <!-- Label -->
-    <label for="form-first-name" class="text-grey-10 text-caption text-bold">
-      {{ $t('form.labelFirstName') }}
+    <label :for="`form-${name}`" class="text-grey-10 text-caption text-bold">
+      {{ $t(label) }}
     </label>
     <!-- Input -->
     <q-input
       dense
       outlined
-      v-model="firstName"
+      v-model="inputValue"
       lazy-rules
       :rules="[
         (val) =>
           isFilled(val) ||
           $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelFirstName'),
+            fieldName: labelShort ? $t(labelShort) : $t(label),
           }),
       ]"
       :bg-color="bgColor"
       class="q-mt-sm"
-      id="form-first-name"
-      name="first_name"
-      autocomplete="given-name"
-      data-cy="form-first-name-input"
+      :id="`form-${name}`"
+      :name="name"
+      :autocomplete="autocomplete"
+      data-cy="form-input"
     />
   </div>
 </template>
