@@ -31,6 +31,7 @@ continue = "Continue"
 back = "Back"
 
 [form]
+hintPassword = "It must contain at least 6 characters and at least 1 letter."
 labelCompany = "The company you want to be a coordinator for"
 labelCompanyShort = "Company"
 labelEmail = "E-mail"

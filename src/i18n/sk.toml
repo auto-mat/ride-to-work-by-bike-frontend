@@ -31,6 +31,7 @@ continue = "Pokračovať"
 back = "Späť"
 
 [form]
+hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 labelCompany = "Spoločnosť, pre ktorú chcete byť koordinátorom"
 labelCompanyShort = "Spoločnosť"
 labelEmail = "E-mail"
