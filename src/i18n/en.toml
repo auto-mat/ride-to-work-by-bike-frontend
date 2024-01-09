@@ -47,7 +47,7 @@ messageFieldRequired = "{fieldName} is required"
 messageNoCompany = "We couldn't find any company. Try searching again or create a new company."
 messagePhoneInvalid = "Please fill in a valid phone number"
 messagePasswordStrong = "Password must contain at least 6 characters and at least 1 letter."
-messagePasswordConfirmNotMatch = "Passwords don't match"
+messagePasswordNotIdentical = "Passwords don't match"
 
 [index]
 title = "Home"

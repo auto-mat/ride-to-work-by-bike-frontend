@@ -47,7 +47,7 @@ messageFieldRequired = "Pole {fieldName} je povinné"
 messageNoCompany = "Nenašli sme žiadnu spoločnosť. Skúste hľadať znova alebo vytvorte novú spoločnosť."
 messagePhoneInvalid = "Vyplňte platné telefónne číslo"
 messagePasswordStrong = "Heslo musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
-messagePasswordConfirmNotMatch = "Heslá sa nezhodujú"
+messagePasswordNotIdentical = "Heslá sa nezhodujú"
 
 [index]
 title = "Domovská stránka"
