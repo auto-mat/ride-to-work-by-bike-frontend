@@ -17,7 +17,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-password-register />
+ * <form-field-password v-model="password" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6385%3A26514&mode=dev)
  */
@@ -70,7 +70,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="col-12 col-sm-6" data-cy="form-password">
+  <div data-cy="form-password">
     <!-- Label -->
     <label for="form-password" class="text-caption text-bold text-grey-10">
       {{ $t('form.labelPassword') }}
