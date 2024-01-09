@@ -187,7 +187,7 @@ export default defineComponent({
             name="form-job-title"
             label="form.labelJobTitle"
             label-short="form.labelJobTitleShort"
-            class="col-12 col-sm-6"
+            class="col-12"
             data-cy="form-register-coordinator-job-title"
           />
           <!-- Input: email -->
