@@ -35,7 +35,7 @@ describe('Login page', () => {
     it('allows user to display and submit contact form', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
-      cy.dataCy('dialog-content').scrollTo(0, 1200);
+      cy.dataCy('dialog-content').children().first().scrollTo(0, 1200);
       cy.dataCy('button-contact').should('be.visible').click();
       cy.dataCy('dialog-header').find('h3').should('be.visible');
       cy.dataCy('contact-form-subject-input')
@@ -61,10 +61,10 @@ describe('Login page', () => {
         .then(() => {
           cy.dataCy('button-help').last().should('be.visible').click();
           cy.dataCy('dialog-header').should('be.visible');
-          cy.dataCy('dialog-content').scrollTo(0, 1200);
+          cy.dataCy('dialog-content').children().first().scrollTo(0, 1200);
           cy.dataCy('button-contact').should('be.visible').click();
           cy.dataCy('dialog-header').find('h3').should('be.visible');
-          cy.dataCy('dialog-content').scrollTo('bottom');
+          cy.dataCy('dialog-content').children().first().scrollTo('bottom');
           cy.dataCy('contact-form-submit').should('be.visible').click();
           cy.dataCy('contact-form-subject')
             .find('.q-field__messages')
@@ -73,7 +73,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('have.class', 'text-negative');
-          cy.dataCy('dialog-content').scrollTo('top');
+          cy.dataCy('dialog-content').children().first().scrollTo('top');
           cy.dataCy('contact-form-subject-input')
             .should('be.visible')
             .type('question');
@@ -84,9 +84,9 @@ describe('Login page', () => {
           cy.dataCy('contact-form-subject')
             .find('.q-field__control')
             .should('not.have.class', 'text-negative');
-          cy.dataCy('dialog-content').scrollTo('bottom');
+          cy.dataCy('dialog-content').children().first().scrollTo('bottom');
           cy.dataCy('contact-form-submit').should('be.visible').click();
-          cy.dataCy('dialog-content').scrollTo('top');
+          cy.dataCy('dialog-content').children().first().scrollTo('top');
           cy.dataCy('contact-form-message')
             .find('.q-field__messages')
             .should('be.visible')
@@ -97,7 +97,7 @@ describe('Login page', () => {
           cy.dataCy('contact-form-message-input')
             .should('be.visible')
             .type('what is the minimum distance to ride to work?');
-          cy.dataCy('dialog-content').scrollTo('bottom');
+          cy.dataCy('dialog-content').children().first().scrollTo('bottom');
           cy.dataCy('contact-form-submit').should('be.visible').click();
           cy.dataCy('contact-form-email')
             .find('.q-field__messages')
