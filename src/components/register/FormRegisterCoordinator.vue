@@ -25,16 +25,14 @@ import { useValidation } from '../../composables/useValidation';
 
 // components
 import FormFieldEmail from './../global/FormFieldEmail.vue';
-import FormFieldFirstName from './../global/FormFieldFirstName.vue';
-import FormFieldLastName from './../global/FormFieldLastName.vue';
+import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   components: {
     FormFieldEmail,
-    FormFieldFirstName,
-    FormFieldLastName,
+    FormFieldTextRequired,
     FormFieldPhone,
   },
   setup() {
@@ -124,14 +122,20 @@ export default defineComponent({
       <div class="q-mt-lg">
         <div class="row q-col-gutter-md q-mb-sm">
           <!-- Input: first name -->
-          <form-field-first-name
+          <form-field-text-required
             v-model="formRegisterCoordinator.firstName"
+            name="form-first-name"
+            label="form.labelFirstName"
+            autocomplete="given-name"
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-first-name"
           />
           <!-- Input: last name -->
-          <form-field-last-name
+          <form-field-text-required
             v-model="formRegisterCoordinator.lastName"
+            name="form-last-name"
+            label="form.labelLastName"
+            autocomplete="family-name"
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-last-name"
           />
@@ -178,35 +182,14 @@ export default defineComponent({
             </q-select>
           </div>
           <!-- Input: job title -->
-          <div class="col-12" data-cy="form-register-coordinator-job-title">
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-job-title"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelJobTitle') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              v-model="formRegisterCoordinator.jobTitle"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t(
-                      'register.coordinator.form.labelJobTitleShort',
-                    ),
-                  }),
-              ]"
-              class="q-mt-sm"
-              id="form-register-coordinator-job-title"
-              name="job_title"
-              data-cy="form-register-coordinator-job-title-input"
-            />
-          </div>
+          <form-field-text-required
+            v-model="formRegisterCoordinator.lastName"
+            name="form-job-title"
+            label="form.labelJobTitle"
+            label-short="form.labelJobTitleShort"
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-job-title"
+          />
           <!-- Input: email -->
           <form-field-email
             v-model="formRegisterCoordinator.email"
