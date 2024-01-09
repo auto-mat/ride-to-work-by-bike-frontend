@@ -28,6 +28,7 @@ import FormFieldCompany from '../global/FormFieldCompany.vue';
 import FormFieldEmail from './../global/FormFieldEmail.vue';
 import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
+import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
@@ -37,6 +38,7 @@ export default defineComponent({
     FormFieldEmail,
     FormFieldTextRequired,
     FormFieldPassword,
+    FormFieldPasswordConfirm,
     FormFieldPhone,
   },
   setup() {
@@ -142,7 +144,15 @@ export default defineComponent({
           <!-- Input: password -->
           <form-field-password
             v-model="formRegisterCoordinator.password"
+            class="col-12 col-sm-6"
             data-cy="form-register-coordinator-password"
+          />
+          <!-- Input: password confirm -->
+          <form-field-password-confirm
+            v-model="formRegisterCoordinator.passwordConfirm"
+            :compare-value="formRegisterCoordinator.password"
+            class="col-12 col-sm-6"
+            data-cy="form-register-coordinator-password-confirm"
           />
           <!-- Input: confirm responsibility -->
           <div
