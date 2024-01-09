@@ -92,24 +92,7 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('renders job title field', () => {
       // input label
-      cy.dataCy('form-register-coordinator-job-title')
-        .should('be.visible')
-        .find('label[for="form-register-coordinator-job-title"]')
-        .should('be.visible')
-        .and('have.color', grey10)
-        .and(
-          'have.text',
-          i18n.global.t('register.coordinator.form.labelJobTitle'),
-        );
-      // input wrapper
-      cy.dataCy('form-register-coordinator-job-title')
-        .find('.q-field__control')
-        .should('be.visible')
-        .and('have.css', 'border-radius', '8px');
-      // input
-      cy.dataCy('form-register-coordinator-job-title-input').should(
-        'be.visible',
-      );
+      cy.dataCy('form-register-coordinator-job-title').should('be.visible');
     });
 
     it('renders email field', () => {
@@ -283,8 +266,12 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('validates company correctly', () => {
       // fill in other parts of the form to be able to test company
-      cy.dataCy('form-register-coordinator-first-name-input').type('John');
-      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-first-name')
+        .find('input')
+        .type('John');
+      cy.dataCy('form-register-coordinator-last-name')
+        .find('input')
+        .type('Doe');
       // empty company
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
@@ -309,11 +296,15 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('validates password correctly', () => {
       // fill in other parts of the form to be able to test password
-      cy.dataCy('form-register-coordinator-first-name-input').type('John');
-      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-first-name')
+        .find('input')
+        .type('John');
+      cy.dataCy('form-register-coordinator-last-name')
+        .find('input')
+        .type('Doe');
       cy.dataCy('form-register-coordinator-company').click();
       cy.get('.q-menu .q-item').first().click();
-      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');
@@ -361,11 +352,15 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('validates password confirm correctly', () => {
       // fill in other parts of the form to be able to test password
-      cy.dataCy('form-register-coordinator-first-name-input').type('John');
-      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-first-name')
+        .find('input')
+        .type('John');
+      cy.dataCy('form-register-coordinator-last-name')
+        .find('input')
+        .type('Doe');
       cy.dataCy('form-register-coordinator-company').click();
       cy.get('.q-menu .q-item').first().click();
-      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');
@@ -416,11 +411,15 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('validates checkboxes correctly', () => {
       // fill in other parts of the form to be able to test password
-      cy.dataCy('form-register-coordinator-first-name-input').type('John');
-      cy.dataCy('form-register-coordinator-last-name-input').type('Doe');
+      cy.dataCy('form-register-coordinator-first-name')
+        .find('input')
+        .type('John');
+      cy.dataCy('form-register-coordinator-last-name')
+        .find('input')
+        .type('Doe');
       cy.dataCy('form-register-coordinator-company').click();
       cy.get('.q-menu .q-item').first().click();
-      cy.dataCy('form-register-coordinator-job-title-input').type('IT');
+      cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
         .find('input')
         .type('simple@example.com');

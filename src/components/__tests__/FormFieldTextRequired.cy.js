@@ -8,11 +8,7 @@ const grey10 = getPaletteColor('grey-10');
 
 describe('<FormFieldTextRequired>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(
-      ['form.labelTextRequired'],
-      'index.component',
-      i18n,
-    );
+    cy.testLanguageStringsInContext(['labelTextRequired'], 'form', i18n);
   });
 
   context('desktop', () => {
