@@ -70,13 +70,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="col-12 col-sm-6" data-cy="form-register-coordinator-password">
+  <div class="col-12 col-sm-6" data-cy="form-password">
     <!-- Label -->
-    <label
-      for="form-register-coordinator-password"
-      class="text-caption text-bold"
-    >
-      {{ $t('register.coordinator.form.labelPassword') }}
+    <label for="form-password" class="text-caption text-bold text-grey-10">
+      {{ $t('form.labelPassword') }}
     </label>
     <!-- Input -->
     <q-input
@@ -84,22 +81,20 @@ export default defineComponent({
       outlined
       hide-bottom-space
       v-model="password"
-      id="form-register-coordinator-password"
-      :hint="$t('register.coordinator.form.hintPassword')"
+      id="form-password"
+      :hint="$t('form.hintPassword')"
       :type="isHiddenPassword ? 'password' : 'text'"
       :rules="[
         (val) =>
           isFilled(val) ||
-          $t('register.coordinator.form.messageFieldRequired', {
-            fieldName: $t('register.coordinator.form.labelPassword'),
+          $t('form.messageFieldRequired', {
+            fieldName: $t('form.labelPassword'),
           }),
-        (val) =>
-          isStrongPassword(val) ||
-          $t('register.coordinator.form.messagePasswordStrong'),
+        (val) => isStrongPassword(val) || $t('form.messagePasswordStrong'),
       ]"
       lazy-rules
       class="q-mt-sm"
-      data-cy="form-register-coordinator-password-input"
+      data-cy="form-password-input"
     >
       <!-- Icon: show password -->
       <template v-slot:append>
@@ -109,9 +104,15 @@ export default defineComponent({
           class="cursor-pointer"
           size="18px"
           @click="isHiddenPassword = !isHiddenPassword"
-          data-cy="form-register-coordinator-password-icon"
+          data-cy="form-password-icon"
         />
       </template>
     </q-input>
   </div>
 </template>
+
+<style lang="scss" scoped>
+:deep(.q-field__control) {
+  border-radius: 8px;
+}
+</style>
