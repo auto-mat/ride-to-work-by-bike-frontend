@@ -90,7 +90,6 @@ export default defineComponent({
       hide-bottom-space
       v-model="password"
       id="form-password-confirm"
-      :hint="$t('form.hintPassword')"
       :type="isHiddenPassword ? 'password' : 'text'"
       :rules="[
         (val) =>
