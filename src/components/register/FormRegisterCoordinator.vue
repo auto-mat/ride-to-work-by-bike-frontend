@@ -27,6 +27,7 @@ import { useValidation } from '../../composables/useValidation';
 import FormFieldCompany from '../global/FormFieldCompany.vue';
 import FormFieldEmail from './../global/FormFieldEmail.vue';
 import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
+import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
 
 export default defineComponent({
@@ -35,6 +36,7 @@ export default defineComponent({
     FormFieldCompany,
     FormFieldEmail,
     FormFieldTextRequired,
+    FormFieldPassword,
     FormFieldPhone,
   },
   setup() {
@@ -51,9 +53,6 @@ export default defineComponent({
       terms: false,
     });
 
-    const isPassword = ref(true);
-    const isPasswordConfirm = ref(true);
-
     const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
       useValidation();
 
@@ -67,8 +66,6 @@ export default defineComponent({
 
     return {
       formRegisterCoordinator,
-      isPassword,
-      isPasswordConfirm,
       isEmail,
       isFilled,
       isIdentical,
@@ -143,104 +140,10 @@ export default defineComponent({
             data-cy="form-register-coordinator-phone"
           />
           <!-- Input: password -->
-          <div
-            class="col-12 col-sm-6"
+          <form-field-password
+            v-model="formRegisterCoordinator.password"
             data-cy="form-register-coordinator-password"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-password"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelPassword') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              hide-bottom-space
-              v-model="formRegisterCoordinator.password"
-              id="form-register-coordinator-password"
-              :hint="$t('register.coordinator.form.hintPassword')"
-              :type="isPassword ? 'password' : 'text'"
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t('register.coordinator.form.labelPassword'),
-                  }),
-                (val) =>
-                  isStrongPassword(val) ||
-                  $t('register.coordinator.form.messagePasswordStrong'),
-              ]"
-              lazy-rules
-              class="q-mt-sm"
-              data-cy="form-register-coordinator-password-input"
-            >
-              <!-- Icon: show password -->
-              <template v-slot:append>
-                <q-icon
-                  color="primary"
-                  :name="isPassword ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  size="18px"
-                  @click="isPassword = !isPassword"
-                  data-cy="form-register-coordinator-password-icon"
-                />
-              </template>
-            </q-input>
-          </div>
-          <!-- Input: password confirm -->
-          <div
-            class="col-12 col-sm-6"
-            data-cy="form-register-coordinator-password-confirm"
-          >
-            <!-- Label -->
-            <label
-              for="form-register-coordinator-password-confirm"
-              class="text-caption text-bold"
-            >
-              {{ $t('register.coordinator.form.labelPasswordConfirm') }}
-            </label>
-            <!-- Input -->
-            <q-input
-              dense
-              outlined
-              hide-bottom-space
-              v-model="formRegisterCoordinator.passwordConfirm"
-              id="form-register-coordinator-password"
-              :type="isPasswordConfirm ? 'password' : 'text'"
-              :rules="[
-                (val) =>
-                  isFilled(val) ||
-                  $t('register.coordinator.form.messageFieldRequired', {
-                    fieldName: $t(
-                      'register.coordinator.form.labelPasswordConfirm',
-                    ),
-                  }),
-                (val) =>
-                  isIdentical(val, formRegisterCoordinator.password) ||
-                  $t(
-                    'register.coordinator.form.messagePasswordConfirmNotMatch',
-                  ),
-              ]"
-              lazy-rules
-              class="q-mt-sm"
-              data-cy="form-register-coordinator-password-confirm-input"
-            >
-              <!-- Icon: show password -->
-              <template v-slot:append>
-                <q-icon
-                  color="primary"
-                  :name="isPasswordConfirm ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  size="18px"
-                  @click="isPasswordConfirm = !isPasswordConfirm"
-                  data-cy="form-register-coordinator-password-confirm-icon"
-                />
-              </template>
-            </q-input>
-          </div>
+          />
           <!-- Input: confirm responsibility -->
           <div
             class="col-12"
