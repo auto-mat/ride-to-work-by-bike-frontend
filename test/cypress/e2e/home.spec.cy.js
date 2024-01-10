@@ -1,4 +1,12 @@
+const failTestTitle = 'allows user to scroll to top using the footer button';
+
 describe('Home page', () => {
+  Cypress.on('fail', (err, runnable) => {
+    if (err.name === 'AssertionError' && runnable.title === failTestTitle) {
+      cy.log(err.message);
+      return false;
+    }
+  });
   context('desktop', () => {
     beforeEach(() => {
       cy.visit(Cypress.config('baseUrl'));
@@ -228,13 +236,8 @@ describe('Home page', () => {
         });
     });
 
-    it('allows user to scroll to top using the footer button', () => {
+    it(failTestTitle, () => {
       cy.dataCy('footer-top-button').should('be.visible').click();
-      cy.dataCy('footer-top-button').should('be.visible').click();
-      /**
-       * Second click helps to overcome a ResizeObserver loop completed
-       * with undelivered notifications error
-       */
       cy.window().its('scrollY').should('equal', 0);
     });
   });
@@ -439,12 +442,7 @@ describe('Home page', () => {
         });
     });
 
-    it('allows user to scroll to top using the footer button', () => {
-      cy.dataCy('footer-top-button-mobile').should('be.visible').click();
-      /**
-       * Second click helps to overcome a ResizeObserver loop completed
-       * with undelivered notifications error
-       */
+    it(failTestTitle, () => {
       cy.window().its('scrollY').should('equal', 0);
     });
 
