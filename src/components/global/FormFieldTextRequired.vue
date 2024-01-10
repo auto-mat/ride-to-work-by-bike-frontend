@@ -9,8 +9,12 @@
  * Note: This component is commonly used in `FormRegisterCoordinator`, `FormRegisterChallenge`.
  *
  * @props
- * - `value` (string, required): The object representing user input.
- *   It should be of type `string`.
+ * - `modelValue` (string, required): The object representing user input.
+ * - `bgColor` (string, default: 'transparent'): The background color of the
+ * - `name` (string, required): The name used for id and test selectors.
+ * - `label` (string, required): The translation key for the label.
+ * - `labelShort` (string): The translation key for the short label.
+ * - `autocomplete` (string): The autocomplete attribute.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
