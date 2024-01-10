@@ -35,6 +35,9 @@ export default defineComponent({
 
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerWidth = rideToWorkByBikeConfig.containerWidth;
+    const doneIcon = `img:${
+      new URL('../assets/svg/check.svg', import.meta.url).href
+    }`;
     // Stepper 1 imgs
     const iconImgSrcStepper1 = `img:${
       new URL('../assets/svg/numeric-1-outline.svg', import.meta.url).href
@@ -42,9 +45,7 @@ export default defineComponent({
     const activeIconImgSrcStepper1 = `img:${
       new URL('../assets/svg/numeric-1-fill.svg', import.meta.url).href
     }`;
-    const doneIconImgSrcStepper1 = `img:${
-      new URL('../assets/svg/check.svg', import.meta.url).href
-    }`;
+    const doneIconImgSrcStepper1 = doneIcon;
     // Stepper 2 imgs
     const iconImgSrcStepper2 = `img:${
       new URL('../assets/svg/numeric-2-outline.svg', import.meta.url).href
@@ -52,9 +53,7 @@ export default defineComponent({
     const activeIconImgSrcStepper2 = `img:${
       new URL('../assets/svg/numeric-2-fill.svg', import.meta.url).href
     }`;
-    const doneIconImgSrcStepper2 = `img:${
-      new URL('../assets/svg/check.svg', import.meta.url).href
-    }`;
+    const doneIconImgSrcStepper2 = doneIcon;
     // Stepper 3 imgs
     const iconImgSrcStepper3 = `img:${
       new URL('../assets/svg/numeric-3-outline.svg', import.meta.url).href
@@ -62,9 +61,7 @@ export default defineComponent({
     const activeIconImgSrcStepper3 = `img:${
       new URL('../assets/svg/numeric-3-fill.svg', import.meta.url).href
     }`;
-    const doneIconImgSrcStepper3 = `img:${
-      new URL('../assets/svg/check.svg', import.meta.url).href
-    }`;
+    const doneIconImgSrcStepper3 = doneIcon;
     // Stepper 4 imgs
     const iconImgSrcStepper4 = `img:${
       new URL('../assets/svg/numeric-4-outline.svg', import.meta.url).href
@@ -72,9 +69,7 @@ export default defineComponent({
     const activeIconImgSrcStepper4 = `img:${
       new URL('../assets/svg/numeric-4-fill.svg', import.meta.url).href
     }`;
-    const doneIconImgSrcStepper4 = `img:${
-      new URL('../assets/svg/check.svg', import.meta.url).href
-    }`;
+    const doneIconImgSrcStepper4 = doneIcon;
 
     return {
       challengeMonth,
