@@ -1,7 +1,7 @@
 import { testLanguageSwitcher } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
-const checkImg = new URL(
+const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
   cy.config().baseUrl,
 ).href;
@@ -10,7 +10,7 @@ const activeIconImgSrcStepper1 = new URL(
   '../../../src/assets/svg/numeric-1-fill.svg',
   cy.config().baseUrl,
 ).href;
-const doneIconImgSrcStepper1 = checkImg;
+const doneIconImgSrcStepper1 = doneIcon;
 // Stepper 2 imgs
 const iconImgSrcStepper2 = new URL(
   '../../../src/assets/svg/numeric-2-outline.svg',
@@ -20,7 +20,7 @@ const activeIconImgSrcStepper2 = new URL(
   '../../../src/assets/svg/numeric-2-fill.svg',
   cy.config().baseUrl,
 ).href;
-const doneIconImgSrcStepper2 = checkImg;
+const doneIconImgSrcStepper2 = doneIcon;
 // Stepper 3 imgs
 const iconImgSrcStepper3 = new URL(
   '../../../src/assets/svg/numeric-3-outline.svg',
@@ -30,7 +30,7 @@ const activeIconImgSrcStepper3 = new URL(
   '../../../src/assets/svg/numeric-3-fill.svg',
   cy.config().baseUrl,
 ).href;
-const doneIconImgSrcStepper3 = checkImg;
+const doneIconImgSrcStepper3 = doneIcon;
 // Stepper 4 imgs
 const iconImgSrcStepper4 = new URL(
   '../../../src/assets/svg/numeric-4-outline.svg',
