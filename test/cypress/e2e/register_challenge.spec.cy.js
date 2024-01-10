@@ -1,6 +1,46 @@
 import { testLanguageSwitcher } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
+const checkImg = new URL(
+  '../../../src/assets/svg/check.svg',
+  cy.config().baseUrl,
+).href;
+// Stepper 1 imgs
+const activeIconImgSrcStepper1 = new URL(
+  '../../../src/assets/svg/numeric-1-fill.svg',
+  cy.config().baseUrl,
+).href;
+const doneIconImgSrcStepper1 = checkImg;
+// Stepper 2 imgs
+const iconImgSrcStepper2 = new URL(
+  '../../../src/assets/svg/numeric-2-outline.svg',
+  cy.config().baseUrl,
+).href;
+const activeIconImgSrcStepper2 = new URL(
+  '../../../src/assets/svg/numeric-2-fill.svg',
+  cy.config().baseUrl,
+).href;
+const doneIconImgSrcStepper2 = checkImg;
+// Stepper 3 imgs
+const iconImgSrcStepper3 = new URL(
+  '../../../src/assets/svg/numeric-3-outline.svg',
+  cy.config().baseUrl,
+).href;
+const activeIconImgSrcStepper3 = new URL(
+  '../../../src/assets/svg/numeric-3-fill.svg',
+  cy.config().baseUrl,
+).href;
+const doneIconImgSrcStepper3 = checkImg;
+// Stepper 4 imgs
+const iconImgSrcStepper4 = new URL(
+  '../../../src/assets/svg/numeric-4-outline.svg',
+  cy.config().baseUrl,
+).href;
+const activeIconImgSrcStepper4 = new URL(
+  '../../../src/assets/svg/numeric-4-fill.svg',
+  cy.config().baseUrl,
+).href;
+
 describe('Register Challenge page', () => {
   context('desktop', () => {
     beforeEach(() => {
@@ -84,7 +124,11 @@ describe('Register Challenge page', () => {
             // test icon src
             cy.dataCy('step-1')
               .find('img')
-              .should('have.attr', 'src', 'src/assets/svg/numeric-1-fill.svg');
+              .should('have.attr', 'src')
+              .then(cy.log);
+            cy.dataCy('step-1')
+              .find('img')
+              .should('have.attr', 'src', activeIconImgSrcStepper1);
             // display title
             cy.dataCy('step-1')
               .find('.q-stepper__title')
@@ -101,61 +145,61 @@ describe('Register Challenge page', () => {
       // active icon 1
       cy.dataCy('step-1')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-1-fill.svg');
+        .should('have.attr', 'src', activeIconImgSrcStepper1);
       cy.dataCy('step-2')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-2-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper2);
       cy.dataCy('step-3')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-3-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper3);
       cy.dataCy('step-4')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper4);
       // change step
       cy.dataCy('step-1-continue').should('be.visible').click();
       // active icon 2
       cy.dataCy('step-1')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper1);
       cy.dataCy('step-2')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-2-fill.svg');
+        .should('have.attr', 'src', activeIconImgSrcStepper2);
       cy.dataCy('step-3')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-3-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper3);
       cy.dataCy('step-4')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper4);
       // change step
       cy.dataCy('step-2-continue').should('be.visible').click();
       // active icon 3
       cy.dataCy('step-1')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper1);
       cy.dataCy('step-2')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper2);
       cy.dataCy('step-3')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-3-fill.svg');
+        .should('have.attr', 'src', activeIconImgSrcStepper3);
       cy.dataCy('step-4')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-4-outline.svg');
+        .should('have.attr', 'src', iconImgSrcStepper4);
       // change step
       cy.dataCy('step-3-continue').should('be.visible').click();
       // active icon 4
       cy.dataCy('step-1')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper1);
       cy.dataCy('step-2')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper2);
       cy.dataCy('step-3')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/check.svg');
+        .should('have.attr', 'src', doneIconImgSrcStepper3);
       cy.dataCy('step-4')
         .find('img')
-        .should('have.attr', 'src', 'src/assets/svg/numeric-4-fill.svg');
+        .should('have.attr', 'src', activeIconImgSrcStepper4);
     });
 
     it('allows user to pass through the registration process', () => {
