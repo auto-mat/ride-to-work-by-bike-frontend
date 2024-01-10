@@ -56,10 +56,6 @@ export default defineComponent({
     autocomplete: {
       type: String,
     },
-    testing: {
-      type: Boolean,
-      default: false,
-    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {

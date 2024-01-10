@@ -40,6 +40,5 @@ export default defineComponent({
     name="text-required"
     label="form.labelTextRequired"
     v-model="inputValue"
-    :testing="true"
   />
 </template>
