@@ -35,11 +35,63 @@ export default defineComponent({
 
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerWidth = rideToWorkByBikeConfig.containerWidth;
+    // Stepper 1 imgs
+    const iconImgSrcStepper1 = `img:${
+      new URL('../assets/svg/numeric-1-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper1 = `img:${
+      new URL('../assets/svg/numeric-1-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper1 = `img:${
+      new URL('../assets/svg/check.svg', import.meta.url).href
+    }`;
+    // Stepper 2 imgs
+    const iconImgSrcStepper2 = `img:${
+      new URL('../assets/svg/numeric-2-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper2 = `img:${
+      new URL('../assets/svg/numeric-2-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper2 = `img:${
+      new URL('../assets/svg/check.svg', import.meta.url).href
+    }`;
+    // Stepper 3 imgs
+    const iconImgSrcStepper3 = `img:${
+      new URL('../assets/svg/numeric-3-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper3 = `img:${
+      new URL('../assets/svg/numeric-3-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper3 = `img:${
+      new URL('../assets/svg/check.svg', import.meta.url).href
+    }`;
+    // Stepper 4 imgs
+    const iconImgSrcStepper4 = `img:${
+      new URL('../assets/svg/numeric-4-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper4 = `img:${
+      new URL('../assets/svg/numeric-4-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper4 = `img:${
+      new URL('../assets/svg/check.svg', import.meta.url).href
+    }`;
 
     return {
       challengeMonth,
       containerWidth,
       step,
+      iconImgSrcStepper1,
+      activeIconImgSrcStepper1,
+      doneIconImgSrcStepper1,
+      iconImgSrcStepper2,
+      activeIconImgSrcStepper2,
+      doneIconImgSrcStepper2,
+      iconImgSrcStepper3,
+      activeIconImgSrcStepper3,
+      doneIconImgSrcStepper3,
+      iconImgSrcStepper4,
+      activeIconImgSrcStepper4,
+      doneIconImgSrcStepper4,
     };
   },
 });
@@ -75,9 +127,9 @@ export default defineComponent({
           <q-step
             :name="1"
             :title="$t('register.challenge.titleStepPersonalDetails')"
-            icon="img:src/assets/svg/numeric-1-outline.svg"
-            active-icon="img:src/assets/svg/numeric-1-fill.svg"
-            done-icon="img:src/assets/svg/check.svg"
+            :icon="iconImgSrcStepper1"
+            :active-icon="activeIconImgSrcStepper1"
+            :done-icon="doneIconImgSrcStepper1"
             :done="step > 1"
             class="bg-white"
             data-cy="step-1"
@@ -98,9 +150,9 @@ export default defineComponent({
           <q-step
             :name="2"
             :title="$t('register.challenge.titleStepPayment')"
-            icon="img:src/assets/svg/numeric-2-outline.svg"
-            active-icon="img:src/assets/svg/numeric-2-fill.svg"
-            done-icon="img:src/assets/svg/check.svg"
+            :icon="iconImgSrcStepper2"
+            :active-icon="activeIconImgSrcStepper2"
+            :done-icon="doneIconImgSrcStepper2"
             :done="step > 2"
             class="bg-white q-mt-lg"
             data-cy="step-2"
@@ -131,9 +183,9 @@ export default defineComponent({
           <q-step
             :name="3"
             :title="$t('register.challenge.titleStepParticipation')"
-            icon="img:src/assets/svg/numeric-3-outline.svg"
-            active-icon="img:src/assets/svg/numeric-3-fill.svg"
-            done-icon="img:src/assets/svg/check.svg"
+            :icon="iconImgSrcStepper3"
+            :active-icon="activeIconImgSrcStepper3"
+            :done-icon="doneIconImgSrcStepper3"
             :done="step > 3"
             class="bg-white q-mt-lg"
             data-cy="step-3"
@@ -164,9 +216,9 @@ export default defineComponent({
           <q-step
             :name="4"
             :title="$t('register.challenge.titleStepCompany')"
-            icon="img:src/assets/svg/numeric-4-outline.svg"
-            active-icon="img:src/assets/svg/numeric-4-fill.svg"
-            done-icon="img:src/assets/svg/check.svg"
+            :icon="iconImgSrcStepper4"
+            :active-icon="activeIconImgSrcStepper4"
+            :done-icon="doneIconImgSrcStepper4"
             :done="step > 4"
             class="bg-white q-mt-lg"
             data-cy="step-4"
