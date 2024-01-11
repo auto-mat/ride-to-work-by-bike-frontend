@@ -131,12 +131,12 @@ export default defineComponent({
       <q-separator />
 
       <!-- Dialog body -->
-      <q-card-section class="items-center q-pa-none" style="flex-wrap: wrap">
-        <q-scroll-area
-          ref="scrollAreaRef"
-          style="height: 50vh"
-          data-cy="dialog-content"
-        >
+      <q-card-section
+        class="items-center q-pa-none"
+        data-cy="dialog-content"
+        style="flex-wrap: wrap"
+      >
+        <q-scroll-area ref="scrollAreaRef" style="height: 50vh">
           <div class="q-py-md">
             <!-- Content for state Default -->
             <slot
