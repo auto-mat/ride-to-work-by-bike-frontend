@@ -51,6 +51,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const STATES = ['default', 'form'];
 
+    const dialogScrollbar: Ref<HTMLElement | null> = ref(null);
     const activeState: Ref<'default' | 'form'> = ref('default');
 
     const dialogOpen = computed({
@@ -63,6 +64,7 @@ export default defineComponent({
 
     const setState = (value: 'form' | 'default'): void => {
       activeState.value = value;
+      dialogScrollbar.value?.$el.scroll(0, 0);
     };
 
     const reset = (): void => {
@@ -76,6 +78,7 @@ export default defineComponent({
       activeState,
       setState,
       reset,
+      dialogScrollbar,
     };
   },
 });
@@ -116,6 +119,7 @@ export default defineComponent({
         class="scroll items-center q-pa-none"
         data-cy="dialog-content"
         style="max-height: 50vh; flex-wrap: wrap"
+        ref="dialogScrollbar"
       >
         <div class="q-py-md">
           <!-- Content for state Default -->
