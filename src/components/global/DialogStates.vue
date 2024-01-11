@@ -37,7 +37,6 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=1611%3A17872&mode=dev)
  */
 
-import { QScrollArea } from 'quasar';
 import { defineComponent, ref, computed, Ref } from 'vue';
 
 export default defineComponent({
@@ -53,8 +52,6 @@ export default defineComponent({
     const STATES = ['default', 'form'];
 
     const activeState: Ref<'default' | 'form'> = ref('default');
-    const scrollAreaRef: Ref<InstanceType<typeof QScrollArea> | null> =
-      ref(null);
 
     const dialogOpen = computed({
       get: (): boolean => props.modelValue,
@@ -64,23 +61,8 @@ export default defineComponent({
       },
     });
 
-    /**
-     * Scrolls to top of dialog
-     * Uses method from ScrollArea component - `scrollAreaRef` to scroll
-     * scrollAreaRef parameters:
-     * - vertical|horizontal
-     * - position (px)
-     * - duration (ms)
-     */
-    const scrollToTop = (): void => {
-      if (scrollAreaRef.value) {
-        scrollAreaRef.value.setScrollPosition('vertical', 0, 150);
-      }
-    };
-
     const setState = (value: 'form' | 'default'): void => {
       activeState.value = value;
-      scrollToTop();
     };
 
     const reset = (): void => {
@@ -90,9 +72,8 @@ export default defineComponent({
 
     return {
       STATES,
-      activeState,
       dialogOpen,
-      scrollAreaRef,
+      activeState,
       setState,
       reset,
     };
@@ -132,21 +113,19 @@ export default defineComponent({
 
       <!-- Dialog body -->
       <q-card-section
-        class="items-center q-pa-none"
+        class="scroll items-center q-pa-none"
         data-cy="dialog-content"
-        style="flex-wrap: wrap"
+        style="max-height: 50vh; flex-wrap: wrap"
       >
-        <q-scroll-area ref="scrollAreaRef" style="height: 50vh">
-          <div class="q-py-md">
-            <!-- Content for state Default -->
-            <slot
-              name="content"
-              :state="activeState"
-              :setState="setState"
-              :reset="reset"
-            ></slot>
-          </div>
-        </q-scroll-area>
+        <div class="q-py-md">
+          <!-- Content for state Default -->
+          <slot
+            name="content"
+            :state="activeState"
+            :setState="setState"
+            :reset="reset"
+          ></slot>
+        </div>
       </q-card-section>
 
       <!-- Button close dialog -->
