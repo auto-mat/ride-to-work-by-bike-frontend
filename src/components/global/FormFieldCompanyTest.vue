@@ -8,10 +8,10 @@
  * @description * Use this component to test the FormFieldCompany component.
  *
  * @components
- * - `FormFieldCompany`: Component to render email input field.
+ * - `FormFieldCompany`: Component to render company input field.
  *
  * @example
- * <form-field-email-test />
+ * <form-field-company-test />
  */
 
 // libraries
