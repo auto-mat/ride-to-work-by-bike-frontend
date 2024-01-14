@@ -10,7 +10,7 @@
  * Note: This component is commonly used in `FormRegisterCoordinator`.
  *
  * @props
- * - `value` (string, required): The object representing user input.
+ * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
  *
  * @events
@@ -40,10 +40,6 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true,
-    },
-    testing: {
-      type: Boolean,
-      default: false,
     },
   },
   setup(props, { emit }) {
@@ -115,7 +111,6 @@ export default defineComponent({
         class="q-mt-sm"
         id="form-company"
         name="company"
-        :lazy-rules="!testing"
         :rules="[
           (val) =>
             isFilled(val) ||
