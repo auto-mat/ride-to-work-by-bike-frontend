@@ -44,6 +44,23 @@ describe('<FormFieldCompany>', () => {
         .should('eq', 'Company 1');
     });
 
+    it('allows to search through options', () => {
+      // search for option
+      cy.dataCy('form-company').find('input').focus();
+      cy.dataCy('form-company').find('input').type('2');
+      // select option
+      cy.get('.q-menu')
+        .should('be.visible')
+        .within(() => {
+          cy.get('.q-item').first().click();
+        });
+      // test selected option
+      cy.dataCy('form-company')
+        .find('input')
+        .invoke('val')
+        .should('eq', 'Company 2');
+    });
+
     it('validates company field correctly', () => {
       cy.dataCy('form-company').find('input').focus();
       cy.dataCy('form-company').find('input').blur();
