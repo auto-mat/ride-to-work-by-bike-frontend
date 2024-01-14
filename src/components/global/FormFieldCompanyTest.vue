@@ -36,5 +36,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <form-field-company v-model="company" :testing="true" />
+  <form-field-company v-model="company" />
 </template>
