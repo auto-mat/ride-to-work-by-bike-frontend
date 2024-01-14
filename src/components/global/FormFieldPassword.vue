@@ -13,7 +13,7 @@
  * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
  * - `bgColor` (string, default: 'transparent'): The background color of the
- * input.
+ *   input.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
