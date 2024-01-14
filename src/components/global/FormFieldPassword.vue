@@ -10,8 +10,10 @@
  * `FormChallenge`.
  *
  * @props
- * - `value` (string, required): The object representing user input.
+ * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
+ * - `bgColor` (string, default: 'transparent'): The background color of the
+ * input.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -38,10 +40,6 @@ export default defineComponent({
     bgColor: {
       type: String as () => 'white' | 'transparent',
       default: 'transparent',
-    },
-    testing: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: ['update:modelValue'],
