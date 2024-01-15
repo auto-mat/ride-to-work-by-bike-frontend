@@ -183,7 +183,7 @@ export default defineComponent({
           </div>
           <!-- Input: job title -->
           <form-field-text-required
-            v-model="formRegisterCoordinator.lastName"
+            v-model="formRegisterCoordinator.jobTitle"
             name="form-job-title"
             label="form.labelJobTitle"
             label-short="form.labelJobTitleShort"
