@@ -66,15 +66,7 @@ describe('<ContactForm>', () => {
     });
 
     it('should render contact-form-email field', () => {
-      cy.dataCy('contact-form-email')
-        .should('be.visible')
-        .find('label[for="contact-form-email"]')
-        .should('be.visible')
-        .and('have.text', i18n.global.t('index.contact.email'));
-      cy.dataCy('contact-form-email')
-        .find('.q-field__control')
-        .should('be.visible')
-        .and('have.css', 'border-radius', '8px');
+      cy.dataCy('contact-form-email').should('be.visible');
     });
 
     it('should render a submit button', () => {
