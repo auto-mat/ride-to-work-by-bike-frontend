@@ -23,11 +23,17 @@
 // libraries
 import { defineComponent, reactive } from 'vue';
 
+// components
+import FormFieldEmail from './../global/FormFieldEmail.vue';
+
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
 export default defineComponent({
   name: 'ContactForm',
+  components: {
+    FormFieldEmail,
+  },
   emits: ['formSubmit'],
   setup(props, { emit }) {
     const contactForm = reactive({
@@ -108,28 +114,11 @@ export default defineComponent({
         </template>
       </q-file>
     </div>
-    <!-- Email input widget -->
-    <div class="q-mt-none" data-cy="contact-form-email">
-      <label for="contact-form-email" class="text-caption text-bold">
-        {{ $t('index.contact.email') }}
-      </label>
-      <q-input
-        dense
-        outlined
-        lazy-rules
-        v-model="contactForm.email"
-        id="contact-form-email"
-        name="email"
-        type="email"
-        :rules="[
-          (val) =>
-            (isFilled(val) && isEmail(val)) ||
-            $t('index.contact.emailRequired'),
-        ]"
-        class="q-mt-sm"
-        data-cy="contact-form-email-input"
-      />
-    </div>
+    <!-- Input: email -->
+    <form-field-email
+      v-model="contactForm.email"
+      data-cy="contact-form-email"
+    />
     <!-- Submit button -->
     <div class="flex justify-end">
       <q-btn
