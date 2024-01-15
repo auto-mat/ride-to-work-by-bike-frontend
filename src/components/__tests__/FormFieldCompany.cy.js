@@ -80,10 +80,26 @@ describe('<FormFieldCompany>', () => {
         .within(() => {
           cy.get('.q-item').first().click();
         });
-      cy.dataCy('form-company')
-        .find('.q-field__messages')
-        .children()
-        .should('not.exist');
+      cy.dataCy('form-company').find('.q-field__messages').should('not.exist');
+    });
+
+    it('renders input and button in a column layout', () => {
+      cy.testElementPercentageWidth(cy.dataCy('col-input'), 90);
+      cy.testElementPercentageWidth(cy.dataCy('col-button'), 10);
+    });
+  });
+
+  context('mobile', () => {
+    beforeEach(() => {
+      cy.mount(FormFieldCompanyTest, {
+        props: {},
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('renders input and button in a stacked layout', () => {
+      cy.testElementPercentageWidth(cy.dataCy('col-input'), 100);
+      cy.testElementPercentageWidth(cy.dataCy('col-button'), 100);
     });
   });
 });

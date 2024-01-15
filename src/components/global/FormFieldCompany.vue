@@ -92,60 +92,67 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="row gap-24">
-    <div class="col" data-cy="form-company">
-      <!-- Label -->
-      <label for="form-company" class="text-caption text-bold">
-        {{ $t('form.labelCompany') }}
-      </label>
-      <!-- Input: Autocomplete -->
-      <q-select
-        dense
-        outlined
-        use-input
-        hide-selected
-        fill-input
-        input-debounce="0"
-        :model-value="company"
-        :options="options"
-        class="q-mt-sm"
-        id="form-company"
-        name="company"
-        :rules="[
-          (val) =>
-            isFilled(val) ||
-            $t('form.messageFieldRequired', {
-              fieldName: $t('form.labelCompanyShort'),
-            }),
-        ]"
-        @filter="onFilter"
-        @input-value="onInputValue"
-        data-cy="form-company-input"
+  <div data-cy="form-company">
+    <!-- Label -->
+    <label for="form-company" class="text-caption text-bold">
+      {{ $t('form.labelCompany') }}
+    </label>
+    <div class="row">
+      <div class="col-12 col-sm" data-cy="col-input">
+        <!-- Input: Autocomplete -->
+        <q-select
+          dense
+          outlined
+          use-input
+          hide-selected
+          fill-input
+          hide-bottom-space
+          input-debounce="0"
+          :model-value="company"
+          :options="options"
+          class="q-mt-sm"
+          id="form-company"
+          name="company"
+          :rules="[
+            (val) =>
+              isFilled(val) ||
+              $t('form.messageFieldRequired', {
+                fieldName: $t('form.labelCompanyShort'),
+              }),
+          ]"
+          @filter="onFilter"
+          @input-value="onInputValue"
+          data-cy="form-company-input"
+        >
+          <!-- Item: No option -->
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                {{ $t('form.messageNoCompany') }}
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+      </div>
+      <div
+        class="col-12 col-sm-auto flex items-start justify-end q-pt-sm q-pl-md"
+        style="margin-top: 2px"
+        data-cy="col-button"
       >
-        <!-- Item: No option -->
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              {{ $t('form.messageNoCompany') }}
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
-    </div>
-    <div class="col-auto flex items-center q-pt-sm">
-      <!-- Button: Add company -->
-      <q-btn
-        flat
-        rounded
-        icon="mdi-plus"
-        color="primary"
-        data-cy="button-add-company"
-      >
-        <!-- Label -->
-        <span class="inline-block q-pl-xs">
-          {{ $t('register.challenge.buttonAddCompany') }}
-        </span>
-      </q-btn>
+        <!-- Button: Add company -->
+        <q-btn
+          flat
+          rounded
+          icon="mdi-plus"
+          color="primary"
+          data-cy="button-add-company"
+        >
+          <!-- Label -->
+          <span class="inline-block q-pl-xs">
+            {{ $t('register.challenge.buttonAddCompany') }}
+          </span>
+        </q-btn>
+      </div>
     </div>
   </div>
 </template>
