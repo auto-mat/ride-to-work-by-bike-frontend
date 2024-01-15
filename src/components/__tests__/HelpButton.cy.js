@@ -243,7 +243,8 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-message-input')
         .should('be.visible')
         .type('what is the minimum distance to ride to work?');
-      cy.dataCy('contact-form-email-input')
+      cy.dataCy('contact-form-email')
+        .find('input')
         .should('be.visible')
         .type('P7LlQ@example.com');
       cy.dataCy('contact-form-submit').should('be.visible').click();
@@ -294,7 +295,12 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-email')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('index.contact.emailRequired'));
+        .and(
+          'contain',
+          i18n.global.t('form.messageFieldRequired', {
+            fieldName: i18n.global.t('form.labelEmail'),
+          }),
+        );
       cy.dataCy('contact-form-email')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
