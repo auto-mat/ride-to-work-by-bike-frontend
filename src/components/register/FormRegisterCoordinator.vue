@@ -18,10 +18,7 @@
  */
 
 // libraries
-import { defineComponent, reactive, ref } from 'vue';
-
-// composables
-import { useValidation } from '../../composables/useValidation';
+import { defineComponent, reactive } from 'vue';
 
 // components
 import FormFieldCompany from '../global/FormFieldCompany.vue';
@@ -55,9 +52,6 @@ export default defineComponent({
       terms: false,
     });
 
-    const { isEmail, isFilled, isIdentical, isPhone, isStrongPassword } =
-      useValidation();
-
     const onSubmit = (): void => {
       // noop
     };
@@ -68,11 +62,6 @@ export default defineComponent({
 
     return {
       formRegisterCoordinator,
-      isEmail,
-      isFilled,
-      isIdentical,
-      isPhone,
-      isStrongPassword,
       onReset,
       onSubmit,
     };
