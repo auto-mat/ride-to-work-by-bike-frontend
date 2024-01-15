@@ -25,6 +25,7 @@ import { defineComponent, reactive } from 'vue';
 
 // components
 import FormFieldEmail from './../global/FormFieldEmail.vue';
+import FormFieldTextRequired from './FormFieldTextRequired.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
@@ -33,6 +34,7 @@ export default defineComponent({
   name: 'ContactForm',
   components: {
     FormFieldEmail,
+    FormFieldTextRequired,
   },
   emits: ['formSubmit'],
   setup(props, { emit }) {
@@ -63,23 +65,12 @@ export default defineComponent({
 
 <template>
   <q-form class="q-gutter-md" @submit.prevent="onSubmit">
-    <!-- Subject input widget -->
-    <div class="q-mt-lg" data-cy="contact-form-subject">
-      <label for="contact-form-subject" class="text-caption text-bold">
-        {{ $t('index.contact.subject') }}
-      </label>
-      <q-input
-        dense
-        outlined
-        lazy-rules
-        v-model="contactForm.subject"
-        id="contact-form-subject"
-        name="subject"
-        :rules="[(val) => isFilled(val) || $t('index.contact.subjectRequired')]"
-        class="q-mt-sm"
-        data-cy="contact-form-subject-input"
-      />
-    </div>
+    <!-- Input: Subject -->
+    <form-field-text-required
+      v-model="contactForm.subject"
+      name="subject"
+      label="index.contact.subject"
+    />
     <!-- Message input widget -->
     <div class="q-mt-none" data-cy="contact-form-message">
       <label for="contact-form-message" class="text-caption text-bold">
