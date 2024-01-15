@@ -257,7 +257,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-last-name')
         .find('input')
         .type('Doe');
-      cy.dataCy('form-register-coordinator-company').click();
+      cy.dataCy('form-register-coordinator-company').find('input').click();
       cy.get('.q-menu .q-item').first().click();
       cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
@@ -313,7 +313,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-last-name')
         .find('input')
         .type('Doe');
-      cy.dataCy('form-register-coordinator-company').click();
+      cy.dataCy('form-register-coordinator-company').find('input').click();
       cy.get('.q-menu .q-item').first().click();
       cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
@@ -372,7 +372,7 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-last-name')
         .find('input')
         .type('Doe');
-      cy.dataCy('form-register-coordinator-company').click();
+      cy.dataCy('form-register-coordinator-company').find('input').click();
       cy.get('.q-menu .q-item').first().click();
       cy.dataCy('form-register-coordinator-job-title').find('input').type('IT');
       cy.dataCy('form-register-coordinator-email')
