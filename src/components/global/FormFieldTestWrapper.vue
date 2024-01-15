@@ -7,6 +7,10 @@
  *
  * @description * Use this component to test the FormField- components.
  *
+ * @props
+ * - `component` (string, required): The name of the tested component.
+ * - `compareValue` (string): The value used for password comparison.
+ *
  * @components
  * - `FormFieldPassword`: Component to render password input field.
  * - `FormFieldPasswordConfirm`: Component to render password input field.
@@ -36,9 +40,6 @@ export default defineComponent({
     compareValue: {
       type: String,
     },
-    testing: {
-      type: Boolean,
-    },
   },
   setup() {
     const inputValue = ref('');
@@ -55,6 +56,5 @@ export default defineComponent({
     :is="component"
     v-model="inputValue"
     :compare-value="compareValue"
-    :testing="testing"
   />
 </template>
