@@ -237,7 +237,8 @@ describe('<HelpButton>', () => {
       cy.dataCy('dialog-content').scrollTo(0, 1200);
       cy.dataCy('button-contact').should('be.visible').click();
       cy.dataCy('dialog-help').find('h3').should('be.visible');
-      cy.dataCy('contact-form-subject-input')
+      cy.dataCy('contact-form-subject')
+        .find('input')
         .should('be.visible')
         .type('question');
       cy.dataCy('contact-form-message-input')
@@ -262,15 +263,21 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('index.contact.subjectRequired'));
+        .and(
+          'contain',
+          i18n.global.t('form.messageFieldRequired', {
+            fieldName: i18n.global.t('index.contact.subject'),
+          }),
+        );
       cy.dataCy('contact-form-subject')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
       cy.dataCy('dialog-content').scrollTo('top');
-      cy.dataCy('contact-form-subject-input')
+      cy.dataCy('contact-form-subject')
+        .find('input')
         .should('be.visible')
         .type('question');
-      cy.dataCy('contact-form-subject-input').blur();
+      cy.dataCy('contact-form-subject').find('input').blur();
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
         .should('be.empty');
