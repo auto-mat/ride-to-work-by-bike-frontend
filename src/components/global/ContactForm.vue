@@ -70,6 +70,7 @@ export default defineComponent({
       v-model="contactForm.subject"
       name="subject"
       label="index.contact.subject"
+      data-cy="contact-form-subject"
     />
     <!-- Message input widget -->
     <div class="q-mt-none" data-cy="contact-form-message">
