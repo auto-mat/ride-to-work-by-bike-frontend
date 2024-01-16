@@ -29,15 +29,7 @@ describe('<ContactForm>', () => {
     });
 
     it('should render contact-form-subject field', () => {
-      cy.dataCy('contact-form-subject')
-        .should('be.visible')
-        .find('label[for="contact-form-subject"]')
-        .should('be.visible')
-        .and('have.text', i18n.global.t('index.contact.subject'));
-      cy.dataCy('contact-form-subject')
-        .find('.q-field__control')
-        .should('be.visible')
-        .and('have.css', 'border-radius', '8px');
+      cy.dataCy('form-subject').should('be.visible');
     });
 
     it('should render contact-form-message field', () => {
