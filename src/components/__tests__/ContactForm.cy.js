@@ -29,7 +29,7 @@ describe('<ContactForm>', () => {
     });
 
     it('should render contact-form-subject field', () => {
-      cy.dataCy('form-subject').should('be.visible');
+      cy.dataCy('contact-form-subject').should('be.visible');
     });
 
     it('should render contact-form-message field', () => {
