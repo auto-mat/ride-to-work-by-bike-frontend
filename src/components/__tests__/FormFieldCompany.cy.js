@@ -1,4 +1,4 @@
-import FormFieldCompanyTest from 'components/global/FormFieldCompanyTest.vue';
+import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldCompany>', () => {
@@ -8,8 +8,10 @@ describe('<FormFieldCompany>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldCompanyTest, {
-        props: {},
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldCompany',
+        },
       });
       cy.viewport('macbook-16');
     });
@@ -91,8 +93,10 @@ describe('<FormFieldCompany>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(FormFieldCompanyTest, {
-        props: {},
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldCompany',
+        },
       });
       cy.viewport('iphone-6');
     });
