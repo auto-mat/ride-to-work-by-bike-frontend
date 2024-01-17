@@ -84,40 +84,49 @@ describe('<FormFieldEmail>', () => {
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('simple@example.com');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('very.common@example.com');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('x@example.com');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type(
         'long.email-address-with-hyphens@and.subdomains.example.com',
       );
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('user.name+tag+sorting@example.com');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('name/surname@example.com');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('mailhost!username@example.org');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('user%example.com@example.org');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
       // valid email
       cy.dataCy('form-email-input').type('user-@example.org');
+      cy.dataCy('form-email-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-email-input').clear();
     });
