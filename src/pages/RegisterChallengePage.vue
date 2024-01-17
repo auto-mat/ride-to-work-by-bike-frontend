@@ -24,11 +24,16 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
+
+// types
+import type { FormPersonalDetailsFields } from 'src/components/form/FormPersonalDetails.vue';
 
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
     LoginRegisterHeader,
+    FormPersonalDetails,
   },
   setup() {
     const step = ref(1);
@@ -71,6 +76,16 @@ export default defineComponent({
     }`;
     const doneIconImgSrcStepper4 = doneIcon;
 
+    const personalDetails = ref<FormPersonalDetailsFields>({
+      firstName: '',
+      lastName: '',
+      nickname: '',
+      gender: '',
+      email: '',
+      newsletter: [],
+      terms: false,
+    });
+
     return {
       challengeMonth,
       containerWidth,
@@ -87,6 +102,7 @@ export default defineComponent({
       iconImgSrcStepper4,
       activeIconImgSrcStepper4,
       doneIconImgSrcStepper4,
+      personalDetails,
     };
   },
 });
@@ -129,7 +145,10 @@ export default defineComponent({
             class="bg-white"
             data-cy="step-1"
           >
-            Content of step 1
+            <form-personal-details
+              :form-values="personalDetails"
+              @update:form-values="personalDetails = $event"
+            />
             <q-stepper-navigation>
               <q-btn
                 unelevated
