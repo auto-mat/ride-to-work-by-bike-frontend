@@ -23,6 +23,7 @@
 import { defineComponent, ref } from 'vue';
 
 // components
+import FormFieldEmail from './FormFieldEmail.vue';
 import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
@@ -31,6 +32,7 @@ import FormFieldTextRequired from './FormFieldTextRequired.vue';
 export default defineComponent({
   name: 'FormFieldTestWrapper',
   components: {
+    FormFieldEmail,
     FormFieldPassword,
     FormFieldPasswordConfirm,
     FormFieldPhone,

@@ -1,4 +1,4 @@
-import FormFieldEmailTest from 'components/global/FormFieldEmailTest.vue';
+import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldEmail>', () => {
@@ -12,7 +12,11 @@ describe('<FormFieldEmail>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldEmailTest);
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldEmail',
+        },
+      });
       cy.viewport('macbook-16');
     });
 
