@@ -72,7 +72,7 @@ export default defineComponent({
 <template>
   <div>
     <div class="row q-col-gutter-md">
-      <div class="col-12 col-md">
+      <div class="col-12 col-sm">
         <form-field-text-required
           v-model="personalDetails.firstName"
           name="firstName"
@@ -82,7 +82,7 @@ export default defineComponent({
           @update:model-value="onUpdate"
         />
       </div>
-      <div class="col-12 col-md">
+      <div class="col-12 col-sm">
         <form-field-text-required
           v-model="personalDetails.lastName"
           name="lastName"
