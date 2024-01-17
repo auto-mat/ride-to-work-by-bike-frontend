@@ -81,11 +81,7 @@ export default defineComponent({
     hide-bottom-space
     :model-value="radioValue"
     :rules="[
-      (val: string) =>
-        isFilled(val) ||
-        $t('form.messageFieldRequired', {
-          fieldName: label,
-        }),
+      (val: string) => isFilled(val) || $t('form.messageOptionRequired'),
     ]"
   >
     <div class="q-gutter-sm">
