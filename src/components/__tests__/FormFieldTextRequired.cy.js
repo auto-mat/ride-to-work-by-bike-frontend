@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import FormFieldTextRequiredTest from 'components/global/FormFieldTextRequiredTest.vue';
+import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
@@ -13,8 +13,12 @@ describe('<FormFieldTextRequired>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldTextRequiredTest, {
-        props: {},
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldTextRequired',
+          name: 'text-required',
+          label: 'form.labelTextRequired',
+        },
       });
       cy.viewport('macbook-16');
     });

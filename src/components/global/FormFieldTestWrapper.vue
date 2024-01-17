@@ -25,12 +25,14 @@ import { defineComponent, ref } from 'vue';
 // components
 import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
+import FormFieldTextRequired from './FormFieldTextRequired.vue';
 
 export default defineComponent({
   name: 'FormFieldTestWrapper',
   components: {
     FormFieldPassword,
     FormFieldPasswordConfirm,
+    FormFieldTextRequired,
   },
   props: {
     component: {
@@ -39,6 +41,15 @@ export default defineComponent({
     },
     compareValue: {
       type: String,
+    },
+    name: {
+      type: String,
+    },
+    label: {
+      type: String,
+    },
+    testing: {
+      type: Boolean,
     },
   },
   setup() {
@@ -55,6 +66,8 @@ export default defineComponent({
   <component
     :is="component"
     v-model="inputValue"
+    :name="name"
+    :label="label"
     :compare-value="compareValue"
   />
 </template>
