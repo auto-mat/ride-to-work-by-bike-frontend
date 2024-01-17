@@ -156,9 +156,3 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-:deep(.q-field__control) {
-  border-radius: 8px;
-}
-</style>

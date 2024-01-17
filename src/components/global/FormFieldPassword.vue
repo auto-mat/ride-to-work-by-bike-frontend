@@ -108,9 +108,3 @@ export default defineComponent({
     </q-input>
   </div>
 </template>
-
-<style lang="scss" scoped>
-:deep(.q-field__control) {
-  border-radius: 8px;
-}
-</style>

@@ -226,9 +226,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-:deep(.q-field__control) {
-  border-radius: 8px;
-}
 :deep(.q-checkbox__bg) {
   border: 1px solid $grey-6;
   border-radius: 4px;
