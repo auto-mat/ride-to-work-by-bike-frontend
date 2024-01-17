@@ -92,6 +92,27 @@ export default defineComponent({
           @update:model-value="onUpdate"
         />
       </div>
+      <div class="col-12">
+        <div data-cy="form-personal-details-nickname">
+          <label
+            for="form-nickname"
+            class="text-grey-10 text-caption text-bold"
+          >
+            {{ $t('form.labelNicknameOptional') }}
+          </label>
+          <q-input
+            dense
+            outlined
+            type="text"
+            v-model="personalDetails.nickname"
+            name="nickname"
+            :hint="$t('form.hintNickname')"
+            id="form-nickname"
+            class="q-mt-sm"
+            @change="onUpdate"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
