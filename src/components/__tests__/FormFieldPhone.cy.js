@@ -1,4 +1,4 @@
-import FormFieldPhoneTest from 'components/global/FormFieldPhoneTest.vue';
+import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldPhone>', () => {
@@ -12,7 +12,11 @@ describe('<FormFieldPhone>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldPhoneTest);
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldPhone',
+        },
+      });
       cy.viewport('macbook-16');
     });
     it('validates phone number correctly', () => {
@@ -118,17 +122,21 @@ describe('<FormFieldPhone>', () => {
           i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
         );
       cy.dataCy('form-phone-input').clear();
+      cy.dataCy('form-phone-input').blur();
 
       // valid phone
       cy.dataCy('form-phone-input').type('+420 736 123 456');
+      cy.dataCy('form-phone-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-phone-input').clear();
       // valid phone
       cy.dataCy('form-phone-input').type('+420736123456');
+      cy.dataCy('form-phone-input').blur();
       cy.get('.q-field__messages').should('be.empty');
       cy.dataCy('form-phone-input').clear();
       // valid phone
       cy.dataCy('form-phone-input').type('736123456');
+      cy.dataCy('form-phone-input').blur();
       cy.get('.q-field__messages').should('be.empty');
     });
   });

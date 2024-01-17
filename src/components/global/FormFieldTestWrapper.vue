@@ -25,6 +25,7 @@ import { defineComponent, ref } from 'vue';
 // components
 import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
+import FormFieldPhone from './FormFieldPhone.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 
 export default defineComponent({
@@ -32,6 +33,7 @@ export default defineComponent({
   components: {
     FormFieldPassword,
     FormFieldPasswordConfirm,
+    FormFieldPhone,
     FormFieldTextRequired,
   },
   props: {
