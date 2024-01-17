@@ -10,10 +10,19 @@
  * @props
  * - `component` (string, required): The name of the tested component.
  * - `compareValue` (string): The value used for password comparison.
+ * - `label` (string): The translation key used for input label in tests.
+ * - `name` (string): The name used for id and test selectors.
+ * - `options` (array): The options used for radio button tests.
  *
  * @components
+ * - `FormFieldCompany`: Component to render company input field.
+ * - `FormFieldEmail`: Component to render email input field.
  * - `FormFieldPassword`: Component to render password input field.
- * - `FormFieldPasswordConfirm`: Component to render password input field.
+ * - `FormFieldPasswordConfirm`: Component to render password confirm input
+ *   field.
+ * - `FormFieldPhone`: Component to render phone input field.
+ * - `FormFieldRadioRequired`: Component to render radio input field.
+ * - `FormFieldTextRequired`: Component to render text input field.
  *
  * @example
  * <form-field-test-wrapper component="FormFieldPassword" :testing="true" />
@@ -28,6 +37,7 @@ import FormFieldEmail from './FormFieldEmail.vue';
 import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
+import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 
 export default defineComponent({
@@ -38,6 +48,7 @@ export default defineComponent({
     FormFieldPassword,
     FormFieldPasswordConfirm,
     FormFieldPhone,
+    FormFieldRadioRequired,
     FormFieldTextRequired,
   },
   props: {
@@ -48,14 +59,14 @@ export default defineComponent({
     compareValue: {
       type: String,
     },
-    name: {
-      type: String,
-    },
     label: {
       type: String,
     },
-    testing: {
-      type: Boolean,
+    name: {
+      type: String,
+    },
+    options: {
+      type: Array as () => { label: string; value: string }[],
     },
   },
   setup() {
@@ -75,5 +86,6 @@ export default defineComponent({
     :name="name"
     :label="label"
     :compare-value="compareValue"
+    :options="options"
   />
 </template>
