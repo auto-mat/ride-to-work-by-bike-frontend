@@ -6,11 +6,7 @@ const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
 
 describe('<FormFieldTestWrapper>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(
-      ['form.messageOptionRequired'],
-      'form',
-      i18n,
-    );
+    cy.testLanguageStringsInContext(['messageOptionRequired'], 'form', i18n);
   });
 
   context('desktop', () => {
