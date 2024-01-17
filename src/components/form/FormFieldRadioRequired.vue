@@ -16,6 +16,7 @@
  *   - label (string)
  *   - value (string)
  * - `label` (string, required): The translation key for the label.
+ * - `inline` (boolean, default: false): Buttons in row layout
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -42,6 +43,10 @@ export default defineComponent({
     options: {
       type: Array as () => { label: string; value: string }[],
       required: true,
+    },
+    inline: {
+      type: Boolean,
+      default: false,
     },
     label: {
       type: String,
@@ -84,7 +89,13 @@ export default defineComponent({
     ]"
   >
     <div class="q-gutter-sm">
-      <q-option-group v-model="radioValue" :options="options" color="primary" />
+      <q-option-group
+        v-model="radioValue"
+        :options="options"
+        :inline="inline"
+        color="primary"
+        data-cy="form-field-radio"
+      />
     </div>
   </q-field>
 </template>
