@@ -58,12 +58,12 @@ messagePasswordNotIdentical = "Heslá sa nezhodujú"
 messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 
 [form.personalDetails]
-titleGender = "Pohlavie"
-titleNewsletter = "O čom chcete byť informovaní e-mailom"
 labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"
 labelNewsletterChallenges = "O budúcich výzvach"
 labelNewsletterEvents = "Chcem dostávať informácie o sprievodných podujatiach (cyklojazdy, raňajky...) a špeciálnych ponukách."
 labelNewsletterMobility = "O udržateľnej mobilite"
+titleGender = "Pohlavie"
+titleNewsletter = "O čom chcete byť informovaní e-mailom"
 
 [index]
 title = "Domovská stránka"
