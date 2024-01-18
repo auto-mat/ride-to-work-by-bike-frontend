@@ -1,8 +1,19 @@
+import { colors } from 'quasar';
+
 import FormPersonalDetails from 'components/form/FormPersonalDetails.vue';
 import { i18n } from '../../boot/i18n';
 
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
+
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
+    cy.testLanguageStringsInContext(['man', 'woman'], 'global', i18n);
+    cy.testLanguageStringsInContext(
+      ['hintNickname', 'messageOptionRequired', 'messageTermsRequired'],
+      'form',
+      i18n,
+    );
     cy.testLanguageStringsInContext(
       [
         'labelNewsletterAll',
@@ -43,15 +54,30 @@ describe('<FormPersonalDetails>', () => {
     });
 
     it('renders form field nickname', () => {
-      cy.dataCy('form-personal-details-nickname').should('be.visible');
+      cy.dataCy('form-personal-details-nickname')
+        .should('be.visible')
+        .find('label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '12px');
     });
 
     it('renders radio select gender', () => {
-      cy.dataCy('form-personal-details-gender').should('be.visible');
+      cy.dataCy('form-personal-details-gender')
+        .should('be.visible')
+        .find('label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '12px');
     });
 
     it('renders checkbox select newsletter', () => {
-      cy.dataCy('form-personal-details-newsletter').should('be.visible');
+      cy.dataCy('form-personal-details-newsletter')
+        .should('be.visible')
+        .find('label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '12px');
     });
 
     it('renders checkbox terms', () => {
