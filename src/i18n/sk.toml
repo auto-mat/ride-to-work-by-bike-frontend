@@ -16,6 +16,10 @@ inviteFriends = "Pozvať priateľov"
 donate = "Darujte"
 more = "Viac"
 
+[global]
+man = "Muž"
+woman = "Žena"
+
 [time]
 day = "deň | dni"
 hour = "hodina | hodín"
@@ -51,6 +55,15 @@ messageOptionRequired = "Vyberte jednu z možností"
 messagePhoneInvalid = "Vyplňte platné telefónne číslo"
 messagePasswordStrong = "Heslo musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 messagePasswordNotIdentical = "Heslá sa nezhodujú"
+messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
+
+[form.personalDetails]
+titleGender = "Pohlavie"
+titleNewsletter = "O čom chcete byť informovaní e-mailom"
+labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"
+labelNewsletterChallenges = "O budúcich výzvach"
+labelNewsletterEvents = "Chcem dostávať informácie o sprievodných podujatiach (cyklojazdy, raňajky...) a špeciálnych ponukách."
+labelNewsletterMobility = "O udržateľnej mobilite"
 
 [index]
 title = "Domovská stránka"

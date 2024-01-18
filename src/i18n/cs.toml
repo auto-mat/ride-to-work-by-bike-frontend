@@ -16,6 +16,10 @@ inviteFriends = "Pozvat přátele"
 donate = "Darujte"
 more = "Více"
 
+[global]
+man = "Muž"
+woman = "Žena"
+
 [time]
 day = "den | dní"
 hour = "hodina | hodin"
@@ -51,7 +55,15 @@ messageOptionRequired = "Prosím, zvolte jednu z možností"
 messagePhoneInvalid = "Prosím vyplňte platné telefonní číslo"
 messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 messagePasswordNotIdentical = "Hesla se neshodují"
+messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 
+[form.personalDetails]
+titleGender = "Pohlaví"
+titleNewsletter = "O čem chcete být informováni e-mailem"
+labelNewsletterAll = "O všech informacích od Do práce na kole"
+labelNewsletterChallenges = "O budoucích výzvách"
+labelNewsletterEvents = "Chci dostávat info o doprovodných akcích (cyklojízdách, snídaních...) a akčních nabídkách."
+labelNewsletterMobility = "O udržitelné mobilitě"
 
 [index]
 title = "Domov"

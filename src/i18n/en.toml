@@ -16,6 +16,10 @@ inviteFriends = "Invite friends"
 donate = "Donate"
 more = "More"
 
+[global]
+man = "Man"
+woman = "Woman"
+
 [time]
 day = "day | days"
 hour = "hour | hours"
@@ -51,6 +55,15 @@ messageOptionRequired = "Please select an option"
 messagePhoneInvalid = "Please fill in a valid phone number"
 messagePasswordStrong = "Password must contain at least 6 characters and at least 1 letter."
 messagePasswordNotIdentical = "Passwords don't match"
+messageTermsRequired = "You must consent to the processing of personal data"
+
+[form.personalDetails]
+titleGender = "Gender"
+titleNewsletter = "What you want to be informed about by e-mail"
+labelNewsletterAll = "About everything around Ride to Work by Bike"
+labelNewsletterChallenges = "About upcoming challenges"
+labelNewsletterEvents = "I want to receive info about accompanying events (bike rides, breakfasts...) and special offers."
+labelNewsletterMobility = "About sustainable mobility"
 
 [index]
 title = "Home"
