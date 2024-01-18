@@ -111,8 +111,8 @@ export default defineComponent({
           name="firstName"
           label="form.labelFirstName"
           autocomplete="given-name"
-          data-cy="form-personal-details-first-name"
           @update:model-value="onUpdate"
+          data-cy="form-personal-details-first-name"
         />
       </div>
       <!-- Input: Last name -->
@@ -122,8 +122,8 @@ export default defineComponent({
           name="lastName"
           label="form.labelLastName"
           autocomplete="family-name"
-          data-cy="form-personal-details-last-name"
           @update:model-value="onUpdate"
+          data-cy="form-personal-details-last-name"
         />
       </div>
       <!-- Input: Nickname -->
@@ -149,7 +149,7 @@ export default defineComponent({
         </div>
       </div>
       <!-- Input: Gender -->
-      <div class="col-12">
+      <div class="col-12" data-cy="form-personal-details-gender">
         <!-- Label -->
         <label for="form-gender" class="text-grey-10 text-caption text-bold">
           {{ $t('form.personalDetails.titleGender') }}
@@ -165,6 +165,7 @@ export default defineComponent({
           color="primary"
           type="radio"
           class="q-gutter-md q-mt-xs"
+          data-cy="form-gender-input"
         >
           <!-- Default slot: label (used so that label is translated dynamically) -->
           <template v-slot:label="option">
@@ -173,7 +174,7 @@ export default defineComponent({
         </q-option-group>
       </div>
       <!-- Input: Newsletter -->
-      <div class="col-12">
+      <div class="col-12" data-cy="form-personal-details-newsletter">
         <!-- Label -->
         <label for="form-gender" class="text-grey-10 text-caption text-bold">
           {{ $t('form.personalDetails.titleNewsletter') }}
@@ -186,6 +187,7 @@ export default defineComponent({
           color="primary"
           type="checkbox"
           class="q-gutter-md q-mt-xs"
+          data-cy="form-newsletter-input"
         >
           <!-- Default slot: label (used so that label is translated dynamically) -->
           <template v-slot:label="option">
@@ -211,6 +213,7 @@ export default defineComponent({
             :false-value="false"
             rules="required"
             class="text-grey-10"
+            data-cy="form-terms-input"
           >
             <!-- Default slot: label -->
             <span>
