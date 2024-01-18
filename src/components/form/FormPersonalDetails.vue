@@ -54,6 +54,36 @@ export default defineComponent({
   setup(props, { emit }) {
     const personalDetails: FormPersonalDetailsFields = props.formValues;
 
+    const newsletterOptions = [
+      {
+        label: 'form.personalDetails.labelNewsletterAll',
+        value: 'all',
+      },
+      {
+        label: 'form.personalDetails.labelNewsletterChallenges',
+        value: 'challenges',
+      },
+      {
+        label: 'form.personalDetails.labelNewsletterEvents',
+        value: 'events',
+      },
+      {
+        label: 'form.personalDetails.labelNewsletterMobility',
+        value: 'mobility',
+      },
+    ];
+
+    const genderOptions = [
+      {
+        label: 'global.man',
+        value: 'male',
+      },
+      {
+        label: 'global.woman',
+        value: 'female',
+      },
+    ];
+
     const onUpdate = () => {
       // wait for next tick to emit the value after update
       nextTick(() => {
@@ -62,6 +92,8 @@ export default defineComponent({
     };
 
     return {
+      genderOptions,
+      newsletterOptions,
       personalDetails,
       onUpdate,
     };
@@ -72,6 +104,7 @@ export default defineComponent({
 <template>
   <div>
     <div class="row q-col-gutter-md">
+      <!-- Input: First name -->
       <div class="col-12 col-sm">
         <form-field-text-required
           v-model="personalDetails.firstName"
@@ -82,6 +115,7 @@ export default defineComponent({
           @update:model-value="onUpdate"
         />
       </div>
+      <!-- Input: Last name -->
       <div class="col-12 col-sm">
         <form-field-text-required
           v-model="personalDetails.lastName"
@@ -92,6 +126,7 @@ export default defineComponent({
           @update:model-value="onUpdate"
         />
       </div>
+      <!-- Input: Nickname -->
       <div class="col-12">
         <div data-cy="form-personal-details-nickname">
           <label
@@ -113,8 +148,83 @@ export default defineComponent({
           />
         </div>
       </div>
+      <!-- Input: Gender -->
+      <div class="col-12">
+        <!-- Label -->
+        <label for="form-gender" class="text-grey-10 text-caption text-bold">
+          {{ $t('form.personalDetails.titleGender') }}
+        </label>
+        <!-- Radio group -->
+        <q-option-group
+          dense
+          inline
+          id="form-gender"
+          v-model="personalDetails.gender"
+          :options="genderOptions"
+          :rules="[(val: string) => !!val || $t('form.messageOptionRequired')]"
+          color="primary"
+          type="radio"
+          class="q-gutter-md q-mt-xs"
+        >
+          <!-- Default slot: label (used so that label is translated dynamically) -->
+          <template v-slot:label="option">
+            {{ $t(option.label) }}
+          </template>
+        </q-option-group>
+      </div>
+      <!-- Input: Newsletter -->
+      <div class="col-12">
+        <!-- Label -->
+        <label for="form-gender" class="text-grey-10 text-caption text-bold">
+          {{ $t('form.personalDetails.titleNewsletter') }}
+        </label>
+        <!-- Checkbox group -->
+        <q-option-group
+          dense
+          v-model="personalDetails.newsletter"
+          :options="newsletterOptions"
+          color="primary"
+          type="checkbox"
+          class="q-gutter-md q-mt-xs"
+        >
+          <!-- Default slot: label (used so that label is translated dynamically) -->
+          <template v-slot:label="option">
+            {{ $t(option.label) }}
+          </template>
+        </q-option-group>
+      </div>
+      <!-- Input: confirm consent -->
+      <div class="col-12" data-cy="form-personal-details-terms">
+        <q-field
+          dense
+          borderless
+          hide-bottom-space
+          :model-value="personalDetails.terms"
+          :rules="[(val) => !!val || $t('form.messageTermsRequired')]"
+        >
+          <q-checkbox
+            dense
+            id="form-personal-details-terms"
+            v-model="personalDetails.terms"
+            color="primary"
+            :true-value="true"
+            :false-value="false"
+            rules="required"
+            class="text-grey-10"
+          >
+            <!-- Default slot: label -->
+            <span>
+              {{ $t('register.coordinator.form.labelTerms') }}
+              <!-- Link: terms -->
+              <!-- TODO: Link to terms page -->
+              <a href="#" target="_blank" class="text-primary">{{
+                $t('register.coordinator.form.linkTerms')
+              }}</a
+              >.
+            </span>
+          </q-checkbox>
+        </q-field>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped lang="scss"></style>
