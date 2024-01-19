@@ -190,7 +190,6 @@ export default defineComponent({
           </q-step>
           <!-- Step: Payment -->
           <q-step
-            ref="stepPaymentRef"
             :name="2"
             :title="$t('register.challenge.titleStepPayment')"
             :icon="iconImgSrcStepper2"
@@ -200,7 +199,7 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-2"
           >
-            Content of step 2
+            <q-form ref="stepPaymentRef"> Content of step 2 </q-form>
             <q-stepper-navigation>
               <q-btn
                 unelevated
@@ -224,7 +223,6 @@ export default defineComponent({
           </q-step>
           <!-- Step: Participation -->
           <q-step
-            ref="stepParticipationRef"
             :name="3"
             :title="$t('register.challenge.titleStepParticipation')"
             :icon="iconImgSrcStepper3"
@@ -234,7 +232,7 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-3"
           >
-            Content of step 3
+            <q-form ref="stepParticipationRef"> Content of step 3 </q-form>
             <q-stepper-navigation>
               <q-btn
                 unelevated
@@ -258,7 +256,6 @@ export default defineComponent({
           </q-step>
           <!-- Step: Company -->
           <q-step
-            ref="stepCompanyRef"
             :name="4"
             :title="$t('register.challenge.titleStepCompany')"
             :icon="iconImgSrcStepper4"
@@ -268,7 +265,7 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-4"
           >
-            Content of step 4
+            <q-form ref="stepCompanyRef"> Content of step 4 </q-form>
             <q-stepper-navigation>
               <q-btn
                 unelevated
