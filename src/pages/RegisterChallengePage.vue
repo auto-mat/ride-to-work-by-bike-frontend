@@ -18,7 +18,7 @@
 
 // libraries
 import { defineComponent, ref } from 'vue';
-import { QStep, QStepper } from 'quasar';
+import { QForm, QStepper } from 'quasar';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -90,10 +90,10 @@ export default defineComponent({
 
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
-    const stepCompanyRef = ref<typeof QStep | null>(null);
-    const stepParticipationRef = ref<typeof QStep | null>(null);
-    const stepPaymentRef = ref<typeof QStep | null>(null);
-    const stepPersonalDetailsRef = ref<typeof QStep | null>(null);
+    const stepCompanyRef = ref<typeof QForm | null>(null);
+    const stepParticipationRef = ref<typeof QForm | null>(null);
+    const stepPaymentRef = ref<typeof QForm | null>(null);
+    const stepPersonalDetailsRef = ref<typeof QForm | null>(null);
 
     const { onBack, onContinue } = useStepperValidation({
       step,
