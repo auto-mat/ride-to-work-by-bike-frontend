@@ -7,3 +7,8 @@ export type FormPersonalDetailsFields = {
   newsletter: string[];
   terms: boolean;
 };
+
+export type FormOption = {
+  label: string;
+  value: string;
+};
