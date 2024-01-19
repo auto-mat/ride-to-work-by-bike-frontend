@@ -30,7 +30,10 @@ import { defineComponent, nextTick } from 'vue';
 import FormFieldTextRequired from 'components/global/FormFieldTextRequired.vue';
 
 // types
-import { FormPersonalDetailsFields } from 'src/components/types/Form';
+import {
+  FormOption,
+  FormPersonalDetailsFields,
+} from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
@@ -47,7 +50,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const personalDetails: FormPersonalDetailsFields = props.formValues;
 
-    const newsletterOptions = [
+    const newsletterOptions: FormOption[] = [
       {
         label: 'form.personalDetails.labelNewsletterAll',
         value: 'all',
@@ -66,7 +69,7 @@ export default defineComponent({
       },
     ];
 
-    const genderOptions = [
+    const genderOptions: FormOption[] = [
       {
         label: 'global.man',
         value: 'male',
@@ -77,9 +80,9 @@ export default defineComponent({
       },
     ];
 
-    const onUpdate = () => {
+    const onUpdate = (): void => {
       // wait for next tick to emit the value after update
-      nextTick(() => {
+      nextTick((): void => {
         emit('update:formValues', personalDetails);
       });
     };
