@@ -141,6 +141,7 @@ export default defineComponent({
             id="form-nickname"
             class="q-mt-sm"
             @change="onUpdate"
+            data-cy="form-nickname-input"
           />
         </div>
       </div>
