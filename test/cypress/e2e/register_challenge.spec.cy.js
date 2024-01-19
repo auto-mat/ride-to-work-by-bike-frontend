@@ -141,6 +141,30 @@ describe('Register Challenge page', () => {
       });
     });
 
+    it('does not change step if form is not valid', () => {
+      // click when form is empty
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      // click when last name is missing
+      cy.dataCy('form-firstName-input').type('John');
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      // click when terms are not checked
+      cy.dataCy('form-firstName-input').type('John');
+      cy.dataCy('form-lastName-input').type('Doe');
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+    });
+
     it('changes icons when step changes', () => {
       // active icon 1
       cy.dataCy('step-1')
@@ -155,6 +179,11 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      // fill in form data
+      cy.dataCy('form-firstName-input').type('John');
+      cy.dataCy('form-lastName-input').type('Doe');
+      cy.dataCy('form-nickname-input').type('Johnny');
+      cy.dataCy('form-terms-input').click();
       // change step
       cy.dataCy('step-1-continue').should('be.visible').click();
       // active icon 2
@@ -212,6 +241,11 @@ describe('Register Challenge page', () => {
         })
         .then(() => {
           // allows for a green route pass
+          // fill in form data
+          cy.dataCy('form-firstName-input').type('John');
+          cy.dataCy('form-lastName-input').type('Doe');
+          cy.dataCy('form-nickname-input').type('Johnny');
+          cy.dataCy('form-terms-input').click();
           cy.dataCy('step-1-continue').should('be.visible').click();
           cy.dataCy('step-2-continue').should('be.visible').click();
           cy.dataCy('step-3-continue').should('be.visible').click();
