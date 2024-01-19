@@ -29,15 +29,8 @@ import { defineComponent, nextTick } from 'vue';
 // components
 import FormFieldTextRequired from 'components/global/FormFieldTextRequired.vue';
 
-export type FormPersonalDetailsFields = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  nickname: string;
-  gender: string;
-  newsletter: string[];
-  terms: boolean;
-};
+// types
+import { FormPersonalDetailsFields } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
