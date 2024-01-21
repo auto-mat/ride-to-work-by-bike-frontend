@@ -118,13 +118,12 @@ export default defineComponent({
       type="radio"
       :options="options"
       class="q-gutter-md"
-      rules=""
       data-cy="form-field-option-group"
     >
       <!-- Custom option content -->
       <template v-slot:label="opt">
         <div
-          class="full-width row items-center q-py-md q-px-md"
+          class="full-width row items-center bg-white q-py-md q-px-md"
           :class="[opt.value === inputValue ? '' : 'bg-white']"
           :style="{
             'border-radius': borderRadius,
