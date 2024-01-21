@@ -17,6 +17,7 @@
  * @components
  * - `FormFieldCompany`: Component to render company input field.
  * - `FormFieldEmail`: Component to render email input field.
+ * - `FormFieldOptionGroup`: Component to render option group input field.
  * - `FormFieldPassword`: Component to render password input field.
  * - `FormFieldPasswordConfirm`: Component to render password confirm input
  *   field.
@@ -34,6 +35,7 @@ import { defineComponent, ref } from 'vue';
 // components
 import FormFieldCompany from './FormFieldCompany.vue';
 import FormFieldEmail from './FormFieldEmail.vue';
+import FormFieldOptionGroup from '../form/FormFieldOptionGroup.vue';
 import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
@@ -45,6 +47,7 @@ export default defineComponent({
   components: {
     FormFieldCompany,
     FormFieldEmail,
+    FormFieldOptionGroup,
     FormFieldPassword,
     FormFieldPasswordConfirm,
     FormFieldPhone,
