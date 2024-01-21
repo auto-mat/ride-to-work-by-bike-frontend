@@ -1,4 +1,4 @@
-import FormFieldOptionGroup from 'components/form/FormFieldOptionGroup.vue';
+import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldOptionGroup>', () => {
@@ -8,9 +8,9 @@ describe('<FormFieldOptionGroup>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldOptionGroup, {
+      cy.mount(FormFieldTestWrapper, {
         props: {
-          modelValue: 'option-1',
+          component: 'FormFieldOptionGroup',
         },
       });
       cy.viewport('macbook-16');
