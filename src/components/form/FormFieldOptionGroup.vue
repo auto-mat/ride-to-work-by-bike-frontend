@@ -24,6 +24,7 @@
  */
 
 // libraries
+import { colors } from 'quasar';
 import { defineComponent, computed } from 'vue';
 
 // composables
@@ -88,10 +89,16 @@ export default defineComponent({
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
+    const { getPaletteColor } = colors;
+    const grey3 = getPaletteColor('grey-3');
+    const primary = getPaletteColor('primary');
+
     return {
       borderRadius,
+      grey3,
       inputValue,
       options,
+      primary,
       isFilled,
     };
   },
@@ -104,50 +111,58 @@ export default defineComponent({
     borderless
     hide-bottom-space
     :model-value="inputValue"
-    :rules="[
-      (val) =>
-        !!val || $t('register.coordinator.form.messageResponsibilityRequired'),
-    ]"
+    :rules="[(val) => !!val || $t('form.messageOptionRequired')]"
   >
     <q-option-group
       v-model="inputValue"
       type="radio"
       :options="options"
       class="q-gutter-md"
+      rules=""
       data-cy="form-field-option-group"
     >
       <!-- Custom option content -->
       <template v-slot:label="opt">
         <div
           class="full-width row items-center q-py-md q-px-md"
-          :class="[opt.value == inputValue ? 'bg-black' : 'bg-white']"
-          :style="{ 'border-radius': borderRadius, border: '1px solid grey' }"
+          :class="[opt.value === inputValue ? '' : 'bg-white']"
+          :style="{
+            'border-radius': borderRadius,
+            'border-width': '1px',
+            'border-style': 'solid',
+            'border-color': opt.value === inputValue ? primary : grey3,
+          }"
+          data-cy="form-field-option"
         >
           <!-- First column: Icon -->
           <div v-if="opt.label" class="col-auto q-mr-sm">
-            <q-icon
-              :name="opt.icon"
-              color="grey-5"
-              size="20px"
-              class="q-mr-sm"
-            />
+            <q-avatar
+              round
+              class="bg-blue-grey-2"
+              data-cy="form-field-option-icon"
+            >
+              <q-icon :name="opt.icon" color="grey-9" size="24px" />
+            </q-avatar>
           </div>
           <!-- Second column: Label -->
-          <div class="col">
-            <div
-              v-if="opt.label"
-              class="text-body1"
-              :class="[opt.value == inputValue ? 'text-white' : 'text-black']"
-            >
+          <div class="col" data-cy="form-field-option-title">
+            <div v-if="opt.label" class="text-body1 text-black">
               {{ opt.label }}
             </div>
-            <div
-              v-if="opt.description"
-              class="text-caption"
-              :class="[opt.value == inputValue ? 'text-white' : 'text-black']"
-            >
+            <div v-if="opt.description" class="text-caption text-black">
               {{ opt.description }}
             </div>
+          </div>
+          <!-- Third column: Check -->
+          <div class="col-auto q-ml-md">
+            <q-avatar round size="24px" data-cy="form-field-option-check">
+              <q-icon
+                v-show="opt.value === inputValue"
+                name="done"
+                color="primary"
+                size="24px"
+              />
+            </q-avatar>
           </div>
         </div>
       </template>
