@@ -33,16 +33,18 @@ describe('<FormFieldOptionGroup>', () => {
       cy.dataCy('form-field-option').should('have.length', 3);
     });
 
-    it('renders options with coorect styles', () => {
+    it('renders options with corect styles', () => {
       cy.dataCy('form-field-option')
         .first()
         .should('have.backgroundColor', white)
         .should('have.css', 'border-radius', borderRadius);
+      // test icon size
       cy.dataCy('form-field-option-icon').invoke('height').should('equal', 48);
       cy.dataCy('form-field-option-icon').invoke('width').should('equal', 48);
     });
 
     it('shows highlighted option', () => {
+      // highlight first opiton
       cy.dataCy('form-field-option').first().click();
       cy.dataCy('form-field-option')
         .first()
@@ -52,6 +54,7 @@ describe('<FormFieldOptionGroup>', () => {
         .find('i')
         .should('be.visible')
         .should('have.css', 'color', hexToRgb(colorPrimary));
+      // highlight last option
       cy.dataCy('form-field-option').last().click();
       cy.dataCy('form-field-option')
         .last()
