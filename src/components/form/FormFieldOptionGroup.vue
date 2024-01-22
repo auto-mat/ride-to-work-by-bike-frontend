@@ -30,14 +30,10 @@ import { defineComponent, computed } from 'vue';
 // composables
 import { useValidation } from 'src/composables/useValidation';
 import { i18n } from 'src/boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // types
-import { ConfigGlobal } from '../types';
-
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { FormOption } from '../../components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldOptionGroup',
@@ -68,7 +64,7 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
-    const options = [
+    const options: FormOption[] = [
       {
         label: i18n.global.t('form.participation.labelColleagues'),
         description: i18n.global.t('form.participation.textColleagues'),

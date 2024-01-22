@@ -11,4 +11,6 @@ export type FormPersonalDetailsFields = {
 export type FormOption = {
   label: string;
   value: string;
+  icon?: string;
+  description?: string;
 };
