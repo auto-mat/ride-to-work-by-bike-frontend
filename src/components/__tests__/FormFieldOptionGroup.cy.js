@@ -2,13 +2,13 @@ import { colors } from 'quasar';
 import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { hexToRgb } from 'app/test/cypress/utils';
 
-const { getPaletteColor } = colors;
+const { getPaletteColor, textToRgb } = colors;
 const white = getPaletteColor('white');
-
+// get primary color
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
-const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
+const rgbPrimary = textToRgb(rideToWorkByBikeConfig.colorPrimary);
+const colorPrimary = `rgb(${rgbPrimary.r}, ${rgbPrimary.g}, ${rgbPrimary.b})`;
 
 describe('<FormFieldOptionGroup>', () => {
   it('has translation for all strings', () => {
@@ -48,12 +48,12 @@ describe('<FormFieldOptionGroup>', () => {
       cy.dataCy('form-field-option').first().click();
       cy.dataCy('form-field-option')
         .first()
-        .should('have.css', 'border-color', hexToRgb(colorPrimary));
+        .should('have.css', 'border-color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .first()
         .find('i')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb(colorPrimary));
+        .should('have.css', 'color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .first()
         .invoke('height')
@@ -66,12 +66,12 @@ describe('<FormFieldOptionGroup>', () => {
       cy.dataCy('form-field-option').last().click();
       cy.dataCy('form-field-option')
         .last()
-        .should('have.css', 'border-color', hexToRgb(colorPrimary));
+        .should('have.css', 'border-color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .last()
         .find('i')
         .should('be.visible')
-        .should('have.css', 'color', hexToRgb(colorPrimary));
+        .should('have.css', 'color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .last()
         .invoke('height')
