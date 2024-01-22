@@ -54,6 +54,14 @@ describe('<FormFieldOptionGroup>', () => {
         .find('i')
         .should('be.visible')
         .should('have.css', 'color', hexToRgb(colorPrimary));
+      cy.dataCy('form-field-option-check')
+        .first()
+        .invoke('height')
+        .should('be.equal', 24);
+      cy.dataCy('form-field-option-check')
+        .first()
+        .invoke('width')
+        .should('be.equal', 24);
       // highlight last option
       cy.dataCy('form-field-option').last().click();
       cy.dataCy('form-field-option')
@@ -64,6 +72,14 @@ describe('<FormFieldOptionGroup>', () => {
         .find('i')
         .should('be.visible')
         .should('have.css', 'color', hexToRgb(colorPrimary));
+      cy.dataCy('form-field-option-check')
+        .last()
+        .invoke('height')
+        .should('be.equal', 24);
+      cy.dataCy('form-field-option-check')
+        .last()
+        .invoke('width')
+        .should('be.equal', 24);
     });
   });
 });
