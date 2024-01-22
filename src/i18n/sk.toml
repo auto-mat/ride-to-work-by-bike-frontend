@@ -67,6 +67,13 @@ labelNewsletterMobility = "O udržateľnej mobilite"
 titleGender = "Pohlavie"
 titleNewsletter = "O čom chcete byť informovaní e-mailom"
 
+[form.participation]
+labelColleagues = "S kolegami z práce"
+labelSchoolmates = "So spolužiakmi"
+labelFamily = "S rodinou alebo priateľmi"
+textColleagues = "Nepotrebujete súhlas zamestnávateľa"
+textSchoolmates = "Nepotrebujete povolenie školy"
+
 [index]
 title = "Domovská stránka"
 logoAltText = "Logo Do práce na bicykli"

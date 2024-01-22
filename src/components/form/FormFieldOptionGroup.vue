@@ -29,6 +29,7 @@ import { defineComponent, computed } from 'vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+import { i18n } from 'src/boot/i18n';
 
 // types
 import { ConfigGlobal } from '../types';
@@ -69,20 +70,20 @@ export default defineComponent({
 
     const options = [
       {
-        label: 'S kolegy z práce',
-        description: 'Svolení zaměstnavatele nepotřebujete',
-        value: 'option-1',
+        label: i18n.global.t('form.participation.labelColleagues'),
+        description: i18n.global.t('form.participation.textColleagues'),
+        value: 'colleagues',
         icon: 'favorite',
       },
       {
-        label: 'Se spolužáky ze školy',
-        description: 'Svolení školy nepotřebujete',
-        value: 'option-2',
+        label: i18n.global.t('form.participation.labelSchoolmates'),
+        description: i18n.global.t('form.participation.textSchoolmates'),
+        value: 'schoolmates',
         icon: 'flight_takeoff',
       },
       {
-        label: 'S rodinou či přáteli',
-        value: 'option-3',
+        label: i18n.global.t('form.participation.labelFamily'),
+        value: 'family',
         icon: 'flight_land',
       },
     ];

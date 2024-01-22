@@ -67,6 +67,13 @@ labelNewsletterMobility = "About sustainable mobility"
 titleGender = "Gender"
 titleNewsletter = "What you want to be informed about by e-mail"
 
+[form.participation]
+labelColleagues = "With my colleagues"
+labelSchoolmates = "With my schoolmates"
+labelFamily = "With my family or friends"
+textColleagues = "You do not need consent from your manager"
+textSchoolmates = "You do not need consent from your school"
+
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"
