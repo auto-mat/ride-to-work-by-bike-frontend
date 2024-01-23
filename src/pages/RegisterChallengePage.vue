@@ -263,7 +263,7 @@ export default defineComponent({
                 unelevated
                 rounded
                 outline
-                @click="step = 2"
+                @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
                 class="q-ml-sm"
@@ -289,13 +289,14 @@ export default defineComponent({
                 rounded
                 color="primary"
                 :label="$t('navigation.continue')"
+                @click="onContinue"
                 data-cy="step-4-continue"
               />
               <q-btn
                 unelevated
                 rounded
                 outline
-                @click="onContinue"
+                @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
                 class="q-ml-sm"
