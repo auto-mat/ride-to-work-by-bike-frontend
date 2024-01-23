@@ -163,6 +163,26 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+
+      // click when form is valid
+      cy.dataCy('form-firstName-input').type('John');
+      cy.dataCy('form-lastName-input').type('Doe');
+      cy.dataCy('form-terms-input').click();
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // click when participation is not selected
+      cy.dataCy('step-3-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      // click when participation is selected
+      cy.dataCy('form-field-option').first().click();
+      cy.dataCy('step-3-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
     });
 
     it('changes icons when step changes', () => {
@@ -214,6 +234,8 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      // select participation option
+      cy.dataCy('form-field-option').first().click();
       // change step
       cy.dataCy('step-3-continue').should('be.visible').click();
       // active icon 4
@@ -248,6 +270,8 @@ describe('Register Challenge page', () => {
           cy.dataCy('form-terms-input').click();
           cy.dataCy('step-1-continue').should('be.visible').click();
           cy.dataCy('step-2-continue').should('be.visible').click();
+          // select participation option
+          cy.dataCy('form-field-option').first().click();
           cy.dataCy('step-3-continue').should('be.visible').click();
           cy.dataCy('step-4-continue').should('be.visible').click();
         });
