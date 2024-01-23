@@ -41,8 +41,9 @@ export const useStepperValidation = ({
       // validate personal details step
       case 1:
         if (!stepPersonalDetailsRef.value) return;
-        const valid: boolean = await stepPersonalDetailsRef.value.validate();
-        if (valid) {
+        const isValidPersonalDetails: boolean =
+          await stepPersonalDetailsRef.value.validate();
+        if (isValidPersonalDetails) {
           stepperRef.value.next();
         } else {
           stepPersonalDetailsRef.value.$el.scrollIntoView({
@@ -53,8 +54,8 @@ export const useStepperValidation = ({
       // validate payment step
       case 2:
         if (!stepPaymentRef.value) return;
-        stepPaymentRef.value.validate();
-        if (!stepPaymentRef.value.hasError) {
+        const isValidPayment: boolean = await stepPaymentRef.value.validate();
+        if (isValidPayment) {
           stepperRef.value.next();
         } else {
           stepPaymentRef.value.$el.scrollIntoView({ behavior: 'smooth' });
@@ -63,8 +64,9 @@ export const useStepperValidation = ({
       // validate participation step
       case 3:
         if (!stepParticipationRef.value) return;
-        stepParticipationRef.value.validate();
-        if (!stepParticipationRef.value.hasError) {
+        const isValidParticipation: boolean =
+          await stepParticipationRef.value.validate();
+        if (isValidParticipation) {
           stepperRef.value.next();
         } else {
           stepParticipationRef.value.$el.scrollIntoView({ behavior: 'smooth' });
@@ -73,8 +75,8 @@ export const useStepperValidation = ({
       // validate company step
       case 4:
         if (!stepCompanyRef.value) return;
-        stepCompanyRef.value.validate();
-        if (!stepCompanyRef.value.hasError) {
+        const isValidCompany: boolean = await stepCompanyRef.value.validate();
+        if (isValidCompany) {
           stepperRef.value.next();
         } else {
           stepCompanyRef.value.$el.scrollIntoView({ behavior: 'smooth' });
