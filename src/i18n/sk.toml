@@ -76,6 +76,9 @@ textSchoolmates = "Nepotrebujete povolenie školy"
 titleParticipation = "S kým sa zúčastníte tejto výzvy?"
 hintPariticipation = "Aj keď plánujete súťažiť sami, vyberte si skupinu, z ktorej by sa niekto mohol neskôr pridať k vášmu tímu."
 
+[form.company]
+labelCompany = "Názov spoločnosti"
+
 [index]
 title = "Domovská stránka"
 logoAltText = "Logo Do práce na bicykli"
