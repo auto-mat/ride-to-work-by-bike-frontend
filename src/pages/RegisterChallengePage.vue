@@ -25,6 +25,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
 import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
+import FormFieldCompanySelect from 'src/components/form/FormFieldCompanySelect.vue';
 import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
@@ -38,6 +39,7 @@ export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
     FormFieldOptionGroup,
+    FormFieldCompanySelect,
     FormPersonalDetails,
     LoginRegisterHeader,
   },
@@ -92,6 +94,8 @@ export default defineComponent({
 
     const participation = ref<string>('');
 
+    const company = ref<string>('');
+
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
     const stepCompanyRef = ref<typeof QForm | null>(null);
@@ -130,6 +134,7 @@ export default defineComponent({
       activeIconImgSrcStepper4,
       doneIconImgSrcStepper4,
       participation,
+      company,
       personalDetails,
       onBack,
       onContinue,
@@ -282,7 +287,9 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-4"
           >
-            <q-form ref="stepCompanyRef"> Content of step 4 </q-form>
+            <q-form ref="stepCompanyRef">
+              <form-field-company-select v-model="company" />
+            </q-form>
             <q-stepper-navigation>
               <q-btn
                 unelevated
