@@ -24,8 +24,9 @@ import { QForm, QStepper } from 'quasar';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
 import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
+import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 // composables
 import { useStepperValidation } from 'src/composables/useStepperValidation';
@@ -36,8 +37,9 @@ import type { FormPersonalDetailsFields } from 'src/components/types/Form';
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
-    LoginRegisterHeader,
+    FormFieldOptionGroup,
     FormPersonalDetails,
+    LoginRegisterHeader,
   },
   setup() {
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
@@ -88,6 +90,8 @@ export default defineComponent({
       terms: false,
     });
 
+    const participation = ref<string>('');
+
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
     const stepCompanyRef = ref<typeof QForm | null>(null);
@@ -125,6 +129,7 @@ export default defineComponent({
       iconImgSrcStepper4,
       activeIconImgSrcStepper4,
       doneIconImgSrcStepper4,
+      participation,
       personalDetails,
       onBack,
       onContinue,
@@ -151,13 +156,13 @@ export default defineComponent({
           }}
         </h1>
         <q-stepper
+          animated
+          vertical
           ref="stepperRef"
           v-model="step"
-          vertical
           color="primary"
           class="bg-transparent q-py-none q-mt-lg"
           style="box-shadow: none"
-          animated
           data-cy="stepper"
         >
           <!-- Step: Personal details -->
@@ -232,12 +237,24 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-3"
           >
-            <q-form ref="stepParticipationRef"> Content of step 3 </q-form>
+            <q-form ref="stepParticipationRef">
+              <p class="q-mb-md">
+                {{ $t('form.participation.titleParticipation') }}
+              </p>
+              <form-field-option-group
+                v-model="participation"
+                name="participation"
+                label="form.labelParticipation"
+              />
+              <p class="q-mt-lg q-mb-none">
+                {{ $t('form.participation.hintPariticipation') }}
+              </p>
+            </q-form>
             <q-stepper-navigation>
               <q-btn
                 unelevated
                 rounded
-                @click="step = 4"
+                @click="onContinue"
                 color="primary"
                 :label="$t('navigation.continue')"
                 data-cy="step-3-continue"
@@ -278,7 +295,7 @@ export default defineComponent({
                 unelevated
                 rounded
                 outline
-                @click="step = 3"
+                @click="onContinue"
                 color="primary"
                 :label="$t('navigation.back')"
                 class="q-ml-sm"

@@ -73,6 +73,8 @@ labelSchoolmates = "With my schoolmates"
 labelFamily = "With my family or friends"
 textColleagues = "You do not need consent from your manager"
 textSchoolmates = "You do not need consent from your school"
+titleParticipation = "With whom will you participate in the challenge?"
+hintPariticipation = "If you plan to compete alone, choose a group from which someone could possibly join your team later."
 
 [index]
 title = "Home"

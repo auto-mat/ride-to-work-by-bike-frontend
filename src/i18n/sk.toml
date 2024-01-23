@@ -73,6 +73,8 @@ labelSchoolmates = "So spolužiakmi"
 labelFamily = "S rodinou alebo priateľmi"
 textColleagues = "Nepotrebujete súhlas zamestnávateľa"
 textSchoolmates = "Nepotrebujete povolenie školy"
+titleParticipation = "S kým sa zúčastníte tejto výzvy?"
+hintPariticipation = "Aj keď plánujete súťažiť sami, vyberte si skupinu, z ktorej by sa niekto mohol neskôr pridať k vášmu tímu."
 
 [index]
 title = "Domovská stránka"

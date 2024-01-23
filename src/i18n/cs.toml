@@ -73,6 +73,8 @@ labelSchoolmates = "Se spolužáky ze školy"
 labelFamily = "S rodinou či přáteli"
 textColleagues = "Svolení zaměstnavatele nepotřebujete"
 textSchoolmates = "Svolení školy nepotřebujete"
+titleParticipation = "S kým se budete výzvy účastnit?"
+hintPariticipation = "I pokud plánujete soutěžit sám/sama, zvolte skupinu, z které by se k vám případně mohl někdo pak přidat do týmu."
 
 [index]
 title = "Domov"
