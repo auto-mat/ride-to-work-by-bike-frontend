@@ -64,6 +64,7 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    // TODO: update icons
     const options: FormOption[] = [
       {
         label: i18n.global.t('form.participation.labelColleagues'),
