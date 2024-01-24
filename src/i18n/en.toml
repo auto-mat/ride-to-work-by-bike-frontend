@@ -33,6 +33,7 @@ secondShort = "s"
 [navigation]
 continue = "Continue"
 back = "Back"
+discard = "Discard"
 
 [form]
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
@@ -78,6 +79,8 @@ hintPariticipation = "If you plan to compete alone, choose a group from which so
 
 [form.company]
 labelCompany = "Company name"
+titleAddCompany = "Add company"
+buttonAddCompany = "Add company"
 
 [index]
 title = "Home"

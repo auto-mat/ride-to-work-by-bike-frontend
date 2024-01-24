@@ -177,28 +177,36 @@ export default defineComponent({
       :form-ref="formRef"
       data-cy="dialog-add-company"
     >
+      <template v-slot:title>
+        {{ $t('form.company.titleAddCompany') }}
+      </template>
       <template v-slot:content>
         <q-form ref="formRef">
           <!-- TODO: Add form fields -->
         </q-form>
       </template>
       <template v-slot:buttons="{ close, submit }">
-        <q-btn
-          flat
-          color="primary"
-          data-cy="dialog-add-company-button"
-          @click="submit"
-        >
-          {{ $t('register.challenge.buttonAddCompany') }}
-        </q-btn>
-        <q-btn
-          flat
-          color="primary"
-          data-cy="dialog-add-company-button-cancel"
-          @click="close"
-        >
-          {{ $t('register.challenge.buttonCancel') }}
-        </q-btn>
+        <div class="flex gap-8">
+          <q-btn
+            rounded
+            unelevated
+            outline
+            color="primary"
+            data-cy="dialog-add-company-button-cancel"
+            @click="close"
+          >
+            {{ $t('navigation.discard') }}
+          </q-btn>
+          <q-btn
+            rounded
+            unelevated
+            color="primary"
+            data-cy="dialog-add-company-button"
+            @click="submit"
+          >
+            {{ $t('form.company.buttonAddCompany') }}
+          </q-btn>
+        </div>
       </template>
     </dialog-form>
   </div>

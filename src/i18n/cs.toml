@@ -33,6 +33,7 @@ secondShort = "s."
 [navigation]
 continue = "Pokračovat"
 back = "Zpět"
+discard = "Zahodit"
 
 [form]
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
@@ -78,6 +79,8 @@ hintPariticipation = "I pokud plánujete soutěžit sám/sama, zvolte skupinu, z
 
 [form.company]
 labelCompany = "Název firmy"
+titleAddCompany = "Přidat firmu"
+buttonAddCompany = "Přidat firmu"
 
 [index]
 title = "Domov"
