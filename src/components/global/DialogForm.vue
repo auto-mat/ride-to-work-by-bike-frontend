@@ -67,6 +67,9 @@ export default defineComponent({
 
     // closes the dialog window
     const close = (): void => {
+      if (props.formRef) {
+        props.formRef.reset();
+      }
       isOpen.value = false;
     };
 
@@ -75,17 +78,17 @@ export default defineComponent({
      * If form is valid emits `form-submit` event and closes dialog.
      */
     const submit = async (): Promise<void> => {
-      if (!props.formRef || !props.formRef) {
-        return;
-      }
-      const isFormValid: boolean = await props.formRef.validate();
-      if (isFormValid) {
-        emit('form-submit');
-        close();
-      } else {
-        props.formRef.$el.scrollIntoView({
-          behavior: 'smooth',
-        });
+      if (props.formRef) {
+        const isFormValid: boolean = await props.formRef.validate();
+
+        if (isFormValid) {
+          emit('form-submit');
+          close();
+        } else {
+          props.formRef.$el.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }
       }
     };
 
@@ -100,7 +103,10 @@ export default defineComponent({
 
 <template>
   <q-dialog square persistent v-model="isOpen" data-cy="dialog-form">
-    <q-card class="relative-position overflow-visible bg-white">
+    <q-card
+      class="relative-position overflow-visible bg-white"
+      style="min-width: 50vw"
+    >
       <!-- Section: Card header -->
       <q-card-section
         v-if="$slots.title"
@@ -125,12 +131,9 @@ export default defineComponent({
         <!-- Content -->
         <slot v-if="$slots.content" name="content"></slot>
         <!-- Buttons -->
-        <slot
-          v-if="$slots.buttons"
-          name="buttons"
-          :close="close"
-          :submit="submit"
-        ></slot>
+        <div v-if="$slots.buttons" class="flex justify-end q-mt-sm">
+          <slot name="buttons" :close="close" :submit="submit"></slot>
+        </div>
       </q-card-section>
 
       <!-- Button: Close dialog -->
