@@ -161,8 +161,8 @@ export default defineComponent({
           rounded
           icon="mdi-plus"
           color="primary"
-          data-cy="button-add-company"
           @click.prevent="isDialogOpen = true"
+          data-cy="button-add-company"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
@@ -192,7 +192,7 @@ export default defineComponent({
             unelevated
             outline
             color="primary"
-            data-cy="dialog-add-company-button-cancel"
+            data-cy="dialog-button-cancel"
             @click="close"
           >
             {{ $t('navigation.discard') }}
@@ -201,7 +201,7 @@ export default defineComponent({
             rounded
             unelevated
             color="primary"
-            data-cy="dialog-add-company-button"
+            data-cy="dialog-button-submit"
             @click="submit"
           >
             {{ $t('form.company.buttonAddCompany') }}

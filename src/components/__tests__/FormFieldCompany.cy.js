@@ -3,7 +3,27 @@ import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldCompany>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'labelCompany',
+        'labelCompanyShort',
+        'messageFieldRequired',
+        'messageNoCompany',
+      ],
+      'form',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['buttonAddCompany', 'titleAddCompany'],
+      'form.company',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['buttonAddCompany'],
+      'register.challenge',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(['discard'], 'navigation', i18n);
   });
 
   context('desktop', () => {
@@ -86,8 +106,25 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('renders input and button in a column layout', () => {
-      cy.testElementPercentageWidth(cy.dataCy('col-input'), 90);
-      cy.testElementPercentageWidth(cy.dataCy('col-button'), 10);
+      cy.testElementPercentageWidth(cy.dataCy('col-input'), 88);
+      cy.testElementPercentageWidth(cy.dataCy('col-button'), 12);
+    });
+
+    it('renders dialog when for adding a new company', () => {
+      cy.dataCy('button-add-company').click();
+      cy.dataCy('dialog-add-company').should('be.visible');
+      cy.dataCy('dialog-add-company')
+        .find('h3')
+        .should('be.visible')
+        .and('have.css', 'font-size', '20px')
+        .and('have.css', 'font-weight', '500')
+        .and('contain', i18n.global.t('form.company.titleAddCompany'));
+      cy.dataCy('dialog-button-cancel')
+        .should('be.visible')
+        .and('have.text', i18n.global.t('navigation.discard'));
+      cy.dataCy('dialog-button-submit')
+        .should('be.visible')
+        .and('have.text', i18n.global.t('form.company.buttonAddCompany'));
     });
   });
 
