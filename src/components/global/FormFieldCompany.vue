@@ -61,10 +61,6 @@ export default defineComponent({
       },
     });
 
-    const companyNew = {
-      name: '',
-    };
-
     // handles select input
     const onInputValue = (val: string) => {
       company.value = val;
@@ -95,7 +91,6 @@ export default defineComponent({
 
     return {
       company,
-      companyNew,
       formRef,
       isDialogOpen,
       options,
