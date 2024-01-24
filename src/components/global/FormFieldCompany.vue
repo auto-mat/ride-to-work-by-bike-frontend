@@ -179,14 +179,7 @@ export default defineComponent({
     >
       <template v-slot:content>
         <q-form ref="formRef">
-          <q-input
-            dense
-            outlined
-            v-model="companyNew.name"
-            label="Company name"
-            name="company"
-            data-cy="dialog-add-company-input"
-          />
+          <!-- TODO: Add form fields -->
         </q-form>
       </template>
       <template v-slot:buttons="{ close, submit }">
