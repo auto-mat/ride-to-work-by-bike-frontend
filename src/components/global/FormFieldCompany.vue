@@ -16,6 +16,9 @@
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
+ * @components
+ * - `DialogForm`: Used to render a dialog window with form as content.
+ *
  * @example
  * <form-field-company />
  *
@@ -24,18 +27,22 @@
 
 // libraries
 import { computed, defineComponent, ref } from 'vue';
+import { QForm } from 'quasar';
+
+// components
+import DialogForm from 'src/components/global/DialogForm.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
-
-// types
-import type { Ref } from 'vue';
 
 // constants
 const stringOptions: string[] = ['Company 1', 'Company 2'];
 
 export default defineComponent({
   name: 'FormFieldCompany',
+  components: {
+    DialogForm,
+  },
   props: {
     modelValue: {
       type: String,
@@ -43,7 +50,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const options: Ref<string[]> = ref([]);
+    const options = ref<string[]>([]);
+    const isDialogOpen = ref<boolean>(false);
+    const formRef = ref<typeof QForm | null>(null);
 
     const company = computed({
       get: () => props.modelValue,
@@ -51,6 +60,10 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+
+    const companyNew = {
+      name: '',
+    };
 
     // handles select input
     const onInputValue = (val: string) => {
@@ -82,6 +95,9 @@ export default defineComponent({
 
     return {
       company,
+      companyNew,
+      formRef,
+      isDialogOpen,
       options,
       isFilled,
       onFilter,
@@ -146,6 +162,7 @@ export default defineComponent({
           icon="mdi-plus"
           color="primary"
           data-cy="button-add-company"
+          @click.prevent="isDialogOpen = true"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
@@ -154,5 +171,42 @@ export default defineComponent({
         </q-btn>
       </div>
     </div>
+    <!-- Dialog: Add company -->
+    <dialog-form
+      v-model="isDialogOpen"
+      :form-ref="formRef"
+      data-cy="dialog-add-company"
+    >
+      <template v-slot:content>
+        <q-form ref="formRef">
+          <q-input
+            dense
+            outlined
+            v-model="companyNew.name"
+            label="Company name"
+            name="company"
+            data-cy="dialog-add-company-input"
+          />
+        </q-form>
+      </template>
+      <template v-slot:buttons="{ close, submit }">
+        <q-btn
+          flat
+          color="primary"
+          data-cy="dialog-add-company-button"
+          @click="submit"
+        >
+          {{ $t('register.challenge.buttonAddCompany') }}
+        </q-btn>
+        <q-btn
+          flat
+          color="primary"
+          data-cy="dialog-add-company-button-cancel"
+          @click="close"
+        >
+          {{ $t('register.challenge.buttonCancel') }}
+        </q-btn>
+      </template>
+    </dialog-form>
   </div>
 </template>
