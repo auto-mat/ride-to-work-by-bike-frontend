@@ -41,7 +41,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const query = ref('');
+    const query = ref<string>('');
 
     const options = ref<FormOption[]>([
       {
@@ -76,7 +76,7 @@ export default defineComponent({
 
     const filteredOptions = computed(() => {
       return options.value.filter(
-        (option) =>
+        (option: FormOption): boolean =>
           option.label
             .toLocaleLowerCase()
             .indexOf(query.value.toLocaleLowerCase()) > -1,
@@ -87,12 +87,12 @@ export default defineComponent({
       get(): string {
         return props.modelValue;
       },
-      set(value: string) {
+      set(value: string): void {
         emit('update:modelValue', value);
       },
     });
 
-    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+    const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
