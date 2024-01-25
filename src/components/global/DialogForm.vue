@@ -11,16 +11,11 @@
  * - `content`: For the main content of the dialog.
  * - `buttons`: For action buttons.
  *
- * The `content` and `image` slots are rendered side by side within
- * a scrollable dialog window (on desktop screens).
- *
  * @props
  * - `modelValue` (Boolean, required): Controls the visibility of the dialog.
- * - `formRef` (Object, required): Template reference to the contained form.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure
- * - `change`: Emitted when the dialog is closed or opened
  *
  * @example
  * <dialog-card>
@@ -61,41 +56,11 @@ export default defineComponent({
       get: (): boolean => props.modelValue,
       set: (value: boolean): void => {
         emit('update:modelValue', value);
-        emit('change');
       },
     });
 
-    // closes the dialog window
-    const close = (): void => {
-      if (props.formRef) {
-        props.formRef.reset();
-      }
-      isOpen.value = false;
-    };
-
-    /**
-     * Validates the form.
-     * If form is valid emits `form-submit` event and closes dialog.
-     */
-    const submit = async (): Promise<void> => {
-      if (props.formRef) {
-        const isFormValid: boolean = await props.formRef.validate();
-
-        if (isFormValid) {
-          emit('form-submit');
-          close();
-        } else {
-          props.formRef.$el.scrollIntoView({
-            behavior: 'smooth',
-          });
-        }
-      }
-    };
-
     return {
       isOpen,
-      close,
-      submit,
     };
   },
 });
@@ -130,10 +95,6 @@ export default defineComponent({
       >
         <!-- Content -->
         <slot v-if="$slots.content" name="content"></slot>
-        <!-- Buttons -->
-        <div v-if="$slots.buttons" class="flex justify-end q-mt-sm">
-          <slot name="buttons" :close="close" :submit="submit"></slot>
-        </div>
       </q-card-section>
 
       <!-- Button: Close dialog -->

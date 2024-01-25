@@ -87,6 +87,32 @@ export default defineComponent({
       });
     };
 
+    const onClose = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
+      isDialogOpen.value = false;
+    };
+
+    /**
+     * Validates the form.
+     * If form is valid it submits the data.
+     */
+    const onSubmit = async (): Promise<void> => {
+      if (formRef.value) {
+        const isFormValid: boolean = await formRef.value.validate();
+
+        if (isFormValid) {
+          // TODO: Submit through API
+          isDialogOpen.value = false;
+        } else {
+          formRef.value.$el.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }
+      }
+    };
+
     const { isFilled } = useValidation();
 
     return {
@@ -95,8 +121,10 @@ export default defineComponent({
       isDialogOpen,
       options,
       isFilled,
+      onClose,
       onFilter,
       onInputValue,
+      onSubmit,
     };
   },
 });
@@ -179,28 +207,29 @@ export default defineComponent({
         <q-form ref="formRef">
           <!-- TODO: Add form fields -->
         </q-form>
-      </template>
-      <template v-slot:buttons="{ close, submit }">
-        <div class="flex gap-8">
-          <q-btn
-            rounded
-            unelevated
-            outline
-            color="primary"
-            data-cy="dialog-button-cancel"
-            @click="close"
-          >
-            {{ $t('navigation.discard') }}
-          </q-btn>
-          <q-btn
-            rounded
-            unelevated
-            color="primary"
-            data-cy="dialog-button-submit"
-            @click="submit"
-          >
-            {{ $t('form.company.buttonAddCompany') }}
-          </q-btn>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-sm">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              data-cy="dialog-button-cancel"
+              @click="onClose"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              data-cy="dialog-button-submit"
+              @click="onSubmit"
+            >
+              {{ $t('form.company.buttonAddCompany') }}
+            </q-btn>
+          </div>
         </div>
       </template>
     </dialog-form>
