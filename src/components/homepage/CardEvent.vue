@@ -17,7 +17,7 @@
  *   type `CardEventType`.
  *
  * @components
- * - `DialogCard`: Used to display detailed information about the offer in a
+ * - `DialogDefault`: Used to display detailed information about the offer in a
  *   modal dialog.
  *
  * @example
@@ -33,7 +33,7 @@ import { defineComponent, ref } from 'vue';
 import { date, Screen } from 'quasar';
 
 // components
-import DialogCard from '../global/DialogCard.vue';
+import DialogDefault from '../global/DialogDefault.vue';
 
 // types
 import { CardEvent as CardEventType, ConfigGlobal } from '../types';
@@ -48,7 +48,7 @@ const { formatDate } = date;
 export default defineComponent({
   name: 'CardEvent',
   components: {
-    DialogCard,
+    DialogDefault,
   },
   props: {
     card: {
@@ -165,7 +165,11 @@ export default defineComponent({
       </q-card-section>
 
       <!-- Modal dialog -->
-      <dialog-card v-model="modalOpened" data-cy="dialog-card-event">
+      <dialog-default
+        v-model="modalOpened"
+        :horizontal="true"
+        data-cy="dialog-card-event"
+      >
         <!-- Title -->
         <template #title>
           {{ card?.title }}
@@ -202,35 +206,48 @@ export default defineComponent({
           </div>
         </template>
         <!-- Content -->
-        <template v-if="card?.content" #content>
-          <div v-html="card.content" data-cy="dialog-content" />
-        </template>
-        <template #buttons>
-          <q-btn
-            color="black"
-            unelevated
-            rounded
-            class="q-mt-md"
-            data-cy="dialog-button"
+        <template #content>
+          <!-- Left column: Content -->
+          <div
+            class="col-12 col-md-6 q-px-md q-py-md"
+            data-cy="dialog-col-left"
           >
-            <div class="flex items-center no-wrap">
-              <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
-              <div class="text-center">
-                {{ $t('index.cardEvent.addToCalendar') }}
+            <div
+              v-if="card?.content"
+              v-html="card.content"
+              data-cy="dialog-content"
+            />
+            <!-- Buttons -->
+            <q-btn
+              color="black"
+              unelevated
+              rounded
+              class="q-mt-md"
+              data-cy="dialog-button"
+            >
+              <div class="flex items-center no-wrap">
+                <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
+                <div class="text-center">
+                  {{ $t('index.cardEvent.addToCalendar') }}
+                </div>
               </div>
-            </div>
-          </q-btn>
+            </q-btn>
+          </div>
+          <!-- Right column: Image -->
+          <div
+            class="col-12 col-md-6 q-px-md q-py-md"
+            data-cy="dialog-col-right"
+          >
+            <!-- Image -->
+            <q-img
+              :src="card.image.src"
+              :alt="card.image.alt"
+              :ratio="1"
+              data-cy="dialog-image"
+            />
+          </div>
         </template>
-        <!-- Image -->
-        <template v-if="card?.image" #image>
-          <q-img
-            :src="card.image.src"
-            :alt="card.image.alt"
-            :ratio="1"
-            data-cy="dialog-image"
-          />
-        </template>
-      </dialog-card>
+      </dialog-default>
     </q-card>
   </div>
 </template>
