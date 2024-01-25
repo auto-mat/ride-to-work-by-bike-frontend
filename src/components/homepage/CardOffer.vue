@@ -18,7 +18,7 @@
  *   should be of type `CardOfferType`.
  *
  * @components
- * - `DialogCard`: Used to display detailed information about the offer in a
+ * - `DialogDefault`: Used to display detailed information about the offer in a
  *   modal dialog.
  *
  * @example
@@ -33,7 +33,7 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-import DialogCard from '../global/DialogCard.vue';
+import DialogDefault from '../global/DialogDefault.vue';
 
 // types
 import { CardOffer as CardOfferType, ConfigGlobal } from '../types';
@@ -46,7 +46,7 @@ const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
 export default defineComponent({
   name: 'CardOffer',
   components: {
-    DialogCard,
+    DialogDefault,
   },
   props: {
     card: {
@@ -95,7 +95,11 @@ export default defineComponent({
     </q-card-section>
 
     <!-- Modal dialog -->
-    <dialog-card v-model="modalOpened" data-cy="dialog-offer">
+    <dialog-default
+      v-model="modalOpened"
+      :horizontal="true"
+      data-cy="dialog-offer"
+    >
       <!-- Title -->
       <template #title>
         {{ card.title }}
@@ -133,29 +137,40 @@ export default defineComponent({
       </template>
       <!-- Content -->
       <template #content>
-        <div v-html="card.content" />
+        <!-- Left column: Content -->
+        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-left">
+          <!-- Content -->
+          <div
+            v-if="card?.content"
+            v-html="card.content"
+            data-cy="dialog-content"
+          />
+          <!-- Buttons -->
+          <q-btn
+            v-if="card.link"
+            :to="card.link.url"
+            color="black"
+            unelevated
+            rounded
+            class="q-mt-md"
+            data-cy="dialog-offer-link"
+          >
+            <div class="flex items-center no-wrap">
+              {{ card.link.title }}
+            </div>
+          </q-btn>
+        </div>
+        <!-- Right column: Image -->
+        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-right">
+          <!-- Image -->
+          <q-img
+            :src="card.image.src"
+            :alt="card.image.alt"
+            data-cy="dialog-image"
+          />
+        </div>
       </template>
-      <!-- Buttons -->
-      <template #buttons>
-        <q-btn
-          v-if="card.link"
-          :to="card.link.url"
-          color="black"
-          unelevated
-          rounded
-          class="q-mt-md"
-          data-cy="dialog-offer-link"
-        >
-          <div class="flex items-center no-wrap">
-            {{ card.link.title }}
-          </div>
-        </q-btn>
-      </template>
-      <!-- Image -->
-      <template #image>
-        <q-img :src="card.image.src" :alt="card.image.alt" />
-      </template>
-    </dialog-card>
+    </dialog-default>
   </q-card>
 </template>
 
