@@ -3,13 +3,12 @@
  * DialogForm Component
  *
  * The `DialogForm` component is used to render a dialog window that can be
- * customized with various slots. Supports validation.
+ * customized with various slots.
  *
  * It provides slots for the following content:
  *
  * - `title`: For the title of the dialog.
  * - `content`: For the main content of the dialog.
- * - `buttons`: For action buttons.
  *
  * @props
  * - `modelValue` (Boolean, required): Controls the visibility of the dialog.
@@ -24,9 +23,6 @@
  *   </template>
  *   <template v-slot:content>
  *     <!-- Main content here -->
- *   </template>
- *   <template v-slot:buttons>
- *     <!-- Action buttons here -->
  *   </template>
  * </dialog-form>
  *
