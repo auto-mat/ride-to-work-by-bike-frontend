@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * DialogForm Component
+ * DialogDefault Component
  *
- * The `DialogForm` component is used to render a dialog window that can be
+ * The `DialogDefault` component is used to render a dialog window that can be
  * customized with various slots.
  *
  * It provides slots for the following content:
@@ -17,14 +17,14 @@
  * - `update:modelValue`: Emitted as a part of v-model structure
  *
  * @example
- * <dialog-card>
+ * <dialog-default>
  *   <template v-slot:title>
  *     <!-- Title content here -->
  *   </template>
  *   <template v-slot:content>
  *     <!-- Main content here -->
  *   </template>
- * </dialog-form>
+ * </dialog-default>
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6014%3A46223&mode=dev)
  */
@@ -33,7 +33,7 @@
 import { defineComponent, computed } from 'vue';
 
 export default defineComponent({
-  name: 'DialogForm',
+  name: 'DialogDefault',
   props: {
     modelValue: {
       type: Boolean,

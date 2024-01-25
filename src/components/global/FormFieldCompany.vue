@@ -17,7 +17,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @components
- * - `DialogForm`: Used to render a dialog window with form as content.
+ * - `DialogDefault`: Used to render a dialog window with form as content.
  *
  * @example
  * <form-field-company />
@@ -30,7 +30,7 @@ import { computed, defineComponent, ref } from 'vue';
 import { QForm } from 'quasar';
 
 // components
-import DialogForm from 'src/components/global/DialogForm.vue';
+import DialogDefault from 'src/components/global/DialogDefault.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
@@ -41,7 +41,7 @@ const stringOptions: string[] = ['Company 1', 'Company 2'];
 export default defineComponent({
   name: 'FormFieldCompany',
   components: {
-    DialogForm,
+    DialogDefault,
   },
   props: {
     modelValue: {
@@ -195,7 +195,7 @@ export default defineComponent({
       </div>
     </div>
     <!-- Dialog: Add company -->
-    <dialog-form
+    <dialog-default
       v-model="isDialogOpen"
       :form-ref="formRef"
       data-cy="dialog-add-company"
@@ -232,6 +232,6 @@ export default defineComponent({
           </div>
         </div>
       </template>
-    </dialog-form>
+    </dialog-default>
   </div>
 </template>
