@@ -35,6 +35,10 @@ import { defineComponent, computed } from 'vue';
 export default defineComponent({
   name: 'DialogDefault',
   props: {
+    horizontal: {
+      type: Boolean,
+      default: false,
+    },
     modelValue: {
       type: Boolean,
       required: true,
@@ -64,15 +68,15 @@ export default defineComponent({
       style="min-width: 50vw"
     >
       <!-- Section: Card header -->
-      <q-card-section
-        v-if="$slots.title"
-        class="q-pt-none"
-        data-cy="dialog-header"
-      >
+      <q-card-section class="q-pt-none" data-cy="dialog-header">
         <!-- Title -->
-        <h3 class="text-h6 q-mt-sm q-pt-xs q-mb-none">
+        <h3 v-if="$slots.title" class="text-h6 q-mt-sm q-pt-xs q-mb-none">
           <slot name="title" />
         </h3>
+        <!-- Metadata -->
+        <div v-if="$slots.metadata">
+          <slot name="metadata" />
+        </div>
       </q-card-section>
 
       <q-separator />
@@ -80,9 +84,10 @@ export default defineComponent({
       <!-- Section: Card body -->
       <q-card-section
         v-if="$slots.content || $slots.buttons"
-        class="scroll"
+        :horizontal="horizontal"
+        class="scroll items-center"
         data-cy="dialog-body"
-        style="max-height: 80vh"
+        style="max-height: 70vh; flex-wrap: wrap"
       >
         <!-- Content -->
         <slot v-if="$slots.content" name="content"></slot>
