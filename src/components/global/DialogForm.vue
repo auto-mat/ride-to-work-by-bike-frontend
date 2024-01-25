@@ -35,15 +35,10 @@
 
 // libraries
 import { defineComponent, computed } from 'vue';
-import { QForm } from 'quasar';
 
 export default defineComponent({
   name: 'DialogForm',
   props: {
-    formRef: {
-      type: Object as () => typeof QForm | null,
-      required: false,
-    },
     modelValue: {
       type: Boolean,
       required: true,
