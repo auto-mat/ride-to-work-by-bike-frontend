@@ -212,12 +212,11 @@ export default defineComponent({
       :form-ref="formRef"
       data-cy="dialog-add-company"
     >
-      <template v-slot:title>
+      <template #title>
         {{ $t('form.company.titleAddCompany') }}
       </template>
-      <template v-slot:content>
+      <template #content>
         <q-form ref="formRef">
-          <!-- TODO: Add form fields -->
           <form-add-company
             :form-values="companyNew"
             variant="simple"
