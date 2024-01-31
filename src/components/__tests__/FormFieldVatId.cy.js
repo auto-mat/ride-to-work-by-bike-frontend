@@ -23,7 +23,6 @@ describe('<FormFieldVatId>', () => {
     it('validates registration number correctly', () => {
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('8765432');
-      // first blur triggers validation
       cy.dataCy('form-vat-id-input').blur();
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
@@ -31,7 +30,8 @@ describe('<FormFieldVatId>', () => {
         .and('contain', i18n.global.t('form.messageVatIdInvalid'));
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
-      cy.dataCy('form-vat-id-input').type('123456789');
+      cy.dataCy('form-vat-id-input').type('1234567890');
+      cy.dataCy('form-vat-id-input').blur();
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
@@ -39,6 +39,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('8765432a');
+      cy.dataCy('form-vat-id-input').blur();
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
@@ -46,6 +47,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('8765432$');
+      cy.dataCy('form-vat-id-input').blur();
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
