@@ -14,3 +14,14 @@ export type FormOption = {
   icon?: string;
   description?: string;
 };
+
+export type FormAddCompanyFields = {
+  name: string;
+  vatId: string;
+  street?: string;
+  streetNumber?: string;
+  city?: string;
+  zip?: string;
+  referenceCity?: string;
+  department?: string;
+};

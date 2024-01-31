@@ -18,6 +18,7 @@
  *
  * @components
  * - `DialogDefault`: Used to render a dialog window with form as content.
+ * - `FormAddCompany`: Used to render form for registering a new company.
  *
  * @example
  * <form-field-company />
@@ -31,9 +32,13 @@ import { QForm } from 'quasar';
 
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
+import FormAddCompany from 'src/components/form/FormAddCompany.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+// types
+import type { FormAddCompanyFields } from 'src/components/types/Form';
 
 // constants
 const stringOptions: string[] = ['Company 1', 'Company 2'];
@@ -42,6 +47,7 @@ export default defineComponent({
   name: 'FormFieldCompany',
   components: {
     DialogDefault,
+    FormAddCompany,
   },
   props: {
     modelValue: {
@@ -60,6 +66,11 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+
+    const companyNew: FormAddCompanyFields = {
+      name: '',
+      vatId: '',
+    };
 
     // handles select input
     const onInputValue = (val: string) => {
@@ -117,6 +128,7 @@ export default defineComponent({
 
     return {
       company,
+      companyNew,
       formRef,
       isDialogOpen,
       options,
@@ -206,6 +218,11 @@ export default defineComponent({
       <template v-slot:content>
         <q-form ref="formRef">
           <!-- TODO: Add form fields -->
+          <form-add-company
+            :form-values="companyNew"
+            variant="simple"
+            @update:form-values="companyNew = $event"
+          ></form-add-company>
         </q-form>
         <!-- Action buttons -->
         <div class="flex justify-end q-mt-sm">
