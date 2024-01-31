@@ -47,11 +47,18 @@ export const useValidation = () => {
     return isLong && hasLetter;
   };
 
+  const isVatId = (value: string): boolean => {
+    const isLong = value.length > 7;
+    const allNumbers = /^[0-9]+$/.test(value);
+    return isLong && allNumbers;
+  };
+
   return {
     isEmail,
     isFilled,
     isIdentical,
     isPhone,
     isStrongPassword,
+    isVatId,
   };
 };

@@ -43,6 +43,7 @@ import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
+import FormFieldVatId from '../form/FormFieldVatId.vue';
 
 export default defineComponent({
   name: 'FormFieldTestWrapper',
@@ -56,6 +57,7 @@ export default defineComponent({
     FormFieldPhone,
     FormFieldRadioRequired,
     FormFieldTextRequired,
+    FormFieldVatId,
   },
   props: {
     component: {

@@ -61,6 +61,7 @@ messagePhoneInvalid = "Vyplňte platné telefónne číslo"
 messagePasswordStrong = "Heslo musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 messagePasswordNotIdentical = "Heslá sa nezhodujú"
 messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
+messageVatIdInvalid = "Neplatné registrační číslo"
 
 [form.personalDetails]
 labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"
