@@ -48,7 +48,7 @@ export const useValidation = () => {
   };
 
   const isVatId = (value: string): boolean => {
-    const isLong = value.length > 7;
+    const isLong = value.length === 8;
     const allNumbers = /^[0-9]+$/.test(value);
     return isLong && allNumbers;
   };
