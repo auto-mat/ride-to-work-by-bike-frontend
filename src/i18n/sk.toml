@@ -34,6 +34,7 @@ secondShort = "s."
 continue = "Pokračovať"
 back = "Späť"
 discard = "Vyhodiť"
+moreInfo = "Viac informácií"
 
 [form]
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
@@ -64,6 +65,11 @@ messagePasswordStrong = "Heslo musí obsahovať aspoň 6 znakov a aspoň 1 písm
 messagePasswordNotIdentical = "Heslá sa nezhodujú"
 messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 messageVatIdInvalid = "Neplatné registrační číslo"
+
+[form.merch]
+labelSizes = "Veľkosti"
+labelAuthor = "Autor"
+labelMaterial = "Materiál"
 
 [form.personalDetails]
 labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"

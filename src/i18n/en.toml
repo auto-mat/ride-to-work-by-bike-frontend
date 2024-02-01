@@ -34,6 +34,7 @@ secondShort = "s"
 continue = "Continue"
 back = "Back"
 discard = "Discard"
+moreInfo = "More info"
 
 [form]
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
@@ -64,6 +65,11 @@ messagePasswordStrong = "Password must contain at least 6 characters and at leas
 messagePasswordNotIdentical = "Passwords don't match"
 messageTermsRequired = "You must consent to the processing of personal data"
 messageVatIdInvalid = "Invalid registration number"
+
+[form.merch]
+labelSizes = "Sizes"
+labelAuthor = "Author"
+labelMaterial = "Material"
 
 [form.personalDetails]
 labelNewsletterAll = "About everything around Ride to Work by Bike"
