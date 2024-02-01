@@ -33,6 +33,11 @@ describe('<FormRegisterCoordinator>', () => {
       'register.coordinator.form',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['labelInstitutionType', 'labelSchool'],
+      'form',
+      i18n,
+    );
   });
 
   context('desktop', () => {
@@ -148,12 +153,12 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox__bg')
         .invoke('height')
-        .should('be.equal', 18);
+        .should('be.equal', 16);
       // checkbox width
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox__bg')
         .invoke('width')
-        .should('be.equal', 18);
+        .should('be.equal', 16);
     });
 
     it('renders checkbox terms', () => {
@@ -171,12 +176,12 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-terms')
         .find('.q-checkbox__bg')
         .invoke('height')
-        .should('be.equal', 18);
+        .should('be.equal', 16);
       // checkbox width
       cy.dataCy('form-register-coordinator-terms')
         .find('.q-checkbox__bg')
         .invoke('width')
-        .should('be.equal', 18);
+        .should('be.equal', 16);
     });
 
     it('validates checkboxes correctly', () => {
