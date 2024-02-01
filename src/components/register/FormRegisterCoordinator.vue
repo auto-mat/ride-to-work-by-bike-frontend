@@ -20,6 +20,8 @@
 // libraries
 import { defineComponent, reactive } from 'vue';
 
+import { i18n } from 'src/boot/i18n';
+
 // components
 import FormFieldCompany from '../global/FormFieldCompany.vue';
 import FormFieldEmail from './../global/FormFieldEmail.vue';
@@ -27,6 +29,9 @@ import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
+
+// types
+import type { FormOption } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
@@ -42,6 +47,7 @@ export default defineComponent({
     const formRegisterCoordinator = reactive({
       firstName: '',
       lastName: '',
+      institutionType: 'company',
       company: '',
       jobTitle: '',
       email: '',
@@ -51,6 +57,17 @@ export default defineComponent({
       responsibility: false,
       terms: false,
     });
+
+    const optionsInstitutionType: FormOption[] = [
+      {
+        label: i18n.global.t('form.labelCompanyShort'),
+        value: 'company',
+      },
+      {
+        label: i18n.global.t('form.labelSchool'),
+        value: 'school',
+      },
+    ];
 
     const onSubmit = (): void => {
       // noop
@@ -62,6 +79,7 @@ export default defineComponent({
 
     return {
       formRegisterCoordinator,
+      optionsInstitutionType,
       onReset,
       onSubmit,
     };
@@ -105,6 +123,26 @@ export default defineComponent({
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-last-name"
           />
+          <!-- Input: institution type -->
+          <div class="col-12 col-sm-6">
+            <!-- Label -->
+            <label
+              for="form-institution-type"
+              class="text-grey-10 text-caption text-bold"
+            >
+              {{ $t('form.labelInstitutionType') }}
+            </label>
+            <!-- Options -->
+            <q-option-group
+              inline
+              dense
+              id="form-institution-type"
+              v-model="formRegisterCoordinator.institutionType"
+              :options="optionsInstitutionType"
+              color="primary"
+              class="q-mt-sm q-gutter-x-lg"
+            />
+          </div>
           <!-- Input: company -->
           <form-field-company
             v-model="formRegisterCoordinator.company"
