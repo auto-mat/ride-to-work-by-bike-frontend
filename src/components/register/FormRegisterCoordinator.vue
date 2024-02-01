@@ -160,11 +160,11 @@ export default defineComponent({
               ]"
             >
               <q-checkbox
+                dense
                 v-model="formRegisterCoordinator.responsibility"
                 color="primary"
                 :true-value="true"
                 :false-value="false"
-                style="margin: 0 -10px"
                 class="text-grey-10"
               >
                 <span>{{
@@ -186,13 +186,13 @@ export default defineComponent({
               ]"
             >
               <q-checkbox
+                dense
                 id="form-register-coordinator-terms"
                 v-model="formRegisterCoordinator.terms"
                 color="primary"
                 :true-value="true"
                 :false-value="false"
                 rules="required"
-                style="margin: -10px"
                 class="text-grey-10"
               >
                 <!-- Default slot: label -->
