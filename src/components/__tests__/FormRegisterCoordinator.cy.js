@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
+const iconSize = 16;
 
 describe('<FormRegisterCoordinator>', () => {
   it('has translation for all strings', () => {
@@ -153,12 +154,12 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox__bg')
         .invoke('height')
-        .should('be.equal', 16);
+        .should('be.equal', iconSize);
       // checkbox width
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox__bg')
         .invoke('width')
-        .should('be.equal', 16);
+        .should('be.equal', iconSize);
     });
 
     it('renders checkbox terms', () => {
@@ -176,12 +177,12 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-terms')
         .find('.q-checkbox__bg')
         .invoke('height')
-        .should('be.equal', 16);
+        .should('be.equal', iconSize);
       // checkbox width
       cy.dataCy('form-register-coordinator-terms')
         .find('.q-checkbox__bg')
         .invoke('width')
-        .should('be.equal', 16);
+        .should('be.equal', iconSize);
     });
 
     it('validates checkboxes correctly', () => {
