@@ -55,7 +55,7 @@ export default defineComponent({
   setup() {
     const isOpen = ref<boolean>(false);
 
-    const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCardSmall;
+    const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
       borderRadius,
@@ -69,19 +69,21 @@ export default defineComponent({
   <q-card
     flat
     bordered
-    class="q-mt-sm"
     :style="{ 'border-radius': borderRadius, 'max-width': '400px' }"
     data-cy="form-card-merch"
   >
-    <q-card-section class="q-pa-sm" data-cy="form-card-merch-top">
+    <q-card-section class="q-pa-md" data-cy="form-card-merch-top">
       <!-- Image -->
-      <q-img ratio="1.33" :src="option.image" />
+      <q-img ratio="1.33" :src="option.image" data-cy="form-card-merch-image" />
       <!-- Title -->
-      <h3 class="text-body1 text-black text-weight-bold q-my-sm">
+      <h3
+        class="text-body1 text-black text-weight-bold q-my-md"
+        data-cy="form-card-merch-title"
+      >
         {{ option.title }}
       </h3>
       <!-- Parameters -->
-      <dl class="q-mt-sm">
+      <dl class="q-mt-sm" data-cy="form-card-merch-parameters">
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelSizes') }}:</dt>
           <dd class="text-weight-bold">
@@ -108,7 +110,13 @@ export default defineComponent({
       data-cy="form-card-merch-button"
     >
       <!-- Button: more info -->
-      <q-btn flat rounded class="full-width" @click="isOpen = true">
+      <q-btn
+        flat
+        rounded
+        class="full-width"
+        @click.prevent="isOpen = true"
+        data-cy="button-more-info"
+      >
         {{ $t('navigation.moreInfo') }}
       </q-btn>
     </q-card-section>
