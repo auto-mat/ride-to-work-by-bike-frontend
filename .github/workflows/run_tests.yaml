@@ -167,7 +167,7 @@ jobs:
       - run: node -v
 
       - name: Run yarn install
-        uses: borales/actions-yarn@v4
+        uses: borales/actions-yarn@v5
         with:
           cmd: install
 
