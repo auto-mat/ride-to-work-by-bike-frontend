@@ -38,7 +38,7 @@ describe('<FormCardMerch>', () => {
       'form.merch',
       i18n,
     );
-    cy.testLanguageStringsInContext(['moreInfo'], 'navigation', i18n);
+    cy.testLanguageStringsInContext(['select'], 'navigation', i18n);
   });
 
   context('desktop', () => {
@@ -54,12 +54,13 @@ describe('<FormCardMerch>', () => {
     it('renders card with image and title', () => {
       cy.dataCy('form-card-merch').should('be.visible');
       // rounded corners
-      cy.dataCy('form-card-merch').should(
-        'have.css',
-        'border-radius',
-        rideToWorkByBikeConfig.borderRadiusCard,
-      );
-      cy.dataCy('form-card-merch-top').should('have.css', 'padding', '16px');
+      cy.dataCy('form-card-merch')
+        .should(
+          'have.css',
+          'border-radius',
+          rideToWorkByBikeConfig.borderRadiusCard,
+        )
+        .and('have.css', 'padding', '16px');
       // image
       cy.dataCy('form-card-merch-image')
         .find('img')
@@ -100,7 +101,7 @@ describe('<FormCardMerch>', () => {
     it('renders button', () => {
       cy.dataCy('form-card-merch-button')
         .should('be.visible')
-        .and('contain.text', i18n.global.t('navigation.moreInfo'));
+        .and('contain.text', i18n.global.t('navigation.select'));
     });
   });
 });

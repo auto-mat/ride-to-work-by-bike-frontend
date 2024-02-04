@@ -35,6 +35,7 @@ continue = "Pokračovať"
 back = "Späť"
 discard = "Vyhodiť"
 moreInfo = "Viac informácií"
+select = "Vybrať"
 
 [form]
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."

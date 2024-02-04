@@ -56,9 +56,12 @@ export default defineComponent({
     const isOpen = ref<boolean>(false);
 
     const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCard;
+    const borderRadiusSmall: string =
+      rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
+      borderRadiusSmall,
       isOpen,
     };
   },
@@ -68,22 +71,29 @@ export default defineComponent({
 <template>
   <q-card
     flat
-    bordered
     :style="{ 'border-radius': borderRadius, 'max-width': '400px' }"
+    class="q-pa-md"
     data-cy="form-card-merch"
   >
-    <q-card-section class="q-pa-md" data-cy="form-card-merch-top">
+    <q-card-section class="q-pa-none" data-cy="form-card-merch-top">
       <!-- Image -->
-      <q-img ratio="1.33" :src="option.image" data-cy="form-card-merch-image" />
+      <q-img
+        ratio="1.33"
+        :src="option.image"
+        data-cy="form-card-merch-image"
+        :style="{ 'border-radius': borderRadiusSmall }"
+      />
       <!-- Title -->
       <h3
-        class="text-body1 text-black text-weight-bold q-my-md"
+        class="text-body1 text-black text-weight-bold q-my-sm"
         data-cy="form-card-merch-title"
       >
-        {{ option.title }}
+        <a href="#" class="text-black" @click.prevent="isOpen = true">{{
+          option.title
+        }}</a>
       </h3>
       <!-- Parameters -->
-      <dl class="q-mt-sm" data-cy="form-card-merch-parameters">
+      <dl class="q-my-sm" data-cy="form-card-merch-parameters">
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelSizes') }}:</dt>
           <dd class="text-weight-bold">
@@ -103,21 +113,21 @@ export default defineComponent({
         </div>
       </dl>
     </q-card-section>
-    <!-- Separator -->
-    <q-separator />
     <q-card-section
-      class="full-width flex items-center justify-center q-pa-sm"
+      class="full-width flex items-center justify-center q-pa-none"
       data-cy="form-card-merch-button"
     >
       <!-- Button: more info -->
       <q-btn
-        flat
+        unelevated
         rounded
+        outline
+        color="primary"
         class="full-width"
         @click.prevent="isOpen = true"
         data-cy="button-more-info"
       >
-        {{ $t('navigation.moreInfo') }}
+        {{ $t('navigation.select') }}
       </q-btn>
     </q-card-section>
   </q-card>
