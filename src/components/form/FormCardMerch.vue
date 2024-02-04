@@ -42,13 +42,13 @@ import { defineComponent, ref } from 'vue';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // types
-import type { FormCardMerch } from 'src/components/types/Form';
+import type { FormCardMerchType } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormCardMerch',
   props: {
     option: {
-      type: Object as () => FormCardMerch,
+      type: Object as () => FormCardMerchType,
       required: true,
     },
   },

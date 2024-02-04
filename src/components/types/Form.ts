@@ -26,14 +26,15 @@ export type FormAddCompanyFields = {
   department?: string;
 };
 
-export type FormCardMerch = {
+export type FormCardMerchType = {
+  author: string;
   dialogDescription: string;
   dialogImages: string[];
   dialogTitle: string;
+  gender: FormOption[];
+  id: string;
   image: string;
+  material: string;
   title: string;
   sizes: FormOption[];
-  gender: FormOption[];
-  author: string;
-  material: string;
 };
