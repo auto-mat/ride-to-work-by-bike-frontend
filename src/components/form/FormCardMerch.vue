@@ -89,7 +89,7 @@ export default defineComponent({
         data-cy="form-card-merch-title"
       >
         <a href="#" class="text-black" @click.prevent="isOpen = true">{{
-          option.title
+          option.label
         }}</a>
       </h3>
       <!-- Parameters -->

@@ -45,8 +45,8 @@ export default defineComponent({
 
     const options: FormCardMerchType[] = [
       {
-        id: '1',
-        title: 'T-Shirt',
+        value: '1',
+        label: 'T-Shirt',
         image: 'https://cdn.quasar.dev/img/mountains.jpg',
         dialogTitle: 'T-Shirt',
         dialogImages: [

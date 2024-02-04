@@ -32,9 +32,9 @@ export type FormCardMerchType = {
   dialogImages: string[];
   dialogTitle: string;
   gender: FormOption[];
-  id: string;
+  value: string;
   image: string;
   material: string;
-  title: string;
+  label: string;
   sizes: FormOption[];
 };
