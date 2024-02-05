@@ -70,9 +70,11 @@ messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 messageVatIdInvalid = "Neplatné IČO"
 
 [form.merch]
+hintNoMerch = "Necháte tak plnou částku na neziskové aktivity AutoMatu."
 labelSizes = "Velikosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
+labelNoMerch = "Nechci triko ani nákrčník"
 
 [form.personalDetails]
 labelNewsletterAll = "O všech informacích od Do práce na kole"

@@ -43,6 +43,8 @@ export default defineComponent({
 
     const formValue = ref();
 
+    const isNotMerch = ref<boolean>(false);
+
     const femaleOptions: FormCardMerchType[] = [
       {
         value: '1',
@@ -65,6 +67,14 @@ export default defineComponent({
           {
             label: 'S',
             value: 'S',
+          },
+          {
+            label: 'M',
+            value: 'M',
+          },
+          {
+            label: 'L',
+            value: 'L',
           },
         ],
         material: 'Bavlna',
@@ -156,6 +166,7 @@ export default defineComponent({
     return {
       formValue,
       femaleOptions,
+      isNotMerch,
       maleOptions,
       tab,
     };
@@ -164,7 +175,26 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card flat data-cy="list-merch" style="max-width: 1024px">
+  <q-item tag="label" v-ripple>
+    <q-item-section avatar top>
+      <q-checkbox dense v-model="isNotMerch" :val="true" color="primary" />
+    </q-item-section>
+    <q-item-section>
+      <q-item-label class="text-grey-10" data-cy="no-merch-label">{{
+        $t('form.merch.labelNoMerch')
+      }}</q-item-label>
+      <q-item-label class="text-grey-8" caption data-cy="no-merch-hint">
+        {{ $t('form.merch.hintNoMerch') }}
+      </q-item-label>
+    </q-item-section>
+  </q-item>
+  <q-card
+    v-show="!isNotMerch"
+    flat
+    class="q-mt-lg"
+    style="max-width: 1024px"
+    data-cy="list-merch"
+  >
     <q-tabs
       v-model="tab"
       dense

@@ -70,9 +70,11 @@ messageTermsRequired = "You must consent to the processing of personal data"
 messageVatIdInvalid = "Invalid registration number"
 
 [form.merch]
+hintNoMerch = "This will leave the full amount for AutoMat's non-profit activities."
 labelSizes = "Sizes"
 labelAuthor = "Author"
 labelMaterial = "Material"
+labelNoMerch = "I don't want a shirt or a neck warmer"
 
 [form.personalDetails]
 labelNewsletterAll = "About everything around Ride to Work by Bike"

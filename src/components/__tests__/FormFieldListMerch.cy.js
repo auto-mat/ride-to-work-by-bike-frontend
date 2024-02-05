@@ -1,5 +1,10 @@
+import { colors } from 'quasar';
 import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+const grey8 = getPaletteColor('grey-8');
+const grey10 = getPaletteColor('grey-10');
 
 describe('<FormFieldListMerch>', () => {
   it('has translation for all strings', () => {
@@ -15,6 +20,16 @@ describe('<FormFieldListMerch>', () => {
     });
 
     it('renders component', () => {
+      cy.dataCy('no-merch-label')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', grey10);
+      cy.dataCy('no-merch-hint')
+        .should('be.visible')
+        .and('have.css', 'font-size', '12px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', grey8);
       // component is visible
       cy.dataCy('list-merch').should('be.visible');
       // cards are visible

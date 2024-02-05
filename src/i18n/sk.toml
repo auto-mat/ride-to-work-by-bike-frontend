@@ -70,9 +70,11 @@ messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 messageVatIdInvalid = "Neplatné registrační číslo"
 
 [form.merch]
+hintNoMerch = "Celá suma tak zostane na neziskové aktivity spoločnosti AutoMat."
 labelSizes = "Veľkosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
+labelNoMerch = "Nechcem košeľu ani nákrčník"
 
 [form.personalDetails]
 labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"
