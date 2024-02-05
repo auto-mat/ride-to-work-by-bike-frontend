@@ -87,6 +87,14 @@ export default defineComponent({
       new URL('../assets/svg/numeric-4-fill.svg', import.meta.url).href
     }`;
     const doneIconImgSrcStepper4 = doneIcon;
+    // Stepper 7 imgs
+    const iconImgSrcStepper7 = `img:${
+      new URL('../assets/svg/numeric-7-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper7 = `img:${
+      new URL('../assets/svg/numeric-7-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper7 = doneIcon;
 
     const personalDetails = ref<FormPersonalDetailsFields>({
       firstName: '',
@@ -139,6 +147,9 @@ export default defineComponent({
       iconImgSrcStepper4,
       activeIconImgSrcStepper4,
       doneIconImgSrcStepper4,
+      iconImgSrcStepper7,
+      activeIconImgSrcStepper7,
+      doneIconImgSrcStepper7,
       participation,
       company,
       personalDetails,
@@ -321,9 +332,9 @@ export default defineComponent({
           <q-step
             :name="7"
             :title="$t('register.challenge.titleStepMerch')"
-            :icon="iconImgSrcStepper4"
-            :active-icon="activeIconImgSrcStepper4"
-            :done-icon="doneIconImgSrcStepper4"
+            :icon="iconImgSrcStepper7"
+            :active-icon="activeIconImgSrcStepper7"
+            :done-icon="doneIconImgSrcStepper7"
             :done="step > 7"
             class="bg-white q-mt-lg"
             data-cy="step-7"
