@@ -70,9 +70,61 @@ export default defineComponent({
         material: 'Bavlna',
         author: 'Cotton lady',
       },
+      {
+        value: '2',
+        label: 'T-Shirt',
+        image: 'https://cdn.quasar.dev/img/mountains.jpg',
+        dialogTitle: 'T-Shirt',
+        dialogImages: [
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+        ],
+        dialogDescription: 'T-Shirt',
+        gender: [
+          {
+            label: 'Male',
+            value: 'male',
+          },
+        ],
+        sizes: [
+          {
+            label: 'S',
+            value: 'S',
+          },
+        ],
+        material: 'Bavlna',
+        author: 'Jaromír 99',
+      },
     ];
 
     const maleOptions: FormCardMerchType[] = [
+      {
+        value: '1',
+        label: 'T-Shirt',
+        image: 'https://cdn.quasar.dev/img/mountains.jpg',
+        dialogTitle: 'T-Shirt',
+        dialogImages: [
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+        ],
+        dialogDescription: 'T-Shirt',
+        gender: [
+          {
+            label: 'Female',
+            value: 'female',
+          },
+        ],
+        sizes: [
+          {
+            label: 'S',
+            value: 'S',
+          },
+        ],
+        material: 'Bavlna',
+        author: 'Cotton lady',
+      },
       {
         value: '2',
         label: 'T-Shirt',
@@ -112,7 +164,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card flat data-cy="form-field-list-merch">
+  <q-card flat data-cy="list-merch" style="max-width: 1024px">
     <q-tabs
       v-model="tab"
       dense
@@ -120,9 +172,14 @@ export default defineComponent({
       active-color="primary"
       indicator-color="primary"
       align="left"
+      data-cy="list-merch-tabs"
     >
-      <q-tab name="female" :label="$t('global.female')" />
-      <q-tab name="male" :label="$t('global.male')" />
+      <q-tab
+        name="female"
+        :label="$t('global.female')"
+        data-cy="list-merch-tab"
+      />
+      <q-tab name="male" :label="$t('global.male')" data-cy="list-merch-tab" />
     </q-tabs>
 
     <q-separator />
@@ -133,10 +190,14 @@ export default defineComponent({
           v-model="formValue"
           type="radio"
           :options="femaleOptions"
-          class="q-gutter-md"
+          class="option-grid"
+          data-cy="list-merch-option-group"
         >
           <template v-slot:label="options">
-            <FormCardMerch :option="options as FormCardMerchType">
+            <FormCardMerch
+              :option="options as FormCardMerchType"
+              data-cy="form-card-merch"
+            >
               <!-- TODO: add form slot for merch customization within dialog -->
             </FormCardMerch>
           </template>
@@ -148,7 +209,8 @@ export default defineComponent({
           v-model="formValue"
           type="radio"
           :options="maleOptions"
-          class="q-gutter-md"
+          class="option-grid"
+          data-cy="list-merch-option-group"
         >
           <template v-slot:label="options">
             <FormCardMerch :option="options as FormCardMerchType">
@@ -171,5 +233,19 @@ export default defineComponent({
 }
 :deep(.q-radio__label) {
   width: 100%;
+}
+// override default q-gutter-x-sm
+:deep(.option-grid > *) {
+  margin: 0;
+}
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0;
+}
+@media (max-width: $breakpoint-sm-max) {
+  .option-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 </style>
