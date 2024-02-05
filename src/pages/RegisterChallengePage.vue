@@ -8,6 +8,10 @@
  * individual challenge.
  *
  * @components
+ * - `FormFieldCompanySelect`: Component to render company select widget.
+ * - `FormFieldListMerch`: Component to render list of merch options.
+ * - `FormFieldOptionGroup`: Component to render radio buttons.
+ * - `FormPersonalDetails`: Component to render personal details form.
  * - `LoginRegisterHeader`: Component to render page header.
  *
  * @layout
@@ -24,8 +28,9 @@ import { QForm, QStepper } from 'quasar';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
-import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
 import FormFieldCompanySelect from 'src/components/form/FormFieldCompanySelect.vue';
+import FormFieldListMerch from 'src/components/form/FormFieldListMerch.vue';
+import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
 import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
@@ -38,8 +43,9 @@ import type { FormPersonalDetailsFields } from 'src/components/types/Form';
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
-    FormFieldOptionGroup,
     FormFieldCompanySelect,
+    FormFieldListMerch,
+    FormFieldOptionGroup,
     FormPersonalDetails,
     LoginRegisterHeader,
   },
@@ -308,6 +314,41 @@ export default defineComponent({
                 :label="$t('navigation.back')"
                 class="q-ml-sm"
                 data-cy="step-4-back"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <!-- Step: Merch -->
+          <q-step
+            :name="7"
+            :title="$t('register.challenge.titleStepMerch')"
+            :icon="iconImgSrcStepper4"
+            :active-icon="activeIconImgSrcStepper4"
+            :done-icon="doneIconImgSrcStepper4"
+            :done="step > 7"
+            class="bg-white q-mt-lg"
+            data-cy="step-7"
+          >
+            <q-form ref="stepMerchRef">
+              <form-field-list-merch />
+            </q-form>
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                @click="onContinue"
+                data-cy="step-7-continue"
+              />
+              <q-btn
+                unelevated
+                rounded
+                outline
+                @click="onBack"
+                color="primary"
+                :label="$t('navigation.back')"
+                class="q-ml-sm"
+                data-cy="step-7-back"
               />
             </q-stepper-navigation>
           </q-step>
