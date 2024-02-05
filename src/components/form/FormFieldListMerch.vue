@@ -43,7 +43,7 @@ export default defineComponent({
 
     const formValue = ref();
 
-    const options: FormCardMerchType[] = [
+    const femaleOptions: FormCardMerchType[] = [
       {
         value: '1',
         label: 'T-Shirt',
@@ -67,14 +67,44 @@ export default defineComponent({
             value: 'S',
           },
         ],
-        material: 'Cotton',
+        material: 'Bavlna',
         author: 'Cotton lady',
+      },
+    ];
+
+    const maleOptions: FormCardMerchType[] = [
+      {
+        value: '2',
+        label: 'T-Shirt',
+        image: 'https://cdn.quasar.dev/img/mountains.jpg',
+        dialogTitle: 'T-Shirt',
+        dialogImages: [
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+          'https://cdn.quasar.dev/img/mountains.jpg',
+        ],
+        dialogDescription: 'T-Shirt',
+        gender: [
+          {
+            label: 'Male',
+            value: 'male',
+          },
+        ],
+        sizes: [
+          {
+            label: 'S',
+            value: 'S',
+          },
+        ],
+        material: 'Bavlna',
+        author: 'Jaromír 99',
       },
     ];
 
     return {
       formValue,
-      options,
+      femaleOptions,
+      maleOptions,
       tab,
     };
   },
@@ -102,18 +132,30 @@ export default defineComponent({
         <q-option-group
           v-model="formValue"
           type="radio"
-          :options="options"
+          :options="femaleOptions"
           class="q-gutter-md"
         >
-          <template v-slot:label="opt">
-            <FormCardMerch :option="opt as FormCardMerchType"> </FormCardMerch>
+          <template v-slot:label="options">
+            <FormCardMerch :option="options as FormCardMerchType">
+              <!-- TODO: add form slot for merch customization within dialog -->
+            </FormCardMerch>
           </template>
         </q-option-group>
       </q-tab-panel>
 
       <q-tab-panel name="male">
-        <div class="text-h6">{{ $t('global.male') }}</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <q-option-group
+          v-model="formValue"
+          type="radio"
+          :options="maleOptions"
+          class="q-gutter-md"
+        >
+          <template v-slot:label="options">
+            <FormCardMerch :option="options as FormCardMerchType">
+              <!-- TODO: add form slot for merch customization within dialog -->
+            </FormCardMerch>
+          </template>
+        </q-option-group>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>

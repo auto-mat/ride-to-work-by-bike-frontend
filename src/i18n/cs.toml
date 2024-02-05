@@ -17,7 +17,9 @@ donate = "Darujte"
 more = "Více"
 
 [global]
+female = "Dámské"
 man = "Muž"
+male = "Pánské"
 woman = "Žena"
 
 [time]

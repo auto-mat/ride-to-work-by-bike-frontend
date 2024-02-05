@@ -17,7 +17,9 @@ donate = "Donate"
 more = "More"
 
 [global]
+female = "Female"
 man = "Man"
+male = "Male"
 woman = "Woman"
 
 [time]
