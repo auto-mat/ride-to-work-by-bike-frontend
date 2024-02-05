@@ -46,6 +46,13 @@ describe('<FormFieldListMerch>', () => {
         33,
       );
     });
+
+    it('allows to disable merch options', () => {
+      cy.dataCy('no-merch').click();
+      cy.dataCy('list-merch').should('not.be.visible');
+      cy.dataCy('no-merch').click();
+      cy.dataCy('list-merch').should('be.visible');
+    });
   });
 
   context('mobile', () => {

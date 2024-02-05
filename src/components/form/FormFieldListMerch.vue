@@ -175,7 +175,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-item tag="label" v-ripple>
+  <q-item tag="label" v-ripple data-cy="no-merch">
     <q-item-section avatar top>
       <q-checkbox dense v-model="isNotMerch" :val="true" color="primary" />
     </q-item-section>
