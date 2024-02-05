@@ -8,7 +8,12 @@ const grey10 = getPaletteColor('grey-10');
 
 describe('<FormFieldListMerch>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      ['labelNoMerch', 'hintNoMerch'],
+      'form.merch',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(['male', 'female'], 'global', i18n);
   });
 
   context('desktop', () => {
