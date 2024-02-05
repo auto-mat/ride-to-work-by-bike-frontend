@@ -272,6 +272,7 @@ titleStepPersonalDetails = "Osobné údaje"
 titleStepPayment = "Platba"
 titleStepParticipation = "Účasť"
 titleStepCompany = "Spoločnosť / škola / skupina"
+titleStepMerch = "Štartovací balíček"
 buttonAddCompany = "Pridanie novej"
 
 [register.coordinator]

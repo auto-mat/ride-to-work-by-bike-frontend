@@ -272,6 +272,7 @@ titleStepPersonalDetails = "Personal details"
 titleStepPayment = "Payment"
 titleStepParticipation = "Participation"
 titleStepCompany = "Company / school / group"
+titleStepMerch = "Starter package"
 buttonAddCompany = "Add new"
 
 [register.coordinator]
