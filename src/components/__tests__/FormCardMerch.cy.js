@@ -12,7 +12,7 @@ const option = {
   dialogImages: ['https://picsum.photos/id/70/340/200'],
   dialogTitle: 'dialogTitle',
   image: 'https://picsum.photos/id/70/340/200',
-  title: 'title',
+  label: 'Title',
   sizes: [
     {
       label: 'L',
@@ -38,7 +38,7 @@ describe('<FormCardMerch>', () => {
       'form.merch',
       i18n,
     );
-    cy.testLanguageStringsInContext(['select'], 'navigation', i18n);
+    cy.testLanguageStringsInContext(['select', 'selected'], 'navigation', i18n);
   });
 
   context('desktop', () => {
@@ -75,7 +75,7 @@ describe('<FormCardMerch>', () => {
         .and('have.css', 'font-size', '16px')
         .and('have.css', 'font-weight', '700')
         .and('have.color', black)
-        .and('contain', option.title);
+        .and('contain', option.label);
     });
 
     it('renders parameters', () => {
@@ -102,6 +102,24 @@ describe('<FormCardMerch>', () => {
       cy.dataCy('form-card-merch-button')
         .should('be.visible')
         .and('contain.text', i18n.global.t('navigation.select'));
+    });
+  });
+
+  context('selected', () => {
+    beforeEach(() => {
+      cy.mount(FormCardMerch, {
+        props: {
+          option: option,
+          selected: true,
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders button', () => {
+      cy.dataCy('form-card-merch-button')
+        .should('be.visible')
+        .and('contain.text', i18n.global.t('navigation.selected'));
     });
   });
 });

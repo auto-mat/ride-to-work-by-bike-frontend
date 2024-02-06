@@ -51,6 +51,10 @@ export default defineComponent({
       type: Object as () => FormCardMerchType,
       required: true,
     },
+    selected: {
+      type: Boolean,
+      required: true,
+    },
   },
   setup() {
     const isOpen = ref<boolean>(false);
@@ -119,6 +123,7 @@ export default defineComponent({
     >
       <!-- Button: more info -->
       <q-btn
+        v-show="!selected"
         unelevated
         rounded
         outline
@@ -128,6 +133,19 @@ export default defineComponent({
         data-cy="button-more-info"
       >
         {{ $t('navigation.select') }}
+      </q-btn>
+      <q-btn
+        v-show="selected"
+        unelevated
+        rounded
+        color="secondary"
+        text-color="primary"
+        icon-right="done"
+        class="full-width"
+        @click.prevent="isOpen = true"
+        data-cy="button-more-info"
+      >
+        {{ $t('navigation.selected') }}
       </q-btn>
     </q-card-section>
   </q-card>

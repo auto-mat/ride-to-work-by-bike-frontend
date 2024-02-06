@@ -38,6 +38,7 @@ back = "Back"
 discard = "Discard"
 moreInfo = "More info"
 select = "Select"
+selected = "Selected"
 
 [form]
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
