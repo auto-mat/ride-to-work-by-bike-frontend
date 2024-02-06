@@ -187,66 +187,32 @@ export default defineComponent({
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="female">
-        <q-option-group
-          v-model="formValue"
-          type="radio"
-          :options="femaleOptions"
-          class="option-grid"
-          data-cy="list-merch-option-group"
-        >
-          <template v-slot:label="options">
-            <FormCardMerch
-              :option="options as FormCardMerchType"
-              data-cy="form-card-merch"
-            >
-              <!-- TODO: add form slot for merch customization within dialog -->
-            </FormCardMerch>
-          </template>
-        </q-option-group>
+        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+          <FormCardMerch
+            v-for="option in femaleOptions"
+            :option="option"
+            :key="option.value"
+            class="col-12 col-md-6 col-lg-4"
+            data-cy="form-card-merch"
+          >
+            <!-- TODO: add form slot for merch customization within dialog -->
+          </FormCardMerch>
+        </div>
       </q-tab-panel>
 
       <q-tab-panel name="male">
-        <q-option-group
-          v-model="formValue"
-          type="radio"
-          :options="maleOptions"
-          class="option-grid"
-          data-cy="list-merch-option-group"
-        >
-          <template v-slot:label="options">
-            <FormCardMerch :option="options as FormCardMerchType">
-              <!-- TODO: add form slot for merch customization within dialog -->
-            </FormCardMerch>
-          </template>
-        </q-option-group>
+        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+          <FormCardMerch
+            v-for="option in femaleOptions"
+            :option="option"
+            :key="option.value"
+            class="col-12 col-md-6 col-lg-4"
+            data-cy="form-card-merch"
+          >
+            <!-- TODO: add form slot for merch customization within dialog -->
+          </FormCardMerch>
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>
 </template>
-
-<style scoped lang="scss">
-// hide radio button
-:deep(.q-radio__inner) {
-  display: none;
-}
-:deep(.q-radio) {
-  width: 100%;
-}
-:deep(.q-radio__label) {
-  width: 100%;
-}
-// override default q-gutter-x-sm
-:deep(.option-grid > *) {
-  margin: 0;
-}
-.option-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 0;
-}
-@media (max-width: $breakpoint-sm-max) {
-  .option-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-</style>
