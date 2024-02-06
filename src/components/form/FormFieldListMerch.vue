@@ -25,7 +25,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import FormCardMerch from 'src/components/form/FormCardMerch.vue';
@@ -41,11 +41,13 @@ export default defineComponent({
   setup() {
     const tab = ref('female');
 
-    const formValue = ref();
+    const selectedModel = ref<string | null>(null);
+    const selectedSize = ref<string | null>(null);
+    const selectedGender = ref<string | null>(null);
 
     const isNotMerch = ref<boolean>(false);
 
-    const femaleOptions: FormCardMerchType[] = [
+    const options: FormCardMerchType[] = [
       {
         value: '1',
         label: 'T-Shirt',
@@ -61,6 +63,10 @@ export default defineComponent({
           {
             label: 'Female',
             value: 'female',
+          },
+          {
+            label: 'Female',
+            value: 'male',
           },
         ],
         sizes: [
@@ -93,35 +99,6 @@ export default defineComponent({
         dialogDescription: 'T-Shirt',
         gender: [
           {
-            label: 'Male',
-            value: 'male',
-          },
-        ],
-        sizes: [
-          {
-            label: 'S',
-            value: 'S',
-          },
-        ],
-        material: 'Bavlna',
-        author: 'Jaromír 99',
-      },
-    ];
-
-    const maleOptions: FormCardMerchType[] = [
-      {
-        value: '1',
-        label: 'T-Shirt',
-        image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'T-Shirt',
-        dialogImages: [
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-        ],
-        dialogDescription: 'T-Shirt',
-        gender: [
-          {
             label: 'Female',
             value: 'female',
           },
@@ -133,38 +110,32 @@ export default defineComponent({
           },
         ],
         material: 'Bavlna',
-        author: 'Cotton lady',
-      },
-      {
-        value: '2',
-        label: 'T-Shirt',
-        image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'T-Shirt',
-        dialogImages: [
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-        ],
-        dialogDescription: 'T-Shirt',
-        gender: [
-          {
-            label: 'Male',
-            value: 'male',
-          },
-        ],
-        sizes: [
-          {
-            label: 'S',
-            value: 'S',
-          },
-        ],
-        material: 'Bavlna',
         author: 'Jaromír 99',
       },
     ];
 
+    const femaleOptions = computed((): FormCardMerchType[] => {
+      return options.filter((option: FormCardMerchType) => {
+        const genderValues = option.gender.map(
+          (gender: { value: string }) => gender.value,
+        );
+        return genderValues.includes('female');
+      });
+    });
+
+    const maleOptions = computed((): FormCardMerchType[] => {
+      return options.filter((option: FormCardMerchType) => {
+        const genderValues = option.gender.map(
+          (gender: { value: string }) => gender.value,
+        );
+        return genderValues.includes('male');
+      });
+    });
+
     return {
-      formValue,
+      selectedModel,
+      selectedSize,
+      selectedGender,
       femaleOptions,
       isNotMerch,
       maleOptions,
