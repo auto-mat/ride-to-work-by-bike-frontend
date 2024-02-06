@@ -193,7 +193,7 @@ export default defineComponent({
     <q-separator />
 
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="female">
+      <q-tab-panel name="female" class="q-pa-none">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <FormCardMerch
             v-for="option in femaleOptions"
