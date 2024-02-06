@@ -20,6 +20,7 @@
  *   - gender (Array)
  *   - author (string)
  *   - material (string)
+ * - `selected` (boolean, required): Whether or not option shows as selected.
  *
  * @events
  * - `update:formValue`: Emitted as a part of v-model structure.
