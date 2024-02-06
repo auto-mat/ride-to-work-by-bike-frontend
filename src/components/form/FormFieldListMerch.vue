@@ -41,9 +41,9 @@ export default defineComponent({
   setup() {
     const tab = ref('female');
 
-    const selectedModel = ref<string | null>(null);
+    const selectedGender = ref<string | null>('female');
+    const selectedModel = ref<string | null>('1');
     const selectedSize = ref<string | null>(null);
-    const selectedGender = ref<string | null>(null);
 
     const isNotMerch = ref<boolean>(false);
 
@@ -132,13 +132,20 @@ export default defineComponent({
       });
     });
 
+    const isSelected = (option: FormCardMerchType): boolean => {
+      const isModel = selectedModel.value === option.value;
+      const isGender = selectedGender.value === tab.value;
+      return isModel && isGender;
+    };
+
     return {
+      femaleOptions,
+      isNotMerch,
+      isSelected,
+      maleOptions,
       selectedModel,
       selectedSize,
       selectedGender,
-      femaleOptions,
-      isNotMerch,
-      maleOptions,
       tab,
     };
   },
@@ -191,7 +198,8 @@ export default defineComponent({
           <FormCardMerch
             v-for="option in femaleOptions"
             :option="option"
-            :key="option.value"
+            :key="`${option.value}-female`"
+            :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch"
           >
@@ -203,9 +211,10 @@ export default defineComponent({
       <q-tab-panel name="male">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <FormCardMerch
-            v-for="option in femaleOptions"
+            v-for="option in maleOptions"
             :option="option"
-            :key="option.value"
+            :key="`${option.value}-female`"
+            :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch"
           >
