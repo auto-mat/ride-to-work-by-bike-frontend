@@ -10,14 +10,18 @@ export type FormPersonalDetailsFields = {
 
 export type FormOption = {
   label: string;
-  value: string;
+  value: string | FormCompanyAddressFields;
   icon?: string;
   description?: string;
 };
 
-export type FormAddCompanyFields = {
+export type FormCompanyFields = {
   name: string;
   vatId: string;
+  address?: FormCompanyAddressFields[];
+};
+
+export type FormCompanyAddressFields = {
   street?: string;
   streetNumber?: string;
   city?: string;
