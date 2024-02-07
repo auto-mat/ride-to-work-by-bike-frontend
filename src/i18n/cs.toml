@@ -63,6 +63,7 @@ linkTerms = "Zásad o ochraně a zpracování údajů"
 messageEmailInvalid = "Prosím vyplňte platný e-mail"
 messageFieldRequired = "Pole {fieldName} je povinné"
 messageNoCompany = "Žádnou firmu jsme nenašli. Zkuste hledat znovu, nebo vytvořte novou firmu."
+messageNoResult = "Nenalezeno"
 messageOptionRequired = "Prosím, zvolte jednu z možností"
 messagePhoneInvalid = "Prosím vyplňte platné telefonní číslo"
 messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
@@ -95,9 +96,11 @@ titleParticipation = "S kým se budete výzvy účastnit?"
 hintPariticipation = "I pokud plánujete soutěžit sám/sama, zvolte skupinu, z které by se k vám případně mohl někdo pak přidat do týmu."
 
 [form.company]
+labelAddress = "Adresa firmy či pobočky"
 labelCompany = "Název firmy"
 titleAddCompany = "Přidat firmu"
 buttonAddCompany = "Přidat firmu"
+buttonAddAddress = "Přidat novou"
 
 [index]
 title = "Domov"
