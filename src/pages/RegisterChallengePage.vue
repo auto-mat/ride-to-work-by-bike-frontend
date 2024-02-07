@@ -28,6 +28,7 @@ import { QForm, QStepper } from 'quasar';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
+import FormFieldCompanyAddress from 'src/components/form/FormFieldCompanyAddress.vue';
 import FormFieldCompanySelect from 'src/components/form/FormFieldCompanySelect.vue';
 import FormFieldListMerch from 'src/components/form/FormFieldListMerch.vue';
 import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
@@ -38,11 +39,15 @@ import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 import { useStepperValidation } from 'src/composables/useStepperValidation';
 
 // types
-import type { FormPersonalDetailsFields } from 'src/components/types/Form';
+import type {
+  FormPersonalDetailsFields,
+  FormCompanyAddressFields,
+} from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
+    FormFieldCompanyAddress,
     FormFieldCompanySelect,
     FormFieldListMerch,
     FormFieldOptionGroup,
@@ -108,7 +113,12 @@ export default defineComponent({
 
     const participation = ref<string>('');
 
-    const company = ref<string>('');
+    const companyId = ref<string>('');
+    const companyAddress = ref<FormCompanyAddressFields | null>(null);
+
+    const onUpdateAddress = (val: FormCompanyAddressFields) => {
+      companyAddress.value = val;
+    };
 
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
@@ -151,10 +161,12 @@ export default defineComponent({
       activeIconImgSrcStepper7,
       doneIconImgSrcStepper7,
       participation,
-      company,
+      companyAddress,
+      companyId,
       personalDetails,
       onBack,
       onContinue,
+      onUpdateAddress,
     };
   },
 });
@@ -305,7 +317,10 @@ export default defineComponent({
             data-cy="step-4"
           >
             <q-form ref="stepCompanyRef">
-              <form-field-company-select v-model="company" />
+              <form-field-company-select v-model="companyId" />
+              <form-field-company-address
+                @update:form-value="onUpdateAddress"
+              />
             </q-form>
             <q-stepper-navigation>
               <q-btn
