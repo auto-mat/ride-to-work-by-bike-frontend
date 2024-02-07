@@ -1,0 +1,23 @@
+{
+  "dialogDescription": "Qui veniam labore nisi laborum nisi occaecat et voluptate aute labore nulla. Velit deserunt eiusmod consequat ea qui esse minim officia culpa ea. Labore excepteur elit quis eiusmod velit aute eiusmod ut. Laboris consectetur sunt amet id ut ullamco eu aliquip minim aliqua nostrud dolor veniam exercitation. Consequat magna consectetur elit nostrud do qui amet deserunt excepteur enim id labore consectetur amet. Esse et et nulla. Aliquip occaecat laboris elit mollit proident occaecat enim anim minim. Voluptate excepteur officia cillum id proident ex dolor esse ad duis aliquip esse laboris.",
+  "dialogImages": ["https://picsum.photos/id/70/340/200"],
+  "dialogTitle": "dialogTitle",
+  "image": "https://picsum.photos/id/70/340/200",
+  "label": "Title",
+  "sizes": [
+    {
+      "label": "L",
+      "value": "L"
+    },
+    {
+      "label": "XL",
+      "value": "XL"
+    },
+    {
+      "label": "XXL",
+      "value": "XXL"
+    }
+  ],
+  "author": "author",
+  "material": "material"
+}
