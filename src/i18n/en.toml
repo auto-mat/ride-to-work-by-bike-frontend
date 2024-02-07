@@ -43,6 +43,7 @@ selected = "Selected"
 [form]
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
 hintNickname = "It will appear in the public results instead of your name"
+labelAddress = "Address"
 labelCompany = "The company you want to be a coordinator for"
 labelCompanyShort = "Company"
 labelEmail = "E-mail"

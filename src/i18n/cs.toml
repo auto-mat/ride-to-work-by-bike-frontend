@@ -43,6 +43,7 @@ selected = "Vybráno"
 [form]
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 hintNickname = "Zobrazí se ve veřejných výsledcích místo vašeho jména"
+labelAddress = "Adresa"
 labelCompany = "Firma, pro kterou chcete být koordinátorem"
 labelCompanyShort = "Firma"
 labelEmail = "E-mail"

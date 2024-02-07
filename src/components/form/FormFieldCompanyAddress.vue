@@ -17,7 +17,6 @@
  *
  * @components
  * - `DialogDefault`: Component to render a dialog window.
- * - `FormAddress`: Component to render address form fields.
  *
  * @example
  * <form-field-company-address />
@@ -31,8 +30,14 @@ import { defineComponent, nextTick, ref } from 'vue';
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
 
+// composables
+import { useValidation } from 'src/composables/useValidation';
+
 // types
-import type { FormOption } from 'src/components/types/Form';
+import type {
+  FormCompanyAddressFields,
+  FormOption,
+} from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
@@ -46,40 +51,49 @@ export default defineComponent({
   },
   emits: ['update:formValue'],
   setup(props, { emit }) {
-    const addressValue = ref(null);
+    const address = ref<string | null>(null);
     const isDialogOpen = ref<boolean>(false);
-
-    const onUpdate = (): void => {
-      // wait for next tick to emit the value after update
-      nextTick((): void => {
-        emit('update:formValue', addressValue.value);
-      });
-    };
 
     const options: FormOption[] = [
       {
         label: 'Address 1',
-        value: {
-          street: 'Street',
-          streetNumber: '123',
-          city: 'City',
-          zip: '1234',
-          referenceCity: 'Ref City',
-          department: 'Department',
-        },
+        value: 'address-1',
       },
       {
         label: 'Address 2',
-        value: {
-          street: 'Street',
-          streetNumber: '123',
-          city: 'City',
-          zip: '1234',
-          referenceCity: 'Ref City',
-          department: 'Department',
-        },
+        value: 'address-2',
       },
     ];
+
+    // Lookup dictionary which provides the full values based on address ID.
+    // TODO: validate the possibility of using this method
+    const addresses: { [key: string]: FormCompanyAddressFields } = {
+      'address-1': {
+        street: 'Street 1',
+        streetNumber: '123',
+        city: 'City 1',
+        zip: '1234',
+        referenceCity: 'Ref City 1',
+        department: 'Department 1',
+      },
+      'address-2': {
+        street: 'Street 2',
+        streetNumber: '123',
+        city: 'City 2',
+        zip: '1234',
+        referenceCity: 'Ref City 2',
+        department: 'Department 2',
+      },
+    };
+
+    const onUpdate = (): void => {
+      // wait for next tick to emit the value after update
+      nextTick((): void => {
+        if (address.value) {
+          emit('update:formValue', addresses[address.value as string]);
+        }
+      });
+    };
 
     const onClose = (): void => {
       isDialogOpen.value = false;
@@ -90,10 +104,13 @@ export default defineComponent({
       isDialogOpen.value = false;
     };
 
+    const { isFilled } = useValidation();
+
     return {
-      addressValue,
+      address,
       isDialogOpen,
       options,
+      isFilled,
       onClose,
       onSubmit,
       onUpdate,
@@ -103,22 +120,33 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="form-field-company-address">
+  <div data-cy="form-company-address">
     <label
       for="form-company-address"
-      class="text-body1 text-bold text-black q-mt-none q-mb-md"
+      class="text-caption text-bold text-grey-10"
+      data-cy="form-company-address-label"
     >
       {{ $t('form.company.labelAddress') }}
     </label>
-    <div class="row q-mt-sm">
+    <div class="row q-mt-sm q-col-gutter-md">
       <div class="col-12 col-sm" data-cy="col-input">
         <!-- Input: Autocomplete -->
         <q-select
+          dense
           outlined
+          emit-value
+          map-options
           id="form-company-address"
-          v-model="addressValue"
+          v-model="address"
           :hint="$t('form.company.hintAddress')"
           :options="options"
+          :rules="[
+            (val) =>
+              isFilled(val) ||
+              $t('form.messageFieldRequired', {
+                fieldName: $t('form.labelAddress'),
+              }),
+          ]"
           @update:model-value="onUpdate"
         >
           <!-- Item: No option -->
@@ -132,7 +160,7 @@ export default defineComponent({
         </q-select>
       </div>
       <div
-        class="col-12 col-sm-auto flex items-start justify-end q-pt-sm q-pl-md"
+        class="col-12 col-sm-auto flex items-start justify-end q-pl-md"
         style="margin-top: 2px"
         data-cy="col-button"
       >
@@ -143,7 +171,7 @@ export default defineComponent({
           icon="mdi-plus"
           color="primary"
           @click.prevent="isDialogOpen = true"
-          data-cy="button-add-company"
+          data-cy="button-add-address"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
@@ -159,12 +187,8 @@ export default defineComponent({
       {{ $t('form.company.titleAddAddress') }}
     </template>
     <template #content>
-      <q-form ref="formRef">
-        <!-- <form-address
-          :form-values="addressNew"
-          variant="simple"
-          @update:form-values="addressNew = $event"
-        ></form-address> -->
+      <q-form>
+        <!-- TODO: add FormAddress -->
       </q-form>
       <!-- Action buttons -->
       <div class="flex justify-end q-mt-sm">
