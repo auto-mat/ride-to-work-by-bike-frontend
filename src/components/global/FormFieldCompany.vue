@@ -38,7 +38,7 @@ import FormAddCompany from 'src/components/form/FormAddCompany.vue';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
-import type { FormAddCompanyFields } from 'src/components/types/Form';
+import type { FormCompanyFields } from 'src/components/types/Form';
 
 // constants
 const stringOptions: string[] = ['Company 1', 'Company 2'];
@@ -67,7 +67,7 @@ export default defineComponent({
       },
     });
 
-    const companyNew: FormAddCompanyFields = {
+    const companyNew: FormCompanyFields = {
       name: '',
       vatId: '',
     };

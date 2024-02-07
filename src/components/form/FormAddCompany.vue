@@ -35,7 +35,7 @@ import FormFieldTextRequired from 'src/components/global/FormFieldTextRequired.v
 import FormFieldVatId from 'src/components/form/FormFieldVatId.vue';
 
 // types
-import type { FormAddCompanyFields } from 'src/components/types/Form';
+import type { FormCompanyFields } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormAddCompany',
@@ -45,7 +45,7 @@ export default defineComponent({
   },
   props: {
     formValues: {
-      type: Object as () => FormAddCompanyFields,
+      type: Object as () => FormCompanyFields,
       required: true,
     },
     variant: {
