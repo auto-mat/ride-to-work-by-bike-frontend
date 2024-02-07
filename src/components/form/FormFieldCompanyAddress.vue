@@ -17,7 +17,7 @@
  *
  * @components
  * - `DialogDefault`: Component to render a dialog window.
- * - `FormAddAddress`: Component to render address form fields.
+ * - `FormAddress`: Component to render address form fields.
  *
  * @example
  * <form-field-company-address />
@@ -28,16 +28,23 @@
 // libraries
 import { defineComponent, nextTick, ref } from 'vue';
 
+// components
+import DialogDefault from 'src/components/global/DialogDefault.vue';
+
+// types
 import type { FormOption } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
-  emits: ['update:formValue'],
+  components: {
+    DialogDefault,
+  },
   props: {
     companyId: {
       type: String,
     },
   },
+  emits: ['update:formValue'],
   setup(props, { emit }) {
     const addressValue = ref(null);
     const isDialogOpen = ref<boolean>(false);
@@ -74,10 +81,21 @@ export default defineComponent({
       },
     ];
 
+    const onClose = (): void => {
+      isDialogOpen.value = false;
+    };
+
+    const onSubmit = async (): Promise<void> => {
+      // noop
+      isDialogOpen.value = false;
+    };
+
     return {
       addressValue,
       isDialogOpen,
       options,
+      onClose,
+      onSubmit,
       onUpdate,
     };
   },
@@ -92,13 +110,14 @@ export default defineComponent({
     >
       {{ $t('form.company.labelAddress') }}
     </label>
-    <div class="row">
+    <div class="row q-mt-sm">
       <div class="col-12 col-sm" data-cy="col-input">
         <!-- Input: Autocomplete -->
         <q-select
-          id="form-company-address"
           outlined
+          id="form-company-address"
           v-model="addressValue"
+          :hint="$t('form.company.hintAddress')"
           :options="options"
           @update:model-value="onUpdate"
         >
@@ -134,4 +153,43 @@ export default defineComponent({
       </div>
     </div>
   </div>
+  <!-- Dialog: Add address -->
+  <dialog-default v-model="isDialogOpen" data-cy="dialog-add-address">
+    <template #title>
+      {{ $t('form.company.titleAddAddress') }}
+    </template>
+    <template #content>
+      <q-form ref="formRef">
+        <!-- <form-address
+          :form-values="addressNew"
+          variant="simple"
+          @update:form-values="addressNew = $event"
+        ></form-address> -->
+      </q-form>
+      <!-- Action buttons -->
+      <div class="flex justify-end q-mt-sm">
+        <div class="flex gap-8">
+          <q-btn
+            rounded
+            unelevated
+            outline
+            color="primary"
+            data-cy="dialog-button-cancel"
+            @click="onClose"
+          >
+            {{ $t('navigation.discard') }}
+          </q-btn>
+          <q-btn
+            rounded
+            unelevated
+            color="primary"
+            data-cy="dialog-button-submit"
+            @click="onSubmit"
+          >
+            {{ $t('form.company.buttonAddBranch') }}
+          </q-btn>
+        </div>
+      </div>
+    </template>
+  </dialog-default>
 </template>

@@ -96,11 +96,14 @@ titleParticipation = "S kým se budete výzvy účastnit?"
 hintPariticipation = "I pokud plánujete soutěžit sám/sama, zvolte skupinu, z které by se k vám případně mohl někdo pak přidat do týmu."
 
 [form.company]
+buttonAddAddress = "Přidat novou"
+buttonAddBranch = "Přidat pobočku"
+buttonAddCompany = "Přidat firmu"
+hintAddress = "Na tuto adresu doručíme startovní balíček pro váš tým."
 labelAddress = "Adresa firmy či pobočky"
 labelCompany = "Název firmy"
+titleAddAddress = "Přidat vaši pobočku"
 titleAddCompany = "Přidat firmu"
-buttonAddCompany = "Přidat firmu"
-buttonAddAddress = "Přidat novou"
 
 [index]
 title = "Domov"

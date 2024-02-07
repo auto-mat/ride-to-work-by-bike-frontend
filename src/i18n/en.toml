@@ -96,11 +96,14 @@ titleParticipation = "With whom will you participate in the challenge?"
 hintPariticipation = "If you plan to compete alone, choose a group from which someone could possibly join your team later."
 
 [form.company]
+buttonAddAddress = "Add new"
+buttonAddBranch = "Add branch"
+buttonAddCompany = "Add company"
+hintAddress = "We will deliver a starter pack for your team to this address."
 labelAddress = "Company or branch address"
 labelCompany = "Company name"
 titleAddCompany = "Add company"
-buttonAddCompany = "Add company"
-buttonAddAddress = "Add new"
+titleAddAddress = "Add your branch"
 
 [index]
 title = "Home"
