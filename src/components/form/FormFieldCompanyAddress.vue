@@ -121,14 +121,14 @@ export default defineComponent({
 
 <template>
   <div data-cy="form-company-address">
-    <label
-      for="form-company-address"
-      class="text-caption text-bold text-grey-10"
-      data-cy="form-company-address-label"
-    >
-      {{ $t('form.company.labelAddress') }}
-    </label>
-    <div class="row q-mt-sm q-col-gutter-md">
+    <div class="row q-mt-sm q-col-gutter-sm">
+      <label
+        for="form-company-address"
+        class="col-12 text-caption text-bold text-grey-10"
+        data-cy="form-company-address-label"
+      >
+        {{ $t('form.company.labelAddress') }}
+      </label>
       <div class="col-12 col-sm" data-cy="col-input">
         <!-- Input: Autocomplete -->
         <q-select
