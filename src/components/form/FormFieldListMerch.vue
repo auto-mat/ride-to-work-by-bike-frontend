@@ -185,9 +185,13 @@ export default defineComponent({
       <q-tab
         name="female"
         :label="$t('global.female')"
-        data-cy="list-merch-tab"
+        data-cy="list-merch-tab-female"
       />
-      <q-tab name="male" :label="$t('global.male')" data-cy="list-merch-tab" />
+      <q-tab
+        name="male"
+        :label="$t('global.male')"
+        data-cy="list-merch-tab-male"
+      />
     </q-tabs>
 
     <q-separator />
@@ -201,7 +205,7 @@ export default defineComponent({
             :key="`${option.value}-female`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
-            data-cy="form-card-merch"
+            data-cy="form-card-merch-female"
           >
             <!-- TODO: add form slot for merch customization within dialog -->
           </FormCardMerch>
@@ -216,7 +220,7 @@ export default defineComponent({
             :key="`${option.value}-female`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
-            data-cy="form-card-merch"
+            data-cy="form-card-merch-male"
           >
             <!-- TODO: add form slot for merch customization within dialog -->
           </FormCardMerch>

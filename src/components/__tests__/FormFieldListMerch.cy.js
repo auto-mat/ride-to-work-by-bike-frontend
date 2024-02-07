@@ -37,12 +37,11 @@ describe('<FormFieldListMerch>', () => {
         .and('have.color', grey8);
       // component is visible
       cy.dataCy('list-merch').should('be.visible');
-      // cards are visible
-      cy.dataCy('form-card-merch').should('be.visible');
+      // female cards are visible
+      cy.dataCy('form-card-merch-female').should('be.visible');
       // tabs are visible
-      cy.dataCy('list-merch-tab')
-        // male and female tabs
-        .should('have.length', 2);
+      cy.dataCy('list-merch-tab-female').should('be.visible');
+      cy.dataCy('list-merch-tab-male').should('be.visible');
     });
 
     it('should render 3 cards in a row', () => {
@@ -57,6 +56,15 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('list-merch').should('not.be.visible');
       cy.dataCy('no-merch').click();
       cy.dataCy('list-merch').should('be.visible');
+    });
+
+    it('allows to switch between tabs', () => {
+      cy.dataCy('list-merch-tab-male').click();
+      cy.dataCy('form-card-merch-female').should('not.exist');
+      cy.dataCy('form-card-merch-male').should('be.visible');
+      cy.dataCy('list-merch-tab-female').click();
+      cy.dataCy('form-card-merch-female').should('be.visible');
+      cy.dataCy('form-card-merch-male').should('not.exist');
     });
   });
 
