@@ -40,6 +40,16 @@ const activeIconImgSrcStepper4 = new URL(
   '../../../src/assets/svg/numeric-4-fill.svg',
   cy.config().baseUrl,
 ).href;
+const doneIconImgSrcStepper4 = doneIcon;
+// Stepper 7 imgs
+const iconImgSrcStepper7 = new URL(
+  '../../../src/assets/svg/numeric-7-outline.svg',
+  cy.config().baseUrl,
+).href;
+const activeIconImgSrcStepper7 = new URL(
+  '../../../src/assets/svg/numeric-7-fill.svg',
+  cy.config().baseUrl,
+).href;
 
 describe('Register Challenge page', () => {
   context('desktop', () => {
@@ -148,6 +158,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when last name is missing
       cy.dataCy('form-firstName-input').type('John');
       cy.dataCy('step-1-continue').should('be.visible').click();
@@ -155,6 +166,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when terms are not checked
       cy.dataCy('form-firstName-input').type('John');
       cy.dataCy('form-lastName-input').type('Doe');
@@ -163,6 +175,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
 
       // click when form is valid
       cy.dataCy('form-firstName-input').type('John');
@@ -176,6 +189,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when participation is selected
       cy.dataCy('form-field-option').first().click();
       cy.dataCy('step-3-continue').should('be.visible').click();
@@ -183,6 +197,14 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
+      // click when participation is selected
+      cy.dataCy('step-4-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
     });
 
     it('changes icons when step changes', () => {
@@ -199,6 +221,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper7);
       // fill in form data
       cy.dataCy('form-firstName-input').type('John');
       cy.dataCy('form-lastName-input').type('Doe');
@@ -219,6 +244,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper7);
       // change step
       cy.dataCy('step-2-continue').should('be.visible').click();
       // active icon 3
@@ -234,6 +262,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper7);
       // select participation option
       cy.dataCy('form-field-option').first().click();
       // change step
@@ -251,9 +282,30 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', activeIconImgSrcStepper4);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper7);
+      // change step
+      cy.dataCy('step-4-continue').should('be.visible').click();
+      // active icon 7
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper1);
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper2);
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper3);
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper4);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', activeIconImgSrcStepper7);
     });
 
-    it('allows user to pass through the registration process', () => {
+    it('allows user to pass back and through the registration process', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let i18n;
       cy.window().should('have.property', 'i18n');
@@ -274,6 +326,13 @@ describe('Register Challenge page', () => {
           cy.dataCy('form-field-option').first().click();
           cy.dataCy('step-3-continue').should('be.visible').click();
           cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test back navigation in the stepper
+          cy.dataCy('step-7-back').should('be.visible').click();
+          cy.dataCy('step-4-back').should('be.visible').click();
+          cy.dataCy('step-3-back').should('be.visible').click();
+          cy.dataCy('step-2-back').should('be.visible').click();
+          cy.dataCy('step-1-continue').should('be.visible');
         });
     });
   });
