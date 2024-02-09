@@ -198,7 +198,26 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
-      // click when participation is selected
+      // click when address is not selected
+      cy.dataCy('step-4-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
+      // select company and address
+      cy.dataCy('form-company-select-option-group')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      cy.dataCy('form-company-address-input').click();
+      // select option
+      cy.get('.q-menu')
+        .should('be.visible')
+        .within(() => {
+          cy.get('.q-item').first().click();
+        });
+      // click when address is selected
       cy.dataCy('step-4-continue').should('be.visible').click();
       cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
@@ -285,6 +304,18 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper7);
+      // select company and address
+      cy.dataCy('form-company-select-option-group')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      cy.dataCy('form-company-address-input').click();
+      // select option
+      cy.get('.q-menu')
+        .should('be.visible')
+        .within(() => {
+          cy.get('.q-item').first().click();
+        });
       // change step
       cy.dataCy('step-4-continue').should('be.visible').click();
       // active icon 7
@@ -325,6 +356,18 @@ describe('Register Challenge page', () => {
           // select participation option
           cy.dataCy('form-field-option').first().click();
           cy.dataCy('step-3-continue').should('be.visible').click();
+          // select company and address
+          cy.dataCy('form-company-select-option-group')
+            .find('.q-radio__label')
+            .first()
+            .click();
+          cy.dataCy('form-company-address-input').click();
+          // select option
+          cy.get('.q-menu')
+            .should('be.visible')
+            .within(() => {
+              cy.get('.q-item').first().click();
+            });
           cy.dataCy('step-4-continue').should('be.visible').click();
           cy.dataCy('step-7-continue').should('be.visible');
           // test back navigation in the stepper

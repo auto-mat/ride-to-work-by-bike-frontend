@@ -147,6 +147,7 @@ export default defineComponent({
                 fieldName: $t('form.labelAddress'),
               }),
           ]"
+          data-cy="form-company-address-input"
           @update:model-value="onUpdate"
         >
           <!-- Item: No option -->
