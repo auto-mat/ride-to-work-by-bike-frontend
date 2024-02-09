@@ -7,7 +7,7 @@
  * You can adjust its appearance by changing the `variant` prop.
  *
  * Note: This component is commonly used in `FormFieldCompany`,
- * `FormFieldCompanySelect`.
+ * `FormFieldSelectTable`.
  *
  * @props
  * - `modelValue` (Object, required): The object representing the form state.

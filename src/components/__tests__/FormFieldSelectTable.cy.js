@@ -1,7 +1,7 @@
 import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<FormFieldCompanySelect>', () => {
+describe('<FormFieldSelectTable>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['labelCompany'], 'form.company', i18n);
   });
@@ -10,7 +10,7 @@ describe('<FormFieldCompanySelect>', () => {
     beforeEach(() => {
       cy.mount(FormFieldTestWrapper, {
         props: {
-          component: 'FormFieldCompanySelect',
+          component: 'FormFieldSelectTable',
         },
       });
       cy.viewport('macbook-16');

@@ -8,7 +8,7 @@
  * individual challenge.
  *
  * @components
- * - `FormFieldCompanySelect`: Component to render company select widget.
+ * - `FormFieldSelectTable`: Component to render company select widget.
  * - `FormFieldListMerch`: Component to render list of merch options.
  * - `FormFieldOptionGroup`: Component to render radio buttons.
  * - `FormPersonalDetails`: Component to render personal details form.
@@ -29,7 +29,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
 import FormFieldCompanyAddress from 'src/components/form/FormFieldCompanyAddress.vue';
-import FormFieldCompanySelect from 'src/components/form/FormFieldCompanySelect.vue';
+import FormFieldSelectTable from 'src/components/form/FormFieldSelectTable.vue';
 import FormFieldListMerch from 'src/components/form/FormFieldListMerch.vue';
 import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
 import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
@@ -40,15 +40,16 @@ import { useStepperValidation } from 'src/composables/useStepperValidation';
 
 // types
 import type {
-  FormPersonalDetailsFields,
   FormCompanyAddressFields,
+  FormOption,
+  FormPersonalDetailsFields,
 } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'RegisterChallengePage',
   components: {
     FormFieldCompanyAddress,
-    FormFieldCompanySelect,
+    FormFieldSelectTable,
     FormFieldListMerch,
     FormFieldOptionGroup,
     FormPersonalDetails,
@@ -113,6 +114,36 @@ export default defineComponent({
 
     const participation = ref<string>('');
 
+    const companyOptions = ref<FormOption[]>([
+      {
+        label: 'Very long company name spanning 3 lines on mobile',
+        value: 'company-1',
+      },
+      {
+        label: 'Company 2',
+        value: 'company-2',
+      },
+      {
+        label: 'Company 3',
+        value: 'company-3',
+      },
+      {
+        label: 'Company 4',
+        value: 'company-4',
+      },
+      {
+        label: 'Company 5',
+        value: 'company-5',
+      },
+      {
+        label: 'Company 6',
+        value: 'company-6',
+      },
+      {
+        label: 'Company 7',
+        value: 'company-7',
+      },
+    ]);
     const companyId = ref<string>('');
     const companyAddress = ref<FormCompanyAddressFields | null>(null);
 
@@ -160,6 +191,7 @@ export default defineComponent({
       iconImgSrcStepper7,
       activeIconImgSrcStepper7,
       doneIconImgSrcStepper7,
+      companyOptions,
       participation,
       companyAddress,
       companyId,
@@ -317,7 +349,10 @@ export default defineComponent({
             data-cy="step-4"
           >
             <q-form ref="stepCompanyRef">
-              <form-field-company-select v-model="companyId" />
+              <form-field-select-table
+                v-model="companyId"
+                :options="companyOptions"
+              />
               <form-field-company-address
                 @update:form-value="onUpdateAddress"
               />
