@@ -143,18 +143,21 @@ export default defineComponent({
                 <template v-if="opt.members">
                   <div class="flex">
                     <div :class="{ 'text-weight-bold': opt.members > 4 }">
-                      {{ opt.members }} / {{ opt.membersMax || '5' }}
+                      {{ opt.members }} / {{ opt.maxMembers }}
                       {{ $t('form.team.members') }}
                     </div>
-                    <q-rating
-                      v-model="opt.members"
-                      size="8px"
-                      color="teal-5"
-                      icon="circle"
-                      icon-selected="circle"
-                      class="q-ml-md"
-                      no-dimming
-                    />
+                    <div class="d-flex gap-4">
+                      <q-icon
+                        v-for="i in 5"
+                        :key="i"
+                        name="circle"
+                        size="8px"
+                        class="q-ml-sm"
+                        :class="[
+                          i <= opt.members ? 'text-teal-4' : 'text-grey-4',
+                        ]"
+                      />
+                    </div>
                   </div>
                 </template>
               </div>
