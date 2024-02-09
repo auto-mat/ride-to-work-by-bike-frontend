@@ -15,6 +15,11 @@ export type FormOption = {
   description?: string;
 };
 
+export interface FormTableSelectOption extends FormOption {
+  members: number;
+  maxMembers: number;
+}
+
 export type FormCompanyFields = {
   name: string;
   vatId: string;

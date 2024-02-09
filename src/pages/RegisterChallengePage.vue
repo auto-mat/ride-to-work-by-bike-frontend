@@ -43,6 +43,7 @@ import type {
   FormCompanyAddressFields,
   FormOption,
   FormPersonalDetailsFields,
+  FormTableSelectOption,
 } from 'src/components/types/Form';
 
 export default defineComponent({
@@ -93,6 +94,14 @@ export default defineComponent({
       new URL('../assets/svg/numeric-4-fill.svg', import.meta.url).href
     }`;
     const doneIconImgSrcStepper4 = doneIcon;
+    // Stepper 5 imgs
+    const iconImgSrcStepper5 = `img:${
+      new URL('../assets/svg/numeric-5-outline.svg', import.meta.url).href
+    }`;
+    const activeIconImgSrcStepper5 = `img:${
+      new URL('../assets/svg/numeric-5-fill.svg', import.meta.url).href
+    }`;
+    const doneIconImgSrcStepper5 = doneIcon;
     // Stepper 7 imgs
     const iconImgSrcStepper7 = `img:${
       new URL('../assets/svg/numeric-7-outline.svg', import.meta.url).href
@@ -151,12 +160,29 @@ export default defineComponent({
       companyAddress.value = val;
     };
 
-    const step = ref(1);
+    const teamOptions = ref<FormTableSelectOption[]>([
+      {
+        label: 'Zelený team',
+        value: 'team-1',
+        members: 2,
+        maxMembers: 5,
+      },
+      {
+        label: 'Modrý team',
+        value: 'team-2',
+        members: 5,
+        maxMembers: 5,
+      },
+    ]);
+    const team = ref<string>('');
+
+    const step = ref(5);
     const stepperRef = ref<typeof QStepper | null>(null);
     const stepCompanyRef = ref<typeof QForm | null>(null);
     const stepParticipationRef = ref<typeof QForm | null>(null);
     const stepPaymentRef = ref<typeof QForm | null>(null);
     const stepPersonalDetailsRef = ref<typeof QForm | null>(null);
+    const stepTeamRef = ref<typeof QForm | null>(null);
 
     const { onBack, onContinue } = useStepperValidation({
       step,
@@ -165,6 +191,7 @@ export default defineComponent({
       stepParticipationRef,
       stepPaymentRef,
       stepPersonalDetailsRef,
+      stepTeamRef,
     });
 
     return {
@@ -176,6 +203,7 @@ export default defineComponent({
       stepPaymentRef,
       stepParticipationRef,
       stepPersonalDetailsRef,
+      stepTeamRef,
       iconImgSrcStepper1,
       activeIconImgSrcStepper1,
       doneIconImgSrcStepper1,
@@ -188,6 +216,9 @@ export default defineComponent({
       iconImgSrcStepper4,
       activeIconImgSrcStepper4,
       doneIconImgSrcStepper4,
+      iconImgSrcStepper5,
+      activeIconImgSrcStepper5,
+      doneIconImgSrcStepper5,
       iconImgSrcStepper7,
       activeIconImgSrcStepper7,
       doneIconImgSrcStepper7,
@@ -196,6 +227,8 @@ export default defineComponent({
       companyAddress,
       companyId,
       personalDetails,
+      team,
+      teamOptions,
       onBack,
       onContinue,
       onUpdateAddress,
@@ -375,6 +408,41 @@ export default defineComponent({
                 :label="$t('navigation.back')"
                 class="q-ml-sm"
                 data-cy="step-4-back"
+              />
+            </q-stepper-navigation>
+          </q-step>
+          <!-- Step: Team -->
+          <q-step
+            :name="5"
+            :title="$t('register.challenge.titleStepTeam')"
+            :icon="iconImgSrcStepper5"
+            :active-icon="activeIconImgSrcStepper5"
+            :done-icon="doneIconImgSrcStepper5"
+            :done="step > 5"
+            class="bg-white q-mt-lg"
+            data-cy="step-5"
+          >
+            <q-form ref="stepTeamRef">
+              <form-field-select-table v-model="team" :options="teamOptions" />
+            </q-form>
+            <q-stepper-navigation>
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                @click="onContinue"
+                data-cy="step-5-continue"
+              />
+              <q-btn
+                unelevated
+                rounded
+                outline
+                @click="onBack"
+                color="primary"
+                :label="$t('navigation.back')"
+                class="q-ml-sm"
+                data-cy="step-5-back"
               />
             </q-stepper-navigation>
           </q-step>
