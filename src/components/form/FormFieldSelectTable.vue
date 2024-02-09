@@ -45,6 +45,14 @@ export default defineComponent({
       type: Array as () => FormSelectTableOption[] | FormOption[],
       required: true,
     },
+    label: {
+      type: String,
+      required: true,
+    },
+    labelButton: {
+      type: String,
+      required: true,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -90,7 +98,7 @@ export default defineComponent({
     class="text-grey-10 text-caption text-bold"
     data-cy="form-company-select-query"
   >
-    {{ $t('form.company.labelCompany') }}
+    {{ label }}
   </label>
   <q-field
     borderless
@@ -144,7 +152,7 @@ export default defineComponent({
                   <div class="flex">
                     <div :class="{ 'text-weight-bold': opt.members > 4 }">
                       {{ opt.members }} / {{ opt.maxMembers }}
-                      {{ $t('form.team.members') }}
+                      {{ $tc('form.team.labelMembers', opt.maxMembers) }}
                     </div>
                     <div class="d-flex gap-4">
                       <q-icon
@@ -182,7 +190,7 @@ export default defineComponent({
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
-            {{ $t('register.challenge.buttonAddCompany') }}
+            {{ labelButton }}
           </span>
         </q-btn>
       </q-card-section>
