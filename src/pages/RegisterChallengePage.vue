@@ -123,7 +123,7 @@ export default defineComponent({
 
     const participation = ref<string>('');
 
-    const companyOptions = ref<FormOption[]>([
+    const companyOptions: FormOption[] = [
       {
         label: 'Very long company name spanning 3 lines on mobile',
         value: 'company-1',
@@ -152,7 +152,7 @@ export default defineComponent({
         label: 'Company 7',
         value: 'company-7',
       },
-    ]);
+    ];
     const companyId = ref<string>('');
     const companyAddress = ref<FormCompanyAddressFields | null>(null);
 
@@ -160,7 +160,7 @@ export default defineComponent({
       companyAddress.value = val;
     };
 
-    const teamOptions = ref<FormSelectTableOption[]>([
+    const teamOptions: FormSelectTableOption[] = [
       {
         label: 'Zelený team',
         value: 'team-1',
@@ -173,7 +173,7 @@ export default defineComponent({
         members: 5,
         maxMembers: 5,
       },
-    ]);
+    ];
     const team = ref<string>('');
 
     const step = ref(5);

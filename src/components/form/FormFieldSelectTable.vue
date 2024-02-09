@@ -32,7 +32,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
-import { FormSelectTableOption } from '../types/Form';
+import { FormOption, FormSelectTableOption } from '../types/Form';
 
 export default defineComponent({
   name: 'FormFieldSelectTable',
@@ -42,7 +42,7 @@ export default defineComponent({
       required: true,
     },
     options: {
-      type: Array as () => FormSelectTableOption[],
+      type: Array as () => FormSelectTableOption[] | FormOption[],
       required: true,
     },
   },
@@ -52,7 +52,7 @@ export default defineComponent({
 
     const filteredOptions = computed(() => {
       return props.options.filter(
-        (option: FormSelectTableOption): boolean =>
+        (option: FormSelectTableOption | FormOption): boolean =>
           option.label
             .toLocaleLowerCase()
             .indexOf(query.value.toLocaleLowerCase()) > -1,
@@ -136,7 +136,30 @@ export default defineComponent({
             color="primary"
             class="q-pr-sm"
             data-cy="form-company-select-option-group"
-          />
+          >
+            <template v-slot:label="opt">
+              <div class="full-width row items-center justify-between">
+                <span>{{ opt.label }}</span>
+                <template v-if="opt.members">
+                  <div class="flex">
+                    <div :class="{ 'text-weight-bold': opt.members > 4 }">
+                      {{ opt.members }} / {{ opt.membersMax || '5' }}
+                      {{ $t('form.team.members') }}
+                    </div>
+                    <q-rating
+                      v-model="opt.members"
+                      size="8px"
+                      color="teal-5"
+                      icon="circle"
+                      icon-selected="circle"
+                      class="q-ml-md"
+                      no-dimming
+                    />
+                  </div>
+                </template>
+              </div>
+            </template>
+          </q-option-group>
         </q-scroll-area>
       </q-card-section>
       <!-- Separator -->
@@ -166,10 +189,15 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
+:deep(.q-radio) {
+  width: 100%;
+}
 :deep(.q-field__append) {
   display: none;
 }
 :deep(.q-radio__label) {
+  display: block;
+  width: 100%;
   color: $grey-10;
 }
 :deep(.text-negative .q-radio__label) {
