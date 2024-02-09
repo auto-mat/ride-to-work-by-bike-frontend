@@ -15,7 +15,7 @@ export type FormOption = {
   description?: string;
 };
 
-export interface FormTableSelectOption extends FormOption {
+export interface FormSelectTableOption extends FormOption {
   members: number;
   maxMembers: number;
 }

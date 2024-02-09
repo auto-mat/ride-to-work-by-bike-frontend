@@ -43,7 +43,7 @@ import type {
   FormCompanyAddressFields,
   FormOption,
   FormPersonalDetailsFields,
-  FormTableSelectOption,
+  FormSelectTableOption,
 } from 'src/components/types/Form';
 
 export default defineComponent({
@@ -160,7 +160,7 @@ export default defineComponent({
       companyAddress.value = val;
     };
 
-    const teamOptions = ref<FormTableSelectOption[]>([
+    const teamOptions = ref<FormSelectTableOption[]>([
       {
         label: 'Zelený team',
         value: 'team-1',

@@ -32,7 +32,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
-import { FormOption } from '../types/Form';
+import { FormSelectTableOption } from '../types/Form';
 
 export default defineComponent({
   name: 'FormFieldSelectTable',
@@ -42,7 +42,7 @@ export default defineComponent({
       required: true,
     },
     options: {
-      type: Array as () => FormOption[],
+      type: Array as () => FormSelectTableOption[],
       required: true,
     },
   },
@@ -52,7 +52,7 @@ export default defineComponent({
 
     const filteredOptions = computed(() => {
       return props.options.filter(
-        (option: FormOption): boolean =>
+        (option: FormSelectTableOption): boolean =>
           option.label
             .toLocaleLowerCase()
             .indexOf(query.value.toLocaleLowerCase()) > -1,
