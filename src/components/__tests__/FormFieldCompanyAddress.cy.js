@@ -15,7 +15,7 @@ describe('<FormFieldCompanyAddress>', () => {
     cy.testLanguageStringsInContext(
       [
         'buttonAddAddress',
-        'buttonAddBranch',
+        'buttonAddSubdivision',
         'hintAddress',
         'labelAddress',
         'titleAddAddress',
@@ -111,7 +111,7 @@ describe('<FormFieldCompanyAddress>', () => {
         .and('have.text', i18n.global.t('navigation.discard'));
       cy.dataCy('dialog-button-submit')
         .should('be.visible')
-        .and('have.text', i18n.global.t('form.company.buttonAddBranch'));
+        .and('have.text', i18n.global.t('form.company.buttonAddSubdivision'));
     });
   });
 

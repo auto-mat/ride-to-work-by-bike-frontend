@@ -98,7 +98,7 @@ hintPariticipation = "I pokud plánujete soutěžit sám/sama, zvolte skupinu, z
 
 [form.company]
 buttonAddAddress = "Přidat novou"
-buttonAddBranch = "Přidat pobočku"
+buttonAddSubdivision = "Přidat pobočku"
 buttonAddCompany = "Přidat firmu"
 hintAddress = "Na tuto adresu doručíme startovní balíček pro váš tým."
 labelAddress = "Adresa firmy či pobočky"
