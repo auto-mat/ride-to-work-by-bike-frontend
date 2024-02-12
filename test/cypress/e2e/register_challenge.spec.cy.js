@@ -41,6 +41,16 @@ const activeIconImgSrcStepper4 = new URL(
   cy.config().baseUrl,
 ).href;
 const doneIconImgSrcStepper4 = doneIcon;
+// Stepper 5 imgs
+const iconImgSrcStepper5 = new URL(
+  '../../../src/assets/svg/numeric-5-outline.svg',
+  cy.config().baseUrl,
+).href;
+const activeIconImgSrcStepper5 = new URL(
+  '../../../src/assets/svg/numeric-5-fill.svg',
+  cy.config().baseUrl,
+).href;
+const doneIconImgSrcStepper5 = doneIcon;
 // Stepper 7 imgs
 const iconImgSrcStepper7 = new URL(
   '../../../src/assets/svg/numeric-7-outline.svg',
@@ -158,6 +168,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when last name is missing
       cy.dataCy('form-firstName-input').type('John');
@@ -166,6 +177,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when terms are not checked
       cy.dataCy('form-firstName-input').type('John');
@@ -175,6 +187,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
 
       // click when form is valid
@@ -189,6 +202,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when participation is selected
       cy.dataCy('form-field-option').first().click();
@@ -197,6 +211,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when address is not selected
       cy.dataCy('step-4-continue').should('be.visible').click();
@@ -204,6 +219,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // select company and address
       cy.dataCy('form-company-select-option-group')
@@ -223,6 +239,27 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
+      // click when team is not selected
+      cy.dataCy('step-5-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
+      // click when team is selected
+      cy.dataCy('form-company-select-option-group')
+        .find('.q-radio')
+        .first()
+        .click();
+      cy.dataCy('step-5-continue').should('be.visible').click();
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
     });
 
@@ -240,6 +277,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper5);
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper7);
@@ -263,6 +303,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper5);
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper7);
@@ -281,6 +324,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper5);
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper7);
@@ -301,12 +347,16 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', activeIconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper5);
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', iconImgSrcStepper7);
       // select company and address
-      cy.dataCy('form-company-select-option-group')
-        .find('.q-radio__label')
+      cy.dataCy('form-select-table-company')
+        .should('be.visible')
+        .find('.q-radio')
         .first()
         .click();
       cy.dataCy('form-company-address-input').click();
@@ -318,6 +368,33 @@ describe('Register Challenge page', () => {
         });
       // change step
       cy.dataCy('step-4-continue').should('be.visible').click();
+      // active icon 5
+      cy.dataCy('step-1')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper1);
+      cy.dataCy('step-2')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper2);
+      cy.dataCy('step-3')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper3);
+      cy.dataCy('step-4')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', activeIconImgSrcStepper5);
+      cy.dataCy('step-7')
+        .find('img')
+        .should('have.attr', 'src', iconImgSrcStepper7);
+      // select option
+      cy.dataCy('form-select-table-team')
+        .should('be.visible')
+        .find('.q-radio')
+        .first()
+        .click();
+      // change step
+      cy.dataCy('step-5-continue').should('be.visible').click();
       // active icon 7
       cy.dataCy('step-1')
         .find('img')
@@ -331,6 +408,9 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4')
         .find('img')
         .should('have.attr', 'src', doneIconImgSrcStepper4);
+      cy.dataCy('step-5')
+        .find('img')
+        .should('have.attr', 'src', doneIconImgSrcStepper5);
       cy.dataCy('step-7')
         .find('img')
         .should('have.attr', 'src', activeIconImgSrcStepper7);
@@ -357,8 +437,9 @@ describe('Register Challenge page', () => {
           cy.dataCy('form-field-option').first().click();
           cy.dataCy('step-3-continue').should('be.visible').click();
           // select company and address
-          cy.dataCy('form-company-select-option-group')
-            .find('.q-radio__label')
+          cy.dataCy('form-select-table-company')
+            .should('be.visible')
+            .find('.q-radio')
             .first()
             .click();
           cy.dataCy('form-company-address-input').click();
@@ -369,9 +450,17 @@ describe('Register Challenge page', () => {
               cy.get('.q-item').first().click();
             });
           cy.dataCy('step-4-continue').should('be.visible').click();
+          // select option
+          cy.dataCy('form-select-table-team')
+            .should('be.visible')
+            .find('.q-radio')
+            .first()
+            .click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
           cy.dataCy('step-7-continue').should('be.visible');
           // test back navigation in the stepper
           cy.dataCy('step-7-back').should('be.visible').click();
+          cy.dataCy('step-5-back').should('be.visible').click();
           cy.dataCy('step-4-back').should('be.visible').click();
           cy.dataCy('step-3-back').should('be.visible').click();
           cy.dataCy('step-2-back').should('be.visible').click();

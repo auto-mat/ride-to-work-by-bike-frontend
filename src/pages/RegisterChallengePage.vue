@@ -176,7 +176,7 @@ export default defineComponent({
     ];
     const team = ref<string>('');
 
-    const step = ref(5);
+    const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
     const stepCompanyRef = ref<typeof QForm | null>(null);
     const stepParticipationRef = ref<typeof QForm | null>(null);
@@ -389,6 +389,7 @@ export default defineComponent({
                 :label-button="$t('register.challenge.buttonAddCompany')"
                 :label-button-dialog="$t('form.company.buttonAddCompany')"
                 :title-dialog="$t('form.company.titleAddCompany')"
+                data-cy="form-select-table-company"
               />
               <form-field-company-address
                 @update:form-value="onUpdateAddress"
@@ -434,6 +435,7 @@ export default defineComponent({
                 :label-button="$t('form.team.buttonAddTeam')"
                 :label-button-dialog="$t('form.team.buttonAddTeam')"
                 :title-dialog="$t('form.team.titleAddTeam')"
+                data-cy="form-select-table-team"
               />
             </q-form>
             <q-stepper-navigation>

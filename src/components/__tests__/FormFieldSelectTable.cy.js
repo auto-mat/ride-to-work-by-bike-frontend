@@ -81,7 +81,7 @@ describe('<FormFieldSelectTable>', () => {
     it('validates company field correctly', () => {
       cy.dataCy('form-company-select-search').find('input').focus();
       cy.dataCy('form-company-select-search').find('input').blur();
-      cy.dataCy('form-select-table')
+      cy.dataCy('form-select-table-field')
         .find('.q-field__messages')
         .should('be.visible')
         .and('contain', i18n.global.t('form.messageOptionRequired'));

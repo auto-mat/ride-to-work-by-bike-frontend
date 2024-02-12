@@ -147,7 +147,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="form-select-table">
+  <div>
     <!-- Label -->
     <label
       for="form-company"
@@ -166,6 +166,7 @@ export default defineComponent({
       :rules="[
         (val: string) => isFilled(val) || $t('form.messageOptionRequired'),
       ]"
+      data-cy="form-select-table-field"
     >
       <q-card
         flat
