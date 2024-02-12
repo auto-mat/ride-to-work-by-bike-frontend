@@ -1,17 +1,32 @@
-import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
+import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormFieldSelectTable>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['labelCompany'], 'form.company', i18n);
+    cy.testLanguageStringsInContext(
+      ['buttonAddCompany', 'labelCompany', 'titleAddCompany'],
+      'form.company',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['buttonAddTeam', 'labelTeam', 'titleAddTeam'],
+      'form.team',
+      i18n,
+    );
   });
 
-  context('desktop', () => {
+  context('company desktop', () => {
     beforeEach(() => {
-      cy.mount(FormFieldTestWrapper, {
-        props: {
-          component: 'FormFieldSelectTable',
-        },
+      cy.fixture('companyOptions').then((options) => {
+        cy.mount(FormFieldSelectTable, {
+          props: {
+            options: options,
+            label: i18n.global.t('form.company.labelCompany'),
+            labelButton: i18n.global.t('register.challenge.buttonAddCompany'),
+            labelButtonDialog: i18n.global.t('form.company.buttonAddCompany'),
+            titleDialog: i18n.global.t('form.company.titleAddCompany'),
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
@@ -37,12 +52,12 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-company-select-option-group').should('be.visible');
       // add new button
       cy.dataCy('form-company-select-button').should('be.visible');
-      cy.dataCy('button-add-company').should('be.visible');
-      cy.dataCy('button-add-company')
+      cy.dataCy('button-add-option').should('be.visible');
+      cy.dataCy('button-add-option')
         .find('i')
         .invoke('height')
         .should('be.gt', 23);
-      cy.dataCy('button-add-company')
+      cy.dataCy('button-add-option')
         .find('i')
         .invoke('width')
         .should('be.gt', 23);
@@ -52,23 +67,66 @@ describe('<FormFieldSelectTable>', () => {
       // search for option
       cy.dataCy('form-company-select-search').find('input').focus();
       cy.dataCy('form-company-select-search').find('input').type('2');
-      // select option
-      cy.dataCy('form-company-select-option-group').within(() => {
-        cy.get('.q-radio__label').first().click();
-      });
       // show only one option
       cy.dataCy('form-company-select-option-group')
         .find('.q-radio__label')
         .should('have.length', 1);
-      // test selected option
-      cy.dataCy('form-company-select-option-group')
-        .find('.q-radio__inner')
-        .should('have.class', 'text-primary');
       cy.dataCy('form-company-select-search').find('input').clear();
       cy.dataCy('form-company-select-search').find('input').blur();
       cy.dataCy('form-company-select-option-group')
         .find('.q-radio__label')
         .should('have.length', 7);
+    });
+
+    it('validates company field correctly', () => {
+      cy.dataCy('form-company-select-search').find('input').focus();
+      cy.dataCy('form-company-select-search').find('input').blur();
+      cy.dataCy('form-select-table')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.messageOptionRequired'));
+    });
+
+    it('renders dialog when for adding a new company', () => {
+      cy.dataCy('button-add-option').click();
+      cy.dataCy('dialog-add-option').should('be.visible');
+      cy.dataCy('dialog-add-option')
+        .find('h3')
+        .should('be.visible')
+        .and('have.css', 'font-size', '20px')
+        .and('have.css', 'font-weight', '500')
+        .and('contain', i18n.global.t('form.company.titleAddCompany'));
+      cy.dataCy('dialog-button-cancel')
+        .should('be.visible')
+        .and('have.text', i18n.global.t('navigation.discard'));
+      cy.dataCy('dialog-button-submit')
+        .should('be.visible')
+        .and('have.text', i18n.global.t('form.company.buttonAddCompany'));
+    });
+  });
+
+  context('company selected', () => {
+    beforeEach(() => {
+      cy.fixture('companyOptions').then((options) => {
+        cy.mount(FormFieldSelectTable, {
+          props: {
+            options: options,
+            modelValue: options[0].value,
+            label: i18n.global.t('form.company.labelCompany'),
+            labelButton: i18n.global.t('register.challenge.buttonAddCompany'),
+            labelButtonDialog: i18n.global.t('form.company.buttonAddCompany'),
+            titleDialog: i18n.global.t('form.company.titleAddCompany'),
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows selected option', () => {
+      cy.dataCy('form-company-select-option-group')
+        .find('.q-radio__inner')
+        .first()
+        .should('have.class', 'text-primary');
     });
   });
 });

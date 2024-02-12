@@ -1,0 +1,30 @@
+[
+  {
+    "label": "Very long company name spanning 3 lines on mobile",
+    "value": "company-1"
+  },
+  {
+    "label": "Company 2",
+    "value": "company-2"
+  },
+  {
+    "label": "Company 3",
+    "value": "company-3"
+  },
+  {
+    "label": "Company 4",
+    "value": "company-4"
+  },
+  {
+    "label": "Company 5",
+    "value": "company-5"
+  },
+  {
+    "label": "Company 6",
+    "value": "company-6"
+  },
+  {
+    "label": "Company 7",
+    "value": "company-7"
+  }
+]

@@ -110,6 +110,7 @@ titleAddAddress = "Add your subdivision"
 buttonAddTeam = "Add team"
 labelMembers = "member | members"
 labelTeam = "Team name"
+titleAddTeam = "Add team"
 
 [index]
 title = "Home"

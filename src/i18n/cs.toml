@@ -110,6 +110,7 @@ titleAddCompany = "Přidat firmu"
 buttonAddTeam = "Přidat tým"
 labelMembers = "člen | členů"
 labelTeam = "Název týmu"
+titleAddTeam = "Přidat tým"
 
 [index]
 title = "Domov"

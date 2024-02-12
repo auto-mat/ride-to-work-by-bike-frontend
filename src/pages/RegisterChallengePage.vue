@@ -384,9 +384,11 @@ export default defineComponent({
             <q-form ref="stepCompanyRef">
               <form-field-select-table
                 v-model="companyId"
+                :options="companyOptions"
                 :label="$t('form.company.labelCompany')"
                 :label-button="$t('register.challenge.buttonAddCompany')"
-                :options="companyOptions"
+                :label-button-dialog="$t('form.company.buttonAddCompany')"
+                :title-dialog="$t('form.company.titleAddCompany')"
               />
               <form-field-company-address
                 @update:form-value="onUpdateAddress"
@@ -427,9 +429,11 @@ export default defineComponent({
             <q-form ref="stepTeamRef">
               <form-field-select-table
                 v-model="team"
+                :options="teamOptions"
                 :label="$t('form.team.labelTeam')"
                 :label-button="$t('form.team.buttonAddTeam')"
-                :options="teamOptions"
+                :label-button-dialog="$t('form.team.buttonAddTeam')"
+                :title-dialog="$t('form.team.titleAddTeam')"
               />
             </q-form>
             <q-stepper-navigation>

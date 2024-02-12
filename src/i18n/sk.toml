@@ -107,9 +107,10 @@ titleAddCompany = "Pridať spoločnosť"
 titleAddAddress = "Pridajte svoju pobočku"
 
 [form.team]
+buttonAddTeam = "Pridať tím"
 labelMembers = "člen | členov"
 labelTeam = "Názov tímu"
-buttonAddTeam = "Pridať tím"
+titleAddTeam = "Pridať tím"
 
 [index]
 title = "Domovská stránka"
