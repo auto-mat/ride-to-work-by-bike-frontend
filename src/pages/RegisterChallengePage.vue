@@ -281,7 +281,7 @@ export default defineComponent({
                 @update:form-values="personalDetails = $event"
               />
             </q-form>
-            <q-stepper-navigation>
+            <q-stepper-navigation class="flex justify-end">
               <q-btn
                 unelevated
                 rounded
@@ -304,24 +304,24 @@ export default defineComponent({
             data-cy="step-2"
           >
             <q-form ref="stepPaymentRef"> Content of step 2 </q-form>
-            <q-stepper-navigation>
+            <q-stepper-navigation class="flex justify-end">
+              <q-btn
+                unelevated
+                rounded
+                outline
+                color="primary"
+                :label="$t('navigation.back')"
+                @click="onBack"
+                data-cy="step-2-back"
+              />
               <q-btn
                 unelevated
                 rounded
                 color="primary"
                 :label="$t('navigation.continue')"
                 @click="onContinue"
-                data-cy="step-2-continue"
-              />
-              <q-btn
-                unelevated
-                rounded
-                outline
-                color="primary"
                 class="q-ml-sm"
-                :label="$t('navigation.back')"
-                @click="onBack"
-                data-cy="step-2-back"
+                data-cy="step-2-continue"
               />
             </q-stepper-navigation>
           </q-step>
@@ -349,15 +349,7 @@ export default defineComponent({
                 {{ $t('form.participation.hintPariticipation') }}
               </p>
             </q-form>
-            <q-stepper-navigation>
-              <q-btn
-                unelevated
-                rounded
-                @click="onContinue"
-                color="primary"
-                :label="$t('navigation.continue')"
-                data-cy="step-3-continue"
-              />
+            <q-stepper-navigation class="flex justify-end">
               <q-btn
                 unelevated
                 rounded
@@ -365,8 +357,16 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
-                class="q-ml-sm"
                 data-cy="step-3-back"
+              />
+              <q-btn
+                unelevated
+                rounded
+                @click="onContinue"
+                color="primary"
+                :label="$t('navigation.continue')"
+                class="q-ml-sm"
+                data-cy="step-3-continue"
               />
             </q-stepper-navigation>
           </q-step>
@@ -395,15 +395,7 @@ export default defineComponent({
                 @update:form-value="onUpdateAddress"
               />
             </q-form>
-            <q-stepper-navigation>
-              <q-btn
-                unelevated
-                rounded
-                color="primary"
-                :label="$t('navigation.continue')"
-                @click="onContinue"
-                data-cy="step-4-continue"
-              />
+            <q-stepper-navigation class="flex justify-end">
               <q-btn
                 unelevated
                 rounded
@@ -411,8 +403,16 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
-                class="q-ml-sm"
                 data-cy="step-4-back"
+              />
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                @click="onContinue"
+                class="q-ml-sm"
+                data-cy="step-4-continue"
               />
             </q-stepper-navigation>
           </q-step>
@@ -438,15 +438,7 @@ export default defineComponent({
                 data-cy="form-select-table-team"
               />
             </q-form>
-            <q-stepper-navigation>
-              <q-btn
-                unelevated
-                rounded
-                color="primary"
-                :label="$t('navigation.continue')"
-                @click="onContinue"
-                data-cy="step-5-continue"
-              />
+            <q-stepper-navigation class="flex justify-end">
               <q-btn
                 unelevated
                 rounded
@@ -454,8 +446,16 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
-                class="q-ml-sm"
                 data-cy="step-5-back"
+              />
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                @click="onContinue"
+                class="q-ml-sm"
+                data-cy="step-5-continue"
               />
             </q-stepper-navigation>
           </q-step>
@@ -473,15 +473,7 @@ export default defineComponent({
             <q-form ref="stepMerchRef">
               <form-field-list-merch />
             </q-form>
-            <q-stepper-navigation>
-              <q-btn
-                unelevated
-                rounded
-                color="primary"
-                :label="$t('navigation.continue')"
-                @click="onContinue"
-                data-cy="step-7-continue"
-              />
+            <q-stepper-navigation class="flex justify-end">
               <q-btn
                 unelevated
                 rounded
@@ -489,8 +481,16 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
-                class="q-ml-sm"
                 data-cy="step-7-back"
+              />
+              <q-btn
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('navigation.continue')"
+                @click="onContinue"
+                class="q-ml-sm"
+                data-cy="step-7-continue"
               />
             </q-stepper-navigation>
           </q-step>
