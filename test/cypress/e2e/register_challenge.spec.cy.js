@@ -460,6 +460,7 @@ describe('Register Challenge page', () => {
           cy.dataCy('step-7-continue').should('be.visible');
           // test back navigation in the stepper
           cy.dataCy('step-7-back').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible');
           cy.dataCy('step-5-back').should('be.visible').click();
           cy.dataCy('step-4-back').should('be.visible').click();
           cy.dataCy('step-3-back').should('be.visible').click();
