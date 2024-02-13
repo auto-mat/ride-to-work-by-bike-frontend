@@ -12,6 +12,13 @@
  * @props
  * - `modelValue` (String, required): The object representing selected
  *   company.
+ * - `options` (Array<FormSelectTableOption>, required): The object
+ *   representing the options.
+ * - `label` (string, required): The translation for the label.
+ * - `labelButton` (string): The translation for the add button.
+ * - `labelButtonDialog` (string): The translation for the add
+ *   button inside the dialog.
+ * - `titleDialog` (string): The translation for the dialog title.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -106,10 +113,14 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    // controls dialog visibility
     const isDialogOpen = ref<boolean>(false);
 
-    // controls dialog visibility
+    // close dialog
     const onClose = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
       isDialogOpen.value = false;
     };
 
@@ -202,15 +213,18 @@ export default defineComponent({
               class="q-pr-sm"
               data-cy="form-company-select-option-group"
             >
+              <!-- Slot: Option label -->
               <template v-slot:label="opt">
                 <div class="full-width row items-center justify-between">
                   <span>{{ opt.label }}</span>
+                  <!-- Members count -->
                   <template v-if="opt.members">
                     <div class="flex">
                       <div :class="{ 'text-weight-bold': opt.members > 4 }">
                         {{ opt.members }} / {{ opt.maxMembers }}
                         {{ $tc('form.team.labelMembers', opt.maxMembers) }}
                       </div>
+                      <!-- Member dot icons -->
                       <div class="d-flex gap-4">
                         <q-icon
                           v-for="i in 5"
