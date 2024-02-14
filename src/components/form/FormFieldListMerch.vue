@@ -17,6 +17,7 @@
  *
  * @components
  * - `FormCardMerch`: Component to render a merch card (option).
+ * - `FormFieldRadioRequired`: Component to render radio buttons.
  *
  * @example
  * <form-field-list-merch />
@@ -29,21 +30,23 @@ import { computed, defineComponent, ref } from 'vue';
 
 // components
 import FormCardMerch from 'src/components/form/FormCardMerch.vue';
+import FormFieldRadioRequired from 'src/components/form/FormFieldRadioRequired.vue';
 
 // types
-import type { FormCardMerchType } from 'src/components/types/Form';
+import type { FormCardMerchType, FormOption } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldListMerch',
   components: {
     FormCardMerch,
+    FormFieldRadioRequired,
   },
   setup() {
     const tab = ref('female');
 
-    const selectedGender = ref<string | null>('female');
-    const selectedModel = ref<string | null>('1');
-    const selectedSize = ref<string | null>(null);
+    const selectedGender = ref<string>('female');
+    const selectedModel = ref<string>('1');
+    const selectedSize = ref<string>('');
 
     const isNotMerch = ref<boolean>(false);
 
@@ -113,6 +116,16 @@ export default defineComponent({
         author: 'Jaromír 99',
       },
     ];
+    const optionsGender: FormOption[] = [
+      {
+        label: 'Female',
+        value: 'female',
+      },
+      {
+        label: 'Female',
+        value: 'male',
+      },
+    ];
 
     const femaleOptions = computed((): FormCardMerchType[] => {
       return options.filter((option: FormCardMerchType) => {
@@ -143,6 +156,7 @@ export default defineComponent({
       isNotMerch,
       isSelected,
       maleOptions,
+      optionsGender,
       selectedModel,
       selectedSize,
       selectedGender,
@@ -153,19 +167,23 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Checkbox: No merch -->
   <q-item tag="label" v-ripple data-cy="no-merch">
     <q-item-section avatar top>
       <q-checkbox dense v-model="isNotMerch" :val="true" color="primary" />
     </q-item-section>
     <q-item-section>
+      <!-- Checkbox title -->
       <q-item-label class="text-grey-10" data-cy="no-merch-label">{{
         $t('form.merch.labelNoMerch')
       }}</q-item-label>
+      <!-- Checkbox hint -->
       <q-item-label class="text-grey-8" caption data-cy="no-merch-hint">
         {{ $t('form.merch.hintNoMerch') }}
       </q-item-label>
     </q-item-section>
   </q-item>
+  <!-- Tabs: Merch -->
   <q-card
     v-show="!isNotMerch"
     flat
@@ -173,6 +191,7 @@ export default defineComponent({
     style="max-width: 1024px"
     data-cy="list-merch"
   >
+    <!-- Tab buttons -->
     <q-tabs
       v-model="tab"
       dense
@@ -182,11 +201,13 @@ export default defineComponent({
       align="left"
       data-cy="list-merch-tabs"
     >
+      <!-- Button: Female -->
       <q-tab
         name="female"
         :label="$t('global.female')"
         data-cy="list-merch-tab-female"
       />
+      <!-- Button: Male -->
       <q-tab
         name="male"
         :label="$t('global.male')"
@@ -196,9 +217,12 @@ export default defineComponent({
 
     <q-separator />
 
+    <!-- Tab panels -->
     <q-tab-panels v-model="tab" animated>
+      <!-- Tab panel: Female -->
       <q-tab-panel name="female" class="q-pa-none">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+          <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
             v-for="option in femaleOptions"
             :option="option"
@@ -208,12 +232,26 @@ export default defineComponent({
             data-cy="form-card-merch-female"
           >
             <!-- TODO: add form slot for merch customization within dialog -->
+            <!-- Radio: Gender (corresponds to selected tab) -->
+            <form-field-radio-required
+              v-model="selectedGender"
+              :options="optionsGender"
+              label="Varianta"
+            />
+            <!-- Radio: Size -->
+            <form-field-radio-required
+              v-model="selectedSize"
+              :options="option.sizes"
+              label="Velikost"
+            />
           </FormCardMerch>
         </div>
       </q-tab-panel>
 
+      <!-- Tab panel: Male -->
       <q-tab-panel name="male">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+          <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
             v-for="option in maleOptions"
             :option="option"
