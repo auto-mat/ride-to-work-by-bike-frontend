@@ -33,6 +33,9 @@ import { computed, defineComponent } from 'vue';
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
+// types
+import type { FormOption } from 'src/components/types/Form';
+
 export default defineComponent({
   name: 'FormFieldRadioRequired',
   props: {
@@ -41,7 +44,7 @@ export default defineComponent({
       required: true,
     },
     options: {
-      type: Array as () => { label: string; value: string }[],
+      type: Array as () => FormOption[],
       required: true,
     },
     inline: {
