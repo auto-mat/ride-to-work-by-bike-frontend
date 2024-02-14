@@ -257,6 +257,7 @@ export default defineComponent({
         <q-stepper
           animated
           vertical
+          keep-alive
           ref="stepperRef"
           v-model="step"
           color="primary"
