@@ -102,9 +102,9 @@ export default defineComponent({
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelSizes') }}:</dt>
           <dd class="text-weight-bold">
-            <span v-for="(size, index) in option.sizes" :key="size.value">
-              {{ size.label
-              }}<span v-if="index < option.sizes.length - 1">, </span>
+            <span v-for="(size, index) in option.sizes" :key="size.label">
+              {{ size.label }}
+              <span v-if="index < option.sizes.length - 1">, </span>
             </span>
           </dd>
         </div>
