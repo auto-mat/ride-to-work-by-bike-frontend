@@ -16,6 +16,7 @@
  * - `update:formValue`: Emitted as a part of v-model structure.
  *
  * @components
+ * - `DialogDefault`: Component to display dialog.
  * - `FormCardMerch`: Component to render a merch card (option).
  * - `FormFieldRadioRequired`: Component to render radio buttons.
  *
@@ -29,6 +30,7 @@
 import { computed, defineComponent, ref } from 'vue';
 
 // components
+import DialogDefault from 'src/components/global/DialogDefault.vue';
 import FormCardMerch from 'src/components/form/FormCardMerch.vue';
 import FormFieldRadioRequired from 'src/components/form/FormFieldRadioRequired.vue';
 
@@ -38,18 +40,23 @@ import type { FormCardMerchType, FormOption } from 'src/components/types/Form';
 export default defineComponent({
   name: 'FormFieldListMerch',
   components: {
+    DialogDefault,
     FormCardMerch,
     FormFieldRadioRequired,
   },
   setup() {
-    const tab = ref('female');
-
+    // selected options
     const selectedGender = ref<string>('female');
-    const selectedModel = ref<string>('1');
+    const selectedOptionId = ref<string>('1');
     const selectedSize = ref<string>('');
 
+    // show merch checkbox
     const isNotMerch = ref<boolean>(false);
 
+    // dialog
+    const isOpen = ref<boolean>(false);
+
+    // options
     const options: FormCardMerchType[] = [
       {
         value: '1',
@@ -68,7 +75,7 @@ export default defineComponent({
             value: 'female',
           },
           {
-            label: 'Female',
+            label: 'Male',
             value: 'male',
           },
         ],
@@ -122,45 +129,55 @@ export default defineComponent({
         value: 'female',
       },
       {
-        label: 'Female',
+        label: 'Male',
         value: 'male',
       },
     ];
-
-    const femaleOptions = computed((): FormCardMerchType[] => {
+    const optionsFemale = computed((): FormCardMerchType[] => {
       return options.filter((option: FormCardMerchType) => {
         const genderValues = option.gender.map(
-          (gender: { value: string }) => gender.value,
+          (gender: FormOption) => gender.value,
         );
         return genderValues.includes('female');
       });
     });
-
-    const maleOptions = computed((): FormCardMerchType[] => {
+    const optionsMale = computed((): FormCardMerchType[] => {
       return options.filter((option: FormCardMerchType) => {
         const genderValues = option.gender.map(
-          (gender: { value: string }) => gender.value,
+          (gender: FormOption) => gender.value,
         );
         return genderValues.includes('male');
       });
     });
 
+    const selectedOption = computed((): FormCardMerchType | undefined => {
+      return options.find((option: FormCardMerchType) => {
+        return option.value === selectedOptionId.value;
+      });
+    });
+
     const isSelected = (option: FormCardMerchType): boolean => {
-      const isModel = selectedModel.value === option.value;
-      const isGender = selectedGender.value === tab.value;
-      return isModel && isGender;
+      const isModel = selectedOptionId.value === option.value;
+      return isModel;
+    };
+
+    const onOptionSelect = (option: FormCardMerchType): void => {
+      selectedOptionId.value = option.value;
+      isOpen.value = true;
     };
 
     return {
-      femaleOptions,
+      optionsFemale,
       isNotMerch,
-      isSelected,
-      maleOptions,
+      isOpen,
       optionsGender,
-      selectedModel,
+      optionsMale,
+      selectedOption,
+      selectedOptionId,
       selectedSize,
       selectedGender,
-      tab,
+      onOptionSelect,
+      isSelected,
     };
   },
 });
@@ -193,7 +210,7 @@ export default defineComponent({
   >
     <!-- Tab buttons -->
     <q-tabs
-      v-model="tab"
+      v-model="selectedGender"
       dense
       class="text-grey"
       active-color="primary"
@@ -218,22 +235,24 @@ export default defineComponent({
     <q-separator />
 
     <!-- Tab panels -->
-    <q-tab-panels v-model="tab" animated>
+    <q-tab-panels v-model="selectedGender" animated>
       <!-- Tab panel: Female -->
       <q-tab-panel name="female" class="q-pa-none">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
-            v-for="option in femaleOptions"
+            v-for="option in optionsFemale"
             :option="option"
             :key="`${option.value}-female`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-female"
+            @select-option="onOptionSelect(option)"
           >
             <!-- TODO: add form slot for merch customization within dialog -->
             <!-- Radio: Gender (corresponds to selected tab) -->
             <form-field-radio-required
+              inline
               v-model="selectedGender"
               :options="optionsGender"
               label="Varianta"
@@ -253,17 +272,28 @@ export default defineComponent({
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
-            v-for="option in maleOptions"
+            v-for="option in optionsMale"
             :option="option"
             :key="`${option.value}-female`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-male"
+            @select-option="onOptionSelect(option)"
           >
             <!-- TODO: add form slot for merch customization within dialog -->
           </FormCardMerch>
         </div>
       </q-tab-panel>
     </q-tab-panels>
+
+    <!-- Dialog -->
+    <dialog-default v-model="isOpen">
+      <template #content>
+        <!-- Merch Image Slider -->
+        <!-- Merch Description -->
+        <!-- Merch Variant -->
+        <!-- Merch Size -->
+      </template>
+    </dialog-default>
   </q-card>
 </template>

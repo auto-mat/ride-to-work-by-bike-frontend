@@ -23,13 +23,7 @@
  * - `selected` (boolean, required): Whether or not option shows as selected.
  *
  * @events
- * - `update:formValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `form`: For displaying form (size options) within dialog.
- *
- * @components
- * - `DialogDefault`: Component to display dialog.
+ * - `select-option`: Emitted when user selects an option.
  *
  * @example
  * <form-card-merch />
@@ -37,7 +31,7 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103131&mode=dev)
  */
 
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -57,9 +51,8 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['select-option'],
   setup() {
-    const isOpen = ref<boolean>(false);
-
     const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCard;
     const borderRadiusSmall: string =
       rideToWorkByBikeConfig.borderRadiusCardSmall;
@@ -67,7 +60,6 @@ export default defineComponent({
     return {
       borderRadius,
       borderRadiusSmall,
-      isOpen,
     };
   },
 });
@@ -93,9 +85,12 @@ export default defineComponent({
         class="text-body1 text-black text-weight-bold q-my-sm"
         data-cy="form-card-merch-title"
       >
-        <a href="#" class="text-black" @click.prevent="isOpen = true">{{
-          option.label
-        }}</a>
+        <a
+          href="#"
+          class="text-black"
+          @click.prevent="$emit('select-option', option)"
+          >{{ option.label }}</a
+        >
       </h3>
       <!-- Parameters -->
       <dl class="q-my-sm" data-cy="form-card-merch-parameters">
@@ -130,7 +125,7 @@ export default defineComponent({
         outline
         color="primary"
         class="full-width"
-        @click.prevent="isOpen = true"
+        @click.prevent="$emit('select-option', option)"
         data-cy="button-more-info"
       >
         {{ $t('navigation.select') }}
@@ -143,7 +138,7 @@ export default defineComponent({
         text-color="primary"
         icon-right="done"
         class="full-width"
-        @click.prevent="isOpen = true"
+        @click.prevent="$emit('select-option', option)"
         data-cy="button-more-info"
       >
         {{ $t('navigation.selected') }}
