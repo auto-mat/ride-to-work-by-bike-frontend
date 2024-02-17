@@ -47,7 +47,7 @@ export default defineComponent({
   setup() {
     // selected options
     const selectedGender = ref<string>('female');
-    const selectedOptionId = ref<string>('1');
+    const selectedOption = ref<FormCardMerchType | null>(null);
     const selectedSize = ref<string>('');
 
     // show merch checkbox
@@ -60,15 +60,16 @@ export default defineComponent({
     const options: FormCardMerchType[] = [
       {
         value: '1',
-        label: 'T-Shirt',
+        label: 'Tričko 2023',
         image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'T-Shirt',
+        dialogTitle: 'Tričko Do práce na kole 2023',
         dialogImages: [
           'https://cdn.quasar.dev/img/mountains.jpg',
           'https://cdn.quasar.dev/img/mountains.jpg',
           'https://cdn.quasar.dev/img/mountains.jpg',
         ],
-        dialogDescription: 'T-Shirt',
+        dialogDescription:
+          '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
         gender: [
           {
             label: 'Female',
@@ -98,15 +99,16 @@ export default defineComponent({
       },
       {
         value: '2',
-        label: 'T-Shirt',
+        label: 'Tričko 2022',
         image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'T-Shirt',
+        dialogTitle: 'Tričko Do práce na kole 2022',
         dialogImages: [
           'https://cdn.quasar.dev/img/mountains.jpg',
           'https://cdn.quasar.dev/img/mountains.jpg',
           'https://cdn.quasar.dev/img/mountains.jpg',
         ],
-        dialogDescription: 'T-Shirt',
+        dialogDescription:
+          '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
         gender: [
           {
             label: 'Female',
@@ -150,19 +152,12 @@ export default defineComponent({
       });
     });
 
-    const selectedOption = computed((): FormCardMerchType | undefined => {
-      return options.find((option: FormCardMerchType) => {
-        return option.value === selectedOptionId.value;
-      });
-    });
-
     const isSelected = (option: FormCardMerchType): boolean => {
-      const isModel = selectedOptionId.value === option.value;
-      return isModel;
+      return selectedOption.value?.value === option.value;
     };
 
     const onOptionSelect = (option: FormCardMerchType): void => {
-      selectedOptionId.value = option.value;
+      selectedOption.value = option;
       isOpen.value = true;
     };
 
@@ -173,7 +168,6 @@ export default defineComponent({
       optionsGender,
       optionsMale,
       selectedOption,
-      selectedOptionId,
       selectedSize,
       selectedGender,
       onOptionSelect,
@@ -248,22 +242,7 @@ export default defineComponent({
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-female"
             @select-option="onOptionSelect(option)"
-          >
-            <!-- TODO: add form slot for merch customization within dialog -->
-            <!-- Radio: Gender (corresponds to selected tab) -->
-            <form-field-radio-required
-              inline
-              v-model="selectedGender"
-              :options="optionsGender"
-              label="Varianta"
-            />
-            <!-- Radio: Size -->
-            <form-field-radio-required
-              v-model="selectedSize"
-              :options="option.sizes"
-              label="Velikost"
-            />
-          </FormCardMerch>
+          />
         </div>
       </q-tab-panel>
 
@@ -279,20 +258,46 @@ export default defineComponent({
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-male"
             @select-option="onOptionSelect(option)"
-          >
-            <!-- TODO: add form slot for merch customization within dialog -->
-          </FormCardMerch>
+          />
         </div>
       </q-tab-panel>
     </q-tab-panels>
 
     <!-- Dialog -->
     <dialog-default v-model="isOpen">
+      <template #title>
+        <!-- Merch Title -->
+        <span v-if="selectedOption">{{ selectedOption.dialogTitle }}</span>
+      </template>
       <template #content>
-        <!-- Merch Image Slider -->
-        <!-- Merch Description -->
-        <!-- Merch Variant -->
-        <!-- Merch Size -->
+        <div v-if="selectedOption">
+          <!-- Merch Image Slider -->
+          <!-- Merch Description -->
+          <div v-html="selectedOption.dialogDescription"></div>
+          <!-- Merch Gender -->
+          <div>
+            <span>{{ $t('form.merch.labelVariant') }}</span>
+            <form-field-radio-required
+              inline
+              v-model="selectedGender"
+              :options="selectedOption.gender"
+            />
+          </div>
+          <!-- Merch Size -->
+          <div>
+            <span v-if="selectedGender === 'female'">{{
+              $t('form.merch.labelSizeFemale')
+            }}</span>
+            <span v-if="selectedGender === 'male'">{{
+              $t('form.merch.labelSizeMale')
+            }}</span>
+            <form-field-radio-required
+              inline
+              v-model="selectedSize"
+              :options="selectedOption.sizes"
+            />
+          </div>
+        </div>
       </template>
     </dialog-default>
   </q-card>

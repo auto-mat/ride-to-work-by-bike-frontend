@@ -78,6 +78,9 @@ labelSizes = "Sizes"
 labelAuthor = "Author"
 labelMaterial = "Material"
 labelNoMerch = "I don't want a shirt or a neck warmer"
+labelSizeFemale = "Size - women's:"
+labelSizeMale = "Size - men's:"
+labelVariant = "Variant"
 
 [form.personalDetails]
 labelNewsletterAll = "About everything around Ride to Work by Bike"

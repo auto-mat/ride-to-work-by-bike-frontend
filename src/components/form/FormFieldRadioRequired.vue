@@ -15,7 +15,6 @@
  *   Should have props:
  *   - label (string)
  *   - value (string)
- * - `label` (string, required): The translation key for the label.
  * - `inline` (boolean, default: false): Buttons in row layout
  *
  * @events
@@ -50,10 +49,6 @@ export default defineComponent({
     inline: {
       type: Boolean,
       default: false,
-    },
-    label: {
-      type: String,
-      required: true,
     },
   },
   emits: ['update:modelValue'],

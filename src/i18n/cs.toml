@@ -78,6 +78,9 @@ labelSizes = "Velikosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
 labelNoMerch = "Nechci triko ani nákrčník"
+labelSizeFemale = "Velikost – dámská:"
+labelSizeMale = "Velikost – pánská:"
+labelVariant = "Varianta"
 
 [form.personalDetails]
 labelNewsletterAll = "O všech informacích od Do práce na kole"

@@ -78,6 +78,9 @@ labelSizes = "Veľkosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
 labelNoMerch = "Nechcem košeľu ani nákrčník"
+labelSizeFemale = "Veľkosť - dámska:"
+labelSizeMale = "Veľkosť - pánska:"
+labelVariant = "Variant"
 
 [form.personalDetails]
 labelNewsletterAll = "O všetkých informáciách zo stránky Do práce na bicykli"
