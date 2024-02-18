@@ -12,6 +12,7 @@
  * - `value` (string, required): The object representing user input.
  *   It should be of type `string`.
  * - `hint` (string, default: ''): The hint text.
+ * - `required` (boolean, default: true): Whether the input is required.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
