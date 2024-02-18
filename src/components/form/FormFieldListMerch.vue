@@ -18,6 +18,7 @@
  * @components
  * - `DialogDefault`: Component to display dialog.
  * - `FormCardMerch`: Component to render a merch card (option).
+ * - `FormFieldPhone`: Component to render phone input.
  * - `FormFieldRadioRequired`: Component to render radio buttons.
  *
  * @example
@@ -32,6 +33,7 @@ import { computed, defineComponent, ref } from 'vue';
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
 import FormCardMerch from 'src/components/form/FormCardMerch.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldRadioRequired from 'src/components/form/FormFieldRadioRequired.vue';
 
 // types
@@ -42,6 +44,7 @@ export default defineComponent({
   components: {
     DialogDefault,
     FormCardMerch,
+    FormFieldPhone,
     FormFieldRadioRequired,
   },
   setup() {
@@ -49,6 +52,7 @@ export default defineComponent({
     const selectedGender = ref<string>('female');
     const selectedOption = ref<FormCardMerchType | null>(null);
     const selectedSize = ref<string>('');
+    const phone = ref<string>('');
 
     // show merch checkbox
     const isNotMerch = ref<boolean>(false);
@@ -167,6 +171,7 @@ export default defineComponent({
       isOpen,
       optionsGender,
       optionsMale,
+      phone,
       selectedOption,
       selectedSize,
       selectedGender,
@@ -303,6 +308,10 @@ export default defineComponent({
               v-model="selectedSize"
               :options="selectedOption.sizes"
               class="q-mt-sm"
+            />
+            <form-field-phone
+              v-model="phone"
+              :hint="$t('form.merch.hintPhone')"
             />
           </div>
         </div>
