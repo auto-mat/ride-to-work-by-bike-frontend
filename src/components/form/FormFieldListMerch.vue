@@ -353,6 +353,7 @@ export default defineComponent({
             <form-field-phone
               v-model="phone"
               :hint="$t('form.merch.hintPhone')"
+              :required="trackDelivery"
             />
             <!-- Input: Track delivery checkbox -->
             <q-checkbox
