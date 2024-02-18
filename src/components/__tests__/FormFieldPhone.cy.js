@@ -4,7 +4,7 @@ import { i18n } from '../../boot/i18n';
 describe('<FormFieldPhone>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['messageFieldRequired', 'messagePhoneInvalid'],
+      ['messageFieldRequired', 'messagePhoneInvalid', 'labelPhone'],
       'form',
       i18n,
     );
