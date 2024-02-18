@@ -82,14 +82,14 @@ export default defineComponent({
       (val: string) => isFilled(val) || $t('form.messageOptionRequired'),
     ]"
   >
-    <div class="q-gutter-sm">
-      <q-option-group
-        v-model="radioValue"
-        :options="options"
-        :inline="inline"
-        color="primary"
-        data-cy="form-field-radio"
-      />
-    </div>
+    <q-option-group
+      dense
+      v-model="radioValue"
+      :options="options"
+      :inline="inline"
+      color="primary"
+      class="q-gutter-md"
+      data-cy="form-field-radio"
+    />
   </q-field>
 </template>

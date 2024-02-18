@@ -276,25 +276,33 @@ export default defineComponent({
           <div v-html="selectedOption.dialogDescription"></div>
           <!-- Merch Gender -->
           <div>
-            <span>{{ $t('form.merch.labelVariant') }}</span>
+            <span class="text-caption text-grey-10">{{
+              $t('form.merch.labelVariant')
+            }}</span>
             <form-field-radio-required
               inline
               v-model="selectedGender"
               :options="selectedOption.gender"
+              class="q-mt-sm"
             />
           </div>
           <!-- Merch Size -->
           <div>
-            <span v-if="selectedGender === 'female'">{{
-              $t('form.merch.labelSizeFemale')
-            }}</span>
-            <span v-if="selectedGender === 'male'">{{
-              $t('form.merch.labelSizeMale')
-            }}</span>
+            <span
+              class="text-caption text-grey-10"
+              v-if="selectedGender === 'female'"
+              >{{ $t('form.merch.labelSizeFemale') }}</span
+            >
+            <span
+              class="text-caption text-grey-10"
+              v-if="selectedGender === 'male'"
+              >{{ $t('form.merch.labelSizeMale') }}</span
+            >
             <form-field-radio-required
               inline
               v-model="selectedSize"
               :options="selectedOption.sizes"
+              class="q-mt-sm"
             />
           </div>
         </div>
