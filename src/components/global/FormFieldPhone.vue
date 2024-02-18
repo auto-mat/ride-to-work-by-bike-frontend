@@ -11,6 +11,7 @@
  * @props
  * - `value` (string, required): The object representing user input.
  *   It should be of type `string`.
+ * - `hint` (string, default: ''): The hint text.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -34,9 +35,9 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    testing: {
-      type: Boolean,
-      default: false,
+    hint: {
+      type: String,
+      default: '',
     },
   },
   emits: ['update:modelValue'],
@@ -72,7 +73,6 @@ export default defineComponent({
       dense
       outlined
       v-model="phone"
-      :lazy-rules="!testing"
       :rules="[
         (val) =>
           isFilled(val) ||
@@ -81,6 +81,7 @@ export default defineComponent({
           }),
         (val) => isPhone(val) || $t('form.messagePhoneInvalid'),
       ]"
+      :hint="hint"
       class="q-mt-sm"
       id="form-phone"
       name="phone"
