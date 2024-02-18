@@ -275,8 +275,8 @@ export default defineComponent({
           <!-- Merch Description -->
           <div v-html="selectedOption.dialogDescription"></div>
           <!-- Merch Gender -->
-          <div>
-            <span class="text-caption text-grey-10">{{
+          <div class="q-pt-sm">
+            <span class="text-caption text-weight-medium text-grey-10">{{
               $t('form.merch.labelVariant')
             }}</span>
             <form-field-radio-required
@@ -287,14 +287,14 @@ export default defineComponent({
             />
           </div>
           <!-- Merch Size -->
-          <div>
+          <div class="q-pt-sm">
             <span
-              class="text-caption text-grey-10"
+              class="text-caption text-weight-medium text-grey-10"
               v-if="selectedGender === 'female'"
               >{{ $t('form.merch.labelSizeFemale') }}</span
             >
             <span
-              class="text-caption text-grey-10"
+              class="text-caption text-weight-medium text-grey-10"
               v-if="selectedGender === 'male'"
               >{{ $t('form.merch.labelSizeMale') }}</span
             >
