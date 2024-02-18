@@ -78,9 +78,11 @@ hintPhone = "Nutné pro info o stavu doručování vašeho balíčku"
 labelSizes = "Velikosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
+labelNewsletter = "Chci vědět více o udržitelné mobilitě a souhlasím, že se mi ozvete ohledně podpory aktivní dopravy a veřejného prostoru."
 labelNoMerch = "Nechci triko ani nákrčník"
 labelSizeFemale = "Velikost – dámská:"
 labelSizeMale = "Velikost – pánská:"
+labelTrackDelivery = "Chci dostat zprávu o stavu doručování mého startovního balíčku."
 labelVariant = "Varianta"
 
 [form.personalDetails]

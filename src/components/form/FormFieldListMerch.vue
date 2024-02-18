@@ -53,6 +53,8 @@ export default defineComponent({
     const selectedOption = ref<FormCardMerchType | null>(null);
     const selectedSize = ref<string>('');
     const phone = ref<string>('');
+    const trackDelivery = ref<boolean>(false);
+    const newsletter = ref<boolean>(false);
 
     // show merch checkbox
     const isNotMerch = ref<boolean>(false);
@@ -169,12 +171,14 @@ export default defineComponent({
       optionsFemale,
       isNotMerch,
       isOpen,
+      newsletter,
       optionsGender,
       optionsMale,
       phone,
       selectedOption,
       selectedSize,
       selectedGender,
+      trackDelivery,
       onOptionSelect,
       isSelected,
     };
@@ -312,6 +316,26 @@ export default defineComponent({
             <form-field-phone
               v-model="phone"
               :hint="$t('form.merch.hintPhone')"
+            />
+            <q-checkbox
+              dense
+              v-model="trackDelivery"
+              color="primary"
+              :false-value="false"
+              :label="$t('form.merch.labelTrackDelivery')"
+              :true-value="true"
+              class="text-grey-10 q-mt-lg"
+              data-cy="form-terms-input"
+            />
+            <q-checkbox
+              dense
+              v-model="newsletter"
+              color="primary"
+              :false-value="false"
+              :label="$t('form.merch.labelNewsletter')"
+              :true-value="true"
+              class="text-grey-10 q-mt-md"
+              data-cy="form-terms-input"
             />
           </div>
         </div>

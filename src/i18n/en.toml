@@ -78,9 +78,11 @@ hintPhone = "Required for info on the delivery status of your package"
 labelSizes = "Sizes"
 labelAuthor = "Author"
 labelMaterial = "Material"
+labelNewsletter = "I want to know more about sustainable mobility and agree to hear from you about promoting active transport and public space."
 labelNoMerch = "I don't want a shirt or a neck warmer"
 labelSizeFemale = "Size - women's:"
 labelSizeMale = "Size - men's:"
+labelTrackDelivery = "I would like to receive a status report on the delivery of my starter pack."
 labelVariant = "Variant"
 
 [form.personalDetails]
