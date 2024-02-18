@@ -74,6 +74,7 @@ messageVatIdInvalid = "Neplatné registrační číslo"
 
 [form.merch]
 hintNoMerch = "Celá suma tak zostane na neziskové aktivity spoločnosti AutoMat."
+hintPhone = "Vyžaduje sa pre informácie o stave doručenia vášho balíka"
 labelSizes = "Veľkosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"

@@ -74,6 +74,7 @@ messageVatIdInvalid = "Invalid registration number"
 
 [form.merch]
 hintNoMerch = "This will leave the full amount for AutoMat's non-profit activities."
+hintPhone = "Required for info on the delivery status of your package"
 labelSizes = "Sizes"
 labelAuthor = "Author"
 labelMaterial = "Material"

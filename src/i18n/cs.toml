@@ -74,6 +74,7 @@ messageVatIdInvalid = "Neplatné IČO"
 
 [form.merch]
 hintNoMerch = "Necháte tak plnou částku na neziskové aktivity AutoMatu."
+hintPhone = "Nutné pro info o stavu doručování vašeho balíčku"
 labelSizes = "Velikosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
