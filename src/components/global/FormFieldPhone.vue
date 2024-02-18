@@ -39,6 +39,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    required: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -72,14 +76,16 @@ export default defineComponent({
     <q-input
       dense
       outlined
+      reactive-rules
       v-model="phone"
       :rules="[
         (val) =>
+          !required ||
           isFilled(val) ||
           $t('form.messageFieldRequired', {
             fieldName: $t('form.labelPhone'),
           }),
-        (val) => isPhone(val) || $t('form.messagePhoneInvalid'),
+        (val) => !val || isPhone(val) || $t('form.messagePhoneInvalid'),
       ]"
       :hint="hint"
       class="q-mt-sm"
