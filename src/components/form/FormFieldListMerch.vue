@@ -29,6 +29,7 @@
 
 // libraries
 import { computed, defineComponent, ref } from 'vue';
+import { QForm } from 'quasar';
 
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
@@ -48,6 +49,12 @@ export default defineComponent({
     FormFieldRadioRequired,
   },
   setup() {
+    // show merch checkbox
+    const isNotMerch = ref<boolean>(false);
+
+    // template ref
+    const formMerchRef = ref<typeof QForm | null>(null);
+
     // selected options
     const selectedGender = ref<string>('female');
     const selectedOption = ref<FormCardMerchType | null>(null);
@@ -55,12 +62,6 @@ export default defineComponent({
     const phone = ref<string>('');
     const trackDelivery = ref<boolean>(false);
     const newsletter = ref<boolean>(false);
-
-    // show merch checkbox
-    const isNotMerch = ref<boolean>(false);
-
-    // dialog
-    const isOpen = ref<boolean>(false);
 
     // options
     const options: FormCardMerchType[] = [
@@ -158,13 +159,42 @@ export default defineComponent({
       });
     });
 
+    /**
+     * Checks if given option is selected.
+     * Used to display "selected" version of the card button.
+     * @param option FormCardMerchType
+     */
     const isSelected = (option: FormCardMerchType): boolean => {
       return selectedOption.value?.value === option.value;
     };
 
+    // dialog
+    const isOpen = ref<boolean>(false);
+
+    /**
+     * Handles the card "select" button click.
+     * Opens the dialog with more details.
+     * @param option FormCardMerchType
+     */
     const onOptionSelect = (option: FormCardMerchType): void => {
       selectedOption.value = option;
       isOpen.value = true;
+    };
+
+    /**
+     * Submits form within the dialog.
+     * Validates the entered details and closes the dialog.
+     */
+    const onSubmit = async (): Promise<void> => {
+      // validate form
+      if (!formMerchRef.value) return;
+      const isFormMerchValid: boolean = await formMerchRef.value.validate();
+      if (isFormMerchValid) {
+        // close dialog
+        isOpen.value = false;
+      } else {
+        formMerchRef.value.$el.scrollIntoView({ behavior: 'smooth' });
+      }
     };
 
     return {
@@ -175,11 +205,13 @@ export default defineComponent({
       optionsGender,
       optionsMale,
       phone,
+      formMerchRef,
       selectedOption,
       selectedSize,
       selectedGender,
       trackDelivery,
       onOptionSelect,
+      onSubmit,
       isSelected,
     };
   },
@@ -281,42 +313,48 @@ export default defineComponent({
       <template #content>
         <div v-if="selectedOption">
           <!-- Merch Image Slider -->
+          <!-- TODO: Add image slider -->
           <!-- Merch Description -->
           <div v-html="selectedOption.dialogDescription"></div>
-          <!-- Merch Gender -->
-          <div class="q-pt-sm">
-            <span class="text-caption text-weight-medium text-grey-10">{{
-              $t('form.merch.labelVariant')
-            }}</span>
-            <form-field-radio-required
-              inline
-              v-model="selectedGender"
-              :options="selectedOption.gender"
-              class="q-mt-sm"
-            />
-          </div>
-          <!-- Merch Size -->
-          <div class="q-pt-sm">
-            <span
-              class="text-caption text-weight-medium text-grey-10"
-              v-if="selectedGender === 'female'"
-              >{{ $t('form.merch.labelSizeFemale') }}</span
-            >
-            <span
-              class="text-caption text-weight-medium text-grey-10"
-              v-if="selectedGender === 'male'"
-              >{{ $t('form.merch.labelSizeMale') }}</span
-            >
-            <form-field-radio-required
-              inline
-              v-model="selectedSize"
-              :options="selectedOption.sizes"
-              class="q-mt-sm"
-            />
+          <q-form ref="formMerchRef">
+            <!-- Input: Merch gender -->
+            <div class="q-pt-sm">
+              <span class="text-caption text-weight-medium text-grey-10">{{
+                $t('form.merch.labelVariant')
+              }}</span>
+              <form-field-radio-required
+                inline
+                v-model="selectedGender"
+                :options="selectedOption.gender"
+                class="q-mt-sm"
+              />
+            </div>
+            <!-- Input: Merch size -->
+            <div class="q-pt-sm">
+              <span
+                class="text-caption text-weight-medium text-grey-10"
+                v-if="selectedGender === 'female'"
+                >{{ $t('form.merch.labelSizeFemale') }}</span
+              >
+              <span
+                class="text-caption text-weight-medium text-grey-10"
+                v-if="selectedGender === 'male'"
+                >{{ $t('form.merch.labelSizeMale') }}</span
+              >
+              <form-field-radio-required
+                inline
+                v-model="selectedSize"
+                :options="selectedOption.sizes"
+                class="q-mt-sm"
+              />
+            </div>
+            <!-- TODO: Add size legend -->
+            <!-- Input: Phone -->
             <form-field-phone
               v-model="phone"
               :hint="$t('form.merch.hintPhone')"
             />
+            <!-- Input: Track delivery checkbox -->
             <q-checkbox
               dense
               v-model="trackDelivery"
@@ -327,6 +365,7 @@ export default defineComponent({
               class="text-grey-10 q-mt-lg"
               data-cy="form-terms-input"
             />
+            <!-- Input: News checkbox -->
             <q-checkbox
               dense
               v-model="newsletter"
@@ -337,7 +376,18 @@ export default defineComponent({
               class="text-grey-10 q-mt-md"
               data-cy="form-terms-input"
             />
-          </div>
+            <div class="q-mt-lg flex justify-end">
+              <q-btn
+                rounded
+                unelevated
+                color="black"
+                :label="$t('navigation.select')"
+                text-color="white"
+                @click="onSubmit"
+                data-cy="button-submit-merch"
+              />
+            </div>
+          </q-form>
         </div>
       </template>
     </dialog-default>
