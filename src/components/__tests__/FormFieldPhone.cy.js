@@ -21,6 +21,8 @@ describe('<FormFieldPhone>', () => {
     });
 
     it('requires a value', () => {
+      cy.dataCy('form-phone-input').clear();
+      cy.dataCy('form-phone-input').blur();
       cy.dataCy('form-phone-input').focus();
       cy.dataCy('form-phone-input').blur();
       cy.dataCy('form-phone')
@@ -49,10 +51,22 @@ describe('<FormFieldPhone>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('allows empty value', () => {
-      cy.dataCy('form-phone-input').focus();
+    it('allows for empty value', () => {
+      cy.dataCy('form-phone-input').clear();
+      cy.dataCy('form-phone-input').type('abc');
       cy.dataCy('form-phone-input').blur();
-      cy.get('.q-field__messages').should('not.be.visible');
+      cy.dataCy('form-phone')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
+        );
+      cy.dataCy('form-phone-input').clear();
+      cy.dataCy('form-phone-input').blur();
+      cy.dataCy('form-phone')
+        .find('.q-field__messages')
+        .should('not.be.visible');
     });
 
     testInvalidPhoneNumberValidation();
