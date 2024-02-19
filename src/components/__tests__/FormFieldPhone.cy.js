@@ -15,6 +15,7 @@ describe('<FormFieldPhone>', () => {
       cy.mount(FormFieldTestWrapper, {
         props: {
           component: 'FormFieldPhone',
+          required: true,
         },
       });
       cy.viewport('macbook-16');
@@ -37,8 +38,7 @@ describe('<FormFieldPhone>', () => {
       cy.dataCy('form-phone-input').clear();
     });
 
-    testInvalidPhoneNumberValidation();
-    testValidPhoneNumberValidation();
+    testPhoneNumberValidation();
   });
 
   context('desktop (optional)', () => {
@@ -46,6 +46,7 @@ describe('<FormFieldPhone>', () => {
       cy.mount(FormFieldTestWrapper, {
         props: {
           component: 'FormFieldPhone',
+          required: false,
         },
       });
       cy.viewport('macbook-16');
@@ -69,12 +70,11 @@ describe('<FormFieldPhone>', () => {
         .should('not.be.visible');
     });
 
-    testInvalidPhoneNumberValidation();
-    testValidPhoneNumberValidation();
+    testPhoneNumberValidation();
   });
 });
 
-function testInvalidPhoneNumberValidation() {
+function testPhoneNumberValidation() {
   it('validates incorrect phone number', () => {
     cy.dataCy('form-phone-input').clear();
     cy.dataCy('form-phone-input').blur();
@@ -179,13 +179,6 @@ function testInvalidPhoneNumberValidation() {
         'contain',
         i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
       );
-    cy.dataCy('form-phone-input').clear();
-    cy.dataCy('form-phone-input').blur();
-  });
-}
-
-function testValidPhoneNumberValidation() {
-  it('validates correct phone number', () => {
     cy.dataCy('form-phone-input').clear();
     cy.dataCy('form-phone-input').blur();
     // valid phone
