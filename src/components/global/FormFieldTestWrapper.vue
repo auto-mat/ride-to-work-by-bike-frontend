@@ -76,6 +76,9 @@ export default defineComponent({
     options: {
       type: Array as () => { label: string; value: string }[],
     },
+    required: {
+      type: Boolean,
+    },
   },
   setup() {
     const inputValue = ref('');
@@ -95,5 +98,6 @@ export default defineComponent({
     :label="label"
     :compare-value="compareValue"
     :options="options"
+    :required="required"
   />
 </template>
