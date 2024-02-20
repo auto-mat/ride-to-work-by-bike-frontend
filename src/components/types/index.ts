@@ -4,6 +4,7 @@ export * from './Config';
 export * from './Countdown';
 export * from './Faq';
 export * from './Dialog';
+export * from './Image';
 export * from './Item';
 export * from './Link';
 export * from './Newsletter';
