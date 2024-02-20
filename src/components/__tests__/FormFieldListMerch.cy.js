@@ -156,7 +156,7 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('form-card-merch-female').should('be.visible');
     });
 
-    it.only('validates dialog settings', () => {
+    it('validates dialog settings', () => {
       // open dialog
       cy.dataCy('form-card-merch-female')
         .first()
