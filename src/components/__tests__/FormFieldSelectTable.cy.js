@@ -4,13 +4,29 @@ import { i18n } from '../../boot/i18n';
 describe('<FormFieldSelectTable>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['buttonAddCompany', 'labelCompany', 'titleAddCompany'],
+      [
+        'buttonAddCompany',
+        'hintCityChallenge',
+        'hintDepartment',
+        'labelCityChallenge',
+        'labelCompany',
+        'labelDepartment',
+        'textCompanyPermission',
+        'textSubdivisionAddress',
+        'titleAddCompany',
+        'titleSubdivisionAddress',
+      ],
       'form.company',
       i18n,
     );
     cy.testLanguageStringsInContext(
       ['buttonAddTeam', 'labelTeam', 'titleAddTeam'],
       'form.team',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['labelCity', 'labelHouseNumber', 'labelStreet', 'labelZip'],
+      'form',
       i18n,
     );
   });

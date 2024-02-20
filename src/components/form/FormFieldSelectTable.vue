@@ -25,6 +25,7 @@
  *
  * @components
  * - `DialogDefault`: Used to render a dialog window with form as content.
+ * - `FormAddCompany`: Used to render form for registering a new company.
  *
  * @example
  * <form-field-select-table />
@@ -41,17 +42,23 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
+import FormAddCompany from 'src/components/form/FormAddCompany.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
 // types
-import { FormOption, FormSelectTableOption } from '../types/Form';
+import {
+  FormCompanyFields,
+  FormOption,
+  FormSelectTableOption,
+} from '../types/Form';
 
 export default defineComponent({
   name: 'FormFieldSelectTable',
   components: {
     DialogDefault,
+    FormAddCompany,
   },
   props: {
     modelValue: {
@@ -78,12 +85,30 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    variant: {
+      type: String as () => 'company' | 'school' | 'group' | 'team',
+      required: true,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     // user input for filtering
     const query = ref<string>('');
     const formRef = ref<typeof QForm | null>(null);
+    const companyNew = ref<FormCompanyFields>({
+      name: '',
+      vatId: '',
+      address: [
+        {
+          street: '',
+          houseNumber: '',
+          city: '',
+          zip: '',
+          cityChallenge: '',
+          department: '',
+        },
+      ],
+    });
 
     /**
      * Provides autocomplete functionality via computed property
@@ -145,7 +170,9 @@ export default defineComponent({
 
     return {
       borderRadius,
+      companyNew,
       filteredOptions,
+      formRef,
       inputValue,
       isDialogOpen,
       query,
@@ -273,7 +300,12 @@ export default defineComponent({
           </template>
           <template #content>
             <q-form ref="formRef">
-              <!-- TODO: add form for adding company / team (subdivision) -->
+              <form-add-company
+                v-if="variant === 'company'"
+                class="q-mb-lg"
+                :form-values="companyNew"
+                @update:form-values="companyNew = $event"
+              ></form-add-company>
             </q-form>
             <!-- Action buttons -->
             <div class="flex justify-end q-mt-sm">
@@ -310,8 +342,13 @@ export default defineComponent({
 :deep(.q-radio) {
   width: 100%;
 }
+// hide error icon for table box
 :deep(.q-field__append) {
   display: none;
+}
+// display table icon for any common field
+:deep(.q-field--outlined .q-field__append) {
+  display: flex;
 }
 :deep(.q-radio__label) {
   display: block;
