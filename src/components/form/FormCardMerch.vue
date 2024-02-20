@@ -89,6 +89,7 @@ export default defineComponent({
           href="#"
           class="text-black"
           @click.prevent="$emit('select-option', option)"
+          data-cy="form-card-merch-link"
           >{{ option.label }}</a
         >
       </h3>
@@ -139,7 +140,7 @@ export default defineComponent({
         icon-right="done"
         class="full-width"
         @click.prevent="$emit('select-option', option)"
-        data-cy="button-more-info"
+        data-cy="button-selected"
       >
         {{ $t('navigation.selected') }}
       </q-btn>

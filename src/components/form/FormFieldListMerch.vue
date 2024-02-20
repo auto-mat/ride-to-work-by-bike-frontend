@@ -305,7 +305,7 @@ export default defineComponent({
     </q-tab-panels>
 
     <!-- Dialog -->
-    <dialog-default v-model="isOpen">
+    <dialog-default v-model="isOpen" data-cy="dialog-merch">
       <template #title>
         <!-- Merch Title -->
         <span v-if="selectedOption">{{ selectedOption.dialogTitle }}</span>
@@ -327,6 +327,7 @@ export default defineComponent({
                 v-model="selectedGender"
                 :options="selectedOption.gender"
                 class="q-mt-sm"
+                data-cy="form-field-merch-gender"
               />
             </div>
             <!-- Input: Merch size -->
@@ -346,6 +347,7 @@ export default defineComponent({
                 v-model="selectedSize"
                 :options="selectedOption.sizes"
                 class="q-mt-sm"
+                data-cy="form-field-merch-size"
               />
             </div>
             <!-- TODO: Add size legend -->
@@ -354,6 +356,7 @@ export default defineComponent({
               v-model="phone"
               :hint="$t('form.merch.hintPhone')"
               :required="trackDelivery"
+              data-cy="form-merch-phone-input"
             />
             <!-- Input: Track delivery checkbox -->
             <q-checkbox
@@ -364,7 +367,7 @@ export default defineComponent({
               :label="$t('form.merch.labelTrackDelivery')"
               :true-value="true"
               class="text-grey-10 q-mt-lg"
-              data-cy="form-terms-input"
+              data-cy="form-merch-tracking-input"
             />
             <!-- Input: News checkbox -->
             <q-checkbox

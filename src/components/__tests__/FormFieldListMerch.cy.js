@@ -51,7 +51,7 @@ describe('<FormFieldListMerch>', () => {
       );
     });
 
-    it('allows to disable merch options', () => {
+    it('allows to hide merch options', () => {
       cy.dataCy('no-merch').click();
       cy.dataCy('list-merch').should('not.be.visible');
       cy.dataCy('no-merch').click();
@@ -65,6 +65,138 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('list-merch-tab-female').click();
       cy.dataCy('form-card-merch-female').should('be.visible');
       cy.dataCy('form-card-merch-male').should('not.exist');
+    });
+
+    it('allows user to select merch option (heading click)', () => {
+      cy.fixture('listMerch').then((cards) => {
+        // open dialog
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="form-card-merch-link"]')
+          .click();
+        cy.dataCy('dialog-merch')
+          .should('be.visible')
+          .and('contain', cards[0].title)
+          .and('contain', cards[0].description);
+        // close dialog
+        cy.dataCy('dialog-close').click();
+        // first option is selected
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-selected"]')
+          .should('be.visible');
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .should('not.be.visible');
+      });
+    });
+
+    it('allows user to select merch option (button click)', () => {
+      cy.fixture('listMerch').then((cards) => {
+        // open dialog
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .click();
+        cy.dataCy('dialog-merch')
+          .should('be.visible')
+          .and('contain', cards[0].title)
+          .and('contain', cards[0].description);
+        // close dialog
+        cy.dataCy('dialog-close').click();
+        // first option is selected
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-selected"]')
+          .should('be.visible');
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .should('not.be.visible');
+      });
+    });
+
+    it('changes tabs when changing gender radio', () => {
+      // open dialog
+      cy.dataCy('form-card-merch-female')
+        .first()
+        .find('[data-cy="button-more-info"]')
+        .click();
+      cy.dataCy('dialog-merch').should('be.visible');
+      // change gender setting
+      cy.dataCy('form-field-merch-gender')
+        .should('be.visible')
+        .find('.q-radio')
+        .last()
+        .click();
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      cy.dataCy('form-card-merch-male').should('be.visible');
+      // we should see male options
+      cy.dataCy('form-card-merch-female').should('not.exist');
+      // same merch type selected
+      cy.dataCy('form-card-merch-male')
+        .first()
+        .find('[data-cy="button-selected"]')
+        .should('be.visible')
+        .click();
+      // open dialog
+      cy.dataCy('dialog-merch').should('be.visible');
+      // change gender setting
+      cy.dataCy('form-field-merch-gender')
+        .should('be.visible')
+        .find('.q-radio')
+        .first()
+        .click();
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      // we should see female options
+      cy.dataCy('form-card-merch-male').should('not.exist');
+      cy.dataCy('form-card-merch-female').should('be.visible');
+    });
+
+    it.only('validates dialog settings', () => {
+      // open dialog
+      cy.dataCy('form-card-merch-female')
+        .first()
+        .find('[data-cy="button-more-info"]')
+        .click();
+      cy.dataCy('dialog-merch').should('be.visible');
+      // invalid settings (size not selected)
+      cy.dataCy('button-submit-merch').should('be.visible').click();
+      // dialog does not close
+      cy.dataCy('dialog-merch').should('be.visible');
+      // select size
+      cy.dataCy('form-field-merch-size')
+        .should('be.visible')
+        .find('.q-radio')
+        .first()
+        .click();
+      // close dialog
+      cy.dataCy('button-submit-merch').should('be.visible').click();
+      // dialog closes
+      cy.dataCy('dialog-merch').should('not.exist');
+      // open dialog
+      cy.dataCy('form-card-merch-female')
+        .first()
+        .find('[data-cy="button-selected"]')
+        .click();
+      cy.dataCy('dialog-merch').should('be.visible');
+      // select package tracking
+      cy.dataCy('form-merch-tracking-input').click();
+      // close dialog
+      cy.dataCy('button-submit-merch').should('be.visible').click();
+      // dialog does not close (number not valid)
+      cy.dataCy('dialog-merch').should('be.visible');
+      cy.dataCy('form-merch-phone-input')
+        .should('be.visible')
+        .find('input')
+        .type('736 123 456');
+      // close dialog
+      cy.dataCy('button-submit-merch').should('be.visible').click();
+      // dialog closes
+      cy.dataCy('dialog-merch').should('not.exist');
     });
   });
 
