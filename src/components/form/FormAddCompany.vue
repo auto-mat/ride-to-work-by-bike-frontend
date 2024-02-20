@@ -34,8 +34,11 @@ import { defineComponent, nextTick, ref } from 'vue';
 import FormFieldTextRequired from 'src/components/global/FormFieldTextRequired.vue';
 import FormFieldVatId from 'src/components/form/FormFieldVatId.vue';
 
+// composables
+import { useValidation } from 'src/composables/useValidation';
+
 // types
-import type { FormCompanyFields } from 'src/components/types/Form';
+import type { FormCompanyFields, FormOption } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormAddCompany',
@@ -57,6 +60,21 @@ export default defineComponent({
   setup(props, { emit }) {
     const company = ref(props.formValues);
 
+    const optionsCityChallenge: FormOption[] = [
+      {
+        label: 'City 1',
+        value: 'city-1',
+      },
+      {
+        label: 'City 2',
+        value: 'city-2',
+      },
+      {
+        label: 'City 3',
+        value: 'city-3',
+      },
+    ];
+
     const onUpdate = (): void => {
       // wait for next tick to emit the value after update
       nextTick((): void => {
@@ -64,8 +82,15 @@ export default defineComponent({
       });
     };
 
+    const { isFilled } = useValidation();
+
+    const addressIndex = 0;
+
     return {
+      addressIndex,
       company,
+      optionsCityChallenge,
+      isFilled,
       onUpdate,
     };
   },
@@ -74,11 +99,23 @@ export default defineComponent({
 
 <template>
   <div>
-    <h3 class="text-body1 text-bold text-black q-mt-none q-mb-md">
-      {{ $t('form.labelCompanyShort') }}
-    </h3>
+    <div class="q-mb-md">
+      <h3
+        class="text-body1 text-bold text-black q-my-none"
+        data-cy="form-add-company-title"
+      >
+        {{ $t('form.labelCompanyShort') }}
+      </h3>
+      <p
+        v-if="variant === 'default'"
+        class="q-mt-sm"
+        data-cy="form-add-company-permission"
+      >
+        {{ $t('form.company.textCompanyPermission') }}
+      </p>
+    </div>
     <div class="row q-col-gutter-lg">
-      <div class="col-12 col-sm">
+      <div class="col-12 col-sm-6">
         <!-- Input: Company name -->
         <form-field-text-required
           v-model="company.name"
@@ -88,15 +125,109 @@ export default defineComponent({
           data-cy="form-add-company-name"
         />
       </div>
-      <div class="col-12 col-sm">
+      <div class="col-12 col-sm-6">
         <!-- Input: VAT ID -->
         <form-field-vat-id
           v-model="company.vatId"
           name="vatId"
-          label="form.labelVatId"
+          :label="$t('form.labelVatId')"
           @update:model-value="onUpdate"
           data-cy="form-add-company-vat-id"
         />
+      </div>
+    </div>
+    <div v-if="variant === 'default'" class="q-mt-lg">
+      <div class="q-mb-md">
+        <h3 class="text-body1 text-bold text-black q-my-none">
+          {{ $t('form.company.titleSubdivisionAddress') }}
+        </h3>
+        <p>
+          {{ $t('form.company.textSubdivisionAddress') }}
+        </p>
+      </div>
+      <div class="row q-col-gutter-lg">
+        <div class="col-12 col-sm-6">
+          <form-field-text-required
+            v-model="company.address[addressIndex].street"
+            name="street"
+            label="form.labelStreet"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-street"
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <form-field-text-required
+            v-model="company.address[addressIndex].houseNumber"
+            name="houseNumber"
+            label="form.labelHouseNumber"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-house-number"
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <form-field-text-required
+            v-model="company.address[addressIndex].city"
+            name="city"
+            label="form.labelCity"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-city"
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <form-field-text-required
+            v-model="company.address[addressIndex].zip"
+            name="zip"
+            label="form.labelZip"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-zip"
+          />
+        </div>
+        <div class="col-12">
+          <label
+            for="form-city-challenge"
+            class="text-caption text-bold text-gray-10"
+            >{{ $t('form.company.labelCityChallenge') }}</label
+          >
+          <q-select
+            dense
+            outlined
+            emit-value
+            map-options
+            v-model="company.address[addressIndex].cityChallenge"
+            :rules="[
+              (val) =>
+                isFilled(val) ||
+                $t('form.messageFieldRequired', {
+                  fieldName: $t('form.labelCity'),
+                }),
+            ]"
+            id="form-city-challenge"
+            :hint="$t('form.company.hintCityChallenge')"
+            :options="optionsCityChallenge"
+            class="q-mt-sm"
+            data-cy="form-add-company-city-challenge"
+          ></q-select>
+        </div>
+        <div class="col-12">
+          <label
+            for="form-department"
+            class="text-caption text-bold text-gray-10"
+          >
+            {{ $t('form.company.labelDepartment') }}
+          </label>
+          <q-input
+            dense
+            outlined
+            lazy-rules
+            hide-bottom-space
+            v-model="company.address[addressIndex].department"
+            id="form-department"
+            name="department"
+            :hint="$t('form.company.hintDepartment')"
+            class="q-mt-sm"
+            data-cy="form-add-company-department"
+          />
+        </div>
       </div>
     </div>
   </div>

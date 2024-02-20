@@ -23,16 +23,16 @@ export interface FormSelectTableOption extends FormOption {
 export type FormCompanyFields = {
   name: string;
   vatId: string;
-  address?: FormCompanyAddressFields[];
+  address: FormCompanyAddressFields[];
 };
 
 export type FormCompanyAddressFields = {
-  street?: string;
-  streetNumber?: string;
-  city?: string;
-  zip?: string;
-  referenceCity?: string;
-  department?: string;
+  street: string;
+  houseNumber: string;
+  city: string;
+  zip: string;
+  cityChallenge: string;
+  department: string;
 };
 
 export type FormCardMerchType = {
