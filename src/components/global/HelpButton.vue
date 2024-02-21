@@ -15,7 +15,7 @@
  *
  * @components
  * - `ContactForm`: Component to display contact for inside the dialog.
- * - `DialogStates`: Component to render help dialog with slots.
+ * - `DialogDefault`: Component to render help dialog with slots.
  * - `ListFaq`: Component to display FAQ list inside the dialog.
  * - `MenuLinks`: Component to display social links and useful links inside
  *   the dialog.
@@ -29,9 +29,12 @@
 // libraries
 import { defineComponent, ref } from 'vue';
 
+// types
+import type { Ref } from 'vue';
+
 // components
 import ContactForm from './ContactForm.vue';
-import DialogStates from './DialogStates.vue';
+import DialogDefault from './DialogDefault.vue';
 import ListFaq from './ListFaq.vue';
 import MenuLinks from './MenuLinks.vue';
 
@@ -41,7 +44,7 @@ export default defineComponent({
     MenuLinks,
     ListFaq,
     ContactForm,
-    DialogStates,
+    DialogDefault,
   },
   props: {
     color: {
@@ -55,9 +58,22 @@ export default defineComponent({
   },
   setup() {
     const isDialogOpen = ref(false);
+    const activeState: Ref<'default' | 'form'> = ref('default');
+
+    const setState = (value: 'form' | 'default'): void => {
+      activeState.value = value;
+    };
+
+    const reset = (): void => {
+      setState('default');
+      isDialogOpen.value = false;
+    };
 
     return {
+      activeState,
       isDialogOpen,
+      reset,
+      setState,
     };
   },
 });
@@ -76,17 +92,29 @@ export default defineComponent({
       <q-icon name="question_mark" color="white" data-cy="icon-help" />
     </q-btn>
     <!-- Dialog -->
-    <dialog-states v-model="isDialogOpen" data-cy="dialog-help">
-      <template #title="{ state }">
-        <span v-if="state === 'default'">
+    <dialog-default v-model="isDialogOpen" data-cy="dialog-help">
+      <template #title>
+        <!-- Navigation button: Default state (arrow) -->
+        <q-btn
+          v-if="activeState !== 'default'"
+          round
+          unelevated
+          size="xs"
+          color="transparent"
+          class="q-mr-sm"
+          @click.prevent="setState('default')"
+        >
+          <q-icon name="west" size="xs" color="black" />
+        </q-btn>
+        <span v-if="activeState === 'default'">
           {{ $t('index.help.titleStateDefault') }}
         </span>
-        <span v-else-if="state === 'form'">
+        <span v-else-if="activeState === 'form'">
           {{ $t('index.help.titleStateContact') }}
         </span>
       </template>
-      <template #content="{ state, setState, reset }">
-        <div v-if="state === 'default'">
+      <template #content>
+        <div v-if="activeState === 'default'">
           <!-- FAQ for pariticipants -->
           <list-faq
             :title="$t('index.help.titleParticipants')"
@@ -141,10 +169,10 @@ export default defineComponent({
           <!-- Section: Social media links -->
           <menu-links :title="$t('index.help.titleSocials')" variant="social" />
         </div>
-        <div v-else-if="state === 'form'">
+        <div v-else-if="activeState === 'form'">
           <contact-form @formSubmit="reset" class="q-px-md"></contact-form>
         </div>
       </template>
-    </dialog-states>
+    </dialog-default>
   </div>
 </template>
