@@ -32,13 +32,13 @@ import { computed, defineComponent, ref } from 'vue';
 import { QForm } from 'quasar';
 
 // components
-import DialogDefault from 'src/components/global/DialogDefault.vue';
-import FormCardMerch from 'src/components/form/FormCardMerch.vue';
+import DialogDefault from '../global/DialogDefault.vue';
+import FormCardMerch from '../form/FormCardMerch.vue';
 import FormFieldPhone from '../global/FormFieldPhone.vue';
-import FormFieldRadioRequired from 'src/components/form/FormFieldRadioRequired.vue';
+import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 
 // types
-import type { FormCardMerchType, FormOption } from 'src/components/types/Form';
+import type { FormCardMerchType, FormOption } from '../types/Form';
 
 export default defineComponent({
   name: 'FormFieldListMerch',
