@@ -46,7 +46,12 @@ export default defineComponent({
         :key="`slider-image-${index}`"
         class="swiper-slide"
       >
-        <q-img :src="item.src" :alt="item.alt" data-cy="swiper-image" />
+        <q-img
+          :src="item.src"
+          :alt="item.alt"
+          data-cy="swiper-image"
+          :ratio="2"
+        />
       </swiper-slide>
     </swiper-container>
   </div>
@@ -54,20 +59,20 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .slider-merch {
-  padding-bottom: 19px;
+  padding-bottom: 32px;
   overflow: hidden;
 }
 swiper-container::part(button-prev),
 swiper-container::part(button-next) {
-  bottom: -19px;
+  bottom: 16px;
 }
 swiper-container::part(button-prev) {
-  right: 72px;
+  right: 64px;
 }
 swiper-container::part(button-next) {
   right: 16px;
 }
 swiper-container::part(pagination) {
-  bottom: -19px;
+  bottom: -24px;
 }
 </style>

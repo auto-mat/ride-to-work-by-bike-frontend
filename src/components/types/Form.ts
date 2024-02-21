@@ -1,3 +1,5 @@
+import type { Image } from './Image';
+
 export type FormPersonalDetailsFields = {
   firstName: string;
   lastName: string;
@@ -38,7 +40,7 @@ export type FormCompanyAddressFields = {
 export type FormCardMerchType = {
   author: string;
   dialogDescription: string;
-  dialogImages: string[];
+  dialogImages: Image[];
   dialogTitle: string;
   gender: FormOption[];
   value: string;

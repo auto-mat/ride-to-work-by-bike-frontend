@@ -20,6 +20,7 @@
  * - `FormCardMerch`: Component to render a merch card (option).
  * - `FormFieldPhone`: Component to render phone input.
  * - `FormFieldRadioRequired`: Component to render radio buttons.
+ * - `SliderMerch`: Component to render images in a slider.
  *
  * @example
  * <form-field-list-merch />
@@ -36,6 +37,7 @@ import DialogDefault from '../global/DialogDefault.vue';
 import FormCardMerch from '../form/FormCardMerch.vue';
 import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
+import SliderMerch from './SliderMerch.vue';
 
 // types
 import type { FormCardMerchType, FormOption } from '../types/Form';
@@ -47,6 +49,7 @@ export default defineComponent({
     FormCardMerch,
     FormFieldPhone,
     FormFieldRadioRequired,
+    SliderMerch,
   },
   setup() {
     // show merch checkbox
@@ -71,9 +74,18 @@ export default defineComponent({
         image: 'https://cdn.quasar.dev/img/mountains.jpg',
         dialogTitle: 'Tričko Do práce na kole 2023',
         dialogImages: [
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
         ],
         dialogDescription:
           '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
@@ -110,9 +122,18 @@ export default defineComponent({
         image: 'https://cdn.quasar.dev/img/mountains.jpg',
         dialogTitle: 'Tričko Do práce na kole 2022',
         dialogImages: [
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
-          'https://cdn.quasar.dev/img/mountains.jpg',
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
+          {
+            alt: 'Road lined by trees',
+            src: 'https://cdn.quasar.dev/img/mountains.jpg',
+          },
         ],
         dialogDescription:
           '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
@@ -313,7 +334,7 @@ export default defineComponent({
       <template #content>
         <div v-if="selectedOption">
           <!-- Merch Image Slider -->
-          <!-- TODO: Add image slider -->
+          <slider-merch :items="selectedOption.dialogImages" />
           <!-- Merch Description -->
           <div v-html="selectedOption.dialogDescription"></div>
           <q-form ref="formMerchRef">
