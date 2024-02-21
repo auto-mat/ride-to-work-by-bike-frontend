@@ -33,5 +33,59 @@ describe('<SliderMerch>', () => {
         cy.testElementPercentageWidth(cy.dataCy('swiper-image'), 100);
       });
     });
+
+    it('renders swiper navigation buttons', () => {
+      cy.window().then(() => {
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('be.visible')
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('be.visible')
+          .and('have.css', 'width', '38px')
+          .and('have.css', 'height', '38px');
+      });
+    });
+
+    it('changes button disabled state after navigation', () => {
+      cy.window().then(() => {
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '0.35');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .click();
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .click();
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-prev')
+          .should('have.css', 'opacity', '0.35');
+        cy.dataCy('swiper-container')
+          .shadow()
+          .find('.swiper-button-next')
+          .should('have.css', 'opacity', '1');
+      });
+    });
   });
 });
