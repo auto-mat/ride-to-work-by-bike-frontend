@@ -19,7 +19,19 @@ describe('<SliderMerch>', () => {
     });
 
     it('renders component', () => {
-      cy.dataCy('slider-merch').should('be.visible');
+      cy.fixture('sliderMerch').then((images) => {
+        cy.dataCy('slider-merch').should('be.visible');
+        cy.dataCy('swiper-image').should('be.visible');
+        cy.dataCy('swiper-image')
+          .first()
+          .find('img')
+          .should('have.attr', 'src', images[0].src);
+        cy.dataCy('swiper-image')
+          .last()
+          .find('img')
+          .should('have.attr', 'src', images[2].src);
+        cy.testElementPercentageWidth(cy.dataCy('swiper-image'), 100);
+      });
     });
   });
 });

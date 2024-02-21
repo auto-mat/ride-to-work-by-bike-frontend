@@ -49,8 +49,8 @@ export default defineComponent({
         <q-img
           :src="item.src"
           :alt="item.alt"
-          data-cy="swiper-image"
           :ratio="2"
+          data-cy="swiper-image"
         />
       </swiper-slide>
     </swiper-container>
