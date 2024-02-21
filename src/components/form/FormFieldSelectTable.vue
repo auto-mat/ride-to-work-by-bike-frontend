@@ -38,14 +38,14 @@ import { computed, defineComponent, ref } from 'vue';
 import { QForm } from 'quasar';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // components
-import DialogDefault from 'src/components/global/DialogDefault.vue';
-import FormAddCompany from 'src/components/form/FormAddCompany.vue';
+import DialogDefault from '../global/DialogDefault.vue';
+import FormAddCompany from '../form/FormAddCompany.vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '../../composables/useValidation';
 
 // types
 import {

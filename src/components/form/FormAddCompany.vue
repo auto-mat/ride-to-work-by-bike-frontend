@@ -31,14 +31,14 @@
 import { defineComponent, nextTick, ref } from 'vue';
 
 // components
-import FormFieldTextRequired from 'src/components/global/FormFieldTextRequired.vue';
-import FormFieldVatId from 'src/components/form/FormFieldVatId.vue';
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+import FormFieldVatId from '../form/FormFieldVatId.vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '../../composables/useValidation';
 
 // types
-import type { FormCompanyFields, FormOption } from 'src/components/types/Form';
+import type { FormCompanyFields, FormOption } from '../types/Form';
 
 export default defineComponent({
   name: 'FormAddCompany',
