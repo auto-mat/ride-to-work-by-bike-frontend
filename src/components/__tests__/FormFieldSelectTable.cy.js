@@ -114,7 +114,7 @@ describe('<FormFieldSelectTable>', () => {
         .and('have.css', 'font-weight', '500')
         .and('contain', i18n.global.t('form.company.titleAddCompany'));
       // scroll to bottom
-      cy.dataCy('dialog-body').scrollTo('bottom');
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
       // action buttons are visible
       cy.dataCy('dialog-button-cancel')
         .should('be.visible')
@@ -126,7 +126,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('dialog-button-submit').click();
       cy.dataCy('dialog-add-option').should('be.visible');
       // scroll to top
-      cy.dataCy('dialog-body').scrollTo('top');
+      cy.dataCy('dialog-body').scrollTo('top', { ensureScrollable: false });
       // fill in form
       cy.dataCy('form-add-company-name').find('input').type('AutoMat');
       cy.dataCy('form-add-company-vat-id').find('input').type('87654321');
