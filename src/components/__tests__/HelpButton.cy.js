@@ -163,6 +163,10 @@ describe('<HelpButton>', () => {
         cy.dataCy('button-help').should('be.visible');
         cy.dataCy('button-help').click();
         cy.dataCy('dialog-help').should('be.visible');
+        cy.dataCy('dialog-body')
+          .should('be.visible')
+          .and('have.css', 'padding-left', '0px')
+          .and('have.css', 'padding-right', '0px');
       });
     });
 
@@ -189,7 +193,7 @@ describe('<HelpButton>', () => {
         cy.dataCy('button-help').should('be.visible');
         cy.dataCy('button-help').click();
         // TODO: Find if you can calculate height exact height of the sections
-        cy.dataCy('dialog-content').scrollTo(0, 1060);
+        cy.dataCy('dialog-body').scrollTo(0, 1060);
         cy.dataCy('title-guide')
           .should('be.visible')
           .and('have.css', 'font-size', '24px')
@@ -234,7 +238,7 @@ describe('<HelpButton>', () => {
     it('allows user to display and submit contact form', () => {
       cy.dataCy('button-help').should('be.visible').click();
       cy.dataCy('dialog-help').should('be.visible');
-      cy.dataCy('dialog-content').scrollTo(0, 1200);
+      cy.dataCy('dialog-body').scrollTo(0, 1200);
       cy.dataCy('button-contact').should('be.visible').click();
       cy.dataCy('dialog-help').find('h3').should('be.visible');
       cy.dataCy('contact-form-subject')
@@ -255,10 +259,10 @@ describe('<HelpButton>', () => {
     it('validates contact form if there are errors', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
-      cy.dataCy('dialog-content').scrollTo(0, 1200);
+      cy.dataCy('dialog-body').scrollTo(0, 1200);
       cy.dataCy('button-contact').should('be.visible').click();
       cy.dataCy('dialog-header').find('h3').should('be.visible');
-      cy.dataCy('dialog-content').scrollTo('bottom');
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
       cy.dataCy('contact-form-submit').should('be.visible').click();
       cy.dataCy('contact-form-subject')
         .find('.q-field__messages')
@@ -272,7 +276,7 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-subject')
         .find('.q-field__control')
         .should('have.class', 'text-negative');
-      cy.dataCy('dialog-content').scrollTo('top');
+      cy.dataCy('dialog-body').scrollTo('top', { ensureScrollable: false });
       cy.dataCy('contact-form-subject')
         .find('input')
         .should('be.visible')
@@ -284,9 +288,9 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-subject')
         .find('.q-field__control')
         .should('not.have.class', 'text-negative');
-      cy.dataCy('dialog-content').scrollTo('bottom');
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
       cy.dataCy('contact-form-submit').should('be.visible').click();
-      cy.dataCy('dialog-content').scrollTo('top');
+      cy.dataCy('dialog-body').scrollTo('top', { ensureScrollable: false });
       cy.dataCy('contact-form-message')
         .find('.q-field__messages')
         .should('be.visible')
@@ -297,7 +301,7 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-message-input')
         .should('be.visible')
         .type('what is the minimum distance to ride to work?');
-      cy.dataCy('dialog-content').scrollTo('bottom');
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
       cy.dataCy('contact-form-submit').should('be.visible').click();
       cy.dataCy('contact-form-email')
         .find('.q-field__messages')
