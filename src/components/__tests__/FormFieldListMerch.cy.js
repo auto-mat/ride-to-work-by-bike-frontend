@@ -78,6 +78,7 @@ describe('<FormFieldListMerch>', () => {
           .should('be.visible')
           .and('contain', cards[0].title)
           .and('contain', cards[0].description);
+        cy.dataCy('slider-merch').should('be.visible');
         // close dialog
         cy.dataCy('dialog-close').click();
         // first option is selected
@@ -103,6 +104,7 @@ describe('<FormFieldListMerch>', () => {
           .should('be.visible')
           .and('contain', cards[0].title)
           .and('contain', cards[0].description);
+        cy.dataCy('slider-merch').should('be.visible');
         // close dialog
         cy.dataCy('dialog-close').click();
         // first option is selected
@@ -164,6 +166,7 @@ describe('<FormFieldListMerch>', () => {
         .click();
       cy.dataCy('dialog-merch').should('be.visible');
       // invalid settings (size not selected)
+      cy.dataCy('dialog-body').scrollTo('bottom');
       cy.dataCy('button-submit-merch').should('be.visible').click();
       // dialog does not close
       cy.dataCy('dialog-merch').should('be.visible');
@@ -174,6 +177,7 @@ describe('<FormFieldListMerch>', () => {
         .first()
         .click();
       // close dialog
+      cy.dataCy('dialog-body').scrollTo('bottom');
       cy.dataCy('button-submit-merch').should('be.visible').click();
       // dialog closes
       cy.dataCy('dialog-merch').should('not.exist');
