@@ -92,7 +92,7 @@ export default defineComponent({
       <q-icon name="question_mark" color="white" data-cy="icon-help" />
     </q-btn>
     <!-- Dialog -->
-    <dialog-default v-model="isDialogOpen" data-cy="dialog-help">
+    <dialog-default no-padding v-model="isDialogOpen" data-cy="dialog-help">
       <template #title>
         <!-- Navigation button: Default state (arrow) -->
         <q-btn

@@ -43,6 +43,10 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    noPadding: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['change', 'form-submit', 'update:modelValue'],
   setup(props, { emit }) {
@@ -85,9 +89,10 @@ export default defineComponent({
       <q-card-section
         v-if="$slots.content || $slots.buttons"
         :horizontal="horizontal"
+        :class="{ 'q-px-none': noPadding }"
         class="scroll items-center"
-        data-cy="dialog-body"
         style="max-height: 70vh; flex-wrap: wrap"
+        data-cy="dialog-body"
       >
         <!-- Content -->
         <slot v-if="$slots.content" name="content"></slot>
