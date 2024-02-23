@@ -11,7 +11,11 @@
  * - `content`: For the main content of the dialog.
  *
  * @props
+ * - `horizontal` (Boolean, default: false): Determines if the dialog should
+ *   display content horizontally.
  * - `modelValue` (Boolean, required): Controls the visibility of the dialog.
+ * - `noPadding` (Boolean, default: false): Determines if the dialog content
+ *   should have padding.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure
