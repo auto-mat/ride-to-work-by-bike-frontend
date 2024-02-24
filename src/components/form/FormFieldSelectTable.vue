@@ -43,6 +43,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormAddCompany from '../form/FormAddCompany.vue';
+import FormAddTeam from '../form/FormAddTeam.vue';
 
 // composables
 import { useValidation } from '../../composables/useValidation';
@@ -52,6 +53,7 @@ import {
   FormCompanyFields,
   FormOption,
   FormSelectTableOption,
+  FormTeamFields,
 } from '../types/Form';
 
 export default defineComponent({
@@ -59,6 +61,7 @@ export default defineComponent({
   components: {
     DialogDefault,
     FormAddCompany,
+    FormAddTeam,
   },
   props: {
     modelValue: {
@@ -108,6 +111,9 @@ export default defineComponent({
           department: '',
         },
       ],
+    });
+    const teamNew = ref<FormTeamFields>({
+      name: '',
     });
 
     /**
@@ -176,6 +182,7 @@ export default defineComponent({
       inputValue,
       isDialogOpen,
       query,
+      teamNew,
       isFilled,
       onClose,
       onSubmit,
@@ -306,6 +313,12 @@ export default defineComponent({
                 :form-values="companyNew"
                 @update:form-values="companyNew = $event"
               ></form-add-company>
+              <form-add-team
+                v-if="variant === 'team'"
+                class="q-mb-lg"
+                :form-values="teamNew"
+                @update:form-values="teamNew = $event"
+              ></form-add-team>
             </q-form>
             <!-- Action buttons -->
             <div class="flex justify-end q-mt-sm">

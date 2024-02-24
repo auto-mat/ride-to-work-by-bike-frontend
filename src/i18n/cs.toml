@@ -128,6 +128,7 @@ titleSubdivisionAddress = "Adresa vaší pobočky"
 buttonAddTeam = "Přidat tým"
 labelMembers = "člen | členů"
 labelTeam = "Název týmu"
+labelTeamName = "Název vašeho týmu"
 titleAddTeam = "Přidat tým"
 
 [index]

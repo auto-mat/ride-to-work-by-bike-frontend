@@ -127,6 +127,7 @@ titleSubdivisionAddress = "Adresa vašej pobočky"
 buttonAddTeam = "Pridať tím"
 labelMembers = "člen | členov"
 labelTeam = "Názov tímu"
+labelTeamName = "Názov vášho tímu"
 titleAddTeam = "Pridať tím"
 
 [index]

@@ -37,6 +37,12 @@ export type FormCompanyAddressFields = {
   department: string;
 };
 
+export type FormTeamFields = {
+  name: string;
+  members?: number;
+  maxMembers?: number;
+};
+
 export type FormCardMerchType = {
   author: string;
   dialogDescription: string;

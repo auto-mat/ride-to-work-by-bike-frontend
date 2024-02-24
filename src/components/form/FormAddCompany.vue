@@ -10,12 +10,12 @@
  * `FormFieldSelectTable`.
  *
  * @props
- * - `modelValue` (Object, required): The object representing the form state.
+ * - `formValues` (Object, required): The object representing the form state.
  * - `variant` (String as 'default', 'simple'): The variant of the form.
  *   `simple` only shows `name` and `vatId` fields.
  *
  * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
+ * - `update:formValues`: Emitted as a part of v-model structure.
  *
  * @components
  * - `FormFieldTextRequired`: Component to render required field.
