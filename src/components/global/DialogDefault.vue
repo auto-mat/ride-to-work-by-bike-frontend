@@ -43,6 +43,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    minWidth: {
+      type: String,
+      default: '50vw',
+    },
     modelValue: {
       type: Boolean,
       required: true,
@@ -73,7 +77,7 @@ export default defineComponent({
   <q-dialog square persistent v-model="isOpen" data-cy="dialog-form">
     <q-card
       class="relative-position overflow-visible bg-white"
-      style="min-width: 50vw"
+      :style="{ minWidth: minWidth }"
     >
       <!-- Section: Card header -->
       <q-card-section class="q-pt-none" data-cy="dialog-header">
