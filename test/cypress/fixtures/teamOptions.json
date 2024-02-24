@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Zelený team",
+    "value": "team-1",
+    "members": 2,
+    "maxMembers": 5
+  },
+  {
+    "label": "Modrý team",
+    "value": "team-2",
+    "members": 5,
+    "maxMembers": 5
+  }
+]
