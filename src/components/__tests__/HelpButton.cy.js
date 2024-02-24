@@ -166,7 +166,9 @@ describe('<HelpButton>', () => {
         cy.dataCy('dialog-body')
           .should('be.visible')
           .and('have.css', 'padding-left', '0px')
-          .and('have.css', 'padding-right', '0px');
+          .and('have.css', 'padding-right', '0px')
+          .invoke('width')
+          .should('eq', 560);
       });
     });
 
