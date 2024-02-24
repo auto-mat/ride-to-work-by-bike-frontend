@@ -128,7 +128,7 @@ buttonAddTeam = "Add team"
 labelMembers = "member | members"
 labelTeam = "Team name"
 labelTeamName = "Your team name"
-textTeam = "<p>V jednom týmu může být max. 5 členů, členy*ky můžete přizvat kdykoliv do konce registračního období výzvy. Firma může mít libovolný počet týmů.</p><p>Jen týmy s více než 1 členem se zapojují do výzev mezi týmy.</p>"
+textTeam = "<p>There can be a maximum of 5 members per team, you can invite members at any time until the end of the registration period. A company can have any number of teams.</p><p>Only teams with more than 1 member can join the inter-team challenges.</p"
 titleAddTeam = "Add team"
 
 [index]

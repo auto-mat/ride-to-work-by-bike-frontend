@@ -20,7 +20,13 @@ describe('<FormFieldSelectTable>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['buttonAddTeam', 'labelTeam', 'titleAddTeam'],
+      [
+        'buttonAddTeam',
+        'labelTeam',
+        'labelTeamName',
+        'titleAddTeam',
+        'textTeam',
+      ],
       'form.team',
       i18n,
     );
