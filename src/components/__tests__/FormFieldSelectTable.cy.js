@@ -50,25 +50,23 @@ describe('<FormFieldSelectTable>', () => {
 
     it('renders necessary elements', () => {
       // input label
-      cy.dataCy('form-company-select-query')
+      cy.dataCy('form-select-table-query')
         .should('be.visible')
         .and('contain', i18n.global.t('form.company.labelCompany'));
       // input
-      cy.dataCy('form-company-select-search')
-        .find('input')
-        .should('be.visible');
-      cy.dataCy('form-company-select-search')
+      cy.dataCy('form-select-table-search').find('input').should('be.visible');
+      cy.dataCy('form-select-table-search')
         .find('i')
         .invoke('height')
         .should('eq', 24);
-      cy.dataCy('form-company-select-search')
+      cy.dataCy('form-select-table-search')
         .find('i')
         .invoke('width')
         .should('eq', 24);
       // options
-      cy.dataCy('form-company-select-option-group').should('be.visible');
+      cy.dataCy('form-select-table-option-group').should('be.visible');
       // add new button
-      cy.dataCy('form-company-select-button').should('be.visible');
+      cy.dataCy('form-select-table-button').should('be.visible');
       cy.dataCy('button-add-option').should('be.visible');
       cy.dataCy('button-add-option')
         .find('i')
@@ -82,22 +80,22 @@ describe('<FormFieldSelectTable>', () => {
 
     it('allows to search through options', () => {
       // search for option
-      cy.dataCy('form-company-select-search').find('input').focus();
-      cy.dataCy('form-company-select-search').find('input').type('2');
+      cy.dataCy('form-select-table-search').find('input').focus();
+      cy.dataCy('form-select-table-search').find('input').type('2');
       // show only one option
-      cy.dataCy('form-company-select-option-group')
+      cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
         .should('have.length', 1);
-      cy.dataCy('form-company-select-search').find('input').clear();
-      cy.dataCy('form-company-select-search').find('input').blur();
-      cy.dataCy('form-company-select-option-group')
+      cy.dataCy('form-select-table-search').find('input').clear();
+      cy.dataCy('form-select-table-search').find('input').blur();
+      cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
         .should('have.length', 7);
     });
 
     it('validates company field correctly', () => {
-      cy.dataCy('form-company-select-search').find('input').focus();
-      cy.dataCy('form-company-select-search').find('input').blur();
+      cy.dataCy('form-select-table-search').find('input').focus();
+      cy.dataCy('form-select-table-search').find('input').blur();
       cy.dataCy('form-select-table-field')
         .find('.q-field__messages')
         .should('be.visible')
@@ -161,7 +159,7 @@ describe('<FormFieldSelectTable>', () => {
     });
 
     it('shows selected option', () => {
-      cy.dataCy('form-company-select-option-group')
+      cy.dataCy('form-select-table-option-group')
         .find('.q-radio__inner')
         .first()
         .should('have.class', 'text-primary');
