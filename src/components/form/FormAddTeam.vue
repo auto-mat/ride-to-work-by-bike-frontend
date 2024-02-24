@@ -68,6 +68,7 @@ export default defineComponent({
       :label="$t('form.team.labelTeamName')"
       :label-short="$t('form.team.labelTeam')"
       @update:model-value="onUpdate"
+      data-cy="form-add-team-name"
     />
     <div v-html="$t('form.team.textTeam')" class="q-mt-sm" />
   </div>
