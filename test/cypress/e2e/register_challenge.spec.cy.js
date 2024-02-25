@@ -222,7 +222,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // select company and address
-      cy.dataCy('form-company-select-option-group')
+      cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
         .first()
         .click();
@@ -250,7 +250,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
       // click when team is selected
-      cy.dataCy('form-company-select-option-group')
+      cy.dataCy('form-select-table-option-group')
         .find('.q-radio')
         .first()
         .click();
