@@ -416,7 +416,7 @@ describe('Register Challenge page', () => {
         .should('have.attr', 'src', activeIconImgSrcStepper7);
     });
 
-    it('allows user to pass back and through the registration process', () => {
+    it('allows user to pass back and forth through stepper', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       let i18n;
       cy.window().should('have.property', 'i18n');
@@ -465,6 +465,57 @@ describe('Register Challenge page', () => {
           cy.dataCy('step-3-back').should('be.visible').click();
           cy.dataCy('step-2-back').should('be.visible').click();
           cy.dataCy('step-1-continue').should('be.visible');
+          // test using the step headers
+          // go to the last step
+          cy.dataCy('step-1-continue').should('be.visible').click();
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 1
+          cy.dataCy('step-1').should('be.visible').click();
+          cy.dataCy('step-1-continue').should('be.visible');
+          // go to the last step
+          cy.dataCy('step-1-continue').should('be.visible').click();
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 2
+          cy.dataCy('step-2').should('be.visible').click();
+          cy.dataCy('step-2-continue').should('be.visible');
+          // go to the last step
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 3
+          cy.dataCy('step-3').should('be.visible').click();
+          cy.dataCy('step-3-continue').should('be.visible');
+          // go to the last step
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 4
+          cy.dataCy('step-4').should('be.visible').click();
+          cy.dataCy('step-4-continue').should('be.visible');
+          // go to the last step
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 5
+          cy.dataCy('step-5').should('be.visible').click();
+          cy.dataCy('step-5-continue').should('be.visible');
+          // go to the last step
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
+          // test goint to step 7
+          cy.dataCy('step-7').should('be.visible').click();
+          cy.dataCy('step-7-continue').should('be.visible');
         });
     });
   });
