@@ -552,7 +552,7 @@ export default defineComponent({
 :deep(.q-stepper__tab--done:after) {
   content: '';
   position: absolute;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 32 32'%3E%3Cpath fill='%2343449C' d='M21.324 3.078a1.404 1.404 0 0 1 1.984 0l5.614 5.614a1.404 1.404 0 0 1 0 1.985L10.677 28.922c-.263.264-.62.412-.993.412H4.07a1.404 1.404 0 0 1-1.403-1.404v-5.614c0-.372.148-.73.411-.992L17.113 7.289l4.21-4.211Zm-3.219 7.187L5.474 22.897v3.63h3.63l12.631-12.632-3.63-3.63Zm5.615 1.645 2.226-2.226-3.63-3.63-2.226 2.227 3.63 3.63Z'/%3E%3C/svg%3E");
+  background-image: url('../assets/svg/edit.svg');
   width: 24px;
   height: 24px;
   right: 24px;
