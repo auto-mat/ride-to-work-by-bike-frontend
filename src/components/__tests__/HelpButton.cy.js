@@ -12,6 +12,8 @@ const rideToWorkByBikeConfig = JSON.parse(
 );
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
 
+const modalDialogWidth = 560;
+
 describe('<HelpButton>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.help', i18n);
@@ -168,7 +170,7 @@ describe('<HelpButton>', () => {
           .and('have.css', 'padding-left', '0px')
           .and('have.css', 'padding-right', '0px')
           .invoke('width')
-          .should('eq', 560);
+          .should('eq', modalDialogWidth);
       });
     });
 
@@ -248,7 +250,7 @@ describe('<HelpButton>', () => {
         .and('have.css', 'padding-left', '0px')
         .and('have.css', 'padding-right', '0px')
         .invoke('width')
-        .should('eq', 560);
+        .should('eq', modalDialogWidth);
       cy.dataCy('dialog-help').find('h3').should('be.visible');
       cy.dataCy('contact-form-subject')
         .find('input')
