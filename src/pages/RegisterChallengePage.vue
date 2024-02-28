@@ -256,6 +256,7 @@ export default defineComponent({
         </h1>
         <q-stepper
           animated
+          header-nav
           vertical
           keep-alive
           ref="stepperRef"
@@ -273,6 +274,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper1"
             :done-icon="doneIconImgSrcStepper1"
             :done="step > 1"
+            :header-nav="step > 1"
             class="bg-white"
             data-cy="step-1"
           >
@@ -301,6 +303,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper2"
             :done-icon="doneIconImgSrcStepper2"
             :done="step > 2"
+            :header-nav="step > 2"
             class="bg-white q-mt-lg"
             data-cy="step-2"
           >
@@ -334,6 +337,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper3"
             :done-icon="doneIconImgSrcStepper3"
             :done="step > 3"
+            :header-nav="step > 3"
             class="bg-white q-mt-lg"
             data-cy="step-3"
           >
@@ -379,6 +383,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper4"
             :done-icon="doneIconImgSrcStepper4"
             :done="step > 4"
+            :header-nav="step > 4"
             class="bg-white q-mt-lg"
             data-cy="step-4"
           >
@@ -426,6 +431,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper5"
             :done-icon="doneIconImgSrcStepper5"
             :done="step > 5"
+            :header-nav="step > 5"
             class="bg-white q-mt-lg"
             data-cy="step-5"
           >
@@ -470,6 +476,7 @@ export default defineComponent({
             :active-icon="activeIconImgSrcStepper7"
             :done-icon="doneIconImgSrcStepper7"
             :done="step > 7"
+            :header-nav="step > 7"
             class="bg-white q-mt-lg"
             data-cy="step-7"
           >
@@ -538,5 +545,16 @@ export default defineComponent({
   color: $grey-10;
   font-size: 16px;
   font-weight: 700;
+}
+:deep(.q-stepper__tab--done) {
+  padding-right: 48px;
+}
+:deep(.q-stepper__tab--done:after) {
+  content: '';
+  position: absolute;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 32 32'%3E%3Cpath fill='%2343449C' d='M21.324 3.078a1.404 1.404 0 0 1 1.984 0l5.614 5.614a1.404 1.404 0 0 1 0 1.985L10.677 28.922c-.263.264-.62.412-.993.412H4.07a1.404 1.404 0 0 1-1.403-1.404v-5.614c0-.372.148-.73.411-.992L17.113 7.289l4.21-4.211Zm-3.219 7.187L5.474 22.897v3.63h3.63l12.631-12.632-3.63-3.63Zm5.615 1.645 2.226-2.226-3.63-3.63-2.226 2.227 3.63 3.63Z'/%3E%3C/svg%3E");
+  width: 24px;
+  height: 24px;
+  right: 24px;
 }
 </style>
