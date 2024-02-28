@@ -242,6 +242,13 @@ describe('<HelpButton>', () => {
       cy.dataCy('dialog-help').should('be.visible');
       cy.dataCy('dialog-body').scrollTo(0, 1200);
       cy.dataCy('button-contact').should('be.visible').click();
+      // test width for contact form state
+      cy.dataCy('dialog-body')
+        .should('be.visible')
+        .and('have.css', 'padding-left', '0px')
+        .and('have.css', 'padding-right', '0px')
+        .invoke('width')
+        .should('eq', 560);
       cy.dataCy('dialog-help').find('h3').should('be.visible');
       cy.dataCy('contact-form-subject')
         .find('input')

@@ -77,7 +77,7 @@ export default defineComponent({
 <template>
   <q-dialog square persistent v-model="isOpen" data-cy="dialog-form">
     <q-card
-      class="relative-position overflow-visible bg-white"
+      class="relative-position full-width overflow-visible bg-white"
       :style="{ minWidth: minWidth }"
     >
       <!-- Section: Card header -->
