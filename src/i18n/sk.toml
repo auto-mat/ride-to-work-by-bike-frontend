@@ -299,6 +299,9 @@ buttonGoogle = "Registrácia cez Facebook"
 buttonFacebook = "Registrácia cez Google"
 
 [register.challenge]
+textCountdownSeptember = "Do septembrovej výzvy zostáva {days} dní a {hours}:{minutes}:{seconds} hodín!"
+textCountdownOctober = "Do októbrovej výzvy zostáva {days} dní a {hours}:{minutes}:{seconds} hodín!"
+textCountdownMay = "Do májovej výzvy zostáva {days} dní a {hours}:{minutes}:{seconds} hodín!"
 titleRegisterToChallenge.may = "Registrácia na májovú výzvu"
 titleRegisterToChallenge.october = "Registrácia na októbrovú výzvu"
 titleStepPersonalDetails = "Osobné údaje"

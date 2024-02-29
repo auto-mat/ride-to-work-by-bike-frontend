@@ -299,6 +299,9 @@ buttonGoogle = "Register via Facebook"
 buttonFacebook = "Register via Google"
 
 [register.challenge]
+textCountdownSeptember = "{days} days and {hours}:{minutes}:{seconds} hours left to September Challenge!"
+textCountdownOctober = "{days} days and {hours}:{minutes}:{seconds} hours left to October Challenge!"
+textCountdownMay = "{days} days and {hours}:{minutes}:{seconds} hours left to May Challenge!"
 titleRegisterToChallenge.may = "Register for May challenge"
 titleRegisterToChallenge.october = "Register for October challenge"
 titleStepPersonalDetails = "Personal details"
