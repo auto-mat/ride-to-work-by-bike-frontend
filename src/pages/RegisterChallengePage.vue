@@ -102,14 +102,14 @@ export default defineComponent({
       new URL('../assets/svg/numeric-5-fill.svg', import.meta.url).href
     }`;
     const doneIconImgSrcStepper5 = doneIcon;
-    // Stepper 7 imgs
-    const iconImgSrcStepper7 = `img:${
-      new URL('../assets/svg/numeric-7-outline.svg', import.meta.url).href
+    // Stepper 6 imgs
+    const iconImgSrcStepper6 = `img:${
+      new URL('../assets/svg/numeric-6-outline.svg', import.meta.url).href
     }`;
-    const activeIconImgSrcStepper7 = `img:${
-      new URL('../assets/svg/numeric-7-fill.svg', import.meta.url).href
+    const activeIconImgSrcStepper6 = `img:${
+      new URL('../assets/svg/numeric-6-fill.svg', import.meta.url).href
     }`;
-    const doneIconImgSrcStepper7 = doneIcon;
+    const doneIconImgSrcStepper6 = doneIcon;
 
     const personalDetails = ref<FormPersonalDetailsFields>({
       firstName: '',
@@ -219,9 +219,9 @@ export default defineComponent({
       iconImgSrcStepper5,
       activeIconImgSrcStepper5,
       doneIconImgSrcStepper5,
-      iconImgSrcStepper7,
-      activeIconImgSrcStepper7,
-      doneIconImgSrcStepper7,
+      iconImgSrcStepper6,
+      activeIconImgSrcStepper6,
+      doneIconImgSrcStepper6,
       companyOptions,
       participation,
       companyAddress,
@@ -470,15 +470,15 @@ export default defineComponent({
           </q-step>
           <!-- Step: Merch -->
           <q-step
-            :name="7"
+            :name="6"
             :title="$t('register.challenge.titleStepMerch')"
-            :icon="iconImgSrcStepper7"
-            :active-icon="activeIconImgSrcStepper7"
-            :done-icon="doneIconImgSrcStepper7"
-            :done="step > 7"
-            :header-nav="step > 7"
+            :icon="iconImgSrcStepper6"
+            :active-icon="activeIconImgSrcStepper6"
+            :done-icon="doneIconImgSrcStepper6"
+            :done="step > 6"
+            :header-nav="step > 6"
             class="bg-white q-mt-lg"
-            data-cy="step-7"
+            data-cy="step-6"
           >
             <q-form ref="stepMerchRef">
               <form-field-list-merch />
@@ -491,7 +491,7 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
-                data-cy="step-7-back"
+                data-cy="step-6-back"
               />
               <q-btn
                 unelevated
@@ -500,7 +500,7 @@ export default defineComponent({
                 :label="$t('navigation.continue')"
                 @click="onContinue"
                 class="q-ml-sm"
-                data-cy="step-7-continue"
+                data-cy="step-6-continue"
               />
             </q-stepper-navigation>
           </q-step>
