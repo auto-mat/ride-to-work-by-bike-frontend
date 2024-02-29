@@ -20,6 +20,8 @@ const getAppConfig = (process) => {
     config['colorWhiteOpacity'] = process.env.COLOR_WHITE_OPACITY;
   } else if (process.env.COLOR_BLACK) {
     config['colorBlack'] = process.env.COLOR_BLACK;
+  } else if (process.env.COLOR_RED) {
+    config['colorRed'] = process.env.COLOR_RED;
   } else if (process.env.IMAGE) {
     config['image'] = process.env.IMAGE;
   } else if (process.env.WIDTH) {

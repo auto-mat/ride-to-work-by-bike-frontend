@@ -15,6 +15,7 @@ const initVars = (): void => {
   setCssVar('primary', rideToWorkByBikeConfig.colorPrimary);
   setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
   setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
+  setCssVar('red', rideToWorkByBikeConfig.colorRed);
 };
 
 export { rideToWorkByBikeConfig, initVars };
