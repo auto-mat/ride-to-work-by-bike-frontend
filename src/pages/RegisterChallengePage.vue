@@ -13,6 +13,7 @@
  * - `FormFieldOptionGroup`: Component to render radio buttons.
  * - `FormPersonalDetails`: Component to render personal details form.
  * - `LoginRegisterHeader`: Component to render page header.
+ * - `TopBarCountdown`: Component to display countdown.
  *
  * @layout
  * - `LoginRegisterLayout`: Displayed within the `LoginLayout` template.
@@ -34,6 +35,7 @@ import FormFieldListMerch from 'src/components/form/FormFieldListMerch.vue';
 import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
 import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import TopBarCountdown from 'src/components/global/TopBarCountdown.vue';
 
 // composables
 import { useStepperValidation } from 'src/composables/useStepperValidation';
@@ -55,6 +57,7 @@ export default defineComponent({
     FormFieldOptionGroup,
     FormPersonalDetails,
     LoginRegisterHeader,
+    TopBarCountdown,
   },
   setup() {
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
@@ -238,11 +241,11 @@ export default defineComponent({
 </script>
 
 <template>
+  <top-bar-countdown />
   <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
       <login-register-header data-cy="login-register-header" />
-
       <!-- Container -->
       <div class="q-mx-auto q-mt-xl" :style="{ 'max-width': containerWidth }">
         <!-- Page title -->
