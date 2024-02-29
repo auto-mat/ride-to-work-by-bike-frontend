@@ -457,7 +457,9 @@ describe('Register Challenge page', () => {
             .first()
             .click();
           cy.dataCy('step-5-continue').should('be.visible').click();
-          cy.dataCy('step-6-continue').should('be.visible');
+          cy.dataCy('step-6-continue')
+            .should('be.visible')
+            .and('contain', i18n.global.t('form.buttonCompleteRegistration'));
           // test back navigation in the stepper
           cy.dataCy('step-6-back').should('be.visible').click();
           cy.dataCy('step-5-back').should('be.visible').click();

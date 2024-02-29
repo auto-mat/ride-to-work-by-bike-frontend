@@ -497,7 +497,7 @@ export default defineComponent({
                 unelevated
                 rounded
                 color="primary"
-                :label="$t('navigation.continue')"
+                :label="$t('form.buttonCompleteRegistration')"
                 @click="onContinue"
                 class="q-ml-sm"
                 data-cy="step-6-continue"

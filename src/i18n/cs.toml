@@ -41,6 +41,7 @@ select = "Vybrat"
 selected = "Vybráno"
 
 [form]
+buttonCompleteRegistration = "Dokončit registraci"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 hintNickname = "Zobrazí se ve veřejných výsledcích místo vašeho jména"
 labelAddress = "Adresa"
