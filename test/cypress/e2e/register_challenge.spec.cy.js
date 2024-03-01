@@ -442,6 +442,14 @@ describe('Register Challenge page', () => {
             .find('.q-radio')
             .first()
             .click();
+          cy.dataCy('step-4-info').should('be.visible');
+          cy.dataCy('step-4-info').find('i').invoke('width').should('eq', 18);
+          cy.dataCy('step-4-info').find('i').invoke('height').should('eq', 18);
+          cy.dataCy('step-4-info')
+            .find('p')
+            .should('be.visible')
+            .should('have.css', 'font-size', '12px')
+            .and('contain', i18n.global.t('form.company.textCoordinator'));
           cy.dataCy('form-company-address-input').click();
           // select option
           cy.get('.q-menu')
