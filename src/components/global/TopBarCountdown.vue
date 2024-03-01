@@ -36,6 +36,7 @@ export default defineComponent({
 <template>
   <div
     class="top-bar justify-center text-white text-weight-bold text-subtitle2 bg-red q-py-sm q-px-sm flex justify-sm-center"
+    data-cy="top-bar-countdown"
   >
     <span v-if="challengeMonth === 'may'">
       {{
