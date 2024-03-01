@@ -20,6 +20,7 @@ export interface ConfigGlobal {
   urlYoutube: string;
   urlGooglePlay: string;
   urlAppStore: string;
-  challengeMonth: 'may' | 'october';
+  challengeMonth: 'may' | 'october' | 'september';
   containerWidth: string;
+  challengeStartDate: string;
 }

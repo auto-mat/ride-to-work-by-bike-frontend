@@ -19,13 +19,11 @@ import { defineComponent } from 'vue';
 import { useCountdown } from 'src/composables/useCountdown';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
-const releaseDate = '2024-10-01T12:00:00';
-
 export default defineComponent({
   name: 'TopBarCountdown',
   setup() {
-    const { countdown } = useCountdown(releaseDate);
-    const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
+    const { challengeMonth, challengeStartDate } = rideToWorkByBikeConfig;
+    const { countdown } = useCountdown(challengeStartDate);
 
     return {
       challengeMonth,

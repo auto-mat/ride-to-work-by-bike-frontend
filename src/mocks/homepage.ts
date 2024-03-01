@@ -16,8 +16,6 @@ import {
   CardOffer,
 } from 'components/types';
 
-export const releaseDate = '2024-10-01T12:00:00';
-
 export const headingBgTitle =
   'Zapojte se do komunity Do práce na kole ve svém městě';
 

@@ -48,6 +48,8 @@ const getAppConfig = (process) => {
     config['urlGooglePlay'] = process.env.URL_GOOGLE_PLAY;
   } else if (process.env.CHALLENGE_MONTH) {
     config['challengeMonth'] = process.env.CHALLENGE_MONTH;
+  } else if (process.env.CHALLENGE_START_DATE) {
+    config['challengeStartDate'] = process.env.CHALLENGE_START_DATE;
   } else if (process.env.CONTAINER_WIDTH) {
     config['containerWidth'] = process.env.CONTAINER_WIDTH;
   }

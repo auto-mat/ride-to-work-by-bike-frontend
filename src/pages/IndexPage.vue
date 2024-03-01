@@ -119,6 +119,9 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// composables
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
 // import components
 import BadgeAchievement from 'components/homepage/BadgeAchievement.vue';
 import BannerApp from 'components/homepage/BannerApp.vue';
@@ -163,8 +166,10 @@ export default defineComponent({
     CardStats,
   },
   setup() {
+    const { challengeStartDate } = rideToWorkByBikeConfig;
+
     return {
-      releaseDate: homepage.releaseDate,
+      releaseDate: challengeStartDate,
       cardsChallenge: homepage.cardsChallenge,
       badgeList: homepage.badgeList,
       bannerImageData: homepage.bannerImage,

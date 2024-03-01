@@ -29,4 +29,5 @@ urlAppStore = "https://apps.apple.com/cz/app/do-pr%C3%A1ce-na-kole/id1564442780"
 urlGooglePlay = "https://play.google.com/store/apps/details?id=cz.dopracenakole"
 
 challengeMonth = "may"
+challengeStartDate = "2024-10-01T12:00:00"
 containerWidth = "752px"
