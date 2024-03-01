@@ -31,7 +31,7 @@ describe('TopBarCountdown', () => {
     );
   });
 
-  it('displays internationalized labels', () => {
+  it('displays internationalized labels based on month', () => {
     cy.clock(currentTime.getTime()).then(() => {
       cy.dataCy('top-bar-countdown')
         .should('be.visible')
