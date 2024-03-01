@@ -1,5 +1,8 @@
 import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
+
+const { contactEmail } = rideToWorkByBikeConfig;
 
 describe('<FormFieldSelectTable>', () => {
   it('has translation for all strings', () => {
@@ -12,7 +15,9 @@ describe('<FormFieldSelectTable>', () => {
         'labelCompany',
         'labelDepartment',
         'textCompanyPermission',
+        'textCoordinator',
         'textSubdivisionAddress',
+        'textUserExperience',
         'titleAddCompany',
         'titleSubdivisionAddress',
       ],
@@ -82,6 +87,11 @@ describe('<FormFieldSelectTable>', () => {
         .find('i')
         .invoke('width')
         .should('be.gt', 23);
+      cy.dataCy('form-select-table-user-note')
+        .should('be.visible')
+        .and('have.css', 'font-size', '12px')
+        .and('have.css', 'font-weight', '400')
+        .and('contain', contactEmail);
     });
 
     it('allows to search through options', () => {
