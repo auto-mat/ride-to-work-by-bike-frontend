@@ -78,7 +78,7 @@ describe('Register Challenge page', () => {
     // switching between languages can only be tested in E2E context
     testLanguageSwitcher();
 
-    it('renders page title', () => {
+    it('renders page elements', () => {
       let i18n;
       cy.task('getAppConfig', process).then((config) => {
         cy.window().should('have.property', 'i18n');
@@ -87,6 +87,7 @@ describe('Register Challenge page', () => {
             i18n = win.i18n;
           })
           .then(() => {
+            cy.dataCy('top-bar-countdown').should('be.visible');
             cy.dataCy('login-register-title')
               .should('be.visible')
               .and('have.color', config.colorWhite)

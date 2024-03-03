@@ -241,7 +241,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <top-bar-countdown />
+  <top-bar-countdown data-cy="top-bar-countdown" />
   <q-page padding class="bg-secondary">
     <div class="q-px-lg">
       <!-- Page header -->
