@@ -91,7 +91,19 @@ describe('<FormFieldSelectTable>', () => {
         .should('be.visible')
         .and('have.css', 'font-size', '12px')
         .and('have.css', 'font-weight', '400')
-        .and('contain', contactEmail);
+        .then(($el) => {
+          const textContent = $el.text();
+          expect(textContent).to.contain(
+            textOnly(
+              i18n.global.t('form.company.textUserExperience', {
+                email: contactEmail,
+              }),
+            ),
+          );
+        });
+      cy.dataCy('form-select-table-user-note')
+        .find('a')
+        .should('have.attr', 'href', 'mailto:' + contactEmail);
     });
 
     it('allows to search through options', () => {
@@ -288,3 +300,8 @@ describe('<FormFieldSelectTable>', () => {
     });
   });
 });
+
+function textOnly(htmlString) {
+  // Using a regular expression to remove HTML tags and bracketed content
+  return htmlString.replace(/<.*?>/g, '');
+}
