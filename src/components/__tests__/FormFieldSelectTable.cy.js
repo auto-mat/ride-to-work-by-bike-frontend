@@ -87,6 +87,7 @@ describe('<FormFieldSelectTable>', () => {
         .find('i')
         .invoke('width')
         .should('be.gt', 23);
+      // note under the select table
       cy.dataCy('form-select-table-user-note')
         .should('be.visible')
         .and('have.css', 'font-size', '12px')
@@ -101,6 +102,7 @@ describe('<FormFieldSelectTable>', () => {
             ),
           );
         });
+      // email contact to Auto*Mat in the note
       cy.dataCy('form-select-table-user-note')
         .find('a')
         .should('have.attr', 'href', 'mailto:' + contactEmail);
