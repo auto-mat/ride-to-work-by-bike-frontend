@@ -1,6 +1,7 @@
 export interface ConfigGlobal {
   colorPrimary: string;
   colorSecondary: string;
+  colorSecondaryOpacity: string;
   colorGrayLight: string;
   colorGrayMiddle: string;
   colorWhite: string;
@@ -13,6 +14,7 @@ export interface ConfigGlobal {
   subtitle: string;
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
+  borderRadiusCardMedium: string;
   contactEmail: string;
   urlFacebook: string;
   urlInstagram: string;

@@ -3,6 +3,7 @@
 
 colorPrimary = "#43449C"
 colorSecondary = "#A0D7C4"
+colorSecondaryOpacity = "rgba(160, 215, 196, 0.4)"
 colorGrayLight = "#F3F7FF"
 colorGrayMiddle = "#DCE1ED"
 colorWhite = "#FFFFFF"
@@ -15,6 +16,7 @@ width = "850px"
 title = "Title"
 subtitle = "Subtitle"
 borderRadiusCard = "20px"
+borderRadiusCardMedium = "16px"
 borderRadiusCardSmall = "8px"
 
 # Emails

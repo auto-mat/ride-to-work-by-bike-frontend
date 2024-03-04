@@ -10,6 +10,8 @@ const getAppConfig = (process) => {
     config['primaryColor'] = process.env.COLOR_PRIMARY;
   } else if (process.env.COLOR_SECONDARY) {
     config['secondaryColor'] = process.env.COLOR_SECONDARY;
+  } else if (process.env.COLOR_SECONDARY_OPACITY) {
+    config['colorSecondaryOpacity'] = process.env.COLOR_SECONDARY_OPACITY;
   } else if (process.env.COLOR_GRAY_LIGHT) {
     config['colorGrayLight'] = process.env.COLOR_GRAY_LIGHT;
   } else if (process.env.COLOR_GRAY_MIDDLE) {
@@ -32,6 +34,8 @@ const getAppConfig = (process) => {
     config['subtitle'] = process.env.SUBTITLE;
   } else if (process.env.BORDER_RADIUS_CARD) {
     config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
+  } else if (process.env.BORDER_RADIUS_CARD_MEDIUM) {
+    config['borderRadiusCardMedium'] = process.env.BORDER_RADIUS_CARD_MEDIUM;
   } else if (process.env.BORDER_RADIUS_CARD_SMALL) {
     config['borderRadiusCardSmall'] = process.env.BORDER_RADIUS_CARD_SMALL;
   } else if (process.env.URL_FACEBOOK) {
