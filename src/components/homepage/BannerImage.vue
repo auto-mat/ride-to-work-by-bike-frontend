@@ -24,12 +24,10 @@
 import { defineComponent } from 'vue';
 
 // types
-import { BannerImage as BannerImageType, ConfigGlobal } from '../types';
+import { BannerImage as BannerImageType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 export default defineComponent({
   name: 'BannerImage',
@@ -40,8 +38,10 @@ export default defineComponent({
     },
   },
   setup() {
-    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
-    return { borderRadius };
+    const { borderRadiusCard: borderRadius, maxWidthBanner } =
+      rideToWorkByBikeConfig;
+
+    return { borderRadius, maxWidthBanner };
   },
 });
 </script>
@@ -49,8 +49,8 @@ export default defineComponent({
 <template>
   <div>
     <div
-      class="overflow-hidden row bg-info"
-      :style="{ 'border-radius': borderRadius }"
+      class="overflow-hidden row bg-white border-grey-5 q-mx-auto"
+      :style="{ 'border-radius': borderRadius, 'max-width': maxWidthBanner }"
       data-cy="banner"
     >
       <!-- Image (half) -->
@@ -62,15 +62,12 @@ export default defineComponent({
         data-cy="banner-half"
       />
       <!-- Text (half) -->
-      <div
-        class="col-sm-6 flex items-center q-px-md q-py-lg"
-        data-cy="banner-half"
-      >
+      <div class="col-sm-6 flex items-center q-pa-xl" data-cy="banner-half">
         <div>
           <!-- Title -->
           <div
             v-if="banner.title"
-            class="text-weight-medium text-subtitle1"
+            class="text-weight-bold text-grey-10 text-subtitle1"
             data-cy="banner-title"
           >
             {{ banner.title }}
@@ -78,7 +75,7 @@ export default defineComponent({
           <!-- Description -->
           <div
             v-if="banner.perex"
-            class="text-caption q-mt-sm"
+            class="text-body2 text-grey-8 q-mt-sm"
             data-cy="banner-perex"
           >
             {{ banner.perex }}
@@ -88,3 +85,9 @@ export default defineComponent({
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.border-grey-5 {
+  border: 1px solid $grey-5;
+}
+</style>

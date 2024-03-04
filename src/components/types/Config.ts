@@ -14,7 +14,7 @@ export interface ConfigGlobal {
   subtitle: string;
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
-  borderRadiusCardMedium: string;
+  maxWidthBanner: string;
   contactEmail: string;
   urlFacebook: string;
   urlInstagram: string;
