@@ -2,11 +2,14 @@ import { colors } from 'quasar';
 
 import CardPost from '../homepage/CardPost.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey5 = getPaletteColor('blue-grey-5');
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 // mocks
 import { cardsPost } from 'src/mocks/homepage';
@@ -37,7 +40,7 @@ describe('<CardPost>', () => {
     cy.window().then(() => {
       cy.dataCy('card-post')
         .should('be.visible')
-        .and('have.css', 'border-radius', '20px');
+        .and('have.css', 'border-radius', borderRadiusCard);
     });
   });
 

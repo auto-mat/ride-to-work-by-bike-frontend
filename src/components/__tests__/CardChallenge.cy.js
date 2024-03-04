@@ -1,9 +1,11 @@
 import { colors } from 'quasar';
 import CardChallenge from '../homepage/CardChallenge.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 describe('<CardChallenge>', () => {
   const title = 'Challenge 1';
@@ -107,7 +109,7 @@ describe('<CardChallenge>', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .and('have.css', 'border-radius', '20px');
+        .and('have.css', 'border-radius', borderRadiusCard);
     });
   });
 });

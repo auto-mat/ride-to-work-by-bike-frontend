@@ -3,10 +3,13 @@ import { colors } from 'quasar';
 import CardStats from '../homepage/CardStats.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsStats } from '../../mocks/homepage';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const blueGrey3 = getPaletteColor('blue-grey-3');
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 const card = cardsStats[0];
 
@@ -68,7 +71,11 @@ describe('<CardStats>', () => {
 
     it('has rounded corners', () => {
       cy.window().then(() => {
-        cy.dataCy('card-stats').should('have.css', 'border-radius', '20px');
+        cy.dataCy('card-stats').should(
+          'have.css',
+          'border-radius',
+          borderRadiusCard,
+        );
       });
     });
   });

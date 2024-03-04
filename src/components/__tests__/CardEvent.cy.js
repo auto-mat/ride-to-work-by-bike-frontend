@@ -2,6 +2,7 @@ import { colors } from 'quasar';
 
 import CardEvent from '../homepage/CardEvent.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
@@ -9,6 +10,8 @@ const white = getPaletteColor('white');
 const blueGrey2 = getPaletteColor('blue-grey-2');
 const blueGrey3 = getPaletteColor('blue-grey-3');
 const blueGrey7 = getPaletteColor('blue-grey-7');
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 const title = 'Opening Ceremony Bike to Work 2022';
 const thumbnail = {
@@ -138,7 +141,7 @@ describe('<CardEvent>', () => {
       cy.window().then(() => {
         cy.dataCy('card')
           .should('be.visible')
-          .and('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', borderRadiusCard);
       });
     });
 

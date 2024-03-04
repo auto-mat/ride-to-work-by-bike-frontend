@@ -2,11 +2,14 @@ import { colors } from 'quasar';
 
 import CardFollow from '../homepage/CardFollow.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey7 = getPaletteColor('blue-grey-7');
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 // mocks
 import { cardsFollow } from 'src/mocks/homepage';
@@ -35,7 +38,11 @@ describe('<CardFollow>', () => {
 
     it('has rounded corners', () => {
       cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.css', 'border-radius', '20px');
+        cy.dataCy('card-follow').should(
+          'have.css',
+          'border-radius',
+          borderRadiusCard,
+        );
       });
     });
 

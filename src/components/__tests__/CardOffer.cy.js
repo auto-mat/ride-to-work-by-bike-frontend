@@ -3,11 +3,14 @@ import { colors } from 'quasar';
 import CardOffer from '../homepage/CardOffer.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsOffer } from '../../mocks/homepage';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 const card = cardsOffer[0];
 
@@ -34,7 +37,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .and('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', borderRadiusCard);
       });
     });
 
@@ -93,7 +96,7 @@ describe('<CardOffer>', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer')
           .should('be.visible')
-          .and('have.css', 'border-radius', '20px');
+          .and('have.css', 'border-radius', borderRadiusCard);
       });
     });
 
