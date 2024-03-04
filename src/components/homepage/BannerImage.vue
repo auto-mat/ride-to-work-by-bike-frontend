@@ -80,6 +80,22 @@ export default defineComponent({
           >
             {{ banner.perex }}
           </div>
+          <div
+            v-if="banner.buttons.length"
+            class="flex flex-wrap gap-8 q-mt-lg"
+          >
+            <q-btn
+              unelevated
+              rounded
+              outline
+              v-for="button in banner.buttons"
+              :key="button.url"
+              :href="button.url"
+              :label="button.title"
+              color="primary"
+              data-cy="banner-button"
+            />
+          </div>
         </div>
       </div>
     </div>
