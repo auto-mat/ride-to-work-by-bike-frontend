@@ -38,10 +38,9 @@ export default defineComponent({
     },
   },
   setup() {
-    const { borderRadiusCard: borderRadius, maxWidthBanner } =
-      rideToWorkByBikeConfig;
+    const { borderRadiusCard, maxWidthBanner } = rideToWorkByBikeConfig;
 
-    return { borderRadius, maxWidthBanner };
+    return { borderRadiusCard, maxWidthBanner };
   },
 });
 </script>
@@ -50,7 +49,10 @@ export default defineComponent({
   <div>
     <div
       class="overflow-hidden row bg-white border-grey-5 q-mx-auto"
-      :style="{ 'border-radius': borderRadius, 'max-width': maxWidthBanner }"
+      :style="{
+        'border-radius': borderRadiusCard,
+        'max-width': maxWidthBanner,
+      }"
       data-cy="banner"
     >
       <!-- Image (half) -->
