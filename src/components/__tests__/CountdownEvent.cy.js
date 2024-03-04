@@ -7,7 +7,8 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const grey8 = getPaletteColor('grey-8');
-const { colorPrimary } = rideToWorkByBikeConfig;
+const { colorPrimary, borderRadiusCardMedium, colorSecondaryOpacity } =
+  rideToWorkByBikeConfig;
 
 describe('<CountdownEvent>', () => {
   const releaseDate = new Date('2023-10-01T12:00:00');
@@ -69,7 +70,7 @@ describe('<CountdownEvent>', () => {
     cy.window().then(() => {
       cy.dataCy('title')
         .should('be.visible')
-        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-size', '16px')
         .and('have.css', 'font-weight', '700')
         .and('have.color', grey10);
     });
@@ -125,11 +126,12 @@ describe('<CountdownEvent>', () => {
       .and('have.color', grey8);
   });
 
-  it('has gray background', () => {
+  it('has correct background', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .and('have.css', 'background-color', 'rgb(243, 247, 255)');
+        .and('have.css', 'border-radius', borderRadiusCardMedium)
+        .and('have.backgroundColor', colorSecondaryOpacity);
     });
   });
 
