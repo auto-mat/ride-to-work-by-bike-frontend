@@ -56,7 +56,7 @@ export default defineComponent({
       <!-- Image (half) -->
       <q-img
         :src="banner?.image?.src"
-        :ratio="3 / 1"
+        :ratio="2 / 1"
         :alt="banner?.image?.alt"
         class="col-sm-6"
         data-cy="banner-half"
