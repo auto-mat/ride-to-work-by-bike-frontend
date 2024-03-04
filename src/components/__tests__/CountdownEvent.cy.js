@@ -1,7 +1,15 @@
+import { colors } from 'quasar';
+
 import CountdownEvent from '../homepage/CountdownEvent.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
-describe('Event Countdown', () => {
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
+const grey8 = getPaletteColor('grey-8');
+const { colorPrimary } = rideToWorkByBikeConfig;
+
+describe('<CountdownEvent>', () => {
   const releaseDate = new Date('2023-10-01T12:00:00');
   const currentTime = new Date('2023-09-30T12:00:00');
 
@@ -62,7 +70,8 @@ describe('Event Countdown', () => {
       cy.dataCy('title')
         .should('be.visible')
         .and('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '700');
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', grey10);
     });
   });
 
@@ -73,39 +82,47 @@ describe('Event Countdown', () => {
   it('renders the numbers in correct format', () => {
     cy.dataCy('countdown-days')
       .should('be.visible')
-      .and('have.css', 'font-size', '64px')
-      .and('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '48px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', colorPrimary);
     cy.dataCy('countdown-hours')
       .should('be.visible')
-      .and('have.css', 'font-size', '64px')
-      .and('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '48px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', colorPrimary);
     cy.dataCy('countdown-minutes')
       .should('be.visible')
-      .and('have.css', 'font-size', '64px')
-      .and('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '48px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', colorPrimary);
     cy.dataCy('countdown-seconds')
       .should('be.visible')
-      .and('have.css', 'font-size', '64px')
-      .and('have.css', 'font-weight', '700');
+      .and('have.css', 'font-size', '48px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', colorPrimary);
   });
 
   it('renders the labels in correct format', () => {
     cy.dataCy('countdown-label-days')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400');
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey8);
     cy.dataCy('countdown-label-hours')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400');
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey8);
     cy.dataCy('countdown-label-minutes')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400');
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey8);
     cy.dataCy('countdown-label-seconds')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400');
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey8);
   });
 
   it('has gray background', () => {
