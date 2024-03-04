@@ -1,11 +1,16 @@
 import { colors } from 'quasar';
 import BannerImage from '../homepage/BannerImage.vue';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { bannerImage } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
+const white = getPaletteColor('white');
+const grey10 = getPaletteColor('grey-10');
+const grey8 = getPaletteColor('grey-8');
+const grey5 = getPaletteColor('grey-5');
 
-const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
+const { borderRadiusCard, colorGrayLight, maxWidthBanner } =
+  rideToWorkByBikeConfig;
 
 describe('<BannerImage>', () => {
   context('desktop', () => {
@@ -23,7 +28,10 @@ describe('<BannerImage>', () => {
         cy.dataCy('banner')
           .should('be.visible')
           .and('have.css', 'display', 'flex')
-          .and('have.css', 'flex-wrap', 'wrap');
+          .and('have.css', 'flex-wrap', 'wrap')
+          .and('have.css', 'border', `1px solid ${grey5}`)
+          .and('have.backgroundColor', white)
+          .and('have.css', 'max-width', maxWidthBanner);
         cy.dataCy('banner-half').should('have.length', 2).and('be.visible');
         cy.testElementPercentageWidth(cy.dataCy('banner-half'), 50);
       });
@@ -34,8 +42,8 @@ describe('<BannerImage>', () => {
         cy.dataCy('banner-title')
           .should('be.visible')
           .and('have.css', 'font-size', '16px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.color', black)
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', grey10)
           .and('contain.text', bannerImage.title)
           .then(($title) => {
             expect($title.text()).to.equal(bannerImage.title);
@@ -47,9 +55,9 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner-perex')
           .should('be.visible')
-          .and('have.css', 'font-size', '12px')
+          .and('have.css', 'font-size', '14px')
           .and('have.css', 'font-weight', '400')
-          .and('have.color', black)
+          .and('have.color', grey8)
           .and('contain.text', bannerImage.perex)
           .then(($perex) => {
             expect($perex.text()).to.equal(bannerImage.perex);
@@ -75,30 +83,19 @@ describe('<BannerImage>', () => {
 
     it('has correct background color', () => {
       cy.window().then(() => {
-        cy.dataCy('banner').should(
-          'have.backgroundColor',
-          config.colorGrayLight,
-        );
+        cy.dataCy('banner').should('have.backgroundColor', colorGrayLight);
       });
 
       it('has rounded corners', () => {
         cy.window().then(() => {
           cy.dataCy('banner')
             .should('be.visible')
-            .and('have.css', 'border-radius', config.borderRadiusCard)
+            .and('have.css', 'border-radius', borderRadiusCard)
             .and('have.css', 'overflow', 'hidden');
           cy.dataCy('banner-half')
             .first()
-            .should(
-              'have.css',
-              'border-top-left-radius',
-              config.borderRadiusCard,
-            )
-            .and(
-              'have.css',
-              'border-bottom-left-radius',
-              config.borderRadiusCard,
-            );
+            .should('have.css', 'border-top-left-radius', borderRadiusCard)
+            .and('have.css', 'border-bottom-left-radius', borderRadiusCard);
         });
       });
     });
@@ -171,10 +168,7 @@ describe('<BannerImage>', () => {
 
     it('has correct background color', () => {
       cy.window().then(() => {
-        cy.dataCy('banner').should(
-          'have.backgroundColor',
-          config.colorGrayLight,
-        );
+        cy.dataCy('banner').should('have.backgroundColor', colorGrayLight);
       });
     });
 
@@ -182,7 +176,7 @@ describe('<BannerImage>', () => {
       cy.window().then(() => {
         cy.dataCy('banner')
           .should('be.visible')
-          .and('have.css', 'border-radius', config.borderRadiusCard)
+          .and('have.css', 'border-radius', borderRadiusCard)
           .and('have.css', 'overflow', 'hidden');
       });
     });

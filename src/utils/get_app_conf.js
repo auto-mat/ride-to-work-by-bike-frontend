@@ -36,6 +36,8 @@ const getAppConfig = (process) => {
     config['borderRadiusCard'] = process.env.BORDER_RADIUS_CARD;
   } else if (process.env.BORDER_RADIUS_CARD_SMALL) {
     config['borderRadiusCardSmall'] = process.env.BORDER_RADIUS_CARD_SMALL;
+  } else if (process.env.MAX_WIDTH_BANNER) {
+    config['maxWidthBanner'] = process.env.MAX_WIDTH_BANNER;
   } else if (process.env.URL_FACEBOOK) {
     config['urlFacebook'] = process.env.URL_FACEBOOK;
   } else if (process.env.URL_INSTAGRAM) {

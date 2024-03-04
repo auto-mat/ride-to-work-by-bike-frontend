@@ -17,6 +17,7 @@ title = "Title"
 subtitle = "Subtitle"
 borderRadiusCard = "16px"
 borderRadiusCardSmall = "8px"
+maxWidthBanner = "876px"
 
 # Emails
 contactEmail = "kontakt@dopracenakole.cz"
