@@ -15,8 +15,7 @@ image = "image.png"
 width = "850px"
 title = "Title"
 subtitle = "Subtitle"
-borderRadiusCard = "20px"
-borderRadiusCardMedium = "16px"
+borderRadiusCard = "16px"
 borderRadiusCardSmall = "8px"
 
 # Emails

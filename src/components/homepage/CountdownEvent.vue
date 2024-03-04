@@ -44,8 +44,7 @@ export default defineComponent({
   setup(props) {
     const { countdown } = useCountdown(props.releaseDate);
 
-    const { borderRadiusCardMedium, colorSecondaryOpacity } =
-      rideToWorkByBikeConfig;
+    const { borderRadiusCard, colorSecondaryOpacity } = rideToWorkByBikeConfig;
 
     // currently not working see https://github.com/intlify/vue-i18n-next/issues/1193
     // const { locale } = useI18n({ useScope: 'global' })
@@ -56,7 +55,7 @@ export default defineComponent({
     const formattedDate = formatDate(new Date(props.releaseDate), formatString);
 
     return {
-      borderRadiusCardMedium,
+      borderRadiusCard,
       colorSecondaryOpacity,
       countdown,
       formattedDate,
@@ -69,7 +68,7 @@ export default defineComponent({
   <q-card
     flat
     class="row items-center justify-evenly q-py-xl"
-    :style="`border-radius: ${borderRadiusCardMedium}; background-color: ${colorSecondaryOpacity}`"
+    :style="`border-radius: ${borderRadiusCard}; background-color: ${colorSecondaryOpacity}`"
     data-cy="card"
   >
     <div class="text-center">

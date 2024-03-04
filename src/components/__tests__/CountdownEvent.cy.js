@@ -7,7 +7,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const grey8 = getPaletteColor('grey-8');
-const { colorPrimary, borderRadiusCardMedium, colorSecondaryOpacity } =
+const { colorPrimary, borderRadiusCard, colorSecondaryOpacity } =
   rideToWorkByBikeConfig;
 
 describe('<CountdownEvent>', () => {
@@ -130,7 +130,7 @@ describe('<CountdownEvent>', () => {
     cy.window().then(() => {
       cy.dataCy('card')
         .should('be.visible')
-        .and('have.css', 'border-radius', borderRadiusCardMedium)
+        .and('have.css', 'border-radius', borderRadiusCard)
         .and('have.backgroundColor', colorSecondaryOpacity);
     });
   });
