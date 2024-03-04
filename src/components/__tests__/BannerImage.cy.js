@@ -72,6 +72,18 @@ describe('<BannerImage>', () => {
       });
     });
 
+    it('renders button', () => {
+      cy.fixture('bannerImage').then((bannerImage) => {
+        cy.window().then(() => {
+          cy.dataCy('banner-button')
+            .first()
+            .should('be.visible')
+            .should('have.attr', 'href', bannerImage.buttons[0].url)
+            .should('contain', bannerImage.buttons[0].title);
+        });
+      });
+    });
+
     it('renders image', () => {
       cy.window().then(() => {
         cy.fixture('bannerImage').then((bannerImage) => {
