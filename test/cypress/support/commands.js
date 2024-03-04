@@ -118,3 +118,7 @@ Cypress.Commands.add(
     cy.dataCy(dataCySelector).invoke('attr', 'style', 'overflow: auto');
   },
 );
+
+Cypress.Commands.add('stripHtmlTags', (htmlString) => {
+  cy.wrap(htmlString.replace(/<\/?[^>]+(>|$)/g, ''));
+});

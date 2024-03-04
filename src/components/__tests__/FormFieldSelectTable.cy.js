@@ -94,13 +94,13 @@ describe('<FormFieldSelectTable>', () => {
         .and('have.css', 'font-weight', '400')
         .then(($el) => {
           const textContent = $el.text();
-          expect(textContent).to.contain(
-            textOnly(
-              i18n.global.t('form.company.textUserExperience', {
-                email: contactEmail,
-              }),
-            ),
-          );
+          cy.stripHtmlTags(
+            i18n.global.t('form.company.textUserExperience', {
+              email: contactEmail,
+            }),
+          ).then((text) => {
+            expect(textContent).to.contain(text);
+          });
         });
       // email contact to Auto*Mat in the note
       cy.dataCy('form-select-table-user-note')
@@ -302,8 +302,3 @@ describe('<FormFieldSelectTable>', () => {
     });
   });
 });
-
-function textOnly(htmlString) {
-  // Using a regular expression to remove HTML tags and bracketed content
-  return htmlString.replace(/<.*?>/g, '');
-}
