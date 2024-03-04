@@ -2,9 +2,10 @@ import { Image } from './Image';
 import { Link } from './Link';
 
 export interface BannerImage {
-  title: string;
-  perex: string;
+  buttons: Link[];
   image: Image;
+  perex: string;
+  title: string;
 }
 
 export interface BannerApp {
