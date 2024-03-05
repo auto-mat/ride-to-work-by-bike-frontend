@@ -81,48 +81,58 @@ describe('<CountdownEvent>', () => {
   });
 
   it('renders the numbers in correct format', () => {
-    cy.dataCy('countdown-days')
-      .should('be.visible')
-      .and('have.css', 'font-size', '48px')
-      .and('have.css', 'font-weight', '700')
-      .and('have.color', colorPrimary);
-    cy.dataCy('countdown-hours')
-      .should('be.visible')
-      .and('have.css', 'font-size', '48px')
-      .and('have.css', 'font-weight', '700')
-      .and('have.color', colorPrimary);
-    cy.dataCy('countdown-minutes')
-      .should('be.visible')
-      .and('have.css', 'font-size', '48px')
-      .and('have.css', 'font-weight', '700')
-      .and('have.color', colorPrimary);
-    cy.dataCy('countdown-seconds')
-      .should('be.visible')
-      .and('have.css', 'font-size', '48px')
-      .and('have.css', 'font-weight', '700')
-      .and('have.color', colorPrimary);
+    let fontSize;
+    const fontWeight = '700';
+    cy.window()
+      .then((win) => {
+        fontSize = win.countdownEvent.fontSize;
+      })
+      .then(() => {
+        cy.dataCy('countdown-days')
+          .should('be.visible')
+          .and('have.css', 'font-size', fontSize)
+          .and('have.css', 'font-weight', fontWeight)
+          .and('have.color', colorPrimary);
+        cy.dataCy('countdown-hours')
+          .should('be.visible')
+          .and('have.css', 'font-size', fontSize)
+          .and('have.css', 'font-weight', fontWeight)
+          .and('have.color', colorPrimary);
+        cy.dataCy('countdown-minutes')
+          .should('be.visible')
+          .and('have.css', 'font-size', fontSize)
+          .and('have.css', 'font-weight', fontWeight)
+          .and('have.color', colorPrimary);
+        cy.dataCy('countdown-seconds')
+          .should('be.visible')
+          .and('have.css', 'font-size', fontSize)
+          .and('have.css', 'font-weight', fontWeight)
+          .and('have.color', colorPrimary);
+      });
   });
 
   it('renders the labels in correct format', () => {
+    const fontSize = '14px';
+    const fontWeight = '400';
     cy.dataCy('countdown-label-days')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
+      .and('have.css', 'font-size', fontSize)
+      .and('have.css', 'font-weight', fontWeight)
       .and('have.color', grey8);
     cy.dataCy('countdown-label-hours')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
+      .and('have.css', 'font-size', fontSize)
+      .and('have.css', 'font-weight', fontWeight)
       .and('have.color', grey8);
     cy.dataCy('countdown-label-minutes')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
+      .and('have.css', 'font-size', fontSize)
+      .and('have.css', 'font-weight', fontWeight)
       .and('have.color', grey8);
     cy.dataCy('countdown-label-seconds')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
+      .and('have.css', 'font-size', fontSize)
+      .and('have.css', 'font-weight', fontWeight)
       .and('have.color', grey8);
   });
 

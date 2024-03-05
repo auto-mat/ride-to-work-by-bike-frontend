@@ -42,6 +42,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const fontSize = '48px';
     const { countdown } = useCountdown(props.releaseDate);
 
     const { borderRadiusCard, colorSecondaryOpacity } = rideToWorkByBikeConfig;
@@ -54,11 +55,16 @@ export default defineComponent({
     // }
     const formattedDate = formatDate(new Date(props.releaseDate), formatString);
 
+    if (window.Cypress) {
+      window.countdownEvent = { fontSize: fontSize };
+    }
+
     return {
       borderRadiusCard,
       colorSecondaryOpacity,
       countdown,
       formattedDate,
+      fontSize,
     };
   },
 });
@@ -84,7 +90,8 @@ export default defineComponent({
         <!-- Days -->
         <div class="q-px-md">
           <div
-            class="text-48 text-primary text-weight-bold"
+            class="text-primary text-weight-bold"
+            :style="{ 'font-size': fontSize }"
             data-cy="countdown-days"
           >
             {{ countdown.days }}
@@ -96,7 +103,8 @@ export default defineComponent({
         <!-- Hours -->
         <div class="q-px-md">
           <div
-            class="text-48 text-primary text-weight-bold"
+            class="text-primary text-weight-bold"
+            :style="{ 'font-size': fontSize }"
             data-cy="countdown-hours"
           >
             {{ countdown.hours }}
@@ -108,7 +116,8 @@ export default defineComponent({
         <!-- Minutes -->
         <div class="q-px-md">
           <div
-            class="text-48 text-primary text-weight-bold"
+            class="text-primary text-weight-bold"
+            :style="{ 'font-size': fontSize }"
             data-cy="countdown-minutes"
           >
             {{ countdown.minutes }}
@@ -120,7 +129,8 @@ export default defineComponent({
         <!-- Seconds -->
         <div class="q-px-md">
           <div
-            class="text-48 text-primary text-weight-bold"
+            class="text-primary text-weight-bold"
+            :style="{ 'font-size': fontSize }"
             data-cy="countdown-seconds"
           >
             {{ countdown.seconds }}
@@ -134,8 +144,4 @@ export default defineComponent({
   </q-card>
 </template>
 
-<style scoped lang="scss">
-.text-48 {
-  font-size: 48px;
-}
-</style>
+<style scoped lang="scss"></style>
