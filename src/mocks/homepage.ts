@@ -131,12 +131,11 @@ export const cardsPost: CardPost[] = [
 ];
 
 export const bannerImage: BannerImage = {
-  title: 'Vyplňte náš dotazník a vyhrajte jednu z našich skvělých cen!',
-  perex:
-    'Pomůžete nám rozhodnout, čemu příště věnovat více času a co by naopak mělo zůstat stejné.',
+  title: i18n.global.t('index.bannerImage.title'),
+  perex: i18n.global.t('index.bannerImage.perex'),
   buttons: [
     {
-      title: 'Vyplnit dotazník',
+      title: i18n.global.t('index.bannerImage.buttonQuestionnaire'),
       url: '#',
     },
   ],
