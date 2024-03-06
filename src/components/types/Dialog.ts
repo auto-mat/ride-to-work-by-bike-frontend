@@ -11,3 +11,5 @@ export interface DialogCard {
     link: Link;
   };
 }
+
+export type DialogStates = 'default' | 'form' | 'sent';

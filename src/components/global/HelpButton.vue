@@ -31,6 +31,7 @@ import { defineComponent, ref } from 'vue';
 
 // types
 import type { Ref } from 'vue';
+import type { DialogStates } from 'components/types';
 
 // components
 import ContactForm from './ContactForm.vue';
@@ -58,9 +59,10 @@ export default defineComponent({
   },
   setup() {
     const isDialogOpen = ref(false);
-    const activeState: Ref<'default' | 'form'> = ref('default');
+    const userEmail = ref('');
+    const activeState: Ref<DialogStates> = ref('default');
 
-    const setState = (value: 'form' | 'default'): void => {
+    const setState = (value: DialogStates): void => {
       activeState.value = value;
     };
 
@@ -69,11 +71,18 @@ export default defineComponent({
       isDialogOpen.value = false;
     };
 
+    const onFormSubmit = (email: string) => {
+      activeState.value = 'sent';
+      userEmail.value = email;
+    };
+
     return {
       activeState,
       isDialogOpen,
       reset,
       setState,
+      userEmail,
+      onFormSubmit,
     };
   },
 });
@@ -114,7 +123,7 @@ export default defineComponent({
         <span v-if="activeState === 'default'">
           {{ $t('index.help.titleStateDefault') }}
         </span>
-        <span v-else-if="activeState === 'form'">
+        <span v-else-if="activeState === 'form' || activeState === 'sent'">
           {{ $t('index.help.titleStateContact') }}
         </span>
       </template>
@@ -175,7 +184,34 @@ export default defineComponent({
           <menu-links :title="$t('index.help.titleSocials')" variant="social" />
         </div>
         <div v-else-if="activeState === 'form'">
-          <contact-form @formSubmit="reset" class="q-px-md"></contact-form>
+          <contact-form
+            class="q-px-md"
+            @form-submit="onFormSubmit"
+          ></contact-form>
+        </div>
+        <div v-else-if="activeState === 'sent'">
+          <div class="q-pa-lg text-center">
+            <div
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="title-sent"
+            >
+              {{ $t('index.help.titleSent') }}
+            </div>
+            <p
+              class="q-mt-lg"
+              v-html="$t('index.help.textSent', { email: userEmail })"
+              data-cy="text-sent"
+            />
+            <q-btn
+              rounded
+              color="primary"
+              unelevated
+              class="q-mt-lg"
+              :label="$t('index.help.buttonBackToHelp')"
+              @click.prevent="setState('default')"
+              data-cy="button-back-to-help"
+            />
+          </div>
         </div>
       </template>
     </dialog-default>

@@ -48,7 +48,7 @@ export default defineComponent({
     const { isEmail, isFilled } = useValidation();
 
     const onSubmit = () => {
-      emit('formSubmit');
+      emit('formSubmit', contactForm.email);
 
       // TODO: add api call
     };

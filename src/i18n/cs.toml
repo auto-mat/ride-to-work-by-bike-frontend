@@ -140,16 +140,19 @@ title = "Domov"
 logoAltText = "Logo Do práce na kole"
 
 [index.help]
-titleStateDefault = "Nápověda"
-titleStateContact = "Kontaktujte nás"
-titleParticipants = "Účastníci"
+buttonBackToHelp = "Zpět do nápovědy"
+buttonContact = "Kontaktovat automat"
+buttonGuide = "Zhlédnout znovu"
+textSent = "Budeme se snažit vám odepsat zpět na e-mail <b>{email}</b> co nejdříve."
+titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
 titleCoordinators = "Firemní koordinátoři"
 titleGuide = "Průvodce aplikací"
-buttonGuide = "Shlédnout znovu"
-titleContact = "Nenašli jste svůj dotaz? Kontaktujte nás!"
-buttonContact = "Kontaktovat automat"
 titleLinks = "Užitečné odkazy"
+titleParticipants = "Účastníci"
+titleSent = "Zpráva odeslána"
 titleSocials = "Sledujte nás na sociálních sítích"
+titleStateContact = "Kontaktujte nás"
+titleStateDefault = "Nápověda"
 
 # REMEMBER when testing these string: They are the same in all languages
 [index.menuLinks]

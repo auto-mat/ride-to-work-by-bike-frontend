@@ -13,6 +13,7 @@ const rideToWorkByBikeConfig = JSON.parse(
 const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
 
 const modalDialogWidth = 560;
+const userEmail = 'test.user@example.com';
 
 describe('<HelpButton>', () => {
   it('has translation for all strings', () => {
@@ -262,9 +263,32 @@ describe('<HelpButton>', () => {
       cy.dataCy('contact-form-email')
         .find('input')
         .should('be.visible')
-        .type('P7LlQ@example.com');
+        .type(userEmail);
+      cy.dataCy('contact-form-email').find('input').blur();
       cy.dataCy('contact-form-submit').should('be.visible').click();
-      // TODO: test successful submission
+      // should show success screen
+      cy.dataCy('title-sent')
+        .should('be.visible')
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('contain', i18n.global.t('index.help.titleSent'));
+      cy.dataCy('text-sent')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(
+            i18n.global.t('index.help.textSent', {
+              email: userEmail,
+            }),
+          ).then((text) => {
+            expect(textContent).to.contain(text);
+          });
+        });
+      cy.dataCy('button-back-to-help')
+        .should('be.visible')
+        .and('contain', i18n.global.t('index.help.buttonBackToHelp'));
     });
 
     it('validates contact form if there are errors', () => {
