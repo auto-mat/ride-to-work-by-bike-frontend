@@ -16,3 +16,10 @@ export interface ItemBadge {
   description: string;
   variant: 'dark' | 'light';
 }
+
+export interface ItemCalendarType {
+  id: string;
+  icon: string;
+  url: string;
+  label: string;
+}

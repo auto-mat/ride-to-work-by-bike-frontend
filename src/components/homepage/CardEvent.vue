@@ -17,6 +17,7 @@
  *   type `CardEventType`.
  *
  * @components
+ * - `ButtonAddToCalendar`: Used to render an add to calendar button.
  * - `DialogDefault`: Used to display detailed information about the offer in a
  *   modal dialog.
  *
@@ -33,6 +34,7 @@ import { defineComponent, ref } from 'vue';
 import { date, Screen } from 'quasar';
 
 // components
+import ButtonAddToCalendar from '../global/ButtonAddToCalendar.vue';
 import DialogDefault from '../global/DialogDefault.vue';
 
 // types
@@ -48,6 +50,7 @@ const { formatDate } = date;
 export default defineComponent({
   name: 'CardEvent',
   components: {
+    ButtonAddToCalendar,
     DialogDefault,
   },
   props: {
@@ -219,20 +222,7 @@ export default defineComponent({
                 data-cy="dialog-content"
               />
               <!-- Buttons -->
-              <q-btn
-                color="black"
-                unelevated
-                rounded
-                class="q-mt-md"
-                data-cy="dialog-button"
-              >
-                <div class="flex items-center no-wrap">
-                  <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
-                  <div class="text-center">
-                    {{ $t('index.cardEvent.addToCalendar') }}
-                  </div>
-                </div>
-              </q-btn>
+              <button-add-to-calendar class="q-mt-md" />
             </div>
             <!-- Right column: Image -->
             <div

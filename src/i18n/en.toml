@@ -22,6 +22,14 @@ man = "Man"
 male = "Male"
 woman = "Woman"
 
+[calendar]
+calendarApple = "Apple"
+calendarGoogle = "Google"
+calendarMicrosoft = "Microsoft 365"
+calendarOutlook = "Outlook.com"
+calendarYahoo = "Yahoo"
+calendarOther = "Other applications (iCal file)"
+
 [time]
 day = "day | days"
 hour = "hour | hours"

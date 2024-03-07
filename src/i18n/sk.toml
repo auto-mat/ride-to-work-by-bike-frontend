@@ -22,6 +22,14 @@ man = "Muž"
 male = "Pánske"
 woman = "Žena"
 
+[calendar]
+calendarApple = "Apple"
+calendarGoogle = "Google"
+calendarMicrosoft = "Microsoft 365"
+calendarOutlook = "Outlook.com"
+calendarYahoo = "Yahoo"
+calendarOther = "Iné aplikácie (súbor iCal)"
+
 [time]
 day = "deň | dni"
 hour = "hodina | hodín"

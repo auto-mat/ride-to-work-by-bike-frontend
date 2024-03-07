@@ -247,6 +247,9 @@ describe('<CardEvent>', () => {
 
     it('shows modal with one column', () => {
       cy.dataCy('card-link').click();
+      cy.dataCy('dialog-body')
+        .should('be.visible')
+        .invoke('css', 'overflow', 'hidden');
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 100);
       cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 100);
     });
