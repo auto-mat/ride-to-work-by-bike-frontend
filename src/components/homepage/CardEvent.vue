@@ -62,7 +62,7 @@ export default defineComponent({
   setup(props) {
     const modalOpened = ref(false);
     const eventDateTime = formatDate(
-      props?.card?.dates,
+      new Date(props?.card?.dates),
       'ddd D. MMM. YYYY, HH:mm',
     );
     const setHorizontalPosition = (): boolean => (Screen.xs ? false : true);
@@ -222,7 +222,7 @@ export default defineComponent({
                 data-cy="dialog-content"
               />
               <!-- Buttons -->
-              <button-add-to-calendar class="q-mt-md" />
+              <button-add-to-calendar class="q-mt-md" data-cy="button-add-to-calendar" />
             </div>
             <!-- Right column: Image -->
             <div

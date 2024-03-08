@@ -14,7 +14,7 @@ export interface CardEvent {
   title: string;
   thumbnail: Image;
   image: Image;
-  dates: Date;
+  dates: string;
   location: string;
   content: string;
   links: string[];
