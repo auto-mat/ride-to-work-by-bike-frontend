@@ -37,6 +37,7 @@ export default defineComponent({
     ref="stepper"
     color="primary"
     header-class="hidden"
+    :style="{ 'max-width': '560px' }"
     data-cy="onboarding-stepper"
   >
     <!-- Step: Video -->
@@ -45,7 +46,6 @@ export default defineComponent({
       title="Select campaign settings"
       icon="settings"
       :done="step > 1"
-      :style="{ 'max-width': '560px' }"
     >
       <div>
         <h2
@@ -87,21 +87,48 @@ export default defineComponent({
 
     <template v-slot:navigation>
       <q-stepper-navigation>
-        <template v-if="step === 1"> </template>
-        <template v-if="step === 2"> </template>
-        <q-btn
-          @click="$refs.stepper.next()"
-          color="primary"
-          :label="step === 4 ? 'Finish' : 'Continue'"
-        />
-        <q-btn
-          v-if="step > 1"
-          flat
-          color="primary"
-          @click="$refs.stepper.previous()"
-          label="Back"
-          class="q-ml-sm"
-        />
+        <template v-if="step === 1">
+          <div class="full-width flex items-center justify-between">
+            <q-btn
+              outline
+              unelevated
+              rounded
+              color="primary"
+              :label="$t('navigation.skip')"
+            />
+            <q-btn
+              outline
+              unelevated
+              rounded
+              color="primary"
+              :label="$t('navigation.continue')"
+              @click="$refs.stepper.next()"
+            >
+              <q-icon name="arrow_forward" size="18px" class="q-ml-sm" />
+            </q-btn>
+          </div>
+        </template>
+        <template v-if="step === 2">
+          <div class="full-width flex items-center justify-between">
+            <q-btn
+              outline
+              unelevated
+              rounded
+              color="primary"
+              @click="$refs.stepper.previous()"
+            >
+              <q-icon name="arrow_back" size="18px" class="q-mr-sm" />
+              {{ $t('navigation.back') }}
+            </q-btn>
+            <q-btn
+              unelevated
+              rounded
+              color="primary"
+              :label="$t('navigation.continue')"
+            >
+            </q-btn>
+          </div>
+        </template>
       </q-stepper-navigation>
     </template>
   </q-stepper>
