@@ -15,15 +15,18 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105047&mode=dev)
  */
 
+import { QStepper } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'OnboardingStepper',
   setup() {
     const step = ref<number>(1);
+    const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 
     return {
       step,
+      stepper,
     };
   },
 });
@@ -102,7 +105,7 @@ export default defineComponent({
               rounded
               color="primary"
               :label="$t('navigation.continue')"
-              @click="$refs.stepper.next()"
+              @click="stepper?.next()"
             >
               <q-icon name="arrow_forward" size="18px" class="q-ml-sm" />
             </q-btn>
@@ -115,7 +118,7 @@ export default defineComponent({
               unelevated
               rounded
               color="primary"
-              @click="$refs.stepper.previous()"
+              @click="stepper?.previous()"
             >
               <q-icon name="arrow_back" size="18px" class="q-mr-sm" />
               {{ $t('navigation.back') }}
