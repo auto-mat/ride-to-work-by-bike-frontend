@@ -440,9 +440,9 @@
     xml2js "^0.6.2"
 
 "@quasar/app-vite@^1.0.0":
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@quasar/app-vite/-/app-vite-1.7.4.tgz#924b4414499ad043479836a43b20850f92513f83"
-  integrity sha512-nsiA3PDWcEffvRe3fLDH+e9yHMNloIe5kBukx1q48ktRwtRt2Yfi00zKrT26eVq8rDLhj5reOlR3XBSdDOcIDQ==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@quasar/app-vite/-/app-vite-1.8.0.tgz#4218e96b6e3dfdc2c5fa63fb8d48af995037f834"
+  integrity sha512-/2HzIYqjm8AayyEeQq7zJnTiZZUQzHFCwEdIms8l+Po7Lhx4a7MXT7VCfR1M1KHGO0Z/EXItpjYwGryo/XNFoA==
   dependencies:
     "@quasar/render-ssr-error" "^1.0.3"
     "@quasar/vite-plugin" "^1.3.3"
