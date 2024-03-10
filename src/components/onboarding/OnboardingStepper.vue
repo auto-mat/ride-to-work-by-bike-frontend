@@ -55,10 +55,10 @@ export default defineComponent({
           class="text-h5 text-weight-bold text-black q-my-none"
           data-cy="step1-title"
         >
-          {{ $t('onboarding.step1.title') }}
+          {{ $t('onboarding.titleStep1') }}
         </h2>
         <p
-          v-html="$t('onboarding.step1.description')"
+          v-html="$t('onboarding.descriptionStep1')"
           class="text-subtitle2 q-mt-lg"
           data-cy="step1-description"
         />
@@ -83,7 +83,7 @@ export default defineComponent({
           class="text-h5 text-weight-bold text-black q-my-none"
           data-cy="step1-title"
         >
-          {{ $t('onboarding.step2.title') }}
+          {{ $t('onboarding.titleStep2') }}
         </h2>
       </div>
     </q-step>

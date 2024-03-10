@@ -47,6 +47,7 @@ discard = "Vyhodiť"
 moreInfo = "Viac informácií"
 select = "Vybrať"
 selected = "Vybrané"
+skip = "Preskočiť"
 
 [form]
 buttonCompleteRegistration = "Dokončenie registrácie"
@@ -290,6 +291,12 @@ buttonFacebook = "Prihlásenie cez Facebook"
 [login.bannerAppButtons]
 title = "Nahrávajte svoje jazdy z mobilného telefónu!"
 description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
+
+[onboarding]
+descriptionStep1 = "Pomôžete svojmu zdraviu a duševnej pohode, čistejšiemu ovzdušiu, čistejšej planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
+descriptionStep2 = "Napíšte svojim kolegom, spolupracovníkom, priateľom alebo blízkym, aby sa k vám pridali!"
+titleStep1 = "Sme radi, že ste prijali túto výzvu spolu s nami!"
+titleStep2 = "Pozvite na výzvu svojich blízkych"
 
 [register.form]
 titleRegister = "Registrácia"

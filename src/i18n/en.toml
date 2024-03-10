@@ -47,6 +47,7 @@ discard = "Discard"
 moreInfo = "More info"
 select = "Select"
 selected = "Selected"
+skip = "Skip"
 
 [form]
 buttonCompleteRegistration = "Complete registration"
@@ -290,6 +291,12 @@ buttonFacebook = "Login via Facebook"
 [login.bannerAppButtons]
 title = "Log your rides from your mobile phone!"
 description = "Download the app and log rides from anywhere."
+
+[onboarding]
+descriptionStep1 = "You will contribute to your health and mental well-being, cleaner air, a cleaner planet, healthier and safer cities. How does it work? Watch the video below:"
+descriptionStep2 = "Message your colleagues, coworkers, friends, or loved ones to join you in the challenge!"
+titleStep1 = "We're glad you're taking the challenge with us!"
+titleStep2 = "Invite your loved ones to the challenge"
 
 [register.form]
 titleRegister = "Registration"
