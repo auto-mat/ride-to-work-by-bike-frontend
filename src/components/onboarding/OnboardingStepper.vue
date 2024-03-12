@@ -88,12 +88,12 @@ export default defineComponent({
     >
       <div data-cy="onboading-step2">
         <h2
-          class="text-h5 text-weight-bold text-black q-mt-none q-mb-lg"
+          class="text-h5 text-weight-bold text-black q-my-none"
           data-cy="step2-title"
         >
           {{ $t('onboarding.titleStep2') }}
         </h2>
-        <form-invite-friends data-cy="form-invite-friends" />
+        <form-invite-friends class="q-mt-lg" data-cy="form-invite-friends" />
       </div>
     </q-step>
 

@@ -37,6 +37,7 @@ describe('<OnboardingStepper>', () => {
     });
 
     it('renders component', () => {
+      // Step 1
       cy.dataCy('onboarding-stepper').should('be.visible');
       // title
       cy.dataCy('step1-title')
@@ -66,6 +67,26 @@ describe('<OnboardingStepper>', () => {
       cy.dataCy('button-continue')
         .should('be.visible')
         .and('contain', i18n.global.t('navigation.continue'));
+      cy.dataCy('button-continue').click();
+      // Step 2
+      cy.dataCy('onboading-step2').should('be.visible');
+      // title
+      cy.dataCy('step2-title')
+        .should('be.visible')
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('have.css', 'margin-top', '0px')
+        .and('have.css', 'margin-bottom', '0px')
+        .and('have.color', black)
+        .and('contain', i18n.global.t('onboarding.titleStep2'));
+      cy.dataCy('form-invite-friends').should('be.visible');
+      // navigation
+      cy.dataCy('button-back')
+        .should('be.visible')
+        .and('contain', i18n.global.t('navigation.back'));
+      cy.dataCy('button-done')
+        .should('be.visible')
+        .and('contain', i18n.global.t('navigation.done'));
     });
   });
 
