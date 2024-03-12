@@ -5,7 +5,18 @@ describe('<OnboardingStepper>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['skip'], 'navigation', i18n);
     cy.testLanguageStringsInContext(
-      ['descriptionStep1', 'descriptionStep2', 'titleStep1', 'titleStep2'],
+      [
+        'buttonInviteFriends',
+        'descriptionStep1',
+        'descriptionStep2',
+        'labelInviteEmailAddresses',
+        'labelLanguage',
+        'messageRequiredAddresses',
+        'textMessage',
+        'titleMessage',
+        'titleStep1',
+        'titleStep2',
+      ],
       'onboarding',
       i18n,
     );

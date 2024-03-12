@@ -293,8 +293,14 @@ title = "Nahrávajte svoje jazdy z mobilného telefónu!"
 description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
 
 [onboarding]
+buttonInviteFriends = "Pozvať priateľov"
 descriptionStep1 = "Pomôžete svojmu zdraviu a duševnej pohode, čistejšiemu ovzdušiu, čistejšej planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
 descriptionStep2 = "Napíšte svojim kolegom, spolupracovníkom, priateľom alebo blízkym, aby sa k vám pridali!"
+labelInviteEmailAddresses = "E-mailové adresy oddelené čiarkou (nepovinné)"
+labelLanguage = "Jazyk správy"
+messageRequiredAddresses = "Musí byť vyplnená aspoň jedna adresa."
+textMessage = "Hezký deň,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
+titleMessage = "Pozvánka k Do práce na bicykli od {name}"
 titleStep1 = "Sme radi, že ste prijali túto výzvu spolu s nami!"
 titleStep2 = "Pozvite na výzvu svojich blízkych"
 

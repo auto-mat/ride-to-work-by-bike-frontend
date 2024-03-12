@@ -8,6 +8,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @components
+ * - `FormInviteFriends`: Component to render form for inviting friends.
  *
  * @example
  * <onboarding-stepper />
@@ -15,11 +16,18 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105047&mode=dev)
  */
 
+// libraries
 import { QStepper } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
+// components
+import FormInviteFriends from 'components/form/FormInviteFriends.vue';
+
 export default defineComponent({
   name: 'OnboardingStepper',
+  components: {
+    FormInviteFriends,
+  },
   setup() {
     const step = ref<number>(1);
     const stepper = ref<InstanceType<typeof QStepper> | null>(null);
@@ -40,7 +48,7 @@ export default defineComponent({
     ref="stepper"
     color="primary"
     header-class="hidden"
-    :style="{ 'max-width': '560px' }"
+    :style="{ 'max-width': '800px' }"
     data-cy="onboarding-stepper"
   >
     <!-- Step: Video -->
@@ -65,7 +73,7 @@ export default defineComponent({
         <div class="q-mt-lg">
           <q-video
             :ratio="16 / 9"
-            src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+            src="https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
           />
         </div>
       </div>
@@ -80,11 +88,12 @@ export default defineComponent({
     >
       <div>
         <h2
-          class="text-h5 text-weight-bold text-black q-my-none"
+          class="text-h5 text-weight-bold text-black q-mt-none q-mb-lg"
           data-cy="step1-title"
         >
           {{ $t('onboarding.titleStep2') }}
         </h2>
+        <form-invite-friends data-cy="form-invite-friends" />
       </div>
     </q-step>
 

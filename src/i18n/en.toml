@@ -293,8 +293,14 @@ title = "Log your rides from your mobile phone!"
 description = "Download the app and log rides from anywhere."
 
 [onboarding]
+buttonInviteFriends = "Invite friends"
 descriptionStep1 = "You will contribute to your health and mental well-being, cleaner air, a cleaner planet, healthier and safer cities. How does it work? Watch the video below:"
 descriptionStep2 = "Message your colleagues, coworkers, friends, or loved ones to join you in the challenge!"
+labelInviteEmailAddresses = "Email addresses, comma separated (optional)"
+labelLanguage = "Message language"
+messageRequiredAddresses = "Please, fill in at least one address."
+textMessage = "Hello,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
+titleMessage = "Invitation to join Ride to Work by Bike from {name}"
 titleStep1 = "We're glad you're taking the challenge with us!"
 titleStep2 = "Invite your loved ones to the challenge"
 

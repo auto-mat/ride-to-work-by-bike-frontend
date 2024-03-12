@@ -294,8 +294,14 @@ title = "Zaznamenávejte si jízdy z mobilu!"
 description = "Stáhněte si appku a zapisujte jízdy odkudkoliv."
 
 [onboarding]
+buttonInviteFriends = "Přizvat přátele"
 descriptionStep1 = "Pomůžete tak svému zdraví a psychické pohodě, čistějšímu ovzduší, planetě, zdravějším a bezpečnějším městům. Jak to funguje? Shlédněte video níže:"
 descriptionStep2 = "Napište kolegyním, kolegům, kamarádkám, kamarádům nebo blízkým, ať se s vámi přidají do výzvy!"
+labelInviteEmailAddresses = "Emailové adresy, oddělené čárkou (nepovinné)"
+labelLanguage = "Jazyk zprávy"
+messageRequiredAddresses = "Alespoň jedna adresa musí být vyplněna."
+textMessage = "Hezký den,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
+titleMessage = "Pozvánka na Do Práce na Kole od {name}"
 titleStep1 = "Jsme rádi, že s námi jdete do výzvy!"
 titleStep2 = "Přizvěte své blízké do výzvy"
 
