@@ -151,7 +151,7 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-// hide vertical line between steps
+// remove shadow from steps
 .q-stepper {
   box-shadow: none;
 }
