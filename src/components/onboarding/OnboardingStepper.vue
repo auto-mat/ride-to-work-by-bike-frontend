@@ -58,7 +58,7 @@ export default defineComponent({
       icon="settings"
       :done="step > 1"
     >
-      <div>
+      <div data-cy="onboading-step1">
         <h2
           class="text-h5 text-weight-bold text-black q-my-none"
           data-cy="step1-title"
@@ -70,7 +70,7 @@ export default defineComponent({
           class="text-subtitle2 q-mt-lg"
           data-cy="step1-description"
         />
-        <div class="q-mt-lg">
+        <div class="q-mt-lg" data-cy="step1-video">
           <q-video
             :ratio="16 / 9"
             src="https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
@@ -86,10 +86,10 @@ export default defineComponent({
       icon="create_new_folder"
       :done="step > 2"
     >
-      <div>
+      <div data-cy="onboading-step2">
         <h2
           class="text-h5 text-weight-bold text-black q-mt-none q-mb-lg"
-          data-cy="step1-title"
+          data-cy="step2-title"
         >
           {{ $t('onboarding.titleStep2') }}
         </h2>
@@ -107,6 +107,7 @@ export default defineComponent({
               rounded
               color="primary"
               :label="$t('navigation.skip')"
+              data-cy="onboarding-skip"
             />
             <q-btn
               outline
@@ -115,6 +116,7 @@ export default defineComponent({
               color="primary"
               :label="$t('navigation.continue')"
               @click="stepper?.next()"
+              data-cy="onboarding-continue"
             >
               <q-icon name="arrow_forward" size="18px" class="q-ml-sm" />
             </q-btn>
@@ -128,6 +130,7 @@ export default defineComponent({
               rounded
               color="primary"
               @click="stepper?.previous()"
+              data-cy="onboarding-back"
             >
               <q-icon name="arrow_back" size="18px" class="q-mr-sm" />
               {{ $t('navigation.back') }}
