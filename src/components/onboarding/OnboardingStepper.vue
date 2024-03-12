@@ -136,7 +136,8 @@ export default defineComponent({
               unelevated
               rounded
               color="primary"
-              :label="$t('navigation.continue')"
+              :label="$t('navigation.done')"
+              data-cy="onboarding-done"
             >
             </q-btn>
           </div>
