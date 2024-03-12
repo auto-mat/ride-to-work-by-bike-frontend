@@ -67,7 +67,7 @@ export default defineComponent({
         </h2>
         <p
           v-html="$t('onboarding.descriptionStep1')"
-          class="text-subtitle2 q-mt-lg"
+          class="text-subtitle2 text-grey-10 q-mt-lg"
           data-cy="step1-description"
         />
         <div class="q-mt-lg" data-cy="step1-video">
@@ -107,7 +107,7 @@ export default defineComponent({
               rounded
               color="primary"
               :label="$t('navigation.skip')"
-              data-cy="onboarding-skip"
+              data-cy="button-skip"
             />
             <q-btn
               outline
@@ -116,7 +116,7 @@ export default defineComponent({
               color="primary"
               :label="$t('navigation.continue')"
               @click="stepper?.next()"
-              data-cy="onboarding-continue"
+              data-cy="button-continue"
             >
               <q-icon name="arrow_forward" size="18px" class="q-ml-sm" />
             </q-btn>
@@ -130,7 +130,7 @@ export default defineComponent({
               rounded
               color="primary"
               @click="stepper?.previous()"
-              data-cy="onboarding-back"
+              data-cy="button-back"
             >
               <q-icon name="arrow_back" size="18px" class="q-mr-sm" />
               {{ $t('navigation.back') }}
@@ -140,7 +140,7 @@ export default defineComponent({
               rounded
               color="primary"
               :label="$t('navigation.done')"
-              data-cy="onboarding-done"
+              data-cy="button-done"
             >
             </q-btn>
           </div>
