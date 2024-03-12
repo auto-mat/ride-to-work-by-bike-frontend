@@ -14,7 +14,7 @@ describe('<OnboardingStepper>', () => {
       [
         'buttonInviteFriends',
         'descriptionStep1',
-        'descriptionStep2',
+        'descriptionInvite',
         'labelInviteEmailAddresses',
         'labelLanguage',
         'messageRequiredAddresses',

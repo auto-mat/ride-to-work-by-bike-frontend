@@ -296,7 +296,7 @@ description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
 [onboarding]
 buttonInviteFriends = "Pozvať priateľov"
 descriptionStep1 = "Pomôžete svojmu zdraviu a duševnej pohode, čistejšiemu ovzdušiu, čistejšej planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
-descriptionStep2 = "Napíšte svojim kolegom, spolupracovníkom, priateľom alebo blízkym, aby sa k vám pridali!"
+descriptionInvite = "Napíšte svojim kolegom, spolupracovníkom, priateľom alebo blízkym, aby sa k vám pridali!"
 labelInviteEmailAddresses = "E-mailové adresy oddelené čiarkou (nepovinné)"
 labelLanguage = "Jazyk správy"
 messageRequiredAddresses = "Musí byť vyplnená aspoň jedna adresa."

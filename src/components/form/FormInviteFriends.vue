@@ -85,18 +85,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="row q-col-gutter-md">
+  <div class="row q-col-gutter-md" data-cy="form-invite-friends">
     <!-- Description text -->
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-6" data-cy="column-1">
       <div
-        v-html="$t('onboarding.descriptionStep2')"
+        v-html="$t('onboarding.descriptionInvite')"
         class="text-grey-10 q-mb-lg"
+        data-cy="invite-description"
       />
       <!-- Message input widget -->
-      <div data-cy="invite-email-addresses">
+      <div class="q-my-md" data-cy="invite-email-addresses">
         <label
           for="invite-email-addresses"
-          class="text-caption text-bold text-gray-10"
+          class="text-caption text-bold text-grey-10"
         >
           {{ $t('onboarding.labelInviteEmailAddresses') }}
         </label>
@@ -116,10 +117,10 @@ export default defineComponent({
           data-cy="invite-email-addresses-input"
         />
       </div>
-      <div class="q-my-md">
+      <div class="q-my-md" data-cy="invite-language">
         <label
           for="select-language"
-          class="text-caption text-bold text-gray-10"
+          class="text-caption text-bold text-grey-10"
           >{{ $t('onboarding.labelLanguage') }}</label
         >
         <q-select
@@ -147,9 +148,9 @@ export default defineComponent({
                 <q-icon :name="selectedLanguage.icon" size="18px" />
               </q-item-section>
               <q-item-section>
-                <q-item-label class="text-subtitle2 text-grey-10">{{
-                  selectedLanguage.label
-                }}</q-item-label>
+                <q-item-label class="text-subtitle2 text-grey-10">
+                  {{ selectedLanguage.label }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </template>
@@ -179,7 +180,7 @@ export default defineComponent({
         />
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-6" data-cy="column-2">
       <div class="bg-grey-1 q-pa-md">
         <h3 class="text-subtitle2 text-weight-bold q-my-none">
           {{ $t('onboarding.titleMessage') }}
