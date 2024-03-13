@@ -376,3 +376,10 @@ messagePasswordConfirmNotMatch = "Hesla se neshodují"
 messageResponsibilityRequired = "Musíte souhlasit se zajištěním startovného."
 messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
+
+[routes]
+actionInputDistance = "Zadat vzdálenost"
+labelDistance = "Trasa"
+labelDirectionHome = "Z práce"
+labelDirectionWork = "Do práce"
+labelTransportType = "Typ dopravy"

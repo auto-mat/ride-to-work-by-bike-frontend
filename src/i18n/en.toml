@@ -375,3 +375,10 @@ messagePasswordConfirmNotMatch = "Passwords don't match"
 messageResponsibilityRequired = "You must agree to provide an entry fee."
 messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
+
+[routes]
+actionInputDistance = "Input distance"
+labelDistance = "Route"
+labelDirectionHome = "From work"
+labelDirectionWork = "To work"
+labelTransportType = "Transport type"
