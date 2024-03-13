@@ -25,7 +25,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // types
@@ -50,10 +50,53 @@ export default defineComponent({
 
     const distance = ref<number>(0);
 
+    const transport = ref<string>('bike');
+    const optionsTransport: FormOption[] = [
+      {
+        label: '',
+        description: i18n.global.t('routes.transportByBike'),
+        value: 'bike',
+        icon: 'pedal_bike',
+      },
+      {
+        label: '',
+        description: i18n.global.t('routes.transportOnFoot'),
+        value: 'walk',
+        icon: 'directions_walk',
+      },
+      {
+        label: '',
+        description: i18n.global.t('routes.transportPublicTransport'),
+        value: 'bus',
+        icon: 'directions_bus',
+      },
+      {
+        label: '',
+        description: i18n.global.t('routes.transportByCar'),
+        value: 'car',
+        icon: 'directions_car',
+      },
+      {
+        label: '',
+        description: i18n.global.t('routes.transportNone'),
+        value: 'none',
+        icon: 'block',
+      },
+    ];
+    const transportDescription = computed(() => {
+      const option = optionsTransport.find((option) => {
+        return option.value === transport.value;
+      });
+      return option?.description;
+    });
+
     return {
       action,
       distance,
       optionsAction,
+      optionsTransport,
+      transport,
+      transportDescription,
     };
   },
 });
@@ -98,7 +141,27 @@ export default defineComponent({
           >
             {{ $t('routes.labelTransportType') }}
           </div>
-          <div data-cy="select-transport">TODO: add component</div>
+          <div class="q-mt-sm" data-cy="select-transport">
+            <!-- Toggle Buttons -->
+            <q-btn-toggle
+              v-model="transport"
+              no-caps
+              rounded
+              unelevated
+              toggle-color="primary"
+              color="white"
+              text-color="primary"
+              :options="optionsTransport"
+              data-cy="button-toggle-transport"
+            />
+            <!-- Description -->
+            <div
+              class="text-caption text-black q-mt-sm"
+              data-cy="description-transport"
+            >
+              {{ transportDescription }}
+            </div>
+          </div>
         </div>
         <!-- Column: Distance -->
         <div class="col-12 col-sm-8" data-cy="column-distance">
@@ -109,33 +172,36 @@ export default defineComponent({
           >
             {{ $t('routes.labelDistance') }}
           </div>
-          <div class="row q-col-gutter-sm">
-            <div class="col-12 col-sm-4">
-              <!-- Select: Action -->
-              <q-select
-                dense
-                outlined
-                emit-value
-                map-options
-                v-model="action"
-                :id="`route-item-action-${route.id}`"
-                :options="optionsAction"
-                class="q-mt-sm"
-                data-cy="select-action"
-              ></q-select>
-            </div>
-            <div class="col-12 col-sm-4">
-              <!-- Input -->
-              <q-input
-                dense
-                outlined
-                type="number"
-                v-model="distance"
-                class="q-mt-sm"
-                :id="`route-item-distance-${route.id}`"
-                :name="`route-item-distance-${route.id}`"
-                data-cy="input-distance"
-              />
+          <div class="q-mt-sm">
+            <div class="row q-col-gutter-sm">
+              <div class="col-12 col-sm-4">
+                <!-- Select: Action -->
+                <q-select
+                  dense
+                  outlined
+                  emit-value
+                  map-options
+                  v-model="action"
+                  :id="`route-item-action-${route.id}`"
+                  :options="optionsAction"
+                  data-cy="select-action"
+                ></q-select>
+              </div>
+              <div class="col-12 col-sm-4">
+                <div class="flex items-center gap-8">
+                  <!-- Input -->
+                  <q-input
+                    dense
+                    outlined
+                    type="number"
+                    v-model="distance"
+                    :id="`route-item-distance-${route.id}`"
+                    :name="`route-item-distance-${route.id}`"
+                    data-cy="input-distance"
+                  />
+                  <span data-cy="units-distance">{{ $t('global.km') }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
