@@ -4,6 +4,7 @@ import FormInviteFriends from 'components/form/FormInviteFriends.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
+const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
 
 describe('<FormInviteFriends>', () => {
@@ -58,6 +59,32 @@ describe('<FormInviteFriends>', () => {
         .and('have.css', 'font-size', '12px')
         .and('have.css', 'font-weight', '700')
         .and('have.color', grey10);
+      cy.dataCy('title-message')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '700')
+        .and('have.color', black)
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('text-message')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', black)
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.textMessage')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
     });
 
     it('renders columns side-by-side', () => {

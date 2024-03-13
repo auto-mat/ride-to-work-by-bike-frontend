@@ -173,19 +173,27 @@ export default defineComponent({
           rounded
           unelevated
           color="primary"
-          icon="send"
-          :label="$t('onboarding.buttonInviteFriends')"
           class="q-mt-sm"
           data-cy="invite-email-addresses-button"
-        />
+        >
+          <q-icon name="send" size="18px" class="q-mr-sm" />
+          {{ $t('onboarding.buttonInviteFriends') }}
+        </q-btn>
       </div>
     </div>
     <div class="col-12 col-sm-6" data-cy="column-2">
       <div class="bg-grey-1 q-pa-md">
-        <h3 class="text-subtitle2 text-weight-bold q-my-none">
+        <h3
+          class="text-subtitle2 text-weight-bold q-my-none"
+          data-cy="title-message"
+        >
           {{ $t('onboarding.titleMessage') }}
         </h3>
-        <div v-html="$t('onboarding.textMessage')" class="q-mt-lg" />
+        <div
+          v-html="$t('onboarding.textMessage')"
+          class="q-mt-lg"
+          data-cy="text-message"
+        />
       </div>
     </div>
   </div>
