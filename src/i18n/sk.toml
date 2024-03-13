@@ -379,6 +379,6 @@ hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 [routes]
 actionInputDistance = "Zadať vzdialenosť"
 labelDistance = "Trasa"
-labelDirectionHome = "Z práce"
-labelDirectionWork = "Do práce"
+labelDirectionFromWork = "Z práce"
+labelDirectionToWork = "Do práce"
 labelTransportType = "Typ dopravy"

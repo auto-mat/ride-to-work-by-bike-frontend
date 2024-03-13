@@ -379,6 +379,6 @@ hintPassword = "It must contain at least 6 characters and at least 1 letter."
 [routes]
 actionInputDistance = "Input distance"
 labelDistance = "Route"
-labelDirectionHome = "From work"
-labelDirectionWork = "To work"
+labelDirectionFromWork = "From work"
+labelDirectionToWork = "To work"
 labelTransportType = "Transport type"

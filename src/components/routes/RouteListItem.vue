@@ -63,14 +63,27 @@ export default defineComponent({
   <div class="row items-center" data-cy="route-list-item">
     <div class="col-12 col-sm-2" data-cy="column-direction">
       <!-- Column: Direction -->
-      <div data-cy="label-direction">
+      <div
+        class="flex gap-8 text-subtitle2 text-weight-bold text-grey-10"
+        data-cy="label-direction"
+      >
         <!-- From work -->
-        <span v-if="route.direction === 'home'">
-          {{ $t('routes.labelDirectionHome') }}
+        <span v-if="route.direction === 'from_work'">
+          <q-icon
+            name="arrow_back"
+            size="18px"
+            data-cy="label-direction-icon"
+          />
+          {{ $t('routes.labelDirectionFromWork') }}
         </span>
         <!-- To work -->
-        <span v-if="route.direction === 'work'">
-          {{ $t('routes.labelDirectionWork') }}
+        <span v-if="route.direction === 'to_work'">
+          <q-icon
+            name="arrow_forward"
+            size="18px"
+            data-cy="label-direction-icon"
+          />
+          {{ $t('routes.labelDirectionToWork') }}
         </span>
       </div>
     </div>
@@ -79,7 +92,10 @@ export default defineComponent({
         <!-- Column: Transport type -->
         <div class="col-12 col-sm-4" data-cy="column-transport">
           <!-- Label -->
-          <div data-cy="label-transport">
+          <div
+            class="text-caption text-weight-bold text-grey-10"
+            data-cy="label-transport"
+          >
             {{ $t('routes.labelTransportType') }}
           </div>
           <div data-cy="select-transport">TODO: add component</div>
@@ -87,7 +103,12 @@ export default defineComponent({
         <!-- Column: Distance -->
         <div class="col-12 col-sm-8" data-cy="column-distance">
           <!-- Label -->
-          <div data-cy="label-distance">{{ $t('routes.labelDistance') }}</div>
+          <div
+            class="text-caption text-weight-bold text-grey-10"
+            data-cy="label-distance"
+          >
+            {{ $t('routes.labelDistance') }}
+          </div>
           <div class="row q-col-gutter-sm">
             <div class="col-12 col-sm-4">
               <!-- Select: Action -->
