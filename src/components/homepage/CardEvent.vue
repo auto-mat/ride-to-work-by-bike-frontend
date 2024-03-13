@@ -207,44 +207,46 @@ export default defineComponent({
         </template>
         <!-- Content -->
         <template #content>
-          <!-- Left column: Content -->
-          <div
-            class="col-12 col-md-6 q-px-md q-py-md"
-            data-cy="dialog-col-left"
-          >
+          <div class="row">
+            <!-- Left column: Content -->
             <div
-              v-if="card?.content"
-              v-html="card.content"
-              data-cy="dialog-content"
-            />
-            <!-- Buttons -->
-            <q-btn
-              color="black"
-              unelevated
-              rounded
-              class="q-mt-md"
-              data-cy="dialog-button"
+              class="col-12 col-md-6 q-px-md q-py-md"
+              data-cy="dialog-col-left"
             >
-              <div class="flex items-center no-wrap">
-                <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
-                <div class="text-center">
-                  {{ $t('index.cardEvent.addToCalendar') }}
+              <div
+                v-if="card?.content"
+                v-html="card.content"
+                data-cy="dialog-content"
+              />
+              <!-- Buttons -->
+              <q-btn
+                color="black"
+                unelevated
+                rounded
+                class="q-mt-md"
+                data-cy="dialog-button"
+              >
+                <div class="flex items-center no-wrap">
+                  <q-icon left name="fa-solid fa-calendar-plus" size="xs" />
+                  <div class="text-center">
+                    {{ $t('index.cardEvent.addToCalendar') }}
+                  </div>
                 </div>
-              </div>
-            </q-btn>
-          </div>
-          <!-- Right column: Image -->
-          <div
-            class="col-12 col-md-6 q-px-md q-py-md"
-            data-cy="dialog-col-right"
-          >
-            <!-- Image -->
-            <q-img
-              :src="card.image.src"
-              :alt="card.image.alt"
-              :ratio="1"
-              data-cy="dialog-image"
-            />
+              </q-btn>
+            </div>
+            <!-- Right column: Image -->
+            <div
+              class="col-12 col-md-6 q-px-md q-py-md"
+              data-cy="dialog-col-right"
+            >
+              <!-- Image -->
+              <q-img
+                :src="card.image.src"
+                :alt="card.image.alt"
+                :ratio="1"
+                data-cy="dialog-image"
+              />
+            </div>
           </div>
         </template>
       </dialog-default>
