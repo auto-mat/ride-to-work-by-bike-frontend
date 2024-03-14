@@ -130,6 +130,35 @@ describe('<RouteListItem>', () => {
         i18n.global.t('routes.transportNone'),
       );
     });
+
+    it('hides distance if transport type is "car" or "none"', () => {
+      // distance is shown
+      cy.dataCy('column-distance').should('be.visible');
+      // change transport type - car
+      cy.dataCy('button-toggle-transport').find('button').eq(3).click();
+      cy.dataCy('description-transport').should(
+        'contain',
+        i18n.global.t('routes.transportByCar'),
+      );
+      // distance is not shown
+      cy.dataCy('column-distance').should('not.be.visible');
+      // change transport type - none
+      cy.dataCy('button-toggle-transport').find('button').eq(4).click();
+      cy.dataCy('description-transport').should(
+        'contain',
+        i18n.global.t('routes.transportNone'),
+      );
+      // distance is not shown
+      cy.dataCy('column-distance');
+      // change transport type -  bike
+      cy.dataCy('button-toggle-transport').find('button').eq(0).click();
+      cy.dataCy('description-transport').should(
+        'contain',
+        i18n.global.t('routes.transportByBike'),
+      );
+      // distance is shown
+      cy.dataCy('column-distance').should('be.visible');
+    });
   });
 
   context('route from work', () => {
@@ -167,6 +196,10 @@ describe('<RouteListItem>', () => {
         });
         cy.viewport('iphone-6');
       });
+    });
+
+    it('renders component', () => {
+      cy.dataCy('route-list-item').should('be.visible');
     });
   });
 });

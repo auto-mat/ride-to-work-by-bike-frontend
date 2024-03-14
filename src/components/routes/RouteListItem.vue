@@ -90,9 +90,18 @@ export default defineComponent({
       return option?.description;
     });
 
+    const isShownDistance = computed((): boolean => {
+      return (
+        transport.value === 'bike' ||
+        transport.value === 'walk' ||
+        transport.value === 'bus'
+      );
+    });
+
     return {
       action,
       distance,
+      isShownDistance,
       optionsAction,
       optionsTransport,
       transport,
@@ -164,7 +173,11 @@ export default defineComponent({
           </div>
         </div>
         <!-- Column: Distance -->
-        <div class="col-12 col-sm-8" data-cy="column-distance">
+        <div
+          v-show="isShownDistance"
+          class="col-12 col-sm-8"
+          data-cy="column-distance"
+        >
           <!-- Label -->
           <div
             class="text-caption text-weight-bold text-grey-10"
