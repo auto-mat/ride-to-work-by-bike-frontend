@@ -30,12 +30,13 @@ import { i18n } from 'src/boot/i18n';
 
 // types
 import type { FormOption } from '../types/Form';
+import type { RouteItem } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteListItem',
   props: {
     route: {
-      type: Object,
+      type: Object as () => RouteItem,
       required: true,
     },
   },

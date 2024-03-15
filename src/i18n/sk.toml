@@ -38,13 +38,15 @@ en = "Angličtina"
 
 [time]
 day = "deň | dni"
-hour = "hodina | hodín"
-minute = "minúta | minút"
-second = "sekunda | sekúnd"
 dayShort = "d."
+hour = "hodina | hodín"
 hourShort = "h."
+minute = "minúta | minút"
 minuteShort = "m."
+second = "sekunda | sekúnd"
 secondShort = "s."
+today = "Dnes"
+yesterday = "Včera"
 
 [navigation]
 continue = "Pokračovať"

@@ -38,13 +38,15 @@ en = "English"
 
 [time]
 day = "day | days"
-hour = "hour | hours"
-minute = "minute | minutes"
-second = "second | seconds"
 dayShort = "d"
+hour = "hour | hours"
 hourShort = "h"
+minute = "minute | minutes"
 minuteShort = "m"
+second = "second | seconds"
 secondShort = "s"
+today = "Today"
+yesterday = "Yesterday"
 
 [navigation]
 continue = "Continue"
