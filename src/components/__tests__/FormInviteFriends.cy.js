@@ -87,6 +87,72 @@ describe('<FormInviteFriends>', () => {
         });
     });
 
+    it('allows to change the message language', () => {
+      cy.dataCy('invite-language-input').select('English');
+      cy.dataCy('title-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage', 'en')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('text-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.textMessage', 'en')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('invite-language-input').select('Slovak');
+      cy.dataCy('title-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage', 'sk')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('text-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.textMessage', 'sk')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('invite-language-input').select('Czech');
+      cy.dataCy('title-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage', 'cs')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+      cy.dataCy('text-message')
+        .should('be.visible')
+        .then(($el) => {
+          const textContent = $el.text();
+          cy.stripHtmlTags(i18n.global.t('onboarding.textMessage', 'cs')).then(
+            (text) => {
+              expect(textContent).to.contain(text);
+            },
+          );
+        });
+    });
+
     it('renders columns side-by-side', () => {
       cy.testElementPercentageWidth(cy.dataCy('column-1'), 50);
       cy.testElementPercentageWidth(cy.dataCy('column-2'), 50);
