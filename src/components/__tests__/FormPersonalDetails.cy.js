@@ -82,6 +82,9 @@ describe('<FormPersonalDetails>', () => {
 
     it('renders checkbox terms', () => {
       cy.dataCy('form-personal-details-terms').should('be.visible');
+      cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
+      cy.dataCy('form-terms-link').should('be.visible').click();
+      cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
     });
   });
 });

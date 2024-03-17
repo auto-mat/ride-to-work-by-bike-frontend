@@ -217,9 +217,14 @@ export default defineComponent({
               {{ $t('form.labelTerms') }}
               <!-- Link: terms -->
               <!-- TODO: Link to terms page -->
-              <a href="#" target="_blank" class="text-primary">{{
-                $t('form.linkTerms')
-              }}</a
+              <a
+                href="#"
+                target="_blank"
+                class="text-primary"
+                @click.stop
+                data-cy="form-terms-link"
+              >
+                {{ $t('form.linkTerms') }} </a
               >.
             </span>
           </q-checkbox>
