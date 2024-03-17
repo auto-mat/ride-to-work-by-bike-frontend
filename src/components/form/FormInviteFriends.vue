@@ -20,6 +20,7 @@
 import { computed, defineComponent, ref } from 'vue';
 
 // composables
+import { i18n } from 'src/boot/i18n';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
@@ -29,22 +30,23 @@ export default defineComponent({
   name: 'FormInviteFriends',
   setup() {
     const emailAddresses = ref<string>('');
-    const language = ref<string>('');
+    const language = ref<string>(i18n.global.locale);
+
     // Flag icons
     const iconFlagCz = `img:${
-      new URL('../assets/svg/flag-cz.svg', import.meta.url).href
+      new URL('../../assets/svg/flag-cz.svg', import.meta.url).href
     }`;
     const iconFlagSk = `img:${
-      new URL('../assets/svg/flag-sk.svg', import.meta.url).href
+      new URL('../../assets/svg/flag-sk.svg', import.meta.url).href
     }`;
     const iconFlagEn = `img:${
-      new URL('../assets/svg/flag-en.svg', import.meta.url).href
+      new URL('../../assets/svg/flag-en.svg', import.meta.url).href
     }`;
     // Country options
     const optionsLanguage: FormOption[] = [
       {
         label: 'Czech',
-        value: 'cz',
+        value: 'cs',
         icon: iconFlagCz,
       },
       {
@@ -187,10 +189,10 @@ export default defineComponent({
           class="text-subtitle2 text-weight-bold q-my-none"
           data-cy="title-message"
         >
-          {{ $t('onboarding.titleMessage') }}
+          {{ $t('onboarding.titleMessage', language) }}
         </h3>
         <div
-          v-html="$t('onboarding.textMessage')"
+          v-html="$t('onboarding.textMessage', language)"
           class="q-mt-lg"
           data-cy="text-message"
         />
