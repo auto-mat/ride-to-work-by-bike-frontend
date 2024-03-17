@@ -223,8 +223,7 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-terms-link"
-              >
-                {{ $t('form.linkTerms') }} </a
+                >{{ $t('form.linkTerms') }}</a
               >.
             </span>
           </q-checkbox>
