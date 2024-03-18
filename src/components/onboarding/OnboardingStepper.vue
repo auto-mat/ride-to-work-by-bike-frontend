@@ -23,6 +23,9 @@ import { defineComponent, ref } from 'vue';
 // components
 import FormInviteFriends from 'components/form/FormInviteFriends.vue';
 
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
 export default defineComponent({
   name: 'OnboardingStepper',
   components: {
@@ -34,10 +37,13 @@ export default defineComponent({
 
     const iconSize = 18;
 
+    const { urlVideoOnboarding } = rideToWorkByBikeConfig;
+
     return {
       iconSize,
       step,
       stepper,
+      urlVideoOnboarding,
     };
   },
 });
@@ -74,10 +80,7 @@ export default defineComponent({
           data-cy="step1-description"
         />
         <div class="q-mt-lg" data-cy="step1-video">
-          <q-video
-            :ratio="16 / 9"
-            src="https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
-          />
+          <q-video :ratio="16 / 9" :src="urlVideoOnboarding" />
         </div>
       </div>
     </q-step>

@@ -29,6 +29,7 @@ urlTwitter = "https://twitter.com/spolekautomat"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
 urlAppStore = "https://apps.apple.com/cz/app/do-pr%C3%A1ce-na-kole/id1564442780"
 urlGooglePlay = "https://play.google.com/store/apps/details?id=cz.dopracenakole"
+urlVideoOnboarding = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 
 challengeMonth = "may"
 challengeStartDate = "2024-10-01T12:00:00"

@@ -2,6 +2,13 @@ import { colors } from 'quasar';
 
 import OnboardingStepper from 'components/onboarding/OnboardingStepper.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import {
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+} from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
@@ -61,6 +68,19 @@ describe('<OnboardingStepper>', () => {
       cy.dataCy('step1-video').should('be.visible');
       cy.dataCy('step1-video').invoke('height').should('be.gt', 100);
       cy.dataCy('step1-video').invoke('width').should('be.gt', 100);
+      cy.request({
+        url: rideToWorkByBikeConfig.urlVideoOnboarding,
+        failOnStatusCode: failOnStatusCode,
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
+      });
+      cy.dataCy('step1-video')
+        .find('iframe')
+        .should('have.attr', 'src', rideToWorkByBikeConfig.urlVideoOnboarding);
       // navigation buttons
       cy.dataCy('button-skip')
         .should('be.visible')
