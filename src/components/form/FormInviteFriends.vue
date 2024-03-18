@@ -119,6 +119,7 @@ export default defineComponent({
           data-cy="invite-email-addresses-input"
         />
       </div>
+      <!-- Input widget: Language select -->
       <div class="q-my-md" data-cy="invite-language">
         <label
           for="select-language"
@@ -144,11 +145,14 @@ export default defineComponent({
           class="q-mt-sm"
           data-cy="invite-language-input"
         >
+          <!-- Item: Selected language -->
           <template v-slot:selected>
             <q-item dense v-if="selectedLanguage">
+              <!-- Flag -->
               <q-item-section avatar>
                 <q-icon :name="selectedLanguage.icon" size="18px" />
               </q-item-section>
+              <!-- Label -->
               <q-item-section>
                 <q-item-label class="text-subtitle2 text-grey-10">
                   {{ selectedLanguage.label }}
@@ -156,11 +160,14 @@ export default defineComponent({
               </q-item-section>
             </q-item>
           </template>
+          <!-- Item: Option -->
           <template v-slot:option="scope">
             <q-item dense v-bind="scope.itemProps">
+              <!-- Flag -->
               <q-item-section avatar>
                 <q-icon :name="scope.opt.icon" size="18px" />
               </q-item-section>
+              <!-- Label -->
               <q-item-section>
                 <q-item-label class="text-subtitle2 text-grey-10">{{
                   scope.opt.label
@@ -170,6 +177,7 @@ export default defineComponent({
           </template>
         </q-select>
       </div>
+      <!-- Button: Invite friends -->
       <div class="q-mt-md">
         <q-btn
           rounded
@@ -183,14 +191,17 @@ export default defineComponent({
         </q-btn>
       </div>
     </div>
+    <!-- Message text -->
     <div class="col-12 col-sm-6" data-cy="column-2">
       <div class="bg-grey-1 q-pa-md">
+        <!-- Title -->
         <h3
           class="text-subtitle2 text-weight-bold q-my-none"
           data-cy="title-message"
         >
           {{ $t('onboarding.titleMessage', language) }}
         </h3>
+        <!-- Text -->
         <div
           v-html="$t('onboarding.textMessage', language)"
           class="q-mt-lg"
