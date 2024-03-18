@@ -95,7 +95,7 @@ export default defineComponent({
         class="text-grey-10 q-mb-lg"
         data-cy="invite-description"
       />
-      <!-- Message input widget -->
+      <!-- Input widget: Email addresses -->
       <div class="q-my-md" data-cy="invite-email-addresses">
         <label
           for="invite-email-addresses"
