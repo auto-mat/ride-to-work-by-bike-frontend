@@ -17,6 +17,7 @@
  */
 
 // libraries
+import { QForm } from 'quasar';
 import { computed, defineComponent, ref } from 'vue';
 
 // composables
@@ -70,17 +71,25 @@ export default defineComponent({
       return null;
     });
 
-    const { isFilled } = useValidation();
+    const formInviteRef = ref<typeof QForm | null>(null);
+    const onSubmit = () => {
+      formInviteRef.value?.validate();
+    };
+
+    const { isEmailList, isFilled } = useValidation();
 
     return {
       emailAddresses,
+      formInviteRef,
       iconFlagCz,
       iconFlagSk,
       iconFlagEn,
       language,
       optionsLanguage,
       selectedLanguage,
+      isEmailList,
       isFilled,
+      onSubmit,
     };
   },
 });
@@ -89,7 +98,7 @@ export default defineComponent({
 <template>
   <div class="row q-col-gutter-md" data-cy="form-invite-friends">
     <!-- Description text -->
-    <div class="col-12 col-sm-6" data-cy="column-1">
+    <q-form ref="formInviteRef" class="col-12 col-sm-6" data-cy="column-1">
       <div
         v-html="$t('onboarding.descriptionInvite')"
         class="text-grey-10 q-mb-lg"
@@ -113,7 +122,9 @@ export default defineComponent({
           name="email-addresses"
           type="textarea"
           :rules="[
-            (val) => isFilled(val) || $t('onboarding.messageRequiredAddresses'),
+            (val) => isFilled(val) || $t('onboarding.messageRequiredEmailList'),
+            (val) =>
+              isEmailList(val) || $t('onboarding.messageInvalidEmailList'),
           ]"
           class="q-mt-sm"
           data-cy="invite-email-addresses-input"
@@ -184,13 +195,14 @@ export default defineComponent({
           unelevated
           color="primary"
           class="q-mt-sm"
-          data-cy="invite-email-addresses-button"
+          data-cy="form-invite-submit"
+          @click="onSubmit"
         >
           <q-icon name="send" size="18px" class="q-mr-sm" />
           {{ $t('onboarding.buttonInviteFriends') }}
         </q-btn>
       </div>
-    </div>
+    </q-form>
     <!-- Message text -->
     <div class="col-12 col-sm-6" data-cy="column-2">
       <div class="bg-grey-1 q-pa-md">

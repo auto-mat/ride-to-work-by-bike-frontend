@@ -14,7 +14,8 @@ describe('<FormInviteFriends>', () => {
         'buttonInviteFriends',
         'labelInviteEmailAddresses',
         'labelLanguage',
-        'messageRequiredAddresses',
+        'messageRequiredEmailList',
+        'messageInvalidEmailList',
         'textMessage',
         'titleMessage',
       ],
@@ -151,6 +152,78 @@ describe('<FormInviteFriends>', () => {
             },
           );
         });
+    });
+
+    it('validates the fields on submit', () => {
+      cy.dataCy('form-invite-submit').should('be.visible').click();
+      // validate email required
+      cy.dataCy('invite-email-addresses')
+        .find('.q-field__messages')
+        .should('be.visible')
+        .and('contain', i18n.global.t('onboarding.messageRequiredEmailList'));
+      // define addresses to test
+      const addressesInvalid = [
+        // one address
+        'qw123@qw',
+        'abc.example.com',
+        'a@b@c@example.com',
+        'a"b(c)d,e:f;g<h>i[jk]l@em',
+        'just"not"right@example.com',
+        'this is"notallowed@example.com',
+        'this still"not\\allowed@example.com',
+        'i.like.underscores@but_they_are_not_allowed_in_this_part',
+        // multiple addresses
+        'qw123@qw, qw123@qw',
+        'qw123@qw, abc.example.com',
+        // combination of valid and invalid address
+        'simple@example.com, abc.example.com',
+        'abc.example.com, simple@example.com',
+        // invalid separator
+        'simple@example.com; simple@example.com',
+        'simple@example.com simple@example.com',
+        'simple@example.com - simple@example.com',
+        // double separator
+        'simple@example.com,, very.common@example.com',
+      ];
+      // validate invalid emails
+      addressesInvalid.forEach((address) => {
+        cy.dataCy('invite-email-addresses-input').type(address);
+        cy.dataCy('form-invite-submit').click();
+        cy.dataCy('invite-email-addresses')
+          .find('.q-field__messages')
+          .should('be.visible')
+          .and('contain', i18n.global.t('onboarding.messageInvalidEmailList'));
+        cy.dataCy('invite-email-addresses-input').clear();
+      });
+      const addressesValid = [
+        // single address
+        'a@b.c',
+        'simple@example.com',
+        'very.common@example.com',
+        'x@example.com',
+        'long.email-address-with-hyphens@and.subdomains.example.com',
+        'user.name+tag+sorting@example.com',
+        'name/surname@example.com',
+        'mailhost!username@example.org',
+        'user%example.com@example.org',
+        'user-@example.org',
+        // combination of valid and addresses
+        'a@b.c,simple@example.com',
+        'very.common@example.com, x@example.com',
+        // long list of addresses
+        'long.email-address-with-hyphens@and.subdomains.example.com, user.name+tag+sorting@example.com, name/surname@example.com, mailhost!username@example.org, user%example.com@example.org, user-@example.org',
+        // spaces before and after
+        ' a@b.c , simple@example.com ',
+      ];
+      // validate valid emails
+      addressesValid.forEach((address) => {
+        cy.dataCy('invite-email-addresses-input').type(address);
+        cy.dataCy('form-invite-submit').click();
+        cy.get('*[data-cy="invite-email-addresses"] .q-field__messages').should(
+          'not.exist',
+        );
+        cy.dataCy('invite-email-addresses-input').clear();
+      });
     });
 
     it('renders columns side-by-side', () => {

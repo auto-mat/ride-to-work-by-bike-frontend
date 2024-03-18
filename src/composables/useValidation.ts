@@ -14,6 +14,17 @@ export const useValidation = () => {
     return regex.test(value);
   };
 
+  const isEmailList = (value: string): boolean => {
+    /**
+     * Match a list of emails separated by comma
+     * Uses the isEmail function for each email
+     */
+    const emails = value.split(',');
+    // remove whitespace
+    const trimmedEmails = emails.map((email) => email.trim());
+    return trimmedEmails.every((email) => isEmail(email));
+  };
+
   const isPhone = (value: string): boolean => {
     // 6-18 characters (extreme length with delimiters)
     if (value.length < 6 || value.length > 18) {
@@ -55,6 +66,7 @@ export const useValidation = () => {
 
   return {
     isEmail,
+    isEmailList,
     isFilled,
     isIdentical,
     isPhone,
