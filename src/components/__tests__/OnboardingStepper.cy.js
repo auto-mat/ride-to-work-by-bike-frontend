@@ -44,71 +44,7 @@ describe('<OnboardingStepper>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('renders component', () => {
-      // Step 1
-      cy.dataCy('onboarding-stepper').should('be.visible');
-      // title
-      cy.dataCy('step1-title')
-        .should('be.visible')
-        .and('have.css', 'font-size', '24px')
-        .and('have.css', 'font-weight', '700')
-        .and('have.css', 'margin-top', '0px')
-        .and('have.css', 'margin-bottom', '0px')
-        .and('have.color', black)
-        .and('contain', i18n.global.t('onboarding.titleStep1'));
-      // description
-      cy.dataCy('step1-description')
-        .should('be.visible')
-        .and('have.css', 'margin-top', '24px')
-        .and('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '500')
-        .and('have.color', grey10)
-        .and('contain', i18n.global.t('onboarding.descriptionStep1'));
-      // video
-      cy.dataCy('step1-video').should('be.visible');
-      cy.dataCy('step1-video').invoke('height').should('be.gt', 100);
-      cy.dataCy('step1-video').invoke('width').should('be.gt', 100);
-      cy.request({
-        url: rideToWorkByBikeConfig.urlVideoOnboarding,
-        failOnStatusCode: failOnStatusCode,
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
-      cy.dataCy('step1-video')
-        .find('iframe')
-        .should('have.attr', 'src', rideToWorkByBikeConfig.urlVideoOnboarding);
-      // navigation buttons
-      cy.dataCy('button-skip')
-        .should('be.visible')
-        .and('contain', i18n.global.t('navigation.skip'));
-      cy.dataCy('button-continue')
-        .should('be.visible')
-        .and('contain', i18n.global.t('navigation.continue'));
-      cy.dataCy('button-continue').click();
-      // Step 2
-      cy.dataCy('onboading-step2').should('be.visible');
-      // title
-      cy.dataCy('step2-title')
-        .should('be.visible')
-        .and('have.css', 'font-size', '24px')
-        .and('have.css', 'font-weight', '700')
-        .and('have.css', 'margin-top', '0px')
-        .and('have.css', 'margin-bottom', '0px')
-        .and('have.color', black)
-        .and('contain', i18n.global.t('onboarding.titleStep2'));
-      cy.dataCy('form-invite-friends').should('be.visible');
-      // navigation
-      cy.dataCy('button-back')
-        .should('be.visible')
-        .and('contain', i18n.global.t('navigation.back'));
-      cy.dataCy('button-done')
-        .should('be.visible')
-        .and('contain', i18n.global.t('navigation.done'));
-    });
+    coreTests();
   });
 
   context('mobile', () => {
@@ -119,6 +55,10 @@ describe('<OnboardingStepper>', () => {
       cy.viewport('iphone-6');
     });
 
+    coreTests();
+  });
+
+  function coreTests() {
     it('renders component', () => {
       // Step 1
       cy.dataCy('onboarding-stepper').should('be.visible');
@@ -184,5 +124,5 @@ describe('<OnboardingStepper>', () => {
         .should('be.visible')
         .and('contain', i18n.global.t('navigation.done'));
     });
-  });
+  }
 });
