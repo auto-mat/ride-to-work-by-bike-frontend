@@ -32,7 +32,10 @@ export default defineComponent({
     const step = ref<number>(1);
     const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 
+    const iconSize = 18;
+
     return {
+      iconSize,
       step,
       stepper,
     };
@@ -118,7 +121,7 @@ export default defineComponent({
               @click="stepper?.next()"
               data-cy="button-continue"
             >
-              <q-icon name="arrow_forward" size="18px" class="q-ml-sm" />
+              <q-icon name="arrow_forward" :size="iconSize" class="q-ml-sm" />
             </q-btn>
           </div>
         </template>
@@ -132,7 +135,7 @@ export default defineComponent({
               @click="stepper?.previous()"
               data-cy="button-back"
             >
-              <q-icon name="arrow_back" size="18px" class="q-mr-sm" />
+              <q-icon name="arrow_back" :size="iconSize" class="q-mr-sm" />
               {{ $t('navigation.back') }}
             </q-btn>
             <q-btn
