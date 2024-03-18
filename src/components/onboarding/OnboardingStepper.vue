@@ -48,7 +48,7 @@ export default defineComponent({
     ref="stepper"
     color="primary"
     header-class="hidden"
-    :style="{ 'max-width': '800px' }"
+    style="max-width: 800px"
     data-cy="onboarding-stepper"
   >
     <!-- Step: Video -->
