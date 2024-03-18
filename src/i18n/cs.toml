@@ -30,6 +30,11 @@ calendarOutlook = "Outlook.com"
 calendarYahoo = "Yahoo"
 calendarOther = "Jiné aplikace (soubor iCal)"
 
+[language]
+cs = "Čeština"
+sk = "Slovenština"
+en = "Angličtina"
+
 [time]
 day = "den | dní"
 hour = "hodina | hodin"

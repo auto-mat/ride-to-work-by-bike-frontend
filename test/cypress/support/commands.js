@@ -86,6 +86,35 @@ Cypress.Commands.add('testImageHeight', ($img) => {
   cy.wrap($img[0]).should('have.prop', 'naturalHeight').should('be.gt', 0);
 });
 
+Cypress.Commands.add('testMessageLanguageSelect', (i18n) => {
+  const locales = i18n.global.availableLocales;
+  locales.forEach((locale) => {
+    cy.dataCy('invite-language-input').select(
+      i18n.global.t(`language.${locale}`),
+    );
+    cy.dataCy('title-message')
+      .should('be.visible')
+      .then(($el) => {
+        const textContent = $el.text();
+        cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage', locale)).then(
+          (text) => {
+            expect(textContent).to.contain(text);
+          },
+        );
+      });
+    cy.dataCy('text-message')
+      .should('be.visible')
+      .then(($el) => {
+        const textContent = $el.text();
+        cy.stripHtmlTags(i18n.global.t('onboarding.textMessage', locale)).then(
+          (text) => {
+            expect(textContent).to.contain(text);
+          },
+        );
+      });
+  });
+});
+
 /**
  * Custom matchImageSnapshot command that disables the vertical and
  * horizontal scrollbar before the snaphost is taken and then enables

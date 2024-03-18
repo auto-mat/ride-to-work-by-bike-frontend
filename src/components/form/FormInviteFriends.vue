@@ -33,36 +33,23 @@ export default defineComponent({
     const emailAddresses = ref<string>('');
     const language = ref<string>(i18n.global.locale);
 
-    // Flag icons
-    const iconFlagCz = `img:${
-      new URL('../../assets/svg/flag-cz.svg', import.meta.url).href
-    }`;
-    const iconFlagSk = `img:${
-      new URL('../../assets/svg/flag-sk.svg', import.meta.url).href
-    }`;
-    const iconFlagEn = `img:${
-      new URL('../../assets/svg/flag-en.svg', import.meta.url).href
-    }`;
-    // Country options
-    const optionsLanguage: FormOption[] = [
-      {
-        label: 'Czech',
-        value: 'cs',
-        icon: iconFlagCz,
-      },
-      {
-        label: 'English',
-        value: 'en',
-        icon: iconFlagEn,
-      },
-      {
-        label: 'Slovak',
-        value: 'sk',
-        icon: iconFlagSk,
-      },
-    ];
+    // dynamically build array of language options
+    const optionsLanguage = computed((): FormOption[] => {
+      const locales = i18n.global.availableLocales;
+      const options: FormOption[] = [];
+      locales.forEach((locale) => {
+        options.push({
+          label: i18n.global.t(`language.${locale}`),
+          value: locale,
+          icon: `img:${
+            new URL(`../../assets/svg/flag-${locale}.svg`, import.meta.url).href
+          }`,
+        });
+      });
+      return options;
+    });
     const selectedLanguage = computed((): FormOption | null => {
-      const languageObject: FormOption | undefined = optionsLanguage.find(
+      const languageObject: FormOption | undefined = optionsLanguage.value.find(
         (option) => option.value === language?.value,
       );
       if (languageObject) {
@@ -81,9 +68,6 @@ export default defineComponent({
     return {
       emailAddresses,
       formInviteRef,
-      iconFlagCz,
-      iconFlagSk,
-      iconFlagEn,
       language,
       optionsLanguage,
       selectedLanguage,
