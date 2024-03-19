@@ -30,6 +30,9 @@
 import { computed, defineComponent, ref } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
+// composables
+import { useRoutes } from 'src/composables/useRoutes';
+
 // types
 import type { FormOption } from '../types/Form';
 import type { RouteItem } from '../types/Route';
@@ -53,31 +56,32 @@ export default defineComponent({
       },
     ];
 
+    const { getRouteIcon } = useRoutes();
     const optionsTransport: FormOption[] = [
       {
         label: '',
         value: 'bike',
-        icon: 'pedal_bike',
+        icon: getRouteIcon('bike'),
       },
       {
         label: '',
         value: 'walk',
-        icon: 'directions_walk',
+        icon: getRouteIcon('walk'),
       },
       {
         label: '',
         value: 'bus',
-        icon: 'directions_bus',
+        icon: getRouteIcon('bus'),
       },
       {
         label: '',
         value: 'car',
-        icon: 'directions_car',
+        icon: getRouteIcon('car'),
       },
       {
         label: '',
         value: 'none',
-        icon: 'block',
+        icon: getRouteIcon('none'),
       },
     ];
 
