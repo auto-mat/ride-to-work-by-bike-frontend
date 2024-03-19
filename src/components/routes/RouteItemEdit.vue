@@ -2,14 +2,15 @@
 /**
  * RouteItemEdit Component
  *
- * @description * Use this component to render an item in a list of routes.
+ * @description * Use this component to render an item in an editable list
+ * of routes.
  *
  * @props
  * - `route` (object, required): The object representing the route.
  *   It should be of type `object` with properties:
  *   - id (string)
  *   - date (string)
- *   - type (string)
+ *   - direction (string)
  *   - distance (number)
  *
  * @events
