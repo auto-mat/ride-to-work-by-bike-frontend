@@ -103,6 +103,7 @@ export default defineComponent({
       </div>
     </q-step>
 
+    <!-- Bottom navigation buttons between stepper pages -->
     <template v-slot:navigation>
       <q-stepper-navigation>
         <template v-if="step === 1">
