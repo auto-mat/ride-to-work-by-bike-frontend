@@ -9,7 +9,7 @@
  *   It should be of type `object`.
  *
  * @components
- * - `RouteListItem`: Component to render a single route.
+ * - `RouteItemEdit`: Component to render a single route.
  *
  * @example
  * <route-list :routes="routes" />
@@ -25,7 +25,7 @@ import { computed, defineComponent } from 'vue';
 import type { RouteItem, RouteListDay } from '../types/Route';
 
 // component
-import RouteListItem from './RouteListItem.vue';
+import RouteItemEdit from './RouteItemEdit.vue';
 
 // composables
 import { i18n } from 'src/boot/i18n';
@@ -38,7 +38,7 @@ export default defineComponent({
     },
   },
   components: {
-    RouteListItem,
+    RouteItemEdit,
   },
   setup(props) {
     const days = computed(() => {
@@ -104,7 +104,7 @@ export default defineComponent({
       <h3 class="text-h6 text-grey-10" data-cy="route-list-day-date">
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
-      <route-list-item
+      <route-item-edit
         v-for="route in day.routes"
         :route="route"
         :key="route.id"

@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * RouteListItem Component
+ * RouteItemEdit Component
  *
  * @description * Use this component to render an item in a list of routes.
  *
@@ -33,7 +33,7 @@ import type { FormOption } from '../types/Form';
 import type { RouteItem } from '../types/Route';
 
 export default defineComponent({
-  name: 'RouteListItem',
+  name: 'RouteItemEdit',
   props: {
     route: {
       type: Object as () => RouteItem,

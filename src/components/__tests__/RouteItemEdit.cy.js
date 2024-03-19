@@ -1,13 +1,13 @@
 import { colors } from 'quasar';
 
-import RouteListItem from 'components/routes/RouteListItem.vue';
+import RouteItemEdit from 'components/routes/RouteItemEdit.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
 
-describe('<RouteListItem>', () => {
+describe('<RouteItemEdit>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
@@ -24,7 +24,7 @@ describe('<RouteListItem>', () => {
   context('route to work', () => {
     beforeEach(() => {
       cy.fixture('routeListItem').then((routes) => {
-        cy.mount(RouteListItem, {
+        cy.mount(RouteItemEdit, {
           props: {
             route: routes.toWork,
           },
@@ -164,7 +164,7 @@ describe('<RouteListItem>', () => {
   context('route from work', () => {
     beforeEach(() => {
       cy.fixture('routeListItem').then((routes) => {
-        cy.mount(RouteListItem, {
+        cy.mount(RouteItemEdit, {
           props: {
             route: routes.fromWork,
           },
@@ -189,7 +189,7 @@ describe('<RouteListItem>', () => {
   context('mobile', () => {
     beforeEach(() => {
       cy.fixture('routeListItem').then((route) => {
-        cy.mount(RouteListItem, {
+        cy.mount(RouteItemEdit, {
           props: {
             route,
           },
