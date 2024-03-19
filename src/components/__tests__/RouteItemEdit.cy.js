@@ -77,7 +77,7 @@ describe('<RouteItemEdit>', () => {
         .and('have.css', 'font-size', '12px')
         .and('have.css', 'font-weight', '400')
         .and('have.color', black)
-        .and('contain', i18n.global.t('routes.transportByBike'));
+        .and('contain', i18n.global.t('routes.transport.bike'));
       // column distance
       cy.dataCy('column-distance').should('be.visible');
       cy.dataCy('label-distance')
@@ -99,35 +99,35 @@ describe('<RouteItemEdit>', () => {
       // description transport
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportByBike'),
+        i18n.global.t('routes.transport.bike'),
       );
       // change transport type
       cy.dataCy('button-toggle-transport').find('button').eq(1).click();
       // transport on foot
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportOnFoot'),
+        i18n.global.t('routes.transport.walk'),
       );
       // change transport type
       cy.dataCy('button-toggle-transport').find('button').eq(2).click();
       // transport by public transport
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportPublicTransport'),
+        i18n.global.t('routes.transport.bus'),
       );
       // change transport type
       cy.dataCy('button-toggle-transport').find('button').eq(3).click();
       // transport by car
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportByCar'),
+        i18n.global.t('routes.transport.car'),
       );
       // change transport type
       cy.dataCy('button-toggle-transport').find('button').eq(4).click();
       // transport none
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportNone'),
+        i18n.global.t('routes.transport.none'),
       );
     });
 
@@ -138,7 +138,7 @@ describe('<RouteItemEdit>', () => {
       cy.dataCy('button-toggle-transport').find('button').eq(3).click();
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportByCar'),
+        i18n.global.t('routes.transport.car'),
       );
       // distance is not shown
       cy.dataCy('column-distance').should('not.be.visible');
@@ -146,7 +146,7 @@ describe('<RouteItemEdit>', () => {
       cy.dataCy('button-toggle-transport').find('button').eq(4).click();
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportNone'),
+        i18n.global.t('routes.transport.none'),
       );
       // distance is not shown
       cy.dataCy('column-distance');
@@ -154,7 +154,7 @@ describe('<RouteItemEdit>', () => {
       cy.dataCy('button-toggle-transport').find('button').eq(0).click();
       cy.dataCy('description-transport').should(
         'contain',
-        i18n.global.t('routes.transportByBike'),
+        i18n.global.t('routes.transport.bike'),
       );
       // distance is shown
       cy.dataCy('column-distance').should('be.visible');
