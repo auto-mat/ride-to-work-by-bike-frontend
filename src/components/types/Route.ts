@@ -3,6 +3,7 @@ export type RouteItem = {
   date: string;
   direction: string;
   distance: number;
+  transport: 'bike' | 'car' | 'walk' | 'bus' | 'none';
 };
 
 export type RouteListDay = {

@@ -12,6 +12,7 @@
  *   - date (string)
  *   - direction (string)
  *   - distance (number)
+ *   - transport (string)
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -43,6 +44,8 @@ export default defineComponent({
   },
   setup() {
     const action = ref<string>('input-distance');
+    const distance = ref<number>(0);
+
     const optionsAction: FormOption[] = [
       {
         label: i18n.global.t('routes.actionInputDistance'),
@@ -50,48 +53,35 @@ export default defineComponent({
       },
     ];
 
-    const distance = ref<number>(0);
-
-    const transport = ref<string>('bike');
     const optionsTransport: FormOption[] = [
       {
         label: '',
-        description: i18n.global.t('routes.transportByBike'),
         value: 'bike',
         icon: 'pedal_bike',
       },
       {
         label: '',
-        description: i18n.global.t('routes.transportOnFoot'),
         value: 'walk',
         icon: 'directions_walk',
       },
       {
         label: '',
-        description: i18n.global.t('routes.transportPublicTransport'),
         value: 'bus',
         icon: 'directions_bus',
       },
       {
         label: '',
-        description: i18n.global.t('routes.transportByCar'),
         value: 'car',
         icon: 'directions_car',
       },
       {
         label: '',
-        description: i18n.global.t('routes.transportNone'),
         value: 'none',
         icon: 'block',
       },
     ];
-    const transportDescription = computed(() => {
-      const option = optionsTransport.find((option) => {
-        return option.value === transport.value;
-      });
-      return option?.description;
-    });
 
+    const transport = ref<string>('bike');
     const isShownDistance = computed((): boolean => {
       return (
         transport.value === 'bike' ||
@@ -107,7 +97,6 @@ export default defineComponent({
       optionsAction,
       optionsTransport,
       transport,
-      transportDescription,
     };
   },
 });
@@ -170,7 +159,7 @@ export default defineComponent({
               class="text-caption text-black q-mt-sm"
               data-cy="description-transport"
             >
-              {{ transportDescription }}
+              {{ $t(`routes.transport.${transport}`) }}
             </div>
           </div>
         </div>
