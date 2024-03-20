@@ -85,7 +85,7 @@ export default defineComponent({
             data-cy="icon-transport"
           />
           <!-- Label -->
-          <span data-cy="label-transport">
+          <span data-cy="description-transport">
             {{ $t(`routes.transport.${route.transport}`) }}
           </span>
         </div>

@@ -85,7 +85,7 @@ export default defineComponent({
       },
     ];
 
-    const transport = ref<string>('bike');
+    const transport = ref<string>(props.route.transport);
     const isShownDistance = computed((): boolean => {
       return (
         transport.value === 'bike' ||

@@ -141,7 +141,7 @@ function coreTests() {
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 24);
-    cy.dataCy('label-transport')
+    cy.dataCy('description-transport')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
