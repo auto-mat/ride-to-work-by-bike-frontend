@@ -1,6 +1,9 @@
 import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
 
+// common tests
+import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
+
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'routes', i18n);
@@ -40,5 +43,7 @@ describe('<RouteListDisplay>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('route-list-display').should('be.visible');
+    cy.dataCy('route-list-item').should('be.visible');
   });
+  testRouteListDayDate();
 }

@@ -66,13 +66,20 @@ export default defineComponent({
       <h3 class="text-h6 text-grey-10" data-cy="route-list-day-date">
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
-      <route-item-display
-        v-for="route in day.routes"
-        :route="route"
-        :key="route.id"
-        class="q-my-md"
-        data-cy="route-list-item"
-      />
+      <div class="row q-col-gutter-lg">
+        <div
+          v-for="route in day.routes"
+          :key="route.id"
+          class="col-12 col-sm-6"
+          data-cy="route-list-item-wrapper"
+        >
+          <route-item-display
+            :route="route"
+            class="q-my-md"
+            data-cy="route-list-item"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>

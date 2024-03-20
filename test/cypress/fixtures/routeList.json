@@ -16,28 +16,28 @@
   {
     "id": "00003",
     "date": "2024-11-01T20:00",
-    "transport": "bike",
+    "transport": "car",
     "distance": "",
     "direction": "to_work"
   },
   {
     "id": "00004",
     "date": "2024-11-01T20:00",
-    "transport": "bike",
+    "transport": "bus",
     "distance": "",
     "direction": "from_work"
   },
   {
     "id": "00005",
     "date": "2024-12-01T20:00",
-    "transport": "bike",
+    "transport": "walk",
     "distance": "",
     "direction": "to_work"
   },
   {
     "id": "00006",
     "date": "2024-12-01T20:00",
-    "transport": "bike",
+    "transport": "none",
     "distance": "",
     "direction": "from_work"
   }

@@ -1,3 +1,8 @@
+import { colors } from 'quasar';
+
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
+
 /**
  * Basic tests for Language Switcher
  *
@@ -54,6 +59,20 @@ export const testPasswordInputReveal = (identifier: string): void => {
     cy.dataCy(`${identifier}-icon`).click();
     // password hiden
     cy.dataCy(identifier).find('input').should('have.attr', 'type', 'password');
+  });
+};
+
+/**
+ * Test styles for title in route list
+ * Used in `RouteListDisplay.cy.js` and `RouteListEdit.cy.js`
+ */
+export const testRouteListDayDate = (): void => {
+  it('renders route list day and date', () => {
+    cy.dataCy('route-list-day-date')
+      .should('be.visible')
+      .and('have.css', 'font-size', '20px')
+      .and('have.css', 'font-weight', '500')
+      .and('have.color', grey10);
   });
 };
 
