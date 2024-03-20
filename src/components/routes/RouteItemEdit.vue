@@ -45,9 +45,9 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const action = ref<string>('input-distance');
-    const distance = ref<number>(0);
+    const distance = ref<number>(props.route.distance || 0);
 
     const optionsAction: FormOption[] = [
       {
