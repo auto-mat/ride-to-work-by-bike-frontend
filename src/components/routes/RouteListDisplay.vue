@@ -25,7 +25,7 @@ import { computed, defineComponent } from 'vue';
 import RouteItemDisplay from './RouteItemDisplay.vue';
 
 // composables
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '../../composables/useRoutes';
 
 // types
 import type { RouteItem, RouteListDay } from '../types/Route';
