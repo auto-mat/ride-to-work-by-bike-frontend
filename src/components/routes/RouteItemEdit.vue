@@ -205,6 +205,8 @@ export default defineComponent({
                     v-model="distance"
                     :id="`route-item-distance-${route.id}`"
                     :name="`route-item-distance-${route.id}`"
+                    min="0"
+                    max="999"
                     data-cy="input-distance"
                   />
                   <span data-cy="units-distance">{{ $t('global.km') }}</span>
