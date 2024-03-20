@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * RouteList Component
+ * RouteListEdit Component
  *
  * @description * Use this component to render routes in a list view.
  *
@@ -31,7 +31,7 @@ import RouteItemEdit from './RouteItemEdit.vue';
 import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
-  name: 'RouteList',
+  name: 'RouteListEdit',
   props: {
     routes: {
       type: Array as () => RouteItem[],
