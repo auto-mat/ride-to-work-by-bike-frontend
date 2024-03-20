@@ -3,24 +3,42 @@ import { i18n } from '../../boot/i18n';
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], index.component, i18n);
+    cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
-  context(desktop, () => {
+  context('desktop', () => {
     beforeEach(() => {
-      cy.mount(RouteListDisplay, {
-        props: {},
+      cy.fixture('routeList').then((routes) => {
+        cy.mount(RouteListDisplay, {
+          props: {
+            routes,
+          },
+        });
+        cy.viewport('macbook-16');
       });
-      cy.viewport('macbook-16');
     });
+
+    coreTests();
   });
 
-  context(mobile, () => {
+  context('mobile', () => {
     beforeEach(() => {
-      cy.mount(RouteListDisplay, {
-        props: {},
+      cy.fixture('routeList').then((routes) => {
+        cy.mount(RouteListDisplay, {
+          props: {
+            routes,
+          },
+        });
+        cy.viewport('iphone-6');
       });
-      cy.viewport('iphone-6');
     });
+
+    coreTests();
   });
 });
+
+function coreTests() {
+  it('renders component', () => {
+    cy.dataCy('route-list-display').should('be.visible');
+  });
+}

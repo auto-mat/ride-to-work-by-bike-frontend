@@ -8,7 +8,7 @@ const grey10 = getPaletteColor('grey-10');
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
   context('desktop', () => {
