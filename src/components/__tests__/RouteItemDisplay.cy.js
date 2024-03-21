@@ -36,16 +36,19 @@ describe('<RouteItemDisplay>', () => {
     coreTests();
 
     it('renders label and icon "to work"', () => {
+      // label to work
       cy.dataCy('label-direction')
         .should('be.visible')
         .and('contain', i18n.global.t('routes.labelDirectionToWork'));
+      // icon to work
       cy.dataCy('label-direction-icon')
         .should('be.visible')
         .and('contain', 'arrow_forward');
     });
 
-    it('renders distance', () => {
+    it('renders correct distance value', () => {
       cy.fixture('routeListItem').then((routes) => {
+        // distance value including units
         cy.dataCy('label-distance')
           .should('be.visible')
           .and('have.css', 'font-size', '14px')
@@ -56,7 +59,7 @@ describe('<RouteItemDisplay>', () => {
       });
     });
 
-    it('renders columns side by side', () => {
+    it('renders columns side by side in 2:10 ratio', () => {
       cy.testElementPercentageWidth(
         cy.dataCy('column-direction'),
         (2 / 12) * 100,
@@ -83,15 +86,18 @@ describe('<RouteItemDisplay>', () => {
     coreTests();
 
     it('renders label and icon "from work"', () => {
+      // label from work
       cy.dataCy('label-direction')
         .should('be.visible')
         .and('contain', i18n.global.t('routes.labelDirectionFromWork'));
+      // icon from work
       cy.dataCy('label-direction-icon')
         .should('be.visible')
         .and('contain', 'arrow_back');
     });
 
     it('does not render distance', () => {
+      // distance value empty
       cy.dataCy('label-distance').should('not.exist');
     });
   });
@@ -119,12 +125,15 @@ describe('<RouteItemDisplay>', () => {
 
 function coreTests() {
   it('renders component', () => {
+    // component visible
     cy.dataCy('route-item-display').should('be.visible');
+    // label direction styles
     cy.dataCy('label-direction')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
+    // icon direction
     cy.dataCy('label-direction-icon')
       .should('be.visible')
       .invoke('height')
@@ -133,6 +142,7 @@ function coreTests() {
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 18);
+    // icon transport
     cy.dataCy('icon-transport')
       .should('be.visible')
       .invoke('height')
@@ -141,6 +151,7 @@ function coreTests() {
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 24);
+    // description transport styles
     cy.dataCy('description-transport')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
