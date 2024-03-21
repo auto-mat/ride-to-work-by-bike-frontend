@@ -248,7 +248,7 @@ function coreTests() {
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
       .and('have.color', black)
-      .and('contain', i18n.global.t('global.km'));
+      .and('contain', i18n.global.t('global.routeLengthUnit'));
   });
 
   it('allows to change transport type', () => {

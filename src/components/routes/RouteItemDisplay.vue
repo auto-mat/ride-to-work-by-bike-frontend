@@ -90,7 +90,7 @@ export default defineComponent({
         </div>
         <!-- Distance -->
         <div v-if="route.distance" data-cy="label-distance">
-          {{ route.distance }} {{ $t('global.km') }}
+          {{ route.distance }} {{ $t('global.routeLengthUnit') }}
         </div>
       </div>
     </div>

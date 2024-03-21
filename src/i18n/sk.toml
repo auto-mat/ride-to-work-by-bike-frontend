@@ -21,7 +21,7 @@ female = "Dámske"
 man = "Muž"
 male = "Pánske"
 woman = "Žena"
-km = "km"
+routeLengthUnit = "km"
 
 [calendar]
 calendarApple = "Apple"

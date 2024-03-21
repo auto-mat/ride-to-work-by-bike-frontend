@@ -21,7 +21,7 @@ female = "Dámské"
 man = "Muž"
 male = "Pánské"
 woman = "Žena"
-km = "km"
+routeLengthUnit = "km"
 
 [calendar]
 calendarApple = "Apple"
@@ -390,6 +390,6 @@ labelTransportType = "Typ dopravy"
 [routes.transport]
 bike = "Na kole"
 car = "Autem"
-none = "Nijak"
+none = "Žádná"
 walk = "Pěšky"
 bus = "Hromadnou dopravou"

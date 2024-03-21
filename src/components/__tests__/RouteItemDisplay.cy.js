@@ -55,7 +55,7 @@ describe('<RouteItemDisplay>', () => {
           .and('have.css', 'font-weight', '400')
           .and('have.color', black)
           .and('contain', routes.toWork.distance)
-          .and('contain', i18n.global.t('global.km'));
+          .and('contain', i18n.global.t('global.routeLengthUnit'));
       });
     });
 

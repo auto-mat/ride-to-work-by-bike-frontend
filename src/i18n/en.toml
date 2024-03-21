@@ -21,7 +21,7 @@ female = "Female"
 man = "Man"
 male = "Male"
 woman = "Woman"
-km = "km"
+routeLengthUnit = "km"
 
 [calendar]
 calendarApple = "Apple"

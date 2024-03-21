@@ -203,7 +203,9 @@ export default defineComponent({
                     max="999"
                     data-cy="input-distance"
                   />
-                  <span data-cy="units-distance">{{ $t('global.km') }}</span>
+                  <span data-cy="units-distance">{{
+                    $t('global.routeLengthUnit')
+                  }}</span>
                 </div>
               </div>
             </div>
