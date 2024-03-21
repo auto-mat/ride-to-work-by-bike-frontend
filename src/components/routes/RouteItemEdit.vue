@@ -85,9 +85,12 @@ export default defineComponent({
       );
     });
 
+    const iconSize = '18px';
+
     return {
       action,
       distance,
+      iconSize,
       isShownDistance,
       optionsAction,
       optionsTransport,
@@ -109,7 +112,7 @@ export default defineComponent({
         <span v-if="route.direction === 'from_work'">
           <q-icon
             name="arrow_back"
-            size="18px"
+            :size="iconSize"
             data-cy="label-direction-icon"
           />
           {{ $t('routes.labelDirectionFromWork') }}
@@ -118,7 +121,7 @@ export default defineComponent({
         <span v-if="route.direction === 'to_work'">
           <q-icon
             name="arrow_forward"
-            size="18px"
+            :size="iconSize"
             data-cy="label-direction-icon"
           />
           {{ $t('routes.labelDirectionToWork') }}
