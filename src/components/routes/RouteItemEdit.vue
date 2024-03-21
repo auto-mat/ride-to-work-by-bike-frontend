@@ -125,7 +125,7 @@ export default defineComponent({
         </span>
       </div>
     </div>
-    <div class="col-12 col-sm-10">
+    <div class="col-12 col-sm-10" data-cy="column-transport-distance">
       <div class="row">
         <!-- Column: Transport type -->
         <div class="col-12 col-sm-4" data-cy="column-transport">

@@ -69,6 +69,28 @@ describe('<RouteItemEdit>', () => {
           );
       });
     });
+
+    it('renders columns direction:transport-distance side by side in 2:10 ratio', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-direction'),
+        (2 / 12) * 100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport-distance'),
+        (10 / 12) * 100,
+      );
+    });
+
+    it('renders columns transport:distance side by side in 4:8 ratio', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport'),
+        (4 / 12) * 100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-distance'),
+        (8 / 12) * 100,
+      );
+    });
   });
 
   context('route from work', () => {
@@ -104,6 +126,28 @@ describe('<RouteItemEdit>', () => {
         .invoke('val')
         .should('eq', '0');
     });
+
+    it('renders columns direction:transport-distance side by side in 2:10 ratio', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-direction'),
+        (2 / 12) * 100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport-distance'),
+        (10 / 12) * 100,
+      );
+    });
+
+    it('renders columns transport:distance side by side in 4:8 ratio', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport'),
+        (4 / 12) * 100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-distance'),
+        (8 / 12) * 100,
+      );
+    });
   });
 
   context('mobile', () => {
@@ -119,6 +163,19 @@ describe('<RouteItemEdit>', () => {
     });
 
     coreTests();
+
+    it('renders columns direction:transport-distance stacked', () => {
+      cy.testElementPercentageWidth(cy.dataCy('column-direction'), 100);
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport-distance'),
+        100,
+      );
+    });
+
+    it('renders columns transport:distance stacked', () => {
+      cy.testElementPercentageWidth(cy.dataCy('column-transport'), 100);
+      cy.testElementPercentageWidth(cy.dataCy('column-distance'), 100);
+    });
   });
 });
 
