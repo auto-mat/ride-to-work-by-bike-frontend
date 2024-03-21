@@ -13,9 +13,10 @@ import type {
 
 export const useRoutes = () => {
   /**
-   * Returns the icon predefined for given transport type
-   * @param route (TransportType)
-   * @returns icon name (string)
+   * Returns the icon name corresponding to the given route.
+   *
+   * @param {TransportType} route - The route.
+   * @return {string} The icon name.
    */
   const getRouteIcon = (route: TransportType): string => {
     switch (route) {
@@ -34,6 +35,12 @@ export const useRoutes = () => {
     }
   };
 
+  /**
+   * Generate an array of RouteListDay objects grouped by date from the given routes.
+   *
+   * @param routes - The array of RouteItem objects to process.
+   * @return The array of RouteListDay objects grouped by date.
+   */
   const getDays = (routes: RouteItem[] | null | undefined): RouteListDay[] => {
     const dayArray: RouteListDay[] = [];
     if (!routes) return dayArray;
@@ -55,12 +62,25 @@ export const useRoutes = () => {
     return dayArray;
   };
 
+  /**
+   * Formats a given date string into a specific format.
+   *
+   * @param dateString - The date string to be formatted.
+   * @return The formatted date string in the format 'D. MMM'.
+   */
   const formatDate = (dateString: string) => {
     const timeStamp = new Date(dateString);
     // using quasar date object
     return date.formatDate(timeStamp, 'D. MMM');
   };
 
+  /**
+   * Returns a text-based label for a day based on the given date.
+   * Example: "Today", "Yesterday", "Monday"
+   *
+   * @param dateString - The date string to be formatted
+   * @return The formatted date name
+   */
   const formatDateName = (dateString: string) => {
     const timeStamp = new Date(dateString);
     const nowStamp = new Date();
