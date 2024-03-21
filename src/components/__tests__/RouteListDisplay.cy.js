@@ -23,6 +23,10 @@ describe('<RouteListDisplay>', () => {
     });
 
     coreTests();
+
+    it('renders items in two columns', () => {
+      cy.testElementPercentageWidth(cy.dataCy('route-list-item-wrapper'), 50);
+    });
   });
 
   context('mobile', () => {
@@ -38,15 +42,22 @@ describe('<RouteListDisplay>', () => {
     });
 
     coreTests();
+
+    it('renders items in one columns', () => {
+      cy.testElementPercentageWidth(cy.dataCy('route-list-item-wrapper'), 100);
+    });
   });
 });
 
 function coreTests() {
   it('renders component', () => {
+    // component visible
     cy.dataCy('route-list-display').should('be.visible');
+    // items
     cy.dataCy('route-list-item').should('be.visible');
   });
 
+  // day date (title) styles
   testRouteListDayDate();
 
   it('renders route list transport methods', () => {

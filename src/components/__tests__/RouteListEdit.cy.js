@@ -43,11 +43,13 @@ describe('<RouteListEdit>', () => {
 
 function coreTests() {
   it('renders component', () => {
+    // component visible
     cy.dataCy('route-list').should('be.visible');
-    // items
+    // items visible
     cy.dataCy('route-list-item').should('be.visible');
   });
 
+  // day date (title) styles
   testRouteListDayDate();
 
   it('renders route list transport methods', () => {
