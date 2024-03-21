@@ -2,26 +2,17 @@
 /**
  * RouteItemEdit Component
  *
- * @description * Use this component to render an item in an editable list
- * of routes.
+ * @description * Use this component to render an item in a list with the
+ * option to edit data.
+ *
+ * Note: This component is commonly used in `RouteListEdit`.
  *
  * @props
- * - `route` (object, required): The object representing the route.
- *   It should be of type `object` with properties:
- *   - id (string)
- *   - date (string)
- *   - direction (string)
- *   - distance (number)
- *   - transport (string)
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @components
- * - `CHILD`: Component to ... .
+ * - `route` (RouteItem, required): The object representing the route.
+ *   It should be of type `RouteItem`
  *
  * @example
- * <route-list-item />
+ * <route-list-item :route="route" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104042&mode=dev)
  */

@@ -2,18 +2,17 @@
 /**
  * RouteItemDisplay Component
  *
- * @description * Use this component to render an item in a route summary list.
+ * @description * Use this component to render an item in a list only for
+ * display.
+ *
+ * Note: This component is commonly used in `RouteListDisplay`.
  *
  * @props
- * - `route` (object, required): The object representing the route.
- *   It should be of type `object` with properties:
- *   - id (string)
- *   - date (string)
- *   - direction (string)
- *   - distance (number)
+ * - `route` (RouteItem, required): The object representing the route.
+ *   It should be of type `RouteItem`.
  *
  * @example
- * <route-item-display />
+ * <route-item-display :route="route" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104042&mode=dev)
  */
