@@ -42,17 +42,31 @@ describe('<RouteItemEdit>', () => {
         'contain',
         i18n.global.t('routes.labelDirectionToWork'),
       );
-      // direation icon
+      // direction icon
       cy.dataCy('label-direction-icon').should('be.visible');
       cy.dataCy('label-direction-icon').should('contain', 'arrow_forward');
     });
 
-    it('renders the distance', () => {
+    it('renders the input distance value', () => {
+      // make sure transport type is bike
+      cy.dataCy('button-toggle-transport').find('button').eq(0).click();
       cy.fixture('routeListItem').then((routes) => {
+        // input distance value
         cy.dataCy('input-distance')
           .should('be.visible')
           .invoke('val')
           .should('eq', routes.toWork.distance);
+      });
+    });
+
+    it('renders correct transport type', () => {
+      cy.fixture('routeListItem').then((routes) => {
+        cy.dataCy('description-transport')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t(`routes.transport.${routes.toWork.transport}`),
+          );
       });
     });
   });
@@ -83,7 +97,8 @@ describe('<RouteItemEdit>', () => {
       cy.dataCy('label-direction-icon').should('contain', 'arrow_back');
     });
 
-    it('renders 0 when distance is not defined', () => {
+    it('renders "0" when distance is empty', () => {
+      // empty distance value
       cy.dataCy('input-distance')
         .should('be.visible')
         .invoke('val')
@@ -109,25 +124,29 @@ describe('<RouteItemEdit>', () => {
 
 function coreTests() {
   it('renders component', () => {
+    // component visible
     cy.dataCy('route-list-item').should('be.visible');
     // column direction
     cy.dataCy('column-direction').should('be.visible');
+    // label direction styles
     cy.dataCy('label-direction')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
+    // icon direction styles
     cy.dataCy('label-direction-icon').should('be.visible');
     cy.dataCy('label-direction-icon').invoke('width').should('be.equal', 18);
     cy.dataCy('label-direction-icon').invoke('height').should('be.equal', 18);
     // column transport
     cy.dataCy('column-transport').should('be.visible');
+    // label transport styles
     cy.dataCy('label-transport')
       .should('be.visible')
       .and('have.css', 'font-size', '12px')
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
-    // button toggle
+    // button toggle transport
     cy.dataCy('button-toggle-transport')
       .should('be.visible')
       .find('button')
@@ -144,13 +163,17 @@ function coreTests() {
       .find('i')
       .invoke('height')
       .should('be.gt', 1);
-    // description transport
+    // description transport styles
     cy.dataCy('description-transport')
       .should('be.visible')
       .and('have.css', 'font-size', '12px')
       .and('have.css', 'font-weight', '400')
-      .and('have.color', black)
-      .and('contain', i18n.global.t('routes.transport.bike'));
+      .and('have.color', black);
+  });
+
+  it('renders column distance', () => {
+    // make sure transport type is bike
+    cy.dataCy('button-toggle-transport').find('button').eq(0).click();
     // column distance
     cy.dataCy('column-distance').should('be.visible');
     cy.dataCy('label-distance')
@@ -158,8 +181,11 @@ function coreTests() {
       .and('have.css', 'font-size', '12px')
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
+    // select action
     cy.dataCy('select-action').should('be.visible');
+    // input distance
     cy.dataCy('input-distance').should('be.visible');
+    // input distance value styles
     cy.dataCy('units-distance')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
@@ -169,6 +195,8 @@ function coreTests() {
   });
 
   it('allows to change transport type', () => {
+    // make sure transport type is bike
+    cy.dataCy('button-toggle-transport').find('button').eq(0).click();
     // description transport
     cy.dataCy('description-transport').should(
       'contain',
@@ -205,6 +233,8 @@ function coreTests() {
   });
 
   it('hides distance if transport type is "car" or "none"', () => {
+    // make sure transport type is bike
+    cy.dataCy('button-toggle-transport').find('button').eq(0).click();
     // distance is shown
     cy.dataCy('column-distance').should('be.visible');
     // change transport type - car
