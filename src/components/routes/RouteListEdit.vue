@@ -57,15 +57,18 @@ export default defineComponent({
 
 <template>
   <div data-cy="route-list">
+    <!-- Item: Day -->
     <div
       v-for="day in days"
       :key="day.date"
       class="q-my-xl"
       data-cy="route-list-day"
     >
+      <!-- Title: Date -->
       <h3 class="text-h6 text-grey-10" data-cy="route-list-day-date">
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
+      <!-- Item: Route -->
       <route-item-edit
         v-for="route in day.routes"
         :route="route"
