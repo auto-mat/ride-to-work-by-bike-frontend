@@ -5,10 +5,11 @@ import { i18n } from '../boot/i18n';
 
 // import components
 import DrawerHeader from 'components/global/DrawerHeader.vue';
-import UserSelect from 'components/global/UserSelect.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
+import DrawerToggleButtons from 'src/components/global/DrawerToggleButtons.vue';
 import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
+import UserSelect from 'components/global/UserSelect.vue';
 
 // set global i18n object (for test purposes)
 if (window.Cypress) {
@@ -20,10 +21,11 @@ export default defineComponent({
 
   components: {
     DrawerHeader,
-    UserSelect,
     DrawerMenu,
+    DrawerToggleButtons,
     FooterBar,
     MobileBottomPanel,
+    UserSelect,
   },
 });
 </script>
@@ -52,11 +54,12 @@ export default defineComponent({
       data-cy="q-drawer"
     >
       <!-- Logo + Buttons (help, notification) -->
-      <drawer-header :mobile="false" data-cy="drawer-header"></drawer-header>
+      <drawer-header :mobile="false" data-cy="drawer-header" />
       <!-- User options dropdown -->
-      <user-select class="q-pt-lg" data-cy="user-select"></user-select>
+      <user-select class="q-pt-lg" data-cy="user-select" />
+      <drawer-toggle-buttons class="q-pt-lg" data-cy="drawer-toggle-buttons" />
       <!-- Navigation menu -->
-      <drawer-menu class="q-pt-lg" data-cy="drawer-menu"></drawer-menu>
+      <drawer-menu class="q-pt-lg" data-cy="drawer-menu" />
     </q-drawer>
 
     <q-page-container class="bg-info pb-footer">
@@ -64,7 +67,7 @@ export default defineComponent({
     </q-page-container>
     <q-footer class="position-static md-position-absolute bg-transparent">
       <!-- footer content -->
-      <mobile-bottom-panel></mobile-bottom-panel>
+      <mobile-bottom-panel />
       <footer-bar />
     </q-footer>
   </q-layout>
