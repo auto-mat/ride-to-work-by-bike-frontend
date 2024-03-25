@@ -14,6 +14,12 @@ const routesConf: RoutesConf = {
       name: 'home',
     },
   },
+  routes: {
+    path: '/routes',
+    children: {
+      name: 'routes',
+    },
+  },
   login: {
     path: '/login',
     children: {

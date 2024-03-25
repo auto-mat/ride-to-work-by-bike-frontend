@@ -21,6 +21,7 @@ female = "Female"
 man = "Man"
 male = "Male"
 woman = "Woman"
+routeLengthUnit = "km"
 
 [calendar]
 calendarApple = "Apple"
@@ -37,13 +38,15 @@ en = "English"
 
 [time]
 day = "day | days"
-hour = "hour | hours"
-minute = "minute | minutes"
-second = "second | seconds"
 dayShort = "d"
+hour = "hour | hours"
 hourShort = "h"
+minute = "minute | minutes"
 minuteShort = "m"
+second = "second | seconds"
 secondShort = "s"
+today = "Today"
+yesterday = "Yesterday"
 
 [navigation]
 continue = "Continue"
@@ -375,3 +378,17 @@ messagePasswordConfirmNotMatch = "Passwords don't match"
 messageResponsibilityRequired = "You must agree to provide an entry fee."
 messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
+
+[routes]
+actionInputDistance = "Input distance"
+labelDistance = "Route"
+labelDirectionFromWork = "From work"
+labelDirectionToWork = "To work"
+labelTransportType = "Transport type"
+
+[routes.transport]
+bike = "By bike"
+car = "By car"
+none = "None"
+walk = "On foot"
+bus = "By public transport"

@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: routesConf['routes']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['routes']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  {
     path: routesConf['login']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [

@@ -21,6 +21,7 @@ female = "Dámske"
 man = "Muž"
 male = "Pánske"
 woman = "Žena"
+routeLengthUnit = "km"
 
 [calendar]
 calendarApple = "Apple"
@@ -37,13 +38,15 @@ en = "Angličtina"
 
 [time]
 day = "deň | dni"
-hour = "hodina | hodín"
-minute = "minúta | minút"
-second = "sekunda | sekúnd"
 dayShort = "d."
+hour = "hodina | hodín"
 hourShort = "h."
+minute = "minúta | minút"
 minuteShort = "m."
+second = "sekunda | sekúnd"
 secondShort = "s."
+today = "Dnes"
+yesterday = "Včera"
 
 [navigation]
 continue = "Pokračovať"
@@ -375,3 +378,17 @@ messagePasswordConfirmNotMatch = "Heslá sa nezhodujú"
 messageResponsibilityRequired = "Musíte súhlasiť s poskytnutím štartovného."
 messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
+
+[routes]
+actionInputDistance = "Zadať vzdialenosť"
+labelDistance = "Trasa"
+labelDirectionFromWork = "Z práce"
+labelDirectionToWork = "Do práce"
+labelTransportType = "Typ dopravy"
+
+[routes.transport]
+bike = "Na bicykli"
+car = "Autom"
+none = "Nič"
+walk = "Pešo"
+bus = "Verejnou dopravou"

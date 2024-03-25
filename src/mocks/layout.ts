@@ -17,7 +17,7 @@ export const menuTop: Link[] = [
     name: 'home',
   },
   {
-    url: '/cesty',
+    url: '/routes',
     icon: 'route',
     name: 'routes',
   },
@@ -55,7 +55,7 @@ export const menuBottom: Link[] = [
     name: 'inviteFriends',
   },
   {
-    url: '/cesty',
+    url: '/routes',
     icon: 'volunteer_activism',
     name: 'donate',
   },
