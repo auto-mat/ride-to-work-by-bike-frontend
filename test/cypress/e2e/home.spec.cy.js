@@ -38,6 +38,10 @@ describe('Home page', () => {
 
     it('renders left drawer', () => {
       cy.dataCy('q-drawer').should('be.visible');
+      cy.dataCy('drawer-header').should('be.visible');
+      cy.dataCy('user-select').should('be.visible');
+      cy.dataCy('drawer-toggle-buttons').should('be.visible');
+      cy.dataCy('drawer-menu').should('be.visible');
     });
 
     it('allows user to display help dialog and read all FAQ items', () => {
