@@ -383,12 +383,14 @@ hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 
 [routes]
 actionInputDistance = "Zadať vzdialenosť"
+descriptionRoutes = "<p>Jazdy môžete nahrávať až 8 dní vopred.</p><p>Ak kombinujete vozidlá, zaznamenajte najdlhšiu časť alebo druhú najdlhšiu časť, ak jazdíte sami.</p>"
 hintLockedSection = "Táto časť sa otvorí hneď po začatí výzvy."
 hintWatchVideo = "Pozrite sa, ako to bude fungovať:"
 labelDistance = "Trasa"
 labelDirectionFromWork = "Z práce"
 labelDirectionToWork = "Do práce"
 labelTransportType = "Typ dopravy"
+titleRoutes = "Cesty"
 
 [routes.transport]
 bike = "Na bicykli"

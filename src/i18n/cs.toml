@@ -384,12 +384,14 @@ hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [routes]
 actionInputDistance = "Zadat vzdálenost"
+descriptionRoutes = "<p>Jízdy můžete zapisovat až 8 dní zpětně.</p><p>Pokud kombinujete dopravní prostředky, zapište tu nejdelší část, případně druhou nejdelší je-li na vlastní pohon.</p>"
 hintLockedSection = "Tato sekce s vám otevře ihned, jakmile začne výzva."
 hintWatchVideo = "Nahlédněte, jak to bude fungovat:"
 labelDistance = "Trasa"
 labelDirectionFromWork = "Z práce"
 labelDirectionToWork = "Do práce"
 labelTransportType = "Typ dopravy"
+titleRoutes = "Cesty"
 
 [routes.transport]
 bike = "Na kole"
