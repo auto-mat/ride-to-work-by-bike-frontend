@@ -56,6 +56,7 @@ export default defineComponent({
     };
     // initialize popstate listener
     onMounted(() => {
+      setActiveTab(activeTab.value);
       window.addEventListener('popstate', handlePopstate);
     });
     onUnmounted(() => {

@@ -102,4 +102,25 @@ function coreTests() {
     cy.dataCy('route-tabs-button-calendar').click();
     cy.dataCy('route-tabs-panel-calendar').should('be.visible');
   });
+
+  it('syncs tab navigation with URL', () => {
+    // initial state
+    cy.url().should('include', 'activeTab=calendar');
+    // switch to list tab
+    cy.dataCy('route-tabs-button-list').click();
+    cy.url().should('not.include', 'activeTab=calendar');
+    cy.url().should('include', 'activeTab=list');
+    // switch to map tab
+    cy.dataCy('route-tabs-button-map').click();
+    cy.url().should('not.include', 'activeTab=list');
+    cy.url().should('include', 'activeTab=map');
+    // switch to app tab
+    cy.dataCy('route-tabs-button-app').click();
+    cy.url().should('not.include', 'activeTab=map');
+    cy.url().should('include', 'activeTab=app');
+    // popstate
+    cy.go('back');
+    cy.url().should('include', 'activeTab=map');
+    cy.dataCy('route-tabs-panel-map').should('be.visible');
+  });
 }
