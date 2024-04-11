@@ -33,18 +33,28 @@ import type { RouteTab } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteTabs',
-  setup() {
+  props: {
+    locked: {
+      type: Array as () => RouteTab[],
+      default: () => [],
+    },
+  },
+  setup(props) {
     const { setUrlParam, getUrlParam } = useUrlParams();
+    // active tab with default value from URL
     const activeTab: Ref<RouteTab> = ref(
       getUrlParam('activeTab', 'calendar') as RouteTab,
     );
+    // function to set active tab and write into URL
     const setActiveTab = (tab: string | number) => {
       activeTab.value = String(tab) as RouteTab;
       setUrlParam('activeTab', String(tab));
     };
+    // change tab on popstate
     const handlePopstate = () => {
       activeTab.value = getUrlParam('activeTab', 'calendar') as RouteTab;
     };
+    // initialize popstate listener
     onMounted(() => {
       window.addEventListener('popstate', handlePopstate);
     });
@@ -52,7 +62,9 @@ export default defineComponent({
       window.removeEventListener('popstate', handlePopstate);
     });
 
-    const lockedTabs = ['map', 'app'];
+    // list locked tabs - exposed for testing and further logic
+    const lockedTabs = props.locked;
+    // getter function for locked state
     const isLocked = (tab: RouteTab): boolean => {
       return lockedTabs.includes(tab);
     };
@@ -77,6 +89,7 @@ export default defineComponent({
       active-color="primary"
       indicator-color="primary"
       align="center"
+      data-cy="route-tabs"
     >
       <q-tab
         name="calendar"
@@ -85,6 +98,7 @@ export default defineComponent({
         :alert="isLocked('calendar')"
         :disable="isLocked('calendar')"
         :label="$t('routes.tabCalendar')"
+        data-cy="route-tabs-button-calendar"
       />
       <q-tab
         name="list"
@@ -93,6 +107,7 @@ export default defineComponent({
         :alert="isLocked('list')"
         :disable="isLocked('list')"
         :label="$t('routes.tabList')"
+        data-cy="route-tabs-button-list"
       />
       <q-tab
         name="map"
@@ -101,6 +116,7 @@ export default defineComponent({
         :alert="isLocked('map')"
         :disable="isLocked('map')"
         :label="$t('routes.tabMap')"
+        data-cy="route-tabs-button-map"
       />
       <q-tab
         name="app"
@@ -109,6 +125,7 @@ export default defineComponent({
         :alert="isLocked('app')"
         :disable="isLocked('app')"
         :label="$t('routes.tabApp')"
+        data-cy="route-tabs-button-app"
       />
     </q-tabs>
     <!-- Separator -->
@@ -120,22 +137,22 @@ export default defineComponent({
       @transition="setActiveTab($event)"
     >
       <!-- Panel: Calendar -->
-      <q-tab-panel name="calendar">
+      <q-tab-panel name="calendar" data-cy="route-tabs-panel-calendar">
         <div class="text-h6">Mails</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
       <!-- Panel: List -->
-      <q-tab-panel name="list">
+      <q-tab-panel name="list" data-cy="route-tabs-panel-list">
         <div class="text-h6">Alarms</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
       <!-- Panel: Map -->
-      <q-tab-panel name="map">
+      <q-tab-panel name="map" data-cy="route-tabs-panel-map">
         <div class="text-h6">Movies</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
       <!-- Panel: App -->
-      <q-tab-panel name="app">
+      <q-tab-panel name="app" data-cy="route-tabs-panel-app">
         <div class="text-h6">Movies</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit.
       </q-tab-panel>
