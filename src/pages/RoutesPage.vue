@@ -7,20 +7,26 @@
       >
         {{ $t('routes.titleRoutes') }}
       </h1>
-      <p
-        v-html="$t('routes.descriptionRoutes')"
-        data-cy="routes-page-description"
-      ></p>
+      <div data-cy="routes-page-description">
+        <div v-html="$t('routes.descriptionRoutes')" />
+      </div>
     </div>
-    <div></div>
+    <RouteTabs data-cy="route-tabs" />
   </q-page>
 </template>
 
 <script lang="ts">
+// libraries
 import { defineComponent } from 'vue';
+
+// components
+import RouteTabs from 'src/components/routes/RouteTabs.vue';
 
 export default defineComponent({
   name: 'RoutesPage',
+  components: {
+    RouteTabs,
+  },
 });
 </script>
 

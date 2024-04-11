@@ -12,3 +12,5 @@ export type RouteListDay = {
   date: string;
   routes: RouteItem[];
 };
+
+export type RouteTab = 'calendar' | 'list' | 'map' | 'app';
