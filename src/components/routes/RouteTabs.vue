@@ -52,8 +52,15 @@ export default defineComponent({
       window.removeEventListener('popstate', handlePopstate);
     });
 
+    const lockedTabs = ['map', 'app'];
+    const isLocked = (tab: RouteTab): boolean => {
+      return lockedTabs.includes(tab);
+    };
+
     return {
       activeTab,
+      lockedTabs,
+      isLocked,
       setActiveTab,
     };
   },
@@ -65,16 +72,44 @@ export default defineComponent({
     <!-- Tab buttons -->
     <q-tabs
       v-model="activeTab"
-      dense
+      inline-label
       class="text-grey"
       active-color="primary"
       indicator-color="primary"
       align="center"
     >
-      <q-tab name="calendar" label="Calendar" />
-      <q-tab name="list" label="List" />
-      <q-tab name="map" label="Map" />
-      <q-tab name="app" label="App" />
+      <q-tab
+        name="calendar"
+        icon="mdi-calendar-blank"
+        alert-icon="mdi-lock"
+        :alert="isLocked('calendar')"
+        :disable="isLocked('calendar')"
+        :label="$t('routes.tabCalendar')"
+      />
+      <q-tab
+        name="list"
+        icon="mdi-format-list-bulleted"
+        alert-icon="mdi-lock"
+        :alert="isLocked('list')"
+        :disable="isLocked('list')"
+        :label="$t('routes.tabList')"
+      />
+      <q-tab
+        name="map"
+        icon="mdi-map"
+        alert-icon="mdi-lock"
+        :alert="isLocked('map')"
+        :disable="isLocked('map')"
+        :label="$t('routes.tabMap')"
+      />
+      <q-tab
+        name="app"
+        icon="mdi-cellphone"
+        alert-icon="mdi-lock"
+        :alert="isLocked('app')"
+        :disable="isLocked('app')"
+        :label="$t('routes.tabApp')"
+      />
     </q-tabs>
     <!-- Separator -->
     <q-separator />

@@ -7,8 +7,9 @@
       >
         {{ $t('routes.titleRoutes') }}
       </h1>
-      <div data-cy="routes-page-description">
-        <div v-html="$t('routes.descriptionRoutes')" />
+      <div data-cy="routes-page-instructions">
+        <p>{{ $t('routes.instructionRouteLogTimeframe') }}</p>
+        <p>{{ $t('routes.instructionRouteCombination') }}</p>
       </div>
     </div>
     <RouteTabs data-cy="route-tabs" />
