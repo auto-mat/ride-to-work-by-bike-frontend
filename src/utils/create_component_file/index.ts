@@ -1,9 +1,7 @@
-const {
-  getCyJsTemplate,
-  getVueTemplate,
-} = require('./create_component_templates');
 const fs = require('fs');
 const path = require('path');
+import componentTemplate from './templates/template_component';
+import testTemplate from './templates/template_test';
 
 // Process arguments
 const componentName = process.argv[2];
@@ -16,31 +14,34 @@ if (!componentName) {
 }
 
 // Determine the import path
-let importPath = `components/${
+const importPath = `components/${
   folderPath === '.' ? '' : folderPath + '/'
 }${componentName}`;
 
 // Ensure the component and tests directories exist
-ensureDir(path.join(__dirname, `src/components/${folderPath}`));
-ensureDir(path.join(__dirname, 'src/components/__tests__'));
+const projectRoot = process.cwd();
+ensureDir(path.join(projectRoot, `src/components/${folderPath}`));
+ensureDir(path.join(projectRoot, 'src/components/__tests__'));
 
-const cyJsTemplate = getCyJsTemplate(componentName, importPath);
-const vueTemplate = getVueTemplate(componentName);
+const vueTemplate = componentTemplate.replace(/ComponentName/g, componentName);
+const cyJsTemplate = testTemplate
+  .replace(/ComponentName/g, componentName)
+  .replace(/ImportPath/g, importPath);
 
 // Create .vue and .cy.js files
 fs.writeFileSync(
-  path.join(__dirname, `src/components/${folderPath}/${componentName}.vue`),
+  path.join(projectRoot, `src/components/${folderPath}/${componentName}.vue`),
   vueTemplate,
 );
 fs.writeFileSync(
-  path.join(__dirname, `src/components/__tests__/${componentName}.cy.js`),
+  path.join(projectRoot, `src/components/__tests__/${componentName}.cy.js`),
   cyJsTemplate,
 );
 
 console.log(`Component ${componentName} created successfully.`);
 
 // Function to ensure the directory exists
-function ensureDir(dirPath) {
+function ensureDir(dirPath: string) {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
   }

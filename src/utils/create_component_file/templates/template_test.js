@@ -1,0 +1,4 @@
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.default =
+  "import ComponentName from 'ImportPath.vue';\nimport { i18n } from '../../boot/i18n';\n\ndescribe('<ComponentName>', () => {\n  it('has translation for all strings', () => {\n    cy.testLanguageStringsInContext([], 'index.component', i18n);\n  });\n\n  context('desktop', () => {\n    beforeEach(() => {\n      cy.mount(ComponentName, {\n        props: {},\n      });\n      cy.viewport('macbook-16');\n    });\n\n    coreTests();\n  });\n\n  context('mobile', () => {\n    beforeEach(() => {\n      cy.mount(ComponentName, {\n        props: {},\n      });\n      cy.viewport('iphone-6');\n    });\n\n    coreTests();\n  });\n});\n\nfunction coreTests() {\n  it('renders component', () => {\n    cy.dataCy('component').should('be.visible');\n  });\n}\n";
