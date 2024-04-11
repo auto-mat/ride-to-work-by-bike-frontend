@@ -23,10 +23,10 @@ const projectRoot = process.cwd();
 ensureDir(path.join(projectRoot, `src/components/${folderPath}`));
 ensureDir(path.join(projectRoot, 'src/components/__tests__'));
 
-const vueTemplate = componentTemplate.replace(/ComponentName/g, componentName);
+const vueTemplate = componentTemplate.replace(/COMPONENT_NAME/g, componentName);
 const cyJsTemplate = testTemplate
-  .replace(/ComponentName/g, componentName)
-  .replace(/ImportPath/g, importPath);
+  .replace(/COMPONENT_NAME/g, componentName)
+  .replace(/IMPORT_PATH/g, importPath);
 
 // Create .vue and .cy.js files
 fs.writeFileSync(

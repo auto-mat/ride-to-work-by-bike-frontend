@@ -1,14 +1,14 @@
-export default `import ComponentName from 'ImportPath.vue';
+export default `import COMPONENT_NAME from 'IMPORT_PATH.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<ComponentName>', () => {
+describe('<COMPONENT_NAME>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(ComponentName, {
+      cy.mount(COMPONENT_NAME, {
         props: {},
       });
       cy.viewport('macbook-16');
@@ -19,7 +19,7 @@ describe('<ComponentName>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(ComponentName, {
+      cy.mount(COMPONENT_NAME, {
         props: {},
       });
       cy.viewport('iphone-6');

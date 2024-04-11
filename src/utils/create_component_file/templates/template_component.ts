@@ -1,6 +1,6 @@
 export default `<script lang='ts'>
 /**
- * ComponentName Component
+ * COMPONENT_NAME Component
  *
  * @description * Use this component to ... .
  * You can adjust its appearance by ... .
@@ -21,7 +21,7 @@ export default `<script lang='ts'>
  * - \`CHILD\`: Component to ... .
  *
  * @example
- * <ComponentName></ComponentName>
+ * <COMPONENT_NAME></COMPONENT_NAME>
  *
  * @see [Figma Design](...)
  */
@@ -30,7 +30,7 @@ export default `<script lang='ts'>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'ComponentName',
+  name: 'COMPONENT_NAME',
 })
 </script>
 
