@@ -12,7 +12,7 @@
         <p>{{ $t('routes.instructionRouteCombination') }}</p>
       </div>
     </div>
-    <RouteTabs data-cy="route-tabs" :locked="['map', 'app']" />
+    <route-tabs data-cy="route-tabs" />
   </q-page>
 </template>
 

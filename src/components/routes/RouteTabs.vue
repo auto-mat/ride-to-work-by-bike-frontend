@@ -12,7 +12,7 @@
  *
  * @components
  * - `RoutesCalendar`: Component to render the calendar view.
- * - `RoutesListDisplay`: Component to render the list view (display mode)
+ * - `RouteListDisplay`: Component to render the list view (display mode)
  * - `RoutesListEdit`: Component to render the list view (edit mode)
  *
  * @example
@@ -24,15 +24,26 @@
 // libraries
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
 
+// components
+import RouteListDisplay from './RouteListDisplay.vue';
+
 // composables
 import { useUrlParams } from '../../composables/useUrlParams';
 
 // types
 import type { Ref } from 'vue';
-import type { RouteTab } from '../types/Route';
+import type { RouteItem, RouteTab } from '../types/Route';
+
+// fixtures
+import routeListFixture from '../../../test/cypress/fixtures/routeList.json';
+// @ts-expect-error to cast routeListFixture to RouteItem type
+const routeList: RouteItem[] = routeListFixture as RouteItem[];
 
 export default defineComponent({
   name: 'RouteTabs',
+  components: {
+    RouteListDisplay,
+  },
   props: {
     locked: {
       type: Array as () => RouteTab[],
@@ -67,12 +78,14 @@ export default defineComponent({
     const lockedTabs = props.locked;
     // getter function for locked state
     const isLocked = (tab: RouteTab): boolean => {
+      if (!lockedTabs.length) return false;
       return lockedTabs.includes(tab);
     };
 
     return {
       activeTab,
       lockedTabs,
+      routeList,
       isLocked,
       setActiveTab,
     };
@@ -139,23 +152,20 @@ export default defineComponent({
     >
       <!-- Panel: Calendar -->
       <q-tab-panel name="calendar" data-cy="route-tabs-panel-calendar">
-        <div class="text-h6">Mails</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div class="text-h6">{{ $t('routes.tabCalendar') }}</div>
       </q-tab-panel>
       <!-- Panel: List -->
       <q-tab-panel name="list" data-cy="route-tabs-panel-list">
-        <div class="text-h6">Alarms</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div class="text-h6">{{ $t('routes.tabList') }}</div>
+        <route-list-display :routes="routeList" />
       </q-tab-panel>
       <!-- Panel: Map -->
       <q-tab-panel name="map" data-cy="route-tabs-panel-map">
-        <div class="text-h6">Movies</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div class="text-h6">{{ $t('routes.tabMap') }}</div>
       </q-tab-panel>
       <!-- Panel: App -->
       <q-tab-panel name="app" data-cy="route-tabs-panel-app">
-        <div class="text-h6">Movies</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <div class="text-h6">{{ $t('routes.tabApp') }}</div>
       </q-tab-panel>
     </q-tab-panels>
   </div>
