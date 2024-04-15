@@ -1,4 +1,4 @@
-export default `import COMPONENT_NAME from 'IMPORT_PATH.vue';
+import COMPONENT_NAME from 'IMPORT_PATH.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<COMPONENT_NAME>', () => {
@@ -34,4 +34,3 @@ function coreTests() {
     cy.dataCy('component').should('be.visible');
   });
 }
-`;

@@ -1,4 +1,4 @@
-export default `<script lang='ts'>
+<script lang='ts'>
 /**
  * COMPONENT_NAME Component
  *
@@ -6,19 +6,19 @@ export default `<script lang='ts'>
  * You can adjust its appearance by ... .
  *
  * @props
- * - \`NAME\` (TYPE, required): The object representing ... .
- *   It should be of type \`TYPE\`.
+ * - `NAME` (TYPE, required): The object representing ... .
+ *   It should be of type `TYPE`.
  *
  * @events
- * - \`update:modelValue\`: Emitted as a part of v-model structure.
+ * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @slots
- * - \`content\`: For ... .
+ * - `content`: For ... .
  *   exposed props and methods:
- *     - \`state\`
+ *     - `state`
  *
  * @components
- * - \`CHILD\`: Component to ... .
+ * - `CHILD`: Component to ... .
  *
  * @example
  * <COMPONENT_NAME></COMPONENT_NAME>
@@ -39,4 +39,3 @@ export default defineComponent({
 
   </div>
 </template>
-`;

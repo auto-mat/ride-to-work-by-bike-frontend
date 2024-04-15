@@ -1,7 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-import componentTemplate from './templates/template_component';
-import testTemplate from './templates/template_test';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const componentTemplate = fs.readFileSync(
+  path.join(__dirname, './templates/template_component'),
+  'utf8',
+);
+const testTemplate = fs.readFileSync(
+  path.join(__dirname, './templates/template_test'),
+  'utf8',
+);
 
 // Process arguments
 const componentName = process.argv[2];

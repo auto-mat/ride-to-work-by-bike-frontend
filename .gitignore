@@ -36,3 +36,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+# Boilerplate script
+./src/utils/create_component_file/index.js

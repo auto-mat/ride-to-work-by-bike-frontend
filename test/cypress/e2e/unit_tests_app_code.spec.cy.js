@@ -23,28 +23,37 @@ describe('Component Boilerplate function', function () {
   before(() => {
     // Pre-test setup to ensure a clean state and run the script
     cy.exec(
-      `npx tsc src/utils/create_component_file/index.ts && node src/utils/create_component_file/index.js ${componentName} ${componentFolder}`,
+      `npx tsc src/utils/create_component_file/index.ts && npx src/utils/create_component_file/index.js ${componentName} ${componentFolder}`,
     );
   });
 
   after(() => {
-    // Optional cleanup
-    cy.exec(`rm -rf src/components/${componentFolder}/${componentName}.vue`);
-    cy.exec(`rm -rf src/components/__tests__/${componentName}.cy.js`);
+    // Cleanup the created files using a Node.js task
+    cy.task(
+      'deleteFile',
+      `src/components/${componentFolder}/${componentName}.vue`,
+    );
+    cy.task('deleteFile', `src/components/__tests__/${componentName}.cy.js`);
   });
 
   it('should create a Vue file in the specified directory', () => {
     // Check that file exists
-    cy.exec(`test -f src/components/${componentFolder}/${componentName}.vue`)
-      .its('code')
-      .should('eq', 0);
+    cy.task(
+      'fileExists',
+      `src/components/${componentFolder}/${componentName}.vue`,
+    ).then((exists) => {
+      expect(exists).to.be.true;
+    });
   });
 
   it('should create a Cypress test file in the correct directory', () => {
     // Check that file exists
-    cy.exec(`test -f src/components/__tests__/${componentName}.cy.js`)
-      .its('code')
-      .should('eq', 0);
+    cy.task(
+      'fileExists',
+      `src/components/__tests__/${componentName}.cy.js`,
+    ).then((exists) => {
+      expect(exists).to.be.true;
+    });
   });
 
   it('should create a Vue file with correct content', () => {
