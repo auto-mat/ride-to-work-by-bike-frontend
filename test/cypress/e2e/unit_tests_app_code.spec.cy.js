@@ -23,7 +23,7 @@ describe('Component Boilerplate function', function () {
   before(() => {
     // Pre-test setup to ensure a clean state and run the script
     cy.exec(
-      `npx tsc src/utils/create_component_file/index.ts && npx src/utils/create_component_file/index.js ${componentName} ${componentFolder}`,
+      `npx tsc src/utils/create_component_file/index.ts && node src/utils/create_component_file/index.js ${componentName} ${componentFolder}`,
     );
   });
 

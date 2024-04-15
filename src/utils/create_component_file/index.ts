@@ -1,3 +1,16 @@
+/**
+ * Node.js script to generate new component files with boilerplate.
+ * Usage: `yarn creat:component [componentName] [folderPath]`
+ *
+ * Args:
+ *  - componentName: name of the component
+ *  - folderPath: path of the src/components subfolder where the component
+ *    will be created
+ *
+ * Creates:
+ *  - .vue file in src/components/[folderPath] (if folderPath is provided)
+ *  - .cy.js file for testing in src/components/__tests__
+ */
 import * as fs from 'fs';
 import * as path from 'path';
 
