@@ -1,6 +1,6 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import { getString } from 'src/utils';
-import componentTemplate from 'src/utils/create_component_file/templates/template_component';
-import testTemplate from 'src/utils/create_component_file/templates/template_test';
 
 describe('Unit Test Application Code', function () {
   before(() => {
@@ -57,6 +57,11 @@ describe('Component Boilerplate function', function () {
   });
 
   it('should create a Vue file with correct content', () => {
+    const componentTemplate = fs.readFileSync(
+      path.join(__dirname, './templates/template_component.txt'),
+      'utf8',
+    );
+
     const vueFilePath = `src/components/${componentFolder}/${componentName}.vue`;
     // Read the .cy.js file
     cy.readFile(vueFilePath).then((content) => {
@@ -70,6 +75,11 @@ describe('Component Boilerplate function', function () {
   });
 
   it('should create a Cypress test file with correct content', () => {
+    const testTemplate = fs.readFileSync(
+      path.join(__dirname, './templates/template_test.txt'),
+      'utf8',
+    );
+
     const testFilePath = `src/components/__tests__/${componentName}.cy.js`;
     // Read the .cy.js file
     cy.readFile(testFilePath).then((content) => {
