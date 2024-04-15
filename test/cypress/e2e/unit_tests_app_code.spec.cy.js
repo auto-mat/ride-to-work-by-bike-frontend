@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { getString } from 'src/utils';
 
 describe('Unit Test Application Code', function () {
@@ -57,37 +55,37 @@ describe('Component Boilerplate function', function () {
   });
 
   it('should create a Vue file with correct content', () => {
-    const componentTemplate = fs.readFileSync(
-      path.join(__dirname, './templates/template_component.txt'),
-      'utf8',
-    );
-
-    const vueFilePath = `src/components/${componentFolder}/${componentName}.vue`;
-    // Read the .cy.js file
-    cy.readFile(vueFilePath).then((content) => {
-      // Check if the file contains the correct content
-      const componentContent = componentTemplate.replace(
-        /COMPONENT_NAME/g,
-        componentName,
-      );
-      expect(content).to.eq(componentContent);
+    cy.task(
+      'readFile',
+      'src/utils/create_component_file/templates/template_component.txt',
+    ).then((componentTemplate) => {
+      const vueFilePath = `src/components/${componentFolder}/${componentName}.vue`;
+      // Read the .cy.js file
+      cy.task('readFile', vueFilePath).then((content) => {
+        // Check if the file contains the correct content
+        const componentContent = componentTemplate.replace(
+          /COMPONENT_NAME/g,
+          componentName,
+        );
+        expect(content).to.eq(componentContent);
+      });
     });
   });
 
   it('should create a Cypress test file with correct content', () => {
-    const testTemplate = fs.readFileSync(
-      path.join(__dirname, './templates/template_test.txt'),
-      'utf8',
-    );
-
-    const testFilePath = `src/components/__tests__/${componentName}.cy.js`;
-    // Read the .cy.js file
-    cy.readFile(testFilePath).then((content) => {
-      // Check if the file contains the correct content
-      const testContent = testTemplate
-        .replace(/COMPONENT_NAME/g, componentName)
-        .replace(/IMPORT_PATH/g, importPath);
-      expect(content).to.eq(testContent);
+    cy.task(
+      'readFile',
+      'src/utils/create_component_file/templates/template_test.txt',
+    ).then((testTemplate) => {
+      const testFilePath = `src/components/__tests__/${componentName}.cy.js`;
+      // Read the .cy.js file
+      cy.task('readFile', testFilePath).then((content) => {
+        // Check if the file contains the correct content
+        const testContent = testTemplate
+          .replace(/COMPONENT_NAME/g, componentName)
+          .replace(/IMPORT_PATH/g, importPath);
+        expect(content).to.eq(testContent);
+      });
     });
   });
 });
