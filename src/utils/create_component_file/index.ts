@@ -2,11 +2,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const componentTemplate = fs.readFileSync(
-  path.join(__dirname, './templates/template_component'),
+  path.join(__dirname, './templates/template_component.txt'),
   'utf8',
 );
 const testTemplate = fs.readFileSync(
-  path.join(__dirname, './templates/template_test'),
+  path.join(__dirname, './templates/template_test.txt'),
   'utf8',
 );
 

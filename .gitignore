@@ -38,4 +38,4 @@ yarn-error.log*
 *.sln
 
 # Boilerplate script
-./src/utils/create_component_file/index.js
+/src/utils/create_component_file/index.js

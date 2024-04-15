@@ -54,7 +54,7 @@
     "test:component:open:win:chrome": "cypress open --component --browser chrome",
     "test:component:open:win:edge": "cypress open --component --browser edge",
     "prepare": "husky install",
-    "create:component": "npx tsc ./src/utils/create_component_file/index.ts && npx ./src/utils/create_component_file/index.js"
+    "create:component": "npx tsc ./src/utils/create_component_file/index.ts && node ./src/utils/create_component_file/index.js"
   },
   "dependencies": {
     "@originjs/vite-plugin-content": "^1.0.1",
