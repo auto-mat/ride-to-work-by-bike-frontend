@@ -10,40 +10,6 @@ const {
 
 const { getAppConfig } = require('src/utils/get_app_conf');
 
-// Task to clean up created files after testing boilerplate script
-export const deleteFile = (path) => {
-  return new Promise((resolve, reject) => {
-    fs.unlink(path, (err) => {
-      if (err) reject(err);
-      // return null to indicate Cypress task success
-      else resolve(null);
-    });
-  });
-};
-
-// Task to check the existence of a script-generated file
-export const fileExists = (path) => {
-  return new Promise((resolve) => {
-    fs.access(path, fs.constants.F_OK, (err) => {
-      if (err) {
-        resolve(false);
-      } else {
-        resolve(true);
-      }
-    });
-  });
-};
-
-export const readFile = (path) => {
-  return new Promise((resolve) => {
-    if (fs.existsSync(path)) {
-      resolve(fs.readFileSync(path, 'utf8'));
-    }
-
-    resolve(null);
-  });
-};
-
 module.exports = defineConfig({
   fixturesFolder: 'test/cypress/fixtures',
   screenshotsFolder: 'test/cypress/screenshots',
@@ -81,3 +47,37 @@ module.exports = defineConfig({
     defaultCommandTimeout: 60000,
   },
 });
+
+// Task to clean up created files after testing boilerplate script
+function deleteFile(path) {
+  return new Promise((resolve, reject) => {
+    fs.unlink(path, (err) => {
+      if (err) reject(err);
+      // return null to indicate Cypress task success
+      else resolve(null);
+    });
+  });
+}
+
+// Task to check the existence of a script-generated file
+function fileExists(path) {
+  return new Promise((resolve) => {
+    fs.access(path, fs.constants.F_OK, (err) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  });
+}
+
+function readFile(path) {
+  return new Promise((resolve) => {
+    if (fs.existsSync(path)) {
+      resolve(fs.readFileSync(path, 'utf8'));
+    }
+
+    resolve(null);
+  });
+}
