@@ -22,16 +22,12 @@
  */
 
 // libraries
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // components
 import RouteListDisplay from './RouteListDisplay.vue';
 
-// composables
-import { useUrlParams } from '../../composables/useUrlParams';
-
 // types
-import type { Ref } from 'vue';
 import type { RouteItem, RouteTab } from '../types/Route';
 
 // fixtures
@@ -51,29 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { setUrlParam, getUrlParam } = useUrlParams();
-    // active tab with default value from URL
-    const activeTab: Ref<RouteTab> = ref(
-      getUrlParam('activeTab', 'calendar') as RouteTab,
-    );
-    // function to set active tab and write into URL
-    const setActiveTab = (tab: string | number) => {
-      activeTab.value = String(tab) as RouteTab;
-      setUrlParam('activeTab', String(tab));
-    };
-    // change tab on popstate
-    const handlePopstate = () => {
-      activeTab.value = getUrlParam('activeTab', 'calendar') as RouteTab;
-    };
-    // initialize popstate listener
-    onMounted(() => {
-      setActiveTab(activeTab.value);
-      window.addEventListener('popstate', handlePopstate);
-    });
-    onUnmounted(() => {
-      window.removeEventListener('popstate', handlePopstate);
-    });
-
+    const activeTab = ref('');
     // list locked tabs - exposed for testing and further logic
     const lockedTabs = props.locked;
     // getter function for locked state
@@ -87,7 +61,6 @@ export default defineComponent({
       lockedTabs,
       routeList,
       isLocked,
-      setActiveTab,
     };
   },
 });
@@ -97,15 +70,16 @@ export default defineComponent({
   <div>
     <!-- Tab buttons -->
     <q-tabs
-      v-model="activeTab"
       inline-label
+      v-model="activeTab"
       class="text-grey"
       active-color="primary"
       indicator-color="primary"
       align="center"
       data-cy="route-tabs"
     >
-      <q-tab
+      <q-route-tab
+        to="/routes/calendar"
         name="calendar"
         icon="mdi-calendar-blank"
         alert-icon="mdi-lock"
@@ -114,7 +88,8 @@ export default defineComponent({
         :label="$t('routes.tabCalendar')"
         data-cy="route-tabs-button-calendar"
       />
-      <q-tab
+      <q-route-tab
+        to="/routes/list"
         name="list"
         icon="mdi-format-list-bulleted"
         alert-icon="mdi-lock"
@@ -123,7 +98,8 @@ export default defineComponent({
         :label="$t('routes.tabList')"
         data-cy="route-tabs-button-list"
       />
-      <q-tab
+      <q-route-tab
+        to="/routes/map"
         name="map"
         icon="mdi-map"
         alert-icon="mdi-lock"
@@ -132,7 +108,8 @@ export default defineComponent({
         :label="$t('routes.tabMap')"
         data-cy="route-tabs-button-map"
       />
-      <q-tab
+      <q-route-tab
+        to="/routes/app"
         name="app"
         icon="mdi-cellphone"
         alert-icon="mdi-lock"
@@ -145,11 +122,7 @@ export default defineComponent({
     <!-- Separator -->
     <q-separator />
     <!-- Tab panels -->
-    <q-tab-panels
-      v-model="activeTab"
-      animated
-      @transition="setActiveTab($event)"
-    >
+    <q-tab-panels v-model="activeTab" animated>
       <!-- Panel: Calendar -->
       <q-tab-panel name="calendar" data-cy="route-tabs-panel-calendar">
         <div class="text-h6">{{ $t('routes.tabCalendar') }}</div>

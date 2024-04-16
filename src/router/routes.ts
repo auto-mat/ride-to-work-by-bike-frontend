@@ -25,6 +25,50 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: routesConf['routes_calendar']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['routes_calendar']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  {
+    path: routesConf['routes_list']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['routes_list']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  {
+    path: routesConf['routes_map']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['routes_map']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  {
+    path: routesConf['routes_app']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['routes_app']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  {
     path: routesConf['login']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [

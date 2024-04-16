@@ -20,6 +20,30 @@ const routesConf: RoutesConf = {
       name: 'routes',
     },
   },
+  routes_calendar: {
+    path: '/routes/calendar',
+    children: {
+      name: 'routes/calendar',
+    },
+  },
+  routes_list: {
+    path: '/routes/list',
+    children: {
+      name: 'routes/list',
+    },
+  },
+  routes_map: {
+    path: '/routes/map',
+    children: {
+      name: 'routes/map',
+    },
+  },
+  routes_app: {
+    path: '/routes/app',
+    children: {
+      name: 'routes/app',
+    },
+  },
   login: {
     path: '/login',
     children: {
