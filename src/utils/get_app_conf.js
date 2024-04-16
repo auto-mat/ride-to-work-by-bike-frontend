@@ -50,6 +50,8 @@ const getAppConfig = (process) => {
     config['urlAppStore'] = process.env.URL_APP_STORE;
   } else if (process.env.URL_GOOGLE_PLAY) {
     config['urlGooglePlay'] = process.env.URL_GOOGLE_PLAY;
+  } else if (process.env.URL_VIDEO_LOGGING_ROUTES) {
+    config['urlVideoLoggingRoutes'] = process.env.URL_VIDEO_LOGGING_ROUTES;
   } else if (process.env.URL_VIDEO_ONBOARDING) {
     config['urlVideoOnboarding'] = process.env.URL_VIDEO_ONBOARDING;
   } else if (process.env.CHALLENGE_MONTH) {

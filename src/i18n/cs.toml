@@ -384,6 +384,8 @@ hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [routes]
 actionInputDistance = "Zadat vzdálenost"
+hintLockedSection = "Tato sekce s vám otevře ihned, jakmile začne výzva."
+hintWatchVideo = "Nahlédněte, jak to bude fungovat:"
 labelDistance = "Trasa"
 labelDirectionFromWork = "Z práce"
 labelDirectionToWork = "Do práce"
