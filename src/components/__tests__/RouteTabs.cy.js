@@ -105,22 +105,22 @@ function coreTests() {
 
   it('syncs tab navigation with URL', () => {
     // initial state
-    cy.url().should('include', 'activeTab=calendar');
+    cy.url().should('include', '/calendar');
     // switch to list tab
     cy.dataCy('route-tabs-button-list').click();
-    cy.url().should('not.include', 'activeTab=calendar');
-    cy.url().should('include', 'activeTab=list');
+    cy.url().should('not.include', '/calendar');
+    cy.url().should('include', '/list');
     // switch to map tab
     cy.dataCy('route-tabs-button-map').click();
-    cy.url().should('not.include', 'activeTab=list');
-    cy.url().should('include', 'activeTab=map');
+    cy.url().should('not.include', '/list');
+    cy.url().should('include', '/map');
     // switch to app tab
     cy.dataCy('route-tabs-button-app').click();
-    cy.url().should('not.include', 'activeTab=map');
-    cy.url().should('include', 'activeTab=app');
+    cy.url().should('not.include', '/map');
+    cy.url().should('include', '/app');
     // popstate
     cy.go('back');
-    cy.url().should('include', 'activeTab=map');
+    cy.url().should('include', '/map');
     cy.dataCy('route-tabs-panel-map').should('be.visible');
   });
 }
