@@ -13,3 +13,11 @@ export interface BannerApp {
   button: Link;
   image: Image;
 }
+
+export interface BannerRoutesApp {
+  title: string;
+  button: Link;
+  image: Image;
+  linked: boolean;
+  linkable: boolean;
+}
