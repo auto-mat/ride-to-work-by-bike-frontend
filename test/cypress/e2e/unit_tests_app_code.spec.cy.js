@@ -15,13 +15,14 @@ describe('Unit Test Application Code', function () {
 
 describe('Component Boilerplate function', function () {
   const componentName = 'TestComponent';
-  const componentFolder = 'global';
-  const importPath = `components/${componentFolder}/${componentName}`;
+  const componentOutputDir = 'global';
+  const importPath = `components/${componentOutputDir}/${componentName}`;
+  const componentsDir = 'src/components';
 
   before(() => {
     // Pre-test setup to ensure a clean state and run the script
     cy.exec(
-      `npx tsc src/utils/create_component_file/index.ts && node src/utils/create_component_file/index.js ${componentName} ${componentFolder}`,
+      `npx tsc src/utils/create_component_file/index.ts && node src/utils/create_component_file/index.js ${componentName} ${componentOutputDir}`,
     );
   });
 
@@ -29,16 +30,16 @@ describe('Component Boilerplate function', function () {
     // Cleanup the created files using a Node.js task
     cy.task(
       'deleteFile',
-      `src/components/${componentFolder}/${componentName}.vue`,
+      `${componentsDir}/${componentOutputDir}/${componentName}.vue`,
     );
-    cy.task('deleteFile', `src/components/__tests__/${componentName}.cy.js`);
+    cy.task('deleteFile', `${componentsDir}/__tests__/${componentName}.cy.js`);
   });
 
   it('should create a Vue file in the specified directory', () => {
     // Check that file exists
     cy.task(
       'fileExists',
-      `src/components/${componentFolder}/${componentName}.vue`,
+      `${componentsDir}/${componentOutputDir}/${componentName}.vue`,
     ).then((exists) => {
       expect(exists).to.be.true;
     });
@@ -48,7 +49,7 @@ describe('Component Boilerplate function', function () {
     // Check that file exists
     cy.task(
       'fileExists',
-      `src/components/__tests__/${componentName}.cy.js`,
+      `${componentsDir}/__tests__/${componentName}.cy.js`,
     ).then((exists) => {
       expect(exists).to.be.true;
     });
@@ -59,7 +60,7 @@ describe('Component Boilerplate function', function () {
       'readFile',
       'src/utils/create_component_file/templates/template_component.txt',
     ).then((componentTemplate) => {
-      const vueFilePath = `src/components/${componentFolder}/${componentName}.vue`;
+      const vueFilePath = `${componentsDir}/${componentOutputDir}/${componentName}.vue`;
       // Read the .cy.js file
       cy.task('readFile', vueFilePath).then((content) => {
         // Check if the file contains the correct content

@@ -1,31 +1,34 @@
 /**
  * Node.js script to generate new component files with boilerplate.
- * Usage: `yarn creat:component [componentName] [folderPath]`
+ * Usage: `yarn creat:component [componentName] [dirPath]`
  *
  * Args:
  *  - componentName: name of the component
- *  - folderPath: path of the src/components subfolder where the component
+ *  - dirPath: path of the src/components subdir where the component
  *    will be created
  *
  * Creates:
- *  - .vue file in src/components/[folderPath] (if folderPath is provided)
+ *  - .vue file in src/components/[dirPath] (if dirPath is provided)
  *  - .cy.js file for testing in src/components/__tests__
  */
 import * as fs from 'fs';
 import * as path from 'path';
 
+const templatesDir = 'templates';
+const componentsDir = 'src/components';
+
 const componentTemplate = fs.readFileSync(
-  path.join(__dirname, './templates/template_component.txt'),
+  path.join(__dirname, templatesDir, 'template_component.txt'),
   'utf8',
 );
 const testTemplate = fs.readFileSync(
-  path.join(__dirname, './templates/template_test.txt'),
+  path.join(__dirname, templatesDir, 'template_test.txt'),
   'utf8',
 );
 
 // Process arguments
 const componentName = process.argv[2];
-const folderPath = process.argv[3] || '.';
+const dirPath = process.argv[3] || '.';
 
 // Check if component name is provided
 if (!componentName) {
@@ -35,13 +38,13 @@ if (!componentName) {
 
 // Determine the import path
 const importPath = `components/${
-  folderPath === '.' ? '' : folderPath + '/'
+  dirPath === '.' ? '' : dirPath + '/'
 }${componentName}`;
 
 // Ensure the component and tests directories exist
 const projectRoot = process.cwd();
-ensureDir(path.join(projectRoot, `src/components/${folderPath}`));
-ensureDir(path.join(projectRoot, 'src/components/__tests__'));
+ensureDir(path.join(projectRoot, `${componentsDir}/${dirPath}`));
+ensureDir(path.join(projectRoot, `${componentsDir}/__tests__`));
 
 const vueTemplate = componentTemplate.replace(/COMPONENT_NAME/g, componentName);
 const cyJsTemplate = testTemplate
@@ -50,11 +53,11 @@ const cyJsTemplate = testTemplate
 
 // Create .vue and .cy.js files
 fs.writeFileSync(
-  path.join(projectRoot, `src/components/${folderPath}/${componentName}.vue`),
+  path.join(projectRoot, componentsDir, `${dirPath}/${componentName}.vue`),
   vueTemplate,
 );
 fs.writeFileSync(
-  path.join(projectRoot, `src/components/__tests__/${componentName}.cy.js`),
+  path.join(projectRoot, componentsDir, `__tests__/${componentName}.cy.js`),
   cyJsTemplate,
 );
 
