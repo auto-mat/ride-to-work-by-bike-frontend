@@ -14,7 +14,7 @@ export interface BannerApp {
   image: Image;
 }
 
-export interface BannerRoutesApp {
+export interface BannerRoutesAppType {
   title: string;
   button: Link;
   image: Image;

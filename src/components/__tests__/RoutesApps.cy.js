@@ -64,6 +64,9 @@ function coreTests() {
       .and('have.css', 'font-weight', '400')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.hintAutomaticLogging'));
+    cy.dataCy('banner-routes-app')
+      .should('be.visible')
+      .should('have.length', 3);
     // title manual
     cy.dataCy('route-app-title-manual')
       .should('be.visible')

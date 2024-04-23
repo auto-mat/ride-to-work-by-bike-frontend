@@ -16,6 +16,9 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// components
+import BannerRoutesApp from './BannerRoutesApp.vue';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
@@ -23,16 +26,19 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
 
 // types
-import type { BannerRoutesApp } from '../types/Banner';
+import type { BannerRoutesAppType } from '../types/Banner';
 
 export default defineComponent({
   name: 'RoutesApps',
+  components: {
+    BannerRoutesApp,
+  },
   setup() {
     const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
     const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
     return {
-      apps: apps as BannerRoutesApp[],
+      apps: apps as BannerRoutesAppType[],
       urlAppStore,
       urlGooglePlay,
     };

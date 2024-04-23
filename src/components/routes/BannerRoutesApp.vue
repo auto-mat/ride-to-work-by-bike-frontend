@@ -6,8 +6,8 @@
  * in the `RoutesApps` view.
  *
  * @props
- * - `app` (BannerRoutesApp, required): The object representing banner data.
- *   It should be of type `BannerRoutesApp`.
+ * - `app` (BannerRoutesAppType, required): The object representing banner data.
+ *   It should be of type `BannerRoutesAppType`.
  *
  * @example
  * <banner-routes-app></banner-routes-app>
@@ -18,13 +18,13 @@
 // libraries
 import { defineComponent } from 'vue';
 
-import type { BannerRoutesApp } from '../types/Banner';
+import type { BannerRoutesAppType } from '../types/Banner';
 
 export default defineComponent({
   name: 'BannerRoutesApp',
   props: {
     app: {
-      type: Object as () => BannerRoutesApp,
+      type: Object as () => BannerRoutesAppType,
     },
   },
 });
