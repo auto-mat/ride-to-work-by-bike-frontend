@@ -5,7 +5,7 @@
  * @description * Use this component to render the App view in `RouteTabs`.
  *
  * @components
- * - `CHILD`: Component to ... .
+ * - `BannerRoutesApp`: Component to display a banner for an App.
  *
  * @example
  * <route-app></route-app>
@@ -16,8 +16,19 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// fixtures
+import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
+
+// types
+import type { BannerRoutesApp } from '../types/Banner';
+
 export default defineComponent({
   name: 'RouteApp',
+  setup() {
+    return {
+      apps: apps as BannerRoutesApp[],
+    };
+  },
 });
 </script>
 
@@ -27,5 +38,13 @@ export default defineComponent({
       {{ $t('routes.titleTabApp') }}
     </h2>
     <p class="" data-cy="route-app-hint">{{ $t('routes.hintTabApp') }}</p>
+    <div class="flex column gap-16">
+      <banner-routes-app
+        v-for="app in apps"
+        :app="app"
+        :key="app.title"
+        data-cy="banner-routes-app"
+      />
+    </div>
   </div>
 </template>

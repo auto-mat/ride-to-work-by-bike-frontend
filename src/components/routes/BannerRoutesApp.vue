@@ -83,12 +83,12 @@ export default defineComponent({
             data-cy="banner-routes-app-button"
           >
             <!-- Button text -->
-            <span v-if="!app.linked && app.linkable">{{
-              $t('routes.buttonLinkToApp')
-            }}</span>
-            <span v-if="app.linked && app.linkable">{{
-              $t('routes.buttonLinkNewDevice')
-            }}</span>
+            <span v-if="!app.linked && app.linkable">
+              {{ $t('routes.buttonLinkToApp') }}
+            </span>
+            <span v-if="app.linked && app.linkable">
+              {{ $t('routes.buttonLinkNewDevice') }}
+            </span>
           </q-btn>
         </div>
       </div>
