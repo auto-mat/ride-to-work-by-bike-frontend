@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * RouteApp Component
+ * RoutesApps Component
  *
  * @description * Use this component to render the App view in `RouteTabs`.
  *
@@ -8,7 +8,7 @@
  * - `BannerRoutesApp`: Component to display a banner for an App.
  *
  * @example
- * <route-app></route-app>
+ * <routes-apps></routes-apps>
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=5190%3A125828&mode=dev)
  */
@@ -23,7 +23,7 @@ import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
 import type { BannerRoutesApp } from '../types/Banner';
 
 export default defineComponent({
-  name: 'RouteApp',
+  name: 'RoutesApps',
   setup() {
     return {
       apps: apps as BannerRoutesApp[],

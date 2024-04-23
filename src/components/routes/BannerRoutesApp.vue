@@ -3,7 +3,7 @@
  * BannerRoutesApp Component
  *
  * @description * Use this component to render a banner for an app
- * in the `RouteApp` view.
+ * in the `RoutesApps` view.
  *
  * @props
  * - `app` (BannerRoutesApp, required): The object representing banner data.

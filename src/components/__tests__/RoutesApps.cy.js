@@ -1,11 +1,11 @@
 import { colors } from 'quasar';
-import RouteApp from 'components/routes/RouteApp.vue';
+import RoutesApps from 'components/routes/RoutesApps.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 
-describe('<RouteApp>', () => {
+describe('<RoutesApps>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
@@ -21,7 +21,7 @@ describe('<RouteApp>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(RouteApp, {
+      cy.mount(RoutesApps, {
         props: {},
       });
       cy.viewport('macbook-16');
@@ -32,7 +32,7 @@ describe('<RouteApp>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(RouteApp, {
+      cy.mount(RoutesApps, {
         props: {},
       });
       cy.viewport('iphone-6');
