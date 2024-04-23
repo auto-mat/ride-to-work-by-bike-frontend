@@ -77,7 +77,6 @@ describe('<FormFieldPhone>', () => {
 function testPhoneNumberValidation() {
   it('validates incorrect phone number', () => {
     cy.dataCy('form-phone-input').clear();
-    cy.dataCy('form-phone-input').blur();
     // invalid phone
     cy.dataCy('form-phone-input').type('12345');
     // first blur triggers validation
@@ -92,6 +91,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('00 00 00');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -102,6 +102,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('12345678901234567890');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -112,6 +113,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('+420 ABC 123 456');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -122,6 +124,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('+420 #23 456 789');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -132,6 +135,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('+420 609 234 567');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -142,6 +146,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('+420 500 234 567');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -152,6 +157,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('123 456 789');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -162,6 +168,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('+420 6012 34567');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
@@ -172,6 +179,7 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').clear();
     // invalid phone
     cy.dataCy('form-phone-input').type('602 3456 78');
+    cy.dataCy('form-phone-input').blur();
     cy.dataCy('form-phone')
       .find('.q-field__messages')
       .should('be.visible')
