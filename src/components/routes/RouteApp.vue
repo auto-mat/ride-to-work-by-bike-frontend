@@ -34,17 +34,29 @@ export default defineComponent({
 
 <template>
   <div data-cy="route-app">
-    <h2 class="text-h6 text-black" data-cy="route-app-title">
-      {{ $t('routes.titleTabApp') }}
-    </h2>
-    <p class="" data-cy="route-app-hint">{{ $t('routes.hintTabApp') }}</p>
-    <div class="flex column gap-16">
-      <banner-routes-app
-        v-for="app in apps"
-        :app="app"
-        :key="app.title"
-        data-cy="banner-routes-app"
-      />
-    </div>
+    <section>
+      <h2 class="text-h6 text-black" data-cy="route-app-title-automatic">
+        {{ $t('routes.titleAutomaticLogging') }}
+      </h2>
+      <p class="" data-cy="route-app-hint-automatic">
+        {{ $t('routes.hintAutomaticLogging') }}
+      </p>
+      <div class="flex column gap-16">
+        <banner-routes-app
+          v-for="app in apps"
+          :app="app"
+          :key="app.title"
+          data-cy="banner-routes-app"
+        />
+      </div>
+    </section>
+    <section>
+      <h2 class="text-h6 text-black" data-cy="route-app-title-manual">
+        {{ $t('routes.titleManualLogging') }}
+      </h2>
+      <p class="" data-cy="route-app-hint-manual">
+        {{ $t('routes.hintManualLogging') }}
+      </p>
+    </section>
   </div>
 </template>

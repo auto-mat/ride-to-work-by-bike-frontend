@@ -8,7 +8,12 @@ const black = getPaletteColor('black');
 describe('<RouteApp>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['hintTabApp', 'titleTabApp'],
+      [
+        'hintAutomaticLogging',
+        'hintManualLogging',
+        'titleAutomaticLogging',
+        'titleManualLogging',
+      ],
       'routes',
       i18n,
     );
@@ -40,17 +45,29 @@ describe('<RouteApp>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('route-app').should('be.visible');
-    cy.dataCy('route-app-title')
+    cy.dataCy('route-app-title-automatic')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
-      .and('contain.text', i18n.global.t('routes.titleTabApp'));
-    cy.dataCy('route-app-hint')
+      .and('contain.text', i18n.global.t('routes.titleAutomaticLogging'));
+    cy.dataCy('route-app-hint-automatic')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
       .and('have.color', black)
-      .and('contain.text', i18n.global.t('routes.hintTabApp'));
+      .and('contain.text', i18n.global.t('routes.hintAutomaticLogging'));
+    cy.dataCy('route-app-title-manual')
+      .should('be.visible')
+      .and('have.css', 'font-size', '20px')
+      .and('have.css', 'font-weight', '500')
+      .and('have.color', black)
+      .and('contain.text', i18n.global.t('routes.titleManualLogging'));
+    cy.dataCy('route-app-hint-manual')
+      .should('be.visible')
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', black)
+      .and('contain.text', i18n.global.t('routes.hintManualLogging'));
   });
 }
