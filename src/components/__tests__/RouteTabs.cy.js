@@ -1,5 +1,6 @@
 import RouteTabs from 'components/routes/RouteTabs.vue';
 import { i18n } from '../../boot/i18n';
+import { routesConf } from 'src/router/routes_conf';
 
 describe('<RouteTabs>', () => {
   it('has translation for all strings', () => {
@@ -105,22 +106,22 @@ function coreTests() {
 
   it('syncs tab navigation with URL', () => {
     // initial state
-    cy.url().should('include', '/calendar');
+    cy.url().should('include', routesConf['routes_calendar'].path);
     // switch to list tab
     cy.dataCy('route-tabs-button-list').click();
-    cy.url().should('not.include', '/calendar');
-    cy.url().should('include', '/list');
+    cy.url().should('not.include', routesConf['routes_calendar'].path);
+    cy.url().should('include', routesConf['routes_list'].path);
     // switch to map tab
     cy.dataCy('route-tabs-button-map').click();
-    cy.url().should('not.include', '/list');
-    cy.url().should('include', '/map');
+    cy.url().should('not.include', routesConf['routes_list'].path);
+    cy.url().should('include', routesConf['routes_map'].path);
     // switch to app tab
     cy.dataCy('route-tabs-button-app').click();
-    cy.url().should('not.include', '/map');
-    cy.url().should('include', '/app');
+    cy.url().should('not.include', routesConf['routes_map'].path);
+    cy.url().should('include', routesConf['routes_app'].path);
     // popstate
     cy.go('back');
-    cy.url().should('include', '/map');
+    cy.url().should('include', routesConf['routes_map'].path);
     cy.dataCy('route-tabs-panel-map').should('be.visible');
   });
 }
