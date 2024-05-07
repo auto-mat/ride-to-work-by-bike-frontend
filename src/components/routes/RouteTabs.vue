@@ -30,6 +30,9 @@ import RouteListDisplay from './RouteListDisplay.vue';
 // types
 import type { RouteItem, RouteTab } from '../types/Route';
 
+// routes
+import { routesConf } from 'src/router/routes_conf';
+
 // fixtures
 import routeListFixture from '../../../test/cypress/fixtures/routeList.json';
 // @ts-expect-error to cast routeListFixture to RouteItem type
@@ -60,6 +63,7 @@ export default defineComponent({
       activeTab,
       lockedTabs,
       routeList,
+      routesConf,
       isLocked,
     };
   },
@@ -79,7 +83,7 @@ export default defineComponent({
       data-cy="route-tabs"
     >
       <q-route-tab
-        to="/routes/calendar"
+        :to="routesConf['routes_calendar'].path"
         name="calendar"
         icon="mdi-calendar-blank"
         alert-icon="mdi-lock"
@@ -89,7 +93,7 @@ export default defineComponent({
         data-cy="route-tabs-button-calendar"
       />
       <q-route-tab
-        to="/routes/list"
+        :to="routesConf['routes_list'].path"
         name="list"
         icon="mdi-format-list-bulleted"
         alert-icon="mdi-lock"
@@ -99,7 +103,7 @@ export default defineComponent({
         data-cy="route-tabs-button-list"
       />
       <q-route-tab
-        to="/routes/map"
+        :to="routesConf['routes_map'].path"
         name="map"
         icon="mdi-map"
         alert-icon="mdi-lock"
@@ -109,7 +113,7 @@ export default defineComponent({
         data-cy="route-tabs-button-map"
       />
       <q-route-tab
-        to="/routes/app"
+        :to="routesConf['routes_app'].path"
         name="app"
         icon="mdi-cellphone"
         alert-icon="mdi-lock"
