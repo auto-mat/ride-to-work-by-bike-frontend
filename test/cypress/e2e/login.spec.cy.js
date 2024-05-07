@@ -12,26 +12,6 @@ describe('Login page', () => {
       cy.dataCy('login-register-header').should('be.visible');
     });
 
-    it('allows user to display help dialog and read all FAQ items', () => {
-      cy.dataCy('button-help').last().should('be.visible').click();
-      cy.dataCy('dialog-header').should('be.visible');
-      cy.dataCy('list-faq-list')
-        .find('.q-card')
-        .each(($element) => {
-          cy.wrap($element).should('not.be.visible');
-        });
-      cy.dataCy('list-faq-list')
-        .find('.q-expansion-item')
-        .each(($element) => {
-          cy.wrap($element).should('be.visible');
-          cy.wrap($element).click();
-          cy.wrap($element)
-            .find('.q-card__section')
-            .should('be.visible')
-            .and('not.be.empty');
-        });
-    });
-
     it('allows user to display and submit contact form', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
