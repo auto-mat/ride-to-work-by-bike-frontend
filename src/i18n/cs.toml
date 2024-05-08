@@ -390,7 +390,6 @@ descriptionRoutes = "<p>Jízdy můžete zapisovat až 8 dní zpětně.</p><p>Pok
 hintAutomaticLogging = "Pro automatický záznam můžete využít jednu z těchto aplikací třetích stran:"
 hintLockedSection = "Tato sekce s vám otevře ihned, jakmile začne výzva."
 hintManualLogging = "Mimo toto webové rozhraní můžete také využívat naše oficiální mobilní aplikace:"
-hintWatchVideo = "Nahlédněte, jak to bude fungovat:"
 hintTabApp = "Pro automatický záznam můžete využít jednu z těchto aplikací třetích stran:"
 hintWatchVideo = "Nahlédněte, jak to bude fungovat:"
 instructionRouteLogTimeframe = "Jízdy můžete zapisovat až 8 dní zpětně."

@@ -389,7 +389,6 @@ descriptionRoutes = "<p>You can record rides up to 8 days in advance.</p><p>If y
 hintAutomaticLogging = "You can use one of these third-party apps for automatic route logging:"
 hintLockedSection = "This section will open as soon as the challenge starts."
 hintManualLogging = "In addition to this web interface, you can also use our official mobile apps:"
-hintWatchVideo = "Take a peek at how it will work:"
 hintTabApp = "You can use one of these third-party apps for automatic route logging:"
 hintWatchVideo = "Take a peek at how it will work:"
 instructionRouteLogTimeframe = "You can record rides up to 8 days in advance."
