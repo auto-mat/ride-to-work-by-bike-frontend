@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 LABEL authors="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 LABEL maintainer="Auto*Mat, z. s. auto-mat@auto-mat.cz"
