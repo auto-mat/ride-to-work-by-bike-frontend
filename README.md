@@ -173,6 +173,7 @@ APP_DIR=/home/dev/$APP_NAME
 # Build Docker image
 docker buildx build \
 --build-arg="UID=$(id -u)" \
+--build-arg="GID=$(id -g)" \
 -t ride-to-work-by-bike-frontend-dev \
 -f ./docker/dev/Dockerfile .
 
