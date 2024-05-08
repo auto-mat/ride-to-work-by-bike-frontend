@@ -70,6 +70,7 @@ export default defineComponent({
       </h3>
       <!-- Item: Route -->
       <route-item-edit
+        display-label
         v-for="route in day.routes"
         :route="route"
         :key="route.id"

@@ -77,7 +77,6 @@ export default defineComponent({
           data-cy="route-list-item-wrapper"
         >
           <route-item-display
-            display-label
             :route="route"
             class="q-my-md"
             data-cy="route-list-item"

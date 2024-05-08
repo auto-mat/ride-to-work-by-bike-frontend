@@ -47,6 +47,8 @@ function coreTests() {
     cy.dataCy('route-list').should('be.visible');
     // items visible
     cy.dataCy('route-list-item').should('be.visible');
+    // direction labels visible
+    cy.dataCy('column-direction').should('be.visible');
   });
 
   // day date (title) styles
