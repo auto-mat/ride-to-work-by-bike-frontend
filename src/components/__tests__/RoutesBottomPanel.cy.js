@@ -17,16 +17,16 @@ describe('<RoutesBottomPanel>', () => {
     coreTests();
   });
 
-  // context('mobile', () => {
-  //   beforeEach(() => {
-  //     cy.mount(RoutesBottomPanel, {
-  //       props: {},
-  //     });
-  //     cy.viewport('iphone-6');
-  //   });
+  context('mobile', () => {
+    beforeEach(() => {
+      cy.mount(RoutesBottomPanel, {
+        props: {},
+      });
+      cy.viewport('iphone-6');
+    });
 
-  //   coreTests();
-  // });
+    coreTests();
+  });
 });
 
 function coreTests() {

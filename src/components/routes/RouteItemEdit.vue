@@ -50,6 +50,10 @@ export default defineComponent({
         label: i18n.global.t('routes.actionInputDistance'),
         value: 'input-distance',
       },
+      {
+        label: i18n.global.t('routes.actionTraceMap'),
+        value: 'trace-map',
+      },
     ];
 
     const { getRouteIcon } = useRoutes();
@@ -200,25 +204,45 @@ export default defineComponent({
                   data-cy="select-action"
                 ></q-select>
               </div>
-              <div class="col-8 col-sm-4">
-                <!-- Input -->
-                <q-input
-                  dense
-                  outlined
-                  type="number"
-                  v-model="distance"
-                  :id="`route-item-distance-${route.id}`"
-                  :name="`route-item-distance-${route.id}`"
-                  min="0"
-                  max="999"
-                  data-cy="input-distance"
-                />
+              <div
+                v-if="action === 'input-distance'"
+                class="col-8 col-sm-5 row items-center gap-8"
+              >
+                <!-- Input: Distance -->
+                <div class="col">
+                  <q-input
+                    dense
+                    outlined
+                    type="number"
+                    v-model="distance"
+                    :id="`route-item-distance-${route.id}`"
+                    :name="`route-item-distance-${route.id}`"
+                    min="0"
+                    max="999"
+                    data-cy="input-distance"
+                  />
+                </div>
+                <div class="col">
+                  <span data-cy="units-distance">
+                    {{ $t('global.routeLengthUnit') }}
+                  </span>
+                </div>
               </div>
-              <div class="col-4 flex items-center">
-                <span data-cy="units-distance">
-                  {{ $t('global.routeLengthUnit') }}</span
+              <div v-else-if="action === 'trace-map'" class="col-8 col-sm-5">
+                <!-- Button: Trace map -->
+                <q-btn
+                  unelevated
+                  rounded
+                  color="primary"
+                  data-cy="button-trace-map"
                 >
+                  <!-- Icon -->
+                  <q-icon name="edit" size="18px" class="q-mr-sm" />
+                  <!-- Label -->
+                  <span>{{ $t('routes.buttonTraceMap') }}</span>
+                </q-btn>
               </div>
+              <div class="col-2 flex items-center"></div>
             </div>
           </div>
         </div>

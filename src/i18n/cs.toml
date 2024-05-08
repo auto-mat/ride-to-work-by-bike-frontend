@@ -384,8 +384,10 @@ hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [routes]
 actionInputDistance = "Zadat vzdálenost"
+actionTraceMap = "Zakreslit do mapy"
 buttonLinkNewDevice = "Propojit další zařízení"
 buttonLinkToApp = "Propojit s aplikací"
+buttonTraceMap = "Zakreslit do mapy"
 descriptionRoutes = "<p>Jízdy můžete zapisovat až 8 dní zpětně.</p><p>Pokud kombinujete dopravní prostředky, zapište tu nejdelší část, případně druhou nejdelší je-li na vlastní pohon.</p>"
 hintAutomaticLogging = "Pro automatický záznam můžete využít jednu z těchto aplikací třetích stran:"
 hintLockedSection = "Tato sekce s vám otevře ihned, jakmile začne výzva."
