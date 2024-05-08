@@ -5,8 +5,10 @@
  * @description * Use this component to render action panel to log a route..
  *
  * @props
+ * - `isOpen` (boolean, optional): Whether the panel is open.
  * - `route` (RouteItem, required): The object representing a route.
  *   It should be of type `RouteItem`.
+ * - `routeCount` (number): The number of routes affected.
  *
  * @components
  * - `RouteItemEdit`: Component to display an editable route.
@@ -36,12 +38,20 @@ export default defineComponent({
     RouteItemEdit,
   },
   props: {
+    isOpen: {
+      type: Boolean,
+      default: false,
+    },
     route: {
       type: Object as () => RouteItem,
     },
+    routeCount: {
+      type: Number,
+      default: 1,
+    },
   },
   setup(props) {
-    const isDialogOpen = ref(true);
+    const isDialogOpen = ref(props.isOpen);
 
     const routeSource: RouteItem = props.route
       ? ({ ...props.route } as RouteItem)
@@ -74,8 +84,13 @@ export default defineComponent({
       <!-- Section: Header -->
       <div class="row justify-between">
         <!-- Title -->
-        <h2 class="q-my-none text-h6" data-cy="bottom-panel-title">
-          {{ $t('routes.titleBottomPanel') }}
+        <h2
+          class="q-my-none text-h6 font-weight-normal"
+          data-cy="bottom-panel-title"
+        >
+          {{
+            $tc('routes.titleBottomPanel', routeCount, { count: routeCount })
+          }}
         </h2>
         <!-- Button: Close -->
         <q-btn
