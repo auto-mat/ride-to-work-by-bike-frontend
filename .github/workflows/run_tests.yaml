@@ -45,6 +45,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Make cypress dir required for cypress-parallel parallel-weights.json file
+        run: |
+          mkdir ./cypress
+        shell: bash
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -61,7 +66,7 @@ jobs:
           browser: firefox
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:ci:firefox
+          command: yarn test:e2e:ci:parallel:firefox -t 4
 
       - name: Run Cypress e2e test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -73,7 +78,7 @@ jobs:
           browser: chrome
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:ci:chrome
+          command: yarn test:e2e:ci:parallel:chrome -t 4
 
       - name: Run Cypress e2e test on MS Edge/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -85,7 +90,7 @@ jobs:
           browser: edge
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:ci:edge
+          command: yarn test:e2e:ci:parallel:edge -t 4
 
       - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -97,7 +102,7 @@ jobs:
           browser: firefox
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:ci:firefox
+          command: yarn test:component:ci:parallel:firefox -t 4
 
       - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -109,7 +114,7 @@ jobs:
           browser: chrome
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:ci:chrome
+          command: yarn test:component:ci:parallel:chrome -t 4
 
       - name: Run Cypress component test on MS Edge/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -121,7 +126,7 @@ jobs:
           browser: edge
           wait-on-timeout: ${{ env.timeout }}
           wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:ci:edge
+          command: yarn test:component:ci:parallel:edge -t 4
 
       - name: Build app
         run: npx quasar build
