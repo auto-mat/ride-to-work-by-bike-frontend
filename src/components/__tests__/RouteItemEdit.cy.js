@@ -358,6 +358,19 @@ function coreTests() {
     // distance is shown
     cy.dataCy('column-distance').should('be.visible');
   });
+
+  it('allows to switch input type', () => {
+    // input type is input distance
+    cy.dataCy('select-action')
+      .should('be.visible')
+      .find('input')
+      .should('have.value', i18n.global.t('routes.actionInputDistance'));
+    cy.dataCy('button-trace-map').should('not.exist');
+    cy.dataCy('input-distance').should('be.visible');
+    cy.dataCy('select-action').select(i18n.global.t('routes.actionTraceMap'));
+    cy.dataCy('input-distance').should('not.exist');
+    cy.dataCy('button-trace-map').should('be.visible');
+  });
 }
 
 function labelDirectionTests() {
