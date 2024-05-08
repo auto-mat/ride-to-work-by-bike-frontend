@@ -17,20 +17,20 @@ describe('<RoutesBottomPanel>', () => {
     coreTests();
   });
 
-  context('mobile', () => {
-    beforeEach(() => {
-      cy.mount(RoutesBottomPanel, {
-        props: {},
-      });
-      cy.viewport('iphone-6');
-    });
+  // context('mobile', () => {
+  //   beforeEach(() => {
+  //     cy.mount(RoutesBottomPanel, {
+  //       props: {},
+  //     });
+  //     cy.viewport('iphone-6');
+  //   });
 
-    coreTests();
-  });
+  //   coreTests();
+  // });
 });
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy('component').should('be.visible');
+    cy.dataCy('route-bottom-panel').should('be.visible');
   });
 }

@@ -21,7 +21,7 @@ describe('<RouteItemEdit>', () => {
     );
   });
 
-  context('route to work', () => {
+  context('route no direction label', () => {
     beforeEach(() => {
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
@@ -34,6 +34,53 @@ describe('<RouteItemEdit>', () => {
     });
 
     coreTests();
+
+    it('renders the input distance value', () => {
+      // make sure transport type is bike
+      cy.dataCy('button-toggle-transport').find('button').eq(0).click();
+      cy.fixture('routeListItem').then((routes) => {
+        // input distance value
+        cy.dataCy('input-distance')
+          .should('be.visible')
+          .invoke('val')
+          .should('eq', routes.toWork.distance.toString());
+      });
+    });
+
+    it('renders column transport distance full width', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport-distance'),
+        (12 / 12) * 100,
+      );
+    });
+
+    it('renders columns transport:distance side by side in 5:7 ratio', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-transport'),
+        (5 / 12) * 100,
+      );
+      cy.testElementPercentageWidth(
+        cy.dataCy('column-distance'),
+        (7 / 12) * 100,
+      );
+    });
+  });
+
+  context('route to work', () => {
+    beforeEach(() => {
+      cy.fixture('routeListItem').then((routes) => {
+        cy.mount(RouteItemEdit, {
+          props: {
+            route: routes.toWork,
+            displayLabel: true,
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+    });
+
+    coreTests();
+    labelDirectionTests();
 
     it('renders label direction', () => {
       // direction label
@@ -55,7 +102,7 @@ describe('<RouteItemEdit>', () => {
         cy.dataCy('input-distance')
           .should('be.visible')
           .invoke('val')
-          .should('eq', routes.toWork.distance);
+          .should('eq', routes.toWork.distance.toString());
       });
     });
 
@@ -93,12 +140,13 @@ describe('<RouteItemEdit>', () => {
     });
   });
 
-  context('route from work', () => {
+  context('route from work (0 distance)', () => {
     beforeEach(() => {
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
           props: {
             route: routes.fromWork,
+            displayLabel: true,
           },
         });
         cy.viewport('macbook-16');
@@ -106,6 +154,7 @@ describe('<RouteItemEdit>', () => {
     });
 
     coreTests();
+    labelDirectionTests();
 
     it('renders label direction', () => {
       // direction label
@@ -156,6 +205,7 @@ describe('<RouteItemEdit>', () => {
         cy.mount(RouteItemEdit, {
           props: {
             route: routes.toWork,
+            displayLabel: true,
           },
         });
         cy.viewport('iphone-6');
@@ -163,6 +213,7 @@ describe('<RouteItemEdit>', () => {
     });
 
     coreTests();
+    labelDirectionTests();
 
     it('renders columns direction:transport-distance stacked', () => {
       cy.testElementPercentageWidth(cy.dataCy('column-direction'), 100);
@@ -183,18 +234,6 @@ function coreTests() {
   it('renders component', () => {
     // component visible
     cy.dataCy('route-list-item').should('be.visible');
-    // column direction
-    cy.dataCy('column-direction').should('be.visible');
-    // label direction styles
-    cy.dataCy('label-direction')
-      .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '700')
-      .and('have.color', grey10);
-    // icon direction styles
-    cy.dataCy('label-direction-icon').should('be.visible');
-    cy.dataCy('label-direction-icon').invoke('width').should('be.equal', 18);
-    cy.dataCy('label-direction-icon').invoke('height').should('be.equal', 18);
     // column transport
     cy.dataCy('column-transport').should('be.visible');
     // label transport styles
@@ -318,5 +357,22 @@ function coreTests() {
     );
     // distance is shown
     cy.dataCy('column-distance').should('be.visible');
+  });
+}
+
+function labelDirectionTests() {
+  it('renders column direction', () => {
+    // column direction
+    cy.dataCy('column-direction').should('be.visible');
+    // label direction styles
+    cy.dataCy('label-direction')
+      .should('be.visible')
+      .and('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', grey10);
+    // icon direction styles
+    cy.dataCy('label-direction-icon').should('be.visible');
+    cy.dataCy('label-direction-icon').invoke('width').should('be.equal', 18);
+    cy.dataCy('label-direction-icon').invoke('height').should('be.equal', 18);
   });
 }

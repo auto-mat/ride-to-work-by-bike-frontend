@@ -18,10 +18,14 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { Screen } from 'quasar';
 
 // components
 import RouteItemEdit from './RouteItemEdit.vue';
+
+// fixtures
+import routeList from '../../../test/cypress/fixtures/routeList.json';
 
 // types
 import type { RouteItem } from '../types/Route';
@@ -36,11 +40,24 @@ export default defineComponent({
       type: Object as () => RouteItem,
     },
   },
-  setup() {
-    const isDialogOpen = ref(false);
+  setup(props) {
+    const isDialogOpen = ref(true);
+
+    const routeSource: RouteItem = props.route
+      ? ({ ...props.route } as RouteItem)
+      : ({ ...routeList[0] } as RouteItem);
+
+    const panelWidth = computed((): string => {
+      if (Screen.gt.md) {
+        return '920px';
+      }
+      return 'auto';
+    });
 
     return {
       isDialogOpen,
+      panelWidth,
+      routeSource,
     };
   },
 });
@@ -51,8 +68,45 @@ export default defineComponent({
   <q-dialog
     v-model="isDialogOpen"
     position="bottom"
-    data-cy="footer-panel-menu-dialog"
+    data-cy="route-bottom-panel"
   >
-    <route-item-edit v-if="route" :route="route" data-cy="route-list-item" />
+    <div class="bg-white q-pa-md" :style="{ 'min-width': panelWidth }">
+      <!-- Section: Header -->
+      <div class="row justify-between">
+        <!-- Title -->
+        <h2 class="q-my-none text-h6" data-cy="bottom-panel-title">
+          {{ $t('routes.titleBottomPanel') }}
+        </h2>
+        <!-- Button: Close -->
+        <q-btn
+          dense
+          unelevated
+          icon="close"
+          size="sm"
+          @click="isDialogOpen = false"
+          data-cy="bottom-panel-close"
+        />
+      </div>
+      <!-- Section: Main -->
+      <div v-if="routeSource" class="row q-mt-lg">
+        <div class="col-12 col-lg-11">
+          <!-- Item: Route edit -->
+          <route-item-edit :route="routeSource" data-cy="route-item-edit" />
+        </div>
+        <div class="col-12 col-lg-1">
+          <div class="flex justify-end q-mt-md">
+            <!-- Button: Save -->
+            <q-btn
+              unelevated
+              round
+              color="primary"
+              icon="check"
+              @click="isDialogOpen = false"
+              data-cy="bottom-panel-save"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </q-dialog>
 </template>

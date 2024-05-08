@@ -3,14 +3,14 @@
     "id": "00001",
     "date": "2024-10-01",
     "transport": "bike",
-    "distance": "20",
+    "distance": 20,
     "direction": "to_work"
   },
   "fromWork": {
     "id": "00002",
     "date": "2024-10-01",
     "transport": "bike",
-    "distance": "",
+    "distance": 0,
     "direction": "from_work"
   }
 }

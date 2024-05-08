@@ -10,6 +10,7 @@
  * @props
  * - `route` (RouteItem, required): The object representing the route.
  *   It should be of type `RouteItem`
+ * - `displayLabel` (boolean, optional): Whether to display direction label.`
  *
  * @example
  * <route-list-item :route="route" />
@@ -34,6 +35,10 @@ export default defineComponent({
     route: {
       type: Object as () => RouteItem,
       required: true,
+    },
+    displayLabel: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -102,7 +107,7 @@ export default defineComponent({
 
 <template>
   <div class="row items-center" data-cy="route-list-item">
-    <div class="col-12 col-sm-2" data-cy="column-direction">
+    <div v-if="displayLabel" class="col-12 col-sm-2" data-cy="column-direction">
       <!-- Column: Direction -->
       <div
         class="flex gap-8 text-subtitle2 text-weight-bold text-grey-10"
@@ -128,10 +133,16 @@ export default defineComponent({
         </span>
       </div>
     </div>
-    <div class="col-12 col-sm-10" data-cy="column-transport-distance">
+    <div
+      :class="[displayLabel ? 'col-12 col-sm-10' : 'col-12']"
+      data-cy="column-transport-distance"
+    >
       <div class="row">
         <!-- Column: Transport type -->
-        <div class="col-12 col-sm-4" data-cy="column-transport">
+        <div
+          :class="[displayLabel ? 'col-12 col-sm-4' : 'col-12 col-sm-5']"
+          data-cy="column-transport"
+        >
           <!-- Label -->
           <div
             class="text-caption text-weight-bold text-grey-10"
@@ -164,7 +175,7 @@ export default defineComponent({
         <!-- Column: Distance -->
         <div
           v-show="isShownDistance"
-          class="col-12 col-sm-8"
+          :class="[displayLabel ? 'col-12 col-sm-8' : 'col-12 col-sm-7']"
           data-cy="column-distance"
         >
           <!-- Label -->
@@ -189,24 +200,24 @@ export default defineComponent({
                   data-cy="select-action"
                 ></q-select>
               </div>
-              <div class="col-12 col-sm-4">
-                <div class="flex items-center gap-8">
-                  <!-- Input -->
-                  <q-input
-                    dense
-                    outlined
-                    type="number"
-                    v-model="distance"
-                    :id="`route-item-distance-${route.id}`"
-                    :name="`route-item-distance-${route.id}`"
-                    min="0"
-                    max="999"
-                    data-cy="input-distance"
-                  />
-                  <span data-cy="units-distance">{{
-                    $t('global.routeLengthUnit')
-                  }}</span>
-                </div>
+              <div class="col-8 col-sm-4">
+                <!-- Input -->
+                <q-input
+                  dense
+                  outlined
+                  type="number"
+                  v-model="distance"
+                  :id="`route-item-distance-${route.id}`"
+                  :name="`route-item-distance-${route.id}`"
+                  min="0"
+                  max="999"
+                  data-cy="input-distance"
+                />
+              </div>
+              <div class="col-4 flex items-center">
+                <span data-cy="units-distance">
+                  {{ $t('global.routeLengthUnit') }}</span
+                >
               </div>
             </div>
           </div>
