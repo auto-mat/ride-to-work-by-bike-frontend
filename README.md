@@ -88,6 +88,8 @@ UNIX-like OS:
 WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
 # Run component tests
 yarn test:component:$WEB_BROWSER
+# Run component tests in parallel
+yarn test:component:parallel:$WEB_BROWSER -t <NUMBER OF CPU CORES>
 # Or test only one component file tests
 yarn test:component:$WEB_BROWSER -s ./src/components/__tests__/CardOffer.cy.js
 # Or interactively open web browser and run tests
@@ -103,6 +105,8 @@ yarn dev
 WEB_BROWSER="firefox" # other web browsers options are "electron", "chrome", "edge"
 # Run e2e tests
 yarn test:e2e:$WEB_BROWSER
+# Run e2e tests in parallel
+yarn test:e2e:parallel:$WEB_BROWSER -t <NUMBER OF CPU CORES>
 # Or test only one e2e file tests
 yarn test:e2e:$WEB_BROWSER -s ./test/cypress/e2e/home.spec.cy.js
 # Or interactively open web browser and run tests
@@ -119,6 +123,8 @@ MS Windows OS:
 set WEB_BROWSER="firefox" :: other web browsers options are "electron", "chrome", "edge"
 :: Run component tests
 yarn test:component:win:%WEB_BROWSER%
+:: Run component tests in parallel
+yarn test:component:win:parallel:%WEB_BROWSER% -t <NUMBER OF CPU CORES>
 :: Or test only one component file tests
 yarn test:component:win:%WEB_BROWSER% -s \src\components\__tests__\CardOffer.cy.js
 :: Or interactively open web browser and run tests
@@ -134,6 +140,8 @@ yarn dev
 set WEB_BROWSER="firefox" :: other web browsers options are "electron", "chrome", "edge"
 :: Run e2e tests
 yarn test:e2e:win:%WEB_BROWSER%
+:: Run e2e tests in parallel
+yarn test:e2e:win:parallel:%WEB_BROWSER% -t <NUMBER OF CPU CORES>
 :: Or test only one e2e file tests
 yarn test:e2e:win:%WEB_BROWSER% -s \test\cypress\e2e\home.spec.cy.js
 :: Or interactively open web browser and run tests
