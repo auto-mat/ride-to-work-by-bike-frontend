@@ -14,6 +14,7 @@ const button = {
 
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
+const gray10 = getPaletteColor('grey-10');
 
 describe('<ListCardPost>', () => {
   it('has translation for all strings', () => {
@@ -45,14 +46,14 @@ describe('<ListCardPost>', () => {
         .should('be.visible')
         .and('have.css', 'width', '38px')
         .and('have.css', 'height', '38px')
-        .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+        .and('have.css', 'border', `1px solid ${hexToRgb(gray10)}`);
       cy.dataCy('swiper-container')
         .shadow()
         .find('.swiper-button-next')
         .should('be.visible')
         .and('have.css', 'width', '38px')
         .and('have.css', 'height', '38px')
-        .and('have.css', 'border', `1px solid ${hexToRgb('#212121')}`);
+        .and('have.css', 'border', `1px solid ${hexToRgb(gray10)}`);
     });
 
     it('changes button disabled state after navigation', () => {
@@ -113,7 +114,7 @@ describe('<ListCardPost>', () => {
     it('renders full width button', () => {
       cy.dataCy('card-list-post-button')
         .should('be.visible')
-        .and('have.css', 'border-color', hexToRgb('#212121'))
+        .and('have.css', 'border-color', hexToRgb(gray10))
         .and('have.css', 'border-radius', '28px')
         .and('contain', button.title);
       cy.testElementPercentageWidth(cy.dataCy('card-list-post-button'), 100);
@@ -146,7 +147,7 @@ function coreTests() {
   it('renders button', () => {
     cy.dataCy('card-list-post-button')
       .should('be.visible')
-      .and('have.css', 'border-color', hexToRgb('#212121'))
+      .and('have.css', 'border-color', hexToRgb(gray10))
       .and('have.css', 'border-radius', '28px')
       .and('contain', button.title);
   });
