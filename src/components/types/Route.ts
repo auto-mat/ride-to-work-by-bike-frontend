@@ -2,6 +2,7 @@ export type RouteItem = {
   id: string;
   date: string;
   direction: string;
+  dirty?: boolean;
   distance: number;
   transport: TransportType;
 };
