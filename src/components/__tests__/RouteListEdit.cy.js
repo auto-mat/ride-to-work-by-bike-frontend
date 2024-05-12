@@ -71,4 +71,55 @@ function coreTests() {
       });
     });
   });
+
+  it('renders save button with edit count', () => {
+    cy.dataCy('button-save')
+      .should('be.visible')
+      .and(
+        'contain',
+        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+      );
+    // introduce a change
+    cy.dataCy('route-list-item')
+      .first()
+      .find('[data-cy="button-toggle-transport"]')
+      .find('button')
+      .last()
+      .click();
+    cy.dataCy('button-save').should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+    );
+    // revert change
+    cy.dataCy('route-list-item')
+      .first()
+      .find('[data-cy="button-toggle-transport"]')
+      .find('button')
+      .first()
+      .click();
+    cy.dataCy('button-save').should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+    );
+    // introduce two changes
+    // change first route
+    cy.dataCy('route-list-item')
+      .first()
+      .find('[data-cy="button-toggle-transport"]')
+      .find('button')
+      .last()
+      .click();
+    // change last route
+    cy.dataCy('route-list-item')
+      .last()
+      .find('[data-cy="button-toggle-transport"]')
+      .find('button')
+      .first()
+      .click();
+    // count changes
+    cy.dataCy('button-save').should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 2, { count: 2 }),
+    );
+  });
 }
