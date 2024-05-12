@@ -49,16 +49,16 @@ describe('<RoutesApps>', () => {
 function coreTests() {
   it('renders component', () => {
     // component
-    cy.dataCy('route-app').should('be.visible');
+    cy.dataCy('routes-apps').should('be.visible');
     // title automatic
-    cy.dataCy('route-app-title-automatic')
+    cy.dataCy('routes-apps-title-automatic')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleAutomaticLogging'));
     // hint automatic
-    cy.dataCy('route-app-hint-automatic')
+    cy.dataCy('routes-apps-hint-automatic')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
@@ -68,14 +68,14 @@ function coreTests() {
       .should('be.visible')
       .should('have.length', 3);
     // title manual
-    cy.dataCy('route-app-title-manual')
+    cy.dataCy('routes-apps-title-manual')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleManualLogging'));
     // hint manual
-    cy.dataCy('route-app-hint-manual')
+    cy.dataCy('routes-apps-hint-manual')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')

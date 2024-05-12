@@ -44,7 +44,7 @@ describe('<RouteListEdit>', () => {
 function coreTests() {
   it('renders component', () => {
     // component visible
-    cy.dataCy('route-list').should('be.visible');
+    cy.dataCy('route-list-edit').should('be.visible');
     // items visible
     cy.dataCy('route-list-item').should('be.visible');
     // direction labels visible

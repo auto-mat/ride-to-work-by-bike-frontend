@@ -47,15 +47,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="route-app">
+  <div data-cy="routes-apps">
     <!-- Section: Apps for automatic logging -->
     <section>
       <!-- Title -->
-      <h2 class="text-h6 text-black" data-cy="route-app-title-automatic">
+      <h2 class="text-h6 text-black" data-cy="routes-apps-title-automatic">
         {{ $t('routes.titleAutomaticLogging') }}
       </h2>
       <!-- Hint -->
-      <p class="" data-cy="route-app-hint-automatic">
+      <p class="" data-cy="routes-apps-hint-automatic">
         {{ $t('routes.hintAutomaticLogging') }}
       </p>
       <!-- App banners -->
@@ -71,11 +71,11 @@ export default defineComponent({
     <!-- Section: Apps for manual logging -->
     <section>
       <!-- Title -->
-      <h2 class="text-h6 text-black" data-cy="route-app-title-manual">
+      <h2 class="text-h6 text-black" data-cy="routes-apps-title-manual">
         {{ $t('routes.titleManualLogging') }}
       </h2>
       <!-- Hint -->
-      <p class="" data-cy="route-app-hint-manual">
+      <p class="" data-cy="routes-apps-hint-manual">
         {{ $t('routes.hintManualLogging') }}
       </p>
       <div class="flex item-center gap-16" data-cy="routes-apps-buttons">

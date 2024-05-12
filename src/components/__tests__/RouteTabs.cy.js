@@ -93,12 +93,17 @@ function coreTests() {
   it('allows to switch tabs', () => {
     cy.dataCy('route-tabs-button-list').click();
     cy.dataCy('route-tabs-panel-list').should('be.visible');
+    // test panel content
+    cy.dataCy('route-list-edit').should('be.visible');
+    cy.dataCy('route-list-display').should('be.visible');
 
     cy.dataCy('route-tabs-button-map').click();
     cy.dataCy('route-tabs-panel-map').should('be.visible');
 
     cy.dataCy('route-tabs-button-app').click();
     cy.dataCy('route-tabs-panel-app').should('be.visible');
+    // test panel content
+    cy.dataCy('routes-apps').should('be.visible');
 
     cy.dataCy('route-tabs-button-calendar').click();
     cy.dataCy('route-tabs-panel-calendar').should('be.visible');

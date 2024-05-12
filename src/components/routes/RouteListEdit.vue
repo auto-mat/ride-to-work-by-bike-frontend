@@ -68,7 +68,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="route-list">
+  <div data-cy="route-list-edit">
     <!-- Item: Day -->
     <div
       v-for="day in days"

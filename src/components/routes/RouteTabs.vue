@@ -139,8 +139,8 @@ export default defineComponent({
       <!-- Panel: List -->
       <q-tab-panel name="list" data-cy="route-tabs-panel-list">
         <div class="text-h6">{{ $t('routes.tabList') }}</div>
-        <route-list-edit :routes="routeList" />
-        <route-list-display :routes="routeList" />
+        <route-list-edit :routes="routeList" data-cy="route-list-edit" />
+        <route-list-display :routes="routeList" data-cy="route-list-display" />
       </q-tab-panel>
       <!-- Panel: Map -->
       <q-tab-panel name="map" data-cy="route-tabs-panel-map">
@@ -149,7 +149,7 @@ export default defineComponent({
       <!-- Panel: App -->
       <q-tab-panel name="app" data-cy="route-tabs-panel-app">
         <div class="text-h6">{{ $t('routes.tabApp') }}</div>
-        <routes-apps />
+        <routes-apps data-cy="routes-apps" />
       </q-tab-panel>
     </q-tab-panels>
   </div>
