@@ -19,7 +19,7 @@
  */
 
 // libraries
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // composables
@@ -41,9 +41,12 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
-    const action = ref<string>('input-distance');
-    const distance = ref<number>(props.route.distance || 0);
+  emits: ['update:route'],
+  setup(props, { emit }) {
+    const actionInitial = 'input-distance';
+    const action = ref<string>(actionInitial);
+    const distanceInitial = props.route.distance || 0;
+    const distance = ref<number>(distanceInitial);
 
     const optionsAction: FormOption[] = [
       {
@@ -85,7 +88,9 @@ export default defineComponent({
       },
     ];
 
-    const transport = ref<string>(props.route.transport);
+    const transportInitial = props.route.transport || '';
+    const transport = ref<string>(transportInitial);
+    // show distance input if transport is bike, walk or bus
     const isShownDistance = computed((): boolean => {
       return (
         transport.value === 'bike' ||
@@ -93,6 +98,25 @@ export default defineComponent({
         transport.value === 'bus'
       );
     });
+
+    // watcher for changes compared to the initial state (dirty)
+    watch(
+      [action, distance, transport],
+      ([actionNew, distanceNew, transportNew]) => {
+        // if settings are the same as initial, mark dirty as false
+        if (
+          actionNew === actionInitial &&
+          distanceNew === distanceInitial &&
+          transportNew === transportInitial
+        ) {
+          emit('update:route', false);
+        }
+        // if settings are different from initial, mark dirty as true
+        else {
+          emit('update:route', true);
+        }
+      },
+    );
 
     const iconSize = '18px';
 

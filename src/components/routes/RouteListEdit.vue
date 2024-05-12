@@ -50,9 +50,11 @@ export default defineComponent({
 
     // dirty state will be tracked within UI to show change count
     const dirtyCount = computed((): number => {
-      return days.value.filter((day): boolean => {
-        return !!day.routes.find((route) => route.dirty);
-      }).length;
+      let count = 0;
+      days.value.forEach((day) => {
+        count += day.routes.filter((route) => route.dirty).length;
+      });
+      return count;
     });
 
     return {
@@ -86,6 +88,7 @@ export default defineComponent({
         :key="route.id"
         class="q-my-md"
         data-cy="route-list-item"
+        @update:route="route.dirty = $event"
       />
     </div>
   </div>
