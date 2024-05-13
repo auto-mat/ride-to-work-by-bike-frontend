@@ -22,7 +22,7 @@ export const menuTop: Link[] = [
     name: 'routes',
   },
   {
-    url: '/vysledky',
+    url: '/results',
     icon: 'emoji_events',
     name: 'results',
   },

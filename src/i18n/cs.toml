@@ -382,6 +382,10 @@ messageResponsibilityRequired = "Musíte souhlasit se zajištěním startovného
 messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
+[results]
+titleResults = "Výsledky"
+titleUpcomingChallenges = "Nadcházející výzvy"
+
 [routes]
 actionInputDistance = "Zadat vzdálenost"
 actionTraceMap = "Zakreslit do mapy"

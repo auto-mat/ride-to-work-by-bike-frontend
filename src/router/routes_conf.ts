@@ -68,6 +68,12 @@ const routesConf: RoutesConf = {
       name: 'register-challenge',
     },
   },
+  results: {
+    path: '/results',
+    children: {
+      name: 'results',
+    },
+  },
 };
 
 export { routesConf };

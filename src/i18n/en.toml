@@ -381,6 +381,10 @@ messageResponsibilityRequired = "You must agree to provide an entry fee."
 messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
 
+[results]
+titleResults = "Results"
+titleUpcomingChallenges = "Upcoming challenges"
+
 [routes]
 actionInputDistance = "Input distance"
 actionTraceMap = "Trace route"

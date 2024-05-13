@@ -9,7 +9,7 @@
  * initiative. The card may contain an image, title, and other details.
  * Border radius can be controlled by `config` parameter.
  *
- * Note: This component is commonly used within the `ListCardChallenge`
+ * Note: This component is commonly used within the `SectionColumns`
  * component.
  *
  * @props
