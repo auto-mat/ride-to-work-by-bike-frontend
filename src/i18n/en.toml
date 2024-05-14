@@ -382,6 +382,9 @@ messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
 
 [results]
+buttonPastChallenges = "View previous challenges"
+titleBadges = "Badges"
+titlePastChallenges = "Previous challenges"
 titleResults = "Results"
 titleUpcomingChallenges = "Upcoming challenges"
 

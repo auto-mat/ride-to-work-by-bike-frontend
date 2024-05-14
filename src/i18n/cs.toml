@@ -383,6 +383,9 @@ messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [results]
+buttonPastChallenges = "Výsledky z dřívějších výzev"
+titleBadges = "Odznaky"
+titlePastChallenges = "Dřívější výzvy"
 titleResults = "Výsledky"
 titleUpcomingChallenges = "Nadcházející výzvy"
 
