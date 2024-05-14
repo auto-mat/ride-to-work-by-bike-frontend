@@ -384,7 +384,10 @@ hintPassword = "It must contain at least 6 characters and at least 1 letter."
 [results]
 buttonPastChallenges = "View previous challenges"
 titleBadges = "Badges"
+titleCurrentResults = "Current results"
+titleOngoingChallenges = "Ongoing challenges"
 titlePastChallenges = "Previous challenges"
+titleRecentChallenges = "Recent completed challenges"
 titleResults = "Results"
 titleUpcomingChallenges = "Upcoming challenges"
 

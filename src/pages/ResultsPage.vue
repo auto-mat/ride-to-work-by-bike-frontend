@@ -5,6 +5,8 @@
  * Shows upcoming challenges, badges, user progress, and other results.
  *
  * @components
+ * - `ResultsChallengeOngoing`: Component to render content in
+ * the "challenge-ongoing" state.
  * - `ResultsChallengeUpcoming`: Component to render content in
  * the "challenge-upcoming" state.
  *
@@ -14,11 +16,14 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// components
+import ResultsChallengeOngoing from 'components/results/ResultsChallengeOngoing.vue';
 import ResultsChallengeUpcoming from 'components/results/ResultsChallengeUpcoming.vue';
 
 export default defineComponent({
   name: 'ResultsPage',
   components: {
+    ResultsChallengeOngoing,
     ResultsChallengeUpcoming,
   },
   setup() {
@@ -43,6 +48,11 @@ export default defineComponent({
       <results-challenge-upcoming
         v-if="state === 'challenge-upcoming'"
         data-cy="results-challenge-upcoming"
+      />
+
+      <results-challenge-ongoing
+        v-if="state === 'challenge-ongoing'"
+        data-cy="results-challenge-ongoing"
       />
     </div>
   </q-page>

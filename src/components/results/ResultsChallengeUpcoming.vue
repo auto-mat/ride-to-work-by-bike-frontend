@@ -69,6 +69,7 @@ export default defineComponent({
         />
       </section-columns>
     </section>
+
     <!-- Section: Badges -->
     <section class="q-pt-xl">
       <!-- Title -->
@@ -79,7 +80,7 @@ export default defineComponent({
       <section-columns
         :columns="4"
         class="q-col-gutter-lg q-mt-sm"
-        data-cy="list-badges"
+        data-cy="badges-list"
       >
         <badge-achievement
           v-for="badge in badgeList"
@@ -90,6 +91,7 @@ export default defineComponent({
         />
       </section-columns>
     </section>
+
     <!-- Section: Past challenges -->
     <section class="q-pt-xl">
       <!-- Title -->

@@ -385,7 +385,10 @@ hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 [results]
 buttonPastChallenges = "Výsledky z dřívějších výzev"
 titleBadges = "Odznaky"
+titleCurrentResults = "Dosavadní výsledky"
+titleOngoingChallenges = "Probíhající výzvy"
 titlePastChallenges = "Dřívější výzvy"
+titleRecentChallenges = "Uplynulé výzvy za toto období"
 titleResults = "Výsledky"
 titleUpcomingChallenges = "Nadcházející výzvy"
 

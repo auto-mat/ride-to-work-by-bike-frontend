@@ -52,7 +52,7 @@ function coreTests() {
       .should('be.visible')
       .and('contain', i18n.global.t('results.titleBadges'));
     // list badges
-    cy.dataCy('list-badges').should('be.visible');
+    cy.dataCy('badges-list').should('be.visible');
     // title past challenges
     cy.dataCy('past-challenges-title')
       .should('be.visible')
