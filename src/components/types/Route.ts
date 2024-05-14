@@ -5,9 +5,12 @@ export type RouteItem = {
   dirty?: boolean;
   distance: number;
   transport: TransportType;
+  inputType?: RouteInputType;
 };
 
 export type TransportType = 'bike' | 'car' | 'walk' | 'bus' | 'none';
+
+export type RouteInputType = 'input-number' | 'input-map';
 
 export type RouteListDay = {
   date: string;

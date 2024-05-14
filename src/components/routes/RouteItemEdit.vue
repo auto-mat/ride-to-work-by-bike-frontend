@@ -27,7 +27,7 @@ import { useRoutes } from 'src/composables/useRoutes';
 
 // types
 import type { FormOption } from '../types/Form';
-import type { RouteItem } from '../types/Route';
+import type { RouteItem, RouteInputType } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteItemEdit',
@@ -43,19 +43,21 @@ export default defineComponent({
   },
   emits: ['update:route'],
   setup(props, { emit }) {
-    const actionInitial = 'input-distance';
-    const action = ref<string>(actionInitial);
-    const distanceInitial = props.route.distance || 0;
-    const distance = ref<number>(distanceInitial);
+    const routeInitial: RouteItem = { ...props.route };
+
+    const action = ref<RouteInputType>(
+      props.route?.inputType || 'input-number',
+    );
+    const distance = ref<number>(props.route?.distance || 0);
 
     const optionsAction: FormOption[] = [
       {
         label: i18n.global.t('routes.actionInputDistance'),
-        value: 'input-distance',
+        value: 'input-number',
       },
       {
         label: i18n.global.t('routes.actionTraceMap'),
-        value: 'trace-map',
+        value: 'input-map',
       },
     ];
 
@@ -88,8 +90,7 @@ export default defineComponent({
       },
     ];
 
-    const transportInitial = props.route.transport || '';
-    const transport = ref<string>(transportInitial);
+    const transport = ref<string>(props.route.transport || '');
     // show distance input if transport is bike, walk or bus
     const isShownDistance = computed((): boolean => {
       return (
@@ -105,9 +106,9 @@ export default defineComponent({
       ([actionNew, distanceNew, transportNew]) => {
         // if settings are the same as initial, mark dirty as false
         if (
-          actionNew === actionInitial &&
-          distanceNew === distanceInitial &&
-          transportNew === transportInitial
+          actionNew === (routeInitial?.inputType || 'input-number') &&
+          Number(distanceNew) === Number(routeInitial.distance) &&
+          transportNew === routeInitial?.transport
         ) {
           emit('update:route', false);
         }
@@ -229,7 +230,7 @@ export default defineComponent({
                 ></q-select>
               </div>
               <div
-                v-if="action === 'input-distance'"
+                v-if="action === 'input-number'"
                 class="col-8 col-sm-5 row items-center gap-8"
               >
                 <!-- Input: Distance -->
@@ -252,7 +253,7 @@ export default defineComponent({
                   </span>
                 </div>
               </div>
-              <div v-else-if="action === 'trace-map'" class="col-8 col-sm-5">
+              <div v-else-if="action === 'input-map'" class="col-8 col-sm-5">
                 <!-- Button: Trace map -->
                 <q-btn
                   unelevated

@@ -91,12 +91,14 @@ export default defineComponent({
         @update:route="route.dirty = $event"
       />
     </div>
-  </div>
-  <div class="flex items-center justify-center">
-    <q-btn rounded unelevated outline color="primary" data-cy="button-save">
-      {{
-        $tc('routes.buttonSaveChangesCount', dirtyCount, { count: dirtyCount })
-      }}
-    </q-btn>
+    <div class="flex items-center justify-center">
+      <q-btn rounded unelevated outline color="primary" data-cy="button-save">
+        {{
+          $tc('routes.buttonSaveChangesCount', dirtyCount, {
+            count: dirtyCount,
+          })
+        }}
+      </q-btn>
+    </div>
   </div>
 </template>
