@@ -26,7 +26,7 @@ const { formatDate } = date;
 export default defineComponent({
   name: 'ResultsList',
   setup() {
-    const date = new Date();
+    const date = new Date('Ocotober 17, 2024 13:00:00');
     const dateChallengeStart = formatDate(date, 'D. MMM. YYYY');
 
     return {
@@ -85,6 +85,7 @@ export default defineComponent({
         class="col-12 col-sm-6 col-lg-3"
         v-for="result in results"
         :key="result.label"
+        data-cy="result-item"
       >
         <q-item-section avatar>
           <q-avatar
