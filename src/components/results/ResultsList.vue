@@ -5,10 +5,6 @@
  * @description * Use this component to render set of results with title
  * and share link.
  *
- * @props
- * - `results` (ResultsListType, required): The object representing results.
- *   It should be of type `ResultsListType`.
- *
  * @example
  * <results-list :results="results" />
  *
@@ -19,7 +15,11 @@
 import { date } from 'quasar';
 import { defineComponent } from 'vue';
 
+// composables
 import { i18n } from 'src/boot/i18n';
+
+// types
+import type { ItemStatistics } from '../types/Item';
 
 const { formatDate } = date;
 
@@ -33,26 +33,26 @@ export default defineComponent({
       dateChallengeStart,
       results: [
         {
+          icon: 'loader',
           label: i18n.global.t('results.labelRegularity'),
           value: '80%',
-          icon: 'loader',
         },
         {
+          icon: 'route',
           label: i18n.global.t('results.labelSustainableRoutes'),
           value: '18/20',
-          icon: 'route',
         },
         {
+          icon: 'distance',
           label: i18n.global.t('global.routeLengthUnit'),
           value: '312,25',
-          icon: 'distance',
         },
         {
+          icon: 'leaf',
           label: i18n.global.t('results.labelCo2Saved'),
           value: '420',
-          icon: 'leaf',
         },
-      ],
+      ] as ItemStatistics[],
     };
   },
 });
