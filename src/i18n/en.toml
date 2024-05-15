@@ -19,6 +19,7 @@ results = "Results"
 routes = "Routes"
 
 [global]
+buttonShare = "Share"
 female = "Female"
 man = "Man"
 male = "Male"
@@ -244,9 +245,6 @@ button = "All results"
 timeline = "days completed"
 toDate = "To date"
 
-[index.cardProgress]
-share = "Share"
-
 [index.cardListProgress]
 title = "Your results"
 button = "All results"
@@ -383,6 +381,9 @@ hintPassword = "It must contain at least 6 characters and at least 1 letter."
 
 [results]
 buttonPastChallenges = "View previous challenges"
+labelCo2Saved = "g of CO<sub>2</sub> saved"
+labelRegularity = "regularity"
+labelSustainableRoutes = "sustainable rides"
 titleBadges = "Badges"
 titleCurrentResults = "Current results"
 titleOngoingChallenges = "Ongoing challenges"
@@ -390,6 +391,7 @@ titlePastChallenges = "Previous challenges"
 titleRecentChallenges = "Recent completed challenges"
 titleResults = "Results"
 titleUpcomingChallenges = "Upcoming challenges"
+titleYourResultsSince = "Your results since {date}"
 
 [routes]
 actionInputDistance = "Input distance"

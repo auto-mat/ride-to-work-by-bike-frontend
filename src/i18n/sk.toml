@@ -19,6 +19,7 @@ results = "Výsledky"
 routes = "Cesty"
 
 [global]
+buttonShare = "Zdieľať"
 female = "Dámske"
 man = "Muž"
 male = "Pánske"
@@ -244,9 +245,6 @@ button = "Všetky výsledky"
 timeline = "dokončených dní"
 toDate = "Doteraz"
 
-[index.cardProgress]
-share = "Zdieľať"
-
 [index.cardListProgress]
 title = "Vaše výsledky"
 button = "Všetky výsledky"
@@ -383,6 +381,9 @@ hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 
 [results]
 buttonPastChallenges = "Výsledky predošlých výziev"
+labelCo2Saved = "g CO<sub>2</sub> ušetrených"
+labelRegularity = "pravidelnosť"
+labelSustainableRoutes = "udržateľných trás"
 titleBadges = "Odznaky"
 titleCurrentResults = "Doterajšie výsledky"
 titleOngoingChallenges = "Prebiehajúce výzvy"
@@ -390,6 +391,7 @@ titlePastChallenges = "Predošlé výzvy"
 titleRecentChallenges = "Predošlé výzvy na toto obdobie"
 titleResults = "Výsledky"
 titleUpcomingChallenges = "Nadchádzajúce výzvy"
+titleYourResultsSince = "Vaše výsledky od {date}"
 
 [routes]
 actionInputDistance = "Zadať vzdialenosť"

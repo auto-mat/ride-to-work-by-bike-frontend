@@ -196,7 +196,7 @@ export default defineComponent({
           <span
             class="leading-1"
             :class="isDark(card) ? 'text-white' : 'text-grey-10'"
-            >{{ $t('index.cardProgress.share') }}</span
+            >{{ $t('global.buttonShare') }}</span
           >
         </q-item>
       </q-list>

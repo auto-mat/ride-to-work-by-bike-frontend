@@ -17,6 +17,7 @@ const card = cardsProgress[1];
 describe('<CardProgress>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.cardProgress', i18n);
+    cy.testLanguageStringsInContext(['buttonShare'], 'global', i18n);
   });
 
   context('desktop: dark', () => {
