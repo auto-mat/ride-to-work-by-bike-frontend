@@ -116,6 +116,43 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: routesConf['results_detail']['path'],
+    redirect: routesConf['results_report']['path'],
+  },
+  {
+    path: routesConf['results_report']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['results_report']['children']['name'],
+        component: () => import('pages/ResultsDetailPage.vue'),
+      },
+    ],
+  },
+  {
+    path: routesConf['results_consistency']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['results_consistency']['children']['name'],
+        component: () => import('pages/ResultsDetailPage.vue'),
+      },
+    ],
+  },
+  {
+    path: routesConf['results_performance']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['results_performance']['children']['name'],
+        component: () => import('pages/ResultsDetailPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

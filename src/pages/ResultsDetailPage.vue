@@ -15,11 +15,13 @@
 import { defineComponent } from 'vue';
 
 // components
+import ResultsList from 'components/results/ResultsList.vue';
 import ResultsTabs from 'components/results/ResultsTabs.vue';
 
 export default defineComponent({
   name: 'ResultsDetailPage',
   components: {
+    ResultsList,
     ResultsTabs,
   },
   setup() {
@@ -33,7 +35,7 @@ export default defineComponent({
     <div class="q-px-lg bg-white q-pb-xl">
       <!-- TODO: Breadcrumb Heading -->
 
-      <!-- TODO: Results List -->
+      <results-list />
 
       <results-tabs data-cy="results-tabs" />
     </div>

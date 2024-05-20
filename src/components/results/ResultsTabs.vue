@@ -70,7 +70,7 @@ export default defineComponent({
       data-cy="results-tabs-buttons"
     >
       <q-route-tab
-        :to="routesConf['results'].path"
+        :to="routesConf['results_report'].path"
         name="report"
         alert-icon="mdi-lock"
         :alert="isLocked('report')"

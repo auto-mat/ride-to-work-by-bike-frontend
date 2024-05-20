@@ -74,22 +74,28 @@ const routesConf: RoutesConf = {
       name: 'results',
     },
   },
-  results_report: {
-    path: '/results/report',
+  results_detail: {
+    path: '/results/detail',
     children: {
-      name: 'results/report',
+      name: 'results/detail',
+    },
+  },
+  results_report: {
+    path: '/results/detail/report',
+    children: {
+      name: 'results/detail/report',
     },
   },
   results_consistency: {
-    path: '/results/consistency',
+    path: '/results/detail/consistency',
     children: {
-      name: 'results/consistency',
+      name: 'results/detail/consistency',
     },
   },
   results_performance: {
-    path: '/results/performance',
+    path: '/results/detail/performance',
     children: {
-      name: 'results/performance',
+      name: 'results/detail/performance',
     },
   },
 };
