@@ -74,6 +74,24 @@ const routesConf: RoutesConf = {
       name: 'results',
     },
   },
+  results_report: {
+    path: '/results/report',
+    children: {
+      name: 'results/report',
+    },
+  },
+  results_consistency: {
+    path: '/results/consistency',
+    children: {
+      name: 'results/consistency',
+    },
+  },
+  results_performance: {
+    path: '/results/performance',
+    children: {
+      name: 'results/performance',
+    },
+  },
 };
 
 export { routesConf };

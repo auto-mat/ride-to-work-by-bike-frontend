@@ -31,6 +31,6 @@ describe('<ResultsTabs>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy('component').should('be.visible');
+    cy.dataCy('results-tabs').should('be.visible');
   });
 }
