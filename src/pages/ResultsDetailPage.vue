@@ -1,0 +1,41 @@
+<script lang="ts">
+/**
+ * Results Detail Page
+ *
+ * Shows results for a single user.
+ *
+ * @components
+ * - `ResultsList`: Component to list of user's results.
+ * - `ResultsTabs`: Component to render tabs with results views.
+ *
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858%3A105197&t=4cALO2fsjKI90AW1-1)
+ **/
+
+// libraries
+import { defineComponent } from 'vue';
+
+// components
+import ResultsTabs from 'components/results/ResultsTabs.vue';
+
+export default defineComponent({
+  name: 'ResultsDetailPage',
+  components: {
+    ResultsTabs,
+  },
+  setup() {
+    return {};
+  },
+});
+</script>
+
+<template>
+  <q-page class="overflow-hidden" data-cy="q-main">
+    <div class="q-px-lg bg-white q-pb-xl">
+      <!-- TODO: Breadcrumb Heading -->
+
+      <!-- TODO: Results List -->
+
+      <results-tabs data-cy="results-tabs" />
+    </div>
+  </q-page>
+</template>
