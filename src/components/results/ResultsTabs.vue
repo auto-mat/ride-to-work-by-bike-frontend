@@ -102,16 +102,25 @@ export default defineComponent({
     <!-- Tab panels -->
     <q-tab-panels v-model="activeTab" animated>
       <!-- Panel: Report -->
-      <q-tab-panel name="report" data-cy="resulst-tabs-panel-report">
-        <div class="text-h6">{{ $t('results.tabReport') }}</div>
+      <q-tab-panel name="report" data-cy="results-tabs-panel-report">
+        <!-- Title -->
+        <div class="text-h6" data-cy="results-tabs-title-report">
+          {{ $t('results.tabReport') }}
+        </div>
       </q-tab-panel>
       <!-- Panel: Consistency -->
-      <q-tab-panel name="consistency" data-cy="resulst-tabs-panel-consistency">
-        <div class="text-h6">{{ $t('results.tabConsistency') }}</div>
+      <q-tab-panel name="consistency" data-cy="results-tabs-panel-consistency">
+        <!-- Title -->
+        <div class="text-h6" data-cy="results-tabs-title-consistency">
+          {{ $t('results.tabConsistency') }}
+        </div>
       </q-tab-panel>
       <!-- Panel: Performance -->
-      <q-tab-panel name="performance" data-cy="resulst-tabs-panel-performance">
-        <div class="text-h6">{{ $t('results.tabPerformance') }}</div>
+      <q-tab-panel name="performance" data-cy="results-tabs-panel-performance">
+        <!-- Title -->
+        <div class="text-h6" data-cy="results-tabs-title-performance">
+          {{ $t('results.tabPerformance') }}
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </div>

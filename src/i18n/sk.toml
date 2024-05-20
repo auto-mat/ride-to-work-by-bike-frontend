@@ -392,6 +392,9 @@ titleRecentChallenges = "Predošlé výzvy na toto obdobie"
 titleResults = "Výsledky"
 titleUpcomingChallenges = "Nadchádzajúce výzvy"
 titleYourResultsSince = "Vaše výsledky od {date}"
+tabConsistency = "Pravidelnosť"
+tabPerformance = "Výkonnosť"
+tabReport = "Data report"
 
 [routes]
 actionInputDistance = "Zadať vzdialenosť"

@@ -392,6 +392,9 @@ titleRecentChallenges = "Recent completed challenges"
 titleResults = "Results"
 titleUpcomingChallenges = "Upcoming challenges"
 titleYourResultsSince = "Your results since {date}"
+tabConsistency = "Consistency"
+tabPerformance = "Performance"
+tabReport = "Data report"
 
 [routes]
 actionInputDistance = "Input distance"

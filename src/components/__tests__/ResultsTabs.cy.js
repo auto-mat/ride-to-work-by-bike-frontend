@@ -3,7 +3,16 @@ import { i18n } from '../../boot/i18n';
 
 describe('<ResultsTabs>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        // Not tested - identical
+        // 'tabReport',
+        'tabConsistency',
+        'tabPerformance',
+      ],
+      'results',
+      i18n,
+    );
   });
 
   context('desktop', () => {

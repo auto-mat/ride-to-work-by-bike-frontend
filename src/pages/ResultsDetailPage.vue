@@ -37,7 +37,7 @@ export default defineComponent({
 
       <results-list />
 
-      <results-tabs data-cy="results-tabs" />
+      <results-tabs class="q-pt-xl" data-cy="results-tabs" />
     </div>
   </q-page>
 </template>
