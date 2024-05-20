@@ -18,6 +18,9 @@
 // libraries
 import { defineComponent, ref } from 'vue';
 
+// composables
+import { i18n } from '../../boot/i18n';
+
 type TableColumn = {
   align: string;
   field: string;
@@ -35,7 +38,7 @@ export default defineComponent({
       {
         name: 'rank',
         required: true,
-        label: 'Pořadí',
+        label: i18n.global.t('results.labelRank'),
         align: 'left',
         field: 'rank',
         format: (val: number | string | null) => (val ? `${val}.` : ''),
@@ -44,7 +47,7 @@ export default defineComponent({
       {
         name: 'consistency',
         required: true,
-        label: 'Pravidelnost',
+        label: i18n.global.t('results.labelConsistency'),
         align: 'left',
         field: 'consistency',
         sortable: true,
@@ -52,7 +55,7 @@ export default defineComponent({
       {
         name: 'route-count',
         required: true,
-        label: 'Poč. jízd',
+        label: i18n.global.t('results.labelRouteCount'),
         align: 'left',
         field: 'routeCount',
         format: (val: number | string | null) => (val ? `${val}%` : ''),
@@ -61,7 +64,7 @@ export default defineComponent({
       {
         name: 'name',
         required: true,
-        label: 'Účastník',
+        label: i18n.global.t('results.labelParticipant'),
         align: 'left',
         field: 'name',
         sortable: true,
@@ -69,7 +72,7 @@ export default defineComponent({
       {
         name: 'team',
         required: true,
-        label: 'Tým',
+        label: i18n.global.t('results.labelTeam'),
         align: 'left',
         field: 'team',
         sortable: true,
@@ -77,7 +80,7 @@ export default defineComponent({
       {
         name: 'organization',
         required: true,
-        label: 'Organizace',
+        label: i18n.global.t('results.labelOrganization'),
         align: 'left',
         field: 'organization',
         sortable: true,
@@ -85,7 +88,7 @@ export default defineComponent({
       {
         name: 'category',
         required: true,
-        label: 'Kategorie',
+        label: i18n.global.t('results.labelCategory'),
         align: 'left',
         field: 'category',
         sortable: true,
@@ -93,7 +96,7 @@ export default defineComponent({
       {
         name: 'city',
         required: true,
-        label: 'Město',
+        label: i18n.global.t('results.labelCity'),
         align: 'left',
         field: 'city',
         sortable: true,
@@ -138,7 +141,13 @@ export default defineComponent({
 
 <template>
   <div data-cy="table-filter">
-    <q-table :rows="rows" :columns="columns" :filter="searchQuery" row-key="id">
+    <q-table
+      flat
+      :rows="rows"
+      :columns="columns"
+      :filter="searchQuery"
+      row-key="id"
+    >
       <!-- Search Filter -->
       <template v-slot:top-right>
         <q-input
