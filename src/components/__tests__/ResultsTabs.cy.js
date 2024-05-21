@@ -8,7 +8,7 @@ describe('<ResultsTabs>', () => {
       [
         // Not tested - identical
         // 'tabReport',
-        'tabConsistency',
+        'tabRegularity',
         'tabPerformance',
       ],
       'results',
@@ -44,12 +44,12 @@ describe('<ResultsTabs>', () => {
     });
 
     it('does not switch to locked tab', () => {
-      cy.dataCy('results-tabs-button-consistency').click();
-      cy.dataCy('results-tabs-panel-consistency').should('be.visible');
+      cy.dataCy('results-tabs-button-regularity').click();
+      cy.dataCy('results-tabs-panel-regularity').should('be.visible');
 
       cy.dataCy('results-tabs-button-report').click();
       cy.dataCy('results-tabs-panel-report').should('not.exist');
-      cy.dataCy('results-tabs-panel-consistency').should('be.visible');
+      cy.dataCy('results-tabs-panel-regularity').should('be.visible');
     });
   });
 
@@ -71,16 +71,16 @@ function coreTests() {
     cy.dataCy('results-tabs-button-report')
       .should('be.visible')
       .and('contain', i18n.global.t('results.tabReport'));
-    cy.dataCy('results-tabs-button-consistency')
+    cy.dataCy('results-tabs-button-regularity')
       .should('be.visible')
-      .and('contain', i18n.global.t('results.tabConsistency'));
+      .and('contain', i18n.global.t('results.tabRegularity'));
     cy.dataCy('results-tabs-button-performance')
       .should('be.visible')
       .and('contain', i18n.global.t('results.tabPerformance'));
 
     cy.dataCy('results-tabs-button-report').click();
     cy.dataCy('results-tabs-panel-report').should('be.visible');
-    cy.dataCy('results-tabs-panel-consistency').should('not.exist');
+    cy.dataCy('results-tabs-panel-regularity').should('not.exist');
     cy.dataCy('results-tabs-panel-performance').should('not.exist');
   });
 
@@ -89,10 +89,10 @@ function coreTests() {
     cy.dataCy('results-tabs-button-report').click();
     cy.dataCy('results-tabs-panel-report').should('be.visible');
     cy.dataCy('results-tabs-title-report').should('be.visible');
-    // display consistency
-    cy.dataCy('results-tabs-button-consistency').click();
-    cy.dataCy('results-tabs-panel-consistency').should('be.visible');
-    cy.dataCy('results-tabs-title-consistency').should('be.visible');
+    // display regularity
+    cy.dataCy('results-tabs-button-regularity').click();
+    cy.dataCy('results-tabs-panel-regularity').should('be.visible');
+    cy.dataCy('results-tabs-title-regularity').should('be.visible');
     // display performance
     cy.dataCy('results-tabs-button-performance').click();
     cy.dataCy('results-tabs-panel-performance').should('be.visible');
@@ -104,16 +104,16 @@ function coreTests() {
     cy.dataCy('results-tabs-button-report').click();
     cy.url().should('include', routesConf['results_report'].path);
     // switch to list tab
-    cy.dataCy('results-tabs-button-consistency').click();
+    cy.dataCy('results-tabs-button-regularity').click();
     cy.url().should('not.include', routesConf['results_report'].path);
-    cy.url().should('include', routesConf['results_consistency'].path);
+    cy.url().should('include', routesConf['results_regularity'].path);
     // switch to map tab
     cy.dataCy('results-tabs-button-performance').click();
-    cy.url().should('not.include', routesConf['results_consistency'].path);
+    cy.url().should('not.include', routesConf['results_regularity'].path);
     cy.url().should('include', routesConf['results_performance'].path);
     // popstate
     cy.go('back');
-    cy.url().should('include', routesConf['results_consistency'].path);
+    cy.url().should('include', routesConf['results_regularity'].path);
     cy.dataCy('results-tabs-panel-performance').should('be.visible');
   });
 }

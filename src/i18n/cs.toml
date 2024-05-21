@@ -393,7 +393,7 @@ titleRecentChallenges = "Uplynulé výzvy za toto období"
 titleResults = "Výsledky"
 titleUpcomingChallenges = "Nadcházející výzvy"
 titleYourResultsSince = "Vaše výsledky od {date}"
-tabConsistency = "Pravidelnost"
+tabRegularity = "Pravidelnost"
 tabPerformance = "Výkonnost"
 tabReport = "Data report"
 

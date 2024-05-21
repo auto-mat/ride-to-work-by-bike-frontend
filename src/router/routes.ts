@@ -132,12 +132,12 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: routesConf['results_consistency']['path'],
+    path: routesConf['results_regularity']['path'],
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['results_consistency']['children']['name'],
+        name: routesConf['results_regularity']['children']['name'],
         component: () => import('pages/ResultsDetailPage.vue'),
       },
     ],

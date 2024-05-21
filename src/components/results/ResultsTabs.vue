@@ -20,7 +20,7 @@ import { defineComponent, ref } from 'vue';
 // routes
 import { routesConf } from 'src/router/routes_conf';
 
-type ResultsTabsOption = 'report' | 'consistency' | 'performance';
+type ResultsTabsOption = 'report' | 'regularity' | 'performance';
 
 export default defineComponent({
   name: 'ResultsTabs',
@@ -32,7 +32,7 @@ export default defineComponent({
   },
   setup(props) {
     // list of available tabs
-    const tabs: ResultsTabsOption[] = ['report', 'consistency', 'performance'];
+    const tabs: ResultsTabsOption[] = ['report', 'regularity', 'performance'];
     const activeTab = ref('' as ResultsTabsOption);
 
     // locked tabs - exposed for testing and further logic
@@ -79,13 +79,13 @@ export default defineComponent({
         data-cy="results-tabs-button-report"
       />
       <q-route-tab
-        :to="routesConf['results_consistency'].path"
-        name="consistency"
+        :to="routesConf['results_regularity'].path"
+        name="regularity"
         alert-icon="mdi-lock"
-        :alert="isLocked('consistency')"
-        :disable="isLocked('consistency')"
-        :label="$t('results.tabConsistency')"
-        data-cy="results-tabs-button-consistency"
+        :alert="isLocked('regularity')"
+        :disable="isLocked('regularity')"
+        :label="$t('results.tabRegularity')"
+        data-cy="results-tabs-button-regularity"
       />
       <q-route-tab
         :to="routesConf['results_performance'].path"
@@ -108,11 +108,11 @@ export default defineComponent({
           {{ $t('results.tabReport') }}
         </div>
       </q-tab-panel>
-      <!-- Panel: Consistency -->
-      <q-tab-panel name="consistency" data-cy="results-tabs-panel-consistency">
+      <!-- Panel: Regularity -->
+      <q-tab-panel name="regularity" data-cy="results-tabs-panel-regularity">
         <!-- Title -->
-        <div class="text-h6" data-cy="results-tabs-title-consistency">
-          {{ $t('results.tabConsistency') }}
+        <div class="text-h6" data-cy="results-tabs-title-regularity">
+          {{ $t('results.tabRegularity') }}
         </div>
       </q-tab-panel>
       <!-- Panel: Performance -->

@@ -86,10 +86,10 @@ const routesConf: RoutesConf = {
       name: 'results/detail/report',
     },
   },
-  results_consistency: {
-    path: '/results/detail/consistency',
+  results_regularity: {
+    path: '/results/detail/regularity',
     children: {
-      name: 'results/detail/consistency',
+      name: 'results/detail/regularity',
     },
   },
   results_performance: {
