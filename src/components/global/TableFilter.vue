@@ -16,10 +16,13 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+
+// types
+import { FormSelectOption } from '../types/Form';
 
 type TableColumn = {
   align: string;
@@ -30,6 +33,12 @@ type TableColumn = {
   required: boolean;
   sortable: boolean;
 };
+
+type TableRow = {
+  [key: string]: number | string | null;
+};
+
+type FilterMethodInput = { search: string; filter: string };
 
 export default defineComponent({
   name: 'TableFilter',
@@ -103,7 +112,7 @@ export default defineComponent({
       },
     ];
 
-    const rows = [
+    const rows: TableRow[] = [
       {
         city: 'Brno',
         name: 'Petr',
@@ -126,14 +135,111 @@ export default defineComponent({
         rank: 2,
         id: 2,
       },
+      {
+        city: 'Praha',
+        name: 'Marta',
+        team: 'Team 2',
+        organization: 'Organizace 3',
+        category: 'Kategorie 3',
+        routeCount: 22,
+        consistency: 80,
+        rank: 2,
+        id: 2,
+      },
     ];
 
     const searchQuery = ref('');
 
+    const filterQuery = ref('');
+    const filterOptions = [
+      {
+        label: i18n.global.t('global.all'),
+        value: '',
+      },
+      {
+        label: 'Organizace 1',
+        value: 'Organizace 1',
+      },
+      {
+        label: 'Organizace 2',
+        value: 'Organizace 2',
+      },
+    ] as FormSelectOption[];
+
+    /**
+     * Creates an object containing the search query and the filter query.
+     */
+    const filterCompound = computed((): FilterMethodInput => {
+      return {
+        search: searchQuery.value,
+        filter: filterQuery.value,
+      };
+    });
+
+    /**
+     * Provides filter functionality
+     **/
+    const filterMethod = (
+      rows: readonly TableRow[],
+      terms: FilterMethodInput,
+      cols: readonly TableColumn[],
+      cellValue: (col: TableColumn, row: TableRow) => string,
+    ): readonly TableRow[] | undefined => {
+      const { search, filter } = terms;
+      if (!search && !filter) {
+        return rows;
+      }
+      if (!filter) {
+        defaultFilter(search);
+      }
+      if (!search) {
+        defaultFilter(filter);
+      }
+      // both filter options are selected
+      const lowerTerms = [search, filter].map((query) => query.toLowerCase());
+      return rows.filter((row) => {
+        // combine conditions into an && operator
+        return (
+          cols.some((col) => {
+            const val = cellValue(col, row) + '';
+            const haystack =
+              val === 'undefined' || val === 'null' ? '' : val.toLowerCase();
+            return haystack.indexOf(lowerTerms[0]) !== -1;
+          }) &&
+          cols.some((col) => {
+            const val = cellValue(col, row) + '';
+            const haystack =
+              val === 'undefined' || val === 'null' ? '' : val.toLowerCase();
+            return haystack.indexOf(lowerTerms[1]) !== -1;
+          })
+        );
+      });
+
+      /**
+       * Default filter function based on QTable source code
+       * @param query string
+       */
+      function defaultFilter(query: string) {
+        const lowerTerms = query ? query.toLowerCase() : '';
+        return rows.filter((row) =>
+          cols.some((col) => {
+            const val = cellValue(col, row) + '';
+            const haystack =
+              val === 'undefined' || val === 'null' ? '' : val.toLowerCase();
+            return haystack.indexOf(lowerTerms) !== -1;
+          }),
+        );
+      }
+    };
+
     return {
       columns,
+      filterCompound,
+      filterOptions,
+      filterQuery,
       rows,
       searchQuery,
+      filterMethod,
     };
   },
 });
@@ -145,30 +251,44 @@ export default defineComponent({
       flat
       :rows="rows"
       :columns="columns"
-      :filter="searchQuery"
+      :filter="filterCompound"
+      :filter-method="filterMethod"
       row-key="id"
     >
-      <!-- Search Filter -->
-      <template v-slot:top-right>
-        <q-input
-          borderless
-          dense
-          debounce="300"
-          v-model="searchQuery"
-          placeholder="Search"
-        >
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
+      <!-- Top-Left: Filters -->
+      <template v-slot:top-left>
+        <div class="flex items-center gap-8">
+          <!-- Filter: Search -->
+          <q-input
+            borderless
+            dense
+            debounce="300"
+            v-model="searchQuery"
+            placeholder="Search"
+            data-cy="table-filter-search"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+          <!-- Filter: Select -->
+          <q-select
+            dense
+            outlined
+            emit-value
+            map-options
+            v-model="filterQuery"
+            :options="filterOptions"
+            data-cy="table-filter-select"
+          >
+          </q-select>
+        </div>
       </template>
 
       <!-- Empty table -->
-      <template v-slot:no-data="{ icon, message, searchQuery }">
-        <div class="full-width row flex-center text-accent q-gutter-sm">
-          <q-icon size="2em" name="sentiment_dissatisfied" />
-          <span> Well this is sad... {{ message }} </span>
-          <q-icon size="2em" :name="searchQuery ? 'filter_b_and_w' : icon" />
+      <template v-slot:no-data>
+        <div class="full-width row flex-center text-grey-10 q-gutter-sm">
+          <span>{{ $t('table.textEmptyTable') }}</span>
         </div>
       </template>
     </q-table>

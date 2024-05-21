@@ -435,6 +435,9 @@ titleTabApp = "Automatic logging"
 titleAutomaticLogging = "Automatic logging"
 titleManualLogging = "Manual logging"
 
+[table]
+textEmptyTable = "No results. Try changing the filter settings."
+
 [routes.transport]
 bike = "By bike"
 car = "By car"

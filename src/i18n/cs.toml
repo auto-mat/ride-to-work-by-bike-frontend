@@ -436,6 +436,9 @@ titleTabApp = "Automatický záznam"
 titleAutomaticLogging = "Automatický záznam"
 titleManualLogging = "Ruční záznam"
 
+[table]
+textEmptyTable = "Žádné výsledky. Zkuste změnit nastavení filtrů."
+
 [routes.transport]
 bike = "Na kole"
 car = "Autem"

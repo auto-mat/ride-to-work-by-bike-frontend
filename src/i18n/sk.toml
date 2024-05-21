@@ -435,6 +435,9 @@ titleTabApp = "Automatické nahrávanie"
 titleAutomaticLogging = "Automatické zadávanie"
 titleManualLogging = "Manuálne zadávanie"
 
+[table]
+textEmptyTable = "Žiadne výsledky. Skúste zmeniť nastavenia filtra."
+
 [routes.transport]
 bike = "Na bicykli"
 car = "Autom"
