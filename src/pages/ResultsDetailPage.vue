@@ -33,9 +33,15 @@ export default defineComponent({
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
     <div class="q-px-lg bg-white q-pb-xl">
-      <!-- TODO: Breadcrumb Heading -->
+      <!-- TODO: Breadcrumb-style Heading -->
+      <h1
+        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
+        data-cy="results-detail-page-title"
+      >
+        {{ $t('results.titleResults') }}
+      </h1>
 
-      <results-list />
+      <results-list data-cy="results-list" />
 
       <results-tabs class="q-pt-xl" data-cy="results-tabs" />
     </div>
