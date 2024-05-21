@@ -1,0 +1,35 @@
+[
+  {
+    "city": "Brno",
+    "name": "Petr",
+    "team": "Team 1",
+    "organization": "Organizace 1",
+    "category": "Kategorie 1",
+    "routeCount": 10,
+    "consistency": 100,
+    "rank": 1,
+    "id": 1
+  },
+  {
+    "city": "Praha",
+    "name": "Pavel",
+    "team": "Team 2",
+    "organization": "Organizace 2",
+    "category": "Kategorie 2",
+    "routeCount": 20,
+    "consistency": 50,
+    "rank": 3,
+    "id": 2
+  },
+  {
+    "city": "Praha",
+    "name": "Marta",
+    "team": "Team 2",
+    "organization": "Organizace 3",
+    "category": "Kategorie 3",
+    "routeCount": 22,
+    "consistency": 80,
+    "rank": 2,
+    "id": 3
+  }
+]
