@@ -25,6 +25,7 @@ man = "Man"
 male = "Male"
 woman = "Woman"
 routeLengthUnit = "km"
+weightUnitGram = "g"
 
 [calendar]
 calendarApple = "Apple"
@@ -381,7 +382,7 @@ hintPassword = "It must contain at least 6 characters and at least 1 letter."
 
 [results]
 buttonPastChallenges = "View previous challenges"
-labelCo2Saved = "g of CO<sub>2</sub> saved"
+labelCo2Saved = "of CO<sub>2</sub> saved"
 labelRegularity = "regularity"
 labelSustainableRoutes = "sustainable rides"
 titleBadges = "Badges"

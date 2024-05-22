@@ -44,13 +44,13 @@ export default defineComponent({
         },
         {
           icon: 'distance',
-          label: i18n.global.t('global.routeLengthUnit'),
-          value: '312,25',
+          label: '',
+          value: `312,25 ${i18n.global.t('global.routeLengthUnit')}`,
         },
         {
           icon: 'leaf',
           label: i18n.global.t('results.labelCo2Saved'),
-          value: '420',
+          value: `420 ${i18n.global.t('global.weightUnitGram')}`,
         },
       ] as ItemStatistics[],
     };
@@ -95,16 +95,16 @@ export default defineComponent({
             data-cy="result-item-icon"
           />
         </q-item-section>
-        <q-item-section>
-          <div class="row items-baseline">
+        <q-item-section top>
+          <div>
             <q-item-label
-              class="col-auto col-sm-12 text-h6 text-bold text-black q-pr-sm"
+              class="text-h6 text-bold text-black q-pr-sm"
               data-cy="result-item-title"
               >{{ result.value }}</q-item-label
             >
             <q-item-label
               caption
-              class="col col-sm-12 text-subtitle2 text-bold text-black"
+              class="text-subtitle2 text-bold text-black"
               data-cy="result-item-value"
             >
               <span v-html="result.label" />

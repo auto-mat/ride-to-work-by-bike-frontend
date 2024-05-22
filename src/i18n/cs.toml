@@ -25,6 +25,7 @@ man = "Muž"
 male = "Pánské"
 woman = "Žena"
 routeLengthUnit = "km"
+weightUnitGram = "g"
 
 [calendar]
 calendarApple = "Apple"
@@ -382,7 +383,7 @@ hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [results]
 buttonPastChallenges = "Výsledky z dřívějších výzev"
-labelCo2Saved = "g CO<sub>2</sub> ušetřeno"
+labelCo2Saved = "CO<sub>2</sub> ušetřeno"
 labelRegularity = "pravidelnost"
 labelSustainableRoutes = "udržitelných cest"
 titleBadges = "Odznaky"
