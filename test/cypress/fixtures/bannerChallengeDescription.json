@@ -1,0 +1,10 @@
+{
+  "dateStart": "2024-10-01",
+  "dateEnd": "2024-10-31",
+  "link": {
+    "title": "Podrobné podmínky výzvy",
+    "url": "#"
+  },
+  "description": "<p>Pravidelnost se počítá jako procento udržitelných cest (na kole či pěšky) ze všech dosavadních cest.</p><p>Zaznamenané dny, kdy jste do práce nejeli, se do pravidelnosti nezapočítávají.</p><p>Pro absolvování této výzvy je podmínkou mít zaznamenáno <strong>alespoň 28 udržitelných cest</strong>.</p>",
+  "transportTypes": ["bike", "walk"]
+}

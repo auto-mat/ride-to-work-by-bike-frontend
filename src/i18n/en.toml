@@ -4,6 +4,10 @@ lang = "Language"
 [header]
 siteTitle = "Ride to Work by Bike"
 
+[bannerChallengeDescription]
+period = "Challenge period"
+transportType = "Means of transport"
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"
@@ -21,8 +25,10 @@ routes = "Routes"
 [global]
 buttonShare = "Share"
 female = "Female"
+from = "from"
 man = "Man"
 male = "Male"
+to = "to"
 woman = "Woman"
 routeLengthUnit = "km"
 weightUnitGram = "g"

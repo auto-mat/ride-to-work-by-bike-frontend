@@ -15,11 +15,11 @@ export const useRoutes = () => {
   /**
    * Returns the icon name corresponding to the given route.
    *
-   * @param {TransportType} route - The route.
+   * @param {TransportType} transport - The transport type.
    * @return {string} The icon name.
    */
-  const getRouteIcon = (route: TransportType): string => {
-    switch (route) {
+  const getRouteIcon = (transport: TransportType): string => {
+    switch (transport) {
       case 'car':
         return 'directions_car';
       case 'bike':

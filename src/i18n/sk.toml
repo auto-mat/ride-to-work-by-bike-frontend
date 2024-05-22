@@ -4,6 +4,10 @@ lang = "Jazyk"
 [header]
 siteTitle = "Do práce na bicykli"
 
+[bannerChallengeDescription]
+period = "Obdobie výzvy"
+transportType = "Spôsoby dopravy"
+
 [drawerMenu]
 buttonParticipation = "Účasť"
 buttonCityAdministration = "Správa mesta"
@@ -21,8 +25,10 @@ routes = "Cesty"
 [global]
 buttonShare = "Zdieľať"
 female = "Dámske"
+from = "od"
 man = "Muž"
 male = "Pánske"
+to = "do"
 woman = "Žena"
 routeLengthUnit = "km"
 weightUnitGram = "g"
