@@ -19,6 +19,7 @@ results = "Výsledky"
 routes = "Cesty"
 
 [global]
+all = "Všechny"
 buttonShare = "Sdílet"
 female = "Dámské"
 man = "Muž"

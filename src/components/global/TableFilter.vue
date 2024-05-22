@@ -79,10 +79,11 @@ export default defineComponent({
       :filter="filterCompound"
       :filter-method="filterMethod"
       row-key="id"
+      data-cy="table-filter-table"
     >
       <!-- Top-Left: Filters -->
       <template v-slot:top-left>
-        <div class="flex items-center gap-8">
+        <div class="flex items-center gap-16 q-my-xs">
           <!-- Filter: Search -->
           <q-input
             borderless
@@ -111,7 +112,7 @@ export default defineComponent({
       </template>
 
       <template v-slot:top-right>
-        <div>
+        <div class="q-my-xs">
           <q-btn
             unelevated
             outline
@@ -126,7 +127,10 @@ export default defineComponent({
 
       <!-- Empty table -->
       <template v-slot:no-data>
-        <div class="full-width row flex-center text-grey-10 q-gutter-sm">
+        <div
+          class="full-width row flex-center text-grey-10 q-gutter-sm"
+          data-cy="table-no-data"
+        >
           <span>{{ $t('table.textEmptyTable') }}</span>
         </div>
       </template>

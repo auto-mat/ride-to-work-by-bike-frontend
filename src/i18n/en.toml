@@ -19,6 +19,7 @@ results = "Results"
 routes = "Routes"
 
 [global]
+all = "All"
 buttonShare = "Share"
 female = "Female"
 man = "Man"
