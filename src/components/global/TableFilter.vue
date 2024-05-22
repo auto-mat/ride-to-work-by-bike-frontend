@@ -4,11 +4,6 @@
  *
  * @description * Use this component to display data in a table.
  *
- * @props
- * - `columns` (TableColumn[], required): The object representing columns.
- *   It should be of type `TableColumn[]`.
- * - `rows` (Array, required): The Array of objects representing rows.
- *
  * @example
  * <table-filter />
  *
