@@ -43,8 +43,7 @@ export default defineComponent({
      * @param tab the tab to check
      */
     const isLocked = (tab: ResultsTabsOption): boolean => {
-      if (!lockedTabs.length) return false;
-      return lockedTabs.includes(tab);
+      return lockedTabs.length ? lockedTabs.includes(tab) : false;
     };
 
     return {
