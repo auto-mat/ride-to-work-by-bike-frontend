@@ -3,7 +3,8 @@ import { i18n } from '../../boot/i18n';
 
 describe('<TableFilter>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(['textEmptyTable'], 'table', i18n);
+    cy.testLanguageStringsInContext(['all'], 'global', i18n);
   });
 
   context('desktop', () => {
@@ -75,7 +76,7 @@ function coreTests() {
       .find('tbody')
       .find('tr')
       .should('have.length', 2);
-    cy.dataCy('table-filter-select').select('All');
+    cy.dataCy('table-filter-select').select(i18n.global.t('global.all'));
     cy.dataCy('table-filter-table')
       .find('tbody')
       .find('tr')
