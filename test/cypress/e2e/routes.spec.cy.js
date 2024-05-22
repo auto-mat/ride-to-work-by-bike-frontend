@@ -49,6 +49,7 @@ function coreTests() {
 
   it('renders route tabs', () => {
     cy.dataCy('route-tabs').should('be.visible');
+    cy.dataCy('route-tabs-button-calendar').click();
     cy.dataCy('route-tabs-panel-calendar').should('be.visible');
   });
 }
