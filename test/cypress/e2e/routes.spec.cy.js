@@ -3,7 +3,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 describe('Routes page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit('#' + routesConf['routes']['path']);
+      cy.visit('#' + routesConf['routes_calendar']['path']);
       cy.viewport('macbook-16');
     });
 
@@ -48,8 +48,9 @@ function coreTests() {
   });
 
   it('renders route tabs', () => {
-    cy.dataCy('route-tabs').should('be.visible');
-    cy.dataCy('route-tabs-button-calendar').click();
-    cy.dataCy('route-tabs-panel-calendar').should('be.visible');
+    cy.window().then(() => {
+      cy.dataCy('route-tabs').should('be.visible');
+      cy.dataCy('route-tabs-panel-calendar').should('be.visible');
+    });
   });
 }
