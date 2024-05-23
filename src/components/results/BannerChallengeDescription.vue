@@ -40,6 +40,11 @@ export default defineComponent({
       return challenge.transportTypes.map((type) => getRouteIcon(type));
     });
 
+    /**
+     * Returns a string representing the time period of a challenge.
+     * Accounts for both dateStart and dateEnd.
+     * If either dates is missing, it shows a textually open-ended period.
+     */
     const timePeriod = computed((): string => {
       if (!challenge?.dateStart && !challenge?.dateEnd) {
         return '';
