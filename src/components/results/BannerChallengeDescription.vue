@@ -83,7 +83,6 @@ export default defineComponent({
               class="col-12 col-sm-auto flex q-my-xs"
               data-cy="challenge-transport"
             >
-              <!-- Transport icons -->
               <dt class="q-mr-sm">
                 {{ $t('bannerChallengeDescription.transportType') }}:
               </dt>
@@ -98,8 +97,11 @@ export default defineComponent({
             </div>
           </div>
           <!-- Description -->
-          <div class="q-my-md" data-cy="challenge-description">
-            <div v-html="challenge.description" />
+          <div class="q-my-md">
+            <div
+              v-html="challenge.description"
+              data-cy="challenge-description"
+            />
           </div>
           <div data-cy="challenge-link">
             <a :href="challenge.link.url" target="_blank" class="flex gap-4">
