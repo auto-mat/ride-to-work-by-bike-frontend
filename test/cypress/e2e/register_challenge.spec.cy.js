@@ -87,18 +87,23 @@ describe('Register Challenge page', () => {
             i18n = win.i18n;
           })
           .then(() => {
+            let title = '';
+            if (config.challengeMonth === 'may') {
+              title = i18n.global.t(
+                'register.challenge.titleRegisterToChallenge.may',
+              );
+            } else if (config.challengeMonth === 'october') {
+              title = i18n.global.t(
+                'register.challenge.titleRegisterToChallenge.october',
+              );
+            }
             cy.dataCy('top-bar-countdown').should('be.visible');
             cy.dataCy('login-register-title')
               .should('be.visible')
               .and('have.color', config.colorWhite)
               .and('have.css', 'font-size', '24px')
               .and('have.css', 'font-weight', '700')
-              .and(
-                'contain',
-                i18n.global.t(
-                  `register.challenge.titleRegisterToChallenge.${config.challengeMonth}`,
-                ),
-              );
+              .and('contain', title);
           });
       });
     });
