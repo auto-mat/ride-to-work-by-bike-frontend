@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM alpine:3.20
 
 LABEL authors="Auto*Mat, z. s. auto-mat@auto-mat.cz"
 LABEL maintainer="Auto*Mat, z. s. auto-mat@auto-mat.cz"
