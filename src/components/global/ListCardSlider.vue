@@ -139,7 +139,7 @@ export default defineComponent({
     <!-- Button: More content -->
     <div
       v-if="button"
-      class="text-center q-pt-md"
+      class="absolute-bottom-left full-width text-center q-pt-md"
       data-cy="list-card-slider-buttons"
     >
       <q-btn
