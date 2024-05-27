@@ -3,6 +3,7 @@
  * ListCardSlider Component
  *
  * The `ListCardSlider` component renders a list of cards in a slider.
+ * Commonly used in `ResultsDetailPage`.
  *
  * @description
  * This component takes an array of card items and displays each card using
@@ -157,7 +158,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .slider {
-  padding-bottom: 32px;
+  padding-bottom: 54px;
   overflow: hidden;
 }
 </style>

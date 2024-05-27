@@ -37,6 +37,7 @@ export interface CardOffer {
 }
 export interface CardPost {
   title: string;
+  perex?: string;
   image: string;
   date: Date;
   url: string;

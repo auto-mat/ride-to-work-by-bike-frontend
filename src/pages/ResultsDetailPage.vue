@@ -15,17 +15,29 @@
 import { defineComponent } from 'vue';
 
 // components
-import ResultsList from 'components/results/ResultsList.vue';
-import ResultsTabs from 'components/results/ResultsTabs.vue';
+import ListCardSlider from '../components/global/ListCardSlider.vue';
+import ResultsList from '../components/results/ResultsList.vue';
+import ResultsTabs from '../components/results/ResultsTabs.vue';
+
+// fixtures
+import prizes from '../../test/cypress/fixtures/listResultsPrizes.json';
+
+// types
+import type { CardPost as CardPostType } from '../components/types/Card';
 
 export default defineComponent({
   name: 'ResultsDetailPage',
   components: {
+    ListCardSlider,
     ResultsList,
     ResultsTabs,
   },
   setup() {
-    return {};
+    const cards = prizes.cards as CardPostType[];
+    return {
+      cards,
+      prizes,
+    };
   },
 });
 </script>
@@ -42,6 +54,16 @@ export default defineComponent({
       </h1>
 
       <results-list data-cy="results-list" />
+
+      <list-card-slider
+        :title="prizes.title"
+        :perex="prizes.perex"
+        :cards="cards"
+        cardType="CardPost"
+        :button="prizes.button"
+        class="q-pt-xl"
+        data-cy="list-card-slider"
+      />
 
       <results-tabs class="q-pt-xl" data-cy="results-tabs" />
     </div>

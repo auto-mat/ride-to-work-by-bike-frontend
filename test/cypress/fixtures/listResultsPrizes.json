@@ -6,31 +6,36 @@
       "id": 1,
       "title": "Nákrčník Respilon",
       "image": "https://picsum.photos/id/70/300/300",
-      "date": ""
+      "date": "",
+      "url": "#"
     },
     {
       "id": 2,
       "title": "Certifikace Cyklozaměstnavatel na dobu 1 roku zdarma",
       "image": "https://picsum.photos/id/70/300/300",
-      "date": ""
+      "date": "",
+      "url": "#"
     },
     {
       "id": 3,
       "title": "Hlavní cena od CYKLOSPECIALIT: Městské kolo HERKA",
       "image": "https://picsum.photos/id/70/300/300",
-      "date": ""
+      "date": "",
+      "url": "#"
     },
     {
       "id": 4,
       "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
       "image": "https://picsum.photos/id/70/300/300",
-      "date": ""
+      "date": "",
+      "url": "#"
     },
     {
       "id": 5,
       "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
       "image": "https://picsum.photos/id/70/300/300",
-      "date": ""
+      "date": "",
+      "url": "#"
     }
   ],
   "button": {
