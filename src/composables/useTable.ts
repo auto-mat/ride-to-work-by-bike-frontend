@@ -101,22 +101,23 @@ export const useTable = () => {
    * @param terms FilterMethodInput
    * @param cols TableColumn[]
    * @param cellValue (col: TableColumn, row: TableRow) => string
+   * @returns TableRow[]
    **/
   const filterMethod = (
     rows: readonly TableRow[],
     terms: FilterMethodInput,
     cols: readonly TableColumn[],
     cellValue: (col: TableColumn, row: TableRow) => string,
-  ): readonly TableRow[] | undefined => {
+  ): readonly TableRow[] => {
     const { search, filter } = terms;
     if (!search && !filter) {
       return rows;
     }
     if (!filter) {
-      defaultFilter(search);
+      return defaultFilter(search);
     }
     if (!search) {
-      defaultFilter(filter);
+      return defaultFilter(filter);
     }
     // both filter options are selected
     const lowerTerms = [search, filter].map((query) => query.toLowerCase());
@@ -131,6 +132,7 @@ export const useTable = () => {
     /**
      * Default filter function based on QTable source code
      * @param query string
+     * @returns TableRow[]
      */
     function defaultFilter(query: string): TableRow[] {
       const lowerTerms = query ? query.toLowerCase() : '';
@@ -141,6 +143,7 @@ export const useTable = () => {
      * Checks if a row matches the search query
      * @param row TableRow
      * @param term string
+     * @returns boolean
      */
     function isMatch({
       cols,
