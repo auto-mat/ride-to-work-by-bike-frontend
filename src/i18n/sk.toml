@@ -273,6 +273,11 @@ copyrightOpenSource = "Táto aplikácia je open source softvér."
 copyrightAuthor = "Výzvu Do práce na kole organizuje <a href='https://auto-mat.cz' target='_blank'>Auto*Mat, z.s.</a>"
 deployedAppVersion = "Nasadená verzia aplikácie"
 
+[listCardSlider]
+buttonAllPrizes = "Všetky výhry"
+textListPrizes = "Víťazi sa vyberajú spomedzi tých, ktorí boli vo výzve najúspešnejší."
+titleListPrizes = "Možné výhry"
+
 [login.form]
 titleLogin = "Prihlásenie"
 titlePasswordReset = "Zabudnuté heslo"

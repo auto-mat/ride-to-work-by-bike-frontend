@@ -1,0 +1,40 @@
+{
+  "title": "Možné výhry",
+  "perex": "Výherci se losují z těch, co byli ve výzvě nejúspěšnější.",
+  "cards": [
+    {
+      "id": 1,
+      "title": "Nákrčník Respilon",
+      "image": "https://picsum.photos/id/70/300/300",
+      "date": ""
+    },
+    {
+      "id": 2,
+      "title": "Certifikace Cyklozaměstnavatel na dobu 1 roku zdarma",
+      "image": "https://picsum.photos/id/70/300/300",
+      "date": ""
+    },
+    {
+      "id": 3,
+      "title": "Hlavní cena od CYKLOSPECIALIT: Městské kolo HERKA",
+      "image": "https://picsum.photos/id/70/300/300",
+      "date": ""
+    },
+    {
+      "id": 4,
+      "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
+      "image": "https://picsum.photos/id/70/300/300",
+      "date": ""
+    },
+    {
+      "id": 5,
+      "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
+      "image": "https://picsum.photos/id/70/300/300",
+      "date": ""
+    }
+  ],
+  "button": {
+    "title": "Všechny výhry",
+    "url": "#"
+  }
+}
