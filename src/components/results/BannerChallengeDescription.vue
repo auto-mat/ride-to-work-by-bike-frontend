@@ -44,6 +44,7 @@ export default defineComponent({
      * Returns a string representing the time period of a challenge.
      * Accounts for both dateStart and dateEnd.
      * If either dates is missing, it shows a textually open-ended period.
+     * If no date is specified, returns empty string.
      */
     const timePeriod = computed((): string => {
       if (!challenge?.dateStart && !challenge?.dateEnd) {
