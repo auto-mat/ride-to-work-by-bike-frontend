@@ -57,14 +57,23 @@ describe('<ListCardSlider>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.fixture('listResultsPrizes').then((listResultsPrizes) => {
+      // component
       cy.dataCy('list-card-slider').should('be.visible');
+      // title
       cy.dataCy('list-card-slider-title')
         .should('be.visible')
         .and('contain', listResultsPrizes.title);
+      // perex
       cy.dataCy('list-card-slider-perex')
         .should('be.visible')
         .and('contain', listResultsPrizes.perex);
+      // swiper
       cy.dataCy('swiper-container').should('be.visible');
+      // cards
+      cy.dataCy('list-card-slider-item')
+        .should('be.visible')
+        .and('have.length', 5);
+      // buttons
       cy.dataCy('list-card-slider-buttons').should('be.visible');
       cy.dataCy('list-card-slider-button')
         .should('be.visible')
