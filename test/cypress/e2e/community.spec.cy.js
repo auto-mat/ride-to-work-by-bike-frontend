@@ -60,4 +60,14 @@ function coreTests() {
       // cy.dataCy('community-select-city').should('be.visible');
     });
   });
+
+  it('renders a list of local events', () => {
+    cy.get('@i18n').then((i18n) => {
+      cy.dataCy('local-events-title')
+        .should('be.visible')
+        .and('contain', i18n.global.t('community.titleLocalEvents'));
+      cy.dataCy('local-events-list').should('be.visible');
+      cy.dataCy('local-events-item').should('be.visible').and('have.length', 2);
+    });
+  });
 }

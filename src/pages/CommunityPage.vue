@@ -14,13 +14,38 @@
  */
 import { defineComponent, ref } from 'vue';
 
+// components
+import CardEvent from '../components/homepage/CardEvent.vue';
+
+// fixtures
+import events from '../../test/cypress/fixtures/listCardsEvent.json';
+
 export default defineComponent({
   name: 'CommunityPage',
+  components: {
+    CardEvent,
+  },
   setup() {
-    const city = ref<string | null>(null);
+    const optionsCity = [
+      {
+        label: 'Brno',
+        value: 'brno',
+      },
+      {
+        label: 'Ostrava',
+        value: 'ostrava',
+      },
+      {
+        label: 'Praha',
+        value: 'praha',
+      },
+    ];
+    const city = ref<string>('');
 
     return {
       city,
+      events,
+      optionsCity,
     };
   },
 });
@@ -28,27 +53,55 @@ export default defineComponent({
 
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
-    <div class="q-px-lg bg-white">
+    <div class="q-px-lg bg-white q-pb-xl q-pt-lg">
       <!-- Section title -->
-      <div class="col-12 flex flex-wrap items-center justify-between gap-4">
+      <div class="col-12 flex flex-wrap items-center justify-between gap-16">
         <!-- Page title -->
-        <h1
-          class="text-h5 text-bold text-white q-my-none"
-          data-cy="community-page-title"
-        >
-          {{ $t('community.titleCommunity') }}
-        </h1>
+        <div>
+          <h1
+            class="text-h5 q-my-none text-weight-bold"
+            data-cy="community-page-title"
+          >
+            {{ $t('community.titleCommunity') }}
+          </h1>
+        </div>
 
         <!-- Select: City -->
-        <FormFieldSelectCity v-model="city" data-cy="community-select-city" />
+        <div class="row items-center">
+          <label for="community-select-city" class="col-auto q-mr-sm">
+            <span>{{ $t('community.labelSelectCity') }}:</span>
+          </label>
+          <q-select
+            dense
+            outlined
+            emit-value
+            map-options
+            v-model="city"
+            :options="optionsCity"
+            :style="{ 'min-width': '160px' }"
+            class="col-auto"
+            id="community-select-city"
+            data-cy="community-select-city"
+          />
+        </div>
       </div>
 
       <!-- Section: Local events -->
-      <div>
-        <h2 class="text-body1 text-bold q-my-none" data-cy="info-title">
+      <div class="q-mt-lg">
+        <h2 class="text-h6 q-my-none" data-cy="local-events-title">
           {{ $t('community.titleLocalEvents') }}
         </h2>
-        <ListEventsLocal />
+        <div data-cy="local-events-list">
+          <card-event
+            v-for="card in events"
+            :key="card.title"
+            :card="card"
+            class="q-mt-lg"
+            data-cy="local-events-item"
+          />
+        </div>
+
+        <!-- TODO: Section: Past events -->
       </div>
 
       <!-- TODO: Section Forum -->

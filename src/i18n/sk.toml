@@ -36,7 +36,9 @@ calendarYahoo = "Yahoo"
 calendarOther = "Iné aplikácie (súbor iCal)"
 
 [community]
-titleLocalEvents = "Komunita"
+labelSelectCity = "Mesto"
+titleCommunity = "Komunita"
+titleLocalEvents = "Miestne udalosti"
 
 [language]
 cs = "Čeština"
