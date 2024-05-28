@@ -19,7 +19,7 @@ import { defineComponent } from 'vue';
 
 // components
 import SectionColumns from '../homepage/SectionColumns.vue';
-// import ForumPostItem from '../community/ForumPostItem.vue';
+import ForumPostItem from './ForumPostItem.vue';
 
 // fixtures
 import forumPosts from '../../../test/cypress/fixtures/forumPostList.json';
@@ -27,6 +27,7 @@ import forumPosts from '../../../test/cypress/fixtures/forumPostList.json';
 export default defineComponent({
   name: 'ForumPostList',
   components: {
+    ForumPostItem,
     SectionColumns,
   },
   setup() {
@@ -46,16 +47,18 @@ export default defineComponent({
       {{ $t('forumPostList.titleRecentPosts') }}
     </h3>
 
-    <section-columns :columns="2">
-      <forum-post-item
-        v-for="post in forumPosts"
-        :key="post.id"
-        :post="post"
-        data-cy="forum-post-item"
-      />
-    </section-columns>
+    <div class="q-my-sm">
+      <section-columns :columns="2">
+        <forum-post-item
+          v-for="post in forumPosts"
+          :key="post.id"
+          :post="post"
+          data-cy="forum-post-item"
+        />
+      </section-columns>
+    </div>
 
-    <div>
+    <div class="text-center q-mt-lg">
       <q-btn color="primary" unelevated rounded data-cy="forum-post-button">
         {{ $t('forumPostList.buttonVisitForum') }}
       </q-btn>
