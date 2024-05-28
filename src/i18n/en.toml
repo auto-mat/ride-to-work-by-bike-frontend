@@ -173,6 +173,10 @@ labelTeamName = "Your team name"
 textTeam = "<p>There can be a maximum of 5 members per team, you can invite members at any time until the end of the registration period. A company can have any number of teams.</p><p>Only teams with more than 1 member can join the inter-team challenges.</p"
 titleAddTeam = "Add team"
 
+[forumPostList]
+buttonVisitForum = "Visit forum"
+titleRecentPosts = "Recent posts"
+
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"
