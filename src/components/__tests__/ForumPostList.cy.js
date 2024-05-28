@@ -36,5 +36,12 @@ describe('<ForumPostList>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('forum-post-list').should('be.visible');
+    cy.dataCy('forum-post-title')
+      .should('be.visible')
+      .and('contain', i18n.global.t('forumPostList.titleRecentPosts'));
+    cy.dataCy('forum-post-item').should('be.visible').and('have.length', 4);
+    cy.dataCy('forum-post-button')
+      .should('be.visible')
+      .and('contain', i18n.global.t('forumPostList.buttonVisitForum'));
   });
 }

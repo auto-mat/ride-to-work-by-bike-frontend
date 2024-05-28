@@ -3,7 +3,19 @@ import { i18n } from '../../boot/i18n';
 
 describe('<ForumPostItem>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+      ],
+      'time',
+      i18n,
+    );
   });
 
   context('desktop', () => {
