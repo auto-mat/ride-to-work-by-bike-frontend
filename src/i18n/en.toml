@@ -35,6 +35,9 @@ calendarOutlook = "Outlook.com"
 calendarYahoo = "Yahoo"
 calendarOther = "Other applications (iCal file)"
 
+[community]
+titleLocalEvents = "Community"
+
 [language]
 cs = "Czech"
 sk = "Slovak"

@@ -27,7 +27,7 @@ export const menuTop: Link[] = [
     name: 'results',
   },
   {
-    url: '/komunita',
+    url: '/community',
     icon: 'people',
     name: 'community',
   },

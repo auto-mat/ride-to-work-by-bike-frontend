@@ -153,6 +153,17 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: routesConf['community']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['community']['children']['name'],
+        component: () => import('pages/CommunityPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it
