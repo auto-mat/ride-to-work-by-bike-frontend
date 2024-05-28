@@ -39,21 +39,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="row q-px-sm q-py-md">
+  <div class="row q-px-sm q-py-md" data-cy="forum-post-item">
     <div class="col-auto">
       <q-avatar class="q-mr-md" size="64px">
-        <q-img :src="post.user.image" />
+        <q-img :src="post.user.image" data-cy="forum-post-image" />
       </q-avatar>
     </div>
     <div class="col text-grey-10">
-      <div class="text-body1">
+      <div class="text-body1" data-cy="forum-post-title">
         {{ post.title }}
       </div>
       <div class="flex flex-wrap gap-8 text-caption">
-        <div>
+        <div data-cy="forum-post-date">
           {{ formatDateTimeLabel(post.date) }}
         </div>
-        <div class="flex gap-4">
+        <div class="flex gap-4" data-cy="forum-post-comment-count">
           <q-icon name="reply" size="18px" color="grey-7" />
           {{ post.comments.length }}
         </div>

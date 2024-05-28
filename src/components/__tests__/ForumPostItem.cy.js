@@ -8,8 +8,12 @@ describe('<ForumPostItem>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(ForumPostItem, {
-        props: {},
+      cy.fixture('forumPostList').then((postList) => {
+        cy.mount(ForumPostItem, {
+          props: {
+            post: postList[0],
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
@@ -19,8 +23,12 @@ describe('<ForumPostItem>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(ForumPostItem, {
-        props: {},
+      cy.fixture('forumPostList').then((postList) => {
+        cy.mount(ForumPostItem, {
+          props: {
+            post: postList[0],
+          },
+        });
       });
       cy.viewport('iphone-6');
     });
@@ -31,6 +39,23 @@ describe('<ForumPostItem>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy('component').should('be.visible');
+    cy.fixture('forumPostList').then((postList) => {
+      cy.dataCy('forum-post-item').should('be.visible');
+      cy.dataCy('forum-post-image')
+        .should('be.visible')
+        .find('img')
+        .and('have.attr', 'src', postList[0].user.image);
+      cy.dataCy('forum-post-title')
+        .should('be.visible')
+        .and('contain', postList[0].title);
+      cy.dataCy('forum-post-date').should('be.visible');
+      cy.dataCy('forum-post-comment-count')
+        .find('i')
+        .should('be.visible')
+        .and('contain', 'reply');
+      cy.dataCy('forum-post-comment-count')
+        .should('be.visible')
+        .and('contain', `${postList[0].comments.length}`);
+    });
   });
 }
