@@ -5,10 +5,10 @@
  * The `CommunityPage` displays information about community events.
  *
  * @components
- * - `LoginRegisterHeader`: Header for login and registration pages.
+ * - `CardEvent`: Card with event information.
  *
  * @layout
- * - `LoginRegisterLayout`: Layout for login and registration pages.
+ * - `MainLayout`: Default layout with sidebar on desktop.
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104327&t=ZZSrUuLgRLYixhUu-1)
  */
@@ -20,13 +20,16 @@ import CardEvent from '../components/homepage/CardEvent.vue';
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
 
+// types
+import type { FormOption } from '../components/types/Form';
+
 export default defineComponent({
   name: 'CommunityPage',
   components: {
     CardEvent,
   },
   setup() {
-    const optionsCity = [
+    const optionsCity: FormOption[] = [
       {
         label: 'Brno',
         value: 'brno',
