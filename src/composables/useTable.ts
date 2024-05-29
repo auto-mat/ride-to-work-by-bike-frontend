@@ -155,10 +155,12 @@ export const useTable = () => {
       term: string;
     }): boolean {
       return cols.some((col) => {
-        const val = cellValue(col, row);
-        const cellContent =
-          val === 'undefined' || val === 'null' ? '' : val.toLowerCase();
-        return cellContent.indexOf(term) !== -1;
+        let val = cellValue(col, row);
+        val =
+          val === 'undefined' || val === 'null'
+            ? ''
+            : val.toString().toLowerCase();
+        return val.indexOf(term) !== -1;
       });
     }
   };
