@@ -15,7 +15,7 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // composables
 import { useFormatDate } from '../../composables/useFormatDate';
@@ -28,10 +28,18 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const { formatDateTimeLabel } = useFormatDate();
+    const date = ref('');
+    date.value = formatDateTimeLabel(props.post.date);
+
+    // setInterval(() => {
+    //   console.log('set time')
+    //   date.value = formatDateTimeLabel(props.post.date)
+    // }, 1000);
 
     return {
+      date,
       formatDateTimeLabel,
     };
   },
@@ -51,7 +59,7 @@ export default defineComponent({
       </div>
       <div class="flex flex-wrap gap-8 text-caption">
         <div data-cy="forum-post-date">
-          {{ formatDateTimeLabel(post.date) }}
+          {{ date }}
         </div>
         <div class="flex gap-4" data-cy="forum-post-comment-count">
           <q-icon name="reply" size="18px" color="grey-7" />

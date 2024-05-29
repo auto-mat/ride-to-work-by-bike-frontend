@@ -35,7 +35,16 @@ export const useFormatDate = () => {
     // today
     if (date.isSameDate(timeStamp, nowStamp, 'day')) {
       const hours = date.getDateDiff(nowStamp, timeStamp, 'hours');
-      return i18n.global.t('time.hoursAgo', { hours: hours });
+      if (hours < 1) {
+        return i18n.global.t('time.lessThanAnHourAgo');
+      } else {
+        return i18n.global.t('time.hoursAgo', { hours: hours });
+      }
+    }
+
+    // yesterday
+    if (date.getDateDiff(nowStamp, timeStamp, 'days') === 1) {
+      return `${i18n.global.t('time.yesterday')}, ${date.formatDate(timeStamp, 'HH:mm')}`;
     }
 
     // past 7 days
@@ -54,7 +63,7 @@ export const useFormatDate = () => {
       });
     }
 
-    return date.formatDate(timeStamp, 'D. MMM. HH:mm');
+    return date.formatDate(timeStamp, 'D. MMM., HH:mm');
   };
 
   return {
