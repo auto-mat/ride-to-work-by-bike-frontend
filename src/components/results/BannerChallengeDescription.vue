@@ -34,10 +34,9 @@ export default defineComponent({
     const challenge = challengeDescriptions as ChallengeDescription;
 
     const transportIcons = computed((): string[] => {
-      if (!challenge?.transportTypes?.length) {
-        return [];
-      }
-      return challenge.transportTypes.map((type) => getRouteIcon(type));
+      return !challenge?.transportTypes?.length
+        ? []
+        : challenge.transportTypes.map((type) => getRouteIcon(type));
     });
 
     /**
