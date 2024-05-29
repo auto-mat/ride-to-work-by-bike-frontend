@@ -7,7 +7,6 @@
       >
         {{ $t('index.title') }}
       </h1>
-      <forum-post-list />
       <countdown-event :release-date="releaseDate" data-cy="countdown-event" />
       <!-- Title -->
       <h2
@@ -133,7 +132,6 @@ import CardEvent from 'components/homepage/CardEvent.vue';
 import CardStats from 'components/homepage/CardStats.vue';
 import CountdownChallenge from 'components/homepage/CountdownChallenge.vue';
 import CountdownEvent from 'components/homepage/CountdownEvent.vue';
-import ForumPostList from 'components/community/ForumPostList.vue';
 import HeadingBackground from 'components/homepage/HeadingBackground.vue';
 import ListCardFollow from 'components/homepage/ListCardFollow.vue';
 import ListCardOffer from 'components/homepage/ListCardOffer.vue';
@@ -163,7 +161,6 @@ export default defineComponent({
     CardEvent,
     CountdownChallenge,
     CountdownEvent,
-    ForumPostList,
     HeadingBackground,
     ListCardFollow,
     ListCardOffer,
