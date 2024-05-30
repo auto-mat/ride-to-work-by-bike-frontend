@@ -33,11 +33,6 @@ export default defineComponent({
     const date = ref('');
     date.value = formatDateTimeLabel(props.post.date);
 
-    // setInterval(() => {
-    //   console.log('set time')
-    //   date.value = formatDateTimeLabel(props.post.date)
-    // }, 1000);
-
     return {
       date,
       formatDateTimeLabel,
