@@ -6,7 +6,7 @@ const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 describe('<CardPrize>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext([], 'cardPrize', i18n);
   });
 
   context('desktop', () => {
