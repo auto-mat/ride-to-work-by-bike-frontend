@@ -37,7 +37,7 @@ describe('<ListCardSlider>', () => {
           props: {
             button: { title: listResultsPrizes.button.title },
             cards: listResultsPrizes.cards,
-            cardType: 'CardPost',
+            cardType: 'CardPrize',
             perex: listResultsPrizes.perex,
             title: listResultsPrizes.title,
           },
