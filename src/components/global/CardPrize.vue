@@ -123,11 +123,12 @@ export default defineComponent({
       <!-- Content -->
       <template #content>
         <!-- Left column: Content -->
-        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-left">
+        <div class="col-12 col-md-6" data-cy="dialog-col-left">
           <!-- Content -->
           <div
             v-if="card?.content"
             v-html="card.content"
+            class="q-px-md q-py-md"
             data-cy="dialog-content"
           />
           <!-- Buttons -->
@@ -146,13 +147,15 @@ export default defineComponent({
           </q-btn>
         </div>
         <!-- Right column: Image -->
-        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-right">
-          <!-- Image -->
-          <q-img
-            :src="card.image.src"
-            :alt="card.image.alt"
-            data-cy="dialog-image"
-          />
+        <div class="col-12 col-md-6" data-cy="dialog-col-right">
+          <div clas="q-px-md q-py-md">
+            <!-- Image -->
+            <q-img
+              :src="card.image.src"
+              :alt="card.image.alt"
+              data-cy="dialog-image"
+            />
+          </div>
         </div>
       </template>
     </dialog-default>
