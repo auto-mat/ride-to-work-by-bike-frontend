@@ -3,13 +3,14 @@
  * CardPrize Component
  *
  * @description * Use this component to show prize cards with dialog.
+ * Card is clickable and shows a dialog with detailed information.
  *
  * @props
  * - `card` (CardPrize, required): The object representing a card.
  *   It should be of type `CardPrize`.
  *
  * @components
- * - `DialogDefault`: Used to display detailed information about the offer in a
+ * - `DialogDefault`: Used to display detailed information about the prize in a
  *   modal dialog.
  *
  * @example
@@ -19,6 +20,7 @@
  */
 
 // libraries
+import { Screen } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // components
@@ -45,10 +47,12 @@ export default defineComponent({
   },
   setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
+    const cardMaxWidth = Screen.sizes.sm;
     const modalOpened = ref(false);
 
     return {
       borderRadius,
+      cardMaxWidth,
       modalOpened,
     };
   },
@@ -57,25 +61,28 @@ export default defineComponent({
 
 <template>
   <q-card
+    v-ripple
     flat
     bordered
     class="bg-white cursor-pointer q-hoverable"
-    :style="{ 'border-radius': borderRadius }"
-    data-cy="card-post"
+    :style="{ 'border-radius': borderRadius, 'max-width': `${cardMaxWidth}px` }"
+    data-cy="card-prize"
+    @click.prevent="modalOpened = true"
   >
+    <span class="q-focus-helper"></span>
     <!-- Image -->
     <q-img
       :src="card.image.src"
-      ratio="1.25"
-      data-cy="card-post-image"
+      ratio="0.8"
+      data-cy="card-prize-image"
       alt=""
     />
     <!-- Content -->
     <q-card-section>
       <!-- Title -->
       <div
-        class="card-post-title text-body text-grey-10"
-        data-cy="card-post-title"
+        class="card-prize-title text-body text-grey-10"
+        data-cy="card-prize-title"
       >
         {{ card.title }}
       </div>
@@ -85,7 +92,7 @@ export default defineComponent({
     <dialog-default
       v-model="modalOpened"
       :horizontal="true"
-      data-cy="dialog-offer"
+      data-cy="dialog-prize"
     >
       <!-- Title -->
       <template #title>
@@ -129,7 +136,7 @@ export default defineComponent({
             unelevated
             rounded
             class="q-mt-md"
-            data-cy="dialog-offer-link"
+            data-cy="dialog-prize-link"
           >
             <div class="flex items-center no-wrap">
               {{ card.link.title }}

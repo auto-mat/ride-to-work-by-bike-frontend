@@ -173,13 +173,3 @@ export default defineComponent({
     </dialog-default>
   </q-card>
 </template>
-
-<style lang="scss" scoped>
-.gap-y-8 {
-  row-gap: 8px;
-}
-
-.gap-x-32 {
-  column-gap: 32px;
-}
-</style>
