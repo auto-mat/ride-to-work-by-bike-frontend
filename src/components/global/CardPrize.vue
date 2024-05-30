@@ -69,7 +69,6 @@ export default defineComponent({
     data-cy="card-prize"
     @click.prevent="modalOpened = true"
   >
-    <span class="q-focus-helper"></span>
     <!-- Image -->
     <q-img
       :src="card.image.src"
@@ -77,6 +76,9 @@ export default defineComponent({
       data-cy="card-prize-image"
       alt=""
     />
+
+    <span class="q-focus-helper"></span>
+
     <!-- Content -->
     <q-card-section>
       <!-- Title -->

@@ -67,6 +67,11 @@ function coreTests() {
       cy.dataCy('card-prize')
         .should('be.visible')
         .and('have.css', 'border-radius', borderRadiusCard);
+
+      cy.dataCy('card-prize-image')
+        .should('be.visible')
+        .and('have.css', 'border-top-left-radius', borderRadiusCard)
+        .and('have.css', 'border-top-right-radius', borderRadiusCard);
     });
   });
 
