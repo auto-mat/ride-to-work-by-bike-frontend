@@ -11,8 +11,8 @@
  *
  * @props
  * - `title` (String): The heading or title for the list of offer cards.
- * - `cards` (Array of CardOfferType, required): An array of card items to be
- *   displayed. Each item is of type `CardOfferType`.
+ * - `cards` (Array of CardPostType | CardPrizeType, required): An array of card items to be
+ *   displayed. Each item is of type `CardPostType | CarPrizeType`.
  * - `cardType` (String): The component to be used to render each card.
  * - `button` (Object of Link type): An object defining the button properties.
  * - `slides` (Number): The number of slides per view on desktop.
@@ -37,14 +37,16 @@ import { Screen } from 'quasar';
 
 // components
 import CardPost from '../homepage/CardPost.vue';
+import CardPrize from './CardPrize.vue';
 
 // types
-import { CardPost as CardPostType, Link } from '../types';
+import { CardPost as CardPostType, CardPrizeType, Link } from '../types';
 
 export default defineComponent({
   name: 'ListCardSlider',
   components: {
     CardPost,
+    CardPrize,
   },
   props: {
     title: {
@@ -52,7 +54,7 @@ export default defineComponent({
       required: true,
     },
     cards: {
-      type: Array as () => CardPostType[],
+      type: Array as () => CardPostType[] | CardPrizeType[],
       required: true,
     },
     cardType: {

@@ -5,41 +5,118 @@
     {
       "id": 1,
       "title": "Nákrčník Respilon",
-      "image": "https://picsum.photos/id/70/300/300",
-      "date": "",
-      "url": "#"
+      "image": {
+        "src": "https://picsum.photos/id/70/300/300"
+      },
+      "content": "Lorem ipsum dolor sit amet",
+      "metadata": [
+        {
+          "id": "location",
+          "text": "Brno",
+          "icon": "location"
+        },
+        {
+          "id": "condition",
+          "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+          "icon": null
+        }
+      ]
     },
     {
       "id": 2,
       "title": "Certifikace Cyklozaměstnavatel na dobu 1 roku zdarma",
-      "image": "https://picsum.photos/id/70/300/300",
-      "date": "",
-      "url": "#"
+      "image": {
+        "src": "https://picsum.photos/id/70/300/300"
+      },
+      "content": "Lorem ipsum dolor sit amet",
+      "metadata": [
+        {
+          "id": "location",
+          "text": "Brno",
+          "icon": "location"
+        },
+        {
+          "id": "condition",
+          "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+          "icon": null
+        }
+      ]
     },
     {
       "id": 3,
       "title": "Hlavní cena od CYKLOSPECIALIT: Městské kolo HERKA",
-      "image": "https://picsum.photos/id/70/300/300",
-      "date": "",
-      "url": "#"
+      "image": {
+        "src": "https://picsum.photos/id/70/300/300"
+      },
+      "content": "Lorem ipsum dolor sit amet",
+      "metadata": [
+        {
+          "id": "location",
+          "text": "Brno",
+          "icon": "location"
+        },
+        {
+          "id": "condition",
+          "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+          "icon": null
+        }
+      ]
     },
     {
       "id": 4,
       "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
-      "image": "https://picsum.photos/id/70/300/300",
-      "date": "",
-      "url": "#"
+      "image": {
+        "src": "https://picsum.photos/id/70/300/300"
+      },
+      "content": "Lorem ipsum dolor sit amet",
+      "metadata": [
+        {
+          "id": "location",
+          "text": "Brno",
+          "icon": "location"
+        },
+        {
+          "id": "condition",
+          "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+          "icon": null
+        }
+      ]
     },
     {
       "id": 5,
       "title": "Fotosoutěž Brno 2022 – Vstup do 4COMFORT zdarma",
-      "image": "https://picsum.photos/id/70/300/300",
-      "date": "",
-      "url": "#"
+      "image": {
+        "src": "https://picsum.photos/id/70/300/300"
+      },
+      "content": "Lorem ipsum dolor sit amet",
+      "metadata": [
+        {
+          "id": "location",
+          "text": "Brno",
+          "icon": "location"
+        },
+        {
+          "id": "condition",
+          "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+          "icon": null
+        }
+      ]
     }
   ],
   "button": {
     "title": "Všechny výhry",
-    "url": "#"
+    "content": "Lorem ipsum dolor sit amet",
+    "metadata": [
+      {
+        "id": "location",
+        "text": "Brno",
+        "icon": "location"
+      },
+      {
+        "id": "condition",
+        "text": "Můžete vyhrát ve výzvě: <a href=''>Vaše pravidelnost</a>",
+        "icon": null
+      }
+    ]
   }
 }

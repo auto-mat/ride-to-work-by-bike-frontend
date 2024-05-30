@@ -23,7 +23,7 @@ import ResultsTabs from '../components/results/ResultsTabs.vue';
 import prizes from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
-import type { CardPost as CardPostType } from '../components/types/Card';
+import type { CardPrizeType, Link } from '../components/types';
 
 export default defineComponent({
   name: 'ResultsDetailPage',
@@ -33,9 +33,14 @@ export default defineComponent({
     ResultsTabs,
   },
   setup() {
-    const cards = prizes.cards as CardPostType[];
+    // coerce types
+    const { cards, button } = prizes as { cards: unknown; button: unknown };
+    const cardsPrize = cards as CardPrizeType[];
+    const cardsButton = button as Link;
+
     return {
-      cards,
+      cardsButton,
+      cardsPrize,
       prizes,
     };
   },
@@ -58,9 +63,9 @@ export default defineComponent({
       <list-card-slider
         :title="prizes.title"
         :perex="prizes.perex"
-        :cards="cards"
+        :cards="cardsPrize"
         cardType="CardPost"
-        :button="prizes.button"
+        :button="cardsButton"
         class="q-pt-xl"
         data-cy="list-card-slider"
       />

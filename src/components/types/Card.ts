@@ -35,6 +35,14 @@ export interface CardOffer {
   icon: string;
   content: string;
 }
+export interface CardPrizeType {
+  content: string;
+  id: string;
+  image: Image;
+  link?: Link;
+  metadata: { id: string; icon: string; text: string }[];
+  title: string;
+}
 export interface CardPost {
   title: string;
   perex?: string;
