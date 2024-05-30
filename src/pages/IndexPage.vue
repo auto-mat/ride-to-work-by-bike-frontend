@@ -141,8 +141,14 @@ import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
 
+// types
+import type { CardFollow } from 'src/components/types';
+
 // mocks
 import * as homepage from '../mocks/homepage';
+
+// fixtures
+import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -168,21 +174,24 @@ export default defineComponent({
   setup() {
     const { challengeStartDate } = rideToWorkByBikeConfig;
 
+    const listCardsFollowImport = listCardsFollow as unknown;
+    const cardsFollow = listCardsFollowImport as CardFollow[];
+
     return {
-      releaseDate: challengeStartDate,
-      cardsChallenge: homepage.cardsChallenge,
       badgeList: homepage.badgeList,
       bannerImageData: homepage.bannerImage,
       bannerAppData: homepage.bannerApp,
-      headingBgTitle: homepage.headingBgTitle,
+      cardsChallenge: homepage.cardsChallenge,
       cardsEvent: homepage.cardsEvent,
+      cardsFollow,
       cardsOffer: homepage.cardsOffer,
       cardsPost: homepage.cardsPost,
-      cardsFollow: homepage.cardsFollow,
-      cardsProgressSlider: homepage.cardsProgressSlider,
-      progressStats: homepage.progressStats,
       cardsProgress: homepage.cardsProgress,
+      cardsProgressSlider: homepage.cardsProgressSlider,
       cardsStats: homepage.cardsStats,
+      headingBgTitle: homepage.headingBgTitle,
+      progressStats: homepage.progressStats,
+      releaseDate: challengeStartDate,
     };
   },
 });

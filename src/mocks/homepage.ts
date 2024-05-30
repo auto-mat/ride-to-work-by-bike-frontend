@@ -6,7 +6,6 @@ import {
   BannerImage,
   CardChallenge,
   CardEvent,
-  CardFollow,
   CardPost,
   CardProgress,
   CardStats,
@@ -283,27 +282,6 @@ export const cardsOffer: CardOffer[] = [
     icon: 'pedal_bike',
     content:
       'Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U.',
-  },
-];
-
-export const cardsFollow: CardFollow[] = [
-  {
-    title: 'Do práce na kole – Brno',
-    handle: '@DPNKBrno',
-    image: {
-      src: 'https://picsum.photos/id/70/300/300',
-      alt: 'road lined with trees',
-    },
-    url: '#',
-  },
-  {
-    title: 'Do práce na kole – Brno',
-    handle: '@DPNKBrno',
-    image: {
-      src: 'https://picsum.photos/id/70/300/300',
-      alt: 'road lined with trees',
-    },
-    url: '#',
   },
 ];
 

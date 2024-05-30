@@ -16,17 +16,23 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
+import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
+import type { CardFollow } from 'src/components/types';
+
+// fixtures
+import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
 
 export default defineComponent({
   name: 'CommunityPage',
   components: {
     CardEvent,
+    ListCardFollow,
   },
   setup() {
     const optionsCity: FormOption[] = [
@@ -45,7 +51,11 @@ export default defineComponent({
     ];
     const city = ref<string>('');
 
+    const listCardsFollowImport = listCardsFollow as unknown;
+    const cardsFollow = listCardsFollowImport as CardFollow[];
+
     return {
+      cardsFollow,
       city,
       events,
       optionsCity,
@@ -112,6 +122,7 @@ export default defineComponent({
       <!-- TODO: Section Locations -->
 
       <!-- TODO: Section Social networks -->
+      <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
 
       <!-- TODO: Section News -->
 

@@ -11,10 +11,6 @@ const blueGrey7 = getPaletteColor('blue-grey-7');
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
 
-// mocks
-import { cardsFollow } from 'src/mocks/homepage';
-const card = cardsFollow[0];
-
 describe('<CardFollow>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.cardFollow', i18n);
@@ -22,63 +18,88 @@ describe('<CardFollow>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(CardFollow, {
-        props: {
-          card,
-        },
+      cy.fixture('listCardsFollow').then((listCardsFollow) => {
+        cy.wrap(listCardsFollow[0]).as('card');
+        cy.mount(CardFollow, {
+          props: {
+            card: listCardsFollow[0],
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
 
-    it('has white background', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.backgroundColor', white);
+    coreTests();
+  });
+
+  context('mobile', () => {
+    beforeEach(() => {
+      cy.fixture('listCardsFollow').then((listCardsFollow) => {
+        cy.wrap(listCardsFollow[0]).as('card');
+        cy.mount(CardFollow, {
+          props: {
+            card: listCardsFollow[0],
+          },
+        });
       });
+      cy.viewport('iphone-6');
     });
 
-    it('has rounded corners', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow').should(
-          'have.css',
-          'border-radius',
-          borderRadiusCard,
-        );
-      });
-    });
+    coreTests();
+  });
+});
 
-    it('has border', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow').should(
-          'have.css',
-          'border',
-          '1px solid rgb(220, 225, 237)', // config colorGrayMiddle
-        );
-      });
+function coreTests() {
+  it('has white background', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow').should('have.backgroundColor', white);
     });
+  });
 
-    it('has no shadow', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.css', 'box-shadow', 'none');
-      });
+  it('has rounded corners', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow').should(
+        'have.css',
+        'border-radius',
+        borderRadiusCard,
+      );
     });
+  });
 
-    it('has padding 16px', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow').should('have.css', 'padding', '16px');
-      });
+  it('has border', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow').should(
+        'have.css',
+        'border',
+        '1px solid rgb(220, 225, 237)', // config colorGrayMiddle
+      );
     });
+  });
 
-    it('has wrapper with top padding', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-follow-wrapper').should(
-          'have.css',
-          'padding-top',
-          '48px',
-        );
-      });
+  it('has no shadow', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow').should('have.css', 'box-shadow', 'none');
     });
+  });
 
-    it('renders title', () => {
+  it('has padding 16px', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow').should('have.css', 'padding', '16px');
+    });
+  });
+
+  it('has wrapper with top padding', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-follow-wrapper').should(
+        'have.css',
+        'padding-top',
+        '48px',
+      );
+    });
+  });
+
+  it('renders title', () => {
+    cy.get('@card').then((card) => {
       cy.window().then(() => {
         cy.dataCy('card-follow-title')
           .should('have.css', 'font-size', '16px')
@@ -90,8 +111,10 @@ describe('<CardFollow>', () => {
           });
       });
     });
+  });
 
-    it('renders handle', () => {
+  it('renders handle', () => {
+    cy.get('@card').then((card) => {
       cy.window().then(() => {
         cy.dataCy('card-follow-handle')
           .should('have.css', 'font-size', '14px')
@@ -103,8 +126,10 @@ describe('<CardFollow>', () => {
           });
       });
     });
+  });
 
-    it('renders image', () => {
+  it('renders image', () => {
+    cy.get('@card').then((card) => {
       cy.window().then(() => {
         cy.dataCy('card-follow-avatar')
           .should('be.visible')
@@ -127,15 +152,4 @@ describe('<CardFollow>', () => {
       });
     });
   });
-
-  context('mobile', () => {
-    beforeEach(() => {
-      cy.mount(CardFollow, {
-        props: {
-          card,
-        },
-      });
-      cy.viewport('iphone-6');
-    });
-  });
-});
+}

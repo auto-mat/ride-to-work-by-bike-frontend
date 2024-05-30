@@ -2,9 +2,6 @@ import { colors } from 'quasar';
 import ListCardFollow from '../homepage/ListCardFollow.vue';
 import { i18n } from '../../boot/i18n';
 
-// mocks
-import { cardsFollow } from 'src/mocks/homepage';
-
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 
@@ -15,36 +12,17 @@ describe('<ListCardFollow>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(ListCardFollow, {
-        props: {
-          cards: cardsFollow,
-        },
+      cy.fixture('listCardsFollow').then((listCardsFollow) => {
+        cy.mount(ListCardFollow, {
+          props: {
+            cards: listCardsFollow,
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
 
-    it('renders title', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-list-follow-title')
-          .should('have.css', 'font-size', '20px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.color', black)
-          .and('contain', i18n.global.t('index.cardListFollow.title'))
-          .then(($title) => {
-            expect($title.text()).to.equal(
-              i18n.global.t('index.cardListFollow.title'),
-            );
-          });
-      });
-    });
-
-    it('renders correct number of items', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-list-follow-item').should('have.length', 2);
-      });
-    });
-
-    it('renders grid', () => {
+    it('renders items in three columns', () => {
       cy.window().then(() => {
         cy.testElementPercentageWidth(
           cy.dataCy('card-list-follow-col-title'),
@@ -53,29 +31,23 @@ describe('<ListCardFollow>', () => {
         cy.testElementPercentageWidth(cy.dataCy('card-list-follow-item'), 33);
       });
     });
-
-    it('aligns items center', () => {
-      cy.window().then(() => {
-        cy.dataCy('card-list-follow').should(
-          'have.css',
-          'align-items',
-          'center',
-        );
-      });
-    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(ListCardFollow, {
-        props: {
-          cards: cardsFollow,
-        },
+      cy.fixture('listCardsFollow').then((listCardsFollow) => {
+        cy.mount(ListCardFollow, {
+          props: {
+            cards: listCardsFollow,
+          },
+        });
       });
       cy.viewport('iphone-6');
     });
 
-    it('renders grid', () => {
+    coreTests();
+
+    it('renders items in one column', () => {
       cy.window().then(() => {
         cy.testElementPercentageWidth(
           cy.dataCy('card-list-follow-col-title'),
@@ -86,3 +58,32 @@ describe('<ListCardFollow>', () => {
     });
   });
 });
+
+function coreTests() {
+  it('renders title', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-list-follow-title')
+        .should('have.css', 'font-size', '20px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.color', black)
+        .and('contain', i18n.global.t('index.cardListFollow.title'))
+        .then(($title) => {
+          expect($title.text()).to.equal(
+            i18n.global.t('index.cardListFollow.title'),
+          );
+        });
+    });
+  });
+
+  it('renders correct number of items', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-list-follow-item').should('have.length', 2);
+    });
+  });
+
+  it('aligns items center', () => {
+    cy.window().then(() => {
+      cy.dataCy('card-list-follow').should('have.css', 'align-items', 'center');
+    });
+  });
+}
