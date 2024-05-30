@@ -64,7 +64,7 @@ export default defineComponent({
         :title="prizes.title"
         :perex="prizes.perex"
         :cards="cardsPrize"
-        cardType="CardPost"
+        cardType="CardPrize"
         :button="cardsButton"
         class="q-pt-xl"
         data-cy="list-card-slider"
