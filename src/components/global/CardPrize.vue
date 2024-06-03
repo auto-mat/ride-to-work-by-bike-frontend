@@ -26,13 +26,11 @@ import { defineComponent, ref } from 'vue';
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 
-// types
-import type { CardPrizeType, ConfigGlobal } from '../types';
-
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG as string,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+// types
+import type { CardPrizeType } from '../types';
 
 export default defineComponent({
   name: 'CardPrize',
