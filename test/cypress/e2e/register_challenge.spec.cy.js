@@ -158,10 +158,13 @@ describe('Register Challenge page', () => {
           cy.dataCy('step-1')
             .find('.q-stepper__title')
             .should('be.visible')
-            .and(
-              'contain',
-              i18n.global.t('register.challenge.titleStepPersonalDetails'),
-            );
+            .then(($el) => {
+              cy.wrap(
+                i18n.global.t('register.challenge.titleStepPersonalDetails'),
+              ).then((translation) => {
+                expect($el.text()).to.equal(translation);
+              });
+            });
         });
       });
     });
@@ -447,7 +450,13 @@ describe('Register Challenge page', () => {
           .find('p')
           .should('be.visible')
           .should('have.css', 'font-size', '12px')
-          .and('contain', i18n.global.t('form.company.textCoordinator'));
+          .then(($el) => {
+            cy.wrap(i18n.global.t('form.company.textCoordinator')).then(
+              (translation) => {
+                expect($el.text()).to.equal(translation);
+              },
+            );
+          });
         cy.dataCy('form-company-address-input').click();
         // select option
         cy.get('.q-menu')
@@ -465,7 +474,13 @@ describe('Register Challenge page', () => {
         cy.dataCy('step-5-continue').should('be.visible').click();
         cy.dataCy('step-6-continue')
           .should('be.visible')
-          .and('contain', i18n.global.t('form.buttonCompleteRegistration'));
+          .then(($el) => {
+            cy.wrap(i18n.global.t('form.buttonCompleteRegistration')).then(
+              (translation) => {
+                expect($el.text()).to.equal(translation);
+              },
+            );
+          });
         // test back navigation in the stepper
         cy.dataCy('step-6-back').should('be.visible').click();
         cy.dataCy('step-5-back').should('be.visible').click();
