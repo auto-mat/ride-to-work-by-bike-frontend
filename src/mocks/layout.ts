@@ -32,7 +32,7 @@ export const menuTop: Link[] = [
     name: 'community',
   },
   {
-    url: '/slevy',
+    url: '/prizes',
     icon: 'verified',
     name: 'discounts',
   },

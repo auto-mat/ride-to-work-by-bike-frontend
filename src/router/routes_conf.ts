@@ -8,52 +8,28 @@ type RoutesConf = {
 };
 
 const routesConf: RoutesConf = {
-  home: {
-    path: '/',
-    children: {
-      name: 'home',
-    },
-  },
   community: {
     path: '/community',
     children: {
       name: 'community',
     },
   },
-  routes: {
-    path: '/routes',
+  home: {
+    path: '/',
     children: {
-      name: 'routes',
-    },
-  },
-  routes_calendar: {
-    path: '/routes/calendar',
-    children: {
-      name: 'routes/calendar',
-    },
-  },
-  routes_list: {
-    path: '/routes/list',
-    children: {
-      name: 'routes/list',
-    },
-  },
-  routes_map: {
-    path: '/routes/map',
-    children: {
-      name: 'routes/map',
-    },
-  },
-  routes_app: {
-    path: '/routes/app',
-    children: {
-      name: 'routes/app',
+      name: 'home',
     },
   },
   login: {
     path: '/login',
     children: {
       name: 'login',
+    },
+  },
+  prizes: {
+    path: '/prizes',
+    children: {
+      name: 'prizes',
     },
   },
   register: {
@@ -102,6 +78,36 @@ const routesConf: RoutesConf = {
     path: '/results/detail/performance',
     children: {
       name: 'results/detail/performance',
+    },
+  },
+  routes: {
+    path: '/routes',
+    children: {
+      name: 'routes',
+    },
+  },
+  routes_calendar: {
+    path: '/routes/calendar',
+    children: {
+      name: 'routes/calendar',
+    },
+  },
+  routes_list: {
+    path: '/routes/list',
+    children: {
+      name: 'routes/list',
+    },
+  },
+  routes_map: {
+    path: '/routes/map',
+    children: {
+      name: 'routes/map',
+    },
+  },
+  routes_app: {
+    path: '/routes/app',
+    children: {
+      name: 'routes/app',
     },
   },
 };

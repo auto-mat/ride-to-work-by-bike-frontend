@@ -14,6 +14,17 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: routesConf['prizes']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['prizes']['children']['name'],
+        component: () => import('pages/PrizesPage.vue'),
+      },
+    ],
+  },
+  {
     path: routesConf['routes']['path'],
     redirect: routesConf['routes_calendar']['path'],
   },
