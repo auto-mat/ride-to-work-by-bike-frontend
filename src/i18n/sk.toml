@@ -52,6 +52,11 @@ cs = "Čeština"
 sk = "Slovenčina"
 en = "Angličtina"
 
+[prizes]
+textSpecialOffers = "Upozorňujeme na obdobie platnosti ponúk. Niektoré sú platné niekoľko dní, iné vypršia v deň ukončenia hovoru a ďalšie po ukončení hovoru."
+titlePrizes = "Zľavy a výhry"
+titleSpecialOffers = "Špeciálne ponuky"
+
 [time]
 day = "deň | dni"
 dayShort = "d."

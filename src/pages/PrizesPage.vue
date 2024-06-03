@@ -16,17 +16,20 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
+import SectionColumns from '../components/homepage/SectionColumns.vue';
 
 // fixtures
-import events from '../../test/cypress/fixtures/listCardsEvent.json';
+import listCardsPrizes from '../../test/cypress/fixtures/listCardsPrizes.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
+import { CardOffer as CardOfferType } from '../components/types';
 
 export default defineComponent({
   name: 'PrizesPage',
   components: {
     CardOffer,
+    SectionColumns,
   },
   setup() {
     const optionsCity: FormOption[] = [
@@ -45,9 +48,12 @@ export default defineComponent({
     ];
     const city = ref<string>('');
 
+    const prizes = listCardsPrizes as unknown;
+    const prizesList = prizes as CardOfferType[];
+
     return {
       city,
-      events,
+      prizesList,
       optionsCity,
     };
   },
@@ -92,16 +98,20 @@ export default defineComponent({
       <!-- Section: Local events -->
       <div class="q-mt-lg">
         <h2 class="text-h6 q-my-none" data-cy="discount-offers-title">
-          {{ $t('prizes.titleDiscountOffers') }}
+          {{ $t('prizes.titleSpecialOffers') }}
         </h2>
-        <div data-cy="discount-offers-list">
-          <card-offer
-            v-for="card in events"
-            :key="card.title"
-            :card="card"
-            class="q-mt-lg"
-            data-cy="discount-offers-item"
-          />
+        <div class="q-mt-sm">
+          {{ $t('prizes.textSpecialOffers') }}
+        </div>
+        <div class="q-mt-lg" data-cy="discount-offers-list">
+          <section-columns :columns="3" class="q-col-gutter-lg">
+            <card-offer
+              v-for="card in prizesList"
+              :key="card.title"
+              :card="card"
+              data-cy="discount-offers-item"
+            />
+          </section-columns>
         </div>
       </div>
 

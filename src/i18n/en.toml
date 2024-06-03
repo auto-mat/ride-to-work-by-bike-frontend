@@ -52,6 +52,11 @@ cs = "Czech"
 sk = "Slovak"
 en = "English"
 
+[prizes]
+textSpecialOffers = "Please note the validity period of the offers. Some are valid for a few days, others expire on the day the call ends, and others expire after the call."
+titlePrizes = "Discounts and offers"
+titleSpecialOffers = "Special offers"
+
 [time]
 day = "day | days"
 dayShort = "d"
