@@ -82,7 +82,7 @@ export const useFormatDate = () => {
   }
 
   /**
-   * Returns a "today" label with a label for passed time.
+   * Returns a label for today's date with a formatted time.
    */
   function labelToday({
     nowStamp,
@@ -96,12 +96,15 @@ export const useFormatDate = () => {
   }
 
   /**
-   * Returns a "yesterday" label with formatted time.
+   * Returns a label for a yesterday's date with formatted time.
    */
   function labelYesterday({ timeStamp }: { timeStamp: Date }): string {
     return `${i18n.global.t('time.yesterday')}, ${date.formatDate(timeStamp, 'HH:mm')}`;
   }
 
+  /**
+   * Returns a label for a date within the past 7 days.
+   */
   function labelPast7Days({ timeStamp }: { timeStamp: Date }): string {
     // see https://quasar.dev/quasar-utils/date-utils#format-for-display
     return date.formatDate(timeStamp, 'dddd, HH:mm', {
