@@ -27,8 +27,7 @@ export interface CardFollow {
 }
 export interface CardOffer {
   title: string;
-  expirationDate: string;
-  issuer: string;
+  metadata: { id: string; icon: string; text: string }[];
   image: Image;
   code: string;
   link: Link;

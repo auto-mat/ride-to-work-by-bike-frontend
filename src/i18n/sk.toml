@@ -248,8 +248,8 @@ title = "Špeciálne ponuky"
 button = "Všetkých {count} zliav"
 
 [index.cardOffer]
+titleVoucherCode = "Kód kupónu"
 unlimitedExpirationDate = "Neobmedzené obdobie platnosti"
-offerCode = "Kód kupónu"
 
 [index.cardListPost]
 title = "Novinky"

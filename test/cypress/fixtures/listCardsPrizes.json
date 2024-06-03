@@ -1,6 +1,33 @@
 [
   {
-    "title": "100 CZK voucher do e-shopu Automatu",
+    "title": "<b>19. kvě.:</b> 20% sleva na <b>vstupenku na akci</b> Víno zblízka",
+    "metadata": [
+      {
+        "id": "validity",
+        "text": "Neomezená doba platnosti",
+        "icon": "calendar"
+      },
+      {
+        "id": "issuer",
+        "text": "AutoMat",
+        "icon": "pedal_bike"
+      }
+    ],
+    "image": {
+      "src": "https://picsum.photos/id/70/380/380",
+      "alt": "road lined with trees"
+    },
+    "code": "65972834",
+    "link": {
+      "title": "Navštívit e-shop",
+      "url": "#",
+      "target": "_blank"
+    },
+    "icon": "mdi-trophy",
+    "content": "Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu, včetně projektů jako Do práce na kole, Zažít město jinak a Generace U."
+  },
+  {
+    "title": "100 CZK voucher do <b>e-shopu Automatu</b>",
     "expirationDate": "Some time later on",
     "issuer": "Automat",
     "image": {
@@ -17,24 +44,7 @@
     "content": "Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U."
   },
   {
-    "title": "100 CZK voucher do e-shopu Automatu",
-    "expirationDate": "Some time later on",
-    "issuer": "Automat",
-    "image": {
-      "src": "https://picsum.photos/id/70/380/380",
-      "alt": "road lined with trees"
-    },
-    "code": "65972834",
-    "link": {
-      "title": "Navštívit e-shop",
-      "url": "#",
-      "target": "_blank"
-    },
-    "icon": "pedal_bike",
-    "content": "Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu,,včetně projektů jako Do práce na kole, Zažít město jinak a Generace U."
-  },
-  {
-    "title": "100 CZK voucher do e-shopu Automatu",
+    "title": "Jezděte na <b>sdílených kolech nextbike</b> zdarma",
     "expirationDate": "Some time later on",
     "issuer": "Automat",
     "image": {

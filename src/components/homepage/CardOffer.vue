@@ -90,7 +90,11 @@ export default defineComponent({
       </q-card-section>
       <q-card-section class="col items-center">
         <!-- Title -->
-        <div class="text-grey-10" data-cy="card-title">{{ card.title }}</div>
+        <div
+          v-html="card.title"
+          class="text-grey-10"
+          data-cy="card-title"
+        ></div>
       </q-card-section>
     </q-card-section>
 
@@ -102,36 +106,25 @@ export default defineComponent({
     >
       <!-- Title -->
       <template #title>
-        {{ card.title }}
+        <span v-html="card.title" />
       </template>
       <!-- Metadata -->
       <template #metadata>
         <div class="flex flex-wrap items-center gap-x-32 gap-y-8 q-mt-sm">
           <div
-            v-if="card.expirationDate"
+            v-for="item in card.metadata"
+            :key="item.id"
             class="flex items-center text-blue-grey-7"
-            data-cy="dialog-meta"
+            data-cy="dialog-metadata-item"
           >
             <q-icon
-              name="event"
+              v-if="item.icon"
+              :name="item.icon"
               size="18px"
               class="q-pr-xs"
               color="blue-grey-3"
             />
-            {{ card.expirationDate }}
-          </div>
-          <div
-            v-if="card.issuer"
-            class="flex items-center text-blue-grey-7"
-            data-cy="dialog-meta"
-          >
-            <q-icon
-              name="pedal_bike"
-              size="18px"
-              class="q-pr-xs"
-              color="blue-grey-3"
-            />
-            {{ card.issuer }}
+            <span v-if="item.text" v-html="item.text" />
           </div>
         </div>
       </template>
@@ -145,6 +138,18 @@ export default defineComponent({
             v-html="card.content"
             data-cy="dialog-content"
           />
+          <!-- Voucher -->
+          <div v-if="card?.code" class="q-mt-lg" data-cy="dialog-voucher">
+            <h4
+              class="text-caption text-uppercase q-my-none"
+              data-cy="dialog-voucher-title"
+            >
+              {{ $t('index.cardOffer.titleVoucherCode') }}
+            </h4>
+            <div class="text-h6 q-mt-sm" data-cy="dialog-voucher-code">
+              {{ card.code }}
+            </div>
+          </div>
           <!-- Buttons -->
           <q-btn
             v-if="card.link"
@@ -152,7 +157,7 @@ export default defineComponent({
             color="black"
             unelevated
             rounded
-            class="q-mt-md"
+            class="q-mt-lg"
             data-cy="dialog-offer-link"
           >
             <div class="flex items-center no-wrap">

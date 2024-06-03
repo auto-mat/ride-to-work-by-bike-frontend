@@ -248,8 +248,8 @@ title = "Special offers"
 button = "All {count} offers"
 
 [index.cardOffer]
+titleVoucherCode = "Voucher code"
 unlimitedExpirationDate = "Unlimited validity"
-offerCode = "Voucher code"
 
 [index.cardListPost]
 title = "News"
