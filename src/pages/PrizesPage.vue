@@ -95,7 +95,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <!-- Section: Local events -->
+      <!-- Section: Special offers -->
       <div class="q-mt-lg">
         <h2 class="text-h6 q-my-none" data-cy="discount-offers-title">
           {{ $t('prizes.titleSpecialOffers') }}
