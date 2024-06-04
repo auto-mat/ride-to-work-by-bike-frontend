@@ -5,6 +5,17 @@ describe('Results page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['results_detail']['path']);
       cy.viewport('macbook-16');
+
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
     });
 
     coreTests();
@@ -22,6 +33,17 @@ describe('Results page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['results_detail']['path']);
       cy.viewport('iphone-6');
+
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
     });
 
     coreTests();
@@ -30,19 +52,17 @@ describe('Results page', () => {
 
 function coreTests() {
   it('renders page heading section', () => {
-    let i18n;
-    cy.window().should('have.property', 'i18n');
-    cy.window()
-      .then((win) => {
-        i18n = win.i18n;
-      })
-      .then(() => {
-        // title
-        // TODO: Add results detail heading (breadcrumb variant)
-        cy.dataCy('results-detail-page-title')
-          .should('be.visible')
-          .and('contain', i18n.global.t('results.titleResults'));
-      });
+    cy.get('@i18n').then((i18n) => {
+      // title
+      // TODO: Add results detail heading (breadcrumb variant)
+      cy.dataCy('results-detail-page-title')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('results.titleResults')).then((translation) => {
+            expect($el.text()).to.equal(translation);
+          });
+        });
+    });
   });
 
   it('renders upcoming challenges section', () => {
