@@ -141,6 +141,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ResultsDetailPage.vue'),
       },
     ],
+    meta: {
+      breadcrumb: [
+        {
+          name: routesConf['results']['children']['name'],
+          path: routesConf['results']['path'],
+        },
+      ],
+    },
   },
   {
     path: routesConf['results_regularity']['path'],
@@ -152,6 +160,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ResultsDetailPage.vue'),
       },
     ],
+    meta: {
+      breadcrumb: [
+        {
+          name: routesConf['results']['children']['name'],
+          path: routesConf['results']['path'],
+        },
+      ],
+    },
   },
   {
     path: routesConf['results_performance']['path'],
@@ -163,6 +179,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/ResultsDetailPage.vue'),
       },
     ],
+    meta: {
+      breadcrumb: [
+        {
+          name: routesConf['results']['children']['name'],
+          path: routesConf['results']['path'],
+        },
+      ],
+    },
   },
   {
     path: routesConf['community']['path'],

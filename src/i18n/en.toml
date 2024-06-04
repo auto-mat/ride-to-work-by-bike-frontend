@@ -8,6 +8,9 @@ siteTitle = "Ride to Work by Bike"
 period = "Challenge period"
 transportType = "Means of transport"
 
+[breadcrumb]
+results = "Results"
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"
@@ -434,6 +437,7 @@ titleOngoingChallenges = "Ongoing challenges"
 titlePastChallenges = "Previous challenges"
 titleRecentChallenges = "Recent completed challenges"
 titleResults = "Results"
+titleResultsYou = "You"
 titleUpcomingChallenges = "Upcoming challenges"
 titleYourResultsSince = "Your results since {date}"
 tabRegularity = "Regularity"

@@ -15,6 +15,7 @@
 import { defineComponent } from 'vue';
 
 // components
+import BreadcrumbTitle from 'src/components/global/BreadcrumbTitle.vue';
 import ListCardSlider from '../components/global/ListCardSlider.vue';
 import ResultsList from '../components/results/ResultsList.vue';
 import ResultsTabs from '../components/results/ResultsTabs.vue';
@@ -28,6 +29,7 @@ import type { CardPrizeType, Link } from '../components/types';
 export default defineComponent({
   name: 'ResultsDetailPage',
   components: {
+    BreadcrumbTitle,
     ListCardSlider,
     ResultsList,
     ResultsTabs,
@@ -50,13 +52,9 @@ export default defineComponent({
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
     <div class="q-px-lg bg-white q-pb-xl">
-      <!-- TODO: Breadcrumb-style Heading -->
-      <h1
-        class="text-h5 q-mt-none q-pt-lg text-weight-bold"
-        data-cy="results-detail-page-title"
-      >
-        {{ $t('results.titleResults') }}
-      </h1>
+      <div class="q-pt-lg">
+        <breadcrumb-title :title="$t('results.titleResultsYou')" />
+      </div>
 
       <results-list data-cy="results-list" />
 

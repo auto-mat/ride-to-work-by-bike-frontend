@@ -8,6 +8,9 @@ siteTitle = "Do práce na kole"
 period = "Období výzvy"
 transportType = "Způsoby dopravy"
 
+[breadcrumb]
+results = "Výsledky"
+
 [drawerMenu]
 buttonParticipation = "Účast"
 buttonCityAdministration = "Správa města"
@@ -435,6 +438,7 @@ titleOngoingChallenges = "Probíhající výzvy"
 titlePastChallenges = "Dřívější výzvy"
 titleRecentChallenges = "Uplynulé výzvy za toto období"
 titleResults = "Výsledky"
+titleResultsYou = "Vy"
 titleUpcomingChallenges = "Nadcházející výzvy"
 titleYourResultsSince = "Vaše výsledky od {date}"
 tabRegularity = "Pravidelnost"
