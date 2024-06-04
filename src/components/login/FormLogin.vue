@@ -32,13 +32,8 @@ import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 // composables
 import { useValidation } from '../../composables/useValidation';
 
-// types
-import { ConfigGlobal } from '../types';
-
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'FormLogin',

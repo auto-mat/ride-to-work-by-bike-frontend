@@ -30,12 +30,10 @@ import { defineComponent, computed } from 'vue';
 import { useCircleSize } from '../../composables/useCircleSize';
 
 // types
-import { CardProgress as CardProgressType, ConfigGlobal } from '../types';
+import { CardProgress as CardProgressType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'CardProgressSlider',

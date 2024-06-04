@@ -38,12 +38,10 @@ import ButtonAddToCalendar from '../global/ButtonAddToCalendar.vue';
 import DialogDefault from '../global/DialogDefault.vue';
 
 // types
-import { CardEvent as CardEventType, ConfigGlobal } from '../types';
+import { CardEvent as CardEventType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { formatDate } = date;
 
@@ -222,7 +220,10 @@ export default defineComponent({
                 data-cy="dialog-content"
               />
               <!-- Buttons -->
-              <button-add-to-calendar class="q-mt-md" data-cy="button-add-to-calendar" />
+              <button-add-to-calendar
+                class="q-mt-md"
+                data-cy="button-add-to-calendar"
+              />
             </div>
             <!-- Right column: Image -->
             <div

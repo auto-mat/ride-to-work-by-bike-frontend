@@ -28,12 +28,10 @@ import { defineComponent } from 'vue';
 import { date } from 'quasar';
 
 // types
-import { CardPost as CardPostType, ConfigGlobal } from '../types';
+import { CardPost as CardPostType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 const { formatDate } = date;
 

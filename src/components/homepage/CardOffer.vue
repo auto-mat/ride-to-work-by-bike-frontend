@@ -36,12 +36,10 @@ import { defineComponent, ref } from 'vue';
 import DialogDefault from '../global/DialogDefault.vue';
 
 // types
-import { CardOffer as CardOfferType, ConfigGlobal } from '../types';
+import { CardOffer as CardOfferType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'CardOffer',

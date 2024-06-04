@@ -26,12 +26,10 @@ import { defineComponent, ref, computed, onMounted } from 'vue';
 import { Screen } from 'quasar';
 
 // types
-import { BannerApp as BannerAppType, ConfigGlobal } from '../types';
+import { BannerApp as BannerAppType } from '../types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'BannerApp',
