@@ -6,6 +6,17 @@ describe('Login page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['register']['path']);
       cy.viewport('macbook-16');
+
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
     });
 
     it('renders page header', () => {
@@ -20,19 +31,19 @@ describe('Login page', () => {
     });
 
     it('renders page title', () => {
-      let i18n;
-      cy.window().should('have.property', 'i18n');
-      cy.window()
-        .then((win) => {
-          i18n = win.i18n;
-        })
-        .then(() => {
-          cy.dataCy('form-register-title')
-            .should('be.visible')
-            .and('have.css', 'font-size', '24px')
-            .and('have.css', 'font-weight', '700')
-            .and('contain', i18n.global.t('register.form.titleRegister'));
-        });
+      cy.get('@i18n').then((i18n) => {
+        cy.dataCy('form-register-title')
+          .should('be.visible')
+          .and('have.css', 'font-size', '24px')
+          .and('have.css', 'font-weight', '700')
+          .then(($el) => {
+            cy.wrap(i18n.global.t('register.form.titleRegister')).then(
+              (translation) => {
+                expect($el.text()).to.equal(translation);
+              },
+            );
+          });
+      });
     });
   });
 });
