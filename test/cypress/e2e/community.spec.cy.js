@@ -56,7 +56,13 @@ function coreTests() {
       // title
       cy.dataCy('community-page-title')
         .should('be.visible')
-        .and('contain', i18n.global.t('community.titleCommunity'));
+        .then(($el) => {
+          cy.wrap(i18n.global.t('community.titleCommunity')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
       // cy.dataCy('community-select-city').should('be.visible');
     });
   });
@@ -65,7 +71,13 @@ function coreTests() {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy('local-events-title')
         .should('be.visible')
-        .and('contain', i18n.global.t('community.titleLocalEvents'));
+        .then(($el) => {
+          cy.wrap(i18n.global.t('community.titleLocalEvents')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
       cy.dataCy('local-events-list').should('be.visible');
       cy.dataCy('local-events-item').should('be.visible').and('have.length', 2);
     });
