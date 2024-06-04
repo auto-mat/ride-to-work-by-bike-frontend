@@ -5,6 +5,17 @@ describe('Routes page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['routes_calendar']['path']);
       cy.viewport('macbook-16');
+
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
     });
 
     coreTests();
@@ -22,6 +33,17 @@ describe('Routes page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['routes']['path']);
       cy.viewport('iphone-6');
+
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
     });
 
     coreTests();
@@ -30,21 +52,31 @@ describe('Routes page', () => {
 
 function coreTests() {
   it('renders page heading section', () => {
-    let i18n;
-    cy.window().should('have.property', 'i18n');
-    cy.window()
-      .then((win) => {
-        i18n = win.i18n;
-      })
-      .then(() => {
-        cy.dataCy('routes-page-title')
-          .should('be.visible')
-          .and('contain', i18n.global.t('routes.titleRoutes'));
-        cy.dataCy('routes-page-instructions')
-          .should('be.visible')
-          .and('contain', i18n.global.t('routes.instructionRouteLogTimeframe'))
-          .and('contain', i18n.global.t('routes.instructionRouteCombination'));
+    cy.get('@i18n').then((i18n) => {
+      cy.dataCy('routes-page-title')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('routes.titleRoutes')).then((translation) => {
+            expect($el.text()).to.contain(translation);
+          });
+        });
+      cy.dataCy('routes-page-instructions')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('routes.instructionRouteLogTimeframe')).then(
+            (translation) => {
+              expect($el.text()).to.contain(translation);
+            },
+          );
+        });
+      cy.dataCy('routes-page-instructions').then(($el) => {
+        cy.wrap(i18n.global.t('routes.instructionRouteCombination')).then(
+          (translation) => {
+            expect($el.text()).to.contain(translation);
+          },
+        );
       });
+    });
   });
 
   it('renders route tabs', () => {
