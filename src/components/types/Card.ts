@@ -52,7 +52,7 @@ export interface CardLocationType {
   content: string;
   id: string;
   image: Image;
-  link?: Link;
+  links?: Link[];
   metadata: CardMetadata[];
   title: string;
 }

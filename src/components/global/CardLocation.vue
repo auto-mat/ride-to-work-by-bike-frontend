@@ -77,7 +77,7 @@ export default defineComponent({
     <!-- Image -->
     <q-img
       :src="card.image.src"
-      ratio="0.8"
+      ratio="1.4"
       data-cy="card-location-image"
       alt=""
     />
@@ -88,13 +88,13 @@ export default defineComponent({
     <q-card-section>
       <!-- Title -->
       <div
-        class="card-location-title text-body text-grey-10"
+        class="card-location-title text-body1 text-weight-bold text-grey-10"
         data-cy="card-location-title"
       >
         {{ card.title }}
       </div>
       <!-- Metadata -->
-      <div class="flex flex-wrap gap-8">
+      <div class="flex flex-wrap gap-8 q-mt-xs">
         <div
           v-for="item in card.metadata"
           :key="item.id"
@@ -107,7 +107,7 @@ export default defineComponent({
             class="q-pr-xs"
             color="blue-grey-6"
           />
-          <span>
+          <span class="text-subtitle2 text-weight-regular">
             {{ item.text }}
           </span>
         </div>
@@ -148,27 +148,30 @@ export default defineComponent({
       <template #content>
         <!-- Left column: Content -->
         <div class="col-12 col-md-6" data-cy="dialog-col-left">
-          <!-- Content -->
-          <div
-            v-if="card?.content"
-            v-html="card.content"
-            class="q-px-md q-py-md"
-            data-cy="dialog-content"
-          />
-          <!-- Buttons -->
-          <q-btn
-            v-if="card.link"
-            :to="card.link.url"
-            color="black"
-            unelevated
-            rounded
-            class="q-mt-md"
-            data-cy="dialog-location-link"
-          >
-            <div class="flex items-center no-wrap">
-              {{ card.link.title }}
-            </div>
-          </q-btn>
+          <div class="q-px-md q-py-md">
+            <!-- Content -->
+            <div
+              v-if="card?.content"
+              v-html="card.content"
+              data-cy="dialog-content"
+            />
+            <!-- Buttons -->
+            <q-btn
+              v-for="(link, index) in card.links"
+              :to="link.url"
+              :key="link.url"
+              color="primary"
+              unelevated
+              rounded
+              :outline="index !== 0"
+              class="q-mt-md q-mr-sm"
+              data-cy="dialog-location-link"
+            >
+              <div class="flex items-center no-wrap">
+                {{ link.title }}
+              </div>
+            </q-btn>
+          </div>
         </div>
         <!-- Right column: Image -->
         <div class="col-12 col-md-6" data-cy="dialog-col-right">

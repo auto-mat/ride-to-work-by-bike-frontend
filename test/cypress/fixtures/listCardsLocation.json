@@ -5,10 +5,16 @@
     "image": {
       "src": "https://picsum.photos/id/70/300/300"
     },
-    "link": {
-      "url": "#",
-      "title": "Více informaci"
-    },
+    "links": [
+      {
+        "url": "#",
+        "title": "Zobrazit na mapě cest"
+      },
+      {
+        "url": "#",
+        "title": "Zobrazit na Mapy.cz"
+      }
+    ],
     "metadata": [
       {
         "id": "location",
@@ -24,10 +30,16 @@
     "image": {
       "src": "https://picsum.photos/id/70/300/300"
     },
-    "link": {
-      "url": "#",
-      "title": "Více informaci"
-    },
+    "links": [
+      {
+        "url": "#",
+        "title": "Zobrazit na mapě cest"
+      },
+      {
+        "url": "#",
+        "title": "Zobrazit na Mapy.cz"
+      }
+    ],
     "metadata": [
       {
         "id": "location",
@@ -43,10 +55,16 @@
     "image": {
       "src": "https://picsum.photos/id/70/300/300"
     },
-    "link": {
-      "url": "#",
-      "title": "Více informaci"
-    },
+    "links": [
+      {
+        "url": "#",
+        "title": "Zobrazit na mapě cest"
+      },
+      {
+        "url": "#",
+        "title": "Zobrazit na Mapy.cz"
+      }
+    ],
     "metadata": [
       {
         "id": "location",

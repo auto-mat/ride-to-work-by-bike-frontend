@@ -1,5 +1,8 @@
 import CardLocation from 'components/global/CardLocation.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
+const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 describe('<CardLocation>', () => {
   it('has translation for all strings', () => {
@@ -40,7 +43,7 @@ describe('<CardLocation>', () => {
 });
 
 function coreTests() {
-  it.only('renders component', () => {
+  it('renders component', () => {
     cy.dataCy('card-location').should('be.visible');
   });
 
@@ -84,6 +87,13 @@ function coreTests() {
               expect(textContent).to.contain(text);
             });
           });
+        // buttons
+        cy.dataCy('dialog-location-link')
+          .should('be.visible')
+          .and('have.length', 2);
+        cy.dataCy('dialog-location-link').each(($item, index) => {
+          cy.wrap($item).should('contain', card.links[index].title);
+        });
         // image
         cy.dataCy('dialog-body').scrollTo('bottom', {
           ensureScrollable: false,

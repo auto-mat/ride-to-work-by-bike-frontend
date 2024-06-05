@@ -131,7 +131,7 @@ export default defineComponent({
           slidesPerView: 3,
         },
         1440: {
-          slidesPerView: 4,
+          slidesPerView: slides,
         },
       }"
       data-cy="swiper-container"

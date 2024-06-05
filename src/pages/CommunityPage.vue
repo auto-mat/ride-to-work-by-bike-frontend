@@ -141,10 +141,11 @@ export default defineComponent({
       <!-- Section: Locations -->
       <list-card-slider
         :title="$t('results.titleLocations')"
+        :button="{ title: $t('results.buttonLocationsMap'), url: '#' }"
         :cards="cardsLocation"
         cardType="CardLocation"
-        :button="{ title: $t('results.buttonLocationsMap'), url: '#' }"
         class="q-pt-xl"
+        :slides="3"
         data-cy="list-card-slider"
       />
 
