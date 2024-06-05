@@ -62,22 +62,23 @@ export const useFormatDate = () => {
     nowStamp: Date;
     timeStamp: Date;
   }): TimeState {
-    let state = TimeState.PAST;
-    state =
-      date.getDateDiff(nowStamp, timeStamp, 'days') < 7
-        ? TimeState.PAST7DAYS
-        : state;
-    state =
-      date.getDateDiff(nowStamp, timeStamp, 'days') === 1
-        ? TimeState.YESTERDAY
-        : state;
-    state = date.isSameDate(nowStamp, timeStamp, 'day')
-      ? TimeState.TODAY
-      : state;
-    state =
-      date.getDateDiff(nowStamp, timeStamp, 'hours') < 1
-        ? TimeState.NOW
-        : state;
+    let state;
+    switch (true) {
+      case date.getDateDiff(nowStamp, timeStamp, 'hours') < 1:
+        state = TimeState.NOW;
+        break;
+      case date.isSameDate(nowStamp, timeStamp, 'day'):
+        state = TimeState.TODAY;
+        break;
+      case date.getDateDiff(nowStamp, timeStamp, 'days') === 1:
+        state = TimeState.YESTERDAY;
+        break;
+      case date.getDateDiff(nowStamp, timeStamp, 'days') < 7:
+        state = TimeState.PAST7DAYS;
+        break;
+      default:
+        state = TimeState.PAST;
+    }
     return state;
   }
 
