@@ -24,6 +24,7 @@
  *   field.
  * - `FormFieldPhone`: Component to render phone input field.
  * - `FormFieldRadioRequired`: Component to render radio input field.
+ * - `FormFieldSelectCity`: Component to render city select field.
  * - `FormFieldTextRequired`: Component to render text input field.
  *
  * @example
@@ -42,6 +43,7 @@ import FormFieldPassword from './FormFieldPassword.vue';
 import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
+import FormFieldSelectCity from '../form/FormFieldSelectCity.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 import FormFieldVatId from '../form/FormFieldVatId.vue';
 
@@ -56,6 +58,7 @@ export default defineComponent({
     FormFieldPasswordConfirm,
     FormFieldPhone,
     FormFieldRadioRequired,
+    FormFieldSelectCity,
     FormFieldTextRequired,
     FormFieldVatId,
   },
