@@ -2,6 +2,12 @@ import { Image } from './Image';
 import { ItemPrize } from './Item';
 import { Link } from './Link';
 
+export interface CardMetadata {
+  id: string;
+  icon: string;
+  text: string;
+}
+
 export interface CardChallenge {
   title: string;
   image: Image;
@@ -27,7 +33,7 @@ export interface CardFollow {
 }
 export interface CardOffer {
   title: string;
-  metadata: { id: string; icon: string; text: string }[];
+  metadata: CardMetadata[];
   image: Image;
   code: string;
   link: Link;
@@ -39,7 +45,15 @@ export interface CardPrizeType {
   id: string;
   image: Image;
   link?: Link;
-  metadata: { id: string; icon: string; text: string }[];
+  metadata: CardMetadata[];
+  title: string;
+}
+export interface CardLocationType {
+  content: string;
+  id: string;
+  image: Image;
+  link?: Link;
+  metadata: CardMetadata[];
   title: string;
 }
 export interface CardPost {
@@ -80,5 +94,5 @@ export interface CardProgress {
 export interface CardStats {
   title: string;
   icon: string;
-  stats: { id: string; icon: string; text: string }[];
+  stats: CardMetadata[];
 }

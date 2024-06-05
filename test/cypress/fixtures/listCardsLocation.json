@@ -1,0 +1,59 @@
+[
+  {
+    "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
+    "id": "location1",
+    "image": {
+      "src": "https://picsum.photos/id/70/300/300"
+    },
+    "link": {
+      "url": "#",
+      "title": "Více informaci"
+    },
+    "metadata": [
+      {
+        "id": "location",
+        "icon": "mdi-map-marker",
+        "text": "Praha–Smíchov"
+      }
+    ],
+    "title": "Ctirad (přírodní památka)"
+  },
+  {
+    "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
+    "id": "location2",
+    "image": {
+      "src": "https://picsum.photos/id/70/300/300"
+    },
+    "link": {
+      "url": "#",
+      "title": "Více informaci"
+    },
+    "metadata": [
+      {
+        "id": "location",
+        "icon": "mdi-map-marker",
+        "text": "Praha–Malá Strana"
+      }
+    ],
+    "title": "Karlův most"
+  },
+  {
+    "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
+    "id": "location3",
+    "image": {
+      "src": "https://picsum.photos/id/70/300/300"
+    },
+    "link": {
+      "url": "#",
+      "title": "Více informaci"
+    },
+    "metadata": [
+      {
+        "id": "location",
+        "icon": "mdi-map-marker",
+        "text": "Praha–Smíchov"
+      }
+    ],
+    "title": "Dívčí hrady"
+  }
+]

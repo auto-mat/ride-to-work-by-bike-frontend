@@ -18,6 +18,7 @@ import { defineComponent, ref } from 'vue';
 import CardEvent from '../components/homepage/CardEvent.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 import ListCardPost from 'src/components/homepage/ListCardPost.vue';
+import ListCardSlider from '../components/global/ListCardSlider.vue';
 
 // composables
 import { i18n } from 'src/boot/i18n';
@@ -28,10 +29,12 @@ import { routesConf } from 'src/router/routes_conf';
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
 import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
+import listCardsLocation from '../../test/cypress/fixtures/listCardsLocation.json';
 import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
+import type { CardPost, CardFollow, CardLocationType } from 'src/components/types';
 
 export default defineComponent({
   name: 'CommunityPage',
@@ -39,6 +42,7 @@ export default defineComponent({
     CardEvent,
     ListCardFollow,
     ListCardPost,
+    ListCardSlider,
   },
   setup() {
     const optionsCity: FormOption[] = [
@@ -57,18 +61,20 @@ export default defineComponent({
     ];
     const city = ref<string>('');
 
-    const cardsFollow = listCardsFollow;
-    const cardsPost = listCardsPost;
+    const cardsFollow = listCardsFollow as CardFollow[];
+    const cardsPost = listCardsPost as CardPost[];
     const buttonPosts = {
       title: i18n.global.t('index.cardListPost.button'),
       // TODO: add route
       url: routesConf?.blog?.path,
     };
+    const cardsLocation = listCardsLocation as CardLocationType[];
 
     return {
       buttonPosts,
       cardsFollow,
       cardsPost,
+      cardsLocation,
       city,
       events,
       optionsCity,
@@ -132,7 +138,15 @@ export default defineComponent({
 
       <!-- TODO: Section Forum -->
 
-      <!-- TODO: Section Locations -->
+      <!-- Section: Locations -->
+      <list-card-slider
+        :title="$t('results.titleLocations')"
+        :cards="cardsLocation"
+        cardType="CardLocation"
+        :button="{ title: $t('results.buttonLocationsMap'), url: '#' }"
+        class="q-pt-xl"
+        data-cy="list-card-slider"
+      />
 
       <!-- TODO: Section Social networks -->
       <list-card-follow :cards="cardsFollow" class="q-pt-xl" />

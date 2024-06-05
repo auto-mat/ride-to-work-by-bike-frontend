@@ -37,14 +37,21 @@ import { Screen } from 'quasar';
 
 // components
 import CardPost from '../homepage/CardPost.vue';
+import CardLocation from './CardLocation.vue';
 import CardPrize from './CardPrize.vue';
 
 // types
-import { CardPost as CardPostType, CardPrizeType, Link } from '../types';
+import {
+  CardLocationType,
+  CardPost as CardPostType,
+  CardPrizeType,
+  Link,
+} from '../types';
 
 export default defineComponent({
   name: 'ListCardSlider',
   components: {
+    CardLocation,
     CardPost,
     CardPrize,
   },
@@ -54,7 +61,10 @@ export default defineComponent({
       required: true,
     },
     cards: {
-      type: Array as () => CardPostType[] | CardPrizeType[],
+      type: Array as () =>
+        | CardPostType[]
+        | CardPrizeType[]
+        | CardLocationType[],
       required: true,
     },
     cardType: {
