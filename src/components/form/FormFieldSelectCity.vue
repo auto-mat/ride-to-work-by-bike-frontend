@@ -3,6 +3,7 @@
  * FormFieldSelectCity Component
  *
  * @description * Use this component to render a select with city options.
+ * It is commonly used in `CommunityPage` and `PrizesPage`.
  *
  * @props
  * - `modelValue` (string, required): The select value.
