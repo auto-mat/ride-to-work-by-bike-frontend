@@ -83,6 +83,10 @@ function coreTests() {
     });
   });
 
+  it('renders a list of locations', () => {
+    cy.dataCy('locations-slider').should('be.visible');
+  });
+
   it('renders a list of new posts', () => {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy('list-card-post').should('be.visible');

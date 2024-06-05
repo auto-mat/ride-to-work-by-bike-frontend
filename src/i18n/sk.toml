@@ -46,9 +46,11 @@ calendarYahoo = "Yahoo"
 calendarOther = "Iné aplikácie (súbor iCal)"
 
 [community]
+buttonLocationsMap = "Zobrazenie na mape"
 labelSelectCity = "Mesto"
 titleCommunity = "Komunita"
 titleLocalEvents = "Miestne udalosti"
+titleLocations = "Zaujímavosti v blízkosti vašej cesty"
 
 [language]
 cs = "Čeština"
@@ -419,7 +421,6 @@ messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 
 [results]
-buttonLocationsMap = "Zobrazenie na mape"
 buttonPastChallenges = "Výsledky predošlých výziev"
 labelCategory = "Kategória"
 labelCity = "Mesto"
@@ -434,7 +435,6 @@ labelSustainableRoutes = "udržateľných trás"
 labelTeam = "Tím"
 titleBadges = "Odznaky"
 titleCurrentResults = "Doterajšie výsledky"
-titleLocations = "Zaujímavosti v blízkosti vašej cesty"
 titleOngoingChallenges = "Prebiehajúce výzvy"
 titlePastChallenges = "Predošlé výzvy"
 titleRecentChallenges = "Predošlé výzvy na toto obdobie"
