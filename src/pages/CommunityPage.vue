@@ -41,6 +41,8 @@ import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 import type { FormOption } from '../components/types/Form';
 import type { CardPost, CardFollow, CardLocationType } from 'src/components/types';
 
+// fixtures
+
 export default defineComponent({
   name: 'CommunityPage',
   components: {
@@ -52,20 +54,6 @@ export default defineComponent({
     ListCardSlider,
   },
   setup() {
-    const optionsCity: FormOption[] = [
-      {
-        label: 'Brno',
-        value: 'brno',
-      },
-      {
-        label: 'Ostrava',
-        value: 'ostrava',
-      },
-      {
-        label: 'Praha',
-        value: 'praha',
-      },
-    ];
     const city = ref<string>('');
 
     const cardsFollow = listCardsFollow as CardFollow[];
@@ -84,7 +72,6 @@ export default defineComponent({
       cardsLocation,
       city,
       events,
-      optionsCity,
     };
   },
 });

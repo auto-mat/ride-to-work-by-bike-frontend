@@ -61,7 +61,7 @@ function coreTests() {
             expect($el.text()).to.equal(translation);
           });
         });
-      cy.dataCy('prizes-select-city').should('be.visible');
+      cy.dataCy('form-field-select-city').should('be.visible');
     });
   });
 
