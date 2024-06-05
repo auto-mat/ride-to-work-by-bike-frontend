@@ -19,6 +19,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
+import FormFieldSelectCity from 'src/components/form/FormFieldSelectCity.vue';
 import ForumPostList from 'src/components/community/ForumPostList.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 import ListCardPost from 'src/components/homepage/ListCardPost.vue';
@@ -44,6 +45,7 @@ export default defineComponent({
   name: 'CommunityPage',
   components: {
     CardEvent,
+    FormFieldSelectCity,
     ForumPostList,
     ListCardFollow,
     ListCardPost,
@@ -104,23 +106,7 @@ export default defineComponent({
         </div>
 
         <!-- Select: City -->
-        <div class="row items-center">
-          <label for="community-select-city" class="col-auto q-mr-sm">
-            <span>{{ $t('community.labelSelectCity') }}:</span>
-          </label>
-          <q-select
-            dense
-            outlined
-            emit-value
-            map-options
-            v-model="city"
-            :options="optionsCity"
-            :style="{ 'min-width': '160px' }"
-            class="col-auto"
-            id="community-select-city"
-            data-cy="community-select-city"
-          />
-        </div>
+        <FormFieldSelectCity v-model="city" data-cy="form-field-select-city" />
       </div>
 
       <!-- Section: Local events -->
