@@ -1,4 +1,4 @@
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 
 import CardPost from '../homepage/CardPost.vue';
 import { i18n } from '../../boot/i18n';
@@ -10,17 +10,17 @@ const grey10 = getPaletteColor('grey-10');
 const blueGrey5 = getPaletteColor('blue-grey-5');
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
-
-// mocks
-import { cardsPost } from 'src/mocks/homepage';
-const card = cardsPost[0];
+const { formatDate } = date;
 
 describe('<CardPost>', () => {
   beforeEach(() => {
-    cy.mount(CardPost, {
-      props: {
-        card,
-      },
+    cy.fixture('listCardsPost').then((listCardsPost) => {
+      cy.wrap(listCardsPost[0]).as('card');
+      cy.mount(CardPost, {
+        props: {
+          card: listCardsPost[0],
+        },
+      });
     });
   });
 
@@ -62,43 +62,50 @@ describe('<CardPost>', () => {
 
   it('renders title', () => {
     cy.window().then(() => {
-      cy.dataCy('card-post-title')
-        .should('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '400')
-        .and('have.color', grey10)
-        .and('contain', card.title)
-        .then(($title) => {
-          expect($title.text()).to.equal(card.title);
-        });
+      cy.get('@card').then((card) => {
+        cy.dataCy('card-post-title')
+          .should('have.css', 'font-size', '14px')
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', grey10)
+          .and('contain', card.title)
+          .then(($title) => {
+            expect($title.text()).to.equal(card.title);
+          });
+      });
     });
   });
 
   it('renders date', () => {
     cy.window().then(() => {
-      cy.dataCy('card-post-date')
-        .should('have.css', 'font-size', '12px')
-        .and('have.css', 'font-weight', '400')
-        .and('have.color', blueGrey5)
-        .and('contain', '1. Sep. 2023')
-        .then(($date) => {
-          // manual workaround to avoid having to calculate dynamic date
-          expect($date.text()).to.equal('1. Sep. 2023');
-        });
+      cy.get('@card').then((card) => {
+        cy.dataCy('card-post-date')
+          .should('have.css', 'font-size', '12px')
+          .and('have.css', 'font-weight', '400')
+          .and('have.color', blueGrey5)
+          .then(($date) => {
+            // manual workaround to avoid having to calculate dynamic date
+            expect($date.text()).to.equal(
+              formatDate(card.date, 'D. MMM. YYYY'),
+            );
+          });
+      });
     });
   });
 
   it('renders image', () => {
     cy.window().then(() => {
-      cy.dataCy('card-post-image')
-        .find('img')
-        .should('be.visible')
-        .then(($img) => {
-          cy.testImageHeight($img);
-          expect($img.attr('src')).to.equal(card.image);
+      cy.get('@card').then((card) => {
+        cy.dataCy('card-post-image')
+          .find('img')
+          .should('be.visible')
+          .then(($img) => {
+            cy.testImageHeight($img);
+            expect($img.attr('src')).to.equal(card.image);
+          });
+        cy.dataCy('card-post-image').matchImageSnapshot({
+          failureThreshold: 0.5,
+          failureThresholdType: 'percent',
         });
-      cy.dataCy('card-post-image').matchImageSnapshot({
-        failureThreshold: 0.5,
-        failureThresholdType: 'percent',
       });
     });
   });

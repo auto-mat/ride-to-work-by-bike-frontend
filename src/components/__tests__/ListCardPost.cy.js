@@ -3,10 +3,7 @@ import ListCardPost from '../homepage/ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 
-// mocks
-import { cardsPost } from 'src/mocks/homepage';
 const title = i18n.global.t('index.cardListPost.title');
-const cards = cardsPost.slice(0, 5);
 const button = {
   title: i18n.global.t('index.cardListPost.button'),
   url: '/blog',
@@ -27,13 +24,16 @@ describe('<ListCardPost>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(ListCardPost, {
-        props: {
-          title,
-          cards,
-          button,
-        },
+      cy.fixture('listCardsPost').then((cards) => {
+        cy.mount(ListCardPost, {
+          props: {
+            title,
+            cards: cards.slice(0, 5),
+            button,
+          },
+        });
       });
+
       cy.viewport('macbook-16');
     });
 
@@ -94,12 +94,14 @@ describe('<ListCardPost>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(ListCardPost, {
-        props: {
-          title,
-          cards,
-          button,
-        },
+      cy.fixture('listCardsPost').then((cards) => {
+        cy.mount(ListCardPost, {
+          props: {
+            title,
+            cards: cards.slice(0, 5),
+            button,
+          },
+        });
       });
       cy.viewport('iphone-6');
     });
