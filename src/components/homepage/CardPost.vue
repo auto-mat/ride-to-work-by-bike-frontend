@@ -24,8 +24,8 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
 import { date } from 'quasar';
+import { computed, defineComponent } from 'vue';
 
 // types
 import { CardPost as CardPostType } from '../types';
@@ -44,7 +44,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formattedDate = formatDate(new Date(props.card.date), 'D. MMM. YYYY');
+    const formattedDate = computed((): string => {
+      if (!props.card.date || !date.isValid(props.card.date)) {
+        return '';
+      }
+      return formatDate(new Date(props.card.date), 'D. MMM. YYYY');
+    });
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
