@@ -2,23 +2,15 @@
 /**
  * CardLocation Component
  *
- * @description * Use this component to ... .
- * You can adjust its appearance by ... .
+ * @description * Use this component to render location card.
+ * Clicking on the card opens a dialog with location information.
  *
  * @props
- * - `NAME` (TYPE, required): The object representing ... .
- *   It should be of type `TYPE`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
+ * - `card` (CardLocation, required): The object representing the card.
+ *   It should be of type `CardLocation`.
  *
  * @components
- * - `CHILD`: Component to ... .
+ * - `DialogDefault`: Component to render a dialog.
  *
  * @example
  * <card-location :card="card" />
