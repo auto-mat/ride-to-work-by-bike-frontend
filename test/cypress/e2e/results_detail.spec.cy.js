@@ -54,13 +54,22 @@ function coreTests() {
   it('renders page heading section', () => {
     cy.get('@i18n').then((i18n) => {
       // title
-      // TODO: Add results detail heading (breadcrumb variant)
-      cy.dataCy('results-detail-page-title')
+      cy.dataCy('breadcrumb-title');
+      cy.dataCy('breadcrumb-title')
         .should('be.visible')
         .then(($el) => {
           cy.wrap(i18n.global.t('results.titleResults')).then((translation) => {
-            expect($el.text()).to.equal(translation);
+            expect($el.text()).to.contain(translation);
           });
+        });
+      cy.dataCy('breadcrumb-title-current')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('results.titleResultsYou')).then(
+            (translation) => {
+              expect($el.text()).to.contain(translation);
+            },
+          );
         });
     });
   });
