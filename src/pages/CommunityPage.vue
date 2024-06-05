@@ -19,6 +19,12 @@ import CardEvent from '../components/homepage/CardEvent.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 import ListCardPost from 'src/components/homepage/ListCardPost.vue';
 
+// composables
+import { i18n } from 'src/boot/i18n';
+
+// config
+import { routesConf } from 'src/router/routes_conf';
+
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
 import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
@@ -53,8 +59,14 @@ export default defineComponent({
 
     const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
+    const buttonPosts = {
+      title: i18n.global.t('index.cardListPost.button'),
+      // TODO: add route
+      url: routesConf?.blog?.path,
+    };
 
     return {
+      buttonPosts,
       cardsFollow,
       cardsPost,
       city,
@@ -128,10 +140,7 @@ export default defineComponent({
       <list-card-post
         :cards="cardsPost"
         :title="$t('index.cardListPost.title')"
-        :button="{
-          title: $t('index.cardListPost.button'),
-          url: '/blog',
-        }"
+        :button="buttonPosts"
         class="q-pt-xl"
         data-cy="list-card-post"
       />
