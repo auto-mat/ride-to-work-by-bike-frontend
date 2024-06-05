@@ -141,14 +141,12 @@ import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
 
-// types
-import type { CardFollow } from 'src/components/types';
-
 // mocks
 import * as homepage from '../mocks/homepage';
 
 // fixtures
 import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
+import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -174,8 +172,8 @@ export default defineComponent({
   setup() {
     const { challengeStartDate } = rideToWorkByBikeConfig;
 
-    const listCardsFollowImport = listCardsFollow as unknown;
-    const cardsFollow = listCardsFollowImport as CardFollow[];
+    const cardsFollow = listCardsFollow;
+    const cardsPost = listCardsPost;
 
     return {
       badgeList: homepage.badgeList,
@@ -185,7 +183,7 @@ export default defineComponent({
       cardsEvent: homepage.cardsEvent,
       cardsFollow,
       cardsOffer: homepage.cardsOffer,
-      cardsPost: homepage.cardsPost,
+      cardsPost,
       cardsProgress: homepage.cardsProgress,
       cardsProgressSlider: homepage.cardsProgressSlider,
       cardsStats: homepage.cardsStats,
