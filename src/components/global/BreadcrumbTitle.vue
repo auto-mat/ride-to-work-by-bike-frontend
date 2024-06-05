@@ -34,15 +34,19 @@ export default defineComponent({
   setup() {
     const route = useRoute();
 
+    /**
+     * Get the list of breadcrumb pages from the route meta object.
+     * An array of matched routes is returned in route.matched.
+     * First item in the array contains data defined in `routes.ts`.
+     * Meta object is used to store breadcrumbs data.
+     * @returns BreadcrumbPage[]
+     */
     const pages = computed((): BreadcrumbPage[] => {
       // get meta object
-      if (!route?.matched.length || !route.matched[0]?.meta?.breadcrumb) {
+      if (!route?.matched.length || !route.matched[0]?.meta?.breadcrumb)
         return [];
-      }
       const breadcrumb = route.matched[0].meta.breadcrumb;
-      if (!Array.isArray(breadcrumb)) {
-        return [];
-      }
+      if (!Array.isArray(breadcrumb)) return [];
       return breadcrumb;
     });
 
