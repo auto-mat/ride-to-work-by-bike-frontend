@@ -93,37 +93,37 @@ export const cardsEvent: CardEvent[] = [
 export const cardsPost: CardPost[] = [
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },
   {
     title: 'Jak na cyklistiku v zimě? Co všechno se můžeme učit od Finů?',
-    date: new Date(2023, 8, 1),
+    date: '05 October 2011 14:48 UTC',
     image: 'https://picsum.photos/id/70/380/380',
     url: '/blog/1',
   },

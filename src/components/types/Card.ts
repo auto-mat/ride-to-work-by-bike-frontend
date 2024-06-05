@@ -46,7 +46,7 @@ export interface CardPost {
   title: string;
   perex?: string;
   image: string;
-  date: Date;
+  date: string;
   url: string;
 }
 export interface CardProgress {

@@ -44,7 +44,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formattedDate = formatDate(props.card.date, 'D. MMM. YYYY');
+    const formattedDate = formatDate(new Date(props.card.date), 'D. MMM. YYYY');
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {

@@ -17,22 +17,23 @@ import { defineComponent, ref } from 'vue';
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
+import ListCardPost from 'src/components/homepage/ListCardPost.vue';
 
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
+import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
+import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
 import type { CardFollow } from 'src/components/types';
-
-// fixtures
-import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
 
 export default defineComponent({
   name: 'CommunityPage',
   components: {
     CardEvent,
     ListCardFollow,
+    ListCardPost,
   },
   setup() {
     const optionsCity: FormOption[] = [
@@ -54,8 +55,11 @@ export default defineComponent({
     const listCardsFollowImport = listCardsFollow as unknown;
     const cardsFollow = listCardsFollowImport as CardFollow[];
 
+    const cardsPost = listCardsPost;
+
     return {
       cardsFollow,
+      cardsPost,
       city,
       events,
       optionsCity,
@@ -124,7 +128,16 @@ export default defineComponent({
       <!-- TODO: Section Social networks -->
       <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
 
-      <!-- TODO: Section News -->
+      <list-card-post
+        :cards="cardsPost"
+        :title="$t('index.cardListPost.title')"
+        :button="{
+          title: $t('index.cardListPost.button'),
+          url: '/blog',
+        }"
+        class="q-pt-xl"
+        data-cy="list-post"
+      />
 
       <!-- TODO: Section Instagram -->
     </div>
