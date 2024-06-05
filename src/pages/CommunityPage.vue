@@ -26,7 +26,6 @@ import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
-import type { CardFollow } from 'src/components/types';
 
 export default defineComponent({
   name: 'CommunityPage',
@@ -52,9 +51,7 @@ export default defineComponent({
     ];
     const city = ref<string>('');
 
-    const listCardsFollowImport = listCardsFollow as unknown;
-    const cardsFollow = listCardsFollowImport as CardFollow[];
-
+    const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
 
     return {
@@ -136,7 +133,7 @@ export default defineComponent({
           url: '/blog',
         }"
         class="q-pt-xl"
-        data-cy="list-post"
+        data-cy="list-card-post"
       />
 
       <!-- TODO: Section Instagram -->

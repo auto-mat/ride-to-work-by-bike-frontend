@@ -82,4 +82,28 @@ function coreTests() {
       cy.dataCy('local-events-item').should('be.visible').and('have.length', 2);
     });
   });
+
+  it('renders a list of new posts', () => {
+    cy.get('@i18n').then((i18n) => {
+      cy.dataCy('list-card-post').should('be.visible');
+      cy.dataCy('card-list-post-title')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('index.cardListPost.title')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
+      cy.dataCy('card-list-post-button')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(i18n.global.t('index.cardListPost.button')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
+    });
+  });
 }
