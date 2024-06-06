@@ -71,7 +71,7 @@ export default defineComponent({
       </div>
     </section>
     <!-- Section: Apps for manual logging -->
-    <section>
+    <section class="q-mt-md">
       <!-- Title -->
       <section-heading class="q-mb-md" data-cy="routes-apps-title-manual">
         {{ $t('routes.titleManualLogging') }}
@@ -79,13 +79,6 @@ export default defineComponent({
           {{ $t('routes.hintManualLogging') }}
         </template>
       </section-heading>
-      <h2 class="text-h6 text-black" data-cy="routes-apps-title-manual">
-        {{ $t('routes.titleManualLogging') }}
-      </h2>
-      <!-- Hint -->
-      <p class="" data-cy="routes-apps-hint-manual">
-        {{ $t('routes.hintManualLogging') }}
-      </p>
       <div class="flex item-center gap-16" data-cy="routes-apps-buttons">
         <!-- Button: Google Play -->
         <a
