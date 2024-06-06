@@ -16,6 +16,7 @@
  *
  * @components
  * - `CardOffer`: Component to render individual follow cards.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <list-card-offer :cards="followList" />
@@ -28,6 +29,7 @@ import { defineComponent, computed } from 'vue';
 
 // components
 import CardOffer from './CardOffer.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // types
 import { CardOffer as CardOfferType } from '../types';
@@ -36,6 +38,7 @@ export default defineComponent({
   name: 'ListCardOffer',
   components: {
     CardOffer,
+    SectionHeading,
   },
   props: {
     title: {
@@ -69,12 +72,9 @@ export default defineComponent({
 <template>
   <div>
     <!-- Title -->
-    <h2
-      class="text-h6 q-mt-none text-weight-semibold"
-      data-cy="card-list-post-title"
-    >
+    <section-heading class="q-mb-md">
       {{ title }}
-    </h2>
+    </section-heading>
     <!-- Cards grid -->
     <div class="row q-col-gutter-lg q-row-gutter-md" data-cy="list-card-offer">
       <div

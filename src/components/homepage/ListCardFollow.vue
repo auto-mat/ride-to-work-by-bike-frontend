@@ -15,6 +15,7 @@
  *
  * @components
  * - `CardFollow`: Component to render individual follow cards.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <list-card-follow :cards="followList" />
@@ -27,6 +28,7 @@ import { defineComponent } from 'vue';
 
 // components
 import CardFollow from './CardFollow.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // types
 import { CardFollow as CardFollowType } from '../types';
@@ -35,6 +37,7 @@ export default defineComponent({
   name: 'ListCardFollow',
   components: {
     CardFollow,
+    SectionHeading,
   },
   props: {
     cards: {
@@ -49,12 +52,9 @@ export default defineComponent({
   <div class="row q-col-gutter-lg items-center" data-cy="card-list-follow">
     <div class="col-12 col-lg-4" data-cy="card-list-follow-col-title">
       <!-- Title -->
-      <h2
-        class="text-h6 q-mt-none q-mb-none text-regular"
-        data-cy="card-list-follow-title"
-      >
+      <section-heading>
         {{ $t('index.cardListFollow.title') }}
-      </h2>
+      </section-heading>
     </div>
     <!-- List of folow cards -->
     <div

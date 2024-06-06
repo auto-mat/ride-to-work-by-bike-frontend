@@ -9,12 +9,9 @@
       </h1>
       <countdown-event :release-date="releaseDate" data-cy="countdown-event" />
       <!-- Title -->
-      <h2
-        class="text-h6 q-mt-none text-weight-bold q-pt-xl"
-        data-cy="card-list-title"
-      >
+      <section-heading class="q-pt-xl q-mb-md" data-cy="card-list-title">
         {{ $t('index.cardListChallenge.title') }}
-      </h2>
+      </section-heading>
       <section-columns
         :columns="3"
         class="q-col-gutter-lg q-pb-xl"
@@ -139,6 +136,7 @@ import ListCardPost from 'components/homepage/ListCardPost.vue';
 import ListCardProgress from 'components/homepage/ListCardProgress.vue';
 import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
+import SectionHeading from 'src/components/global/SectionHeading.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
 
 // mocks
@@ -157,17 +155,18 @@ export default defineComponent({
     BannerRoutes,
     CardChallenge,
     CardEvent,
+    CardStats,
     CountdownChallenge,
     CountdownEvent,
     HeadingBackground,
     ListCardFollow,
     ListCardOffer,
-    ListCardProgress,
-    SliderProgress,
     ListCardPost,
+    ListCardProgress,
     NewsletterFeature,
     SectionColumns,
-    CardStats,
+    SectionHeading,
+    SliderProgress,
   },
   setup() {
     const { challengeStartDate } = rideToWorkByBikeConfig;

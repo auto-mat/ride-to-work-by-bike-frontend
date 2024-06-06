@@ -23,6 +23,7 @@ import ForumPostList from 'src/components/community/ForumPostList.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 import ListCardPost from 'src/components/homepage/ListCardPost.vue';
 import ListCardSlider from '../components/global/ListCardSlider.vue';
+import SectionHeading from 'src/components/global/SectionHeading.vue';
 
 // composables
 import { i18n } from 'src/boot/i18n';
@@ -48,6 +49,7 @@ export default defineComponent({
     ListCardFollow,
     ListCardPost,
     ListCardSlider,
+    SectionHeading,
   },
   setup() {
     const optionsCity: FormOption[] = [
@@ -125,9 +127,9 @@ export default defineComponent({
 
       <!-- Section: Local events -->
       <div class="q-mt-lg">
-        <h2 class="text-h6 q-my-none" data-cy="local-events-title">
+        <section-heading data-cy="local-events-title">
           {{ $t('community.titleLocalEvents') }}
-        </h2>
+        </section-heading>
         <div data-cy="local-events-list">
           <card-event
             v-for="card in events"

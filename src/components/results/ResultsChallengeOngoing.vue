@@ -13,6 +13,7 @@
  * - `CardProgressSlider`: Component to progress slider card.
  * - `CardStats`: Component to render a stat card.
  * - `SectionColumns`: Component to render content in columns.
+ * - `SectionHeading` Component to render a heading.
  *
  * @example
  * <results-challenge-ongoing />
@@ -30,6 +31,7 @@ import CardProgress from '../homepage/CardProgress.vue';
 import CardProgressSlider from '../homepage/CardProgressSlider.vue';
 import CardStats from '../homepage/CardStats.vue';
 import SectionColumns from '../homepage/SectionColumns.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // mocks
 import {
@@ -48,6 +50,7 @@ export default defineComponent({
     CardProgressSlider,
     CardStats,
     SectionColumns,
+    SectionHeading,
   },
   setup() {
     return {
@@ -65,12 +68,9 @@ export default defineComponent({
     <!-- Section: Current results -->
     <section>
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="current-results-title"
-      >
+      <section-heading data-cy="current-results-title">
         {{ $t('results.titleCurrentResults') }}
-      </h2>
+      </section-heading>
       <!-- Stats: Current results -->
       <section-columns
         :columns="3"
@@ -84,12 +84,9 @@ export default defineComponent({
     <!-- Section: Ongoing challenges -->
     <section class="q-mt-xl">
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="ongoing-challenges-title"
-      >
+      <section-heading data-cy="ongoing-challenges-title">
         {{ $t('results.titleOngoingChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Card: Featured challenge -->
       <div class="q-mt-lg">
         <card-progress-slider :card="cardsProgressSlider[0]" data-cy="card" />
@@ -100,9 +97,9 @@ export default defineComponent({
     <!-- Section: Badges -->
     <section class="q-pt-xl">
       <!-- Title -->
-      <h2 class="text-h6 q-my-none text-weight-bold" data-cy="badges-title">
+      <section-heading data-cy="badges-title">
         {{ $t('results.titleBadges') }}
-      </h2>
+      </section-heading>
       <!-- Button -->
       <section-columns
         :columns="3"
@@ -122,12 +119,9 @@ export default defineComponent({
     <!-- Section: Upcoming challenges -->
     <section class="q-mt-xl">
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="upcoming-challenges-title"
-      >
+      <section-heading data-cy="upcoming-challenges-title">
         {{ $t('results.titleUpcomingChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Cards: Challenge -->
       <section-columns
         :columns="3"
@@ -146,12 +140,9 @@ export default defineComponent({
     <!-- Section: Recent challenges -->
     <section class="q-mt-xl">
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="recent-challenges-title"
-      >
+      <section-heading data-cy="recent-challenges-title">
         {{ $t('results.titleRecentChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Cards: Recent challenge -->
       <section-columns
         :columns="3"
@@ -169,12 +160,9 @@ export default defineComponent({
     <!-- Section: Past challenges -->
     <section class="q-pt-xl">
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="past-challenges-title"
-      >
+      <section-heading data-cy="past-challenges-title">
         {{ $t('results.titlePastChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Button -->
       <div class="q-mt-lg">
         <q-btn

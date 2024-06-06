@@ -10,6 +10,7 @@
  * - `BadgeAchievement`: Component to render a badge.
  * - `CardChallenge`: Component to challenge card.
  * - `SectionColumns`: Component to render content in columns.
+ * - `SectionHeading` Component to render a heading.
  *
  * @example
  * <results-challenge-upcoming />
@@ -24,6 +25,7 @@ import { defineComponent } from 'vue';
 import BadgeAchievement from '../homepage/BadgeAchievement.vue';
 import CardChallenge from '../homepage/CardChallenge.vue';
 import SectionColumns from '../homepage/SectionColumns.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // mocks
 import { badgeList, cardsChallenge } from '../../mocks/homepage';
@@ -34,6 +36,7 @@ export default defineComponent({
     BadgeAchievement,
     CardChallenge,
     SectionColumns,
+    SectionHeading,
   },
   setup() {
     return {
@@ -49,16 +52,13 @@ export default defineComponent({
     <!-- Section: Upcoming challenges -->
     <section>
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="upcoming-challenges-title"
-      >
+      <section-heading class="q-mb-md" data-cy="upcoming-challenges-title">
         {{ $t('results.titleUpcomingChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Cards: Challenge -->
       <section-columns
         :columns="3"
-        class="q-col-gutter-lg q-mt-sm"
+        class="q-col-gutter-lg"
         data-cy="upcoming-challenges"
       >
         <card-challenge
@@ -73,13 +73,13 @@ export default defineComponent({
     <!-- Section: Badges -->
     <section class="q-pt-xl">
       <!-- Title -->
-      <h2 class="text-h6 q-my-none text-weight-bold" data-cy="badges-title">
+      <section-heading class="q-mb-md" data-cy="badges-title">
         {{ $t('results.titleBadges') }}
-      </h2>
+      </section-heading>
       <!-- Badges: Achievement -->
       <section-columns
         :columns="4"
-        class="q-col-gutter-lg q-mt-sm"
+        class="q-col-gutter-lg"
         data-cy="badges-list"
       >
         <badge-achievement
@@ -95,14 +95,11 @@ export default defineComponent({
     <!-- Section: Past challenges -->
     <section class="q-pt-xl">
       <!-- Title -->
-      <h2
-        class="text-h6 q-my-none text-weight-bold"
-        data-cy="past-challenges-title"
-      >
+      <section-heading class="q-mb-md" data-cy="past-challenges-title">
         {{ $t('results.titlePastChallenges') }}
-      </h2>
+      </section-heading>
       <!-- Button -->
-      <div class="q-mt-lg">
+      <div>
         <q-btn
           rounded
           unelevated

@@ -72,7 +72,7 @@ function coreTests() {
         .then(($el) => {
           cy.wrap(i18n.global.t('prizes.titleSpecialOffers')).then(
             (translation) => {
-              expect($el.text()).to.equal(translation);
+              expect($el.text()).to.contain(translation);
             },
           );
         });

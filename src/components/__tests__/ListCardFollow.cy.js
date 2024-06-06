@@ -62,7 +62,7 @@ describe('<ListCardFollow>', () => {
 function coreTests() {
   it('renders title', () => {
     cy.window().then(() => {
-      cy.dataCy('card-list-follow-title')
+      cy.dataCy('section-heading-title')
         .should('have.css', 'font-size', '20px')
         .and('have.css', 'font-weight', '500')
         .and('have.color', black)

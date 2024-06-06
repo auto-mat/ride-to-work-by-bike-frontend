@@ -60,11 +60,12 @@ function coreTests() {
       // component
       cy.dataCy('list-card-slider').should('be.visible');
       // title
-      cy.dataCy('list-card-slider-title')
+      cy.dataCy('list-card-slider-title').should('be.visible');
+      cy.dataCy('section-heading-title')
         .should('be.visible')
         .and('contain', listResultsPrizes.title);
       // perex
-      cy.dataCy('list-card-slider-perex')
+      cy.dataCy('section-heading-perex')
         .should('be.visible')
         .and('contain', listResultsPrizes.perex);
       // swiper

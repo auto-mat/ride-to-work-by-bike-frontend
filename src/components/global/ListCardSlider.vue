@@ -19,6 +19,7 @@
  *
  * @components
  * - `CardPost`: Component to render individual post cards.
+ * - `SectionHeading`: Component to render section heading.
  *
  * @example
  * <list-card-slider
@@ -39,6 +40,7 @@ import { Screen } from 'quasar';
 import CardPost from '../homepage/CardPost.vue';
 import CardLocation from './CardLocation.vue';
 import CardPrize from './CardPrize.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // types
 import {
@@ -54,6 +56,7 @@ export default defineComponent({
     CardLocation,
     CardPost,
     CardPrize,
+    SectionHeading,
   },
   props: {
     title: {
@@ -105,15 +108,12 @@ export default defineComponent({
 <template>
   <div class="relative-position slider" data-cy="list-card-slider">
     <!-- Title -->
-    <h2
-      class="text-h6 q-mt-none text-weight-semibold"
-      data-cy="list-card-slider-title"
-    >
+    <section-heading class="q-mb-md" data-cy="list-card-slider-title">
       {{ title }}
-    </h2>
-    <div v-if="perex" class="q-my-md" data-cy="list-card-slider-perex">
-      <p>{{ perex }}</p>
-    </div>
+      <template #perex>
+        {{ perex }}
+      </template>
+    </section-heading>
     <!-- Swiper for cards -->
     <swiper-container
       :navigation="true"
