@@ -17,6 +17,7 @@
  *
  * @components
  * - `CardPost`: Component to render individual post cards.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <list-card-post
@@ -34,6 +35,7 @@ import { Screen } from 'quasar';
 
 // components
 import CardPost from './CardPost.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // types
 import { CardPost as CardPostType, Link } from '../types';
@@ -42,6 +44,7 @@ export default defineComponent({
   name: 'ListCardPost',
   components: {
     CardPost,
+    SectionHeading,
   },
   props: {
     title: {
@@ -76,12 +79,9 @@ export default defineComponent({
 <template>
   <div class="relative-position" data-cy="card-list-post">
     <!-- Title -->
-    <h2
-      class="text-h6 q-mt-none text-weight-semibold"
-      data-cy="card-list-post-title"
-    >
+    <section-heading class="q-mb-md">
       {{ title }}
-    </h2>
+    </section-heading>
     <!-- Swiper for news cards -->
     <swiper-container
       :navigation="true"

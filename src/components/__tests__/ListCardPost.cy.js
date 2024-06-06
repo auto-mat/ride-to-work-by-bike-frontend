@@ -126,7 +126,7 @@ describe('<ListCardPost>', () => {
 
 function coreTests() {
   it('renders title', () => {
-    cy.dataCy('card-list-post-title')
+    cy.dataCy('section-heading-title')
       .should('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)

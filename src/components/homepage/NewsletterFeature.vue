@@ -12,6 +12,7 @@
  *
  * @components
  * - `NewsletterItem`: Component to render individual newsletter details.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <newsletter-feature />
@@ -27,11 +28,13 @@ import { newsletterItems } from '../../mocks/homepage';
 
 // components
 import NewsletterItem from './NewsletterItem.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 export default defineComponent({
   name: 'NewsletterFeature',
   components: {
     NewsletterItem,
+    SectionHeading,
   },
   setup() {
     return {
@@ -64,15 +67,12 @@ export default defineComponent({
     <!-- Section content -->
     <div class="col-12 col-md-9 col-lg-10" data-cy="newsletter-col-content">
       <!-- Title -->
-      <h2 class="q-mb-md q-mt-none text-h6" data-cy="newsletter-feature-title">
+      <section-heading class="q-mb-md">
         {{ $t('index.newsletterFeature.title') }}
-      </h2>
-      <!-- Description -->
-      <p
-        class="q-my-md"
-        v-html="$t('index.newsletterFeature.description')"
-        data-cy="newsletter-feature-description"
-      ></p>
+        <template #perex>
+          {{ $t('index.newsletterFeature.description') }}
+        </template>
+      </section-heading>
       <div v-for="(item, index) in newsletterItems" :key="item.title">
         <!-- Item - subscription variant -->
         <newsletter-item :item="item" data-cy="newsletter-feature-item" />

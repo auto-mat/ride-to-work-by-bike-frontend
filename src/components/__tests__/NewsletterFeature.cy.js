@@ -32,13 +32,13 @@ describe('<NewsletterFeature>', () => {
 
     it('renders title', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-title')
+        cy.dataCy('section-heading-title')
           .should('have.css', 'font-size', '20px')
           .and('have.css', 'font-weight', '500')
           .and('have.color', black)
           .and('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(
+            expect($title.text()).to.contain(
               i18n.global.t('index.newsletterFeature.title'),
             );
           });
@@ -47,13 +47,13 @@ describe('<NewsletterFeature>', () => {
 
     it('renders description', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-description')
+        cy.dataCy('section-heading-perex')
           .should('have.css', 'font-size', '14px')
           .and('have.css', 'font-weight', '400')
           .and('have.color', black)
           .and('contain', i18n.global.t('index.newsletterFeature.description'))
           .then(($title) => {
-            expect($title.text()).to.equal(
+            expect($title.text()).to.contain(
               i18n.global.t('index.newsletterFeature.description'),
             );
           });
@@ -114,13 +114,13 @@ describe('<NewsletterFeature>', () => {
 
     it('renders title', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-title')
+        cy.dataCy('section-heading-title')
           .should('have.css', 'font-size', '20px')
           .and('have.css', 'font-weight', '500')
           .and('have.color', black)
           .and('contain', i18n.global.t('index.newsletterFeature.title'))
           .then(($title) => {
-            expect($title.text()).to.equal(
+            expect($title.text()).to.contain(
               i18n.global.t('index.newsletterFeature.title'),
             );
           });
@@ -129,13 +129,13 @@ describe('<NewsletterFeature>', () => {
 
     it('renders description', () => {
       cy.window().then(() => {
-        cy.dataCy('newsletter-feature-description')
+        cy.dataCy('section-heading-perex')
           .should('have.css', 'font-size', '14px')
           .and('have.css', 'font-weight', '400')
           .and('have.color', black)
           .and('contain', i18n.global.t('index.newsletterFeature.description'))
           .then(($title) => {
-            expect($title.text()).to.equal(
+            expect($title.text()).to.contain(
               i18n.global.t('index.newsletterFeature.description'),
             );
           });

@@ -20,6 +20,7 @@
  *
  * @components
  * - `CardProgress`: Component to render individual progress cards.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <list-card-progress
@@ -44,6 +45,7 @@ import {
 
 // components
 import CardProgress from './CardProgress.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 export default defineComponent({
   name: 'ListCardProgress',
@@ -66,6 +68,7 @@ export default defineComponent({
   },
   components: {
     CardProgress,
+    SectionHeading,
   },
 });
 </script>
@@ -76,9 +79,9 @@ export default defineComponent({
   <div>
     <div class="row q-col-gutter-lg" data-cy="card-list-progress">
       <!-- Title -->
-      <h2 class="col-sm-5 text-h6" data-cy="card-list-progress-title">
+      <section-heading class="col-sm-5" data-cy="card-list-progress-title">
         {{ title }}
-      </h2>
+      </section-heading>
       <!-- List of statistics -->
       <q-list
         class="col-sm-7 flex flex-wrap items-center justify-end q-pr-md gap-x-40"
