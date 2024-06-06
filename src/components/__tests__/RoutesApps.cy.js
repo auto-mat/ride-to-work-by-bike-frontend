@@ -51,14 +51,16 @@ function coreTests() {
     // component
     cy.dataCy('routes-apps').should('be.visible');
     // title automatic
-    cy.dataCy('section-heading-title')
+    cy.dataCy('routes-apps-title-auto')
+      .find('[data-cy="section-heading-title"]')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleAutomaticLogging'));
     // hint automatic
-    cy.dataCy('section-heading-perex')
+    cy.dataCy('routes-apps-title-auto')
+      .find('[data-cy="section-heading-perex"]')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
@@ -69,13 +71,15 @@ function coreTests() {
       .should('have.length', 3);
     // title manual
     cy.dataCy('routes-apps-title-manual')
+      .find('[data-cy="section-heading-title"]')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleManualLogging'));
     // hint manual
-    cy.dataCy('routes-apps-hint-manual')
+    cy.dataCy('routes-apps-title-manual')
+      .find('[data-cy="section-heading-perex"]')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')

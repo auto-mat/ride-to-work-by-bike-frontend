@@ -54,7 +54,7 @@ export default defineComponent({
     <!-- Section: Apps for automatic logging -->
     <section>
       <!-- Title -->
-      <section-heading class="q-mb-md">
+      <section-heading class="q-mb-md" data-cy="routes-apps-title-auto">
         {{ $t('routes.titleAutomaticLogging') }}
         <template #perex>
           {{ $t('routes.hintAutomaticLogging') }}
@@ -73,6 +73,12 @@ export default defineComponent({
     <!-- Section: Apps for manual logging -->
     <section>
       <!-- Title -->
+      <section-heading class="q-mb-md" data-cy="routes-apps-title-manual">
+        {{ $t('routes.titleManualLogging') }}
+        <template #perex>
+          {{ $t('routes.hintManualLogging') }}
+        </template>
+      </section-heading>
       <h2 class="text-h6 text-black" data-cy="routes-apps-title-manual">
         {{ $t('routes.titleManualLogging') }}
       </h2>
