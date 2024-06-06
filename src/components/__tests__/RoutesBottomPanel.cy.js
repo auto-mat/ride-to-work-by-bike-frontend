@@ -38,7 +38,7 @@ describe('<RoutesBottomPanel>', () => {
 
     it('renders title', () => {
       // title visible
-      cy.dataCy('bottom-panel-title')
+      cy.dataCy('section-heading-title')
         .should('be.visible')
         .and('have.css', 'font-size', '20px')
         .and('have.css', 'font-weight', '500')
@@ -84,7 +84,7 @@ function coreTests() {
 function singleRouteTests() {
   it('renders title', () => {
     // title visible
-    cy.dataCy('bottom-panel-title')
+    cy.dataCy('section-heading-title')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')

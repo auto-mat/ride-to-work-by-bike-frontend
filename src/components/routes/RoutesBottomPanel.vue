@@ -12,6 +12,7 @@
  *
  * @components
  * - `RouteItemEdit`: Component to display an editable route.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <routes-bottom-panel></routes-bottom-panel>
@@ -25,6 +26,7 @@ import { Screen } from 'quasar';
 
 // components
 import RouteItemEdit from './RouteItemEdit.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // fixtures
 import routeList from '../../../test/cypress/fixtures/routeList.json';
@@ -36,6 +38,7 @@ export default defineComponent({
   name: 'RoutesBottomPanel',
   components: {
     RouteItemEdit,
+    SectionHeading,
   },
   props: {
     isOpen: {
@@ -84,14 +87,11 @@ export default defineComponent({
       <!-- Section: Header -->
       <div class="row justify-between">
         <!-- Title -->
-        <h2
-          class="q-my-none text-h6 font-weight-normal"
-          data-cy="bottom-panel-title"
-        >
+        <section-heading>
           {{
             $tc('routes.titleBottomPanel', routeCount, { count: routeCount })
           }}
-        </h2>
+        </section-heading>
         <!-- Button: Close -->
         <q-btn
           dense
