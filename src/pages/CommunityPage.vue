@@ -6,6 +6,9 @@
  *
  * @components
  * - `CardEvent`: Card with event information.
+ * - `ForumPostList`: List of forum posts.
+ * - `ListCardFollow`: List of cards social networks profiles.
+ * - `ListCardPost`: List of cards with news posts.
  *
  * @layout
  * - `MainLayout`: Default layout with sidebar on desktop.
@@ -16,6 +19,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
+import ForumPostList from 'src/components/community/ForumPostList.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
 import ListCardPost from 'src/components/homepage/ListCardPost.vue';
 
@@ -37,6 +41,7 @@ export default defineComponent({
   name: 'CommunityPage',
   components: {
     CardEvent,
+    ForumPostList,
     ListCardFollow,
     ListCardPost,
   },
@@ -130,11 +135,12 @@ export default defineComponent({
         <!-- TODO: Section: Past events -->
       </div>
 
-      <!-- TODO: Section Forum -->
+      <!-- Section: Forum -->
+      <forum-post-list class="q-mt-xl" data-cy="forum-post-list" />
 
       <!-- TODO: Section Locations -->
 
-      <!-- TODO: Section Social networks -->
+      <!-- Section: Social networks -->
       <list-card-follow :cards="cardsFollow" class="q-pt-xl" />
 
       <list-card-post

@@ -67,6 +67,10 @@ function coreTests() {
     });
   });
 
+  it('renders a list of forum posts', () => {
+    cy.dataCy('forum-post-list').should('be.visible');
+  });
+
   it('renders a list of local events', () => {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy('local-events-title')
