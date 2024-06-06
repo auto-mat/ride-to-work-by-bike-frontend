@@ -19,6 +19,7 @@
  *
  * @components
  * - `CardProgressSlider`: Component to render individual progress cards.
+ * - `SectionHeading`: Component to render a heading.
  *
  * @example
  * <slider-progress
@@ -37,6 +38,7 @@ import { Screen } from 'quasar';
 
 // components
 import CardProgressSlider from './CardProgressSlider.vue';
+import SectionHeading from '../global/SectionHeading.vue';
 
 // types
 import { CardProgress, Link, ItemStatistics } from '../types';
@@ -45,6 +47,7 @@ export default defineComponent({
   name: 'SliderProgress',
   components: {
     CardProgressSlider,
+    SectionHeading,
   },
   props: {
     title: {
@@ -83,9 +86,9 @@ export default defineComponent({
   <div class="progress-slider relative-position" data-cy="progress-slider">
     <div class="row q-col-gutter-lg">
       <!-- Title -->
-      <h2 class="col-sm-5 text-h6 q-my-none" data-cy="progress-slider-title">
+      <section-heading class="col-sm-5">
         {{ title }}
-      </h2>
+      </section-heading>
       <!-- List of statistics -->
       <q-list
         class="col-sm-7 flex flex-wrap items-center justify-end q-pr-md gap-x-40"

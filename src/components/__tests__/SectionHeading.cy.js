@@ -14,7 +14,7 @@ describe('<SectionHeading>', () => {
       cy.mount(SectionHeading, {
         props: {},
         slots: {
-          title: {
+          default: {
             render: () => title,
           },
           perex: {
