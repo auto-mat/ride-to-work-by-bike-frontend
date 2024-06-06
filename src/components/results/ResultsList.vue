@@ -5,6 +5,9 @@
  * @description * Use this component to render set of results with title
  * and share link.
  *
+ * @components
+ * - `SectionHeading`: Component to render a heading.
+ *
  * @example
  * <results-list :results="results" />
  *
@@ -14,6 +17,9 @@
 // libraries
 import { date } from 'quasar';
 import { defineComponent } from 'vue';
+
+// components
+import SectionHeading from '../global/SectionHeading.vue';
 
 // composables
 import { i18n } from 'src/boot/i18n';
@@ -25,6 +31,9 @@ const { formatDate } = date;
 
 export default defineComponent({
   name: 'ResultsList',
+  components: {
+    SectionHeading,
+  },
   setup() {
     const date = new Date('Ocotober 17, 2024 13:00:00');
     const dateChallengeStart = formatDate(date, 'D. MMM. YYYY');
@@ -63,9 +72,9 @@ export default defineComponent({
     <!-- Section: Top -->
     <div class="row items-center gap-4 justify-between">
       <!-- Title -->
-      <h2 class="col-12 col-sm text-h6" data-cy="results-list-title">
+      <section-heading>
         {{ $t('results.titleYourResultsSince', { date: dateChallengeStart }) }}
-      </h2>
+      </section-heading>
       <!-- Button: Share -->
       <div class="col col-sm-auto text-right">
         <q-btn

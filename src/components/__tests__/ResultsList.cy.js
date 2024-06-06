@@ -46,7 +46,7 @@ function coreTests() {
     // component
     cy.dataCy('results-list').should('be.visible');
     // title
-    cy.dataCy('results-list-title')
+    cy.dataCy('section-heading-title')
       .should('be.visible')
       .and('contain', i18n.global.t('results.titleYourResultsSince'));
     // button
