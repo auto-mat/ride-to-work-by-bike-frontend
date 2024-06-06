@@ -51,14 +51,14 @@ function coreTests() {
     // component
     cy.dataCy('routes-apps').should('be.visible');
     // title automatic
-    cy.dataCy('routes-apps-title-automatic')
+    cy.dataCy('section-heading-title')
       .should('be.visible')
       .and('have.css', 'font-size', '20px')
       .and('have.css', 'font-weight', '500')
       .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleAutomaticLogging'));
     // hint automatic
-    cy.dataCy('routes-apps-hint-automatic')
+    cy.dataCy('section-heading-perex')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
