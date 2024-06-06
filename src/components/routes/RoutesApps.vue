@@ -50,7 +50,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="routes-apps">
+  <div data-cy="routes-apps" class="q-my-xl">
     <!-- Section: Apps for automatic logging -->
     <section>
       <!-- Title -->
