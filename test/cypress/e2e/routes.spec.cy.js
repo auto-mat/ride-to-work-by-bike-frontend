@@ -31,7 +31,7 @@ describe('Routes page', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.visit('#' + routesConf['routes']['path']);
+      cy.visit('#' + routesConf['routes_calendar']['path']);
       cy.viewport('iphone-6');
 
       // load config an i18n objects as aliases
