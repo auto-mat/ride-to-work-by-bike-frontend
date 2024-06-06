@@ -94,7 +94,8 @@ function coreTests() {
   it('renders a list of new posts', () => {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy('list-card-post').should('be.visible');
-      cy.dataCy('card-list-post-title')
+      cy.dataCy('list-card-post')
+        .find('[data-cy="section-heading-title"]')
         .should('be.visible')
         .then(($el) => {
           cy.wrap(i18n.global.t('index.cardListPost.title')).then(
