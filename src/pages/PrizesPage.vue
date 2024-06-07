@@ -16,19 +16,22 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
+import CardPrize from 'src/components/global/CardPrize.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 
 // fixtures
 import listCardsPrizes from '../../test/cypress/fixtures/listCardsPrizes.json';
+import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
 import type { FormOption } from '../components/types/Form';
-import { CardOffer as CardOfferType } from '../components/types';
+import { CardOffer as CardOfferType, CardPrizeType } from '../components/types';
 
 export default defineComponent({
   name: 'PrizesPage',
   components: {
     CardOffer,
+    CardPrize,
     SectionColumns,
   },
   setup() {
@@ -50,10 +53,13 @@ export default defineComponent({
 
     const prizes = listCardsPrizes as unknown;
     const prizesList = prizes as CardOfferType[];
+    const prizesListAvailable =
+      listCardsPrizesAvailable.cards as CardPrizeType[];
 
     return {
       city,
       prizesList,
+      prizesListAvailable,
       optionsCity,
     };
   },
@@ -116,6 +122,21 @@ export default defineComponent({
       </div>
 
       <!-- TODO: Section Prizes -->
+      <section class="q-mt-lg">
+        <!-- TODO: Replace with section-heading -->
+        <h2>{{ $t('prizes.titleAvailablePrizes') }}</h2>
+        <p>{{ $t('prizes.textAvailablePrizes') }}</p>
+
+        <div class="q-mt-lg">
+          <section-columns :columns="4" class="q-col-gutter-lg">
+            <card-prize
+              v-for="(card, index) in prizesListAvailable"
+              :key="`card-${index}-${card.title}`"
+              :card="card"
+            />
+          </section-columns>
+        </div>
+      </section>
 
       <!-- TODO: Section Partners -->
     </div>
