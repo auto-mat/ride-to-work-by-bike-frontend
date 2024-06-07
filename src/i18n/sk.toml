@@ -56,7 +56,9 @@ sk = "Slovenčina"
 en = "Angličtina"
 
 [prizes]
+textAvailablePrizes = "Tímy, ktoré získajú cenu, budú vyžrebované z tímov, ktoré dosiahli celkovú pravidelnosť viac ako 60 %."
 textSpecialOffers = "Upozorňujeme na obdobie platnosti ponúk. Niektoré sú platné niekoľko dní, iné vypršia v deň ukončenia hovoru a ďalšie po ukončení hovoru."
+titleAvailablePrizes = "Možné ceny pre <a href='{url}'>Pravidelnosť tímu</a>"
 titlePrizes = "Zľavy a výhry"
 titleSpecialOffers = "Špeciálne ponuky"
 

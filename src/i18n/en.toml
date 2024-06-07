@@ -56,7 +56,9 @@ sk = "Slovak"
 en = "English"
 
 [prizes]
+textAvailablePrizes = "The teams that will receive the prize will be drawn from the teams that have achieved an overall regularity of more than 60%."
 textSpecialOffers = "Please note the validity period of the offers. Some are valid for a few days, others expire on the day the call ends, and others expire after the call."
+titleAvailablePrizes = "Prizes available for the <a href='{url}'>Team Regularity Challenge</a>"
 titlePrizes = "Discounts and offers"
 titleSpecialOffers = "Special offers"
 

@@ -82,4 +82,33 @@ function coreTests() {
         .and('have.length', 7);
     });
   });
+
+  it('renders a list of available prizes', () => {
+    cy.get('@i18n').then((i18n) => {
+      cy.dataCy('available-prizes')
+        .find('[data-cy="section-heading-title"]')
+        .should('be.visible')
+        .then(($el) => {
+          cy.stripHtmlTags(i18n.global.t('prizes.titleAvailablePrizes')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
+      cy.dataCy('available-prizes')
+        .find('[data-cy="section-heading-perex"]')
+        .should('be.visible')
+        .then(($el) => {
+          cy.stripHtmlTags(i18n.global.t('prizes.textAvailablePrizes')).then(
+            (translation) => {
+              expect($el.text()).to.equal(translation);
+            },
+          );
+        });
+      cy.dataCy('available-prizes-list').should('be.visible');
+      cy.dataCy('available-prizes-item')
+        .should('be.visible')
+        .and('have.length', 5);
+    });
+  });
 }

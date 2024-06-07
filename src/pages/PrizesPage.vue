@@ -121,18 +121,26 @@ export default defineComponent({
         </div>
       </div>
 
-      <!-- TODO: Section Prizes -->
-      <section class="q-mt-lg">
+      <!-- Section: Available prizes -->
+      <section class="q-mt-lg" data-cy="available-prizes">
         <!-- TODO: Replace with section-heading -->
-        <h2>{{ $t('prizes.titleAvailablePrizes') }}</h2>
-        <p>{{ $t('prizes.textAvailablePrizes') }}</p>
-
+        <h2 class="text-h6 q-my-none" data-cy="section-heading-title">
+          <span v-html="$t('prizes.titleAvailablePrizes', { url: '#' })" />
+        </h2>
+        <div class="q-mt-sm" data-cy="section-heading-perex">
+          <span v-html="$t('prizes.textAvailablePrizes')" />
+        </div>
         <div class="q-mt-lg">
-          <section-columns :columns="4" class="q-col-gutter-lg">
+          <section-columns
+            :columns="4"
+            class="q-col-gutter-lg"
+            data-cy="available-prizes-list"
+          >
             <card-prize
               v-for="(card, index) in prizesListAvailable"
               :key="`card-${index}-${card.title}`"
               :card="card"
+              data-cy="available-prizes-item"
             />
           </section-columns>
         </div>
