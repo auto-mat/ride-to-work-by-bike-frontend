@@ -62,7 +62,7 @@ export default defineComponent({
     v-ripple
     flat
     bordered
-    class="bg-white cursor-pointer q-hoverable"
+    class="full-height bg-white cursor-pointer q-hoverable"
     :style="{ 'border-radius': borderRadius, 'max-width': `${cardMaxWidth}px` }"
     data-cy="card-prize"
     @click.prevent="modalOpened = true"
