@@ -44,7 +44,7 @@ export default defineComponent({
         <div>
           <h1
             class="text-h5 q-my-none text-weight-bold"
-            data-cy="community-page-title"
+            data-cy="company-coordinator-title"
           >
             {{ $t('companyCoordinator.titleBecomeCoordinator') }}
           </h1>
@@ -57,10 +57,20 @@ export default defineComponent({
           <div
             class="q-mt-lg"
             v-html="$t('companyCoordinator.textBecomeCoordinator')"
+            data-cy="company-coordinator-text"
           />
           <div class="q-mt-lg">
             <!-- TODO: Form apply -->
           </div>
+        </div>
+        <div class="col-lg-4">
+          <q-icon
+            name="mdi-account-box-outline"
+            size="180px"
+            color="grey-5"
+            class="q-mx-auto"
+            data-cy="company-coordinator-icon"
+          />
         </div>
       </div>
     </div>

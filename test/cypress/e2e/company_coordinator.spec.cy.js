@@ -31,7 +31,7 @@ describe('Company coordinator page', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.visit('#' + routesConf['community']['path']);
+      cy.visit('#' + routesConf['company_coordinator']['path']);
       cy.viewport('iphone-6');
 
       // load config an i18n objects as aliases
@@ -50,4 +50,31 @@ describe('Company coordinator page', () => {
   });
 });
 
-function coreTests() {}
+function coreTests() {
+  it('renders title and description with icon', () => {
+    cy.get('@i18n').then((i18n) => {
+      // title
+      cy.dataCy('company-coordinator-title')
+        .should('be.visible')
+        .then(($el) => {
+          cy.wrap(
+            i18n.global.t('companyCoordinator.titleBecomeCoordinator'),
+          ).then((translation) => {
+            expect($el.text()).to.eq(translation);
+          });
+        });
+      // text
+      cy.dataCy('company-coordinator-text')
+        .should('be.visible')
+        .then(($el) => {
+          cy.stripHtmlTags(
+            i18n.global.t('companyCoordinator.textBecomeCoordinator'),
+          ).then((translation) => {
+            expect($el.text()).to.eq(translation);
+          });
+        });
+      // image
+      cy.dataCy('company-coordinator-icon').should('be.visible');
+    });
+  });
+}
