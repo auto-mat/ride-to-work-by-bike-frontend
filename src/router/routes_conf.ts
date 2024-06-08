@@ -14,6 +14,12 @@ const routesConf: RoutesConf = {
       name: 'community',
     },
   },
+  company_coordinator: {
+    path: '/company-coordinator',
+    children: {
+      name: 'company-coordinator',
+    },
+  },
   home: {
     path: '/',
     children: {

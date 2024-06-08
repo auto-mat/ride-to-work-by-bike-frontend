@@ -37,7 +37,7 @@ export const menuTop: Link[] = [
     name: 'discounts',
   },
   {
-    url: '/firemni-koordinator',
+    url: '/company-coordinator',
     icon: 'business',
     name: 'coordinator',
   },
