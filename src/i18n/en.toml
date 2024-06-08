@@ -53,6 +53,7 @@ titleLocalEvents = "Local events"
 titleLocations = "Points of interest along your way"
 
 [companyCoordinator]
+textBecomeCoordinator = "<p>Your organization <b>Car mat</b> has no coordinator yet. You can become one!</p><p>As coordinator you will be responsible for:</p><ul><li>Ask your employer to pay the entry fee.</li><li>Distribute start packages to participants.</li><li>List any internal challenges.</li><li>Approve payments for your employees on an ongoing basis and then generate an invoice.</li></ul><p>You will also have access to the Ride to Work by Bike system, where you will find information about your organisation's participation and results, including teams and individual participants.</p><p><b>You won't register participants yourself, you can just ask them to sign up.</b></p>"
 titleBecomeCoordinator = "Become a company coordinator"
 
 [language]

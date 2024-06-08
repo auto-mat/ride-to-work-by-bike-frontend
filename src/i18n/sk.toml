@@ -53,6 +53,7 @@ titleLocalEvents = "Miestne udalosti"
 titleLocations = "Zaujímavosti v blízkosti vašej cesty"
 
 [companyCoordinator]
+textBecomeCoordinator = "<p>Vaša organizácia <b>Autový mat</b> zatiaľ nemá žiadneho koordinátora. Môžete sa ním stať!</p><p>Ako koordinátor budete zodpovedný za:</p><ul><li>Požiadajte svojho zamestnávateľa o zaplatenie vstupného poplatku.</li><li>Rozdajte účastníkom štartovacie balíčky.</li><li>Uveďte všetky interné výzvy.</li><li>Priebežne schvaľujte platby pre svojich zamestnancov a následne generujte faktúru.</li></ul><p>Získate tiež prístup do systému Do práce na bicykli, kde nájdete informácie o účasti a výsledkoch vašej organizácie vrátane tímov a jednotlivých účastníkov.</p><p><b>Účastníkov nebudete registrovať sami, môžete ich len požiadať, aby sa zaregistrovali.</b></p>"
 titleBecomeCoordinator = "Staňte sa firemným koordinátorom"
 
 [language]

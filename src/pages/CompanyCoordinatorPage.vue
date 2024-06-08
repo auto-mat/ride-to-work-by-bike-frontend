@@ -51,9 +51,18 @@ export default defineComponent({
         </div>
       </div>
 
-      <!-- TODO: Section description -->
-
-      <!-- TODO: Form apply -->
+      <div class="row q-col-gutter-lg">
+        <div class="col-lg-8">
+          <!-- Section: description -->
+          <div
+            class="q-mt-lg"
+            v-html="$t('companyCoordinator.textBecomeCoordinator')"
+          />
+          <div class="q-mt-lg">
+            <!-- TODO: Form apply -->
+          </div>
+        </div>
+      </div>
     </div>
   </q-page>
 </template>
