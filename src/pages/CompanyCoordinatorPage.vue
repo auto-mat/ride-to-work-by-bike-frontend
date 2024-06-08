@@ -4,8 +4,6 @@
  *
  * The `CompanyCoordinatorPage` displays information about community events.
  *
- * @components
- *
  * @layout
  * - `MainLayout`: Default layout with sidebar on desktop.
  *
@@ -14,17 +12,6 @@
 
 // libraries
 import { defineComponent } from 'vue';
-
-// components
-
-// // composables
-// import { i18n } from '../boot/i18n';
-
-// // config
-// import { routesConf } from '../router/routes_conf';
-
-// // types
-// import type { FormOption } from '../components/types/Form';
 
 export default defineComponent({
   name: 'CompanyCoordinatorPage',
@@ -38,6 +25,7 @@ export default defineComponent({
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
     <div class="q-px-lg bg-white q-pb-xl q-pt-lg">
+      <!-- TODO: If dependant of challenge or user state, refactor to a component -->
       <!-- Section title -->
       <div class="col-12 flex flex-wrap items-center justify-between gap-16">
         <!-- Page title -->
