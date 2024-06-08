@@ -9,8 +9,10 @@
  * @layout
  * - `MainLayout`: Default layout with sidebar on desktop.
  *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104327&t=ZZSrUuLgRLYixhUu-1)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-105730&t=DGufCIdIJs2I0lEM-1)
  */
+
+// libraries
 import { defineComponent } from 'vue';
 
 // components

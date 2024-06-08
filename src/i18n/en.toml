@@ -52,6 +52,9 @@ titleCommunity = "Community"
 titleLocalEvents = "Local events"
 titleLocations = "Points of interest along your way"
 
+[companyCoordinator]
+titleBecomeCoordinator = "Become a company coordinator"
+
 [language]
 cs = "Czech"
 sk = "Slovak"

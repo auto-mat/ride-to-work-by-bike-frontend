@@ -52,6 +52,9 @@ titleCommunity = "Komunita"
 titleLocalEvents = "Místní události"
 titleLocations = "Zajímavosti poblíž vaší cesty"
 
+[companyCoordinator]
+titleBecomeCoordinator = "Stát se firemní*m koordinátorem*kou"
+
 [language]
 cs = "Čeština"
 sk = "Slovenština"
