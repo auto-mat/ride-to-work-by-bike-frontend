@@ -48,16 +48,16 @@ export default defineComponent({
     const terms = ref(false);
 
     const { isPhone } = useValidation();
-    const formInviteRef = ref<typeof QForm | null>(null);
+    const formCoordinatorApplicationRef = ref<typeof QForm | null>(null);
     const onSubmit = () => {
-      formInviteRef.value?.validate();
+      formCoordinatorApplicationRef.value?.validate();
     };
 
     const { challengeMonth } = rideToWorkByBikeConfig;
 
     return {
       challengeMonth,
-      formInviteRef,
+      formCoordinatorApplicationRef,
       phone,
       position,
       responsibility,
@@ -71,7 +71,7 @@ export default defineComponent({
 
 <template>
   <q-form
-    ref="formCoordinatorApplication"
+    ref="formCoordinatorApplicationRef"
     data-cy="form-coordinator-application"
   >
     <div class="row q-col-gutter-md">
@@ -93,62 +93,78 @@ export default defineComponent({
         />
       </div>
       <div class="col-12">
-        <q-checkbox
+        <q-field
           dense
-          id="form-coordinator-terms"
-          v-model="responsibility"
-          color="primary"
-          :true-value="true"
-          :false-value="false"
-          rules="required"
-          class="text-grey-10"
-          data-cy="form-responsibility-input"
+          borderless
+          hide-bottom-space
+          :model-value="responsibility"
+          :rules="[(val) => !!val || $t('form.messageResponsibilityRequired')]"
         >
-          <!-- Default slot: label -->
-          <span>
-            {{ $t('form.labelCoordinatorResponsibility') }}
-          </span>
-        </q-checkbox>
+          <q-checkbox
+            dense
+            id="form-coordinator-terms"
+            v-model="responsibility"
+            color="primary"
+            :true-value="true"
+            :false-value="false"
+            rules="required"
+            class="text-grey-10"
+            data-cy="form-responsibility-input"
+          >
+            <!-- Default slot: label -->
+            <span>
+              {{ $t('form.labelCoordinatorResponsibility') }}
+            </span>
+          </q-checkbox>
+        </q-field>
       </div>
       <div class="col-12">
-        <q-checkbox
+        <q-field
           dense
-          id="form-coordinator-terms"
-          v-model="terms"
-          color="primary"
-          :true-value="true"
-          :false-value="false"
-          rules="required"
-          class="text-grey-10"
-          data-cy="form-terms-input"
+          borderless
+          hide-bottom-space
+          :model-value="terms"
+          :rules="[(val) => !!val || $t('form.messageTermsRequired')]"
         >
-          <!-- Link: consent -->
-          <span>
-            {{ $t('form.labelPrivacyConsent') }}
-            <!-- TODO: Link to privacy consent page -->
-            <a
-              href="#"
-              target="_blank"
-              class="text-primary"
-              @click.stop
-              data-cy="form-terms-link"
-              >{{ $t('form.linkPrivacyConsent') }}</a
-            >
-          </span>
-          {{ $t('global.and') }}
-          <!-- Link: terms -->
-          <span>
-            <!-- TODO: Link to terms page -->
-            <a
-              href="#"
-              target="_blank"
-              class="text-primary"
-              @click.stop
-              data-cy="form-terms-link"
-              >{{ $t(`form.labelTermsChallenge.${challengeMonth}`) }}</a
-            >.
-          </span>
-        </q-checkbox>
+          <q-checkbox
+            dense
+            id="form-coordinator-terms"
+            v-model="terms"
+            color="primary"
+            :true-value="true"
+            :false-value="false"
+            rules="required"
+            class="text-grey-10"
+            data-cy="form-terms-input"
+          >
+            <!-- Link: consent -->
+            <span>
+              {{ $t('form.labelPrivacyConsent') }}
+              <!-- TODO: Link to privacy consent page -->
+              <a
+                href="#"
+                target="_blank"
+                class="text-primary"
+                @click.stop
+                data-cy="form-terms-link"
+                >{{ $t('form.linkPrivacyConsent') }}</a
+              >
+            </span>
+            {{ $t('global.and') }}
+            <!-- Link: terms -->
+            <span>
+              <!-- TODO: Link to terms page -->
+              <a
+                href="#"
+                target="_blank"
+                class="text-primary"
+                @click.stop
+                data-cy="form-terms-link"
+                >{{ $t(`form.labelTermsChallenge.${challengeMonth}`) }}</a
+              >.
+            </span>
+          </q-checkbox>
+        </q-field>
       </div>
       <div class="col-12 flex justify-end">
         <q-btn

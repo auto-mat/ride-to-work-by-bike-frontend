@@ -146,6 +146,7 @@ messageOptionRequired = "Please select an option"
 messagePhoneInvalid = "Please fill in a valid phone number"
 messagePasswordStrong = "Password must contain at least 6 characters and at least 1 letter."
 messagePasswordNotIdentical = "Passwords don't match"
+messageResponsibilityRequired = "You must agree to arrange the payment of the entry fee."
 messageTermsRequired = "You must consent to the processing of personal data"
 messageVatIdInvalid = "Invalid registration number"
 

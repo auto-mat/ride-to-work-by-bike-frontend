@@ -146,6 +146,7 @@ messageOptionRequired = "Vyberte jednu z možností"
 messagePhoneInvalid = "Vyplňte platné telefónne číslo"
 messagePasswordStrong = "Heslo musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 messagePasswordNotIdentical = "Heslá sa nezhodujú"
+messageResponsibilityRequired = "Musíte súhlasiť so zabezpečením platby štartovného."
 messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 messageVatIdInvalid = "Neplatné registrační číslo"
 
