@@ -39,5 +39,10 @@ function coreTests() {
     cy.dataCy('form-select-label')
       .should('be.visible')
       .and('contain', i18n.global.t('form.labelCity'));
+    // click select
+    cy.dataCy('form-select-city').click();
+    cy.get('.q-menu .q-item__label')
+      .should('be.visible')
+      .and('have.length', 10);
   });
 }
