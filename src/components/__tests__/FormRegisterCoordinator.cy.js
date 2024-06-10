@@ -21,8 +21,8 @@ describe('<FormRegisterCoordinator>', () => {
         'labelPassword',
         'labelPasswordConfirm',
         'labelResponsibility',
-        'labelTerms',
-        'linkTerms',
+        'labelPrivacyConsent',
+        'linkPrivacyConsent',
         'buttonSubmit',
         'messageFieldRequired',
         'messageEmailInvalid',
@@ -168,7 +168,10 @@ describe('<FormRegisterCoordinator>', () => {
         .find('.q-checkbox__label')
         .should('be.visible')
         .and('have.color', grey10)
-        .and('contain', i18n.global.t('register.coordinator.form.labelTerms'));
+        .and(
+          'contain',
+          i18n.global.t('register.coordinator.form.labelPrivacyConsent'),
+        );
       // checkbox border
       cy.dataCy('form-register-coordinator-terms')
         .find('.q-checkbox__bg')

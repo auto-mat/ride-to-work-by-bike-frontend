@@ -235,11 +235,11 @@ export default defineComponent({
               >
                 <!-- Default slot: label -->
                 <span>
-                  {{ $t('register.coordinator.form.labelTerms') }}
+                  {{ $t('register.coordinator.form.labelPrivacyConsent') }}
                   <!-- Link: terms -->
                   <!-- TODO: Link to terms page -->
                   <a href="#" target="_blank" class="text-primary">{{
-                    $t('register.coordinator.form.linkTerms')
+                    $t('register.coordinator.form.linkPrivacyConsent')
                   }}</a
                   >.
                 </span>

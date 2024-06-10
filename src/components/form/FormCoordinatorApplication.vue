@@ -1,0 +1,149 @@
+<script lang="ts">
+/**
+ * FormCoordinatorApplication Component
+ *
+ * @description * Use this component to render a form for applying for
+ * the position of a company coordinator.
+ *
+ * Note: This component is commonly used in `CompanyCoordinatorPage`.
+ *
+ * Component uses lazy-rules="ondemand" which means that validation will be
+ * triggered only when component’s validate() method is manually called or
+ * when the wrapper QForm submits itself.
+ *
+ * @components
+ * - `FormFieldTextRequired`: Component to render required field.
+ * - `FormFieldPhone`: Component to render required phone field.
+ *
+ * @example
+ * <form-coordinator-application />
+ *
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-105730&t=0rvmPgpn944BuMav-1)
+ */
+
+// libraries
+import { QForm } from 'quasar';
+import { defineComponent, ref } from 'vue';
+
+// composables
+import { useValidation } from '../../composables/useValidation';
+
+// components
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
+
+export default defineComponent({
+  name: 'FormCoordinatorApplication',
+  components: {
+    FormFieldTextRequired,
+    FormFieldPhone,
+  },
+  setup() {
+    const phone = ref('');
+    const position = ref('');
+    const responsibility = ref(false);
+    const terms = ref(false);
+
+    const { isPhone } = useValidation();
+    const formInviteRef = ref<typeof QForm | null>(null);
+    const onSubmit = () => {
+      formInviteRef.value?.validate();
+    };
+
+    return {
+      formInviteRef,
+      phone,
+      position,
+      responsibility,
+      terms,
+      isPhone,
+      onSubmit,
+    };
+  },
+});
+</script>
+
+<template>
+  <q-form
+    ref="formCoordinatorApplication"
+    data-cy="form-coordinator-application"
+  >
+    <div class="row q-col-gutter-md">
+      <div class="col-12 col-sm-6">
+        <!-- Input: Company name -->
+        <form-field-text-required
+          v-model="position"
+          name="name"
+          label="form.labelYourPosition"
+          data-cy="form-coordinator-position"
+        />
+      </div>
+      <div class="col-12 col-sm-6">
+        <form-field-phone
+          v-model="phone"
+          name="phone"
+          label="form.labelYourPhone"
+          data-cy="form-coordinator-phone"
+        />
+      </div>
+      <div class="col-12">
+        <q-checkbox
+          dense
+          id="form-coordinator-terms"
+          v-model="responsibility"
+          color="primary"
+          :true-value="true"
+          :false-value="false"
+          rules="required"
+          class="text-grey-10"
+          data-cy="form-responsibility-input"
+        >
+          <!-- Default slot: label -->
+          <span>
+            {{ $t('form.labelCoordinatorResponsibility') }}
+          </span>
+        </q-checkbox>
+      </div>
+      <div class="col-12">
+        <q-checkbox
+          dense
+          id="form-coordinator-terms"
+          v-model="terms"
+          color="primary"
+          :true-value="true"
+          :false-value="false"
+          rules="required"
+          class="text-grey-10"
+          data-cy="form-terms-input"
+        >
+          <!-- Link: consent -->
+          <span>
+            {{ $t('form.labelPrivacyConsent') }}
+            <!-- TODO: Link to terms page -->
+            <a
+              href="#"
+              target="_blank"
+              class="text-primary"
+              @click.stop
+              data-cy="form-terms-link"
+              >{{ $t('form.linkPrivacyConsent') }}</a
+            >.
+          </span>
+          <!-- Link: terms -->
+          <span>
+            {{ $t('form.labelPrivacyConsent') }}
+            <!-- TODO: Link to terms page -->
+            <a
+              href="#"
+              target="_blank"
+              class="text-primary"
+              @click.stop
+              data-cy="form-terms-link"
+              >{{ $t('form.linkPrivacyConsent') }}</a
+            >.
+          </span>
+        </q-checkbox>
+      </div>
+    </div>
+  </q-form>
+</template>

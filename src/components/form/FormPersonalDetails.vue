@@ -214,7 +214,7 @@ export default defineComponent({
           >
             <!-- Default slot: label -->
             <span>
-              {{ $t('form.labelTerms') }}
+              {{ $t('form.labelPrivacyConsent') }}
               <!-- Link: terms -->
               <!-- TODO: Link to terms page -->
               <a
@@ -223,7 +223,7 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-terms-link"
-                >{{ $t('form.linkTerms') }}</a
+                >{{ $t('form.linkPrivacyConsent') }}</a
               >.
             </span>
           </q-checkbox>
