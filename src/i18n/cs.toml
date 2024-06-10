@@ -27,6 +27,7 @@ routes = "Cesty"
 
 [global]
 all = "Všechny"
+and = "a"
 buttonShare = "Sdílet"
 female = "Dámské"
 from = "od"
@@ -106,6 +107,7 @@ skip = "Přeskočit"
 
 [form]
 buttonCompleteRegistration = "Dokončit registraci"
+buttonCoordinatorApplication = "Odeslat přihlášku"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 hintNickname = "Zobrazí se ve veřejných výsledcích místo vašeho jména"
 labelAddress = "Adresa"
@@ -126,6 +128,9 @@ labelPhone = "Telefon"
 labelSchool = "Škola"
 labelStreet = "Ulice"
 labelPrivacyConsent = "Souhlasím se zpracováním osobních údajů podle "
+labelTermsChallenge.may = "Obchodních podmínek Květnové výzvy 2024"
+labelTermsChallenge.october = "Obchodních podmínek Říjnové výzvy 2024"
+labelTermsChallenge.september = "Obchodních podmínek Zářijové výzvy 2024"
 labelTextRequired = "Povinný text"
 labelTitle = "Název"
 labelVatId = "IČO"
@@ -143,7 +148,6 @@ messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 p�
 messagePasswordNotIdentical = "Hesla se neshodují"
 messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 messageVatIdInvalid = "Neplatné IČO"
-
 
 [form.merch]
 hintNoMerch = "Necháte tak plnou částku na neziskové aktivity AutoMatu."

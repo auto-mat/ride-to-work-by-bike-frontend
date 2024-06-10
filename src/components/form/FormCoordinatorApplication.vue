@@ -32,6 +32,9 @@ import { useValidation } from '../../composables/useValidation';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormFieldPhone from '../global/FormFieldPhone.vue';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 export default defineComponent({
   name: 'FormCoordinatorApplication',
   components: {
@@ -50,7 +53,10 @@ export default defineComponent({
       formInviteRef.value?.validate();
     };
 
+    const { challengeMonth } = rideToWorkByBikeConfig;
+
     return {
+      challengeMonth,
       formInviteRef,
       phone,
       position,
@@ -119,7 +125,7 @@ export default defineComponent({
           <!-- Link: consent -->
           <span>
             {{ $t('form.labelPrivacyConsent') }}
-            <!-- TODO: Link to terms page -->
+            <!-- TODO: Link to privacy consent page -->
             <a
               href="#"
               target="_blank"
@@ -127,11 +133,11 @@ export default defineComponent({
               @click.stop
               data-cy="form-terms-link"
               >{{ $t('form.linkPrivacyConsent') }}</a
-            >.
+            >
           </span>
+          {{ $t('global.and') }}
           <!-- Link: terms -->
           <span>
-            {{ $t('form.labelPrivacyConsent') }}
             <!-- TODO: Link to terms page -->
             <a
               href="#"
@@ -139,10 +145,22 @@ export default defineComponent({
               class="text-primary"
               @click.stop
               data-cy="form-terms-link"
-              >{{ $t('form.linkPrivacyConsent') }}</a
+              >{{ $t(`form.labelTermsChallenge.${challengeMonth}`) }}</a
             >.
           </span>
         </q-checkbox>
+      </div>
+      <div class="col-12 flex justify-end">
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          :label="$t('form.buttonCoordinatorApplication')"
+          @click.prevent="onSubmit"
+          class="q-mt-lg"
+          data-cy="form-coordinator-submit"
+        />
       </div>
     </div>
   </q-form>
