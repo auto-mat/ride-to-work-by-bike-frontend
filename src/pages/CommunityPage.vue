@@ -38,7 +38,6 @@ import listCardsLocation from '../../test/cypress/fixtures/listCardsLocation.jso
 import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 // types
-import type { FormOption } from '../components/types/Form';
 import type { CardPost, CardFollow, CardLocationType } from 'src/components/types';
 
 // fixtures
