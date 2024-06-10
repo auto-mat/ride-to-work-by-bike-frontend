@@ -83,4 +83,29 @@ function coreTests() {
       .should('be.visible')
       .and('contain', i18n.global.t('form.buttonCoordinatorApplication'));
   });
+
+  it('validates checkboxes', () => {
+    // responsibility checkbox
+    // tick box
+    cy.dataCy('form-coordinator-responsibility')
+      .find('.q-checkbox__inner')
+      .click();
+    // untick box (to trigger validation)
+    cy.dataCy('form-coordinator-responsibility')
+      .find('.q-checkbox__inner')
+      .click();
+    cy.dataCy('form-coordinator-responsibility').should(
+      'contain',
+      i18n.global.t('form.messageResponsibilityRequired'),
+    );
+    // terms checkbox
+    // tick box
+    cy.dataCy('form-coordinator-terms').find('.q-checkbox__inner').click();
+    // untick box (to trigger validation)
+    cy.dataCy('form-coordinator-terms').find('.q-checkbox__inner').click();
+    cy.dataCy('form-coordinator-terms').should(
+      'contain',
+      i18n.global.t('form.messageTermsRequired'),
+    );
+  });
 }
