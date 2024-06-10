@@ -40,6 +40,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    label: {
+      type: String,
+      default: 'form.labelPhone',
+    },
     required: {
       type: Boolean,
       default: true,
@@ -71,7 +75,7 @@ export default defineComponent({
   <div class="col-12 col-sm-6" data-cy="form-phone">
     <!-- Label -->
     <label for="form-phone" class="text-caption text-bold">
-      {{ $t('form.labelPhone') }}
+      {{ $t(label) }}
     </label>
     <!-- Input -->
     <q-input

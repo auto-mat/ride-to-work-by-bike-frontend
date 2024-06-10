@@ -99,6 +99,7 @@ export default defineComponent({
           hide-bottom-space
           :model-value="responsibility"
           :rules="[(val) => !!val || $t('form.messageResponsibilityRequired')]"
+          data-cy="form-coordinator-responsibility"
         >
           <q-checkbox
             dense
@@ -125,6 +126,7 @@ export default defineComponent({
           hide-bottom-space
           :model-value="terms"
           :rules="[(val) => !!val || $t('form.messageTermsRequired')]"
+          data-cy="form-coordinator-terms"
         >
           <q-checkbox
             dense
