@@ -48,15 +48,22 @@ function coreTests() {
   });
 
   it('has rounded corners', () => {
-    cy.window().then(() => {
-      cy.dataCy('card-location')
-        .should('be.visible')
-        .and('have.css', 'border-radius', borderRadiusCard);
-
-      cy.dataCy('card-location-image')
-        .should('be.visible')
-        .and('have.css', 'border-top-left-radius', borderRadiusCard)
-        .and('have.css', 'border-top-right-radius', borderRadiusCard);
+    cy.get('@card').then((card) => {
+      cy.window().then(() => {
+        cy.dataCy('card-location')
+          .should('be.visible')
+          .and('have.css', 'border-radius', borderRadiusCard);
+        // image
+        cy.dataCy('card-location-image')
+          .should('be.visible')
+          .and('have.css', 'border-top-left-radius', borderRadiusCard)
+          .and('have.css', 'border-top-right-radius', borderRadiusCard);
+        cy.testImageSrcAlt(
+          'card-location-image',
+          card.image.src,
+          card.image.alt,
+        );
+      });
     });
   });
 

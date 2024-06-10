@@ -3,7 +3,8 @@
     "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
     "id": "location1",
     "image": {
-      "src": "https://picsum.photos/id/70/300/300"
+      "src": "https://picsum.photos/id/70/300/300",
+      "alt": "road lined with trees"
     },
     "links": [
       {
@@ -28,7 +29,8 @@
     "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
     "id": "location2",
     "image": {
-      "src": "https://picsum.photos/id/70/300/300"
+      "src": "https://picsum.photos/id/70/300/300",
+      "alt": "road lined with trees"
     },
     "links": [
       {
@@ -53,7 +55,8 @@
     "content": "<p>Skalní přírodní památka na Smíchově, poblíž tramvajové zastávky Lihovar.</p><p>Ze Ctiradu je krásný rozhled na Prahu, návštěvy nebudete litovat.</p>",
     "id": "location3",
     "image": {
-      "src": "https://picsum.photos/id/70/300/300"
+      "src": "https://picsum.photos/id/70/300/300",
+      "alt": "road lined with trees"
     },
     "links": [
       {

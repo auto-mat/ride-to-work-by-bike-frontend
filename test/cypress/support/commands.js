@@ -94,6 +94,24 @@ Cypress.Commands.add('testImageHeight', ($img) => {
   cy.wrap($img[0]).should('have.prop', 'naturalHeight').should('be.gt', 0);
 });
 
+/**
+ * Custom testImageSrcAlt command that provides a standardized test
+ * for any image.
+ *
+ * @param {string} dataCySelector - data-cy-selector of the HTML element
+ * @param {string} src - src attribute
+ * @param {string} alt - alt attribute
+ */
+Cypress.Commands.add('testImageSrcAlt', (dataCySelector, src, alt) => {
+  // test height
+  cy.dataCy(dataCySelector).invoke('height').should('be.gt', 0);
+  // test src and alt atributes
+  cy.dataCy(dataCySelector)
+    .find('img')
+    .should('have.attr', 'src', src)
+    .should('have.attr', 'alt', alt);
+});
+
 Cypress.Commands.add('testMessageLanguageSelect', (i18n) => {
   const locales = i18n.global.availableLocales;
   locales.forEach((locale) => {

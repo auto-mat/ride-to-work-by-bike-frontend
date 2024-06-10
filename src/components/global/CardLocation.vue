@@ -71,7 +71,7 @@ export default defineComponent({
       :src="card.image.src"
       ratio="1.4"
       data-cy="card-location-image"
-      alt=""
+      :alt="card.image.alt"
     />
 
     <span class="q-focus-helper"></span>
