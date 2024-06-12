@@ -25,7 +25,6 @@ import listCardsPrizes from '../../test/cypress/fixtures/listCardsPrizes.json';
 import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
-import type { FormOption } from '../components/types/Form';
 import { CardOffer as CardOfferType, CardPrizeType } from '../components/types';
 
 export default defineComponent({
@@ -48,7 +47,6 @@ export default defineComponent({
       city,
       prizesList,
       prizesListAvailable,
-      optionsCity,
     };
   },
 });

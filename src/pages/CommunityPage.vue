@@ -38,9 +38,11 @@ import listCardsLocation from '../../test/cypress/fixtures/listCardsLocation.jso
 import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
 // types
-import type { CardPost, CardFollow, CardLocationType } from 'src/components/types';
-
-// fixtures
+import type {
+  CardPost,
+  CardFollow,
+  CardLocationType,
+} from 'src/components/types';
 
 export default defineComponent({
   name: 'CommunityPage',
