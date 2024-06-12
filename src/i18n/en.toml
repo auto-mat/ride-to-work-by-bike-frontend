@@ -370,6 +370,11 @@ buttonFacebook = "Login via Facebook"
 title = "Log your rides from your mobile phone!"
 description = "Download the app and log rides from anywhere."
 
+[offer]
+titleOfferValidation = "To use it, just show proof of identity on the spot:"
+labelOfferValidationTshirt = "T-shirt or neck warmer"
+labelOfferValidationAccount = "An active Ride to Work by Bike profile on your mobile phone or computer"
+
 [onboarding]
 buttonInviteFriends = "Invite friends"
 descriptionStep1 = "You will contribute to your health and mental well-being, cleaner air, a cleaner planet, healthier and safer cities. How does it work? Watch the video below:"

@@ -20,6 +20,8 @@
  * @components
  * - `DialogDefault`: Used to display detailed information about the offer in a
  *   modal dialog.
+ * - `OfferValidation`: Used to display information about how an offer can be
+ *   validated and received.
  *
  * @example
  * <card-offer
@@ -34,6 +36,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import DialogDefault from '../global/DialogDefault.vue';
+import OfferValidation from '../offer/OfferValidation.vue';
 
 // types
 import { CardOffer as CardOfferType } from '../types';
@@ -45,6 +48,7 @@ export default defineComponent({
   name: 'CardOffer',
   components: {
     DialogDefault,
+    OfferValidation,
   },
   props: {
     card: {
@@ -172,6 +176,8 @@ export default defineComponent({
             data-cy="dialog-image"
           />
         </div>
+        <!-- Section: Validation -->
+        <offer-validation class="q-mb-md" />
       </template>
     </dialog-default>
   </q-card>

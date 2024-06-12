@@ -370,6 +370,11 @@ buttonFacebook = "Prihlásenie cez Facebook"
 title = "Nahrávajte svoje jazdy z mobilného telefónu!"
 description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
 
+[offer]
+titleOfferValidation = "Chcete-li ji použít, stačí se na místě prokázat dokladem totožnosti:"
+labelOfferValidationTshirt = "Tričko nebo nákrčník"
+labelOfferValidationAccount = "Aktivní profil zde v systému Pro práci na kole na mobilním telefonu nebo počítači"
+
 [onboarding]
 buttonInviteFriends = "Pozvať priateľov"
 descriptionStep1 = "Pomôžete svojmu zdraviu a duševnej pohode, čistejšiemu ovzdušiu, čistejšej planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
