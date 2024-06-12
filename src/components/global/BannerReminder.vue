@@ -6,6 +6,8 @@
  * You can hide the reminder temporarily by clicking one button.
  * You can hide the reminder permanently by clickon another button.
  *
+ * Note: This component is used on `CompanyCoordinatorPage`.
+ *
  * @example
  * <banner-reminder />
  *
@@ -55,10 +57,12 @@ export default defineComponent({
     class="text-white bg-primary"
     :style="{ 'border-radius': borderRadius }"
   >
+    <!-- Banner text -->
     <p class="q-ma-none q-px-sm" data-cy="banner-text">
       {{ $t('coordinator.textBannerReminder') }}
     </p>
     <template v-slot:action>
+      <!-- Button: Dismiss -->
       <q-btn
         flat
         color="white"
@@ -66,6 +70,7 @@ export default defineComponent({
         @click.prevent="onDismiss"
         data-cy="banner-button-dismiss"
       />
+      <!-- Button: Confirm -->
       <q-btn
         flat
         color="white"
