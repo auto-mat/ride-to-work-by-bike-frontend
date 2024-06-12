@@ -161,6 +161,8 @@ function coreTests() {
         cy.dataCy('dialog-voucher-code')
           .should('be.visible')
           .and('contain', card.code);
+        // validation
+        cy.dataCy('offer-validation').should('be.visible');
         // image
         cy.dataCy('dialog-body').scrollTo('bottom', {
           ensureScrollable: false,

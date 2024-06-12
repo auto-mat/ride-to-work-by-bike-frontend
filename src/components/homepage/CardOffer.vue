@@ -177,7 +177,7 @@ export default defineComponent({
           />
         </div>
         <!-- Section: Validation -->
-        <offer-validation class="q-mb-md" />
+        <offer-validation class="col-12 q-mb-md" data-cy="offer-validation" />
       </template>
     </dialog-default>
   </q-card>
