@@ -50,6 +50,11 @@ labelSelectCity = "Město"
 titleCommunity = "Komunita"
 titleLocalEvents = "Místní události"
 
+[coordinator]
+buttonBannerReminderConfirm = "Oznámil"
+buttonBannerReminderDismiss = "Zatím neoznámil"
+textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
+
 [language]
 cs = "Čeština"
 sk = "Slovenština"

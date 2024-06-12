@@ -50,6 +50,11 @@ labelSelectCity = "City"
 titleCommunity = "Community"
 titleLocalEvents = "Local events"
 
+[coordinator]
+buttonBannerReminderConfirm = "Yes"
+buttonBannerReminderDismiss = "Not yet"
+textBannerReminder = "Have you notified the company that you are a coordinator?"
+
 [language]
 cs = "Czech"
 sk = "Slovak"
