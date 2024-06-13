@@ -1,0 +1,28 @@
+{
+  "title": "Auto*Mat, z. s.",
+  "identificationNumber": "22670319",
+  "branches": [
+    {
+      "id": "001",
+      "title": "Pobočka 1"
+    }
+  ],
+  "image": {
+    "src": "https://picsum.photos/id/70/96/96",
+    "alt": "road lined with trees"
+  },
+  "members": [
+    {
+      "id": "001",
+      "name": "Petr"
+    },
+    {
+      "id": "002",
+      "name": "Pavel"
+    },
+    {
+      "id": "003",
+      "name": "Marta"
+    }
+  ]
+}

@@ -60,6 +60,10 @@ titleBecomeCoordinator = "Become a company coordinator"
 [coordinator]
 buttonBannerReminderConfirm = "Yes"
 buttonBannerReminderDismiss = "Not yet"
+buttonExportMembers = "Export members"
+labelBranches = "branch | branches"
+labelMembers = "member | members"
+labelOrganizationId = "ID"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
 
 [language]

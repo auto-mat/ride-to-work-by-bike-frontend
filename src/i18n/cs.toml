@@ -60,6 +60,10 @@ titleBecomeCoordinator = "Stát se firemní*m koordinátorem*kou"
 [coordinator]
 buttonBannerReminderConfirm = "Oznámil"
 buttonBannerReminderDismiss = "Zatím neoznámil"
+buttonExportMembers = "Exportovat členy"
+labelBranches = "pobočka | poboček"
+labelMembers = "člen | členů"
+labelOrganizationId = "IČO"
 textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
 
 [language]
