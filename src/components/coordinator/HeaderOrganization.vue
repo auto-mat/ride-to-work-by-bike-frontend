@@ -61,8 +61,8 @@ export default defineComponent({
     <!-- Organization data -->
     <div class="col-12 col-sm row q-col-gutter-x-md">
       <div class="col-auto">
-        <!-- Image -->
         <q-avatar data-cy="header-organization-image" size="96px">
+          <!-- Image -->
           <q-img
             v-if="organization.image"
             :src="organization.image.src"
@@ -71,6 +71,7 @@ export default defineComponent({
             height="96"
             :alt="organization.image.alt"
           />
+          <!-- Fallback icon -->
           <q-icon v-else name="mdi-office-building" size="96px" />
         </q-avatar>
       </div>
