@@ -4,6 +4,8 @@
  *
  * @description * Use this component to show info banner.
  *
+ * Note: This component is commonly used on `CompanyCoordinatorPage`.
+ *
  * @props
  * - `title` (string, required): banner title.
  * - `icon` (string, required): banner icon.
