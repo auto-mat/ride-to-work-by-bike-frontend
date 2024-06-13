@@ -10,6 +10,10 @@
  * - `organization` (Organization, required): The object representing an
  * organization. It should be of type `Organization`.
  *
+ * @emits
+ * - `export`: Emitted when the user clicks on the export button.
+ *   It should have no payload and be handled in the parent component.
+ *
  * @example
  * <header-organization />
  *
@@ -30,6 +34,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['export'],
   setup(props) {
     const countBranches = computed((): number => {
       return props.organization?.branches?.length
@@ -53,6 +58,7 @@ export default defineComponent({
 
 <template>
   <div class="row q-col-gutter-y-md items-center" data-cy="header-organization">
+    <!-- Organization data -->
     <div class="col-12 col-sm row q-col-gutter-x-md">
       <div class="col-auto">
         <!-- Image -->
@@ -115,6 +121,7 @@ export default defineComponent({
         </div>
       </div>
     </div>
+    <!-- Button: Export -->
     <div class="col-12 col-sm-auto">
       <q-btn
         unelevated
@@ -123,6 +130,7 @@ export default defineComponent({
         color="primary"
         class="flex items-center"
         data-cy="header-organization-button-export"
+        @click.prevent="$emit('export')"
       >
         <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
         {{ $t('coordinator.buttonExportMembers') }}
