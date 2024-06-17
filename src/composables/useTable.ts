@@ -264,7 +264,6 @@ export const useTableFeeApproval = () => {
       name: 'dateCreated',
       required: true,
       sortable: true,
-      // TODO: add sort for dates
     },
   ];
 
