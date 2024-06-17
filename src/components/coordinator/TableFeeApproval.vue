@@ -6,28 +6,14 @@
  * approval.
  * Shown on `CompanyCoordinatoFees` page.
  *
- * @props
- * - `NAME` (TYPE, required): The object representing ... .
- *   It should be of type `TYPE`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
- *
- * @components
- * - `CHILD`: Component to ... .
- *
  * @example
- * <TableFeeApproval></TableFeeApproval>
+ * <table-fee-approval />
  *
- * @see [Figma Design](...)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104283&t=MqCoIBTXNV4xkXVk-1)
  */
 
 // libraries
+import { date } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // composables
@@ -44,11 +30,20 @@ export default defineComponent({
 
     const { columns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
+    const { formatDate } = date;
+
+    // format date
+    const rowsFeeApproval = tableFeeApproval.map((row) => {
+      return {
+        ...row,
+        dateCreated: formatDate(new Date(row.dateCreated), 'D. MMM. YYYY'),
+      };
+    });
 
     return {
       columns,
       selected,
-      tableFeeApproval,
+      rowsFeeApproval,
       sortByTeam,
     };
   },
@@ -56,16 +51,35 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <q-table
-      flat
-      bordered
-      :rows="tableFeeApproval"
-      :columns="columns"
-      row-key="name"
-      selection="multiple"
-      v-model:selected="selected"
-      :style="{ 'border-radius': '8px' }"
-    />
+  <div class="q-pa-md" data-cy="table-fee-approval">
+    <div>
+      <h3
+        class="text-body1 text-bold text-black q-my-none"
+        data-cy="table-fee-approval-title"
+      >
+        {{ $t('table.titleFeeApproval') }}
+      </h3>
+    </div>
+    <div class="q-my-lg">
+      <q-table
+        flat
+        bordered
+        :rows="rowsFeeApproval"
+        :columns="columns"
+        row-key="name"
+        selection="multiple"
+        v-model:selected="selected"
+        :style="{ 'border-radius': '8px' }"
+      />
+    </div>
+    <div class="q-mt-lg text-right">
+      <q-btn
+        rounded
+        unelevated
+        :label="$t('table.buttonFeeApproval')"
+        color="primary"
+        data-cy="table-fee-approval-button"
+      />
+    </div>
   </div>
 </template>
