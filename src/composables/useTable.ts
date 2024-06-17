@@ -3,15 +3,21 @@ import { computed, ref } from 'vue';
 
 // composables
 import { i18n } from 'src/boot/i18n';
+// TODO: import format price
 
 // types
+import type { QTableProps } from 'quasar';
 import type { TableColumn, TableRow } from '../components/types/Table';
 
 type FilterMethodInput = { search: string; filter: string };
 
+const formatPrice = (value: number | string | null) => {
+  return String(value);
+};
+
 export const useTable = () => {
   // Used in the `ResultsDetailPage`
-  const tableResultsColumns: TableColumn[] = [
+  const tableResultsColumns: QTableProps['columns'] = [
     {
       name: 'rank',
       required: true,
@@ -165,11 +171,92 @@ export const useTable = () => {
     }
   };
 
+  const sortByTeam = (
+    rows: readonly TableRow[],
+    sortBy: string,
+    descending: boolean,
+  ): readonly TableRow[] => {
+    const data = [...rows];
+
+    if (sortBy) {
+      data.sort((a, b) => {
+        const aVal = a[sortBy] ? a[sortBy] : '';
+        const bVal = b[sortBy] ? b[sortBy] : '';
+        if (!aVal || !bVal) return 0;
+        if (aVal < bVal) return descending ? 1 : -1;
+        if (aVal > bVal) return descending ? -1 : 1;
+        return 0;
+      });
+    }
+
+    data.sort((a, b) => {
+      if (!a.team || !b.team) return 0;
+      if (a.team < b.team) return descending ? 1 : -1;
+      if (a.team > b.team) return descending ? -1 : 1;
+      return 0;
+    });
+
+    return data;
+  };
+
   return {
     filterCompound,
     filterQuery,
     searchQuery,
     tableResultsColumns,
     filterMethod,
+    sortByTeam,
   };
+};
+
+export const useTableFeeApproval = () => {
+  const tableFeeApprovalColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: 'amount',
+      format: (val: number | string | null): string => formatPrice(val),
+      label: i18n.global.t('table.labelAmount'),
+      name: 'amount',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'name',
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelName'),
+      name: 'name',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'email',
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelEmail'),
+      name: 'email',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'nickname',
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelNickname'),
+      name: 'nickname',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'dateCreated',
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelDateRegistered'),
+      name: 'dateCreated',
+      required: true,
+      sortable: true,
+    },
+  ];
+
+  return { columns: tableFeeApprovalColumns };
 };

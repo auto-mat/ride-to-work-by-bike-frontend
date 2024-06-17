@@ -1,0 +1,32 @@
+[
+  {
+    "amount": 390,
+    "name": "Ludmila Anonymní",
+    "team": "Silný tým",
+    "email": "ludmila.anonymni@auto-mat.cz",
+    "nickname": "ludmilaa",
+    "dateCreated": "05 October 2011 14:48 UTC",
+    "group": "Křížová 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 390,
+    "name": "Ludmila Biker",
+    "team": "Silný tým",
+    "email": "ludmila.anonymni@auto-mat.cz",
+    "nickname": "ludmilaa",
+    "dateCreated": "05 October 2011 14:48 UTC",
+    "group": "Křížová 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 390,
+    "name": "Ludmila Cestující",
+    "team": "Ještě silnější tým",
+    "email": "ludmila.anonymni@auto-mat.cz",
+    "nickname": "ludmilaa",
+    "dateCreated": "05 October 2011 14:48 UTC",
+    "group": "Křížová 4, Praha 5",
+    "id": 1
+  }
+]
