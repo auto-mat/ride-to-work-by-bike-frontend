@@ -26,13 +26,14 @@ export default defineComponent({
   name: 'TableFeeApproval',
 
   setup() {
+    // holds an array of currently selected rows
     const selected = ref([]);
 
     const { columns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
-    const { formatDate } = date;
 
     // format date
+    const { formatDate } = date;
     const rowsFeeApproval = tableFeeApproval.map((row) => {
       return {
         ...row,
@@ -53,6 +54,7 @@ export default defineComponent({
 <template>
   <div class="q-pa-md" data-cy="table-fee-approval">
     <div>
+      <!-- Title -->
       <h3
         class="text-body1 text-bold text-black q-my-none"
         data-cy="table-fee-approval-title"
@@ -61,6 +63,7 @@ export default defineComponent({
       </h3>
     </div>
     <div class="q-my-lg">
+      <!-- Table -->
       <q-table
         flat
         bordered
@@ -73,6 +76,7 @@ export default defineComponent({
       />
     </div>
     <div class="q-mt-lg text-right">
+      <!-- Button -->
       <q-btn
         rounded
         unelevated
