@@ -64,7 +64,6 @@ export default defineComponent({
       :columns="columns"
       row-key="name"
       selection="multiple"
-      :sort-method="sortByTeam"
       v-model:selected="selected"
       :style="{ 'border-radius': '8px' }"
     />

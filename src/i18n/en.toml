@@ -714,6 +714,12 @@ labelSustainableRoutes = "sustainable routes"
 labelSaved = "saved"
 
 [table]
+labelAmount = "Amount"
+labelDateRegistered = "Date registered"
+labelEmail = "Email"
+labelName = "Name"
+labelNickname = "Nickname"
+labelTeam = "Team"
 textEmptyTable = "No results. Try changing the filter settings."
 
 [resetPassword]

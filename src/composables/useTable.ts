@@ -249,6 +249,15 @@ export const useTableFeeApproval = () => {
     },
     {
       align: 'left',
+      field: 'team',
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelTeam'),
+      name: 'team',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
       field: 'dateCreated',
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelDateRegistered'),

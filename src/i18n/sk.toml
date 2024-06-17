@@ -714,6 +714,12 @@ labelSustainableRoutes = "udržateľných trás"
 labelSaved = "ušetrených"
 
 [table]
+labelAmount = "Suma"
+labelDateRegistered = "Dátum registrácie"
+labelEmail = "E-mail"
+labelName = "Meno"
+labelNickname = "Priezvisko"
+labelTeam = "Tím"
 textEmptyTable = "Žiadne výsledky. Skúste zmeniť nastavenia filtra."
 
 [resetPassword]
