@@ -76,7 +76,7 @@ export default defineComponent({
   >
     <div class="row q-col-gutter-md">
       <div class="col-12 col-sm-6">
-        <!-- Input: Company name -->
+        <!-- Input: Company job position -->
         <form-field-text-required
           v-model="position"
           name="name"
@@ -85,6 +85,7 @@ export default defineComponent({
         />
       </div>
       <div class="col-12 col-sm-6">
+        <!-- Input: Telephone number -->
         <form-field-phone
           v-model="phone"
           name="phone"
@@ -93,6 +94,7 @@ export default defineComponent({
         />
       </div>
       <div class="col-12">
+        <!-- Input: Coordinator's responsibilities -->
         <q-field
           dense
           borderless
@@ -120,6 +122,7 @@ export default defineComponent({
         </q-field>
       </div>
       <div class="col-12">
+        <!-- Input: Terms and conditions -->
         <q-field
           dense
           borderless
@@ -169,6 +172,7 @@ export default defineComponent({
         </q-field>
       </div>
       <div class="col-12 flex justify-end">
+        <!-- Button: submit -->
         <q-btn
           rounded
           unelevated
