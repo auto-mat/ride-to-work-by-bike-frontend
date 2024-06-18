@@ -16,7 +16,7 @@
  *
  * @components
  * - `FormFieldCompany`: Component to render company input field.
- * - `FormFieldSelectTable`: Component to render company select field.
+ * - `FormFieldDateRequired`: Component to render date input field.
  * - `FormFieldEmail`: Component to render email input field.
  * - `FormFieldOptionGroup`: Component to render option group input field.
  * - `FormFieldPassword`: Component to render password input field.
@@ -25,6 +25,7 @@
  * - `FormFieldPhone`: Component to render phone input field.
  * - `FormFieldRadioRequired`: Component to render radio input field.
  * - `FormFieldSelectCity`: Component to render city select field.
+ * - `FormFieldSelectTable`: Component to render company select field.
  * - `FormFieldTextRequired`: Component to render text input field.
  *
  * @example
@@ -36,7 +37,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import FormFieldCompany from './FormFieldCompany.vue';
-import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
+import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
 import FormFieldEmail from './FormFieldEmail.vue';
 import FormFieldOptionGroup from '../form/FormFieldOptionGroup.vue';
 import FormFieldPassword from './FormFieldPassword.vue';
@@ -44,6 +45,7 @@ import FormFieldPasswordConfirm from './FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import FormFieldSelectCity from '../form/FormFieldSelectCity.vue';
+import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 import FormFieldVatId from '../form/FormFieldVatId.vue';
 
@@ -51,7 +53,7 @@ export default defineComponent({
   name: 'FormFieldTestWrapper',
   components: {
     FormFieldCompany,
-    FormFieldSelectTable,
+    FormFieldDateRequired,
     FormFieldEmail,
     FormFieldOptionGroup,
     FormFieldPassword,
@@ -59,6 +61,7 @@ export default defineComponent({
     FormFieldPhone,
     FormFieldRadioRequired,
     FormFieldSelectCity,
+    FormFieldSelectTable,
     FormFieldTextRequired,
     FormFieldVatId,
   },
