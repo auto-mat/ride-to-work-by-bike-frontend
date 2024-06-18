@@ -65,10 +65,10 @@ export default defineComponent({
 <template>
   <div data-cy="form-company-challenge">
     <!-- Section: Challenge type -->
-    <div>
-      <div class="text-grey-10 text-caption text-bold q-mb-sm">
+    <fieldset data-cy="form-challenge-type" class="q-pa-none no-border">
+      <legend class="text-grey-10 text-caption text-bold q-mb-sm">
         {{ $t('form.labelChallengeType') }}
-      </div>
+      </legend>
       <div class="q-gutter-sm">
         <!-- Regularity -->
         <q-radio
@@ -85,12 +85,15 @@ export default defineComponent({
           data-cy="form-challenge-type-performance"
         />
       </div>
-    </div>
+    </fieldset>
     <!-- Section: Participants -->
-    <div class="q-mt-lg">
-      <div class="text-grey-10 text-caption text-bold q-mb-sm">
+    <fieldset
+      class="q-mt-lg q-pa-none no-border"
+      data-cy="form-challenge-participants"
+    >
+      <legend class="text-grey-10 text-caption text-bold q-mb-sm">
         {{ $t('form.labelParticipants') }}
-      </div>
+      </legend>
       <div class="q-gutter-sm">
         <!-- Individuals -->
         <q-radio
@@ -124,12 +127,15 @@ export default defineComponent({
           {{ $t('form.labelParticipantsBranches') }}
         </q-radio>
       </div>
-    </div>
+    </fieldset>
     <!-- Section: Acceptable transport -->
-    <div class="q-mt-lg">
-      <div class="text-grey-10 text-caption text-bold q-mb-sm">
+    <fieldset
+      class="q-mt-lg q-pa-none no-border"
+      data-cy="form-challenge-transport"
+    >
+      <legend class="text-grey-10 text-caption text-bold q-mb-sm">
         {{ $t('form.labelTransportAcceptable') }}
-      </div>
+      </legend>
       <div class="q-gutter-sm">
         <!-- Bike -->
         <q-checkbox
@@ -189,7 +195,7 @@ export default defineComponent({
           {{ $t('form.labelTransportNone') }}
         </q-checkbox>
       </div>
-    </div>
+    </fieldset>
     <!-- Section: Challenge title -->
     <div class="q-mt-lg">
       <form-field-text-required
@@ -200,7 +206,7 @@ export default defineComponent({
       />
     </div>
     <!-- Section: Challenge description -->
-    <div class="q-mt-sm">
+    <div class="q-mt-sm" data-cy="form-challenge-description">
       <label
         for="form-challenge-description"
         class="text-grey-10 text-caption text-bold"
@@ -217,7 +223,7 @@ export default defineComponent({
       />
     </div>
     <!-- Section: Info URL -->
-    <div class="q-mt-lg">
+    <div class="q-mt-lg" data-cy="form-challenge-info-url">
       <!-- Label -->
       <label
         for="form-challenge-url"
@@ -240,7 +246,7 @@ export default defineComponent({
     <!-- Section: Dates -->
     <div class="q-mt-lg">
       <div class="row q-col-gutter-lg">
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-6" data-cy="date-column-start">
           <!-- Input: Challenge start -->
           <form-field-date-required
             v-model="challengeStart"
@@ -249,7 +255,7 @@ export default defineComponent({
             data-cy="form-challenge-start"
           />
         </div>
-        <div class="col-12 col-sm-6">
+        <div class="col-12 col-sm-6" data-cy="date-column-stop">
           <!-- Input: Challenge stop -->
           <form-field-date-required
             v-model="challengeStop"
