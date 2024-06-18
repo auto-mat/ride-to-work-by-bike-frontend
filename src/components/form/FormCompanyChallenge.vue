@@ -39,15 +39,24 @@ export default defineComponent({
     FormFieldTextRequired,
   },
   setup() {
+    const challengeType = ref<ChallengeType>('regularity');
+    const challengeParticipants = ref<ChallengeParticipants>('individuals');
+    const challengeTransportType = ref<TransportType[]>(['bike', 'walk']);
+    const challengeTitle = ref<string>('');
+    const challengeDescription = ref<string>('');
+    const challengeInfoUrl = ref<string>('');
+    const challengeStart = ref<string>('');
+    const challengeStop = ref<string>('');
+
     return {
-      challengeType: ref<ChallengeType>('regularity'),
-      challengeParticipants: ref<ChallengeParticipants>('individuals'),
-      challengeTransportType: ref<TransportType[]>(['bike', 'walk']),
-      challengeTitle: ref<string>(''),
-      challengeDescription: ref<string>(''),
-      challengeInfoUrl: ref<string>(''),
-      challengeStart: ref<string>(''),
-      challengeStop: ref<string>(''),
+      challengeType,
+      challengeParticipants,
+      challengeTransportType,
+      challengeTitle,
+      challengeDescription,
+      challengeInfoUrl,
+      challengeStart,
+      challengeStop,
     };
   },
 });
