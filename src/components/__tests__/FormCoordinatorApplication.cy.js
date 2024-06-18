@@ -108,4 +108,17 @@ function coreTests() {
       i18n.global.t('form.messageTermsRequired'),
     );
   });
+
+  it('validates phone', () => {
+    cy.dataCy('form-coordinator-phone').find('input').clear();
+    cy.dataCy('form-coordinator-phone').find('input').blur();
+    cy.dataCy('form-coordinator-phone')
+      .find('.q-field__messages')
+      .should(
+        'contain',
+        i18n.global.t('form.messageFieldRequired', {
+          fieldName: i18n.global.t('form.labelPhone'),
+        }),
+      );
+  });
 }
