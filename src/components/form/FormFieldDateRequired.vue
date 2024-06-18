@@ -91,8 +91,8 @@ export default defineComponent({
     <q-input
       dense
       outlined
+      hide-bottom-space
       v-model="inputValue"
-      lazy-rules
       :rules="[
         (val) =>
           isFilled(val) ||

@@ -11,6 +11,7 @@
  *     - `submit`: Method to submit the form inside the slot
  *
  * @components
+ * - `FormFieldDateRequired`: Component to render required date field.
  * - `FormFieldTextRequired`: Component to render required text field.
  *
  * @example
@@ -23,7 +24,8 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-import FormFieldTextRequired from '../../components/global/FormFieldTextRequired.vue';
+import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // types
 import type { TransportType } from '../types/Route';
@@ -33,6 +35,7 @@ type ChallengeParticipants = 'individuals' | 'teams' | 'branches';
 export default defineComponent({
   name: 'FormCompanyChallenge',
   components: {
+    FormFieldDateRequired,
     FormFieldTextRequired,
   },
   setup() {
@@ -43,6 +46,8 @@ export default defineComponent({
       challengeTitle: ref<string>(''),
       challengeDescription: ref<string>(''),
       challengeInfoUrl: ref<string>(''),
+      challengeStart: ref<string>(''),
+      challengeStop: ref<string>(''),
     };
   },
 });
@@ -196,13 +201,14 @@ export default defineComponent({
       <q-input
         dense
         outlined
+        hide-bottom-space
         id="form-challenge-description"
         v-model="challengeDescription"
         type="textarea"
       />
     </div>
     <!-- Section: Info URL -->
-    <div class="q-mt-sm">
+    <div class="q-mt-lg">
       <!-- Label -->
       <label
         for="form-challenge-url"
@@ -214,6 +220,7 @@ export default defineComponent({
       <q-input
         dense
         outlined
+        hide-bottom-space
         v-model="challengeInfoUrl"
         class="q-mt-sm"
         id="form-challenge-url"
@@ -222,15 +229,27 @@ export default defineComponent({
       />
     </div>
     <!-- Section: Dates -->
-    <!-- <div class="row">
-      <div class="col-12 col-sm-6">
-        <form-field-date v-model="challengeStartsAt" name="starts-at" label="form.labelChallengeStartsAt"
-          data-cy="form-challenge-starts-at" />
+    <div class="q-mt-lg">
+      <div class="row q-col-gutter-lg">
+        <div class="col-12 col-sm-6">
+          <!-- Input: Challenge start -->
+          <form-field-date-required
+            v-model="challengeStart"
+            name="date-start"
+            label="form.labelChallengeStart"
+            data-cy="form-challenge-start"
+          />
+        </div>
+        <div class="col-12 col-sm-6">
+          <!-- Input: Challenge stop -->
+          <form-field-date-required
+            v-model="challengeStop"
+            name="date-stop"
+            label="form.labelChallengeStop"
+            data-cy="form-challenge-stop"
+          />
+        </div>
       </div>
-      <div class="col-12 col-sm-6">
-        <form-field-date v-model="challengeEndsAt" name="ends-at" label="form.labelChallengeEndsAt"
-          data-cy="form-challenge-ends-at" />
-      </div>
-    </div> -->
+    </div>
   </div>
 </template>
