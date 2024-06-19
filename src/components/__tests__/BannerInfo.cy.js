@@ -48,12 +48,9 @@ function coreTests() {
       // component
       cy.dataCy('banner-info').should('be.visible');
       // icon
-      cy.dataCy('banner-info-icon')
-        .should('be.visible')
-        .and(($icon) => {
-          expect($icon[0].naturalWidth).to.be.greaterThan(0);
-          expect($icon[0].naturalHeight).to.be.greaterThan(0);
-        });
+      cy.dataCy('banner-info-icon').should('be.visible');
+      cy.dataCy('banner-info-icon').invoke('height').should('be.equal', 96);
+      cy.dataCy('banner-info-icon').invoke('width').should('be.equal', 96);
       // title
       cy.dataCy('banner-info-title')
         .should('be.visible')
