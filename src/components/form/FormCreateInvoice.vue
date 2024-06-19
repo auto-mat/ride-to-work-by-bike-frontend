@@ -1,0 +1,192 @@
+<script lang="ts">
+/**
+ * FormCreateInvoice Component
+ *
+ * @description * Use this component to render form for creating an invoice.
+ * It is used within a modal dialog on `CompanyCoordinatorPage`.
+ *
+ * @props
+ * - `organization` (Organization, required): The object with organization
+ * details.
+ *   It should be of type `Organization`.
+ *
+ * @slots
+ * - `controls`: For triggering the form via dialog buttons.
+ *   exposed props and methods:
+ *     - `submit`: Method to submit the form inside the slot
+ *
+ * @example
+ * <form-create-invoice :organization="organization" />
+ *
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-106291&t=rChuMkmuOQjQof29-1)
+ */
+
+// libraries
+import { QForm } from 'quasar';
+import { defineComponent, reactive, ref } from 'vue';
+
+// types
+import type { Organization } from '../types/Organization';
+
+export default defineComponent({
+  name: 'FormCreateInvoice',
+  props: {
+    organization: {
+      type: Object as () => Organization,
+      required: true,
+    },
+  },
+  setup() {
+    const formCreateInvoiceRef = ref<typeof QForm | null>(null);
+    const isBillingDetailsCorrect = ref<boolean>(false);
+
+    // TODO: Update data structure
+    const teams = [
+      {
+        id: 'team-1',
+        name: 'Team 1',
+        members: [
+          { id: 'member-1', name: 'Petr', team: 'Team 1' },
+          { id: 'member-2', name: 'Marta', team: 'Team 1' },
+        ],
+      },
+      {
+        id: 'team-2',
+        name: 'Team 2',
+        members: [{ id: 'member-3', name: 'Jan', team: 'Team 2' }],
+      },
+    ];
+
+    const selectedTeams = reactive<{ [key: string]: boolean }>({
+      'team-1': false,
+      'team-2': false,
+    });
+
+    const selectedMembers = reactive<{ [key: string]: string[] }>({
+      'team-1': [] as string[],
+      'team-2': [] as string[],
+    });
+
+    /**
+     * Handles team selection.
+     * If team is not selected, all members are deselected.
+     * If team is selected, all members are selected.
+     * @param id string Team ID
+     * @returns void
+     */
+    const onChangeSelectedTeam = (id: string): void => {
+      if (!selectedTeams[id]) {
+        selectedMembers[id] = [];
+      } else {
+        const updatedTeam = teams.find((team) => team.id === id);
+        if (updatedTeam?.members) {
+          selectedMembers[id] = updatedTeam.members.map((member) => member.id);
+        }
+      }
+    };
+
+    return {
+      formCreateInvoiceRef,
+      isBillingDetailsCorrect,
+      selectedMembers,
+      selectedTeams,
+      teams,
+      onChangeSelectedTeam,
+    };
+  },
+});
+</script>
+
+<template>
+  <q-form ref="formCreateInvoiceRef" data-cy="form-create-invoice">
+    <div>
+      <!-- Title: Billing details -->
+      <h3 class="text-body1 text-bold text-black q-my-none">
+        {{ $t('form.titleOrganizationBillingDetails') }}
+      </h3>
+      <!-- Section: Billing details -->
+      <address class="q-my-lg">
+        <p v-if="organization.title">{{ organization.title }}</p>
+        <template v-if="organization?.address">
+          <!-- Street + house number -->
+          <p v-if="organization.address?.street">
+            {{ organization.address.street }}
+          </p>
+          <p v-if="organization.address?.zip || organization.address?.city">
+            <!-- Zip + city -->
+            <span v-if="organization.address?.zip">{{
+              organization.address.zip
+            }}</span
+            >&nbsp;<span v-if="organization.address?.city">{{
+              organization.address.city
+            }}</span>
+          </p>
+        </template>
+        <!-- Comapny ID -->
+        <p v-if="organization?.identificationNumber">
+          {{ $t('form.labelCompanyId') }}:
+          {{ organization.identificationNumber }}
+        </p>
+        <!-- VAT ID -->
+        <p v-if="organization?.identificationNumberVat">
+          {{ $t('form.labelCompanyIdVat') }}:
+          {{ organization.identificationNumberVat }}
+        </p>
+      </address>
+      <!-- Toggle: Confirm billing details -->
+      <q-toggle
+        dense
+        v-model="isBillingDetailsCorrect"
+        :label="$t('form.labelConfirmBillingDetails')"
+        name="confirm-billing-details"
+        color="primary"
+      />
+      <!-- Link: Edit billing details -->
+      <p class="q-mt-lg">
+        {{ $t('form.textEditBillingDetails') }}
+        <!-- TODO: Link to edit screen -->
+        <a href="#">
+          {{ $t('form.linkEditBillingDetails') }}
+        </a>
+      </p>
+      <!-- Section: Participants -->
+      <div v-for="team in teams" :key="team.id" class="q-gutter-col-sm q-my-lg">
+        <h3 class="text-body1 text-bold text-black q-my-none">
+          <q-checkbox
+            v-model="selectedTeams[team.id]"
+            color="primary"
+            :label="team.name"
+            @update:model-value="onChangeSelectedTeam(team.id)"
+          />
+        </h3>
+        <q-list class="row">
+          <!-- Team members -->
+          <q-item
+            class="col-12 col-sm-6"
+            dense
+            v-for="member in team.members"
+            :key="member.id"
+            tag="label"
+            v-ripple
+          >
+            <q-item-section avatar>
+              <q-checkbox
+                v-model="selectedMembers[team.id]"
+                :val="member.id"
+                color="primary"
+              />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>
+                <div class="flex justify-between">
+                  <span>{{ member.name }}</span>
+                  <span>{{ 399 }}</span>
+                </div>
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </div>
+  </q-form>
+</template>

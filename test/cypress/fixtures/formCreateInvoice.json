@@ -1,0 +1,37 @@
+{
+  "title": "Auto*Mat, z. s.",
+  "identificationNumber": "22670319",
+  "identificationNumberVat": "CZ22670319",
+  "address": {
+    "street": "Slezská 11",
+    "zip": "12000",
+    "city": "Praha"
+  },
+  "branches": [
+    {
+      "id": "001",
+      "title": "Pobočka 1"
+    }
+  ],
+  "image": {
+    "src": "https://picsum.photos/id/70/96/96",
+    "alt": "road lined with trees"
+  },
+  "members": [
+    {
+      "id": "001",
+      "name": "Petr",
+      "team": "Team 1"
+    },
+    {
+      "id": "002",
+      "name": "Pavel",
+      "team": "Team 1"
+    },
+    {
+      "id": "003",
+      "name": "Marta",
+      "team": "Team 2"
+    }
+  ]
+}

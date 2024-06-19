@@ -1,10 +1,10 @@
 import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<FormFieldVatId>', () => {
+describe('<FormFieldCompanyId>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['messageFieldRequired', 'messageVatIdInvalid'],
+      ['messageFieldRequired', 'messageCompanyIdInvalid'],
       'form',
       i18n,
     );
@@ -14,7 +14,7 @@ describe('<FormFieldVatId>', () => {
     beforeEach(() => {
       cy.mount(FormFieldTestWrapper, {
         props: {
-          component: 'FormFieldVatId',
+          component: 'FormFieldCompanyId',
         },
       });
       cy.viewport('macbook-16');
@@ -27,7 +27,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.messageVatIdInvalid'));
+        .and('contain', i18n.global.t('form.messageCompanyIdInvalid'));
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('1234567890');
@@ -35,7 +35,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.messageVatIdInvalid'));
+        .and('contain', i18n.global.t('form.messageCompanyIdInvalid'));
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('8765432a');
@@ -43,7 +43,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.messageVatIdInvalid'));
+        .and('contain', i18n.global.t('form.messageCompanyIdInvalid'));
       cy.dataCy('form-vat-id-input').clear();
       // invalid registration number
       cy.dataCy('form-vat-id-input').type('8765432$');
@@ -51,7 +51,7 @@ describe('<FormFieldVatId>', () => {
       cy.dataCy('form-vat-id')
         .find('.q-field__messages')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.messageVatIdInvalid'));
+        .and('contain', i18n.global.t('form.messageCompanyIdInvalid'));
       cy.dataCy('form-vat-id-input').clear();
 
       // valid registration number

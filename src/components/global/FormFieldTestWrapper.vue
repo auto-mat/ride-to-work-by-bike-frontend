@@ -47,7 +47,7 @@ import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import FormFieldSelectCity from '../form/FormFieldSelectCity.vue';
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
-import FormFieldVatId from '../form/FormFieldVatId.vue';
+import FormFieldCompanyId from '../form/FormFieldCompanyId.vue';
 
 export default defineComponent({
   name: 'FormFieldTestWrapper',
@@ -63,7 +63,7 @@ export default defineComponent({
     FormFieldSelectCity,
     FormFieldSelectTable,
     FormFieldTextRequired,
-    FormFieldVatId,
+    FormFieldCompanyId,
   },
   props: {
     component: {

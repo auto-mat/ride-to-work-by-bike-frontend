@@ -19,7 +19,7 @@
  *
  * @components
  * - `FormFieldTextRequired`: Component to render required field.
- * - `FormFieldVatId`: Component to render registration number field.
+ * - `FormFieldCompanyId`: Component to render registration number field.
  *
  * @example
  * <form-add-company v-model="companyNew" />
@@ -32,7 +32,7 @@ import { defineComponent, nextTick, ref } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
-import FormFieldVatId from '../form/FormFieldVatId.vue';
+import FormFieldCompanyId from '../form/FormFieldCompanyId.vue';
 
 // composables
 import { useValidation } from '../../composables/useValidation';
@@ -44,7 +44,7 @@ export default defineComponent({
   name: 'FormAddCompany',
   components: {
     FormFieldTextRequired,
-    FormFieldVatId,
+    FormFieldCompanyId,
   },
   props: {
     formValues: {
@@ -127,10 +127,10 @@ export default defineComponent({
       </div>
       <div class="col-12 col-sm-6">
         <!-- Input: VAT ID -->
-        <form-field-vat-id
+        <form-field-company-id
           v-model="company.vatId"
           name="vatId"
-          :label="$t('form.labelVatId')"
+          :label="$t('form.labelCompanyId')"
           @update:model-value="onUpdate"
           data-cy="form-add-company-vat-id"
         />

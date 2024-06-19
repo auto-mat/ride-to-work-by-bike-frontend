@@ -58,7 +58,7 @@ export const useValidation = () => {
     return isLong && hasLetter;
   };
 
-  const isVatId = (value: string): boolean => {
+  const isCompanyId = (value: string): boolean => {
     const isLong = value.length === 8;
     const allNumbers = /^[0-9]+$/.test(value);
     return isLong && allNumbers;
@@ -71,6 +71,6 @@ export const useValidation = () => {
     isIdentical,
     isPhone,
     isStrongPassword,
-    isVatId,
+    isCompanyId,
   };
 };

@@ -1,4 +1,5 @@
 import { Image } from './Image';
+import { FormCompanyAddressFields } from './Form';
 
 export interface OrganizationBranch {
   id: string;
@@ -11,10 +12,12 @@ export interface OrganizationMember {
 }
 
 export interface Organization {
+  address?: FormCompanyAddressFields;
   branches: OrganizationBranch[];
   description?: string;
   id: string;
   identificationNumber: string;
+  identificationNumberVat?: string;
   image?: Image;
   members: OrganizationMember[];
   title: string;
