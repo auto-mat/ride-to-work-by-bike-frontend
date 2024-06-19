@@ -27,6 +27,12 @@ import 'quasar/src/css/index.sass';
 // If you use multiple or different icon-sets then the default, be sure to import them here.
 import 'quasar/dist/icon-set/material-icons.umd.prod';
 import '@quasar/extras/material-icons/material-icons.css';
+import 'quasar/dist/icon-set/mdi-v5.umd.prod';
+import '@quasar/extras/mdi-v5/mdi-v5.css';
+import 'quasar/dist/icon-set/ionicons-v4.umd.prod';
+import '@quasar/extras/ionicons-v4/ionicons-v4.css';
+import 'quasar/dist/icon-set/fontawesome-v5.umd.prod';
+import '@quasar/extras/fontawesome-v5/fontawesome-v5.css';
 
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 import { Dialog } from 'quasar';
