@@ -17,7 +17,7 @@ describe('<FormCompanyChallenge>', () => {
         'labelParticipants',
         'labelParticipantsIndividuals',
         'labelParticipantsTeams',
-        'labelParticipantsBranches',
+        'labelParticipantsSubsidiaries',
         'labelTransportAcceptable',
         'labelTransportBike',
         'labelTransportBus',
@@ -101,11 +101,11 @@ function coreTests() {
       .should('be.visible')
       .find('.q-radio__label')
       .should('contain', i18n.global.t('form.labelParticipantsTeams'));
-    // participants branches
-    cy.dataCy('form-participants-branches')
+    // participants subsidiaries
+    cy.dataCy('form-participants-subsidiaries')
       .should('be.visible')
       .find('.q-radio__label')
-      .should('contain', i18n.global.t('form.labelParticipantsBranches'));
+      .should('contain', i18n.global.t('form.labelParticipantsSubsidiaries'));
     // transport
     cy.dataCy('form-challenge-transport')
       .should('be.visible')

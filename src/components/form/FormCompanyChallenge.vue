@@ -30,7 +30,7 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // types
 import type { TransportType } from '../types/Route';
 type ChallengeType = 'regularity' | 'performance';
-type ChallengeParticipants = 'individuals' | 'teams' | 'branches';
+type ChallengeParticipants = 'individuals' | 'teams' | 'subsidiaries';
 
 export default defineComponent({
   name: 'FormCompanyChallenge',
@@ -113,18 +113,18 @@ export default defineComponent({
           <q-icon name="people" class="q-mr-xs text-grey-6" size="18px" />
           {{ $t('form.labelParticipantsTeams') }}
         </q-radio>
-        <!-- Branches -->
+        <!-- Subsidiaries -->
         <q-radio
           v-model="challengeParticipants"
-          val="branches"
-          data-cy="form-participants-branches"
+          val="subsidiaries"
+          data-cy="form-participants-subsidiaries"
         >
           <q-icon
             name="mdi-office-building"
             class="q-mr-xs text-grey-6"
             size="18px"
           />
-          {{ $t('form.labelParticipantsBranches') }}
+          {{ $t('form.labelParticipantsSubsidiaries') }}
         </q-radio>
       </div>
     </fieldset>
