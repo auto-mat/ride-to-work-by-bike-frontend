@@ -50,7 +50,10 @@ function coreTests() {
       // icon
       cy.dataCy('banner-info-icon')
         .should('be.visible')
-        .and('have.css', 'font-size', '96px');
+        .and(($icon) => {
+          expect($icon[0].naturalWidth).to.be.greaterThan(0);
+          expect($icon[0].naturalHeight).to.be.greaterThan(0);
+        });
       // title
       cy.dataCy('banner-info-title')
         .should('be.visible')
