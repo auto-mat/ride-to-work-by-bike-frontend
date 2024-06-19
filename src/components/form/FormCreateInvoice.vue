@@ -15,6 +15,10 @@
  *   exposed props and methods:
  *     - `submit`: Method to submit the form inside the slot
  *
+ * @components
+ * - `form-field-checkbox-team`: Use this component to render a widget for
+ *   selecting members from a team.
+ *
  * @example
  * <form-create-invoice :organization="organization" />
  *
@@ -25,11 +29,17 @@
 import { QForm } from 'quasar';
 import { defineComponent, reactive, ref } from 'vue';
 
+// components
+import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
+
 // types
 import type { Organization } from '../types/Organization';
 
 export default defineComponent({
   name: 'FormCreateInvoice',
+  components: {
+    FormFieldCheckboxTeam,
+  },
   props: {
     organization: {
       type: Object as () => Organization,
@@ -46,52 +56,27 @@ export default defineComponent({
         id: 'team-1',
         name: 'Team 1',
         members: [
-          { id: 'member-1', name: 'Petr', team: 'Team 1' },
-          { id: 'member-2', name: 'Marta', team: 'Team 1' },
+          { id: 'member-1', name: 'Petr', team: 'Team 1', amount: 399 },
+          { id: 'member-2', name: 'Marta', team: 'Team 1', amount: 399 },
         ],
       },
       {
         id: 'team-2',
         name: 'Team 2',
-        members: [{ id: 'member-3', name: 'Jan', team: 'Team 2' }],
+        members: [{ id: 'member-3', name: 'Jan', team: 'Team 2', amount: 399 }],
       },
     ];
-
-    const selectedTeams = reactive<{ [key: string]: boolean }>({
-      'team-1': false,
-      'team-2': false,
-    });
 
     const selectedMembers = reactive<{ [key: string]: string[] }>({
       'team-1': [] as string[],
       'team-2': [] as string[],
     });
 
-    /**
-     * Handles team selection.
-     * If team is not selected, all members are deselected.
-     * If team is selected, all members are selected.
-     * @param id string Team ID
-     * @returns void
-     */
-    const onChangeSelectedTeam = (id: string): void => {
-      if (!selectedTeams[id]) {
-        selectedMembers[id] = [];
-      } else {
-        const updatedTeam = teams.find((team) => team.id === id);
-        if (updatedTeam?.members) {
-          selectedMembers[id] = updatedTeam.members.map((member) => member.id);
-        }
-      }
-    };
-
     return {
       formCreateInvoiceRef,
       isBillingDetailsCorrect,
       selectedMembers,
-      selectedTeams,
       teams,
-      onChangeSelectedTeam,
     };
   },
 });
@@ -150,43 +135,13 @@ export default defineComponent({
         </a>
       </p>
       <!-- Section: Participants -->
-      <div v-for="team in teams" :key="team.id" class="q-gutter-col-sm q-my-lg">
-        <h3 class="text-body1 text-bold text-black q-my-none">
-          <q-checkbox
-            v-model="selectedTeams[team.id]"
-            color="primary"
-            :label="team.name"
-            @update:model-value="onChangeSelectedTeam(team.id)"
-          />
-        </h3>
-        <q-list class="row">
-          <!-- Team members -->
-          <q-item
-            class="col-12 col-sm-6"
-            dense
-            v-for="member in team.members"
-            :key="member.id"
-            tag="label"
-            v-ripple
-          >
-            <q-item-section avatar>
-              <q-checkbox
-                v-model="selectedMembers[team.id]"
-                :val="member.id"
-                color="primary"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>
-                <div class="flex justify-between">
-                  <span>{{ member.name }}</span>
-                  <span>{{ 399 }}</span>
-                </div>
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </div>
+      <form-field-checkbox-team
+        v-for="team in teams"
+        :key="team.id"
+        class="q-gutter-col-sm q-my-lg"
+        :team="team"
+        v-model="selectedMembers[team.id]"
+      />
     </div>
   </q-form>
 </template>
