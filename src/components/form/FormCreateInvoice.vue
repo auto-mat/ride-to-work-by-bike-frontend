@@ -53,17 +53,34 @@ export default defineComponent({
     // TODO: Update data structure
     const teams = [
       {
-        id: 'team-1',
+        id: '001',
         name: 'Team 1',
         members: [
-          { id: 'member-1', name: 'Petr', team: 'Team 1', amount: 399 },
-          { id: 'member-2', name: 'Marta', team: 'Team 1', amount: 399 },
+          {
+            id: 'member-1',
+            name: 'Petr',
+            team: '001',
+            payment: { amount: 399 },
+          },
+          {
+            id: 'member-2',
+            name: 'Marta',
+            team: '001',
+            payment: { amount: 399 },
+          },
         ],
       },
       {
-        id: 'team-2',
+        id: '002',
         name: 'Team 2',
-        members: [{ id: 'member-3', name: 'Jan', team: 'Team 2', amount: 399 }],
+        members: [
+          {
+            id: 'member-3',
+            name: 'Jan',
+            team: '002',
+            payment: { amount: 399 },
+          },
+        ],
       },
     ];
 

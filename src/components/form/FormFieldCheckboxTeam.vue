@@ -28,6 +28,9 @@ import { computed, defineComponent, ref } from 'vue';
 import { useFormatPrice } from 'src/composables/useFormatPrice';
 import { nextTick } from 'process';
 
+// types
+import type { OrganizationMember } from '../types/Organization';
+
 // fixtures
 import teamFixture from '../../../test/cypress/fixtures/formCreateInvoiceTeam.json';
 
@@ -85,7 +88,9 @@ export default defineComponent({
       if (!isSelectedTeam.value) {
         selectedMembers.value = [];
       } else {
-        selectedMembers.value = props.team.members.map((member) => member.id);
+        selectedMembers.value = props.team.members.map(
+          (member: OrganizationMember) => member.id,
+        );
       }
     };
 
@@ -142,7 +147,7 @@ export default defineComponent({
             <div class="flex justify-between">
               <span>{{ member.name }}</span>
               <span class="text-weight-bold">{{
-                formatPriceCurrency(member.amount, 'CZK')
+                formatPriceCurrency(member.payment.amount, 'CZK')
               }}</span>
             </div>
           </q-item-label>

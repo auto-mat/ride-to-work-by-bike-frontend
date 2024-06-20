@@ -9,6 +9,10 @@ export interface OrganizationBranch {
 export interface OrganizationMember {
   id: string;
   name: string;
+  team: string;
+  payment: {
+    amount: number;
+  };
 }
 
 export interface Organization {

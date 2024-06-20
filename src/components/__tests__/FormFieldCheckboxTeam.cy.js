@@ -59,7 +59,7 @@ function coreTests() {
         .each(($item, index) => {
           cy.wrap($item)
             .should('contain', team.members[index].name)
-            .and('contain', team.members[index].amount);
+            .and('contain', team.members[index].payment.amount);
         });
     });
   });

@@ -2,7 +2,17 @@
   "id": "001",
   "name": "Team 1",
   "members": [
-    { "id": "member-1", "name": "Petr", "team": "001", "amount": 399 },
-    { "id": "member-2", "name": "Marta", "team": "001", "amount": 399 }
+    {
+      "id": "member-1",
+      "name": "Petr",
+      "team": "001",
+      "payment": { "amount": 399 }
+    },
+    {
+      "id": "member-2",
+      "name": "Marta",
+      "team": "001",
+      "payment": { "amount": 399 }
+    }
   ]
 }
