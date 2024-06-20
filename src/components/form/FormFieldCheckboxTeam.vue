@@ -32,7 +32,7 @@ import { nextTick } from 'process';
 import type { OrganizationMember } from '../types/Organization';
 
 // fixtures
-import teamFixture from '../../../test/cypress/fixtures/formCreateInvoiceTeam.json';
+import invoiceFixture from '../../../test/cypress/fixtures/formCreateInvoice.json';
 
 export default defineComponent({
   name: 'FormFieldCheckboxTeam',
@@ -40,7 +40,7 @@ export default defineComponent({
     team: {
       type: Object,
       required: true,
-      default: teamFixture,
+      default: invoiceFixture.teams[0],
     },
     modelValue: {
       type: Array as () => string[],

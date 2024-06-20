@@ -46,7 +46,8 @@ describe('<FormFieldCheckboxTeam>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.fixture('formCreateInvoiceTeam').then((team) => {
+    cy.fixture('formCreateInvoice').then((invoice) => {
+      const team = invoice.teams[0];
       // component
       cy.dataCy('form-field-checkbox-team').should('be.visible');
       // input team

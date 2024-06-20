@@ -17,21 +17,36 @@
     "src": "https://picsum.photos/id/70/96/96",
     "alt": "road lined with trees"
   },
-  "members": [
+  "teams": [
     {
       "id": "001",
-      "name": "Petr",
-      "team": "Team 1"
+      "name": "Team 1",
+      "members": [
+        {
+          "id": "member-1",
+          "name": "Petr",
+          "team": "001",
+          "payment": { "amount": 399 }
+        },
+        {
+          "id": "member-2",
+          "name": "Marta",
+          "team": "001",
+          "payment": { "amount": 399 }
+        }
+      ]
     },
     {
       "id": "002",
-      "name": "Pavel",
-      "team": "Team 1"
-    },
-    {
-      "id": "003",
-      "name": "Marta",
-      "team": "Team 2"
+      "name": "Team 2",
+      "members": [
+        {
+          "id": "member-3",
+          "name": "Jan",
+          "team": "002",
+          "payment": { "amount": 399 }
+        }
+      ]
     }
   ]
 }
