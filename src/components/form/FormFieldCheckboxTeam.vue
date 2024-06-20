@@ -28,12 +28,16 @@ import { computed, defineComponent, ref } from 'vue';
 import { useFormatPrice } from 'src/composables/useFormatPrice';
 import { nextTick } from 'process';
 
+// fixtures
+import teamFixture from '../../../test/cypress/fixtures/formCreateInvoiceTeam.json';
+
 export default defineComponent({
   name: 'FormFieldCheckboxTeam',
   props: {
     team: {
       type: Object,
       required: true,
+      default: teamFixture,
     },
     modelValue: {
       type: Array as () => string[],
@@ -109,6 +113,7 @@ export default defineComponent({
         color="primary"
         :label="team.name"
         @update:model-value="onChangeTeam"
+        data-cy="form-field-checkbox-team-input"
       />
     </h3>
     <q-list class="row">
