@@ -13,6 +13,13 @@ describe('<FormFieldCheckboxTeam>', () => {
     });
 
     coreTests();
+
+    it('renders items in 2 column layout', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('form-field-checkbox-team-item'),
+        50,
+      );
+    });
   });
 
   context('mobile', () => {
@@ -27,6 +34,13 @@ describe('<FormFieldCheckboxTeam>', () => {
     });
 
     coreTests();
+
+    it('renders items in 2 column layout', () => {
+      cy.testElementPercentageWidth(
+        cy.dataCy('form-field-checkbox-team-item'),
+        100,
+      );
+    });
   });
 });
 
