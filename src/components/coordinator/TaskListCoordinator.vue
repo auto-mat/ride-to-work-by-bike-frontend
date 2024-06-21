@@ -56,7 +56,7 @@ export default defineComponent({
       return tasks;
     });
 
-    const isShownPast = ref<boolean>(true);
+    const isShownPast = ref<boolean>(false);
     const chevronIcon = computed((): string => {
       return isShownPast.value ? 'mdi-chevron-up' : 'mdi-chevron-down';
     });
@@ -95,6 +95,7 @@ export default defineComponent({
           v-ripple
           class="text-body1 q-pl-none"
           @click.prevent="isShownPast = !isShownPast"
+          data-cy="task-list-show-past"
         >
           <q-item-section class="text-uppercase text-weight-bold">
             {{ $t('coordinator.labelShowPastTasks') }}
@@ -111,6 +112,7 @@ export default defineComponent({
         v-for="task in taskListPast"
         :key="task.id"
         class="light-dimmed"
+        data-cy="task-item-past"
       >
         <!-- Subtitle: month name -->
         <template v-if="task.month" v-slot:subtitle>
@@ -118,10 +120,13 @@ export default defineComponent({
         </template>
         <!-- Title + date -->
         <template v-slot:title>
-          <div class="flex gap-8 text-body1 text-weight-bold">
-            <span v-if="task.date" class="text-grey-7">{{
-              formatDate(task.date, 'DD. M. YYYY')
-            }}</span>
+          <div
+            class="flex gap-8 text-body1 text-weight-bold"
+            data-cy="task-item-past-title"
+          >
+            <span v-if="task.date" class="text-grey-7">
+              {{ formatDate(task.date, 'DD. M. YYYY') }}
+            </span>
             <span v-if="task.title" class="text-grey-10">{{ task.title }}</span>
           </div>
         </template>
@@ -130,7 +135,11 @@ export default defineComponent({
       </q-timeline-entry>
     </template>
     <!-- Future tasks -->
-    <q-timeline-entry v-for="task in taskListFuture" :key="task.id">
+    <q-timeline-entry
+      v-for="task in taskListFuture"
+      :key="task.id"
+      data-cy="task-item-future"
+    >
       <!-- Subtitle: month name -->
       <template v-if="task.month" v-slot:subtitle>
         <span class="text-caption text-weight-bold">{{ task.month }}</span>
