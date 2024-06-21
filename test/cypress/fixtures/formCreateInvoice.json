@@ -19,7 +19,7 @@
   },
   "teams": [
     {
-      "id": "001",
+      "id": "team-1",
       "name": "Team 1",
       "members": [
         {
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "id": "002",
+      "id": "team-2",
       "name": "Team 2",
       "members": [
         {

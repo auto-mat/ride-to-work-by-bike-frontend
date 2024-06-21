@@ -35,6 +35,9 @@ import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
 // types
 import type { Organization } from '../types/Organization';
 
+// fixtures
+import invoiceFixture from '../../../test/cypress/fixtures/formCreateInvoice.json';
+
 export default defineComponent({
   name: 'FormCreateInvoice',
   components: {
@@ -49,40 +52,9 @@ export default defineComponent({
   setup() {
     const formCreateInvoiceRef = ref<typeof QForm | null>(null);
     const isBillingDetailsCorrect = ref<boolean>(false);
-
-    // TODO: Update data structure
-    const teams = [
-      {
-        id: '001',
-        name: 'Team 1',
-        members: [
-          {
-            id: 'member-1',
-            name: 'Petr',
-            team: '001',
-            payment: { amount: 399 },
-          },
-          {
-            id: 'member-2',
-            name: 'Marta',
-            team: '001',
-            payment: { amount: 399 },
-          },
-        ],
-      },
-      {
-        id: '002',
-        name: 'Team 2',
-        members: [
-          {
-            id: 'member-3',
-            name: 'Jan',
-            team: '002',
-            payment: { amount: 399 },
-          },
-        ],
-      },
-    ];
+    const isDonorEntryFee = ref<boolean>(false);
+    const orderNote = ref<string>('');
+    const orderNumber = ref<string>('');
 
     const selectedMembers = reactive<{ [key: string]: string[] }>({
       'team-1': [] as string[],
@@ -92,8 +64,11 @@ export default defineComponent({
     return {
       formCreateInvoiceRef,
       isBillingDetailsCorrect,
+      isDonorEntryFee,
+      orderNote,
+      orderNumber,
       selectedMembers,
-      teams,
+      teams: invoiceFixture.teams,
     };
   },
 });
@@ -158,7 +133,79 @@ export default defineComponent({
         class="q-gutter-col-sm q-my-lg"
         :team="team"
         v-model="selectedMembers[team.id]"
+        data-cy="form-create-invoice-team"
       />
+      <div class="q-mt-lg">
+        <!-- Title: Additional information -->
+        <h3 class="text-body1 text-bold text-black q-mt-none q-mb-sm">
+          {{ $t('form.titleAdditionalInformation') }}
+        </h3>
+        <div class="row q-col-gutter-lg">
+          <!-- Input: Order number -->
+          <div
+            class="col-12 col-sm-6"
+            data-cy="form-create-invoice-order-number"
+          >
+            <!-- Label -->
+            <label
+              for="form-create-invoice-order-number"
+              class="text-grey-10 text-caption text-bold"
+            >
+              {{ $t('form.labelOrderNumber') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              hide-bottom-space
+              v-model="orderNumber"
+              class="q-mt-sm"
+              id="form-create-invoice-order-number"
+              name="create-invoice-order-number"
+              :data-cy="`form-create-invoice-order-number-input`"
+            />
+          </div>
+          <!-- Input: Note -->
+          <div class="col-12 col-sm-6" data-cy="form-create-invoice-note">
+            <!-- Label -->
+            <label
+              for="form-create-invoice-note"
+              class="text-grey-10 text-caption text-bold"
+            >
+              {{ $t('form.labelOrderNote') }}
+            </label>
+            <!-- Input -->
+            <q-input
+              dense
+              outlined
+              hide-bottom-space
+              v-model="orderNote"
+              class="q-mt-sm"
+              id="form-create-invoice-note"
+              name="create-invoice-note"
+              :data-cy="`form-create-invoice-note-input`"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="q-mt-xl">
+        <!-- Title: Donor entry fee -->
+        <h3 class="text-body1 text-bold text-black q-my-none">
+          {{ $t('form.titleDonorEntryFee') }}
+        </h3>
+        <!-- Text: Donor entry fee -->
+        <div v-html="$t('form.textDonorEntryFee')" class="q-mt-lg" />
+        <!-- Toggle: Donor entry fee -->
+        <q-toggle
+          dense
+          v-model="isDonorEntryFee"
+          :label="$t('form.labelDonorEntryFee')"
+          name="confirm-billing-details"
+          color="primary"
+          class="q-mt-lg"
+        />
+      </div>
     </div>
   </q-form>
 </template>

@@ -4,7 +4,14 @@ import { i18n } from '../../boot/i18n';
 describe('<FormCreateInvoice>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['labelCompanyId', 'labelCompanyIdVat', 'labelConfirmBillingDetails'],
+      [
+        'labelCompanyId',
+        'labelCompanyIdVat',
+        'labelConfirmBillingDetails',
+        'titleAdditionalInformation',
+        'labelOrderNote',
+        'labelOrderNumber',
+      ],
       'form',
       i18n,
     );
