@@ -29,7 +29,7 @@ export default defineComponent({
   name: 'TaskListCoordinator',
   props: {
     tasks: {
-      type: Object,
+      type: Object as () => TaskCoordinator[],
       required: true,
       default: taskListFixture,
     },
@@ -37,46 +37,72 @@ export default defineComponent({
   setup(props) {
     const { formatDate } = date;
 
-    const taskList = computed(() => {
-      if (!props.tasks) {
-        return [];
-      }
+    const { chevronIcon, isShownPast, taskListFuture, taskListPast } =
+      useTaskList();
 
-      const tasks: TaskCoordinator[] = [];
-      let month = '';
-      props.tasks.forEach((task: TaskCoordinator) => {
-        const taskMonth = date.formatDate(task.date, 'MMMM YYYY');
-        // if a new month, push month into the task
-        taskMonth !== month
-          ? tasks.push({ ...task, month: taskMonth })
-          : tasks.push(task);
-        month = taskMonth;
+    /**
+     * useTaskList encapsulates the task list logic.
+     */
+    function useTaskList() {
+      const isShownPast = ref<boolean>(false);
+
+      const chevronIcon = computed((): string => {
+        return isShownPast.value ? 'mdi-chevron-up' : 'mdi-chevron-down';
       });
 
-      return tasks;
-    });
+      /**
+       * Task list
+       * Loops throught the tasks and assigns the `month` property to first
+       * task of each month.
+       */
+      const taskList = computed((): TaskCoordinator[] => {
+        if (!props.tasks) {
+          return [];
+        }
 
-    const isShownPast = ref<boolean>(false);
-    const chevronIcon = computed((): string => {
-      return isShownPast.value ? 'mdi-chevron-up' : 'mdi-chevron-down';
-    });
+        const tasks: TaskCoordinator[] = [];
+        let month = '';
+        props.tasks.forEach((task: TaskCoordinator) => {
+          const taskMonth = date.formatDate(task.date, 'MMMM YYYY');
+          // if a new month, push month into the task
+          taskMonth !== month
+            ? tasks.push({ ...task, month: taskMonth })
+            : tasks.push(task);
+          month = taskMonth;
+        });
 
-    const taskListFuture = computed(() => {
-      return taskList.value.filter((task: TaskCoordinator) => {
-        return new Date(task.date) > new Date();
+        return tasks;
       });
-    });
 
-    const taskListPast = computed(() => {
-      return taskList.value.filter((task: TaskCoordinator) => {
-        return new Date(task.date) < new Date();
+      /**
+       * Filter future tasks
+       */
+      const taskListFuture = computed(() => {
+        return taskList.value.filter((task: TaskCoordinator) => {
+          return new Date(task.date) > new Date();
+        });
       });
-    });
+
+      /**
+       * Filter past tasks
+       */
+      const taskListPast = computed(() => {
+        return taskList.value.filter((task: TaskCoordinator) => {
+          return new Date(task.date) < new Date();
+        });
+      });
+
+      return {
+        chevronIcon,
+        isShownPast,
+        taskListFuture,
+        taskListPast,
+      };
+    }
 
     return {
       chevronIcon,
       isShownPast,
-      taskList,
       taskListFuture,
       taskListPast,
       formatDate,
