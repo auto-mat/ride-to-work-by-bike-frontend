@@ -78,18 +78,29 @@ export default defineComponent({
   <q-form ref="formCreateInvoiceRef" data-cy="form-create-invoice">
     <div>
       <!-- Title: Billing details -->
-      <h3 class="text-body1 text-bold text-black q-my-none">
+      <h3
+        class="text-body1 text-bold text-black q-my-none"
+        data-cy="form-create-invoice-title"
+      >
         {{ $t('form.titleOrganizationBillingDetails') }}
       </h3>
       <!-- Section: Billing details -->
-      <address class="q-my-lg">
-        <p v-if="organization.title">{{ organization.title }}</p>
+      <address
+        class="q-my-lg"
+        data-cy="form-create-invoice-organization-details"
+      >
+        <p class="q-mb-xs" v-if="organization.title">
+          {{ organization.title }}
+        </p>
         <template v-if="organization?.address">
           <!-- Street + house number -->
-          <p v-if="organization.address?.street">
+          <p class="q-mb-xs" v-if="organization.address?.street">
             {{ organization.address.street }}
           </p>
-          <p v-if="organization.address?.zip || organization.address?.city">
+          <p
+            class="q-mb-xs"
+            v-if="organization.address?.zip || organization.address?.city"
+          >
             <!-- Zip + city -->
             <span v-if="organization.address?.zip">{{
               organization.address.zip
@@ -100,12 +111,20 @@ export default defineComponent({
           </p>
         </template>
         <!-- Comapny ID -->
-        <p v-if="organization?.identificationNumber">
+        <p
+          class="q-mb-xs"
+          v-if="organization?.identificationNumber"
+          data-cy="form-create-invoice-organization-id"
+        >
           {{ $t('form.labelCompanyId') }}:
           {{ organization.identificationNumber }}
         </p>
         <!-- VAT ID -->
-        <p v-if="organization?.identificationNumberVat">
+        <p
+          class="q-mb-xs"
+          v-if="organization?.identificationNumberVat"
+          data-cy="form-create-invoice-organization-vat-id"
+        >
           {{ $t('form.labelCompanyIdVat') }}:
           {{ organization.identificationNumberVat }}
         </p>
@@ -117,9 +136,10 @@ export default defineComponent({
         :label="$t('form.labelConfirmBillingDetails')"
         name="confirm-billing-details"
         color="primary"
+        data-cy="form-create-invoice-confirm-billing-details"
       />
       <!-- Link: Edit billing details -->
-      <p class="q-mt-lg">
+      <p class="q-mt-lg" data-cy="form-create-invoice-edit-billing-details">
         {{ $t('form.textEditBillingDetails') }}
         <!-- TODO: Link to edit screen -->
         <a href="#">
@@ -135,8 +155,9 @@ export default defineComponent({
         v-model="selectedMembers[team.id]"
         data-cy="form-create-invoice-team"
       />
-      <div class="q-mt-lg">
-        <!-- Title: Additional information -->
+      <!-- Section: Additional information -->
+      <div class="q-mt-lg" data-cy="form-create-invoice-additional-information">
+        <!-- Title -->
         <h3 class="text-body1 text-bold text-black q-mt-none q-mb-sm">
           {{ $t('form.titleAdditionalInformation') }}
         </h3>
@@ -188,15 +209,19 @@ export default defineComponent({
           </div>
         </div>
       </div>
-
-      <div class="q-mt-xl">
-        <!-- Title: Donor entry fee -->
+      <!-- Section: Donor entry fee -->
+      <div class="q-mt-xl" data-cy="form-create-invoice-donor-entry-fee">
+        <!-- Title -->
         <h3 class="text-body1 text-bold text-black q-my-none">
           {{ $t('form.titleDonorEntryFee') }}
         </h3>
-        <!-- Text: Donor entry fee -->
-        <div v-html="$t('form.textDonorEntryFee')" class="q-mt-lg" />
-        <!-- Toggle: Donor entry fee -->
+        <!-- Text -->
+        <div
+          v-html="$t('form.textDonorEntryFee')"
+          class="q-mt-lg"
+          data-cy="form-create-invoice-donor-entry-fee-text"
+        />
+        <!-- Toggle -->
         <q-toggle
           dense
           v-model="isDonorEntryFee"
@@ -204,6 +229,7 @@ export default defineComponent({
           name="confirm-billing-details"
           color="primary"
           class="q-mt-lg"
+          data-cy="form-create-invoice-donor-entry-fee-toggle"
         />
       </div>
     </div>
