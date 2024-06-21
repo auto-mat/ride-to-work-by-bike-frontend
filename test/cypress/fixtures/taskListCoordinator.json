@@ -1,0 +1,38 @@
+[
+  {
+    "id": "0001",
+    "date": "2023-09-14T20:00",
+    "title": "Ohlásit počet účastníků zaměstnavateli",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  },
+  {
+    "id": "0002",
+    "date": "2023-09-30T20:00",
+    "title": "Rozdat účastníkům trička",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  },
+  {
+    "id": "0003",
+    "date": "2023-10-01T20:00",
+    "title": "Lorem ipsum dolor sit amet consectetur",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  },
+  {
+    "id": "0011",
+    "date": "2024-09-14T20:00",
+    "title": "Ohlásit počet účastníků zaměstnavateli",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  },
+  {
+    "id": "0012",
+    "date": "2024-09-30T20:00",
+    "title": "Rozdat účastníkům trička",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  },
+  {
+    "id": "0013",
+    "date": "2024-10-01T20:00",
+    "title": "Lorem ipsum dolor sit amet consectetur",
+    "body": "Lorem ipsum dolor sit amet consectetur. Eu neque leo pretium pharetra ullamcorper fames amet ut aliquam. Massa in sit volutpat neque. Velit ultrices rutrum turpis enim amet urna laoreet integer. Ac curabitur velit cursus lobortis pharetra feugiat diam at risus."
+  }
+]

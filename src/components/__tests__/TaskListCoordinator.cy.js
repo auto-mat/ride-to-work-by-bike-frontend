@@ -31,6 +31,6 @@ describe('<TaskListCoordinator>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy('component').should('be.visible');
+    cy.dataCy('task-list-coordinator').should('be.visible');
   });
 }

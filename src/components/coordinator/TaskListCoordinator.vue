@@ -9,23 +9,151 @@
  * - `tasks` (CoordinatorTask, required): The object representing the tasks.
  *   It should be of type `CoordinatorTask`.
  *
- * @components
- * - `CHILD`: Component to ... .
- *
  * @example
- * <TaskListCoordinator></TaskListCoordinator>
+ * <TaskListCoordinator :tasks="tasks" />
  *
- * @see [Figma Design](...)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=6699-27628&t=JZZe82aEPkedUcAG-1)
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { date } from 'quasar';
+import { computed, defineComponent, ref } from 'vue';
+
+// types
+import type { TaskCoordinator } from '../types/Task';
+
+// fixtures
+import taskListFixture from '../../../test/cypress/fixtures/taskListCoordinator.json';
 
 export default defineComponent({
   name: 'TaskListCoordinator',
+  props: {
+    tasks: {
+      type: Object,
+      required: true,
+      default: taskListFixture,
+    },
+  },
+  setup(props) {
+    const { formatDate } = date;
+
+    const taskList = computed(() => {
+      if (!props.tasks) {
+        return [];
+      }
+
+      const tasks: TaskCoordinator[] = [];
+      let month = '';
+      props.tasks.forEach((task: TaskCoordinator) => {
+        const taskMonth = date.formatDate(task.date, 'MMMM YYYY');
+        // if a new month, push month into the task
+        taskMonth !== month
+          ? tasks.push({ ...task, month: taskMonth })
+          : tasks.push(task);
+        month = taskMonth;
+      });
+
+      return tasks;
+    });
+
+    const isShownPast = ref<boolean>(true);
+    const chevronIcon = computed((): string => {
+      return isShownPast.value ? 'mdi-chevron-up' : 'mdi-chevron-down';
+    });
+
+    const taskListFuture = computed(() => {
+      return taskList.value.filter((task: TaskCoordinator) => {
+        return new Date(task.date) > new Date();
+      });
+    });
+
+    const taskListPast = computed(() => {
+      return taskList.value.filter((task: TaskCoordinator) => {
+        return new Date(task.date) < new Date();
+      });
+    });
+
+    return {
+      chevronIcon,
+      isShownPast,
+      taskList,
+      taskListFuture,
+      taskListPast,
+      formatDate,
+    };
+  },
 });
 </script>
 
 <template>
-  <div></div>
+  <q-timeline color="primary" data-cy="task-list-coordinator">
+    <q-timeline-entry>
+      <template v-slot:title>
+        <q-item
+          dense
+          clickable
+          v-ripple
+          class="text-body1 q-pl-none"
+          @click.prevent="isShownPast = !isShownPast"
+        >
+          <q-item-section class="text-uppercase text-weight-bold">
+            {{ $t('coordinator.labelShowPastTasks') }}
+          </q-item-section>
+          <q-item-section avatar>
+            <q-icon color="primary" :name="chevronIcon" size="18px" />
+          </q-item-section>
+        </q-item>
+      </template>
+    </q-timeline-entry>
+    <!-- Past tasks -->
+    <template v-if="taskListPast.length && isShownPast">
+      <q-timeline-entry
+        v-for="task in taskListPast"
+        :key="task.id"
+        class="light-dimmed"
+      >
+        <!-- Subtitle: month name -->
+        <template v-if="task.month" v-slot:subtitle>
+          <span class="text-caption text-weight-bold">{{ task.month }}</span>
+        </template>
+        <!-- Title + date -->
+        <template v-slot:title>
+          <div class="flex gap-8 text-body1 text-weight-bold">
+            <span v-if="task.date" class="text-grey-7">{{
+              formatDate(task.date, 'DD. M. YYYY')
+            }}</span>
+            <span v-if="task.title" class="text-grey-10">{{ task.title }}</span>
+          </div>
+        </template>
+        <!-- Body -->
+        <div v-if="task.body" v-html="task.body" />
+      </q-timeline-entry>
+    </template>
+    <!-- Future tasks -->
+    <q-timeline-entry v-for="task in taskListFuture" :key="task.id">
+      <!-- Subtitle: month name -->
+      <template v-if="task.month" v-slot:subtitle>
+        <span class="text-caption text-weight-bold">{{ task.month }}</span>
+      </template>
+      <!-- Title + date -->
+      <template v-slot:title>
+        <div class="flex gap-8 text-body1 text-weight-bold">
+          <span v-if="task.date" class="text-grey-7">{{
+            formatDate(task.date, 'DD. M. YYYY')
+          }}</span>
+          <span v-if="task.title" class="text-grey-10">{{ task.title }}</span>
+        </div>
+      </template>
+      <!-- Body -->
+      <div v-if="task.body" v-html="task.body" />
+    </q-timeline-entry>
+  </q-timeline>
 </template>
+
+<style scoped lang="scss">
+:deep(.q-timeline__subtitle) {
+  text-transform: none;
+  color: $dark;
+  opacity: 1;
+}
+</style>

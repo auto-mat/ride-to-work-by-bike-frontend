@@ -64,6 +64,7 @@ buttonExportMembers = "Export members"
 labelBranches = "branch | branches"
 labelMembers = "member | members"
 labelOrganizationId = "ID"
+labelShowPastTasks = "Show past tasks"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
 
 [language]

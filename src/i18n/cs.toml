@@ -64,6 +64,7 @@ buttonExportMembers = "Exportovat členy"
 labelBranches = "pobočka | poboček"
 labelMembers = "člen | členů"
 labelOrganizationId = "IČO"
+labelShowPastTasks = "Zobrazit uplynulé úkoly"
 textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
 
 [language]
