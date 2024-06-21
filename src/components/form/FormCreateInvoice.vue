@@ -3,17 +3,17 @@
  * FormCreateInvoice Component
  *
  * @description * Use this component to render form for creating an invoice.
- * It is used within a modal dialog on `CompanyCoordinatorPage`.
+ *
+ * Note: This component is used  on `CompanyCoordinatorPage`.
+ *
+ * TODO: To trigger submission of the form from the wrapping dialog
+ * you can use submit method passed via `slot` or an event bus:
+ * see: https://quasar.dev/quasar-utils/event-bus-util#introduction
  *
  * @props
  * - `organization` (Organization, required): The object with organization
  * details.
  *   It should be of type `Organization`.
- *
- * @slots
- * - `controls`: For triggering the form via dialog buttons.
- *   exposed props and methods:
- *     - `submit`: Method to submit the form inside the slot
  *
  * @components
  * - `form-field-checkbox-team`: Use this component to render a widget for
