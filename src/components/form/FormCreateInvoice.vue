@@ -16,7 +16,7 @@
  *   It should be of type `Organization`.
  *
  * @components
- * - `form-field-checkbox-team`: Use this component to render a widget for
+ * - `FormFieldCheckboxTeam`: Use this component to render a widget for
  *   selecting members from a team.
  *
  * @example
