@@ -112,5 +112,9 @@ function coreTests() {
         .first()
         .should('contain', formatDate(tasks[0].date, 'MMMM YYYY'));
     });
+    // hide past tasks
+    cy.dataCy('task-list-show-past').should('be.visible').click();
+    // no past tasks
+    cy.dataCy('task-item-past').should('not.exist');
   });
 }
