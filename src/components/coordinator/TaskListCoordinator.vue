@@ -40,6 +40,14 @@ export default defineComponent({
     const { chevronIcon, isShownPast, taskListFuture, taskListPast } =
       useTaskList();
 
+    return {
+      chevronIcon,
+      isShownPast,
+      taskListFuture,
+      taskListPast,
+      formatDate,
+    };
+
     /**
      * useTaskList encapsulates the task list logic.
      */
@@ -99,14 +107,6 @@ export default defineComponent({
         taskListPast,
       };
     }
-
-    return {
-      chevronIcon,
-      isShownPast,
-      taskListFuture,
-      taskListPast,
-      formatDate,
-    };
   },
 });
 </script>
