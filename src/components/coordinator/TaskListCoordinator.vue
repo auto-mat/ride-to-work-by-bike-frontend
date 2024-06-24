@@ -85,7 +85,7 @@ export default defineComponent({
       /**
        * Filter future tasks
        */
-      const taskListFuture = computed(() => {
+      const taskListFuture = computed((): TaskCoordinator[] => {
         return taskList.value.filter((task: TaskCoordinator) => {
           return new Date(task.date) > new Date();
         });
@@ -94,7 +94,7 @@ export default defineComponent({
       /**
        * Filter past tasks
        */
-      const taskListPast = computed(() => {
+      const taskListPast = computed((): TaskCoordinator[] => {
         return taskList.value.filter((task: TaskCoordinator) => {
           return new Date(task.date) < new Date();
         });
