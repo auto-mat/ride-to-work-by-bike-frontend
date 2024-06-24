@@ -48,6 +48,8 @@ export default defineComponent({
     const challengeStart = ref<string>('');
     const challengeStop = ref<string>('');
 
+    const iconSize = '18px';
+
     return {
       challengeType,
       challengeParticipants,
@@ -57,6 +59,7 @@ export default defineComponent({
       challengeInfoUrl,
       challengeStart,
       challengeStop,
+      iconSize,
     };
   },
 });
@@ -101,7 +104,7 @@ export default defineComponent({
           val="individuals"
           data-cy="form-participants-individuals"
         >
-          <q-icon name="person" class="q-mr-xs text-grey-6" size="18px" />
+          <q-icon name="person" class="q-mr-xs text-grey-6" :size="iconSize" />
           {{ $t('form.labelParticipantsIndividuals') }}
         </q-radio>
         <!-- Teams -->
@@ -110,7 +113,7 @@ export default defineComponent({
           val="teams"
           data-cy="form-participants-teams"
         >
-          <q-icon name="people" class="q-mr-xs text-grey-6" size="18px" />
+          <q-icon name="people" class="q-mr-xs text-grey-6" :size="iconSize" />
           {{ $t('form.labelParticipantsTeams') }}
         </q-radio>
         <!-- Subsidiaries -->
@@ -122,7 +125,7 @@ export default defineComponent({
           <q-icon
             name="mdi-office-building"
             class="q-mr-xs text-grey-6"
-            size="18px"
+            :size="iconSize"
           />
           {{ $t('form.labelParticipantsSubsidiaries') }}
         </q-radio>
@@ -143,7 +146,11 @@ export default defineComponent({
           val="bike"
           data-cy="form-acceptable-transport-bike"
         >
-          <q-icon name="pedal_bike" class="q-mr-xs text-grey-6" size="18px" />
+          <q-icon
+            name="pedal_bike"
+            class="q-mr-xs text-grey-6"
+            :size="iconSize"
+          />
           {{ $t('form.labelTransportBike') }}
         </q-checkbox>
         <!-- Walk -->
@@ -155,7 +162,7 @@ export default defineComponent({
           <q-icon
             name="directions_walk"
             class="q-mr-xs text-grey-6"
-            size="18px"
+            :size="iconSize"
           />
           {{ $t('form.labelTransportWalk') }}
         </q-checkbox>
@@ -168,7 +175,7 @@ export default defineComponent({
           <q-icon
             name="directions_bus"
             class="q-mr-xs text-grey-6"
-            size="18px"
+            :size="iconSize"
           />
           {{ $t('form.labelTransportBus') }}
         </q-checkbox>
@@ -181,7 +188,7 @@ export default defineComponent({
           <q-icon
             name="directions_car"
             class="q-mr-xs text-grey-6"
-            size="18px"
+            :size="iconSize"
           />
           {{ $t('form.labelTransportCar') }}
         </q-checkbox>
@@ -191,7 +198,7 @@ export default defineComponent({
           val="none"
           data-cy="form-acceptable-transport-none"
         >
-          <q-icon name="block" class="q-mr-xs text-grey-6" size="18px" />
+          <q-icon name="block" class="q-mr-xs text-grey-6" :size="iconSize" />
           {{ $t('form.labelTransportNone') }}
         </q-checkbox>
       </div>
