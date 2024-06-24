@@ -5,8 +5,8 @@ describe('<FormCreateInvoice>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
-        'labelCompanyId',
-        'labelCompanyIdVat',
+        'labelBusinessId',
+        'labelTaxId',
         'labelConfirmBillingDetails',
         'labelDonorEntryFee',
         'labelOrderNote',
@@ -14,6 +14,7 @@ describe('<FormCreateInvoice>', () => {
         'textDonorEntryFee',
         'titleAdditionalInformation',
         'titleDonorEntryFee',
+        'titleOrganizationBillingDetails',
       ],
       'form',
       i18n,
@@ -71,11 +72,11 @@ function coreTests() {
         .and('contain', organization.address.city);
       cy.dataCy('form-create-invoice-organization-id')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.labelCompanyId'))
+        .and('contain', i18n.global.t('form.labelBusinessId'))
         .and('contain', organization.identificationNumber);
       cy.dataCy('form-create-invoice-organization-vat-id')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.labelCompanyIdVat'))
+        .and('contain', i18n.global.t('form.labelTaxId'))
         .and('contain', organization.identificationNumberVat);
     });
     // confirm billing details

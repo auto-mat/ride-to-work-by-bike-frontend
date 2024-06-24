@@ -1,8 +1,8 @@
 <script lang="ts">
 /**
- * FormFieldCompanyId Component
+ * FormFieldBusinessId Component
  *
- * The `FormFieldCompanyId` displays VAT ID input.
+ * The `FormFieldBusinessId` displays VAT ID input.
  *
  * @description * Use this component to render VAT ID input in forms.
  *
@@ -17,7 +17,7 @@
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-company-id />
+ * <form-field-business-id />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
  */
@@ -29,7 +29,7 @@ import { computed, defineComponent } from 'vue';
 import { useValidation } from 'src/composables/useValidation';
 
 export default defineComponent({
-  name: 'FormFieldCompanyId',
+  name: 'FormFieldBusinessId',
   props: {
     modelValue: {
       type: String,
@@ -55,12 +55,12 @@ export default defineComponent({
       },
     });
 
-    const { isCompanyId, isFilled } = useValidation();
+    const { isBusinessId, isFilled } = useValidation();
 
     return {
       vatId,
       isFilled,
-      isCompanyId,
+      isBusinessId,
     };
   },
 });
@@ -70,7 +70,7 @@ export default defineComponent({
   <div class="col-12 col-sm-6" data-cy="form-vat-id">
     <!-- Label -->
     <label for="form-vat-id" class="text-caption text-bold">
-      {{ $t('form.labelCompanyId') }}
+      {{ $t('form.labelBusinessId') }}
     </label>
     <!-- Input -->
     <q-input
@@ -82,9 +82,9 @@ export default defineComponent({
         (val) =>
           isFilled(val) ||
           $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelCompanyId'),
+            fieldName: $t('form.labelBusinessId'),
           }),
-        (val) => isCompanyId(val) || $t('form.messageCompanyIdInvalid'),
+        (val) => isBusinessId(val) || $t('form.messageBusinessIdInvalid'),
       ]"
       :bg-color="bgColor"
       class="q-mt-sm"

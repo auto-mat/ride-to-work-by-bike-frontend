@@ -45,7 +45,7 @@ export default defineComponent({
     DialogDefault,
   },
   props: {
-    companyId: {
+    BusinessId: {
       type: String,
     },
   },

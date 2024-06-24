@@ -116,7 +116,7 @@ export default defineComponent({
           v-if="organization?.identificationNumber"
           data-cy="form-create-invoice-organization-id"
         >
-          {{ $t('form.labelCompanyId') }}:
+          {{ $t('form.labelBusinessId') }}:
           {{ organization.identificationNumber }}
         </p>
         <!-- VAT ID -->
@@ -125,7 +125,7 @@ export default defineComponent({
           v-if="organization?.identificationNumberVat"
           data-cy="form-create-invoice-organization-vat-id"
         >
-          {{ $t('form.labelCompanyIdVat') }}:
+          {{ $t('form.labelTaxId') }}:
           {{ organization.identificationNumberVat }}
         </p>
       </address>

@@ -156,7 +156,7 @@ export default defineComponent({
         value: 'company-7',
       },
     ];
-    const companyId = ref<string>('');
+    const BusinessId = ref<string>('');
     const companyAddress = ref<FormCompanyAddressFields | null>(null);
 
     const onUpdateAddress = (val: FormCompanyAddressFields) => {
@@ -228,7 +228,7 @@ export default defineComponent({
       companyOptions,
       participation,
       companyAddress,
-      companyId,
+      BusinessId,
       personalDetails,
       team,
       teamOptions,
@@ -393,7 +393,7 @@ export default defineComponent({
             <q-form ref="stepCompanyRef">
               <form-field-select-table
                 variant="company"
-                v-model="companyId"
+                v-model="BusinessId"
                 :options="companyOptions"
                 :label="$t('form.company.labelCompany')"
                 :label-button="$t('register.challenge.buttonAddCompany')"
