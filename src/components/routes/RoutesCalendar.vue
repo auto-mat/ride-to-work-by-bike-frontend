@@ -28,16 +28,23 @@
 
 // libraries
 import {
+  QCalendarMonth,
   addToDate,
   parseDate,
   parseTimestamp,
   today,
 } from '@quasar/quasar-ui-qcalendar';
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 
 export default defineComponent({
   name: 'RoutesCalendar',
+  components: {
+    QCalendarMonth,
+  },
   setup() {
+    const calendarRef = ref<typeof QCalendarMonth | null>(null);
+
+    // TODO: remove example functions
     function onMoved(data) {
       console.log('onMoved', data);
     }
@@ -69,6 +76,18 @@ export default defineComponent({
       console.log('onClickHeadWorkweek', data);
     }
 
+    // TODO: Currently, the calendar registers new date but does not re-render.
+    function onToday() {
+      calendarRef.value && calendarRef.value.moveToToday();
+    }
+    function onPrev() {
+      calendarRef.value && calendarRef.value.prev();
+    }
+    function onNext() {
+      calendarRef.value && calendarRef.value.next();
+    }
+
+    // TODO: remove example data
     // The function below is used to set up our demo data
     const CURRENT_DAY = new Date();
     function getCurrentDay(day: number) {
@@ -198,6 +217,7 @@ export default defineComponent({
       return map;
     });
 
+    // TODO: remove example function
     function badgeClasses(event) {
       return {
         [`text-white bg-${event.bgcolor}`]: true,
@@ -205,6 +225,7 @@ export default defineComponent({
       };
     }
 
+    // TODO: remove example function
     function badgeStyles() {
       const s = {};
       // s.left = day.weekday === 0 ? 0 : (day.weekday * this.parsedCellWidth) + '%'
@@ -215,6 +236,7 @@ export default defineComponent({
     }
 
     return {
+      calendarRef,
       selectedDate: today(),
       dateAlign: 'center',
       weekdayAlign: 'center',
@@ -246,6 +268,10 @@ export default defineComponent({
       onClickHeadDay,
       onClickHeadWorkweek,
       onClickWorkweek,
+
+      onToday,
+      onPrev,
+      onNext,
     };
   },
 });
@@ -253,150 +279,187 @@ export default defineComponent({
 
 <template>
   <div data-cy="routes-calendar">
-    <div class="row justify-center q-mt-lg">
-      <div style="display: flex; width: 100%; height: 690px">
-        <q-calendar-month
-          ref="calendar"
-          v-model="selectedDate"
-          animated
-          bordered
-          focusable
-          hoverable
-          no-active-date
-          :day-min-height="100"
-          :day-height="0"
-          @change="onChange"
-          @moved="onMoved"
-          @click-date="onClickDate"
-          @click-day="onClickDay"
-          @click-workweek="onClickWorkweek"
-          @click-head-workweek="onClickHeadWorkweek"
-          @click-head-day="onClickHeadDay"
+    <!-- Navigation bar -->
+    <div class="row flex items-center justify-end gap-16 q-mt-md">
+      <q-btn
+        unelevated
+        rounded
+        color="primary"
+        :label="$t('time.today')"
+        @click="onToday"
+        data-cy="routes-calendar-navigation-today"
+      />
+      <div class="flex gap-8">
+        <q-btn
+          unelevated
+          round
+          outline
+          size="12px"
+          @click="onPrev"
+          data-cy="routes-calendar-navigation-prev"
         >
-          <template #day="{ scope: { timestamp } }">
+          <q-icon name="arrow_back" size="18px" />
+        </q-btn>
+        <q-btn
+          unelevated
+          round
+          outline
+          size="12px"
+          @click="onNext"
+          data-cy="routes-calendar-navigation-next"
+        >
+          <q-icon name="arrow_forward" size="18px" />
+        </q-btn>
+      </div>
+    </div>
+    <!-- Calendar -->
+    <div class="row justify-center q-mt-lg">
+      <q-calendar-month
+        ref="calendarRef"
+        v-model="selectedDate"
+        animated
+        bordered
+        hoverable
+        no-active-date
+        use-navigation
+        locale="cs"
+        :weekdays="[1, 2, 3, 4, 5, 6, 0]"
+        weekday-align="center"
+        date-align="right"
+        date-type="rounded"
+        :day-min-height="100"
+        :day-height="0"
+        @change="onChange"
+        @moved="onMoved"
+        @click-date="onClickDate"
+        @click-day="onClickDay"
+        @click-workweek="onClickWorkweek"
+        @click-head-workweek="onClickHeadWorkweek"
+        @click-head-day="onClickHeadDay"
+      >
+        <template #day="{ scope: { timestamp } }">
+          <div class="q-my-sm">
+            <!-- Route to work -->
             <div class="q-my-sm">
-              <!-- Route to work -->
-              <div class="q-my-sm">
-                <!-- Route is already logged: Display and allow editing (within bounds) -->
-                <q-item
-                  v-if="!!eventsMap[timestamp.date]"
-                  dense
-                  clickable
-                  v-ripple
-                  class="relative-position flex justify-center items-center text-center gap-8"
+              <!-- Route is already logged: Display and allow editing (within bounds) -->
+              <q-item
+                v-if="!!eventsMap[timestamp.date]"
+                dense
+                clickable
+                v-ripple
+                class="relative-position flex justify-center items-center text-center gap-8"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="full-width full-height absolute-full"
+                  fill="none"
+                  viewBox="0 0 114 38"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="full-width full-height absolute-full"
-                    fill="none"
-                    viewBox="0 0 114 38"
-                  >
-                    <path
-                      fill="#E6EBF5"
-                      fill-rule="evenodd"
-                      d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <q-icon color="primary" name="pedal_bike" size="18px" />
-                  <span class="relative-position text-caption text-grey-10"
-                    >20 km</span
-                  >
-                </q-item>
-                <q-item
-                  v-else
-                  dense
-                  clickable
-                  v-ripple
-                  class="relative-position flex justify-center items-center text-center"
+                  <path
+                    fill="#E6EBF5"
+                    fill-rule="evenodd"
+                    d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <q-icon color="primary" name="pedal_bike" size="18px" />
+                <span class="relative-position text-caption text-grey-10"
+                  >20 km</span
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="full-width full-height absolute-full"
-                    fill="none"
-                    viewBox="0 0 114 38"
-                  >
-                    <path
-                      fill="#E6EBF5"
-                      fill-rule="evenodd"
-                      d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <q-icon color="grey-6" name="mdi-plus" size="18px" />
-                </q-item>
-              </div>
-              <!-- Route from work -->
-              <div class="q-my-sm">
-                <!-- Route is already logged: Display and allow editing (within bounds) -->
-                <q-item
-                  v-if="!!eventsMap[timestamp.date]"
-                  dense
-                  clickable
-                  v-ripple
-                  class="relative-position flex justify-center items-center text-center gap-8"
+              </q-item>
+              <q-item
+                v-else
+                dense
+                clickable
+                v-ripple
+                class="relative-position flex justify-center items-center text-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="full-width full-height absolute-full"
+                  fill="none"
+                  viewBox="0 0 114 38"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="full-width full-height absolute-full"
-                    fill="none"
-                    viewBox="0 0 114 38"
-                  >
-                    <path
-                      fill="#E6EBF5"
-                      fill-rule="evenodd"
-                      d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <q-icon color="primary" name="pedal_bike" size="18px" />
-                  <span class="relative-position text-caption text-grey-10"
-                    >20 km</span
-                  >
-                </q-item>
-                <q-item
-                  v-else
-                  dense
-                  clickable
-                  v-ripple
-                  class="relative-position flex justify-center items-center text-center"
+                  <path
+                    fill="#E6EBF5"
+                    fill-rule="evenodd"
+                    d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <q-icon color="grey-6" name="mdi-plus" size="18px" />
+              </q-item>
+            </div>
+            <!-- Route from work -->
+            <div class="q-my-sm">
+              <!-- Route is already logged: Display and allow editing (within bounds) -->
+              <q-item
+                v-if="!!eventsMap[timestamp.date]"
+                dense
+                clickable
+                v-ripple
+                class="relative-position flex justify-center items-center text-center gap-8"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="full-width full-height absolute-full"
+                  fill="none"
+                  viewBox="0 0 114 38"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="full-width full-height absolute-full"
-                    fill="none"
-                    viewBox="0 0 114 38"
-                  >
-                    <path
-                      fill="#E6EBF5"
-                      fill-rule="evenodd"
-                      d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <q-icon color="grey-6" name="mdi-plus" size="18px" />
-                </q-item>
+                  <path
+                    fill="#E6EBF5"
+                    fill-rule="evenodd"
+                    d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <q-icon color="primary" name="pedal_bike" size="18px" />
+                <span class="relative-position text-caption text-grey-10"
+                  >20 km</span
+                >
+              </q-item>
+              <q-item
+                v-else
+                dense
+                clickable
+                v-ripple
+                class="relative-position flex justify-center items-center text-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="full-width full-height absolute-full"
+                  fill="none"
+                  viewBox="0 0 114 38"
+                >
+                  <path
+                    fill="#E6EBF5"
+                    fill-rule="evenodd"
+                    d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <q-icon color="grey-6" name="mdi-plus" size="18px" />
+              </q-item>
+            </div>
+          </div>
+
+          <!-- <template
+            v-for="event in eventsMap[timestamp.date]"
+            :key="event.id"
+          >
+            <div
+              :class="badgeClasses(event, 'day')"
+              :style="badgeStyles(event, 'day')"
+              class="my-event"
+            >
+              <div class="title q-calendar__ellipsis">
+                {{ event.title + (event.time ? ' - ' + event.time : '') }}
+                <q-tooltip>{{ event.details }}</q-tooltip>
               </div>
             </div>
-
-            <!-- <template
-              v-for="event in eventsMap[timestamp.date]"
-              :key="event.id"
-            >
-              <div
-                :class="badgeClasses(event, 'day')"
-                :style="badgeStyles(event, 'day')"
-                class="my-event"
-              >
-                <div class="title q-calendar__ellipsis">
-                  {{ event.title + (event.time ? ' - ' + event.time : '') }}
-                  <q-tooltip>{{ event.details }}</q-tooltip>
-                </div>
-              </div>
-            </template> -->
-          </template>
-        </q-calendar-month>
-      </div>
+          </template> -->
+        </template>
+      </q-calendar-month>
     </div>
   </div>
 </template>
