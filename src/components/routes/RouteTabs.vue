@@ -27,6 +27,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import RoutesApps from './RoutesApps.vue';
+import RoutesCalendar from './RoutesCalendar.vue';
 import RouteListDisplay from './RouteListDisplay.vue';
 import RouteListEdit from './RouteListEdit.vue';
 
@@ -45,6 +46,7 @@ export default defineComponent({
   name: 'RouteTabs',
   components: {
     RoutesApps,
+    RoutesCalendar,
     RouteListDisplay,
     RouteListEdit,
   },
@@ -135,6 +137,7 @@ export default defineComponent({
       <!-- Panel: Calendar -->
       <q-tab-panel name="calendar" data-cy="route-tabs-panel-calendar">
         <div class="text-h6">{{ $t('routes.tabCalendar') }}</div>
+        <routes-calendar />
       </q-tab-panel>
       <!-- Panel: List -->
       <q-tab-panel name="list" data-cy="route-tabs-panel-list">

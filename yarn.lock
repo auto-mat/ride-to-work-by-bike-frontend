@@ -503,6 +503,13 @@
   resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.16.11.tgz#84b1efb9097a6e58c3ebfdd5da83ac658056a35c"
   integrity sha512-sbTBHOA+Hi7ah0P6qSm+xfRXqwJ94ct3NKA3Lkq3iNPYuHD7VXbSWtP2eA7Cu9Fd0WjVoPbngf6yFGg46U3IfQ==
 
+"@quasar/quasar-app-extension-qcalendar@^4.0.0-beta.15":
+  version "4.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qcalendar/-/quasar-app-extension-qcalendar-4.0.0-beta.15.tgz#1e85626a104c3a33083b7237f50ccf5f9048926a"
+  integrity sha512-i6hQkcP70LXLfVMPZMKQjSg3681gjZmASV3vq6ULzc0LhtBiPneLdVNNtH2itkWxAmaUj+1heQDI5Pa0F7VKLQ==
+  dependencies:
+    "@quasar/quasar-ui-qcalendar" "^4.0.0-beta.15"
+
 "@quasar/quasar-app-extension-testing-e2e-cypress@^6.0.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-testing-e2e-cypress/-/quasar-app-extension-testing-e2e-cypress-6.1.0.tgz#fa6568ae1e3474cb6cd62feb619221d849947c30"
@@ -523,6 +530,11 @@
     chalk "^4.1.1"
     execa "^5.1.1"
     strip-ansi "^6.0.0"
+
+"@quasar/quasar-ui-qcalendar@^4.0.0-beta.15":
+  version "4.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qcalendar/-/quasar-ui-qcalendar-4.0.0-beta.16.tgz#90dca0962f1fe1068361f387893df6c5da7522e2"
+  integrity sha512-KVbFJD1HQp91tiklv+6XsG7bq8FKK6mhhnoVzmjgoyhUAEb9csfbDPbpegy1/FzXy3o0wITe6mmRZ8nbaiMEZg==
 
 "@quasar/render-ssr-error@^1.0.3":
   version "1.0.3"
