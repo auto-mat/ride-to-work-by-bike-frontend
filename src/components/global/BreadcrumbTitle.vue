@@ -36,18 +36,28 @@ export default defineComponent({
 
     /**
      * Get the list of breadcrumb pages from the route meta object.
-     * An array of matched routes is returned in route.matched.
-     * First item in the array contains data defined in `routes.ts`.
-     * Meta object is used to store breadcrumbs data.
+     * Route matched returns a hierarchy of routes.
+     * If specific breadcrumb structure is defined in route meta, use it.
+     * Otherwise, use the hierarchy of routes.
      * @returns BreadcrumbPage[]
      */
     const pages = computed((): BreadcrumbPage[] => {
-      // get meta object
-      if (!route?.matched.length || !route.matched[0]?.meta?.breadcrumb)
-        return [];
-      const breadcrumb = route.matched[0].meta.breadcrumb;
-      if (!Array.isArray(breadcrumb)) return [];
-      return breadcrumb;
+      // If matched returns a single route or nothing, return an empty array
+      if (!route?.matched.length || route?.matched.length === 1) return [];
+      // Breadcrumbs defined in `routes.ts`
+      const current = route.matched.find((r) => r.path == route.path);
+      if (current && current.meta && current.meta.breadcrumb) {
+        return current.meta.breadcrumb as BreadcrumbPage[];
+      }
+      // Default page hierarchy
+      else {
+        return route.matched.map(
+          (r): BreadcrumbPage => ({
+            path: r.path || '',
+            name: String(r.name) || '',
+          }),
+        );
+      }
     });
 
     return {

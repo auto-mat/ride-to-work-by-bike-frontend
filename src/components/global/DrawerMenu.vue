@@ -43,7 +43,7 @@ export default defineComponent({
     <q-item
       v-for="item in menuTop"
       :key="item.name"
-      :to="item.url"
+      :to="{ name: item.name }"
       active-class="menu-active-item"
       class="flex items-center"
       clickable
@@ -51,7 +51,7 @@ export default defineComponent({
       <!-- Link icon -->
       <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
       <!-- Link text -->
-      {{ $t(`drawerMenu.${item.name}`) }}
+      {{ $t(`drawerMenu.${item.title}`) }}
     </q-item>
 
     <q-separator color="blue-grey-2 q-my-sm" />
@@ -67,7 +67,7 @@ export default defineComponent({
       <!-- Link icon -->
       <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
       <!-- Link text -->
-      {{ $t(`drawerMenu.${item.name}`) }}
+      {{ $t(`drawerMenu.${item.title}`) }}
     </q-item>
   </q-list>
 </template>

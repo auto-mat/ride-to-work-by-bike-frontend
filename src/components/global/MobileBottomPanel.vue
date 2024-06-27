@@ -55,7 +55,7 @@ export default defineComponent({
       <q-item
         v-for="item in menuPanel"
         :key="item.name"
-        :to="item.url"
+        :to="{ name: item.name }"
         clickable
         v-ripple
         class="q-pa-sm"
@@ -66,7 +66,7 @@ export default defineComponent({
           <q-icon :name="item.icon" size="24px"></q-icon>
           <!-- Label -->
           <q-item-label class="text-caption text-grey-10">{{
-            $t(`drawerMenu.${item.name}`)
+            $t(`drawerMenu.${item.title}`)
           }}</q-item-label>
         </div>
       </q-item>
@@ -102,7 +102,7 @@ export default defineComponent({
       <q-item
         v-for="item in menuTop.slice(4)"
         :key="item.name"
-        :to="item.url"
+        :to="{ name: item.name }"
         clickable
         v-ripple
         class="q-py-sm q-px-md"
@@ -115,7 +115,7 @@ export default defineComponent({
         <!-- Label -->
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
-            $t(`drawerMenu.${item.name}`)
+            $t(`drawerMenu.${item.title}`)
           }}</q-item-label>
         </q-item-section>
       </q-item>
@@ -126,7 +126,7 @@ export default defineComponent({
       <q-item
         v-for="item in menuBottom"
         :key="item.name"
-        :to="item.url"
+        :to="{ name: item.name }"
         clickable
         v-ripple
         class="q-py-sm q-px-md items-center"
@@ -139,7 +139,7 @@ export default defineComponent({
         <!-- Label -->
         <q-item-section>
           <q-item-label class="text-caption text-grey-10">{{
-            $t(`drawerMenu.${item.name}`)
+            $t(`drawerMenu.${item.title}`)
           }}</q-item-label>
         </q-item-section>
       </q-item>

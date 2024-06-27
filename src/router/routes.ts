@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router';
 import { routesConf } from './routes_conf';
 
 const routes: RouteRecordRaw[] = [
+  // home
   {
     path: routesConf['home']['path'],
     component: () => import('layouts/MainLayout.vue'),
@@ -13,76 +14,19 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // community
   {
-    path: routesConf['company_coordinator']['path'],
+    path: routesConf['community']['path'],
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['company_coordinator']['children']['name'],
-        component: () => import('pages/CompanyCoordinatorPage.vue'),
+        name: routesConf['community']['children']['name'],
+        component: () => import('pages/CommunityPage.vue'),
       },
     ],
   },
-  {
-    path: routesConf['prizes']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['prizes']['children']['name'],
-        component: () => import('pages/PrizesPage.vue'),
-      },
-    ],
-  },
-  {
-    path: routesConf['routes']['path'],
-    redirect: routesConf['routes_calendar']['path'],
-  },
-  {
-    path: routesConf['routes_calendar']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['routes_calendar']['children']['name'],
-        component: () => import('pages/RoutesPage.vue'),
-      },
-    ],
-  },
-  {
-    path: routesConf['routes_list']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['routes_list']['children']['name'],
-        component: () => import('pages/RoutesPage.vue'),
-      },
-    ],
-  },
-  {
-    path: routesConf['routes_map']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['routes_map']['children']['name'],
-        component: () => import('pages/RoutesPage.vue'),
-      },
-    ],
-  },
-  {
-    path: routesConf['routes_app']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['routes_app']['children']['name'],
-        component: () => import('pages/RoutesPage.vue'),
-      },
-    ],
-  },
+  // login
   {
     path: routesConf['login']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
@@ -94,6 +38,60 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // company coordinator
+  {
+    path: routesConf['company_coordinator']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['company_coordinator']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+    ],
+  },
+  // prizes
+  {
+    path: routesConf['prizes']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['prizes']['children']['name'],
+        component: () => import('pages/PrizesPage.vue'),
+      },
+    ],
+  },
+  // routes
+  {
+    path: routesConf['routes']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    name: routesConf['routes']['children']['name'],
+    redirect: { name: routesConf['routes_calendar']['children']['name'] },
+    children: [
+      {
+        path: routesConf['routes_calendar']['path'],
+        name: routesConf['routes_calendar']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+      {
+        path: routesConf['routes_list']['path'],
+        name: routesConf['routes_list']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+      {
+        path: routesConf['routes_map']['path'],
+        name: routesConf['routes_map']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+      {
+        path: routesConf['routes_app']['path'],
+        name: routesConf['routes_app']['children']['name'],
+        component: () => import('pages/RoutesPage.vue'),
+      },
+    ],
+  },
+  // register
   {
     path: routesConf['register']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
@@ -105,28 +103,31 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // register coordinator
   {
-    path: routesConf['register-coordinator']['path'],
+    path: routesConf['register_coordinator']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['register-coordinator']['children']['name'],
+        name: routesConf['register_coordinator']['children']['name'],
         component: () => import('pages/RegisterCoordinatorPage.vue'),
       },
     ],
   },
+  // register challenge
   {
-    path: routesConf['register-challenge']['path'],
+    path: routesConf['register_challenge']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['register-challenge']['children']['name'],
+        name: routesConf['register_challenge']['children']['name'],
         component: () => import('pages/RegisterChallengePage.vue'),
       },
     ],
   },
+  // results
   {
     path: routesConf['results']['path'],
     component: () => import('layouts/MainLayout.vue'),
@@ -136,77 +137,52 @@ const routes: RouteRecordRaw[] = [
         name: routesConf['results']['children']['name'],
         component: () => import('pages/ResultsPage.vue'),
       },
-    ],
-  },
-  {
-    path: routesConf['results_detail']['path'],
-    redirect: routesConf['results_report']['path'],
-  },
-  {
-    path: routesConf['results_report']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
       {
-        path: '',
-        name: routesConf['results_report']['children']['name'],
+        path: routesConf['results_detail']['path'],
+        name: routesConf['results_detail']['children']['name'],
         component: () => import('pages/ResultsDetailPage.vue'),
-      },
-    ],
-    meta: {
-      breadcrumb: [
-        {
-          name: routesConf['results']['children']['name'],
-          path: routesConf['results']['path'],
-        },
-      ],
-    },
-  },
-  {
-    path: routesConf['results_regularity']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['results_regularity']['children']['name'],
-        component: () => import('pages/ResultsDetailPage.vue'),
-      },
-    ],
-    meta: {
-      breadcrumb: [
-        {
-          name: routesConf['results']['children']['name'],
-          path: routesConf['results']['path'],
-        },
-      ],
-    },
-  },
-  {
-    path: routesConf['results_performance']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['results_performance']['children']['name'],
-        component: () => import('pages/ResultsDetailPage.vue'),
-      },
-    ],
-    meta: {
-      breadcrumb: [
-        {
-          name: routesConf['results']['children']['name'],
-          path: routesConf['results']['path'],
-        },
-      ],
-    },
-  },
-  {
-    path: routesConf['community']['path'],
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '',
-        name: routesConf['community']['children']['name'],
-        component: () => import('pages/CommunityPage.vue'),
+        redirect: { name: routesConf['results_report']['children']['name'] },
+        children: [
+          {
+            path: routesConf['results_report']['path'],
+            name: routesConf['results_report']['children']['name'],
+            component: () => import('pages/ResultsDetailPage.vue'),
+            meta: {
+              breadcrumb: [
+                {
+                  path: routesConf['results']['path'],
+                  name: routesConf['results']['children']['name'],
+                },
+              ],
+            },
+          },
+          {
+            path: routesConf['results_regularity']['path'],
+            name: routesConf['results_regularity']['children']['name'],
+            component: () => import('pages/ResultsDetailPage.vue'),
+            meta: {
+              breadcrumb: [
+                {
+                  path: routesConf['results']['path'],
+                  name: routesConf['results']['children']['name'],
+                },
+              ],
+            },
+          },
+          {
+            path: routesConf['results_performance']['path'],
+            name: routesConf['results_performance']['children']['name'],
+            component: () => import('pages/ResultsDetailPage.vue'),
+            meta: {
+              breadcrumb: [
+                {
+                  path: routesConf['results']['path'],
+                  name: routesConf['results']['children']['name'],
+                },
+              ],
+            },
+          },
+        ],
       },
     ],
   },

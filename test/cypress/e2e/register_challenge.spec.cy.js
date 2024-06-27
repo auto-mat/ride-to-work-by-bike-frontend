@@ -65,7 +65,7 @@ describe('Register Challenge page', () => {
   context('desktop', () => {
     beforeEach(() => {
       // config is defined without hash in the URL
-      cy.visit('#' + routesConf['register-challenge']['path']);
+      cy.visit('#' + routesConf['register_challenge']['path']);
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases

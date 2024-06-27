@@ -44,13 +44,13 @@ const routesConf: RoutesConf = {
       name: 'register',
     },
   },
-  'register-coordinator': {
+  register_coordinator: {
     path: '/register-coordinator',
     children: {
       name: 'register-coordinator',
     },
   },
-  'register-challenge': {
+  register_challenge: {
     path: '/register-challenge',
     children: {
       name: 'register-challenge',
@@ -63,25 +63,25 @@ const routesConf: RoutesConf = {
     },
   },
   results_detail: {
-    path: '/results/detail',
+    path: 'detail',
     children: {
       name: 'results/detail',
     },
   },
   results_report: {
-    path: '/results/detail/report',
+    path: 'report',
     children: {
       name: 'results/detail/report',
     },
   },
   results_regularity: {
-    path: '/results/detail/regularity',
+    path: 'regularity',
     children: {
       name: 'results/detail/regularity',
     },
   },
   results_performance: {
-    path: '/results/detail/performance',
+    path: 'performance',
     children: {
       name: 'results/detail/performance',
     },
@@ -93,25 +93,25 @@ const routesConf: RoutesConf = {
     },
   },
   routes_calendar: {
-    path: '/routes/calendar',
+    path: 'calendar',
     children: {
       name: 'routes/calendar',
     },
   },
   routes_list: {
-    path: '/routes/list',
+    path: 'list',
     children: {
       name: 'routes/list',
     },
   },
   routes_map: {
-    path: '/routes/map',
+    path: 'map',
     children: {
       name: 'routes/map',
     },
   },
   routes_app: {
-    path: '/routes/app',
+    path: 'app',
     children: {
       name: 'routes/app',
     },

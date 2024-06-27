@@ -12,52 +12,61 @@ export const user: User = {
 
 export const menuTop: Link[] = [
   {
-    url: '/',
+    url: '',
     icon: 'home',
     name: 'home',
+    title: 'home',
   },
   {
-    url: '/routes',
+    url: '',
     icon: 'route',
     name: 'routes',
+    title: 'routes',
   },
   {
-    url: '/results',
+    url: '',
     icon: 'emoji_events',
     name: 'results',
+    title: 'results',
   },
   {
-    url: '/community',
+    url: '',
     icon: 'people',
     name: 'community',
+    title: 'community',
   },
   {
-    url: '/prizes',
+    url: '',
     icon: 'verified',
-    name: 'discounts',
+    name: 'prizes',
+    title: 'discounts',
   },
   {
-    url: '/company-coordinator',
+    url: '',
     icon: 'business',
-    name: 'coordinator',
+    name: 'company-coordinator',
+    title: 'coordinator',
   },
   {
-    url: '/profil',
+    url: '',
     icon: 'account_circle',
     name: 'profile',
+    title: 'profile',
   },
 ];
 
 export const menuBottom: Link[] = [
   {
-    url: '/invite',
+    url: '',
     icon: 'email',
-    name: 'inviteFriends',
+    name: 'invite',
+    title: 'inviteFriends',
   },
   {
-    url: '/routes',
+    url: '',
     icon: 'volunteer_activism',
     name: 'donate',
+    title: 'donate',
   },
 ];
 
