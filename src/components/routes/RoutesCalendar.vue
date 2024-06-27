@@ -6,7 +6,7 @@
  * This component is used on `RoutesPage` in `RouteTabs` component.
  *
  * @components
- * - `CHILD`: Component to ... .
+ * - `RoutesCalendarNavigation`: Component to render navigation buttons.
  *
  * @example
  * <routes-calendar />
@@ -18,11 +18,17 @@
 import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
 
+// components
+import RoutesCalendarNavigation from './RoutesCalendarNavigation.vue';
+
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
 
 export default defineComponent({
   name: 'RoutesCalendar',
+  components: {
+    RoutesCalendarNavigation,
+  },
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref(today());
@@ -108,38 +114,12 @@ export default defineComponent({
 <template>
   <div data-cy="routes-calendar">
     <!-- Navigation bar -->
-    <div class="row flex items-center justify-end gap-16 q-mt-md">
-      <q-btn
-        unelevated
-        rounded
-        color="primary"
-        :label="$t('time.today')"
-        @click="onToday"
-        data-cy="routes-calendar-navigation-today"
-      />
-      <div class="flex gap-8">
-        <q-btn
-          unelevated
-          round
-          outline
-          size="12px"
-          @click="onPrev"
-          data-cy="routes-calendar-navigation-prev"
-        >
-          <q-icon name="arrow_back" size="18px" />
-        </q-btn>
-        <q-btn
-          unelevated
-          round
-          outline
-          size="12px"
-          @click="onNext"
-          data-cy="routes-calendar-navigation-next"
-        >
-          <q-icon name="arrow_forward" size="18px" />
-        </q-btn>
-      </div>
-    </div>
+    <routes-calendar-navigation
+      @next="onNext"
+      @prev="onPrev"
+      @today="onToday"
+      class="q-mt-md"
+    />
     <!-- Calendar -->
     <div class="row justify-center q-mt-lg">
       <q-calendar-month
