@@ -65,7 +65,7 @@ export default defineComponent({
      * Handles member selection.
      * If all members are selected, team is selected.
      * If all members are deselected, team is deselected.
-     * @returns void
+     * @return void
      */
     const onChangeMember = (): void => {
       // wait for next tick to get the updated value after emitting
@@ -82,7 +82,7 @@ export default defineComponent({
      * Handles team selection.
      * If team is not selected, all members are deselected.
      * If team is selected, all members are selected.
-     * @returns void
+     * @return void
      */
     const onChangeTeam = (): void => {
       if (!isSelectedTeam.value) {
