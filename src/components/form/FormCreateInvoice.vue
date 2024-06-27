@@ -110,7 +110,7 @@ export default defineComponent({
             }}</span>
           </p>
         </template>
-        <!-- Comapny ID -->
+        <!-- Business ID -->
         <p
           class="q-mb-xs"
           v-if="organization?.identificationNumber"
@@ -119,7 +119,7 @@ export default defineComponent({
           {{ $t('form.labelBusinessId') }}:
           {{ organization.identificationNumber }}
         </p>
-        <!-- VAT ID -->
+        <!-- Tax ID -->
         <p
           class="q-mb-xs"
           v-if="organization?.identificationNumberVat"
