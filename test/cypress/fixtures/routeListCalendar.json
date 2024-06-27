@@ -1,0 +1,56 @@
+[
+  {
+    "id": "10001",
+    "date": "2024-06-27",
+    "toWork": {
+      "id": "00001",
+      "date": "2024-06-27",
+      "transport": "bike",
+      "distance": 20,
+      "direction": "to_work"
+    },
+    "fromWork": {
+      "id": "00002",
+      "date": "2024-06-27",
+      "transport": "bike",
+      "distance": 5,
+      "direction": "from_work"
+    }
+  },
+  {
+    "id": "10002",
+    "date": "2024-06-28",
+    "toWork": {
+      "id": "00001",
+      "date": "2024-06-28",
+      "transport": "bike",
+      "distance": 21,
+      "direction": "to_work"
+    },
+    "fromWork": {
+      "id": "00002",
+      "date": "2024-06-28",
+      "transport": "bike",
+      "distance": 19,
+      "direction": "from_work"
+    }
+  },
+  {
+    "id": "10003",
+    "date": "2024-06-26",
+    "toWork": {
+      "id": "00001",
+      "date": "2024-06-26",
+      "transport": "bike",
+      "distance": 20,
+      "direction": "to_work"
+    },
+    "fromWork": {
+      "id": "",
+      "date": "",
+      "transport": "",
+      "distance": 0,
+      "direction": ""
+    }
+  }
+]

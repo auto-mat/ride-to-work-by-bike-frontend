@@ -2,20 +2,8 @@
 /**
  * RoutesCalendar Component
  *
- * @description * Use this component to ... .
- * You can adjust its appearance by ... .
- *
- * @props
- * - `NAME` (TYPE, required): The object representing ... .
- *   It should be of type `TYPE`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
+ * @description * Use this component to render a calendar for logging routes.
+ * This component is used on `RoutesPage` in `RouteTabs` component.
  *
  * @components
  * - `CHILD`: Component to ... .
@@ -23,26 +11,33 @@
  * @example
  * <routes-calendar />
  *
- * @see [Figma Design](...)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104006&t=kwUDasKoJ1urpPut-1)
  */
 
 // libraries
-import {
-  QCalendarMonth,
-  addToDate,
-  parseDate,
-  parseTimestamp,
-  today,
-} from '@quasar/quasar-ui-qcalendar';
+import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
+
+// fixtures
+import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
 
 export default defineComponent({
   name: 'RoutesCalendar',
-  components: {
-    QCalendarMonth,
-  },
   setup() {
-    const calendarRef = ref<typeof QCalendarMonth | null>(null);
+    const calendar = ref<typeof QCalendarMonth | null>(null);
+    const selectedDate = ref(today());
+
+    // Get data
+    const routes = routesListCalendarFixture;
+    const routesMap = computed(() => {
+      const routesObject = {};
+      if (routes.length > 0) {
+        routes.forEach((route) => {
+          routesObject[route.date] = route;
+        });
+      }
+      return routesObject;
+    });
 
     // TODO: remove example functions
     function onMoved(data) {
@@ -78,187 +73,20 @@ export default defineComponent({
 
     // TODO: Currently, the calendar registers new date but does not re-render.
     function onToday() {
-      calendarRef.value && calendarRef.value.moveToToday();
+      calendar.value?.moveToToday();
     }
     function onPrev() {
-      calendarRef.value && calendarRef.value.prev();
+      calendar.value?.prev();
     }
     function onNext() {
-      calendarRef.value && calendarRef.value.next();
-    }
-
-    // TODO: remove example data
-    // The function below is used to set up our demo data
-    const CURRENT_DAY = new Date();
-    function getCurrentDay(day: number) {
-      const newDay = new Date(CURRENT_DAY);
-      newDay.setDate(day);
-      const tm = parseDate(newDay);
-      return tm ? tm.date : '';
-    }
-    const events = [
-      {
-        id: 1,
-        title: '1st of the Month',
-        details:
-          'Everything is funny as long as it is happening to someone else',
-        date: getCurrentDay(1),
-        bgcolor: 'orange',
-      },
-      {
-        id: 2,
-        title: 'Sisters Birthday',
-        details: 'Buy a nice present',
-        date: getCurrentDay(4),
-        bgcolor: 'green',
-        icon: 'fas fa-birthday-cake',
-      },
-      {
-        id: 3,
-        title: 'Meeting',
-        details: 'Time to pitch my idea to the company',
-        date: getCurrentDay(10),
-        time: '10:00',
-        duration: 120,
-        bgcolor: 'red',
-        icon: 'fas fa-handshake',
-      },
-      {
-        id: 4,
-        title: 'Lunch',
-        details: 'Company is paying!',
-        date: getCurrentDay(10),
-        time: '11:30',
-        duration: 90,
-        bgcolor: 'teal',
-        icon: 'fas fa-hamburger',
-      },
-      {
-        id: 5,
-        title: 'Visit mom',
-        details: 'Always a nice chat with mom',
-        date: getCurrentDay(20),
-        time: '17:00',
-        duration: 90,
-        bgcolor: 'grey',
-        icon: 'fas fa-car',
-      },
-      {
-        id: 6,
-        title: 'Conference',
-        details: 'Teaching Javascript 101',
-        date: getCurrentDay(22),
-        time: '08:00',
-        duration: 540,
-        bgcolor: 'blue',
-        icon: 'fas fa-chalkboard-teacher',
-      },
-      {
-        id: 7,
-        title: 'Girlfriend',
-        details: 'Meet GF for dinner at Swanky Restaurant',
-        date: getCurrentDay(22),
-        time: '19:00',
-        duration: 180,
-        bgcolor: 'teal',
-        icon: 'fas fa-utensils',
-      },
-      {
-        id: 8,
-        title: 'Rowing',
-        details: 'Stay in shape!',
-        date: getCurrentDay(27),
-        bgcolor: 'purple',
-        icon: 'rowing',
-        days: 2,
-      },
-      {
-        id: 9,
-        title: 'Fishing',
-        details: 'Time for some weekend R&R',
-        date: getCurrentDay(27),
-        bgcolor: 'purple',
-        icon: 'fas fa-fish',
-        days: 2,
-      },
-      {
-        id: 10,
-        title: 'Vacation',
-        details:
-          "Trails and hikes, going camping! Don't forget to bring bear spray!",
-        date: getCurrentDay(29),
-        bgcolor: 'purple',
-        icon: 'fas fa-plane',
-        days: 5,
-      },
-    ];
-    const eventsMap = computed(() => {
-      const map = {};
-      if (events.length > 0) {
-        events.forEach((event) => {
-          (map[event.date] = map[event.date] || []).push(event);
-          if (event.days !== undefined) {
-            let timestamp = parseTimestamp(event.date);
-            let days = event.days;
-            // add a new event for each day
-            // skip 1st one which would have been done above
-            do {
-              timestamp = addToDate(timestamp, { day: 1 });
-              if (!map[timestamp.date]) {
-                map[timestamp.date] = [];
-              }
-              map[timestamp.date].push(event);
-              // already accounted for 1st day
-            } while (--days > 1);
-          }
-        });
-      }
-      console.log(map);
-      return map;
-    });
-
-    // TODO: remove example function
-    function badgeClasses(event) {
-      return {
-        [`text-white bg-${event.bgcolor}`]: true,
-        'rounded-border': true,
-      };
-    }
-
-    // TODO: remove example function
-    function badgeStyles() {
-      const s = {};
-      // s.left = day.weekday === 0 ? 0 : (day.weekday * this.parsedCellWidth) + '%'
-      // s.top = 0
-      // s.bottom = 0
-      // s.width = (event.days * this.parsedCellWidth) + '%'
-      return s;
+      calendar.value?.next();
     }
 
     return {
-      calendarRef,
-      selectedDate: today(),
-      dateAlign: 'center',
-      weekdayAlign: 'center',
-      dateHeader: 'stacked',
-      leftColumnOptions: [
-        {
-          id: 'overdue',
-          label: 'Overdue',
-        },
-      ],
-      rightColumnOptions: [
-        {
-          id: 'summary',
-          label: 'Summary',
-        },
-      ],
-      eventsMap,
+      calendar,
+      selectedDate,
+      routesMap,
 
-      badgeClasses,
-      badgeStyles,
-
-      onMoved,
       onChange,
       onClickDate,
       onClickDay,
@@ -268,10 +96,10 @@ export default defineComponent({
       onClickHeadDay,
       onClickHeadWorkweek,
       onClickWorkweek,
-
-      onToday,
-      onPrev,
+      onMoved,
       onNext,
+      onPrev,
+      onToday,
     };
   },
 });
@@ -315,7 +143,7 @@ export default defineComponent({
     <!-- Calendar -->
     <div class="row justify-center q-mt-lg">
       <q-calendar-month
-        ref="calendarRef"
+        ref="calendar"
         v-model="selectedDate"
         animated
         bordered
@@ -328,7 +156,6 @@ export default defineComponent({
         date-align="right"
         date-type="rounded"
         :day-min-height="100"
-        :day-height="0"
         @change="onChange"
         @moved="onMoved"
         @click-date="onClickDate"
@@ -343,7 +170,7 @@ export default defineComponent({
             <div class="q-my-sm">
               <!-- Route is already logged: Display and allow editing (within bounds) -->
               <q-item
-                v-if="!!eventsMap[timestamp.date]"
+                v-if="!!routesMap[timestamp.date]?.toWork.id"
                 dense
                 clickable
                 v-ripple
@@ -363,10 +190,11 @@ export default defineComponent({
                   />
                 </svg>
                 <q-icon color="primary" name="pedal_bike" size="18px" />
-                <span class="relative-position text-caption text-grey-10"
-                  >20 km</span
-                >
+                <span class="relative-position text-caption text-grey-10">
+                  {{ routesMap[timestamp.date]?.toWork.distance }} km
+                </span>
               </q-item>
+              <!-- Route is not logged -->
               <q-item
                 v-else
                 dense
@@ -394,7 +222,7 @@ export default defineComponent({
             <div class="q-my-sm">
               <!-- Route is already logged: Display and allow editing (within bounds) -->
               <q-item
-                v-if="!!eventsMap[timestamp.date]"
+                v-if="!!routesMap[timestamp.date]?.fromWork.id"
                 dense
                 clickable
                 v-ripple
@@ -415,7 +243,7 @@ export default defineComponent({
                 </svg>
                 <q-icon color="primary" name="pedal_bike" size="18px" />
                 <span class="relative-position text-caption text-grey-10"
-                  >20 km</span
+                  >{{ routesMap[timestamp.date]?.fromWork.distance }} km</span
                 >
               </q-item>
               <q-item
@@ -442,22 +270,6 @@ export default defineComponent({
               </q-item>
             </div>
           </div>
-
-          <!-- <template
-            v-for="event in eventsMap[timestamp.date]"
-            :key="event.id"
-          >
-            <div
-              :class="badgeClasses(event, 'day')"
-              :style="badgeStyles(event, 'day')"
-              class="my-event"
-            >
-              <div class="title q-calendar__ellipsis">
-                {{ event.title + (event.time ? ' - ' + event.time : '') }}
-                <q-tooltip>{{ event.details }}</q-tooltip>
-              </div>
-            </div>
-          </template> -->
         </template>
       </q-calendar-month>
     </div>
