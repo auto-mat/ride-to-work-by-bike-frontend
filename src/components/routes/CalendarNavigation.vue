@@ -10,7 +10,7 @@
  * - `today`: Move to today.
  *
  * @example
- * <routes-calendar-navigation />
+ * <calendar-navigation />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=8279-39418&t=baRxKn3ERzsqCVyl-1)
  */
@@ -19,7 +19,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'RoutesCalendarNavigation',
+  name: 'CalendarNavigation',
   emits: ['next', 'prev', 'today'],
   setup(props, { emit }) {
     const onToday = () => {
@@ -46,7 +46,7 @@ export default defineComponent({
 <template>
   <div
     class="row flex items-center justify-end gap-16"
-    data-cy="routes-calendar-navigation"
+    data-cy="calendar-navigation"
   >
     <!-- Button: today -->
     <q-btn
@@ -55,7 +55,7 @@ export default defineComponent({
       color="primary"
       :label="$t('time.today')"
       @click="onToday"
-      data-cy="routes-calendar-navigation-today"
+      data-cy="calendar-navigation-today"
     />
     <div class="flex gap-8">
       <!-- Button: previous -->
@@ -65,12 +65,12 @@ export default defineComponent({
         outline
         size="12px"
         @click="onPrev"
-        data-cy="routes-calendar-navigation-previous"
+        data-cy="calendar-navigation-previous"
       >
         <q-icon
           name="arrow_back"
           size="18px"
-          data-cy="routes-calendar-navigation-prev"
+          data-cy="calendar-navigation-prev"
         />
       </q-btn>
       <!-- Button: next -->
@@ -80,12 +80,12 @@ export default defineComponent({
         outline
         size="12px"
         @click="onNext"
-        data-cy="routes-calendar-navigation-next"
+        data-cy="calendar-navigation-next"
       >
         <q-icon
           name="arrow_forward"
           size="18px"
-          data-cy="routes-calendar-navigation-next"
+          data-cy="calendar-navigation-next"
         />
       </q-btn>
     </div>

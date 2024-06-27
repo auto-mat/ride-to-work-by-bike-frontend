@@ -1,14 +1,14 @@
-import RoutesCalendarNavigation from 'components/routes/RoutesCalendarNavigation.vue';
+import CalendarNavigation from 'components/routes/CalendarNavigation.vue';
 import { i18n } from '../../boot/i18n';
 
-describe('<RoutesCalendarNavigation>', () => {
+describe('<CalendarNavigation>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['today'], 'time', i18n);
   });
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(RoutesCalendarNavigation, {
+      cy.mount(CalendarNavigation, {
         props: {},
       });
       cy.viewport('macbook-16');
@@ -19,7 +19,7 @@ describe('<RoutesCalendarNavigation>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(RoutesCalendarNavigation, {
+      cy.mount(CalendarNavigation, {
         props: {},
       });
       cy.viewport('iphone-6');
@@ -31,26 +31,26 @@ describe('<RoutesCalendarNavigation>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy('routes-calendar-navigation').should('be.visible');
+    cy.dataCy('calendar-navigation').should('be.visible');
     // button today
-    cy.dataCy('routes-calendar-navigation-today')
+    cy.dataCy('calendar-navigation-today')
       .should('be.visible')
       .and('contain', i18n.global.t('time.today'));
     // button previous
-    cy.dataCy('routes-calendar-navigation-previous')
+    cy.dataCy('calendar-navigation-previous')
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 36);
-    cy.dataCy('routes-calendar-navigation-previous')
+    cy.dataCy('calendar-navigation-previous')
       .should('be.visible')
       .invoke('height')
       .should('be.eq', 36);
     // button next
-    cy.dataCy('routes-calendar-navigation-next')
+    cy.dataCy('calendar-navigation-next')
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 36);
-    cy.dataCy('routes-calendar-navigation-next')
+    cy.dataCy('calendar-navigation-next')
       .should('be.visible')
       .invoke('height')
       .should('be.eq', 36);

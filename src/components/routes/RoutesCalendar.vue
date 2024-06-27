@@ -6,7 +6,7 @@
  * This component is used on `RoutesPage` in `RouteTabs` component.
  *
  * @components
- * - `RoutesCalendarNavigation`: Component to render navigation buttons.
+ * - `CalendarNavigation`: Component to render navigation buttons.
  *
  * @example
  * <routes-calendar />
@@ -19,7 +19,7 @@ import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
 
 // components
-import RoutesCalendarNavigation from './RoutesCalendarNavigation.vue';
+import CalendarNavigation from './CalendarNavigation.vue';
 
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
@@ -27,7 +27,7 @@ import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListC
 export default defineComponent({
   name: 'RoutesCalendar',
   components: {
-    RoutesCalendarNavigation,
+    CalendarNavigation,
   },
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
@@ -114,7 +114,7 @@ export default defineComponent({
 <template>
   <div data-cy="routes-calendar">
     <!-- Navigation bar -->
-    <routes-calendar-navigation
+    <calendar-navigation
       @next="onNext"
       @prev="onPrev"
       @today="onToday"
@@ -255,49 +255,3 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-.my-event
-  position: relative
-  font-size: 12px
-  width: 100%
-  margin: 1px 0 0 0
-  justify-content: center
-  text-overflow: ellipsis
-  overflow: hidden
-  cursor: pointer
-
-.title
-  position: relative
-  display: flex
-  justify-content: center
-  align-items: center
-  height: 100%
-
-.text-white
-  color: white
-
-.bg-blue
-  background: blue
-
-.bg-green
-  background: green
-
-.bg-orange
-  background: orange
-
-.bg-red
-  background: red
-
-.bg-teal
-  background: teal
-
-.bg-grey
-  background: grey
-
-.bg-purple
-  background: purple
-
-.rounded-border
-  border-radius: 2px
-</style>
