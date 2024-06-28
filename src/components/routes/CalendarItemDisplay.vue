@@ -206,6 +206,7 @@ export default defineComponent({
           </svg>
         </q-icon>
       </template>
+
       <!-- Content: Route logged -->
       <template v-if="route && route.id">
         <!-- Icon: Transport type -->
@@ -213,11 +214,13 @@ export default defineComponent({
           :color="active ? 'white' : 'primary'"
           :name="getRouteIcon(route.transport)"
           size="18px"
+          data-cy="calendar-item-icon-transport"
         />
         <!-- Distance -->
         <span
           class="relative-position text-caption"
           :class="[active ? 'text-white' : 'text-primary']"
+          data-cy="calendar-item-distance"
         >
           {{ route.distance }} km
         </span>
