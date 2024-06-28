@@ -92,10 +92,23 @@ export default defineComponent({
     }
 
     const activeItem = ref<Timestamp | null>(null);
+    const activeDirection = ref<'toWork' | 'fromWork'>('toWork');
+    const isActive = ({
+      timestamp,
+      direction,
+    }: {
+      timestamp: Timestamp;
+      direction: 'toWork' | 'fromWork';
+    }): boolean => {
+      if (!timestamp || !direction) return false;
+      return (
+        activeItem.value.date === timestamp.date &&
+        activeDirection.value === direction
+      );
+    };
     function onClickItem(payload) {
-      console.log(payload);
       activeItem.value = payload.timestamp;
-      console.log('clickitem', payload);
+      activeDirection.value = payload.direction;
     }
 
     return {
@@ -104,6 +117,7 @@ export default defineComponent({
       selectedDate,
       routesMap,
 
+      isActive,
       onChange,
       onClickDate,
       onClickDay,
@@ -160,7 +174,7 @@ export default defineComponent({
           <div class="q-my-sm">
             <!-- Route to work -->
             <calendar-item-display
-              :active="activeItem === timestamp"
+              :active="isActive({ timestamp, direction: 'toWork' })"
               direction="toWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
@@ -168,7 +182,7 @@ export default defineComponent({
             />
             <!-- Route from work -->
             <calendar-item-display
-              :active="activeItem === timestamp"
+              :active="isActive({ timestamp, direction: 'fromWork' })"
               direction="fromWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
