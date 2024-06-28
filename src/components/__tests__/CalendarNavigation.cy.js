@@ -1,5 +1,11 @@
+import { colors } from 'quasar';
 import CalendarNavigation from 'components/routes/CalendarNavigation.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+const { getPaletteColor } = colors;
+const primary = getPaletteColor('primary');
+const borderRadius = rideToWorkByBikeConfig.borderRadiusButtonSmall;
 
 describe('<CalendarNavigation>', () => {
   it('has translation for all strings', () => {
@@ -35,8 +41,11 @@ function coreTests() {
     // button today
     cy.dataCy('calendar-navigation-today')
       .should('be.visible')
+      .and('have.css', 'border-radius', borderRadius)
+      .and('have.color', primary)
       .and('contain', i18n.global.t('time.today'));
     // button previous
+    cy.dataCy('calendar-navigation-previous').should('have.color', primary);
     cy.dataCy('calendar-navigation-previous')
       .should('be.visible')
       .invoke('width')
@@ -46,6 +55,7 @@ function coreTests() {
       .invoke('height')
       .should('be.eq', 36);
     // button next
+    cy.dataCy('calendar-navigation-next').should('have.color', primary);
     cy.dataCy('calendar-navigation-next')
       .should('be.visible')
       .invoke('width')

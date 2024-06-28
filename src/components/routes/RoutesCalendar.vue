@@ -105,8 +105,9 @@ export default defineComponent({
         !direction ||
         !activeItem.value ||
         !activeDirection.value
-      )
+      ) {
         return false;
+      }
       return (
         activeItem.value.date === timestamp.date &&
         activeDirection.value === direction
@@ -122,7 +123,6 @@ export default defineComponent({
       calendar,
       selectedDate,
       routesMap,
-
       isActive,
       onChange,
       onClickDate,

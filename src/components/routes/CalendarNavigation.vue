@@ -18,6 +18,9 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 export default defineComponent({
   name: 'CalendarNavigation',
   emits: ['next', 'prev', 'today'],
@@ -34,7 +37,10 @@ export default defineComponent({
       emit('prev');
     };
 
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusButtonSmall;
+
     return {
+      borderRadius,
       onToday,
       onNext,
       onPrev,
@@ -52,10 +58,12 @@ export default defineComponent({
     <q-btn
       unelevated
       rounded
-      color="primary"
+      color="indigo-2"
+      text-color="primary"
       :label="$t('time.today')"
       @click="onToday"
       data-cy="calendar-navigation-today"
+      :style="{ 'border-radius': borderRadius }"
     />
     <div class="flex gap-8">
       <!-- Button: previous -->
@@ -64,11 +72,13 @@ export default defineComponent({
         round
         outline
         size="12px"
+        color="primary"
         @click="onPrev"
         data-cy="calendar-navigation-previous"
       >
         <q-icon
           name="arrow_back"
+          color="primary"
           size="18px"
           data-cy="calendar-navigation-prev"
         />
@@ -79,11 +89,13 @@ export default defineComponent({
         round
         outline
         size="12px"
+        color="primary"
         @click="onNext"
         data-cy="calendar-navigation-next"
       >
         <q-icon
           name="arrow_forward"
+          color="primary"
           size="18px"
           data-cy="calendar-navigation-next"
         />
