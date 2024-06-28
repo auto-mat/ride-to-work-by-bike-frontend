@@ -16,7 +16,7 @@
  */
 
 // libraries
-import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
+import { parsed, QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
 
 // components
@@ -91,7 +91,7 @@ export default defineComponent({
       calendar.value?.next();
     }
 
-    const activeItem = ref<Timestamp | null>(null);
+    const activeItem = ref<Timestamp>(parsed(today()));
     const activeDirection = ref<'toWork' | 'fromWork'>('toWork');
     const isActive = ({
       timestamp,
@@ -100,7 +100,13 @@ export default defineComponent({
       timestamp: Timestamp;
       direction: 'toWork' | 'fromWork';
     }): boolean => {
-      if (!timestamp || !direction) return false;
+      if (
+        !timestamp ||
+        !direction ||
+        !activeItem.value ||
+        !activeDirection.value
+      )
+        return false;
       return (
         activeItem.value.date === timestamp.date &&
         activeDirection.value === direction
