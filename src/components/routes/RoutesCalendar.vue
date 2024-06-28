@@ -23,6 +23,10 @@ import { defineComponent, computed, ref } from 'vue';
 import CalendarItemDisplay from './CalendarItemDisplay.vue';
 import CalendarNavigation from './CalendarNavigation.vue';
 
+// types
+import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
+import type { RouteCalendarDay, TransportDirection } from '../types/Route';
+
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
 
@@ -34,15 +38,16 @@ export default defineComponent({
   },
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
-    const selectedDate = ref(today());
+    const selectedDate = ref<string>(today());
 
     // Get data
-    const routes = routesListCalendarFixture;
-    const routesMap = computed(() => {
-      const routesObject = {};
+    const routes: RouteCalendarDay[] =
+      routesListCalendarFixture as RouteCalendarDay[];
+    const routesMap = computed((): Record<string, RouteCalendarDay> => {
+      const routesObject = {} as Record<string, RouteCalendarDay>;
       if (routes.length > 0) {
         routes.forEach((route) => {
-          routesObject[route.date] = { ...route, active: false };
+          routesObject[route.date] = route;
         });
       }
       return routesObject;
@@ -91,15 +96,15 @@ export default defineComponent({
       calendar.value?.next();
     }
 
-    const activeItem = ref<Timestamp>(parsed(today()));
-    const activeDirection = ref<'toWork' | 'fromWork'>('toWork');
-    const isActive = ({
+    const activeItem = ref<Timestamp | null>(parsed(today()));
+    const activeDirection = ref<TransportDirection>('toWork');
+    function isActive({
       timestamp,
       direction,
     }: {
       timestamp: Timestamp;
-      direction: 'toWork' | 'fromWork';
-    }): boolean => {
+      direction: TransportDirection;
+    }): boolean {
       if (
         !timestamp ||
         !direction ||
@@ -112,10 +117,16 @@ export default defineComponent({
         activeItem.value.date === timestamp.date &&
         activeDirection.value === direction
       );
-    };
-    function onClickItem(payload) {
-      activeItem.value = payload.timestamp;
-      activeDirection.value = payload.direction;
+    }
+    function onClickItem({
+      timestamp,
+      direction,
+    }: {
+      timestamp: Timestamp;
+      direction: TransportDirection;
+    }): void {
+      activeItem.value = timestamp;
+      activeDirection.value = direction;
     }
 
     return {

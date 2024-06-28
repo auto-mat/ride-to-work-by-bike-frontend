@@ -7,14 +7,14 @@
       "date": "2024-06-27",
       "transport": "bike",
       "distance": 20,
-      "direction": "to_work"
+      "direction": "toWork"
     },
     "fromWork": {
       "id": "00002",
       "date": "2024-06-27",
       "transport": "bike",
       "distance": 5,
-      "direction": "from_work"
+      "direction": "fromWork"
     }
   },
   {
@@ -25,14 +25,14 @@
       "date": "2024-06-28",
       "transport": "bike",
       "distance": 21,
-      "direction": "to_work"
+      "direction": "toWork"
     },
     "fromWork": {
       "id": "00002",
       "date": "2024-06-28",
       "transport": "bike",
       "distance": 19,
-      "direction": "from_work"
+      "direction": "fromWork"
     }
   },
   {
@@ -43,7 +43,7 @@
       "date": "2024-06-26",
       "transport": "bike",
       "distance": 20,
-      "direction": "to_work"
+      "direction": "toWork"
     },
     "fromWork": {
       "id": "",

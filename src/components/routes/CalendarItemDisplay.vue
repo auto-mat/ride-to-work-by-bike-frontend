@@ -8,18 +8,25 @@
  * props. Each shows arrow pointing in a different direction.
  *
  * @props
- * - `route` (Route): The object representing the associated route.
- *   It should be of type `Route`. It can be null or undefined.
+ * - `day` (RouteCalendarDay, default - null): The object representing the associated route.
+ *   It should be of type `RouteCalendarDay`.
  * - `toWork` (boolean, optional): Whether the route is to work.
  * - `fromWork` (boolean, optional): Whether the route is from work.
  * - `active` (boolean, optional): Whether the route is active (currently
  *   being edited).
  *
  * @events
- * - `click`: Register click on item.
+ * - `item-click`: Emitted when the item is clicked.
+ *   payload:
+ *     - `direction` (TransportDirection): The direction of the route.
+ *     - `timestamp` (Timestamp): The timestamp of the route.
  *
  * @example
- * <calendar-item />
+ * <calendar-item
+ *  direction="toWork"
+ *  :day="routeCalendarDay"
+ *  :timestamp="timestamp"
+ * />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=8279-39418&t=baRxKn3ERzsqCVyl-1)
  */
@@ -27,19 +34,27 @@
 // libraries
 import { computed, defineComponent } from 'vue';
 
+// types
+import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
+import type {
+  RouteCalendarDay,
+  RouteItem,
+  TransportDirection,
+} from '../types/Route';
+
 export default defineComponent({
   name: 'CalendarItemDisplay',
   props: {
     day: {
-      type: Object,
+      type: Object as () => RouteCalendarDay | null,
       default: null,
     },
     direction: {
-      type: String as () => 'toWork' | 'fromWork',
+      type: String as () => TransportDirection,
       required: true,
     },
     timestamp: {
-      type: Object,
+      type: Object as () => Timestamp,
       required: true,
     },
     active: {
@@ -49,14 +64,14 @@ export default defineComponent({
   },
   emits: ['item-click'],
   setup(props, { emit }) {
-    const onClick = (): void => {
+    function onClick(): void {
       emit('item-click', {
         timestamp: props.timestamp,
         direction: props.direction,
       });
-    };
+    }
 
-    const route = computed(() => {
+    const route = computed((): RouteItem | null => {
       if (!props.day) return null;
       return props.day[props.direction] ? props.day[props.direction] : null;
     });
