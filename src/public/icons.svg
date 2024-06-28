@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="arrow-route-to" viewBox="0 0 24 24">
+    <path fill="currentColor" fill-rule="evenodd" d="M8.857 0a8 8 0 0 0-8 8v22a8 8 0 0 0 8 8h99.2l26.8-19-26.8-19h-99.2Z" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="arrow-route-from" viewBox="0 0 24 24">
+    <path fill="currentColor" fill-rule="evenodd" d="M126.857 0a8 8 0 0 1 8 8v22a8 8 0 0 1-8 8h-99.2L.857 19l26.8-19h99.2Z" clip-rule="evenodd"/>
+  </symbol>
+</svg>

@@ -7,6 +7,7 @@
  *
  * @components
  * - `CalendarNavigation`: Component to render navigation buttons.
+ * - `CalendarItemDisplay`: Component to render calendar items.
  *
  * @example
  * <routes-calendar />
@@ -19,6 +20,7 @@ import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
 
 // components
+import CalendarItemDisplay from './CalendarItemDisplay.vue';
 import CalendarNavigation from './CalendarNavigation.vue';
 
 // fixtures
@@ -27,6 +29,7 @@ import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListC
 export default defineComponent({
   name: 'RoutesCalendar',
   components: {
+    CalendarItemDisplay,
     CalendarNavigation,
   },
   setup() {
@@ -39,7 +42,7 @@ export default defineComponent({
       const routesObject = {};
       if (routes.length > 0) {
         routes.forEach((route) => {
-          routesObject[route.date] = route;
+          routesObject[route.date] = { ...route, active: false };
         });
       }
       return routesObject;
@@ -88,7 +91,15 @@ export default defineComponent({
       calendar.value?.next();
     }
 
+    const activeItem = ref<Timestamp | null>(null);
+    function onClickItem(payload) {
+      console.log(payload);
+      activeItem.value = payload.timestamp;
+      console.log('clickitem', payload);
+    }
+
     return {
+      activeItem,
       calendar,
       selectedDate,
       routesMap,
@@ -98,6 +109,7 @@ export default defineComponent({
       onClickDay,
       onClickTime,
       onClickInterval,
+      onClickItem,
       onClickHeadIntervals,
       onClickHeadDay,
       onClickHeadWorkweek,
@@ -147,108 +159,21 @@ export default defineComponent({
         <template #day="{ scope: { timestamp } }">
           <div class="q-my-sm">
             <!-- Route to work -->
-            <div class="q-my-sm">
-              <!-- Route is already logged: Display and allow editing (within bounds) -->
-              <q-item
-                v-if="!!routesMap[timestamp.date]?.toWork.id"
-                dense
-                clickable
-                v-ripple
-                class="relative-position flex justify-center items-center text-center gap-8"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="full-width full-height absolute-full"
-                  fill="none"
-                  viewBox="0 0 114 38"
-                >
-                  <path
-                    fill="#E6EBF5"
-                    fill-rule="evenodd"
-                    d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <q-icon color="primary" name="pedal_bike" size="18px" />
-                <span class="relative-position text-caption text-grey-10">
-                  {{ routesMap[timestamp.date]?.toWork.distance }} km
-                </span>
-              </q-item>
-              <!-- Route is not logged -->
-              <q-item
-                v-else
-                dense
-                clickable
-                v-ripple
-                class="relative-position flex justify-center items-center text-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="full-width full-height absolute-full"
-                  fill="none"
-                  viewBox="0 0 114 38"
-                >
-                  <path
-                    fill="#E6EBF5"
-                    fill-rule="evenodd"
-                    d="M91.2 0H0v38h91.2L114 19 91.2 0Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <q-icon color="grey-6" name="mdi-plus" size="18px" />
-              </q-item>
-            </div>
+            <calendar-item-display
+              :active="activeItem === timestamp"
+              direction="toWork"
+              :day="routesMap[timestamp.date]"
+              :timestamp="timestamp"
+              @item-click="onClickItem"
+            />
             <!-- Route from work -->
-            <div class="q-my-sm">
-              <!-- Route is already logged: Display and allow editing (within bounds) -->
-              <q-item
-                v-if="!!routesMap[timestamp.date]?.fromWork.id"
-                dense
-                clickable
-                v-ripple
-                class="relative-position flex justify-center items-center text-center gap-8"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="full-width full-height absolute-full"
-                  fill="none"
-                  viewBox="0 0 114 38"
-                >
-                  <path
-                    fill="#E6EBF5"
-                    fill-rule="evenodd"
-                    d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <q-icon color="primary" name="pedal_bike" size="18px" />
-                <span class="relative-position text-caption text-grey-10"
-                  >{{ routesMap[timestamp.date]?.fromWork.distance }} km</span
-                >
-              </q-item>
-              <q-item
-                v-else
-                dense
-                clickable
-                v-ripple
-                class="relative-position flex justify-center items-center text-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="full-width full-height absolute-full"
-                  fill="none"
-                  viewBox="0 0 114 38"
-                >
-                  <path
-                    fill="#E6EBF5"
-                    fill-rule="evenodd"
-                    d="M22.8 0H114v38H22.8L0 19 22.8 0Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <q-icon color="grey-6" name="mdi-plus" size="18px" />
-              </q-item>
-            </div>
+            <calendar-item-display
+              :active="activeItem === timestamp"
+              direction="fromWork"
+              :day="routesMap[timestamp.date]"
+              :timestamp="timestamp"
+              @item-click="onClickItem"
+            />
           </div>
         </template>
       </q-calendar-month>
