@@ -40,52 +40,7 @@ export default defineComponent({
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
 
-    // Get data
-    const routes: RouteCalendarDay[] =
-      routesListCalendarFixture as RouteCalendarDay[];
-    const routesMap = computed((): Record<string, RouteCalendarDay> => {
-      const routesObject = {} as Record<string, RouteCalendarDay>;
-      if (routes.length > 0) {
-        routes.forEach((route) => {
-          routesObject[route.date] = route;
-        });
-      }
-      return routesObject;
-    });
-
-    // TODO: remove example functions
-    function onMoved(data) {
-      console.log('onMoved', data);
-    }
-    function onChange(data) {
-      console.log('onChange', data);
-    }
-    function onClickDate(data) {
-      console.log('onClickDate', data);
-    }
-    function onClickTime(data) {
-      console.log('onClickTime', data);
-    }
-    function onClickInterval(data) {
-      console.log('onClickInterval', data);
-    }
-    function onClickHeadIntervals(data) {
-      console.log('onClickHeadIntervals', data);
-    }
-    function onClickDay(data) {
-      console.log('onClickDay', data);
-    }
-    function onClickWorkweek(data) {
-      console.log('onClickWorkweek', data);
-    }
-    function onClickHeadDay(data) {
-      console.log('onClickHeadDay', data);
-    }
-    function onClickHeadWorkweek(data) {
-      console.log('onClickHeadWorkweek', data);
-    }
-
-    // TODO: Currently, the calendar registers new date but does not re-render.
+    // Calendar naviation functions
     function onToday() {
       calendar.value?.moveToToday();
     }
@@ -96,8 +51,35 @@ export default defineComponent({
       calendar.value?.next();
     }
 
+    // Get data
+    const routes: RouteCalendarDay[] =
+      routesListCalendarFixture as RouteCalendarDay[];
+
+    /**
+     * Computed property of the routes map.
+     * Contains an array of days - each with two routes:
+     * - to work
+     * - from work
+     */
+    const routesMap = computed((): Record<string, RouteCalendarDay> => {
+      const routesObject = {} as Record<string, RouteCalendarDay>;
+      if (routes.length > 0) {
+        routes.forEach((route) => {
+          routesObject[route.date] = route;
+        });
+      }
+      return routesObject;
+    });
+
+    // Active state
     const activeItem = ref<Timestamp | null>(parsed(today()));
     const activeDirection = ref<TransportDirection>('toWork');
+
+    /**
+     * Determines if route item is active.
+     * It checks if the timestamp and direction against a stored state.
+     * @param param0 { timestamp: Timestamp; direction: TransportDirection }
+     */
     function isActive({
       timestamp,
       direction,
@@ -118,6 +100,14 @@ export default defineComponent({
         activeDirection.value === direction
       );
     }
+
+    /**
+     * Handles click on route item within a day frame.
+     * It triggers active state on that day.
+     * It controls content of the route-logging dialog panel.
+     * @param param0 { timestamp: Timestamp; direction: TransportDirection }
+     * @returns void
+     */
     function onClickItem({
       timestamp,
       direction,
@@ -135,17 +125,7 @@ export default defineComponent({
       selectedDate,
       routesMap,
       isActive,
-      onChange,
-      onClickDate,
-      onClickDay,
-      onClickTime,
-      onClickInterval,
       onClickItem,
-      onClickHeadIntervals,
-      onClickHeadDay,
-      onClickHeadWorkweek,
-      onClickWorkweek,
-      onMoved,
       onNext,
       onPrev,
       onToday,
@@ -179,13 +159,6 @@ export default defineComponent({
         date-align="right"
         date-type="rounded"
         :day-min-height="100"
-        @change="onChange"
-        @moved="onMoved"
-        @click-date="onClickDate"
-        @click-day="onClickDay"
-        @click-workweek="onClickWorkweek"
-        @click-head-workweek="onClickHeadWorkweek"
-        @click-head-day="onClickHeadDay"
       >
         <template #day="{ scope: { timestamp } }">
           <div class="q-my-sm">
