@@ -1,7 +1,34 @@
+import { colors } from 'quasar';
 import CalendarItemDisplay from 'components/routes/CalendarItemDisplay.vue';
 
+const { getPaletteColor } = colors;
+
+const primary = getPaletteColor('primary');
+const white = getPaletteColor('white');
+
 describe('<CalendarItemDisplay>', () => {
-  context('toWork - active', () => {
+  context('toWork - logged active', () => {
+    beforeEach(() => {
+      cy.fixture('routeListCalendar').then((routeList) => {
+        const day = routeList[0];
+        cy.wrap(day).as('day');
+        cy.mount(CalendarItemDisplay, {
+          props: {
+            active: true,
+            direction: 'toWork',
+            day,
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    coreTests();
+
+    loggedTests({ active: true, direction: 'toWork' });
+  });
+
+  context('toWork - empty active', () => {
     beforeEach(() => {
       cy.mount(CalendarItemDisplay, {
         props: {
@@ -13,6 +40,8 @@ describe('<CalendarItemDisplay>', () => {
     });
 
     coreTests();
+
+    emptyTests({ active: true });
   });
 
   context('toWork - logged', () => {
@@ -32,18 +61,7 @@ describe('<CalendarItemDisplay>', () => {
 
     coreTests();
 
-    it('renders transport type', () => {
-      cy.dataCy('calendar-item-icon-transport').should('be.visible');
-      // TODO: test icon
-    });
-
-    it('renders distance', () => {
-      cy.get('@day').then((day) => {
-        cy.dataCy('calendar-item-distance')
-          .should('be.visible')
-          .and('contain', `${day.toWork.distance} km`);
-      });
-    });
+    loggedTests({ active: false, direction: 'toWork' });
   });
 
   context('toWork - empty', () => {
@@ -58,13 +76,31 @@ describe('<CalendarItemDisplay>', () => {
 
     coreTests();
 
-    it('renders plus icon', () => {
-      cy.dataCy('calendar-item-icon-plus').should('be.visible');
-      // TODO: test icon
-    });
+    emptyTests({ active: false });
   });
 
-  context('fromWork - active', () => {
+  context('fromWork - logged active', () => {
+    beforeEach(() => {
+      cy.fixture('routeListCalendar').then((routeList) => {
+        const day = routeList[0];
+        cy.wrap(day).as('day');
+        cy.mount(CalendarItemDisplay, {
+          props: {
+            active: true,
+            direction: 'fromWork',
+            day,
+          },
+        });
+        cy.viewport('iphone-6');
+      });
+    });
+
+    coreTests();
+
+    loggedTests({ active: true, direction: 'fromWork' });
+  });
+
+  context('fromWork - empty active', () => {
     beforeEach(() => {
       cy.mount(CalendarItemDisplay, {
         props: {
@@ -76,6 +112,8 @@ describe('<CalendarItemDisplay>', () => {
     });
 
     coreTests();
+
+    emptyTests({ active: true });
   });
 
   context('fromWork - logged', () => {
@@ -89,19 +127,13 @@ describe('<CalendarItemDisplay>', () => {
             day,
           },
         });
-        cy.viewport('iphone-6');
       });
+      cy.viewport('iphone-6');
     });
 
     coreTests();
 
-    it('renders distance', () => {
-      cy.get('@day').then((day) => {
-        cy.dataCy('calendar-item-distance')
-          .should('be.visible')
-          .and('contain', `${day.fromWork.distance} km`);
-      });
-    });
+    loggedTests({ active: false, direction: 'fromWork' });
   });
 
   context('fromWork - empty', () => {
@@ -115,6 +147,8 @@ describe('<CalendarItemDisplay>', () => {
     });
 
     coreTests();
+
+    emptyTests({ active: false });
   });
 });
 
@@ -122,11 +156,41 @@ function coreTests() {
   it('renders component', () => {
     // component
     cy.dataCy('calendar-item-display').should('be.visible');
-    // TODO: snapshot
-    // cy.dataCy('calendar-item-display').then((element) => {
-    //   cy.wrap(element).matchImageSnapshot({
-    //     name: `calendar-item-display-${Cypress.currentTest.titlePath[0]}`,
-    //   });
-    // })
+    // snapshot
+    cy.dataCy('calendar-item-display').then((element) => {
+      cy.wrap(element).matchImageSnapshot({
+        name: `calendar-item-display-${Cypress.currentTest.titlePath[0]}`,
+      });
+    });
+  });
+}
+
+function loggedTests({ active, direction }) {
+  it('renders transport type', () => {
+    // icon transport
+    cy.dataCy('calendar-item-icon-transport')
+      .should('have.color', active ? white : primary)
+      .and('have.css', 'font-size', '18px');
+    // distance
+  });
+
+  it('renders distance', () => {
+    cy.get('@day').then((day) => {
+      console.log(day[direction].distance);
+      cy.dataCy('calendar-item-distance')
+        .should('be.visible')
+        .and('have.color', active ? white : primary)
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('contain', `${day[direction].distance} km`);
+    });
+  });
+}
+
+function emptyTests({ active }) {
+  it('renders plus icon', () => {
+    cy.dataCy('calendar-item-icon-plus')
+      .should('have.color', active ? white : primary)
+      .and('have.css', 'font-size', '18px');
   });
 }

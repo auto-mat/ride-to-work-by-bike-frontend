@@ -218,7 +218,7 @@ export default defineComponent({
         />
         <!-- Distance -->
         <span
-          class="relative-position text-caption"
+          class="relative-position text-subtitle2"
           :class="[active ? 'text-white' : 'text-primary']"
           data-cy="calendar-item-distance"
         >
