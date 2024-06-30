@@ -136,7 +136,6 @@ export default defineComponent({
     <q-tab-panels v-model="activeTab" animated>
       <!-- Panel: Calendar -->
       <q-tab-panel name="calendar" data-cy="route-tabs-panel-calendar">
-        <div class="text-h6">{{ $t('routes.tabCalendar') }}</div>
         <routes-calendar />
       </q-tab-panel>
       <!-- Panel: List -->

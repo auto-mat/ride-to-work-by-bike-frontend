@@ -43,6 +43,16 @@ export default defineComponent({
     const locale = computed((): string => {
       return i18n.global.locale;
     });
+    const monthNameAndYear = computed((): string => {
+      if (!selectedDate.value) {
+        return '';
+      }
+
+      const date = new Date(selectedDate.value);
+      const month = date.toLocaleString(locale.value, { month: 'long' });
+      const year = date.toLocaleString(locale.value, { year: 'numeric' });
+      return `${month} ${year}`;
+    });
 
     // Calendar naviation functions
     function onToday() {
@@ -127,6 +137,7 @@ export default defineComponent({
       activeItem,
       calendar,
       locale,
+      monthNameAndYear,
       routesMap,
       selectedDate,
       isActive,
@@ -142,12 +153,17 @@ export default defineComponent({
 <template>
   <div data-cy="routes-calendar">
     <!-- Navigation bar -->
-    <calendar-navigation
-      @next="onNext"
-      @prev="onPrev"
-      @today="onToday"
-      class="q-mt-md"
-    />
+    <div class="row q-pb-sm q-my-lg items-center gap-8">
+      <div class="col-12 col-sm-auto text-h5 text-capitalize text-weight-bold">
+        {{ monthNameAndYear }}
+      </div>
+      <calendar-navigation
+        @next="onNext"
+        @prev="onPrev"
+        @today="onToday"
+        class="col-12 col-sm"
+      />
+    </div>
     <!-- Calendar -->
     <div class="row justify-center q-mt-lg">
       <q-calendar-month
@@ -192,3 +208,30 @@ export default defineComponent({
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+:deep(.q-calendar-month__day--month) {
+  visibility: hidden;
+}
+:deep(.q-calendar-month__day--label) {
+  margin-top: 8px;
+  font-size: 14px;
+}
+// TODO: Fix local $primary color in calendar (to not be blue but custom)
+:deep(.q-current-day .q-calendar-month__day--label) {
+  color: $primary;
+  font-weight: 700;
+  border: none;
+}
+:deep(.q-current-day .q-calendar-month__day--label:before) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $primary;
+  opacity: 0.2;
+  border-radius: 4px;
+}
+</style>
