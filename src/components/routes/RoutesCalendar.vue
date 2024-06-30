@@ -153,6 +153,7 @@ export default defineComponent({
         hoverable
         no-active-date
         use-navigation
+        short-weekday-label
         locale="cs"
         :weekdays="[1, 2, 3, 4, 5, 6, 0]"
         weekday-align="center"
@@ -161,7 +162,7 @@ export default defineComponent({
         :day-min-height="100"
       >
         <template #day="{ scope: { timestamp } }">
-          <div class="q-my-sm">
+          <div class="q-my-sm" data-cy="calendar-day">
             <!-- Route to work -->
             <calendar-item-display
               :active="isActive({ timestamp, direction: 'toWork' })"
@@ -169,6 +170,7 @@ export default defineComponent({
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
               @item-click="onClickItem"
+              data-cy="calendar-item-display-to-work"
             />
             <!-- Route from work -->
             <calendar-item-display
@@ -177,6 +179,7 @@ export default defineComponent({
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
               @item-click="onClickItem"
+              data-cy="calendar-item-display-from-work"
             />
           </div>
         </template>

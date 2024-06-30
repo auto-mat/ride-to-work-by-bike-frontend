@@ -36,6 +36,8 @@ import '@quasar/extras/fontawesome-v5/fontawesome-v5.css';
 
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 import { Dialog } from 'quasar';
+import VuePlugin from '@quasar/quasar-ui-qcalendar';
+import '@quasar/quasar-ui-qcalendar/dist/QCalendarMonth.css';
 
 // Since Cypress v10 we cannot import `config` directly from VTU as Cypress bundles its own version of it
 // See https://github.com/cypress-io/cypress/issues/22611
@@ -89,6 +91,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
       app.use(options.router);
       app.use(i18nApp);
       app.use(VueLogger, loggerOptions);
+      app.use(VuePlugin);
     },
   });
 

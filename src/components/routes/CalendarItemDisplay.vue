@@ -93,6 +93,7 @@ export default defineComponent({
 <template>
   <div class="q-my-sm" data-cy="calendar-item-display">
     <q-item
+      :active="active"
       dense
       clickable
       v-ripple
