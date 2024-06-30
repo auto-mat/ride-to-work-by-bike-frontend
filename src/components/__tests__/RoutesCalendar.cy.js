@@ -19,7 +19,7 @@ describe('<RoutesCalendar>', () => {
   context('desktop', () => {
     beforeEach(() => {
       // set default date
-      const now = new Date(2024, 1, 14);
+      const now = new Date(2024, 5, 17);
       cy.clock(now);
       cy.mount(RoutesCalendar, {
         props: {},
@@ -34,7 +34,7 @@ describe('<RoutesCalendar>', () => {
   // context('mobile', () => {
   //   beforeEach(() => {
   //     // set default date
-  //     const now = new Date(2024, 5, 14);
+  //     const now = new Date(2024, 5, 17);
   //     cy.clock(now);
   //     cy.mount(RoutesCalendar, {
   //       props: {},
@@ -60,11 +60,12 @@ function coreTests() {
   });
 
   // Each calendar day contains two routes
-  it('renders two routes for each day', () => {
-    cy.dataCy('calendar-day')
+  it('renders two routes for each past day', () => {
+    // check dates in the past
+    cy.get('.q-past-day')
       .find('[data-cy="calendar-item-display-to-work"]')
       .should('be.visible');
-    cy.dataCy('calendar-day')
+    cy.get('.q-past-day')
       .find('[data-cy="calendar-item-display-from-work"]')
       .should('be.visible');
   });
@@ -94,22 +95,11 @@ function coreTests() {
       .find('[data-cy="calendar-item-display-to-work"]')
       .first()
       .click();
-    // today from work is active
+    // from work is active
     cy.get('.q-past-day')
       .find('[data-cy="calendar-item-display-to-work"]')
       .first()
       .find('[data-cy="calendar-item-icon-towork-active"]')
-      .should('be.visible');
-    // switch to a future day within the current month
-    cy.get('.q-future-day')
-      .find('[data-cy="calendar-item-display-from-work"]')
-      .last()
-      .click();
-    // today from work is active
-    cy.get('.q-future-day')
-      .find('[data-cy="calendar-item-display-from-work"]')
-      .last()
-      .find('[data-cy="calendar-item-icon-fromwork-active"]')
       .should('be.visible');
   });
 }

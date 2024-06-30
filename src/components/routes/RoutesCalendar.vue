@@ -167,7 +167,7 @@ export default defineComponent({
         :day-min-height="100"
       >
         <template #day="{ scope: { timestamp } }">
-          <div class="q-my-sm" data-cy="calendar-day">
+          <div v-if="!timestamp.future" class="q-my-sm" data-cy="calendar-day">
             <!-- Route to work -->
             <calendar-item-display
               :active="isActive({ timestamp, direction: 'toWork' })"
