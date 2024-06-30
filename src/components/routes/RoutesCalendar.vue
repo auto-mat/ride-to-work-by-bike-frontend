@@ -159,7 +159,7 @@ export default defineComponent({
         no-active-date
         use-navigation
         short-weekday-label
-        :locale="'en'"
+        :locale="locale"
         :weekdays="[1, 2, 3, 4, 5, 6, 0]"
         weekday-align="center"
         date-align="right"
