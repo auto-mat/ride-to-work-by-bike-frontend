@@ -18,6 +18,7 @@
 // libraries
 import { parsed, QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
+import { i18n } from '../../boot/i18n';
 
 // components
 import CalendarItemDisplay from './CalendarItemDisplay.vue';
@@ -39,6 +40,9 @@ export default defineComponent({
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
+    const locale = computed((): string => {
+      return i18n.global.locale;
+    });
 
     // Calendar naviation functions
     function onToday() {
@@ -122,8 +126,9 @@ export default defineComponent({
     return {
       activeItem,
       calendar,
-      selectedDate,
+      locale,
       routesMap,
+      selectedDate,
       isActive,
       onClickItem,
       onNext,
@@ -154,7 +159,7 @@ export default defineComponent({
         no-active-date
         use-navigation
         short-weekday-label
-        locale="cs"
+        :locale="'en'"
         :weekdays="[1, 2, 3, 4, 5, 6, 0]"
         weekday-align="center"
         date-align="right"

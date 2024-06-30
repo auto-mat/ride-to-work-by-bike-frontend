@@ -1,6 +1,16 @@
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 
+const dayNames = [
+  i18n.global.t('time.mondayShort'),
+  i18n.global.t('time.tuesdayShort'),
+  i18n.global.t('time.wednesdayShort'),
+  i18n.global.t('time.thursdayShort'),
+  i18n.global.t('time.fridayShort'),
+  i18n.global.t('time.saturdayShort'),
+  i18n.global.t('time.sundayShort'),
+];
+
 describe('<RoutesCalendar>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
@@ -39,6 +49,14 @@ describe('<RoutesCalendar>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('routes-calendar').should('be.visible');
+  });
+
+  it('renders localized day names', () => {
+    cy.get('.q-calendar-month__head--weekday')
+      .should('be.visible')
+      .each((element, index) => {
+        cy.wrap(element).should('contain', dayNames[index]);
+      });
   });
 
   // Each calendar day contains two routes
