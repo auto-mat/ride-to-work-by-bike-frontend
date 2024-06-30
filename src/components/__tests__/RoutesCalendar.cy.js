@@ -31,19 +31,6 @@ describe('<RoutesCalendar>', () => {
   });
 
   // TODO: Responsive version (option to use mini-mode) https://qcalendar.netlify.app/developing/qcalendarmonth-minimode/minimode-getting-started
-  // context('mobile', () => {
-  //   beforeEach(() => {
-  //     // set default date
-  //     const now = new Date(2024, 5, 17);
-  //     cy.clock(now);
-  //     cy.mount(RoutesCalendar, {
-  //       props: {},
-  //     });
-  //     cy.viewport('iphone-6');
-  //   });
-
-  //   coreTests();
-  // });
 });
 
 function coreTests() {
