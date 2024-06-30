@@ -161,14 +161,16 @@ export default defineComponent({
 
 <template>
   <div data-cy="routes-calendar">
-    <!-- Navigation bar -->
+    <!-- Top bar -->
     <div class="row q-pb-sm q-my-lg items-center gap-8">
+      <!-- Title -->
       <div
         class="col-12 col-sm-auto text-h5 text-capitalize text-weight-bold"
         data-cy="calendar-title"
       >
         {{ monthNameAndYear }}
       </div>
+      <!-- Navigation buttons -->
       <calendar-navigation
         @next="onNext"
         @prev="onPrev"
