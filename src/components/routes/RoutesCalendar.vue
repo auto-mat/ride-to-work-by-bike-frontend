@@ -176,6 +176,7 @@ export default defineComponent({
         use-navigation
         short-weekday-label
         :locale="locale"
+        :show-month-label="false"
         :weekdays="[1, 2, 3, 4, 5, 6, 0]"
         weekday-align="center"
         date-align="right"
@@ -210,9 +211,6 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-:deep(.q-calendar-month__day--month) {
-  visibility: hidden;
-}
 :deep(.q-calendar-month__day--label) {
   margin-top: 8px;
   font-size: 14px;
