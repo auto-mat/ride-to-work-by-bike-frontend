@@ -21,6 +21,7 @@ describe('<RoutesCalendar>', () => {
       // set default date
       const now = new Date(2024, 5, 17);
       cy.clock(now);
+      cy.wrap(now).as('now');
       cy.mount(RoutesCalendar, {
         props: {},
       });
@@ -36,6 +37,21 @@ describe('<RoutesCalendar>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('routes-calendar').should('be.visible');
+  });
+
+  it('renders top title with month and year', () => {
+    cy.get('@now').then((now) => {
+      const locale = i18n.global.locale;
+      const month = now.toLocaleString(locale, { month: 'long' });
+      const year = now.toLocaleString(locale, { year: 'numeric' });
+      const title = `${month} ${year}`;
+
+      cy.dataCy('calendar-title')
+        .should('be.visible')
+        .and('have.css', 'font-size', '24px')
+        .and('have.css', 'font-weight', '700')
+        .and('contain', title);
+    });
   });
 
   it('renders localized day names', () => {
