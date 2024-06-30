@@ -16,6 +16,7 @@
  */
 
 // libraries
+import { colors } from 'quasar';
 import { parsed, QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref } from 'vue';
 import { i18n } from '../../boot/i18n';
@@ -43,11 +44,18 @@ export default defineComponent({
     const locale = computed((): string => {
       return i18n.global.locale;
     });
+
+    // Define calendar CSS vars that can be accessed in scoped SCSS
+    const { getPaletteColor } = colors;
+    const theme = {
+      '--calendar-current-color': getPaletteColor('primary'),
+    };
+
+    // Compute month name and year for title
     const monthNameAndYear = computed((): string => {
       if (!selectedDate.value) {
         return '';
       }
-
       const date = new Date(selectedDate.value);
       const month = date.toLocaleString(locale.value, { month: 'long' });
       const year = date.toLocaleString(locale.value, { year: 'numeric' });
@@ -140,6 +148,7 @@ export default defineComponent({
       monthNameAndYear,
       routesMap,
       selectedDate,
+      theme,
       isActive,
       onClickItem,
       onNext,
@@ -154,7 +163,10 @@ export default defineComponent({
   <div data-cy="routes-calendar">
     <!-- Navigation bar -->
     <div class="row q-pb-sm q-my-lg items-center gap-8">
-      <div class="col-12 col-sm-auto text-h5 text-capitalize text-weight-bold">
+      <div
+        class="col-12 col-sm-auto text-h5 text-capitalize text-weight-bold"
+        data-cy="calendar-title"
+      >
         {{ monthNameAndYear }}
       </div>
       <calendar-navigation
@@ -179,6 +191,7 @@ export default defineComponent({
         :show-month-label="false"
         :weekdays="[1, 2, 3, 4, 5, 6, 0]"
         weekday-align="center"
+        :style="theme"
         date-align="right"
         date-type="rounded"
         :day-min-height="100"
@@ -217,7 +230,7 @@ export default defineComponent({
 }
 // TODO: Fix local $primary color in calendar (to not be blue but custom)
 :deep(.q-current-day .q-calendar-month__day--label) {
-  color: $primary;
+  color: var(--calendar-current-color);
   font-weight: 700;
   border: none;
 }
@@ -228,7 +241,7 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background: $primary;
+  background: var(--calendar-current-color);
   opacity: 0.2;
   border-radius: 4px;
 }
