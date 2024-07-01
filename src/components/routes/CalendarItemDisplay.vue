@@ -81,11 +81,12 @@ export default defineComponent({
       return props.day[props.direction] ? props.day[props.direction] : null;
     });
 
-    const { getRouteIcon } = useRoutes();
+    const { getRouteDistance, getRouteIcon } = useRoutes();
 
     return {
       iconSize,
       route,
+      getRouteDistance,
       getRouteIcon,
       onClick,
     };
@@ -178,7 +179,7 @@ export default defineComponent({
           :class="[active ? 'text-white' : 'text-primary']"
           data-cy="calendar-item-distance"
         >
-          {{ route.distance }} km
+          {{ getRouteDistance(route) }}
         </span>
       </template>
       <!-- Content: Route empty -->
