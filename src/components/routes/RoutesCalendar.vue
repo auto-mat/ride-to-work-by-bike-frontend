@@ -63,13 +63,13 @@ export default defineComponent({
     });
 
     // Calendar naviation functions
-    function onToday() {
+    function onToday(): void {
       calendar.value?.moveToToday();
     }
-    function onPrev() {
+    function onPrev(): void {
       calendar.value?.prev();
     }
-    function onNext() {
+    function onNext(): void {
       calendar.value?.next();
     }
 
