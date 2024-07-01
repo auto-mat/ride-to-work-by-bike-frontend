@@ -25,6 +25,9 @@ export default defineComponent({
   name: 'CalendarNavigation',
   emits: ['next', 'prev', 'today'],
   setup(props, { emit }) {
+    const buttonSize = '12px';
+    const iconSize = '18px';
+
     const onToday = () => {
       emit('today');
     };
@@ -41,6 +44,8 @@ export default defineComponent({
 
     return {
       borderRadius,
+      buttonSize,
+      iconSize,
       onToday,
       onNext,
       onPrev,
@@ -71,7 +76,7 @@ export default defineComponent({
         unelevated
         round
         outline
-        size="12px"
+        :size="buttonSize"
         color="primary"
         @click="onPrev"
         data-cy="calendar-navigation-previous"
@@ -79,7 +84,7 @@ export default defineComponent({
         <q-icon
           name="arrow_back"
           color="primary"
-          size="18px"
+          :size="iconSize"
           data-cy="calendar-navigation-prev"
         />
       </q-btn>
@@ -88,7 +93,7 @@ export default defineComponent({
         unelevated
         round
         outline
-        size="12px"
+        :size="buttonSize"
         color="primary"
         @click="onNext"
         data-cy="calendar-navigation-next"
@@ -96,7 +101,7 @@ export default defineComponent({
         <q-icon
           name="arrow_forward"
           color="primary"
-          size="18px"
+          :size="iconSize"
           data-cy="calendar-navigation-next"
         />
       </q-btn>
