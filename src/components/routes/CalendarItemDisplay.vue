@@ -67,6 +67,8 @@ export default defineComponent({
   },
   emits: ['item-click'],
   setup(props, { emit }) {
+    const iconSize = '18px';
+
     function onClick(): void {
       emit('item-click', {
         timestamp: props.timestamp,
@@ -82,6 +84,7 @@ export default defineComponent({
     const { getRouteIcon } = useRoutes();
 
     return {
+      iconSize,
       route,
       getRouteIcon,
       onClick,
@@ -166,7 +169,7 @@ export default defineComponent({
         <q-icon
           :color="active ? 'white' : 'primary'"
           :name="getRouteIcon(route.transport)"
-          size="18px"
+          :size="iconSize"
           data-cy="calendar-item-icon-transport"
         />
         <!-- Distance -->
@@ -184,7 +187,7 @@ export default defineComponent({
         <q-icon
           :color="active ? 'white' : 'primary'"
           name="mdi-plus"
-          size="18px"
+          :size="iconSize"
           data-cy="calendar-item-icon-plus"
         />
       </template>
