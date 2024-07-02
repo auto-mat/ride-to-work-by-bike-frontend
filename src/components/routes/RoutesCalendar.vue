@@ -45,7 +45,7 @@ export default defineComponent({
       return i18n.global.locale;
     });
 
-    // Define calendar CSS vars that can be accessed in scoped SCSS
+    // Define calendar CSS vars for calendar theme
     const { getPaletteColor } = colors;
     const theme = {
       '--calendar-active-date-color': getPaletteColor('primary'),
