@@ -48,7 +48,9 @@ export default defineComponent({
     // Define calendar CSS vars that can be accessed in scoped SCSS
     const { getPaletteColor } = colors;
     const theme = {
+      '--calendar-active-date-color': getPaletteColor('primary'),
       '--calendar-current-color': getPaletteColor('primary'),
+      '--calendar-border-current': `${getPaletteColor('primary')} 2px solid`,
     };
 
     // Compute month name and year for title
@@ -224,27 +226,3 @@ export default defineComponent({
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-:deep(.q-calendar-month__day--label) {
-  margin-top: 8px;
-  font-size: 14px;
-}
-// TODO: Fix local $primary color in calendar (to not be blue but custom)
-:deep(.q-current-day .q-calendar-month__day--label) {
-  color: var(--calendar-current-color);
-  font-weight: 700;
-  border: none;
-}
-:deep(.q-current-day .q-calendar-month__day--label:before) {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--calendar-current-color);
-  opacity: 0.2;
-  border-radius: 4px;
-}
-</style>
