@@ -76,14 +76,14 @@ export default defineComponent({
     <!-- Content -->
     <div class="flex items-center gap-24">
       <!-- Help icon link for displaying modal dialog-->
-      <help-button size="8px" />
+      <help-button small data-cy="help-button" />
       <!-- Notification icon link -->
       <a href="#">
         <q-icon
           name="notifications"
           size="sm"
           color="black"
-          data-cy="icon-notification"
+          data-cy="drawer-header-notification-icon"
         />
       </a>
       <!-- User menu dropdown -->

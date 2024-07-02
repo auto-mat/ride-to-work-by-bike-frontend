@@ -90,7 +90,11 @@ export default defineComponent({
           >
             <q-item-section avatar class="text-blue-grey-3">
               <!-- Icon -->
-              <q-icon :name="item.icon" size="14px" />
+              <q-icon
+                :name="item.icon"
+                size="14px"
+                data-cy="card-stats-item-icon"
+              />
             </q-item-section>
             <q-item-section>
               <!-- Label -->

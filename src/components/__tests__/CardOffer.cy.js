@@ -112,12 +112,10 @@ function coreTests() {
   it('renders icon', () => {
     cy.window().then(() => {
       cy.get('@card').then((card) => {
-        cy.dataCy('card-icon')
-          .should('be.visible')
-          .and('have.class', card.icon)
-          .and('have.css', 'height', '48px')
-          .and('have.css', 'width', '48px')
-          .and('have.color', 'rgb(176, 190, 197)');
+        cy.dataCy('card-icon').then((element) => {
+          cy.testIcon({ element, name: `card-offer-${card.icon}`, size: 48 });
+        });
+        cy.dataCy('card-icon').should('have.class', card.icon);
       });
     });
   });

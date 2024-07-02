@@ -132,9 +132,10 @@ export default defineComponent({
                 <!-- Event calendar icon -->
                 <q-icon
                   name="event"
-                  size="sm"
+                  size="24px"
                   class="q-pr-xs"
                   color="blue-grey-2"
+                  data-cy="card-event-date-icon"
                 />
                 {{ eventDateTime }}
               </div>
@@ -149,6 +150,7 @@ export default defineComponent({
                   size="sm"
                   class="q-pr-xs"
                   color="blue-grey-2"
+                  data-cy="card-event-location-icon"
                 />
                 {{ card?.location }}
               </div>
@@ -158,7 +160,13 @@ export default defineComponent({
           <div class="overflow-hidden flex items-center q-mt-md">
             <div class="q-px-md">
               <q-btn round outline data-cy="calendar-button">
-                <q-icon name="fa-solid fa-calendar-plus" size="xs"></q-icon>
+                <!-- TODO: calendar icon generates corrupted snapshot -->
+                <q-icon
+                  name="mdi-calendar-plus"
+                  size="18px"
+                  color="grey-10"
+                  data-cy="card-event-calendar-icon"
+                />
               </q-btn>
             </div>
           </div>
@@ -188,6 +196,7 @@ export default defineComponent({
                 size="18px"
                 class="q-pr-xs"
                 color="blue-grey-3"
+                data-cy="dialog-event-date-icon"
               />
               {{ eventDateTime }}
             </div>
@@ -201,6 +210,7 @@ export default defineComponent({
                 size="18px"
                 class="q-pr-xs"
                 color="blue-grey-3"
+                data-cy="dialog-event-location-icon"
               />
               {{ card?.location }}
             </div>

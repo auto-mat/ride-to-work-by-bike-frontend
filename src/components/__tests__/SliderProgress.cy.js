@@ -7,7 +7,6 @@ import { i18n } from '../../boot/i18n';
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
-const blueGrey3 = getPaletteColor('blue-grey-3');
 
 // mocks
 import { progressStats, cardsProgress } from 'src/mocks/homepage';
@@ -62,12 +61,6 @@ describe('<SliderProgress>', () => {
             .and('have.css', 'font-weight', '400')
             .and('have.color', grey10);
           cy.wrap($item)
-            .find('.q-icon')
-            .should('contain', progressStats[index].icon)
-            .and('have.color', blueGrey3)
-            .and('have.css', 'width', '18px')
-            .and('have.css', 'height', '18px');
-          cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
             .and('have.color', grey10);
@@ -76,6 +69,13 @@ describe('<SliderProgress>', () => {
             .should('contain', progressStats[index].value)
             .and('have.color', grey10)
             .and('have.css', 'font-weight', '700');
+        });
+        cy.dataCy('progress-slider-stats-icon').each((element, index) => {
+          cy.testIcon({
+            element,
+            name: `slider-progress-${progressStats[index].icon}-desktop`,
+            size: 18,
+          });
         });
       });
     });
@@ -199,12 +199,6 @@ describe('<SliderProgress>', () => {
             .and('have.css', 'font-weight', '400')
             .and('have.color', grey10);
           cy.wrap($item)
-            .find('.q-icon')
-            .should('contain', progressStats[index].icon)
-            .and('have.color', blueGrey3)
-            .and('have.css', 'width', '18px')
-            .and('have.css', 'height', '18px');
-          cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
             .and('have.color', grey10);
@@ -213,6 +207,13 @@ describe('<SliderProgress>', () => {
             .should('contain', progressStats[index].value)
             .and('have.color', grey10)
             .and('have.css', 'font-weight', '700');
+        });
+        cy.dataCy('progress-slider-stats-icon').each((element, index) => {
+          cy.testIcon({
+            element,
+            name: `slider-progress-${progressStats[index].icon}-mobile`,
+            size: 18,
+          });
         });
       });
     });

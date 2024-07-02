@@ -8,7 +8,6 @@ const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey1 = getPaletteColor('blue-grey-1');
-const blueGrey5 = getPaletteColor('blue-grey-5');
 const blueGrey7 = getPaletteColor('blue-grey-7');
 
 const cardFirst = cardsProgress[0];
@@ -43,12 +42,14 @@ describe('<CardProgress>', () => {
       });
     });
 
-    it('renders prize icon', () => {
-      cy.dataCy('card-progress-prizes-icon')
-        .should('contain', cardFirst.prizes[0].icon)
-        .and('have.color', white)
-        .and('have.css', 'width', '24px')
-        .and('have.css', 'height', '24px');
+    it('renders first prize icon', () => {
+      cy.dataCy('card-progress-prizes-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `card-progress-dark-${cardFirst.prizes[0].icon}`,
+          size: 24,
+        });
+      });
     });
 
     it('renders percentage', () => {
@@ -91,11 +92,9 @@ describe('<CardProgress>', () => {
     });
 
     it('renders white share link icon', () => {
-      cy.dataCy('card-progress-share-icon')
-        .should('have.color', white)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px')
-        .and('contain', 'share');
+      cy.dataCy('card-progress-share-icon').then((element) => {
+        cy.testIcon({ element, name: 'card-progress-dark-share', size: 18 });
+      });
     });
   });
 
@@ -123,12 +122,13 @@ describe('<CardProgress>', () => {
     });
 
     it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey5)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
+      cy.dataCy('card-progress-header-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `card-progress-header-light-${card.icon}`,
+          size: 18,
+        });
+      });
     });
 
     it('renders percentage', () => {
@@ -171,11 +171,9 @@ describe('<CardProgress>', () => {
     });
 
     it('renders dark share link icon', () => {
-      cy.dataCy('card-progress-share-icon')
-        .should('have.color', grey10)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px')
-        .and('contain', 'share');
+      cy.dataCy('card-progress-share-icon').then((element) => {
+        cy.testIcon({ element, name: 'card-progress-light-share', size: 18 });
+      });
     });
   });
 
@@ -203,12 +201,13 @@ describe('<CardProgress>', () => {
     });
 
     it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey5)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
+      cy.dataCy('card-progress-header-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `card-progress-header-mobile-${card.icon}`,
+          size: 18,
+        });
+      });
     });
 
     it('renders percentage', () => {

@@ -82,6 +82,10 @@ describe('<FormRegister>', () => {
 
     it('renders show/hide icons for password inputs', () => {
       // password
+      // TODO: fix corrupted snapshot
+      // cy.dataCy('form-register-password-icon').then((element) => {
+      //   cy.testIcon({ element, name: 'form-register-password-show', size: 18 });
+      // })
       cy.dataCy('form-register-password-icon')
         .should('contain', 'visibility')
         .and('have.color', `${colorPrimary}`);

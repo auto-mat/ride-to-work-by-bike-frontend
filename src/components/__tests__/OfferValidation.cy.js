@@ -56,7 +56,8 @@ function coreTests() {
       .should('be.visible')
       .and('contain', i18n.global.t('offer.labelOfferValidationAccount'));
     // icon
-    cy.dataCy('offer-validation-icon').invoke('height').should('be.equal', 32);
-    cy.dataCy('offer-validation-icon').invoke('width').should('be.equal', 32);
+    cy.dataCy('offer-validation-icon').each((element, index) => {
+      cy.testIcon({ element, name: `offer-validation-${index}`, size: 32 });
+    });
   });
 }

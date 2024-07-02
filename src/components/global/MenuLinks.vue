@@ -77,7 +77,12 @@ export default defineComponent({
         data-cy="button-menu-links"
       >
         <!-- Icon -->
-        <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
+        <q-icon
+          :name="item.icon"
+          size="18px"
+          color="blue-grey-3"
+          data-cy="menu-links-icon"
+        />
         <!-- Label -->
         <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
       </q-btn>

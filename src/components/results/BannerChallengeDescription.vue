@@ -97,6 +97,7 @@ export default defineComponent({
                   :key="icon"
                   :name="icon"
                   size="18px"
+                  :data-cy="`challenge-transport-icon-${icon}`"
                 />
               </dd>
             </div>
@@ -111,7 +112,12 @@ export default defineComponent({
           <div data-cy="challenge-link">
             <a :href="challenge.link.url" target="_blank" class="flex gap-4">
               <span>
-                <q-icon name="launch" size="18px" />
+                <q-icon
+                  name="launch"
+                  color="grey-10"
+                  size="18px"
+                  data-cy="challenge-link-icon"
+                />
               </span>
               <span>
                 {{ challenge.link.title }}

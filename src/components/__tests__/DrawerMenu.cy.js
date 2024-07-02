@@ -40,14 +40,8 @@ describe('DrawerMenu', () => {
 
   it('should render each item with the expected icon and text content', () => {
     cy.window().then(() => {
-      menuItems.forEach((item, index) => {
-        cy.get('.q-item')
-          .eq(index)
-          .within(() => {
-            cy.get('.q-icon')
-              .should('be.visible')
-              .and('contain.text', item.icon);
-          });
+      cy.dataCy('drawer-menu-icon').each((element, index) => {
+        cy.testIcon({ element, name: `drawer-menu-${index}`, size: 18 });
       });
     });
   });

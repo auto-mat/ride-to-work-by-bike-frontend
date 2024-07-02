@@ -53,6 +53,10 @@ describe('<FormFieldPassword>', () => {
         .and('have.color', colorPrimary);
       cy.dataCy('form-password-icon').invoke('height').should('be.equal', 18);
       cy.dataCy('form-password-icon').invoke('width').should('be.equal', 18);
+      // TODO: fix corrupted snapshot file
+      // testPasswordInputReveal({
+      //   identifierPassword: 'form-password',
+      // });
     });
 
     it('allows user to reveal and hide password', () => {

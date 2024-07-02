@@ -5,7 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
+const grey10 = getPaletteColor('grey-10');
 const white = getPaletteColor('white');
 const blueGrey2 = getPaletteColor('blue-grey-2');
 const blueGrey3 = getPaletteColor('blue-grey-3');
@@ -90,11 +90,10 @@ describe('<CardEvent>', () => {
             .and('contain', date)
             .and('contain', year)
             .and('contain', hour);
-          cy.dataCy('card-dates')
-            .find('i')
-            .should('be.visible')
-            .and('have.color', blueGrey2)
-            .and('contain', 'event');
+          cy.dataCy('card-event-date-icon').then((element) => {
+            cy.testIcon({ element, name: 'card-event-event', size: 24 });
+          });
+          cy.dataCy('card-event-date-icon').should('have.color', blueGrey2);
         });
       });
     });
@@ -107,11 +106,10 @@ describe('<CardEvent>', () => {
             .and('have.css', 'font-size', '14px')
             .and('have.css', 'font-weight', '400')
             .and('contain', cardEvent.location);
-          cy.dataCy('card-location')
-            .find('i')
-            .should('be.visible')
-            .and('have.color', blueGrey2)
-            .and('contain', 'place');
+          cy.dataCy('card-event-location-icon').then((element) => {
+            cy.testIcon({ element, name: 'card-event-location', size: 24 });
+          });
+          cy.dataCy('card-event-location-icon').should('have.color', blueGrey2);
         });
       });
     });
@@ -122,10 +120,11 @@ describe('<CardEvent>', () => {
           .should('be.visible')
           .and('have.css', 'height', '42px')
           .and('have.css', 'width', '42px');
-        cy.dataCy('calendar-button')
-          .find('i')
-          .should('be.visible')
-          .and('have.color', black);
+        // TODO: fix corrupted snapshot
+        // cy.dataCy('card-event-calendar-icon').then((element) => {
+        //   cy.testIcon({ element, name: 'card-event-calendar', size: 18 });
+        // })
+        cy.dataCy('card-event-calendar-icon').and('have.color', grey10);
       });
     });
 
@@ -168,27 +167,26 @@ describe('<CardEvent>', () => {
                   .should('contain', '1.')
                   .and('contain', '2023')
                   .and('contain', '12:00');
-                const $icon = $el.find('i');
-                if ($icon.length) {
-                  cy.wrap($icon)
-                    .should('be.visible')
-                    .and('have.color', blueGrey3)
-                    .and('have.css', 'width', '18px')
-                    .and('have.css', 'height', '18px');
-                }
               }
               if (index === 1) {
                 cy.wrap($el).should('contain', cardEvent.location);
-                const $icon = $el.find('i');
-                if ($icon.length) {
-                  cy.wrap($icon)
-                    .should('be.visible')
-                    .and('have.color', blueGrey3)
-                    .and('have.css', 'width', '18px')
-                    .and('have.css', 'height', '18px');
-                }
               }
             });
+          cy.dataCy('dialog-event-date-icon').then((element) => {
+            cy.testIcon({ element, name: 'card-event-dialog-event', size: 18 });
+          });
+          cy.dataCy('dialog-event-date-icon').should('have.color', blueGrey3);
+          cy.dataCy('dialog-event-location-icon').then((element) => {
+            cy.testIcon({
+              element,
+              name: 'card-event-dialog-location',
+              size: 18,
+            });
+          });
+          cy.dataCy('dialog-event-location-icon').should(
+            'have.color',
+            blueGrey3,
+          );
         });
       });
     });

@@ -88,10 +88,11 @@ export default defineComponent({
         >
           <!-- Plus icon -->
           <q-icon
-            name="add"
+            name="mdi-plus"
             size="24px"
             color="white"
             class="q-mr-sm"
+            style="flex-shrink: 0"
             data-cy="banner-routes-button-icon"
           />
           <!-- Button text -->

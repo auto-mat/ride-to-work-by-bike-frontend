@@ -56,6 +56,16 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', black);
         });
     });
+
+    it('renders icon for each link', () => {
+      cy.dataCy('menu-links-icon').each((element, index) => {
+        cy.testIcon({
+          element,
+          name: `menu-links-social-${index}`,
+          size: 18,
+        });
+      });
+    });
   });
 
   context('useful', () => {
@@ -85,7 +95,15 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', black);
         });
     });
-  });
 
-  // TODO: Check for icons
+    it('renders icon for each link', () => {
+      cy.dataCy('menu-links-icon').each((element, index) => {
+        cy.testIcon({
+          element,
+          name: `menu-links-useful-${index}`,
+          size: 18,
+        });
+      });
+    });
+  });
 });

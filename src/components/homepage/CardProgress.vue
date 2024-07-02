@@ -86,6 +86,7 @@ export default defineComponent({
           :name="card.icon"
           size="18px"
           :color="isDark(card) ? 'white' : 'blue-grey-5'"
+          data-cy="card-progress-header-icon"
         />
         <!-- Card title -->
         <component
@@ -143,6 +144,7 @@ export default defineComponent({
             data-cy="card-progress-prizes"
           >
             <q-icon
+              v-if="prize.icon"
               :name="prize.icon"
               size="24px"
               color="white"
