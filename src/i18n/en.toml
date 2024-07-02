@@ -546,7 +546,15 @@ titleAutomaticLogging = "Automatic logging"
 titleManualLogging = "Manual logging"
 
 [table]
+buttonFeeApproval = "Approve entry fee payments"
+labelAmount = "Amount"
+labelDateRegistered = "Date registered"
+labelEmail = "Email"
+labelName = "Name"
+labelNickname = "Nickname"
+labelTeam = "Team"
 textEmptyTable = "No results. Try changing the filter settings."
+titleFeeApproval = "Entry fee payments for approval"
 
 [routes.transport]
 bike = "By bike"
