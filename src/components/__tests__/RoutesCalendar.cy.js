@@ -71,6 +71,10 @@ function coreTests() {
     cy.get('.q-past-day')
       .find('[data-cy="calendar-item-display-from-work"]')
       .should('be.visible');
+    // no routes for future dates
+    cy.get('.q-future-day')
+      .find('[data-cy="calendar-item-display-to-work"]')
+      .should('not.exist');
   });
 
   // First route of the current date is active
