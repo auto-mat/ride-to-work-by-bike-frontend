@@ -70,18 +70,22 @@ describe('<RouteTabs>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('route-tabs').should('be.visible');
-    cy.dataCy('route-tabs-button-calendar')
-      .should('be.visible')
-      .and('contain', i18n.global.t('routes.tabCalendar'));
-    cy.dataCy('route-tabs-button-list')
-      .should('be.visible')
-      .and('contain', i18n.global.t('routes.tabList'));
-    cy.dataCy('route-tabs-button-map')
-      .should('be.visible')
-      .and('contain', i18n.global.t('routes.tabMap'));
-    cy.dataCy('route-tabs-button-app')
-      .should('be.visible')
-      .and('contain', i18n.global.t('routes.tabApp'));
+    cy.dataCy('route-tabs-button-calendar').and(
+      'contain',
+      i18n.global.t('routes.tabCalendar'),
+    );
+    cy.dataCy('route-tabs-button-list').and(
+      'contain',
+      i18n.global.t('routes.tabList'),
+    );
+    cy.dataCy('route-tabs-button-map').and(
+      'contain',
+      i18n.global.t('routes.tabMap'),
+    );
+    cy.dataCy('route-tabs-button-app').and(
+      'contain',
+      i18n.global.t('routes.tabApp'),
+    );
 
     cy.dataCy('route-tabs-button-calendar').click();
     cy.dataCy('route-tabs-panel-calendar').should('be.visible');
