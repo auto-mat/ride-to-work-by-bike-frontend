@@ -20,7 +20,7 @@ describe('<CalendarItemDisplay>', () => {
           },
         });
       });
-      cy.viewport('macbook-16');
+      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -36,7 +36,7 @@ describe('<CalendarItemDisplay>', () => {
           direction: 'toWork',
         },
       });
-      cy.viewport('macbook-16');
+      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -56,7 +56,7 @@ describe('<CalendarItemDisplay>', () => {
           },
         });
       });
-      cy.viewport('macbook-16');
+      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -71,7 +71,7 @@ describe('<CalendarItemDisplay>', () => {
           direction: 'toWork',
         },
       });
-      cy.viewport('macbook-16');
+      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -158,19 +158,15 @@ function coreTests() {
     cy.dataCy('calendar-item-display').should('be.visible');
     // snapshot
 
-    cy.viewport(1280, 800).then(() => {
-      cy.window().then(() => {
-        cy.dataCy('calendar-item-display').then((element) => {
-          cy.wrap(element).matchImageSnapshot({
-            failureThreshold: 0.1,
-            failureThresholdType: 'percent',
-            timeout: 4000,
-            customDiffConfig: { threshold: 0.4 },
-            screenshotsFolder: 'test/cypress/snapshots',
-            retries: 2,
-            name: `calendar-item-display-${Cypress.currentTest.titlePath[0]}`,
-          });
-        });
+    cy.dataCy('calendar-item-display').then((element) => {
+      cy.wrap(element).matchImageSnapshot({
+        failureThreshold: 0.1,
+        failureThresholdType: 'percent',
+        timeout: 4000,
+        customDiffConfig: { threshold: 0.4 },
+        screenshotsFolder: 'test/cypress/snapshots',
+        retries: 2,
+        name: `calendar-item-display-${Cypress.currentTest.titlePath[0]}`,
       });
     });
   });
