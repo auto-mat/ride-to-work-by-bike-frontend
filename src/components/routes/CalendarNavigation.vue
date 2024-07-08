@@ -79,13 +79,14 @@ export default defineComponent({
         :size="buttonSize"
         color="primary"
         @click="onPrev"
-        data-cy="calendar-navigation-previous"
+        data-cy="calendar-navigation-previous-button"
       >
+        <!-- Icon -->
         <q-icon
           name="arrow_back"
           color="primary"
           :size="iconSize"
-          data-cy="calendar-navigation-prev"
+          data-cy="calendar-navigation-previous-icon"
         />
       </q-btn>
       <!-- Button: next -->
@@ -96,13 +97,14 @@ export default defineComponent({
         :size="buttonSize"
         color="primary"
         @click="onNext"
-        data-cy="calendar-navigation-next"
+        data-cy="calendar-navigation-next-button"
       >
+        <!-- Icon -->
         <q-icon
           name="arrow_forward"
           color="primary"
           :size="iconSize"
-          data-cy="calendar-navigation-next"
+          data-cy="calendar-navigation-next-icon"
         />
       </q-btn>
     </div>

@@ -45,22 +45,25 @@ function coreTests() {
       .and('have.color', primary)
       .and('contain', i18n.global.t('time.today'));
     // button previous
-    cy.dataCy('calendar-navigation-previous').should('have.color', primary);
-    cy.dataCy('calendar-navigation-previous')
+    cy.dataCy('calendar-navigation-previous-button').should(
+      'have.color',
+      primary,
+    );
+    cy.dataCy('calendar-navigation-previous-button')
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 36);
-    cy.dataCy('calendar-navigation-previous')
+    cy.dataCy('calendar-navigation-previous-button')
       .should('be.visible')
       .invoke('height')
       .should('be.eq', 36);
     // button next
-    cy.dataCy('calendar-navigation-next').should('have.color', primary);
-    cy.dataCy('calendar-navigation-next')
+    cy.dataCy('calendar-navigation-next-button').should('have.color', primary);
+    cy.dataCy('calendar-navigation-next-button')
       .should('be.visible')
       .invoke('width')
       .should('be.eq', 36);
-    cy.dataCy('calendar-navigation-next')
+    cy.dataCy('calendar-navigation-next-button')
       .should('be.visible')
       .invoke('height')
       .should('be.eq', 36);
