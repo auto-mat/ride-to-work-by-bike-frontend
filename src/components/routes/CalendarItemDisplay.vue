@@ -112,7 +112,7 @@ export default defineComponent({
           v-if="active"
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-towork-active|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-active|0 0 133 40"
           data-cy="calendar-item-icon-towork-active"
         />
         <!-- Icon: To work - logged -->
@@ -120,7 +120,7 @@ export default defineComponent({
           v-else-if="route && route.id"
           color="secondary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-towork-logged|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-logged|0 0 133 40"
           style="opacity: 0.4"
           data-cy="calendar-item-icon-towork-logged"
         />
@@ -129,7 +129,7 @@ export default defineComponent({
           v-else
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-towork-empty|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-empty|0 0 133 40"
           style="opacity: 0.5"
           data-cy="calendar-item-icon-towork-empty"
         />
@@ -141,7 +141,7 @@ export default defineComponent({
           v-if="active"
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-fromwork-active|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-active|0 0 133 40"
           data-cy="calendar-item-icon-fromwork-active"
         />
         <!-- Icon: From work - logged -->
@@ -149,7 +149,7 @@ export default defineComponent({
           v-else-if="route && route.id"
           color="secondary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-fromwork-logged|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-logged|0 0 133 40"
           style="opacity: 0.4"
           data-cy="calendar-item-icon-fromwork-logged"
         />
@@ -158,7 +158,7 @@ export default defineComponent({
           v-else
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons.svg#route-bg-fromwork-empty|0 0 133 40"
+          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-empty|0 0 133 40"
           style="opacity: 0.5"
           data-cy="calendar-item-icon-fromwork-empty"
         />
