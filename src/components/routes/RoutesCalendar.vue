@@ -103,6 +103,7 @@ export default defineComponent({
      * Determines if route item is active.
      * It checks if the timestamp and direction against a stored state.
      * @param Object { timestamp: Timestamp; direction: TransportDirection }
+     * @returns boolean
      */
     function isActive({
       timestamp,
