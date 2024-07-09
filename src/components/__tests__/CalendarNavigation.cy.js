@@ -37,6 +37,7 @@ describe('<CalendarNavigation>', () => {
 
 function coreTests() {
   it('renders component', () => {
+    const iconSize = 36;
     cy.dataCy('calendar-navigation').should('be.visible');
     // button today
     cy.dataCy('calendar-navigation-today')
@@ -52,20 +53,20 @@ function coreTests() {
     cy.dataCy('calendar-navigation-previous-button')
       .should('be.visible')
       .invoke('width')
-      .should('be.eq', 36);
+      .should('be.eq', iconSize);
     cy.dataCy('calendar-navigation-previous-button')
       .should('be.visible')
       .invoke('height')
-      .should('be.eq', 36);
+      .should('be.eq', iconSize);
     // button next
     cy.dataCy('calendar-navigation-next-button').should('have.color', primary);
     cy.dataCy('calendar-navigation-next-button')
       .should('be.visible')
       .invoke('width')
-      .should('be.eq', 36);
+      .should('be.eq', iconSize);
     cy.dataCy('calendar-navigation-next-button')
       .should('be.visible')
       .invoke('height')
-      .should('be.eq', 36);
+      .should('be.eq', iconSize);
   });
 }
