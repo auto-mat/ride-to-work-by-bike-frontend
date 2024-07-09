@@ -83,12 +83,17 @@ export default defineComponent({
 
     const { getRouteDistance, getRouteIcon } = useRoutes();
 
+    const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
+    const customSVGIconViewPort = '0 0 133 40';
+
     return {
       iconSize,
       route,
       getRouteDistance,
       getRouteIcon,
       onClick,
+      customSVGIconsFilePath,
+      customSVGIconViewPort,
     };
   },
 });
@@ -112,7 +117,7 @@ export default defineComponent({
           v-if="active"
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-active|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-towork-active|${customSVGIconViewPort}`"
           data-cy="calendar-item-icon-towork-active"
         />
         <!-- Icon: To work - logged -->
@@ -120,7 +125,7 @@ export default defineComponent({
           v-else-if="route && route.id"
           color="secondary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-logged|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-towork-logged|${customSVGIconViewPort}`"
           style="opacity: 0.4"
           data-cy="calendar-item-icon-towork-logged"
         />
@@ -129,7 +134,7 @@ export default defineComponent({
           v-else
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-towork-empty|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-towork-empty|${customSVGIconViewPort}`"
           style="opacity: 0.5"
           data-cy="calendar-item-icon-towork-empty"
         />
@@ -141,7 +146,7 @@ export default defineComponent({
           v-if="active"
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-active|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-fromwork-active|${customSVGIconViewPort}`"
           data-cy="calendar-item-icon-fromwork-active"
         />
         <!-- Icon: From work - logged -->
@@ -149,7 +154,7 @@ export default defineComponent({
           v-else-if="route && route.id"
           color="secondary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-logged|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-fromwork-logged|${customSVGIconViewPort}`"
           style="opacity: 0.4"
           data-cy="calendar-item-icon-fromwork-logged"
         />
@@ -158,7 +163,7 @@ export default defineComponent({
           v-else
           color="primary"
           class="full-width full-height absolute-full"
-          name="svguse:icons/routes_calendar/icons.svg#route-bg-fromwork-empty|0 0 133 40"
+          :name="`svguse:${customSVGIconsFilePath}#route-bg-fromwork-empty|${customSVGIconViewPort}`"
           style="opacity: 0.5"
           data-cy="calendar-item-icon-fromwork-empty"
         />
