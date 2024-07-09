@@ -102,8 +102,8 @@ export default defineComponent({
     /**
      * Determines if route item is active.
      * It checks if the timestamp and direction against a stored state.
-     * @param Object { timestamp: Timestamp; direction: TransportDirection }
-     * @returns boolean
+     * @param {Object} { timestamp: Timestamp; direction: TransportDirection }
+     * @return {boolean}
      */
     function isActive({
       timestamp,
@@ -130,8 +130,8 @@ export default defineComponent({
      * Handles click on route item within a day frame.
      * It triggers active state on that day.
      * It controls content of the route-logging dialog panel.
-     * @param Object { timestamp: Timestamp; direction: TransportDirection }
-     * @returns void
+     * @param {Object} { timestamp: Timestamp; direction: TransportDirection }
+     * @return {void}
      */
     function onClickItem({
       timestamp,
