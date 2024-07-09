@@ -1,5 +1,6 @@
 import { colors } from 'quasar';
 import CalendarItemDisplay from 'components/routes/CalendarItemDisplay.vue';
+import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
 
@@ -189,7 +190,10 @@ function loggedTests({ active, direction }) {
         .and('have.color', active ? white : primary)
         .and('have.css', 'font-size', '14px')
         .and('have.css', 'font-weight', '500')
-        .and('contain', `${day[direction].distance} km`);
+        .and(
+          'contain',
+          `${day[direction].distance} ${i18n.global.t('global.routeLengthUnit')}`,
+        );
     });
   });
 }
