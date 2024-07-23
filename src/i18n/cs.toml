@@ -68,6 +68,9 @@ labelOrganizationId = "IČO"
 labelShowPastTasks = "Zobrazit uplynulé úkoly"
 textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
 
+[profile]
+fillFormButton = "Vyplnit dotazník"
+
 [language]
 cs = "Čeština"
 sk = "Slovenština"
