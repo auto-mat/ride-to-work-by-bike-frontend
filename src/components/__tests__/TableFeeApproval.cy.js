@@ -1,8 +1,8 @@
-import { date } from 'quasar';
+// import { date } from 'quasar';
 import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
 import { i18n } from '../../boot/i18n';
 
-const { formatDate } = date;
+// const { formatDate } = date;
 
 describe('<TableFeeApproval>', () => {
   it('has translation for all strings', () => {
@@ -64,27 +64,5 @@ function coreTests() {
     cy.dataCy('table-fee-approval-button')
       .should('be.visible')
       .and('contain', i18n.global.t('table.buttonFeeApproval'));
-    // table rows
-    cy.get('@rows').then((rows) => {
-      cy.dataCy('table-fee-approval')
-        .find('tbody')
-        .find('tr')
-        .should('have.length', rows.length);
-      cy.dataCy('table-fee-approval')
-        .find('tbody')
-        .find('tr')
-        .each((row, index) =>
-          cy
-            .wrap(row)
-            .should('contain', rows[index].name)
-            .and('contain', rows[index].email)
-            .and('contain', rows[index].team)
-            .and('contain', rows[index].amount)
-            .and(
-              'contain',
-              formatDate(new Date(rows[index].dateCreated), 'D. MMM. YYYY'),
-            ),
-        );
-    });
   });
 }

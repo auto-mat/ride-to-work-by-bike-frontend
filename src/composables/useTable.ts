@@ -176,6 +176,7 @@ export const useTable = () => {
     sortBy: string,
     descending: boolean,
   ): readonly TableRow[] => {
+    console.table([rows, sortBy, descending]);
     const data = [...rows];
 
     if (sortBy) {
@@ -194,6 +195,17 @@ export const useTable = () => {
       if (a.team < b.team) return descending ? 1 : -1;
       if (a.team > b.team) return descending ? -1 : 1;
       return 0;
+    });
+
+    // Mark the first occurrence of each team
+    const seenTeams = new Set();
+    data.forEach(row => {
+      if (!seenTeams.has(row.team)) {
+        row.isFirst = true;
+        seenTeams.add(row.team);
+      } else {
+        row.isFirst = false;
+      }
     });
 
     return data;
@@ -253,7 +265,7 @@ export const useTableFeeApproval = () => {
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelTeam'),
       name: 'team',
-      required: true,
+      required: false,
       sortable: true,
     },
     {
@@ -268,9 +280,34 @@ export const useTableFeeApproval = () => {
     },
   ];
 
-  function sortDate(a: { dateCreated: string }, b: { dateCreated: string }, rowA: { dateCreated: string }, rowB: { dateCreated: string }): number {
+  const tableFeeApprovalVisibleColumns: string[] = [
+    'amount',
+    'name',
+    'email',
+    'nickname',
+    'dateCreated',
+  ]
+
+  /**
+   * Sorts an array of objects by the `dateCreated` date property.
+   * Used as the sort function for dateCreated column.
+   * @param {Object} a - Row A (formatted values)
+   * @param {Object} b - Row B (formatted values)
+   * @param {Object} rowA - Row A (unformatted values)
+   * @param {Object} rowB - Row B (unformatted values)
+   * @return {number} The difference in ms.
+   */
+  function sortDate(
+    a: { dateCreated: string },
+    b: { dateCreated: string },
+    rowA: { dateCreated: string },
+    rowB: { dateCreated: string }): number
+  {
     return new Date(rowB.dateCreated).getTime() - new Date(rowA.dateCreated).getTime();
   }
 
-  return { columns: tableFeeApprovalColumns };
+  return {
+    columns: tableFeeApprovalColumns,
+    visibleColumns: tableFeeApprovalVisibleColumns
+  };
 };

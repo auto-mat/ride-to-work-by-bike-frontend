@@ -13,8 +13,8 @@
  */
 
 // libraries
-import { date } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { date, QTable } from 'quasar';
+import { defineComponent, onMounted, ref } from 'vue';
 
 // composables
 import { useTable, useTableFeeApproval } from '../../composables/useTable';
@@ -28,8 +28,14 @@ export default defineComponent({
   setup() {
     // holds an array of currently selected rows
     const selected = ref([]);
+    const tableRef = ref<QTable | null>(null);
+    onMounted(() => {
+      if (tableRef.value) {
+        tableRef.value.sort('dateCreated');
+      }
+    })
 
-    const { columns } = useTableFeeApproval();
+    const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
 
     // format date
@@ -45,6 +51,8 @@ export default defineComponent({
       columns,
       selected,
       rowsFeeApproval,
+      tableRef,
+      visibleColumns,
       sortByTeam,
     };
   },
@@ -65,15 +73,50 @@ export default defineComponent({
     <div class="q-my-lg">
       <!-- Table -->
       <q-table
+        ref="tableRef"
         flat
         bordered
+        binary-state-sort
         :rows="rowsFeeApproval"
         :columns="columns"
+        :visible-columns="visibleColumns"
         row-key="name"
+        :sort-method="sortByTeam"
         selection="multiple"
         v-model:selected="selected"
         :style="{ 'border-radius': '8px' }"
-      />
+      >
+        <template v-slot:body="props">
+          <q-tr v-if="props.row.isFirst" class="bg-blue-grey-2">
+            <q-td colspan="7" class="text-weight-bold">
+              {{ props.row.team }}
+            </q-td>
+          </q-tr>
+          <q-tr :props="props" @click="onRowClick(props.row)" class="data-row">
+            <q-td>
+              <q-checkbox v-model="props.selected" color="primary" />
+            </q-td>
+            <q-td key="amount" :props="props">
+              {{ props.row.amount }}
+            </q-td>
+            <q-td key="name" :props="props">
+              {{ props.row.name }}
+            </q-td>
+            <q-td key="email" :props="props">
+              {{ props.row.email }}
+            </q-td>
+            <q-td key="nickname" :props="props">
+              {{ props.row.nickname }}
+            </q-td>
+            <q-td key="team" :props="props">
+              {{ props.row.team }}
+            </q-td>
+            <q-td key="dateCreated" :props="props">
+              {{ props.row.dateCreated }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
     </div>
     <div class="q-mt-lg text-right">
       <!-- Button -->
