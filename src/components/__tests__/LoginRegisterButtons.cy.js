@@ -42,16 +42,13 @@ describe('<LoginRegisterButtons>', () => {
     });
 
     it('renders google button icon', () => {
-      cy.dataCy('login-register-button-google-icon')
-        .should('have.class', 'fab')
-        .and('have.class', 'fa-google')
-        .and('have.color', primary);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('height')
-        .should('be.equal', 18);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('width')
-        .should('be.equal', 18);
+      cy.dataCy('login-register-button-google-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: 'login-register-button-google',
+          size: 18,
+        });
+      });
     });
 
     it('renders login button facebook', () => {
@@ -66,15 +63,13 @@ describe('<LoginRegisterButtons>', () => {
     });
 
     it('renders facebook button icon', () => {
-      cy.dataCy('login-register-button-facebook-icon')
-        .should('contain', 'facebook')
-        .and('have.color', primary);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('height')
-        .should('be.equal', 24);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('width')
-        .should('be.equal', 24);
+      cy.dataCy('login-register-button-facebook-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: 'login-register-button-facebook',
+          size: 24,
+        });
+      });
     });
 
     it('renders buttons with correct spacing', () => {
@@ -108,16 +103,13 @@ describe('<LoginRegisterButtons>', () => {
     });
 
     it('renders google button icon', () => {
-      cy.dataCy('login-register-button-google-icon')
-        .should('have.class', 'fab')
-        .and('have.class', 'fa-google')
-        .and('have.color', primary);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('height')
-        .should('be.equal', 18);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('width')
-        .should('be.equal', 18);
+      cy.dataCy('login-register-button-google-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: 'login-register-button-google-register',
+          size: 18,
+        });
+      });
     });
 
     it('renders register button facebook', () => {
@@ -132,15 +124,13 @@ describe('<LoginRegisterButtons>', () => {
     });
 
     it('renders facebook button icon', () => {
-      cy.dataCy('login-register-button-facebook-icon')
-        .should('contain', 'facebook')
-        .and('have.color', primary);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('height')
-        .should('be.equal', 24);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('width')
-        .should('be.equal', 24);
+      cy.dataCy('login-register-button-facebook-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: 'login-register-button-facebook-register',
+          size: 24,
+        });
+      });
     });
 
     it('renders buttons with correct spacing', () => {

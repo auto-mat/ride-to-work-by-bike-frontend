@@ -112,6 +112,33 @@ Cypress.Commands.add('testImageSrcAlt', (dataCySelector, src, alt) => {
     .should('have.attr', 'alt', alt);
 });
 
+/**
+ * Custom testIcon command that takes an HTML element (icon) and tests
+ * its size and snapshot.
+ *
+ * @param {object} element - HTML element (icon)
+ * @param {string} name - name of the snapshot
+ * @param {number} size - size of the icon
+ *
+ * @example cy.dataCy('icon').then((element) => {
+ *   testIcon({element, name: 'icon-name'})
+ * });
+ */
+Cypress.Commands.add('testIcon', ({ element, name, size, click = true }) => {
+  if (click) cy.get(element).click();
+  cy.get(element).invoke('width').should('eq', size);
+  cy.get(element).invoke('height').should('eq', size);
+  // snapshot
+  cy.get(element).matchImageSnapshot(name, {
+    failureThreshold: 0.1,
+    failureThresholdType: 'percent',
+    timeout: 8000,
+    customDiffConfig: { threshold: 0.4 },
+    retries: 3,
+    //capture: 'viewport',
+  });
+});
+
 Cypress.Commands.add('testMessageLanguageSelect', (i18n) => {
   const locales = i18n.global.availableLocales;
   locales.forEach((locale) => {

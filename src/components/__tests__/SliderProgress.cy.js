@@ -7,7 +7,6 @@ import { i18n } from '../../boot/i18n';
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
-const blueGrey3 = getPaletteColor('blue-grey-3');
 
 // mocks
 import { progressStats, cardsProgress } from 'src/mocks/homepage';
@@ -62,12 +61,6 @@ describe('<SliderProgress>', () => {
             .and('have.css', 'font-weight', '400')
             .and('have.color', grey10);
           cy.wrap($item)
-            .find('.q-icon')
-            .should('contain', progressStats[index].icon)
-            .and('have.color', blueGrey3)
-            .and('have.css', 'width', '18px')
-            .and('have.css', 'height', '18px');
-          cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
             .and('have.color', grey10);
@@ -76,6 +69,19 @@ describe('<SliderProgress>', () => {
             .should('contain', progressStats[index].value)
             .and('have.color', grey10)
             .and('have.css', 'font-weight', '700');
+        });
+        cy.viewport(1280, 800).then(() => {
+          cy.window().then(() => {
+            cy.dataCy('progress-slider-stats-icon', { timeout: 5000 }).each(
+              (element, index) => {
+                cy.testIcon({
+                  element,
+                  name: `${Cypress.currentTest.titlePath}-${index}`,
+                  size: 18,
+                });
+              },
+            );
+          });
         });
       });
     });
@@ -190,6 +196,28 @@ describe('<SliderProgress>', () => {
       });
     });
 
+    it('renders a slider with stat cards', () => {
+      cy.window().then(() => {
+        cy.dataCy('swiper-container').should('be.visible');
+      });
+    });
+
+    it('renders button', () => {
+      cy.viewport('iphone-6').then(() => {
+        cy.window().then(() => {
+          cy.dataCy('progress-slider-button')
+            .should('be.visible')
+            .and('have.css', 'border-color', hexToRgb('#212121'))
+            .and('have.css', 'border-radius', '28px')
+            .and('contain', i18n.global.t('index.progressSlider.button'));
+          cy.testElementPercentageWidth(
+            cy.dataCy('progress-slider-button'),
+            100,
+          );
+        });
+      });
+    });
+
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-stats-item').should('have.length', 3);
@@ -198,12 +226,6 @@ describe('<SliderProgress>', () => {
             .should('have.css', 'font-size', '14px')
             .and('have.css', 'font-weight', '400')
             .and('have.color', grey10);
-          cy.wrap($item)
-            .find('.q-icon')
-            .should('contain', progressStats[index].icon)
-            .and('have.color', blueGrey3)
-            .and('have.css', 'width', '18px')
-            .and('have.css', 'height', '18px');
           cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
@@ -214,23 +236,19 @@ describe('<SliderProgress>', () => {
             .and('have.color', grey10)
             .and('have.css', 'font-weight', '700');
         });
-      });
-    });
-
-    it('renders a slider with stat cards', () => {
-      cy.window().then(() => {
-        cy.dataCy('swiper-container').should('be.visible');
-      });
-    });
-
-    it('renders button', () => {
-      cy.window().then(() => {
-        cy.dataCy('progress-slider-button')
-          .should('be.visible')
-          .and('have.css', 'border-color', hexToRgb('#212121'))
-          .and('have.css', 'border-radius', '28px')
-          .and('contain', i18n.global.t('index.progressSlider.button'));
-        cy.testElementPercentageWidth(cy.dataCy('progress-slider-button'), 100);
+        cy.viewport(1280, 800).then(() => {
+          cy.window().then(() => {
+            cy.dataCy('progress-slider-stats-icon', { timeout: 5000 }).each(
+              (element, index) => {
+                cy.testIcon({
+                  element,
+                  name: `${Cypress.currentTest.titlePath}-${index}`,
+                  size: 18,
+                });
+              },
+            );
+          });
+        });
       });
     });
   });

@@ -3,15 +3,17 @@
  * HelpButton Component
  *
  * The `HelpButton`
- * You can adjust its appearance by passing in `color` and `size` props.
+ * You can adjust its appearance by passing in `color` and `small` props.
  *
  * @description * Use this component to render help icon with help dialog .
  *
  * Note: This component is commonly used in `DrawerHeader` and `PageHeader`.
  *
  * @props
- * - `color`: Color of the help button.
- * - `size`: Size of the help button.
+ * - `color` (String: 'primary' | 'grey-10', default: 'grey-10'): Determines
+ * the color of the button.
+ * - `small` (Boolean, default: false): Determines if the button should be
+ * small.
  *
  * @components
  * - `ContactForm`: Component to display contact for inside the dialog.
@@ -52,9 +54,9 @@ export default defineComponent({
       type: String as () => 'grey-10' | 'primary',
       default: 'grey-10',
     },
-    size: {
-      type: String,
-      default: '11px',
+    small: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
@@ -93,12 +95,17 @@ export default defineComponent({
     <q-btn
       unelevated
       round
-      :size="size"
+      :size="small ? '8px' : '13px'"
       :color="color"
       @click.prevent="isDialogOpen = true"
       data-cy="button-help"
     >
-      <q-icon name="question_mark" color="white" data-cy="icon-help" />
+      <q-icon
+        name="question_mark"
+        color="white"
+        data-cy="icon-help"
+        :size="small ? '12px' : '24px'"
+      />
     </q-btn>
     <!-- Dialog -->
     <dialog-default

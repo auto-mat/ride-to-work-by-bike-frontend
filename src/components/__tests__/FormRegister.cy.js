@@ -81,7 +81,15 @@ describe('<FormRegister>', () => {
     });
 
     it('renders show/hide icons for password inputs', () => {
-      // password
+      cy.viewport(500, 500).then(() => {
+        cy.dataCy('form-register-password-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: 'form-register-password-show',
+            size: 18,
+          });
+        });
+      });
       cy.dataCy('form-register-password-icon')
         .should('contain', 'visibility')
         .and('have.color', `${colorPrimary}`);

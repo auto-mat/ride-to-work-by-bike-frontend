@@ -47,12 +47,22 @@ describe('<FormFieldPassword>', () => {
         .and('have.css', 'border-radius', '8px');
       // input
       cy.dataCy('form-password-input').should('be.visible');
-      // icon
-      cy.dataCy('form-password-icon')
-        .should('contain', 'visibility')
-        .and('have.color', colorPrimary);
-      cy.dataCy('form-password-icon').invoke('height').should('be.equal', 18);
-      cy.dataCy('form-password-icon').invoke('width').should('be.equal', 18);
+      cy.viewport(500, 500).then(() => {
+        // icon
+        cy.dataCy('form-password-icon')
+          .should('contain', 'visibility')
+          .and('have.color', colorPrimary)
+          .then((element) => {
+            cy.testIcon({
+              element: element,
+              name: 'form-field-password',
+              size: 18,
+            });
+          });
+      });
+      testPasswordInputReveal({
+        identifierPassword: 'form-password',
+      });
     });
 
     it('allows user to reveal and hide password', () => {

@@ -50,16 +50,19 @@ describe('<FormFieldPasswordConfirm>', () => {
         .and('have.css', 'border-radius', '8px');
       // input
       cy.dataCy('form-password-confirm-input').should('be.visible');
-      // icon
-      cy.dataCy('form-password-confirm-icon')
-        .should('contain', 'visibility')
-        .and('have.color', colorPrimary);
-      cy.dataCy('form-password-confirm-icon')
-        .invoke('height')
-        .should('be.equal', 18);
-      cy.dataCy('form-password-confirm-icon')
-        .invoke('width')
-        .should('be.equal', 18);
+      cy.viewport(500, 500).then(() => {
+        // icon
+        cy.dataCy('form-password-confirm-icon')
+          .should('contain', 'visibility')
+          .and('have.color', colorPrimary)
+          .then((element) => {
+            cy.testIcon({
+              element: element,
+              name: 'form-field-password-confirm',
+              size: 18,
+            });
+          });
+      });
     });
 
     it('allows user to reveal and hide password', () => {

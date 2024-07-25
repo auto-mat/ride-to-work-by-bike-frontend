@@ -41,9 +41,13 @@ describe('<RouteItemDisplay>', () => {
         .should('be.visible')
         .and('contain', i18n.global.t('routes.labelDirectionToWork'));
       // icon to work
-      cy.dataCy('label-direction-icon')
-        .should('be.visible')
-        .and('contain', 'arrow_forward');
+      cy.dataCy('label-direction-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `${Cypress.currentTest.titlePath}-arrow-right`,
+          size: 18,
+        });
+      });
     });
 
     it('renders correct distance value', () => {
@@ -91,9 +95,13 @@ describe('<RouteItemDisplay>', () => {
         .should('be.visible')
         .and('contain', i18n.global.t('routes.labelDirectionFromWork'));
       // icon from work
-      cy.dataCy('label-direction-icon')
-        .should('be.visible')
-        .and('contain', 'arrow_back');
+      cy.dataCy('label-direction-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `${Cypress.currentTest.titlePath}-arrow-left`,
+          size: 18,
+        });
+      });
     });
 
     it('does not render distance', () => {
@@ -134,23 +142,21 @@ function coreTests() {
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
     // icon direction
-    cy.dataCy('label-direction-icon')
-      .should('be.visible')
-      .invoke('height')
-      .should('be.eq', 18);
-    cy.dataCy('label-direction-icon')
-      .should('be.visible')
-      .invoke('width')
-      .should('be.eq', 18);
+    cy.dataCy('label-direction-icon').each((element, index) => {
+      cy.testIcon({
+        element,
+        name: `${Cypress.currentTest.titlePath}-direction-${index}`,
+        size: 18,
+      });
+    });
     // icon transport
-    cy.dataCy('icon-transport')
-      .should('be.visible')
-      .invoke('height')
-      .should('be.eq', 24);
-    cy.dataCy('icon-transport')
-      .should('be.visible')
-      .invoke('width')
-      .should('be.eq', 24);
+    cy.dataCy('icon-transport').each((element, index) => {
+      cy.testIcon({
+        element,
+        name: `${Cypress.currentTest.titlePath}-transport-${index}`,
+        size: 24,
+      });
+    });
     // description transport styles
     cy.dataCy('description-transport')
       .should('be.visible')

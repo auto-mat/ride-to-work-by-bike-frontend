@@ -30,6 +30,16 @@ describe('<BannerRoutes>', () => {
       cy.viewport('macbook-16');
     });
 
+    coreTests();
+
+    it('renders button icon with correct spacing', () => {
+      // icon additional tests
+      cy.dataCy('banner-routes-button-icon')
+        .should('be.visible')
+        .and('have.color', white)
+        .and('have.css', 'margin-right', '8px');
+    });
+
     it('renders title with the number of missing routes', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-title').should('contain', routesCount);
@@ -56,20 +66,6 @@ describe('<BannerRoutes>', () => {
         .and('have.css', 'padding-bottom', '16px')
         .and('have.css', 'padding-right', '24px')
         .and('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
-    });
-
-    it('renders button icon with correct spacing', () => {
-      cy.dataCy('banner-routes-button-icon')
-        .should('be.visible')
-        .and('have.color', white)
-        .and('have.css', 'margin-right', '8px')
-        .and('contain', 'add');
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('height')
-        .should('equal', 24);
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('width')
-        .should('equal', 24);
     });
 
     it('has gray background', () => {
@@ -111,6 +107,8 @@ describe('<BannerRoutes>', () => {
       cy.viewport('macbook-16');
     });
 
+    coreTests();
+
     it('renders title width the "start" message', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-title').should(
@@ -140,20 +138,6 @@ describe('<BannerRoutes>', () => {
         .and('have.css', 'padding-bottom', '16px')
         .and('have.css', 'padding-right', '24px')
         .and('contain', i18n.global.t('index.bannerRoutes.addFirstRoutes'));
-    });
-
-    it('renders button icon with correct spacing', () => {
-      cy.dataCy('banner-routes-button-icon')
-        .should('be.visible')
-        .and('have.color', white)
-        .and('have.css', 'margin-right', '8px')
-        .and('contain', 'add');
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('height')
-        .should('equal', 24);
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('width')
-        .should('equal', 24);
     });
 
     it('has gray background', () => {
@@ -195,6 +179,8 @@ describe('<BannerRoutes>', () => {
       cy.viewport('iphone-6');
     });
 
+    coreTests();
+
     it('renders title with the number of missing routes', () => {
       cy.window().then(() => {
         cy.dataCy('banner-routes-title')
@@ -218,20 +204,6 @@ describe('<BannerRoutes>', () => {
         .and('have.css', 'padding-bottom', '16px')
         .and('have.css', 'padding-right', '24px')
         .and('contain', i18n.global.t('index.bannerRoutes.addRoutes'));
-    });
-
-    it('renders button icon with correct spacing', () => {
-      cy.dataCy('banner-routes-button-icon')
-        .should('be.visible')
-        .and('have.color', white)
-        .and('have.css', 'margin-right', '8px')
-        .and('contain', 'add');
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('height')
-        .should('equal', 24);
-      cy.dataCy('banner-routes-button-icon')
-        .invoke('width')
-        .should('equal', 24);
     });
 
     it('has gray background', () => {
@@ -262,3 +234,25 @@ describe('<BannerRoutes>', () => {
     });
   });
 });
+
+function coreTests() {
+  it('renders button icon with correct spacing', () => {
+    cy.viewport(1280, 800).then(() => {
+      cy.window().then(() => {
+        // icon core test
+        cy.dataCy('banner-routes-button-icon').then((element) => {
+          cy.testIcon({
+            element,
+            name: `${Cypress.currentTest.titlePath}-add`,
+            size: 24,
+          });
+        });
+      });
+    });
+    // icon additional tests
+    cy.dataCy('banner-routes-button-icon')
+      .should('be.visible')
+      .and('have.color', white)
+      .and('have.css', 'margin-right', '8px');
+  });
+}

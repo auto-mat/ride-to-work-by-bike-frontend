@@ -45,10 +45,9 @@ describe('<ContactForm>', () => {
     });
 
     it('should render contact-form-file field', () => {
-      cy.dataCy('contact-form-file')
-        .find('i.q-icon')
-        .should('be.visible')
-        .and('contain', 'attachment');
+      cy.dataCy('contact-form-file-icon').then((element) => {
+        cy.testIcon({ element, name: 'contact-form-file', size: 18 });
+      });
       cy.dataCy('contact-form-file')
         .find('.q-field__label')
         .should('be.visible')

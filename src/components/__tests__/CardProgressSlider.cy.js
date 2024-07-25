@@ -6,7 +6,6 @@ import { cardsProgressSlider } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
-const blueGrey1 = getPaletteColor('blue-grey-1');
 
 const card = cardsProgressSlider[0];
 
@@ -29,6 +28,8 @@ describe('<CardProgressSlider>', () => {
       cy.viewport('macbook-16');
     });
 
+    coreTests();
+
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
@@ -40,15 +41,6 @@ describe('<CardProgressSlider>', () => {
             expect($title.text()).to.equal(card.title);
           });
       });
-    });
-
-    it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey1)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
     });
 
     it('renders timeline', () => {
@@ -138,6 +130,8 @@ describe('<CardProgressSlider>', () => {
       cy.viewport('iphone-6');
     });
 
+    coreTests();
+
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('card-progress-title')
@@ -149,15 +143,6 @@ describe('<CardProgressSlider>', () => {
             expect($title.text()).to.equal(card.title);
           });
       });
-    });
-
-    it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey1)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
     });
 
     it('renders timeline', () => {
@@ -209,3 +194,19 @@ describe('<CardProgressSlider>', () => {
     });
   });
 });
+
+function coreTests() {
+  it('renders title icon', () => {
+    cy.viewport(1280, 800).then(() => {
+      cy.window().then(() => {
+        cy.dataCy('card-progress-header-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-header-${card.icon}`,
+            size: 18,
+          });
+        });
+      });
+    });
+  });
+}

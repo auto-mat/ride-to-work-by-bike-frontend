@@ -152,12 +152,13 @@ export default defineComponent({
           </div>
           <!-- Third column: Check -->
           <div class="col-auto q-ml-md">
-            <q-avatar round size="24px" data-cy="form-field-option-check">
+            <q-avatar round size="24px">
               <q-icon
                 v-show="opt.value === inputValue"
                 name="done"
                 color="primary"
                 size="24px"
+                data-cy="form-field-option-check"
               />
             </q-avatar>
           </div>

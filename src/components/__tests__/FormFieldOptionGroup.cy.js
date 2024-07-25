@@ -38,9 +38,14 @@ describe('<FormFieldOptionGroup>', () => {
         .first()
         .should('have.backgroundColor', white)
         .should('have.css', 'border-radius', borderRadius);
-      // test icon size
-      cy.dataCy('form-field-option-icon').invoke('height').should('equal', 48);
-      cy.dataCy('form-field-option-icon').invoke('width').should('equal', 48);
+      // test icons
+      cy.dataCy('form-field-option-icon').each((element, index) => {
+        cy.testIcon({
+          element: element,
+          name: `form-field-option-${index}`,
+          size: 48,
+        });
+      });
     });
 
     it('shows highlighted option', () => {
@@ -51,17 +56,13 @@ describe('<FormFieldOptionGroup>', () => {
         .should('have.css', 'border-color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .first()
-        .find('i')
-        .should('be.visible')
-        .should('have.css', 'color', colorPrimary);
-      cy.dataCy('form-field-option-check')
-        .first()
-        .invoke('height')
-        .should('be.equal', 24);
-      cy.dataCy('form-field-option-check')
-        .first()
-        .invoke('width')
-        .should('be.equal', 24);
+        .then((element) => {
+          cy.testIcon({
+            element: element,
+            name: 'form-field-option-check',
+            size: 24,
+          });
+        });
       // highlight last option
       cy.dataCy('form-field-option').last().click();
       cy.dataCy('form-field-option')
@@ -69,17 +70,9 @@ describe('<FormFieldOptionGroup>', () => {
         .should('have.css', 'border-color', colorPrimary);
       cy.dataCy('form-field-option-check')
         .last()
-        .find('i')
-        .should('be.visible')
-        .should('have.css', 'color', colorPrimary);
-      cy.dataCy('form-field-option-check')
-        .last()
-        .invoke('height')
-        .should('be.equal', 24);
-      cy.dataCy('form-field-option-check')
-        .last()
-        .invoke('width')
-        .should('be.equal', 24);
+        .then((element) => {
+          cy.testIcon({ element, name: 'form-field-option-check', size: 24 });
+        });
     });
   });
 });

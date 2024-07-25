@@ -38,6 +38,7 @@ describe('<BannerChallengeDescription>', () => {
 });
 
 function coreTests() {
+  const iconSize = 18;
   it('renders component', () => {
     cy.fixture('bannerChallengeDescription').then(
       (bannerChallengeDescription) => {
@@ -53,9 +54,21 @@ function coreTests() {
           .and(
             'contain',
             i18n.global.t('bannerChallengeDescription.transportType'),
-          )
-          .and('contain', getRouteIcon('bike'))
-          .and('contain', getRouteIcon('walk'));
+          );
+        // loop over icons
+        bannerChallengeDescription.transportTypes.forEach((type) => {
+          cy.dataCy(`challenge-transport-icon-${getRouteIcon(type)}`).then(
+            (element) => {
+              // test icon
+              cy.testIcon({
+                element: element,
+                name: `${Cypress.currentTest.titlePath}-banner-challenge-description-${getRouteIcon(type)}`,
+                size: iconSize,
+                click: false,
+              });
+            },
+          );
+        });
         cy.dataCy('challenge-description')
           .should('be.visible')
           // test v-html content
@@ -71,6 +84,14 @@ function coreTests() {
         cy.dataCy('challenge-link')
           .find('a')
           .should('have.attr', 'href', bannerChallengeDescription.link.url);
+        cy.dataCy('challenge-link-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-banner-challenge-description-launch`,
+            size: iconSize,
+            click: false,
+          });
+        });
       },
     );
   });

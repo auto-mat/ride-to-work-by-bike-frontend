@@ -49,7 +49,13 @@ export default defineComponent({
       clickable
     >
       <!-- Link icon -->
-      <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
+      <q-icon
+        :name="item.icon"
+        size="xs"
+        color="blue-grey-4"
+        class="q-mr-sm"
+        data-cy="drawer-menu-icon"
+      />
       <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>
@@ -65,7 +71,13 @@ export default defineComponent({
       clickable
     >
       <!-- Link icon -->
-      <q-icon :name="item.icon" size="xs" color="blue-grey-4" class="q-mr-sm" />
+      <q-icon
+        :name="item.icon"
+        size="xs"
+        color="blue-grey-4"
+        class="q-mr-sm"
+        data-cy="drawer-bottom-menu-icon"
+      />
       <!-- Link text -->
       {{ $t(`drawerMenu.${item.name}`) }}
     </q-item>

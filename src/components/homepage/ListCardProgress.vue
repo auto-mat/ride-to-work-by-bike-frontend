@@ -93,7 +93,12 @@ export default defineComponent({
           class="text-grey-10 q-px-none"
         >
           <!-- Icon -->
-          <q-icon :name="item.icon" color="blue-grey-3" size="18px" />&nbsp;
+          <q-icon
+            :name="item.icon"
+            color="blue-grey-3"
+            size="18px"
+            data-cy="card-list-progress-stats-icon"
+          />&nbsp;
           <!-- Value -->
           <strong>{{ item.value }}</strong
           >&nbsp;

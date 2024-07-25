@@ -7,7 +7,6 @@ import { progressStats, cardsProgress } from '../../mocks/homepage';
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
-const blueGrey3 = getPaletteColor('blue-grey-3');
 
 describe('<ListCardProgress>', () => {
   it('has translation for all strings', () => {
@@ -55,12 +54,6 @@ describe('<ListCardProgress>', () => {
             .and('have.css', 'font-weight', '400')
             .and('have.color', grey10);
           cy.wrap($item)
-            .find('.q-icon')
-            .should('contain', progressStats[index].icon)
-            .and('have.color', blueGrey3)
-            .and('have.css', 'width', '18px')
-            .and('have.css', 'height', '18px');
-          cy.wrap($item)
             .find('span')
             .should('contain', progressStats[index].label)
             .and('have.color', grey10);
@@ -69,6 +62,19 @@ describe('<ListCardProgress>', () => {
             .should('contain', progressStats[index].value)
             .and('have.color', grey10)
             .and('have.css', 'font-weight', '700');
+        });
+        cy.viewport(1280, 800).then(() => {
+          cy.window().then(() => {
+            cy.dataCy('card-list-progress-stats-icon').each(
+              (element, index) => {
+                cy.testIcon({
+                  element,
+                  name: `card-list-progress-${index}`,
+                  size: 18,
+                });
+              },
+            );
+          });
         });
       });
     });

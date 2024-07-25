@@ -83,7 +83,12 @@ export default defineComponent({
         >
           <div class="flex items-center gap-16 text-body1">
             <!-- Card icon -->
-            <q-icon :name="card.icon" size="18px" color="blue-grey-1" />
+            <q-icon
+              :name="card.icon"
+              size="18px"
+              color="blue-grey-1"
+              data-cy="card-progress-header-icon"
+            />
             <!-- Card title -->
             <component
               :is="card.url ? 'a' : 'div'"

@@ -90,8 +90,13 @@ describe('<RouteItemEdit>', () => {
         i18n.global.t('routes.labelDirectionToWork'),
       );
       // direction icon
-      cy.dataCy('label-direction-icon').should('be.visible');
-      cy.dataCy('label-direction-icon').should('contain', 'arrow_forward');
+      cy.dataCy('label-direction-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `${Cypress.currentTest.titlePath}-arrow-right`,
+          size: 18,
+        });
+      });
     });
 
     it('renders the input distance value', () => {
@@ -164,8 +169,13 @@ describe('<RouteItemEdit>', () => {
         i18n.global.t('routes.labelDirectionFromWork'),
       );
       // direation icon
-      cy.dataCy('label-direction-icon').should('be.visible');
-      cy.dataCy('label-direction-icon').should('contain', 'arrow_back');
+      cy.dataCy('label-direction-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `${Cypress.currentTest.titlePath}-arrow-left`,
+          size: 18,
+        });
+      });
     });
 
     it('renders "0" when distance is empty', () => {
@@ -384,8 +394,12 @@ function labelDirectionTests() {
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
     // icon direction styles
-    cy.dataCy('label-direction-icon').should('be.visible');
-    cy.dataCy('label-direction-icon').invoke('width').should('be.equal', 18);
-    cy.dataCy('label-direction-icon').invoke('height').should('be.equal', 18);
+    cy.dataCy('label-direction-icon').each((element, index) => {
+      cy.testIcon({
+        element,
+        name: `${Cypress.currentTest.titlePath}-${index}`,
+        size: 18,
+      });
+    });
   });
 }

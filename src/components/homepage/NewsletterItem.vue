@@ -90,6 +90,7 @@ export default defineComponent({
         size="18px"
         color="grey-10"
         class="q-mr-xs"
+        data-cy="newsletter-item-button-icon"
       />
       <!-- Label -->
       <span v-if="item.following">

@@ -92,23 +92,17 @@ describe('Register Challenge page', () => {
     it('renders page elements', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          let title = '';
-          if (config.challengeMonth === 'may') {
-            title = i18n.global.t(
-              'register.challenge.titleRegisterToChallenge.may',
-            );
-          } else if (config.challengeMonth === 'october') {
-            title = i18n.global.t(
-              'register.challenge.titleRegisterToChallenge.october',
-            );
-          }
-          cy.dataCy('top-bar-countdown').should('be.visible');
-          cy.dataCy('login-register-title')
-            .should('be.visible')
-            .and('have.color', config.colorWhite)
-            .and('have.css', 'font-size', '24px')
-            .and('have.css', 'font-weight', '700')
-            .and('contain', title);
+          cy.wrap(i18n.global.t(
+            `register.challenge.titleRegisterToChallenge.${config.challengeMonth}`,
+          )).then((title) => {
+            cy.dataCy('top-bar-countdown').should('be.visible');
+            cy.dataCy('login-register-title')
+              .should('be.visible')
+              .and('have.color', config.colorWhite)
+              .and('have.css', 'font-size', '24px')
+              .and('have.css', 'font-weight', '700')
+              .and('contain', title);
+          });
         });
       });
     });

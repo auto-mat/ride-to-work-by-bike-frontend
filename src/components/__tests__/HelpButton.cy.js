@@ -4,7 +4,6 @@ import HelpButton from '../global/HelpButton.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
-const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
 const rideToWorkByBikeConfig = JSON.parse(
@@ -16,6 +15,7 @@ const modalDialogWidth = 560;
 const userEmail = 'test.user@example.com';
 
 describe('<HelpButton>', () => {
+  const iconSize24 = 24;
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.help', i18n);
   });
@@ -25,7 +25,6 @@ describe('<HelpButton>', () => {
       cy.mount(HelpButton, {
         props: {
           color: 'grey-10',
-          size: '13px',
         },
       });
       cy.viewport('macbook-16');
@@ -50,17 +49,13 @@ describe('<HelpButton>', () => {
     });
 
     it('renders help icon', () => {
-      cy.dataCy('icon-help')
-        .should('contain', 'question_mark')
-        .and('have.color', white);
-      cy.dataCy('icon-help')
-        .invoke('height')
-        .should('be.gt', 22)
-        .and('be.lt', 24);
-      cy.dataCy('icon-help')
-        .invoke('width')
-        .should('be.gt', 22)
-        .and('be.lt', 24);
+      cy.dataCy('icon-help').then((element) => {
+        cy.testIcon({
+          element: element,
+          name: 'help-button-question-mark-grey',
+          size: iconSize24,
+        });
+      });
     });
   });
 
@@ -94,17 +89,13 @@ describe('<HelpButton>', () => {
     });
 
     it('renders help icon', () => {
-      cy.dataCy('icon-help')
-        .should('contain', 'question_mark')
-        .and('have.color', white);
-      cy.dataCy('icon-help')
-        .invoke('height')
-        .should('be.gt', 22)
-        .and('be.lt', 24);
-      cy.dataCy('icon-help')
-        .invoke('width')
-        .should('be.gt', 22)
-        .and('be.lt', 24);
+      cy.dataCy('icon-help').then((element) => {
+        cy.testIcon({
+          element: element,
+          name: 'help-button-question-mark-primary',
+          size: iconSize24,
+        });
+      });
     });
   });
 
@@ -113,7 +104,7 @@ describe('<HelpButton>', () => {
       cy.mount(HelpButton, {
         props: {
           color: 'grey-10',
-          size: '8px',
+          small: true,
         },
       });
       cy.viewport('macbook-16');
@@ -136,17 +127,13 @@ describe('<HelpButton>', () => {
     });
 
     it('renders help icon', () => {
-      cy.dataCy('icon-help')
-        .should('contain', 'question_mark')
-        .and('have.color', white);
-      cy.dataCy('icon-help')
-        .invoke('height')
-        .should('be.gt', 12)
-        .and('be.lt', 14);
-      cy.dataCy('icon-help')
-        .invoke('width')
-        .should('be.gt', 12)
-        .and('be.lt', 14);
+      cy.dataCy('icon-help').then((element) => {
+        cy.testIcon({
+          element: element,
+          name: 'help-button-question-mark-small',
+          size: 12,
+        });
+      });
     });
   });
 
@@ -155,7 +142,6 @@ describe('<HelpButton>', () => {
       cy.mount(HelpButton, {
         props: {
           color: 'grey-10',
-          size: '13px',
         },
       });
       cy.viewport('macbook-16');

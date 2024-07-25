@@ -82,15 +82,15 @@ describe('<FooterBar>', () => {
         cy.dataCy('footer-social-menu-link-youtube')
           .should('be.visible')
           .and('have.attr', 'href', rideToWorkByBikeConfig.urlYoutube);
-        cy.dataCy('footer-social-menu-icon')
-          .should('be.visible')
-          .and('have.color', white);
-        cy.dataCy('footer-social-menu-icon')
-          .invoke('height')
-          .should('be.equal', 18);
-        cy.dataCy('footer-social-menu-icon')
-          .invoke('width')
-          .should('be.equal', 18);
+        // icons
+        cy.dataCy('footer-social-menu-icon').each((element, index) => {
+          cy.testIcon({
+            element,
+            name: `footer-social-menu-icon-${index}`,
+            size: 18,
+            click: false,
+          });
+        });
       });
     });
 

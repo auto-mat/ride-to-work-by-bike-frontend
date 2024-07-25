@@ -8,13 +8,14 @@ const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 const blueGrey1 = getPaletteColor('blue-grey-1');
-const blueGrey5 = getPaletteColor('blue-grey-5');
 const blueGrey7 = getPaletteColor('blue-grey-7');
 
 const cardFirst = cardsProgress[0];
 const card = cardsProgress[1];
 
 describe('<CardProgress>', () => {
+  const iconSize24 = 24;
+  const iconSize18 = 18;
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'index.cardProgress', i18n);
     cy.testLanguageStringsInContext(['buttonShare'], 'global', i18n);
@@ -43,12 +44,16 @@ describe('<CardProgress>', () => {
       });
     });
 
-    it('renders prize icon', () => {
-      cy.dataCy('card-progress-prizes-icon')
-        .should('contain', cardFirst.prizes[0].icon)
-        .and('have.color', white)
-        .and('have.css', 'width', '24px')
-        .and('have.css', 'height', '24px');
+    it('renders first prize icon', () => {
+      cy.window().then(() => {
+        cy.dataCy('card-progress-prizes-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-prize-${cardFirst.prizes[0].icon}`,
+            size: iconSize24,
+          });
+        });
+      });
     });
 
     it('renders percentage', () => {
@@ -91,14 +96,17 @@ describe('<CardProgress>', () => {
     });
 
     it('renders white share link icon', () => {
-      cy.dataCy('card-progress-share-icon')
-        .should('have.color', white)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px')
-        .and('contain', 'share');
+      cy.window().then(() => {
+        cy.dataCy('card-progress-share-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-share`,
+            size: iconSize18,
+          });
+        });
+      });
     });
   });
-
   context('desktop: light', () => {
     beforeEach(() => {
       cy.mount(CardProgress, {
@@ -123,12 +131,15 @@ describe('<CardProgress>', () => {
     });
 
     it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey5)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
+      cy.window().then(() => {
+        cy.dataCy('card-progress-share-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-header-${card.icon}`,
+            size: iconSize18,
+          });
+        });
+      });
     });
 
     it('renders percentage', () => {
@@ -171,14 +182,17 @@ describe('<CardProgress>', () => {
     });
 
     it('renders dark share link icon', () => {
-      cy.dataCy('card-progress-share-icon')
-        .should('have.color', grey10)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px')
-        .and('contain', 'share');
+      cy.window().then(() => {
+        cy.dataCy('card-progress-share-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-share`,
+            size: iconSize18,
+          });
+        });
+      });
     });
   });
-
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(CardProgress, {
@@ -203,12 +217,15 @@ describe('<CardProgress>', () => {
     });
 
     it('renders title icon', () => {
-      cy.dataCy('card-progress-header')
-        .find('.q-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey5)
-        .and('have.css', 'width', '18px')
-        .and('have.css', 'height', '18px');
+      cy.window().then(() => {
+        cy.dataCy('card-progress-header-icon').then((element) => {
+          cy.testIcon({
+            element: element,
+            name: `${Cypress.currentTest.titlePath}-header-${card.icon}`,
+            size: iconSize18,
+          });
+        });
+      });
     });
 
     it('renders percentage', () => {

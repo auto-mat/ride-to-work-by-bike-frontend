@@ -8,6 +8,7 @@ const black = getPaletteColor('black');
 const blueGrey1 = getPaletteColor('blue-grey-1');
 
 describe('<MenuLinks>', () => {
+  const iconSize18 = 18;
   context('social', () => {
     const title = 'Find us on social media';
 
@@ -56,6 +57,17 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', black);
         });
     });
+
+    it('renders icon for each link', () => {
+      cy.dataCy('menu-links-icon').each((element, index) => {
+        cy.testIcon({
+          element: element,
+          name: `menu-links-social-${index}`,
+          size: iconSize18,
+          click: false,
+        });
+      });
+    });
   });
 
   context('useful', () => {
@@ -85,7 +97,16 @@ describe('<MenuLinks>', () => {
           cy.wrap($el).should('have.color', black);
         });
     });
-  });
 
-  // TODO: Check for icons
+    it('renders icon for each link', () => {
+      cy.dataCy('menu-links-icon').each((element, index) => {
+        cy.testIcon({
+          element: element,
+          name: `menu-links-useful-${index}`,
+          size: iconSize18,
+          click: false,
+        });
+      });
+    });
+  });
 });

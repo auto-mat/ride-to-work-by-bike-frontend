@@ -45,10 +45,15 @@ describe('<CardChallenge>', () => {
         .should('be.visible')
         .and('have.backgroundColor', 'rgba(0, 0, 0, 0.47)')
         .and('contain', title);
-      cy.dataCy('card-title')
-        .find('i')
-        .should('be.visible')
-        .and('contain', 'person');
+      cy.dataCy('card-challenge-title-icon', { timeout: 5000 }).then(
+        (element) => {
+          cy.testIcon({
+            element,
+            name: 'card-challenge-title-person',
+            size: 18,
+          });
+        },
+      );
       cy.dataCy('card-title')
         .find('a')
         .should('have.css', 'font-size', '16px')

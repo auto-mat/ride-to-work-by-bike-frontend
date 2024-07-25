@@ -6,7 +6,6 @@ import { i18n } from '../../boot/i18n';
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
-const blueGrey6 = getPaletteColor('blue-grey-6');
 
 const icon = 'people';
 const title = i18n.global.t('index.newsletterFeature.aboutEvents');
@@ -27,6 +26,8 @@ describe('<NewsletterItem>', () => {
       });
       cy.viewport('macbook-16');
     });
+
+    coreTests();
 
     it('has display flex column', () => {
       cy.window().then(() => {
@@ -59,37 +60,6 @@ describe('<NewsletterItem>', () => {
           });
       });
     });
-
-    it('renders icon', () => {
-      cy.window().then(() => {
-        cy.dataCy('newsletter-item-icon')
-          .should('be.visible')
-          .and('have.css', 'width', '32px')
-          .and('have.css', 'height', '32px')
-          .and('have.color', blueGrey6)
-          .and('contain', icon);
-      });
-    });
-
-    it('renders button with icon', () => {
-      cy.window().then(() => {
-        cy.dataCy('newsletter-item-button')
-          .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.css', 'text-transform', 'uppercase')
-          .and('have.css', 'border-radius', '28px')
-          .and('have.color', grey10)
-          .and('contain', i18n.global.t('index.newsletterFeature.following'));
-        cy.dataCy('newsletter-item-button')
-          .find('.q-icon')
-          .should('be.visible')
-          .and('have.css', 'width', '18px')
-          .and('have.css', 'height', '18px')
-          .and('have.color', grey10)
-          .and('contain', 'check');
-      });
-    });
   });
 
   context('mobile', () => {
@@ -107,6 +77,8 @@ describe('<NewsletterItem>', () => {
       cy.viewport('iphone-6');
     });
 
+    coreTests();
+
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('newsletter-item-title')
@@ -120,35 +92,7 @@ describe('<NewsletterItem>', () => {
       });
     });
 
-    it('renders icon', () => {
-      cy.window().then(() => {
-        cy.dataCy('newsletter-item-icon')
-          .should('be.visible')
-          .and('have.css', 'width', '32px')
-          .and('have.css', 'height', '32px')
-          .and('have.color', blueGrey6)
-          .and('contain', icon);
-      });
-    });
-
-    it('renders button with icon', () => {
-      cy.window().then(() => {
-        cy.dataCy('newsletter-item-button')
-          .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.css', 'text-transform', 'uppercase')
-          .and('have.css', 'border-radius', '28px')
-          .and('have.color', grey10)
-          .and('contain', i18n.global.t('index.newsletterFeature.following'));
-        cy.dataCy('newsletter-item-button')
-          .find('.q-icon')
-          .should('be.visible')
-          .and('have.css', 'width', '18px')
-          .and('have.css', 'height', '18px')
-          .and('have.color', grey10)
-          .and('contain', 'check');
-      });
+    it('renders full-width button', () => {
       cy.testElementPercentageWidth(cy.dataCy('newsletter-item-button'), 100);
     });
 
@@ -218,3 +162,36 @@ describe('<NewsletterItem>', () => {
     });
   });
 });
+
+function coreTests() {
+  it('renders icon', () => {
+    cy.window().then(() => {
+      cy.dataCy('newsletter-item-icon').then((element) => {
+        cy.testIcon({
+          element,
+          name: `${Cypress.currentTest.titlePath}-${icon}`,
+          size: 32,
+        });
+      });
+    });
+  });
+
+  it('renders button with icon', () => {
+    cy.window().then(() => {
+      cy.dataCy('newsletter-item-button')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '500')
+        .and('have.css', 'text-transform', 'uppercase')
+        .and('have.css', 'border-radius', '28px')
+        .and('have.color', grey10)
+        .and('contain', i18n.global.t('index.newsletterFeature.following'));
+      cy.dataCy('newsletter-item-button-icon')
+        .invoke('height')
+        .should('be.equal', 18);
+      cy.dataCy('newsletter-item-button-icon')
+        .invoke('width')
+        .should('be.equal', 18);
+    });
+  });
+}

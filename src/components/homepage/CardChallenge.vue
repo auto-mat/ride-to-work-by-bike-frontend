@@ -69,7 +69,12 @@ export default defineComponent({
         data-cy="card-title"
       >
         <!-- Person icon -->
-        <q-icon class="q-py-md" name="person" size="xs" />
+        <q-icon
+          class="q-py-md"
+          name="person"
+          size="xs"
+          data-cy="card-challenge-title-icon"
+        />
         <!-- Title link -->
         <component
           :is="card?.url ? 'a' : 'div'"

@@ -40,14 +40,37 @@ describe('DrawerMenu', () => {
 
   it('should render each item with the expected icon and text content', () => {
     cy.window().then(() => {
-      menuItems.forEach((item, index) => {
-        cy.get('.q-item')
-          .eq(index)
-          .within(() => {
-            cy.get('.q-icon')
-              .should('be.visible')
-              .and('contain.text', item.icon);
-          });
+      const drawerMenuIcon = 'drawer-menu-icon';
+      const drawerBottomMenuIcon = 'drawer-bottom-menu-icon';
+      const drawerMenuIconSize = 18;
+
+      cy.viewport(500, 500).then(() => {
+        cy.dataCy(drawerMenuIcon).then(() => {
+          cy.dataCy(drawerMenuIcon)
+            .should('be.visible')
+            .each((element, index) => {
+              if (index === 0) cy.get(element).click();
+              cy.testIcon({
+                element: element,
+                name: `${Cypress.currentTest.titlePath}-drawer-menu-${index}`,
+                size: drawerMenuIconSize,
+                click: false,
+              });
+            });
+        });
+
+        cy.dataCy(drawerBottomMenuIcon).then(() => {
+          cy.dataCy(drawerBottomMenuIcon)
+            .should('be.visible')
+            .each((element, index) => {
+              cy.testIcon({
+                element: element,
+                name: `${Cypress.currentTest.titlePath}-drawer-bottom-menu${index}`,
+                size: drawerMenuIconSize,
+                click: false,
+              });
+            });
+        });
       });
     });
   });
