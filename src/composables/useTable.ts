@@ -264,8 +264,13 @@ export const useTableFeeApproval = () => {
       name: 'dateCreated',
       required: true,
       sortable: true,
+      sort: sortDate
     },
   ];
+
+  function sortDate(a: { dateCreated: string }, b: { dateCreated: string }, rowA: { dateCreated: string }, rowB: { dateCreated: string }): number {
+    return new Date(rowB.dateCreated).getTime() - new Date(rowA.dateCreated).getTime();
+  }
 
   return { columns: tableFeeApprovalColumns };
 };

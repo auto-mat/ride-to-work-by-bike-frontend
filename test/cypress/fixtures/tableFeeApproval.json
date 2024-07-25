@@ -20,10 +20,20 @@
     "id": 1
   },
   {
+    "amount": 330,
+    "name": "Ludmila Walker",
+    "team": "Konzistentní tým",
+    "email": "ludmila.walker@auto-mat.cz",
+    "nickname": "luda",
+    "dateCreated": "4 June 2023 14:48 UTC",
+    "group": "Křížová 4, Praha 5",
+    "id": 1
+  },
+  {
     "amount": 390,
     "name": "Ludmila Cestující",
     "team": "Ještě silnější tým",
-    "email": "ludmila.anonymni@auto-mat.cz",
+    "email": "ludmila.traveller@auto-mat.cz",
     "nickname": "ludmilaa",
     "dateCreated": "05 October 2023 14:48 UTC",
     "group": "Křížová 4, Praha 5",
