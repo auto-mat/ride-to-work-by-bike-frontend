@@ -176,7 +176,6 @@ export const useTable = () => {
     sortBy: string,
     descending: boolean,
   ): readonly TableRow[] => {
-    console.table([rows, sortBy, descending]);
     const data = [...rows];
 
     if (sortBy) {
