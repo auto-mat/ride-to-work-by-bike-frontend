@@ -82,6 +82,7 @@
     "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/extras": "^1.0.0",
     "fs": "^0.0.1-security",
+    "pinia": "^2.1.7",
     "quasar": "^2.6.0",
     "swiper": "^11.0.0",
     "toml": "^3.0.0",
