@@ -171,6 +171,14 @@ export const useTable = () => {
     }
   };
 
+  /**
+   * Sorts an array of TableRow objects by team and then by the specified column.
+   *
+   * @param {readonly TableRow[]} rows - The array of TableRow objects to be sorted.
+   * @param {string} sortBy - The column to sort by.
+   * @param {boolean} descending - Whether to sort in descending order.
+   * @return {readonly TableRow[]} The sorted array of TableRow objects.
+   */
   const sortByTeam = (
     rows: readonly TableRow[],
     sortBy: string,
@@ -275,7 +283,6 @@ export const useTableFeeApproval = () => {
       name: 'dateCreated',
       required: true,
       sortable: true,
-      sort: sortDate
     },
   ];
 
@@ -285,25 +292,7 @@ export const useTableFeeApproval = () => {
     'email',
     'nickname',
     'dateCreated',
-  ]
-
-  /**
-   * Sorts an array of objects by the `dateCreated` date property.
-   * Used as the sort function for dateCreated column.
-   * @param {Object} a - Row A (formatted values)
-   * @param {Object} b - Row B (formatted values)
-   * @param {Object} rowA - Row A (unformatted values)
-   * @param {Object} rowB - Row B (unformatted values)
-   * @return {number} The difference in ms.
-   */
-  function sortDate(
-    a: { dateCreated: string },
-    b: { dateCreated: string },
-    rowA: { dateCreated: string },
-    rowB: { dateCreated: string }): number
-  {
-    return new Date(rowB.dateCreated).getTime() - new Date(rowA.dateCreated).getTime();
-  }
+  ];
 
   return {
     columns: tableFeeApprovalColumns,
