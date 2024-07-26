@@ -38,7 +38,7 @@ export default defineComponent({
     const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
 
-    // format date
+    // format date (did not work when used in table columns format function)
     const { formatDate } = date;
     const rowsFeeApproval = tableFeeApproval.map((row) => {
       return {
