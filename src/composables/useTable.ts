@@ -1,4 +1,5 @@
 // librarires
+import { date } from 'quasar';
 import { computed, ref } from 'vue';
 
 // composables
@@ -278,7 +279,11 @@ export const useTableFeeApproval = () => {
     {
       align: 'left',
       field: 'dateCreated',
-      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      format: (val: number | string | null): string => (
+        val ?
+        (date.formatDate(new Date(String(val)), 'D. MMM. YYYY')) :
+        ''
+      ),
       label: i18n.global.t('table.labelDateRegistered'),
       name: 'dateCreated',
       required: true,

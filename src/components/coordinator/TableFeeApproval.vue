@@ -13,7 +13,7 @@
  */
 
 // libraries
-import { date, QTable } from 'quasar';
+import { QTable } from 'quasar';
 import { defineComponent, onMounted, ref } from 'vue';
 
 // composables
@@ -38,19 +38,10 @@ export default defineComponent({
     const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
 
-    // format date (did not work when used in table columns format function)
-    const { formatDate } = date;
-    const rowsFeeApproval = tableFeeApproval.map((row) => {
-      return {
-        ...row,
-        dateCreated: formatDate(new Date(row.dateCreated), 'D. MMM. YYYY'),
-      };
-    });
-
     return {
       columns,
       selected,
-      rowsFeeApproval,
+      tableFeeApproval,
       tableRef,
       visibleColumns,
       sortByTeam,
@@ -77,7 +68,7 @@ export default defineComponent({
         flat
         bordered
         binary-state-sort
-        :rows="rowsFeeApproval"
+        :rows="tableFeeApproval"
         :columns="columns"
         :visible-columns="visibleColumns"
         row-key="name"
@@ -92,7 +83,7 @@ export default defineComponent({
               {{ props.row.team }}
             </q-td>
           </q-tr>
-          <q-tr :props="props" @click="onRowClick(props.row)" class="data-row">
+          <q-tr :props="props" class="data-row">
             <q-td>
               <q-checkbox v-model="props.selected" color="primary" />
             </q-td>
@@ -112,7 +103,12 @@ export default defineComponent({
               {{ props.row.team }}
             </q-td>
             <q-td key="dateCreated" :props="props">
-              {{ props.row.dateCreated }}
+              <!-- Custom loop to get formatted content -->
+              <template v-for="col in props.cols" :key="col.field">
+                <span v-if="col.field === 'dateCreated'">
+                  {{ col.value }}
+                </span>
+              </template>
             </q-td>
           </q-tr>
         </template>
