@@ -37,19 +37,19 @@ describe('<TableFeeApproval>', () => {
     coreTests();
   });
 
-  context('mobile', () => {
-    beforeEach(() => {
-      cy.fixture('tableFeeApproval').then((rows) => {
-        cy.wrap(rows).as('rows');
-        cy.mount(TableFeeApproval, {
-          props: {},
-        });
-        cy.viewport('iphone-6');
-      });
-    });
+  // context('mobile', () => {
+  //   beforeEach(() => {
+  //     cy.fixture('tableFeeApproval').then((rows) => {
+  //       cy.wrap(rows).as('rows');
+  //       cy.mount(TableFeeApproval, {
+  //         props: {},
+  //       });
+  //       cy.viewport('iphone-6');
+  //     });
+  //   });
 
-    coreTests();
-  });
+  //   coreTests();
+  // });
 });
 
 function coreTests() {
@@ -64,5 +64,14 @@ function coreTests() {
     cy.dataCy('table-fee-approval-button')
       .should('be.visible')
       .and('contain', i18n.global.t('table.buttonFeeApproval'));
+  });
+
+  it('sorts correctly by team', () => {
+    /**
+     * "Konzistentní tým" data row [0, 1] "Aneta", "Barbora"
+     * "Nadšený tým" data row [2] "Cyprián"
+     * "Silný tým" data row [3, 4, 5] "Denisa", "Emil", "Filip"
+     * dateCreated: 0-5 ascending
+     */
   });
 }

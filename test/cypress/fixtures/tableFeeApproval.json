@@ -1,62 +1,62 @@
 [
   {
-    "amount": 390,
-    "name": "Ludmila Anonymní",
-    "team": "Silný tým",
-    "email": "ludmila.anonymni@auto-mat.cz",
-    "nickname": "ludmilaa",
-    "dateCreated": "4 December 2023 14:48 UTC",
-    "group": "Křížová 4, Praha 5",
-    "id": 1
-  },
-  {
-    "amount": 390,
-    "name": "Ludmila Biker",
-    "team": "Silný tým",
-    "email": "ludmila.anonymni@auto-mat.cz",
-    "nickname": "ludmilaa",
-    "dateCreated": "10 October 2023 14:48 UTC",
-    "group": "Křížová 4, Praha 5",
-    "id": 1
-  },
-  {
-    "amount": 390,
-    "name": "Jana Runner",
-    "team": "Silný tým",
-    "email": "ja.ru@auto-mat.cz",
-    "nickname": "janarunner",
-    "dateCreated": "10 June 2023 14:48 UTC",
-    "group": "Modrá 4, Praha 5",
-    "id": 1
-  },
-  {
-    "amount": 330,
-    "name": "Ludmila Walker",
-    "team": "Konzistentní tým",
-    "email": "ludmila.walker@auto-mat.cz",
-    "nickname": "luda",
-    "dateCreated": "4 June 2023 14:48 UTC",
-    "group": "Křížová 4, Praha 5",
-    "id": 1
-  },
-  {
-    "amount": 300,
+    "amount": 500,
     "name": "Aneta Walker",
     "team": "Konzistentní tým",
     "email": "aneta.walker@auto-mat.cz",
     "nickname": "anwa",
     "dateCreated": "4 January 2023 14:48 UTC",
-    "group": "Křížová 8, Praha 5",
+    "group": "Erbovní 8, Praha 5",
     "id": 1
   },
   {
     "amount": 390,
-    "name": "Ludmila Cestující",
-    "team": "Ještě silnější tým",
-    "email": "ludmila.traveller@auto-mat.cz",
-    "nickname": "ludmilaa",
+    "name": "Barbora Walker",
+    "team": "Konzistentní tým",
+    "email": "bara.walker@auto-mat.cz",
+    "nickname": "bawa",
+    "dateCreated": "4 June 2023 14:48 UTC",
+    "group": "Demokratů 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 500,
+    "name": "Cyprián Runner",
+    "team": "Nadšený tým",
+    "email": "cypr.run@auto-mat.cz",
+    "nickname": "cypr.run",
+    "dateCreated": "10 June 2023 14:48 UTC",
+    "group": "Celní 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 1000,
+    "name": "Denisa Cestující",
+    "team": "Silný tým",
+    "email": "deni.traveller@auto-mat.cz",
+    "nickname": "deni.traveller",
     "dateCreated": "05 October 2023 14:48 UTC",
-    "group": "Křížová 4, Praha 5",
+    "group": "Filatelistů 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 390,
+    "name": "Emil Biker",
+    "team": "Silný tým",
+    "email": "e.biker@auto-mat.cz",
+    "nickname": "ebiker",
+    "dateCreated": "10 October 2023 14:48 UTC",
+    "group": "Bílá 4, Praha 5",
+    "id": 1
+  },
+  {
+    "amount": 390,
+    "name": "Filip Anonymní",
+    "team": "Silný tým",
+    "email": "filip.anonymni@auto-mat.cz",
+    "nickname": "filipnoname",
+    "dateCreated": "4 December 2023 14:48 UTC",
+    "group": "Armádní 4, Praha 5",
     "id": 1
   }
 ]
