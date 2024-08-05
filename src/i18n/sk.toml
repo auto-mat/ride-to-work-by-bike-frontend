@@ -68,6 +68,9 @@ labelOrganizationId = "ID"
 labelShowPastTasks = "Zobraziť minulé úlohy"
 textBannerReminder = "Oznámili ste spoločnosti, že ste koordinátor?"
 
+[profile]
+fillFormButton = "Vyplnit dotazník"
+
 [language]
 cs = "Čeština"
 sk = "Slovenčina"
