@@ -330,7 +330,9 @@ addFirstRoutes = "Zapíšte prvé trasy"
 addToCalendar = "Pridať do kalendára"
 
 [index.headingBackground]
-imageAltText = "obrázok na pozadí zobrazujúci mestskú komunitu"
+highlightCommunity = "Zapojte sa"
+imageAltText = "Obrázok mestskej komunity"
+titleCommunity = "Komunita Do práce na bicykli vo vašom meste"
 
 [index.cardListOffer]
 title = "Špeciálne ponuky"

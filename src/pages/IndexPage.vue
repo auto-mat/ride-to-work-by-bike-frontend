@@ -73,11 +73,13 @@
       </section-columns>
       <countdown-challenge date-end="2023-10-24" />
     </div>
-    <heading-background
-      :title="headingBgTitle"
-      class="bg-white q-pt-xl"
-      data-cy="heading-background"
-    ></heading-background>
+    <div class="q-px-lg bg-gray-light">
+      <heading-background
+        :title="headingBgTitle"
+        class="q-pt-xl"
+        data-cy="heading-background"
+      ></heading-background>
+    </div>
     <div class="bg-gray-light q-px-lg">
       <div class="q-pt-xl" data-cy="list-event">
         <card-event

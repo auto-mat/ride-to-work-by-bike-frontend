@@ -16,10 +16,11 @@
  * @example
  * <heading-background :title="sectionTitle" />
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105612&mode=dev)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=7004-32012&t=q6B4M3KcptuW1mh3-1)
  */
 
 // libraries
+import { Screen } from 'quasar';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -29,26 +30,45 @@ export default defineComponent({
       type: String,
     },
   },
+  setup() {
+    const headingMaxWidth = Screen.sizes.sm;
+
+    return {
+      headingMaxWidth,
+    };
+  },
 });
 </script>
 
 <template>
-  <div class="wrapper relative-position">
-    <!-- Background image -->
-    <q-img
-      src="~assets/svg/bg-community.svg"
-      :ratio="5"
-      :alt="$t('index.headingBackground.imageAltText')"
-      data-cy="svg"
-    />
-    <div class="heading-wrapper" data-cy="heading-wrapper">
-      <!-- Title -->
-      <h2
-        class="text-h5 text-weight-bold text-center q-my-none"
-        data-cy="heading"
-      >
-        {{ title }}
-      </h2>
+  <div
+    class="row relative-position items-center q-col-gutter-lg"
+    data-cy="heading-background"
+  >
+    <div class="col-12 col-lg-auto" data-cy="section-text">
+      <div :style="{ maxWidth: `${headingMaxWidth}px` }">
+        <div
+          class="q-mt-none q-mb-xs text-subtitle2 text-weight-bold text-primary"
+          data-cy="heading-background-highlight"
+          v-html="$t('index.headingBackground.highlightCommunity')"
+        />
+        <h2
+          class="q-my-none text-balance text-40 text-weight-bold text-primary"
+          data-cy="heading-background-title"
+          :style="{ lineHeight: '44px' }"
+          v-html="$t('index.headingBackground.titleCommunity')"
+        />
+      </div>
+    </div>
+    <div class="col-12 col-lg" data-cy="section-image">
+      <q-img
+        src="~assets/image/heading-background/rtwbb-community.webp"
+        :ratio="4.5"
+        height="117px"
+        fit="contain"
+        :alt="$t('index.headingBackground.imageAltText')"
+        data-cy="heading-background-image"
+      />
     </div>
   </div>
 </template>

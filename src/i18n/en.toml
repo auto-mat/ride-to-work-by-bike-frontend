@@ -330,7 +330,9 @@ addFirstRoutes = "Log first routes"
 addToCalendar = "Add to calendar"
 
 [index.headingBackground]
-imageAltText = "background image depicting urban community"
+highlightCommunity = "Get Involved"
+imageAltText = "Urban community image"
+titleCommunity = "Bike to Work Community in your city"
 
 [index.cardListOffer]
 title = "Special offers"

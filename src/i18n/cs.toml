@@ -333,7 +333,9 @@ addFirstRoutes = "Zapište první trasy"
 addToCalendar = "Přidat do kalendáře"
 
 [index.headingBackground]
-imageAltText = "obrázek na pozadí zobrazující městskou komunitu"
+highlightCommunity = "Zapojte se"
+imageAltText = "Obrázek městské komunity"
+titleCommunity = "Komunita Do práce na kole ve vašem městě"
 
 [index.cardListOffer]
 title = "Akční nabídky"
