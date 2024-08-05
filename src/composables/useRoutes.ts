@@ -36,6 +36,19 @@ export const useRoutes = () => {
   };
 
   /**
+   * Get a transport label based on given transport key.
+   * @param {TransportType} transport - The transport type.
+   * @return {string} The transport label.
+   */
+  const getTransportLabel = (transport: TransportType): string => {
+    if (transport) {
+      return i18n.global.t(`routes.transport.${transport}`);
+    } else {
+      return i18n.global.t('routes.transport.unknown');
+    }
+  };
+
+  /**
    * Returns the route distance including the unit.
    *
    * @param {RouteItem | null} route - The route item containing the distance.
@@ -116,5 +129,6 @@ export const useRoutes = () => {
     getDays,
     getRouteDistance,
     getRouteIcon,
+    getTransportLabel,
   };
 };

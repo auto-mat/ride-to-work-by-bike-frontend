@@ -43,6 +43,7 @@ module.exports = configure(function (ctx) {
       'ionicons-v4',
       'mdi-v5',
       'fontawesome-v6',
+      'material-symbols-sharp',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -108,7 +109,11 @@ module.exports = configure(function (ctx) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      config: {
+        notify: {
+          position: 'bottom-right',
+        },
+      },
 
       iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -121,7 +126,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: ['Notify'],
     },
 
     // animations: 'all', // --- includes all animations

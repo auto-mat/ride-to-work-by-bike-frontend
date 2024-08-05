@@ -1,0 +1,10 @@
+[
+  {
+    "id": "00001",
+    "date": "2024-08-14",
+    "direction": "toWork",
+    "distance": 0,
+    "transport": "bike",
+    "routeFeature": null
+  }
+]

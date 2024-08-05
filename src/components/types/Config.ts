@@ -28,4 +28,11 @@ export interface ConfigGlobal {
   challengeMonth: 'may' | 'october' | 'september';
   containerWidth: string;
   challengeStartDate: string;
+  mapProjection: string;
+  mapCenterLon: string;
+  mapCenterLat: string;
+  mapZoom: string;
+  mapGeocodingApiUrl: string;
+  mapSourceRtwbb: string;
+  mapSourceOsm: string;
 }
