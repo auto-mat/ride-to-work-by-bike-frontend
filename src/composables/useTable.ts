@@ -186,26 +186,54 @@ export const useTable = () => {
     descending: boolean,
   ): readonly TableRow[] => {
     const data = [...rows];
+    if (!sortBy) return data;
 
-    if (sortBy) {
-      data.sort((a, b) => {
-        const aVal = a[sortBy] ? a[sortBy] : '';
-        const bVal = b[sortBy] ? b[sortBy] : '';
-        if (!aVal || !bVal) return 0;
-        if (aVal < bVal) return descending ? 1 : -1;
-        if (aVal > bVal) return descending ? -1 : 1;
-        return 0;
-      });
-    }
+    sortDataByValue(data, sortBy, descending);
+    sortDataByTeam(data, descending);
+    markFirstInGroup(data);
 
+    return data;
+  };
+
+  /**
+   * Sorts data array by given column in ascending or descending order.
+   * @param {TableRow[]} data - The array to be sorted.
+   * @param {string} sortBy - The column to sort by.
+   * @param {boolean} descending - Whether to sort in descending order.
+   * @return {void}
+   */
+  function sortDataByValue(data: TableRow[], sortBy: string, descending: boolean): void {
+    data.sort((a, b) => {
+      const aVal = a[sortBy] || '';
+      const bVal = b[sortBy] || '';
+      if (!aVal || !bVal) return 0;
+      if (aVal < bVal) return descending ? 1 : -1;
+      if (aVal > bVal) return descending ? -1 : 1;
+      return 0;
+    });
+  }
+
+  /**
+   * Sorts data array by team in ascending or descending order.
+   * @param {TableRow[]} data - The array of TableRow objects to be sorted.
+   * @param {boolean} descending - Whether to sort in descending order.
+   * @return {void}
+   */
+  function sortDataByTeam(data: TableRow[], descending: boolean): void {
     data.sort((a, b) => {
       if (!a.team || !b.team) return 0;
       if (a.team < b.team) return descending ? 1 : -1;
       if (a.team > b.team) return descending ? -1 : 1;
       return 0;
     });
+  }
 
-    // Mark the first occurrence of each team
+  /**
+   * If item is first in team, set isFirst to true.
+   * @param {TableRow[]} data - The array of items.
+   * @return {void}
+   */
+  function markFirstInGroup(data: TableRow[]): void {
     const seenTeams = new Set();
     data.forEach(row => {
       if (!seenTeams.has(row.team)) {
@@ -215,9 +243,7 @@ export const useTable = () => {
         row.isFirst = false;
       }
     });
-
-    return data;
-  };
+  }
 
   return {
     filterCompound,
