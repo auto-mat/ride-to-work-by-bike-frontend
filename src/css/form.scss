@@ -1,3 +1,10 @@
 .q-field__control {
   border-radius: 8px !important;
 }
+.q-checkbox .q-checkbox__bg {
+  border: 1px solid $grey-6;
+  border-radius: 4px;
+}
+.q-checkbox .q-checkbox__svg {
+  padding: 3px;
+}

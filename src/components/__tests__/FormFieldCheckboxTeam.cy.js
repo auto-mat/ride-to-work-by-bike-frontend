@@ -6,7 +6,7 @@ describe('<FormFieldCheckboxTeam>', () => {
       cy.mount(FormFieldTestWrapper, {
         props: {
           component: 'FormFieldCheckboxTeam',
-          array: true,
+          type: 'array',
         },
       });
       cy.viewport('macbook-16');
@@ -27,7 +27,7 @@ describe('<FormFieldCheckboxTeam>', () => {
       cy.mount(FormFieldTestWrapper, {
         props: {
           component: 'FormFieldCheckboxTeam',
-          array: true,
+          type: 'array',
         },
       });
       cy.viewport('iphone-6');

@@ -13,8 +13,12 @@
  * - `label` (string): The translation key used for input label in tests.
  * - `name` (string): The name used for id and test selectors.
  * - `options` (array): The options used for radio button tests.
+ * - `required` (boolean): If the input is required.
+ * - `type` (boolean): Input type.
+ * - `validationMessage` (string): The message used for validation error.
  *
  * @components
+ * - `FormFieldCheckboxRequired`: Component to render checkbox input field.
  * - `FormFieldCheckboxTeam`: Component to render checkbox team widget.
  * - `FormFieldCompany`: Component to render company input field.
  * - `FormFieldDateRequired`: Component to render date input field.
@@ -29,6 +33,9 @@
  * - `FormFieldSelectTable`: Component to render company select field.
  * - `FormFieldTextRequired`: Component to render text input field.
  *
+ * @slots
+ * - `default`: Slot for input fields
+ *
  * @example
  * <form-field-test-wrapper component="FormFieldPassword" :testing="true" />
  */
@@ -37,6 +44,7 @@
 import { defineComponent, ref } from 'vue';
 
 // components
+import FormFieldCheckboxRequired from '../form/FormFieldCheckboxRequired.vue';
 import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
 import FormFieldCompany from './FormFieldCompany.vue';
 import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
@@ -54,6 +62,7 @@ import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 export default defineComponent({
   name: 'FormFieldTestWrapper',
   components: {
+    FormFieldCheckboxRequired,
     FormFieldCheckboxTeam,
     FormFieldCompany,
     FormFieldDateRequired,
@@ -88,12 +97,16 @@ export default defineComponent({
     required: {
       type: Boolean,
     },
-    array: {
-      type: Boolean,
+    type: {
+      type: String as () => 'array' | 'boolean' | 'string',
+      default: 'string',
+    },
+    validationMessage: {
+      type: String,
     },
   },
   setup(props) {
-    const inputValue = ref(props.array ? [] : '');
+    const inputValue = ref(props.type === 'array' ? [] : props.type === 'boolean' ? false : '');
 
     return {
       inputValue,
@@ -111,5 +124,8 @@ export default defineComponent({
     :compare-value="compareValue"
     :options="options"
     :required="required"
-  />
+    :validation-message="validationMessage"
+  >
+    <slot />
+  </component>
 </template>

@@ -9,7 +9,13 @@
  * Note: This component is commonly used in `RegisterCoordinatorPage`.
  *
  * @components
+ * - `FormFieldCheckboxRequired`: Component to render checkbox input.
+ * - `FormFieldCompany`: Component to render company input.
  * - `FormFieldEmail`: Component to render email input.
+ * - `FormFieldPassword`: Component to render password input.
+ * - `FormFieldPasswordConfirm`: Component to render password confirm input.
+ * - `FormFieldPhone`: Component to render phone input.
+ * - `FormFieldTextRequired`: Component to render required field.
  *
  * @example
  * <form-register-coordinator />
@@ -23,12 +29,13 @@ import { defineComponent, reactive } from 'vue';
 import { i18n } from 'src/boot/i18n';
 
 // components
+import FormFieldCheckboxRequired from './../form/FormFieldCheckboxRequired.vue';
 import FormFieldCompany from '../global/FormFieldCompany.vue';
 import FormFieldEmail from './../global/FormFieldEmail.vue';
-import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
 import FormFieldPasswordConfirm from '../global/FormFieldPasswordConfirm.vue';
 import FormFieldPhone from './../global/FormFieldPhone.vue';
+import FormFieldTextRequired from './../global/FormFieldTextRequired.vue';
 
 // types
 import type { FormOption } from 'src/components/types/Form';
@@ -36,6 +43,7 @@ import type { FormOption } from 'src/components/types/Form';
 export default defineComponent({
   name: 'FormRegisterCoordinator',
   components: {
+    FormFieldCheckboxRequired,
     FormFieldCompany,
     FormFieldEmail,
     FormFieldTextRequired,
@@ -186,65 +194,31 @@ export default defineComponent({
             class="col-12"
             data-cy="form-register-coordinator-responsibility"
           >
-            <q-field
-              dense
-              borderless
-              hide-bottom-space
-              :model-value="formRegisterCoordinator.responsibility"
-              :rules="[
-                (val) =>
-                  !!val ||
-                  $t('register.coordinator.form.messageResponsibilityRequired'),
-              ]"
+            <form-field-checkbox-required
+              v-model="formRegisterCoordinator.responsibility"
+              :validation-message="
+                $t('register.coordinator.form.messageResponsibilityRequired')
+              "
             >
-              <q-checkbox
-                dense
-                v-model="formRegisterCoordinator.responsibility"
-                color="primary"
-                :true-value="true"
-                :false-value="false"
-                class="text-grey-10"
-              >
-                <span>{{
-                  $t('register.coordinator.form.labelResponsibility')
-                }}</span>
-              </q-checkbox>
-            </q-field>
+              {{ $t('register.coordinator.form.labelResponsibility') }}
+            </form-field-checkbox-required>
           </div>
           <!-- Input: confirm consent -->
           <div class="col-12" data-cy="form-register-coordinator-terms">
-            <q-field
-              dense
-              borderless
-              hide-bottom-space
-              :model-value="formRegisterCoordinator.terms"
-              :rules="[
-                (val) =>
-                  !!val || $t('register.coordinator.form.messageTermsRequired'),
-              ]"
+            <!-- Checkbox: terms -->
+            <form-field-checkbox-required
+              v-model="formRegisterCoordinator.terms"
+              :validation-message="
+                $t('register.coordinator.form.messageTermsRequired')
+              "
             >
-              <q-checkbox
-                dense
-                id="form-register-coordinator-terms"
-                v-model="formRegisterCoordinator.terms"
-                color="primary"
-                :true-value="true"
-                :false-value="false"
-                rules="required"
-                class="text-grey-10"
-              >
-                <!-- Default slot: label -->
-                <span>
-                  {{ $t('register.coordinator.form.labelPrivacyConsent') }}
-                  <!-- Link: terms -->
-                  <!-- TODO: Link to terms page -->
-                  <a href="#" target="_blank" class="text-primary">{{
-                    $t('register.coordinator.form.linkPrivacyConsent')
-                  }}</a
-                  >.
-                </span>
-              </q-checkbox>
-            </q-field>
+              {{ $t('register.coordinator.form.labelPrivacyConsent') }}
+              <!-- Link: terms -->
+              <!-- TODO: Link to terms page -->
+              <a href="#" target="_blank" class="text-primary">
+                {{ $t('register.coordinator.form.linkPrivacyConsent') }} </a
+              >.
+            </form-field-checkbox-required>
           </div>
         </div>
         <!-- Button: submit -->
@@ -262,13 +236,3 @@ export default defineComponent({
     </q-form>
   </div>
 </template>
-
-<style scoped lang="scss">
-:deep(.q-checkbox__bg) {
-  border: 1px solid $grey-6;
-  border-radius: 4px;
-}
-:deep(.q-checkbox__svg) {
-  padding: 3px;
-}
-</style>
