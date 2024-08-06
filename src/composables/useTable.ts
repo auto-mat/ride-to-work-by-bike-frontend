@@ -206,10 +206,18 @@ export const useTable = () => {
     data.sort((a, b) => {
       const aVal = a[sortBy] || '';
       const bVal = b[sortBy] || '';
-      if (!aVal || !bVal) return 0;
-      if (aVal < bVal) return descending ? 1 : -1;
-      if (aVal > bVal) return descending ? -1 : 1;
-      return 0;
+      if (!aVal || !bVal) {
+        return 0;
+      }
+      if (aVal < bVal) {
+        return descending ? 1 : -1;
+      }
+      else if (aVal > bVal) {
+        return descending ? -1 : 1;
+      }
+      else {
+        return 0;
+      }
     });
   }
 
@@ -221,10 +229,18 @@ export const useTable = () => {
    */
   function sortDataByTeam(data: TableRow[], descending: boolean): void {
     data.sort((a, b) => {
-      if (!a.team || !b.team) return 0;
-      if (a.team < b.team) return descending ? 1 : -1;
-      if (a.team > b.team) return descending ? -1 : 1;
-      return 0;
+      if (!a.team || !b.team) {
+        return 0;
+      }
+      if (a.team < b.team) {
+        return descending ? 1 : -1;
+      }
+      else if (a.team > b.team) {
+        return descending ? -1 : 1;
+      }
+      else {
+        return 0;
+      }
     });
   }
 
