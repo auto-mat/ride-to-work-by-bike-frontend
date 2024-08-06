@@ -4,7 +4,7 @@
     "date": "2024-03-15T20:00",
     "transport": "bike",
     "distance": 10,
-    "direction": "to_work",
+    "direction": "toWork",
     "dirty": false
   },
   {
@@ -12,31 +12,31 @@
     "date": "2024-03-14T20:00",
     "transport": "bike",
     "distance": 12,
-    "direction": "from_work",
+    "direction": "fromWork",
     "dirty": false
   },
   {
     "id": "00003",
     "date": "2024-11-01T20:00",
-    "transport": "car",
-    "distance": 0,
-    "direction": "to_work",
+    "transport": null,
+    "distance": null,
+    "direction": "toWork",
     "dirty": false
   },
   {
     "id": "00004",
     "date": "2024-11-01T20:00",
     "transport": "bus",
-    "distance": 0,
-    "direction": "from_work",
+    "distance": 10,
+    "direction": "fromWork",
     "dirty": false
   },
   {
     "id": "00005",
     "date": "2024-12-01T20:00",
-    "transport": "walk",
+    "transport": "car",
     "distance": 0,
-    "direction": "to_work",
+    "direction": "toWork",
     "dirty": false
   },
   {
@@ -44,7 +44,7 @@
     "date": "2024-12-01T20:00",
     "transport": "none",
     "distance": 0,
-    "direction": "from_work",
+    "direction": "fromWork",
     "dirty": false
   }
 ]

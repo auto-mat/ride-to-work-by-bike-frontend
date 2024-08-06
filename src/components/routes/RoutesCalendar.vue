@@ -201,11 +201,12 @@ export default defineComponent({
         date-type="rounded"
         :day-min-height="100"
       >
-        <template #day="{ scope: { timestamp } }">
+        <template #day="{ scope: { timestamp, outside } }">
           <div v-if="!timestamp.future" class="q-my-sm" data-cy="calendar-day">
             <!-- Route to work -->
             <calendar-item-display
               :active="isActive({ timestamp, direction: 'toWork' })"
+              :disabled="outside"
               direction="toWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
@@ -215,6 +216,7 @@ export default defineComponent({
             <!-- Route from work -->
             <calendar-item-display
               :active="isActive({ timestamp, direction: 'fromWork' })"
+              :disabled="outside"
               direction="fromWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"

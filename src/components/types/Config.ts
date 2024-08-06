@@ -2,6 +2,7 @@ export interface ConfigGlobal {
   colorPrimary: string;
   colorSecondary: string;
   colorSecondaryOpacity: string;
+  colorGray: string;
   colorGrayLight: string;
   colorGrayMiddle: string;
   colorWhite: string;

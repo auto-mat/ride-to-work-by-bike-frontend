@@ -1,9 +1,12 @@
+import { colors } from 'quasar';
 import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '../../../src/composables/useRoutes';
 
-const { getRouteIcon } = useRoutes();
+const { getPaletteColor } = colors;
+const grey10 = getPaletteColor('grey-10');
+const { getTransportLabel } = useRoutes();
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
@@ -53,6 +56,12 @@ function coreTests() {
   it('renders component', () => {
     // component visible
     cy.dataCy('route-list-display').should('be.visible');
+    // day title
+    cy.dataCy('route-list-day-date')
+      .should('be.visible')
+      .and('have.css', 'font-size', '18px')
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey10);
     // items
     cy.dataCy('route-list-item').should('be.visible');
   });
@@ -64,15 +73,19 @@ function coreTests() {
     cy.fixture('routeList').then((routeList) => {
       // for each route check if icon is correct
       cy.dataCy('route-list-item').each(($element, index) => {
-        cy.wrap($element)
-          .find('[data-cy="icon-transport"]')
-          .should('contain', getRouteIcon(routeList[index].transport));
+        if (routeList[index].direction === 'toWork') {
+          cy.wrap($element)
+            .find('[data-cy="label-direction"]')
+            .should('contain', i18n.global.t('routes.labelDirectionToWork'));
+        }
+        if (routeList[index].direction === 'fromWork') {
+          cy.wrap($element)
+            .find('[data-cy="label-direction"]')
+            .should('contain', i18n.global.t('routes.labelDirectionFromWork'));
+        }
         cy.wrap($element)
           .find('[data-cy="description-transport"]')
-          .should(
-            'contain',
-            i18n.global.t(`routes.transport.${routeList[index].transport}`),
-          );
+          .should('contain', getTransportLabel(routeList[index].transport));
       });
     });
   });

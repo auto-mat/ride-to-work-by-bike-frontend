@@ -1,8 +1,5 @@
 import BannerChallengeDescription from 'components/results/BannerChallengeDescription.vue';
 import { i18n } from '../../boot/i18n';
-import { useRoutes } from 'src/composables/useRoutes';
-
-const { getRouteIcon } = useRoutes();
 
 describe('<BannerChallengeDescription>', () => {
   it('has translation for all strings', () => {
@@ -53,9 +50,11 @@ function coreTests() {
           .and(
             'contain',
             i18n.global.t('bannerChallengeDescription.transportType'),
-          )
-          .and('contain', getRouteIcon('bike'))
-          .and('contain', getRouteIcon('walk'));
+          );
+        cy.dataCy('challenge-transport-icon')
+          .should('be.visible')
+          .should('have.length', 2);
+        // TODO: add icon snapshot
         cy.dataCy('challenge-description')
           .should('be.visible')
           // test v-html content

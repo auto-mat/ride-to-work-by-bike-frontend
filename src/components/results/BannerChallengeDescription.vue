@@ -97,6 +97,7 @@ export default defineComponent({
                   :key="icon"
                   :name="icon"
                   size="18px"
+                  data-cy="challenge-transport-icon"
                 />
               </dd>
             </div>

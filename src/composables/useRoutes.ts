@@ -12,6 +12,8 @@ import type {
 } from 'src/components/types/Route';
 
 export const useRoutes = () => {
+  const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
+
   /**
    * Returns the icon name corresponding to the given route.
    *
@@ -21,25 +23,39 @@ export const useRoutes = () => {
   const getRouteIcon = (transport: TransportType): string => {
     switch (transport) {
       case 'car':
-        return 'directions_car';
+        return `svguse:${customSVGIconsFilePath}#lucide-car-front`;
       case 'bike':
-        return 'pedal_bike';
+        return `svguse:${customSVGIconsFilePath}#lucide-bike`;
       case 'walk':
-        return 'directions_walk';
+        return `svguse:${customSVGIconsFilePath}#lucide-walk`;
       case 'bus':
-        return 'directions_bus';
+        return `svguse:${customSVGIconsFilePath}#lucide-bus`;
       case 'none':
-        return 'block';
+        return `svguse:${customSVGIconsFilePath}#lucide-ban`;
       default:
-        return 'block';
+        return `svguse:${customSVGIconsFilePath}#question-mark`;
     }
   };
 
   /**
-   * Returns the route distance including the unit.
+   * Get a transport label based on given transport key.
    *
-   * @param {RouteItem | null} route - The route item containing the distance.
-   * @return {string} The formatted distance label.
+   * @param {TransportType} transport - The transport type.
+   * @return {string} The transport label.
+   */
+  const getTransportLabel = (transport: TransportType): string => {
+    if (transport) {
+      return i18n.global.t(`routes.transport.${transport}`);
+    } else {
+      return i18n.global.t('routes.transport.unknown');
+    }
+  };
+
+  /**
+   * Get distance label for given route.
+   *
+   * @param {RouteItem} route - The route item.
+   * @return {string} The distance label.
    */
   const getRouteDistance = (route: RouteItem | null): string => {
     if (!route?.distance) return '';
@@ -116,5 +132,6 @@ export const useRoutes = () => {
     getDays,
     getRouteDistance,
     getRouteIcon,
+    getTransportLabel,
   };
 };

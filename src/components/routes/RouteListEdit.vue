@@ -73,26 +73,41 @@ export default defineComponent({
     <div
       v-for="day in days"
       :key="day.date"
-      class="q-my-xl"
+      class="q-my-lg"
       data-cy="route-list-day"
     >
       <!-- Title: Date -->
-      <h3 class="text-h6 text-grey-10" data-cy="route-list-day-date">
+      <h3 class="text-18 text-grey-10 q-my-none" data-cy="route-list-day-date">
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
-      <!-- Item: Route -->
-      <route-item-edit
-        display-label
-        v-for="route in day.routes"
-        :route="route"
-        :key="route.id"
-        class="q-my-md"
-        data-cy="route-list-item"
-        @update:route="route.dirty = $event"
-      />
+      <div class="q-py-md">
+        <div class="row q-col-gutter-lg">
+          <!-- Item: Route -->
+          <div
+            v-for="route in day.routes"
+            :key="route.id"
+            class="col-12 col-sm-6"
+            data-cy="route-list-item-wrapper"
+          >
+            <route-item-edit
+              :route="route"
+              class="full-height"
+              data-cy="route-list-item"
+              @update:route="route.dirty = $event"
+            />
+          </div>
+        </div>
+      </div>
     </div>
     <div class="flex items-center justify-center">
-      <q-btn rounded unelevated outline color="primary" data-cy="button-save">
+      <q-btn
+        rounded
+        unelevated
+        color="primary"
+        size="16px"
+        class="text-weight-bold"
+        data-cy="button-save"
+      >
         {{
           $tc('routes.buttonSaveChangesCount', dirtyCount, {
             count: dirtyCount,

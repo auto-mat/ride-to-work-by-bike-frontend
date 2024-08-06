@@ -28,6 +28,7 @@
  * - `FormFieldSelectCity`: Component to render city select field.
  * - `FormFieldSelectTable`: Component to render company select field.
  * - `FormFieldTextRequired`: Component to render text input field.
+ * - `RouteInputTransportType`: Component to render transport type input field.
  *
  * @example
  * <form-field-test-wrapper component="FormFieldPassword" :testing="true" />
@@ -50,6 +51,7 @@ import FormFieldSelectCity from '../form/FormFieldSelectCity.vue';
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
+import RouteInputTransportType from '../routes/RouteInputTransportType.vue';
 
 export default defineComponent({
   name: 'FormFieldTestWrapper',
@@ -67,6 +69,7 @@ export default defineComponent({
     FormFieldSelectTable,
     FormFieldTextRequired,
     FormFieldBusinessId,
+    RouteInputTransportType,
   },
   props: {
     component: {

@@ -177,3 +177,20 @@ Cypress.Commands.add(
 Cypress.Commands.add('stripHtmlTags', (htmlString) => {
   cy.wrap(htmlString.replace(/<\/?[^>]+(>|$)/g, ''));
 });
+
+Cypress.Commands.add(
+  'testElementsSideBySide',
+  (elementSelector, siblingElementSelector) => {
+    cy.dataCy(elementSelector).then((element) => {
+      const offsetTop = element[0].offsetTop;
+      const offsetHeight = element[0].offsetHeight;
+      cy.dataCy(siblingElementSelector).then((sibling) => {
+        const siblingOffsetTop = sibling[0].offsetTop;
+        const siblingOffsetHeight = sibling[0].offsetHeight;
+        expect(offsetTop + offsetHeight / 2).to.be.eq(
+          siblingOffsetTop + siblingOffsetHeight / 2,
+        );
+      });
+    });
+  },
+);

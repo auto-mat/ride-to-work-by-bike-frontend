@@ -14,6 +14,7 @@
  * - `fromWork` (boolean, optional): Whether the route is from work.
  * - `active` (boolean, optional): Whether the route is active (currently
  *   being edited).
+ * - `disabled` (boolean, optional): Whether the route is disabled.
  *
  * @events
  * - `item-click`: Emitted when the item is clicked.
@@ -64,6 +65,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    }
   },
   emits: ['item-click'],
   setup(props, { emit }) {
@@ -102,10 +107,10 @@ export default defineComponent({
 <template>
   <div class="q-my-sm" data-cy="calendar-item-display">
     <q-item
-      :active="active"
       dense
-      clickable
-      v-ripple
+      :active="active"
+      :clickable="!disabled"
+      :v-ripple="!disabled"
       class="relative-position flex justify-center items-center text-center gap-8"
       @click.prevent="onClick()"
       data-cy="calendar-item-display-item"

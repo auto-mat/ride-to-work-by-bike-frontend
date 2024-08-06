@@ -1,6 +1,19 @@
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 
+// selectors
+const classSelectorCurrentDay = '.q-current-day';
+const classSelectorFutureDay = '.q-future-day';
+const classSelectorHeadWeekday = '.q-calendar-month__head--weekday';
+const classSelectorOutsideDay = '.q-outside';
+const classSelectorPastDay = '.q-past-day';
+const dataSelectorItemFromWork = '[data-cy="calendar-item-display-from-work"]';
+const dataSelectorItemFromWorkActive = '[data-cy="calendar-item-icon-fromwork-active"]';
+const dataSelectorItemToWork = '[data-cy="calendar-item-display-to-work"]';
+const dataSelectorItemToWorkActive = '[data-cy="calendar-item-icon-towork-active"]';
+const selectorCalendarDay = 'calendar-day';
+const selectorCalendarTitle = 'calendar-title';
+
 const dayNames = [
   i18n.global.t('time.mondayShort'),
   i18n.global.t('time.tuesdayShort'),
@@ -46,7 +59,7 @@ function coreTests() {
       const year = now.toLocaleString(locale, { year: 'numeric' });
       const title = `${month} ${year}`;
 
-      cy.dataCy('calendar-title')
+      cy.dataCy(selectorCalendarTitle)
         .should('be.visible')
         .and('have.css', 'font-size', '24px')
         .and('have.css', 'font-weight', '700')
@@ -55,7 +68,7 @@ function coreTests() {
   });
 
   it('renders localized day names', () => {
-    cy.get('.q-calendar-month__head--weekday')
+    cy.get(classSelectorHeadWeekday)
       .should('be.visible')
       .each((element, index) => {
         cy.wrap(element).should('contain', dayNames[index]);
@@ -65,48 +78,62 @@ function coreTests() {
   // Each calendar day contains two routes
   it('renders two routes for each past day', () => {
     // check dates in the past
-    cy.get('.q-past-day')
-      .find('[data-cy="calendar-item-display-to-work"]')
+    cy.get(classSelectorPastDay)
+      .find(dataSelectorItemToWork)
       .should('be.visible');
-    cy.get('.q-past-day')
-      .find('[data-cy="calendar-item-display-from-work"]')
+    cy.get(classSelectorPastDay)
+      .find(dataSelectorItemFromWork)
       .should('be.visible');
     // no routes for future dates
-    cy.get('.q-future-day')
-      .find('[data-cy="calendar-item-display-to-work"]')
+    cy.get(classSelectorFutureDay)
+      .find(dataSelectorItemToWork)
       .should('not.exist');
   });
 
   // First route of the current date is active
   it('renders default active route', () => {
     // check for active background
-    cy.get('.q-current-day')
-      .find('[data-cy="calendar-item-display-to-work"]')
-      .find('[data-cy="calendar-item-icon-towork-active"]')
+    cy.get(classSelectorCurrentDay)
+      .find(dataSelectorItemToWork)
+      .find(dataSelectorItemToWorkActive)
       .should('be.visible');
   });
 
   it('allows to switch active route', () => {
     // switch to today from work
-    cy.get('.q-current-day')
-      .find('[data-cy="calendar-item-display-from-work"]')
+    cy.get(classSelectorCurrentDay)
+      .find(dataSelectorItemFromWork)
       .click();
     // today from work is active
-    cy.get('.q-current-day')
-      .find('[data-cy="calendar-item-display-from-work"]')
-      .find('[data-cy="calendar-item-icon-fromwork-active"]')
+    cy.get(classSelectorCurrentDay)
+      .find(dataSelectorItemFromWork)
+      .find(dataSelectorItemFromWorkActive)
       .should('be.visible');
-    cy.dataCy('calendar-day');
+    cy.dataCy(selectorCalendarDay);
     // switch to a past day within the current month
-    cy.get('.q-past-day')
-      .find('[data-cy="calendar-item-display-to-work"]')
+    cy.get(classSelectorPastDay)
+      .find(dataSelectorItemToWork)
       .first()
       .click();
     // from work is active
-    cy.get('.q-past-day')
-      .find('[data-cy="calendar-item-display-to-work"]')
+    cy.get(classSelectorPastDay)
+      .find(dataSelectorItemToWork)
       .first()
-      .find('[data-cy="calendar-item-icon-towork-active"]')
+      .find(dataSelectorItemToWorkActive)
       .should('be.visible');
   });
+
+  it('does not allow to select a day outside current month', () => {
+    // click on outside date
+    cy.get(classSelectorOutsideDay)
+      .find(dataSelectorItemToWork)
+      .first()
+      .click();
+    // date should not be active
+    cy.get(classSelectorOutsideDay)
+      .find(dataSelectorItemToWork)
+      .first()
+      .find(dataSelectorItemFromWorkActive)
+      .should('not.exist');
+  })
 }
