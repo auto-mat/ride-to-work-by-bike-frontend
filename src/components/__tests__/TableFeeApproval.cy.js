@@ -64,19 +64,19 @@ describe('<TableFeeApproval>', () => {
     coreTests();
   });
 
-  // context('mobile', () => {
-  //   beforeEach(() => {
-  //     cy.fixture('tableFeeApproval').then((rows) => {
-  //       cy.wrap(rows).as('rows');
-  //       cy.mount(TableFeeApproval, {
-  //         props: {},
-  //       });
-  //       cy.viewport('iphone-6');
-  //     });
-  //   });
+  context('mobile', () => {
+    beforeEach(() => {
+      cy.fixture('tableFeeApproval').then((rows) => {
+        cy.wrap(rows).as('rows');
+        cy.mount(TableFeeApproval, {
+          props: {},
+        });
+        cy.viewport('iphone-6');
+      });
+    });
 
-  //   coreTests();
-  // });
+    coreTests();
+  });
 });
 
 function coreTests() {
