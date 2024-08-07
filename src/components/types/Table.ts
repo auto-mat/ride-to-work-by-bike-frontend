@@ -9,5 +9,5 @@ export type TableColumn = {
 };
 
 export type TableRow = {
-  [key: string]: number | string | null;
+  [key: string]: number | string | null | boolean;
 };
