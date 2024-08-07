@@ -188,6 +188,34 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: routesConf['profile']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    name: routesConf['profile']['children']['name'],
+    redirect: { name: routesConf['profile_details']['children']['name'] },
+    children: [
+      {
+        path: routesConf['profile_details']['path'],
+        name: routesConf['profile_details']['children']['name'],
+        component: () => import('pages/ProfilePage.vue'),
+      },
+      {
+        path: routesConf['profile_forms']['path'],
+        name: routesConf['profile_forms']['children']['name'],
+        component: () => import('pages/ProfilePage.vue'),
+      },
+      {
+        path: routesConf['profile_newsletter']['path'],
+        name: routesConf['profile_newsletter']['children']['name'],
+        component: () => import('pages/ProfilePage.vue'),
+      },
+      {
+        path: routesConf['profile_notifications']['path'],
+        name: routesConf['profile_notifications']['children']['name'],
+        component: () => import('pages/ProfilePage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

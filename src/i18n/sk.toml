@@ -431,6 +431,12 @@ titleMessage = "Pozvánka k Do práce na bicykli od {name}"
 titleStep1 = "Sme radi, že ste prijali túto výzvu spolu s nami!"
 titleStep2 = "Pozvite na výzvu svojich blízkych"
 
+[profile]
+tabDetails = "Vaše údaje"
+tabForms = "Dotazníky"
+tabNewsletter = "Newsletter"
+tabNotifications = "História oznámení"
+
 [register.form]
 titleRegister = "Registrácia"
 labelEmail = "E-mail"

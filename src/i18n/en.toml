@@ -431,6 +431,12 @@ titleMessage = "Invitation to join Ride to Work by Bike from {name}"
 titleStep1 = "We're glad you're taking the challenge with us!"
 titleStep2 = "Invite your loved ones to the challenge"
 
+[profile]
+tabDetails = "Your data"
+tabForms = "Questionnaires"
+tabNewsletter = "Newsletter"
+tabNotifications = "Notification history"
+
 [register.form]
 titleRegister = "Registration"
 labelEmail = "E-mail"

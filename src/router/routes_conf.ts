@@ -135,6 +135,41 @@ const routesConf: RoutesConf = {
       name: 'routes-app',
     },
   },
+  profile: {
+    path: '/profile',
+    children: {
+      fullPath: '/profile',
+      name: 'profile',
+    },
+  },
+  profile_details: {
+    path: 'details',
+    children: {
+      fullPath: '/profile/details',
+      name: 'profile-details',
+    },
+  },
+  profile_forms: {
+    path: 'forms',
+    children: {
+      fullPath: '/profile/forms',
+      name: 'profile-forms',
+    },
+  },
+  profile_newsletter: {
+    path: 'newsletter',
+    children: {
+      fullPath: '/profile/newsletter',
+      name: 'profile-newsletter',
+    },
+  },
+  profile_notifications: {
+    path: 'notifications',
+    children: {
+      fullPath: '/profile/notifications',
+      name: 'profile-notifications',
+    },
+  },
 };
 
 export { routesConf };
