@@ -1,3 +1,6 @@
+// types
+import type { TimestampOrNull } from '@quasar/quasar-ui-qcalendar';
+
 export type RouteItem = {
   id: string;
   date: string;
@@ -25,6 +28,11 @@ export type RouteCalendarDay = {
   date: string;
   toWork: RouteItem;
   fromWork: RouteItem;
+};
+
+export type RouteCalendarActive = {
+  timestamp: TimestampOrNull;
+  direction: TransportDirection;
 };
 
 export type RouteTab = 'calendar' | 'list' | 'map' | 'app';

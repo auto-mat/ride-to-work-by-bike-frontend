@@ -27,7 +27,11 @@ import CalendarNavigation from './CalendarNavigation.vue';
 
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
-import type { RouteCalendarDay, TransportDirection } from '../types/Route';
+import type {
+  TransportDirection,
+  RouteCalendarActive,
+  RouteCalendarDay,
+} from '../types/Route';
 
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
@@ -96,12 +100,13 @@ export default defineComponent({
     });
 
     // Active state
-    const activeItem = ref<Timestamp | null>(parsed(today()));
-    const activeDirection = ref<TransportDirection>('toWork');
+    const activeRoutes = ref<RouteCalendarActive[]>([
+      { timestamp: parsed(today()), direction: 'toWork' },
+    ]);
 
     /**
      * Determines if route item is active.
-     * It checks if the timestamp and direction against a stored state.
+     * It checks timestamp and direction against a stored routes.
      * @param {Object} { timestamp: Timestamp; direction: TransportDirection }
      * @return {boolean}
      */
@@ -115,15 +120,41 @@ export default defineComponent({
       if (
         !timestamp ||
         !direction ||
-        !activeItem.value ||
-        !activeDirection.value
+        !activeRoutes.value ||
+        !activeRoutes.value.length
       ) {
         return false;
       }
-      return (
-        activeItem.value.date === timestamp.date &&
-        activeDirection.value === direction
-      );
+      return getActiveIndex({ timestamp, direction }) > -1;
+    }
+
+    /**
+     * Finds the index of the active route based on timestamp and direction.
+     * @param {Timestamp} timestamp - The timestamp of the route item.
+     * @param {TransportDirection} direction - The direction of the route item.
+     * @return {number} The index of the active route.
+     */
+    function getActiveIndex({
+      timestamp,
+      direction,
+    }: {
+      timestamp: Timestamp;
+      direction: TransportDirection;
+    }): number {
+      if (
+        !timestamp ||
+        !direction ||
+        !activeRoutes.value ||
+        !activeRoutes.value.length
+      ) {
+        return -1;
+      }
+      return activeRoutes.value.findIndex((activeRoute) => {
+        return (
+          activeRoute.timestamp?.date === timestamp?.date &&
+          activeRoute.direction === direction
+        );
+      });
     }
 
     /**
@@ -140,12 +171,15 @@ export default defineComponent({
       timestamp: Timestamp;
       direction: TransportDirection;
     }): void {
-      activeItem.value = timestamp;
-      activeDirection.value = direction;
+      if (isActive({ timestamp, direction })) {
+        activeRoutes.value.splice(getActiveIndex({ timestamp, direction }), 1);
+      } else {
+        activeRoutes.value.push({ timestamp, direction });
+      }
     }
 
     return {
-      activeItem,
+      activeRoutes,
       calendar,
       locale,
       monthNameAndYear,
