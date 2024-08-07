@@ -30,7 +30,7 @@
     "id": 1
   },
   {
-    "amount": 1000,
+    "amount": 500,
     "name": "Denisa Cestující",
     "team": "Silný tým",
     "email": "deni.traveller@auto-mat.cz",
@@ -40,7 +40,7 @@
     "id": 1
   },
   {
-    "amount": 390,
+    "amount": 1000,
     "name": "Emil Biker",
     "team": "Silný tým",
     "email": "e.biker@auto-mat.cz",

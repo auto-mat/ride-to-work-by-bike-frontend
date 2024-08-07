@@ -174,7 +174,6 @@ export const useTable = () => {
 
   /**
    * Sorts an array of TableRow objects by team and then by the specified column.
-   *
    * @param {readonly TableRow[]} rows - The array of TableRow objects to be sorted.
    * @param {string} sortBy - The column to sort by.
    * @param {boolean} descending - Whether to sort in descending order.
