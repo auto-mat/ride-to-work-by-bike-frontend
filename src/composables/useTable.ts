@@ -209,7 +209,7 @@ export const useTable = () => {
       if (!aVal || !bVal) {
         return 0;
       }
-      if (aVal < bVal) {
+      else if (aVal < bVal) {
         return descending ? 1 : -1;
       }
       else if (aVal > bVal) {
@@ -232,7 +232,7 @@ export const useTable = () => {
       if (!a.team || !b.team) {
         return 0;
       }
-      if (a.team < b.team) {
+      else if (a.team < b.team) {
         return descending ? 1 : -1;
       }
       else if (a.team > b.team) {
