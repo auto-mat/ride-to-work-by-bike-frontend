@@ -9,3 +9,4 @@ export * from './Item';
 export * from './Link';
 export * from './Newsletter';
 export * from './User';
+export * from './Profile';

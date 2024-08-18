@@ -68,6 +68,9 @@ labelOrganizationId = "ID"
 labelShowPastTasks = "Show past tasks"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
 
+[profile]
+fillFormButton = "Fill form"
+
 [language]
 cs = "Czech"
 sk = "Slovak"
