@@ -28,7 +28,7 @@ export type RouteItem = {
   dirty?: boolean;
   distance: number;
   transport: TransportType;
-  inputType?: RouteInputType;
+  inputType: RouteInputType;
 };
 
 export type RouteInputType = 'input-number' | 'input-map';
@@ -36,7 +36,8 @@ export type RouteInputType = 'input-number' | 'input-map';
 export type RouteListDay = {
   id: string;
   date: string;
-  routes: RouteItem[];
+  fromWork: RouteItem;
+  toWork: RouteItem;
 };
 
 export type RouteCalendarDay = {

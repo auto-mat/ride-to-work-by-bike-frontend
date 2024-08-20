@@ -61,7 +61,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const { borderRadiusCard: borderRadius, colorGray: borderColor } =
       rideToWorkByBikeConfig;
-
     const routes = computed(() => [props.route]);
     const { action, distance, transportType, isShownDistance } =
       useLogRoutes(routes);
@@ -103,6 +102,7 @@ export default defineComponent({
 
 <template>
   <div
+    v-if="route"
     class="text-grey-10"
     :style="{
       'border-radius': borderRadius,

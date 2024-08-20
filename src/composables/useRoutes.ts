@@ -5,7 +5,7 @@ import { date } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 
 // enums
-import { TransportType } from 'src/components/types/Route';
+import { TransportDirection, TransportType } from 'src/components/types/Route';
 
 // types
 import type { RouteItem, RouteListDay } from 'src/components/types/Route';
@@ -89,6 +89,30 @@ export const useRoutes = () => {
   };
 
   /**
+   * Retrieves a route from a given list of routes based on date and direction.
+   * @param {RouteItem[]} routes - The list of route items to search through.
+   * @param {Date} dateQuery - Route date.
+   * @param {TransportDirection} directionQuery - Route direction.
+   * @return {RouteItem | null} Matching route, or null if no match is found.
+   */
+  const getRouteByDateAndDirection = (
+    routes: RouteItem[],
+    dateQuery: Date,
+    directionQuery: TransportDirection,
+  ): RouteItem | null => {
+    const route = routes.find((route) => {
+      const matchesDate = date.isSameDate(
+        new Date(route.date),
+        dateQuery,
+        'day',
+      );
+      const matchesDirection = route.direction === directionQuery;
+      return matchesDate && matchesDirection;
+    });
+    return route || null;
+  };
+
+  /**
    * Formats a given date string into a specific format.
    *
    * @param dateString - The date string to be formatted.
@@ -129,6 +153,7 @@ export const useRoutes = () => {
     formatDate,
     formatDateName,
     getDays,
+    getRouteByDateAndDirection,
     getRouteDistance,
     getRouteIcon,
     getTransportLabel,

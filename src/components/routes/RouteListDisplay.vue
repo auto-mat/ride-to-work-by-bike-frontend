@@ -70,14 +70,29 @@ export default defineComponent({
       </h3>
       <div class="q-py-md">
         <div class="row q-col-gutter-lg">
-          <!-- Item: Route -->
+          <!-- Item: Route to work -->
           <div
-            v-for="route in day.routes"
-            :key="route.id"
+            v-if="day.toWork"
             class="col-12 col-sm-6"
             data-cy="route-list-item-wrapper"
           >
-            <route-item-display :route="route" data-cy="route-list-item" />
+            <route-item-display
+              :route="day.toWork"
+              data-cy="route-list-item"
+              :data-id="day.toWork.id"
+            />
+          </div>
+          <!-- Item: Route from work -->
+          <div
+            v-if="day.fromWork"
+            class="col-12 col-sm-6"
+            data-cy="route-list-item-wrapper"
+          >
+            <route-item-display
+              :route="day.fromWork"
+              data-cy="route-list-item"
+              :data-id="day.fromWork.id"
+            />
           </div>
         </div>
       </div>

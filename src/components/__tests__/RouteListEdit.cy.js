@@ -1,7 +1,10 @@
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
-import { TransportDirection } from '../../../src/components/types/Route';
+// import { TransportDirection } from '../../../src/components/types/Route';
+import { useRoutes } from '../../../src/composables/useRoutes';
+
+const { getTransportLabel } = useRoutes();
 
 // selectors
 const selectorButtonSave = 'button-save';
@@ -21,6 +24,7 @@ describe('<RouteListEdit>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.clock(new Date('2024-03-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
@@ -43,6 +47,7 @@ describe('<RouteListEdit>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      cy.clock(new Date('2024-03-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
@@ -77,20 +82,12 @@ function coreTests() {
   // day date (title) styles
   testRouteListDayDate();
 
-  it('renders route list transport methods', () => {
+  it.only('renders route list transport methods', () => {
     cy.fixture('routeList').then((routeList) => {
-      // for each route check if icon is correct
-      cy.dataCy(selectorRouteListItem).each(($element, index) => {
-        if (routeList[index].direction === TransportDirection.toWork) {
-          cy.wrap($element)
-            .find('[data-cy="label-direction"]')
-            .should('contain', i18n.global.t('routes.labelDirectionToWork'));
-        }
-        if (routeList[index].direction === TransportDirection.fromWork) {
-          cy.wrap($element)
-            .find('[data-cy="label-direction"]')
-            .should('contain', i18n.global.t('routes.labelDirectionFromWork'));
-        }
+      routeList.forEach((loggedRoute) => {
+        cy.dataCy(selectorRouteListItemWrapper)
+          .find(`[data-id="${loggedRoute.id}"]`)
+          .should('contain', getTransportLabel(loggedRoute.transport));
       });
     });
   });

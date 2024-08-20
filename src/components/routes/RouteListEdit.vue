@@ -2,8 +2,8 @@
 /**
  * RouteListEdit Component
  *
- * @description * Use this component to render routes in a list view
- * for editing.
+ * @description * Use this component to render routes which can be edited
+ * by the user. The selection of routes is defined by global config.
  *
  * @props
  * - `routes` (RouteItem, required): The object representing a list of routes.
@@ -19,13 +19,20 @@
  */
 
 // libraries
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { date } from 'quasar';
+import { computed, defineComponent, ref } from 'vue';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
 
 // composables
 import { useRoutes } from 'src/composables/useRoutes';
+
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
+// enums
+import { TransportDirection, TransportType } from '../types/Route';
 
 // types
 import type { RouteItem, RouteListDay } from '../types/Route';
@@ -41,18 +48,74 @@ export default defineComponent({
     RouteItemEdit,
   },
   setup(props) {
-    const { formatDate, formatDateName, getDays } = useRoutes();
-    const days = ref([] as RouteListDay[]);
-    // initiate local routes object
-    onMounted(() => {
-      days.value = getDays(props.routes);
-    });
+    const { formatDate, formatDateName, getRouteByDateAndDirection } =
+      useRoutes();
+
+    const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
+
+    const createDaysArray = (numberOfDays: number): RouteListDay[] => {
+      let days = [] as RouteListDay[];
+      const today = new Date();
+      if (props.routes) {
+        for (let i = 0; i < numberOfDays; i++) {
+          const currentDate = date.subtractFromDate(today, { days: i });
+
+          // For any given day, get data from routes or create an empty route.
+          const fromWork = getRouteByDateAndDirection(
+            props.routes,
+            currentDate,
+            TransportDirection.fromWork,
+          );
+          const toWork = getRouteByDateAndDirection(
+            props.routes,
+            currentDate,
+            TransportDirection.toWork,
+          );
+          days.push({
+            id: date.formatDate(currentDate, 'YYYY-MM-DD'),
+            date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+            fromWork: fromWork
+              ? fromWork
+              : ({
+                  id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.fromWork}`,
+                  date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+                  transport: TransportType.bike,
+                  distance: 0,
+                  direction: TransportDirection.fromWork,
+                  dirty: false,
+                  inputType: 'input-number',
+                } as RouteItem),
+            toWork: toWork
+              ? toWork
+              : ({
+                  id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.toWork}`,
+                  date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+                  transport: TransportType.bike,
+                  distance: 0,
+                  direction: TransportDirection.toWork,
+                  dirty: false,
+                  inputType: 'input-number',
+                } as RouteItem),
+          });
+        }
+      }
+      return days;
+    };
+
+    const days = ref<RouteListDay[]>(
+      createDaysArray(challengeLoggingWindowDays),
+    );
 
     // dirty state will be tracked within UI to show change count
     const dirtyCount = computed((): number => {
       let count = 0;
       days.value.forEach((day) => {
-        count += day.routes.filter((route) => route.dirty).length;
+        if (day.fromWork?.dirty) {
+          count += 1;
+        }
+        if (day.toWork?.dirty) {
+          count += 1;
+        }
       });
       return count;
     });
@@ -82,18 +145,24 @@ export default defineComponent({
       </h3>
       <div class="q-py-md">
         <div class="row q-col-gutter-lg">
-          <!-- Item: Route -->
-          <div
-            v-for="route in day.routes"
-            :key="route.id"
-            class="col-12 col-sm-6"
-            data-cy="route-list-item-wrapper"
-          >
+          <!-- Item: Route to work -->
+          <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
             <route-item-edit
-              :route="route"
+              :route="day.toWork"
               class="full-height"
               data-cy="route-list-item"
-              @update:route="route.dirty = $event"
+              :data-id="day.toWork?.id"
+              @update:route="day.toWork.dirty = $event"
+            />
+          </div>
+          <!-- Item: Route from work -->
+          <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
+            <route-item-edit
+              :route="day.fromWork"
+              class="full-height"
+              data-cy="route-list-item"
+              :data-id="day.fromWork?.id"
+              @update:route="day.fromWork.dirty = $event"
             />
           </div>
         </div>

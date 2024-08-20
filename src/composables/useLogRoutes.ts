@@ -39,12 +39,21 @@ export const useLogRoutes = (routes: ComputedRef<RouteItem[]>) => {
   });
 
   const isShownDistance = computed((): boolean => {
-    return (
-      transportType.value === TransportType.bike ||
-      transportType.value === TransportType.walk ||
-      transportType.value === TransportType.bus
-    );
+    return hasTransportDistance(transportType.value);
   });
+
+  /**
+   * Checks if the given transport type has distance.
+   * @param {TransportType} transport - The transport type to check.
+   * @return {boolean} Whether the transport has distance.
+   */
+  const hasTransportDistance = (transport: TransportType): boolean => {
+    return (
+      transport === TransportType.bike ||
+      transport === TransportType.walk ||
+      transport === TransportType.bus
+    );
+  };
 
   return {
     action,
@@ -52,5 +61,6 @@ export const useLogRoutes = (routes: ComputedRef<RouteItem[]>) => {
     routesCount,
     transportType,
     isShownDistance,
+    hasTransportDistance,
   };
 };
