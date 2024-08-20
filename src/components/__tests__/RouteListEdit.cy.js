@@ -1,8 +1,10 @@
+import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
 // import { TransportDirection } from '../../../src/components/types/Route';
 import { useRoutes } from '../../../src/composables/useRoutes';
+import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 
 const { getTransportLabel } = useRoutes();
 
@@ -45,6 +47,41 @@ describe('<RouteListEdit>', () => {
     });
   });
 
+  // cy.clock() interferes with select dropdown function
+  context('desktop - current date', () => {
+    beforeEach(() => {
+      cy.fixture('routeList').then((routes) => {
+        cy.mount(RouteListEdit, {
+          props: {
+            routes,
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('tracks dirty state of input type', () => {
+      // test changing input type
+      cy.dataCy(selectorRouteListItem)
+        .first()
+        .find('[data-cy="select-action"]')
+        .select(i18n.global.t('routes.actionTraceMap'));
+      cy.dataCy(selectorButtonSave).should(
+        'contain',
+        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+      );
+      // reset
+      cy.dataCy(selectorRouteListItem)
+        .first()
+        .find('[data-cy="select-action"]')
+        .select(i18n.global.t('routes.actionInputDistance'));
+      cy.dataCy(selectorButtonSave).should(
+        'contain',
+        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+      );
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       cy.clock(new Date('2024-03-15').getTime());
@@ -82,12 +119,29 @@ function coreTests() {
   // day date (title) styles
   testRouteListDayDate();
 
-  it.only('renders route list transport methods', () => {
+  it('renders route list transport methods', () => {
     cy.fixture('routeList').then((routeList) => {
+      // initialize composable function
+      const { hasTransportDistance } = useLogRoutes(computed(() => routeList));
+      // check logged routes by id
       routeList.forEach((loggedRoute) => {
+        // has transport label
         cy.dataCy(selectorRouteListItemWrapper)
           .find(`[data-id="${loggedRoute.id}"]`)
           .should('contain', getTransportLabel(loggedRoute.transport));
+        // has transport distance (value)
+        if (hasTransportDistance(loggedRoute)) {
+          cy.dataCy(selectorRouteListItemWrapper)
+            .find(`[data-id="${loggedRoute.id}"]`)
+            .find('[data-cy="route-distance"]')
+            .should('be.visible')
+            .and('have.value', loggedRoute.distance);
+        } else {
+          cy.dataCy(selectorRouteListItemWrapper)
+            .find(`[data-id="${loggedRoute.id}"]`)
+            .find('[data-cy="route-distance"]')
+            .should('not.exist');
+        }
       });
     });
   });
@@ -132,7 +186,7 @@ function coreTests() {
     cy.dataCy(selectorRouteListItem)
       .last()
       .find('[data-cy="button-toggle-transport"]')
-      .first()
+      .last()
       .click();
     // count changes
     cy.dataCy(selectorButtonSave).should(
@@ -148,7 +202,7 @@ function coreTests() {
     cy.dataCy(selectorRouteListItem)
       .last()
       .find('[data-cy="button-toggle-transport"]')
-      .last()
+      .first()
       .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
@@ -185,25 +239,6 @@ function coreTests() {
       .first()
       .find('[data-cy="input-distance"]')
       .blur();
-    cy.dataCy(selectorButtonSave).should(
-      'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
-    );
-
-    // test changing input type
-    cy.dataCy(selectorRouteListItem)
-      .first()
-      .find('[data-cy="select-action"]')
-      .select(i18n.global.t('routes.actionTraceMap'));
-    cy.dataCy(selectorButtonSave).should(
-      'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
-    );
-    // reset
-    cy.dataCy(selectorRouteListItem)
-      .first()
-      .find('[data-cy="select-action"]')
-      .select(i18n.global.t('routes.actionInputDistance'));
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
