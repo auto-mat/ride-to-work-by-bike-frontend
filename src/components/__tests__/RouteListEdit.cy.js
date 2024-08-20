@@ -2,9 +2,9 @@ import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
-// import { TransportDirection } from '../../../src/components/types/Route';
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
+import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 
 const { getTransportLabel } = useRoutes();
 
@@ -18,6 +18,7 @@ const selectorSectionDirection = 'section-direction';
 // variables
 const routeListItemWrapperWidthDesktop = 50;
 const routeListItemWrapperWidthMobile = 100;
+const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
@@ -111,7 +112,9 @@ function coreTests() {
     // component visible
     cy.dataCy(selectorRouteListEdit).should('be.visible');
     // items visible
-    cy.dataCy(selectorRouteListItem).should('be.visible');
+    cy.dataCy(selectorRouteListItem)
+      .should('be.visible')
+      .and('have.length', challengeLoggingWindowDays * 2);
     // direction labels visible
     cy.dataCy(selectorSectionDirection).should('be.visible');
   });
