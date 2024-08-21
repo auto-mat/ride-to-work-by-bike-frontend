@@ -22,6 +22,7 @@ describe('<RouteListDisplay>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {
@@ -41,6 +42,7 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {
