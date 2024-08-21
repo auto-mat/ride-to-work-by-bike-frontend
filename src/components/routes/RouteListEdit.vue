@@ -31,9 +31,6 @@ import { useRoutes } from 'src/composables/useRoutes';
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
-// enums
-import { TransportDirection, TransportType } from '../types/Route';
-
 // types
 import type { RouteItem, RouteListDay } from '../types/Route';
 
@@ -42,68 +39,25 @@ export default defineComponent({
   props: {
     routes: {
       type: Array as () => RouteItem[],
+      required: true,
     },
   },
   components: {
     RouteItemEdit,
   },
   setup(props) {
-    const { formatDate, formatDateName, getRouteByDateAndDirection } =
+    const { createDaysArrayWithRoutes, formatDate, formatDateName } =
       useRoutes();
 
     const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
-
-    const createDaysArray = (numberOfDays: number): RouteListDay[] => {
-      let days = [] as RouteListDay[];
-      const today = new Date();
-      if (props.routes) {
-        for (let i = 0; i < numberOfDays; i++) {
-          const currentDate = date.subtractFromDate(today, { days: i });
-
-          // For any given day, get data from routes or create an empty route.
-          const fromWork = getRouteByDateAndDirection(
-            props.routes,
-            currentDate,
-            TransportDirection.fromWork,
-          );
-          const toWork = getRouteByDateAndDirection(
-            props.routes,
-            currentDate,
-            TransportDirection.toWork,
-          );
-          days.push({
-            id: date.formatDate(currentDate, 'YYYY-MM-DD'),
-            date: date.formatDate(currentDate, 'YYYY-MM-DD'),
-            fromWork: fromWork
-              ? fromWork
-              : ({
-                  id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.fromWork}`,
-                  date: date.formatDate(currentDate, 'YYYY-MM-DD'),
-                  transport: TransportType.bike,
-                  distance: 0,
-                  direction: TransportDirection.fromWork,
-                  dirty: false,
-                  inputType: 'input-number',
-                } as RouteItem),
-            toWork: toWork
-              ? toWork
-              : ({
-                  id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.toWork}`,
-                  date: date.formatDate(currentDate, 'YYYY-MM-DD'),
-                  transport: TransportType.bike,
-                  distance: 0,
-                  direction: TransportDirection.toWork,
-                  dirty: false,
-                  inputType: 'input-number',
-                } as RouteItem),
-          });
-        }
-      }
-      return days;
-    };
+    const todayDate = new Date();
+    const startDate = date.addToDate(todayDate, {
+      days: -1 * challengeLoggingWindowDays,
+    });
+    const endDate = todayDate;
 
     const days = ref<RouteListDay[]>(
-      createDaysArray(challengeLoggingWindowDays),
+      createDaysArrayWithRoutes(startDate, endDate, props.routes),
     );
 
     // dirty state will be tracked within UI to show change count

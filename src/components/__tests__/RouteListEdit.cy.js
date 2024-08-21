@@ -1,3 +1,4 @@
+import { date } from 'quasar';
 import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
@@ -27,7 +28,7 @@ describe('<RouteListEdit>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(new Date('2024-03-15').getTime());
+      cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
@@ -85,7 +86,7 @@ describe('<RouteListEdit>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(new Date('2024-03-15').getTime());
+      cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
@@ -128,22 +129,28 @@ function coreTests() {
       const { hasTransportDistance } = useLogRoutes(computed(() => routeList));
       // check logged routes by id
       routeList.forEach((loggedRoute) => {
-        // has transport label
-        cy.dataCy(selectorRouteListItemWrapper)
-          .find(`[data-id="${loggedRoute.id}"]`)
-          .should('contain', getTransportLabel(loggedRoute.transport));
-        // has transport distance (value)
-        if (hasTransportDistance(loggedRoute)) {
+        const startDate = date.addToDate(new Date(), {
+          days: -1 * challengeLoggingWindowDays,
+        });
+        const endDate = new Date();
+        if (loggedRoute.date > startDate && loggedRoute.date <= endDate) {
+          // has transport label
           cy.dataCy(selectorRouteListItemWrapper)
             .find(`[data-id="${loggedRoute.id}"]`)
-            .find('[data-cy="route-distance"]')
-            .should('be.visible')
-            .and('have.value', loggedRoute.distance);
-        } else {
-          cy.dataCy(selectorRouteListItemWrapper)
-            .find(`[data-id="${loggedRoute.id}"]`)
-            .find('[data-cy="route-distance"]')
-            .should('not.exist');
+            .should('contain', getTransportLabel(loggedRoute.transport));
+          // has transport distance (value)
+          if (hasTransportDistance(loggedRoute)) {
+            cy.dataCy(selectorRouteListItemWrapper)
+              .find(`[data-id="${loggedRoute.id}"]`)
+              .find('[data-cy="route-distance"]')
+              .should('be.visible')
+              .and('have.value', loggedRoute.distance);
+          } else {
+            cy.dataCy(selectorRouteListItemWrapper)
+              .find(`[data-id="${loggedRoute.id}"]`)
+              .find('[data-cy="route-distance"]')
+              .should('not.exist');
+          }
         }
       });
     });

@@ -1,13 +1,19 @@
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
+import { computed } from 'vue';
 import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';
-import { TransportDirection } from '../../../src/components/types/Route';
+import { useLogRoutes } from '../../../src/composables/useLogRoutes';
+import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const { getTransportLabel } = useRoutes();
+
+// variables
+const { challengeLoggingWindowDays, challengeStartDate } =
+  rideToWorkByBikeConfig;
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
@@ -72,21 +78,35 @@ function coreTests() {
 
   it('renders route list transport methods', () => {
     cy.fixture('routeList').then((routeList) => {
-      // for each route check if icon is correct
-      cy.dataCy('route-list-item').each(($element, index) => {
-        if (routeList[index].direction === TransportDirection.toWork) {
-          cy.wrap($element)
-            .find('[data-cy="label-direction"]')
-            .should('contain', i18n.global.t('routes.labelDirectionToWork'));
+      // initialize composable function
+      const { hasTransportDistance } = useLogRoutes(computed(() => routeList));
+      // check logged routes by id
+      routeList.forEach((loggedRoute) => {
+        const startDate = date.addToDate(new Date(challengeStartDate), {
+          days: -1,
+        });
+        const endDate = date.addToDate(new Date(), {
+          days: -1 * challengeLoggingWindowDays,
+        });
+        if (loggedRoute.date > startDate && loggedRoute.date <= endDate) {
+          // has transport label
+          cy.dataCy(selectorRouteListItemWrapper)
+            .find(`[data-id="${loggedRoute.id}"]`)
+            .should('contain', getTransportLabel(loggedRoute.transport));
+          // has transport distance (value)
+          if (hasTransportDistance(loggedRoute) && loggedRoute.distance > 0) {
+            cy.dataCy(selectorRouteListItemWrapper)
+              .find(`[data-id="${loggedRoute.id}"]`)
+              .find('[data-cy="label-distance"]')
+              .should('be.visible')
+              .and('have.value', loggedRoute.distance);
+          } else {
+            cy.dataCy(selectorRouteListItemWrapper)
+              .find(`[data-id="${loggedRoute.id}"]`)
+              .find('[data-cy="label-distance"]')
+              .should('not.exist');
+          }
         }
-        if (routeList[index].direction === TransportDirection.fromWork) {
-          cy.wrap($element)
-            .find('[data-cy="label-direction"]')
-            .should('contain', i18n.global.t('routes.labelDirectionFromWork'));
-        }
-        cy.wrap($element)
-          .find('[data-cy="description-transport"]')
-          .should('contain', getTransportLabel(routeList[index].transport));
       });
     });
   });
