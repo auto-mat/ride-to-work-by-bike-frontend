@@ -65,10 +65,6 @@ export default defineComponent({
     );
 
     return {
-      challengeLoggingWindowDays,
-      challengeStartDate,
-      startDate,
-      endDate,
       days,
       formatDate,
       formatDateName,
