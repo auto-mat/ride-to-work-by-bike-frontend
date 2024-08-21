@@ -3,7 +3,7 @@
  * RouteListEdit Component
  *
  * @description * Use this component to render routes which can be edited
- * by the user. The selection of routes is defined by global config.
+ * by the user. The number of routes to log is defined by global config.
  *
  * @props
  * - `routes` (RouteItem, required): The object representing a list of routes.
