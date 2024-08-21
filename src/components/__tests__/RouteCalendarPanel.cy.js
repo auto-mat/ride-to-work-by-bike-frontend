@@ -44,8 +44,8 @@ describe('<RouteCalendarPanel>', () => {
 
   context('desktop - empty route', () => {
     beforeEach(() => {
-      cy.fixture('routeList').then((listRoutes) => {
-        const routes = [listRoutes[2]];
+      cy.fixture('routeEmpty').then((routeEmpty) => {
+        const routes = [routeEmpty];
         cy.wrap(routes).as('routes');
         cy.mount(RouteCalendarPanel, {
           props: {
