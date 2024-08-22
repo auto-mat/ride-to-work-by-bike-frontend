@@ -3,7 +3,8 @@
  * RouteListEdit Component
  *
  * @description * Use this component to render routes which can be edited
- * by the user. The number of routes to log is defined by global config.
+ * by the user. The number of routes to log is defined by global config var
+ * `challengeLoggingWindowDays`.
  *
  * @props
  * - `routes` (RouteItem, required): The object representing a list of routes.
@@ -64,10 +65,7 @@ export default defineComponent({
     const dirtyCount = computed((): number => {
       let count = 0;
       days.value.forEach((day) => {
-        if (day.fromWork?.dirty) {
-          count += 1;
-        }
-        if (day.toWork?.dirty) {
+        if (day.fromWork?.dirty || day.toWork?.dirty) {
           count += 1;
         }
       });

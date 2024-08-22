@@ -14,6 +14,7 @@ const { getTransportLabel } = useRoutes();
 // variables
 const { challengeLoggingWindowDays, challengeStartDate } =
   rideToWorkByBikeConfig;
+const fixedDate = '2024-08-15';
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
@@ -22,7 +23,7 @@ describe('<RouteListDisplay>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(new Date('2024-08-15').getTime());
+      cy.clock(new Date(fixedDate).getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {
@@ -42,7 +43,7 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(new Date('2024-08-15').getTime());
+      cy.clock(new Date(fixedDate).getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {

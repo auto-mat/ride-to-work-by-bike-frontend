@@ -78,6 +78,8 @@ export const useRoutes = () => {
   ): RouteListDay[] => {
     const numberOfDays = date.getDateDiff(endDate, startDate, 'days');
     const days = [] as RouteListDay[];
+    const routeDateFormat = 'YYYY-MM-DD';
+
     if (routes) {
       for (let i = 0; i < numberOfDays; i++) {
         const currentDate = date.subtractFromDate(endDate, { days: i });
@@ -94,13 +96,13 @@ export const useRoutes = () => {
           TransportDirection.toWork,
         );
         days.push({
-          id: date.formatDate(currentDate, 'YYYY-MM-DD'),
-          date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+          id: date.formatDate(currentDate, routeDateFormat),
+          date: date.formatDate(currentDate, routeDateFormat),
           fromWork: fromWork
             ? fromWork
             : ({
-                id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.fromWork}`,
-                date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+                id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.fromWork}`,
+                date: date.formatDate(currentDate, routeDateFormat),
                 transport: TransportType.none,
                 distance: 0,
                 direction: TransportDirection.fromWork,
@@ -110,8 +112,8 @@ export const useRoutes = () => {
           toWork: toWork
             ? toWork
             : ({
-                id: `${date.formatDate(currentDate, 'YYYY-MM-DD')}-${TransportDirection.toWork}`,
-                date: date.formatDate(currentDate, 'YYYY-MM-DD'),
+                id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.toWork}`,
+                date: date.formatDate(currentDate, routeDateFormat),
                 transport: TransportType.none,
                 distance: 0,
                 direction: TransportDirection.toWork,
