@@ -1,4 +1,5 @@
-import { store } from 'quasar/wrappers';
+import { boot } from 'quasar/wrappers';
+
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
@@ -16,11 +17,9 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
  * @see https://prazdevs.github.io/pinia-plugin-persistedstate/guide/limitations.html
  */
 
-export default store(() => {
+export default boot(({ app }) => {
   const pinia = createPinia();
-
   // plugins
   pinia.use(piniaPluginPersistedstate);
-
-  return pinia;
+  app.use(pinia);
 });
