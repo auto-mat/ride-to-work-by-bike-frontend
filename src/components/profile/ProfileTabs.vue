@@ -21,6 +21,7 @@ import { defineComponent, ref } from 'vue';
 // components
 import ProfileDetails from './ProfileDetails.vue';
 import TableNotifications from './TableNotifications.vue';
+import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -38,6 +39,7 @@ export default defineComponent({
   components: {
     ProfileDetails,
     TableNotifications,
+    ProfileQuestionnaires,
   },
   setup() {
     const activeTab = ref(tabsProfile.none);
@@ -100,9 +102,9 @@ export default defineComponent({
       >
         <profile-details />
       </q-tab-panel>
-      <!-- Panel: Forms -->
+      <!-- Panel: Questionnaires -->
       <q-tab-panel :name="tabsProfile.forms" data-cy="profile-tabs-panel-forms">
-        <!-- <profile-forms /> -->
+        <profile-questionnaires />
       </q-tab-panel>
       <!-- Panel: Newsletter -->
       <q-tab-panel

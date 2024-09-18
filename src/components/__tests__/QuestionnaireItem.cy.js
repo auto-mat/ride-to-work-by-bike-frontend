@@ -36,30 +36,58 @@ describe('<QuestionnaireItem>', () => {
     );
   });
 
-  context('desktop', () => {
+  context('desktop - target _blank', () => {
     beforeEach(() => {
-      cy.mount(QuestionnaireItem, {
-        props: {
-          questionnaire: questionnaires[0],
-        },
+      cy.wrap(questionnaires[0]).as('questionnaire');
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.mount(QuestionnaireItem, {
+          props: {
+            questionnaire: questionnaire,
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
 
     coreTests();
+    iconTests();
+  });
+
+  context('desktop - target _self', () => {
+    beforeEach(() => {
+      cy.wrap(questionnaires[1]).as('questionnaire');
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.mount(QuestionnaireItem, {
+          props: {
+            questionnaire: questionnaire,
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    coreTests();
+
+    it('does not render an external link icon in the button', () => {
+      cy.dataCy(questionnaireButtonIcon).should('not.exist');
+    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(QuestionnaireItem, {
-        props: {
-          questionnaire: questionnaires[0],
-        },
+      cy.wrap(questionnaires[0]).as('questionnaire');
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.mount(QuestionnaireItem, {
+          props: {
+            questionnaire: questionnaire,
+          },
+        });
       });
       cy.viewport('iphone-6');
     });
 
     coreTests();
+    iconTests();
   });
 
   function coreTests() {
@@ -68,34 +96,48 @@ describe('<QuestionnaireItem>', () => {
     });
 
     it('displays the questionnaire title', () => {
-      cy.dataCy(questionnaireTitle)
-        .should('have.css', 'font-size', '16px')
-        .and('have.css', 'font-weight', '400')
-        .and('contain', questionnaires[0].title);
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.dataCy(questionnaireTitle)
+          .should('have.css', 'font-size', '16px')
+          .and('have.css', 'font-weight', '400')
+          .and('contain', questionnaire.title);
+      });
     });
 
     it('renders the questionnaire image', () => {
-      cy.dataCy(questionnaireAvatar)
-        .should('be.visible')
-        .invoke('height')
-        .should('be.eq', avatarSize);
-      cy.dataCy(questionnaireAvatar)
-        .invoke('width')
-        .should('be.eq', avatarSize);
-      cy.dataCy(questionnaireImage)
-        .find('img')
-        .should('have.attr', 'src', questionnaires[0].image.src)
-        .and('have.attr', 'alt', questionnaires[0].image.alt);
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.dataCy(questionnaireAvatar)
+          .should('be.visible')
+          .invoke('height')
+          .should('be.eq', avatarSize);
+        cy.dataCy(questionnaireAvatar)
+          .invoke('width')
+          .should('be.eq', avatarSize);
+        cy.dataCy(questionnaireImage)
+          .find('img')
+          .should('have.attr', 'src', questionnaire.image.src)
+          .and('have.attr', 'alt', questionnaire.image.alt);
+      });
     });
 
     it('renders a button with correct attributes and text', () => {
-      cy.dataCy(questionnaireButton)
-        .should('be.visible')
-        .and('have.attr', 'href', questionnaires[0].link.url)
-        .and('have.attr', 'target', questionnaires[0].link.target)
-        .and('contain', i18n.global.t('profile.buttonFillQuestionnaire'));
+      cy.get('@questionnaire').then((questionnaire) => {
+        cy.dataCy(questionnaireButton)
+          .should('be.visible')
+          .and('have.attr', 'href', questionnaire.link.url)
+          .and('have.attr', 'target', questionnaire.link.target)
+          .and('contain', i18n.global.t('profile.buttonFillQuestionnaire'));
+      });
     });
 
+    it('applies correct styles to the component', () => {
+      cy.dataCy(questionnaireItem)
+        .should('have.css', 'padding', '16px')
+        .and('have.backgroundColor', white);
+    });
+  }
+
+  function iconTests() {
     it('renders an external link icon in the button', () => {
       cy.dataCy(questionnaireButtonIcon)
         .should('be.visible')
@@ -106,12 +148,6 @@ describe('<QuestionnaireItem>', () => {
       cy.dataCy(questionnaireButtonIcon)
         .invoke('width')
         .should('be.eq', iconSize);
-    });
-
-    it('applies correct styles to the component', () => {
-      cy.dataCy(questionnaireItem)
-        .should('have.css', 'padding', '16px')
-        .and('have.backgroundColor', white);
     });
   }
 });

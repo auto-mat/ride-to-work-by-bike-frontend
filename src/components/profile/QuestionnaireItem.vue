@@ -89,6 +89,7 @@ export default defineComponent({
               data-cy="questionnaire-button"
             >
               <q-icon
+                v-if="questionnaire.link.target === '_blank'"
                 size="18px"
                 class="q-mr-sm"
                 name="open_in_new"
