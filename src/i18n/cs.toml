@@ -471,6 +471,7 @@ titleStep2 = "Přizvěte své blízké do výzvy"
 
 [profile]
 buttonDownloadInvoice = "Stáhnout potvrzení o platbě"
+buttonFillQuestionnaire = "Vyplnit dotazník"
 descriptionNickname = "Zobrazí se ve veřejných výsledcích místo vašeho jména"
 labelAddressDivision = "Adresa / pobočka:"
 labelAllowContactPhone = "Chci vědět více o udržitelné mobilitě a souhlasím, že se mi můžete ozvat telefonicky ohledně podpory aktivní dopravy a veřejného prostoru."

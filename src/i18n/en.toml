@@ -468,6 +468,7 @@ titleStep2 = "Invite your loved ones to the challenge"
 
 [profile]
 buttonDownloadInvoice = "Download payment confirmation"
+buttonFillQuestionnaire = "Fill in questionnaire"
 descriptionNickname = "Appears in public results instead of your name"
 labelAddressDivision = "Address / Division:"
 labelAllowContactPhone = "I want to know more about sustainable mobility and agree to be contacted by phone about promoting active transport and public space."

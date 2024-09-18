@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Závěrečný dotazník",
+    "image": {
+      "src": "https://picsum.photos/id/70/500/550",
+      "alt": "road lined with trees"
+    },
+    "link": {
+      "url": "https://example.com/zaverecny-dotaznik",
+      "target": "_blank"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Cyklozaměstnavatel",
+    "image": {
+      "src": "https://picsum.photos/id/70/500/550",
+      "alt": "road lined with trees"
+    },
+    "link": {
+      "url": "https://example.com/cyklozamestnavatel",
+      "target": "_self"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Cykloměsto a Cykloskokan",
+    "image": {
+      "src": "https://picsum.photos/id/70/500/550",
+      "alt": "road lined with trees"
+    },
+    "link": {
+      "url": "https://example.com/cyklomesto-cykloskokan",
+      "target": "_blank"
+    }
+  }
+]
