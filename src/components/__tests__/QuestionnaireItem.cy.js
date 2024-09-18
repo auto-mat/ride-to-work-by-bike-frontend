@@ -17,6 +17,7 @@ const questionnaireImage = 'questionnaire-image';
 
 // variables
 const avatarSize = 48;
+const iconSize = 18;
 
 describe('<QuestionnaireItem>', () => {
   let questionnaires;
@@ -98,7 +99,13 @@ describe('<QuestionnaireItem>', () => {
     it('renders an external link icon in the button', () => {
       cy.dataCy(questionnaireButtonIcon)
         .should('be.visible')
-        .should('have.color', primary);
+        .and('have.color', primary);
+      cy.dataCy(questionnaireButtonIcon)
+        .invoke('height')
+        .should('be.eq', iconSize);
+      cy.dataCy(questionnaireButtonIcon)
+        .invoke('width')
+        .should('be.eq', iconSize);
     });
 
     it('applies correct styles to the component', () => {
