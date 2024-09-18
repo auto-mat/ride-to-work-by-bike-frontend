@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 // colors
 const { getPaletteColor } = colors;
 const primary = getPaletteColor('primary');
+const white = getPaletteColor('white');
 
 // selectors
 const questionnaireItem = 'questionnaire-item';
@@ -13,6 +14,9 @@ const questionnaireButton = 'questionnaire-button';
 const questionnaireButtonIcon = 'questionnaire-button-icon';
 const questionnaireAvatar = 'questionnaire-avatar';
 const questionnaireImage = 'questionnaire-image';
+
+// variables
+const avatarSize = 48;
 
 describe('<QuestionnaireItem>', () => {
   let questionnaires;
@@ -70,7 +74,13 @@ describe('<QuestionnaireItem>', () => {
     });
 
     it('renders the questionnaire image', () => {
-      cy.dataCy(questionnaireAvatar).should('be.visible');
+      cy.dataCy(questionnaireAvatar)
+        .should('be.visible')
+        .invoke('height')
+        .should('be.eq', avatarSize);
+      cy.dataCy(questionnaireAvatar)
+        .invoke('width')
+        .should('be.eq', avatarSize);
       cy.dataCy(questionnaireImage)
         .find('img')
         .should('have.attr', 'src', questionnaires[0].image.src)
@@ -93,8 +103,8 @@ describe('<QuestionnaireItem>', () => {
 
     it('applies correct styles to the component', () => {
       cy.dataCy(questionnaireItem)
-        .should('have.class', 'q-pa-md')
-        .and('have.class', 'bg-white');
+        .should('have.css', 'padding', '16px')
+        .and('have.backgroundColor', white);
     });
   }
 });

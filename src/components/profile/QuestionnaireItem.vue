@@ -63,7 +63,7 @@ export default defineComponent({
         data-cy="questionnaire-section-image"
       >
         <!-- Image -->
-        <q-avatar size="56px" data-cy="questionnaire-avatar">
+        <q-avatar size="48px" data-cy="questionnaire-avatar">
           <q-img
             :src="questionnaire.image.src"
             data-cy="questionnaire-image"
@@ -72,7 +72,7 @@ export default defineComponent({
           />
         </q-avatar>
       </q-item-section>
-      <q-item-section class="col q-pl-sm">
+      <q-item-section class="col q-pl-md">
         <div class="row q-col-gutter-sm items-center">
           <div class="col-12 col-sm text-body1" data-cy="questionnaire-title">
             {{ questionnaire.title }}
