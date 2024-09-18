@@ -83,7 +83,7 @@
     "@quasar/extras": "^1.0.0",
     "fs": "^0.0.1-security",
     "pinia": "^2.2.2",
-    "pinia-plugin-persistedstate": "^3.2.1",
+    "pinia-plugin-persistedstate": "^4.0.0",
     "quasar": "^2.6.0",
     "swiper": "^11.0.0",
     "toml": "^3.0.0",
