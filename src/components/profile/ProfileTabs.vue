@@ -28,7 +28,7 @@ import { routesConf } from '../../router/routes_conf';
 
 enum tabsProfile {
   details = 'details',
-  forms = 'forms',
+  questionnaires = 'questionnaires',
   newsletter = 'newsletter',
   notifications = 'notifications',
   none = '',
@@ -73,9 +73,9 @@ export default defineComponent({
       />
       <q-route-tab
         :to="routesConf['profile_forms'].path"
-        :name="tabsProfile.forms"
+        :name="tabsProfile.questionnaires"
         :label="$t('profile.tabForms')"
-        data-cy="profile-tabs-button-forms"
+        data-cy="profile-tabs-button-questionnaires"
       />
       <q-route-tab
         :to="routesConf['profile_newsletter'].path"
@@ -103,7 +103,10 @@ export default defineComponent({
         <profile-details />
       </q-tab-panel>
       <!-- Panel: Questionnaires -->
-      <q-tab-panel :name="tabsProfile.forms" data-cy="profile-tabs-panel-forms">
+      <q-tab-panel
+        :name="tabsProfile.questionnaires"
+        data-cy="profile-tabs-panel-questionnaires"
+      >
         <profile-questionnaires />
       </q-tab-panel>
       <!-- Panel: Newsletter -->

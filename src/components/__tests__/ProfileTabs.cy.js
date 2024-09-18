@@ -5,13 +5,14 @@ import { routesConf } from 'src/router/routes_conf';
 // selectors
 const selectorProfileTabs = 'profile-tabs';
 const selectorButtonDetails = 'profile-tabs-button-details';
-const selectorButtonForms = 'profile-tabs-button-forms';
+const selectorButtonQuestionnaires = 'profile-tabs-button-questionnaires';
 const selectorButtonNewsletter = 'profile-tabs-button-newsletter';
 const selectorButtonNotifications = 'profile-tabs-button-notifications';
 const selectorPanelDetails = 'profile-tabs-panel-details';
-const selectorPanelForms = 'profile-tabs-panel-forms';
+const selectorPanelQuestionnaires = 'profile-tabs-panel-questionnaires';
 const selectorPanelNewsletter = 'profile-tabs-panel-newsletter';
 const selectorPanelNotifications = 'profile-tabs-panel-notifications';
+const selectorProfileQuestionnaires = 'profile-questionnaires';
 
 describe('<ProfileTabs>', () => {
   it('has translation for all strings', () => {
@@ -48,7 +49,7 @@ function coreTests() {
       'contain',
       i18n.global.t('profile.tabDetails'),
     );
-    cy.dataCy(selectorButtonForms).and(
+    cy.dataCy(selectorButtonQuestionnaires).and(
       'contain',
       i18n.global.t('profile.tabForms'),
     );
@@ -63,14 +64,14 @@ function coreTests() {
 
     cy.dataCy(selectorButtonDetails).click();
     cy.dataCy(selectorPanelDetails).should('be.visible');
-    cy.dataCy(selectorPanelForms).should('not.exist');
+    cy.dataCy(selectorPanelQuestionnaires).should('not.exist');
     cy.dataCy(selectorPanelNewsletter).should('not.exist');
     cy.dataCy(selectorPanelNotifications).should('not.exist');
   });
 
   it('allows to switch tabs', () => {
-    cy.dataCy(selectorButtonForms).click();
-    cy.dataCy(selectorPanelForms).should('be.visible');
+    cy.dataCy(selectorButtonQuestionnaires).click();
+    cy.dataCy(selectorPanelQuestionnaires).should('be.visible');
     cy.dataCy(selectorButtonNewsletter).click();
     cy.dataCy(selectorPanelNewsletter).should('be.visible');
     cy.dataCy(selectorButtonNotifications).click();
@@ -83,7 +84,7 @@ function coreTests() {
     // initial state
     cy.url().should('include', routesConf['profile_details'].path);
     // switch to details tab
-    cy.dataCy(selectorButtonForms).click();
+    cy.dataCy(selectorButtonQuestionnaires).click();
     cy.url().should('not.include', routesConf['profile_details'].path);
     cy.url().should('include', routesConf['profile_forms'].path);
     // switch to forms tab
@@ -98,5 +99,11 @@ function coreTests() {
     cy.go('back');
     cy.url().should('include', routesConf['profile_newsletter'].path);
     cy.dataCy(selectorPanelNewsletter).should('be.visible');
+  });
+
+  it('renders questionnaires tab', () => {
+    cy.dataCy(selectorButtonQuestionnaires).click();
+    cy.dataCy(selectorPanelQuestionnaires).should('be.visible');
+    cy.dataCy(selectorProfileQuestionnaires).should('be.visible');
   });
 }
