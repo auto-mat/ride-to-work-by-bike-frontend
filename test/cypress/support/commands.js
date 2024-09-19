@@ -51,14 +51,21 @@ Cypress.Commands.add(
     );
 
     translationKeyList.forEach((translationKey) => {
-      const defaultEnglishString = i18n.global.t(translationKey, 'en');
+      const defaultEnglishString = i18n.global.t(
+        translationKey,
+        {},
+        { locale: 'en' },
+      );
 
       const locales = i18n.global.availableLocales;
       locales
         .filter((locale) => locale !== 'en')
         .forEach((locale) => {
-          i18n.global.locale = locale;
-          const translatedString = i18n.global.t(translationKey);
+          const translatedString = i18n.global.t(
+            translationKey,
+            {},
+            { locale: locale },
+          );
 
           cy.wrap(translatedString)
             .should('be.a', 'string')
