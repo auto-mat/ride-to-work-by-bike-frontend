@@ -81,7 +81,7 @@
   "dependencies": {
     "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/extras": "^1.0.0",
-    "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.0",
     "quasar": "^2.6.0",

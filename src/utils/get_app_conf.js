@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { parse } = require('toml');
-const { readFileSync } = require('fs');
+const { readFileSync } = require('fs-extra');
 
 const getAppConfig = (process) => {
   let config = parse(
