@@ -8,6 +8,7 @@
  * @components
  * - `ProfileDetails`: Component to display a ProfileDetails section.
  * - `TableNotifications`: Component to display a table of notifications.
+ * - `ProfileQuestionnaires`: Component to display a table of questionnaires.
  *
  * @example
  * <profile-tabs />
