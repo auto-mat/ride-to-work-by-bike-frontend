@@ -220,7 +220,7 @@ export const useLoginStore = defineStore('login', {
         });
         return null;
       }
-
+      // refresh tokens
       const payload = { refresh: this.refreshToken };
       const { data } = await apiFetch<RefreshTokenResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiRefresh,
@@ -230,7 +230,7 @@ export const useLoginStore = defineStore('login', {
         logger: this.$log,
         showSuccessMessage: false,
       });
-
+      // set new access token
       if (data && data.access) {
         this.setAccessToken(data.access);
       }
