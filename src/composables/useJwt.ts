@@ -23,7 +23,6 @@ export const useJwt = () => {
         });
         return null;
       }
-
       return expirationTime;
     } catch (error) {
       if (error instanceof Error) {
@@ -53,7 +52,6 @@ export const useJwt = () => {
     if (parts.length !== 3) {
       throw new Error('Invalid JWT token format');
     }
-
     return {
       header: parts[0],
       payload: parts[1],
@@ -63,7 +61,6 @@ export const useJwt = () => {
 
   const decodePayload = (payload: string) => {
     const jsonPayload = base64UrlDecode(payload);
-
     return JSON.parse(jsonPayload);
   };
 
@@ -82,7 +79,6 @@ export const useJwt = () => {
     }
     // decode Base64
     const decodedData = atob(base64);
-
     return decodedData;
   };
 
