@@ -26,6 +26,7 @@ export const useApi = () => {
       Accept: `application/json; version=${apiVersion}`,
     } as AxiosRequestHeaders,
     logger,
+    showSuccessMessage = true,
   }: {
     endpoint: string;
     payload: unknown;
@@ -33,6 +34,7 @@ export const useApi = () => {
     method: Method;
     headers?: AxiosRequestHeaders;
     logger: Logger | null;
+    showSuccessMessage?: boolean;
   }): Promise<ApiResponse<T>> => {
     try {
       const response = await api<T>({
@@ -42,7 +44,11 @@ export const useApi = () => {
         headers,
       });
 
-      if (response.status >= 200 && response.status < 300) {
+      if (
+        response.status >= 200 &&
+        response.status < 300 &&
+        showSuccessMessage
+      ) {
         Notify.create({
           message: i18n.global.t(`${translationKey}.apiMessageSuccess`),
           color: 'positive',

@@ -1,6 +1,7 @@
 import { markRaw } from 'vue';
 import { boot } from 'quasar/wrappers';
 import { createPinia } from 'pinia';
+import { useLoginStore } from '../stores/login';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 /**
@@ -26,4 +27,10 @@ export default boot(({ app }) => {
     store.$log = markRaw(app.config.globalProperties.$log);
   });
   app.use(pinia);
+
+  // schedule token refresh
+  const loginStore = useLoginStore();
+  if (loginStore.accessToken && loginStore.refreshToken) {
+    loginStore.scheduleTokenRefresh();
+  }
 });

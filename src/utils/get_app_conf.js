@@ -92,6 +92,8 @@ const getAppConfig = (process) => {
     config['apiVersion'] = process.env.API_VERSION;
   } else if (process.env.URL_API_LOGIN) {
     config['urlApiLogin'] = process.env.URL_API_LOGIN;
+  } else if (process.env.URL_API_REFRESH) {
+    config['urlApiRefresh'] = process.env.URL_API_REFRESH;
   } else if (process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE) {
     config['urlLoginRegisterBackgroundImage'] =
       process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE;

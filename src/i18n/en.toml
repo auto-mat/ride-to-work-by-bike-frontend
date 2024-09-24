@@ -513,6 +513,15 @@ titleUpdateEmail = "Edit e-mail"
 titleUpdateGender = "Edit performance category"
 titleUpdateNickname = "Edit nickname"
 
+[refreshTokens]
+messageRefreshTokenRequired = "To refresh tokens, you must log in."
+apiMessageSuccess = "Login token was refreshed."
+apiMessageError = "Failed to refresh login token."
+apiMessageErrorWithMessage = "Failed to refresh login token. Error: {error}"
+messageJwtInvalid = "Failed to read login token."
+messageJwtInvalidExpiration = "Error: login token is invalid."
+messageJwtInvalidWithMessage = "Failed to read login token. Error: {error}"
+
 [register.form]
 titleRegister = "Registration"
 labelEmail = "E-mail"

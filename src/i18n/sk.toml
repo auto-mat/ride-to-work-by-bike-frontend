@@ -513,6 +513,15 @@ titleUpdateEmail = "Upraviť e-mail"
 titleUpdateGender = "Upraviť kategóriu výkonu"
 titleUpdateNickname = "Upraviť prezývku"
 
+[refreshTokens]
+messageRefreshTokenRequired = "Aby ste mohli obnoviť tokeny, musíte sa prihlásiť."
+apiMessageSuccess = "Prihlasovací token bol obnovený."
+apiMessageError = "Obnovenie prihlasovacieho tokenu sa nepodarilo."
+apiMessageErrorWithMessage = "Obnovenie prihlasovacieho tokenu sa nepodarilo. Chyba: {error}"
+messageJwtInvalid = "Nepodarilo sa prečítať prihlasovací token."
+messageJwtInvalidExpiration = "Chyba: prihlasovací token nemá platnosť."
+messageJwtInvalidWithMessage = "Nepodarilo sa prečítať prihlasovací token. Chyba: {error}"
+
 [register.form]
 titleRegister = "Registrácia"
 labelEmail = "E-mail"
