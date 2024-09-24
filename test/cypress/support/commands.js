@@ -61,6 +61,9 @@ Cypress.Commands.add(
       locales
         .filter((locale) => locale !== 'en')
         .forEach((locale) => {
+          // required for E2E tests to work
+          i18n.global.locale = locale;
+
           const translatedString = i18n.global.t(
             translationKey,
             {},
