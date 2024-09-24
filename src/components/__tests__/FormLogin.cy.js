@@ -22,12 +22,23 @@ const contactEmail = rideToWorkByBikeConfig.contactEmail;
 const classSelectorQNotificationMessage = '.q-notification__message';
 
 // variables
+const { apiBase, urlApiLogin, urlApiRefresh } = rideToWorkByBikeConfig;
+const apiLoginUrl = `${apiBase}${urlApiLogin}`;
+const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
+
 const username = 'test@example.com';
 const password = 'example123';
+
 const tokenAccess =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjA4MDM2LCJqdGkiOiJkYTRlNTk4YTE4N2Q0ZWUyYjczNDQyMjZlZTQ2ZmE0YyIsInVzZXJfaWQiOjE4OTc2MX0.wgbyAI4i23_1PrusndvbAeoUacpaMjWCbS0JHxSh93Q';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjEwMTYzLCJqdGkiOiJiMzY5M2I1ZTU3OWE0MDZhOWUyNWE0ZTQ3YzFmMjQ4NiIsInVzZXJfaWQiOjE4OTc2MX0.jAfrS_1R2FnoNcZmYUEoOqPq7evNLP7KzPAOFmuHu88';
+const tokenAccessExpiration = 1727210163;
+const tokenAccessTimeUntilExpiration = 5220003;
 const tokenRefresh =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI5NDEzNiwianRpIjoiZDI5M2ZiYjVhNWY3NDM4Mzk1YjM3NmFlNzA2NjRkOGIiLCJ1c2VyX2lkIjoxODk3NjF9.hH0XpE_rWYNs-SI2SFFy5hLx_X7OPk12FU3LwOl-Ihg';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI5NjI2MywianRpIjoiNzYzNGIxYzBiYTdiNDQ0Zjk0ZTZmNTA5M2E1MDM3MDYiLCJ1c2VyX2lkIjoxODk3NjF9.6J_L4wVjPN3bKAOU-UcvxhrIBirqLVrgi5AZefsqrt0';
+const tokenAccessNew =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjEwMjYxLCJqdGkiOiIzYjRmNTMzNGRiZmE0OGRhOGQxZjU0YTg2NDA5NDA3MCIsInVzZXJfaWQiOjE4OTc2MX0.SD-Ltv7W68KY9xnJ8iJVuMlkwvg18SMRmnadj43dtgQ';
+const tokenAccessNewExpiration = '2024-09-16T11:46:48.551800';
+
 const user = {
   pk: 1,
   username: 'foobar',
@@ -35,8 +46,6 @@ const user = {
   first_name: 'Foo',
   last_name: 'Bar',
 };
-const { apiBase, urlApiLogin } = rideToWorkByBikeConfig;
-const apiLoginUrl = `${apiBase}${urlApiLogin}`;
 
 describe('<FormLogin>', () => {
   it('has translation for all strings', () => {
@@ -315,7 +324,7 @@ describe('<FormLogin>', () => {
       });
     });
 
-    it.only('calls API and set token on successful login', () => {
+    it('calls API and set token on successful login', () => {
       cy.get('@clock').then((clock) => {
         // set time to 24. Sep 2024 21:56:00
         clock.setSystemTime(1721990160000);
@@ -338,13 +347,30 @@ describe('<FormLogin>', () => {
             expect(store.getAccessToken).to.equal(tokenAccess);
             expect(store.getRefreshToken).to.equal(tokenRefresh);
             expect(store.getUser).to.deep.equal(user);
-            expect(store.getJwtExpiration).to.equal(1727208036);
-            expect(store.getTimeUntilExpiration()).to.equal(5217876);
+            expect(store.getJwtExpiration).to.equal(tokenAccessExpiration);
+            expect(store.getTimeUntilExpiration()).to.equal(
+              tokenAccessTimeUntilExpiration,
+            );
             expect(store.isJwtExpired()).to.equal(false);
             // set time to when JWT should be expired + 1 second
-            clock.tick(5217876 * 1000 + 1000);
+            clock.tick(tokenAccessTimeUntilExpiration * 1000 + 1000);
             expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
             expect(store.isJwtExpired()).to.equal(true);
+            // refresh tokens
+            cy.intercept('POST', apiRefreshUrl, {
+              statusCode: httpSuccessfullStatus,
+              body: {
+                access: tokenAccessNew,
+                access_token_expiration: tokenAccessNewExpiration,
+              },
+            }).then(() => {
+              cy.wrap(store.refreshTokens()).then(() => {
+                // new JWT
+                expect(store.getAccessToken).to.equal(tokenAccessNew);
+                // JWT not be expired
+                expect(store.isJwtExpired()).to.equal(false);
+              });
+            });
           });
         });
       });

@@ -44,15 +44,13 @@ export const useApi = () => {
         headers,
       });
 
-      if (
-        response.status >= 200 &&
-        response.status < 300 &&
-        showSuccessMessage
-      ) {
-        Notify.create({
-          message: i18n.global.t(`${translationKey}.apiMessageSuccess`),
-          color: 'positive',
-        });
+      if (response.status >= 200 && response.status < 300) {
+        if (showSuccessMessage) {
+          Notify.create({
+            message: i18n.global.t(`${translationKey}.apiMessageSuccess`),
+            color: 'positive',
+          });
+        }
         return { data: response.data };
       } else {
         Notify.create({

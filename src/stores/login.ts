@@ -221,9 +221,17 @@ export const useLoginStore = defineStore('login', {
         logger: this.$log,
         showSuccessMessage: false,
       });
+
       // set new access token
       if (data && data.access) {
         this.setAccessToken(data.access);
+
+        // set JWT expiration
+        const { readJwtExpiration } = useJwt();
+        const expiration = readJwtExpiration(data.access);
+        if (expiration) {
+          this.setJwtExpiration(expiration);
+        }
       }
 
       return data;
