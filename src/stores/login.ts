@@ -66,6 +66,11 @@ export const useLoginStore = defineStore('login', {
       const currentTime = Math.floor(Date.now() / 1000);
       return state.jwtExpiration ? state.jwtExpiration - currentTime : null;
     },
+    isJwtExpired(state): boolean {
+      const expiration = state.jwtExpiration;
+      const currentTime = Math.floor(Date.now() / 1000);
+      return !expiration || currentTime > expiration;
+    },
   },
 
   actions: {
@@ -182,11 +187,11 @@ export const useLoginStore = defineStore('login', {
         return false;
       } else {
         // token is set - check if it is expired
-        if (this.isJwtExpired()) {
+        if (this.isJwtExpired) {
           // try to refresh tokens
           await this.refreshTokens();
           // check if refresh was successful
-          if (this.isJwtExpired()) {
+          if (this.isJwtExpired) {
             // refresh failed - logout
             this.logout();
             return false;
@@ -199,18 +204,6 @@ export const useLoginStore = defineStore('login', {
           return true;
         }
       }
-    },
-    /**
-     * Check if JWT access token is expired
-     * @returns boolean
-     */
-    isJwtExpired(): boolean {
-      const expiration = this.getJwtExpiration;
-      if (expiration) {
-        const currentTime = Math.floor(Date.now() / 1000);
-        return currentTime > expiration;
-      }
-      return true;
     },
     /**
      * Refresh tokens
