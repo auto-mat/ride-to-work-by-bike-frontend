@@ -62,15 +62,6 @@ export const useLoginStore = defineStore('login', {
     getAccessToken: (state): string => state.accessToken,
     getRefreshToken: (state): string => state.refreshToken,
     getJwtExpiration: (state): number | null => state.jwtExpiration,
-    getTimeUntilExpiration(state): number | null {
-      const currentTime = Math.floor(Date.now() / 1000);
-      return state.jwtExpiration ? state.jwtExpiration - currentTime : null;
-    },
-    isJwtExpired(state): boolean {
-      const expiration = state.jwtExpiration;
-      const currentTime = Math.floor(Date.now() / 1000);
-      return !expiration || currentTime > expiration;
-    },
   },
 
   actions: {
@@ -154,7 +145,7 @@ export const useLoginStore = defineStore('login', {
      * This function is being called in `pinia.js` boot file.
      */
     scheduleTokenRefresh() {
-      const timeUntilExpiration = this.getTimeUntilExpiration;
+      const timeUntilExpiration = this.getTimeUntilExpiration();
       if (timeUntilExpiration) {
         // refresh token 1 minute before expiration
         const refreshTime = (timeUntilExpiration - 60) * 1000;
@@ -187,11 +178,11 @@ export const useLoginStore = defineStore('login', {
         return false;
       } else {
         // token is set - check if it is expired
-        if (this.isJwtExpired) {
+        if (this.isJwtExpired()) {
           // try to refresh tokens
           await this.refreshTokens();
           // check if refresh was successful
-          if (this.isJwtExpired) {
+          if (this.isJwtExpired()) {
             // refresh failed - logout
             this.logout();
             return false;
@@ -236,6 +227,23 @@ export const useLoginStore = defineStore('login', {
       }
 
       return data;
+    },
+    /**
+     * Calculates the time until JWT expiration.
+     * @returns {number | null} Time in seconds until expiration.
+     */
+    getTimeUntilExpiration(): number | null {
+      const currentTime = Math.floor(Date.now() / 1000);
+      return this.jwtExpiration ? this.jwtExpiration - currentTime : null;
+    },
+    /**
+     * Checks if the JWT is expired.
+     * @returns {boolean} True if expired, else false.
+     */
+    isJwtExpired(): boolean {
+      const expiration = this.jwtExpiration;
+      const currentTime = Math.floor(Date.now() / 1000);
+      return !expiration || currentTime > expiration;
     },
   },
 

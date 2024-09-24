@@ -24,8 +24,10 @@ const classSelectorQNotificationMessage = '.q-notification__message';
 // variables
 const username = 'test@example.com';
 const password = 'example123';
-const tokenAccess = '1234567890';
-const tokenRefresh = '0987654321';
+const tokenAccess =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjA4MDM2LCJqdGkiOiJkYTRlNTk4YTE4N2Q0ZWUyYjczNDQyMjZlZTQ2ZmE0YyIsInVzZXJfaWQiOjE4OTc2MX0.wgbyAI4i23_1PrusndvbAeoUacpaMjWCbS0JHxSh93Q';
+const tokenRefresh =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI5NDEzNiwianRpIjoiZDI5M2ZiYjVhNWY3NDM4Mzk1YjM3NmFlNzA2NjRkOGIiLCJ1c2VyX2lkIjoxODk3NjF9.hH0XpE_rWYNs-SI2SFFy5hLx_X7OPk12FU3LwOl-Ihg';
 const user = {
   pk: 1,
   username: 'foobar',
@@ -263,6 +265,9 @@ describe('<FormLogin>', () => {
         props: {},
       });
       cy.viewport('macbook-16');
+      cy.clock().then((clock) => {
+        cy.wrap(clock).as('clock');
+      });
     });
 
     it('allows to save tokens and user into store', () => {
@@ -310,23 +315,37 @@ describe('<FormLogin>', () => {
       });
     });
 
-    it('calls API and set token on successful login', () => {
-      // intercept login API call
-      cy.intercept('POST', apiLoginUrl, {
-        statusCode: httpSuccessfullStatus,
-        body: { access_token: tokenAccess, refresh_token: tokenRefresh, user },
-      }).then(() => {
-        const store = useLoginStore();
-        cy.wrap(store.login({ username, password })).then((response) => {
-          console.log(response);
-          expect(response).to.deep.equal({
+    it.only('calls API and set token on successful login', () => {
+      cy.get('@clock').then((clock) => {
+        // set time to 24. Sep 2024 21:56:00
+        clock.setSystemTime(1721990160000);
+        // intercept login API call
+        cy.intercept('POST', apiLoginUrl, {
+          statusCode: httpSuccessfullStatus,
+          body: {
             access_token: tokenAccess,
             refresh_token: tokenRefresh,
             user,
+          },
+        }).then(() => {
+          const store = useLoginStore();
+          cy.wrap(store.login({ username, password })).then((response) => {
+            expect(response).to.deep.equal({
+              access_token: tokenAccess,
+              refresh_token: tokenRefresh,
+              user,
+            });
+            expect(store.getAccessToken).to.equal(tokenAccess);
+            expect(store.getRefreshToken).to.equal(tokenRefresh);
+            expect(store.getUser).to.deep.equal(user);
+            expect(store.getJwtExpiration).to.equal(1727208036);
+            expect(store.getTimeUntilExpiration()).to.equal(5217876);
+            expect(store.isJwtExpired()).to.equal(false);
+            // set time to when JWT should be expired + 1 second
+            clock.tick(5217876 * 1000 + 1000);
+            expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
+            expect(store.isJwtExpired()).to.equal(true);
           });
-          expect(store.getAccessToken).to.equal(tokenAccess);
-          expect(store.getRefreshToken).to.equal(tokenRefresh);
-          expect(store.getUser).to.deep.equal(user);
         });
       });
     });
