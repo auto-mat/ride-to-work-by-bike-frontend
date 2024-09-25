@@ -235,10 +235,10 @@ export const useLoginStore = defineStore('login', {
         if (expiration) {
           this.setJwtExpiration(expiration);
         }
-      }
 
-      // token refresh (if no page reload before expiration)
-      this.scheduleTokenRefresh();
+        // token refresh (if no page reload before expiration)
+        this.scheduleTokenRefresh();
+      }
 
       return data;
     },
