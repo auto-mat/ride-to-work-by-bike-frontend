@@ -122,6 +122,9 @@ export const useLoginStore = defineStore('login', {
         if (expiration) {
           this.setJwtExpiration(expiration);
         }
+
+        // token refresh (if no page reload before expiration)
+        this.scheduleTokenRefresh();
       }
       // set user
       if (data && data.user) {
@@ -233,6 +236,9 @@ export const useLoginStore = defineStore('login', {
           this.setJwtExpiration(expiration);
         }
       }
+
+      // token refresh (if no page reload before expiration)
+      this.scheduleTokenRefresh();
 
       return data;
     },
