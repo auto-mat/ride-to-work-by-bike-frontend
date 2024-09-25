@@ -48,13 +48,14 @@ export const emptyUser: User = {
 const { apiFetch } = useApi();
 
 export const useLoginStore = defineStore('login', {
+  // ! you have to manually enable persist (persist config below)
   state: () => ({
     // property set in pinia.js boot file
     $log: null as Logger | null,
-    user: emptyUser,
+    user: emptyUser as User, // persisted
     accessToken: '',
-    refreshToken: '',
-    jwtExpiration: null as number | null,
+    refreshToken: '', // persisted
+    jwtExpiration: null as number | null, // persisted
     refreshTokenTimeout: null as NodeJS.Timeout | null,
   }),
 
@@ -80,6 +81,12 @@ export const useLoginStore = defineStore('login', {
     },
     setRefreshTokenTimeout(timeout: NodeJS.Timeout | null): void {
       this.refreshTokenTimeout = timeout;
+    },
+    clearRefreshTokenTimeout(): void {
+      if (this.refreshTokenTimeout) {
+        clearTimeout(this.refreshTokenTimeout);
+        this.refreshTokenTimeout = null;
+      }
     },
     /**
      * Login user
@@ -145,7 +152,7 @@ export const useLoginStore = defineStore('login', {
       this.setAccessToken('');
       this.setRefreshToken('');
       this.setUser(emptyUser);
-      this.setRefreshTokenTimeout(null);
+      this.clearRefreshTokenTimeout();
     },
     /**
      * Schedule token refresh (on page load, if logged in)
@@ -182,8 +189,7 @@ export const useLoginStore = defineStore('login', {
      * @returns Promise<boolean> (token is valid)
      */
     async validateAccessToken(): Promise<boolean> {
-      const expiration = this.getJwtExpiration;
-      if (!expiration) {
+      if (!this.getJwtExpiration) {
         // no expiration set - user is not logged in
         this.logout();
         return false;
@@ -271,5 +277,7 @@ export const useLoginStore = defineStore('login', {
     },
   },
 
-  persist: true,
+  persist: {
+    pick: ['user', 'refreshToken', 'jwtExpiration'],
+  },
 });

@@ -28,9 +28,9 @@ export default boot(({ app }) => {
   });
   app.use(pinia);
 
-  // schedule token refresh
+  // refresh access token on each reload (as it is not persisted)
   const loginStore = useLoginStore();
-  if (loginStore.accessToken && loginStore.refreshToken) {
-    loginStore.scheduleTokenRefresh();
+  if (loginStore.refreshToken) {
+    loginStore.refreshTokens();
   }
 });
