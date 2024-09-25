@@ -1,6 +1,12 @@
 import { colors } from 'quasar';
 import ProfileQuestionnaires from 'components/profile/ProfileQuestionnaires.vue';
 import { i18n } from '../../boot/i18n';
+import {
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+} from '../../../test/cypress/support/commonTests';
 
 // colors
 const { getPaletteColor } = colors;
@@ -72,15 +78,27 @@ describe('<ProfileQuestionnaires>', () => {
         cy.dataCy(selectorQuestionnaireItem)
           .eq(index)
           .within(() => {
+            // link
             cy.dataCy(selectorQuestionnaireTitle).should(
               'contain',
               questionnaire.title,
             );
-
+            // link url
             cy.dataCy(selectorQuestionnaireButton)
               .should('have.attr', 'href', questionnaire.link.url)
               .and('have.attr', 'target', questionnaire.link.target);
-
+            // successful response from url
+            cy.request({
+              url: questionnaire.link.url,
+              failOnStatusCode: failOnStatusCode,
+            }).then((resp) => {
+              if (resp.status === httpTooManyRequestsStatus) {
+                cy.log(httpTooManyRequestsStatusMessage);
+                return;
+              }
+              expect(resp.status).to.eq(httpSuccessfullStatus);
+            });
+            // icon external link
             if (questionnaire.link.target === '_blank') {
               cy.dataCy(selectorQuestionnaireButtonIcon)
                 .should('be.visible')
