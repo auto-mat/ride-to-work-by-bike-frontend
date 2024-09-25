@@ -55,6 +55,7 @@ export const useLoginStore = defineStore('login', {
     accessToken: '',
     refreshToken: '',
     jwtExpiration: null as number | null,
+    refreshTokenTimeout: null as NodeJS.Timeout | null,
   }),
 
   getters: {
@@ -76,6 +77,9 @@ export const useLoginStore = defineStore('login', {
     },
     setJwtExpiration(expiration: number): void {
       this.jwtExpiration = expiration;
+    },
+    setRefreshTokenTimeout(timeout: NodeJS.Timeout | null): void {
+      this.refreshTokenTimeout = timeout;
     },
     /**
      * Login user
@@ -141,6 +145,7 @@ export const useLoginStore = defineStore('login', {
       this.setAccessToken('');
       this.setRefreshToken('');
       this.setUser(emptyUser);
+      this.setRefreshTokenTimeout(null);
     },
     /**
      * Schedule token refresh (on page load, if logged in)
@@ -154,9 +159,12 @@ export const useLoginStore = defineStore('login', {
         const refreshTime = (timeUntilExpiration - 60) * 1000;
 
         if (refreshTime > 0) {
-          setTimeout(() => {
-            this.refreshTokens();
-          }, refreshTime);
+          // store timeout in store so it can be cancelled on logout
+          this.setRefreshTokenTimeout(
+            setTimeout(() => {
+              this.refreshTokens();
+            }, refreshTime),
+          );
         } else {
           // token expired - refresh immediately
           this.refreshTokens();
@@ -244,6 +252,7 @@ export const useLoginStore = defineStore('login', {
     },
     /**
      * Calculates the time until JWT expiration.
+     * Action is used instead of getter to provide reactive value in tests.
      * @returns {number | null} Time in seconds until expiration.
      */
     getTimeUntilExpiration(): number | null {
@@ -252,6 +261,7 @@ export const useLoginStore = defineStore('login', {
     },
     /**
      * Checks if the JWT is expired.
+     * Action is used instead of getter to provide reactive value in tests.
      * @returns {boolean} True if expired, else false.
      */
     isJwtExpired(): boolean {
