@@ -4,24 +4,18 @@ import { Notify } from 'quasar';
 // composables
 import { i18n } from '../boot/i18n';
 
-/**
- * Interface representing the parts of a JWT token
- */
+// types
 interface JwtParts {
   header: string;
   payload: string;
   signature: string;
 }
 
-/**
- * Composable for JWT (JSON Web Token) operations
- * @returns {Object} Object with JWT utility functions
- */
 export const useJwt = () => {
   /**
    * Get JWT expiration time
    * @param {string} token - JWT token
-   * @returns {number | null} Expiration time in seconds or null if invalid
+   * @return {number | null} Expiration time in seconds or null if invalid
    */
   const readJwtExpiration = (token: string): number | null => {
     try {
@@ -56,9 +50,9 @@ export const useJwt = () => {
   };
 
   /**
-   * Parse JWT token into its constituent parts
+   * Parse JWT token into parts
    * @param {string} token - JWT token string
-   * @returns {JwtParts} Object containing header, payload, and signature parts of the token
+   * @return {JwtParts} Object (header, payload, signature) - token parts
    * @throws {Error} If the token format is invalid
    */
   const parseJwt = (token: string): JwtParts => {
@@ -76,7 +70,7 @@ export const useJwt = () => {
   /**
    * Decode JWT payload
    * @param {string} payload - Base64Url encoded JWT payload
-   * @returns {Record<string, unknown>} Decoded payload as a JavaScript object
+   * @return {Record<string, unknown>} Decoded payload as a JavaScript object
    */
   const decodePayload = (payload: string): Record<string, unknown> => {
     const jsonPayload = base64UrlDecode(payload);
@@ -86,7 +80,7 @@ export const useJwt = () => {
   /**
    * Decode a Base64Url encoded string
    * @param {string} str - Base64Url encoded string
-   * @returns {string} Decoded string
+   * @return {string} Decoded string
    */
   const base64UrlDecode = (str: string): string => {
     // replace URL-safe characters with Base64 standard characters
