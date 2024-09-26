@@ -4,11 +4,24 @@ import { Notify } from 'quasar';
 // composables
 import { i18n } from '../boot/i18n';
 
+/**
+ * Interface representing the parts of a JWT token
+ */
+interface JwtParts {
+  header: string;
+  payload: string;
+  signature: string;
+}
+
+/**
+ * Composable for JWT (JSON Web Token) operations
+ * @returns {Object} Object with JWT utility functions
+ */
 export const useJwt = () => {
   /**
-   * Get JWT expiration
-   * @param token - JWT token
-   * @returns - Expiration time in seconds or null
+   * Get JWT expiration time
+   * @param {string} token - JWT token
+   * @returns {number | null} Expiration time in seconds or null if invalid
    */
   const readJwtExpiration = (token: string): number | null => {
     try {
@@ -23,7 +36,7 @@ export const useJwt = () => {
         });
         return null;
       }
-      return expirationTime;
+      return expirationTime as number;
     } catch (error) {
       if (error instanceof Error) {
         Notify.create({
@@ -43,11 +56,12 @@ export const useJwt = () => {
   };
 
   /**
-   * Parse JWT token
-   * @param token - JWT token
-   * @returns - JWT parts (header, payload, signature)
+   * Parse JWT token into its constituent parts
+   * @param {string} token - JWT token string
+   * @returns {JwtParts} Object containing header, payload, and signature parts of the token
+   * @throws {Error} If the token format is invalid
    */
-  const parseJwt = (token: string) => {
+  const parseJwt = (token: string): JwtParts => {
     const parts = token.split('.');
     if (parts.length !== 3) {
       throw new Error('Invalid JWT token format');
@@ -59,15 +73,20 @@ export const useJwt = () => {
     };
   };
 
-  const decodePayload = (payload: string) => {
+  /**
+   * Decode JWT payload
+   * @param {string} payload - Base64Url encoded JWT payload
+   * @returns {Record<string, unknown>} Decoded payload as a JavaScript object
+   */
+  const decodePayload = (payload: string): Record<string, unknown> => {
     const jsonPayload = base64UrlDecode(payload);
-    return JSON.parse(jsonPayload);
+    return JSON.parse(jsonPayload) as Record<string, unknown>;
   };
 
   /**
-   * Base64 URL decode
-   * @param str - Base64 URL encoded string
-   * @returns - Decoded string
+   * Decode a Base64Url encoded string
+   * @param {string} str - Base64Url encoded string
+   * @returns {string} Decoded string
    */
   const base64UrlDecode = (str: string): string => {
     // replace URL-safe characters with Base64 standard characters
