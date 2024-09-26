@@ -3,6 +3,7 @@ import {
   testBackgroundImage,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
+import { httpSuccessfullStatus } from '../support/commonTests';
 
 describe('Login page', () => {
   context('desktop', () => {
@@ -138,6 +139,27 @@ describe('Login page', () => {
 
     // switching between languages can only be tested in E2E context
     testLanguageSwitcher();
+  });
+
+  context('login user flow', () => {
+    beforeEach(() => {
+      cy.visit('#' + routesConf['login']['path']);
+      cy.viewport('macbook-16');
+
+      // load clock, config and i18n objects as aliases
+      cy.clock().then((clock) => {
+        cy.wrap(clock).as('clock');
+      });
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
+    });
 
     it('renders form title', () => {
       cy.get('@i18n').then((i18n) => {
@@ -153,6 +175,33 @@ describe('Login page', () => {
               },
             );
           });
+      });
+    });
+
+    it('renders login form', () => {
+      cy.dataCy('form-login-email').should('be.visible');
+      cy.dataCy('form-login-password').should('be.visible');
+      cy.dataCy('form-login-forgotten-password').should('be.visible');
+      cy.dataCy('form-login-submit-login').should('be.visible');
+    });
+
+    it('shows a message on unsuccessful login', () => {
+      // set time to 24. Sep 2024 21:56:00
+      const testDate = new Date('2024-09-24T21:56:00Z');
+      clock.setSystemTime(testDate);
+
+      cy.get('@config').then((config) => {
+        const { apiBase, urlApiLogin } = config;
+        const apiLoginUrl = `${apiBase}${urlApiLogin}`;
+        // const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
+        cy.intercept('POST', apiLoginUrl, {
+          statusCode: httpSuccessfullStatus,
+          body: {
+            access_token: tokenAccess,
+            refresh_token: tokenRefresh,
+            user,
+          },
+        });
       });
     });
   });

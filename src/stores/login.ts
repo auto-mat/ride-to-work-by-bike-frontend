@@ -100,6 +100,7 @@ export const useLoginStore = defineStore('login', {
     async login(payload: LoginPayload): Promise<LoginResponse | null> {
       // check that email is set
       if (!payload.username) {
+        console.log('login.form.messageEmailReqired');
         Notify.create({
           message: i18n.global.t('login.form.messageEmailReqired'),
           color: 'negative',
@@ -163,7 +164,7 @@ export const useLoginStore = defineStore('login', {
       const timeUntilExpiration = this.getTimeUntilExpiration();
       if (timeUntilExpiration) {
         // refresh token 1 minute before expiration
-        const refreshTime = (timeUntilExpiration - 60) * 1000;
+        const refreshTime = timeUntilExpiration - 60;
 
         if (refreshTime > 0) {
           // store timeout in store so it can be cancelled on logout
@@ -262,8 +263,12 @@ export const useLoginStore = defineStore('login', {
      * @returns {number | null} Time in seconds until expiration.
      */
     getTimeUntilExpiration(): number | null {
-      const currentTime = Math.floor(Date.now() / 1000);
-      return this.jwtExpiration ? this.jwtExpiration - currentTime : null;
+      const currentTimeSeconds = Math.floor(Date.now());
+      console.log('currentTimeSeconds', currentTimeSeconds);
+      console.log('this.jwtExpiration', this.jwtExpiration);
+      return this.jwtExpiration
+        ? this.jwtExpiration - currentTimeSeconds
+        : null;
     },
     /**
      * Checks if the JWT is expired.
@@ -272,8 +277,8 @@ export const useLoginStore = defineStore('login', {
      */
     isJwtExpired(): boolean {
       const expiration = this.jwtExpiration;
-      const currentTime = Math.floor(Date.now() / 1000);
-      return !expiration || currentTime > expiration;
+      const currentTimeSeconds = Math.floor(Date.now());
+      return !expiration || currentTimeSeconds > expiration;
     },
   },
 

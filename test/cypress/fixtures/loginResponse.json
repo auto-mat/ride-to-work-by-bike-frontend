@@ -1,0 +1,11 @@
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjEwMTYzLCJqdGkiOiJiMzY5M2I1ZTU3OWE0MDZhOWUyNWE0ZTQ3YzFmMjQ4NiIsInVzZXJfaWQiOjE4OTc2MX0.jAfrS_1R2FnoNcZmYUEoOqPq7evNLP7KzPAOFmuHu88",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI5NjI2MywianRpIjoiNzYzNGIxYzBiYTdiNDQ0Zjk0ZTZmNTA5M2E1MDM3MDYiLCJ1c2VyX2lkIjoxODk3NjF9.6J_L4wVjPN3bKAOU-UcvxhrIBirqLVrgi5AZefsqrt0",
+  "user": {
+    "pk": 1,
+    "username": "foobar",
+    "email": "foo@bar.org",
+    "first_name": "Foo",
+    "last_name": "Bar"
+  }
+}

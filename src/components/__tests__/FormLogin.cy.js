@@ -29,23 +29,16 @@ const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
 const username = 'test@example.com';
 const password = 'example123';
 
-const tokenAccess =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjEwMTYzLCJqdGkiOiJiMzY5M2I1ZTU3OWE0MDZhOWUyNWE0ZTQ3YzFmMjQ4NiIsInVzZXJfaWQiOjE4OTc2MX0.jAfrS_1R2FnoNcZmYUEoOqPq7evNLP7KzPAOFmuHu88';
-const tokenAccessExpiration = 1727210163;
-const tokenAccessTimeUntilExpiration = 5220003;
-const tokenRefresh =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNzI5NjI2MywianRpIjoiNzYzNGIxYzBiYTdiNDQ0Zjk0ZTZmNTA5M2E1MDM3MDYiLCJ1c2VyX2lkIjoxODk3NjF9.6J_L4wVjPN3bKAOU-UcvxhrIBirqLVrgi5AZefsqrt0';
-const tokenAccessNew =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3MjEwMjYxLCJqdGkiOiIzYjRmNTMzNGRiZmE0OGRhOGQxZjU0YTg2NDA5NDA3MCIsInVzZXJfaWQiOjE4OTc2MX0.SD-Ltv7W68KY9xnJ8iJVuMlkwvg18SMRmnadj43dtgQ';
-const tokenAccessNewExpiration = '2024-09-16T11:46:48.551800';
-
-const user = {
-  pk: 1,
-  username: 'foobar',
-  email: 'foo@bar.org',
-  first_name: 'Foo',
-  last_name: 'Bar',
-};
+// Access token expiration time: Tuesday 24. September 2024 22:36:03
+const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
+// Refresh token expiration time: Tuesday 24. September 2024 22:37:41
+const fixtureTokenRefreshExpiration = new Date('2024-09-24T22:37:41');
+const fixtureTokenRefreshExpirationTime =
+  fixtureTokenRefreshExpiration.getTime() / 1000;
+const timeUntilRefresh = 60;
+const timeUntilExpiration = timeUntilRefresh * 2;
+const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min before JWT expires
 
 describe('<FormLogin>', () => {
   it('has translation for all strings', () => {
@@ -265,28 +258,17 @@ describe('<FormLogin>', () => {
         .should('be.visible')
         .and('contain', i18n.global.t('login.form.messagePasswordRequired'));
     });
-  });
-
-  context('desktop - login store', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.mount(FormLogin, {
-        props: {},
-      });
-      cy.viewport('macbook-16');
-      cy.clock().then((clock) => {
-        cy.wrap(clock).as('clock');
-      });
-    });
 
     it('allows to save tokens and user into store', () => {
-      const store = useLoginStore();
-      store.setAccessToken(tokenAccess);
-      store.setRefreshToken(tokenRefresh);
-      store.setUser(user);
-      expect(store.getAccessToken).to.equal(tokenAccess);
-      expect(store.getRefreshToken).to.equal(tokenRefresh);
-      expect(store.getUser).to.deep.equal(user);
+      cy.fixture('loginResponse.json').then((loginResponse) => {
+        const store = useLoginStore();
+        store.setAccessToken(loginResponse.access_token);
+        store.setRefreshToken(loginResponse.refresh_token);
+        store.setUser(loginResponse.user);
+        expect(store.getAccessToken).to.equal(loginResponse.access_token);
+        expect(store.getRefreshToken).to.equal(loginResponse.refresh_token);
+        expect(store.getUser).to.deep.equal(loginResponse.user);
+      });
     });
 
     it('shows error if login is called and username is not set', () => {
@@ -324,58 +306,6 @@ describe('<FormLogin>', () => {
       });
     });
 
-    it('calls API and set token on successful login', () => {
-      cy.get('@clock').then((clock) => {
-        // set time to 24. Sep 2024 21:56:00
-        clock.setSystemTime(1721990160000);
-        // intercept login API call
-        cy.intercept('POST', apiLoginUrl, {
-          statusCode: httpSuccessfullStatus,
-          body: {
-            access_token: tokenAccess,
-            refresh_token: tokenRefresh,
-            user,
-          },
-        }).then(() => {
-          const store = useLoginStore();
-          cy.wrap(store.login({ username, password })).then((response) => {
-            expect(response).to.deep.equal({
-              access_token: tokenAccess,
-              refresh_token: tokenRefresh,
-              user,
-            });
-            expect(store.getAccessToken).to.equal(tokenAccess);
-            expect(store.getRefreshToken).to.equal(tokenRefresh);
-            expect(store.getUser).to.deep.equal(user);
-            expect(store.getJwtExpiration).to.equal(tokenAccessExpiration);
-            expect(store.getTimeUntilExpiration()).to.equal(
-              tokenAccessTimeUntilExpiration,
-            );
-            expect(store.isJwtExpired()).to.equal(false);
-            // set time to when JWT should be expired + 1 second
-            clock.tick(tokenAccessTimeUntilExpiration * 1000 + 1000);
-            expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
-            expect(store.isJwtExpired()).to.equal(true);
-            // refresh tokens
-            cy.intercept('POST', apiRefreshUrl, {
-              statusCode: httpSuccessfullStatus,
-              body: {
-                access: tokenAccessNew,
-                access_token_expiration: tokenAccessNewExpiration,
-              },
-            }).then(() => {
-              cy.wrap(store.refreshTokens()).then(() => {
-                // new JWT
-                expect(store.getAccessToken).to.equal(tokenAccessNew);
-                // JWT not be expired
-                expect(store.isJwtExpired()).to.equal(false);
-              });
-            });
-          });
-        });
-      });
-    });
-
     it('calls API and shows error if login fails', () => {
       const store = useLoginStore();
       // intercept login API call
@@ -386,6 +316,134 @@ describe('<FormLogin>', () => {
           cy.get(classSelectorQNotificationMessage)
             .should('be.visible')
             .and('contain', i18n.global.t('login.apiMessageError'));
+        });
+      });
+    });
+  });
+
+  context('desktop - timed login', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormLogin, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+      cy.clock().then((clock) => {
+        cy.wrap(clock).as('clock');
+      });
+    });
+
+    it('performs login and sets token and expiration time', () => {
+      cy.fixture('loginResponse.json').then((loginResponse) => {
+        cy.get('@clock').then((clock) => {
+          // set time to Tuesday 24. September 2024 20:34:03 (2 min before JWT expires)
+          clock.setSystemTime(systemTime);
+          // intercept login API call
+          cy.intercept('POST', apiLoginUrl, {
+            statusCode: httpSuccessfullStatus,
+            body: loginResponse,
+          }).then(() => {
+            const store = useLoginStore();
+            cy.wrap(store.login({ username, password })).then((response) => {
+              expect(response).to.deep.equal(loginResponse);
+              expect(store.getAccessToken).to.equal(loginResponse.access_token);
+              expect(store.getRefreshToken).to.equal(
+                loginResponse.refresh_token,
+              );
+              expect(store.getUser).to.deep.equal(loginResponse.user);
+              expect(store.getJwtExpiration).to.equal(
+                fixtureTokenExpirationTime,
+              );
+              expect(store.getTimeUntilExpiration()).to.equal(
+                timeUntilExpiration,
+              );
+              expect(store.isJwtExpired()).to.equal(false);
+              cy.fixture('refreshTokensResponse.json').then(
+                (refreshTokensResponse) => {
+                  cy.intercept('POST', apiRefreshUrl, {
+                    statusCode: httpSuccessfullStatus,
+                    body: refreshTokensResponse,
+                  }).then(() => {
+                    // set time to when JWT should be expired + 1 second
+                    clock.tick(timeUntilExpiration + 1);
+                    expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
+                    expect(store.isJwtExpired()).to.equal(true);
+                    // refresh tokens
+                    cy.wrap(store.refreshTokens()).then(() => {
+                      // new JWT
+                      expect(store.getAccessToken).to.equal(
+                        refreshTokensResponse.access,
+                      );
+                      // JWT not be expired
+                      expect(store.isJwtExpired()).to.equal(false);
+                      expect(store.getJwtExpiration).to.equal(
+                        fixtureTokenRefreshExpirationTime,
+                      );
+                    });
+                  });
+                },
+              );
+            });
+          });
+        });
+      });
+    });
+
+    it('performs login and refreshes token 1 min before expiration', () => {
+      cy.fixture('loginResponse.json').then((loginResponse) => {
+        cy.get('@clock').then((clock) => {
+          // set time to Tuesday 24. September 2024 20:34:03 (2 min before JWT expires)
+          clock.setSystemTime(systemTime);
+          // intercept login API call
+          cy.intercept('POST', apiLoginUrl, {
+            statusCode: httpSuccessfullStatus,
+            body: loginResponse,
+          }).then(() => {
+            const store = useLoginStore();
+            cy.wrap(store.login({ username, password })).then((response) => {
+              expect(response).to.deep.equal(loginResponse);
+              expect(store.getAccessToken).to.equal(loginResponse.access_token);
+              expect(store.getRefreshToken).to.equal(
+                loginResponse.refresh_token,
+              );
+              expect(store.getUser).to.deep.equal(loginResponse.user);
+              expect(store.getJwtExpiration).to.equal(
+                fixtureTokenExpirationTime,
+              );
+              expect(store.getTimeUntilExpiration()).to.equal(
+                timeUntilExpiration,
+              );
+              expect(store.isJwtExpired()).to.equal(false);
+              cy.fixture('refreshTokensResponse.json').then(
+                (refreshTokensResponse) => {
+                  cy.intercept('POST', apiRefreshUrl, {
+                    statusCode: httpSuccessfullStatus,
+                    body: refreshTokensResponse,
+                  })
+                    .as('refreshTokens')
+                    .then(() => {
+                      // set time to when JWT should be expired + 1 second
+                      clock.tick(timeUntilExpiration);
+                      // intercepted function apiRefreshUrl should be called
+                      cy.wait('@refreshTokens')
+                        .its('response.statusCode')
+                        .should('eq', httpSuccessfullStatus)
+                        .then(() => {
+                          // new JWT
+                          expect(store.getAccessToken).to.equal(
+                            refreshTokensResponse.access,
+                          );
+                          // JWT not be expired
+                          expect(store.isJwtExpired()).to.equal(false);
+                          expect(store.getJwtExpiration).to.equal(
+                            fixtureTokenRefreshExpirationTime,
+                          );
+                        });
+                    });
+                },
+              );
+            });
+          });
         });
       });
     });
