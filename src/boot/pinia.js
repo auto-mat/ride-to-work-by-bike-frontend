@@ -18,13 +18,14 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
  * @see https://prazdevs.github.io/pinia-plugin-persistedstate/guide/limitations.html
  */
 
-export default boot(({ app }) => {
+export default boot(({ app, router }) => {
   const pinia = createPinia();
   // plugins
   pinia.use(piniaPluginPersistedstate);
   // make logger available in stores
   pinia.use(({ store }) => {
     store.$log = markRaw(app.config.globalProperties.$log);
+    store.$router = markRaw(router);
   });
   app.use(pinia);
 

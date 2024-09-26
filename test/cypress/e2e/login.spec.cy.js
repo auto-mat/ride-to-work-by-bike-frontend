@@ -5,6 +5,17 @@ import {
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
 
+// variables
+// access token expiration time: Tuesday 24. September 2024 22:36:03
+const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
+// refresh token expiration time: Tuesday 24. September 2024 22:37:41
+// const fixtureTokenRefreshExpiration = new Date('2024-09-24T22:37:41');
+// const fixtureTokenRefreshExpirationTime = fixtureTokenRefreshExpiration.getTime() / 1000;
+const timeUntilRefresh = 60;
+const timeUntilExpiration = timeUntilRefresh * 2;
+const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min before JWT expires
+
 describe('Login page', () => {
   context('desktop', () => {
     beforeEach(() => {
@@ -185,22 +196,62 @@ describe('Login page', () => {
       cy.dataCy('form-login-submit-login').should('be.visible');
     });
 
-    it('shows a message on unsuccessful login', () => {
-      // set time to 24. Sep 2024 21:56:00
-      const testDate = new Date('2024-09-24T21:56:00Z');
-      clock.setSystemTime(testDate);
+    it.only('allows user to login and refreshes token 1 min before expiration', () => {
+      cy.get('@clock').then((clock) => {
+        clock.setSystemTime(systemTime);
+        cy.get('@config').then((config) => {
+          const { apiBase, urlApiLogin, urlApiRefresh } = config;
+          const apiLoginUrl = `${apiBase}${urlApiLogin}`;
+          const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
 
-      cy.get('@config').then((config) => {
-        const { apiBase, urlApiLogin } = config;
-        const apiLoginUrl = `${apiBase}${urlApiLogin}`;
-        // const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
-        cy.intercept('POST', apiLoginUrl, {
-          statusCode: httpSuccessfullStatus,
-          body: {
-            access_token: tokenAccess,
-            refresh_token: tokenRefresh,
-            user,
-          },
+          cy.fixture('loginResponse.json').then((loginResponse) => {
+            // intercept API call
+            cy.intercept('POST', apiLoginUrl, {
+              statusCode: httpSuccessfullStatus,
+              body: loginResponse,
+            }).as('loginRequest');
+            // intercept refresh token API call
+            cy.fixture('refreshTokensResponse.json').then(
+              (refreshTokensResponse) => {
+                cy.intercept('POST', apiRefreshUrl, {
+                  statusCode: httpSuccessfullStatus,
+                  body: refreshTokensResponse,
+                }).as('refreshTokens');
+                // fill in form
+                cy.dataCy('form-login-email')
+                  .find('input')
+                  .type('test@example.com');
+                cy.dataCy('form-login-password')
+                  .find('input')
+                  .type('password123');
+                // submit form
+                cy.dataCy('form-login-submit-login').click();
+                // wait for login API call
+                cy.wait('@loginRequest').then(() => {
+                  // check that we are on homepage
+                  cy.testRoute(routesConf['home']['path']);
+                  // go to refresh time
+                  clock.tick(timeUntilExpiration);
+                  // refresh tokens should be called on load
+                  cy.wait('@refreshTokens').then((interception) => {
+                    expect(interception.response.statusCode).to.equal(
+                      httpSuccessfullStatus,
+                    );
+                  });
+                  // reload page
+                  cy.reload();
+                  // check that we are on homepage
+                  cy.testRoute(routesConf['home']['path']);
+                  // refresh tokens should be called on load
+                  cy.wait('@refreshTokens').then((interception) => {
+                    expect(interception.response.statusCode).to.equal(
+                      httpSuccessfullStatus,
+                    );
+                  });
+                });
+              },
+            );
+          });
         });
       });
     });

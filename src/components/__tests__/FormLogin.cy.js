@@ -29,10 +29,10 @@ const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
 const username = 'test@example.com';
 const password = 'example123';
 
-// Access token expiration time: Tuesday 24. September 2024 22:36:03
+// access token expiration time: Tuesday 24. September 2024 22:36:03
 const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
 const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
-// Refresh token expiration time: Tuesday 24. September 2024 22:37:41
+// refresh token expiration time: Tuesday 24. September 2024 22:37:41
 const fixtureTokenRefreshExpiration = new Date('2024-09-24T22:37:41');
 const fixtureTokenRefreshExpirationTime =
   fixtureTokenRefreshExpiration.getTime() / 1000;
@@ -42,7 +42,7 @@ const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min be
 
 describe('<FormLogin>', () => {
   it('has translation for all strings', () => {
-    // Not testing form labels since they are the same in all languages
+    // not testing form labels since they are the same in all languages
     cy.testLanguageStringsInContext(
       [
         'titleLogin',
@@ -416,6 +416,7 @@ describe('<FormLogin>', () => {
               expect(store.isJwtExpired()).to.equal(false);
               cy.fixture('refreshTokensResponse.json').then(
                 (refreshTokensResponse) => {
+                  // intercept refresh token API call
                   cy.intercept('POST', apiRefreshUrl, {
                     statusCode: httpSuccessfullStatus,
                     body: refreshTokensResponse,

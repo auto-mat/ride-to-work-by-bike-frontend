@@ -1,6 +1,7 @@
 // libraries
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
+import { Router } from 'vue-router';
 
 // composables
 import { i18n } from '../boot/i18n';
@@ -9,9 +10,16 @@ import { useJwt } from '../composables/useJwt';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
+import { routesConf } from '../router/routes_conf';
 
 // types
 import type { Logger } from '../components/types/Logger';
+
+declare module 'pinia' {
+  export interface PiniaCustomProperties {
+    $router: Router;
+  }
+}
 
 interface LoginPayload {
   username: string;
@@ -123,6 +131,10 @@ export const useLoginStore = defineStore('login', {
         translationKey: 'login',
         logger: this.$log,
       });
+      // set user
+      if (data && data.user) {
+        this.setUser(data.user);
+      }
       // set tokens
       if (data && data.access_token && data.refresh_token) {
         this.setAccessToken(data.access_token);
@@ -137,10 +149,8 @@ export const useLoginStore = defineStore('login', {
 
         // token refresh (if no page reload before expiration)
         this.scheduleTokenRefresh();
-      }
-      // set user
-      if (data && data.user) {
-        this.setUser(data.user);
+
+        this.$router.push(routesConf['home']['path']);
       }
 
       return data;
@@ -264,8 +274,6 @@ export const useLoginStore = defineStore('login', {
      */
     getTimeUntilExpiration(): number | null {
       const currentTimeSeconds = Math.floor(Date.now());
-      console.log('currentTimeSeconds', currentTimeSeconds);
-      console.log('this.jwtExpiration', this.jwtExpiration);
       return this.jwtExpiration
         ? this.jwtExpiration - currentTimeSeconds
         : null;
