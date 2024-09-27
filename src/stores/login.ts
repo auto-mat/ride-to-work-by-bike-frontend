@@ -108,7 +108,6 @@ export const useLoginStore = defineStore('login', {
     async login(payload: LoginPayload): Promise<LoginResponse | null> {
       // check that email is set
       if (!payload.username) {
-        console.log('login.form.messageEmailReqired');
         Notify.create({
           message: i18n.global.t('login.form.messageEmailReqired'),
           color: 'negative',
@@ -150,7 +149,9 @@ export const useLoginStore = defineStore('login', {
         // token refresh (if no page reload before expiration)
         this.scheduleTokenRefresh();
 
-        this.$router.push(routesConf['home']['path']);
+        if (this.$router) {
+          this.$router.push(routesConf['home']['path']);
+        }
       }
 
       return data;
