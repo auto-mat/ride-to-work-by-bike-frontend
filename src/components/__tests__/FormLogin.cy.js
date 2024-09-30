@@ -30,10 +30,10 @@ const username = 'test@example.com';
 const password = 'example123';
 
 // access token expiration time: Tuesday 24. September 2024 22:36:03
-const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpiration = new Date('2024-09-24T20:36:03Z');
 const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
 // refresh token expiration time: Tuesday 24. September 2024 22:37:41
-const fixtureTokenRefreshExpiration = new Date('2024-09-24T22:37:41');
+const fixtureTokenRefreshExpiration = new Date('2024-09-24T20:37:41Z');
 const fixtureTokenRefreshExpirationTime =
   fixtureTokenRefreshExpiration.getTime() / 1000;
 const timeUntilRefresh = 60;
