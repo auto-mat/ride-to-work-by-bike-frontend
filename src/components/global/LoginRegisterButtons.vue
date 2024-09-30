@@ -21,7 +21,8 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28817&mode=dev)
  */
 
-import { defineComponent } from 'vue';
+import { useQuasar } from 'quasar';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'LoginRegisterButtons',
@@ -31,42 +32,75 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    const profile = ref<{ id: string; name: string; email: string } | null>(
+      null,
+    );
+    const $q = useQuasar();
+
+    const signInWithGoogle = async () => {
+      try {
+        // @ts-expect-error - find a way to extend the type of $q
+        const googleUser = await $q.gAuth.signIn();
+        const basicProfile = googleUser.getBasicProfile();
+
+        profile.value = {
+          id: basicProfile.getId(),
+          name: basicProfile.getName(),
+          email: basicProfile.getEmail(),
+        };
+
+        // You can send the token to your backend if needed
+        const token = googleUser.getAuthResponse().id_token;
+        console.log('Token:', token);
+      } catch (error) {
+        console.error('Error during Google sign-in:', error);
+      }
+    };
+
+    return {
+      signInWithGoogle,
+      profile,
+    };
+  },
 });
 </script>
 
 <template>
   <div>
     <!-- Button: Login Google -->
-    <q-btn
-      unelevated
-      rounded
-      outline
-      color="primary"
-      class="full-width"
-      data-cy="login-register-button-google"
-    >
-      <!-- Icon -->
-      <q-icon
-        name="fab fa-google"
-        size="18px"
-        color="primary"
-        class="q-mr-sm"
-        data-cy="login-register-button-google-icon"
-      />
-      <!-- Label -->
-      <span v-if="variant === 'login'">{{
-        $t('login.buttons.buttonGoogle')
-      }}</span>
-      <span v-else-if="variant === 'register'">{{
-        $t('register.buttons.buttonGoogle')
-      }}</span>
-    </q-btn>
+    <GoogleLogin :callback="signInWithGoogle" class="full-width">
+      <q-btn
+        unelevated
+        rounded
+        outline
+        color="white"
+        class="full-width"
+        data-cy="login-register-button-google"
+      >
+        <!-- Icon -->
+        <q-icon
+          name="fab fa-google"
+          size="18px"
+          color="white"
+          class="q-mr-sm"
+          data-cy="login-register-button-google-icon"
+        />
+        <!-- Label -->
+        <span v-if="variant === 'login'">{{
+          $t('login.buttons.buttonGoogle')
+        }}</span>
+        <span v-else-if="variant === 'register'">{{
+          $t('register.buttons.buttonGoogle')
+        }}</span>
+      </q-btn>
+    </GoogleLogin>
     <!-- Button: Login Facebook -->
     <q-btn
       unelevated
       rounded
       outline
-      color="primary"
+      color="white"
       class="full-width q-mt-md"
       data-cy="login-register-button-facebook"
     >
@@ -74,7 +108,7 @@ export default defineComponent({
       <q-icon
         name="facebook"
         size="24px"
-        color="primary"
+        color="white"
         class="q-mr-sm"
         data-cy="login-register-button-facebook-icon"
       />

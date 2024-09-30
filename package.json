@@ -91,6 +91,7 @@
     "vue": "^3.0.0",
     "vue-i18n": "^10.0.0",
     "vue-router": "^4.0.0",
+    "vue3-google-login": "^2.0.33",
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
