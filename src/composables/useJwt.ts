@@ -58,7 +58,7 @@ export const useJwt = () => {
   const parseJwt = (token: string): JwtParts => {
     const parts = token.split('.');
     if (parts.length !== 3) {
-      throw new Error('Invalid JWT token format');
+      throw new Error(i18n.global.t('refreshTokens.messageJwtInvalidFormat'));
     }
     return {
       header: parts[0],

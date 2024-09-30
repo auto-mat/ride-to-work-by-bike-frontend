@@ -520,6 +520,7 @@ apiMessageError = "Failed to refresh login token."
 apiMessageErrorWithMessage = "Failed to refresh login token. Error: {error}"
 messageJwtInvalid = "Failed to read login token."
 messageJwtInvalidExpiration = "Error: login token is invalid."
+messageJwtInvalidFormat = "Error: invalid login token format."
 messageJwtInvalidWithMessage = "Failed to read login token. Error: {error}"
 
 [register.form]

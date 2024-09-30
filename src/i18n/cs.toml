@@ -523,6 +523,7 @@ apiMessageError = "Obnovení přihlašovacího tokenu se nezdařilo."
 apiMessageErrorWithMessage = "Obnovení přihlašovacího tokenu se nezdařilo. Chyba: {error}"
 messageJwtInvalid = "Nepodařilo se přečíst přihlašovací token."
 messageJwtInvalidExpiration = "Chyba: přihlašovací token nemá platnost."
+messageJwtInvalidFormat = "Chyba: neplatný formát přihlašovacího tokenu."
 messageJwtInvalidWithMessage = "Nepodařilo se přečíst přihlašovací token. Chyba: {error}"
 
 [register.form]
