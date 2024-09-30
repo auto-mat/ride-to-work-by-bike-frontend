@@ -33,14 +33,14 @@ export default defineComponent({
   <div v-if="$slots.default || $slots.perex" data-cy="section-heading">
     <h2
       v-if="$slots.default"
-      class="text-h6 text-black q-my-none"
+      class="text-h5 text-weight-bold text-grey-10 q-my-none"
       data-cy="section-heading-title"
     >
       <slot />
     </h2>
     <div
       v-if="$slots.perex"
-      class="q-mt-md text-subtitle2 text-weight-regular text-black"
+      class="q-mt-md text-subtitle2 text-weight-regular text-grey-10"
       data-cy="section-heading-perex"
     >
       <slot name="perex"></slot>
