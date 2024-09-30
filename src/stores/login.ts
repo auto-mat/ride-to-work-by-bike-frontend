@@ -14,6 +14,7 @@ import { routesConf } from '../router/routes_conf';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type { UserLogin } from '../components/types/User';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {
@@ -29,15 +30,7 @@ interface LoginPayload {
 interface LoginResponse {
   access: string;
   refresh: string;
-  user: User;
-}
-
-interface User {
-  pk: number;
-  username: string;
-  email: string;
-  first_name: string;
-  last_name: string;
+  user: UserLogin;
 }
 
 interface RefreshTokenResponse {
@@ -45,7 +38,7 @@ interface RefreshTokenResponse {
   access_expiration: string;
 }
 
-export const emptyUser: User = {
+export const emptyUser: UserLogin = {
   email: '',
   first_name: '',
   last_name: '',
@@ -60,7 +53,7 @@ export const useLoginStore = defineStore('login', {
   state: () => ({
     // property set in pinia.js boot file
     $log: null as Logger | null,
-    user: emptyUser as User, // persisted
+    user: emptyUser as UserLogin, // persisted
     accessToken: '',
     refreshToken: '', // persisted
     jwtExpiration: null as number | null, // persisted
@@ -68,14 +61,14 @@ export const useLoginStore = defineStore('login', {
   }),
 
   getters: {
-    getUser: (state): User => state.user,
+    getUser: (state): UserLogin => state.user,
     getAccessToken: (state): string => state.accessToken,
     getRefreshToken: (state): string => state.refreshToken,
     getJwtExpiration: (state): number | null => state.jwtExpiration,
   },
 
   actions: {
-    setUser(user: User): void {
+    setUser(user: UserLogin): void {
       Object.assign(this.user, user);
     },
     setAccessToken(token: string): void {

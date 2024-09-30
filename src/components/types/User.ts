@@ -6,3 +6,11 @@ export interface User {
   value: string;
   image: Image;
 }
+
+export interface UserLogin {
+  pk: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
