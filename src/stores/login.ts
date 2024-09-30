@@ -131,10 +131,13 @@ export const useLoginStore = defineStore('login', {
       if (data && data.access && data.refresh) {
         this.setAccessToken(data.access);
         this.setRefreshToken(data.refresh);
+        this.$log?.info(`login - saved access: ${this.getAccessToken}`);
+        this.$log?.info(`login - saved refresh: ${this.getRefreshToken}`);
 
         // set JWT expiration
         const { readJwtExpiration } = useJwt();
         const expiration = readJwtExpiration(data.access);
+        this.$log?.info(`login - expiration: ${expiration}`);
         if (expiration) {
           this.setJwtExpiration(expiration);
         }
@@ -167,10 +170,16 @@ export const useLoginStore = defineStore('login', {
     scheduleTokenRefresh() {
       const timeUntilExpiration = this.getTimeUntilExpiration();
       if (timeUntilExpiration) {
+        this.$log?.info(
+          `scheduleTokenRefresh - timeUntilExpiration: ${timeUntilExpiration}`,
+        );
         // refresh token 1 minute before expiration
         const refreshTime = timeUntilExpiration - 60;
 
         if (refreshTime > 0) {
+          this.$log?.info(
+            `scheduleTokenRefresh - refreshTime (timeout): ${refreshTime}`,
+          );
           // store timeout in store so it can be cancelled on logout
           this.setRefreshTokenTimeout(
             setTimeout(() => {
@@ -268,8 +277,14 @@ export const useLoginStore = defineStore('login', {
      */
     getTimeUntilExpiration(): number | null {
       const currentTimeSeconds = Math.floor(Date.now());
-      return this.jwtExpiration
-        ? this.jwtExpiration - currentTimeSeconds
+      this.$log?.info(
+        `getTimeUntilExpiration - currentTimeSeconds: ${currentTimeSeconds}`,
+      );
+      this.$log?.info(
+        `getTimeUntilExpiration - getJwtExpiration: ${this.getJwtExpiration}`,
+      );
+      return this.getJwtExpiration
+        ? this.getJwtExpiration - currentTimeSeconds
         : null;
     },
     /**
