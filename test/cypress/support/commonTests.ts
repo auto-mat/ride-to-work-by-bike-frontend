@@ -148,7 +148,7 @@ export const testUserSelect = (selector: string): void => {
     ];
 
     cy.dataCy(selector).within(() => {
-      cy.dataCy(selectorUserSelectInput).click();
+      cy.dataCy(selectorUserSelectInput).should('be.visible').click();
     });
     cy.get(classSelectorMenu)
       .should('be.visible')
