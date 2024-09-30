@@ -21,8 +21,10 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28817&mode=dev)
  */
 
-import { useQuasar } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, inject } from 'vue';
+
+// types
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'LoginRegisterButtons',
@@ -33,34 +35,18 @@ export default defineComponent({
     },
   },
   setup() {
-    const profile = ref<{ id: string; name: string; email: string } | null>(
-      null,
-    );
-    const $q = useQuasar();
+    const logger: Logger | undefined = inject('vuejs3-logger');
 
-    const signInWithGoogle = async () => {
-      try {
-        // @ts-expect-error - find a way to extend the type of $q
-        const googleUser = await $q.gAuth.signIn();
-        const basicProfile = googleUser.getBasicProfile();
-
-        profile.value = {
-          id: basicProfile.getId(),
-          name: basicProfile.getName(),
-          email: basicProfile.getEmail(),
-        };
-
-        // You can send the token to your backend if needed
-        const token = googleUser.getAuthResponse().id_token;
-        console.log('Token:', token);
-      } catch (error) {
-        console.error('Error during Google sign-in:', error);
+    // @ts-expect-error: response is not typed
+    const loginCallback = (response) => {
+      if (logger) {
+        logger.debug(`loginCallback - response: ${JSON.stringify(response)}`);
       }
+      // TODO: use login store to run functions based on the response data
     };
 
     return {
-      signInWithGoogle,
-      profile,
+      loginCallback,
     };
   },
 });
@@ -69,7 +55,7 @@ export default defineComponent({
 <template>
   <div>
     <!-- Button: Login Google -->
-    <GoogleLogin :callback="signInWithGoogle" class="full-width">
+    <GoogleLogin :callback="loginCallback" class="full-width">
       <q-btn
         unelevated
         rounded

@@ -7,3 +7,11 @@
 //  this declaration also apply `quasar` own
 //  augmentations (eg. adds `$q` into Vue component context)
 /// <reference types="@quasar/app-vite" />
+
+import GoogleAuth from 'vue3-google-login';
+
+declare module 'quasar' {
+  interface QVueGlobals {
+    gAuth: typeof GoogleAuth; // Adding gAuth to the Quasar context
+  }
+}
