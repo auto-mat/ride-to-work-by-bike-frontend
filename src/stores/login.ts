@@ -42,7 +42,7 @@ interface User {
 
 interface RefreshTokenResponse {
   access: string;
-  access_token_expiration: string;
+  access_expiration: string;
 }
 
 export const emptyUser: User = {
