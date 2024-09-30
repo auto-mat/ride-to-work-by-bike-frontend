@@ -3,6 +3,7 @@ import ProfileDetails from 'components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { PaymentState } from '../../../src/components/types/Profile';
 
+// colors
 const { getPaletteColor } = colors;
 const green = getPaletteColor('green');
 const red = getPaletteColor('red');
