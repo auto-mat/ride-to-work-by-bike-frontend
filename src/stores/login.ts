@@ -27,8 +27,8 @@ interface LoginPayload {
 }
 
 interface LoginResponse {
-  access_token: string;
-  refresh_token: string;
+  access: string;
+  refresh: string;
   user: User;
 }
 
@@ -135,13 +135,13 @@ export const useLoginStore = defineStore('login', {
         this.setUser(data.user);
       }
       // set tokens
-      if (data && data.access_token && data.refresh_token) {
-        this.setAccessToken(data.access_token);
-        this.setRefreshToken(data.refresh_token);
+      if (data && data.access && data.refresh) {
+        this.setAccessToken(data.access);
+        this.setRefreshToken(data.refresh);
 
         // set JWT expiration
         const { readJwtExpiration } = useJwt();
-        const expiration = readJwtExpiration(data.access_token);
+        const expiration = readJwtExpiration(data.access);
         if (expiration) {
           this.setJwtExpiration(expiration);
         }

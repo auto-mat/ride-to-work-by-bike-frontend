@@ -262,11 +262,11 @@ describe('<FormLogin>', () => {
     it('allows to save tokens and user into store', () => {
       cy.fixture('loginResponse.json').then((loginResponse) => {
         const store = useLoginStore();
-        store.setAccessToken(loginResponse.access_token);
-        store.setRefreshToken(loginResponse.refresh_token);
+        store.setAccessToken(loginResponse.access);
+        store.setRefreshToken(loginResponse.refresh);
         store.setUser(loginResponse.user);
-        expect(store.getAccessToken).to.equal(loginResponse.access_token);
-        expect(store.getRefreshToken).to.equal(loginResponse.refresh_token);
+        expect(store.getAccessToken).to.equal(loginResponse.access);
+        expect(store.getRefreshToken).to.equal(loginResponse.refresh);
         expect(store.getUser).to.deep.equal(loginResponse.user);
       });
     });
@@ -347,8 +347,8 @@ describe('<FormLogin>', () => {
           const store = useLoginStore();
           cy.wrap(store.login({ username, password })).then((response) => {
             expect(response).to.deep.equal(loginResponse);
-            expect(store.getAccessToken).to.equal(loginResponse.access_token);
-            expect(store.getRefreshToken).to.equal(loginResponse.refresh_token);
+            expect(store.getAccessToken).to.equal(loginResponse.access);
+            expect(store.getRefreshToken).to.equal(loginResponse.refresh);
             expect(store.getUser).to.deep.equal(loginResponse.user);
             expect(store.getJwtExpiration).to.equal(fixtureTokenExpirationTime);
             expect(store.getTimeUntilExpiration()).to.equal(
@@ -395,8 +395,8 @@ describe('<FormLogin>', () => {
           const store = useLoginStore();
           cy.wrap(store.login({ username, password })).then((response) => {
             expect(response).to.deep.equal(loginResponse);
-            expect(store.getAccessToken).to.equal(loginResponse.access_token);
-            expect(store.getRefreshToken).to.equal(loginResponse.refresh_token);
+            expect(store.getAccessToken).to.equal(loginResponse.access);
+            expect(store.getRefreshToken).to.equal(loginResponse.refresh);
             expect(store.getUser).to.deep.equal(loginResponse.user);
             expect(store.getJwtExpiration).to.equal(fixtureTokenExpirationTime);
             expect(store.getTimeUntilExpiration()).to.equal(
