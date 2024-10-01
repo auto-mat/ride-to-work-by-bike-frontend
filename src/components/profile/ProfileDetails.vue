@@ -13,6 +13,7 @@
  * - `FormUpdateGender`: Component to render a form for updating gender.
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
  * - `LanguageSwitcher`: Component to render a language switcher.
+ * - `SectionHeading`: Component to render a section heading.
  *
  * @example
  * <profile-details />

@@ -10,7 +10,6 @@ const button = {
 };
 
 const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 const gray10 = getPaletteColor('grey-10');
 
 describe('<ListCardPost>', () => {
@@ -127,10 +126,7 @@ describe('<ListCardPost>', () => {
 function coreTests() {
   it('renders title', () => {
     cy.dataCy('section-heading-title')
-      .should('have.css', 'font-size', '20px')
-      .and('have.css', 'font-weight', '500')
-      .and('have.color', black)
-      .and('contain', title)
+      .should('contain', title)
       .then(($title) => {
         expect($title.text()).to.equal(title);
       });

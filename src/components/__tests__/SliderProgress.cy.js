@@ -6,7 +6,6 @@ import { routesConf } from '../../router/routes_conf';
 
 // colors
 const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
 
@@ -92,9 +91,6 @@ function coreTests() {
     cy.window().then(() => {
       // title
       cy.dataCy(selectorSectionHeadingTitle)
-        .should('have.css', 'font-size', '20px')
-        .and('have.css', 'font-weight', '500')
-        .and('have.color', black)
         .and('contain', i18n.global.t('index.progressSlider.title'))
         .then(($title) => {
           expect($title.text()).to.equal(

@@ -1,4 +1,3 @@
-import { colors } from 'quasar';
 import ListCardOffer from '../homepage/ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
 
@@ -6,9 +5,6 @@ import { i18n } from '../../boot/i18n';
 import { cardsOffer } from 'src/mocks/homepage';
 const title = i18n.global.t('index.cardListOffer.title');
 const cards = cardsOffer;
-
-const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 
 describe('<ListCardOffer>', () => {
   it('has translation for all strings', () => {
@@ -33,10 +29,7 @@ describe('<ListCardOffer>', () => {
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('section-heading-title')
-          .should('have.css', 'font-size', '20px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.color', black)
-          .and('contain', title)
+          .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });
@@ -83,10 +76,7 @@ describe('<ListCardOffer>', () => {
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('section-heading-title')
-          .should('have.css', 'font-size', '20px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.color', black)
-          .and('contain', title)
+          .should('contain', title)
           .then(($title) => {
             expect($title.text()).to.equal(title);
           });

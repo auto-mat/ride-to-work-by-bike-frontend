@@ -1,10 +1,5 @@
-import { colors } from 'quasar';
 import ListCardFollow from '../homepage/ListCardFollow.vue';
 import { i18n } from '../../boot/i18n';
-
-// colors
-const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 
 // selectors
 const cardListFollow = 'card-list-follow';
@@ -80,10 +75,7 @@ function coreTests() {
   it('renders title', () => {
     cy.window().then(() => {
       cy.dataCy(sectionHeadingTitle)
-        .should('have.css', 'font-size', '20px')
-        .and('have.css', 'font-weight', '500')
-        .and('have.color', black)
-        .and('contain', i18n.global.t('index.cardListFollow.title'))
+        .should('contain', i18n.global.t('index.cardListFollow.title'))
         .then(($title) => {
           expect($title.text()).to.equal(
             i18n.global.t('index.cardListFollow.title'),

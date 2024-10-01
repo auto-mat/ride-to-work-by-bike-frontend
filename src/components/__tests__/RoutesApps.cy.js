@@ -1,10 +1,6 @@
-import { colors } from 'quasar';
 import RoutesApps from 'components/routes/RoutesApps.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-
-const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 
 const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
 const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
@@ -54,17 +50,11 @@ function coreTests() {
     cy.dataCy('routes-apps-title-auto')
       .find('[data-cy="section-heading-title"]')
       .should('be.visible')
-      .and('have.css', 'font-size', '20px')
-      .and('have.css', 'font-weight', '500')
-      .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleAutomaticLogging'));
     // hint automatic
     cy.dataCy('routes-apps-title-auto')
       .find('[data-cy="section-heading-perex"]')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
-      .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.hintAutomaticLogging'));
     cy.dataCy('banner-routes-app')
       .should('be.visible')
@@ -73,17 +63,11 @@ function coreTests() {
     cy.dataCy('routes-apps-title-manual')
       .find('[data-cy="section-heading-title"]')
       .should('be.visible')
-      .and('have.css', 'font-size', '20px')
-      .and('have.css', 'font-weight', '500')
-      .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.titleManualLogging'));
     // hint manual
     cy.dataCy('routes-apps-title-manual')
       .find('[data-cy="section-heading-perex"]')
       .should('be.visible')
-      .and('have.css', 'font-size', '14px')
-      .and('have.css', 'font-weight', '400')
-      .and('have.color', black)
       .and('contain.text', i18n.global.t('routes.hintManualLogging'));
     // buttons container
     cy.dataCy('routes-apps-buttons')

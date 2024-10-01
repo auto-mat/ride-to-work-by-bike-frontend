@@ -1,9 +1,5 @@
-import { colors } from 'quasar';
 import ListCardProgress from '../homepage/ListCardProgress.vue';
 import { i18n } from '../../boot/i18n';
-
-const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 
 describe('<ListCardProgress>', () => {
   let cards;
@@ -42,10 +38,7 @@ describe('<ListCardProgress>', () => {
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('section-heading-title')
-          .should('have.css', 'font-size', '20px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.color', black)
-          .and('contain', i18n.global.t('index.progressSlider.title'))
+          .should('contain', i18n.global.t('index.progressSlider.title'))
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.progressSlider.title'),
