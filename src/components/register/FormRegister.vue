@@ -25,15 +25,26 @@
  */
 
 // libraries
-import { defineComponent, ref, reactive } from 'vue';
+import { defineComponent, inject, ref, reactive } from 'vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useApi } from '../../composables/useApi';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
+
+// types
+import type { Logger } from '../types/Logger';
+
+interface RegisterResponse {
+  email: string;
+}
 
 export default defineComponent({
   name: 'FormRegister',
@@ -49,14 +60,54 @@ export default defineComponent({
       passwordConfirm: '',
     });
 
+    const logger = inject('vue3-logger') as Logger;
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
 
-    const onSubmitRegister = () => {
-      // noop
+    const { apiFetch } = useApi();
+    const router = useRouter();
+    const $q = useQuasar();
+
+    const onSubmitRegister = async (): Promise<void> => {
+      // fields are already validated in the QForm
+      try {
+        const response = await apiFetch<RegisterResponse>({
+          endpoint: rideToWorkByBikeConfig.urlApiRegister,
+          method: 'post',
+          payload: {
+            email: formRegister.email,
+            password: formRegister.password,
+          },
+          translationKey: 'register',
+          logger: logger as Logger,
+        });
+
+        if (response.data?.email) {
+          $q.notify({
+            color: 'positive',
+            message: i18n.global.t('register.form.messageSuccess', {
+              email: response.data.email,
+            }),
+          });
+          // redirect to login page
+          router.push({ name: 'login' });
+        }
+      } catch (error) {
+        logger.debug(JSON.stringify(error));
+        $q.notify({
+          color: 'negative',
+          message: i18n.global.t('register.form.messageError'),
+        });
+      }
+    };
+
+    const onReset = (): void => {
+      formRegister.email = '';
+      formRegister.password = '';
+      formRegister.passwordConfirm = '';
     };
 
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
@@ -73,6 +124,7 @@ export default defineComponent({
       isIdentical,
       isStrongPassword,
       onSubmitRegister,
+      onReset,
     };
   },
 });
@@ -87,7 +139,7 @@ export default defineComponent({
       </h1>
     </div>
     <!-- Form: register -->
-    <q-form @submit.prevent="onSubmitRegister">
+    <q-form @submit.prevent="onSubmitRegister" @reset="onReset">
       <!-- Input: email -->
       <form-field-email
         dark

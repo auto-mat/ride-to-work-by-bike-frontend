@@ -44,6 +44,7 @@ export interface ConfigGlobal {
   apiDefaultLang: string;
   urlApiLogin: string;
   urlApiRefresh: string;
+  urlApiRegister: string;
   urlLoginRegisterBackgroundImage: string;
 }
 

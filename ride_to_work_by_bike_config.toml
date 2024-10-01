@@ -74,3 +74,4 @@ apiDefaultLang = "cs"
 
 urlApiLogin = "auth/login/"
 urlApiRefresh = "auth/token/refresh/"
+urlApiRegister = "auth/register/"

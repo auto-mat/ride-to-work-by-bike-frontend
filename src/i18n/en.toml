@@ -523,6 +523,11 @@ messageJwtInvalidExpiration = "Error: login token is invalid."
 messageJwtInvalidFormat = "Error: invalid login token format."
 messageJwtInvalidWithMessage = "Failed to read login token. Error: {error}"
 
+[register]
+apiMessageError = "Registration failed. Please try again later. {error}"
+apiMessageErrorWithMessage = "Registration failed. Please try again later. Error: {error}"
+apiMessageSuccess = "Registration was successful"
+
 [register.form]
 titleRegister = "Registration"
 labelEmail = "E-mail"
