@@ -79,13 +79,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="text-grey-10" data-cy="form-register">
+  <div class="text-white" data-cy="form-register">
     <!-- Heading -->
     <div class="q-my-lg">
-      <h1
-        class="text-h5 text-grey-10 text-bold q-my-none"
-        data-cy="form-register-title"
-      >
+      <h1 class="text-h5 text-bold q-my-none" data-cy="form-register-title">
         {{ $t('register.form.titleRegister') }}
       </h1>
     </div>
@@ -93,6 +90,7 @@ export default defineComponent({
     <q-form @submit.prevent="onSubmitRegister">
       <!-- Input: email -->
       <form-field-email
+        dark
         v-model="formRegister.email"
         bg-color="white"
         data-cy="form-register-email"
@@ -105,6 +103,7 @@ export default defineComponent({
         </label>
         <!-- Input -->
         <q-input
+          dark
           dense
           outlined
           hide-bottom-space
@@ -148,6 +147,7 @@ export default defineComponent({
         </label>
         <!-- Input -->
         <q-input
+          dark
           dense
           outlined
           hide-bottom-space
@@ -186,7 +186,8 @@ export default defineComponent({
         rounded
         class="full-width"
         type="submit"
-        color="primary q-mt-lg"
+        color="secondary q-mt-lg"
+        text-color="primary"
         :label="$t('register.form.submitRegister')"
         data-cy="form-register-submit"
       />

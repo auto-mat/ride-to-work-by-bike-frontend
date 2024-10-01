@@ -31,6 +31,10 @@ import { useValidation } from 'src/composables/useValidation';
 export default defineComponent({
   name: 'FormFieldEmail',
   props: {
+    dark: {
+      type: Boolean,
+      default: false,
+    },
     modelValue: {
       type: String,
       required: true,
@@ -76,6 +80,7 @@ export default defineComponent({
     <q-input
       dense
       outlined
+      :dark="dark"
       v-model="email"
       :lazy-rules="!testing"
       :rules="[
