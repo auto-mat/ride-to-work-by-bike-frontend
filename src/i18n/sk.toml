@@ -524,7 +524,7 @@ messageJwtInvalidFormat = "Chyba: neplatný formát prihlasovacieho tokenu."
 messageJwtInvalidWithMessage = "Nepodarilo sa prečítať prihlasovací token. Chyba: {error}"
 
 [register]
-apiMessageError = "Registrácia sa nezdařila. Prosím, skúste to znovu později. {error}"
+apiMessageError = "Registrácia sa nezdařila. Prosím, skúste to znovu později."
 apiMessageErrorWithMessage = "Registrácia sa nezdařila. Prosím, skúste to znovu později. Chyba: {error}"
 apiMessageSuccess = "Registrácia bola úspešná"
 

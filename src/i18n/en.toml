@@ -524,7 +524,7 @@ messageJwtInvalidFormat = "Error: invalid login token format."
 messageJwtInvalidWithMessage = "Failed to read login token. Error: {error}"
 
 [register]
-apiMessageError = "Registration failed. Please try again later. {error}"
+apiMessageError = "Registration failed. Please try again later."
 apiMessageErrorWithMessage = "Registration failed. Please try again later. Error: {error}"
 apiMessageSuccess = "Registration was successful"
 

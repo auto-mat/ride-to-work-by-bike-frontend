@@ -1,16 +1,18 @@
 import {
   testLanguageSwitcher,
   testBackgroundImage,
+  httpSuccessfullStatus,
+  httpInternalServerErrorStatus,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
-describe('Login page', () => {
+describe('Register page', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['register']['path']);
       cy.viewport('macbook-16');
 
-      // load config an i18n objects as aliases
+      // load config and i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
@@ -28,7 +30,6 @@ describe('Login page', () => {
       cy.dataCy('login-register-header').should('be.visible');
     });
 
-    // switching between languages can only be tested in E2E context
     testLanguageSwitcher();
 
     it('renders register form', () => {
@@ -50,5 +51,91 @@ describe('Login page', () => {
           });
       });
     });
+
+    it('allows user to register with valid credentials', () => {
+      cy.get('@config').then((config) => {
+        // variables
+        const { apiBase, urlApiRegister } = config;
+        const apiRegisterUrl = `${apiBase}${urlApiRegister}`;
+        const testEmail = 'test@example.com';
+        const testPassword = 'validPassword123';
+        // intercept register request
+        cy.intercept('POST', apiRegisterUrl, {
+          statusCode: httpSuccessfullStatus,
+          body: { email: testEmail },
+        }).as('registerRequest');
+        // fill form
+        cy.dataCy('form-register-email').find('input').type(testEmail);
+        cy.dataCy('form-register-password-input').type(testPassword);
+        cy.dataCy('form-register-password-confirm-input').type(testPassword);
+        cy.dataCy('form-register-submit').click();
+        // wait for request to complete
+        cy.wait('@registerRequest').then((interception) => {
+          expect(interception.request.body).to.deep.equal({
+            email: testEmail,
+            password: testPassword,
+          });
+        });
+        // check success message
+        cy.get('@i18n').then((i18n) => {
+          cy.contains(
+            i18n.global.t('register.form.messageSuccess', { email: testEmail }),
+          ).should('be.visible');
+        });
+        // email confirmation
+        cy.dataCy('email-confirmation').should('be.visible');
+      });
+    });
+
+    it('shows error message on registration failure', () => {
+      cy.get('@config').then((config) => {
+        // variables
+        const { apiBase, urlApiRegister } = config;
+        const apiRegisterUrl = `${apiBase}${urlApiRegister}`;
+        const testEmail = 'test@example.com';
+        const testPassword = 'validPassword123';
+        // intercept register request
+        cy.intercept('POST', apiRegisterUrl, {
+          statusCode: httpInternalServerErrorStatus,
+          body: { message: 'Registration failed' },
+        }).as('registerRequest');
+        // fill form
+        cy.dataCy('form-register-email').find('input').type(testEmail);
+        cy.dataCy('form-register-password-input').type(testPassword);
+        cy.dataCy('form-register-password-confirm-input').type(testPassword);
+        cy.dataCy('form-register-submit').click();
+        // wait for request to complete
+        cy.wait('@registerRequest');
+        // check error message
+        cy.get('@i18n').then((i18n) => {
+          cy.contains(
+            i18n.global.t('register.apiMessageErrorWithMessage'),
+          ).should('be.visible');
+        });
+      });
+    });
+
+    it('renders coordinator registration link', () => {
+      cy.dataCy('form-register-coordinator-link')
+        .should('be.visible')
+        .invoke('attr', 'href')
+        .should('contain', routesConf['register_coordinator']['path']);
+    });
+
+    it('renders login link', () => {
+      cy.dataCy('form-register-login-link')
+        .should('be.visible')
+        .invoke('attr', 'href')
+        .should('contain', routesConf['login']['path']);
+    });
+  });
+
+  context('mobile', () => {
+    beforeEach(() => {
+      cy.visit('#' + routesConf['register']['path']);
+      cy.viewport('iphone-6');
+    });
+
+    // Add mobile-specific tests if needed
   });
 });
