@@ -10,7 +10,6 @@
  * It contains links to App stores.
  *
  * @components
- * - `EmailConfirmation`: Component to render email confirmation.
  * - `FormRegister`: Component to render registration form.
  * - `LoginRegisterHeader`: Component to render page header.
  *
@@ -21,32 +20,20 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 // components
-import EmailConfirmation from 'components/register/EmailConfirmation.vue';
 import FormRegister from 'components/register/FormRegister.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
-
-// stores
-import { useRegisterStore } from '../stores/register';
 
 export default defineComponent({
   name: 'RegisterPage',
   components: {
-    EmailConfirmation,
     FormRegister,
     LoginRegisterHeader,
   },
   setup() {
-    const registerStore = useRegisterStore();
-    const isAwaitingConfirmation = computed(
-      () => registerStore.getIsAwaitingConfirmation,
-    );
-
-    return {
-      isAwaitingConfirmation,
-    };
+    return {};
   },
 });
 </script>
@@ -59,8 +46,7 @@ export default defineComponent({
 
       <div class="row">
         <div class="col-12 col-md-4">
-          <email-confirmation v-if="isAwaitingConfirmation" />
-          <form-register v-else />
+          <form-register />
         </div>
       </div>
     </div>
