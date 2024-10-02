@@ -25,10 +25,9 @@
  */
 
 // libraries
-import { defineComponent, inject, ref, reactive } from 'vue';
+import { defineComponent, inject, ref, reactive, computed } from 'vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useApi } from '../../composables/useApi';
-import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 
 // composables
@@ -38,6 +37,10 @@ import { useValidation } from '../../composables/useValidation';
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
+
+// stores
+import { useGlobalStore } from '../../stores/global';
+import { useRegisterStore } from '../../stores/register';
 
 // types
 import type { Logger } from '../types/Logger';
@@ -60,7 +63,10 @@ export default defineComponent({
       passwordConfirm: '',
     });
 
+    const registerStore = useRegisterStore();
+    const globalStore = useGlobalStore();
     const logger = inject('vue3-logger') as Logger;
+    const isActiveChallenge = computed(() => globalStore.getIsActiveChallenge);
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
 
@@ -68,7 +74,6 @@ export default defineComponent({
       useValidation();
 
     const { apiFetch } = useApi();
-    const router = useRouter();
     const $q = useQuasar();
 
     const onSubmitRegister = async (): Promise<void> => {
@@ -92,8 +97,10 @@ export default defineComponent({
               email: response.data.email,
             }),
           });
-          // redirect to login page
-          router.push({ name: 'login' });
+          // set email in store
+          registerStore.setEmail(response.data.email);
+          // set awaitingConfirmation in store
+          registerStore.setAwaitingConfirmation(true);
         }
       } catch (error) {
         logger.debug(JSON.stringify(error));
@@ -117,6 +124,7 @@ export default defineComponent({
       backgroundColor,
       borderRadius,
       formRegister,
+      isActiveChallenge,
       isPassword,
       isPasswordConfirm,
       isEmail,
@@ -131,12 +139,19 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="text-white" data-cy="form-register">
+  <div class="bg-primary text-white" data-cy="form-register">
     <!-- Heading -->
-    <div class="q-my-lg">
+    <div class="q-mb-lg">
       <h1 class="text-h5 text-bold q-my-none" data-cy="form-register-title">
         {{ $t('register.form.titleRegister') }}
       </h1>
+      <p
+        v-if="!isActiveChallenge"
+        class="q-mt-md q-mb-none"
+        data-cy="form-register-text-no-active-challenge"
+      >
+        {{ $t('register.form.textNoActiveChallenge') }}
+      </p>
     </div>
     <!-- Form: register -->
     <q-form @submit.prevent="onSubmitRegister" @reset="onReset">
@@ -144,7 +159,8 @@ export default defineComponent({
       <form-field-email
         dark
         v-model="formRegister.email"
-        bg-color="white"
+        bg-color="transparent"
+        color="white"
         data-cy="form-register-email"
       />
       <!-- Input: password -->
@@ -159,7 +175,8 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
-          bg-color="grey-1"
+          color="white"
+          bg-color="transparent"
           v-model="formRegister.password"
           id="form-register-password"
           :hint="$t('register.form.hintPassword')"
@@ -203,7 +220,8 @@ export default defineComponent({
           dense
           outlined
           hide-bottom-space
-          bg-color="grey-1"
+          color="white"
+          bg-color="transparent"
           v-model="formRegister.passwordConfirm"
           id="form-register-password"
           :type="isPasswordConfirm ? 'password' : 'text'"
@@ -293,11 +311,3 @@ export default defineComponent({
     </q-form>
   </div>
 </template>
-
-<style scoped lang="scss">
-:deep(.q-field__control) {
-  &:before {
-    border-color: transparent;
-  }
-}
-</style>

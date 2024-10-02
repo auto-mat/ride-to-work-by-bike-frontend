@@ -12,6 +12,13 @@
  * @props
  * - `value` (string, required): The object representing user input.
  *   It should be of type `string`.
+ * - `color` (string, optional): The color of the input. Defaults to `white`.
+ * - `bgColor` (string, optional): The background color of the input.
+ *    Defaults to `transparent`.
+ * - `dark` (boolean, optional): Whether the input should be dark.
+ *    Defaults to `false`.
+ * - `testing` (boolean, optional): Wheter this is a testing environment.
+ *    Defaults to `false`.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -38,6 +45,10 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true,
+    },
+    color: {
+      type: String,
+      default: 'grey-10',
     },
     bgColor: {
       type: String as () => 'white' | 'transparent',
@@ -80,6 +91,8 @@ export default defineComponent({
     <q-input
       dense
       outlined
+      :color="color"
+      :bg-color="bgColor"
       :dark="dark"
       v-model="email"
       :lazy-rules="!testing"
@@ -91,7 +104,6 @@ export default defineComponent({
           }),
         (val) => isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
-      :bg-color="bgColor"
       class="q-mt-sm"
       id="form-email"
       name="email"

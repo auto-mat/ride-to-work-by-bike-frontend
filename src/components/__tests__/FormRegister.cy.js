@@ -1,19 +1,19 @@
 import { colors } from 'quasar';
-
+import { createPinia, setActivePinia } from 'pinia';
 import FormRegister from '../register/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import route from '../../../src/router';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
+import { useGlobalStore } from '../../stores/global';
 
+// colors
 const { getPaletteColor } = colors;
-
-const router = route();
-
-const grey10 = getPaletteColor('grey-10');
 const white = getPaletteColor('white');
+const primary = getPaletteColor('primary');
 
-const colorPrimary = rideToWorkByBikeConfig.colorPrimary;
+// variables
+const router = route();
 const colorWhiteOpacity = rideToWorkByBikeConfig.colorWhiteOpacity;
 const borderRadiusCardSmall = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
@@ -21,14 +21,25 @@ describe('<FormRegister>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
-        'titleRegister',
+        'hintLogin',
         'hintPassword',
+        'hintRegisterAsCoordinator',
+        'labelEmail',
+        'labelPassword',
+        'labelPasswordConfirm',
+        'linkLogin',
+        'linkRegisterAsCoordinator',
         'messageEmailReqired',
         'messageEmailInvalid',
+        'messageError',
         'messagePasswordRequired',
         'messagePasswordStrong',
         'messagePasswordConfirmRequired',
         'messagePasswordConfirmNotMatch',
+        'messageSuccess',
+        'submitRegister',
+        'textNoActiveChallenge',
+        'titleRegister',
       ],
       'register.form',
       i18n,
@@ -46,7 +57,7 @@ describe('<FormRegister>', () => {
     it('renders title', () => {
       cy.dataCy('form-register-title')
         .should('be.visible')
-        .and('have.color', grey10)
+        .and('have.color', white)
         .and('have.css', 'font-size', '24px')
         .and('have.css', 'font-weight', '700')
         .and('contain', i18n.global.t('register.form.titleRegister'));
@@ -84,7 +95,7 @@ describe('<FormRegister>', () => {
       // password
       cy.dataCy('form-register-password-icon')
         .should('contain', 'visibility')
-        .and('have.color', `${colorPrimary}`);
+        .and('have.color', primary);
       cy.dataCy('form-register-password-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -94,7 +105,7 @@ describe('<FormRegister>', () => {
       // password confirm
       cy.dataCy('form-register-password-confirm-icon')
         .should('contain', 'visibility')
-        .and('have.color', `${colorPrimary}`);
+        .and('have.color', primary);
       cy.dataCy('form-register-password-confirm-icon')
         .invoke('height')
         .should('be.equal', 18);
@@ -231,12 +242,42 @@ describe('<FormRegister>', () => {
     });
   });
 
-  context('mobile', () => {
+  context('active challenge', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(FormRegister, {
         props: {},
       });
       cy.viewport('iphone-6');
+    });
+
+    it('does not show a text with no active challenge', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(true);
+      expect(store.getIsActiveChallenge).to.equal(true);
+      cy.dataCy('form-register-text-no-active-challenge').should('not.exist');
+    });
+  });
+
+  context('no active challenge', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormRegister, {
+        props: {},
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('shows a text with no active challenge', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(false);
+      expect(store.getIsActiveChallenge).to.equal(false);
+      cy.dataCy('form-register-text-no-active-challenge')
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', white)
+        .and('contain', i18n.global.t('register.form.textNoActiveChallenge'));
     });
   });
 });
