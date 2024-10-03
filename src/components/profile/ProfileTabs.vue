@@ -6,9 +6,10 @@
  * Note: Used on `ProfilePage`.
  *
  * @components
+ * - `NewsletterFeature`: Component to display a newsletter section.
  * - `ProfileDetails`: Component to display a ProfileDetails section.
- * - `TableNotifications`: Component to display a table of notifications.
  * - `ProfileQuestionnaires`: Component to display a table of questionnaires.
+ * - `TableNotifications`: Component to display a table of notifications.
  *
  * @example
  * <profile-tabs />
@@ -20,9 +21,10 @@
 import { defineComponent, ref } from 'vue';
 
 // components
+import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import ProfileDetails from './ProfileDetails.vue';
-import TableNotifications from './TableNotifications.vue';
 import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
+import TableNotifications from './TableNotifications.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -38,9 +40,10 @@ enum tabsProfile {
 export default defineComponent({
   name: 'ProfileTabs',
   components: {
+    NewsletterFeature,
     ProfileDetails,
-    TableNotifications,
     ProfileQuestionnaires,
+    TableNotifications,
   },
   setup() {
     const activeTab = ref(tabsProfile.none);
@@ -115,7 +118,7 @@ export default defineComponent({
         :name="tabsProfile.newsletter"
         data-cy="profile-tabs-panel-newsletter"
       >
-        <!-- <profile-newsletter /> -->
+        <newsletter-feature class="q-mt-lg" />
       </q-tab-panel>
       <!-- Panel: Notifications -->
       <q-tab-panel
