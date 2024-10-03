@@ -8,6 +8,7 @@ const selectorButtonDetails = 'profile-tabs-button-details';
 const selectorButtonQuestionnaires = 'profile-tabs-button-questionnaires';
 const selectorButtonNewsletter = 'profile-tabs-button-newsletter';
 const selectorButtonNotifications = 'profile-tabs-button-notifications';
+const selectorNewsletterFeature = 'newsletter-feature';
 const selectorPanelDetails = 'profile-tabs-panel-details';
 const selectorPanelQuestionnaires = 'profile-tabs-panel-questionnaires';
 const selectorPanelNewsletter = 'profile-tabs-panel-newsletter';
@@ -105,5 +106,11 @@ function coreTests() {
     cy.dataCy(selectorButtonQuestionnaires).click();
     cy.dataCy(selectorPanelQuestionnaires).should('be.visible');
     cy.dataCy(selectorProfileQuestionnaires).should('be.visible');
+  });
+
+  it('renders newsletter tab', () => {
+    cy.dataCy(selectorButtonNewsletter).click();
+    cy.dataCy(selectorPanelNewsletter).should('be.visible');
+    cy.dataCy(selectorNewsletterFeature).should('be.visible');
   });
 }
