@@ -27,6 +27,7 @@
  */
 
 // libraries
+import { colors } from 'quasar';
 import { computed, defineComponent } from 'vue';
 
 // stores
@@ -38,8 +39,15 @@ export default defineComponent({
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
 
+    // colors
+    const { getPaletteColor, changeAlpha } = colors;
+    const white = getPaletteColor('white');
+    const whiteOpacity20 = changeAlpha(white, 0.2);
+
     return {
       email,
+      white,
+      whiteOpacity20,
     };
   },
 });
@@ -47,6 +55,22 @@ export default defineComponent({
 
 <template>
   <div class="bg-primary text-white" data-cy="email-confirmation">
+    <!-- Icon -->
+    <div class="q-mb-lg" data-cy="email-confirmation-graphics">
+      <q-avatar
+        size="64px"
+        :style="{ backgroundColor: whiteOpacity20 }"
+        :color="white"
+        data-cy="email-confirmation-avatar"
+      >
+        <q-icon
+          size="40px"
+          color="white"
+          name="svguse:icons/email_confirmation/icons.svg#email"
+          data-cy="email-confirmation-icon"
+        />
+      </q-avatar>
+    </div>
     <!-- Heading -->
     <div class="q-mb-lg">
       <h1

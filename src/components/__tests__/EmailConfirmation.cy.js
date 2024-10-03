@@ -6,8 +6,9 @@ import { useRegisterStore } from '../../stores/register';
 import { routesConf } from '../../router/routes_conf';
 
 // colors
-const { getPaletteColor } = colors;
+const { getPaletteColor, changeAlpha } = colors;
 const white = getPaletteColor('white');
+const whiteOpacity20 = changeAlpha(white, 0.2);
 
 // selectors
 const selectorEmailConfirmation = 'email-confirmation';
@@ -17,12 +18,17 @@ const selectorEmailConfirmationWrongEmailHint =
   'email-confirmation-wrong-email-hint';
 const selectorEmailConfirmationRegisterLink =
   'email-confirmation-register-link';
+const selectorEmailConfirmationGraphics = 'email-confirmation-graphics';
+const selectorEmailConfirmationAvatar = 'email-confirmation-avatar';
+const selectorEmailConfirmationIcon = 'email-confirmation-icon';
 
 // variables
 const fontSizeTitle = 24;
 const fontWeightTitle = 700;
 const fontSizeText = 14;
 const fontWeightText = 400;
+const avatarSize = 64;
+const iconSize = 40;
 const testEmail = 'test@test.cz';
 
 describe('<EmailConfirmation>', () => {
@@ -111,5 +117,25 @@ function coreTests() {
       .and('contain', i18n.global.t('register.form.linkRegister'))
       .invoke('attr', 'href')
       .should('contain', routesConf['register']['path']);
+    // graphics
+    cy.dataCy(selectorEmailConfirmationGraphics).should('be.visible');
+    // avatar
+    cy.dataCy(selectorEmailConfirmationAvatar)
+      .should('be.visible')
+      .and('have.backgroundColor', whiteOpacity20)
+      .invoke('height')
+      .should('eq', avatarSize);
+    cy.dataCy(selectorEmailConfirmationAvatar)
+      .invoke('width')
+      .should('eq', avatarSize);
+    // icon
+    cy.dataCy(selectorEmailConfirmationIcon)
+      .should('be.visible')
+      .and('have.color', white)
+      .invoke('height')
+      .should('eq', iconSize);
+    cy.dataCy(selectorEmailConfirmationIcon)
+      .invoke('width')
+      .should('eq', iconSize);
   });
 }
