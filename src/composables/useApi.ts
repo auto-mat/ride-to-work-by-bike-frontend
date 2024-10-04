@@ -48,6 +48,15 @@ const hasReponseDataNonFieldsErrorsKey = ({
 };
 
 /*
+ * Inject Axios base API URL with lang (internationalization)
+ * @param {(Logger|null)} logger - Logger instance
+ * @returns {void}
+ */
+const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
+  api.defaults.baseURL = getApiBaseUrlWithLang(logger, apiBase, apiDefaultLang);
+};
+
+/*
  * Localization REST API with injecting
  * API base URL with lang different from the
  * default lang (cs) and sk lang
@@ -60,26 +69,32 @@ const hasReponseDataNonFieldsErrorsKey = ({
  *
  * https://test.dopracenakole.cz/rest/
  *
- * @param {(Logger|null)} logger - Logger instance
- * @returns {void}
+ * @param {(Logger | null)} logger - Logger instance
+ * @param {string} apiBase - API base URL
+ * @param {string} apiDefaultLang - API default language
+ * @returns {string} - API base URL with language (internationalization)
  */
-const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
+export const getApiBaseUrlWithLang = (
+  logger: Logger | null,
+  apiBase: string,
+  apiDefaultLang: string,
+): string => {
   // Use same API default cs lang for sk lang
   if (![apiDefaultLang, 'sk'].includes(i18n.global.locale)) {
     logger?.info(
       'Inject Axios base API URL with language (internationalization).',
     );
     const apiBaseUrl = new URL(apiBase);
-    api.defaults.baseURL = `${apiBaseUrl.origin}/${i18n.global.locale}${apiBaseUrl.pathname}`;
     logger?.debug(`Available locales <${i18n.global.availableLocales}>.`);
     logger?.debug(
       `Injected base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
     );
+    return `${apiBaseUrl.origin}/${i18n.global.locale}${apiBaseUrl.pathname}`;
   } else {
-    api.defaults.baseURL = apiBase;
     logger?.debug(
       `Reset injected base API URL <${api.defaults.baseURL}> to default language <${apiDefaultLang}>.`,
     );
+    return apiBase;
   }
 };
 

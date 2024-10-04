@@ -9,6 +9,7 @@ import {
   httpSuccessfullStatus,
   httpInternalServerErrorStatus,
 } from '../../../test/cypress/support/commonTests';
+import { getApiBaseUrlWithLang } from '../../../src/composables/useApi';
 
 // colors
 const { getPaletteColor } = colors;
@@ -22,23 +23,28 @@ const contactEmail = rideToWorkByBikeConfig.contactEmail;
 const classSelectorQNotificationMessage = '.q-notification__message';
 
 // variables
-const { apiBase, urlApiLogin, urlApiRefresh } = rideToWorkByBikeConfig;
-const apiLoginUrl = `${apiBase}${urlApiLogin}`;
-const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
+const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
+  rideToWorkByBikeConfig;
+const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang);
+const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
+const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
 
 const username = 'test@example.com';
 const password = 'example123';
 
 // access token expiration time: Tuesday 24. September 2024 22:36:03
 const fixtureTokenExpiration = new Date('2024-09-24T20:36:03Z');
-const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
+const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime();
+const fixtureTokenExpirationTimeSeconds = fixtureTokenExpirationTime / 1000;
 // refresh token expiration time: Tuesday 24. September 2024 22:37:41
 const fixtureTokenRefreshExpiration = new Date('2024-09-24T20:37:41Z');
 const fixtureTokenRefreshExpirationTime =
   fixtureTokenRefreshExpiration.getTime() / 1000;
-const timeUntilRefresh = 60;
+const timeUntilRefresh = 60 * 1000; // miliseconds (because used in cy.tick)
 const timeUntilExpiration = timeUntilRefresh * 2;
-const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min before JWT expires
+const timeUntilExpirationSeconds = timeUntilExpiration / 1000;
+// 2 min before JWT expires - this needs to be miliseconds!
+const systemTime = fixtureTokenExpirationTime - timeUntilExpiration;
 
 describe('<FormLogin>', () => {
   it('has translation for all strings', () => {
@@ -290,33 +296,39 @@ describe('<FormLogin>', () => {
           .and('contain', i18n.global.t('login.form.messageEmailReqired'));
       });
     });
+  });
+
+  context('desktop - API error', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormLogin, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+      // intercept login API call
+      cy.intercept('POST', apiLoginUrl, {
+        statusCode: httpInternalServerErrorStatus,
+      }).as('loginRequest');
+    });
 
     it('shows error if API call fails (error has message)', () => {
       const store = useLoginStore();
-      cy.intercept('POST', apiLoginUrl, {
-        statusCode: httpInternalServerErrorStatus,
-      }).then(() => {
-        cy.wrap(store.login({ username, password })).then((result) => {
-          expect(result).to.equal(null);
-          cy.get(classSelectorQNotificationMessage)
-            .should('be.visible')
-            .and('contain', i18n.global.t('login.apiMessageErrorWithMessage'))
-            .and('contain', httpInternalServerErrorStatus);
-        });
+      cy.wrap(store.login({ username, password })).then((result) => {
+        expect(result).to.equal(null);
+        cy.get(classSelectorQNotificationMessage)
+          .should('be.visible')
+          .and('contain', i18n.global.t('login.apiMessageErrorWithMessage'))
+          .and('contain', httpInternalServerErrorStatus);
       });
     });
 
     it('calls API and shows error if login fails', () => {
       const store = useLoginStore();
       // intercept login API call
-      cy.intercept('POST', apiLoginUrl, {
-        statusCode: httpInternalServerErrorStatus,
-      }).then(() => {
-        cy.wrap(store.login({ username, password })).then(() => {
-          cy.get(classSelectorQNotificationMessage)
-            .should('be.visible')
-            .and('contain', i18n.global.t('login.apiMessageError'));
-        });
+      cy.wrap(store.login({ username, password })).then(() => {
+        cy.get(classSelectorQNotificationMessage)
+          .should('be.visible')
+          .and('contain', i18n.global.t('login.apiMessageError'));
       });
     });
   });
@@ -337,7 +349,7 @@ describe('<FormLogin>', () => {
         cy.intercept('POST', apiLoginUrl, {
           statusCode: httpSuccessfullStatus,
           body: loginResponse,
-        });
+        }).as('loginRequest');
       });
     });
 
@@ -350,9 +362,11 @@ describe('<FormLogin>', () => {
             expect(store.getAccessToken).to.equal(loginResponse.access);
             expect(store.getRefreshToken).to.equal(loginResponse.refresh);
             expect(store.getUser).to.deep.equal(loginResponse.user);
-            expect(store.getJwtExpiration).to.equal(fixtureTokenExpirationTime);
+            expect(store.getJwtExpiration).to.equal(
+              fixtureTokenExpirationTimeSeconds,
+            );
             expect(store.getTimeUntilExpiration()).to.equal(
-              timeUntilExpiration,
+              timeUntilExpirationSeconds, // time until expiration in seconds
             );
             expect(store.isJwtExpired()).to.equal(false);
             cy.fixture('refreshTokensResponse.json').then(
@@ -398,9 +412,11 @@ describe('<FormLogin>', () => {
             expect(store.getAccessToken).to.equal(loginResponse.access);
             expect(store.getRefreshToken).to.equal(loginResponse.refresh);
             expect(store.getUser).to.deep.equal(loginResponse.user);
-            expect(store.getJwtExpiration).to.equal(fixtureTokenExpirationTime);
+            expect(store.getJwtExpiration).to.equal(
+              fixtureTokenExpirationTimeSeconds,
+            );
             expect(store.getTimeUntilExpiration()).to.equal(
-              timeUntilExpiration,
+              timeUntilExpirationSeconds,
             );
             expect(store.isJwtExpired()).to.equal(false);
             cy.fixture('refreshTokensResponse.json').then(
@@ -410,7 +426,7 @@ describe('<FormLogin>', () => {
                   body: refreshTokensResponse,
                 }).then(() => {
                   // set time to when JWT should be expired + 1 second
-                  clock.tick(timeUntilExpiration + 1);
+                  clock.tick(timeUntilExpiration + 1000);
                   expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
                   expect(store.isJwtExpired()).to.equal(true);
                   // refresh tokens

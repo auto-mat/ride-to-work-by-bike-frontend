@@ -4,6 +4,7 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
+import { getApiBaseUrlWithLang } from '../../../src/composables/useApi';
 
 // variables
 // access token expiration time: Tuesday 24. September 2024 22:36:03
@@ -196,13 +197,19 @@ describe('Login page', () => {
       cy.dataCy('form-login-submit-login').should('be.visible');
     });
 
-    it.only('allows user to login and refreshes token 1 min before expiration', () => {
+    it('allows user to login and refreshes token 1 min before expiration', () => {
       cy.get('@clock').then((clock) => {
         clock.setSystemTime(systemTime);
         cy.get('@config').then((config) => {
-          const { apiBase, urlApiLogin, urlApiRefresh } = config;
-          const apiLoginUrl = `${apiBase}${urlApiLogin}`;
-          const apiRefreshUrl = `${apiBase}${urlApiRefresh}`;
+          const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
+            config;
+          const apiBaseUrl = getApiBaseUrlWithLang(
+            null,
+            apiBase,
+            apiDefaultLang,
+          );
+          const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
+          const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
 
           cy.fixture('loginResponse.json').then((loginResponse) => {
             // intercept API call
