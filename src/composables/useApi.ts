@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { Notify } from 'quasar';
 import { api, axios } from '../boot/axios';
 import { i18n } from '../boot/i18n';
+import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -53,49 +54,15 @@ const hasReponseDataNonFieldsErrorsKey = ({
  * @returns {void}
  */
 const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
-  api.defaults.baseURL = getApiBaseUrlWithLang(logger, apiBase, apiDefaultLang);
-};
-
-/*
- * Localization REST API with injecting
- * API base URL with lang different from the
- * default lang (cs) and sk lang
- *
- * Example:
- *
- * https://test.dopracenakole.cz/en/rest/
- *
- * And reset back injected API base URL for default cs lang and sk lang.
- *
- * https://test.dopracenakole.cz/rest/
- *
- * @param {(Logger | null)} logger - Logger instance
- * @param {string} apiBase - API base URL
- * @param {string} apiDefaultLang - API default language
- * @returns {string} - API base URL with language (internationalization)
- */
-export const getApiBaseUrlWithLang = (
-  logger: Logger | null,
-  apiBase: string,
-  apiDefaultLang: string,
-): string => {
-  // Use same API default cs lang for sk lang
-  if (![apiDefaultLang, 'sk'].includes(i18n.global.locale)) {
-    logger?.info(
-      'Inject Axios base API URL with language (internationalization).',
-    );
-    const apiBaseUrl = new URL(apiBase);
-    logger?.debug(`Available locales <${i18n.global.availableLocales}>.`);
-    logger?.debug(
-      `Injected base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
-    );
-    return `${apiBaseUrl.origin}/${i18n.global.locale}${apiBaseUrl.pathname}`;
-  } else {
-    logger?.debug(
-      `Reset injected base API URL <${api.defaults.baseURL}> to default language <${apiDefaultLang}>.`,
-    );
-    return apiBase;
-  }
+  logger?.debug(
+    `Injected base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
+  );
+  api.defaults.baseURL = getApiBaseUrlWithLang(
+    logger,
+    apiBase,
+    apiDefaultLang,
+    i18n,
+  );
 };
 
 export const useApi = () => {

@@ -4,7 +4,7 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
-import { getApiBaseUrlWithLang } from '../../../src/composables/useApi';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
 // variables
 // access token expiration time: Tuesday 24. September 2024 22:36:03
@@ -200,64 +200,67 @@ describe('Login page', () => {
     it('allows user to login and refreshes token 1 min before expiration', () => {
       cy.get('@clock').then((clock) => {
         clock.setSystemTime(systemTime);
-        cy.get('@config').then((config) => {
-          const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
-            config;
-          const apiBaseUrl = getApiBaseUrlWithLang(
-            null,
-            apiBase,
-            apiDefaultLang,
-          );
-          const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
-          const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
-
-          cy.fixture('loginResponse.json').then((loginResponse) => {
-            // intercept API call
-            cy.intercept('POST', apiLoginUrl, {
-              statusCode: httpSuccessfullStatus,
-              body: loginResponse,
-            }).as('loginRequest');
-            // intercept refresh token API call
-            cy.fixture('refreshTokensResponse.json').then(
-              (refreshTokensResponse) => {
-                cy.intercept('POST', apiRefreshUrl, {
-                  statusCode: httpSuccessfullStatus,
-                  body: refreshTokensResponse,
-                }).as('refreshTokens');
-                // fill in form
-                cy.dataCy('form-login-email')
-                  .find('input')
-                  .type('test@example.com');
-                cy.dataCy('form-login-password')
-                  .find('input')
-                  .type('password123');
-                // submit form
-                cy.dataCy('form-login-submit-login').click();
-                // wait for login API call
-                cy.wait('@loginRequest').then(() => {
-                  // check that we are on homepage
-                  cy.testRoute(routesConf['home']['path']);
-                  // go to refresh time
-                  clock.tick(timeUntilExpiration);
-                  // refresh tokens should be called on load
-                  cy.wait('@refreshTokens').then((interception) => {
-                    expect(interception.response.statusCode).to.equal(
-                      httpSuccessfullStatus,
-                    );
-                  });
-                  // reload page
-                  cy.reload();
-                  // check that we are on homepage
-                  cy.testRoute(routesConf['home']['path']);
-                  // refresh tokens should be called on load
-                  cy.wait('@refreshTokens').then((interception) => {
-                    expect(interception.response.statusCode).to.equal(
-                      httpSuccessfullStatus,
-                    );
-                  });
-                });
-              },
+        cy.get('@i18n').then((i18n) => {
+          cy.get('@config').then((config) => {
+            const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
+              config;
+            const apiBaseUrl = getApiBaseUrlWithLang(
+              null,
+              apiBase,
+              apiDefaultLang,
+              i18n,
             );
+            const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
+            const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
+
+            cy.fixture('loginResponse.json').then((loginResponse) => {
+              // intercept API call
+              cy.intercept('POST', apiLoginUrl, {
+                statusCode: httpSuccessfullStatus,
+                body: loginResponse,
+              }).as('loginRequest');
+              // intercept refresh token API call
+              cy.fixture('refreshTokensResponse.json').then(
+                (refreshTokensResponse) => {
+                  cy.intercept('POST', apiRefreshUrl, {
+                    statusCode: httpSuccessfullStatus,
+                    body: refreshTokensResponse,
+                  }).as('refreshTokens');
+                  // fill in form
+                  cy.dataCy('form-login-email')
+                    .find('input')
+                    .type('test@example.com');
+                  cy.dataCy('form-login-password')
+                    .find('input')
+                    .type('password123');
+                  // submit form
+                  cy.dataCy('form-login-submit-login').click();
+                  // wait for login API call
+                  cy.wait('@loginRequest').then(() => {
+                    // check that we are on homepage
+                    cy.testRoute(routesConf['home']['path']);
+                    // go to refresh time
+                    clock.tick(timeUntilExpiration);
+                    // refresh tokens should be called on load
+                    cy.wait('@refreshTokens').then((interception) => {
+                      expect(interception.response.statusCode).to.equal(
+                        httpSuccessfullStatus,
+                      );
+                    });
+                    // reload page
+                    cy.reload();
+                    // check that we are on homepage
+                    cy.testRoute(routesConf['home']['path']);
+                    // refresh tokens should be called on load
+                    cy.wait('@refreshTokens').then((interception) => {
+                      expect(interception.response.statusCode).to.equal(
+                        httpSuccessfullStatus,
+                      );
+                    });
+                  });
+                },
+              );
+            });
           });
         });
       });

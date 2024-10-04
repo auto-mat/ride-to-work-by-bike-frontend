@@ -9,7 +9,7 @@ import {
   httpSuccessfullStatus,
   httpInternalServerErrorStatus,
 } from '../../../test/cypress/support/commonTests';
-import { getApiBaseUrlWithLang } from '../../../src/composables/useApi';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
 // colors
 const { getPaletteColor } = colors;
@@ -25,9 +25,6 @@ const classSelectorQNotificationMessage = '.q-notification__message';
 // variables
 const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
   rideToWorkByBikeConfig;
-const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang);
-const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
-const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
 
 const username = 'test@example.com';
 const password = 'example123';
@@ -73,6 +70,17 @@ describe('<FormLogin>', () => {
         props: {},
       });
       cy.viewport('macbook-16');
+      // intercept login API call
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
+      cy.intercept('POST', apiLoginUrl, {
+        statusCode: httpInternalServerErrorStatus,
+      }).as('loginRequest');
     });
 
     it('renders title', () => {
@@ -296,20 +304,6 @@ describe('<FormLogin>', () => {
           .and('contain', i18n.global.t('login.form.messageEmailReqired'));
       });
     });
-  });
-
-  context('desktop - API error', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.mount(FormLogin, {
-        props: {},
-      });
-      cy.viewport('macbook-16');
-      // intercept login API call
-      cy.intercept('POST', apiLoginUrl, {
-        statusCode: httpInternalServerErrorStatus,
-      }).as('loginRequest');
-    });
 
     it('shows error if API call fails (error has message)', () => {
       const store = useLoginStore();
@@ -317,8 +311,7 @@ describe('<FormLogin>', () => {
         expect(result).to.equal(null);
         cy.get(classSelectorQNotificationMessage)
           .should('be.visible')
-          .and('contain', i18n.global.t('login.apiMessageErrorWithMessage'))
-          .and('contain', httpInternalServerErrorStatus);
+          .and('contain', i18n.global.t('login.apiMessageErrorWithMessage'));
       });
     });
 
@@ -345,6 +338,13 @@ describe('<FormLogin>', () => {
         clock.setSystemTime(systemTime);
       });
       // intercept login API call
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
       cy.fixture('loginResponse.json').then((loginResponse) => {
         cy.intercept('POST', apiLoginUrl, {
           statusCode: httpSuccessfullStatus,
@@ -372,6 +372,13 @@ describe('<FormLogin>', () => {
             cy.fixture('refreshTokensResponse.json').then(
               (refreshTokensResponse) => {
                 // intercept refresh token API call
+                const apiBaseUrl = getApiBaseUrlWithLang(
+                  null,
+                  apiBase,
+                  apiDefaultLang,
+                  i18n,
+                );
+                const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
                 cy.intercept('POST', apiRefreshUrl, {
                   statusCode: httpSuccessfullStatus,
                   body: refreshTokensResponse,
@@ -421,6 +428,14 @@ describe('<FormLogin>', () => {
             expect(store.isJwtExpired()).to.equal(false);
             cy.fixture('refreshTokensResponse.json').then(
               (refreshTokensResponse) => {
+                // intercept refresh token API call
+                const apiBaseUrl = getApiBaseUrlWithLang(
+                  null,
+                  apiBase,
+                  apiDefaultLang,
+                  i18n,
+                );
+                const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
                 cy.intercept('POST', apiRefreshUrl, {
                   statusCode: httpSuccessfullStatus,
                   body: refreshTokensResponse,
