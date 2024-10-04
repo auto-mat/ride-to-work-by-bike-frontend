@@ -70,6 +70,7 @@ entryFeePaymentOptions = "500,700"
 
 apiBase = "https://test.dopracenakole.cz/rest/"
 apiVersion = "1.0"
+apiDefaultLang = "cs"
 
 urlApiLogin = "auth/login/"
 urlApiRefresh = "auth/token/refresh/"

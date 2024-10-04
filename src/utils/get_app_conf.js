@@ -90,6 +90,8 @@ const getAppConfig = (process) => {
     config['apiBase'] = process.env.API_BASE;
   } else if (process.env.API_VERSION) {
     config['apiVersion'] = process.env.API_VERSION;
+  } else if (process.env.API_DEFAULT_LANG) {
+    config['apiDefaultLang'] = process.env.API_DEFAULT_LANG;
   } else if (process.env.URL_API_LOGIN) {
     config['urlApiLogin'] = process.env.URL_API_LOGIN;
   } else if (process.env.URL_API_REFRESH) {

@@ -21,7 +21,7 @@ export const useJwt = () => {
     try {
       const { payload } = parseJwt(token);
       const decodedPayload = decodePayload(payload);
-      // extract the expiration time
+      // extract the expiration time in seconds
       const expirationTime = decodedPayload.exp;
       if (!expirationTime) {
         Notify.create({
@@ -52,8 +52,8 @@ export const useJwt = () => {
   /**
    * Parse JWT token into parts
    * @param {string} token - JWT token string
-   * @return {JwtParts} Object (header, payload, signature) - token parts
-   * @throws {Error} If the token format is invalid
+   * @return {JwtParts} - Object (header, payload, signature) - token parts
+   * @throws {Error} - If the token format is invalid
    */
   const parseJwt = (token: string): JwtParts => {
     const parts = token.split('.');
