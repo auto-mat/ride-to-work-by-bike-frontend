@@ -190,8 +190,6 @@ describe('<FormLogin>', () => {
         });
     });
 
-    it('renders a link to register', () => {});
-
     it('allows to navigate between states', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
       cy.dataCy('form-password-reset').should('be.visible');
