@@ -60,6 +60,8 @@ export default defineComponent({
     const isActiveChallenge = computed(() => globalStore.getIsActiveChallenge);
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
+    const isPrivacyConsent = ref(false);
+    const isNewsletterSubscription = ref(false);
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
@@ -90,6 +92,8 @@ export default defineComponent({
       isAwaitingConfirmation,
       isPassword,
       isPasswordConfirm,
+      isPrivacyConsent,
+      isNewsletterSubscription,
       isEmail,
       isFilled,
       isIdentical,
@@ -216,6 +220,64 @@ export default defineComponent({
               />
             </template>
           </q-input>
+        </div>
+        <!-- Section: checkboxes (only if no challenge is active) -->
+        <div v-if="!isActiveChallenge">
+          <div class="q-mt-lg">
+            <!-- Input: Privacy policy -->
+            <q-field
+              dense
+              borderless
+              hide-bottom-space
+              :model-value="isPrivacyConsent"
+              :rules="[
+                (val) =>
+                  !!val || $t('register.form.messagePrivacyConsentRequired'),
+              ]"
+              data-cy="form-register-privacy-consent"
+            >
+              <q-checkbox
+                dense
+                id="form-register-privacy-consent"
+                v-model="isPrivacyConsent"
+                color="primary"
+                :true-value="true"
+                :false-value="false"
+                rules="required"
+                class="text-white"
+                style="align-items: flex-start"
+                data-cy="form-register-privacy-consent-input"
+              >
+                <!-- Link: consent -->
+                <span>
+                  {{ $t('register.form.labelPrivacyConsent1') }}
+                  <!-- TODO: Link to privacy policy page -->
+                  <a
+                    href="#"
+                    target="_blank"
+                    class="text-white"
+                    @click.stop
+                    data-cy="form-register-privacy-consent-link"
+                    >{{ $t('register.form.labelPrivacyConsentLink') }}</a
+                  >
+                  {{ $t('register.form.labelPrivacyConsent2') }} </span
+                >.
+              </q-checkbox>
+            </q-field>
+            <!-- Input: Newsletter -->
+            <q-checkbox
+              dense
+              v-model="isNewsletterSubscription"
+              color="primary"
+              :true-value="true"
+              :false-value="false"
+              class="text-white q-mt-md"
+              style="align-items: flex-start"
+              data-cy="form-register-newsletter-subscription"
+            >
+              <span>{{ $t('register.form.labelNewsletterSubscription') }}</span>
+            </q-checkbox>
+          </div>
         </div>
         <!-- Button: submit -->
         <q-btn
