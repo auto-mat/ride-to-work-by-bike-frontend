@@ -30,6 +30,7 @@ import RoutesApps from './RoutesApps.vue';
 import RoutesCalendar from './RoutesCalendar.vue';
 import RouteListDisplay from './RouteListDisplay.vue';
 import RouteListEdit from './RouteListEdit.vue';
+import RoutesMap from './RoutesMap.vue';
 
 // enums
 import { RouteTab } from '../types/Route';
@@ -51,6 +52,7 @@ export default defineComponent({
     RoutesCalendar,
     RouteListDisplay,
     RouteListEdit,
+    RoutesMap,
   },
   props: {
     locked: {
@@ -153,6 +155,7 @@ export default defineComponent({
       <!-- Panel: Map -->
       <q-tab-panel :name="RouteTab.map" data-cy="route-tabs-panel-map">
         <div class="text-h6">{{ $t('routes.tabMap') }}</div>
+        <RoutesMap />
       </q-tab-panel>
       <!-- Panel: App -->
       <q-tab-panel :name="RouteTab.app" data-cy="route-tabs-panel-app">

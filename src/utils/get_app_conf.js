@@ -99,6 +99,20 @@ const getAppConfig = (process) => {
   } else if (process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE) {
     config['urlLoginRegisterBackgroundImage'] =
       process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE;
+  } else if (process.env.MAP_PROJECTION) {
+    config['mapProjection'] = process.env.MAP_PROJECTION;
+  } else if (process.env.MAP_CENTER_LON) {
+    config['mapCenterLon'] = process.env.MAP_CENTER_LON;
+  } else if (process.env.MAP_CENTER_LAT) {
+    config['mapCenterLat'] = process.env.MAP_CENTER_LAT;
+  } else if (process.env.MAP_ZOOM) {
+    config['mapZoom'] = process.env.MAP_ZOOM;
+  } else if (process.env.MAP_GEOCODING_API_URL) {
+    config['mapGeocodingApiUrl'] = process.env.MAP_GEOCODING_API_URL;
+  } else if (process.env.MAP_SOURCE_RTWBB) {
+    config['mapSourceRtwbb'] = process.env.MAP_SOURCE_RTWBB;
+  } else if (process.env.MAP_SOURCE_OSM) {
+    config['mapSourceOsm'] = process.env.MAP_SOURCE_OSM;
   }
 
   return config;

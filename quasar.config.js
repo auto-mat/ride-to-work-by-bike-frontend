@@ -44,6 +44,7 @@ module.exports = configure(function (ctx) {
       'ionicons-v4',
       'mdi-v5',
       'fontawesome-v6',
+      'material-symbols-sharp',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',

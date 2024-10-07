@@ -42,7 +42,6 @@ export const useRoutes = () => {
 
   /**
    * Get a transport label based on given transport key.
-   *
    * @param {TransportType} transport - The transport type.
    * @return {string} The transport label.
    */
@@ -55,8 +54,7 @@ export const useRoutes = () => {
   };
 
   /**
-   * Get distance label for given route.
-   *
+   * Returns the route distance including the unit.
    * @param {RouteItem} route - The route item.
    * @return {string} The distance label.
    */

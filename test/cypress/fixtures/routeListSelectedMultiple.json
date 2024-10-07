@@ -1,0 +1,26 @@
+[
+  {
+    "id": "00001",
+    "date": "2024-08-14",
+    "direction": "toWork",
+    "distance": 0,
+    "transport": "bike",
+    "routeFeature": null
+  },
+  {
+    "id": "00002",
+    "date": "2024-08-14",
+    "direction": "fromWork",
+    "distance": 0,
+    "transport": "bike",
+    "routeFeature": null
+  },
+  {
+    "id": "00003",
+    "date": "2024-08-15",
+    "direction": "toWork",
+    "distance": 0,
+    "transport": "bike",
+    "routeFeature": null
+  }
+]

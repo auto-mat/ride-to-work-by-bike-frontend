@@ -33,6 +33,8 @@ import 'quasar/dist/icon-set/ionicons-v4.umd.prod';
 import '@quasar/extras/ionicons-v4/ionicons-v4.css';
 import 'quasar/dist/icon-set/fontawesome-v5.umd.prod';
 import '@quasar/extras/fontawesome-v5/fontawesome-v5.css';
+import 'quasar/dist/icon-set/material-symbols-sharp.umd.prod';
+import '@quasar/extras/material-symbols-sharp/material-symbols-sharp.css';
 
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 import { Dialog, Notify } from 'quasar';
@@ -41,6 +43,7 @@ import '@quasar/quasar-ui-qcalendar/dist/QCalendarMonth.css';
 import { createPinia } from 'pinia';
 
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import OpenLayersMap from 'vue3-openlayers';
 
 // Since Cypress v10 we cannot import `config` directly from VTU as Cypress bundles its own version of it
 // See https://github.com/cypress-io/cypress/issues/22611
@@ -106,6 +109,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
       app.use(VueLogger, loggerOptions);
       app.use(VuePlugin);
       app.use(createPinia());
+      app.use(OpenLayersMap);
     },
   });
 

@@ -74,3 +74,12 @@ apiDefaultLang = "cs"
 
 urlApiLogin = "auth/login/"
 urlApiRefresh = "auth/token/refresh/"
+
+# MAP SETTINGS
+mapProjection = "EPSG:3857"
+mapCenterLon = "14.4378"
+mapCenterLat = "50.0755"
+mapZoom = "14"
+mapGeocodingApiUrl = "https://nominatim.openstreetmap.org/reverse"
+mapSourceRtwbb = "https://mnk-osm-tiles.dopracenakole.net/{z}/{x}/{y}.png"
+mapSourceOsm = "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"

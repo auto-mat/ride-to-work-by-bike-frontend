@@ -83,6 +83,9 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^1.7.7",
     "fs-extra": "^11.2.0",
+    "ol": "^10.1.0",
+    "ol-contextmenu": "^5.5.0",
+    "ol-ext": "^4.0.23",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.0",
     "quasar": "^2.6.0",
@@ -91,6 +94,7 @@
     "vue": "^3.0.0",
     "vue-i18n": "^10.0.0",
     "vue-router": "^4.0.0",
+    "vue3-openlayers": "^11.2.0",
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
