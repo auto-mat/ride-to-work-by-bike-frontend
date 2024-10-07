@@ -2,28 +2,13 @@
 /**
  * EmailConfirmation Component
  *
- * @description * Use this component to ... .
- * You can adjust its appearance by ... .
- *
- * @props
- * - `NAME` (TYPE, required): The object representing ... .
- *   It should be of type `TYPE`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
- *
- * @components
- * - `CHILD`: Component to ... .
+ * @description * Renders a confirmation message after user registers,
+ * prompting user to confirm their address by clicking the link in the email.
  *
  * @example
  * <email-confirmation />
  *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-103496&t=PEybZ3QfO934YQow-1)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-103494&t=6I4I349ASWWgGjGu-1)
  */
 
 // libraries
@@ -55,7 +40,7 @@ export default defineComponent({
 
 <template>
   <div class="bg-primary text-white" data-cy="email-confirmation">
-    <!-- Icon -->
+    <!-- Graphics -->
     <div class="q-mb-lg" data-cy="email-confirmation-graphics">
       <q-avatar
         size="64px"
@@ -63,6 +48,7 @@ export default defineComponent({
         :color="white"
         data-cy="email-confirmation-avatar"
       >
+        <!-- Icon -->
         <q-icon
           size="40px"
           color="white"
@@ -80,11 +66,13 @@ export default defineComponent({
         {{ $t('register.form.titleEmailConfirmation') }}
       </h1>
     </div>
+    <!-- Text -->
     <div
       data-cy="email-confirmation-text"
       class="q-mb-xl"
       v-html="$t('register.form.textEmailConfirmation', { email })"
     />
+    <!-- Link: Register again -->
     <div data-cy="email-confirmation-wrong-email-hint">
       {{ $t('register.form.hintWrongEmail') }}
       <router-link
