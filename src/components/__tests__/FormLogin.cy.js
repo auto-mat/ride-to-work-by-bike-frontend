@@ -21,6 +21,8 @@ const contactEmail = rideToWorkByBikeConfig.contactEmail;
 
 // selectors
 const classSelectorQNotificationMessage = '.q-notification__message';
+const selectorLoginPromptNoAccount = 'login-prompt-no-account';
+const selectorLoginLinkRegister = 'login-link-register';
 
 // variables
 const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
@@ -157,6 +159,38 @@ describe('<FormLogin>', () => {
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.text', i18n.global.t('login.form.submitLogin'));
     });
+
+    it('renders a no account prompt and a link to register', () => {
+      cy.dataCy(selectorLoginPromptNoAccount)
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', white)
+        .then(($el) => {
+          const content = $el.text();
+          cy.stripHtmlTags(i18n.global.t('login.form.promptNoAccount')).then(
+            (text) => {
+              expect(content).to.contain(text);
+            },
+          );
+        });
+      // register
+      cy.dataCy(selectorLoginLinkRegister)
+        .should('be.visible')
+        .and('have.css', 'font-size', '14px')
+        .and('have.css', 'font-weight', '400')
+        .and('have.color', white)
+        .then(($el) => {
+          const content = $el.text();
+          cy.stripHtmlTags(i18n.global.t('login.form.linkRegister')).then(
+            (text) => {
+              expect(content).to.contain(text);
+            },
+          );
+        });
+    });
+
+    it('renders a link to register', () => {});
 
     it('allows to navigate between states', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();

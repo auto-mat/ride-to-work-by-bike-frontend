@@ -40,7 +40,7 @@ export default route(function (/* { store, ssrContext } */) {
     Router.beforeEach(async (to, from, next) => {
       const loginStore = useLoginStore();
       const isAuthenticated = await loginStore.validateAccessToken();
-      // if not authenticated and not on login page, redirect to login page
+      // if not authenticated and not on login or register page, redirect to login page
       if (
         !isAuthenticated &&
         !to.matched.some(
