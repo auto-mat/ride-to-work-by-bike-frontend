@@ -42,6 +42,9 @@ const selectorFormRegisterTextNoActiveChallenge =
 const selectorFormRegisterForm = 'form-register-form';
 const selectorEmailConfirmation = 'email-confirmation';
 const selectorEmailConfirmationText = 'email-confirmation-text';
+const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
+const selectorFormRegisterNewsletterSubscription =
+  'form-register-newsletter-subscription';
 
 // variables
 const iconSize = 18;
@@ -57,8 +60,6 @@ const {
   borderRadiusCardSmall,
   urlApiRegister,
 } = rideToWorkByBikeConfig;
-const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
-const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
 
 describe('<FormRegister>', () => {
   it('has translation for all strings', () => {
@@ -89,6 +90,7 @@ describe('<FormRegister>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(FormRegister, {
         props: {},
       });
@@ -227,6 +229,21 @@ describe('<FormRegister>', () => {
       ).should('not.exist');
     });
 
+    it('validates privacy policy correctly', () => {
+      // fill in email input to be able to test password
+      cy.dataCy(selectorFormRegisterEmail).find('input').type('qw123@qw.com');
+      // fill in password input to be able to test password confirm
+      cy.dataCy(selectorFormRegisterPasswordInput).type('12345a');
+      cy.dataCy(selectorFormRegisterPasswordConfirmInput).type('12345a');
+      // validate privacy policy
+      cy.dataCy(selectorFormRegisterSubmit).should('be.visible').click();
+      cy.dataCy(selectorFormRegisterPrivacyConsent).within(() => {
+        cy.contains(
+          i18n.global.t('register.form.messagePrivacyConsentRequired'),
+        ).should('be.visible');
+      });
+    });
+
     it('renders box with coordinator registration link', () => {
       const urlRegisterCoordinator = router.resolve({
         name: 'register-coordinator',
@@ -283,45 +300,6 @@ describe('<FormRegister>', () => {
         .and('have.attr', 'href', urlLogin)
         .and('contain', i18n.global.t('register.form.linkLogin'));
     });
-  });
-
-  context('no active challenge', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.mount(FormRegister, {
-        props: {},
-      });
-      cy.viewport('iphone-6');
-    });
-
-    it('shows a text with no active challenge', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(false);
-      expect(store.getIsActiveChallenge).to.equal(false);
-      cy.dataCy(selectorFormRegisterTextNoActiveChallenge)
-        .should('be.visible')
-        .and('have.css', 'font-size', `${fontSizeText}px`)
-        .and('have.css', 'font-weight', `${fontWeightText}`)
-        .and('have.color', white)
-        .and('contain', i18n.global.t('register.form.textNoActiveChallenge'));
-    });
-  });
-
-  context('active challenge', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.mount(FormRegister, {
-        props: {},
-      });
-      cy.viewport('iphone-6');
-    });
-
-    it('does not show a text with no active challenge', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(true);
-      expect(store.getIsActiveChallenge).to.equal(true);
-      cy.dataCy(selectorFormRegisterTextNoActiveChallenge).should('not.exist');
-    });
 
     it('shows an error if the registration fails', () => {
       const registerStore = useRegisterStore();
@@ -331,6 +309,14 @@ describe('<FormRegister>', () => {
       // form is visible, confirmation is not
       cy.dataCy(selectorFormRegisterForm).should('be.visible');
       cy.dataCy(selectorEmailConfirmation).should('not.exist');
+      // variables
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
       // intercept registration API call
       cy.intercept('POST', apiRegisterUrl, {
         statusCode: httpInternalServerErrorStatus,
@@ -361,6 +347,15 @@ describe('<FormRegister>', () => {
       // form is visible, confirmation is not
       cy.dataCy(selectorFormRegisterForm).should('be.visible');
       cy.dataCy(selectorEmailConfirmation).should('not.exist');
+      // variables
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
+      // intercept registration API call
       cy.intercept('POST', apiRegisterUrl, {
         statusCode: httpSuccessfullStatus,
         body: {
@@ -396,6 +391,152 @@ describe('<FormRegister>', () => {
           },
         );
       });
+    });
+  });
+
+  context('no active challenge', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormRegister, {
+        props: {},
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('shows a text with no active challenge', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(false);
+      expect(store.getIsActiveChallenge).to.equal(false);
+      cy.dataCy(selectorFormRegisterTextNoActiveChallenge)
+        .should('be.visible')
+        .and('have.css', 'font-size', `${fontSizeText}px`)
+        .and('have.css', 'font-weight', `${fontWeightText}`)
+        .and('have.color', white)
+        .and('contain', i18n.global.t('register.form.textNoActiveChallenge'));
+    });
+
+    it('shows checkboxes for privacy policy and newsletter subscription', () => {
+      // privacy policy
+      cy.dataCy(selectorFormRegisterPrivacyConsent)
+        .should('be.visible')
+        .and('have.css', 'font-size', `${fontSizeText}px`)
+        .and('have.css', 'font-weight', `${fontWeightText}`)
+        .and('have.color', white)
+        .and('contain', i18n.global.t('register.form.labelPrivacyConsent1'))
+        .and('contain', i18n.global.t('register.form.labelPrivacyConsentLink'))
+        .and('contain', i18n.global.t('register.form.labelPrivacyConsent2'));
+      // newsletter subscription
+      cy.dataCy(selectorFormRegisterNewsletterSubscription)
+        .should('be.visible')
+        .and('have.css', 'font-size', `${fontSizeText}px`)
+        .and('have.css', 'font-weight', `${fontWeightText}`)
+        .and('have.color', white)
+        .and(
+          'contain',
+          i18n.global.t('register.form.labelNewsletterSubscription'),
+        );
+    });
+
+    it('allows to submit form after filling fields', () => {
+      // variables
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
+      // intercept registration API call
+      cy.intercept('POST', apiRegisterUrl, {
+        statusCode: httpSuccessfullStatus,
+        body: {
+          email: testEmail,
+        },
+      }).as('registerRequest');
+      // fill in form
+      cy.dataCy(selectorFormRegisterEmail).find('input').type('qw123@qw.com');
+      cy.dataCy(selectorFormRegisterPasswordInput).type('12345a');
+      cy.dataCy(selectorFormRegisterPasswordConfirmInput).type('12345a');
+      // accept privacy policy
+      cy.dataCy(selectorFormRegisterPrivacyConsent)
+        .should('be.visible')
+        .click('topLeft');
+      // submit form
+      cy.dataCy(selectorFormRegisterSubmit).should('be.visible').click();
+      // check that form is submitted
+      cy.wait('@registerRequest')
+        .its('response.statusCode')
+        .should('be.equal', httpSuccessfullStatus)
+        .then(() => {
+          cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
+            'be.visible',
+          );
+          // confirm email is displayed
+          cy.dataCy(selectorEmailConfirmation).should('be.visible');
+        });
+    });
+  });
+
+  context('active challenge', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormRegister, {
+        props: {},
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('does not show a text with no active challenge', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(true);
+      expect(store.getIsActiveChallenge).to.equal(true);
+      cy.dataCy(selectorFormRegisterTextNoActiveChallenge).should('not.exist');
+    });
+
+    it('does not show checkboxes for privacy policy and newsletter subscription', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(true);
+      expect(store.getIsActiveChallenge).to.equal(true);
+      cy.dataCy(selectorFormRegisterPrivacyConsent).should('not.exist');
+      cy.dataCy(selectorFormRegisterNewsletterSubscription).should('not.exist');
+    });
+
+    it('allows to submit form after filling fields and accepting privacy policy', () => {
+      const store = useGlobalStore();
+      store.setIsActiveChallenge(true);
+      expect(store.getIsActiveChallenge).to.equal(true);
+      // variables
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
+      // intercept registration API call
+      cy.intercept('POST', apiRegisterUrl, {
+        statusCode: httpSuccessfullStatus,
+        body: {
+          email: testEmail,
+        },
+      }).as('registerRequest');
+      // fill in form
+      cy.dataCy(selectorFormRegisterEmail).find('input').type('qw123@qw.com');
+      cy.dataCy(selectorFormRegisterPasswordInput).type('12345a');
+      cy.dataCy(selectorFormRegisterPasswordConfirmInput).type('12345a');
+      // submit form
+      cy.dataCy(selectorFormRegisterSubmit).should('be.visible').click();
+      // check that form is submitted
+      cy.wait('@registerRequest')
+        .its('response.statusCode')
+        .should('be.equal', httpSuccessfullStatus)
+        .then(() => {
+          cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
+            'be.visible',
+          );
+          // confirm email is displayed
+          cy.dataCy(selectorEmailConfirmation).should('be.visible');
+        });
     });
   });
 });
