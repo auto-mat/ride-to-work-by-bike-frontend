@@ -7,7 +7,11 @@ import route from '../../../src/router';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
 import { useGlobalStore } from '../../stores/global';
 import { useRegisterStore } from '../../stores/register';
-import { httpSuccessfullStatus } from '../../../test/cypress/support/commonTests';
+import {
+  httpSuccessfullStatus,
+  httpInternalServerErrorStatus,
+} from '../../../test/cypress/support/commonTests';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
 // colors
 const { getPaletteColor } = colors;
@@ -37,6 +41,7 @@ const selectorFormRegisterTextNoActiveChallenge =
   'form-register-text-no-active-challenge';
 const selectorFormRegisterForm = 'form-register-form';
 const selectorEmailConfirmation = 'email-confirmation';
+const selectorEmailConfirmationText = 'email-confirmation-text';
 
 // variables
 const iconSize = 18;
@@ -45,9 +50,15 @@ const fontWeightText = 400;
 const router = route();
 const testEmail = 'test@test.com';
 const testPassword = '12345a';
-const { apiBase, colorWhiteOpacity, borderRadiusCardSmall, urlApiRegister } =
-  rideToWorkByBikeConfig;
-const apiRegisterUrl = `${apiBase}${urlApiRegister}`;
+const {
+  apiBase,
+  apiDefaultLang,
+  colorWhiteOpacity,
+  borderRadiusCardSmall,
+  urlApiRegister,
+} = rideToWorkByBikeConfig;
+const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
+const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
 
 describe('<FormRegister>', () => {
   it('has translation for all strings', () => {
@@ -312,7 +323,37 @@ describe('<FormRegister>', () => {
       cy.dataCy(selectorFormRegisterTextNoActiveChallenge).should('not.exist');
     });
 
-    it('allows to register with email and password', () => {
+    it.only('shows an error if the registration fails', () => {
+      const registerStore = useRegisterStore();
+      // default store state
+      expect(registerStore.getEmail).to.equal('');
+      expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
+      // form is visible, confirmation is not
+      cy.dataCy(selectorFormRegisterForm).should('be.visible');
+      cy.dataCy(selectorEmailConfirmation).should('not.exist');
+      // intercept registration API call
+      cy.intercept('POST', apiRegisterUrl, {
+        statusCode: httpInternalServerErrorStatus,
+      }).as('registerRequest');
+      // register
+      cy.wrap(registerStore.register(testEmail, testPassword)).then(
+        (response) => {
+          expect(response).to.deep.equal(null);
+          // form is visible, confirmation is not
+          cy.dataCy(selectorFormRegisterForm).should('be.visible');
+          cy.dataCy(selectorEmailConfirmation).should('not.exist');
+          // state does not change
+          expect(registerStore.getEmail).to.equal('');
+          expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
+          // error is shown
+          cy.contains(
+            i18n.global.t('register.apiMessageErrorWithMessage'),
+          ).should('be.visible');
+        },
+      );
+    });
+
+    it.only('allows to register with email and password', () => {
       const registerStore = useRegisterStore();
       // default store state
       expect(registerStore.getEmail).to.equal('');
@@ -327,14 +368,33 @@ describe('<FormRegister>', () => {
         },
       }).then(() => {
         // register
-        cy.wrap(registerStore.register(testEmail, testPassword)).then(() => {
-          // new store state
-          expect(registerStore.getEmail).to.equal(testEmail);
-          expect(registerStore.getIsAwaitingConfirmation).to.equal(true);
-          // show confirmation
-          cy.dataCy(selectorFormRegisterForm).should('not.exist');
-          cy.dataCy(selectorEmailConfirmation).should('be.visible');
-        });
+        cy.wrap(registerStore.register(testEmail, testPassword)).then(
+          (response) => {
+            // test function return value
+            expect(response).to.deep.equal({
+              email: testEmail,
+            });
+            // store state
+            expect(registerStore.getEmail).to.equal(testEmail);
+            expect(registerStore.getIsAwaitingConfirmation).to.equal(true);
+            // show confirmation
+            cy.dataCy(selectorFormRegisterForm).should('not.exist');
+            cy.dataCy(selectorEmailConfirmation).should('be.visible');
+            // email is shown in confirmation text
+            cy.dataCy(selectorEmailConfirmationText)
+              .should('be.visible')
+              .then(($el) => {
+                const content = $el.text();
+                cy.stripHtmlTags(
+                  i18n.global.t('register.form.textEmailConfirmation', {
+                    email: testEmail,
+                  }),
+                ).then((text) => {
+                  expect(content).to.equal(text);
+                });
+              });
+          },
+        );
       });
     });
   });

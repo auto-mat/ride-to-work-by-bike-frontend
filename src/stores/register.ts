@@ -34,13 +34,16 @@ export const useRegisterStore = defineStore('register', {
     setAwaitingConfirmation(awaiting: boolean): void {
       this.isAwaitingConfirmation = awaiting;
     },
-    async register(email: string, password: string): Promise<void> {
+    async register(
+      email: string,
+      password: string,
+    ): Promise<RegisterResponse | null> {
       const { apiFetch } = useApi();
       this.$log?.debug(`Register email <${email}>.`);
       this.$log?.debug(`Register password <${password}>.`);
       // register
       this.$log?.info('Post API registration details.');
-      const response = await apiFetch<RegisterResponse>({
+      const { data } = await apiFetch<RegisterResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiRegister,
         method: 'post',
         payload: {
@@ -51,10 +54,10 @@ export const useRegisterStore = defineStore('register', {
         logger: this.$log,
       });
 
-      if (response.data?.email) {
+      if (data?.email) {
         // set email in store
         this.$log?.info('Registration successful. Saving email to store.');
-        this.setEmail(response.data.email);
+        this.setEmail(data.email);
         this.$log?.debug(`Register store saved email <${this.getEmail}>.`);
         // set awaitingConfirmation in store
         this.$log?.info('Setting awaitingConfirmation flag.');
@@ -63,6 +66,8 @@ export const useRegisterStore = defineStore('register', {
           `Register store set awaitingConfirmation to <${this.getIsAwaitingConfirmation}>.`,
         );
       }
+
+      return data;
     },
   },
 
