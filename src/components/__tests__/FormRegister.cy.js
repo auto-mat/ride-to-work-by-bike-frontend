@@ -323,7 +323,7 @@ describe('<FormRegister>', () => {
       cy.dataCy(selectorFormRegisterTextNoActiveChallenge).should('not.exist');
     });
 
-    it.only('shows an error if the registration fails', () => {
+    it('shows an error if the registration fails', () => {
       const registerStore = useRegisterStore();
       // default store state
       expect(registerStore.getEmail).to.equal('');
@@ -353,7 +353,7 @@ describe('<FormRegister>', () => {
       );
     });
 
-    it.only('allows to register with email and password', () => {
+    it('allows to register with email and password', () => {
       const registerStore = useRegisterStore();
       // default store state
       expect(registerStore.getEmail).to.equal('');
