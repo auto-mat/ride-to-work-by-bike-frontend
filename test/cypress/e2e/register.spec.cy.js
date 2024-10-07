@@ -5,6 +5,7 @@ import {
   httpInternalServerErrorStatus,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
 describe('Register page', () => {
   context('desktop', () => {
@@ -53,64 +54,80 @@ describe('Register page', () => {
     });
 
     it('allows user to register with valid credentials', () => {
-      cy.get('@config').then((config) => {
-        // variables
-        const { apiBase, urlApiRegister } = config;
-        const apiRegisterUrl = `${apiBase}${urlApiRegister}`;
-        const testEmail = 'test@example.com';
-        const testPassword = 'validPassword123';
-        // intercept register request
-        cy.intercept('POST', apiRegisterUrl, {
-          statusCode: httpSuccessfullStatus,
-          body: { email: testEmail },
-        }).as('registerRequest');
-        // fill form
-        cy.dataCy('form-register-email').find('input').type(testEmail);
-        cy.dataCy('form-register-password-input').type(testPassword);
-        cy.dataCy('form-register-password-confirm-input').type(testPassword);
-        cy.dataCy('form-register-submit').click();
-        // wait for request to complete
-        cy.wait('@registerRequest').then((interception) => {
-          expect(interception.request.body).to.deep.equal({
-            email: testEmail,
-            password: testPassword,
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          // variables
+          const { apiBase, apiDefaultLang, urlApiRegister } = config;
+          const apiBaseUrl = getApiBaseUrlWithLang(
+            null,
+            apiBase,
+            apiDefaultLang,
+            i18n,
+          );
+          const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
+          const testEmail = 'test@example.com';
+          const testPassword = 'validPassword123';
+          // intercept register request
+          cy.intercept('POST', apiRegisterUrl, {
+            statusCode: httpSuccessfullStatus,
+            body: { email: testEmail },
+          }).as('registerRequest');
+          // fill form
+          cy.dataCy('form-register-email').find('input').type(testEmail);
+          cy.dataCy('form-register-password-input').type(testPassword);
+          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy('form-register-submit').click();
+          // wait for request to complete
+          cy.wait('@registerRequest').then((interception) => {
+            expect(interception.request.body).to.deep.equal({
+              email: testEmail,
+              password: testPassword,
+            });
           });
+          // check success message
+          cy.get('@i18n').then((i18n) => {
+            cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
+              'be.visible',
+            );
+          });
+          // email confirmation
+          cy.dataCy('email-confirmation').should('be.visible');
         });
-        // check success message
-        cy.get('@i18n').then((i18n) => {
-          cy.contains(
-            i18n.global.t('register.form.messageSuccess', { email: testEmail }),
-          ).should('be.visible');
-        });
-        // email confirmation
-        cy.dataCy('email-confirmation').should('be.visible');
       });
     });
 
     it('shows error message on registration failure', () => {
-      cy.get('@config').then((config) => {
-        // variables
-        const { apiBase, urlApiRegister } = config;
-        const apiRegisterUrl = `${apiBase}${urlApiRegister}`;
-        const testEmail = 'test@example.com';
-        const testPassword = 'validPassword123';
-        // intercept register request
-        cy.intercept('POST', apiRegisterUrl, {
-          statusCode: httpInternalServerErrorStatus,
-          body: { message: 'Registration failed' },
-        }).as('registerRequest');
-        // fill form
-        cy.dataCy('form-register-email').find('input').type(testEmail);
-        cy.dataCy('form-register-password-input').type(testPassword);
-        cy.dataCy('form-register-password-confirm-input').type(testPassword);
-        cy.dataCy('form-register-submit').click();
-        // wait for request to complete
-        cy.wait('@registerRequest');
-        // check error message
-        cy.get('@i18n').then((i18n) => {
-          cy.contains(
-            i18n.global.t('register.apiMessageErrorWithMessage'),
-          ).should('be.visible');
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          // variables
+          const { apiBase, apiDefaultLang, urlApiRegister } = config;
+          const apiBaseUrl = getApiBaseUrlWithLang(
+            null,
+            apiBase,
+            apiDefaultLang,
+            i18n,
+          );
+          const apiRegisterUrl = `${apiBaseUrl}${urlApiRegister}`;
+          const testEmail = 'test@example.com';
+          const testPassword = 'validPassword123';
+          // intercept register request
+          cy.intercept('POST', apiRegisterUrl, {
+            statusCode: httpInternalServerErrorStatus,
+            body: { message: 'Registration failed' },
+          }).as('registerRequest');
+          // fill form
+          cy.dataCy('form-register-email').find('input').type(testEmail);
+          cy.dataCy('form-register-password-input').type(testPassword);
+          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy('form-register-submit').click();
+          // wait for request to complete
+          cy.wait('@registerRequest');
+          // check error message
+          cy.get('@i18n').then((i18n) => {
+            cy.contains(
+              i18n.global.t('register.apiMessageErrorWithMessage'),
+            ).should('be.visible');
+          });
         });
       });
     });
