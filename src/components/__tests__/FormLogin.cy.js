@@ -62,6 +62,11 @@ describe('<FormLogin>', () => {
       'login.form',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'register',
+      i18n,
+    );
   });
 
   context('desktop', () => {
