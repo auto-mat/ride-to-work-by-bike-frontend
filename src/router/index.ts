@@ -36,15 +36,13 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  // turn off auth check if in Cypress tests
+  // turn off auth check if in Cypress tests (except for register tests)
   if (!window.Cypress || window.Cypress.spec.name === 'register.spec.cy.js') {
     Router.beforeEach(async (to, from, next) => {
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
-      console.log('isAuthenticated', isAuthenticated);
-      console.log('isEmailVerified', isEmailVerified);
 
       // if authenticated and not verified email, redirect to confirm email page
       if (
@@ -82,7 +80,6 @@ export default route(function (/* { store, ssrContext } */) {
             record.path === routesConf['register']['path'],
         )
       ) {
-        console.log('redirecting to login page');
         next({ path: routesConf['login']['path'] });
       }
       // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status
