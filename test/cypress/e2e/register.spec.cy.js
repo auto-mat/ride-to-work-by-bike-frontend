@@ -171,7 +171,7 @@ describe('Register page', () => {
             );
           });
           // redirect to confirm email page
-          cy.url().should('contain', routesConf['confirm_email']['path']);
+          cy.url().should('contain', routesConf['verify_email']['path']);
           cy.wait('@emailVerificationRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
               email: testEmail,
@@ -181,7 +181,7 @@ describe('Register page', () => {
             });
           });
 
-          // test navigating to app pages (not logged in and awaiting confirmation)
+          // test navigating to app pages (not logged in and email not verified)
           // routes page
           cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
           cy.url().should(
@@ -205,16 +205,16 @@ describe('Register page', () => {
           cy.visit('#' + routesConf['profile_details']['path']);
           cy.url().should('not.contain', routesConf['profile_details']['path']);
           cy.url().should('contain', routesConf['login']['path']);
-          // test navigating to login and register page (this is allowed when awaiting confirmation and not logged in)
+          // test navigating to login and register page (this is allowed when email not verified and not logged in)
           cy.visit('#' + routesConf['login']['path']);
           cy.url().should('contain', routesConf['login']['path']);
           cy.visit('#' + routesConf['register']['path']);
           cy.url().should('contain', routesConf['register']['path']);
-          // test navigating to confirm email page (this is allowed when awaiting confirmation)
-          cy.visit('#' + routesConf['confirm_email']['path']);
-          cy.url().should('contain', routesConf['confirm_email']['path']);
+          // test navigating to confirm email page (this is allowed when email not verified)
+          cy.visit('#' + routesConf['verify_email']['path']);
+          cy.url().should('contain', routesConf['verify_email']['path']);
 
-          // test awaiting confirmation state after logging in
+          // test email not verified state after logging in
           cy.visit('#' + routesConf['login']['path']);
           cy.url().should('contain', routesConf['login']['path']);
           // intercept login request
@@ -244,10 +244,10 @@ describe('Register page', () => {
                     // redirected to confirm email page
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
 
-                    // test navigating to app pages (logged in and awaiting confirmation)
+                    // test navigating to app pages (logged in and email not verified)
                     cy.visit(
                       '#' +
                         routesConf['routes_calendar']['children']['fullPath'],
@@ -258,7 +258,7 @@ describe('Register page', () => {
                     );
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     // results page
                     cy.visit('#' + routesConf['results']['path']);
@@ -268,7 +268,7 @@ describe('Register page', () => {
                     );
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     // community page
                     cy.visit('#' + routesConf['community']['path']);
@@ -278,7 +278,7 @@ describe('Register page', () => {
                     );
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     // prizes page
                     cy.visit('#' + routesConf['prizes']['path']);
@@ -288,7 +288,7 @@ describe('Register page', () => {
                     );
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     // profile page
                     cy.visit('#' + routesConf['profile_details']['path']);
@@ -298,24 +298,24 @@ describe('Register page', () => {
                     );
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
-                    // test navigating to login and register page (this is NOT allowed when awaiting confirmation and logged in)
+                    // test navigating to login and register page (this is NOT allowed when email not verified and logged in)
                     cy.visit('#' + routesConf['login']['path']);
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     cy.visit('#' + routesConf['register']['path']);
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
-                    // test navigating to confirm email page (this is allowed when awaiting confirmation)
-                    cy.visit('#' + routesConf['confirm_email']['path']);
+                    // test navigating to confirm email page (this is allowed when email not verified)
+                    cy.visit('#' + routesConf['verify_email']['path']);
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                   });
                 });
@@ -380,7 +380,7 @@ describe('Register page', () => {
             );
           });
           // redirect to confirm email page
-          cy.url().should('contain', routesConf['confirm_email']['path']);
+          cy.url().should('contain', routesConf['verify_email']['path']);
           // wait for email verification request to complete
           cy.wait('@emailVerificationRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -462,7 +462,7 @@ describe('Register page', () => {
             });
           });
           // redirect to confirm email page
-          cy.url().should('contain', routesConf['confirm_email']['path']);
+          cy.url().should('contain', routesConf['verify_email']['path']);
           // wait for email verification request to complete
           cy.wait('@emailVerificationRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -506,7 +506,7 @@ describe('Register page', () => {
                     // redirected to email confirmation page
                     cy.url().should(
                       'contain',
-                      routesConf['confirm_email']['path'],
+                      routesConf['verify_email']['path'],
                     );
                     cy.reload();
                     cy.wait('@emailVerificationRequest').then(
@@ -562,7 +562,7 @@ describe('Register page', () => {
                     cy.url().should('contain', routesConf['home']['path']);
                     cy.dataCy('index-title').should('be.visible');
                     // test navigating to confirm email page (this is NOT allowed when logged in and verified email)
-                    cy.visit('#' + routesConf['confirm_email']['path']);
+                    cy.visit('#' + routesConf['verify_email']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
                     cy.dataCy('index-title').should('be.visible');
                   });

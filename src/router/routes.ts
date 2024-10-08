@@ -28,12 +28,12 @@ const routes: RouteRecordRaw[] = [
   },
   // confirm email
   {
-    path: routesConf['confirm_email']['path'],
+    path: routesConf['verify_email']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
     children: [
       {
         path: '',
-        name: routesConf['confirm_email']['children']['name'],
+        name: routesConf['verify_email']['children']['name'],
         component: () => import('pages/ConfirmEmailPage.vue'),
       },
     ],

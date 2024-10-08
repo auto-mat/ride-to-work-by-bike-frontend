@@ -52,10 +52,10 @@ export default route(function (/* { store, ssrContext } */) {
         !isEmailVerified &&
         // only these pages are accessible when authenticated and not verified email
         !to.matched.some(
-          (record) => record.path === routesConf['confirm_email']['path'],
+          (record) => record.path === routesConf['verify_email']['path'],
         )
       ) {
-        next({ path: routesConf['confirm_email']['path'] });
+        next({ path: routesConf['verify_email']['path'] });
       }
       // if authenticated and on login page or register page or confirm email page, redirect to home page
       else if (
@@ -66,7 +66,7 @@ export default route(function (/* { store, ssrContext } */) {
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
-            record.path === routesConf['confirm_email']['path'],
+            record.path === routesConf['verify_email']['path'],
         )
       ) {
         next({ path: routesConf['home']['path'] });
@@ -94,7 +94,7 @@ export default route(function (/* { store, ssrContext } */) {
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
-            record.path === routesConf['confirm_email']['path'],
+            record.path === routesConf['verify_email']['path'],
         )
       ) {
         next({ path: routesConf['login']['path'] });

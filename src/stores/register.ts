@@ -81,9 +81,9 @@ export const useRegisterStore = defineStore('register', {
         // redirect to confirm email page
         if (this.$router) {
           this.$log?.info(
-            `Registration was succcesfull, redirect to <${routesConf['confirm_email']['path']}> URL.`,
+            `Registration was succcesfull, redirect to <${routesConf['verify_email']['path']}> URL.`,
           );
-          this.$router.push(routesConf['confirm_email']['path']);
+          this.$router.push(routesConf['verify_email']['path']);
         }
       }
 
