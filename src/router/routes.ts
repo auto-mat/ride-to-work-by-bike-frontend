@@ -26,7 +26,7 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-  // confirm email
+  // verify email
   {
     path: routesConf['verify_email']['path'],
     component: () => import('layouts/LoginRegisterLayout.vue'),
