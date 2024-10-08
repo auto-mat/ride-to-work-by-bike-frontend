@@ -1,15 +1,15 @@
 <script lang="ts">
 /**
- * ConfirmEmailPage Component
+ * VerifyEmailPage Component
  *
- * The `ConfirmEmailPage` renders the page with email confirmation.
+ * The `VerifyEmailPage` renders the page with email confirmation.
  *
  * @description
  * This component is used to prompt users to confirm their email address
  * after registration.
  *
  * @components
- * - `EmailConfirmation`: Component to handle email confirmation process.
+ * - `EmailVerification`: Component to handle email confirmation process.
  * - `LoginRegisterHeader`: Component to render page header.
  *
  * @layout
@@ -22,13 +22,13 @@
 import { defineComponent } from 'vue';
 
 // components
-import EmailConfirmation from 'components/register/EmailConfirmation.vue';
+import EmailVerification from 'components/register/EmailVerification.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
-  name: 'ConfirmEmailPage',
+  name: 'VerifyEmailPage',
   components: {
-    EmailConfirmation,
+    EmailVerification,
     LoginRegisterHeader,
   },
   setup() {
@@ -45,7 +45,7 @@ export default defineComponent({
 
       <div class="row q-mt-xl">
         <div class="col-12 col-md-4">
-          <email-confirmation />
+          <email-verification />
         </div>
       </div>
     </div>

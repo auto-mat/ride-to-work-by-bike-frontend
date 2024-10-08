@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import EmailConfirmation from 'components/register/EmailConfirmation.vue';
+import EmailVerification from 'components/register/EmailVerification.vue';
 import { i18n } from '../../boot/i18n';
 import { useRegisterStore } from '../../stores/register';
 import { routesConf } from '../../router/routes_conf';
@@ -11,16 +11,16 @@ const white = getPaletteColor('white');
 const whiteOpacity20 = changeAlpha(white, 0.2);
 
 // selectors
-const selectorEmailConfirmation = 'email-confirmation';
-const selectorEmailConfirmationTitle = 'email-confirmation-title';
-const selectorEmailConfirmationText = 'email-confirmation-text';
-const selectorEmailConfirmationWrongEmailHint =
-  'email-confirmation-wrong-email-hint';
-const selectorEmailConfirmationRegisterLink =
-  'email-confirmation-register-link';
-const selectorEmailConfirmationGraphics = 'email-confirmation-graphics';
-const selectorEmailConfirmationAvatar = 'email-confirmation-avatar';
-const selectorEmailConfirmationIcon = 'email-confirmation-icon';
+const selectorEmailVerification = 'email-verification';
+const selectorEmailVerificationTitle = 'email-verification-title';
+const selectorEmailVerificationText = 'email-verification-text';
+const selectorEmailVerificationWrongEmailHint =
+  'email-verification-wrong-email-hint';
+const selectorEmailVerificationRegisterLink =
+  'email-verification-register-link';
+const selectorEmailVerificationGraphics = 'email-verification-graphics';
+const selectorEmailVerificationAvatar = 'email-verification-avatar';
+const selectorEmailVerificationIcon = 'email-verification-icon';
 
 // variables
 const fontSizeTitle = 24;
@@ -31,14 +31,14 @@ const avatarSize = 64;
 const iconSize = 40;
 const testEmail = 'test@test.cz';
 
-describe('<EmailConfirmation>', () => {
+describe('<EmailVerification>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
         'linkRegister',
         'hintWrongEmail',
-        'textEmailConfirmation',
-        'titleEmailConfirmation',
+        'textEmailVerification',
+        'titleEmailVerification',
       ],
       'register.form',
       i18n,
@@ -48,7 +48,7 @@ describe('<EmailConfirmation>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(EmailConfirmation, {
+      cy.mount(EmailVerification, {
         props: {},
       });
       cy.viewport('macbook-16');
@@ -60,7 +60,7 @@ describe('<EmailConfirmation>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(EmailConfirmation, {
+      cy.mount(EmailVerification, {
         props: {},
       });
       cy.viewport('iphone-6');
@@ -72,29 +72,29 @@ describe('<EmailConfirmation>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.dataCy(selectorEmailConfirmation).should('be.visible');
+    cy.dataCy(selectorEmailVerification).should('be.visible');
     // title
-    cy.dataCy(selectorEmailConfirmationTitle)
+    cy.dataCy(selectorEmailVerificationTitle)
       .should('be.visible')
       .and('have.css', 'font-size', `${fontSizeTitle}px`)
       .and('have.css', 'font-weight', `${fontWeightTitle}`)
       .and('have.color', white)
-      .and('contain', i18n.global.t('register.form.titleEmailConfirmation'));
+      .and('contain', i18n.global.t('register.form.titleEmailVerification'));
     // text
     const store = useRegisterStore();
     store.setEmail(testEmail);
-    cy.dataCy(selectorEmailConfirmationText)
+    cy.dataCy(selectorEmailVerificationText)
       .should('be.visible')
       .and('contain', testEmail);
     // check inner html
-    cy.dataCy(selectorEmailConfirmationText)
+    cy.dataCy(selectorEmailVerificationText)
       .should('be.visible')
       .and('have.css', 'font-size', `${fontSizeText}px`)
       .and('have.css', 'font-weight', `${fontWeightText}`)
       .then(($el) => {
         const content = $el.text();
         cy.stripHtmlTags(
-          i18n.global.t('register.form.textEmailConfirmation', {
+          i18n.global.t('register.form.textEmailVerification', {
             email: testEmail,
           }),
         ).then((text) => {
@@ -102,14 +102,14 @@ function coreTests() {
         });
       });
     // wrong email hint
-    cy.dataCy(selectorEmailConfirmationWrongEmailHint)
+    cy.dataCy(selectorEmailVerificationWrongEmailHint)
       .should('be.visible')
       .and('have.css', 'font-size', `${fontSizeText}px`)
       .and('have.css', 'font-weight', `${fontWeightText}`)
       .and('have.color', white)
       .and('contain', i18n.global.t('register.form.hintWrongEmail'));
     // register link
-    cy.dataCy(selectorEmailConfirmationRegisterLink)
+    cy.dataCy(selectorEmailVerificationRegisterLink)
       .should('be.visible')
       .and('have.css', 'font-size', `${fontSizeText}px`)
       .and('have.css', 'font-weight', `${fontWeightText}`)
@@ -118,23 +118,23 @@ function coreTests() {
       .invoke('attr', 'href')
       .should('contain', routesConf['register']['path']);
     // graphics
-    cy.dataCy(selectorEmailConfirmationGraphics).should('be.visible');
+    cy.dataCy(selectorEmailVerificationGraphics).should('be.visible');
     // avatar
-    cy.dataCy(selectorEmailConfirmationAvatar)
+    cy.dataCy(selectorEmailVerificationAvatar)
       .should('be.visible')
       .and('have.backgroundColor', whiteOpacity20)
       .invoke('height')
       .should('eq', avatarSize);
-    cy.dataCy(selectorEmailConfirmationAvatar)
+    cy.dataCy(selectorEmailVerificationAvatar)
       .invoke('width')
       .should('eq', avatarSize);
     // icon
-    cy.dataCy(selectorEmailConfirmationIcon)
+    cy.dataCy(selectorEmailVerificationIcon)
       .should('be.visible')
       .and('have.color', white)
       .invoke('height')
       .should('eq', iconSize);
-    cy.dataCy(selectorEmailConfirmationIcon)
+    cy.dataCy(selectorEmailVerificationIcon)
       .invoke('width')
       .should('eq', iconSize);
   });

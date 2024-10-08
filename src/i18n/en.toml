@@ -556,9 +556,9 @@ messagePasswordConfirmRequired = "Please fill in the password"
 messagePasswordConfirmNotMatch = "Passwords don't match"
 messagePrivacyConsentRequired = "You must consent to the processing of personal data"
 submitRegister = "Register now"
-textEmailConfirmation = "<p>We have just sent an invitation to the Ride to Work by Bike system to your email <b>{email}</b>.</p><p>If you can't find it, please check your spam folder.</p>"
+textEmailVerification = "<p>We have just sent an invitation to the Ride to Work by Bike system to your email <b>{email}</b>.</p><p>If you can't find it, please check your spam folder.</p>"
 textNoActiveChallenge = "Currently, no challenge is active. You can still register, we will inform you as soon as we launch the next one."
-titleEmailConfirmation = "Continue by confirming your email"
+titleEmailVerification = "Continue by confirming your email"
 titleRegister = "Registration"
 
 [register.buttons]

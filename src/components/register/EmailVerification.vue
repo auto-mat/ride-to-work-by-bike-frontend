@@ -1,12 +1,12 @@
 <script lang="ts">
 /**
- * EmailConfirmation Component
+ * EmailVerification Component
  *
  * @description * Renders a confirmation message after user registers,
  * prompting user to confirm their address by clicking the link in the email.
  *
  * @example
- * <email-confirmation />
+ * <email-verification />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-103494&t=6I4I349ASWWgGjGu-1)
  */
@@ -23,7 +23,7 @@ import { routesConf } from '../../router/routes_conf';
 import { useRegisterStore } from '../../stores/register';
 
 export default defineComponent({
-  name: 'EmailConfirmation',
+  name: 'EmailVerification',
   setup() {
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
@@ -57,21 +57,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-primary text-white" data-cy="email-confirmation">
+  <div class="bg-primary text-white" data-cy="email-verification">
     <!-- Graphics -->
-    <div class="q-mb-lg" data-cy="email-confirmation-graphics">
+    <div class="q-mb-lg" data-cy="email-verification-graphics">
       <q-avatar
         size="64px"
         :style="{ backgroundColor: whiteOpacity20 }"
         :color="white"
-        data-cy="email-confirmation-avatar"
+        data-cy="email-verification-avatar"
       >
         <!-- Icon -->
         <q-icon
           size="40px"
           color="white"
           name="svguse:icons/email_confirmation/icons.svg#email"
-          data-cy="email-confirmation-icon"
+          data-cy="email-verification-icon"
         />
       </q-avatar>
     </div>
@@ -79,24 +79,24 @@ export default defineComponent({
     <div class="q-mb-lg">
       <h1
         class="text-h5 text-bold q-my-none"
-        data-cy="email-confirmation-title"
+        data-cy="email-verification-title"
       >
-        {{ $t('register.form.titleEmailConfirmation') }}
+        {{ $t('register.form.titleEmailVerification') }}
       </h1>
     </div>
     <!-- Text -->
     <div
-      data-cy="email-confirmation-text"
+      data-cy="email-verification-text"
       class="q-mb-xl"
-      v-html="$t('register.form.textEmailConfirmation', { email })"
+      v-html="$t('register.form.textEmailVerification', { email })"
     />
     <!-- Link: Register again -->
-    <div data-cy="email-confirmation-wrong-email-hint">
+    <div data-cy="email-verification-wrong-email-hint">
       {{ $t('register.form.hintWrongEmail') }}
       <router-link
         class="text-white"
         to="register"
-        data-cy="email-confirmation-register-link"
+        data-cy="email-verification-register-link"
         >{{ $t('register.form.linkRegister') }}</router-link
       >.
     </div>

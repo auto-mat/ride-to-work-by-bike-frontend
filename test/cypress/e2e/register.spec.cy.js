@@ -170,7 +170,7 @@ describe('Register page', () => {
               'be.visible',
             );
           });
-          // redirect to confirm email page
+          // redirect to verify email page
           cy.url().should('contain', routesConf['verify_email']['path']);
           cy.wait('@emailVerificationRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -210,7 +210,7 @@ describe('Register page', () => {
           cy.url().should('contain', routesConf['login']['path']);
           cy.visit('#' + routesConf['register']['path']);
           cy.url().should('contain', routesConf['register']['path']);
-          // test navigating to confirm email page (this is allowed when email not verified)
+          // test navigating to verify email page (this is allowed when email not verified)
           cy.visit('#' + routesConf['verify_email']['path']);
           cy.url().should('contain', routesConf['verify_email']['path']);
 
@@ -241,7 +241,7 @@ describe('Register page', () => {
                   cy.dataCy('form-login-submit-login').click();
                   // wait for login request to complete
                   cy.wait('@loginRequest').then(() => {
-                    // redirected to confirm email page
+                    // redirected to verify email page
                     cy.url().should(
                       'contain',
                       routesConf['verify_email']['path'],
@@ -311,7 +311,7 @@ describe('Register page', () => {
                       'contain',
                       routesConf['verify_email']['path'],
                     );
-                    // test navigating to confirm email page (this is allowed when email not verified)
+                    // test navigating to verify email page (this is allowed when email not verified)
                     cy.visit('#' + routesConf['verify_email']['path']);
                     cy.url().should(
                       'contain',
@@ -379,7 +379,7 @@ describe('Register page', () => {
               'be.visible',
             );
           });
-          // redirect to confirm email page
+          // redirect to verify email page
           cy.url().should('contain', routesConf['verify_email']['path']);
           // wait for email verification request to complete
           cy.wait('@emailVerificationRequest').then((interception) => {
@@ -461,7 +461,7 @@ describe('Register page', () => {
               email: testEmail,
             });
           });
-          // redirect to confirm email page
+          // redirect to verify email page
           cy.url().should('contain', routesConf['verify_email']['path']);
           // wait for email verification request to complete
           cy.wait('@emailVerificationRequest').then((interception) => {
@@ -503,7 +503,7 @@ describe('Register page', () => {
                   cy.dataCy('form-login-submit-login').click();
                   // wait for login request to complete
                   cy.wait('@loginRequest').then(() => {
-                    // redirected to email confirmation page
+                    // redirected to email verification page
                     cy.url().should(
                       'contain',
                       routesConf['verify_email']['path'],
@@ -561,7 +561,7 @@ describe('Register page', () => {
                     cy.visit('#' + routesConf['register']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
                     cy.dataCy('index-title').should('be.visible');
-                    // test navigating to confirm email page (this is NOT allowed when logged in and verified email)
+                    // test navigating to verify email page (this is NOT allowed when logged in and verified email)
                     cy.visit('#' + routesConf['verify_email']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
                     cy.dataCy('index-title').should('be.visible');

@@ -34,7 +34,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: '',
         name: routesConf['verify_email']['children']['name'],
-        component: () => import('pages/ConfirmEmailPage.vue'),
+        component: () => import('pages/VerifyEmailPage.vue'),
       },
     ],
   },

@@ -559,9 +559,9 @@ messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
 messagePrivacyConsentRequired = "Musíte souhlasit se zpracováním osobních údajů"
 submitRegister = "Registrovat se"
-textEmailConfirmation = "<p>Právě jsme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na kole.</p><p>Pokud ji nemůžete najít, koukněte i do spamu.</p>"
+textEmailVerification = "<p>Právě jsme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na kole.</p><p>Pokud ji nemůžete najít, koukněte i do spamu.</p>"
 textNoActiveChallenge = "Momentálně žádná z výzev Do práce na kole neprobíhá. Můžete se zaregistrovat, rádi vás informujeme, jakmile vypíšeme další."
-titleEmailConfirmation = "Pokračujte potvrzením e-mailu"
+titleEmailVerification = "Pokračujte potvrzením e-mailu"
 titleRegister = "Registrace"
 
 [register.buttons]
