@@ -11,6 +11,11 @@ transportType = "Způsoby dopravy"
 [breadcrumb]
 results = "Výsledky"
 
+[checkEmailVerification]
+apiMessageError = "Ověření emailu se nezdařilo."
+apiMessageErrorWithMessage = "Ověření emailu se nezdařilo. Chyba: {error}"
+apiMessageSuccess = "Email byl úspěšně ověřen."
+
 [drawerMenu]
 buttonParticipation = "Účast"
 buttonCityAdministration = "Správa města"

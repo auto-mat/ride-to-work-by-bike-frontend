@@ -11,6 +11,11 @@ transportType = "Means of transport"
 [breadcrumb]
 results = "Results"
 
+[checkEmailVerification]
+apiMessageError = "Email verification failed."
+apiMessageErrorWithMessage = "Email verification failed. Error: {error}"
+apiMessageSuccess = "Email was successfully verified."
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"

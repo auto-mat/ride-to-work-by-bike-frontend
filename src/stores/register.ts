@@ -22,6 +22,10 @@ interface RegisterResponse {
   email: string;
 }
 
+interface HasVerifiedEmailResponse {
+  validated: boolean;
+}
+
 export const useRegisterStore = defineStore('register', {
   state: () => ({
     // property set in pinia.js boot file
@@ -84,6 +88,33 @@ export const useRegisterStore = defineStore('register', {
       }
 
       return data;
+    },
+
+    async checkEmailVerification(): Promise<void> {
+      const { apiFetch } = useApi();
+      this.$log?.debug(`Checking email verification for <${this.email}>.`);
+      // check email verification
+      const { data } = await apiFetch<HasVerifiedEmailResponse>({
+        endpoint: rideToWorkByBikeConfig.urlApiHasUserVerifiedEmail,
+        method: 'post',
+        payload: {
+          email: this.email,
+        },
+        translationKey: 'checkEmailVerification',
+        showSuccessMessage: false,
+        logger: this.$log,
+      });
+
+      // type check data
+      if (data && typeof data?.validated === 'boolean') {
+        this.$log?.info('Email verification check successful.');
+        this.setIsEmailVerified(data.validated);
+        this.$log?.debug(
+          `Email verified status set to <${this.isEmailVerified}>.`,
+        );
+      } else {
+        this.$log?.warn('Email verification check failed or returned no data.');
+      }
     },
   },
 
