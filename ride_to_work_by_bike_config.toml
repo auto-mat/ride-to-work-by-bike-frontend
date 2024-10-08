@@ -72,6 +72,7 @@ apiBase = "https://test.dopracenakole.cz/rest/"
 apiVersion = "1.0"
 apiDefaultLang = "cs"
 
+urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/"
 urlApiLogin = "auth/login/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/register/"

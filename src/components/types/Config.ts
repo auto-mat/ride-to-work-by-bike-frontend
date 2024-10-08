@@ -42,6 +42,7 @@ export interface ConfigGlobal {
   apiBase: string;
   apiVersion: string;
   apiDefaultLang: string;
+  urlApiHasUserVerifiedEmail: string;
   urlApiLogin: string;
   urlApiRefresh: string;
   urlApiRegister: string;
