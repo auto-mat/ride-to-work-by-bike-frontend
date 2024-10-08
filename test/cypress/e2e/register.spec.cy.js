@@ -8,7 +8,22 @@ import {
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
+// selectors
 const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
+const selectorFormRegisterEmail = 'form-register-email';
+const selectorFormRegisterPasswordInput = 'form-register-password-input';
+const selectorFormRegisterPasswordConfirmInput =
+  'form-register-password-confirm-input';
+const selectorFormRegisterSubmit = 'form-register-submit';
+const selectorFormLoginEmail = 'form-login-email';
+const selectorFormLoginPasswordInput = 'form-login-password-input';
+const selectorFormLoginSubmit = 'form-login-submit-login';
+const selectorIndexTitle = 'index-title';
+const selectorRoutesPageTitle = 'routes-page-title';
+const selectorResultsPageTitle = 'results-page-title';
+const selectorCommunityPageTitle = 'community-page-title';
+const selectorPrizesPageTitle = 'prizes-page-title';
+const selectorProfilePageTitle = 'profile-page-title';
 
 // variables
 const testEmail = 'test@example.com';
@@ -90,14 +105,16 @@ describe('Register page', () => {
             body: { message: 'Registration failed' },
           }).as('registerRequest');
           // fill form
-          cy.dataCy('form-register-email').find('input').type(testEmail);
-          cy.dataCy('form-register-password-input').type(testPassword);
-          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy(selectorFormRegisterEmail).find('input').type(testEmail);
+          cy.dataCy(selectorFormRegisterPasswordInput).type(testPassword);
+          cy.dataCy(selectorFormRegisterPasswordConfirmInput).type(
+            testPassword,
+          );
           // accept privacy policy
           cy.dataCy(selectorFormRegisterPrivacyConsent)
             .should('be.visible')
             .click('topLeft');
-          cy.dataCy('form-register-submit').click();
+          cy.dataCy(selectorFormRegisterSubmit).click();
           // wait for request to complete
           cy.wait('@registerRequest');
           // check error message
@@ -142,14 +159,16 @@ describe('Register page', () => {
             body: { validated: false },
           }).as('emailVerificationRequest');
           // fill form
-          cy.dataCy('form-register-email').find('input').type(testEmail);
-          cy.dataCy('form-register-password-input').type(testPassword);
-          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy(selectorFormRegisterEmail).find('input').type(testEmail);
+          cy.dataCy(selectorFormRegisterPasswordInput).type(testPassword);
+          cy.dataCy(selectorFormRegisterPasswordConfirmInput).type(
+            testPassword,
+          );
           // accept privacy policy
           cy.dataCy(selectorFormRegisterPrivacyConsent)
             .should('be.visible')
             .click('topLeft');
-          cy.dataCy('form-register-submit').click();
+          cy.dataCy(selectorFormRegisterSubmit).click();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -232,9 +251,11 @@ describe('Register page', () => {
                 cy.clock().then((clock) => {
                   clock.setSystemTime(systemTime);
                   // login
-                  cy.dataCy('form-login-email').find('input').type(testEmail);
-                  cy.dataCy('form-login-password-input').type(testPassword);
-                  cy.dataCy('form-login-submit-login').click();
+                  cy.dataCy(selectorFormLoginEmail)
+                    .find('input')
+                    .type(testEmail);
+                  cy.dataCy(selectorFormLoginPasswordInput).type(testPassword);
+                  cy.dataCy(selectorFormLoginSubmit).click();
                   // wait for login request to complete
                   cy.wait('@loginRequest').then(() => {
                     // redirected to verify email page
@@ -351,14 +372,16 @@ describe('Register page', () => {
             body: { validated: false },
           }).as('emailVerificationRequest');
           // fill form
-          cy.dataCy('form-register-email').find('input').type(testEmail);
-          cy.dataCy('form-register-password-input').type(testPassword);
-          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy(selectorFormRegisterEmail).find('input').type(testEmail);
+          cy.dataCy(selectorFormRegisterPasswordInput).type(testPassword);
+          cy.dataCy(selectorFormRegisterPasswordConfirmInput).type(
+            testPassword,
+          );
           // accept privacy policy
           cy.dataCy(selectorFormRegisterPrivacyConsent)
             .should('be.visible')
             .click('topLeft');
-          cy.dataCy('form-register-submit').click();
+          cy.dataCy(selectorFormRegisterSubmit).click();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -438,15 +461,17 @@ describe('Register page', () => {
             body: { validated: false },
           }).as('emailVerificationRequest');
           // fill form
-          cy.dataCy('form-register-email').find('input').type(testEmail);
-          cy.dataCy('form-register-password-input').type(testPassword);
-          cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          cy.dataCy(selectorFormRegisterEmail).find('input').type(testEmail);
+          cy.dataCy(selectorFormRegisterPasswordInput).type(testPassword);
+          cy.dataCy(selectorFormRegisterPasswordConfirmInput).type(
+            testPassword,
+          );
           // accept privacy policy
           cy.dataCy(selectorFormRegisterPrivacyConsent)
             .should('be.visible')
             .click('topLeft');
           // submit register form
-          cy.dataCy('form-register-submit').click();
+          cy.dataCy(selectorFormRegisterSubmit).click();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             expect(interception.request.body).to.deep.equal({
@@ -494,9 +519,11 @@ describe('Register page', () => {
                 cy.clock().then((clock) => {
                   clock.setSystemTime(systemTime);
                   // login
-                  cy.dataCy('form-login-email').find('input').type(testEmail);
-                  cy.dataCy('form-login-password-input').type(testPassword);
-                  cy.dataCy('form-login-submit-login').click();
+                  cy.dataCy(selectorFormLoginEmail)
+                    .find('input')
+                    .type(testEmail);
+                  cy.dataCy(selectorFormLoginPasswordInput).type(testPassword);
+                  cy.dataCy(selectorFormLoginSubmit).click();
                   // wait for login request to complete
                   cy.wait('@loginRequest').then(() => {
                     // redirected to email verification page
@@ -517,7 +544,7 @@ describe('Register page', () => {
                     );
                     // redirected to home page
                     cy.url().should('contain', routesConf['home']['path']);
-                    cy.dataCy('index-title').should('be.visible');
+                    cy.dataCy(selectorIndexTitle).should('be.visible');
                     // test navigating to app pages (logged in and verified email)
                     cy.visit(
                       '#' +
@@ -527,19 +554,19 @@ describe('Register page', () => {
                       'contain',
                       routesConf['routes_calendar']['children']['fullPath'],
                     );
-                    cy.dataCy('routes-page-title').should('be.visible');
+                    cy.dataCy(selectorRoutesPageTitle).should('be.visible');
                     // results page
                     cy.visit('#' + routesConf['results']['path']);
                     cy.url().should('contain', routesConf['results']['path']);
-                    cy.dataCy('results-page-title').should('be.visible');
+                    cy.dataCy(selectorResultsPageTitle).should('be.visible');
                     // community page
                     cy.visit('#' + routesConf['community']['path']);
                     cy.url().should('contain', routesConf['community']['path']);
-                    cy.dataCy('community-page-title').should('be.visible');
+                    cy.dataCy(selectorCommunityPageTitle).should('be.visible');
                     // prizes page
                     cy.visit('#' + routesConf['prizes']['path']);
                     cy.url().should('contain', routesConf['prizes']['path']);
-                    cy.dataCy('prizes-page-title').should('be.visible');
+                    cy.dataCy(selectorPrizesPageTitle).should('be.visible');
                     // profile page
                     cy.visit(
                       '#' +
@@ -549,18 +576,18 @@ describe('Register page', () => {
                       'contain',
                       routesConf['profile_details']['children']['fullPath'],
                     );
-                    cy.dataCy('profile-page-title').should('be.visible');
+                    cy.dataCy(selectorProfilePageTitle).should('be.visible');
                     // test navigating to login and register page (this is NOT allowed when logged in and verified email)
                     cy.visit('#' + routesConf['login']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
-                    cy.dataCy('index-title').should('be.visible');
+                    cy.dataCy(selectorIndexTitle).should('be.visible');
                     cy.visit('#' + routesConf['register']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
-                    cy.dataCy('index-title').should('be.visible');
+                    cy.dataCy(selectorIndexTitle).should('be.visible');
                     // test navigating to verify email page (this is NOT allowed when logged in and verified email)
                     cy.visit('#' + routesConf['verify_email']['path']);
                     cy.url().should('contain', routesConf['home']['path']);
-                    cy.dataCy('index-title').should('be.visible');
+                    cy.dataCy(selectorIndexTitle).should('be.visible');
                   });
                 });
               },
