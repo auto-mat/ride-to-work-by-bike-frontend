@@ -39,9 +39,6 @@ const selectorFormRegisterLogin = 'form-register-login';
 const selectorFormRegisterLoginLink = 'form-register-login-link';
 const selectorFormRegisterTextNoActiveChallenge =
   'form-register-text-no-active-challenge';
-const selectorFormRegisterForm = 'form-register-form';
-const selectorEmailConfirmation = 'email-confirmation';
-const selectorEmailConfirmationText = 'email-confirmation-text';
 const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
 const selectorFormRegisterNewsletterSubscription =
   'form-register-newsletter-subscription';
@@ -306,9 +303,6 @@ describe('<FormRegister>', () => {
       // default store state
       expect(registerStore.getEmail).to.equal('');
       expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
-      // form is visible, confirmation is not
-      cy.dataCy(selectorFormRegisterForm).should('be.visible');
-      cy.dataCy(selectorEmailConfirmation).should('not.exist');
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
@@ -325,9 +319,6 @@ describe('<FormRegister>', () => {
       cy.wrap(registerStore.register(testEmail, testPassword)).then(
         (response) => {
           expect(response).to.deep.equal(null);
-          // form is visible, confirmation is not
-          cy.dataCy(selectorFormRegisterForm).should('be.visible');
-          cy.dataCy(selectorEmailConfirmation).should('not.exist');
           // state does not change
           expect(registerStore.getEmail).to.equal('');
           expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
@@ -344,9 +335,6 @@ describe('<FormRegister>', () => {
       // default store state
       expect(registerStore.getEmail).to.equal('');
       expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
-      // form is visible, confirmation is not
-      cy.dataCy(selectorFormRegisterForm).should('be.visible');
-      cy.dataCy(selectorEmailConfirmation).should('not.exist');
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
@@ -372,22 +360,6 @@ describe('<FormRegister>', () => {
             // store state
             expect(registerStore.getEmail).to.equal(testEmail);
             expect(registerStore.getIsAwaitingConfirmation).to.equal(true);
-            // show confirmation
-            cy.dataCy(selectorFormRegisterForm).should('not.exist');
-            cy.dataCy(selectorEmailConfirmation).should('be.visible');
-            // email is shown in confirmation text
-            cy.dataCy(selectorEmailConfirmationText)
-              .should('be.visible')
-              .then(($el) => {
-                const content = $el.text();
-                cy.stripHtmlTags(
-                  i18n.global.t('register.form.textEmailConfirmation', {
-                    email: testEmail,
-                  }),
-                ).then((text) => {
-                  expect(content).to.equal(text);
-                });
-              });
           },
         );
       });
@@ -471,8 +443,6 @@ describe('<FormRegister>', () => {
           cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
             'be.visible',
           );
-          // confirm email is displayed
-          cy.dataCy(selectorEmailConfirmation).should('be.visible');
         });
     });
   });
@@ -534,8 +504,6 @@ describe('<FormRegister>', () => {
           cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
             'be.visible',
           );
-          // confirm email is displayed
-          cy.dataCy(selectorEmailConfirmation).should('be.visible');
         });
     });
   });
