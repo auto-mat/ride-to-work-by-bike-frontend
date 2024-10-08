@@ -27,20 +27,20 @@ export const useRegisterStore = defineStore('register', {
     // property set in pinia.js boot file
     $log: null as Logger | null,
     email: '',
-    isAwaitingConfirmation: false,
+    isEmailVerified: false,
   }),
 
   getters: {
     getEmail: (state): string => state.email,
-    getIsAwaitingConfirmation: (state): boolean => state.isAwaitingConfirmation,
+    getIsEmailVerified: (state): boolean => state.isEmailVerified,
   },
 
   actions: {
     setEmail(email: string): void {
       this.email = email;
     },
-    setAwaitingConfirmation(awaiting: boolean): void {
-      this.isAwaitingConfirmation = awaiting;
+    setIsEmailVerified(awaiting: boolean): void {
+      this.isEmailVerified = awaiting;
     },
     async register(
       email: string,
@@ -67,11 +67,11 @@ export const useRegisterStore = defineStore('register', {
         this.$log?.info('Registration successful. Saving email to store.');
         this.setEmail(data.email);
         this.$log?.debug(`Register store saved email <${this.getEmail}>.`);
-        // set isAwaitingConfirmation in store
-        this.$log?.info('Setting isAwaitingConfirmation flag.');
-        this.setAwaitingConfirmation(true);
+        // set isEmailVerified in store
+        this.$log?.info('Setting isEmailVerified flag.');
+        this.setIsEmailVerified(false);
         this.$log?.debug(
-          `Register store set isAwaitingConfirmation to <${this.getIsAwaitingConfirmation}>.`,
+          `Register store set isEmailVerified to <${this.getIsEmailVerified}>.`,
         );
 
         // redirect to confirm email page
@@ -88,6 +88,6 @@ export const useRegisterStore = defineStore('register', {
   },
 
   persist: {
-    pick: ['email', 'isAwaitingConfirmation'],
+    pick: ['email', 'isEmailVerified'],
   },
 });

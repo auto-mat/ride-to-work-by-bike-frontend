@@ -302,7 +302,7 @@ describe('<FormRegister>', () => {
       const registerStore = useRegisterStore();
       // default store state
       expect(registerStore.getEmail).to.equal('');
-      expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
+      expect(registerStore.getIsEmailVerified).to.equal(false);
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
@@ -321,7 +321,7 @@ describe('<FormRegister>', () => {
           expect(response).to.deep.equal(null);
           // state does not change
           expect(registerStore.getEmail).to.equal('');
-          expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
+          expect(registerStore.getIsEmailVerified).to.equal(false);
           // error is shown
           cy.contains(
             i18n.global.t('register.apiMessageErrorWithMessage'),
@@ -334,7 +334,7 @@ describe('<FormRegister>', () => {
       const registerStore = useRegisterStore();
       // default store state
       expect(registerStore.getEmail).to.equal('');
-      expect(registerStore.getIsAwaitingConfirmation).to.equal(false);
+      expect(registerStore.getIsEmailVerified).to.equal(false);
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
@@ -359,7 +359,7 @@ describe('<FormRegister>', () => {
             });
             // store state
             expect(registerStore.getEmail).to.equal(testEmail);
-            expect(registerStore.getIsAwaitingConfirmation).to.equal(true);
+            expect(registerStore.getIsEmailVerified).to.equal(false);
           },
         );
       });

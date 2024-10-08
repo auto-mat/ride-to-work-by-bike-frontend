@@ -42,13 +42,12 @@ export default route(function (/* { store, ssrContext } */) {
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
-      const isAwaitingConfirmation: boolean =
-        registerStore.getIsAwaitingConfirmation;
+      const isEmailVerified: boolean = registerStore.getIsEmailVerified;
 
       // if authenticated but awaiting confirmation, redirect to confirm email page
       if (
         isAuthenticated &&
-        isAwaitingConfirmation &&
+        !isEmailVerified &&
         // only these pages are accessible when authenticated and awaiting confirmation
         !to.matched.some(
           (record) => record.path === routesConf['confirm_email']['path'],
@@ -59,7 +58,7 @@ export default route(function (/* { store, ssrContext } */) {
       // if authenticated and on login page or register page or confirm email page, redirect to home page
       else if (
         isAuthenticated &&
-        !isAwaitingConfirmation &&
+        isEmailVerified &&
         // these pages are not accessible when authenticated and confirmed
         to.matched.some(
           (record) =>
@@ -73,7 +72,7 @@ export default route(function (/* { store, ssrContext } */) {
       // if not authenticated and not on login or register or confirm email page, redirect to login page
       else if (
         !isAuthenticated &&
-        !isAwaitingConfirmation &&
+        isEmailVerified &&
         // only these pages are accessible when not authenticated
         !to.matched.some(
           (record) =>
@@ -86,7 +85,7 @@ export default route(function (/* { store, ssrContext } */) {
       // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status
       else if (
         !isAuthenticated &&
-        isAwaitingConfirmation &&
+        !isEmailVerified &&
         // only these pages are accessible when not authenticated and awaiting confirmation
         !to.matched.some(
           (record) =>
