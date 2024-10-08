@@ -7,6 +7,8 @@ import {
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
+const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
+
 describe('Register page', () => {
   context('desktop', () => {
     beforeEach(() => {
@@ -76,6 +78,10 @@ describe('Register page', () => {
           cy.dataCy('form-register-email').find('input').type(testEmail);
           cy.dataCy('form-register-password-input').type(testPassword);
           cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          // accept privacy policy
+          cy.dataCy(selectorFormRegisterPrivacyConsent)
+            .should('be.visible')
+            .click('topLeft');
           cy.dataCy('form-register-submit').click();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
@@ -119,6 +125,10 @@ describe('Register page', () => {
           cy.dataCy('form-register-email').find('input').type(testEmail);
           cy.dataCy('form-register-password-input').type(testPassword);
           cy.dataCy('form-register-password-confirm-input').type(testPassword);
+          // accept privacy policy
+          cy.dataCy(selectorFormRegisterPrivacyConsent)
+            .should('be.visible')
+            .click('topLeft');
           cy.dataCy('form-register-submit').click();
           // wait for request to complete
           cy.wait('@registerRequest');
