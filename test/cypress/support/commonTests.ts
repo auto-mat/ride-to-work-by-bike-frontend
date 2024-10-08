@@ -181,3 +181,10 @@ export const httpInternalServerErrorStatus = 500;
 export const httpTooManyRequestsStatus = 429;
 export const httpTooManyRequestsStatusMessage = `HTTP status code ${httpTooManyRequestsStatus} Too Many Requests ("rate limiting").`;
 export const failOnStatusCode = false;
+
+// access token expiration time: Tuesday 24. September 2024 22:36:03
+const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
+const timeUntilRefresh = 60;
+export const timeUntilExpiration = timeUntilRefresh * 2;
+export const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min before JWT expires

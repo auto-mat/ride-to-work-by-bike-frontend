@@ -3,6 +3,7 @@ import {
   testBackgroundImage,
   httpSuccessfullStatus,
   httpInternalServerErrorStatus,
+  systemTime,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
@@ -12,11 +13,6 @@ const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
 // variables
 const testEmail = 'test@example.com';
 const testPassword = 'validPassword123';
-const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
-const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
-const timeUntilRefresh = 60;
-const timeUntilExpiration = timeUntilRefresh * 2;
-const systemTime = fixtureTokenExpirationTime - timeUntilExpiration;
 
 describe('Register page', () => {
   context('desktop', () => {
