@@ -1,35 +1,34 @@
 <script lang="ts">
 /**
- * RegisterPage Component
+ * ConfirmEmailPage Component
  *
- * The `RegisterPage` renders the page with login form and password reset form.
+ * The `ConfirmEmailPage` renders the page with email confirmation.
  *
  * @description
- * This component is used to allow user to login into their account. Or
- * reset their password. It allows login via Google and Facebook accounts.
- * It contains links to App stores.
+ * This component is used to prompt users to confirm their email address
+ * after registration.
  *
  * @components
- * - `FormRegister`: Component to render registration form.
+ * - `EmailConfirmation`: Component to handle email confirmation process.
  * - `LoginRegisterHeader`: Component to render page header.
  *
  * @layout
  * - `LoginRegisterLayout`: Displayed in the `LoginRegisterLayout` template.
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6356%3A25412&mode=dev)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-103206&t=wJyiVeMuR4PtXnLz-1)
  */
 
 // libraries
 import { defineComponent } from 'vue';
 
 // components
-import FormRegister from 'components/register/FormRegister.vue';
+import EmailConfirmation from 'components/register/EmailConfirmation.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
-  name: 'RegisterPage',
+  name: 'ConfirmEmailPage',
   components: {
-    FormRegister,
+    EmailConfirmation,
     LoginRegisterHeader,
   },
   setup() {
@@ -46,7 +45,7 @@ export default defineComponent({
 
       <div class="row q-mt-xl">
         <div class="col-12 col-md-4">
-          <form-register />
+          <email-confirmation />
         </div>
       </div>
     </div>

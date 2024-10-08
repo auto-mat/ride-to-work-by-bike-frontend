@@ -26,6 +26,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // confirm email
+  {
+    path: routesConf['confirm_email']['path'],
+    component: () => import('layouts/LoginRegisterLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['confirm_email']['children']['name'],
+        component: () => import('pages/ConfirmEmailPage.vue'),
+      },
+    ],
+  },
   // login
   {
     path: routesConf['login']['path'],
