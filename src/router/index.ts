@@ -37,56 +37,33 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   // turn off auth check if in Cypress tests
-  if (!window.Cypress) {
+  if (!window.Cypress || window.Cypress.spec.name === 'register.spec.cy.js') {
     Router.beforeEach(async (to, from, next) => {
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isAwaitingConfirmation: boolean =
         registerStore.getIsAwaitingConfirmation;
-      // if not authenticated and not on login or register or confirm email page, redirect to login page
-      if (
-        !isAuthenticated &&
-        // route is not one of the allowed pages
-        !to.matched.some(
-          (record) =>
-            record.path === routesConf['login']['path'] ||
-            record.path === routesConf['register']['path'],
-        )
-      ) {
-        next({ path: routesConf['login']['path'] });
-      } else {
-        next();
-      }
-      // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status
-      if (
-        !isAwaitingConfirmation &&
-        to.path === routesConf['confirm_email']['path']
-      ) {
-        if (isAuthenticated) {
-          next({ path: routesConf['home']['path'] });
-        } else {
-          next({ path: routesConf['login']['path'] });
-        }
-      }
+
       // if authenticated but awaiting confirmation, redirect to confirm email page
       if (
         isAuthenticated &&
         isAwaitingConfirmation &&
-        // route is not one of the allowed pages
+        // only these pages are accessible when authenticated and awaiting confirmation
         !to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
-            record.path === routesConf['register']['path'],
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['confirm_email']['path'],
         )
       ) {
         next({ path: routesConf['confirm_email']['path'] });
       }
       // if authenticated and on login page or register page or confirm email page, redirect to home page
-      if (
+      else if (
         isAuthenticated &&
         !isAwaitingConfirmation &&
-        // pages inaccessible when logged in and confirmed
+        // these pages are not accessible when authenticated and confirmed
         to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
@@ -95,6 +72,37 @@ export default route(function (/* { store, ssrContext } */) {
         )
       ) {
         next({ path: routesConf['home']['path'] });
+      }
+      // if not authenticated and not on login or register or confirm email page, redirect to login page
+      else if (
+        !isAuthenticated &&
+        !isAwaitingConfirmation &&
+        // only these pages are accessible when not authenticated
+        !to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'],
+        )
+      ) {
+        next({ path: routesConf['login']['path'] });
+      }
+      // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status
+      else if (
+        !isAuthenticated &&
+        isAwaitingConfirmation &&
+        // only these pages are accessible when not authenticated and awaiting confirmation
+        !to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['confirm_email']['path'],
+        )
+      ) {
+        next({ path: routesConf['login']['path'] });
+      }
+      // pass
+      else {
+        next();
       }
     });
   }
