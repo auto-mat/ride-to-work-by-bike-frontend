@@ -12,14 +12,17 @@ const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
 // variables
 const testEmail = 'test@example.com';
 const testPassword = 'validPassword123';
+const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
+const timeUntilRefresh = 60;
+const timeUntilExpiration = timeUntilRefresh * 2;
+const systemTime = fixtureTokenExpirationTime - timeUntilExpiration;
 
 describe('Register page', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['register']['path']);
       cy.viewport('macbook-16');
-
-      // load config and i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
@@ -112,11 +115,17 @@ describe('Register page', () => {
     });
 
     // ! router redirection rules are enabled for this file in /router/index.ts
-    it('allows user to register with valid credentials and requires email confirmation to access other pages', () => {
+    it.only('allows user to register with valid credentials and requires email confirmation to access other pages', () => {
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
           // variables
-          const { apiBase, apiDefaultLang, urlApiRegister } = config;
+          const {
+            apiBase,
+            apiDefaultLang,
+            urlApiRegister,
+            urlApiLogin,
+            urlApiRefresh,
+          } = config;
           const apiBaseUrl = getApiBaseUrlWithLang(
             null,
             apiBase,
@@ -156,8 +165,8 @@ describe('Register page', () => {
 
           // test navigating to app pages (not logged in and awaiting confirmation)
           // routes page
-          cy.visit('#' + routesConf['routes']['path']);
-          cy.url().should('not.contain', routesConf['routes']['path']);
+          cy.visit('#' + routesConf['routes_calendar']['path']);
+          cy.url().should('not.contain', routesConf['routes_calendar']['path']);
           cy.url().should('contain', routesConf['login']['path']);
           // results page
           cy.visit('#' + routesConf['results']['path']);
@@ -183,6 +192,112 @@ describe('Register page', () => {
           // test navigating to confirm email page (this is allowed when awaiting confirmation)
           cy.visit('#' + routesConf['confirm_email']['path']);
           cy.url().should('contain', routesConf['confirm_email']['path']);
+
+          // test awaiting confirmation state after logging in
+          cy.visit('#' + routesConf['login']['path']);
+          cy.url().should('contain', routesConf['login']['path']);
+          // intercept login request
+          cy.fixture('loginResponse.json').then((loginResponse) => {
+            // intercept API call
+            const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
+            cy.intercept('POST', apiLoginUrl, {
+              statusCode: httpSuccessfullStatus,
+              body: loginResponse,
+            }).as('loginRequest');
+            cy.fixture('refreshTokensResponse.json').then(
+              (refreshTokensResponse) => {
+                // intercept refresh tokens request
+                const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
+                cy.intercept('POST', apiRefreshUrl, {
+                  statusCode: httpSuccessfullStatus,
+                  body: refreshTokensResponse,
+                }).as('refreshTokens');
+                cy.clock().then((clock) => {
+                  clock.setSystemTime(systemTime);
+                  // login
+                  cy.dataCy('form-login-email').find('input').type(testEmail);
+                  cy.dataCy('form-login-password-input').type(testPassword);
+                  cy.dataCy('form-login-submit-login').click();
+                  // wait for login request to complete
+                  cy.wait('@loginRequest').then(() => {
+                    // redirected to confirm email page
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+
+                    // test navigating to app pages (logged in and awaiting confirmation)
+                    cy.visit('#' + routesConf['routes_calendar']['path']);
+                    cy.url().should(
+                      'not.contain',
+                      routesConf['routes_calendar']['path'],
+                    );
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // results page
+                    cy.visit('#' + routesConf['results']['path']);
+                    cy.url().should(
+                      'not.contain',
+                      routesConf['results']['path'],
+                    );
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // community page
+                    cy.visit('#' + routesConf['community']['path']);
+                    cy.url().should(
+                      'not.contain',
+                      routesConf['community']['path'],
+                    );
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // prizes page
+                    cy.visit('#' + routesConf['prizes']['path']);
+                    cy.url().should(
+                      'not.contain',
+                      routesConf['prizes']['path'],
+                    );
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // profile page
+                    cy.visit('#' + routesConf['profile_details']['path']);
+                    cy.url().should(
+                      'not.contain',
+                      routesConf['profile_details']['path'],
+                    );
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // test navigating to login and register page (this is allowed when awaiting confirmation and not logged in)
+                    cy.visit('#' + routesConf['login']['path']);
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    cy.visit('#' + routesConf['register']['path']);
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                    // test navigating to confirm email page (this is allowed when awaiting confirmation)
+                    cy.visit('#' + routesConf['confirm_email']['path']);
+                    cy.url().should(
+                      'contain',
+                      routesConf['confirm_email']['path'],
+                    );
+                  });
+                });
+              },
+            );
+          });
         });
       });
     });

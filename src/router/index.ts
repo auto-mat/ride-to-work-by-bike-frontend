@@ -51,10 +51,7 @@ export default route(function (/* { store, ssrContext } */) {
         isAwaitingConfirmation &&
         // only these pages are accessible when authenticated and awaiting confirmation
         !to.matched.some(
-          (record) =>
-            record.path === routesConf['login']['path'] ||
-            record.path === routesConf['register']['path'] ||
-            record.path === routesConf['confirm_email']['path'],
+          (record) => record.path === routesConf['confirm_email']['path'],
         )
       ) {
         next({ path: routesConf['confirm_email']['path'] });
