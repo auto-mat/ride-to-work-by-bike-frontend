@@ -43,12 +43,14 @@ export default route(function (/* { store, ssrContext } */) {
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
+      console.log('isAuthenticated', isAuthenticated);
+      console.log('isEmailVerified', isEmailVerified);
 
-      // if authenticated but awaiting confirmation, redirect to confirm email page
+      // if authenticated and not verified email, redirect to confirm email page
       if (
         isAuthenticated &&
         !isEmailVerified &&
-        // only these pages are accessible when authenticated and awaiting confirmation
+        // only these pages are accessible when authenticated and not verified email
         !to.matched.some(
           (record) => record.path === routesConf['confirm_email']['path'],
         )
@@ -59,7 +61,7 @@ export default route(function (/* { store, ssrContext } */) {
       else if (
         isAuthenticated &&
         isEmailVerified &&
-        // these pages are not accessible when authenticated and confirmed
+        // these pages are not accessible when authenticated and verified
         to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
@@ -80,6 +82,7 @@ export default route(function (/* { store, ssrContext } */) {
             record.path === routesConf['register']['path'],
         )
       ) {
+        console.log('redirecting to login page');
         next({ path: routesConf['login']['path'] });
       }
       // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status

@@ -13,7 +13,11 @@
 
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onMounted, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+// config
+import { routesConf } from '../../router/routes_conf';
 
 // stores
 import { useRegisterStore } from '../../stores/register';
@@ -23,6 +27,20 @@ export default defineComponent({
   setup() {
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
+    const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
+    // check email verification on page load
+    onMounted(async () => {
+      if (!isEmailVerified.value) {
+        await registerStore.checkEmailVerification();
+      }
+    });
+    const router = useRouter();
+    // once email is verified, redirect to home page
+    watch(isEmailVerified, (newValue) => {
+      if (newValue) {
+        router.push(routesConf['home']['path']);
+      }
+    });
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
