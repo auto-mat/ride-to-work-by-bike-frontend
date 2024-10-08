@@ -4,6 +4,9 @@ import EmailVerification from 'components/register/EmailVerification.vue';
 import { i18n } from '../../boot/i18n';
 import { useRegisterStore } from '../../stores/register';
 import { routesConf } from '../../router/routes_conf';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+import { httpSuccessfullStatus } from '../../../test/cypress/support/commonTests';
 
 // colors
 const { getPaletteColor, changeAlpha } = colors;
@@ -48,10 +51,26 @@ describe('<EmailVerification>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
+      cy.viewport('macbook-16');
+      // variables
+      const { apiBase, apiDefaultLang, urlApiHasUserVerifiedEmail } =
+        rideToWorkByBikeConfig;
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiEmailVerificationUrl = `${apiBaseUrl}${urlApiHasUserVerifiedEmail}`;
+      // intercept email verification request
+      cy.intercept('POST', apiEmailVerificationUrl, {
+        statusCode: httpSuccessfullStatus,
+        body: { validated: true },
+      }).as('emailVerificationRequest');
+      // mount after intercept
       cy.mount(EmailVerification, {
         props: {},
       });
-      cy.viewport('macbook-16');
     });
 
     coreTests();
@@ -60,6 +79,22 @@ describe('<EmailVerification>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
+      // variables
+      const { apiBase, apiDefaultLang, urlApiHasUserVerifiedEmail } =
+        rideToWorkByBikeConfig;
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const apiEmailVerificationUrl = `${apiBaseUrl}${urlApiHasUserVerifiedEmail}`;
+      // intercept email verification request
+      cy.intercept('POST', apiEmailVerificationUrl, {
+        statusCode: httpSuccessfullStatus,
+        body: { validated: true },
+      }).as('emailVerificationRequest');
+      // mount after intercept
       cy.mount(EmailVerification, {
         props: {},
       });
@@ -137,5 +172,15 @@ function coreTests() {
     cy.dataCy(selectorEmailVerificationIcon)
       .invoke('width')
       .should('eq', iconSize);
+  });
+
+  it('makes an email verification request', () => {
+    // check that email verification request is made
+    cy.wait('@emailVerificationRequest').then((interception) => {
+      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
+      expect(interception.response.body.validated).to.equal(true);
+      const store = useRegisterStore();
+      expect(store.getIsEmailVerified).to.equal(true);
+    });
   });
 }
