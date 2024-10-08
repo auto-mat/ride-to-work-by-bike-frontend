@@ -276,7 +276,7 @@ describe('Register page', () => {
                       'contain',
                       routesConf['confirm_email']['path'],
                     );
-                    // test navigating to login and register page (this is allowed when awaiting confirmation and not logged in)
+                    // test navigating to login and register page (this is NOT allowed when awaiting confirmation and logged in)
                     cy.visit('#' + routesConf['login']['path']);
                     cy.url().should(
                       'contain',
