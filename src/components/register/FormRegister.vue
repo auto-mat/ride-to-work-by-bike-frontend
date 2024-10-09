@@ -72,8 +72,8 @@ export default defineComponent({
 
     const onReset = (): void => {
       formRegister.email = '';
-      formRegister.password = '';
-      formRegister.passwordConfirm = '';
+      formRegister.password1 = '';
+      formRegister.password2 = '';
     };
 
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
