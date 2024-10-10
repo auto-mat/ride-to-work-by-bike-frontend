@@ -2,8 +2,7 @@
 import type { AxiosRequestHeaders } from 'axios';
 
 // config
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
-const { apiVersion } = rideToWorkByBikeConfig;
+const { rideToWorkByBikeConfig } = await import('../boot/global_vars');
 
 /*
  * Convert date time timestamp number to formated
@@ -43,7 +42,7 @@ const timestampToDatetimeString = (timestamp: number): string => {
 };
 
 const requestDefaultHeader = {
-  Accept: `application/json; version=${apiVersion}`,
+  Accept: `application/json; version=${rideToWorkByBikeConfig.apiVersion}`,
 } as AxiosRequestHeaders;
 
 const requestTokenHeader = {

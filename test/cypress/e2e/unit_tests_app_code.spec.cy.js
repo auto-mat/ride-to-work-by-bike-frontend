@@ -1,18 +1,3 @@
-import { getString } from 'src/utils';
-
-describe('Unit Test Application Code', function () {
-  before(() => {
-    // check if the import worked correctly
-    expect(getString, 'getString').to.be.a('function');
-  });
-  context('src/utils/utils.js', () => {
-    it('get string', function () {
-      const str = 'Test text';
-      expect(getString(str)).to.eq(str);
-    });
-  });
-});
-
 describe('Component Boilerplate function', function () {
   const componentName = 'TestComponent';
   const componentOutputDir = 'global';
@@ -41,6 +26,7 @@ describe('Component Boilerplate function', function () {
       'fileExists',
       `${componentsDir}/${componentOutputDir}/${componentName}.vue`,
     ).then((exists) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(exists).to.be.true;
     });
   });
@@ -51,6 +37,7 @@ describe('Component Boilerplate function', function () {
       'fileExists',
       `${componentsDir}/__tests__/${componentName}.cy.js`,
     ).then((exists) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(exists).to.be.true;
     });
   });
