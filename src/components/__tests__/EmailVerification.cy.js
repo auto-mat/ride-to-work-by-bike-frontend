@@ -66,11 +66,14 @@ describe('<EmailVerification>', () => {
       cy.intercept('GET', apiEmailVerificationUrl, {
         statusCode: httpSuccessfullStatus,
         body: { has_user_verified_email_address: true },
-      }).as('emailVerificationRequest');
-      // mount after intercept
-      cy.mount(EmailVerification, {
-        props: {},
-      });
+      })
+        .as('emailVerificationRequest')
+        .then(() => {
+          // mount after intercept
+          cy.mount(EmailVerification, {
+            props: {},
+          });
+        });
     });
 
     coreTests();
@@ -79,6 +82,7 @@ describe('<EmailVerification>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
+      cy.viewport('iphone-6');
       // variables
       const { apiBase, apiDefaultLang, urlApiHasUserVerifiedEmail } =
         rideToWorkByBikeConfig;
@@ -93,12 +97,14 @@ describe('<EmailVerification>', () => {
       cy.intercept('GET', apiEmailVerificationUrl, {
         statusCode: httpSuccessfullStatus,
         body: { has_user_verified_email_address: true },
-      }).as('emailVerificationRequest');
-      // mount after intercept
-      cy.mount(EmailVerification, {
-        props: {},
-      });
-      cy.viewport('iphone-6');
+      })
+        .as('emailVerificationRequest')
+        .then(() => {
+          // mount after intercept
+          cy.mount(EmailVerification, {
+            props: {},
+          });
+        });
     });
 
     coreTests();
@@ -176,13 +182,26 @@ function coreTests() {
 
   it('makes an email verification request', () => {
     // check that email verification request is made
-    cy.wait('@emailVerificationRequest').then((interception) => {
-      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(
-        interception.response.body.has_user_verified_email_address,
-      ).to.equal(true);
-      const store = useRegisterStore();
-      expect(store.getIsEmailVerified).to.equal(true);
-    });
+    cy.wait('@emailVerificationRequest')
+      .then((interception) => {
+        expect(interception.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(
+          interception.response.body.has_user_verified_email_address,
+        ).to.equal(true);
+      })
+      .then(() => {
+        // prevent race condition between modifying and accessing store
+        return new Cypress.Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 500);
+        });
+      })
+      .then(() => {
+        const store = useRegisterStore();
+        expect(store.getIsEmailVerified).to.equal(true);
+      });
   });
 }
