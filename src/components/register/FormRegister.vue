@@ -50,8 +50,8 @@ export default defineComponent({
   setup() {
     const formRegister = reactive({
       email: '',
-      password: '',
-      passwordConfirm: '',
+      password1: '',
+      password2: '',
     });
 
     const registerStore = useRegisterStore();
@@ -67,7 +67,7 @@ export default defineComponent({
 
     const onSubmitRegister = async (): Promise<void> => {
       // fields are already validated in the QForm
-      await registerStore.register(formRegister.email, formRegister.password);
+      await registerStore.register(formRegister.email, formRegister.password1);
     };
 
     const onReset = (): void => {
@@ -138,7 +138,7 @@ export default defineComponent({
           hide-bottom-space
           color="white"
           bg-color="transparent"
-          v-model="formRegister.password"
+          v-model="formRegister.password1"
           id="form-register-password"
           :hint="$t('register.form.hintPassword')"
           :type="isPassword ? 'password' : 'text'"
@@ -183,7 +183,7 @@ export default defineComponent({
           hide-bottom-space
           color="white"
           bg-color="transparent"
-          v-model="formRegister.passwordConfirm"
+          v-model="formRegister.password2"
           id="form-register-password"
           :type="isPasswordConfirm ? 'password' : 'text'"
           :rules="[
@@ -191,7 +191,7 @@ export default defineComponent({
               isFilled(val) ||
               $t('register.form.messagePasswordConfirmRequired'),
             (val) =>
-              isIdentical(val, formRegister.password) ||
+              isIdentical(val, formRegister.password1) ||
               $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
           lazy-rules
