@@ -63,9 +63,9 @@ describe('<EmailVerification>', () => {
       );
       const apiEmailVerificationUrl = `${apiBaseUrl}${urlApiHasUserVerifiedEmail}`;
       // intercept email verification request
-      cy.intercept('POST', apiEmailVerificationUrl, {
+      cy.intercept('GET', apiEmailVerificationUrl, {
         statusCode: httpSuccessfullStatus,
-        body: { validated: true },
+        body: { has_user_verified_email_address: true },
       }).as('emailVerificationRequest');
       // mount after intercept
       cy.mount(EmailVerification, {
@@ -90,9 +90,9 @@ describe('<EmailVerification>', () => {
       );
       const apiEmailVerificationUrl = `${apiBaseUrl}${urlApiHasUserVerifiedEmail}`;
       // intercept email verification request
-      cy.intercept('POST', apiEmailVerificationUrl, {
+      cy.intercept('GET', apiEmailVerificationUrl, {
         statusCode: httpSuccessfullStatus,
-        body: { validated: true },
+        body: { has_user_verified_email_address: true },
       }).as('emailVerificationRequest');
       // mount after intercept
       cy.mount(EmailVerification, {
@@ -178,7 +178,9 @@ function coreTests() {
     // check that email verification request is made
     cy.wait('@emailVerificationRequest').then((interception) => {
       expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(interception.response.body.validated).to.equal(true);
+      expect(
+        interception.response.body.has_user_verified_email_address,
+      ).to.equal(true);
       const store = useRegisterStore();
       expect(store.getIsEmailVerified).to.equal(true);
     });
