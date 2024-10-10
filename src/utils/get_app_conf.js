@@ -92,10 +92,15 @@ const getAppConfig = (process) => {
     config['apiVersion'] = process.env.API_VERSION;
   } else if (process.env.API_DEFAULT_LANG) {
     config['apiDefaultLang'] = process.env.API_DEFAULT_LANG;
+  } else if (process.env.URL_API_HAS_USER_VERIFIED_EMAIL) {
+    config['urlApiHasUserVerifiedEmail'] =
+      process.env.URL_API_HAS_USER_VERIFIED_EMAIL;
   } else if (process.env.URL_API_LOGIN) {
     config['urlApiLogin'] = process.env.URL_API_LOGIN;
   } else if (process.env.URL_API_REFRESH) {
     config['urlApiRefresh'] = process.env.URL_API_REFRESH;
+  } else if (process.env.URL_API_REGISTER) {
+    config['urlApiRegister'] = process.env.URL_API_REGISTER;
   } else if (process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE) {
     config['urlLoginRegisterBackgroundImage'] =
       process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE;

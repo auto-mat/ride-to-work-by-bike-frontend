@@ -1,21 +1,12 @@
 import {
   testLanguageSwitcher,
   testBackgroundImage,
+  timeUntilExpiration,
+  systemTime,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
-
-// variables
-// access token expiration time: Tuesday 24. September 2024 22:36:03
-const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
-const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
-// refresh token expiration time: Tuesday 24. September 2024 22:37:41
-// const fixtureTokenRefreshExpiration = new Date('2024-09-24T22:37:41');
-// const fixtureTokenRefreshExpirationTime = fixtureTokenRefreshExpiration.getTime() / 1000;
-const timeUntilRefresh = 60;
-const timeUntilExpiration = timeUntilRefresh * 2;
-const systemTime = fixtureTokenExpirationTime - timeUntilExpiration; // 2 min before JWT expires
 
 describe('Login page', () => {
   context('desktop', () => {

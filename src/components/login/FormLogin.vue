@@ -184,12 +184,12 @@ export default defineComponent({
     <!-- Buttons: Login with 3rd party -->
     <login-register-buttons variant="login" />
     <!-- Link: Register -->
-    <div class="q-mt-lg">
-      <p>
+    <div class="text-white q-mt-lg">
+      <p data-cy="login-prompt-no-account">
         {{ $t('login.form.promptNoAccount') }}
         <router-link
           :to="{ name: 'register' }"
-          class="text-primary"
+          class="text-white"
           data-cy="login-link-register"
         >
           {{ $t('login.form.linkRegister') }} </router-link

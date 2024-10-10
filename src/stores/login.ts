@@ -7,8 +7,8 @@ import { Router } from 'vue-router';
 import { i18n } from '../boot/i18n';
 import { useApi } from '../composables/useApi';
 import { useJwt } from '../composables/useJwt';
-
 import { timestampToDatetimeString } from 'src/utils';
+import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -139,36 +139,14 @@ export const useLoginStore = defineStore('login', {
           `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
         );
       }
-      // set tokens
       if (data && data.access && data.refresh) {
-        this.$log?.info('Save access and refresh token into store.');
-        this.setAccessToken(data.access);
-        this.setRefreshToken(data.refresh);
-        this.$log?.debug(
-          `Login store saved access token <${this.getAccessToken}>.`,
-        );
-        this.$log?.debug(
-          `Login store saved refresh token <${this.getRefreshToken}>.`,
-        );
-
-        // set JWT expiration
-        const { readJwtExpiration } = useJwt();
-        const expiration = readJwtExpiration(data.access);
-        this.$log?.debug(
-          `Current time <${timestampToDatetimeString(Date.now() / 1000)}>.`,
-        );
-        this.$log?.debug(
-          `Access token expiration time <${expiration ? timestampToDatetimeString(expiration) : null}>.`,
-        );
-        if (expiration) {
-          this.setJwtExpiration(expiration);
-          this.$log?.debug(
-            `Login store saved access token expiration time <${this.getJwtExpiration ? timestampToDatetimeString(this.getJwtExpiration) : null}>.`,
-          );
-        }
-
-        // token refresh (if no page reload before expiration)
-        this.scheduleTokenRefresh();
+        // set tokens
+        setAccessRefreshTokens({
+          access: data.access,
+          refresh: data.refresh,
+          loginStore: this,
+          $log: this.$log as Logger,
+        });
 
         if (this.$router) {
           this.$log?.info(

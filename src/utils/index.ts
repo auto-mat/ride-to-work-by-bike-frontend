@@ -1,6 +1,8 @@
-const getString = (text: string): string => {
-  return text;
-};
+// types
+import type { AxiosRequestHeaders } from 'axios';
+
+// config
+import rideToWorkByBikeConfig from '../boot/global_vars';
 
 /*
  * Convert date time timestamp number to formated
@@ -39,4 +41,12 @@ const timestampToDatetimeString = (timestamp: number): string => {
   return formatedDateTime;
 };
 
-export { getString, timestampToDatetimeString };
+const requestDefaultHeader = {
+  Accept: `application/json; version=${rideToWorkByBikeConfig.apiVersion}`,
+} as AxiosRequestHeaders;
+
+const requestTokenHeader = {
+  Authorization: 'Bearer ',
+} as AxiosRequestHeaders;
+
+export { requestDefaultHeader, requestTokenHeader, timestampToDatetimeString };

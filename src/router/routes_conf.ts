@@ -23,6 +23,13 @@ const routesConf: RoutesConf = {
       name: 'company-coordinator',
     },
   },
+  verify_email: {
+    path: '/verify-email',
+    children: {
+      fullPath: '/verify-email',
+      name: 'verify-email',
+    },
+  },
   home: {
     path: '/',
     children: {

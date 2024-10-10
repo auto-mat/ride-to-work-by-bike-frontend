@@ -6,6 +6,7 @@ import {
   createWebHistory,
 } from 'vue-router';
 import { useLoginStore } from 'src/stores/login';
+import { useRegisterStore } from 'src/stores/register';
 import routes from './routes';
 import { routesConf } from './routes_conf';
 
@@ -35,14 +36,44 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  // turn off auth check if in Cypress tests
-  if (!window.Cypress) {
+  // turn off auth check if in Cypress tests (except for register tests)
+  if (!window.Cypress || window.Cypress.spec.name === 'register.spec.cy.js') {
     Router.beforeEach(async (to, from, next) => {
       const loginStore = useLoginStore();
-      const isAuthenticated = await loginStore.validateAccessToken();
-      // if not authenticated and not on login page, redirect to login page
+      const registerStore = useRegisterStore();
+      const isAuthenticated: boolean = await loginStore.validateAccessToken();
+      const isEmailVerified: boolean = registerStore.getIsEmailVerified;
+
+      // if authenticated and not verified email, redirect to confirm email page
       if (
+        isAuthenticated &&
+        !isEmailVerified &&
+        // only these pages are accessible when authenticated and not verified email
+        !to.matched.some(
+          (record) => record.path === routesConf['verify_email']['path'],
+        )
+      ) {
+        next({ path: routesConf['verify_email']['path'] });
+      }
+      // if authenticated and on login page or register page or confirm email page, redirect to home page
+      else if (
+        isAuthenticated &&
+        isEmailVerified &&
+        // these pages are not accessible when authenticated and verified
+        to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['verify_email']['path'],
+        )
+      ) {
+        next({ path: routesConf['home']['path'] });
+      }
+      // if not authenticated and not on login or register or confirm email page, redirect to login page
+      else if (
         !isAuthenticated &&
+        isEmailVerified &&
+        // only these pages are accessible when not authenticated
         !to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
@@ -50,15 +81,24 @@ export default route(function (/* { store, ssrContext } */) {
         )
       ) {
         next({ path: routesConf['login']['path'] });
-      } else {
-        next();
       }
-      // if authenticated and on login page, redirect to home page
-      if (
-        isAuthenticated &&
-        to.matched.some((record) => record.path === routesConf['login']['path'])
+      // if is not awaiting confirmation, and user navigates to confirm email page, redirect based on login status
+      else if (
+        !isAuthenticated &&
+        !isEmailVerified &&
+        // only these pages are accessible when not authenticated and awaiting confirmation
+        !to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['verify_email']['path'],
+        )
       ) {
-        next({ path: routesConf['home']['path'] });
+        next({ path: routesConf['login']['path'] });
+      }
+      // pass
+      else {
+        next();
       }
     });
   }

@@ -11,6 +11,11 @@ transportType = "Způsoby dopravy"
 [breadcrumb]
 results = "Výsledky"
 
+[checkEmailVerification]
+apiMessageError = "Ověření emailu se nezdařilo."
+apiMessageErrorWithMessage = "Ověření emailu se nezdařilo. Chyba: {error}"
+apiMessageSuccess = "Email byl úspěšně ověřen."
+
 [drawerMenu]
 buttonParticipation = "Účast"
 buttonCityAdministration = "Správa města"
@@ -526,23 +531,38 @@ messageJwtInvalidExpiration = "Chyba: přihlašovací token nemá platnost."
 messageJwtInvalidFormat = "Chyba: neplatný formát přihlašovacího tokenu."
 messageJwtInvalidWithMessage = "Nepodařilo se přečíst přihlašovací token. Chyba: {error}"
 
+[register]
+apiMessageError = "Registrace se nezdařila. Prosím, zkuste to znovu později."
+apiMessageErrorWithMessage = "Registrace se nezdařila. Prosím, zkuste to znovu později. Chyba: {error}"
+apiMessageSuccess = "Registrace byla úspěšná"
+
 [register.form]
-titleRegister = "Registrace"
+hintLogin = "Již máte účet?"
+hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
+hintRegisterAsCoordinator = "Chcete se stát firemní*m či školní*m koordinátorem*kou, ale neúčastnit se výzvy?"
+hintWrongEmail = "Máte špatně e-mail?"
 labelEmail = "E-mail"
 labelPassword = "Heslo"
 labelPasswordConfirm = "Potvrzení hesla"
-hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
+labelPrivacyConsent1 = "Souhlasím se"
+labelPrivacyConsentLink = "zpracováním osobních údajů"
+labelPrivacyConsent2 = "za účelem vytvoření účtu a upozorňování na budoucí výzvy."
+linkLogin = "Přihlašte se"
+labelNewsletterSubscription = "Chci dostávat info o doprovodných akcích (cyklojízdách, snídaních...) a akčních nabídkách."
+linkRegister = "Registrujte se znovu"
+linkRegisterAsCoordinator = "Registrujte se jako koordinátor*ka."
 messageEmailReqired = "Prosím vyplňte e-mail"
 messageEmailInvalid = "Prosím vyplňte platný e-mail"
 messagePasswordRequired = "Prosím vyplňte heslo"
 messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
+messagePrivacyConsentRequired = "Musíte souhlasit se zpracováním osobních údajů"
 submitRegister = "Registrovat se"
-hintRegisterAsCoordinator = "Chcete se stát firemní*m či školní*m koordinátorem*kou, ale neúčastnit se výzvy?"
-linkRegisterAsCoordinator = "Registrujte se jako koordinátor*ka."
-hintLogin = "Již máte účet?"
-linkLogin = "Přihlašte se"
+textEmailVerification = "<p>Právě jsme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na kole.</p><p>Pokud ji nemůžete najít, koukněte i do spamu.</p>"
+textNoActiveChallenge = "Momentálně žádná z výzev Do práce na kole neprobíhá. Můžete se zaregistrovat, rádi vás informujeme, jakmile vypíšeme další."
+titleEmailVerification = "Pokračujte potvrzením e-mailu"
+titleRegister = "Registrace"
 
 [register.buttons]
 buttonGoogle = "Registrovat přes Facebook"

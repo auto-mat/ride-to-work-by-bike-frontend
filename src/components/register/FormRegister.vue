@@ -15,6 +15,7 @@
  * @slots
  *
  * @components
+ * - `FormFieldEmail`: Component to render email input.
  * - `LoginRegisterButtons`: Component to render third-party authentication
  * buttons.
  *
@@ -25,7 +26,7 @@
  */
 
 // libraries
-import { defineComponent, ref, reactive } from 'vue';
+import { defineComponent, ref, reactive, computed } from 'vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // composables
@@ -34,6 +35,10 @@ import { useValidation } from '../../composables/useValidation';
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
+
+// stores
+import { useGlobalStore } from '../../stores/global';
+import { useRegisterStore } from '../../stores/register';
 
 export default defineComponent({
   name: 'FormRegister',
@@ -45,18 +50,30 @@ export default defineComponent({
   setup() {
     const formRegister = reactive({
       email: '',
-      password: '',
-      passwordConfirm: '',
+      password1: '',
+      password2: '',
     });
 
+    const registerStore = useRegisterStore();
+    const globalStore = useGlobalStore();
+    const isActiveChallenge = computed(() => globalStore.getIsActiveChallenge);
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
+    const isPrivacyConsent = ref(false);
+    const isNewsletterSubscription = ref(false);
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
 
-    const onSubmitRegister = () => {
-      // noop
+    const onSubmitRegister = async (): Promise<void> => {
+      // fields are already validated in the QForm
+      await registerStore.register(formRegister.email, formRegister.password1);
+    };
+
+    const onReset = (): void => {
+      formRegister.email = '';
+      formRegister.password1 = '';
+      formRegister.password2 = '';
     };
 
     const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
@@ -66,35 +83,45 @@ export default defineComponent({
       backgroundColor,
       borderRadius,
       formRegister,
+      isActiveChallenge,
       isPassword,
       isPasswordConfirm,
+      isPrivacyConsent,
+      isNewsletterSubscription,
       isEmail,
       isFilled,
       isIdentical,
       isStrongPassword,
       onSubmitRegister,
+      onReset,
     };
   },
 });
 </script>
 
 <template>
-  <div class="text-grey-10" data-cy="form-register">
+  <div class="bg-primary text-white" data-cy="form-register">
     <!-- Heading -->
-    <div class="q-my-lg">
-      <h1
-        class="text-h5 text-grey-10 text-bold q-my-none"
-        data-cy="form-register-title"
-      >
+    <div class="q-mb-lg" data-cy="form-register-form">
+      <h1 class="text-h5 text-bold q-my-none" data-cy="form-register-title">
         {{ $t('register.form.titleRegister') }}
       </h1>
+      <p
+        v-if="!isActiveChallenge"
+        class="q-mt-md q-mb-none"
+        data-cy="form-register-text-no-active-challenge"
+      >
+        {{ $t('register.form.textNoActiveChallenge') }}
+      </p>
     </div>
     <!-- Form: register -->
-    <q-form @submit.prevent="onSubmitRegister">
+    <q-form @submit.prevent="onSubmitRegister" @reset="onReset">
       <!-- Input: email -->
       <form-field-email
+        dark
         v-model="formRegister.email"
-        bg-color="white"
+        bg-color="transparent"
+        color="white"
         data-cy="form-register-email"
       />
       <!-- Input: password -->
@@ -105,11 +132,13 @@ export default defineComponent({
         </label>
         <!-- Input -->
         <q-input
+          dark
           dense
           outlined
           hide-bottom-space
-          bg-color="grey-1"
-          v-model="formRegister.password"
+          color="white"
+          bg-color="transparent"
+          v-model="formRegister.password1"
           id="form-register-password"
           :hint="$t('register.form.hintPassword')"
           :type="isPassword ? 'password' : 'text'"
@@ -127,7 +156,7 @@ export default defineComponent({
           <!-- Icon: show password -->
           <template v-slot:append>
             <q-icon
-              color="primary"
+              color="white"
               :name="isPassword ? 'visibility_off' : 'visibility'"
               class="cursor-pointer"
               size="18px"
@@ -148,11 +177,13 @@ export default defineComponent({
         </label>
         <!-- Input -->
         <q-input
+          dark
           dense
           outlined
           hide-bottom-space
-          bg-color="grey-1"
-          v-model="formRegister.passwordConfirm"
+          color="white"
+          bg-color="transparent"
+          v-model="formRegister.password2"
           id="form-register-password"
           :type="isPasswordConfirm ? 'password' : 'text'"
           :rules="[
@@ -160,7 +191,7 @@ export default defineComponent({
               isFilled(val) ||
               $t('register.form.messagePasswordConfirmRequired'),
             (val) =>
-              isIdentical(val, formRegister.password) ||
+              isIdentical(val, formRegister.password1) ||
               $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
           lazy-rules
@@ -170,7 +201,7 @@ export default defineComponent({
           <!-- Icon: show password -->
           <template v-slot:append>
             <q-icon
-              color="primary"
+              color="white"
               :name="isPasswordConfirm ? 'visibility_off' : 'visibility'"
               class="cursor-pointer"
               size="18px"
@@ -180,13 +211,72 @@ export default defineComponent({
           </template>
         </q-input>
       </div>
+      <!-- Section: checkboxes (only if no challenge is active) -->
+      <div v-if="!isActiveChallenge">
+        <div class="q-mt-lg">
+          <!-- Input: Privacy policy -->
+          <q-field
+            dense
+            borderless
+            hide-bottom-space
+            :model-value="isPrivacyConsent"
+            :rules="[
+              (val) =>
+                !!val || $t('register.form.messagePrivacyConsentRequired'),
+            ]"
+            data-cy="form-register-privacy-consent"
+          >
+            <q-checkbox
+              dense
+              id="form-register-privacy-consent"
+              v-model="isPrivacyConsent"
+              color="primary"
+              :true-value="true"
+              :false-value="false"
+              rules="required"
+              class="text-white"
+              style="align-items: flex-start"
+              data-cy="form-register-privacy-consent-input"
+            >
+              <!-- Link: consent -->
+              <span>
+                {{ $t('register.form.labelPrivacyConsent1') }}
+                <!-- TODO: Link to privacy policy page -->
+                <a
+                  href="#"
+                  target="_blank"
+                  class="text-white"
+                  @click.stop
+                  data-cy="form-register-privacy-consent-link"
+                  >{{ $t('register.form.labelPrivacyConsentLink') }}</a
+                >
+                {{ $t('register.form.labelPrivacyConsent2') }} </span
+              >.
+            </q-checkbox>
+          </q-field>
+          <!-- Input: Newsletter -->
+          <q-checkbox
+            dense
+            v-model="isNewsletterSubscription"
+            color="primary"
+            :true-value="true"
+            :false-value="false"
+            class="text-white q-mt-md"
+            style="align-items: flex-start"
+            data-cy="form-register-newsletter-subscription"
+          >
+            <span>{{ $t('register.form.labelNewsletterSubscription') }}</span>
+          </q-checkbox>
+        </div>
+      </div>
       <!-- Button: submit -->
       <q-btn
         unelevated
         rounded
         class="full-width"
         type="submit"
-        color="primary q-mt-lg"
+        color="secondary q-mt-lg"
+        text-color="primary"
         :label="$t('register.form.submitRegister')"
         data-cy="form-register-submit"
       />
@@ -240,11 +330,3 @@ export default defineComponent({
     </q-form>
   </div>
 </template>
-
-<style scoped lang="scss">
-:deep(.q-field__control) {
-  &:before {
-    border-color: transparent;
-  }
-}
-</style>
