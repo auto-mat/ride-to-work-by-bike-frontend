@@ -4,17 +4,13 @@ import { Router } from 'vue-router';
 
 // composables
 import { useApi } from 'src/composables/useApi';
-import { useJwt } from '../composables/useJwt';
+import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 
 // stores
 import { useLoginStore } from './login';
 
 // utils
-import {
-  requestDefaultHeader,
-  requestTokenHeader,
-  timestampToDatetimeString,
-} from 'src/utils';
+import { requestDefaultHeader, requestTokenHeader } from 'src/utils';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -106,34 +102,12 @@ export const useRegisterStore = defineStore('register', {
       // set tokens
       if (data && data.access && data.refresh) {
         const loginStore = useLoginStore();
-        this.$log?.info('Save access and refresh token into store.');
-        loginStore.setAccessToken(data.access);
-        loginStore.setRefreshToken(data.refresh);
-        this.$log?.debug(
-          `Login store saved access token <${loginStore.getAccessToken}>.`,
-        );
-        this.$log?.debug(
-          `Login store saved refresh token <${loginStore.getRefreshToken}>.`,
-        );
-
-        // set JWT expiration
-        const { readJwtExpiration } = useJwt();
-        const expiration = readJwtExpiration(data.access);
-        this.$log?.debug(
-          `Current time <${timestampToDatetimeString(Date.now() / 1000)}>.`,
-        );
-        this.$log?.debug(
-          `Access token expiration time <${expiration ? timestampToDatetimeString(expiration) : null}>.`,
-        );
-        if (expiration) {
-          loginStore.setJwtExpiration(expiration);
-          this.$log?.debug(
-            `Login store saved access token expiration time <${loginStore.getJwtExpiration ? timestampToDatetimeString(loginStore.getJwtExpiration) : null}>.`,
-          );
-        }
-
-        // token refresh (if no page reload before expiration)
-        loginStore.scheduleTokenRefresh();
+        setAccessRefreshTokens({
+          access: data.access,
+          refresh: data.refresh,
+          loginStore,
+          $log: this.$log as Logger,
+        });
       }
 
       return data;
