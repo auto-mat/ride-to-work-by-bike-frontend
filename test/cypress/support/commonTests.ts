@@ -183,7 +183,7 @@ export const httpTooManyRequestsStatusMessage = `HTTP status code ${httpTooManyR
 export const failOnStatusCode = false;
 
 // access token expiration time: Tuesday 24. September 2024 22:36:03
-const fixtureTokenExpiration = new Date('2024-09-24T22:36:03');
+const fixtureTokenExpiration = new Date('2024-09-24T22:36:03Z');
 const fixtureTokenExpirationTime = fixtureTokenExpiration.getTime() / 1000;
 const timeUntilRefresh = 60;
 export const timeUntilExpiration = timeUntilRefresh * 2;
