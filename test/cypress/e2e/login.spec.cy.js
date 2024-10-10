@@ -188,7 +188,7 @@ describe('Login page', () => {
       cy.dataCy('form-login-submit-login').should('be.visible');
     });
 
-    it.only('allows user to login and refreshes token 1 min before expiration', () => {
+    it('allows user to login and refreshes token 1 min before expiration', () => {
       cy.get('@clock').then((clock) => {
         clock.setSystemTime(systemTime);
         cy.get('@i18n').then((i18n) => {
