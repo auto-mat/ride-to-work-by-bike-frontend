@@ -2,7 +2,7 @@
 import type { AxiosRequestHeaders } from 'axios';
 
 // config
-import rideToWorkByBikeConfig from '../boot/global_vars';
+const { rideToWorkByBikeConfig } = await import('../boot/global_vars');
 
 /*
  * Convert date time timestamp number to formated
