@@ -37,7 +37,7 @@ import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 
 // stores
-import { useGlobalStore } from '../../stores/global';
+import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 
 export default defineComponent({
@@ -55,8 +55,10 @@ export default defineComponent({
     });
 
     const registerStore = useRegisterStore();
-    const globalStore = useGlobalStore();
-    const isActiveChallenge = computed(() => globalStore.getIsActiveChallenge);
+    const challengeStore = useChallengeStore();
+    const isActiveChallenge = computed(
+      () => challengeStore.getIsChallengeActive,
+    );
     const isPassword = ref(true);
     const isPasswordConfirm = ref(true);
     const isPrivacyConsent = ref(false);

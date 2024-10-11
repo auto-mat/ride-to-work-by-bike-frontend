@@ -5,7 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import route from '../../../src/router';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
-import { useGlobalStore } from '../../stores/global';
+import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 import {
   httpSuccessfullStatus,
@@ -376,9 +376,9 @@ describe('<FormRegister>', () => {
     });
 
     it('shows a text with no active challenge', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(false);
-      expect(store.getIsActiveChallenge).to.equal(false);
+      const challengeStore = useChallengeStore();
+      challengeStore.setIsChallengeActive(false);
+      expect(challengeStore.getIsChallengeActive).to.equal(false);
       cy.dataCy(selectorFormRegisterTextNoActiveChallenge)
         .should('be.visible')
         .and('have.css', 'font-size', `${fontSizeText}px`)
@@ -462,24 +462,24 @@ describe('<FormRegister>', () => {
     });
 
     it('does not show a text with no active challenge', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(true);
-      expect(store.getIsActiveChallenge).to.equal(true);
+      const challengeStore = useChallengeStore();
+      challengeStore.setIsChallengeActive(true);
+      expect(challengeStore.getIsChallengeActive).to.equal(true);
       cy.dataCy(selectorFormRegisterTextNoActiveChallenge).should('not.exist');
     });
 
     it('does not show checkboxes for privacy policy and newsletter subscription', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(true);
-      expect(store.getIsActiveChallenge).to.equal(true);
+      const challengeStore = useChallengeStore();
+      challengeStore.setIsChallengeActive(true);
+      expect(challengeStore.getIsChallengeActive).to.equal(true);
       cy.dataCy(selectorFormRegisterPrivacyConsent).should('not.exist');
       cy.dataCy(selectorFormRegisterNewsletterSubscription).should('not.exist');
     });
 
     it('allows to submit form after filling fields and accepting privacy policy', () => {
-      const store = useGlobalStore();
-      store.setIsActiveChallenge(true);
-      expect(store.getIsActiveChallenge).to.equal(true);
+      const challengeStore = useChallengeStore();
+      challengeStore.setIsChallengeActive(true);
+      expect(challengeStore.getIsChallengeActive).to.equal(true);
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
