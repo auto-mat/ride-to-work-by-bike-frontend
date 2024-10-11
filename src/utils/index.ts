@@ -1,8 +1,11 @@
 // types
 import type { AxiosRequestHeaders } from 'axios';
+import { ConfigGlobal } from '../components/types';
 
 // config
-const { rideToWorkByBikeConfig } = await import('../boot/global_vars');
+const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
+);
 
 /*
  * Convert date time timestamp number to formated
