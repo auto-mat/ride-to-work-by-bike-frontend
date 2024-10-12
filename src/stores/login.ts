@@ -149,8 +149,8 @@ export const useLoginStore = defineStore('login', {
         });
 
         if (this.$router) {
-          this.$log?.info(
-            `Login was succcesfull, redirect to <${routesConf['home']['path']}> URL.`,
+          this.$log?.debug(
+            `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
           );
           this.$router.push(routesConf['home']['path']);
         }
