@@ -25,6 +25,7 @@ import { useRegisterStore } from '../../stores/register';
 export default defineComponent({
   name: 'EmailVerification',
   setup() {
+    const logger = inject('vuejs3-logger');
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
@@ -38,6 +39,9 @@ export default defineComponent({
     // once email is verified, redirect to home page
     watch(isEmailVerified, (newValue) => {
       if (newValue) {
+        logger.debug(
+          `Email address <${email.value}> was verified successfully, redirect to <${routesConf['home']['path']}> URL.`,
+        );
         router.push(routesConf['home']['path']);
       }
     });
