@@ -13,7 +13,7 @@
 
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, onMounted, watch } from 'vue';
+import { computed, defineComponent, inject, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
@@ -22,10 +22,13 @@ import { routesConf } from '../../router/routes_conf';
 // stores
 import { useRegisterStore } from '../../stores/register';
 
+// types
+import type { Logger } from '../types/Logger';
+
 export default defineComponent({
   name: 'EmailVerification',
   setup() {
-    const logger = inject('vuejs3-logger');
+    const logger = inject('vuejs3-logger') as Logger | null;
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
@@ -39,7 +42,7 @@ export default defineComponent({
     // once email is verified, redirect to home page
     watch(isEmailVerified, (newValue) => {
       if (newValue) {
-        logger.debug(
+        logger?.debug(
           `Email address <${email.value}> was verified successfully, redirect to <${routesConf['home']['path']}> URL.`,
         );
         router.push(routesConf['home']['path']);
