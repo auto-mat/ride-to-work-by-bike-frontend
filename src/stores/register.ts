@@ -57,6 +57,19 @@ export const useRegisterStore = defineStore('register', {
     setIsEmailVerified(awaiting: boolean): void {
       this.isEmailVerified = awaiting;
     },
+    /**
+     * Register user
+     * Sends the registration request to the API.
+     * If successful:
+     *   - sets auth tokens from the response
+     *   - stores user email in register store
+     *   - sets isEmailVerified flag to false
+     *   - redirects to email verification page
+     * If not successful, returns response data.
+     * @param {string} email - Email address
+     * @param {string} password - Password
+     * @return {Promise<RegisterResponse | null>} - Register response or null
+     */
     async register(
       email: string,
       password: string,
@@ -112,7 +125,12 @@ export const useRegisterStore = defineStore('register', {
 
       return data;
     },
-
+    /**
+     * Check email verification
+     * Sends the email verification check request to the API.
+     * If successful, sets isEmailVerified flag to the value from the response.
+     * @returns {Promise<void>}
+     */
     async checkEmailVerification(): Promise<void> {
       const { apiFetch } = useApi();
       this.$log?.debug(`Checking email verification for <${this.email}>.`);
