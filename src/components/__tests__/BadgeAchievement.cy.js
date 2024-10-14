@@ -54,6 +54,10 @@ describe('<BadgeAchievement>', () => {
         cy.dataCy(selectorBadgeDescription).should('have.color', grey10);
       });
     });
+
+    it('has dark share button', () => {
+      cy.dataCy(selectorBadgeShareIcon).should('have.color', grey10);
+    });
   });
 
   context('desktop dark', () => {
@@ -78,6 +82,10 @@ describe('<BadgeAchievement>', () => {
         cy.dataCy(selectorBadgeTitle).should('have.color', white);
         cy.dataCy(selectorBadgeDescription).should('have.color', white);
       });
+    });
+
+    it('has light share button', () => {
+      cy.dataCy(selectorBadgeShareIcon).should('have.color', white);
     });
   });
 
