@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
-
 import BadgeAchievement from '../homepage/BadgeAchievement.vue';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { badgeList } from '../../mocks/homepage';
 
@@ -14,13 +14,15 @@ const selectorBadgeCard = 'badge-card';
 const selectorBadgeTitle = 'badge-title';
 const selectorBadgeImage = 'badge-image';
 const selectorBadgeDescription = 'badge-description';
+const selectorBadgeShareButton = 'badge-share-button';
+const selectorBadgeShareIcon = 'badge-share-icon';
 
 // variables
 const fontSizeDescription = 12;
 const fontSizeTitle = 14;
 const fontWeightTitle = 700;
 const fontWeightDescription = 400;
-
+const iconSize = 18;
 const badge = badgeList[0];
 const badgeDark = badgeList[1];
 
@@ -95,6 +97,14 @@ describe('<BadgeAchievement>', () => {
       });
     });
 
+    it('has border radius', () => {
+      cy.dataCy(selectorBadgeCard).should(
+        'have.css',
+        'border-radius',
+        rideToWorkByBikeConfig.borderRadiusCard,
+      );
+    });
+
     it('renders description', () => {
       cy.window().then(() => {
         cy.get('@badge').then((badge) => {
@@ -127,6 +137,13 @@ describe('<BadgeAchievement>', () => {
           });
         });
       });
+    });
+
+    it('renders share button', () => {
+      cy.dataCy(selectorBadgeShareButton).should('be.visible');
+      cy.dataCy(selectorBadgeShareIcon).should('be.visible');
+      cy.dataCy(selectorBadgeShareIcon).invoke('height').should('eq', iconSize);
+      cy.dataCy(selectorBadgeShareIcon).invoke('width').should('eq', iconSize);
     });
   }
 });

@@ -80,7 +80,9 @@ export default defineComponent({
       </q-card-section>
       <!-- Share link -->
       <q-card-section class="absolute-top-right">
-        <q-btn flat round icon="share" size="sm" />
+        <q-btn dense flat round data-cy="badge-share-button">
+          <q-icon size="18px" name="share" data-cy="badge-share-icon" />
+        </q-btn>
       </q-card-section>
       <!-- Content -->
       <q-card-section data-cy="badge-card-content">
