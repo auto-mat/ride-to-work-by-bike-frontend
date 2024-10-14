@@ -28,6 +28,9 @@
 // libraries
 import { defineComponent, computed } from 'vue';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // types
 import { ItemBadge } from '../types';
 
@@ -44,32 +47,34 @@ export default defineComponent({
       return props.badge.variant === 'dark';
     });
 
+    const { borderRadiusCard, maxWidthBanner } = rideToWorkByBikeConfig;
+
     return {
+      borderRadiusCard,
       isDark,
+      maxWidthBanner,
     };
   },
 });
 </script>
 
 <template>
-  <div class="full-width flex column pt-48">
+  <div class="full-width flex column">
     <q-card
       :dark="isDark"
-      square
-      :bordered="false"
+      bordered
       flat
       class="full-width col-grow text-center"
-      :class="[isDark ? 'bg-blue-grey-7 text-white' : 'text-grey-9']"
+      :class="[isDark ? 'bg-primary text-white' : 'bg-white text-grey-10']"
+      :style="{
+        'border-radius': borderRadiusCard,
+        'max-width': maxWidthBanner,
+      }"
       data-cy="badge-card"
     >
       <!-- Image -->
-      <q-card-section avatar class="q-pa-none">
-        <q-avatar
-          class="mt--48"
-          size="96px"
-          color="grey-3"
-          data-cy="badge-image"
-        >
+      <q-card-section avatar class="q-pb-none">
+        <q-avatar size="96px" color="grey-3" data-cy="badge-image">
           <q-img :src="badge.image" alt="" ratio="1" />
         </q-avatar>
       </q-card-section>
@@ -78,29 +83,19 @@ export default defineComponent({
         <q-btn flat round icon="share" size="sm" />
       </q-card-section>
       <!-- Content -->
-      <q-card-section class="q-pa-md" data-cy="badge-card-content">
+      <q-card-section data-cy="badge-card-content">
         <!-- Title -->
         <h3
-          class="text-subtitle2 text-weight-bold q-mb-xs"
+          class="text-subtitle2 text-weight-bold q-my-none"
           data-cy="badge-title"
         >
           {{ badge.title }}
         </h3>
         <!-- Description -->
-        <p class="text-caption" data-cy="badge-description">
+        <p class="text-caption q-mt-xs q-mb-none" data-cy="badge-description">
           {{ badge.description }}
         </p>
       </q-card-section>
     </q-card>
   </div>
 </template>
-
-<style scoped>
-.pt-48 {
-  padding-top: 48px;
-}
-
-.mt--48 {
-  margin-top: -48px;
-}
-</style>

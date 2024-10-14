@@ -6,8 +6,20 @@ import { badgeList } from '../../mocks/homepage';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
-const grey9 = getPaletteColor('grey-9');
-const blueGrey7 = getPaletteColor('blue-grey-7');
+const grey10 = getPaletteColor('grey-10');
+const primary = getPaletteColor('primary');
+
+// selectors
+const selectorBadgeCard = 'badge-card';
+const selectorBadgeTitle = 'badge-title';
+const selectorBadgeImage = 'badge-image';
+const selectorBadgeDescription = 'badge-description';
+
+// variables
+const fontSizeDescription = 12;
+const fontSizeTitle = 14;
+const fontWeightTitle = 700;
+const fontWeightDescription = 400;
 
 const badge = badgeList[0];
 const badgeDark = badgeList[1];
@@ -24,95 +36,97 @@ describe('<BadgeAchievement>', () => {
           badge,
         },
       });
+      cy.wrap(badge).as('badge');
       cy.viewport('macbook-16', { deviceScaleFactor: 1 });
     });
 
-    it('renders title', () => {
-      cy.window().then(() => {
-        cy.dataCy('badge-title')
-          .should('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '700')
-          .and('have.css', 'text-align', 'center')
-          .and('have.color', grey9)
-          .and('contain', badge.title)
-          .then(($title) => {
-            expect($title.text()).to.equal(badge.title);
-          });
-      });
+    coreTests();
+
+    it('has light background', () => {
+      cy.dataCy(selectorBadgeCard).should('have.backgroundColor', white);
     });
 
-    it('renders image', () => {
+    it('has dark text', () => {
       cy.window().then(() => {
-        cy.dataCy('badge-image')
-          .should('be.visible')
-          .find('img')
-          .should(($img) => {
-            expect($img[0].naturalWidth).to.be.greaterThan(0);
-          })
-          .invoke('attr', 'src')
-          .should('contains', badge.image);
-        cy.dataCy('badge-image').matchImageSnapshot({
-          failureThreshold: 0.5,
-          failureThresholdType: 'percent',
-        });
-      });
-    });
-
-    it('renders description', () => {
-      cy.window().then(() => {
-        cy.dataCy('badge-description')
-          .should('have.css', 'font-size', '12px')
-          .and('have.css', 'font-weight', '400')
-          .and('have.css', 'text-align', 'center')
-          .and('have.color', grey9)
-          .and('contain', badge.description)
-          .then(($description) => {
-            expect($description.text()).to.equal(badge.description);
-          });
+        cy.dataCy(selectorBadgeTitle).should('have.color', grey10);
+        cy.dataCy(selectorBadgeDescription).should('have.color', grey10);
       });
     });
   });
 
-  context('variant dark', () => {
+  context('desktop dark', () => {
     beforeEach(() => {
       cy.mount(BadgeAchievement, {
         props: {
           badge: badgeDark,
         },
       });
+      cy.wrap(badgeDark).as('badge');
       cy.viewport('iphone-6', { deviceScaleFactor: 1 });
     });
 
+    coreTests();
+
     it('has dark background', () => {
-      cy.dataCy('badge-card').should('have.backgroundColor', blueGrey7);
+      cy.dataCy(selectorBadgeCard).should('have.backgroundColor', primary);
     });
 
+    it('has light text', () => {
+      cy.window().then(() => {
+        cy.dataCy(selectorBadgeTitle).should('have.color', white);
+        cy.dataCy(selectorBadgeDescription).should('have.color', white);
+      });
+    });
+  });
+
+  function coreTests() {
     it('renders title', () => {
       cy.window().then(() => {
-        cy.dataCy('badge-title')
-          .should('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '700')
-          .and('have.css', 'text-align', 'center')
-          .and('have.color', white)
-          .and('contain', badgeDark.title)
-          .then(($title) => {
-            expect($title.text()).to.equal(badgeDark.title);
-          });
+        cy.get('@badge').then((badge) => {
+          cy.dataCy(selectorBadgeTitle)
+            .should('have.css', 'font-size', `${fontSizeTitle}px`)
+            .and('have.css', 'font-weight', fontWeightTitle.toString())
+            .and('have.css', 'text-align', 'center')
+            .and('contain', badge.title)
+            .then(($title) => {
+              expect($title.text()).to.equal(badge.title);
+            });
+        });
       });
     });
 
     it('renders description', () => {
       cy.window().then(() => {
-        cy.dataCy('badge-description')
-          .should('have.css', 'font-size', '12px')
-          .and('have.css', 'font-weight', '400')
-          .and('have.css', 'text-align', 'center')
-          .and('have.color', white)
-          .and('contain', badgeDark.description)
-          .then(($description) => {
-            expect($description.text()).to.equal(badgeDark.description);
-          });
+        cy.get('@badge').then((badge) => {
+          cy.dataCy(selectorBadgeDescription)
+            .should('have.css', 'font-size', `${fontSizeDescription}px`)
+            .and('have.css', 'font-weight', fontWeightDescription.toString())
+            .and('have.css', 'text-align', 'center')
+            .and('contain', badge.description)
+            .then(($description) => {
+              expect($description.text()).to.equal(badge.description);
+            });
+        });
       });
     });
-  });
+
+    it('renders image', () => {
+      cy.window().then(() => {
+        cy.get('@badge').then((badge) => {
+          cy.dataCy(selectorBadgeImage)
+            .should('be.visible')
+            .find('img')
+            .should(($img) => {
+              expect($img[0].naturalWidth).to.be.greaterThan(0);
+            })
+            .invoke('attr', 'src')
+            .should('contains', badge.image);
+          cy.dataCy(selectorBadgeImage).matchImageSnapshot({
+            failureThreshold: 0.5,
+            failureThresholdType: 'percent',
+          });
+        });
+      });
+    });
+  }
 });
