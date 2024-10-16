@@ -13,7 +13,7 @@
 
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, inject, onMounted, watch } from 'vue';
+import { computed, defineComponent, inject, onBeforeMount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
@@ -32,11 +32,29 @@ export default defineComponent({
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
-    // check email verification on page load
-    onMounted(async () => {
+    const checkIsEmailVerifiedInterval = 60; // seconds
+
+    const checkIsEmailVerified = async (): void => {
       if (!isEmailVerified.value) {
+        logger?.info(
+          'Check if email is verified by <checkIsEmailVerified()> function.',
+        );
         await registerStore.checkEmailVerification();
+      } else {
+        logger?.debug(
+          'Email is verified, disable <checkIsEmailVerified()>' +
+            ` function runned in every <${checkIsEmailVerifiedInterval}> seconds.`,
+        );
+        clearTimeout(checkIsEmailVerifiedId);
       }
+    };
+    const checkIsEmailVerifiedId = setInterval(
+      checkIsEmailVerified,
+      checkIsEmailVerifiedInterval * 1000,
+    );
+    // check email verification on page load
+    onBeforeMount(() => {
+      checkIsEmailVerified();
     });
     const router = useRouter();
     // once email is verified, redirect to home page
