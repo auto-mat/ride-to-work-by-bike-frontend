@@ -136,14 +136,15 @@ export const useRegisterStore = defineStore('register', {
       this.$log?.debug(`Checking email verification for <${this.email}>.`);
       const loginStore = useLoginStore();
       // Append access token into HTTP header
-      requestTokenHeader.Authorization += loginStore.getAccessToken;
+      const requestTokenHeader_ = { ...requestTokenHeader };
+      requestTokenHeader_.Authorization += loginStore.getAccessToken;
       // check email verification
       const { data } = await apiFetch<HasVerifiedEmailResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiHasUserVerifiedEmail,
         method: 'get',
         translationKey: 'checkEmailVerification',
         showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader, requestTokenHeader),
+        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
         logger: this.$log,
       });
 
