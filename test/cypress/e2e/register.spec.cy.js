@@ -315,6 +315,9 @@ describe('Register page', () => {
 
               // click user select
               cy.dataCy(selectorUserSelectDesktop).within(() => {
+                cy.dataCy(selectorUserSelectInput)
+                  .should('be.visible')
+                  .and('contain', registerResponse.user.email);
                 cy.dataCy(selectorUserSelectInput).should('be.visible').click();
               });
               // tick to render animated component
