@@ -7,6 +7,7 @@ import route from '../../../src/router';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';
 import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
+import { useLoginStore } from '../../stores/login';
 import {
   httpSuccessfullStatus,
   httpInternalServerErrorStatus,
@@ -57,6 +58,15 @@ const {
   borderRadiusCardSmall,
   urlApiRegister,
 } = rideToWorkByBikeConfig;
+
+const compareRegisterResponseWithStore = (registerResponse) => {
+  cy.contains(i18n.global.t('register.apiMessageSuccess')).should('be.visible');
+  const registerStore = useRegisterStore();
+  expect(registerStore.getEmail).to.equal(registerResponse.user.email);
+  expect(registerStore.getIsEmailVerified).to.equal(false);
+  const loginStore = useLoginStore();
+  expect(loginStore.getUser).to.eql(registerResponse.user);
+};
 
 describe('<FormRegister>', () => {
   it('has translation for all strings', () => {
@@ -439,14 +449,7 @@ describe('<FormRegister>', () => {
           .its('response.statusCode')
           .should('be.equal', httpSuccessfullStatus)
           .then(() => {
-            cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
-              'be.visible',
-            );
-            const registerStore = useRegisterStore();
-            expect(registerStore.getEmail).to.equal(
-              registerResponse.user.email,
-            );
-            expect(registerStore.getIsEmailVerified).to.equal(false);
+            compareRegisterResponseWithStore(registerResponse);
           });
       });
     });
@@ -505,14 +508,7 @@ describe('<FormRegister>', () => {
           .its('response.statusCode')
           .should('be.equal', httpSuccessfullStatus)
           .then(() => {
-            cy.contains(i18n.global.t('register.apiMessageSuccess')).should(
-              'be.visible',
-            );
-            const registerStore = useRegisterStore();
-            expect(registerStore.getEmail).to.equal(
-              registerResponse.user.email,
-            );
-            expect(registerStore.getIsEmailVerified).to.equal(false);
+            compareRegisterResponseWithStore(registerResponse);
           });
       });
     });
