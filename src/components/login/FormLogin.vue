@@ -194,7 +194,11 @@ export default defineComponent({
       />
     </q-form>
     <!-- Separator -->
-    <q-separator :style="{ backgroundColor: whiteOpacity }" class="q-my-lg" />
+    <q-separator
+      :style="{ backgroundColor: whiteOpacity }"
+      class="q-my-lg"
+      data-cy="form-login-separator"
+    />
     <!-- Buttons: Login with 3rd party -->
     <login-register-buttons variant="login" />
     <!-- Link: Register -->

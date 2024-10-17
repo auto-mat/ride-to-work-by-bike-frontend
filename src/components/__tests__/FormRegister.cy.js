@@ -47,6 +47,7 @@ const selectorFormRegisterTextNoActiveChallenge =
 const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
 const selectorFormRegisterNewsletterSubscription =
   'form-register-newsletter-subscription';
+const selectorFormRegisterSeparator = 'form-register-separator';
 
 // variables
 const iconSize = 18;
@@ -161,6 +162,12 @@ describe('<FormRegister>', () => {
       cy.dataCy(selectorFormRegisterPasswordConfirmIcon)
         .invoke('width')
         .should('be.equal', iconSize);
+    });
+
+    it('renders separator', () => {
+      cy.dataCy(selectorFormRegisterSeparator)
+        .should('be.visible')
+        .and('have.backgroundColor', whiteOpacity);
     });
 
     testPasswordInputReveal(selectorFormRegisterPassword);

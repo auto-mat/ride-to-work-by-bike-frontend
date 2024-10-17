@@ -19,12 +19,16 @@ const { getPaletteColor, changeAlpha } = colors;
 const white = getPaletteColor('white');
 const primary = getPaletteColor('primary');
 const secondary = getPaletteColor('secondary');
-const whiteOpacity20 = changeAlpha(white, 0.2);
+const whiteOpacity = changeAlpha(
+  white,
+  rideToWorkByBikeConfig.opacityWhiteBackground,
+);
 
 // selectors
 const classSelectorQNotificationMessage = '.q-notification__message';
 const selectorLoginPromptNoAccount = 'login-prompt-no-account';
 const selectorLoginLinkRegister = 'login-link-register';
+const selectorFormLoginSeparator = 'form-login-separator';
 
 // variables
 const {
@@ -157,6 +161,12 @@ describe('<FormLogin>', () => {
         .should('have.attr', 'type', 'password');
     });
 
+    it('renders separator', () => {
+      cy.dataCy(selectorFormLoginSeparator)
+        .should('be.visible')
+        .and('have.backgroundColor', whiteOpacity);
+    });
+
     it('renders forgotten password link', () => {
       cy.dataCy('form-login-forgotten-password')
         .should('be.visible')
@@ -276,7 +286,7 @@ describe('<FormLogin>', () => {
       // icon wrapper
       cy.dataCy('form-reset-finished-icon-wrapper')
         .should('be.visible')
-        .and('have.backgroundColor', whiteOpacity20)
+        .and('have.backgroundColor', whiteOpacity)
         .and('have.css', 'border-radius', '50%');
       // icon
       cy.dataCy('form-reset-finished-icon')

@@ -289,7 +289,11 @@ export default defineComponent({
         data-cy="form-register-submit"
       />
       <!-- Separator -->
-      <q-separator color="grey-2" class="q-my-lg" />
+      <q-separator
+        :style="{ backgroundColor: whiteOpacity }"
+        class="q-my-lg"
+        data-cy="form-register-separator"
+      />
       <!-- Buttons: Register with 3rd party -->
       <login-register-buttons variant="register" />
       <!-- Link: Register Coordinator -->
