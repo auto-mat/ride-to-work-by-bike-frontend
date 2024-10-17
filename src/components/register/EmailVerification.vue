@@ -17,6 +17,7 @@ import { computed, defineComponent, inject, onBeforeMount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { routesConf } from '../../router/routes_conf';
 
 // stores
@@ -70,12 +71,15 @@ export default defineComponent({
     // colors
     const { getPaletteColor, changeAlpha } = colors;
     const white = getPaletteColor('white');
-    const whiteOpacity20 = changeAlpha(white, 0.2);
+    const whiteOpacity = changeAlpha(
+      white,
+      rideToWorkByBikeConfig.opacityWhiteBackground,
+    );
 
     return {
       email,
       white,
-      whiteOpacity20,
+      whiteOpacity,
     };
   },
 });
@@ -87,7 +91,7 @@ export default defineComponent({
     <div class="q-mb-lg" data-cy="email-verification-graphics">
       <q-avatar
         size="64px"
-        :style="{ backgroundColor: whiteOpacity20 }"
+        :style="{ backgroundColor: whiteOpacity }"
         :color="white"
         data-cy="email-verification-avatar"
       >

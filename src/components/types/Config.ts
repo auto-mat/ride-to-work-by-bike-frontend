@@ -8,9 +8,9 @@ export interface ConfigGlobal {
   colorGrayLight: string;
   colorGrayMiddle: string;
   colorWhite: string;
-  colorWhiteOpacity: string;
   colorBlack: string;
   colorRed: string;
+  opacityWhiteBackground: number;
   image: string;
   width: string;
   title: string;

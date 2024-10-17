@@ -26,6 +26,7 @@
  */
 
 // libraries
+import { colors } from 'quasar';
 import { defineComponent, ref, reactive, computed } from 'vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
@@ -78,11 +79,16 @@ export default defineComponent({
       formRegister.password2 = '';
     };
 
-    const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
+    const { getPaletteColor, changeAlpha } = colors;
+    const white = getPaletteColor('white');
+    const whiteOpacity = changeAlpha(
+      white,
+      rideToWorkByBikeConfig.opacityWhiteBackground,
+    );
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
-      backgroundColor,
+      whiteOpacity,
       borderRadius,
       formRegister,
       isActiveChallenge,
@@ -283,7 +289,11 @@ export default defineComponent({
         data-cy="form-register-submit"
       />
       <!-- Separator -->
-      <q-separator color="grey-2" class="q-my-lg" />
+      <q-separator
+        :style="{ backgroundColor: whiteOpacity }"
+        class="q-my-lg"
+        data-cy="form-register-separator"
+      />
       <!-- Buttons: Register with 3rd party -->
       <login-register-buttons variant="register" />
       <!-- Link: Register Coordinator -->
@@ -291,7 +301,7 @@ export default defineComponent({
         <div
           class="q-pa-md text-body2 text-white"
           :style="{
-            'background-color': backgroundColor,
+            'background-color': whiteOpacity,
             'border-radius': borderRadius,
           }"
           data-cy="form-register-coordinator"

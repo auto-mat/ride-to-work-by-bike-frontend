@@ -11,7 +11,10 @@ import { httpSuccessfullStatus } from '../../../test/cypress/support/commonTests
 // colors
 const { getPaletteColor, changeAlpha } = colors;
 const white = getPaletteColor('white');
-const whiteOpacity20 = changeAlpha(white, 0.2);
+const whiteOpacity = changeAlpha(
+  white,
+  rideToWorkByBikeConfig.opacityWhiteBackground,
+);
 
 // selectors
 const selectorEmailVerification = 'email-verification';
@@ -163,7 +166,7 @@ function coreTests() {
     // avatar
     cy.dataCy(selectorEmailVerificationAvatar)
       .should('be.visible')
-      .and('have.backgroundColor', whiteOpacity20)
+      .and('have.backgroundColor', whiteOpacity)
       .invoke('height')
       .should('eq', avatarSize);
     cy.dataCy(selectorEmailVerificationAvatar)
