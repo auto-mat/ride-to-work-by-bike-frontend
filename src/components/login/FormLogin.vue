@@ -68,7 +68,6 @@ export default defineComponent({
       loginStore.setLoginFormState(state);
     };
 
-    const backgroundColor = rideToWorkByBikeConfig.colorWhiteOpacity;
     const contactEmail = computed(() => loginStore.getPasswordResetEmail);
 
     const { isEmail, isFilled } = useValidation();
@@ -88,10 +87,12 @@ export default defineComponent({
     // colors
     const { getPaletteColor, changeAlpha } = colors;
     const white = getPaletteColor('white');
-    const whiteOpacity20 = changeAlpha(white, 0.2);
+    const whiteOpacity = changeAlpha(
+      white,
+      rideToWorkByBikeConfig.opacityWhiteBackground,
+    );
 
     return {
-      backgroundColor,
       contactEmail,
       formPasswordReset,
       formState,
@@ -99,7 +100,7 @@ export default defineComponent({
       LoginFormState,
       loginLoading,
       formLogin,
-      whiteOpacity20,
+      whiteOpacity,
       isEmail,
       isFilled,
       onSubmitLogin,
@@ -193,7 +194,7 @@ export default defineComponent({
       />
     </q-form>
     <!-- Separator -->
-    <q-separator :style="{ backgroundColor: whiteOpacity20 }" class="q-my-lg" />
+    <q-separator :style="{ backgroundColor: whiteOpacity }" class="q-my-lg" />
     <!-- Buttons: Login with 3rd party -->
     <login-register-buttons variant="login" />
     <!-- Link: Register -->
@@ -280,7 +281,7 @@ export default defineComponent({
       <div class="flex">
         <q-avatar
           size="64px"
-          :style="{ backgroundColor: whiteOpacity20 }"
+          :style="{ backgroundColor: whiteOpacity }"
           data-cy="form-reset-finished-icon-wrapper"
         >
           <q-icon

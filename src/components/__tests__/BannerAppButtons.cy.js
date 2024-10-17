@@ -15,8 +15,12 @@ const rideToWorkByBikeConfig = JSON.parse(
 const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
 const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
-const { getPaletteColor } = colors;
-const grey10 = getPaletteColor('grey-10');
+const { getPaletteColor, changeAlpha } = colors;
+const white = getPaletteColor('white');
+const whiteOpacity = changeAlpha(
+  white,
+  rideToWorkByBikeConfig.opacityWhiteBackground,
+);
 
 describe('<BannerAppButtons>', () => {
   it('has translation for all strings', () => {
@@ -38,7 +42,7 @@ describe('<BannerAppButtons>', () => {
     it('renders container with semi-transparent white background and rounded corners', () => {
       cy.dataCy('banner-app-buttons')
         .should('have.css', 'padding', '16px')
-        .and('have.backgroundColor', 'rgba(255, 255, 255, 0.5)')
+        .and('have.backgroundColor', whiteOpacity)
         .and('have.css', 'border-radius', '8px');
     });
 
@@ -46,7 +50,7 @@ describe('<BannerAppButtons>', () => {
       cy.dataCy('banner-app-buttons-title')
         .should('have.css', 'font-size', '14px')
         .and('have.css', 'font-weight', '700')
-        .and('have.color', grey10)
+        .and('have.color', white)
         .and('contain', i18n.global.t('login.bannerAppButtons.title'))
         .then(($title) => {
           expect($title.text()).to.equal(
@@ -59,7 +63,7 @@ describe('<BannerAppButtons>', () => {
       cy.dataCy('banner-app-buttons-description')
         .should('have.css', 'font-size', '12px')
         .and('have.css', 'font-weight', '400')
-        .and('have.color', grey10)
+        .and('have.color', white)
         .and('contain', i18n.global.t('login.bannerAppButtons.description'))
         .then(($description) => {
           expect($description.text()).to.equal(

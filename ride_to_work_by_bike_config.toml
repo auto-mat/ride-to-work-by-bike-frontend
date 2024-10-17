@@ -8,10 +8,10 @@ colorGray = "#D4D4D4"
 colorGrayLight = "#F3F7FF"
 colorGrayMiddle = "#DCE1ED"
 colorWhite = "#FFFFFF"
-colorWhiteOpacity = "rgba(255, 255, 255, 0.5)"
 colorBlack = "#000000"
 colorRed = "#F15857"
 colorSecondaryBackgroundOpacity = 0.4
+colorWhiteBackgroundOpacity = 0.2
 
 # STYLING ATTRIBUTES
 

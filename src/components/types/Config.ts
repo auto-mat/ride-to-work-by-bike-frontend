@@ -7,10 +7,10 @@ export interface ConfigGlobal {
   colorGrayLight: string;
   colorGrayMiddle: string;
   colorWhite: string;
-  colorWhiteOpacity: string;
   colorBlack: string;
   colorRed: string;
   colorSecondaryBackgroundOpacity: number;
+  colorWhiteBackgroundOpacity: number;
   image: string;
   width: string;
   title: string;

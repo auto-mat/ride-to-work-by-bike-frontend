@@ -23,15 +23,15 @@ const getAppConfig = (process) => {
     config['colorGrayMiddle'] = process.env.COLOR_GRAY_MIDDLE;
   } else if (process.env.COLOR_WHITE) {
     config['colorWhite'] = process.env.COLOR_WHITE;
-  } else if (process.env.COLOR_WHITE_OPACITY) {
-    config['colorWhiteOpacity'] = process.env.COLOR_WHITE_OPACITY;
   } else if (process.env.COLOR_BLACK) {
     config['colorBlack'] = process.env.COLOR_BLACK;
   } else if (process.env.COLOR_RED) {
     config['colorRed'] = process.env.COLOR_RED;
   } else if (process.env.COLOR_SECONDARY_BACKGROUND_OPACITY) {
     config['colorSecondaryBackgroundOpacity'] =
-      process.env.OPACITY_SECONDARY_BACKGROUND;
+      process.env.COLOR_SECONDARY_BACKGROUND_OPACITY;
+  } else if (process.env.COLOR_WHITE_BACKGROUND_OPACITY) {
+    config['colorWhiteBackgroundOpacity'] = process.env.COLOR_WHITE_BACKGROUND_OPACITY;
   } else if (process.env.IMAGE) {
     config['image'] = process.env.IMAGE;
   } else if (process.env.WIDTH) {
