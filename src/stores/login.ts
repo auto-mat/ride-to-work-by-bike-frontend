@@ -17,6 +17,7 @@ import { routesConf } from '../router/routes_conf';
 // types
 import type { Logger } from '../components/types/Logger';
 import type { UserLogin } from '../components/types/User';
+import type { LoginResponse } from 'src/components/types/Login';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {
@@ -27,12 +28,6 @@ declare module 'pinia' {
 interface LoginPayload {
   username: string;
   password: string;
-}
-
-interface LoginResponse {
-  access: string;
-  refresh: string;
-  user: UserLogin;
 }
 
 interface RefreshTokenResponse {

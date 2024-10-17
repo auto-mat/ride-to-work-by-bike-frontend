@@ -18,19 +18,12 @@ import { routesConf } from '../router/routes_conf';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type { LoginResponse as RegisterResponse } from 'src/components/types/Login';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {
     $router: Router;
   }
-}
-
-interface RegisterResponse {
-  access: string;
-  refresh: string;
-  user: {
-    email: string;
-  };
 }
 
 interface HasVerifiedEmailResponse {
@@ -112,9 +105,14 @@ export const useRegisterStore = defineStore('register', {
         }
       }
 
-      // set tokens
+      // set user and tokens
       if (data && data.access && data.refresh) {
         const loginStore = useLoginStore();
+        this.$log?.info('Save user data into login store.');
+        loginStore.setUser(data.user);
+        this.$log?.debug(
+          `Login store saved user data <${JSON.stringify(loginStore.getUser, null, 2)}>.`,
+        );
         setAccessRefreshTokens({
           access: data.access,
           refresh: data.refresh,
