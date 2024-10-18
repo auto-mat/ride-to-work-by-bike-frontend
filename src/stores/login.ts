@@ -14,6 +14,9 @@ import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { routesConf } from '../router/routes_conf';
 
+// stores
+import { useRegisterStore } from './register';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type { UserLogin } from '../components/types/User';
@@ -164,10 +167,17 @@ export const useLoginStore = defineStore('login', {
         });
 
         if (this.$router) {
-          this.$log?.debug(
-            `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
-          );
-          this.$router.push(routesConf['home']['path']);
+          const registerStore = useRegisterStore();
+          /*
+           * Check if user email address is verified before login,
+           * prevent to show confirming your email page.
+           */
+          await registerStore.checkEmailVerification().then(() => {
+            this.$log?.debug(
+              `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
+            );
+            this.$router.push(routesConf['home']['path']);
+          });
         }
       }
 

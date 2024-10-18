@@ -13,7 +13,7 @@
 
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, inject, onBeforeMount, watch } from 'vue';
+import { computed, defineComponent, inject, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
@@ -53,7 +53,7 @@ export default defineComponent({
       checkIsEmailVerifiedInterval * 1000,
     );
     // check email verification on page load
-    onBeforeMount(() => {
+    onMounted(() => {
       checkIsEmailVerified();
     });
     const router = useRouter();
