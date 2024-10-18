@@ -1,4 +1,8 @@
-import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
+import {
+  testDesktopSidebar,
+  testLanguageSwitcher,
+  testMobileHeader,
+} from '../support/commonTests';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -29,6 +33,7 @@ describe('Home page', () => {
     });
 
     coreTests();
+    testLanguageSwitcher();
     testDesktopSidebar();
 
     it('allows user to display and submit contact form', () => {
@@ -195,6 +200,7 @@ describe('Home page', () => {
     });
 
     coreTests();
+    testLanguageSwitcher();
     testMobileHeader();
 
     it('allows user to show and hide bottom panel on mobile', () => {
@@ -332,15 +338,11 @@ describe('Home page', () => {
 
   // TODO: test links
 
-  // TODO: test switching language
-
   // TODO: test rewatching application guide
 
   // TODO: test adding event to calendar
 
   // TODO: test displaying notifications
-
-  // TODO: test redirecting to other pages through menu
 
   // TODO: test outbound links to social media
 });
@@ -355,9 +357,10 @@ function coreTests() {
       .and('have.css', 'font-family', fontFamily);
   });
 
-  it('renders all components', () => {
+  it('renders all components (before challenge state)', () => {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy('q-main').should('be.visible');
+      // title
       cy.dataCy('index-title')
         .should('be.visible')
         .then(($el) => {
@@ -365,11 +368,34 @@ function coreTests() {
             expect($el.text()).to.equal(translation);
           });
         });
+      // countdown
       cy.dataCy('countdown-event').should('be.visible');
+      // NOT banner routes
+      cy.dataCy('banner-routes').should('not.exist');
+      // banner app
+      cy.dataCy('banner-app').should('be.visible');
+      // future challenges
+      cy.dataCy('card-list-title').should('be.visible');
       cy.dataCy('list-challenge').should('be.visible');
+      // NOT progress slider
+      cy.dataCy('slider-progress').should('not.exist');
+      // NOT list progress
+      cy.dataCy('list-progress').should('not.exist');
+      // banner questionnaire
       cy.dataCy('banner-image').should('be.visible');
+      // heading with background image
       cy.dataCy('heading-background').should('be.visible');
+      // list of events
       cy.dataCy('list-event').should('be.visible');
+      cy.dataCy('card-list-item').should('be.visible');
+      // list of offers
+      cy.dataCy('list-offer').should('be.visible');
+      // list of posts
+      cy.dataCy('list-post').should('be.visible');
+      // newsletter
+      cy.dataCy('newsletter-feature').should('be.visible');
+      // list of follow
+      cy.dataCy('list-card-follow').should('be.visible');
     });
   });
 
@@ -387,37 +413,5 @@ function coreTests() {
     cy.dataCy('dialog-offer').should('not.exist');
     cy.dataCy('list-card-offer-item').first().should('be.visible').click();
     cy.dataCy('dialog-offer').should('be.visible');
-  });
-
-  it('allows user to switch language', () => {
-    cy.get('@i18n').then((i18n) => {
-      const locales = i18n.global.availableLocales;
-      locales.forEach((locale) => {
-        let initialActiveLocale = i18n.global.locale;
-        if (locale === initialActiveLocale) {
-          return;
-        }
-        cy.dataCy('switcher-' + locale)
-          .should('exist')
-          .and('be.visible')
-          .find('.q-btn')
-          .click();
-        cy.dataCy('switcher-' + initialActiveLocale)
-          .find('.q-btn')
-          .should('not.have', 'font-weight', '400');
-        cy.dataCy('switcher-' + locale)
-          .find('.q-btn')
-          .should('have.css', 'font-weight', '700');
-        cy.dataCy('index-title')
-          .should('be.visible')
-          .then(($el) => {
-            cy.wrap(i18n.global.messages[locale].index.title).then(
-              (translation) => {
-                expect($el.text()).to.equal(translation);
-              },
-            );
-          });
-      });
-    });
   });
 }
