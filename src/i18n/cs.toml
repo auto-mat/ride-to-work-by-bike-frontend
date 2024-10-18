@@ -11,6 +11,10 @@ transportType = "Způsoby dopravy"
 [breadcrumb]
 results = "Výsledky"
 
+[challengeInactive]
+text = "<p>Jsme rádi, že s námi chcete jezdit na kole, koloběžce, chodit či běhat (nejen) do práce!</p><p>Další výzvu připravujeme.</p><p>Zatím se můžete podívat na novinky v oblasti městské cyklistiky a udržitelné dopravy.</p>"
+title = "Dáme vám vědět, jakmile vypíšeme další výzvu"
+
 [checkEmailVerification]
 apiMessageError = "Ověření emailu se nezdařilo."
 apiMessageErrorWithMessage = "Ověření emailu se nezdařilo. Chyba: {error}"
@@ -698,6 +702,9 @@ none = "Žádná"
 walk = "Pěšky"
 bus = "Hromadnou dopravou"
 unknown = "Nevyplněno"
+
+[socialBar]
+title = "Sledujte nás na sociálních sítích"
 
 [userSelect]
 companyCoordinator = "Stát se firemním koordinátorem"

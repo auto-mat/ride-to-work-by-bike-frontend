@@ -9,6 +9,13 @@ type RoutesConf = {
 };
 
 const routesConf: RoutesConf = {
+  challenge_inactive: {
+    path: '/challenge-inactive',
+    children: {
+      fullPath: '/challenge-inactive',
+      name: 'challenge-inactive',
+    },
+  },
   community: {
     path: '/community',
     children: {

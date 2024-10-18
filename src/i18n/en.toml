@@ -11,6 +11,10 @@ transportType = "Means of transport"
 [breadcrumb]
 results = "Results"
 
+[challengeInactive]
+text = "<p>We are happy that you want to ride a bike, scooter, walk or run (not only) to work with us!</p><p>We are preparing the next challenge.</p><p>Meanwhile, you can have a look at the news in the field of urban cycling and sustainable transport.</p>"
+title = "We will let you know when we announce the next challenge"
+
 [checkEmailVerification]
 apiMessageError = "Email verification failed."
 apiMessageErrorWithMessage = "Email verification failed. Error: {error}"
@@ -695,6 +699,9 @@ none = "None"
 walk = "On foot"
 bus = "By public transport"
 unknown = "Not logged"
+
+[socialBar]
+title = "Follow us on social media"
 
 [userSelect]
 companyCoordinator = "Become a company coordinator"
