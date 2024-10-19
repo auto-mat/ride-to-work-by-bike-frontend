@@ -17,6 +17,7 @@ import { computed, defineComponent, inject, onBeforeMount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { routesConf } from '../../router/routes_conf';
 
 // stores
@@ -32,7 +33,6 @@ export default defineComponent({
     const registerStore = useRegisterStore();
     const email = computed(() => registerStore.getEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
-    const checkIsEmailVerifiedInterval = 60; // seconds
 
     const checkIsEmailVerified = async (): void => {
       if (!isEmailVerified.value) {
@@ -43,14 +43,18 @@ export default defineComponent({
       } else {
         logger?.debug(
           'Email is verified, disable <checkIsEmailVerified()>' +
-            ` function runned in every <${checkIsEmailVerifiedInterval}> seconds.`,
+            ` function runned in every <${rideToWorkByBikeConfig.checkIsEmailVerifiedInterval}> seconds.`,
         );
         clearTimeout(checkIsEmailVerifiedId);
       }
     };
+    logger?.debug(
+      'Email verification process <checkIsEmailVerified()> function' +
+        ` run in every <${rideToWorkByBikeConfig.checkIsEmailVerifiedInterval}> seconds.`,
+    );
     const checkIsEmailVerifiedId = setInterval(
       checkIsEmailVerified,
-      checkIsEmailVerifiedInterval * 1000,
+      rideToWorkByBikeConfig.checkIsEmailVerifiedInterval * 1000,
     );
     // check email verification on page load
     onBeforeMount(() => {
