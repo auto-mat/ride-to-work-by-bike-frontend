@@ -44,11 +44,11 @@ export default defineComponent({
     LanguageSwitcher,
   },
   setup() {
-    let copyrightList: string[];
+    let appInfo: string[];
     if (rideToWorkByBikeDeployedAppVersion.version) {
-      copyrightList = ['softwareLicence', 'deployedAppVersion'];
+      appInfo = ['softwareLicence', 'deployedAppVersion'];
     } else {
-      copyrightList = ['softwareLicence'];
+      appInfo = ['softwareLicence'];
     }
 
     function scrollToTop(): void {
@@ -95,7 +95,7 @@ export default defineComponent({
     );
 
     return {
-      copyrightList,
+      appInfo,
       maxWidth,
       primaryOpacity,
       rideToWorkByBikeDeployedAppVersion,
@@ -180,10 +180,10 @@ export default defineComponent({
             <!-- License + Owner information (mobile) -->
             <div
               class="col-12 lt-sm w-md-auto flex flex-wrap items-center text-grey-8 justify-center gap-12 text-center q-my-md"
-              data-cy="footer-copyright-list-mobile"
+              data-cy="footer-app-info-mobile"
             >
               <div
-                v-for="(message, index) in copyrightList"
+                v-for="(message, index) in appInfo"
                 :key="message"
                 class="flex items-center gap-12"
               >
@@ -200,9 +200,7 @@ export default defineComponent({
                     }`
                   "
                 ></span>
-                <span v-if="index < copyrightList.length - 1" class="gt-sm"
-                  >|</span
-                >
+                <span v-if="index < appInfo.length - 1" class="gt-sm">|</span>
               </div>
             </div>
 
@@ -260,10 +258,10 @@ export default defineComponent({
           <!-- License + Owner information (desktop) -->
           <div
             class="flex flex-wrap items-center text-grey-8 gap-12 gt-xs q-mt-lg"
-            data-cy="footer-copyright-list-desktop"
+            data-cy="footer-app-info-desktop"
           >
             <div
-              v-for="(message, index) in copyrightList"
+              v-for="(message, index) in appInfo"
               :key="message"
               class="flex items-center gap-12"
             >
@@ -280,9 +278,7 @@ export default defineComponent({
                   }`
                 "
               ></span>
-              <span v-if="index < copyrightList.length - 1" class="gt-sm"
-                >|</span
-              >
+              <span v-if="index < appInfo.length - 1" class="gt-sm">|</span>
             </div>
           </div>
         </div>

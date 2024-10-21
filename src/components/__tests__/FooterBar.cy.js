@@ -33,8 +33,8 @@ const selectorFooterTopButton = 'footer-top-button';
 const selectorFooterTopButtonText = 'footer-top-button-text';
 const selectorFooterAutoMat = 'footer-auto-mat';
 const selectorFooterChallengeOrganizer = 'footer-challenge-organizer';
-const selectorFooterCopyrightListDesktop = 'footer-copyright-list-desktop';
-const selectorFooterCopyrightListMobile = 'footer-copyright-list-mobile';
+const selectorFooterAppInfoDesktop = 'footer-app-info-desktop';
+const selectorFooterAppInfoMobile = 'footer-app-info-mobile';
 
 // variables
 const iconSize = 24;
@@ -56,11 +56,7 @@ describe('<FooterBar>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FooterBar, {
-        props: {
-          copyright: ['Tato aplikace je svobodný software.'],
-        },
-      });
+      cy.mount(FooterBar, {});
       cy.viewport('macbook-16');
     });
 
@@ -75,9 +71,9 @@ describe('<FooterBar>', () => {
         .and('contain', i18n.global.t('footer.textChallengeOrganizer'));
     });
 
-    it('renders copyright list', () => {
+    it('renders application info', () => {
       cy.window().then(() => {
-        cy.dataCy(selectorFooterCopyrightListDesktop)
+        cy.dataCy(selectorFooterAppInfoDesktop)
           .should('be.visible')
           .and('have.css', 'display', displayFlex)
           .and('have.css', 'flex-wrap', flexWrap)
@@ -98,9 +94,9 @@ describe('<FooterBar>', () => {
 
     coreTests();
 
-    it('renders copyright list', () => {
+    it('renders application info', () => {
       cy.window().then(() => {
-        cy.dataCy(selectorFooterCopyrightListMobile)
+        cy.dataCy(selectorFooterAppInfoMobile)
           .should('be.visible')
           .and('have.css', 'display', displayFlex)
           .and('have.css', 'flex-wrap', flexWrap)
