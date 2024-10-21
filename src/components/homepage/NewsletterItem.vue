@@ -26,12 +26,15 @@
 
 // libraries
 import { defineComponent, computed } from 'vue';
+import { colors } from 'quasar';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // types
 import { NewsletterItem as NewsletterItemType } from '../types';
+
+const { getPaletteColor, changeAlpha } = colors;
 
 export default defineComponent({
   name: 'NewsletterItem',
@@ -47,7 +50,10 @@ export default defineComponent({
       return props.item.following ? 'grey-10' : 'primary';
     });
 
-    const { colorPrimaryOpacity } = rideToWorkByBikeConfig;
+    const colorPrimaryOpacity = changeAlpha(
+      getPaletteColor('primary'),
+      rideToWorkByBikeConfig.colorPrimaryOpacity,
+    );
 
     const onFollow = (): void => {
       emit('follow');

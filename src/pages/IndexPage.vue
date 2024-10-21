@@ -195,8 +195,10 @@ export default defineComponent({
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
-    const primary = getPaletteColor('primary');
-    const primaryOpacity = changeAlpha(primary, 0.1);
+    const primaryOpacity = changeAlpha(
+      getPaletteColor('primary'),
+      rideToWorkByBikeConfig.colorPrimaryOpacity,
+    );
 
     const maxWidth = rideToWorkByBikeConfig.containerContentWidth;
 

@@ -5,7 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // colors
-const { getPaletteColor } = colors;
+const { getPaletteColor, changeAlpha } = colors;
 const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
@@ -25,7 +25,10 @@ const title = i18n.global.t('index.newsletterFeature.aboutEvents');
 const url = '#';
 const avatarSize = 38;
 const iconSize = 18;
-const colorPrimaryOpacity = rideToWorkByBikeConfig.colorPrimaryOpacity;
+const colorPrimaryOpacity = changeAlpha(
+  primary,
+  rideToWorkByBikeConfig.colorPrimaryOpacity,
+);
 
 describe('<NewsletterItem>', () => {
   context('desktop', () => {

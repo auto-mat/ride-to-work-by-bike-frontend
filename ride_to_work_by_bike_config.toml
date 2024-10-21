@@ -2,7 +2,7 @@
 
 colorPrimary = "#43449C"
 colorPrimaryDark = "#110547"
-colorPrimaryOpacity = "rgba(67, 68, 156, 0.1)"
+colorPrimaryOpacity = 0.1
 colorSecondary = "#A0D7C4"
 colorGray = "#D4D4D4"
 colorGrayLight = "#F3F7FF"
