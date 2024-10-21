@@ -2,9 +2,6 @@ import { colors } from 'quasar';
 import FooterBar from '../global/FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-const rideToWorkByBikeDeployedAppVersion = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION,
-);
 
 import {
   failOnStatusCode,
@@ -95,10 +92,12 @@ describe('<FooterBar>', () => {
         'href',
         rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
       );
-      cy.dataCy(selectorFooterAppInfoDeployedVersionDesktop).should(
-        'have.text',
-        `${i18n.global.t('footer.deployedAppVersion')}: ${rideToWorkByBikeDeployedAppVersion.version}`,
-      );
+      cy.fixture('deployedAppVersion').then((deployedAppVersion) => {
+        cy.dataCy(selectorFooterAppInfoDeployedVersionDesktop).should(
+          'have.text',
+          `${i18n.global.t('footer.deployedAppVersion')}: ${deployedAppVersion.version}`,
+        );
+      });
     });
 
     it('test application info URL', () => {
@@ -140,10 +139,12 @@ describe('<FooterBar>', () => {
         'href',
         rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
       );
-      cy.dataCy(selectorFooterAppInfoDeployedVersionMobile).should(
-        'have.text',
-        `${i18n.global.t('footer.deployedAppVersion')}: ${rideToWorkByBikeDeployedAppVersion.version}`,
-      );
+      cy.fixture('deployedAppVersion').then((deployedAppVersion) => {
+        cy.dataCy(selectorFooterAppInfoDeployedVersionMobile).should(
+          'have.text',
+          `${i18n.global.t('footer.deployedAppVersion')}: ${deployedAppVersion.version}`,
+        );
+      });
     });
   });
 });

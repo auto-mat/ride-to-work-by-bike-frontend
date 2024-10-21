@@ -21,7 +21,7 @@
 
 // libraries
 import { colors } from 'quasar';
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { i18n } from '../../boot/i18n';
 
 // components
@@ -32,11 +32,20 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // types
 import { ConfigAppVersion } from '../types/Config';
+import { Logger } from '../types/Logger';
 
 // Deployed app version
 const rideToWorkByBikeDeployedAppVersion: ConfigAppVersion = JSON.parse(
   process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION,
 );
+
+let deployedAppVersionFixture;
+if (window.Cypress)
+  import('../../../test/cypress/fixtures/deployedAppVersion.json').then(
+    (deployedAppVersion) => {
+      deployedAppVersionFixture = deployedAppVersion;
+    },
+  );
 
 export default defineComponent({
   name: 'FooterBar',
@@ -44,8 +53,17 @@ export default defineComponent({
     LanguageSwitcher,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger;
     let appInfo: string[];
-    if (rideToWorkByBikeDeployedAppVersion.version) {
+
+    const deployedAppVersion = deployedAppVersionFixture
+      ? deployedAppVersionFixture
+      : rideToWorkByBikeDeployedAppVersion;
+
+    logger.debug(
+      `Deployed application version <${deployedAppVersion.version}>.`,
+    );
+    if (deployedAppVersion?.version) {
       appInfo = ['softwareLicence', 'deployedAppVersion'];
     } else {
       appInfo = ['softwareLicence'];
@@ -99,6 +117,7 @@ export default defineComponent({
 
     return {
       appInfo,
+      deployedAppVersion,
       maxWidth,
       primaryOpacity,
       rideToWorkByBikeDeployedAppVersion,
@@ -202,11 +221,9 @@ export default defineComponent({
                 ></a>
                 <!-- Deployed app version -->
                 <span
-                  v-else-if="rideToWorkByBikeDeployedAppVersion.version"
+                  v-else-if="deployedAppVersion?.version"
                   v-html="
-                    `${$t('footer.' + message)}: ${
-                      rideToWorkByBikeDeployedAppVersion.version
-                    }`
+                    `${$t('footer.' + message)}: ${deployedAppVersion.version}`
                   "
                   data-cy="footer-app-info-deployed-version-mobile"
                 ></span>
@@ -286,11 +303,9 @@ export default defineComponent({
               </a>
               <!-- Deployed app version -->
               <span
-                v-else-if="rideToWorkByBikeDeployedAppVersion.version"
+                v-else-if="deployedAppVersion?.version"
                 v-html="
-                  `${$t('footer.' + message)}: ${
-                    rideToWorkByBikeDeployedAppVersion.version
-                  }`
+                  `${$t('footer.' + message)}: ${deployedAppVersion.version}`
                 "
                 data-cy="footer-app-info-deployed-version-desktop"
               ></span>
