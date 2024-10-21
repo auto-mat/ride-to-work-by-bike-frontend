@@ -81,6 +81,7 @@ export const useLoginStore = defineStore('login', {
     getPasswordResetEmail: (state): string => state.passwordResetEmail,
     getRefreshTokenTimeout: (state): NodeJS.Timeout | null =>
       state.refreshTokenTimeout,
+    getUserEmail: (state): string => state.user.email,
   },
 
   actions: {

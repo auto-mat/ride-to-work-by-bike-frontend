@@ -34,19 +34,14 @@ export const useRegisterStore = defineStore('register', {
   state: () => ({
     // property set in pinia.js boot file
     $log: null as Logger | null,
-    email: '',
     isEmailVerified: false,
   }),
 
   getters: {
-    getEmail: (state): string => state.email,
     getIsEmailVerified: (state): boolean => state.isEmailVerified,
   },
 
   actions: {
-    setEmail(email: string): void {
-      this.email = email;
-    },
     setIsEmailVerified(awaiting: boolean): void {
       this.isEmailVerified = awaiting;
     },
@@ -85,10 +80,6 @@ export const useRegisterStore = defineStore('register', {
       });
 
       if (data?.user?.email) {
-        // set email in store
-        this.$log?.info('Registration successful. Saving email to store.');
-        this.setEmail(data.user.email);
-        this.$log?.debug(`Register store saved email <${this.getEmail}>.`);
         // set isEmailVerified in store
         this.$log?.info('Setting isEmailVerified flag.');
         this.setIsEmailVerified(false);
@@ -131,8 +122,10 @@ export const useRegisterStore = defineStore('register', {
      */
     async checkEmailVerification(): Promise<void> {
       const { apiFetch } = useApi();
-      this.$log?.debug(`Checking email verification for <${this.email}>.`);
       const loginStore = useLoginStore();
+      this.$log?.debug(
+        `Checking email verification for <${loginStore.getUserEmail}>.`,
+      );
       // Append access token into HTTP header
       const requestTokenHeader_ = { ...requestTokenHeader };
       requestTokenHeader_.Authorization += loginStore.getAccessToken;
@@ -160,6 +153,6 @@ export const useRegisterStore = defineStore('register', {
   },
 
   persist: {
-    pick: ['email', 'isEmailVerified'],
+    pick: ['isEmailVerified'],
   },
 });

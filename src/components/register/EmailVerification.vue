@@ -22,6 +22,7 @@ import { routesConf } from '../../router/routes_conf';
 
 // stores
 import { useRegisterStore } from '../../stores/register';
+import { useLoginStore } from '../../stores/login';
 
 // types
 import type { Logger } from '../types/Logger';
@@ -30,11 +31,12 @@ export default defineComponent({
   name: 'EmailVerification',
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
+    const loginStore = useLoginStore();
     const registerStore = useRegisterStore();
-    const email = computed(() => registerStore.getEmail);
+    const email = computed(() => loginStore.getUserEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
 
-    const checkIsEmailVerified = async (): void => {
+    const checkIsEmailVerified = async (): Promise<void> => {
       if (!isEmailVerified.value) {
         logger?.info(
           'Check if email is verified by <checkIsEmailVerified()> function.',

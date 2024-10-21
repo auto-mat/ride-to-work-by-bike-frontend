@@ -62,9 +62,9 @@ const {
 const compareRegisterResponseWithStore = (registerResponse) => {
   cy.contains(i18n.global.t('register.apiMessageSuccess')).should('be.visible');
   const registerStore = useRegisterStore();
-  expect(registerStore.getEmail).to.equal(registerResponse.user.email);
-  expect(registerStore.getIsEmailVerified).to.equal(false);
   const loginStore = useLoginStore();
+  expect(registerStore.getIsEmailVerified).to.equal(false);
+  expect(loginStore.getUserEmail).to.equal(registerResponse.user.email);
   expect(loginStore.getUser).to.eql(registerResponse.user);
 };
 
@@ -310,8 +310,9 @@ describe('<FormRegister>', () => {
 
     it('shows an error if the registration fails', () => {
       const registerStore = useRegisterStore();
+      const loginStore = useLoginStore();
       // default store state
-      expect(registerStore.getEmail).to.equal('');
+      expect(loginStore.getUserEmail).to.equal('');
       expect(registerStore.getIsEmailVerified).to.equal(false);
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
@@ -330,7 +331,7 @@ describe('<FormRegister>', () => {
         (response) => {
           expect(response).to.deep.equal(null);
           // state does not change
-          expect(registerStore.getEmail).to.equal('');
+          expect(loginStore.getUserEmail).to.equal('');
           expect(registerStore.getIsEmailVerified).to.equal(false);
           // error is shown
           cy.contains(
@@ -342,8 +343,9 @@ describe('<FormRegister>', () => {
 
     it('allows to register with email and password', () => {
       const registerStore = useRegisterStore();
+      const loginStore = useLoginStore();
       // default store state
-      expect(registerStore.getEmail).to.equal('');
+      expect(loginStore.getUserEmail).to.equal('');
       expect(registerStore.getIsEmailVerified).to.equal(false);
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
@@ -365,7 +367,7 @@ describe('<FormRegister>', () => {
               // test function return value
               expect(response).to.deep.equal(registerResponse);
               // store state
-              expect(registerStore.getEmail).to.equal(
+              expect(loginStore.getUserEmail).to.equal(
                 registerResponse.user.email,
               );
               expect(registerStore.getIsEmailVerified).to.equal(false);
