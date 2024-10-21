@@ -29,6 +29,7 @@ export interface ConfigGlobal {
   urlAppStore: string;
   urlVideoLoggingRoutes: string;
   urlVideoOnboarding: string;
+  urlFreeSoftwareDefinition: string;
   challengeMonth: 'may' | 'october' | 'september';
   containerFormWidth: string;
   containerContentWidth: string;

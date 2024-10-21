@@ -94,6 +94,9 @@ export default defineComponent({
       rideToWorkByBikeConfig.colorPrimaryOpacity,
     );
 
+    const urlFreeSoftwareDefinition =
+      rideToWorkByBikeConfig.urlFreeSoftwareDefinition;
+
     return {
       appInfo,
       maxWidth,
@@ -102,6 +105,7 @@ export default defineComponent({
       rideToWorkByBikeConfig,
       socialLinksList,
       scrollToTop,
+      urlFreeSoftwareDefinition,
     };
   },
 });
@@ -187,10 +191,15 @@ export default defineComponent({
                 :key="message"
                 class="flex items-center gap-12"
               >
-                <span
+                <a
+                  :href="urlFreeSoftwareDefinition"
                   v-if="message !== 'deployedAppVersion'"
-                  v-html="$t('footer.' + message)"
-                ></span>
+                  target="_blank"
+                  class="text-primary"
+                  data-cy="footer-app-info-licence-mobile"
+                >
+                  <span v-html="$t('footer.' + message)"></span
+                ></a>
                 <!-- Deployed app version -->
                 <span
                   v-else-if="rideToWorkByBikeDeployedAppVersion.version"
@@ -199,6 +208,7 @@ export default defineComponent({
                       rideToWorkByBikeDeployedAppVersion.version
                     }`
                   "
+                  data-cy="footer-app-info-deployed-version-mobile"
                 ></span>
                 <span v-if="index < appInfo.length - 1" class="gt-sm">|</span>
               </div>
@@ -265,10 +275,15 @@ export default defineComponent({
               :key="message"
               class="flex items-center gap-12"
             >
-              <span
+              <a
+                :href="urlFreeSoftwareDefinition"
                 v-if="message !== 'deployedAppVersion'"
-                v-html="$t('footer.' + message)"
-              ></span>
+                target="_blank"
+                class="text-primary"
+                data-cy="footer-app-info-licence-desktop"
+              >
+                <span v-html="$t('footer.' + message)"></span>
+              </a>
               <!-- Deployed app version -->
               <span
                 v-else-if="rideToWorkByBikeDeployedAppVersion.version"
@@ -277,6 +292,7 @@ export default defineComponent({
                     rideToWorkByBikeDeployedAppVersion.version
                   }`
                 "
+                data-cy="footer-app-info-deployed-version-desktop"
               ></span>
               <span v-if="index < appInfo.length - 1" class="gt-sm">|</span>
             </div>

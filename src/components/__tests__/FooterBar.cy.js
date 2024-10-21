@@ -2,6 +2,9 @@ import { colors } from 'quasar';
 import FooterBar from '../global/FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+const rideToWorkByBikeDeployedAppVersion = JSON.parse(
+  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION,
+);
 
 import {
   failOnStatusCode,
@@ -35,6 +38,12 @@ const selectorFooterAutoMat = 'footer-auto-mat';
 const selectorFooterChallengeOrganizer = 'footer-challenge-organizer';
 const selectorFooterAppInfoDesktop = 'footer-app-info-desktop';
 const selectorFooterAppInfoMobile = 'footer-app-info-mobile';
+const selectorFooterAppInfoLicenceDesktop = 'footer-app-info-licence-desktop';
+const selectorFooterAppInfoDeployedVersionDesktop =
+  'footer-app-info-deployed-version-desktop';
+const selectorFooterAppInfoLicenceMobile = 'footer-app-info-licence-mobile';
+const selectorFooterAppInfoDeployedVersionMobile =
+  'footer-app-info-deployed-version-mobile';
 
 // variables
 const iconSize = 24;
@@ -81,6 +90,28 @@ describe('<FooterBar>', () => {
           .and('have.css', 'font-weight', fontWeight)
           .and('have.color', grey8);
       });
+      cy.dataCy(selectorFooterAppInfoLicenceDesktop).should(
+        'have.attr',
+        'href',
+        rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+      );
+      cy.dataCy(selectorFooterAppInfoDeployedVersionDesktop).should(
+        'have.text',
+        `${i18n.global.t('footer.deployedAppVersion')}: ${rideToWorkByBikeDeployedAppVersion.version}`,
+      );
+    });
+
+    it('test application info URL', () => {
+      cy.request({
+        url: rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+        failOnStatusCode: failOnStatusCode,
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
+      });
     });
   });
 
@@ -104,6 +135,15 @@ describe('<FooterBar>', () => {
           .and('have.css', 'font-weight', fontWeight)
           .and('have.color', grey8);
       });
+      cy.dataCy(selectorFooterAppInfoLicenceMobile).should(
+        'have.attr',
+        'href',
+        rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+      );
+      cy.dataCy(selectorFooterAppInfoDeployedVersionMobile).should(
+        'have.text',
+        `${i18n.global.t('footer.deployedAppVersion')}: ${rideToWorkByBikeDeployedAppVersion.version}`,
+      );
     });
   });
 });
