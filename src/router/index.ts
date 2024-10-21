@@ -6,6 +6,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
+import { useChallengeStore } from 'src/stores/challenge';
 import { useLoginStore } from 'src/stores/login';
 import { useRegisterStore } from 'src/stores/register';
 import routes from './routes';
@@ -43,10 +44,12 @@ export default route(function (/* { store, ssrContext } */) {
   if (!window.Cypress || window.Cypress.spec.name === 'register.spec.cy.js') {
     Router.beforeEach(async (to, from, next) => {
       const logger = inject('vuejs3-logger') as Logger | null;
+      const challengeStore = useChallengeStore();
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
+      const isChallengeActive: boolean = challengeStore.getIsChallengeActive;
 
       // if authenticated and not verified email, redirect to confirm email page
       if (
@@ -100,7 +103,21 @@ export default route(function (/* { store, ssrContext } */) {
         logger?.debug(
           `Router path redirect to page URL <${routesConf['verify_email']['path']}>.`,
         );
-        next({ path: routesConf['home']['path'] });
+        if (isChallengeActive) {
+          logger?.debug(`Router challenge is active <${isChallengeActive}>`);
+          logger?.debug(
+            `Router path redirect to page URL <${routesConf['home']['path']}>.`,
+          );
+          next({ path: routesConf['home']['path'] });
+        } else {
+          logger?.debug(
+            `Router challenge is not active <${!isChallengeActive}>`,
+          );
+          logger?.debug(
+            `Router path redirect to page URL <${routesConf['challenge_inactive']['path']}>.`,
+          );
+          next({ path: routesConf['challenge_inactive']['path'] });
+        }
       }
       // if not authenticated and not on login or register or confirm email page, redirect to login page
       else if (

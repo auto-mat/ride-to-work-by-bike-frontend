@@ -1,0 +1,22 @@
+[
+  {
+    "id": "instagram",
+    "title": "index.menuLinks.instagram",
+    "icon": "mdi-instagram"
+  },
+  {
+    "id": "facebook",
+    "title": "index.menuLinks.facebook",
+    "icon": "mdi-facebook"
+  },
+  {
+    "id": "twitter",
+    "title": "index.menuLinks.twitter",
+    "icon": "mdi-twitter"
+  },
+  {
+    "id": "youtube",
+    "title": "index.menuLinks.youtube",
+    "icon": "mdi-youtube"
+  }
+]

@@ -21,10 +21,12 @@
 
 // libraries
 import { defineComponent } from 'vue';
-import { i18n } from '../../boot/i18n';
 
 // components
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
+
+// composables
+import { useSocialLinks } from '../../composables/useSocialLinks';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -57,32 +59,7 @@ export default defineComponent({
       });
     }
 
-    const socialLinksList = [
-      {
-        id: 'instagram',
-        title: i18n.global.t('index.menuLinks.instagram'),
-        icon: 'mdi-instagram',
-        url: rideToWorkByBikeConfig.urlInstagram,
-      },
-      {
-        id: 'facebook',
-        title: i18n.global.t('index.menuLinks.facebook'),
-        icon: 'mdi-facebook',
-        url: rideToWorkByBikeConfig.urlFacebook,
-      },
-      {
-        id: 'twitter',
-        title: i18n.global.t('index.menuLinks.twitter'),
-        icon: 'mdi-twitter',
-        url: rideToWorkByBikeConfig.urlTwitter,
-      },
-      {
-        id: 'youtube',
-        title: i18n.global.t('index.menuLinks.youtube'),
-        icon: 'mdi-youtube',
-        url: rideToWorkByBikeConfig.urlYoutube,
-      },
-    ];
+    const { socialLinks } = useSocialLinks();
 
     const { containerContentWidth } = rideToWorkByBikeConfig;
 
@@ -91,7 +68,7 @@ export default defineComponent({
       containerContentWidth,
       rideToWorkByBikeDeployedAppVersion,
       rideToWorkByBikeConfig,
-      socialLinksList,
+      socialLinks,
       scrollToTop,
     };
   },
@@ -212,7 +189,7 @@ export default defineComponent({
                   <q-btn
                     flat
                     round
-                    v-for="link in socialLinksList"
+                    v-for="link in socialLinks"
                     :key="link.icon"
                     :title="link.title"
                     data-cy="footer-social-menu-button"

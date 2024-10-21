@@ -2,12 +2,11 @@ import { colors } from 'quasar';
 import ListCardPost from '../homepage/ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// variables
 const title = i18n.global.t('index.cardListPost.title');
-const button = {
-  title: i18n.global.t('index.cardListPost.button'),
-  url: '/blog',
-};
+const buttonUrl = rideToWorkByBikeConfig.urlBlog;
 
 const { getPaletteColor } = colors;
 const gray10 = getPaletteColor('grey-10');
@@ -28,7 +27,6 @@ describe('<ListCardPost>', () => {
           props: {
             title,
             cards: cards.slice(0, 5),
-            button,
           },
         });
       });
@@ -98,7 +96,6 @@ describe('<ListCardPost>', () => {
           props: {
             title,
             cards: cards.slice(0, 5),
-            button,
           },
         });
       });
@@ -117,7 +114,7 @@ describe('<ListCardPost>', () => {
         .should('be.visible')
         .and('have.css', 'border-color', hexToRgb(gray10))
         .and('have.css', 'border-radius', '28px')
-        .and('contain', button.title);
+        .and('contain', i18n.global.t('index.cardListPost.button'));
       cy.testElementPercentageWidth(cy.dataCy('card-list-post-button'), 100);
     });
   });
@@ -147,6 +144,8 @@ function coreTests() {
       .should('be.visible')
       .and('have.css', 'border-color', hexToRgb(gray10))
       .and('have.css', 'border-radius', '28px')
-      .and('contain', button.title);
+      .and('contain', i18n.global.t('index.cardListPost.button'))
+      .invoke('attr', 'href')
+      .should('equal', buttonUrl);
   });
 }

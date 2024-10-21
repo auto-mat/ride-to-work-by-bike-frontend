@@ -21,14 +21,15 @@ export interface ConfigGlobal {
   maxWidthBanner: string;
   contactEmail: string;
   urlAutoMat: string;
+  urlAppStore: string;
+  urlBlog: string;
   urlFacebook: string;
+  urlGooglePlay: string;
   urlInstagram: string;
   urlTwitter: string;
-  urlYoutube: string;
-  urlGooglePlay: string;
-  urlAppStore: string;
   urlVideoLoggingRoutes: string;
   urlVideoOnboarding: string;
+  urlYoutube: string;
   challengeMonth: 'may' | 'october' | 'september';
   containerFormWidth: string;
   containerContentWidth: string;
