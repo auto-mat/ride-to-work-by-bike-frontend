@@ -11,6 +11,9 @@ import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 import UserSelect from 'components/global/UserSelect.vue';
 
+// routes config
+import { routesConf } from '../router/routes_conf';
+
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
@@ -39,7 +42,9 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
-    const isHomePage = computed(() => route.path === '/');
+    const isHomePage = computed(
+      () => route.path === routesConf['home']['path'],
+    );
     // do not limit homepage max width - there are sections with bg color.
     const maxWidth = computed(() => {
       return isHomePage.value
