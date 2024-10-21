@@ -7,7 +7,7 @@ const selectorHeaderLogoButton = 'header-logo-button';
 const selectorHeaderLogoImage = 'header-logo-image';
 
 // variables
-const logoHeight = 40; // Adjust this value based on your actual logo height
+const logoHeight = 40;
 
 describe('<HeaderLogo>', () => {
   it('has translation for all strings', () => {
