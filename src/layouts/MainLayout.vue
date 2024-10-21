@@ -1,20 +1,24 @@
 <script lang="ts">
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { i18n } from '../boot/i18n';
+import { useRoute } from 'vue-router';
 
-// import components
+// components
 import DrawerHeader from 'components/global/DrawerHeader.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 import UserSelect from 'components/global/UserSelect.vue';
 
-// mocks
-import { menuBottom, menuTop } from '../mocks/layout';
+// routes config
+import { routesConf } from '../router/routes_conf';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
+// mocks
+import { menuBottom, menuTop } from '../mocks/layout';
 
 declare global {
   interface Window {
@@ -37,11 +41,22 @@ export default defineComponent({
     UserSelect,
   },
   setup() {
-    const { containerContentWidth } = rideToWorkByBikeConfig;
+    const route = useRoute();
+    const isHomePage = computed(
+      () => route.path === routesConf['home']['path'],
+    );
+    // do not limit homepage max width - there are sections with bg color.
+    const maxWidth = computed(() => {
+      return isHomePage.value
+        ? 'none'
+        : rideToWorkByBikeConfig.containerContentWidth;
+    });
+
     return {
-      containerContentWidth,
       menuBottom,
       menuTop,
+      isHomePage,
+      maxWidth,
     };
   },
 });
@@ -84,7 +99,7 @@ export default defineComponent({
     </q-drawer>
 
     <q-page-container class="bg-white">
-      <router-view :style="{ 'max-width': containerContentWidth }" />
+      <router-view :style="{ maxWidth }" />
       <!-- Footer content (desktop) -->
       <footer-bar />
     </q-page-container>

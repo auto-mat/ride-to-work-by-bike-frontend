@@ -97,7 +97,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="progress-slider relative-position" data-cy="progress-slider">
+  <div class="progress-slider relative-position" data-cy="slider-progress">
     <div class="row q-col-gutter-lg q-mb-lg">
       <!-- Title -->
       <section-heading

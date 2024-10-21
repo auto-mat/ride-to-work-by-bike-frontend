@@ -66,6 +66,8 @@ const getAppConfig = (process) => {
     config['urlVideoLoggingRoutes'] = process.env.URL_VIDEO_LOGGING_ROUTES;
   } else if (process.env.URL_VIDEO_ONBOARDING) {
     config['urlVideoOnboarding'] = process.env.URL_VIDEO_ONBOARDING;
+  } else if (process.env.FREE_SOFTWARE_DEFINITION) {
+    config['freeSoftwareDefinitionUrl'] = process.env.FREE_SOFTWARE_DEFINITION;
   } else if (process.env.CHALLENGE_MONTH) {
     config['challengeMonth'] = process.env.CHALLENGE_MONTH;
   } else if (process.env.CHALLENGE_START_DATE) {

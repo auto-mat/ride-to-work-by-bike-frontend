@@ -33,8 +33,14 @@ const selectorFooterTopButton = 'footer-top-button';
 const selectorFooterTopButtonText = 'footer-top-button-text';
 const selectorFooterAutoMat = 'footer-auto-mat';
 const selectorFooterChallengeOrganizer = 'footer-challenge-organizer';
-const selectorFooterCopyrightListDesktop = 'footer-copyright-list-desktop';
-const selectorFooterCopyrightListMobile = 'footer-copyright-list-mobile';
+const selectorFooterAppInfoDesktop = 'footer-app-info-desktop';
+const selectorFooterAppInfoMobile = 'footer-app-info-mobile';
+const selectorFooterAppInfoLicenceDesktop = 'footer-app-info-licence-desktop';
+const selectorFooterAppInfoDeployedVersionDesktop =
+  'footer-app-info-deployed-version-desktop';
+const selectorFooterAppInfoLicenceMobile = 'footer-app-info-licence-mobile';
+const selectorFooterAppInfoDeployedVersionMobile =
+  'footer-app-info-deployed-version-mobile';
 
 // variables
 const iconSize = 24;
@@ -56,11 +62,7 @@ describe('<FooterBar>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(FooterBar, {
-        props: {
-          copyright: ['Tato aplikace je svobodný software.'],
-        },
-      });
+      cy.mount(FooterBar, {});
       cy.viewport('macbook-16');
     });
 
@@ -75,15 +77,39 @@ describe('<FooterBar>', () => {
         .and('contain', i18n.global.t('footer.textChallengeOrganizer'));
     });
 
-    it('renders copyright list', () => {
+    it('renders application info', () => {
       cy.window().then(() => {
-        cy.dataCy(selectorFooterCopyrightListDesktop)
+        cy.dataCy(selectorFooterAppInfoDesktop)
           .should('be.visible')
           .and('have.css', 'display', displayFlex)
           .and('have.css', 'flex-wrap', flexWrap)
           .and('have.css', 'font-size', fontSize)
           .and('have.css', 'font-weight', fontWeight)
           .and('have.color', grey8);
+      });
+      cy.dataCy(selectorFooterAppInfoLicenceDesktop).should(
+        'have.attr',
+        'href',
+        rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+      );
+      cy.fixture('deployedAppVersion').then((deployedAppVersion) => {
+        cy.dataCy(selectorFooterAppInfoDeployedVersionDesktop).should(
+          'have.text',
+          `${i18n.global.t('footer.deployedAppVersion')}: ${deployedAppVersion.version}`,
+        );
+      });
+    });
+
+    it('test application info URL', () => {
+      cy.request({
+        url: rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+        failOnStatusCode: failOnStatusCode,
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
       });
     });
   });
@@ -98,15 +124,26 @@ describe('<FooterBar>', () => {
 
     coreTests();
 
-    it('renders copyright list', () => {
+    it('renders application info', () => {
       cy.window().then(() => {
-        cy.dataCy(selectorFooterCopyrightListMobile)
+        cy.dataCy(selectorFooterAppInfoMobile)
           .should('be.visible')
           .and('have.css', 'display', displayFlex)
           .and('have.css', 'flex-wrap', flexWrap)
           .and('have.css', 'font-size', fontSize)
           .and('have.css', 'font-weight', fontWeight)
           .and('have.color', grey8);
+      });
+      cy.dataCy(selectorFooterAppInfoLicenceMobile).should(
+        'have.attr',
+        'href',
+        rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
+      );
+      cy.fixture('deployedAppVersion').then((deployedAppVersion) => {
+        cy.dataCy(selectorFooterAppInfoDeployedVersionMobile).should(
+          'have.text',
+          `${i18n.global.t('footer.deployedAppVersion')}: ${deployedAppVersion.version}`,
+        );
       });
     });
   });

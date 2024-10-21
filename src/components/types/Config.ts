@@ -1,7 +1,7 @@
 export interface ConfigGlobal {
   colorPrimary: string;
   colorPrimaryDark: string;
-  colorPrimaryOpacity: string;
+  colorPrimaryOpacity: number;
   colorSecondary: string;
   colorGray: string;
   colorGrayLight: string;
@@ -29,6 +29,7 @@ export interface ConfigGlobal {
   urlAppStore: string;
   urlVideoLoggingRoutes: string;
   urlVideoOnboarding: string;
+  urlFreeSoftwareDefinition: string;
   challengeMonth: 'may' | 'october' | 'september';
   containerFormWidth: string;
   containerContentWidth: string;
