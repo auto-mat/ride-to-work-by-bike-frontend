@@ -13,7 +13,7 @@ const { getPaletteColor, changeAlpha } = colors;
 const white = getPaletteColor('white');
 const whiteOpacity = changeAlpha(
   white,
-  rideToWorkByBikeConfig.opacityWhiteBackground,
+  rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
 );
 
 // selectors

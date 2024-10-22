@@ -21,7 +21,7 @@ const primary = getPaletteColor('primary');
 const secondary = getPaletteColor('secondary');
 const whiteOpacity = changeAlpha(
   white,
-  rideToWorkByBikeConfig.opacityWhiteBackground,
+  rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
 );
 
 // selectors
