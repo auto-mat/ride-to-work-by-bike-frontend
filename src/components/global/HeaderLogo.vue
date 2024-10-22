@@ -25,7 +25,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 export default defineComponent({
   name: 'HeaderLogo',
   setup() {
-    const linkUrl = rideToWorkByBikeConfig.urlRTWBLogo;
+    const linkUrl = rideToWorkByBikeConfig.urlRTWBBLogo;
     return {
       linkUrl,
     };

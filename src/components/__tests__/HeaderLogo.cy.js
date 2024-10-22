@@ -42,7 +42,7 @@ function coreTests() {
   it('has correct link to home page', () => {
     cy.dataCy(selectorHeaderLogoButton)
       .should('have.attr', 'href')
-      .and('include', rideToWorkByBikeConfig.urlRTWBLogo);
+      .and('include', rideToWorkByBikeConfig.urlRTWBBLogo);
   });
 
   it('renders logo with correct attributes', () => {

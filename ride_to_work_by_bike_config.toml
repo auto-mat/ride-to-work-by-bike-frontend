@@ -40,7 +40,7 @@ contactEmail = "kontakt@dopracenakole.cz"
 
 # LOCAL URLS
 
-urlRTWBLogo = "/"
+urlRTWBBLogo = "/"
 urlLoginRegisterBackgroundImage = "/image/login-register-layout.webp"
 
 # EXTERNAL URLS
