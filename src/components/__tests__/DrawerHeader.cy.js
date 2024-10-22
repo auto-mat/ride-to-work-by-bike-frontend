@@ -11,6 +11,7 @@ const red = getPaletteColor('red');
 const selectorButtonHelp = 'button-help';
 const selectorButtonNotifications = 'button-notifications';
 const selectorIconHelp = 'icon-help';
+const selectorHeaderLogo = 'header-logo';
 
 // variables
 const buttonSize = 24;
@@ -42,7 +43,9 @@ describe('<DrawerHeader>', () => {
 
   it('renders logo', () => {
     cy.window().then(() => {
-      cy.dataCy('logo').should('be.visible').and('have.css', 'height', '40px');
+      cy.dataCy(selectorHeaderLogo)
+        .should('be.visible')
+        .and('have.css', 'height', '40px');
     });
   });
 

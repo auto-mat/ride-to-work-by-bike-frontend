@@ -11,7 +11,7 @@ const white = getPaletteColor('white');
 const selectorButtonHelp = 'button-help';
 const selectorIconHelp = 'icon-help';
 const selectorLanguageSwitcher = 'language-switcher';
-const selectorLogo = 'logo';
+const selectorLogo = 'header-logo';
 
 // variables
 const helpButtonFontSize = '15px';

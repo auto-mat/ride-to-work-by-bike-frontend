@@ -15,6 +15,7 @@
  *
  * @components
  * - `ButtonNotifications` Component to render notifications.
+ * - `HeaderLogo` Component to render logo.
  * - `HelpButton` Component to render help button.
  * - `UserSelect` Component to render user menu.
  *
@@ -29,6 +30,7 @@ import { defineComponent, computed } from 'vue';
 
 // import components
 import ButtonNotifications from './ButtonNotifications.vue';
+import HeaderLogo from './HeaderLogo.vue';
 import HelpButton from './HelpButton.vue';
 import UserSelect from './UserSelect.vue';
 
@@ -36,6 +38,7 @@ export default defineComponent({
   name: 'DrawerHeader',
   components: {
     ButtonNotifications,
+    HeaderLogo,
     HelpButton,
     UserSelect,
   },
@@ -70,12 +73,9 @@ export default defineComponent({
     :class="classes"
   >
     <!-- RTWBB logo -->
-    <img
-      class="logo"
-      src="~assets/svg/logo-white.svg"
-      :alt="$t('index.logoAltText')"
-      data-cy="logo"
-    />
+    <div>
+      <header-logo v-if="showLogo" data-cy="header-logo" />
+    </div>
     <!-- Content -->
     <div class="flex items-center gap-24">
       <!-- Help icon link for displaying modal dialog-->

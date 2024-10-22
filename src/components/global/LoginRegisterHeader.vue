@@ -10,6 +10,7 @@
  * Note: This component is commonly used in `LoginPage` and `RegisterPage`.
  *
  * @components
+ * - `HeaderLogo`: Component to render the logo.
  * - `HelpButton`: Component to render help icon with dialog.
  * - `LanguageSwitcher`: Component to render language switcher.
  *
@@ -23,12 +24,14 @@
 import { defineComponent } from 'vue';
 
 // components
+import HeaderLogo from './HeaderLogo.vue';
 import HelpButton from './HelpButton.vue';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 
 export default defineComponent({
   name: 'LoginRegisterHeader',
   components: {
+    HeaderLogo,
     HelpButton,
     LanguageSwitcher,
   },
@@ -41,13 +44,7 @@ export default defineComponent({
 <template>
   <div class="flex items-center justify-between q-py-lg">
     <!-- RTWBB logo -->
-    <img
-      class="logo"
-      src="~assets/svg/logo-white.svg"
-      :alt="$t('index.logoAltText')"
-      :title="$t('header.siteTitle')"
-      data-cy="logo"
-    />
+    <header-logo width="280px" height="80px" data-cy="header-logo" />
     <div class="flex items-center gap-32">
       <!-- Help icon link for displaying modal dialog -->
       <help-button data-cy="help-button" />
