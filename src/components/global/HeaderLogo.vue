@@ -24,6 +24,16 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'HeaderLogo',
+  props: {
+    width: {
+      type: String,
+      default: '140px',
+    },
+    height: {
+      type: String,
+      default: '40px',
+    },
+  },
   setup() {
     const linkUrl = rideToWorkByBikeConfig.urlRTWBBLogo;
     return {
@@ -42,8 +52,8 @@ export default defineComponent({
     data-cy="header-logo-button"
   >
     <q-img
-      width="140px"
-      height="40px"
+      :width="width"
+      :height="height"
       fit="contain"
       src="~assets/svg/logo-white.svg"
       :alt="$t('index.logoAltText')"
