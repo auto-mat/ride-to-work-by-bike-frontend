@@ -86,9 +86,8 @@ export default defineComponent({
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
-    const white = getPaletteColor('white');
     const whiteOpacity = changeAlpha(
-      white,
+      getPaletteColor('white'),
       rideToWorkByBikeConfig.opacityWhiteBackground,
     );
 

@@ -80,9 +80,8 @@ export default defineComponent({
     };
 
     const { getPaletteColor, changeAlpha } = colors;
-    const white = getPaletteColor('white');
     const whiteOpacity = changeAlpha(
-      white,
+      getPaletteColor('white'),
       rideToWorkByBikeConfig.opacityWhiteBackground,
     );
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
