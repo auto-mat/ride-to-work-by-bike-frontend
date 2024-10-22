@@ -92,8 +92,7 @@ export default defineComponent({
     <div class="q-mb-lg" data-cy="email-verification-graphics">
       <q-avatar
         size="64px"
-        :style="{ backgroundColor: whiteOpacity }"
-        color="white"
+        :style="{ backgroundColor: whiteOpacity, color: 'white' }"
         data-cy="email-verification-avatar"
       >
         <!-- Icon -->
