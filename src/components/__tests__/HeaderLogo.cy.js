@@ -1,6 +1,6 @@
 import HeaderLogo from 'components/global/HeaderLogo.vue';
 import { i18n } from '../../boot/i18n';
-import { routesConf } from '../../router/routes_conf';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // selectors
 const selectorHeaderLogoButton = 'header-logo-button';
@@ -42,7 +42,7 @@ function coreTests() {
   it('has correct link to home page', () => {
     cy.dataCy(selectorHeaderLogoButton)
       .should('have.attr', 'href')
-      .and('include', routesConf['home']['children']['fullPath']);
+      .and('include', rideToWorkByBikeConfig.urlRTWBLogo);
   });
 
   it('renders logo with correct attributes', () => {

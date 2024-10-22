@@ -107,6 +107,8 @@ const getAppConfig = (process) => {
   } else if (process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE) {
     config['urlLoginRegisterBackgroundImage'] =
       process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE;
+  } else if (process.env.URL_RTWB_LOGO) {
+    config['urlRTWBLogo'] = process.env.URL_RTWB_LOGO;
   } else if (process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL) {
     config['checkIsEmailVerifiedInterval'] =
       process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL;

@@ -20,13 +20,14 @@
 import { defineComponent } from 'vue';
 
 // config
-import { routesConf } from '../../router/routes_conf';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'HeaderLogo',
   setup() {
+    const linkUrl = rideToWorkByBikeConfig.urlRTWBLogo;
     return {
-      routesConf,
+      linkUrl,
     };
   },
 });
@@ -36,7 +37,7 @@ export default defineComponent({
   <q-btn
     flat
     no-caps
-    :to="{ name: routesConf['home']['children']['name'] }"
+    :href="linkUrl"
     class="q-pa-none"
     data-cy="header-logo-button"
   >
