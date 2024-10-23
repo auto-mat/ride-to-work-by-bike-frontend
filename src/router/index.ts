@@ -6,6 +6,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
+import { useChallengeStore } from 'src/stores/challenge';
 import { useLoginStore } from 'src/stores/login';
 import { useRegisterStore } from 'src/stores/register';
 import routes from './routes';
@@ -40,13 +41,26 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   // turn off auth check if in Cypress tests (except for register tests)
-  if (!window.Cypress || window.Cypress.spec.name === 'register.spec.cy.js') {
+  if (
+    !window.Cypress ||
+    window.Cypress.spec.name === 'register.spec.cy.js' ||
+    window.Cypress.spec.name === 'router_rules.cy.js'
+  ) {
     Router.beforeEach(async (to, from, next) => {
       const logger = inject('vuejs3-logger') as Logger | null;
+      // const challengeStore = useChallengeStore();
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
+      const isChallengeActive: boolean =
+        useChallengeStore().getIsChallengeInActivePhase;
+
+      logger?.debug(`Router path <${to.path}>.`);
+      logger?.debug(`Router from path <${from.path}>.`);
+      logger?.debug(`Router is authenticated <${isAuthenticated}>.`);
+      logger?.debug(`Router is email verified <${isEmailVerified}>.`);
+      logger?.debug(`Router is challenge active <${isChallengeActive}>.`);
 
       // if authenticated and not verified email, redirect to confirm email page
       if (
@@ -76,12 +90,14 @@ export default route(function (/* { store, ssrContext } */) {
       else if (
         isAuthenticated &&
         isEmailVerified &&
+        isChallengeActive &&
         // these pages are not accessible when authenticated and verified
         to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
-            record.path === routesConf['verify_email']['path'],
+            record.path === routesConf['verify_email']['path'] ||
+            record.path === routesConf['challenge_inactive']['path'],
         )
       ) {
         logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
@@ -90,17 +106,42 @@ export default route(function (/* { store, ssrContext } */) {
           `Router path <${routesConf['login']['path']}>,` +
             ` <${routesConf['register']['path']}>` +
             ` <${routesConf['verify_email']['path']}>` +
+            ` <${routesConf['challenge_inactive']['path']}>` +
             ` is matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
                 record.path === routesConf['register']['path'] ||
-                record.path === routesConf['verify_email']['path'],
+                record.path === routesConf['verify_email']['path'] ||
+                record.path === routesConf['challenge_inactive']['path'],
+            )}>.`,
+        );
+        logger?.debug(`Router challenge is active <${isChallengeActive}>`);
+        logger?.debug(
+          `Router path redirect to page URL <${routesConf['home']['path']}>.`,
+        );
+        next({ path: routesConf['home']['path'] });
+      } else if (
+        isAuthenticated &&
+        isEmailVerified &&
+        !isChallengeActive &&
+        !to.matched.some(
+          (record) => record.path === routesConf['challenge_inactive']['path'],
+        )
+      ) {
+        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
+        logger?.debug(`Router challenge is not active <${!isChallengeActive}>`);
+        logger?.debug(
+          `Router path <${routesConf['challenge_inactive']['path']}>` +
+            ` is not matched <${!to.matched.some(
+              (record) =>
+                record.path === routesConf['challenge_inactive']['path'],
             )}>.`,
         );
         logger?.debug(
-          `Router path redirect to page URL <${routesConf['verify_email']['path']}>.`,
+          `Router path redirect to page URL <${routesConf['challenge_inactive']['path']}>.`,
         );
-        next({ path: routesConf['home']['path'] });
+        next({ path: routesConf['challenge_inactive']['path'] });
       }
       // if not authenticated and not on login or register or confirm email page, redirect to login page
       else if (

@@ -1,0 +1,38 @@
+{
+  "results": [
+    {
+      "phase_set": [
+        {
+          "phase_type": "registration",
+          "date_from": "2024-07-15",
+          "date_to": "2024-09-29"
+        },
+        {
+          "phase_type": "competition",
+          "date_from": "2024-09-16",
+          "date_to": "2024-09-29"
+        },
+        {
+          "phase_type": "entry_enabled",
+          "date_from": "2024-09-16",
+          "date_to": "2024-10-02"
+        },
+        {
+          "phase_type": "payment",
+          "date_from": "2024-07-15",
+          "date_to": "2024-09-29"
+        },
+        {
+          "phase_type": "invoices",
+          "date_from": "2024-07-15",
+          "date_to": "2024-10-07"
+        }
+      ],
+      "id": 263,
+      "slug": "dpnk",
+      "days_active": 8,
+      "year": "2024",
+      "campaign_type": "https://dpnk.dopracenakole.cz/rest/campaign_type/4/"
+    }
+  ]
+}

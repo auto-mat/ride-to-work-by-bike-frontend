@@ -9,7 +9,7 @@ import {
   fixtureTokenExpirationTime,
   httpSuccessfullStatus,
   httpInternalServerErrorStatus,
-  systemTime,
+  systemTimeLoggedIn,
   timeUntilExpiration,
 } from '../../../test/cypress/support/commonTests';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
@@ -349,15 +349,17 @@ describe('<FormLogin>', () => {
     });
 
     it('allows to save tokens and user into store', () => {
-      cy.fixture('loginResponse.json').then((loginResponse) => {
-        const store = useLoginStore();
-        store.setAccessToken(loginResponse.access);
-        store.setRefreshToken(loginResponse.refresh);
-        store.setUser(loginResponse.user);
-        expect(store.getAccessToken).to.equal(loginResponse.access);
-        expect(store.getRefreshToken).to.equal(loginResponse.refresh);
-        expect(store.getUser).to.deep.equal(loginResponse.user);
-      });
+      cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+        (loginResponse) => {
+          const store = useLoginStore();
+          store.setAccessToken(loginResponse.access);
+          store.setRefreshToken(loginResponse.refresh);
+          store.setUser(loginResponse.user);
+          expect(store.getAccessToken).to.equal(loginResponse.access);
+          expect(store.getRefreshToken).to.equal(loginResponse.refresh);
+          expect(store.getUser).to.deep.equal(loginResponse.user);
+        },
+      );
     });
 
     it('shows error if login is called and username is not set', () => {
@@ -410,7 +412,7 @@ describe('<FormLogin>', () => {
       cy.viewport('macbook-16');
       cy.clock().then((clock) => {
         cy.wrap(clock).as('clock');
-        clock.setSystemTime(systemTime);
+        clock.setSystemTime(systemTimeLoggedIn);
       });
       // intercept login API call
       const apiBaseUrl = getApiBaseUrlWithLang(
@@ -420,123 +422,129 @@ describe('<FormLogin>', () => {
         i18n,
       );
       const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
-      cy.fixture('loginResponse.json').then((loginResponse) => {
-        cy.intercept('POST', apiLoginUrl, {
-          statusCode: httpSuccessfullStatus,
-          body: loginResponse,
-        }).as('loginRequest');
-      });
+      cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+        (loginResponse) => {
+          cy.intercept('POST', apiLoginUrl, {
+            statusCode: httpSuccessfullStatus,
+            body: loginResponse,
+          }).as('loginRequest');
+        },
+      );
     });
 
     it('performs login and refreshes token 1 min before expiration', () => {
-      cy.fixture('loginResponse.json').then((loginResponse) => {
-        cy.get('@clock').then((clock) => {
-          const store = useLoginStore();
-          cy.wrap(store.login({ username, password })).then((response) => {
-            expect(response).to.deep.equal(loginResponse);
-            expect(store.getAccessToken).to.equal(loginResponse.access);
-            expect(store.getRefreshToken).to.equal(loginResponse.refresh);
-            expect(store.getUser).to.deep.equal(loginResponse.user);
-            expect(store.getJwtExpiration).to.equal(
-              fixtureTokenExpirationTimeSeconds,
-            );
-            expect(store.getTimeUntilExpiration()).to.equal(
-              timeUntilExpirationSeconds, // time until expiration in seconds
-            );
-            expect(store.isJwtExpired()).to.equal(false);
-            cy.fixture('refreshTokensResponse.json').then(
-              (refreshTokensResponse) => {
-                // intercept refresh token API call
-                const apiBaseUrl = getApiBaseUrlWithLang(
-                  null,
-                  apiBase,
-                  apiDefaultLang,
-                  i18n,
-                );
-                const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
-                cy.intercept('POST', apiRefreshUrl, {
-                  statusCode: httpSuccessfullStatus,
-                  body: refreshTokensResponse,
-                })
-                  .as('refreshTokens')
-                  .then(() => {
-                    // set time to when JWT should be expired + 1 second
-                    clock.tick(timeUntilExpiration);
-                    // intercepted function apiRefreshUrl should be called
-                    cy.wait('@refreshTokens')
-                      .its('response.statusCode')
-                      .should('eq', httpSuccessfullStatus)
-                      .then(() => {
-                        // new JWT
-                        expect(store.getAccessToken).to.equal(
-                          refreshTokensResponse.access,
-                        );
-                        // JWT not be expired
-                        expect(store.isJwtExpired()).to.equal(false);
-                        expect(store.getJwtExpiration).to.equal(
-                          fixtureTokenRefreshExpirationTime,
-                        );
-                      });
-                  });
-              },
-            );
+      cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+        (loginResponse) => {
+          cy.get('@clock').then((clock) => {
+            const store = useLoginStore();
+            cy.wrap(store.login({ username, password })).then((response) => {
+              expect(response).to.deep.equal(loginResponse);
+              expect(store.getAccessToken).to.equal(loginResponse.access);
+              expect(store.getRefreshToken).to.equal(loginResponse.refresh);
+              expect(store.getUser).to.deep.equal(loginResponse.user);
+              expect(store.getJwtExpiration).to.equal(
+                fixtureTokenExpirationTimeSeconds,
+              );
+              expect(store.getTimeUntilExpiration()).to.equal(
+                timeUntilExpirationSeconds, // time until expiration in seconds
+              );
+              expect(store.isJwtExpired()).to.equal(false);
+              cy.fixture('refreshTokensResponse.json').then(
+                (refreshTokensResponse) => {
+                  // intercept refresh token API call
+                  const apiBaseUrl = getApiBaseUrlWithLang(
+                    null,
+                    apiBase,
+                    apiDefaultLang,
+                    i18n,
+                  );
+                  const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
+                  cy.intercept('POST', apiRefreshUrl, {
+                    statusCode: httpSuccessfullStatus,
+                    body: refreshTokensResponse,
+                  })
+                    .as('refreshTokens')
+                    .then(() => {
+                      // set time to when JWT should be expired + 1 second
+                      clock.tick(timeUntilExpiration);
+                      // intercepted function apiRefreshUrl should be called
+                      cy.wait('@refreshTokens')
+                        .its('response.statusCode')
+                        .should('eq', httpSuccessfullStatus)
+                        .then(() => {
+                          // new JWT
+                          expect(store.getAccessToken).to.equal(
+                            refreshTokensResponse.access,
+                          );
+                          // JWT not be expired
+                          expect(store.isJwtExpired()).to.equal(false);
+                          expect(store.getJwtExpiration).to.equal(
+                            fixtureTokenRefreshExpirationTime,
+                          );
+                        });
+                    });
+                },
+              );
+            });
           });
-        });
-      });
+        },
+      );
     });
 
     it('performs login and sets token and expiration time', () => {
-      cy.fixture('loginResponse.json').then((loginResponse) => {
-        cy.get('@clock').then((clock) => {
-          const store = useLoginStore();
-          cy.wrap(store.login({ username, password })).then((response) => {
-            expect(response).to.deep.equal(loginResponse);
-            expect(store.getAccessToken).to.equal(loginResponse.access);
-            expect(store.getRefreshToken).to.equal(loginResponse.refresh);
-            expect(store.getUser).to.deep.equal(loginResponse.user);
-            expect(store.getJwtExpiration).to.equal(
-              fixtureTokenExpirationTimeSeconds,
-            );
-            expect(store.getTimeUntilExpiration()).to.equal(
-              timeUntilExpirationSeconds,
-            );
-            expect(store.isJwtExpired()).to.equal(false);
-            cy.fixture('refreshTokensResponse.json').then(
-              (refreshTokensResponse) => {
-                // intercept refresh token API call
-                const apiBaseUrl = getApiBaseUrlWithLang(
-                  null,
-                  apiBase,
-                  apiDefaultLang,
-                  i18n,
-                );
-                const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
-                cy.intercept('POST', apiRefreshUrl, {
-                  statusCode: httpSuccessfullStatus,
-                  body: refreshTokensResponse,
-                }).then(() => {
-                  // set time to when JWT should be expired + 1 second
-                  clock.tick(timeUntilExpiration + 1000);
-                  expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
-                  expect(store.isJwtExpired()).to.equal(true);
-                  // refresh tokens
-                  cy.wrap(store.refreshTokens()).then(() => {
-                    // new JWT
-                    expect(store.getAccessToken).to.equal(
-                      refreshTokensResponse.access,
-                    );
-                    // JWT not be expired
-                    expect(store.isJwtExpired()).to.equal(false);
-                    expect(store.getJwtExpiration).to.equal(
-                      fixtureTokenRefreshExpirationTime,
-                    );
+      cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+        (loginResponse) => {
+          cy.get('@clock').then((clock) => {
+            const store = useLoginStore();
+            cy.wrap(store.login({ username, password })).then((response) => {
+              expect(response).to.deep.equal(loginResponse);
+              expect(store.getAccessToken).to.equal(loginResponse.access);
+              expect(store.getRefreshToken).to.equal(loginResponse.refresh);
+              expect(store.getUser).to.deep.equal(loginResponse.user);
+              expect(store.getJwtExpiration).to.equal(
+                fixtureTokenExpirationTimeSeconds,
+              );
+              expect(store.getTimeUntilExpiration()).to.equal(
+                timeUntilExpirationSeconds,
+              );
+              expect(store.isJwtExpired()).to.equal(false);
+              cy.fixture('refreshTokensResponse.json').then(
+                (refreshTokensResponse) => {
+                  // intercept refresh token API call
+                  const apiBaseUrl = getApiBaseUrlWithLang(
+                    null,
+                    apiBase,
+                    apiDefaultLang,
+                    i18n,
+                  );
+                  const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
+                  cy.intercept('POST', apiRefreshUrl, {
+                    statusCode: httpSuccessfullStatus,
+                    body: refreshTokensResponse,
+                  }).then(() => {
+                    // set time to when JWT should be expired + 1 second
+                    clock.tick(timeUntilExpiration + 1000);
+                    expect(store.getTimeUntilExpiration()).to.be.lessThan(0);
+                    expect(store.isJwtExpired()).to.equal(true);
+                    // refresh tokens
+                    cy.wrap(store.refreshTokens()).then(() => {
+                      // new JWT
+                      expect(store.getAccessToken).to.equal(
+                        refreshTokensResponse.access,
+                      );
+                      // JWT not be expired
+                      expect(store.isJwtExpired()).to.equal(false);
+                      expect(store.getJwtExpiration).to.equal(
+                        fixtureTokenRefreshExpirationTime,
+                      );
+                    });
                   });
-                });
-              },
-            );
+                },
+              );
+            });
           });
-        });
-      });
+        },
+      );
     });
   });
 });

@@ -14,6 +14,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // challenge inactive
+  {
+    path: routesConf['challenge_inactive']['path'],
+    component: () => import('layouts/LoginRegisterLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['challenge_inactive']['children']['name'],
+        component: () => import('pages/ChallengeInactivePage.vue'),
+      },
+    ],
+  },
   // community
   {
     path: routesConf['community']['path'],
@@ -200,6 +212,7 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // profile
   {
     path: routesConf['profile']['path'],
     component: () => import('layouts/MainLayout.vue'),

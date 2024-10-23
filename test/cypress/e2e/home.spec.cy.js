@@ -1,4 +1,5 @@
 import {
+  systemTimeChallengeInactive,
   testDesktopSidebar,
   testLanguageSwitcher,
   testMobileHeader,
@@ -336,6 +337,68 @@ describe('Home page', () => {
     });
   });
 
+  context('before challenge', () => {
+    beforeEach(() => {
+      cy.clock(systemTimeChallengeInactive).then(() => {
+        cy.visit(Cypress.config('baseUrl'));
+        cy.viewport('macbook-16');
+
+        // load config an i18n objects as aliases
+        cy.task('getAppConfig', process).then((config) => {
+          // alias config
+          cy.wrap(config).as('config');
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            // alias i18n
+            cy.wrap(win.i18n).as('i18n');
+          });
+        });
+      });
+    });
+
+    it('renders all components', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.dataCy('q-main').should('be.visible');
+        // title
+        cy.dataCy('index-title')
+          .should('be.visible')
+          .then(($el) => {
+            cy.wrap(i18n.global.t('index.title')).then((translation) => {
+              expect($el.text()).to.equal(translation);
+            });
+          });
+        // countdown
+        cy.dataCy('countdown-event').should('be.visible');
+        // NOT banner routes
+        cy.dataCy('banner-routes').should('not.exist');
+        // banner app
+        cy.dataCy('banner-app').should('be.visible');
+        // future challenges
+        cy.dataCy('card-list-title').should('be.visible');
+        cy.dataCy('list-challenge').should('be.visible');
+        // NOT progress slider
+        cy.dataCy('slider-progress').should('not.exist');
+        // NOT list progress
+        cy.dataCy('list-progress').should('not.exist');
+        // banner questionnaire
+        cy.dataCy('banner-image').should('be.visible');
+        // heading with background image
+        cy.dataCy('heading-background').should('be.visible');
+        // list of events
+        cy.dataCy('list-event').should('be.visible');
+        cy.dataCy('card-list-item').should('be.visible');
+        // list of offers
+        cy.dataCy('list-offer').should('be.visible');
+        // list of posts
+        cy.dataCy('list-post').should('be.visible');
+        // newsletter
+        cy.dataCy('newsletter-feature').should('be.visible');
+        // list of follow
+        cy.dataCy('list-card-follow').should('be.visible');
+      });
+    });
+  });
+
   // TODO: test links
 
   // TODO: test rewatching application guide
@@ -355,48 +418,6 @@ function coreTests() {
     cy.dataCy('index-title')
       .should('be.visible')
       .and('have.css', 'font-family', fontFamily);
-  });
-
-  it('renders all components (before challenge state)', () => {
-    cy.get('@i18n').then((i18n) => {
-      cy.dataCy('q-main').should('be.visible');
-      // title
-      cy.dataCy('index-title')
-        .should('be.visible')
-        .then(($el) => {
-          cy.wrap(i18n.global.t('index.title')).then((translation) => {
-            expect($el.text()).to.equal(translation);
-          });
-        });
-      // countdown
-      cy.dataCy('countdown-event').should('be.visible');
-      // NOT banner routes
-      cy.dataCy('banner-routes').should('not.exist');
-      // banner app
-      cy.dataCy('banner-app').should('be.visible');
-      // future challenges
-      cy.dataCy('card-list-title').should('be.visible');
-      cy.dataCy('list-challenge').should('be.visible');
-      // NOT progress slider
-      cy.dataCy('slider-progress').should('not.exist');
-      // NOT list progress
-      cy.dataCy('list-progress').should('not.exist');
-      // banner questionnaire
-      cy.dataCy('banner-image').should('be.visible');
-      // heading with background image
-      cy.dataCy('heading-background').should('be.visible');
-      // list of events
-      cy.dataCy('list-event').should('be.visible');
-      cy.dataCy('card-list-item').should('be.visible');
-      // list of offers
-      cy.dataCy('list-offer').should('be.visible');
-      // list of posts
-      cy.dataCy('list-post').should('be.visible');
-      // newsletter
-      cy.dataCy('newsletter-feature').should('be.visible');
-      // list of follow
-      cy.dataCy('list-card-follow').should('be.visible');
-    });
   });
 
   it('allows user to display event modal', () => {

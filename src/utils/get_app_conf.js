@@ -50,24 +50,26 @@ const getAppConfig = (process) => {
     config['maxWidthBanner'] = process.env.MAX_WIDTH_BANNER;
   } else if (process.env.URL_AUTO_MAT) {
     config['urlAutoMat'] = process.env.URL_AUTO_MAT;
+  } else if (process.env.URL_APP_STORE) {
+    config['urlAppStore'] = process.env.URL_APP_STORE;
+  } else if (process.env.URL_BLOG) {
+    config['urlBlog'] = process.env.URL_BLOG;
   } else if (process.env.URL_FACEBOOK) {
     config['urlFacebook'] = process.env.URL_FACEBOOK;
+  } else if (process.env.URL_GOOGLE_PLAY) {
+    config['urlGooglePlay'] = process.env.URL_GOOGLE_PLAY;
   } else if (process.env.URL_INSTAGRAM) {
     config['urlInstagram'] = process.env.URL_INSTAGRAM;
   } else if (process.env.URL_TWITTER) {
     config['urlTwitter'] = process.env.URL_TWITTER;
-  } else if (process.env.URL_YOUTUBE) {
-    config['urlYoutube'] = process.env.URL_YOUTUBE;
-  } else if (process.env.URL_APP_STORE) {
-    config['urlAppStore'] = process.env.URL_APP_STORE;
-  } else if (process.env.URL_GOOGLE_PLAY) {
-    config['urlGooglePlay'] = process.env.URL_GOOGLE_PLAY;
   } else if (process.env.URL_VIDEO_LOGGING_ROUTES) {
     config['urlVideoLoggingRoutes'] = process.env.URL_VIDEO_LOGGING_ROUTES;
   } else if (process.env.URL_VIDEO_ONBOARDING) {
     config['urlVideoOnboarding'] = process.env.URL_VIDEO_ONBOARDING;
   } else if (process.env.FREE_SOFTWARE_DEFINITION) {
     config['freeSoftwareDefinitionUrl'] = process.env.FREE_SOFTWARE_DEFINITION;
+  } else if (process.env.URL_YOUTUBE) {
+    config['urlYoutube'] = process.env.URL_YOUTUBE;
   } else if (process.env.CHALLENGE_MONTH) {
     config['challengeMonth'] = process.env.CHALLENGE_MONTH;
   } else if (process.env.CHALLENGE_START_DATE) {

@@ -75,10 +75,12 @@ describe('<EmailVerification>', () => {
         props: {},
       }).then(() => {
         // set store var
-        cy.fixture('loginResponse.json').then((loginResponse) => {
-          const loginStore = useLoginStore();
-          loginStore.setUser(loginResponse.user);
-        });
+        cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+          (loginResponse) => {
+            const loginStore = useLoginStore();
+            loginStore.setUser(loginResponse.user);
+          },
+        );
       });
     });
 
@@ -109,10 +111,12 @@ describe('<EmailVerification>', () => {
         props: {},
       }).then(() => {
         // set store var
-        cy.fixture('loginResponse.json').then((loginResponse) => {
-          const loginStore = useLoginStore();
-          loginStore.setUser(loginResponse.user);
-        });
+        cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+          (loginResponse) => {
+            const loginStore = useLoginStore();
+            loginStore.setUser(loginResponse.user);
+          },
+        );
       });
     });
 
@@ -122,35 +126,40 @@ describe('<EmailVerification>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.fixture('loginResponse.json').then((loginResponse) => {
-      cy.dataCy(selectorEmailVerification).should('be.visible');
-      // title
-      cy.dataCy(selectorEmailVerificationTitle)
-        .should('be.visible')
-        .and('have.css', 'font-size', `${fontSizeTitle}px`)
-        .and('have.css', 'font-weight', `${fontWeightTitle}`)
-        .and('have.color', white)
-        .and('contain', i18n.global.t('register.form.titleEmailVerification'));
-      // text
-      cy.dataCy(selectorEmailVerificationText)
-        .should('be.visible')
-        .and('contain', loginResponse.user.email);
-      // check inner html
-      cy.dataCy(selectorEmailVerificationText)
-        .should('be.visible')
-        .and('have.css', 'font-size', `${fontSizeText}px`)
-        .and('have.css', 'font-weight', `${fontWeightText}`)
-        .then(($el) => {
-          const content = $el.text();
-          cy.stripHtmlTags(
-            i18n.global.t('register.form.textEmailVerification', {
-              email: loginResponse.user.email,
-            }),
-          ).then((text) => {
-            expect(content).to.equal(text);
+    cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+      (loginResponse) => {
+        cy.dataCy(selectorEmailVerification).should('be.visible');
+        // title
+        cy.dataCy(selectorEmailVerificationTitle)
+          .should('be.visible')
+          .and('have.css', 'font-size', `${fontSizeTitle}px`)
+          .and('have.css', 'font-weight', `${fontWeightTitle}`)
+          .and('have.color', white)
+          .and(
+            'contain',
+            i18n.global.t('register.form.titleEmailVerification'),
+          );
+        // text
+        cy.dataCy(selectorEmailVerificationText)
+          .should('be.visible')
+          .and('contain', loginResponse.user.email);
+        // check inner html
+        cy.dataCy(selectorEmailVerificationText)
+          .should('be.visible')
+          .and('have.css', 'font-size', `${fontSizeText}px`)
+          .and('have.css', 'font-weight', `${fontWeightText}`)
+          .then(($el) => {
+            const content = $el.text();
+            cy.stripHtmlTags(
+              i18n.global.t('register.form.textEmailVerification', {
+                email: loginResponse.user.email,
+              }),
+            ).then((text) => {
+              expect(content).to.equal(text);
+            });
           });
-        });
-    });
+      },
+    );
     // wrong email hint
     cy.dataCy(selectorEmailVerificationWrongEmailHint)
       .should('be.visible')

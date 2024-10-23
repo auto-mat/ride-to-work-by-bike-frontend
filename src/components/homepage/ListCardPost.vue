@@ -10,6 +10,7 @@
  * the `CardPost` component inside a carousel slider. Shows 4 slides per view.
  *
  * @props
+ * - `dark` (Boolean): If true, the component will use a dark theme.
  * - `title` (String): The heading or title for the list of offer cards.
  * - `cards` (Array of CardOfferType, required): An array of card items to be
  *   displayed. Each item is of type `CardOfferType`.
@@ -21,6 +22,7 @@
  *
  * @example
  * <list-card-post
+ *  dark
  *  :cards="postList"
  *  :title="postsTitle"
  *  :button="buttonDetails"
@@ -37,8 +39,11 @@ import { Screen } from 'quasar';
 import CardPost from './CardPost.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // types
-import { CardPost as CardPostType, Link } from '../types';
+import { CardPost as CardPostType } from '../types';
 
 export default defineComponent({
   name: 'ListCardPost',
@@ -47,6 +52,10 @@ export default defineComponent({
     SectionHeading,
   },
   props: {
+    dark: {
+      type: Boolean,
+      default: false,
+    },
     title: {
       type: String,
       required: true,
@@ -55,21 +64,20 @@ export default defineComponent({
       type: Array as () => CardPostType[],
       required: true,
     },
-    button: {
-      type: Object as () => Link,
-      required: false,
-    },
   },
   setup() {
     const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
 
+    const buttonUrl = rideToWorkByBikeConfig.urlBlog;
+
     const buttonWidth = computed((): string => {
       return isLargeScreen.value ? 'auto' : '100%';
     });
 
     return {
+      buttonUrl,
       buttonWidth,
     };
   },
@@ -113,18 +121,15 @@ export default defineComponent({
       </swiper-slide>
     </swiper-container>
     <!-- Link to more news -->
-    <div
-      v-if="button"
-      class="text-center q-pt-md"
-      data-cy="card-list-post-buttons"
-    >
+    <div class="text-center q-pt-md" data-cy="card-list-post-buttons">
       <q-btn
         rounded
         unelevated
-        outline
+        :outline="!dark"
         color="grey-10"
-        :to="button.url"
-        :label="button.title"
+        :href="buttonUrl"
+        target="_blank"
+        :label="$t('index.cardListPost.button')"
         :style="{ width: buttonWidth }"
         data-cy="card-list-post-button"
       />

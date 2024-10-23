@@ -51,47 +51,49 @@ describe('<UserSelect>', () => {
     });
 
     it('allows to logout', () => {
-      cy.fixture('loginResponse').then((loginResponse) => {
-        cy.fixture('loggedUser').then((user) => {
-          const loginStore = useLoginStore();
-          loginStore.setAccessToken(loginResponse.access);
-          loginStore.setRefreshToken(loginResponse.refresh);
-          loginStore.setUser(user);
-          loginStore.setJwtExpiration(fixtureTokenExpirationTime);
-          cy.wrap(loginStore.getAccessToken).should(
-            'equal',
-            loginResponse.access,
-          );
-          cy.wrap(loginStore.getRefreshToken).should(
-            'equal',
-            loginResponse.refresh,
-          );
-          cy.wrap(loginStore.getUser).should('deep.equal', user);
-          cy.wrap(loginStore.getJwtExpiration).should(
-            'equal',
-            fixtureTokenExpirationTime,
-          );
-          // click on logout button
-          cy.dataCy('user-select-input').click();
-          cy.dataCy('menu-item')
-            .contains(i18n.global.t('userSelect.logout'))
-            .click();
-          cy.wrap(() => {
-            // prevent race condition between modifying and accessing store
-            return new Cypress.Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-              }, 500);
+      cy.fixture('loginRegisterResponseChallengeInactive.json').then(
+        (loginResponse) => {
+          cy.fixture('loggedUser').then((user) => {
+            const loginStore = useLoginStore();
+            loginStore.setAccessToken(loginResponse.access);
+            loginStore.setRefreshToken(loginResponse.refresh);
+            loginStore.setUser(user);
+            loginStore.setJwtExpiration(fixtureTokenExpirationTime);
+            cy.wrap(loginStore.getAccessToken).should(
+              'equal',
+              loginResponse.access,
+            );
+            cy.wrap(loginStore.getRefreshToken).should(
+              'equal',
+              loginResponse.refresh,
+            );
+            cy.wrap(loginStore.getUser).should('deep.equal', user);
+            cy.wrap(loginStore.getJwtExpiration).should(
+              'equal',
+              fixtureTokenExpirationTime,
+            );
+            // click on logout button
+            cy.dataCy('user-select-input').click();
+            cy.dataCy('menu-item')
+              .contains(i18n.global.t('userSelect.logout'))
+              .click();
+            cy.wrap(() => {
+              // prevent race condition between modifying and accessing store
+              return new Cypress.Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                }, 500);
+              });
+            }).then(() => {
+              // check if we are logged out
+              cy.wrap(loginStore.getAccessToken).should('be.empty');
+              cy.wrap(loginStore.getRefreshToken).should('be.empty');
+              cy.wrap(loginStore.getUser).should('deep.equal', emptyUser);
+              cy.wrap(loginStore.getJwtExpiration).should('be.null');
             });
-          }).then(() => {
-            // check if we are logged out
-            cy.wrap(loginStore.getAccessToken).should('be.empty');
-            cy.wrap(loginStore.getRefreshToken).should('be.empty');
-            cy.wrap(loginStore.getUser).should('deep.equal', emptyUser);
-            cy.wrap(loginStore.getJwtExpiration).should('be.null');
           });
-        });
-      });
+        },
+      );
     });
   });
 

@@ -59,12 +59,12 @@ export default defineComponent({
     const registerStore = useRegisterStore();
     const challengeStore = useChallengeStore();
     const isActiveChallenge = computed(
-      () => challengeStore.getIsChallengeActive,
+      (): boolean => challengeStore.getIsChallengeInActivePhase,
     );
-    const isPassword = ref(true);
-    const isPasswordConfirm = ref(true);
-    const isPrivacyConsent = ref(false);
-    const isNewsletterSubscription = ref(false);
+    const isPassword = ref<boolean>(true);
+    const isPasswordConfirm = ref<boolean>(true);
+    const isPrivacyConsent = ref<boolean>(false);
+    const isNewsletterSubscription = ref<boolean>(false);
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();

@@ -1,0 +1,11 @@
+{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI2NDQ0ODAwLCJqdGkiOiJiMzY5M2I1ZTU3OWE0MDZhOWUyNWE0ZTQ3YzFmMjQ4NiIsInVzZXJfaWQiOjE4OTc2MX0.lksW4KvrzvTVAxi5JvlYpP86A1Hoi0QjyVIUP-i5Jl4",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNjUzMTIwMCwianRpIjoiNzYzNGIxYzBiYTdiNDQ0Zjk0ZTZmNTA5M2E1MDM3MDYiLCJ1c2VyX2lkIjoxODk3NjF9.XV6kyozcA8_x5ei4FAIN8evEuZ1i4bdXvGq3Vwo9DJw",
+  "user": {
+    "pk": 1,
+    "username": "foobar",
+    "email": "foo@bar.org",
+    "first_name": "Foo",
+    "last_name": "Bar"
+  }
+}

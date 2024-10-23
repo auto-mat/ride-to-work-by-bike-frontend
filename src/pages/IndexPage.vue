@@ -1,6 +1,7 @@
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
     <div class="bg-white">
+      {{ challengeStatus }}
       <div
         class="q-px-lg q-pt-lg q-pb-xl overflow-hidden"
         :style="{ maxWidth }"

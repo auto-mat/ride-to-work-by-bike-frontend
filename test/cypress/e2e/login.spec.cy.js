@@ -1,12 +1,13 @@
 import {
+  loginWithUI,
   testLanguageSwitcher,
   testBackgroundImage,
   timeUntilExpiration,
-  systemTime,
+  systemTimeChallengeActive,
+  setupApiChallengeActive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
-import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 
 describe('Login page', () => {
   context('desktop', () => {
@@ -146,13 +147,11 @@ describe('Login page', () => {
 
   context('login user flow', () => {
     beforeEach(() => {
+      cy.clock(systemTimeChallengeActive);
       cy.visit('#' + routesConf['login']['path']);
       cy.viewport('macbook-16');
 
-      // load clock, config and i18n objects as aliases
-      cy.clock().then((clock) => {
-        cy.wrap(clock).as('clock');
-      });
+      // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
@@ -160,6 +159,7 @@ describe('Login page', () => {
         cy.window().then((win) => {
           // alias i18n
           cy.wrap(win.i18n).as('i18n');
+          setupApiChallengeActive(config, win.i18n, true);
         });
       });
     });
@@ -188,69 +188,30 @@ describe('Login page', () => {
     });
 
     it('allows user to login and refreshes token 1 min before expiration', () => {
-      cy.get('@clock').then((clock) => {
-        clock.setSystemTime(systemTime);
-        cy.get('@i18n').then((i18n) => {
-          cy.get('@config').then((config) => {
-            const { apiBase, apiDefaultLang, urlApiLogin, urlApiRefresh } =
-              config;
-            const apiBaseUrl = getApiBaseUrlWithLang(
-              null,
-              apiBase,
-              apiDefaultLang,
-              i18n,
+      cy.clock(systemTimeChallengeActive).then((clock) => {
+        // fill in form
+        loginWithUI();
+        // wait for login API call
+        cy.wait('@loginRequest').then(() => {
+          // check that we are on homepage
+          cy.testRoute(routesConf['home']['path']);
+          // go to refresh time
+          clock.tick(timeUntilExpiration);
+          // refresh tokens should be called on load
+          cy.wait('@refreshTokens').then((interception) => {
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
             );
-            const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
-            const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
-
-            cy.fixture('loginResponse.json').then((loginResponse) => {
-              // intercept API call
-              cy.intercept('POST', apiLoginUrl, {
-                statusCode: httpSuccessfullStatus,
-                body: loginResponse,
-              }).as('loginRequest');
-              // intercept refresh token API call
-              cy.fixture('refreshTokensResponse.json').then(
-                (refreshTokensResponse) => {
-                  cy.intercept('POST', apiRefreshUrl, {
-                    statusCode: httpSuccessfullStatus,
-                    body: refreshTokensResponse,
-                  }).as('refreshTokens');
-                  // fill in form
-                  cy.dataCy('form-login-email')
-                    .find('input')
-                    .type('test@example.com');
-                  cy.dataCy('form-login-password')
-                    .find('input')
-                    .type('password123');
-                  // submit form
-                  cy.dataCy('form-login-submit-login').click();
-                  // wait for login API call
-                  cy.wait('@loginRequest').then(() => {
-                    // check that we are on homepage
-                    cy.testRoute(routesConf['home']['path']);
-                    // go to refresh time
-                    clock.tick(timeUntilExpiration);
-                    // refresh tokens should be called on load
-                    cy.wait('@refreshTokens').then((interception) => {
-                      expect(interception.response.statusCode).to.equal(
-                        httpSuccessfullStatus,
-                      );
-                    });
-                    // reload page
-                    cy.reload();
-                    // check that we are on homepage
-                    cy.testRoute(routesConf['home']['path']);
-                    // refresh tokens should be called on load
-                    cy.wait('@refreshTokens').then((interception) => {
-                      expect(interception.response.statusCode).to.equal(
-                        httpSuccessfullStatus,
-                      );
-                    });
-                  });
-                },
-              );
-            });
+          });
+          // reload page
+          cy.reload();
+          // check that we are on homepage
+          cy.testRoute(routesConf['home']['path']);
+          // refresh tokens should be called on load
+          cy.wait('@refreshTokens').then((interception) => {
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
           });
         });
       });
