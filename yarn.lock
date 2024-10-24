@@ -2063,12 +2063,12 @@ cypress-image-snapshot@^4.0.1:
     pkg-dir "^3.0.0"
     term-img "^4.0.0"
 
-cypress-multi-reporters@^1.6.4:
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/cypress-multi-reporters/-/cypress-multi-reporters-1.6.4.tgz#6f9d25ed8a0d8d7fa5597977adcd2237d1249931"
-  integrity sha512-3xU2t6pZjZy/ORHaCvci5OT1DAboS4UuMMM8NBAizeb2C9qmHt+cgAjXgurazkwkPRdO7ccK39M5ZaPCju0r6A==
+cypress-multi-reporters@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/cypress-multi-reporters/-/cypress-multi-reporters-2.0.3.tgz#2264f8a3810bef21d05360abcbbd483472bc451a"
+  integrity sha512-iHOPp9g+dwbwNM4fKW087nhoL0VPgXph9fU++Vg6/oQZgE6SU1Amwb/GDH6kEHB5X+x+s1dO0WaNhSoxZEagHA==
   dependencies:
-    debug "^4.3.4"
+    debug "^4.3.7"
     lodash "^4.17.21"
 
 cypress-parallel@^0.14.0:
@@ -2179,7 +2179,7 @@ debug@^3.1.0:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@~4.3.6:
+debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.3.7, debug@~4.3.6:
   version "4.3.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.7.tgz#87945b4151a011d76d95a198d7111c865c360a52"
   integrity sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==
