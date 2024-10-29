@@ -10,6 +10,11 @@
  * when clicked.
  * Note: Used in `DrawerHeader` component.
  *
+ * @props
+ * - `width` (string): logo image width.
+ * - `height` (string): logo image height.
+ * - `url` (string, default: null): logo image URL link.
+ *
  * @example
  * <header-logo />
  *
@@ -33,9 +38,15 @@ export default defineComponent({
       type: String,
       default: '40px',
     },
+    url: {
+      type: [String, null],
+      default: null,
+    },
   },
-  setup() {
-    const linkUrl = rideToWorkByBikeConfig.urlRTWBBLogo;
+  setup(props) {
+    const { url } = props;
+    let linkUrl;
+    linkUrl = url ? url : rideToWorkByBikeConfig.urlRTWBBLogo;
     return {
       linkUrl,
     };
