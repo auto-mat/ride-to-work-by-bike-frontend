@@ -45,7 +45,7 @@ import SectionHeading from '../global/SectionHeading.vue';
 import StatsBar from '../global/StatsBar.vue';
 
 // composables
-import { useStatsBar } from 'src/composables/useStatsBar';
+import { useStats } from 'src/composables/useStats';
 
 // types
 import type { ItemStatistics } from '../types/Statistics';
@@ -75,7 +75,7 @@ export default defineComponent({
   },
   setup() {
     const memberResults = memberResultsFixture as MemberResults;
-    const { getMemberResultStats } = useStatsBar();
+    const { getMemberResultStats } = useStats();
     const stats = computed<ItemStatistics[]>(() =>
       getMemberResultStats(memberResults.results),
     );

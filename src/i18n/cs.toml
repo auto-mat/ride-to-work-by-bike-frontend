@@ -41,6 +41,7 @@ free = "zdarma"
 from = "od"
 man = "Muž"
 male = "Pánské"
+percentageUnit = "%"
 to = "do"
 woman = "Žena"
 routeLengthUnit = "km"
@@ -680,6 +681,7 @@ titleRoutes = "Cesty"
 titleTabApp = "Automatický záznam"
 
 [statsBar]
+labelFrequency = "pravidelnost"
 labelSustainableRoutes = "udržitelných cest"
 labelSaved = "ušetřeno"
 

@@ -20,7 +20,7 @@
 import { defineComponent } from 'vue';
 
 // composables
-import { useStatsBar } from '../../composables/useStatsBar';
+import { useStats } from '../../composables/useStats';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -41,7 +41,7 @@ export default defineComponent({
   },
   setup() {
     const { borderRadiusCard } = rideToWorkByBikeConfig;
-    const { getStatIcon, getStatLabel, getStatUnit } = useStatsBar();
+    const { getStatIcon, getStatLabel, getStatUnit } = useStats();
 
     return {
       borderRadiusCard,

@@ -7,7 +7,7 @@ import { ItemStatistics, StatisticsId } from '../components/types/Statistics';
 // types
 import { TeamMember } from '../components/types/Results';
 
-export const useStatsBar = () => {
+export const useStats = () => {
   /**
    * Parse API data structure to a one-dimensional array of statistics.
    * @param {TeamMember[]} memberResults - The API data structure.
@@ -42,6 +42,8 @@ export const useStatsBar = () => {
   const getStatIcon = (id: StatisticsId) => {
     const baseSvgImgPath = 'svguse:icons/stats_bar/icons.svg#';
     switch (id) {
+      case StatisticsId.frequency:
+        return `${baseSvgImgPath}tabler-progress`;
       case StatisticsId.distance:
         return `${baseSvgImgPath}jam-arrows-h`;
       case StatisticsId.routes:
@@ -60,6 +62,8 @@ export const useStatsBar = () => {
    */
   const getStatLabel = (id: StatisticsId) => {
     switch (id) {
+      case StatisticsId.frequency:
+        return i18n.global.t('statsBar.labelFrequency');
       case StatisticsId.routes:
         return i18n.global.t('statsBar.labelSustainableRoutes');
       case StatisticsId.co2:
@@ -76,6 +80,8 @@ export const useStatsBar = () => {
    */
   const getStatUnit = (id: StatisticsId) => {
     switch (id) {
+      case StatisticsId.frequency:
+        return i18n.global.t('global.percentageUnit');
       case StatisticsId.distance:
         return i18n.global.t('global.routeLengthUnit');
       case StatisticsId.co2:

@@ -13,8 +13,8 @@
  * component.
  *
  * @props
- * - `card` (Object, required): The card object containing statistics details.
- *   It should be of type `CardStats`.
+ * - `stats` (StatsBarType, required): The object representing stats.
+ *   It should be of type `StatsBarType`.
  *
  * @example
  * <card-stats
@@ -27,11 +27,18 @@
 // libraries
 import { defineComponent } from 'vue';
 
-// types
-import { CardStats } from '../types';
+// composables
+import { useStats } from '../../composables/useStats';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+// enums
+import { StatisticsId } from '../types/Statistics';
+
+// types
+import type { CardStats } from '../types';
+import type { ItemStatistics } from '../types/Statistics';
 
 export default defineComponent({
   name: 'CardStats',
@@ -40,12 +47,21 @@ export default defineComponent({
       type: Object as () => CardStats,
       required: true,
     },
+    stats: {
+      type: Array as () => ItemStatistics[],
+      required: true,
+    },
   },
   setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
+    const { getStatIcon, getStatLabel, getStatUnit } = useStats();
 
     return {
       borderRadius,
+      getStatIcon,
+      getStatLabel,
+      getStatUnit,
+      StatisticsId,
     };
   },
 });
@@ -83,19 +99,39 @@ export default defineComponent({
         <!-- List stats -->
         <q-list class="q-pa-none">
           <q-item
-            v-for="item in card.stats"
+            v-for="item in stats"
             :key="item.id"
-            class="q-px-none text-black"
+            class="q-px-none text-grey-10"
             data-cy="card-stats-item"
           >
-            <q-item-section avatar class="text-blue-grey-3">
+            <q-item-section avatar>
               <!-- Icon -->
-              <q-icon :name="item.icon" size="14px" />
+              <q-icon
+                :name="getStatIcon(item.id)"
+                color="primary"
+                size="18px"
+                data-cy="card-stats-item-icon"
+              />
             </q-item-section>
             <q-item-section>
-              <!-- Label -->
               <q-item-label>
-                {{ item.text }}
+                <!-- Value -->
+                <strong class="text-weight-bold" data-cy="card-stats-item-value"
+                  >{{ item.value }}&nbsp;</strong
+                >
+                <!-- Label -->
+                <span
+                  v-if="getStatUnit(item.id)"
+                  class="text-weight-bold"
+                  data-cy="card-stats-item-label-unit"
+                  v-html="getStatUnit(item.id)"
+                />
+                <span
+                  v-if="getStatLabel(item.id)"
+                  data-cy="card-stats-item-label"
+                >
+                  <span>&nbsp;{{ getStatLabel(item.id) }}</span>
+                </span>
               </q-item-label>
             </q-item-section>
           </q-item>

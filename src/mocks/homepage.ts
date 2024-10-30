@@ -360,7 +360,7 @@ export const cardsStats: CardStats[] = [
       {
         id: 'regularity',
         icon: 'lens',
-        text: '80% pravidelnost',
+        text: '80 % pravidelnost',
       },
       {
         id: 'routes',

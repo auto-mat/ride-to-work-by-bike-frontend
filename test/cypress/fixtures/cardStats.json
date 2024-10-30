@@ -1,5 +1,9 @@
 [
   {
+    "id": "frequency",
+    "value": "80"
+  },
+  {
     "id": "eco_trip_count",
     "value": "18"
   },
