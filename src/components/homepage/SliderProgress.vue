@@ -75,9 +75,9 @@ export default defineComponent({
   },
   setup() {
     const memberResults = memberResultsFixture as MemberResponse;
-    const { getMemberResultStats } = useStats();
+    const { getResultStatistics } = useStats();
     const stats = computed<ItemStatistics[]>(() =>
-      getMemberResultStats(memberResults.results),
+      getResultStatistics(memberResults.results),
     );
 
     const isLargeScreen = computed((): boolean => {

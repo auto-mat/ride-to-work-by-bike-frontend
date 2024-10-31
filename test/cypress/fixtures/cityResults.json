@@ -1,0 +1,48 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "competitor_count": 106,
+      "trip_stats": {
+        "distance__sum": 8707.747999999989,
+        "user_count": 83,
+        "count__sum": 1135,
+        "count_bicycle": 665,
+        "distance_bicycle": 7652.178,
+        "count_foot": 323,
+        "distance_foot": 883.4300000000003
+      },
+      "emissions": {
+        "co2": 1123299.5,
+        "co": 6307892.7,
+        "nox": 1477704.8,
+        "n2o": 217693.7,
+        "voc": 721872.3,
+        "ch4": 67049.7,
+        "so2": 42668.0,
+        "solid": 304771.2,
+        "pb": 95.8
+      },
+      "distance": 8707.747999999989,
+      "eco_trip_count": 1135,
+      "description": "Do práce na kole v tomto městě pořádá ",
+      "organizer": "",
+      "organizer_url": "",
+      "subsidiaries": [
+        "https://dpnk.dopracenakole.cz/rest/subsidiary/15008/",
+        "https://dpnk.dopracenakole.cz/rest/subsidiary/8889/",
+        "https://dpnk.dopracenakole.cz/rest/subsidiary/17398/"
+      ],
+      "competitions": [],
+      "wp_url": "https://dopracenakole.cz/mesta/brno",
+      "id": 5,
+      "name": "Brno",
+      "location": {
+        "coordinates": [16.616821289063, 49.203917384147],
+        "type": "Point"
+      }
+    }
+  ]
+}

@@ -26,7 +26,7 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // composables
 import { useStats } from '../../composables/useStats';
@@ -35,10 +35,23 @@ import { useStats } from '../../composables/useStats';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
-import { StatisticsId } from '../types/Statistics';
+import { StatisticsId, StatisticsCategoryId } from '../types/Statistics';
+
+// fixtures
+import memberResultsFixture from '../../../test/cypress/fixtures/memberResults.json';
+import teamResultsFixture from '../../../test/cypress/fixtures/teamResults.json';
+import organizationResultsFixture from '../../../test/cypress/fixtures/organizationResults.json';
+import cityResultsFixture from '../../../test/cypress/fixtures/cityResults.json';
 
 // types
-import type { ItemStatistics, StatisticsCategoryId } from '../types/Statistics';
+import type {
+  CityResponse,
+  MemberResponse,
+  ResultsUnion,
+  TeamResponse,
+  OrganizationResponse,
+} from '../types/Results';
+import type { ItemStatistics } from '../types/Statistics';
 
 export default defineComponent({
   name: 'CardStats',
@@ -47,20 +60,52 @@ export default defineComponent({
       type: String as () => StatisticsCategoryId,
       required: true,
     },
-    stats: {
-      type: Array as () => ItemStatistics[],
-      required: true,
-    },
   },
-  setup() {
+  setup(props) {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const {
+      getResultStatistics,
       getStatIcon,
       getStatLabel,
       getStatUnit,
       getStatCategoryIcon,
       getStatCategoryLabel,
     } = useStats();
+
+    const memberResults = memberResultsFixture as MemberResponse;
+    const teamResults = teamResultsFixture as TeamResponse;
+    const organizationResults =
+      organizationResultsFixture as OrganizationResponse;
+    const cityResults = cityResultsFixture as CityResponse;
+
+    let results = null as ResultsUnion[] | null;
+    // get results based on category
+    if (
+      props.category === StatisticsCategoryId.personal &&
+      memberResults.results
+    ) {
+      results = memberResults.results;
+    } else if (
+      props.category === StatisticsCategoryId.team &&
+      teamResults.results
+    ) {
+      results = teamResults.results;
+    } else if (
+      props.category === StatisticsCategoryId.organization &&
+      organizationResults.results
+    ) {
+      results = organizationResults.results;
+    } else if (
+      props.category === StatisticsCategoryId.city &&
+      cityResults.results
+    ) {
+      results = cityResults.results;
+    }
+
+    // get stats
+    const stats = computed<ItemStatistics[]>(() =>
+      results ? getResultStatistics(results) : [],
+    );
 
     return {
       borderRadius,
@@ -70,6 +115,7 @@ export default defineComponent({
       getStatCategoryIcon,
       getStatCategoryLabel,
       StatisticsId,
+      stats,
     };
   },
 });

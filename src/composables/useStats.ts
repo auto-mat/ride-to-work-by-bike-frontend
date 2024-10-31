@@ -9,32 +9,63 @@ import {
 } from '../components/types/Statistics';
 
 // types
-import { Results } from '../components/types/Results';
+import { ResultsUnion } from '../components/types/Results';
 
 export const useStats = () => {
   /**
    * Parse API data structure to a one-dimensional array of statistics.
-   * @param {Results[]} memberResults - The API data structure.
+   * Allows to specify ids of statistics to return.
+   * @param {MemberResults[]} results - The API data structure.
+   * @param {StatisticsId[]} ids - The IDs of the statistics to return.
    * @return {ItemStatistics[]} The statistics.
    */
-  const getMemberResultStats = (memberResults: Results[]): ItemStatistics[] => {
-    // return id-value pairs of statistics
-    return memberResults
-      .map((member: Results) => [
-        {
-          id: StatisticsId.distance,
-          value: member[StatisticsId.distance].toString(),
-        },
-        {
-          id: StatisticsId.routes,
-          value: member[StatisticsId.routes].toString(),
-        },
-        {
-          id: StatisticsId.co2,
-          value: member.emissions[StatisticsId.co2].toString(),
-        },
-      ])
+  const getResultStatistics = (
+    results: ResultsUnion[],
+    ids?: StatisticsId[],
+  ): ItemStatistics[] => {
+    // create all statistics array
+    const allStats = results
+      .map((member: ResultsUnion) => {
+        const stats: ItemStatistics[] = [];
+        // add frequency if it exists
+        if (StatisticsId.frequency in member) {
+          stats.push({
+            id: StatisticsId.frequency,
+            value: member.frequency.toString(),
+          });
+        }
+        // add distance if it exists
+        if (StatisticsId.distance in member) {
+          stats.push({
+            id: StatisticsId.distance,
+            value: member.distance.toString(),
+          });
+        }
+        // add eco_trip_count if it exists
+        if (StatisticsId.routes in member) {
+          stats.push({
+            id: StatisticsId.routes,
+            value: member.eco_trip_count.toString(),
+          });
+        }
+        // add CO2 emissions if they exist
+        if (StatisticsId.co2 in member.emissions) {
+          stats.push({
+            id: StatisticsId.co2,
+            value: member.emissions.co2.toString(),
+          });
+        }
+
+        return stats;
+      })
       .flat();
+
+    // if specific IDs are requested, filter the results
+    if (ids) {
+      return allStats.filter((stat) => ids.includes(stat.id));
+    }
+    // else return all statistics
+    return allStats;
   };
   /**
    * Get the icon of the statistic.
@@ -124,7 +155,7 @@ export const useStats = () => {
   };
 
   return {
-    getMemberResultStats,
+    getResultStatistics,
     getStatCategoryIcon,
     getStatCategoryLabel,
     getStatIcon,

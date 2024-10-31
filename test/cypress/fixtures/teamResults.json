@@ -1,0 +1,56 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "distance": 4.0,
+      "frequency": 0.4,
+      "emissions": {
+        "co2": 516.0,
+        "co": 2897.6,
+        "nox": 678.8,
+        "n2o": 100.0,
+        "voc": 331.6,
+        "ch4": 30.8,
+        "so2": 19.6,
+        "solid": 140.0,
+        "pb": 0.0
+      },
+      "eco_trip_count": 8,
+      "working_rides_base_count": 20,
+      "name": null,
+      "id": 174196,
+      "icon_url": null,
+      "members": [
+        {
+          "distance": 4.0,
+          "emissions": {
+            "co2": 516.0,
+            "co": 2897.6,
+            "nox": 678.8,
+            "n2o": 100.0,
+            "voc": 331.6,
+            "ch4": 30.8,
+            "so2": 19.6,
+            "solid": 140.0,
+            "pb": 0.0
+          },
+          "working_rides_base_count": 20,
+          "id": 412425,
+          "name": "ŠJ",
+          "frequency": 0.4,
+          "avatar_url": "",
+          "eco_trip_count": 8,
+          "rest_url": "https://dpnk.dopracenakole.cz/rest/all_userattendance/412425/",
+          "is_me": true
+        }
+      ],
+      "icon": null,
+      "subsidiary": "https://dpnk.dopracenakole.cz/rest/subsidiary/39075/",
+      "campaign": "https://dpnk.dopracenakole.cz/rest/campaign/263/",
+      "gallery": "https://dpnk.dopracenakole.cz/rest/gallery/191693/",
+      "gallery_slug": "team-174196-photos"
+    }
+  ]
+}

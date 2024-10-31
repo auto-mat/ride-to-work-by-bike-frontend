@@ -7,6 +7,7 @@ import {
   StatisticsId,
   StatisticsCategoryId,
 } from 'components/types/Statistics';
+import { useStats } from '../../composables/useStats';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -27,6 +28,8 @@ const selectorCardStatsItemValue = 'card-stats-item-value';
 const selectorCardStatsItemLabel = 'card-stats-item-label';
 const selectorCardStatsItemLabelUnit = 'card-stats-item-label-unit';
 
+const { getResultStatistics } = useStats();
+
 describe('<CardStats>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
@@ -38,13 +41,14 @@ describe('<CardStats>', () => {
 
   context('card personal', () => {
     beforeEach(() => {
-      cy.fixture('cardStats.json').then((stats) => {
-        cy.mount(CardStats, {
-          props: {
-            category: StatisticsCategoryId.personal,
-            stats,
-          },
-        });
+      cy.mount(CardStats, {
+        props: {
+          category: StatisticsCategoryId.personal,
+        },
+      });
+      cy.fixture('memberResults.json').then((response) => {
+        cy.wrap(response.results).as('results');
+        cy.wrap(getResultStatistics(response.results)).as('stats');
       });
       cy.viewport('macbook-16');
     });
@@ -64,13 +68,14 @@ describe('<CardStats>', () => {
 
   context('card team', () => {
     beforeEach(() => {
-      cy.fixture('cardStats.json').then((stats) => {
-        cy.mount(CardStats, {
-          props: {
-            category: StatisticsCategoryId.team,
-            stats,
-          },
-        });
+      cy.mount(CardStats, {
+        props: {
+          category: StatisticsCategoryId.team,
+        },
+      });
+      cy.fixture('teamResults.json').then((response) => {
+        cy.wrap(response.results).as('results');
+        cy.wrap(getResultStatistics(response.results)).as('stats');
       });
       cy.viewport('macbook-16');
     });
@@ -87,13 +92,14 @@ describe('<CardStats>', () => {
 
   context('card organization', () => {
     beforeEach(() => {
-      cy.fixture('cardStats.json').then((stats) => {
-        cy.mount(CardStats, {
-          props: {
-            category: StatisticsCategoryId.organization,
-            stats,
-          },
-        });
+      cy.mount(CardStats, {
+        props: {
+          category: StatisticsCategoryId.organization,
+        },
+      });
+      cy.fixture('organizationResults.json').then((response) => {
+        cy.wrap(response.results).as('results');
+        cy.wrap(getResultStatistics(response.results)).as('stats');
       });
     });
 
@@ -109,13 +115,14 @@ describe('<CardStats>', () => {
 
   context('card city', () => {
     beforeEach(() => {
-      cy.fixture('cardStats.json').then((stats) => {
-        cy.mount(CardStats, {
-          props: {
-            category: StatisticsCategoryId.city,
-            stats,
-          },
-        });
+      cy.mount(CardStats, {
+        props: {
+          category: StatisticsCategoryId.city,
+        },
+      });
+      cy.fixture('cityResults.json').then((response) => {
+        cy.wrap(response.results).as('results');
+        cy.wrap(getResultStatistics(response.results)).as('stats');
       });
     });
 
@@ -142,7 +149,7 @@ describe('<CardStats>', () => {
     });
 
     it('renders stats', () => {
-      cy.fixture('cardStats.json').then((stats) => {
+      cy.get('@stats').then((stats) => {
         cy.dataCy(selectorCardStatsItem).should('have.length', stats.length);
         cy.dataCy(selectorCardStatsItem).each(($item, index) => {
           // item

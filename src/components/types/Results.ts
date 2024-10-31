@@ -10,7 +10,7 @@ export interface Emissions {
   pb: number;
 }
 
-export interface Results {
+export interface MemberResults {
   distance: number;
   emissions: Emissions;
   working_rides_base_count: number;
@@ -32,7 +32,7 @@ export interface Results {
   team: string;
 }
 
-export interface Team {
+export interface TeamResults {
   distance: number;
   frequency: number;
   emissions: Emissions;
@@ -41,7 +41,7 @@ export interface Team {
   name: string | null;
   id: number;
   icon_url: string | null;
-  members: Results[];
+  members: MemberResults[];
   icon: string | null;
   subsidiary: string;
   campaign: string;
@@ -53,12 +53,92 @@ export interface MemberResponse {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Results[];
+  results: MemberResults[];
 }
 
 export interface TeamResponse {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Team[];
+  results: TeamResults[];
 }
+
+export interface SubsidiaryResults {
+  frequency: number;
+  distance: number;
+  eco_trip_count: number;
+  working_rides_base_count: number;
+  emissions: Emissions;
+  id: number;
+  address_street: string;
+  city: string;
+  icon_url: string | null;
+  rest_url: string;
+}
+
+export interface OrganizationResults {
+  subsidiaries: SubsidiaryResults[];
+  eco_trip_count: number;
+  frequency: number;
+  emissions: Emissions;
+  distance: number;
+  working_rides_base_count: number;
+  id: number;
+  name: string;
+  icon: string | null;
+  icon_url: string | null;
+  gallery: string;
+  gallery_slug: string;
+}
+
+export interface OrganizationResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: OrganizationResults[];
+}
+
+export interface TripStats {
+  distance__sum: number;
+  user_count: number;
+  count__sum: number;
+  count_bicycle: number;
+  distance_bicycle: number;
+  count_foot: number;
+  distance_foot: number;
+}
+
+export interface Location {
+  coordinates: number[];
+  type: string;
+}
+
+export interface CityResults {
+  competitor_count: number;
+  trip_stats: TripStats;
+  emissions: Emissions;
+  distance: number;
+  eco_trip_count: number;
+  description: string;
+  organizer: string;
+  organizer_url: string;
+  subsidiaries: string[];
+  competitions: string[];
+  wp_url: string;
+  id: number;
+  name: string;
+  location: Location;
+}
+
+export interface CityResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: CityResults[];
+}
+
+export type ResultsUnion =
+  | MemberResults
+  | TeamResults
+  | OrganizationResults
+  | CityResults;
