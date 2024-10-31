@@ -49,7 +49,7 @@ import { useStats } from 'src/composables/useStats';
 
 // types
 import type { ItemStatistics } from '../types/Statistics';
-import type { MemberResults } from '../types/Results';
+import type { MemberResponse } from '../types/Results';
 import { CardProgress as CardProgressType, Link } from '../types';
 
 export default defineComponent({
@@ -74,7 +74,7 @@ export default defineComponent({
     StatsBar,
   },
   setup() {
-    const memberResults = memberResultsFixture as MemberResults;
+    const memberResults = memberResultsFixture as MemberResponse;
     const { getMemberResultStats } = useStats();
     const stats = computed<ItemStatistics[]>(() =>
       getMemberResultStats(memberResults.results),

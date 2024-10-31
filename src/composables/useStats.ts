@@ -9,20 +9,18 @@ import {
 } from '../components/types/Statistics';
 
 // types
-import { TeamMember } from '../components/types/Results';
+import { Results } from '../components/types/Results';
 
 export const useStats = () => {
   /**
    * Parse API data structure to a one-dimensional array of statistics.
-   * @param {TeamMember[]} memberResults - The API data structure.
+   * @param {Results[]} memberResults - The API data structure.
    * @return {ItemStatistics[]} The statistics.
    */
-  const getMemberResultStats = (
-    memberResults: TeamMember[],
-  ): ItemStatistics[] => {
+  const getMemberResultStats = (memberResults: Results[]): ItemStatistics[] => {
     // return id-value pairs of statistics
     return memberResults
-      .map((member: TeamMember) => [
+      .map((member: Results) => [
         {
           id: StatisticsId.distance,
           value: member[StatisticsId.distance].toString(),

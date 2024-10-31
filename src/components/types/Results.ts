@@ -10,7 +10,7 @@ export interface Emissions {
   pb: number;
 }
 
-export interface TeamMember {
+export interface Results {
   distance: number;
   emissions: Emissions;
   working_rides_base_count: number;
@@ -41,7 +41,7 @@ export interface Team {
   name: string | null;
   id: number;
   icon_url: string | null;
-  members: TeamMember[];
+  members: Results[];
   icon: string | null;
   subsidiary: string;
   campaign: string;
@@ -49,14 +49,14 @@ export interface Team {
   gallery_slug: string;
 }
 
-export interface MemberResults {
+export interface MemberResponse {
   count: number;
   next: string | null;
   previous: string | null;
-  results: TeamMember[];
+  results: Results[];
 }
 
-export interface TeamResults {
+export interface TeamResponse {
   count: number;
   next: string | null;
   previous: string | null;

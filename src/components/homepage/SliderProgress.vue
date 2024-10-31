@@ -48,7 +48,7 @@ import { useStats } from '../../composables/useStats';
 import memberResultsFixture from '../../../test/cypress/fixtures/memberResults.json';
 
 // types
-import type { MemberResults } from '../types/Results';
+import type { MemberResponse } from '../types/Results';
 import { CardProgress, Link } from '../types';
 import type { ItemStatistics } from '../types/Statistics';
 
@@ -74,7 +74,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const memberResults = memberResultsFixture as MemberResults;
+    const memberResults = memberResultsFixture as MemberResponse;
     const { getMemberResultStats } = useStats();
     const stats = computed<ItemStatistics[]>(() =>
       getMemberResultStats(memberResults.results),
