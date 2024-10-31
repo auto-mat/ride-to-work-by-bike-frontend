@@ -14,12 +14,10 @@
  *
  * @props
  * - `category` (StatisticsCategoryId, required): The category of the stats.
- * - `stats` (StatsBarType, required): The object representing stats.
- *   It should be of type `StatsBarType`.
  *
  * @example
  * <card-stats
- *   :card="statsDetails"
+ *   :category="category"
  * />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104243&mode=dev)
