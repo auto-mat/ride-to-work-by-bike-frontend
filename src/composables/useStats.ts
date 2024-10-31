@@ -31,28 +31,29 @@ export const useStats = () => {
         if (StatisticsId.frequency in member) {
           stats.push({
             id: StatisticsId.frequency,
-            value: member.frequency.toString(),
+            // convert to percentage
+            value: formatNumberDecimal(member.frequency * 100, 0),
           });
         }
         // add distance if it exists
         if (StatisticsId.distance in member) {
           stats.push({
             id: StatisticsId.distance,
-            value: member.distance.toString(),
+            value: formatNumberDecimal(member.distance, 2),
           });
         }
         // add eco_trip_count if it exists
         if (StatisticsId.routes in member) {
           stats.push({
             id: StatisticsId.routes,
-            value: member.eco_trip_count.toString(),
+            value: formatNumberDecimal(member.eco_trip_count),
           });
         }
         // add CO2 emissions if they exist
         if (StatisticsId.co2 in member.emissions) {
           stats.push({
             id: StatisticsId.co2,
-            value: member.emissions.co2.toString(),
+            value: formatNumberDecimal(member.emissions.co2, 0),
           });
         }
 
@@ -68,11 +69,21 @@ export const useStats = () => {
     return allStats;
   };
   /**
-   * Get the icon of the statistic.
-   * @param id - The id of the statistic.
-   * @returns The icon of the statistic or an empty string.
+   * Format a number to given number of decimal places
+   * If the number is an integer, it is returned as is.
+   * @param {number} value - The number to format.
+   * @param {number} decimals - The number of decimal places to format to.
+   * @returns {number} The formatted number.
    */
-  const getStatIcon = (id: StatisticsId) => {
+  const formatNumberDecimal = (value: number, decimals = 1): number => {
+    return Number.isInteger(value) ? value : Number(value.toFixed(decimals));
+  };
+  /**
+   * Get the icon of the statistic.
+   * @param {StatisticsId} id - The id of the statistic.
+   * @returns {string} The icon of the statistic or an empty string.
+   */
+  const getStatIcon = (id: StatisticsId): string => {
     const baseSvgImgPath = 'svguse:icons/stats_bar/icons.svg#';
     switch (id) {
       case StatisticsId.frequency:
@@ -87,13 +98,12 @@ export const useStats = () => {
         return '';
     }
   };
-
   /**
    * Get the label of the statistic.
-   * @param id - The id of the statistic.
-   * @returns The label of the statistic or an empty string.
+   * @param {StatisticsId} id - The id of the statistic.
+   * @returns {string} The label of the statistic or an empty string.
    */
-  const getStatLabel = (id: StatisticsId) => {
+  const getStatLabel = (id: StatisticsId): string => {
     switch (id) {
       case StatisticsId.frequency:
         return i18n.global.t('statsBar.labelFrequency');
@@ -105,13 +115,12 @@ export const useStats = () => {
         return '';
     }
   };
-
   /**
    * Get the unit of the statistic.
-   * @param id - The id of the statistic.
-   * @returns The unit of the statistic or an empty string.
+   * @param {StatisticsId} id - The id of the statistic.
+   * @returns {string} The unit of the statistic or an empty string.
    */
-  const getStatUnit = (id: StatisticsId) => {
+  const getStatUnit = (id: StatisticsId): string => {
     switch (id) {
       case StatisticsId.frequency:
         return i18n.global.t('global.percentageUnit');
@@ -123,7 +132,11 @@ export const useStats = () => {
         return '';
     }
   };
-
+  /**
+   * Get the label of the statistic category.
+   * @param {StatisticsCategoryId} id - The id of the statistic category.
+   * @returns {string} The label of the statistic category or an empty string.
+   */
   const getStatCategoryLabel = (id: StatisticsCategoryId): string => {
     switch (id) {
       case StatisticsCategoryId.personal:
@@ -138,7 +151,11 @@ export const useStats = () => {
         return '';
     }
   };
-
+  /**
+   * Get the icon of the statistic category.
+   * @param {StatisticsCategoryId} id - The id of the statistic category.
+   * @returns {string} The icon of the statistic category or an empty string.
+   */
   const getStatCategoryIcon = (id: StatisticsCategoryId): string => {
     switch (id) {
       case StatisticsCategoryId.personal:
