@@ -36,18 +36,18 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { StatisticsId, StatisticsCategoryId } from '../types/Statistics';
 
 // fixtures
-import memberResultsFixture from '../../../test/cypress/fixtures/memberResults.json';
-import teamResultsFixture from '../../../test/cypress/fixtures/teamResults.json';
-import organizationResultsFixture from '../../../test/cypress/fixtures/organizationResults.json';
 import cityResultsFixture from '../../../test/cypress/fixtures/cityResults.json';
+import memberResultsFixture from '../../../test/cypress/fixtures/memberResults.json';
+import organizationResultsFixture from '../../../test/cypress/fixtures/organizationResults.json';
+import teamResultsFixture from '../../../test/cypress/fixtures/teamResults.json';
 
 // types
 import type {
   CityResponse,
   MemberResponse,
+  OrganizationResponse,
   ResultsUnion,
   TeamResponse,
-  OrganizationResponse,
 } from '../types/Results';
 import type { ItemStatistics } from '../types/Statistics';
 
