@@ -1,90 +1,18 @@
 [
   {
     "id": 123,
-    "category": "personal",
-    "stats": [
-      {
-        "id": "frequency",
-        "value": "80"
-      },
-      {
-        "id": "eco_trip_count",
-        "value": "18"
-      },
-      {
-        "id": "distance",
-        "value": "312,25"
-      },
-      {
-        "id": "co2",
-        "value": "420"
-      }
-    ]
+    "category": "personal"
   },
   {
     "id": 124,
-    "category": "team",
-    "stats": [
-      {
-        "id": "frequency",
-        "value": "80"
-      },
-      {
-        "id": "eco_trip_count",
-        "value": "18"
-      },
-      {
-        "id": "distance",
-        "value": "312,25"
-      },
-      {
-        "id": "co2",
-        "value": "420"
-      }
-    ]
+    "category": "team"
   },
   {
     "id": 125,
-    "category": "organization",
-    "stats": [
-      {
-        "id": "frequency",
-        "value": "80"
-      },
-      {
-        "id": "eco_trip_count",
-        "value": "18"
-      },
-      {
-        "id": "distance",
-        "value": "312,25"
-      },
-      {
-        "id": "co2",
-        "value": "420"
-      }
-    ]
+    "category": "organization"
   },
   {
     "id": 126,
-    "category": "city",
-    "stats": [
-      {
-        "id": "frequency",
-        "value": "80"
-      },
-      {
-        "id": "eco_trip_count",
-        "value": "18"
-      },
-      {
-        "id": "distance",
-        "value": "312,25"
-      },
-      {
-        "id": "co2",
-        "value": "420"
-      }
-    ]
+    "category": "city"
   }
 ]

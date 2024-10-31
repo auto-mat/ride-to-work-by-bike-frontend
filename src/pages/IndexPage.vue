@@ -214,7 +214,6 @@ export default defineComponent({
       cardsPost,
       cardsProgress: homepage.cardsProgress,
       cardsProgressSlider,
-      cardsStats: homepage.cardsStats,
       challengeStatus,
       ChallengeStatusEnum,
       maxWidth,

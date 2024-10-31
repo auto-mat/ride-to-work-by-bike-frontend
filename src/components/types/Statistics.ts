@@ -15,11 +15,5 @@ export enum StatisticsCategoryId {
 export interface ItemStatistics {
   id: StatisticsId;
   icon?: string;
-  value: string;
-}
-
-export interface CardStatistics {
-  id: number;
-  category: StatisticsCategoryId;
-  stats: ItemStatistics[];
+  value: number;
 }

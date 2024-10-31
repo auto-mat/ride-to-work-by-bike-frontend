@@ -20,7 +20,7 @@
  *
  * @example
  * <section-columns :columns="4">
- *   <card-stats v-for="card in cardsStats" :key="card.id" :category="card.category" :stats="card.stats" />
+ *   <card-stats v-for="card in cardsStats" :key="card.id" :category="card.category" />
  * </section-columns>
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A106374&mode=dev)

@@ -36,12 +36,11 @@ import SectionHeading from '../global/SectionHeading.vue';
 // mocks
 import { badgeList, cardsChallenge } from '../../mocks/homepage';
 
+// enums
+import { StatisticsCategoryId } from '../../components/types/Statistics';
+
 // fixtures
 import cardsProgressSlider from '../../../test/cypress/fixtures/cardsProgress.json';
-import cardsStatsFixture from '../../../test/cypress/fixtures/cardsStats.json';
-
-// types
-import type { CardStatistics } from '../../components/types/Statistics';
 
 export default defineComponent({
   name: 'ResultsChallengeOngoing',
@@ -55,7 +54,13 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const cardsStats: CardStatistics[] = cardsStatsFixture as CardStatistics[];
+    const cardsStats: StatisticsCategoryId[] = [
+      StatisticsCategoryId.personal,
+      StatisticsCategoryId.team,
+      StatisticsCategoryId.organization,
+      StatisticsCategoryId.city,
+    ];
+
     return {
       badgeList,
       cardsChallenge,
@@ -80,12 +85,7 @@ export default defineComponent({
         class="q-col-gutter-lg q-mt-lg"
         data-cy="current-results-list"
       >
-        <card-stats
-          v-for="card in cardsStats"
-          :key="card.id"
-          :category="card.category"
-          :stats="card.stats"
-        />
+        <card-stats v-for="card in cardsStats" :key="card" :category="card" />
       </section-columns>
     </section>
 
