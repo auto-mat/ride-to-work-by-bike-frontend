@@ -16,6 +16,9 @@ const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 const iconSizeLg = 24;
 const iconSizeSm = 18;
+const fontSizeSm = 14;
+const fontWeightRegular = 400;
+const fontWeightBold = 700;
 
 // selectors
 const selectorCardStatsItem = 'card-stats-item';
@@ -144,8 +147,8 @@ describe('<CardStats>', () => {
         cy.dataCy(selectorCardStatsItem).each(($item, index) => {
           // item
           cy.wrap($item)
-            .should('have.css', 'font-size', '14px')
-            .and('have.css', 'font-weight', '400')
+            .should('have.css', 'font-size', `${fontSizeSm}px`)
+            .and('have.css', 'font-weight', `${fontWeightRegular}`)
             .and('have.color', grey10);
           // within item
           cy.wrap($item).within(() => {
@@ -166,7 +169,7 @@ describe('<CardStats>', () => {
               cy.dataCy(selectorCardStatsItemValue)
                 .should('contain', stats[index].value)
                 .and('have.color', grey10)
-                .and('have.css', 'font-weight', '700');
+                .and('have.css', 'font-weight', `${fontWeightBold}`);
             }
             if (stats[index].id === StatisticsId.co2) {
               cy.dataCy(selectorCardStatsItemLabelUnit).then(($el) => {
