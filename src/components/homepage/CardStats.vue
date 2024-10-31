@@ -75,27 +75,24 @@ export default defineComponent({
       :style="{ 'border-radius': borderRadius }"
       data-cy="card-stats"
     >
-      <!-- Card icon -->
-      <q-card-section avatar class="q-py-none">
-        <!-- Icon -->
-        <q-icon
-          :name="card.icon"
-          size="48px"
-          class="text-blue-grey-3"
-          style="margin-top: -24px"
-          data-cy="card-stats-icon"
-        />
-      </q-card-section>
-
       <!-- Card title -->
       <q-card-section>
-        <!-- Title -->
-        <h3
-          class="text-body1 text-weight-bold text-black q-mt-none q-mb-md"
-          data-cy="card-stats-title"
-        >
-          {{ card.title }}
-        </h3>
+        <div class="flex gap-16 items-center q-mb-md">
+          <!-- Icon -->
+          <q-icon
+            :name="card.icon"
+            size="24px"
+            color="primary"
+            data-cy="card-stats-icon"
+          />
+          <!-- Title -->
+          <h3
+            class="text-body1 text-weight-bold text-primary q-my-none"
+            data-cy="card-stats-title"
+          >
+            {{ card.title }}
+          </h3>
+        </div>
         <!-- List stats -->
         <q-list class="q-pa-none">
           <q-item

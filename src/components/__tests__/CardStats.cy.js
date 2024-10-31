@@ -7,16 +7,15 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { StatisticsId } from 'components/types/Statistics';
 
 const { getPaletteColor } = colors;
-const black = getPaletteColor('black');
 const grey10 = getPaletteColor('grey-10');
-const blueGrey3 = getPaletteColor('blue-grey-3');
 const primary = getPaletteColor('primary');
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
 
 const card = cardsStats[0];
 
-const iconSize = '18px';
+const iconSizeLg = 24;
+const iconSizeSm = 18;
 
 // selectors
 const selectorCardStatsItem = 'card-stats-item';
@@ -43,12 +42,20 @@ describe('<CardStats>', () => {
       cy.viewport('macbook-16');
     });
 
+    it('renders icon', () => {
+      cy.dataCy('card-stats-icon')
+        .should('contain', card.icon)
+        .and('have.color', primary)
+        .and('have.css', 'width', `${iconSizeLg}px`)
+        .and('have.css', 'height', `${iconSizeLg}px`);
+    });
+
     it('renders title', () => {
       cy.window().then(() => {
         cy.dataCy('card-stats-title')
           .should('have.css', 'font-size', '16px')
           .and('have.css', 'font-weight', '700')
-          .and('have.color', black)
+          .and('have.color', primary)
           .and('contain', card.title)
           .then(($title) => {
             expect($title.text()).to.equal(card.title);
@@ -56,12 +63,8 @@ describe('<CardStats>', () => {
       });
     });
 
-    it('renders icon', () => {
-      cy.dataCy('card-stats-icon')
-        .should('contain', card.icon)
-        .and('have.color', blueGrey3)
-        .and('have.css', 'width', '48px')
-        .and('have.css', 'height', '48px');
+    it('renders icon and title side-by-side', () => {
+      cy.testElementsSideBySide('card-stats-icon', 'card-stats-title');
     });
 
     it('renders stats', () => {
@@ -79,8 +82,8 @@ describe('<CardStats>', () => {
             cy.dataCy(selectorCardStatsItemIcon)
               .should('be.visible')
               .and('have.color', primary)
-              .and('have.css', 'width', iconSize)
-              .and('have.css', 'height', iconSize);
+              .and('have.css', 'width', `${iconSizeSm}px`)
+              .and('have.css', 'height', `${iconSizeSm}px`);
             // label
             if (stats[index].label) {
               cy.dataCy(selectorCardStatsItemLabel)
