@@ -5,6 +5,13 @@ export enum StatisticsId {
   frequency = 'frequency',
 }
 
+export enum StatisticsCategoryId {
+  personal = 'personal',
+  team = 'team',
+  organization = 'organization',
+  city = 'city',
+}
+
 export interface ItemStatistics {
   id: StatisticsId;
   icon?: string;

@@ -1,6 +1,12 @@
 totalQuestions = "Total questions"
 lang = "Language"
 
+[cardStats]
+labelPersonal = "You"
+labelTeam = "Your team"
+labelOrganization = "Your organization"
+labelCity = "Your city"
+
 [header]
 siteTitle = "Ride to Work by Bike"
 

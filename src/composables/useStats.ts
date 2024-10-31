@@ -2,7 +2,11 @@
 import { i18n } from '../boot/i18n';
 
 // enums
-import { ItemStatistics, StatisticsId } from '../components/types/Statistics';
+import {
+  ItemStatistics,
+  StatisticsId,
+  StatisticsCategoryId,
+} from '../components/types/Statistics';
 
 // types
 import { TeamMember } from '../components/types/Results';
@@ -91,8 +95,40 @@ export const useStats = () => {
     }
   };
 
+  const getStatCategoryLabel = (id: StatisticsCategoryId): string => {
+    switch (id) {
+      case StatisticsCategoryId.personal:
+        return i18n.global.t('cardStats.labelPersonal');
+      case StatisticsCategoryId.team:
+        return i18n.global.t('cardStats.labelTeam');
+      case StatisticsCategoryId.organization:
+        return i18n.global.t('cardStats.labelOrganization');
+      case StatisticsCategoryId.city:
+        return i18n.global.t('cardStats.labelCity');
+      default:
+        return '';
+    }
+  };
+
+  const getStatCategoryIcon = (id: StatisticsCategoryId): string => {
+    switch (id) {
+      case StatisticsCategoryId.personal:
+        return 'svguse:icons/card-stats/icons.svg#ion-person-outline';
+      case StatisticsCategoryId.team:
+        return 'svguse:icons/card-stats/icons.svg#three-circles';
+      case StatisticsCategoryId.organization:
+        return 'svguse:icons/card-stats/icons.svg#lucide-building';
+      case StatisticsCategoryId.city:
+        return 'svguse:icons/card-stats/icons.svg#lucide-building-2';
+      default:
+        return '';
+    }
+  };
+
   return {
     getMemberResultStats,
+    getStatCategoryIcon,
+    getStatCategoryLabel,
     getStatIcon,
     getStatLabel,
     getStatUnit,

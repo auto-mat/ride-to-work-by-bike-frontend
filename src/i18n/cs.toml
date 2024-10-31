@@ -1,6 +1,12 @@
 totalQuestions = "Počet otázek"
 lang = "Jazyk"
 
+[cardStats]
+labelPersonal = "Vy"
+labelTeam = "Váš tým"
+labelOrganization = "Vaše organizace"
+labelCity = "Vaše město"
+
 [header]
 siteTitle = "Do práce na kole"
 

@@ -38,13 +38,17 @@ import { StatisticsId } from '../types/Statistics';
 
 // types
 import type { CardStats } from '../types';
-import type { ItemStatistics } from '../types/Statistics';
+import type { ItemStatistics, StatisticsCategoryId } from '../types/Statistics';
 
 export default defineComponent({
   name: 'CardStats',
   props: {
     card: {
       type: Object as () => CardStats,
+      required: true,
+    },
+    category: {
+      type: String as () => StatisticsCategoryId,
       required: true,
     },
     stats: {
@@ -54,13 +58,21 @@ export default defineComponent({
   },
   setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
-    const { getStatIcon, getStatLabel, getStatUnit } = useStats();
+    const {
+      getStatIcon,
+      getStatLabel,
+      getStatUnit,
+      getStatCategoryIcon,
+      getStatCategoryLabel,
+    } = useStats();
 
     return {
       borderRadius,
       getStatIcon,
       getStatLabel,
       getStatUnit,
+      getStatCategoryIcon,
+      getStatCategoryLabel,
       StatisticsId,
     };
   },
@@ -76,11 +88,11 @@ export default defineComponent({
       data-cy="card-stats"
     >
       <!-- Card title -->
-      <q-card-section>
+      <q-card-section class="q-pa-lg">
         <div class="flex gap-16 items-center q-mb-md">
           <!-- Icon -->
           <q-icon
-            :name="card.icon"
+            :name="getStatCategoryIcon(category)"
             size="24px"
             color="primary"
             data-cy="card-stats-icon"
@@ -90,7 +102,7 @@ export default defineComponent({
             class="text-body1 text-weight-bold text-primary q-my-none"
             data-cy="card-stats-title"
           >
-            {{ card.title }}
+            {{ getStatCategoryLabel(category) }}
           </h3>
         </div>
         <!-- List stats -->

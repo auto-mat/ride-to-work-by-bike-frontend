@@ -4,7 +4,10 @@ import CardStats from '../homepage/CardStats.vue';
 import { i18n } from '../../boot/i18n';
 import { cardsStats } from '../../mocks/homepage';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { StatisticsId } from 'components/types/Statistics';
+import {
+  StatisticsId,
+  StatisticsCategoryId,
+} from 'components/types/Statistics';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -26,7 +29,11 @@ const selectorCardStatsItemLabelUnit = 'card-stats-item-label-unit';
 
 describe('<CardStats>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      ['labelPersonal', 'labelTeam', 'labelOrganization', 'labelCity'],
+      'cardStats',
+      i18n,
+    );
   });
 
   context('desktop', () => {
@@ -34,7 +41,7 @@ describe('<CardStats>', () => {
       cy.fixture('cardStats.json').then((stats) => {
         cy.mount(CardStats, {
           props: {
-            card,
+            category: StatisticsCategoryId.personal,
             stats,
           },
         });
@@ -44,7 +51,6 @@ describe('<CardStats>', () => {
 
     it('renders icon', () => {
       cy.dataCy('card-stats-icon')
-        .should('contain', card.icon)
         .and('have.color', primary)
         .and('have.css', 'width', `${iconSizeLg}px`)
         .and('have.css', 'height', `${iconSizeLg}px`);
