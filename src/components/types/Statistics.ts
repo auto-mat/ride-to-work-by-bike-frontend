@@ -17,3 +17,9 @@ export interface ItemStatistics {
   icon?: string;
   value: string;
 }
+
+export interface CardStatistics {
+  id: number;
+  category: StatisticsCategoryId;
+  stats: ItemStatistics[];
+}

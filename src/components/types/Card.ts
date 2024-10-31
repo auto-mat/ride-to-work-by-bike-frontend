@@ -86,9 +86,3 @@ export interface StatsItem {
   id: string;
   text: string;
 }
-
-export interface CardStats {
-  title: string;
-  icon: string;
-  stats: CardMetadata[];
-}

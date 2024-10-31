@@ -13,6 +13,7 @@
  * component.
  *
  * @props
+ * - `category` (StatisticsCategoryId, required): The category of the stats.
  * - `stats` (StatsBarType, required): The object representing stats.
  *   It should be of type `StatsBarType`.
  *
@@ -37,16 +38,11 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { StatisticsId } from '../types/Statistics';
 
 // types
-import type { CardStats } from '../types';
 import type { ItemStatistics, StatisticsCategoryId } from '../types/Statistics';
 
 export default defineComponent({
   name: 'CardStats',
   props: {
-    card: {
-      type: Object as () => CardStats,
-      required: true,
-    },
     category: {
       type: String as () => StatisticsCategoryId,
       required: true,

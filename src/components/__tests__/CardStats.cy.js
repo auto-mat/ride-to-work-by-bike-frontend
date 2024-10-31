@@ -2,7 +2,6 @@ import { colors } from 'quasar';
 
 import CardStats from '../homepage/CardStats.vue';
 import { i18n } from '../../boot/i18n';
-import { cardsStats } from '../../mocks/homepage';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import {
   StatisticsId,
@@ -14,8 +13,6 @@ const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
-
-const card = cardsStats[0];
 
 const iconSizeLg = 24;
 const iconSizeSm = 18;
@@ -62,10 +59,7 @@ describe('<CardStats>', () => {
           .should('have.css', 'font-size', '16px')
           .and('have.css', 'font-weight', '700')
           .and('have.color', primary)
-          .and('contain', card.title)
-          .then(($title) => {
-            expect($title.text()).to.equal(card.title);
-          });
+          .and('contain', i18n.global.t('cardStats.labelPersonal'));
       });
     });
 

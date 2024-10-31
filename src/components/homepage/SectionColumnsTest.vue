@@ -25,8 +25,11 @@ import { defineComponent } from 'vue';
 import SectionColumns from './SectionColumns.vue';
 import CardStats from './CardStats.vue';
 
-// mocks
-import { cardsStats } from 'src/mocks/homepage';
+// fixtures
+import cardsStatsFixture from 'test/cypress/fixtures/cardsStats.json';
+
+// types
+import type { CardStatistics } from '../../components/types/Statistics';
 
 export default defineComponent({
   name: 'SectionColumnsTest',
@@ -41,6 +44,7 @@ export default defineComponent({
     },
   },
   setup() {
+    const cardsStats: CardStatistics[] = cardsStatsFixture as CardStatistics[];
     return {
       cardsStats,
     };
@@ -50,6 +54,11 @@ export default defineComponent({
 
 <template>
   <section-columns :columns="columns" class="q-col-gutter-lg q-pt-xl q-pb-xl">
-    <card-stats v-for="card in cardsStats" :key="card.title" :card="card" />
+    <card-stats
+      v-for="card in cardsStats"
+      :key="card.id"
+      :category="card.category"
+      :stats="card.stats"
+    />
   </section-columns>
 </template>
