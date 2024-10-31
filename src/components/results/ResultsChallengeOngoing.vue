@@ -38,7 +38,7 @@ import { badgeList, cardsChallenge } from '../../mocks/homepage';
 
 // fixtures
 import cardsProgressSlider from '../../../test/cypress/fixtures/cardsProgress.json';
-import cardsStatsFixture from 'test/cypress/fixtures/cardsStats.json';
+import cardsStatsFixture from '../../../test/cypress/fixtures/cardsStats.json';
 
 // types
 import type { CardStatistics } from '../../components/types/Statistics';

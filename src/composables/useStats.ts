@@ -113,13 +113,13 @@ export const useStats = () => {
   const getStatCategoryIcon = (id: StatisticsCategoryId): string => {
     switch (id) {
       case StatisticsCategoryId.personal:
-        return 'svguse:icons/card-stats/icons.svg#ion-person-outline';
+        return 'svguse:icons/card_stats/icons.svg#ion-person-outline';
       case StatisticsCategoryId.team:
-        return 'svguse:icons/card-stats/icons.svg#three-circles';
+        return 'svguse:icons/card_stats/icons.svg#three-circles';
       case StatisticsCategoryId.organization:
-        return 'svguse:icons/card-stats/icons.svg#lucide-building';
+        return 'svguse:icons/card_stats/icons.svg#lucide-building';
       case StatisticsCategoryId.city:
-        return 'svguse:icons/card-stats/icons.svg#lucide-building-2';
+        return 'svguse:icons/card_stats/icons.svg#lucide-building-2';
       default:
         return '';
     }
