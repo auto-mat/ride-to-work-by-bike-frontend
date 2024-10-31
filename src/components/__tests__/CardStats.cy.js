@@ -47,7 +47,6 @@ describe('<CardStats>', () => {
         },
       });
       cy.fixture('memberResults.json').then((response) => {
-        cy.wrap(response.results).as('results');
         cy.wrap(getResultStatistics(response.results)).as('stats');
       });
       cy.viewport('macbook-16');
@@ -74,7 +73,6 @@ describe('<CardStats>', () => {
         },
       });
       cy.fixture('teamResults.json').then((response) => {
-        cy.wrap(response.results).as('results');
         cy.wrap(getResultStatistics(response.results)).as('stats');
       });
       cy.viewport('macbook-16');
@@ -98,7 +96,6 @@ describe('<CardStats>', () => {
         },
       });
       cy.fixture('organizationResults.json').then((response) => {
-        cy.wrap(response.results).as('results');
         cy.wrap(getResultStatistics(response.results)).as('stats');
       });
     });
@@ -121,7 +118,6 @@ describe('<CardStats>', () => {
         },
       });
       cy.fixture('cityResults.json').then((response) => {
-        cy.wrap(response.results).as('results');
         cy.wrap(getResultStatistics(response.results)).as('stats');
       });
     });
