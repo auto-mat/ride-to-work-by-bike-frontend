@@ -33,7 +33,7 @@ describe('<CardStats>', () => {
     );
   });
 
-  context('desktop', () => {
+  context('card personal', () => {
     beforeEach(() => {
       cy.fixture('cardStats.json').then((stats) => {
         cy.mount(CardStats, {
@@ -46,12 +46,7 @@ describe('<CardStats>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('renders icon', () => {
-      cy.dataCy('card-stats-icon')
-        .and('have.color', primary)
-        .and('have.css', 'width', `${iconSizeLg}px`)
-        .and('have.css', 'height', `${iconSizeLg}px`);
-    });
+    commonTests();
 
     it('renders title', () => {
       cy.window().then(() => {
@@ -61,6 +56,82 @@ describe('<CardStats>', () => {
           .and('have.color', primary)
           .and('contain', i18n.global.t('cardStats.labelPersonal'));
       });
+    });
+  });
+
+  context('card team', () => {
+    beforeEach(() => {
+      cy.fixture('cardStats.json').then((stats) => {
+        cy.mount(CardStats, {
+          props: {
+            category: StatisticsCategoryId.team,
+            stats,
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    commonTests();
+
+    it('renders title', () => {
+      cy.dataCy('card-stats-title').should(
+        'contain',
+        i18n.global.t('cardStats.labelTeam'),
+      );
+    });
+  });
+
+  context('card organization', () => {
+    beforeEach(() => {
+      cy.fixture('cardStats.json').then((stats) => {
+        cy.mount(CardStats, {
+          props: {
+            category: StatisticsCategoryId.organization,
+            stats,
+          },
+        });
+      });
+    });
+
+    commonTests();
+
+    it('renders title', () => {
+      cy.dataCy('card-stats-title').should(
+        'contain',
+        i18n.global.t('cardStats.labelOrganization'),
+      );
+    });
+  });
+
+  context('card city', () => {
+    beforeEach(() => {
+      cy.fixture('cardStats.json').then((stats) => {
+        cy.mount(CardStats, {
+          props: {
+            category: StatisticsCategoryId.city,
+            stats,
+          },
+        });
+      });
+    });
+
+    commonTests();
+
+    it('renders title', () => {
+      cy.dataCy('card-stats-title').should(
+        'contain',
+        i18n.global.t('cardStats.labelCity'),
+      );
+    });
+  });
+
+  function commonTests() {
+    it('renders icon', () => {
+      cy.dataCy('card-stats-icon')
+        .and('have.color', primary)
+        .and('have.css', 'width', `${iconSizeLg}px`)
+        .and('have.css', 'height', `${iconSizeLg}px`);
     });
 
     it('renders icon and title side-by-side', () => {
@@ -133,16 +204,5 @@ describe('<CardStats>', () => {
         );
       });
     });
-  });
-
-  context('mobile', () => {
-    beforeEach(() => {
-      cy.mount(CardStats, {
-        props: {
-          card,
-        },
-      });
-      cy.viewport('iphone-6');
-    });
-  });
+  }
 });
