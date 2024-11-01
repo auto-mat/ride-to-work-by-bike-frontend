@@ -23,14 +23,14 @@ const selectorTableFeeApprovalRow = 'table-fee-approval-row';
 const selectorTableTitle = 'table-fee-approval-title';
 const selectorTableButton = 'table-fee-approval-button';
 const selectorTable = 'table-fee-approval-table';
-const selectorTableTeamHeader = 'table-fee-approval-team-header';
+const selectorTableTeamHeader = 'table-fee-approval-address-header';
 const selectorTableRow = 'table-fee-approval-row';
 const selectorTableCheckbox = 'table-fee-approval-checkbox';
 const selectorTableAmount = 'table-fee-approval-amount';
 const selectorTableName = 'table-fee-approval-name';
 const selectorTableEmail = 'table-fee-approval-email';
 const selectorTableNickname = 'table-fee-approval-nickname';
-const selectorTableTeam = 'table-fee-approval-team';
+const selectorTableTeam = 'table-fee-approval-address';
 const selectorTableDate = 'table-fee-approval-date';
 
 /**

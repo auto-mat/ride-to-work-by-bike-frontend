@@ -40,7 +40,7 @@ export default defineComponent({
     });
 
     const { columns, visibleColumns } = useTableFeeApproval();
-    const { sortByTeam } = useTable();
+    const { sortByAddress } = useTable();
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
@@ -51,7 +51,7 @@ export default defineComponent({
       tableFeeApproval,
       tableRef,
       visibleColumns,
-      sortByTeam,
+      sortByAddress,
     };
   },
 });
@@ -79,7 +79,7 @@ export default defineComponent({
         :columns="columns"
         :visible-columns="visibleColumns"
         row-key="name"
-        :sort-method="sortByTeam"
+        :sort-method="sortByAddress"
         selection="multiple"
         v-model:selected="selected"
         :style="{ borderRadius }"
@@ -89,10 +89,10 @@ export default defineComponent({
           <q-tr
             v-if="props.row.isFirst"
             class="bg-primary text-weight-bold text-white"
-            data-cy="table-fee-approval-team-header"
+            data-cy="table-fee-approval-address-header"
           >
             <q-td colspan="7">
-              {{ props.row.team }}
+              {{ props.row.address }}
             </q-td>
           </q-tr>
           <q-tr
@@ -127,8 +127,12 @@ export default defineComponent({
             >
               {{ props.row.nickname }}
             </q-td>
-            <q-td key="team" :props="props" data-cy="table-fee-approval-team">
-              {{ props.row.team }}
+            <q-td
+              key="address"
+              :props="props"
+              data-cy="table-fee-approval-address"
+            >
+              {{ props.row.address }}
             </q-td>
             <q-td
               key="dateCreated"

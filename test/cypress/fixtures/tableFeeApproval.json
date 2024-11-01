@@ -2,7 +2,7 @@
   {
     "amount": 500,
     "name": "Aneta Walker",
-    "team": "Konzistentní tým",
+    "address": "Biskupcova 1733, Praha 3",
     "email": "aneta.walker@auto-mat.cz",
     "nickname": "anwa",
     "dateCreated": "4 January 2023 14:48 UTC",
@@ -12,7 +12,7 @@
   {
     "amount": 390,
     "name": "Barbora Walker",
-    "team": "Konzistentní tým",
+    "address": "Biskupcova 1733, Praha 3",
     "email": "bara.walker@auto-mat.cz",
     "nickname": "bawa",
     "dateCreated": "4 June 2023 14:48 UTC",
@@ -22,7 +22,7 @@
   {
     "amount": 500,
     "name": "Cyprián Runner",
-    "team": "Nadšený tým",
+    "address": "Křížová 4, Praha 5",
     "email": "cypr.run@auto-mat.cz",
     "nickname": "cypr.run",
     "dateCreated": "10 June 2023 14:48 UTC",
@@ -32,7 +32,7 @@
   {
     "amount": 500,
     "name": "Denisa Cestující",
-    "team": "Silný tým",
+    "address": "Slezská 2033, Praha 2",
     "email": "deni.traveller@auto-mat.cz",
     "nickname": "deni.traveller",
     "dateCreated": "05 October 2023 14:48 UTC",
@@ -42,7 +42,7 @@
   {
     "amount": 1000,
     "name": "Emil Biker",
-    "team": "Silný tým",
+    "address": "Slezská 2033, Praha 2",
     "email": "e.biker@auto-mat.cz",
     "nickname": "ebiker",
     "dateCreated": "10 October 2023 14:48 UTC",
@@ -52,7 +52,7 @@
   {
     "amount": 390,
     "name": "Filip Anonymní",
-    "team": "Silný tým",
+    "address": "Slezská 2033, Praha 2",
     "email": "filip.anonymni@auto-mat.cz",
     "nickname": "filipnoname",
     "dateCreated": "4 December 2023 14:48 UTC",

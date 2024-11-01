@@ -173,15 +173,15 @@ export const useTable = () => {
   };
 
   /**
-   * Sorts an array of TableRow objects and group them by team.
-   * First uses standard sort, then sorts results by team to create groups.
+   * Sorts an array of TableRow objects and group them by address.
+   * First uses standard sort, then sorts results by address to create groups.
    * Finally, marks the first item in each group so we can show group headers.
    * @param {readonly TableRow[]} rows - The array of TableRows to be sorted.
    * @param {string} sortBy - The column to sort by.
    * @param {boolean} descending - Whether to sort in descending order.
    * @return {readonly TableRow[]} The sorted array of TableRows.
    */
-  const sortByTeam = (
+  const sortByAddress = (
     rows: readonly TableRow[],
     sortBy: string,
     descending: boolean,
@@ -190,8 +190,8 @@ export const useTable = () => {
     if (!sortBy) return data;
 
     sortDataByValue(data, sortBy, descending);
-    sortDataByKey(data, 'team', descending);
-    markFirstInGroup(data, 'team');
+    sortDataByKey(data, 'address', descending);
+    markFirstInGroup(data, 'address');
 
     return data;
   };
@@ -276,7 +276,7 @@ export const useTable = () => {
     searchQuery,
     tableResultsColumns,
     filterMethod,
-    sortByTeam,
+    sortByAddress,
     formatPrice,
   };
 };
@@ -321,10 +321,10 @@ export const useTableFeeApproval = () => {
     },
     {
       align: 'left',
-      field: 'team',
+      field: 'address',
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelTeam'),
-      name: 'team',
+      name: 'address',
       required: false,
       sortable: true,
     },
@@ -340,7 +340,7 @@ export const useTableFeeApproval = () => {
     },
   ];
 
-  // hide team column as the table is grouped by the key 'team'
+  // hide address column as the table is grouped by the key 'address'
   const tableFeeApprovalVisibleColumns: string[] = [
     'amount',
     'name',
