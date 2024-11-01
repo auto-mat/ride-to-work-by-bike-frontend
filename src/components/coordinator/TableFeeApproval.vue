@@ -86,6 +86,7 @@ export default defineComponent({
         data-cy="table-fee-approval-table"
       >
         <template v-slot:body="props">
+          <!-- Group header -->
           <q-tr
             v-if="props.row.isFirst"
             class="bg-primary text-weight-bold text-white"
@@ -95,11 +96,13 @@ export default defineComponent({
               {{ props.row.address }}
             </q-td>
           </q-tr>
+          <!-- Row -->
           <q-tr
             :props="props"
             class="data-row text-grey-10"
             data-cy="table-fee-approval-row"
           >
+            <!-- Checkbox -->
             <q-td>
               <q-checkbox
                 v-model="props.selected"
@@ -107,6 +110,7 @@ export default defineComponent({
                 data-cy="table-fee-approval-checkbox"
               />
             </q-td>
+            <!-- Amount -->
             <q-td
               key="amount"
               :props="props"
@@ -114,12 +118,15 @@ export default defineComponent({
             >
               {{ props.row.amount }}
             </q-td>
+            <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
               {{ props.row.name }}
             </q-td>
+            <!-- Email -->
             <q-td key="email" :props="props" data-cy="table-fee-approval-email">
               {{ props.row.email }}
             </q-td>
+            <!-- Nickname -->
             <q-td
               key="nickname"
               :props="props"
@@ -127,6 +134,7 @@ export default defineComponent({
             >
               {{ props.row.nickname }}
             </q-td>
+            <!-- Address -->
             <q-td
               key="address"
               :props="props"
@@ -134,12 +142,13 @@ export default defineComponent({
             >
               {{ props.row.address }}
             </q-td>
+            <!-- Date created -->
             <q-td
               key="dateCreated"
               :props="props"
               data-cy="table-fee-approval-date"
             >
-              <!-- Custom loop to get formatted content -->
+              <!-- Loop over data to get formatted content -->
               <template v-for="col in props.cols" :key="col.field">
                 <span v-if="col.field === 'dateCreated'">
                   {{ col.value }}
@@ -151,7 +160,7 @@ export default defineComponent({
       </q-table>
     </div>
     <div class="q-mt-lg text-right">
-      <!-- Button -->
+      <!-- Button: Approve selected -->
       <q-btn
         rounded
         unelevated
