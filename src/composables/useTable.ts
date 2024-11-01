@@ -173,11 +173,13 @@ export const useTable = () => {
   };
 
   /**
-   * Sorts an array of TableRow objects by team and then by the specified column.
-   * @param {readonly TableRow[]} rows - The array of TableRow objects to be sorted.
+   * Sorts an array of TableRow objects and group them by team.
+   * First uses standard sort, then sorts results by team to create groups.
+   * Finally, marks the first item in each group so we can show group headers.
+   * @param {readonly TableRow[]} rows - The array of TableRows to be sorted.
    * @param {string} sortBy - The column to sort by.
    * @param {boolean} descending - Whether to sort in descending order.
-   * @return {readonly TableRow[]} The sorted array of TableRow objects.
+   * @return {readonly TableRow[]} The sorted array of TableRows.
    */
   const sortByTeam = (
     rows: readonly TableRow[],
@@ -188,8 +190,8 @@ export const useTable = () => {
     if (!sortBy) return data;
 
     sortDataByValue(data, sortBy, descending);
-    sortDataByTeam(data, descending);
-    markFirstInGroup(data);
+    sortDataByKey(data, 'team', descending);
+    markFirstInGroup(data, 'team');
 
     return data;
   };
@@ -201,59 +203,67 @@ export const useTable = () => {
    * @param {boolean} descending - Whether to sort in descending order.
    * @return {void}
    */
-  function sortDataByValue(data: TableRow[], sortBy: string, descending: boolean): void {
+  function sortDataByValue(
+    data: TableRow[],
+    sortBy: string,
+    descending: boolean,
+  ): void {
     data.sort((a, b) => {
       const aVal = a[sortBy] || '';
       const bVal = b[sortBy] || '';
       if (!aVal || !bVal) {
         return 0;
-      }
-      else if (aVal < bVal) {
+      } else if (aVal < bVal) {
         return descending ? 1 : -1;
-      }
-      else if (aVal > bVal) {
+      } else if (aVal > bVal) {
         return descending ? -1 : 1;
-      }
-      else {
+      } else {
         return 0;
       }
     });
   }
 
   /**
-   * Sorts data array by team in ascending or descending order.
+   * Sorts data array by given key in ascending or descending order.
+   * This is used to sort data into groups by a key.
+   * Together with `markFirstInGroup`, it can be used to show group headers.
    * @param {TableRow[]} data - The array of TableRow objects to be sorted.
+   * @param {string} key - The key to sort by.
    * @param {boolean} descending - Whether to sort in descending order.
    * @return {void}
    */
-  function sortDataByTeam(data: TableRow[], descending: boolean): void {
+  function sortDataByKey(
+    data: TableRow[],
+    key: string,
+    descending: boolean,
+  ): void {
     data.sort((a, b) => {
-      if (!a.team || !b.team) {
+      if (!a[key] || !b[key]) {
         return 0;
-      }
-      else if (a.team < b.team) {
+      } else if (a[key] < b[key]) {
         return descending ? 1 : -1;
-      }
-      else if (a.team > b.team) {
+      } else if (a[key] > b[key]) {
         return descending ? -1 : 1;
-      }
-      else {
+      } else {
         return 0;
       }
     });
   }
 
   /**
-   * If item is first in team, set isFirst to true.
+   * Loop through items in a list
+   * If you find item with a new value for given key, set isFirst to true.
+   * This is used in combination with grouping by a key to show group header.
    * @param {TableRow[]} data - The array of items.
+   * @param {string} key - The key to group by.
    * @return {void}
    */
-  function markFirstInGroup(data: TableRow[]): void {
+  function markFirstInGroup(data: TableRow[], key: string): void {
     const seenTeams = new Set();
-    data.forEach(row => {
-      if (!seenTeams.has(row.team)) {
+    data.forEach((row) => {
+      if (!seenTeams.has(row[key])) {
         row.isFirst = true;
-        seenTeams.add(row.team);
+        seenTeams.add(row[key]);
       } else {
         row.isFirst = false;
       }
@@ -320,11 +330,8 @@ export const useTableFeeApproval = () => {
     {
       align: 'left',
       field: 'dateCreated',
-      format: (val: number | string | null): string => (
-        val ?
-        (date.formatDate(new Date(String(val)), 'D. MMM. YYYY')) :
-        ''
-      ),
+      format: (val: number | string | null): string =>
+        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
       label: i18n.global.t('table.labelDateRegistered'),
       name: 'dateCreated',
       required: true,
@@ -332,6 +339,7 @@ export const useTableFeeApproval = () => {
     },
   ];
 
+  // hide team column as the table is grouped by the key 'team'
   const tableFeeApprovalVisibleColumns: string[] = [
     'amount',
     'name',
@@ -342,6 +350,6 @@ export const useTableFeeApproval = () => {
 
   return {
     columns: tableFeeApprovalColumns,
-    visibleColumns: tableFeeApprovalVisibleColumns
+    visibleColumns: tableFeeApprovalVisibleColumns,
   };
 };

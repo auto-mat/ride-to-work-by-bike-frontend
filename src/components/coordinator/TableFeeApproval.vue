@@ -32,6 +32,7 @@ export default defineComponent({
     // holds an array of currently selected rows
     const selected = ref([]);
     const tableRef = ref<QTable | null>(null);
+    // sort by dateCreated initially
     onMounted(() => {
       if (tableRef.value) {
         tableRef.value.sort('dateCreated');
