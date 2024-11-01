@@ -183,14 +183,12 @@ describe('<CardStats>', () => {
                   expect(content.trim()).to.equal(text.trim());
                 });
               });
-            }
-            if (stats[index].id === StatisticsId.distance) {
+            } else if (stats[index].id === StatisticsId.distance) {
               cy.dataCy(selectorCardStatsItemLabelUnit).should(
                 'contain',
                 i18n.global.t('global.routeLengthUnit'),
               );
-            }
-            if (stats[index].id === StatisticsId.frequency) {
+            } else if (stats[index].id === StatisticsId.frequency) {
               cy.dataCy(selectorCardStatsItemLabelUnit).should(
                 'contain',
                 i18n.global.t('global.percentageUnit'),
