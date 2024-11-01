@@ -17,7 +17,7 @@ export const useStats = () => {
    * Allows to specify ids of statistics to return.
    * @param {MemberResults[]} results - The API data structure.
    * @param {StatisticsId[]} ids - The IDs of the statistics to return.
-   * @return {ItemStatistics[]} The statistics.
+   * @return {ItemStatistics[]} - The statistics.
    */
   const getResultStatistics = (
     results: ResultsUnion[],
@@ -73,7 +73,7 @@ export const useStats = () => {
    * If the number is an integer, it is returned as is.
    * @param {number} value - The number to format.
    * @param {number} decimals - The number of decimal places to format to.
-   * @returns {number} The formatted number.
+   * @returns {number} - The formatted number.
    */
   const formatNumberDecimal = (value: number, decimals = 1): number => {
     return Number.isInteger(value) ? value : Number(value.toFixed(decimals));
@@ -81,7 +81,7 @@ export const useStats = () => {
   /**
    * Get the icon of the statistic.
    * @param {StatisticsId} id - The id of the statistic.
-   * @returns {string} The icon of the statistic or an empty string.
+   * @returns {string} - The icon of the statistic or an empty string.
    */
   const getStatIcon = (id: StatisticsId): string => {
     const baseSvgImgPath = 'svguse:icons/stats_bar/icons.svg#';
@@ -101,7 +101,7 @@ export const useStats = () => {
   /**
    * Get the label of the statistic.
    * @param {StatisticsId} id - The id of the statistic.
-   * @returns {string} The label of the statistic or an empty string.
+   * @returns {string} - The label of the statistic or an empty string.
    */
   const getStatLabel = (id: StatisticsId): string => {
     switch (id) {
@@ -118,7 +118,7 @@ export const useStats = () => {
   /**
    * Get the unit of the statistic.
    * @param {StatisticsId} id - The id of the statistic.
-   * @returns {string} The unit of the statistic or an empty string.
+   * @returns {string} - The unit of the statistic or an empty string.
    */
   const getStatUnit = (id: StatisticsId): string => {
     switch (id) {
@@ -135,7 +135,7 @@ export const useStats = () => {
   /**
    * Get the label of the statistic category.
    * @param {StatisticsCategoryId} id - The id of the statistic category.
-   * @returns {string} The label of the statistic category or an empty string.
+   * @returns {string} - The label of the statistic category or an empty string.
    */
   const getStatCategoryLabel = (id: StatisticsCategoryId): string => {
     switch (id) {
@@ -154,7 +154,7 @@ export const useStats = () => {
   /**
    * Get the icon of the statistic category.
    * @param {StatisticsCategoryId} id - The id of the statistic category.
-   * @returns {string} The icon of the statistic category or an empty string.
+   * @returns {string} - The icon of the statistic category or an empty string.
    */
   const getStatCategoryIcon = (id: StatisticsCategoryId): string => {
     switch (id) {
