@@ -277,6 +277,7 @@ export const useTable = () => {
     tableResultsColumns,
     filterMethod,
     sortByTeam,
+    formatPrice,
   };
 };
 

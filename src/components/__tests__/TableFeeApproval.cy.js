@@ -1,8 +1,9 @@
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
 import { i18n } from '../../boot/i18n';
 import tableFeeApproval from '../../../test/cypress/fixtures/tableFeeApproval.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useTable } from 'src/composables/useTable';
 
 // colors
 const { getPaletteColor } = colors;
@@ -10,10 +11,15 @@ const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
 
+// composables
+const { formatDate } = date;
+const { formatPrice } = useTable();
+
 // selectors
 const classSelectorTableRow = '.data-row';
 const classSelectorTableSortable = 'th.sortable';
 const selectorTableFeeApproval = 'table-fee-approval';
+const selectorTableFeeApprovalRow = 'table-fee-approval-row';
 const selectorTableTitle = 'table-fee-approval-title';
 const selectorTableButton = 'table-fee-approval-button';
 const selectorTable = 'table-fee-approval-table';
@@ -142,6 +148,35 @@ function coreTests() {
     });
     // checkbox
     cy.dataCy(selectorTableCheckbox).should('be.visible');
+  });
+
+  it('displays correct data in table', () => {
+    cy.get('@rows').then((rows) => {
+      // default sorting by date ascending
+      cy.dataCy(selectorTableFeeApprovalRow)
+        .should('have.length', 5)
+        .each((tableRow, index) => {
+          cy.wrap(tableRow).within(() => {
+            cy.dataCy(selectorTableAmount).should(
+              'contain',
+              formatPrice(rows[index].amount),
+            );
+            cy.dataCy(selectorTableName).should('contain', rows[index].name);
+            cy.dataCy(selectorTableEmail).should('contain', rows[index].email);
+            cy.dataCy(selectorTableNickname).should(
+              'contain',
+              rows[index].nickname,
+            );
+            cy.dataCy(selectorTableDate).should(
+              'contain',
+              formatDate(
+                new Date(String(rows[index].dateCreated)),
+                'D. MMM. YYYY',
+              ),
+            );
+          });
+        });
+    });
   });
 
   it('sorts correctly by team', () => {
