@@ -43,6 +43,9 @@ import { useValidation } from 'src/composables/useValidation';
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
+// enums
+import { OrganizationType } from '../types/Organization';
+
 // stores
 import { useLoginStore } from 'src/stores/login';
 
@@ -76,6 +79,9 @@ export default defineComponent({
     label: {
       type: String,
       default: '',
+    },
+    organizationType: {
+      type: String as () => OrganizationType,
     },
   },
   setup(props, { emit }) {
@@ -376,6 +382,7 @@ export default defineComponent({
           <form-add-company
             :form-values="companyNew"
             variant="simple"
+            :organization-type="organizationType"
             @update:form-values="companyNew = $event"
           ></form-add-company>
         </q-form>

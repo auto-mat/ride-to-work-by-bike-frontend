@@ -179,6 +179,7 @@ export default defineComponent({
           <!-- Input: organization ID -->
           <form-field-company
             v-model="formRegisterCoordinator.organizationId"
+            :organization-type="formRegisterCoordinator.organizationType"
             class="col-12"
             data-cy="form-register-coordinator-company"
           />

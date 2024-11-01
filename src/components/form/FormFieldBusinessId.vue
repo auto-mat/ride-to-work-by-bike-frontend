@@ -11,7 +11,9 @@
  *
  * @props
  * - `value` (string, required): The object representing user input.
+ * - `bgColor` (string, default: 'transparent'): The input background color.
  *   It should be of type `string`.
+ * - `testing` (boolean, default: false): Whether component is in test mode.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.

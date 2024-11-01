@@ -11,6 +11,7 @@
  *
  * @props
  * - `formValues` (Object, required): The object representing the form state.
+ * - `organizationType` (String as OrganizationType): The type of organization.
  * - `variant` (String as 'default', 'simple'): The variant of the form.
  *   `simple` only shows `name` and `vatId` fields.
  *
@@ -28,7 +29,7 @@
  */
 
 // libraries
-import { defineComponent, nextTick, ref } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
@@ -36,6 +37,9 @@ import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 
 // composables
 import { useValidation } from '../../composables/useValidation';
+
+// enums
+import { OrganizationType } from '../types/Organization';
 
 // types
 import type { FormCompanyFields, FormOption } from '../types/Form';
@@ -50,6 +54,9 @@ export default defineComponent({
     formValues: {
       type: Object as () => FormCompanyFields,
       required: true,
+    },
+    organizationType: {
+      type: String as () => OrganizationType,
     },
     variant: {
       type: String as () => 'default' | 'simple',
@@ -86,11 +93,19 @@ export default defineComponent({
 
     const addressIndex = 0;
 
+    const isVatShown = computed((): boolean => {
+      if (!props.organizationType) {
+        return true;
+      }
+      return props.organizationType === OrganizationType.company;
+    });
+
     return {
       addressIndex,
       company,
       optionsCityChallenge,
       isFilled,
+      isVatShown,
       onUpdate,
     };
   },
@@ -115,7 +130,7 @@ export default defineComponent({
       </p>
     </div>
     <div class="row q-col-gutter-lg">
-      <div class="col-12 col-sm-6">
+      <div class="col-12" :class="{ 'col-sm-6': isVatShown }">
         <!-- Input: Company name -->
         <form-field-text-required
           v-model="company.name"
@@ -125,9 +140,10 @@ export default defineComponent({
           data-cy="form-add-company-name"
         />
       </div>
-      <div class="col-12 col-sm-6">
+      <div class="col-12" :class="{ 'col-sm-6': isVatShown }">
         <!-- Input: VAT ID -->
         <form-field-business-id
+          v-if="isVatShown"
           v-model="company.vatId"
           name="vatId"
           :label="$t('form.labelBusinessId')"
