@@ -9,7 +9,7 @@
  * @example
  * <table-fee-approval />
  *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104283&t=MqCoIBTXNV4xkXVk-1)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104283&t=uDGm2WzHopjjpn5o-1)
  */
 
 // libraries
