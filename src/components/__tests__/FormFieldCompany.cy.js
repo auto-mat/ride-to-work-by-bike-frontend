@@ -1,10 +1,14 @@
-import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
+import { ref } from 'vue';
+import FormFieldCompany from 'components/global/FormFieldCompany.vue';
+import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
   httpSuccessfullStatus,
   interceptOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
+
+const model = ref('');
 
 describe('<FormFieldCompany>', () => {
   it('has translation for all strings', () => {
@@ -33,11 +37,14 @@ describe('<FormFieldCompany>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      // reset model
+      model.value = '';
+      // intercept api
       interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
       // mount component
-      cy.mount(FormFieldTestWrapper, {
+      cy.mount(FormFieldCompany, {
         props: {
-          component: 'FormFieldCompany',
+          ...vModelAdapter(model),
         },
       });
       cy.viewport('macbook-16');
@@ -97,15 +104,11 @@ describe('<FormFieldCompany>', () => {
     it('validates company field correctly', () => {
       cy.dataCy('form-company').find('input').focus();
       cy.dataCy('form-company').find('input').blur();
-      cy.dataCy('form-company')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and(
-          'contain',
-          i18n.global.t('form.messageFieldRequired', {
-            fieldName: i18n.global.t('form.labelCompanyShort'),
-          }),
-        );
+      cy.contains(
+        i18n.global.t('form.messageFieldRequired', {
+          fieldName: i18n.global.t('form.labelCompanyShort'),
+        }),
+      ).should('be.visible');
       cy.dataCy('form-company').find('input').click();
       // select option
       cy.get('.q-menu')
@@ -113,7 +116,11 @@ describe('<FormFieldCompany>', () => {
         .within(() => {
           cy.get('.q-item').first().click();
         });
-      cy.dataCy('form-company').find('.q-field__messages').should('not.exist');
+      cy.contains(
+        i18n.global.t('form.messageFieldRequired', {
+          fieldName: i18n.global.t('form.labelCompanyShort'),
+        }),
+      ).should('not.exist');
     });
 
     it('renders input and button in a column layout', () => {
@@ -184,9 +191,9 @@ describe('<FormFieldCompany>', () => {
     beforeEach(() => {
       interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
       // mount component
-      cy.mount(FormFieldTestWrapper, {
+      cy.mount(FormFieldCompany, {
         props: {
-          component: 'FormFieldCompany',
+          ...vModelAdapter(model),
         },
       });
       cy.viewport('iphone-6');
