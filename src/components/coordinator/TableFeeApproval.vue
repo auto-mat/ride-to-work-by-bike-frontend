@@ -19,6 +19,9 @@ import { defineComponent, onMounted, ref } from 'vue';
 // composables
 import { useTable, useTableFeeApproval } from '../../composables/useTable';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // fixtures
 import tableFeeApproval from '../../../test/cypress/fixtures/tableFeeApproval.json';
 
@@ -33,12 +36,15 @@ export default defineComponent({
       if (tableRef.value) {
         tableRef.value.sort('dateCreated');
       }
-    })
+    });
 
     const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByTeam } = useTable();
 
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
     return {
+      borderRadius,
       columns,
       selected,
       tableFeeApproval,
@@ -75,34 +81,59 @@ export default defineComponent({
         :sort-method="sortByTeam"
         selection="multiple"
         v-model:selected="selected"
-        :style="{ 'border-radius': '8px' }"
+        :style="{ borderRadius }"
+        data-cy="table-fee-approval-table"
       >
         <template v-slot:body="props">
-          <q-tr v-if="props.row.isFirst" class="bg-blue-grey-2">
-            <q-td colspan="7" class="text-weight-bold">
+          <q-tr
+            v-if="props.row.isFirst"
+            class="bg-primary text-weight-bold text-white"
+            data-cy="table-fee-approval-team-header"
+          >
+            <q-td colspan="7">
               {{ props.row.team }}
             </q-td>
           </q-tr>
-          <q-tr :props="props" class="data-row">
+          <q-tr
+            :props="props"
+            class="data-row text-grey-10"
+            data-cy="table-fee-approval-row"
+          >
             <q-td>
-              <q-checkbox v-model="props.selected" color="primary" />
+              <q-checkbox
+                v-model="props.selected"
+                color="primary"
+                data-cy="table-fee-approval-checkbox"
+              />
             </q-td>
-            <q-td key="amount" :props="props">
+            <q-td
+              key="amount"
+              :props="props"
+              data-cy="table-fee-approval-amount"
+            >
               {{ props.row.amount }}
             </q-td>
-            <q-td key="name" :props="props">
+            <q-td key="name" :props="props" data-cy="table-fee-approval-name">
               {{ props.row.name }}
             </q-td>
-            <q-td key="email" :props="props">
+            <q-td key="email" :props="props" data-cy="table-fee-approval-email">
               {{ props.row.email }}
             </q-td>
-            <q-td key="nickname" :props="props">
+            <q-td
+              key="nickname"
+              :props="props"
+              data-cy="table-fee-approval-nickname"
+            >
               {{ props.row.nickname }}
             </q-td>
-            <q-td key="team" :props="props">
+            <q-td key="team" :props="props" data-cy="table-fee-approval-team">
               {{ props.row.team }}
             </q-td>
-            <q-td key="dateCreated" :props="props">
+            <q-td
+              key="dateCreated"
+              :props="props"
+              data-cy="table-fee-approval-date"
+            >
               <!-- Custom loop to get formatted content -->
               <template v-for="col in props.cols" :key="col.field">
                 <span v-if="col.field === 'dateCreated'">
