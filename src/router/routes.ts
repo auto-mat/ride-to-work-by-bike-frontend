@@ -241,6 +241,49 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // coordinator
+  {
+    path: routesConf['coordinator']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    name: routesConf['coordinator']['children']['name'],
+    children: [
+      {
+        path: routesConf['coordinator_tasks']['path'],
+        name: routesConf['coordinator_tasks']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_fees']['path'],
+        name: routesConf['coordinator_fees']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_invoices']['path'],
+        name: routesConf['coordinator_invoices']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_packages']['path'],
+        name: routesConf['coordinator_packages']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_attendance']['path'],
+        name: routesConf['coordinator_attendance']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_challenges']['path'],
+        name: routesConf['coordinator_challenges']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+      {
+        path: routesConf['coordinator_results']['path'],
+        name: routesConf['coordinator_results']['children']['name'],
+        component: () => import('pages/CompanyCoordinatorPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

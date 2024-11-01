@@ -184,6 +184,62 @@ const routesConf: RoutesConf = {
       name: 'profile-notifications',
     },
   },
+  coordinator: {
+    path: '/coordinator',
+    children: {
+      fullPath: '/coordinator',
+      name: 'coordinator',
+    },
+  },
+  coordinator_tasks: {
+    path: 'tasks',
+    children: {
+      fullPath: '/coordinator/tasks',
+      name: 'coordinator-tasks',
+    },
+  },
+  coordinator_fees: {
+    path: 'fees',
+    children: {
+      fullPath: '/coordinator/fees',
+      name: 'coordinator-fees',
+    },
+  },
+  coordinator_invoices: {
+    path: 'invoices',
+    children: {
+      fullPath: '/coordinator/invoices',
+      name: 'coordinator-invoices',
+    },
+  },
+  coordinator_packages: {
+    path: 'packages',
+    children: {
+      fullPath: '/coordinator/packages',
+      name: 'coordinator-packages',
+    },
+  },
+  coordinator_attendance: {
+    path: 'attendance',
+    children: {
+      fullPath: '/coordinator/attendance',
+      name: 'coordinator-attendance',
+    },
+  },
+  coordinator_challenges: {
+    path: 'challenges',
+    children: {
+      fullPath: '/coordinator/challenges',
+      name: 'coordinator-challenges',
+    },
+  },
+  coordinator_results: {
+    path: 'results',
+    children: {
+      fullPath: '/coordinator/results',
+      name: 'coordinator-results',
+    },
+  },
 };
 
 export { routesConf };

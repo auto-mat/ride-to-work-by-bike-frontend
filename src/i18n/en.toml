@@ -86,6 +86,13 @@ labelBranches = "subsidiary | subsidiaries"
 labelMembers = "member | members"
 labelOrganizationId = "ID"
 labelShowPastTasks = "Show past tasks"
+tabTasks = "Tasks"
+tabFees = "Entry fees"
+tabInvoices = "Invoices"
+tabPackages = "Packages"
+tabAttendance = "Attendance"
+tabChallenges = "Company challenges"
+tabResults = "Results"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
 
 [createOrganization]

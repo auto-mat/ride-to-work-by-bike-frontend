@@ -86,6 +86,13 @@ labelBranches = "pobočka | poboček"
 labelMembers = "člen | členů"
 labelOrganizationId = "IČO"
 labelShowPastTasks = "Zobrazit uplynulé úkoly"
+tabTasks = "Úkoly"
+tabFees = "Startovné"
+tabInvoices = "Faktury"
+tabPackages = "Balíčky"
+tabAttendance = "Účast"
+tabChallenges = "Firemní výzvy"
+tabResults = "Výsledky"
 textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
 
 [createOrganization]
