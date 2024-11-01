@@ -20,6 +20,8 @@ const selectorFormRegisterPasswordConfirmInput =
 const selectorFormRegisterSubmit = 'form-register-submit';
 const selectorUserSelectDesktop = 'user-select-desktop';
 const selectorUserSelectInput = 'user-select-input';
+const selectorEmailVerificationRegisterLink =
+  'email-verification-register-link';
 
 // variables
 const testEmail = 'test@example.com';
@@ -336,6 +338,40 @@ describe('Register page', () => {
           cy.url().should('include', routesConf['login']['path']);
         });
       });
+    });
+
+    it('allows user to stop registration process before email verification and register again', () => {
+      cy.fixture('loginRegisterResponseChallengeActive.json').then(
+        (registerResponse) => {
+          // fill form
+          cy.dataCy(selectorFormRegisterEmail).find('input').type(testEmail);
+          cy.dataCy(selectorFormRegisterPasswordInput).type(testPassword);
+          cy.dataCy(selectorFormRegisterPasswordConfirmInput).type(
+            testPassword,
+          );
+          cy.dataCy(selectorFormRegisterSubmit).click();
+          cy.wait('@registerRequest').then((interception) => {
+            expect(interception.request.body).to.deep.equal(
+              registerRequestBody,
+            );
+            expect(interception.response.body).to.deep.equal(registerResponse);
+          });
+        },
+      );
+      // redirect to verify email page
+      cy.url().should('contain', routesConf['verify_email']['path']);
+      // test access to register page
+      cy.visit('#' + routesConf['register']['path']);
+      // register page should not be accessible
+      cy.url().should('not.contain', routesConf['register']['path']);
+      cy.url().should('contain', routesConf['verify_email']['path']);
+      // click register again link (logs out user)
+      cy.dataCy(selectorEmailVerificationRegisterLink)
+        .should('be.visible')
+        .click();
+      // redirected to register page
+      cy.url().should('not.contain', routesConf['verify_email']['path']);
+      cy.url().should('contain', routesConf['register']['path']);
     });
   });
 });
