@@ -5,9 +5,6 @@
  * @description * Use this component to render tabs on the Coordinator page.
  * Note: Used on `CoordinatorPage`.
  *
- * @components
- * - `TaskListCoordinator`: Component to display coordinator tasks.
- *
  * @example
  * <coordinator-tabs />
  */
