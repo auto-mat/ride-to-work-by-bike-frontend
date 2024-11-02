@@ -410,7 +410,7 @@ export const useTableAttendance = () => {
       sortable: true,
     },
     {
-      align: 'left',
+      align: 'center',
       field: AttendanceTableColumns.contact,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelContact'),
@@ -479,7 +479,7 @@ export const useTableAttendance = () => {
       case PaymentState.paid:
         return 'check';
       case PaymentState.scheduled:
-        return 'calendar_month';
+        return 'svguse:icons/table_attendance/icons.svg#calendar';
       default:
         return '';
     }

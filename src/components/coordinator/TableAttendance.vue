@@ -59,12 +59,12 @@ export default defineComponent({
       columns,
       tableAttendance,
       tableRef,
-      visibleColumns,
-      sortByTeam,
       teams,
+      visibleColumns,
       getPaymentStateIcon,
       getPaymentStateLabel,
       getPaymentTypeLabel,
+      sortByTeam,
     };
   },
 });
@@ -116,16 +116,28 @@ export default defineComponent({
             {{ props.row.nickname }}
           </q-td>
           <!-- Contact -->
-          <q-td key="contact" :props="props" data-cy="table-attendance-contact">
-            {{ props.row.contact }}
+          <q-td
+            auto-width
+            key="contact"
+            :props="props"
+            data-cy="table-attendance-contact"
+          >
+            <q-icon
+              size="18px"
+              color="primary"
+              name="svguse:icons/table_attendance/icons.svg#info"
+              data-cy="table-attendance-contact-icon"
+            />
           </q-td>
           <!-- Fee Approved -->
           <q-td
+            auto-width
             key="isFeeApproved"
             :props="props"
             data-cy="table-attendance-fee-approved"
           >
             <q-icon
+              size="18px"
               :name="props.row.isFeeApproved ? 'check' : 'close'"
               :color="props.row.isFeeApproved ? 'positive' : 'negative'"
             />

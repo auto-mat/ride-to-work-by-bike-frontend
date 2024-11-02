@@ -27,6 +27,7 @@ const selectorTableRow = 'table-attendance-row';
 const selectorTableName = 'table-attendance-name';
 const selectorTableNickname = 'table-attendance-nickname';
 const selectorTableContact = 'table-attendance-contact';
+const selectorTableContactIcon = 'table-attendance-contact-icon';
 const selectorTableFeeApproved = 'table-attendance-fee-approved';
 const selectorTablePaymentType = 'table-attendance-payment-type';
 const selectorTablePaymentState = 'table-attendance-payment-state';
@@ -54,6 +55,7 @@ const dataByNameDesc = [
 
 // variables
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+const iconSize = 18;
 
 describe('<TableAttendance>', () => {
   it('has translation for all strings', () => {
@@ -130,36 +132,51 @@ function coreTests() {
         .should('have.length', 5)
         .each((tableRow, index) => {
           cy.wrap(tableRow).within(() => {
+            // name
             cy.dataCy(selectorTableName).should('contain', rows[index].name);
+            // nickname
             cy.dataCy(selectorTableNickname).should(
               'contain',
               rows[index].nickname,
             );
-            cy.dataCy(selectorTableContact).should(
-              'contain',
-              rows[index].contact,
-            );
+            // contact icon
+            cy.dataCy(selectorTableContact).within(() => {
+              cy.dataCy(selectorTableContactIcon)
+                .should('be.visible')
+                .and('have.color', primary);
+              cy.dataCy(selectorTableContactIcon)
+                .invoke('height')
+                .should('be.equal', iconSize);
+              cy.dataCy(selectorTableContactIcon)
+                .invoke('width')
+                .should('be.equal', iconSize);
+            });
+            // payment type label
             cy.dataCy(selectorTablePaymentType).should(
               'contain',
               getPaymentTypeLabel(rows[index].paymentType),
             );
-            // Check payment state icon and label
+            // payment state icon and label
             cy.dataCy(selectorTablePaymentState).within(() => {
-              let expectedIcon;
               let expectedColor;
               if (rows[index].paymentState === PaymentState.paid) {
-                expectedIcon = 'check';
                 expectedColor = positive;
               } else if (rows[index].paymentState === PaymentState.scheduled) {
-                expectedIcon = 'calendar_month';
                 expectedColor = primary;
               }
+              // icon
+              cy.get(classSelectorIcon).should('have.color', expectedColor);
+              // icon size
               cy.get(classSelectorIcon)
-                .should('have.color', expectedColor)
-                .and('contain', expectedIcon);
+                .invoke('height')
+                .should('be.equal', iconSize);
+              cy.get(classSelectorIcon)
+                .invoke('width')
+                .should('be.equal', iconSize);
+              // label
               cy.contains(getPaymentStateLabel(rows[index].paymentState));
             });
-            // Check fee approved icon
+            // fee approved icon
             cy.dataCy(selectorTableFeeApproved).within(() => {
               let expectedIcon;
               let expectedColor;
@@ -170,9 +187,17 @@ function coreTests() {
                 expectedIcon = 'close';
                 expectedColor = negative;
               }
+              // icon
               cy.get(classSelectorIcon)
                 .should('have.color', expectedColor)
                 .and('contain', expectedIcon);
+              // icon size
+              cy.get(classSelectorIcon)
+                .invoke('height')
+                .should('be.equal', iconSize);
+              cy.get(classSelectorIcon)
+                .invoke('width')
+                .should('be.equal', iconSize);
             });
           });
         });
