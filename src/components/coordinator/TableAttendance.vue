@@ -174,8 +174,10 @@ export default defineComponent({
             :props="props"
             data-cy="table-attendance-actions"
           >
+            <!-- Button: More actions -->
             <q-btn dense flat round>
               <q-icon name="more_vert" />
+              <!-- Dropdown menu -->
               <q-menu auto-close>
                 <!-- TODO: Add actions -->
               </q-menu>
