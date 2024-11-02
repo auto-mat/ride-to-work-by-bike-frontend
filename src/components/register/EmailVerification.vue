@@ -42,7 +42,7 @@ export default defineComponent({
   setup(props) {
     const logger = inject('vuejs3-logger') as Logger | null;
     const loginStore = useLoginStore();
-    if (window.Cypress) {
+    if (window.Cypress && props.fixture) {
       logger?.debug(
         `Set user fixture data <${JSON.stringify(props.fixture.loginResponse.user, null, 2)}> into the store.`,
       );
