@@ -19,7 +19,7 @@ import { useTable, useTableAttendance } from '../../composables/useTable';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
-// TODO: Add fixture for attendance data
+// fixtures
 import tableAttendance from '../../../test/cypress/fixtures/tableAttendance.json';
 
 export default defineComponent({
