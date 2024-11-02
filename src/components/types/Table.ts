@@ -21,3 +21,23 @@ export type TableColumn = {
 export type TableRow = {
   [key: string]: number | string | null | boolean;
 };
+
+export enum ResultsTableColumns {
+  rank = 'rank',
+  consistency = 'consistency',
+  routeCount = 'routeCount',
+  name = 'name',
+  team = 'team',
+  organization = 'organization',
+  category = 'category',
+  city = 'city',
+}
+
+export enum FeeApprovalTableColumns {
+  amount = 'amount',
+  name = 'name',
+  email = 'email',
+  nickname = 'nickname',
+  address = 'address',
+  dateCreated = 'dateCreated',
+}

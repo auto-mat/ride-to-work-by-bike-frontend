@@ -8,7 +8,12 @@ import { i18n } from 'src/boot/i18n';
 
 // types
 import type { QTableProps } from 'quasar';
-import type { TableColumn, TableRow } from '../components/types/Table';
+import {
+  TableColumn,
+  TableRow,
+  ResultsTableColumns,
+  FeeApprovalTableColumns,
+} from '../components/types/Table';
 
 type FilterMethodInput = { search: string; filter: string };
 
@@ -20,69 +25,69 @@ export const useTable = () => {
   // Used in the `ResultsDetailPage`
   const tableResultsColumns: QTableProps['columns'] = [
     {
-      name: 'rank',
+      name: ResultsTableColumns.rank,
       required: true,
       label: i18n.global.t('results.labelRank'),
       align: 'left',
-      field: 'rank',
+      field: ResultsTableColumns.rank,
       format: (val: number | string | null) => (val ? `${val}.` : ''),
       sortable: true,
     },
     {
-      name: 'consistency',
+      name: ResultsTableColumns.consistency,
       required: true,
       label: i18n.global.t('results.labelConsistency'),
       align: 'left',
-      field: 'consistency',
+      field: ResultsTableColumns.consistency,
       sortable: true,
     },
     {
-      name: 'route-count',
+      name: ResultsTableColumns.routeCount,
       required: true,
       label: i18n.global.t('results.labelRouteCount'),
       align: 'left',
-      field: 'routeCount',
+      field: ResultsTableColumns.routeCount,
       format: (val: number | string | null) => (val ? `${val}%` : ''),
       sortable: true,
     },
     {
-      name: 'name',
+      name: ResultsTableColumns.name,
       required: true,
       label: i18n.global.t('results.labelParticipant'),
       align: 'left',
-      field: 'name',
+      field: ResultsTableColumns.name,
       sortable: true,
     },
     {
-      name: 'team',
+      name: ResultsTableColumns.team,
       required: true,
       label: i18n.global.t('results.labelTeam'),
       align: 'left',
-      field: 'team',
+      field: ResultsTableColumns.team,
       sortable: true,
     },
     {
-      name: 'organization',
+      name: ResultsTableColumns.organization,
       required: true,
       label: i18n.global.t('results.labelOrganization'),
       align: 'left',
-      field: 'organization',
+      field: ResultsTableColumns.organization,
       sortable: true,
     },
     {
-      name: 'category',
+      name: ResultsTableColumns.category,
       required: true,
       label: i18n.global.t('results.labelCategory'),
       align: 'left',
-      field: 'category',
+      field: ResultsTableColumns.category,
       sortable: true,
     },
     {
-      name: 'city',
+      name: ResultsTableColumns.city,
       required: true,
       label: i18n.global.t('results.labelCity'),
       align: 'left',
-      field: 'city',
+      field: ResultsTableColumns.city,
       sortable: true,
     },
   ];
@@ -190,8 +195,8 @@ export const useTable = () => {
     if (!sortBy) return data;
 
     sortDataByValue(data, sortBy, descending);
-    sortDataByKey(data, 'address', descending);
-    markFirstInGroup(data, 'address');
+    sortDataByKey(data, FeeApprovalTableColumns.address, descending);
+    markFirstInGroup(data, FeeApprovalTableColumns.address);
 
     return data;
   };
@@ -285,56 +290,56 @@ export const useTableFeeApproval = () => {
   const tableFeeApprovalColumns: QTableProps['columns'] = [
     {
       align: 'left',
-      field: 'amount',
+      field: FeeApprovalTableColumns.amount,
       format: (val: number | string | null): string => formatPrice(val),
       label: i18n.global.t('table.labelAmount'),
-      name: 'amount',
+      name: FeeApprovalTableColumns.amount,
       required: true,
       sortable: true,
     },
     {
       align: 'left',
-      field: 'name',
+      field: FeeApprovalTableColumns.name,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelName'),
-      name: 'name',
+      name: FeeApprovalTableColumns.name,
       required: true,
       sortable: true,
     },
     {
       align: 'left',
-      field: 'email',
+      field: FeeApprovalTableColumns.email,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelEmail'),
-      name: 'email',
+      name: FeeApprovalTableColumns.email,
       required: true,
       sortable: true,
     },
     {
       align: 'left',
-      field: 'nickname',
+      field: FeeApprovalTableColumns.nickname,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelNickname'),
-      name: 'nickname',
+      name: FeeApprovalTableColumns.nickname,
       required: true,
       sortable: true,
     },
     {
       align: 'left',
-      field: 'address',
+      field: FeeApprovalTableColumns.address,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelTeam'),
-      name: 'address',
+      name: FeeApprovalTableColumns.address,
       required: false,
       sortable: true,
     },
     {
       align: 'left',
-      field: 'dateCreated',
+      field: FeeApprovalTableColumns.dateCreated,
       format: (val: number | string | null): string =>
         val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
       label: i18n.global.t('table.labelDateRegistered'),
-      name: 'dateCreated',
+      name: FeeApprovalTableColumns.dateCreated,
       required: true,
       sortable: true,
     },
@@ -342,11 +347,11 @@ export const useTableFeeApproval = () => {
 
   // hide address column as the table is grouped by the key 'address'
   const tableFeeApprovalVisibleColumns: string[] = [
-    'amount',
-    'name',
-    'email',
-    'nickname',
-    'dateCreated',
+    FeeApprovalTableColumns.amount,
+    FeeApprovalTableColumns.name,
+    FeeApprovalTableColumns.email,
+    FeeApprovalTableColumns.nickname,
+    FeeApprovalTableColumns.dateCreated,
   ];
 
   return {
