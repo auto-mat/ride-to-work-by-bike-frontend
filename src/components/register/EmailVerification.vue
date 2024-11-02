@@ -5,6 +5,12 @@
  * @description * Renders a confirmation message after user registers,
  * prompting user to confirm their address by clicking the link in the email.
  *
+ * @props
+ * - `fixture` (LoginResponse): The object representing
+ *   Cypress loginRegisterResponseChallengeActive.json fixture file.
+ *   It is used by Cypress component test to load user data and save
+ *   into login store.
+ *
  * @example
  * <email-verification />
  *
@@ -26,12 +32,25 @@ import { useLoginStore } from '../../stores/login';
 
 // types
 import type { Logger } from '../types/Logger';
+import type { LoginResponse } from '../types/Login';
 
 export default defineComponent({
   name: 'EmailVerification',
-  setup() {
+  props: {
+    fixture: Object as () => LoginResponse,
+  },
+  setup(props) {
     const logger = inject('vuejs3-logger') as Logger | null;
     const loginStore = useLoginStore();
+    if (window.Cypress) {
+      logger?.debug(
+        `Set user fixture data <${JSON.stringify(props.fixture.loginResponse.user, null, 2)}> into the store.`,
+      );
+      loginStore.setUser(props.fixture.loginResponse.user);
+      logger?.debug(
+        `Get user data <${JSON.stringify(props.fixture.loginResponse.user, null, 2)}> from the store.`,
+      );
+    }
     const registerStore = useRegisterStore();
     const email = computed(() => loginStore.getUserEmail);
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);

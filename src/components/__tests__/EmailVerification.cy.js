@@ -2,7 +2,6 @@ import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import EmailVerification from 'components/register/EmailVerification.vue';
 import { i18n } from '../../boot/i18n';
-import { useLoginStore } from '../../stores/login';
 import { useRegisterStore } from '../../stores/register';
 import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -70,18 +69,15 @@ describe('<EmailVerification>', () => {
         statusCode: httpSuccessfullStatus,
         body: { has_user_verified_email_address: true },
       }).as('emailVerificationRequest');
-      // mount after intercept
-      cy.mount(EmailVerification, {
-        props: {},
-      }).then(() => {
-        // set store var
-        cy.fixture('loginRegisterResponseChallengeActive.json').then(
-          (loginResponse) => {
-            const loginStore = useLoginStore();
-            loginStore.setUser(loginResponse.user);
-          },
-        );
-      });
+      // set store var
+      cy.fixture('loginRegisterResponseChallengeActive.json').then(
+        (loginResponse) => {
+          // mount after intercept
+          cy.mount(EmailVerification, {
+            props: { fixture: { loginResponse: loginResponse } },
+          });
+        },
+      );
     });
 
     coreTests();
@@ -106,18 +102,15 @@ describe('<EmailVerification>', () => {
         statusCode: httpSuccessfullStatus,
         body: { has_user_verified_email_address: true },
       }).as('emailVerificationRequest');
-      // mount after intercept
-      cy.mount(EmailVerification, {
-        props: {},
-      }).then(() => {
-        // set store var
-        cy.fixture('loginRegisterResponseChallengeActive.json').then(
-          (loginResponse) => {
-            const loginStore = useLoginStore();
-            loginStore.setUser(loginResponse.user);
-          },
-        );
-      });
+      // set store var
+      cy.fixture('loginRegisterResponseChallengeActive.json').then(
+        (loginResponse) => {
+          // mount after intercept
+          cy.mount(EmailVerification, {
+            props: { fixture: { loginResponse: loginResponse } },
+          });
+        },
+      );
     });
 
     coreTests();
