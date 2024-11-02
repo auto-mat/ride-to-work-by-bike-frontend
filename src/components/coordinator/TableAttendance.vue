@@ -51,22 +51,7 @@ export default defineComponent({
      * It will be displayed before the next group header.
      */
     const teams = ref([
-      {
-        name: 'Chytrý tým',
-        id: 1,
-      },
-      {
-        name: 'Nadšený tým',
-        id: 2,
-      },
-      {
-        name: 'Prázdný tým',
-        id: 3,
-      },
-      {
-        name: 'Silný tým',
-        id: 4,
-      },
+      // TODO: Add teams
     ]);
 
     return {
