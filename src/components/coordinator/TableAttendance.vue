@@ -34,9 +34,40 @@ export default defineComponent({
       }
     });
 
-    const { columns, visibleColumns } = useTableAttendance();
+    const {
+      columns,
+      visibleColumns,
+      getPaymentStateIcon,
+      getPaymentStateLabel,
+      getPaymentTypeLabel,
+    } = useTableAttendance();
     const { sortByTeam } = useTable();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
+    /**
+     * Teams list is used to display empty team rows in the table.
+     * If team does not have data (members), it will be displayed
+     * based on this list.
+     * It will be displayed before the next group header.
+     */
+    const teams = ref([
+      {
+        name: 'Chytrý tým',
+        id: 1,
+      },
+      {
+        name: 'Nadšený tým',
+        id: 2,
+      },
+      {
+        name: 'Prázdný tým',
+        id: 3,
+      },
+      {
+        name: 'Silný tým',
+        id: 4,
+      },
+    ]);
 
     return {
       borderRadius,
@@ -45,125 +76,115 @@ export default defineComponent({
       tableRef,
       visibleColumns,
       sortByTeam,
+      teams,
+      getPaymentStateIcon,
+      getPaymentStateLabel,
+      getPaymentTypeLabel,
     };
   },
 });
 </script>
 
 <template>
-  <div class="q-pa-md" data-cy="table-attendance">
-    <div>
-      <!-- Title -->
-      <h3
-        class="text-body1 text-bold text-black q-my-none"
-        data-cy="table-attendance-title"
-      >
-        {{ $t('table.titleAttendance') }}
-      </h3>
-    </div>
-    <div class="q-my-lg">
-      <!-- Table -->
-      <q-table
-        ref="tableRef"
-        flat
-        bordered
-        binary-state-sort
-        :rows="tableAttendance"
-        :columns="columns"
-        :visible-columns="visibleColumns"
-        row-key="name"
-        :sort-method="sortByTeam"
-        :style="{ borderRadius }"
-        data-cy="table-attendance-table"
-      >
-        <template v-slot:body="props">
-          <!-- Group header -->
-          <q-tr
-            v-if="props.row.isFirst"
-            class="bg-primary text-weight-bold text-white"
-            data-cy="table-attendance-team-header"
-          >
-            <q-td colspan="7">
-              {{ props.row.team }}
-            </q-td>
-          </q-tr>
-          <!-- Row -->
-          <q-tr
+  <div data-cy="table-attendance">
+    <!-- Table -->
+    <q-table
+      ref="tableRef"
+      flat
+      bordered
+      binary-state-sort
+      :rows="tableAttendance"
+      :columns="columns"
+      :visible-columns="visibleColumns"
+      row-key="name"
+      :sort-method="sortByTeam"
+      :style="{ borderRadius }"
+      data-cy="table-attendance-table"
+    >
+      <template v-slot:body="props">
+        <!-- Group header -->
+        <q-tr
+          v-if="props.row.isFirst"
+          class="bg-primary text-weight-bold text-white"
+          data-cy="table-attendance-team-header"
+        >
+          <q-td colspan="7">
+            {{ props.row.team }}
+          </q-td>
+        </q-tr>
+        <!-- Row -->
+        <q-tr
+          :props="props"
+          class="text-grey-10"
+          data-cy="table-attendance-row"
+        >
+          <!-- Name -->
+          <q-td key="name" :props="props" data-cy="table-attendance-name">
+            {{ props.row.name }}
+          </q-td>
+          <!-- Nickname -->
+          <q-td
+            key="nickname"
             :props="props"
-            :class="{ 'cursor-pointer': true }"
-            data-cy="table-attendance-row"
+            data-cy="table-attendance-nickname"
           >
-            <!-- Name -->
-            <q-td key="name" :props="props" data-cy="table-attendance-name">
-              {{ props.row.name }}
-            </q-td>
-            <!-- Nickname -->
-            <q-td
-              key="nickname"
-              :props="props"
-              data-cy="table-attendance-nickname"
-            >
-              {{ props.row.nickname }}
-            </q-td>
-            <!-- Contact -->
-            <q-td
-              key="contact"
-              :props="props"
-              data-cy="table-attendance-contact"
-            >
-              {{ props.row.contact }}
-            </q-td>
-            <!-- Fee Approved -->
-            <q-td
-              key="isFeeApproved"
-              :props="props"
-              data-cy="table-attendance-fee-approved"
-            >
-              <q-icon
-                :name="props.row.isFeeApproved ? 'check' : 'close'"
-                :color="props.row.isFeeApproved ? 'positive' : 'negative'"
-              />
-            </q-td>
-            <!-- Payment Type -->
-            <q-td
-              key="paymentType"
-              :props="props"
-              data-cy="table-attendance-payment-type"
-            >
-              {{ props.row.paymentType }}
-            </q-td>
-            <!-- Payment State -->
-            <q-td
-              key="paymentState"
-              :props="props"
-              data-cy="table-attendance-payment-state"
-            >
-              {{ props.row.paymentState }}
-            </q-td>
-            <!-- Action buttons -->
-            <q-td
-              auto-width
-              key="actions"
-              :props="props"
-              data-cy="table-attendance-actions"
-            >
-              <q-btn dense flat round>
-                <q-icon name="more_vert" />
-                <q-menu auto-close>
-                  <q-list style="min-width: 100px">
-                    <q-item clickable>
-                      <q-item-section>New tab</q-item-section>
-                    </q-item>
-                    <q-item clickable>
-                      <q-item-section>New incognito tab</q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
-    </div>
+            {{ props.row.nickname }}
+          </q-td>
+          <!-- Contact -->
+          <q-td key="contact" :props="props" data-cy="table-attendance-contact">
+            {{ props.row.contact }}
+          </q-td>
+          <!-- Fee Approved -->
+          <q-td
+            key="isFeeApproved"
+            :props="props"
+            data-cy="table-attendance-fee-approved"
+          >
+            <q-icon
+              :name="props.row.isFeeApproved ? 'check' : 'close'"
+              :color="props.row.isFeeApproved ? 'positive' : 'negative'"
+            />
+          </q-td>
+          <!-- Payment Type -->
+          <q-td
+            key="paymentType"
+            :props="props"
+            data-cy="table-attendance-payment-type"
+          >
+            {{ getPaymentTypeLabel(props.row.paymentType) }}
+          </q-td>
+          <!-- Payment State -->
+          <q-td
+            key="paymentState"
+            :props="props"
+            data-cy="table-attendance-payment-state"
+          >
+            <q-icon
+              :name="getPaymentStateIcon(props.row.paymentState)"
+              size="18px"
+              :color="
+                props.row.paymentState === 'paid' ? 'positive' : 'primary'
+              "
+              class="q-mr-xs"
+            />
+            {{ getPaymentStateLabel(props.row.paymentState) }}
+          </q-td>
+          <!-- Action buttons -->
+          <q-td
+            auto-width
+            key="actions"
+            :props="props"
+            data-cy="table-attendance-actions"
+          >
+            <q-btn dense flat round>
+              <q-icon name="more_vert" />
+              <q-menu auto-close>
+                <!-- TODO: Add actions -->
+              </q-menu>
+            </q-btn>
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
   </div>
 </template>

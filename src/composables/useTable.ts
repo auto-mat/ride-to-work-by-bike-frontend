@@ -6,6 +6,9 @@ import { computed, ref } from 'vue';
 import { i18n } from 'src/boot/i18n';
 // TODO: import format price
 
+// enums
+import { PaymentState, PaymentType } from '../components/types/Payment';
+
 // types
 import type { QTableProps } from 'quasar';
 import {
@@ -471,8 +474,44 @@ export const useTableAttendance = () => {
     AttendanceTableColumns.actions,
   ];
 
+  const getPaymentStateIcon = (paymentState: PaymentState): string => {
+    switch (paymentState) {
+      case PaymentState.paid:
+        return 'check';
+      case PaymentState.scheduled:
+        return 'calendar_month';
+      default:
+        return '';
+    }
+  };
+
+  const getPaymentStateLabel = (paymentState: PaymentState): string => {
+    switch (paymentState) {
+      case PaymentState.paid:
+        return i18n.global.t('payment.labelPaid');
+      case PaymentState.scheduled:
+        return i18n.global.t('payment.labelScheduled');
+      default:
+        return '';
+    }
+  };
+
+  const getPaymentTypeLabel = (paymentType: PaymentType): string => {
+    switch (paymentType) {
+      case PaymentType.organization:
+        return i18n.global.t('payment.labelOrganization');
+      case PaymentType.registration:
+        return i18n.global.t('payment.labelRegistration');
+      default:
+        return '';
+    }
+  };
+
   return {
     columns: tableAttendanceColumns,
     visibleColumns: tableAttendanceVisibleColumns,
+    getPaymentStateIcon,
+    getPaymentStateLabel,
+    getPaymentTypeLabel,
   };
 };

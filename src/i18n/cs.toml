@@ -512,6 +512,12 @@ titleMessage = "Pozvánka na Do Práce na Kole od {name}"
 titleStep1 = "Jsme rádi, že s námi jdete do výzvy!"
 titleStep2 = "Přizvěte své blízké do výzvy"
 
+[payment]
+labelOrganization = "Organizací"
+labelPaid = "Zaplaceno"
+labelRegistration = "Při registraci"
+labelScheduled = "Po výzvě"
+
 [profile]
 buttonDownloadInvoice = "Stáhnout potvrzení o platbě"
 buttonFillQuestionnaire = "Vyplnit dotazník"

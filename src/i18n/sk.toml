@@ -509,6 +509,12 @@ titleMessage = "Pozvánka k Do práce na bicykli od {name}"
 titleStep1 = "Sme radi, že ste prijali túto výzvu spolu s nami!"
 titleStep2 = "Pozvite na výzvu svojich blízkych"
 
+[payment]
+labelOrganization = "Organizácia"
+labelPaid = "Zaplatené"
+labelRegistration = "Při registraci"
+labelScheduled = "Po výzve"
+
 [profile]
 buttonDownloadInvoice = "Stiahnutie potvrzenia o platbe"
 buttonFillQuestionnaire = "Vyplniť dotazník"

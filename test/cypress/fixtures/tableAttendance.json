@@ -6,7 +6,7 @@
     "isFeeApproved": true,
     "paymentType": "organization",
     "paymentState": "scheduled",
-    "team": "Silný tým",
+    "team": "Chytrý tým",
     "isFirst": true
   },
   {
@@ -16,7 +16,7 @@
     "isFeeApproved": true,
     "paymentType": "registration",
     "paymentState": "paid",
-    "team": "Silný tým"
+    "team": "Chytrý tým"
   },
   {
     "name": "Cyprián Runner",
@@ -44,7 +44,7 @@
     "isFeeApproved": true,
     "paymentType": "organization",
     "paymentState": "scheduled",
-    "team": "Chytrý tým",
+    "team": "Silný tým",
     "isFirst": true
   }
 ]
