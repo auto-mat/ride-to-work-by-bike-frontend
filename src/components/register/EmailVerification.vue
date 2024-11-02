@@ -37,14 +37,20 @@ export default defineComponent({
     const isEmailVerified = computed(() => registerStore.getIsEmailVerified);
 
     const checkIsEmailVerified = async (): Promise<void> => {
-      if (!isEmailVerified.value) {
+      logger?.debug(
+        `Check if email is verified is user logged in <${loginStore.isUserLoggedIn}>.`,
+      );
+      if (!isEmailVerified.value && loginStore.isUserLoggedIn) {
         logger?.info(
           'Check if email is verified by <checkIsEmailVerified()> function.',
         );
         await registerStore.checkEmailVerification();
       } else {
+        const message = loginStore.isUserLoggedIn
+          ? 'Email is verified'
+          : 'User is not logged in';
         logger?.debug(
-          'Email is verified, disable <checkIsEmailVerified()>' +
+          `${message}, disable <checkIsEmailVerified()>` +
             ` function runned in every <${rideToWorkByBikeConfig.checkIsEmailVerifiedInterval}> seconds.`,
         );
         clearTimeout(checkIsEmailVerifiedId);

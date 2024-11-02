@@ -82,6 +82,7 @@ export const useLoginStore = defineStore('login', {
     getRefreshTokenTimeout: (state): NodeJS.Timeout | null =>
       state.refreshTokenTimeout,
     getUserEmail: (state): string => state.user.email,
+    isUserLoggedIn: (state): boolean => (state.user.email ? true : false),
   },
 
   actions: {
@@ -112,7 +113,6 @@ export const useLoginStore = defineStore('login', {
         this.refreshTokenTimeout = null;
       }
     },
-
     /**
      * Login user
      * Checks if email and password are set.
