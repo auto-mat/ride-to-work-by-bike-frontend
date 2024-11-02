@@ -104,11 +104,11 @@ export const useTable = () => {
    * Provides filter functionality
    * Upon typing, find strings which contain query entered into the filter
    * Function must match QTable filterMethod interface
-   * @param rows TableRow[]
-   * @param terms FilterMethodInput
-   * @param cols TableColumn[]
-   * @param cellValue (col: TableColumn, row: TableRow) => string
-   * @returns TableRow[]
+   * @param {TableRow[]} rows - Table rows
+   * @param {FilterMethodInput} terms - Terms
+   * @param {TableColumn[]} cols - Table columns
+   * @param {(col: TableColumn, row: TableRow) => string} cellValue - Table cell value
+   * @returns {TableRow[]}
    **/
   const filterMethod = (
     rows: readonly TableRow[],
@@ -138,8 +138,8 @@ export const useTable = () => {
 
     /**
      * Default filter function based on QTable source code
-     * @param query string
-     * @returns TableRow[]
+     * @param {string} query - Query
+     * @returns {TableRow[]}
      */
     function defaultFilter(query: string): TableRow[] {
       const lowerTerms = query ? query.toLowerCase() : '';
@@ -148,9 +148,9 @@ export const useTable = () => {
 
     /**
      * Checks if a row matches the search query
-     * @param row TableRow
-     * @param term string
-     * @returns boolean
+     * @param {TableRow} row - Table row
+     * @param {string} term - Term
+     * @returns {boolean}
      */
     function isMatch({
       cols,
@@ -179,7 +179,7 @@ export const useTable = () => {
    * @param {readonly TableRow[]} rows - The array of TableRows to be sorted.
    * @param {string} sortBy - The column to sort by.
    * @param {boolean} descending - Whether to sort in descending order.
-   * @return {readonly TableRow[]} The sorted array of TableRows.
+   * @return {readonly TableRow[]} - The sorted array of TableRows.
    */
   const sortByAddress = (
     rows: readonly TableRow[],
