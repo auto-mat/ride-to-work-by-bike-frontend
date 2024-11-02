@@ -13,6 +13,7 @@ import {
   TableRow,
   ResultsTableColumns,
   FeeApprovalTableColumns,
+  AttendanceTableColumns,
 } from '../components/types/Table';
 
 type FilterMethodInput = { search: string; filter: string };
@@ -357,5 +358,78 @@ export const useTableFeeApproval = () => {
   return {
     columns: tableFeeApprovalColumns,
     visibleColumns: tableFeeApprovalVisibleColumns,
+  };
+};
+
+export const useTableAttendance = () => {
+  const tableAttendanceColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: AttendanceTableColumns.name,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelName'),
+      name: AttendanceTableColumns.name,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.nickname,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelNickname'),
+      name: AttendanceTableColumns.nickname,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.contact,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelContact'),
+      name: AttendanceTableColumns.contact,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.isFeeApproved,
+      format: (val: boolean): boolean => val,
+      label: i18n.global.t('table.labelFeeApproved'),
+      name: AttendanceTableColumns.isFeeApproved,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.paymentType,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelPaymentType'),
+      name: AttendanceTableColumns.paymentType,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.paymentState,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelPaymentState'),
+      name: AttendanceTableColumns.paymentState,
+      required: true,
+      sortable: true,
+    },
+  ];
+
+  const tableAttendanceVisibleColumns: string[] = [
+    AttendanceTableColumns.name,
+    AttendanceTableColumns.nickname,
+    AttendanceTableColumns.contact,
+    AttendanceTableColumns.isFeeApproved,
+    AttendanceTableColumns.paymentType,
+    AttendanceTableColumns.paymentState,
+  ];
+
+  return {
+    columns: tableAttendanceColumns,
+    visibleColumns: tableAttendanceVisibleColumns,
   };
 };

@@ -41,3 +41,12 @@ export enum FeeApprovalTableColumns {
   address = 'address',
   dateCreated = 'dateCreated',
 }
+
+export enum AttendanceTableColumns {
+  name = 'name',
+  nickname = 'nickname',
+  contact = 'contact',
+  isFeeApproved = 'isFeeApproved',
+  paymentType = 'paymentType',
+  paymentState = 'paymentState',
+}
