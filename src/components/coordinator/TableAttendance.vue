@@ -49,6 +49,7 @@ export default defineComponent({
      * If team does not have data (members), it will be displayed
      * based on this list.
      * It will be displayed before the next group header.
+     * The row will contain "delete" and "rename" actions.
      */
     const teams = ref([
       // TODO: Add teams
