@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Aneta Walker",
+    "nickname": "anwa",
+    "contact": "aneta.walker@auto-mat.cz",
+    "isFeeApproved": true,
+    "paymentType": "organization",
+    "paymentState": "scheduled",
+    "team": "Silný tým",
+    "isFirst": true
+  },
+  {
+    "name": "Barbora Walker",
+    "nickname": "bawa",
+    "contact": "bara.walker@auto-mat.cz",
+    "isFeeApproved": true,
+    "paymentType": "registration",
+    "paymentState": "paid",
+    "team": "Silný tým"
+  },
+  {
+    "name": "Cyprián Runner",
+    "nickname": "cypr.run",
+    "contact": "cypr.run@auto-mat.cz",
+    "isFeeApproved": false,
+    "paymentType": "organization",
+    "paymentState": "scheduled",
+    "team": "Nadšený tým",
+    "isFirst": true
+  },
+  {
+    "name": "Denisa Cestující",
+    "nickname": "deni.traveller",
+    "contact": "deni.traveller@auto-mat.cz",
+    "isFeeApproved": true,
+    "paymentType": "organization",
+    "paymentState": "scheduled",
+    "team": "Nadšený tým"
+  },
+  {
+    "name": "Emil Biker",
+    "nickname": "ebiker",
+    "contact": "e.biker@auto-mat.cz",
+    "isFeeApproved": true,
+    "paymentType": "organization",
+    "paymentState": "scheduled",
+    "team": "Chytrý tým",
+    "isFirst": true
+  }
+]

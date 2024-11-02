@@ -203,6 +203,30 @@ export const useTable = () => {
   };
 
   /**
+   * Sorts an array of TableRow objects and group them by team.
+   * First uses standard sort, then sorts results by team to create groups.
+   * Finally, marks the first item in each group so we can show group headers.
+   * @param {readonly TableRow[]} rows - The array of TableRows to be sorted.
+   * @param {string} sortBy - The column to sort by.
+   * @param {boolean} descending - Whether to sort in descending order.
+   * @return {readonly TableRow[]} - The sorted array of TableRows.
+   */
+  const sortByTeam = (
+    rows: readonly TableRow[],
+    sortBy: string,
+    descending: boolean,
+  ): readonly TableRow[] => {
+    const data = [...rows];
+    if (!sortBy) return data;
+
+    sortDataByValue(data, sortBy, descending);
+    sortDataByKey(data, AttendanceTableColumns.team, descending);
+    markFirstInGroup(data, AttendanceTableColumns.team);
+
+    return data;
+  };
+
+  /**
    * Sorts data array by given column in ascending or descending order.
    * @param {TableRow[]} data - The array to be sorted.
    * @param {string} sortBy - The column to sort by.
@@ -283,6 +307,7 @@ export const useTable = () => {
     tableResultsColumns,
     filterMethod,
     sortByAddress,
+    sortByTeam,
     formatPrice,
   };
 };
@@ -391,7 +416,7 @@ export const useTableAttendance = () => {
       sortable: true,
     },
     {
-      align: 'left',
+      align: 'center',
       field: AttendanceTableColumns.isFeeApproved,
       format: (val: boolean): boolean => val,
       label: i18n.global.t('table.labelFeeApproved'),
@@ -417,6 +442,23 @@ export const useTableAttendance = () => {
       required: true,
       sortable: true,
     },
+    {
+      align: 'left',
+      field: AttendanceTableColumns.team,
+      label: i18n.global.t('table.labelTeam'),
+      name: AttendanceTableColumns.team,
+      required: false,
+      sortable: true,
+    },
+    // Action buttons
+    {
+      align: 'center',
+      field: '',
+      label: '',
+      name: 'actions',
+      required: false,
+      sortable: false,
+    },
   ];
 
   const tableAttendanceVisibleColumns: string[] = [
@@ -426,6 +468,7 @@ export const useTableAttendance = () => {
     AttendanceTableColumns.isFeeApproved,
     AttendanceTableColumns.paymentType,
     AttendanceTableColumns.paymentState,
+    AttendanceTableColumns.actions,
   ];
 
   return {

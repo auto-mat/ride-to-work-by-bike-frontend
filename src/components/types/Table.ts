@@ -49,4 +49,6 @@ export enum AttendanceTableColumns {
   isFeeApproved = 'isFeeApproved',
   paymentType = 'paymentType',
   paymentState = 'paymentState',
+  team = 'team',
+  actions = 'actions',
 }
