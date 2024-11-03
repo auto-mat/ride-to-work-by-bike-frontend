@@ -50,6 +50,7 @@ describe('<ListCardProgress>', () => {
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-stats').should('be.visible');
+        cy.dataCy('stats-bar-item').should('have.length', 3);
       });
     });
 
