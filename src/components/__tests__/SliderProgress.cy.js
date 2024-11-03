@@ -17,6 +17,7 @@ const selectorProgressSliderSectionTitle = 'progress-slider-section-title';
 const selectorProgressSliderSectionStats = 'progress-slider-section-stats';
 const selectorProgressSliderStats = 'progress-slider-stats';
 const selectorSectionHeadingTitle = 'section-heading-title';
+const selectorStatsBarItem = 'stats-bar-item';
 const selectorSwiperContainer = 'swiper-container';
 
 // variables
@@ -99,6 +100,7 @@ function coreTests() {
         });
       // stats
       cy.dataCy(selectorProgressSliderStats).should('be.visible');
+      cy.dataCy(selectorStatsBarItem).should('have.length', 3);
     });
   });
 

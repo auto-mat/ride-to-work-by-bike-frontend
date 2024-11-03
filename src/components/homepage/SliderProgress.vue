@@ -44,6 +44,9 @@ import StatsBar from '../global/StatsBar.vue';
 // composables
 import { useStats } from '../../composables/useStats';
 
+// enums
+import { StatisticsId } from '../types/Statistics';
+
 // fixtures
 import memberResultsFixture from '../../../test/cypress/fixtures/memberResults.json';
 
@@ -75,9 +78,16 @@ export default defineComponent({
   },
   setup() {
     const memberResults = memberResultsFixture as MemberResponse;
+
     const { getResultStatistics } = useStats();
+    // define which stats are shown
+    const shownStatsIds = [
+      StatisticsId.routes,
+      StatisticsId.distance,
+      StatisticsId.co2,
+    ];
     const stats = computed<ItemStatistics[]>(() =>
-      getResultStatistics(memberResults.results),
+      getResultStatistics(memberResults.results, shownStatsIds),
     );
 
     const isLargeScreen = computed((): boolean => {
