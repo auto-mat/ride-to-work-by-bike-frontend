@@ -71,3 +71,13 @@ export enum AttendanceTablePayColumnIconsColors {
   paid = AttendanceTableFeeColumnIconsColors.approved,
   scheduled = 'primary',
 }
+
+export enum InvoicesTableColumns {
+  issueDate = 'issueDate',
+  orderNumber = 'orderNumber',
+  files = 'files',
+  variableSymbol = 'variableSymbol',
+  paymentCount = 'paymentCount',
+  amount = 'amount',
+  confirmationDate = 'confirmationDate',
+}

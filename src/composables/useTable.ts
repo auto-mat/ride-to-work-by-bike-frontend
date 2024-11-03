@@ -18,6 +18,7 @@ import {
   ResultsTableColumns,
   FeeApprovalTableColumns,
   AttendanceTableColumns,
+  InvoicesTableColumns,
 } from '../components/types/Table';
 
 type FilterMethodInput = { search: string; filter: string };
@@ -514,5 +515,90 @@ export const useTableAttendance = () => {
     getPaymentStateIcon,
     getPaymentStateLabel,
     getPaymentTypeLabel,
+  };
+};
+
+export const useTableInvoices = () => {
+  const tableInvoicesColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: InvoicesTableColumns.issueDate,
+      format: (val: number | string | null): string =>
+        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+      label: i18n.global.t('table.labelIssueDate'),
+      name: InvoicesTableColumns.issueDate,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.orderNumber,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelOrderNumber'),
+      name: InvoicesTableColumns.orderNumber,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.files,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelFiles'),
+      name: InvoicesTableColumns.files,
+      required: true,
+      sortable: false,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.variableSymbol,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelVariableSymbol'),
+      name: InvoicesTableColumns.variableSymbol,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.paymentCount,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelPaymentCount'),
+      name: InvoicesTableColumns.paymentCount,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.amount,
+      format: (val: number | string | null): string => formatPrice(val),
+      label: i18n.global.t('table.labelAmount'),
+      name: InvoicesTableColumns.amount,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: InvoicesTableColumns.confirmationDate,
+      format: (val: number | string | null): string =>
+        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+      label: i18n.global.t('table.labelConfirmationDate'),
+      name: InvoicesTableColumns.confirmationDate,
+      required: true,
+      sortable: true,
+    },
+  ];
+
+  const tableInvoicesVisibleColumns: string[] = [
+    InvoicesTableColumns.issueDate,
+    InvoicesTableColumns.orderNumber,
+    InvoicesTableColumns.files,
+    InvoicesTableColumns.variableSymbol,
+    InvoicesTableColumns.paymentCount,
+    InvoicesTableColumns.amount,
+    InvoicesTableColumns.confirmationDate,
+  ];
+
+  return {
+    columns: tableInvoicesColumns,
+    visibleColumns: tableInvoicesVisibleColumns,
   };
 };
