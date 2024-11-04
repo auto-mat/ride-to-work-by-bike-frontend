@@ -2,13 +2,14 @@ import { defineStore } from 'pinia';
 
 // types
 import { FormPersonalDetailsFields } from '../components/types/Form';
+import { Gender } from '../components/types/Profile';
 
 const emptyFormPersonalDetails: FormPersonalDetailsFields = {
   firstName: '',
   lastName: '',
   email: '',
   nickname: '',
-  gender: '',
+  gender: null as Gender | null,
   newsletter: [],
   terms: true,
 };
