@@ -84,9 +84,9 @@ export default defineComponent({
         <!-- Icon -->
         <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
         <!-- Label -->
-        <span v-if="item.title" class="inline-block text-black q-pl-sm">{{
-          $t(item.title)
-        }}</span>
+        <span v-if="item.title" class="inline-block text-black q-pl-sm">
+          {{ $t(item.title) }}
+        </span>
       </q-btn>
     </div>
   </div>
