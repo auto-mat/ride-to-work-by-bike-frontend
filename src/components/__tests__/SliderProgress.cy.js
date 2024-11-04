@@ -81,7 +81,6 @@ describe('<SliderProgress>', () => {
       });
       cy.viewport('iphone-6');
     });
-
     coreTests();
     mobileTests();
   });
@@ -90,17 +89,19 @@ describe('<SliderProgress>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.window().then(() => {
-      // title
-      cy.dataCy(selectorSectionHeadingTitle)
-        .and('contain', i18n.global.t('index.progressSlider.title'))
-        .then(($title) => {
-          expect($title.text()).to.equal(
-            i18n.global.t('index.progressSlider.title'),
-          );
-        });
-      // stats
-      cy.dataCy(selectorProgressSliderStats).should('be.visible');
-      cy.dataCy(selectorStatsBarItem).should('have.length', 3);
+      cy.fixture('statsBar').then((statsData) => {
+        // title
+        cy.dataCy(selectorSectionHeadingTitle)
+          .and('contain', i18n.global.t('index.progressSlider.title'))
+          .then(($title) => {
+            expect($title.text()).to.equal(
+              i18n.global.t('index.progressSlider.title'),
+            );
+          });
+        // stats
+        cy.dataCy(selectorProgressSliderStats).should('be.visible');
+        cy.dataCy(selectorStatsBarItem).should('have.length', statsData.length);
+      });
     });
   });
 
