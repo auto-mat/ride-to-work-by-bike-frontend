@@ -43,7 +43,7 @@ describe('<MenuLinks>', () => {
 
     it('renders social buttons with correct styling (social variant)', () => {
       cy.dataCy('button-menu-links')
-        .should('have.length', 4)
+        .should('have.length', socialLinks.length)
         .each(($el, index) => {
           cy.wrap($el).should(
             'contain',
@@ -76,7 +76,7 @@ describe('<MenuLinks>', () => {
 
     it('renders link buttons with correct styling (useful links variant)', () => {
       cy.dataCy('button-menu-links')
-        .should('have.length', 4)
+        .should('have.length', socialLinks.length)
         .and('contain', 'Auto-Mat.cz')
         .and('contain', 'Podpořte nás')
         .and('contain', 'Kód projektu')
