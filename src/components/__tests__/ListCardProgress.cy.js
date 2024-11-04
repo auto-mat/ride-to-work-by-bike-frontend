@@ -50,13 +50,16 @@ describe('<ListCardProgress>', () => {
     it('renders list of stats', () => {
       cy.window().then(() => {
         cy.dataCy('progress-slider-stats').should('be.visible');
-        cy.dataCy('stats-bar-item').should('have.length', 3);
+        cy.dataCy('stats-bar-item').should('have.length', stats.length);
       });
     });
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('card-list-progress-item').should('have.length', 3);
+        cy.dataCy('card-list-progress-item').should(
+          'have.length',
+          stats.length,
+        );
       });
     });
 
