@@ -216,22 +216,25 @@ function coreTests() {
   });
 
   it('sorts correctly by team', () => {
-    // default sorting by name ascending
-    cy.dataCy(selectorTableRow)
-      .should('have.length', 5)
-      .each((tableRow, index) => {
-        cy.wrap(tableRow).should('contain', dataByNameAsc[index].name);
-      });
+    cy.get('@rows').then((rows) => {
+      // default sorting by name ascending
+      cy.dataCy(selectorTableRow)
+        .should('have.length', rows.length)
+        .each((tableRow, index) => {
+          cy.wrap(tableRow).should('contain', dataByNameAsc[index].name);
+        });
 
-    // sorting by name descending
-    cy.dataCy(selectorTableAttendance)
-      .find(classSelectorTableSortable)
-      .first()
-      .click();
-    cy.dataCy(selectorTableRow)
-      .should('have.length', 5)
-      .each((tableRow, index) => {
-        cy.wrap(tableRow).should('contain', dataByNameDesc[index].name);
-      });
+      // sorting by name descending
+      cy.dataCy(selectorTableAttendance)
+        .find(classSelectorTableSortable)
+        .first()
+        .click();
+
+      cy.dataCy(selectorTableRow)
+        .should('have.length', rows.length)
+        .each((tableRow, index) => {
+          cy.wrap(tableRow).should('contain', dataByNameDesc[index].name);
+        });
+    });
   });
 }
