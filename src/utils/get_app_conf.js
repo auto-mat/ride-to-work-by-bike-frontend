@@ -31,7 +31,8 @@ const getAppConfig = (process) => {
     config['colorSecondaryBackgroundOpacity'] =
       process.env.COLOR_SECONDARY_BACKGROUND_OPACITY;
   } else if (process.env.COLOR_WHITE_BACKGROUND_OPACITY) {
-    config['colorWhiteBackgroundOpacity'] = process.env.COLOR_WHITE_BACKGROUND_OPACITY;
+    config['colorWhiteBackgroundOpacity'] =
+      process.env.COLOR_WHITE_BACKGROUND_OPACITY;
   } else if (process.env.IMAGE) {
     config['image'] = process.env.IMAGE;
   } else if (process.env.WIDTH) {
@@ -118,6 +119,9 @@ const getAppConfig = (process) => {
       process.env.URL_LOGIN_REGISTER_BACKGROUND_IMAGE;
   } else if (process.env.URL_RTWBB_LOGO) {
     config['urlRTWBBLogo'] = process.env.URL_RTWBB_LOGO;
+  } else if (process.env.URL_API_CHALLENGE_REGISTRATION_USER) {
+    config['urlApiChallengeRegistrationUser'] =
+      process.env.URL_API_CHALLENGE_REGISTRATION_USER;
   } else if (process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL) {
     config['checkIsEmailVerifiedInterval'] =
       process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL;

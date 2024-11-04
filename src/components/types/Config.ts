@@ -51,6 +51,7 @@ export interface ConfigGlobal {
   urlApiRegister: string;
   urlApiRegisterCoordinator: string;
   urlApiResetPassword: string;
+  urlApiChallengeRegistrationUser: string;
   urlLoginRegisterBackgroundImage: string;
   urlRTWBBLogo: string;
   checkIsEmailVerifiedInterval: number;
