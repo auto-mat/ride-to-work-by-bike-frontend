@@ -1,23 +1,10 @@
-// enums
-import { NewsletterType } from '../types/Newsletter';
-
 // types
 import type { Image } from './Image';
-import { Gender } from './Profile';
+
 export enum TestPaymentVoucher {
   full = 'FULL',
   half = 'HALF',
 }
-
-export type FormPersonalDetailsFields = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  nickname: string;
-  gender: Gender | null;
-  newsletter: NewsletterType[];
-  terms: boolean;
-};
 
 export type FormOption = {
   label: string;

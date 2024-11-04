@@ -2,18 +2,17 @@
 import { defineStore } from 'pinia';
 
 // enums
+import { Gender } from '../components/types/Profile';
 import { NewsletterType } from '../components/types/Newsletter';
 import { OrganizationType } from '../components/types/Organization';
-import { Gender } from '../components/types/Profile';
 
 // types
-import type { FormPersonalDetailsFields } from '../components/types/Form';
 import type { Logger } from '../components/types/Logger';
+import type { RegisterChallengePersonalDetailsForm } from '../components/types/RegisterChallenge';
 
-const emptyFormPersonalDetails: FormPersonalDetailsFields = {
+const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   firstName: '',
   lastName: '',
-  email: '',
   nickname: '',
   gender: null as Gender | null,
   newsletter: [] as NewsletterType[],
@@ -37,7 +36,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
   }),
 
   getters: {
-    getPersonalDetails: (state): FormPersonalDetailsFields =>
+    getPersonalDetails: (state): RegisterChallengePersonalDetailsForm =>
       state.personalDetails,
     getOrganizationType: (state): OrganizationType | null =>
       state.organizationType,
@@ -48,7 +47,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
   },
 
   actions: {
-    setPersonalDetails(personalDetails: FormPersonalDetailsFields) {
+    setPersonalDetails(personalDetails: RegisterChallengePersonalDetailsForm) {
       Object.assign(this.personalDetails, personalDetails);
     },
     setOrganizationType(organizationType: OrganizationType) {

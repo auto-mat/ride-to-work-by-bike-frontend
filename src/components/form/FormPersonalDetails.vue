@@ -34,10 +34,8 @@ import { i18n } from '../../boot/i18n';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import {
-  FormOption,
-  FormPersonalDetailsFields,
-} from 'src/components/types/Form';
+import { FormOption } from 'src/components/types/Form';
+import { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
@@ -48,7 +46,7 @@ export default defineComponent({
   },
   setup() {
     const store = useRegisterChallengeStore();
-    const personalDetails = reactive<FormPersonalDetailsFields>(
+    const personalDetails = reactive<RegisterChallengePersonalDetailsForm>(
       store.getPersonalDetails,
     );
 
