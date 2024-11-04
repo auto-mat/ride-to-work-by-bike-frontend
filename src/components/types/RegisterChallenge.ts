@@ -20,11 +20,11 @@ export interface RegisterChallengePersonalDetailsApi
   firstName?: string;
   gender?: Gender | null;
   lastName?: string;
-  newsletter?: NewsletterType[];
 }
 
 /**
  * For the use in form, we declare the following properties as required.
+ * We also add the newsletter property.
  */
 export interface RegisterChallengePersonalDetailsForm
   extends CorePersonalDetails {
@@ -32,4 +32,10 @@ export interface RegisterChallengePersonalDetailsForm
   gender: Gender | null;
   lastName: string;
   newsletter: NewsletterType[];
+}
+
+export interface RegisterChallengePostRequest {
+  personalDetails: RegisterChallengePersonalDetailsApi;
+  newsletter: NewsletterType[];
+  teamId?: number;
 }

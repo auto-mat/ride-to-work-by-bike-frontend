@@ -13,9 +13,9 @@ import type { RegisterChallengePersonalDetailsForm } from '../components/types/R
 const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   firstName: '',
   lastName: '',
+  newsletter: [] as NewsletterType[],
   nickname: '',
   gender: null as Gender | null,
-  newsletter: [] as NewsletterType[],
   terms: true,
 };
 
