@@ -77,6 +77,7 @@ export default defineComponent({
         unelevated
         :key="item.title"
         :href="item.url"
+        target="_blank"
         color="blue-grey-1"
         class="q-btn-underline text-body2 q-mt-md"
         data-cy="button-menu-links"
