@@ -24,8 +24,11 @@
 // libraries
 import { defineComponent, computed } from 'vue';
 
+// composables
+import { useSocialLinks } from '../../composables/useSocialLinks';
+
 // mocks
-import { socialLinks, usefulLinks } from '../../mocks/layout';
+import { usefulLinks } from '../../mocks/layout';
 
 export default defineComponent({
   name: 'MenuLinks',
@@ -41,6 +44,8 @@ export default defineComponent({
   },
   setup(props) {
     const items = computed(() => {
+      const { socialLinks } = useSocialLinks();
+
       if (props.variant === 'social') {
         return socialLinks;
       }
@@ -79,7 +84,9 @@ export default defineComponent({
         <!-- Icon -->
         <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
         <!-- Label -->
-        <span class="inline-block text-black q-pl-sm">{{ item.title }}</span>
+        <span v-if="item.title" class="inline-block text-black q-pl-sm">{{
+          $t(item.title)
+        }}</span>
       </q-btn>
     </div>
   </div>
