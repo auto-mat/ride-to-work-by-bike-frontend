@@ -52,3 +52,22 @@ export enum AttendanceTableColumns {
   team = 'team',
   actions = 'actions',
 }
+export enum AttendanceTableFeeColumnIcons {
+  approved = 'check',
+  unapproved = 'close',
+}
+
+export enum AttendanceTableFeeColumnIconsColors {
+  approved = 'positive',
+  unapproved = 'negative',
+}
+
+export enum AttendanceTablePayColumnIcons {
+  paid = 'check',
+  scheduled = 'svguse:icons/table_attendance/icons.svg#calendar',
+}
+
+export enum AttendanceTablePayColumnIconsColors {
+  paid = AttendanceTableFeeColumnIconsColors.approved,
+  scheduled = 'primary',
+}

@@ -5,14 +5,17 @@ import tableAttendance from '../../../test/cypress/fixtures/tableAttendance.json
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useTableAttendance } from '../../composables/useTable';
 import { PaymentState } from '../types/Payment';
+import {
+  AttendanceTableFeeColumnIcons,
+  AttendanceTableFeeColumnIconsColors,
+  AttendanceTablePayColumnIconsColors,
+} from '../types/Table';
 
 // colors
 const { getPaletteColor } = colors;
 const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
-const positive = getPaletteColor('positive');
-const negative = getPaletteColor('negative');
 
 // composables
 const { getPaymentTypeLabel, getPaymentStateLabel } = useTableAttendance();
@@ -160,9 +163,13 @@ function coreTests() {
             cy.dataCy(selectorTablePaymentState).within(() => {
               let expectedColor;
               if (rows[index].paymentState === PaymentState.paid) {
-                expectedColor = positive;
+                expectedColor = getPaletteColor(
+                  AttendanceTablePayColumnIconsColors.paid,
+                );
               } else if (rows[index].paymentState === PaymentState.scheduled) {
-                expectedColor = primary;
+                expectedColor = getPaletteColor(
+                  AttendanceTablePayColumnIconsColors.scheduled,
+                );
               }
               // icon
               cy.get(classSelectorIcon).should('have.color', expectedColor);
@@ -181,11 +188,15 @@ function coreTests() {
               let expectedIcon;
               let expectedColor;
               if (rows[index].isFeeApproved) {
-                expectedIcon = 'check';
-                expectedColor = positive;
+                expectedIcon = AttendanceTableFeeColumnIcons.approved;
+                expectedColor = getPaletteColor(
+                  AttendanceTableFeeColumnIconsColors.approved,
+                );
               } else {
-                expectedIcon = 'close';
-                expectedColor = negative;
+                expectedIcon = AttendanceTableFeeColumnIcons.unapproved;
+                expectedColor = getPaletteColor(
+                  AttendanceTableFeeColumnIconsColors.unapproved,
+                );
               }
               // icon
               cy.get(classSelectorIcon)

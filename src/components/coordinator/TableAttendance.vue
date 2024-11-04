@@ -16,6 +16,16 @@ import { defineComponent, onMounted, ref } from 'vue';
 // composables
 import { useTable, useTableAttendance } from '../../composables/useTable';
 
+// types
+import { PaymentState } from '../types/Payment';
+
+// enum
+import {
+  AttendanceTableFeeColumnIcons,
+  AttendanceTableFeeColumnIconsColors,
+  AttendanceTablePayColumnIconsColors,
+} from '../types/Table';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
@@ -56,6 +66,9 @@ export default defineComponent({
     ]);
 
     return {
+      AttendanceTableFeeColumnIcons,
+      AttendanceTableFeeColumnIconsColors,
+      AttendanceTablePayColumnIconsColors,
       borderRadius,
       columns,
       tableAttendance,
@@ -66,6 +79,7 @@ export default defineComponent({
       getPaymentStateLabel,
       getPaymentTypeLabel,
       sortByTeam,
+      PaymentState,
     };
   },
 });
@@ -139,8 +153,16 @@ export default defineComponent({
           >
             <q-icon
               size="18px"
-              :name="props.row.isFeeApproved ? 'check' : 'close'"
-              :color="props.row.isFeeApproved ? 'positive' : 'negative'"
+              :name="
+                props.row.isFeeApproved
+                  ? AttendanceTableFeeColumnIcons.approved
+                  : AttendanceTableFeeColumnIcons.unapproved
+              "
+              :color="
+                props.row.isFeeApproved
+                  ? AttendanceTableFeeColumnIconsColors.approved
+                  : AttendanceTableFeeColumnIconsColors.unapproved
+              "
             />
           </q-td>
           <!-- Payment Type -->
@@ -161,7 +183,9 @@ export default defineComponent({
               :name="getPaymentStateIcon(props.row.paymentState)"
               size="18px"
               :color="
-                props.row.paymentState === 'paid' ? 'positive' : 'primary'
+                props.row.paymentState === PaymentState.paid
+                  ? AttendanceTablePayColumnIconsColors.paid
+                  : AttendanceTablePayColumnIconsColors.scheduled
               "
               class="q-mr-xs"
             />
