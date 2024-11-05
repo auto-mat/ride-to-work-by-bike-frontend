@@ -246,6 +246,7 @@ const routes: RouteRecordRaw[] = [
     path: routesConf['coordinator']['path'],
     component: () => import('layouts/MainLayout.vue'),
     name: routesConf['coordinator']['children']['name'],
+    redirect: { name: routesConf['coordinator_tasks']['children']['name'] },
     children: [
       {
         path: routesConf['coordinator_tasks']['path'],

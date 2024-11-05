@@ -94,6 +94,7 @@ tabAttendance = "Attendance"
 tabChallenges = "Company challenges"
 tabResults = "Results"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
+titleCompanyCoordinator = "Company coordinator"
 
 [createOrganization]
 apiMessageError = "Organization creation failed."

@@ -4,7 +4,7 @@ import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
 describe('Community page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit('#' + routesConf['community']['path']);
+      cy.visit('#' + routesConf['coordinator_tasks']['path']);
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases

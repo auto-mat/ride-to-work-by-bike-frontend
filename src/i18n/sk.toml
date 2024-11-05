@@ -94,6 +94,7 @@ tabAttendance = "Účasť"
 tabChallenges = "Firemné výzvy"
 tabResults = "Výsledky"
 textBannerReminder = "Oznámili ste spoločnosti, že ste koordinátor?"
+titleCompanyCoordinator = "Firemní koordinátor"
 
 [createOrganization]
 apiMessageError = "Vytvorenie organizácie zlyhalo."
