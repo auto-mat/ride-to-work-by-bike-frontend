@@ -1,6 +1,8 @@
 import { colors } from 'quasar';
+import { nextTick } from 'vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
 import { i18n } from '../../boot/i18n';
+import { useLoginStore } from '../../stores/login';
 
 // colors
 const { getPaletteColor } = colors;
@@ -13,11 +15,15 @@ const selectorIconHelp = 'icon-help';
 const selectorLanguageSwitcher = 'language-switcher';
 const selectorLogo = 'header-logo';
 const selectorLoginRegisterMobileMenu = 'login-register-mobile-menu';
+const selectorLogoutButton = 'logout-button';
+const selectorLogoutButtonIcon = 'logout-button-icon';
 
 // variables
 const helpButtonFontSize = '15px';
 const helpButtonSize = 45;
 const iconHelpSize = 38;
+const logoutButtonSize = 45;
+const logoutIconSize = 24;
 const logoHeightDesktop = 80;
 const logoHeightMobile = 48;
 
@@ -68,6 +74,39 @@ describe('<LoginRegisterHeader>', () => {
 
     it('renders language switcher', () => {
       cy.dataCy(selectorLanguageSwitcher).should('be.visible');
+    });
+
+    it('renders logout button', () => {
+      cy.fixture('loginRegisterResponseChallengeActive.json').then(
+        (response) => {
+          const loginStore = useLoginStore();
+          loginStore.setUser(response.user);
+          nextTick();
+          // button
+          cy.dataCy(selectorLogoutButton)
+            .should('be.visible')
+            .and('have.attr', 'title', i18n.global.t('userSelect.logout'))
+            .and('have.backgroundColor', white);
+          // button size
+          cy.dataCy(selectorLogoutButton)
+            .invoke('width')
+            .should('be.equal', logoutButtonSize);
+          cy.dataCy(selectorLogoutButton)
+            .invoke('height')
+            .should('be.equal', logoutButtonSize);
+          // icon
+          cy.dataCy(selectorLogoutButtonIcon)
+            .should('be.visible')
+            .and('have.color', primary);
+          // icon size
+          cy.dataCy(selectorLogoutButtonIcon)
+            .invoke('width')
+            .should('be.equal', logoutIconSize);
+          cy.dataCy(selectorLogoutButtonIcon)
+            .invoke('height')
+            .should('be.equal', logoutIconSize);
+        },
+      );
     });
   });
 
