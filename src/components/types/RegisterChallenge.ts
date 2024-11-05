@@ -2,7 +2,7 @@
 import type { NewsletterType } from './Newsletter';
 import type { Gender } from './Profile';
 
-interface CorePersonalDetails {
+interface BasePersonalDetails {
   ageGroup?: number;
   jobTitle?: string;
   language?: string;
@@ -16,7 +16,7 @@ interface CorePersonalDetails {
  * API endpoint declares the following properties as optional.
  */
 export interface RegisterChallengePersonalDetailsApi
-  extends CorePersonalDetails {
+  extends BasePersonalDetails {
   firstName?: string;
   gender?: Gender | null;
   lastName?: string;
@@ -27,7 +27,7 @@ export interface RegisterChallengePersonalDetailsApi
  * We also add the newsletter property.
  */
 export interface RegisterChallengePersonalDetailsForm
-  extends CorePersonalDetails {
+  extends BasePersonalDetails {
   firstName: string;
   gender: Gender | null;
   lastName: string;
