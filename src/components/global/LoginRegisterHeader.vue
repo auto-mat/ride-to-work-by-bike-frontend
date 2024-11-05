@@ -30,6 +30,9 @@ import HelpButton from './HelpButton.vue';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 import LoginRegisterMobileMenu from './LoginRegisterMobileMenu.vue';
 
+// stores
+import { useLoginStore } from '../../stores/login';
+
 export default defineComponent({
   name: 'LoginRegisterHeader',
   components: {
@@ -49,10 +52,20 @@ export default defineComponent({
       return isDesktop.value ? '280px' : '170px';
     });
 
+    const loginStore = useLoginStore();
+    const userLoggedIn = computed((): boolean => {
+      return loginStore.isUserLoggedIn;
+    });
+    const onLogout = (): void => {
+      loginStore.logout();
+    };
+
     return {
       isDesktop,
       logoHeight,
       logoWidth,
+      onLogout,
+      userLoggedIn,
     };
   },
 });
@@ -67,6 +80,24 @@ export default defineComponent({
       data-cy="header-logo"
     />
     <div v-if="isDesktop" class="flex items-center gap-32">
+      <!-- Logout button -->
+      <q-btn
+        v-if="userLoggedIn"
+        unelevated
+        round
+        size="15px"
+        color="white"
+        :title="$t('userSelect.logout')"
+        @click="onLogout"
+        data-cy="logout-button"
+      >
+        <q-icon
+          name="svguse:/icons/login_register_header/icons.svg#lucide-logout"
+          size="24px"
+          color="primary"
+          data-cy="logout-button-icon"
+        />
+      </q-btn>
       <!-- Help icon link for displaying modal dialog -->
       <help-button data-cy="help-button" />
       <!-- Language switcher -->
