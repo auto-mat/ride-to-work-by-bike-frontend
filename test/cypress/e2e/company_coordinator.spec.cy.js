@@ -29,6 +29,10 @@ describe('Company Coordinator Page', () => {
     });
   });
 
+  it('goes to the first tab URL', () => {
+    cy.url().should('include', routesConf['coordinator_tasks'].path);
+  });
+
   it('displays page title', () => {
     cy.get('@i18n').then((i18n) => {
       cy.dataCy(selectorPageTitle)
