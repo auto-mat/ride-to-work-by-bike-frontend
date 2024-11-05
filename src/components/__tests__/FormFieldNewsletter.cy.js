@@ -66,6 +66,8 @@ function coreTests() {
   });
 
   it('renders all newsletter options', () => {
+    model.value = [];
+    nextTick();
     cy.dataCy(selectorNewsletterOption).should('have.length', 3);
   });
 
@@ -73,6 +75,7 @@ function coreTests() {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterOption).eq(0).click();
+    nextTick();
     cy.wrap(model)
       .its('value')
       .should('deep.equal', [NewsletterType.challenge]);
@@ -86,11 +89,13 @@ function coreTests() {
   });
 
   it('deselects all options when "all" is unclicked', () => {
-    nextTick();
     model.value = [];
-    cy.dataCy(selectorNewsletterOption).each(($el) => {
-      cy.wrap($el).click();
-    });
+    nextTick();
+    cy.dataCy(selectorNewsletterOption)
+      .should('have.length', 3)
+      .each(($el) => {
+        cy.wrap($el).click();
+      });
     nextTick();
     cy.wrap(model).its('value').should('have.length', 3);
     cy.dataCy(selectorNewsletterAll).click();
@@ -101,9 +106,11 @@ function coreTests() {
   it('selects "all" when all options are manually selected', () => {
     model.value = [];
     nextTick();
-    cy.dataCy(selectorNewsletterOption).each(($el) => {
-      cy.wrap($el).click();
-    });
+    cy.dataCy(selectorNewsletterOption)
+      .should('have.length', 3)
+      .each(($el) => {
+        cy.wrap($el).click();
+      });
     cy.dataCy(selectorNewsletterAll).should('be.checked');
   });
 }
