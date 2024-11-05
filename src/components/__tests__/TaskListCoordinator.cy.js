@@ -1,8 +1,5 @@
-import { date } from 'quasar';
 import TaskListCoordinator from 'components/coordinator/TaskListCoordinator.vue';
 import { i18n } from '../../boot/i18n';
-
-const { formatDate } = date;
 
 describe('<TaskListCoordinator>', () => {
   it('has translation for all strings', () => {
@@ -63,7 +60,7 @@ function coreTests() {
           // date
           cy.wrap($item).should(
             'contain',
-            formatDate(tasks[index].date, 'DD. M. YYYY'),
+            i18n.global.d(new Date(tasks[index].date), 'numeric'),
           );
           // body
           cy.wrap($item).then(($item) => {
@@ -76,10 +73,10 @@ function coreTests() {
       // first item will have month label (based on test data)
       cy.dataCy('task-item-future')
         .first()
-        .should('contain', formatDate(tasks[0].date, 'MMMM YYYY'));
+        .should('contain', i18n.global.d(new Date(tasks[0].date), 'monthYear'));
       cy.dataCy('task-item-future')
         .last()
-        .should('contain', formatDate(tasks[2].date, 'MMMM YYYY'));
+        .should('contain', i18n.global.d(new Date(tasks[2].date), 'monthYear'));
     });
   });
 
@@ -97,7 +94,7 @@ function coreTests() {
           // date
           cy.wrap($item).should(
             'contain',
-            formatDate(tasks[index].date, 'DD. M. YYYY'),
+            i18n.global.d(new Date(tasks[index].date), 'numeric'),
           );
           // body
           cy.wrap($item).then(($item) => {
@@ -110,7 +107,7 @@ function coreTests() {
       // first item will always have month label
       cy.dataCy('task-item-past')
         .first()
-        .should('contain', formatDate(tasks[0].date, 'MMMM YYYY'));
+        .should('contain', i18n.global.d(new Date(tasks[0].date), 'monthYear'));
     });
     // hide past tasks
     cy.dataCy('task-list-show-past').should('be.visible').click();

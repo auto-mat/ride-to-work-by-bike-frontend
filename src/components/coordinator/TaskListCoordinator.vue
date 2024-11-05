@@ -16,8 +16,10 @@
  */
 
 // libraries
-import { date } from 'quasar';
 import { computed, defineComponent, ref } from 'vue';
+
+// composables
+import { i18n } from '../../boot/i18n';
 
 // types
 import type { TaskCoordinator } from '../types/Task';
@@ -35,8 +37,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { formatDate } = date;
-
     const { chevronIcon, isShownPast, taskListFuture, taskListPast } =
       useTaskList();
 
@@ -45,7 +45,6 @@ export default defineComponent({
       isShownPast,
       taskListFuture,
       taskListPast,
-      formatDate,
     };
 
     /**
@@ -71,7 +70,7 @@ export default defineComponent({
         const tasks: TaskCoordinator[] = [];
         let month = '';
         props.tasks.forEach((task: TaskCoordinator) => {
-          const taskMonth = date.formatDate(task.date, 'MMMM YYYY');
+          const taskMonth = i18n.global.d(new Date(task.date), 'monthYear');
           // if a new month, push month into the task
           if (taskMonth !== month) {
             tasks.push({ ...task, month: taskMonth });
@@ -144,7 +143,9 @@ export default defineComponent({
       >
         <!-- Subtitle: month name -->
         <template v-if="task.month" v-slot:subtitle>
-          <span class="text-caption text-weight-bold">{{ task.month }}</span>
+          <span class="text-caption text-weight-bold text-capitalize">{{
+            task.month
+          }}</span>
         </template>
         <!-- Title + date -->
         <template v-slot:title>
@@ -153,7 +154,7 @@ export default defineComponent({
             data-cy="task-item-past-title"
           >
             <span v-if="task.date" class="text-grey-7">
-              {{ formatDate(task.date, 'DD. M. YYYY') }}
+              {{ $d(new Date(task.date), 'numeric') }}
             </span>
             <span v-if="task.title" class="text-grey-10">{{ task.title }}</span>
           </div>
@@ -170,14 +171,16 @@ export default defineComponent({
     >
       <!-- Subtitle: month name -->
       <template v-if="task.month" v-slot:subtitle>
-        <span class="text-caption text-weight-bold">{{ task.month }}</span>
+        <span class="text-caption text-weight-bold text-capitalize">{{
+          task.month
+        }}</span>
       </template>
       <!-- Title + date -->
       <template v-slot:title>
         <div class="flex gap-8 text-body1 text-weight-bold">
-          <span v-if="task.date" class="text-grey-7">{{
-            formatDate(task.date, 'DD. M. YYYY')
-          }}</span>
+          <span v-if="task.date" class="text-grey-7">
+            {{ $d(new Date(task.date), 'numeric') }}
+          </span>
           <span v-if="task.title" class="text-grey-10">{{ task.title }}</span>
         </div>
       </template>
