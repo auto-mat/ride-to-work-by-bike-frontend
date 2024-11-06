@@ -86,3 +86,19 @@ urlApiResetPassword = "auth/password/reset/"
 urlApiChallengeRegistrationUser = "rest/challenge/registration/user/"
 
 checkIsEmailVerifiedInterval = 20 # seconds
+
+# DATE TIME FORMATS
+
+dateTimeFormatsAllLocales = '''
+{
+  "numeric": {
+    "year": "numeric",
+    "month": "numeric",
+    "day": "numeric"
+  },
+  "monthYear": {
+    "year": "numeric",
+    "month": "long"
+  }
+}
+'''

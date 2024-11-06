@@ -127,6 +127,9 @@ const getAppConfig = (process) => {
   } else if (process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL) {
     config['checkIsEmailVerifiedInterval'] =
       process.env.CHECK_IS_EMAIL_VERIFIED_INTERVAL;
+  } else if (process.env.DATE_TIME_FORMAT_ALL_LOCALES) {
+    config['dateTimeFormatsAllLocales'] =
+      process.env.DATE_TIME_FORMATS_ALL_LOCALES;
   }
   return config;
 };
