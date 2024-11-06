@@ -98,7 +98,18 @@ module.exports = configure(function (ctx) {
         },
       },
 
-      vitePlugins: [['@originjs/vite-plugin-content', {}]],
+      vitePlugins: [
+        ['@originjs/vite-plugin-content', {}],
+        [
+          'vite-plugin-top-level-await',
+          {
+            // The export name of top-level await promise for each chunk module
+            promiseExportName: '__tla',
+            // The function to generate import names of top-level await promise in each chunk module
+            promiseImportName: (i) => `__tla_${i}`,
+          },
+        ],
+      ],
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
