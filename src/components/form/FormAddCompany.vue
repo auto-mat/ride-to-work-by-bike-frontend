@@ -10,13 +10,13 @@
  * `FormFieldSelectTable`.
  *
  * @props
- * - `formValues` (Object, required): The object representing the form state.
+ * - `modelValue` (Object, required): The object representing the form state.
  * - `organizationType` (String as OrganizationType): The type of organization.
  * - `variant` (String as 'default', 'simple'): The variant of the form.
  *   `simple` only shows `name` and `vatId` fields.
  *
  * @events
- * - `update:formValues`: Emitted as a part of v-model structure.
+ * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @components
  * - `FormFieldTextRequired`: Component to render required field.
@@ -51,7 +51,7 @@ export default defineComponent({
     FormFieldBusinessId,
   },
   props: {
-    formValues: {
+    modelValue: {
       type: Object as () => FormCompanyFields,
       required: true,
     },
@@ -63,9 +63,9 @@ export default defineComponent({
       default: 'default',
     },
   },
-  emits: ['update:formValues'],
+  emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const company = ref(props.formValues);
+    const company = ref(props.modelValue);
 
     const optionsCityChallenge: FormOption[] = [
       {
@@ -85,7 +85,7 @@ export default defineComponent({
     const onUpdate = (): void => {
       // wait for next tick to emit the value after update
       nextTick((): void => {
-        emit('update:formValues', company.value);
+        emit('update:modelValue', company.value);
       });
     };
 

@@ -65,6 +65,21 @@ import type {
 import { requestDefaultHeader, requestTokenHeader } from 'src/utils';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 
+export const emptyFormCompanyFields: FormCompanyFields = {
+  name: '',
+  vatId: '',
+  address: [
+    {
+      street: '',
+      houseNumber: '',
+      city: '',
+      zip: '',
+      cityChallenge: '',
+      department: '',
+    },
+  ],
+};
+
 export default defineComponent({
   name: 'FormFieldCompany',
   components: {
@@ -181,21 +196,10 @@ export default defineComponent({
     const isDialogOpen = ref<boolean>(false);
     // form ref
     const formRef = ref<typeof QForm | null>(null);
-    // default form state
-    const companyNew: FormCompanyFields = {
-      name: '',
-      vatId: '',
-      address: [
-        {
-          street: '',
-          houseNumber: '',
-          city: '',
-          zip: '',
-          cityChallenge: '',
-          department: '',
-        },
-      ],
-    };
+    // default form state (make a deep copy of empty state)
+    const companyNew: FormCompanyFields = JSON.parse(
+      JSON.stringify(emptyFormCompanyFields),
+    );
     /**
      * Close dialog
      * Resets form and closes dialog
@@ -380,10 +384,9 @@ export default defineComponent({
       <template #content>
         <q-form ref="formRef">
           <form-add-company
-            :form-values="companyNew"
+            v-model="companyNew"
             variant="simple"
             :organization-type="organizationType"
-            @update:form-values="companyNew = $event"
           ></form-add-company>
         </q-form>
         <!-- Action buttons -->

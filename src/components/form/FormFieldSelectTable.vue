@@ -312,8 +312,7 @@ export default defineComponent({
               <form-add-company
                 v-if="variant === 'company'"
                 class="q-mb-lg"
-                :form-values="companyNew"
-                @update:form-values="companyNew = $event"
+                v-model="companyNew"
               ></form-add-company>
               <form-add-team
                 v-if="variant === 'team'"
