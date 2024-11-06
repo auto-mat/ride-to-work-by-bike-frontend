@@ -6,7 +6,6 @@ import { OrganizationType } from '../types/Organization';
 import { emptyFormCompanyFields } from '../global/FormFieldCompany.vue';
 
 // selectors
-// const selectorFormAddCompany = 'form-add-company';
 const classSelectorDropdownItem = '.q-item';
 const classSelectorDropdownMenu = '.q-menu';
 const selectorFormTitle = 'form-add-company-title';
