@@ -85,7 +85,9 @@ function coreTests() {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterAll).click();
-    cy.wrap(model).its('value').should('have.length', 3);
+    cy.wrap(model)
+      .its('value')
+      .should('have.length', Object.keys(NewsletterType).length);
   });
 
   it('deselects all options when "all" is unclicked', () => {
@@ -97,7 +99,9 @@ function coreTests() {
         cy.wrap($el).click();
       });
     nextTick();
-    cy.wrap(model).its('value').should('have.length', 3);
+    cy.wrap(model)
+      .its('value')
+      .should('have.length', Object.keys(NewsletterType).length);
     cy.dataCy(selectorNewsletterAll).click();
     nextTick();
     cy.wrap(model).its('value').should('have.length', 0);
@@ -107,7 +111,7 @@ function coreTests() {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterOption)
-      .should('have.length', 3)
+      .should('have.length', Object.keys(NewsletterType).length)
       .each(($el) => {
         cy.wrap($el).click();
       });
