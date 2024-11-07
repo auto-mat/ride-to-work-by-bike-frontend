@@ -63,7 +63,11 @@ import type {
 } from 'src/components/types/Organization';
 
 // utils
-import { requestDefaultHeader, requestTokenHeader } from 'src/utils';
+import {
+  deepObjectWithSimplePropsCopy,
+  requestDefaultHeader,
+  requestTokenHeader,
+} from 'src/utils';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 
 export const emptyFormCompanyFields: FormCompanyFields = {
@@ -198,8 +202,8 @@ export default defineComponent({
     // form ref
     const formRef = ref<typeof QForm | null>(null);
     // default form state (make a deep copy of empty state)
-    const companyNew: FormCompanyFields = JSON.parse(
-      JSON.stringify(emptyFormCompanyFields),
+    const companyNew: FormCompanyFields = deepObjectWithSimplePropsCopy(
+      emptyFormCompanyFields,
     );
     /**
      * Close dialog
