@@ -20,22 +20,6 @@ const selectorFormZip = 'form-add-company-zip';
 const selectorFormCityChallenge = 'form-add-company-city-challenge';
 const selectorFormDepartment = 'form-add-company-department';
 
-// variables
-const testData = {
-  name: 'Test Company',
-  vatId: '12345678',
-  address: [
-    {
-      street: 'Test Street',
-      houseNumber: '123',
-      city: 'Test City',
-      zip: '12345',
-      cityChallenge: 'city-1',
-      department: 'Test Department',
-    },
-  ],
-};
-
 describe('<FormAddCompany>', () => {
   // default form state (make a deep copy of empty state)
   const model = ref(deepObjectWithSimplePropsCopy(emptyFormCompanyFields));
@@ -95,15 +79,17 @@ describe('<FormAddCompany>', () => {
     });
 
     it('updates model value when fields change', () => {
-      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
-      nextTick();
-      // fill in basic fields
-      cy.dataCy(selectorFormName).find('input').type(testData.name);
-      cy.dataCy(selectorFormVatId).find('input').type(testData.vatId);
-      // verify model updates
-      nextTick();
-      cy.wrap(model).its('value.name').should('eq', testData.name);
-      cy.wrap(model).its('value.vatId').should('eq', testData.vatId);
+      cy.fixture('companyAddress').then((companyAddress) => {
+        model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
+        nextTick();
+        // fill in basic fields
+        cy.dataCy(selectorFormName).find('input').type(companyAddress.name);
+        cy.dataCy(selectorFormVatId).find('input').type(companyAddress.vatId);
+        // verify model updates
+        nextTick();
+        cy.wrap(model).its('value.name').should('eq', companyAddress.name);
+        cy.wrap(model).its('value.vatId').should('eq', companyAddress.vatId);
+      });
     });
   });
 
@@ -142,31 +128,39 @@ describe('<FormAddCompany>', () => {
     });
 
     it('updates model value when all fields change', () => {
-      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
-      nextTick();
-      // fill in basic fields
-      cy.dataCy(selectorFormName).find('input').type(testData.name);
-      cy.dataCy(selectorFormVatId).find('input').type(testData.vatId);
-      // fill in address fields
-      cy.dataCy(selectorFormStreet)
-        .find('input')
-        .type(testData.address[0].street);
-      cy.dataCy(selectorFormHouseNumber)
-        .find('input')
-        .type(testData.address[0].houseNumber);
-      cy.dataCy(selectorFormCity).find('input').type(testData.address[0].city);
-      cy.dataCy(selectorFormZip).find('input').type(testData.address[0].zip);
-      cy.dataCy(selectorFormCityChallenge).click();
-      cy.get(classSelectorDropdownMenu)
-        .should('be.visible')
-        .within(() => {
-          cy.get(classSelectorDropdownItem).first().click();
-        });
-      cy.dataCy(selectorFormDepartment).type(testData.address[0].department);
-      cy.dataCy(selectorFormDepartment).blur();
-      nextTick();
-      // verify model updates
-      cy.wrap(model).its('value').should('deep.equal', testData);
+      cy.fixture('companyAddress').then((companyAddress) => {
+        model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
+        nextTick();
+        // fill in basic fields
+        cy.dataCy(selectorFormName).find('input').type(companyAddress.name);
+        cy.dataCy(selectorFormVatId).find('input').type(companyAddress.vatId);
+        // fill in address fields
+        cy.dataCy(selectorFormStreet)
+          .find('input')
+          .type(companyAddress.address[0].street);
+        cy.dataCy(selectorFormHouseNumber)
+          .find('input')
+          .type(companyAddress.address[0].houseNumber);
+        cy.dataCy(selectorFormCity)
+          .find('input')
+          .type(companyAddress.address[0].city);
+        cy.dataCy(selectorFormZip)
+          .find('input')
+          .type(companyAddress.address[0].zip);
+        cy.dataCy(selectorFormCityChallenge).click();
+        cy.get(classSelectorDropdownMenu)
+          .should('be.visible')
+          .within(() => {
+            cy.get(classSelectorDropdownItem).first().click();
+          });
+        cy.dataCy(selectorFormDepartment).type(
+          companyAddress.address[0].department,
+        );
+        cy.dataCy(selectorFormDepartment).blur();
+        nextTick();
+        // verify model updates
+        cy.wrap(model).its('value').should('deep.equal', companyAddress);
+      });
     });
   });
 

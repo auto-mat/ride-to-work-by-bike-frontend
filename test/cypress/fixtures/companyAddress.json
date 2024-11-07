@@ -1,0 +1,14 @@
+{
+  "name": "Test Company",
+  "vatId": "12345678",
+  "address": [
+    {
+      "street": "Test Street",
+      "houseNumber": "123",
+      "city": "Test City",
+      "zip": "12345",
+      "cityChallenge": "city-1",
+      "department": "Test Department"
+    }
+  ]
+}
