@@ -13,6 +13,7 @@
  * - `modelValue` (string, required): The object representing user input.
  *   It should be of type `string`.
  * - `label` (string, optional): The label for the form field.
+ * - `organizationType` (string['company'|'school'|'family'], optional): Organization type
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
