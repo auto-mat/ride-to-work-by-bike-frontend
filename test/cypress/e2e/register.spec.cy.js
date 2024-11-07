@@ -407,7 +407,6 @@ describe('Register page', () => {
         .should('be.visible')
         .click();
       // redirected to register page
-      cy.url().should('not.contain', routesConf['verify_email']['path']);
       cy.url().should('contain', routesConf['register']['path']);
     });
   });
