@@ -5,12 +5,18 @@
  * @description * Use this component to render tabs on the Coordinator page.
  * Note: Used on `CompanyCoordinatorPage`.
  *
+ * @components
+ * - `TaskListCoordinator`: Component to render a list of tasks.
+ *
  * @example
  * <coordinator-tabs />
  */
 
 // libraries
 import { defineComponent, ref } from 'vue';
+
+// components
+import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -28,6 +34,9 @@ enum tabsCoordinator {
 
 export default defineComponent({
   name: 'CoordinatorTabs',
+  components: {
+    TaskListCoordinator,
+  },
   setup() {
     const activeTab = ref(tabsCoordinator.none);
 
@@ -105,7 +114,7 @@ export default defineComponent({
         class="q-px-lg"
         data-cy="coordinator-tabs-panel-tasks"
       >
-        <!-- TODO: add content -->
+        <task-list-coordinator data-cy="task-list-coordinator" />
       </q-tab-panel>
       <!-- Panel: Fees -->
       <q-tab-panel
