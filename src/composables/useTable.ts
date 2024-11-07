@@ -524,7 +524,7 @@ export const useTableInvoices = () => {
       align: 'left',
       field: InvoicesTableColumns.issueDate,
       format: (val: number | string | null): string =>
-        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+        val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
       label: i18n.global.t('table.labelIssueDate'),
       name: InvoicesTableColumns.issueDate,
       required: true,
@@ -542,7 +542,6 @@ export const useTableInvoices = () => {
     {
       align: 'left',
       field: InvoicesTableColumns.files,
-      format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelFiles'),
       name: InvoicesTableColumns.files,
       required: true,
@@ -570,7 +569,7 @@ export const useTableInvoices = () => {
       align: 'left',
       field: InvoicesTableColumns.amount,
       format: (val: number | string | null): string => formatPrice(val),
-      label: i18n.global.t('table.labelAmount'),
+      label: i18n.global.t('table.labelAmountIncludingVat'),
       name: InvoicesTableColumns.amount,
       required: true,
       sortable: true,
@@ -579,7 +578,9 @@ export const useTableInvoices = () => {
       align: 'left',
       field: InvoicesTableColumns.confirmationDate,
       format: (val: number | string | null): string =>
-        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+        val
+          ? i18n.global.d(new Date(String(val)), 'numeric')
+          : i18n.global.t('table.labelNotConfirmed'),
       label: i18n.global.t('table.labelConfirmationDate'),
       name: InvoicesTableColumns.confirmationDate,
       required: true,
