@@ -19,7 +19,7 @@ describe('<FormFieldCompanyAddress>', () => {
       const { addressOptions, organizationOptions } = useSelectedOrganization(
         formOrganizationOptions,
       );
-      store.setFormOrganizationId(organizationOptions.value[0].value);
+      store.setOrganizationId(organizationOptions.value[0].value);
       options = addressOptions.value;
     });
   });

@@ -1,6 +1,6 @@
 [
   {
-    "id": "org-001",
+    "id": 12345,
     "title": "TechCorp Solutions",
     "identificationNumber": "12345678",
     "identificationNumberVat": "CZ12345678",
@@ -19,7 +19,7 @@
     },
     "subsidiaries": [
       {
-        "id": "div-001",
+        "id": 23455,
         "address": {
           "street": "Innovation Avenue",
           "houseNumber": "42",
@@ -31,37 +31,37 @@
         "title": "Software Development",
         "teams": [
           {
-            "id": "team-001",
+            "id": 34565,
             "title": "Frontend Team",
             "members": [
               {
-                "id": "mem-001",
+                "id": 45678,
                 "name": "Alice Smith",
-                "team": "team-001",
+                "team": 34565,
                 "payment": { "amount": 399 }
               },
               {
-                "id": "mem-002",
+                "id": 45679,
                 "name": "Bob Johnson",
-                "team": "team-001",
+                "team": 34565,
                 "payment": { "amount": 399 }
               }
             ]
           },
           {
-            "id": "team-002",
+            "id": 34566,
             "title": "Backend Team",
             "members": [
               {
-                "id": "mem-003",
+                "id": 45671,
                 "name": "Charlie Brown",
-                "team": "team-002",
+                "team": 34566,
                 "payment": { "amount": 399 }
               },
               {
-                "id": "mem-004",
+                "id": 45672,
                 "name": "Diana Lee",
-                "team": "team-002",
+                "team": 34566,
                 "payment": { "amount": 399 }
               }
             ]
@@ -72,7 +72,7 @@
     "description": "Leading software solutions provider"
   },
   {
-    "id": "org-002",
+    "id": 12346,
     "title": "GreenLeaf Eco",
     "identificationNumber": "87654321",
     "identificationNumberVat": "CZ87654321",
@@ -83,7 +83,7 @@
     },
     "subsidiaries": [
       {
-        "id": "div-002",
+        "id": 23456,
         "title": "Recycling",
         "address": {
           "street": "Sustainability Road",
@@ -95,19 +95,19 @@
         },
         "teams": [
           {
-            "id": "team-003",
+            "id": 34567,
             "title": "Collection Team",
             "members": [
               {
-                "id": "mem-005",
+                "id": 45673,
                 "name": "Eva Green",
-                "team": "team-003",
+                "team": 34567,
                 "payment": { "amount": 399 }
               },
               {
-                "id": "mem-006",
+                "id": 45674,
                 "name": "Frank White",
-                "team": "team-003",
+                "team": 34567,
                 "payment": { "amount": 399 }
               }
             ]
@@ -115,7 +115,7 @@
         ]
       },
       {
-        "id": "div-003",
+        "id": 23457,
         "title": "Renewable Energy",
         "address": {
           "street": "Knowledge Lane",
@@ -127,19 +127,19 @@
         },
         "teams": [
           {
-            "id": "team-004",
+            "id": 34568,
             "title": "Solar Panel Team",
             "members": [
               {
-                "id": "mem-007",
+                "id": 45675,
                 "name": "Grace Sun",
-                "team": "team-004",
+                "team": 34568,
                 "payment": { "amount": 399 }
               },
               {
-                "id": "mem-008",
+                "id": 45676,
                 "name": "Henry Wind",
-                "team": "team-004",
+                "team": 34568,
                 "payment": { "amount": 399 }
               }
             ]
@@ -150,7 +150,7 @@
     "description": "Sustainable solutions for a greener future"
   },
   {
-    "id": "org-003",
+    "id": 12347,
     "title": "EduSmart Academy",
     "identificationNumber": "98765432",
     "identificationNumberVat": "CZ98765432",
@@ -161,7 +161,7 @@
     },
     "subsidiaries": [
       {
-        "id": "div-004",
+        "id": 23458,
         "title": "Primary Education",
         "address": {
           "street": "Knowledge Lane",
@@ -173,19 +173,19 @@
         },
         "teams": [
           {
-            "id": "team-005",
+            "id": 34569,
             "title": "Elementary Teachers",
             "members": [
               {
-                "id": "mem-009",
+                "id": 45681,
                 "name": "Irene Wise",
-                "team": "team-005",
+                "team": 34569,
                 "payment": { "amount": 299 }
               },
               {
-                "id": "mem-010",
+                "id": 45682,
                 "name": "Jack Smart",
-                "team": "team-005",
+                "team": 34569,
                 "payment": { "amount": 299 }
               }
             ]
@@ -193,7 +193,7 @@
         ]
       },
       {
-        "id": "div-005",
+        "id": 23459,
         "title": "Secondary Education",
         "address": {
           "street": "Udržitelná",
@@ -205,19 +205,19 @@
         },
         "teams": [
           {
-            "id": "team-006",
+            "id": 34561,
             "title": "High School Teachers",
             "members": [
               {
-                "id": "mem-011",
+                "id": 45683,
                 "name": "Kate Bright",
-                "team": "team-006",
+                "team": 34561,
                 "payment": { "amount": 299 }
               },
               {
-                "id": "mem-012",
+                "id": 45684,
                 "name": "Liam Sharp",
-                "team": "team-006",
+                "team": 34561,
                 "payment": { "amount": 299 }
               }
             ]

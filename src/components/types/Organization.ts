@@ -10,7 +10,7 @@ export enum OrganizationType {
 export interface Organization {
   subsidiaries: OrganizationSubsidiary[];
   description?: string;
-  id: string;
+  id: number;
   identificationNumber: string;
   identificationNumberVat?: string;
   image?: Image;
@@ -19,22 +19,22 @@ export interface Organization {
 }
 
 export interface OrganizationSubsidiary {
-  id: string;
+  id: number;
   title: string;
   address?: FormCompanyAddressFields;
   teams: OrganizationTeam[];
 }
 
 export interface OrganizationTeam {
-  id: string;
+  id: number;
   title: string;
   members: OrganizationMember[];
 }
 
 export interface OrganizationMember {
-  id: string;
+  id: number;
   name: string;
-  team: string;
+  team: number;
   payment: {
     amount: number;
   };
@@ -43,7 +43,7 @@ export interface OrganizationMember {
 // API
 
 export interface OrganizationOption {
-  id: string;
+  id: number;
   name: string;
 }
 

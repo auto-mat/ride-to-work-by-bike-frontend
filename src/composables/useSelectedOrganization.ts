@@ -14,14 +14,16 @@ export const useSelectedOrganization = (organizations: Organization[]) => {
   // store
   const store = useRegisterChallengeStore();
 
-  const organizationId = computed({
-    get: (): string => store.getOrganizationId,
-    set: (value: string) => store.setFormOrganizationId(value),
+  const organizationId = computed<number | null>({
+    get: (): number | null =>
+      store.getOrganizationId ? store.getOrganizationId : null,
+    set: (value: number | null) => store.setOrganizationId(value),
   });
 
-  const addressId = computed({
-    get: (): string => store.getAddressId,
-    set: (value: string) => store.setFormAddressId(value),
+  const addressId = computed<number | null>({
+    get: (): number | null =>
+      store.getSubsidiaryId ? store.getSubsidiaryId : null,
+    set: (value: number | null) => store.setSubsidiaryId(value),
   });
 
   /**
