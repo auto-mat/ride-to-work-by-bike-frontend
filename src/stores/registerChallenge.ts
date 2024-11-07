@@ -1,9 +1,14 @@
+// libraries
 import { defineStore } from 'pinia';
 
-// types
-import { FormPersonalDetailsFields } from '../components/types/Form';
-import { Gender } from '../components/types/Profile';
+// enums
 import { NewsletterType } from '../components/types/Newsletter';
+import { OrganizationType } from '../components/types/Organization';
+import { Gender } from '../components/types/Profile';
+
+// types
+import type { FormPersonalDetailsFields } from '../components/types/Form';
+import type { Logger } from '../components/types/Logger';
 
 const emptyFormPersonalDetails: FormPersonalDetailsFields = {
   firstName: '',
@@ -21,29 +26,45 @@ const emptyFormPersonalDetails: FormPersonalDetailsFields = {
  */
 export const useRegisterChallengeStore = defineStore('registerChallenge', {
   state: () => ({
+    $log: null as Logger | null,
     personalDetails: emptyFormPersonalDetails,
     payment: null, // TODO: add data type options
-    participation: null, // TODO: add data type options
-    organizationId: '',
-    addressId: '',
+    organizationType: null as OrganizationType | null,
+    organizationId: null as number | null,
+    subsidiaryId: null as number | null,
+    teamId: null as number | null,
+    merchId: null as number | null,
   }),
 
   getters: {
-    getAddressId: (state): string => state.addressId,
-    getOrganizationId: (state): string => state.organizationId,
     getPersonalDetails: (state): FormPersonalDetailsFields =>
       state.personalDetails,
+    getOrganizationType: (state): OrganizationType | null =>
+      state.organizationType,
+    getOrganizationId: (state): number | null => state.organizationId,
+    getSubsidiaryId: (state): number | null => state.subsidiaryId,
+    getTeamId: (state): number | null => state.teamId,
+    getMerchId: (state): number | null => state.merchId,
   },
 
   actions: {
-    setFormAddressId(addressId: string) {
-      this.addressId = addressId;
-    },
-    setFormOrganizationId(organizationId: string) {
-      this.organizationId = organizationId;
-    },
     setPersonalDetails(personalDetails: FormPersonalDetailsFields) {
       Object.assign(this.personalDetails, personalDetails);
+    },
+    setOrganizationType(organizationType: OrganizationType) {
+      this.organizationType = organizationType;
+    },
+    setOrganizationId(organizationId: number | null) {
+      this.organizationId = organizationId;
+    },
+    setSubsidiaryId(subsidiaryId: number | null) {
+      this.subsidiaryId = subsidiaryId;
+    },
+    setTeamId(teamId: number | null) {
+      this.teamId = teamId;
+    },
+    setMerchId(merchId: number | null) {
+      this.merchId = merchId;
     },
   },
 
