@@ -1,3 +1,4 @@
+import { nextTick } from 'vue';
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormRegister from '../register/FormRegister.vue';
@@ -56,9 +57,12 @@ const testPassword = '12345a';
 const { apiBase, apiDefaultLang, urlApiRegister } = rideToWorkByBikeConfig;
 const defaultLoginUserEmailStoreValue = '';
 
-const compareRegisterResponseWithStore = (registerResponse) => {
-  const registerStore = useRegisterStore();
-  const loginStore = useLoginStore();
+const compareRegisterResponseWithStore = (
+  loginStore,
+  registerStore,
+  registerResponse,
+) => {
+  nextTick();
   expect(registerStore.getIsEmailVerified).to.equal(false);
   expect(loginStore.getUserEmail).to.equal(registerResponse.user.email);
   expect(loginStore.getUser).to.eql(registerResponse.user);
@@ -406,6 +410,8 @@ describe('<FormRegister>', () => {
     });
 
     it('allows to submit form after filling fields', () => {
+      const registerStore = useRegisterStore();
+      const loginStore = useLoginStore();
       // variables
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
@@ -438,7 +444,11 @@ describe('<FormRegister>', () => {
             .its('response.statusCode')
             .should('be.equal', httpSuccessfullStatus)
             .then(() => {
-              compareRegisterResponseWithStore(registerResponse);
+              compareRegisterResponseWithStore(
+                loginStore,
+                registerStore,
+                registerResponse,
+              );
             });
         },
       );
@@ -477,6 +487,8 @@ describe('<FormRegister>', () => {
     });
 
     it('allows to submit form after filling fields and accepting privacy policy', () => {
+      const registerStore = useRegisterStore();
+      const loginStore = useLoginStore();
       const challengeStore = useChallengeStore();
       expect(
         challengeStore.getIsChallengeInPhase(PhaseType.competition),
@@ -509,7 +521,11 @@ describe('<FormRegister>', () => {
             .its('response.statusCode')
             .should('be.equal', httpSuccessfullStatus)
             .then(() => {
-              compareRegisterResponseWithStore(registerResponse);
+              compareRegisterResponseWithStore(
+                loginStore,
+                registerStore,
+                registerResponse,
+              );
             });
         },
       );
