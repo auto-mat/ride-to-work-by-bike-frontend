@@ -104,8 +104,9 @@ export default defineComponent({
       addressIndex,
       company,
       optionsCityChallenge,
-      isFilled,
+      OrganizationType,
       isVatShown,
+      isFilled,
       onUpdate,
     };
   },
@@ -119,7 +120,13 @@ export default defineComponent({
         class="text-body1 text-bold text-black q-my-none"
         data-cy="form-add-company-title"
       >
-        {{ $t('form.labelCompanyShort') }}
+        <span v-if="organizationType === OrganizationType.school">{{
+          $t('form.labelSchool')
+        }}</span>
+        <span v-else-if="organizationType === OrganizationType.family">{{
+          $t('form.labelFamily')
+        }}</span>
+        <span v-else>{{ $t('form.labelCompanyShort') }}</span>
       </h3>
       <p
         v-if="variant === 'default'"

@@ -42,6 +42,8 @@ describe('<FormAddCompany>', () => {
         'company.hintCityChallenge',
         'company.labelDepartment',
         'company.hintDepartment',
+        'labelSchool',
+        'labelFamily',
       ],
       'form',
       i18n,
@@ -174,6 +176,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('be.visible');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelCompanyShort'),
+      );
     });
 
     it('shows VAT field for company type (default)', () => {
@@ -185,6 +191,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('be.visible');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelCompanyShort'),
+      );
     });
 
     it('hides VAT field for school type (simple)', () => {
@@ -196,6 +206,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('not.exist');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelSchool'),
+      );
     });
 
     it('hides VAT field for school type (default)', () => {
@@ -207,6 +221,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('not.exist');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelSchool'),
+      );
     });
 
     it('hides VAT field for family type (simple)', () => {
@@ -218,6 +236,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('not.exist');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelFamily'),
+      );
     });
 
     it('hides VAT field for family type (default)', () => {
@@ -229,6 +251,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('not.exist');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelFamily'),
+      );
     });
 
     it('shows VAT field when organizationType is not provided (simple)', () => {
@@ -239,6 +265,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('be.visible');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelCompanyShort'),
+      );
     });
 
     it('shows VAT field when organizationType is not provided (default)', () => {
@@ -249,6 +279,10 @@ describe('<FormAddCompany>', () => {
         },
       });
       cy.dataCy(selectorFormVatId).should('be.visible');
+      cy.dataCy(selectorFormTitle).should(
+        'contain',
+        i18n.global.t('form.labelCompanyShort'),
+      );
     });
   });
 });
