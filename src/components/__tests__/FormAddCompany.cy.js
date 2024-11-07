@@ -4,6 +4,7 @@ import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { OrganizationType } from '../types/Organization';
 import { emptyFormCompanyFields } from '../global/FormFieldCompany.vue';
+import { deepObjectWithSimplePropsCopy } from '../../utils';
 
 // selectors
 const classSelectorDropdownItem = '.q-item';
@@ -37,7 +38,7 @@ const testData = {
 
 describe('<FormAddCompany>', () => {
   // default form state (make a deep copy of empty state)
-  const model = ref(JSON.parse(JSON.stringify(emptyFormCompanyFields)));
+  const model = ref(deepObjectWithSimplePropsCopy(emptyFormCompanyFields));
 
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
@@ -94,7 +95,7 @@ describe('<FormAddCompany>', () => {
     });
 
     it('updates model value when fields change', () => {
-      model.value = JSON.parse(JSON.stringify(emptyFormCompanyFields));
+      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
       nextTick();
       // fill in basic fields
       cy.dataCy(selectorFormName).find('input').type(testData.name);
@@ -118,7 +119,7 @@ describe('<FormAddCompany>', () => {
     });
 
     it('renders all form elements', () => {
-      model.value = JSON.parse(JSON.stringify(emptyFormCompanyFields));
+      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
       nextTick();
       // title
       cy.dataCy(selectorFormTitle)
@@ -141,7 +142,7 @@ describe('<FormAddCompany>', () => {
     });
 
     it('updates model value when all fields change', () => {
-      model.value = JSON.parse(JSON.stringify(emptyFormCompanyFields));
+      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
       nextTick();
       // fill in basic fields
       cy.dataCy(selectorFormName).find('input').type(testData.name);

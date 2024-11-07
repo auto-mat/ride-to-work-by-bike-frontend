@@ -72,7 +72,19 @@ const rgbaColorObjectToString = (rgba: RgbaI): string => {
   return `rgba(${rgba['r']}, ${rgba['g']}, ${rgba['b']}, ${rgba['a'] / 100.0})`;
 };
 
+/*
+ * Deep copy Object with simple props (not function)
+ *
+ * @param {Object} obj: Object to copy
+ *
+ * @returns {Object}: Object copy
+ */
+const deepObjectWithSimplePropsCopy = (obj: object): object => {
+  return JSON.parse(JSON.stringify(obj));
+};
+
 export {
+  deepObjectWithSimplePropsCopy,
   requestDefaultHeader,
   requestTokenHeader,
   rgbaColorObjectToString,
