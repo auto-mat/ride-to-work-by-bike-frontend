@@ -151,13 +151,39 @@ export const useLoginStore = defineStore('login', {
         translationKey: 'login',
         logger: this.$log,
       });
-      // set user
+
+      await this.processLoginData(data);
+
+      return data;
+    },
+
+    async authenticateWithGoogle(response: CallbackTypes.CodePopupResponse) {
+      this.$log?.debug(`Google authentication code <${response.code}>.`);
+      const payload = {
+        access_token: '',
+        code: response.code,
+        id_token: '',
+      };
+      this.$log?.info('Get API access/refresh token (Google auth).');
+      const { data } = await apiFetch<LoginResponse>({
+        endpoint: rideToWorkByBikeConfig.urlApiLoginGoogle,
+        method: 'post',
+        payload,
+        translationKey: 'login',
+        logger: this.$log,
+      });
+
+      await this.processLoginData(data);
+
+      return data;
+    },
+    /**
+     * Process data received from login request
+     * Save user and tokens to login store, then redirect to home page.
+     */
+    async processLoginData(data: LoginResponse | null): Promise<void> {
       if (data && data.user) {
-        this.$log?.info('Save user data into login store.');
-        this.setUser(data.user);
-        this.$log?.debug(
-          `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
-        );
+        this.setUserAfterLogin(data);
       }
       if (data && data.access && data.refresh) {
         // set tokens
@@ -170,20 +196,16 @@ export const useLoginStore = defineStore('login', {
 
         await this.redirectHomeAfterLogin();
       }
-
-      return data;
     },
     /**
-     * Set user after login
+     * Save user value to login store
      */
     setUserAfterLogin(data: LoginResponse): void {
-      if (data && data.user) {
-        this.$log?.info('Save user data into login store.');
-        this.setUser(data.user);
-        this.$log?.debug(
-          `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
-        );
-      }
+      this.$log?.info('Save user data into login store.');
+      this.setUser(data.user);
+      this.$log?.debug(
+        `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
+      );
     },
     /**
      * Redirect home after login
@@ -428,43 +450,6 @@ export const useLoginStore = defineStore('login', {
         this.$log?.debug(
           `Login store login form state <${this.getLoginFormState}>.`,
         );
-      }
-
-      return data;
-    },
-    async authenticateWithGoogle(response: CallbackTypes.CodePopupResponse) {
-      this.$log?.debug(`Authenticate with Google code <${response.code}>.`);
-      const payload = {
-        access_token: '',
-        code: response.code,
-        id_token: '',
-      };
-      const { data } = await apiFetch<LoginResponse>({
-        endpoint: rideToWorkByBikeConfig.urlApiLoginGoogle,
-        method: 'post',
-        payload,
-        translationKey: 'login',
-        logger: this.$log,
-      });
-      // set user
-      if (data && data.user) {
-        this.$log?.info('Save user data into login store.');
-        this.setUser(data.user);
-        this.$log?.debug(
-          `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
-        );
-      }
-      if (data && data.access && data.refresh) {
-        this.$log?.info('Successfully authenticated with Google');
-        // set tokens
-        setAccessRefreshTokens({
-          access: data.access,
-          refresh: data.refresh,
-          loginStore: this,
-          $log: this.$log as Logger,
-        });
-
-        await this.redirectHomeAfterLogin();
       }
 
       return data;
