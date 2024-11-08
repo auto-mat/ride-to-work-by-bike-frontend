@@ -1,12 +1,12 @@
 import { boot } from 'quasar/wrappers';
 import vue3GoogleLogin from 'vue3-google-login';
+import { rideToWorkByBikeConfig } from './global_vars';
 
-// Replace with your actual Google Client ID
-const clientId = 'your-google-client-id';
+const clientId = rideToWorkByBikeConfig.googleLoginAppId;
 
 export default boot(({ app }) => {
   // Use the GoogleLoginPlugin with the provided client ID
   app.use(vue3GoogleLogin, {
-    clientId: clientId,
+    clientId,
   });
 });

@@ -132,6 +132,8 @@ const getAppConfig = (process) => {
   } else if (process.env.DATE_TIME_FORMAT_ALL_LOCALES) {
     config['dateTimeFormatsAllLocales'] =
       process.env.DATE_TIME_FORMATS_ALL_LOCALES;
+  } else if (process.env.GOOGLE_LOGIN_APP_ID) {
+    config['googleLoginAppId'] = process.env.GOOGLE_LOGIN_APP_ID;
   }
   return config;
 };

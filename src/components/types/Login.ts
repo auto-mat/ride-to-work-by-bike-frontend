@@ -7,8 +7,13 @@ export interface LoginResponse {
 }
 
 export interface GoogleAuthResponse {
-  clientId: string;
-  credential: string;
-  select_by: string;
-  error?: string;
+  code: string;
+  scope: string;
+  authuser: string;
+  hd: string;
+  prompt: string;
+}
+
+export interface GoogleLoginError {
+  error: string;
 }

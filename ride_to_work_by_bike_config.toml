@@ -78,7 +78,7 @@ apiDefaultLang = "cs"
 
 urlApiHasUserVerifiedEmail = "auth/registration/has-user-verified-email-address/"
 urlApiLogin = "auth/login/"
-urlApiLoginGoogle = "rest/auth/google/login/"
+urlApiLoginGoogle = "auth/google/login/"
 urlApiOrganizations = "organizations/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"
@@ -103,3 +103,7 @@ dateTimeFormatsAllLocales = '''
   }
 }
 '''
+
+# SECRETS
+
+googleLoginAppId = "SECRET"
