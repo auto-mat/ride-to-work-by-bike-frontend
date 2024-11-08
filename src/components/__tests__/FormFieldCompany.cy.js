@@ -196,6 +196,7 @@ describe('<FormFieldCompany>', () => {
       cy.mount(FormFieldCompany, {
         props: {
           ...vModelAdapter(model),
+          organizationType: OrganizationType.company,
         },
       });
       cy.viewport('iphone-6');
