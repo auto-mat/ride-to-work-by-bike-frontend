@@ -24,7 +24,6 @@
 import { defineComponent, inject } from 'vue';
 import { CallbackTypes } from 'vue3-google-login';
 import { useLoginStore } from '../../stores/login';
-import { useI18n } from 'vue-i18n';
 
 // types
 import type { Logger } from '../types/Logger';
@@ -40,7 +39,6 @@ export default defineComponent({
   setup() {
     const logger: Logger | undefined = inject('vuejs3-logger');
     const loginStore = useLoginStore();
-    const { t } = useI18n();
 
     const onGoogleLogin = async (response: CallbackTypes.CodePopupResponse) => {
       if (logger) {
@@ -55,7 +53,6 @@ export default defineComponent({
 
     return {
       onGoogleLogin,
-      t,
     };
   },
 });
@@ -83,10 +80,10 @@ export default defineComponent({
         />
         <!-- Label -->
         <span v-if="variant === 'login'">{{
-          t('login.buttons.buttonGoogle')
+          $t('login.buttons.buttonGoogle')
         }}</span>
         <span v-else-if="variant === 'register'">{{
-          t('register.buttons.buttonGoogle')
+          $t('register.buttons.buttonGoogle')
         }}</span>
       </q-btn>
     </GoogleLogin>
@@ -109,10 +106,10 @@ export default defineComponent({
       />
       <!-- Label -->
       <span v-if="variant === 'login'">{{
-        t('login.buttons.buttonFacebook')
+        $t('login.buttons.buttonFacebook')
       }}</span>
       <span v-else-if="variant === 'register'">{{
-        t('register.buttons.buttonFacebook')
+        $t('register.buttons.buttonFacebook')
       }}</span>
     </q-btn>
   </div>
