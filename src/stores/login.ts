@@ -21,6 +21,7 @@ import { useRegisterStore } from './register';
 import type { Logger } from '../components/types/Logger';
 import type { UserLogin } from '../components/types/User';
 import type { LoginResponse } from 'src/components/types/Login';
+import type { GoogleAuthResponse } from '../components/types/Login';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {
@@ -167,22 +168,38 @@ export const useLoginStore = defineStore('login', {
           $log: this.$log as Logger,
         });
 
-        if (this.$router) {
-          const registerStore = useRegisterStore();
-          /*
-           * Check if user email address is verified before login,
-           * prevent to show confirming your email page.
-           */
-          await registerStore.checkEmailVerification().then(() => {
-            this.$log?.debug(
-              `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
-            );
-            this.$router.push(routesConf['home']['path']);
-          });
-        }
+        await this.redirectHomeAfterLogin();
       }
 
       return data;
+    },
+    /**
+     * Set user after login
+     */
+    setUserAfterLogin(data: LoginResponse): void {
+      if (data && data.user) {
+        this.$log?.info('Save user data into login store.');
+        this.setUser(data.user);
+        this.$log?.debug(
+          `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
+        );
+      }
+    },
+    /**
+     * Redirect home after login
+     */
+    async redirectHomeAfterLogin(): Promise<void> {
+      const registerStore = useRegisterStore();
+      /*
+       * Check if user email address is verified before login,
+       * prevent to show confirming your email page.
+       */
+      await registerStore.checkEmailVerification().then(() => {
+        this.$log?.debug(
+          `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
+        );
+        this.$router.push(routesConf['home']['path']);
+      });
     },
     /**
      * Logout user
@@ -405,6 +422,45 @@ export const useLoginStore = defineStore('login', {
         this.$log?.debug(
           `Login store login form state <${this.getLoginFormState}>.`,
         );
+      }
+
+      return data;
+    },
+    async authenticateWithGoogle(response: GoogleAuthResponse) {
+      this.$log?.debug(
+        `Authenticate with Google - credential: ${response.credential}`,
+      );
+      const payload = {
+        access_token: '', // Google doesn't provide access token in basic response
+        code: '', // Google doesn't provide auth code in basic response
+        id_token: response.credential,
+      };
+      const { data } = await apiFetch<LoginResponse>({
+        endpoint: rideToWorkByBikeConfig.urlApiLoginGoogle,
+        method: 'post',
+        payload,
+        translationKey: 'login',
+        logger: this.$log,
+      });
+      // set user
+      if (data && data.user) {
+        this.$log?.info('Save user data into login store.');
+        this.setUser(data.user);
+        this.$log?.debug(
+          `Login store saved user data <${JSON.stringify(this.getUser, null, 2)}>.`,
+        );
+      }
+      if (data && data.access && data.refresh) {
+        this.$log?.info('Successfully authenticated with Google');
+        // set tokens
+        setAccessRefreshTokens({
+          access: data.access,
+          refresh: data.refresh,
+          loginStore: this,
+          $log: this.$log as Logger,
+        });
+
+        await this.redirectHomeAfterLogin();
       }
 
       return data;

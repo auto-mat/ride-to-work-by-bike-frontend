@@ -5,3 +5,10 @@ export interface LoginResponse {
   refresh: string;
   user: UserLogin;
 }
+
+export interface GoogleAuthResponse {
+  clientId: string;
+  credential: string;
+  select_by: string;
+  error?: string;
+}

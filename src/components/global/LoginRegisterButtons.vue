@@ -22,9 +22,12 @@
  */
 
 import { defineComponent, inject } from 'vue';
+import { useLoginStore } from '../../stores/login';
+import { useI18n } from 'vue-i18n';
 
 // types
 import type { Logger } from '../types/Logger';
+import type { GoogleAuthResponse } from '../types/Login';
 
 export default defineComponent({
   name: 'LoginRegisterButtons',
@@ -36,17 +39,57 @@ export default defineComponent({
   },
   setup() {
     const logger: Logger | undefined = inject('vuejs3-logger');
+    const loginStore = useLoginStore();
+    const { t } = useI18n();
 
-    // @ts-expect-error: response is not typed
-    const loginCallback = (response) => {
+    const onGoogleLogin = async (response: GoogleAuthResponse) => {
       if (logger) {
-        logger.debug(`loginCallback - response: ${JSON.stringify(response)}`);
+        logger.debug(`onGoogleLogin - response: ${JSON.stringify(response)}`);
       }
-      // TODO: use login store to run functions based on the response data
+      // process response
+      try {
+        // TODO: confirm the validity of error responses
+        if (response.error) {
+          handleGoogleAuthError(response.error);
+        } else {
+          await loginStore.authenticateWithGoogle(response);
+        }
+      } catch (error) {
+        if (logger) {
+          logger.debug(`Google auth error: ${JSON.stringify(error)}`);
+        }
+      }
+    };
+    /**
+     * Handles Google authentication errors
+     * Shows toast notification based on the error type.
+     * @param {string} error - Error message
+     * @returns {void}
+     */
+    const handleGoogleAuthError = (error: string): void => {
+      if (!logger) {
+        return;
+      }
+      switch (error) {
+        case 'popup_closed_by_user':
+          logger.debug('Login was canceled. Please try again.');
+          break;
+        case 'access_denied':
+          logger.debug('Access denied. Please grant permissions to continue.');
+          break;
+        case 'idpiframe_initialization_failed':
+          logger.debug(
+            'Failed to initialize Google login. Ensure third-party cookies are enabled.',
+          );
+          break;
+        default:
+          logger.debug('An unknown error occurred. Please try again.');
+      }
     };
 
     return {
-      loginCallback,
+      onGoogleLogin,
+      t,
     };
   },
 });
@@ -55,7 +98,7 @@ export default defineComponent({
 <template>
   <div>
     <!-- Button: Login Google -->
-    <GoogleLogin :callback="loginCallback" class="full-width">
+    <GoogleLogin :callback="onGoogleLogin" class="full-width">
       <q-btn
         unelevated
         rounded
@@ -74,10 +117,10 @@ export default defineComponent({
         />
         <!-- Label -->
         <span v-if="variant === 'login'">{{
-          $t('login.buttons.buttonGoogle')
+          t('login.buttons.buttonGoogle')
         }}</span>
         <span v-else-if="variant === 'register'">{{
-          $t('register.buttons.buttonGoogle')
+          t('register.buttons.buttonGoogle')
         }}</span>
       </q-btn>
     </GoogleLogin>
@@ -100,10 +143,10 @@ export default defineComponent({
       />
       <!-- Label -->
       <span v-if="variant === 'login'">{{
-        $t('login.buttons.buttonFacebook')
+        t('login.buttons.buttonFacebook')
       }}</span>
       <span v-else-if="variant === 'register'">{{
-        $t('register.buttons.buttonFacebook')
+        t('register.buttons.buttonFacebook')
       }}</span>
     </q-btn>
   </div>
