@@ -59,7 +59,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <div class="bg-primary">
     <!-- Button: Login Google -->
     <GoogleLogin :callback="onGoogleLogin" class="full-width">
       <q-btn
@@ -92,7 +92,7 @@ export default defineComponent({
       unelevated
       rounded
       outline
-      color="white"
+      color="primary"
       class="full-width q-mt-md"
       data-cy="login-register-button-facebook"
     >
@@ -100,7 +100,7 @@ export default defineComponent({
       <q-icon
         name="facebook"
         size="24px"
-        color="white"
+        color="primary"
         class="q-mr-sm"
         data-cy="login-register-button-facebook-icon"
       />

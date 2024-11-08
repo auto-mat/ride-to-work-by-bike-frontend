@@ -187,6 +187,9 @@ export const useLoginStore = defineStore('login', {
     },
     /**
      * Redirect home after login
+     * First waits for the email verification check.
+     * Then redirects to home page.
+     * (Possible redirection is handled by router guards.)
      */
     async redirectHomeAfterLogin(): Promise<void> {
       const registerStore = useRegisterStore();
@@ -198,7 +201,10 @@ export const useLoginStore = defineStore('login', {
         this.$log?.debug(
           `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
         );
-        this.$router.push(routesConf['home']['path']);
+        // redirect to home page
+        if (this.$router) {
+          this.$router.push(routesConf['home']['path']);
+        }
       });
     },
     /**

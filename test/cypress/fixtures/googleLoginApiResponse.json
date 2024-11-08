@@ -1,0 +1,7 @@
+{
+  "code": "4/0AXR9hjKLM5nW8pQ2yBvDkPt7fmNSbUw4HgxYJc3Vz6r-tEwTLCqaRn8GvFhMkNpBsZxWyA",
+  "scope": "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+  "authuser": "2",
+  "hd": "auto-mat.cz",
+  "prompt": "consent"
+}

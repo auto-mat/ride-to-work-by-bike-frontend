@@ -426,6 +426,37 @@ export const interceptRegisterCoordinatorApi = (
   }).as('registerCoordinator');
 };
 
+/**
+ * Intercept Google login API call
+ * It uses the same response data as the login API call.
+ * Provides a `@loginGoogle` alias for the intercepted request.
+ * @param {ConfigGlobal} config - API config
+ * @param {I18n} i18n - i18n instance
+ * @return {void}
+ */
+export const interceptGoogleLoginApi = (
+  config: ConfigGlobal,
+  i18n: I18n,
+): void => {
+  cy.fixture('loginRegisterResponseChallengeActive.json').then(
+    (loginResponse) => {
+      const { apiBase, apiDefaultLang, urlApiLoginGoogle } = config;
+      const apiBaseUrl = getApiBaseUrlWithLang(
+        null,
+        apiBase,
+        apiDefaultLang,
+        i18n,
+      );
+      const urlApiLoginGoogleLocalized = `${apiBaseUrl}${urlApiLoginGoogle}`;
+      // intercept google login API call (before mounting component)
+      cy.intercept('POST', urlApiLoginGoogleLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: loginResponse,
+      }).as('loginGoogle');
+    },
+  );
+};
+
 export const fillFormRegisterCoordinator = (): void => {
   cy.fixture('formRegisterCoordinator').then((formRegisterCoordinatorData) => {
     cy.dataCy('form-register-coordinator-first-name')
