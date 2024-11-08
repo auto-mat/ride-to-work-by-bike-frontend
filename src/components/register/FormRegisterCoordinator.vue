@@ -22,7 +22,7 @@
  */
 
 // libraries
-import { defineComponent, inject, reactive } from 'vue';
+import { defineComponent, inject, reactive, computed } from 'vue';
 
 // components
 import FormFieldCheckboxRequired from './../form/FormFieldCheckboxRequired.vue';
@@ -71,20 +71,22 @@ export default defineComponent({
       terms: false,
     });
 
-    const optionsInstitutionType: FormOption[] = [
-      {
-        label: i18n.global.t('form.labelCompanyShort'),
-        value: OrganizationType.company,
-      },
-      {
-        label: i18n.global.t('form.labelSchoolShort'),
-        value: OrganizationType.school,
-      },
-      {
-        label: i18n.global.t('form.labelFamilyShort'),
-        value: OrganizationType.family,
-      },
-    ];
+    const optionsInstitutionType = computed((): FormOption[] => {
+      return [
+        {
+          label: i18n.global.t('form.labelCompanyShort'),
+          value: OrganizationType.company,
+        },
+        {
+          label: i18n.global.t('form.labelSchoolShort'),
+          value: OrganizationType.school,
+        },
+        {
+          label: i18n.global.t('form.labelFamilyShort'),
+          value: OrganizationType.family,
+        },
+      ];
+    });
 
     const onSubmit = async (): Promise<void> => {
       // build payload
