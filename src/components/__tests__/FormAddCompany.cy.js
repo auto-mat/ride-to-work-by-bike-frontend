@@ -42,8 +42,8 @@ describe('<FormAddCompany>', () => {
         'company.hintCityChallenge',
         'company.labelDepartment',
         'company.hintDepartment',
-        'labelSchool',
-        'labelFamily',
+        'labelSchoolShort',
+        'labelFamilyShort',
       ],
       'form',
       i18n,
@@ -208,7 +208,7 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormVatId).should('not.exist');
       cy.dataCy(selectorFormTitle).should(
         'contain',
-        i18n.global.t('form.labelSchool'),
+        i18n.global.t('form.labelSchoolShort'),
       );
     });
 
@@ -223,7 +223,7 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormVatId).should('not.exist');
       cy.dataCy(selectorFormTitle).should(
         'contain',
-        i18n.global.t('form.labelSchool'),
+        i18n.global.t('form.labelSchoolShort'),
       );
     });
 
@@ -238,7 +238,7 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormVatId).should('not.exist');
       cy.dataCy(selectorFormTitle).should(
         'contain',
-        i18n.global.t('form.labelFamily'),
+        i18n.global.t('form.labelFamilyShort'),
       );
     });
 
@@ -253,7 +253,7 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormVatId).should('not.exist');
       cy.dataCy(selectorFormTitle).should(
         'contain',
-        i18n.global.t('form.labelFamily'),
+        i18n.global.t('form.labelFamilyShort'),
       );
     });
 

@@ -77,11 +77,11 @@ export default defineComponent({
         value: OrganizationType.company,
       },
       {
-        label: i18n.global.t('form.labelSchool'),
+        label: i18n.global.t('form.labelSchoolShort'),
         value: OrganizationType.school,
       },
       {
-        label: i18n.global.t('form.labelFamily'),
+        label: i18n.global.t('form.labelFamilyShort'),
         value: OrganizationType.family,
       },
     ];

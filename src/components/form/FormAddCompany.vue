@@ -121,10 +121,10 @@ export default defineComponent({
         data-cy="form-add-company-title"
       >
         <span v-if="organizationType === OrganizationType.school">{{
-          $t('form.labelSchool')
+          $t('form.labelSchoolShort')
         }}</span>
         <span v-else-if="organizationType === OrganizationType.family">{{
-          $t('form.labelFamily')
+          $t('form.labelFamilyShort')
         }}</span>
         <span v-else>{{ $t('form.labelCompanyShort') }}</span>
       </h3>

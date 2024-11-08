@@ -50,7 +50,7 @@ describe('<FormRegisterCoordinator>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['labelInstitutionType', 'labelSchool', 'labelFamily'],
+      ['labelInstitutionType', 'labelSchoolShort', 'labelFamilyShort'],
       'form',
       i18n,
     );

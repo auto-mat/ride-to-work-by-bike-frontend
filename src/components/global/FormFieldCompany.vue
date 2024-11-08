@@ -285,11 +285,48 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
-    const formFieldLabel = computed(
-      () => props.label || i18n.global.t('form.labelCompany'),
-    );
+    const formFieldLabel = computed(() => {
+      if (props.label) {
+        return props.label;
+      } else if (props.organizationType === OrganizationType.company) {
+        return i18n.global.t('form.labelCompany');
+      } else if (props.organizationType === OrganizationType.school) {
+        return i18n.global.t('form.labelSchool');
+      } else if (props.organizationType === OrganizationType.family) {
+        return i18n.global.t('form.labelFamily');
+      }
+      return '';
+    });
+
+    const addNewOrganizationDialogTitle = computed(() => {
+      if (props.label) {
+        return props.label;
+      } else if (props.organizationType === OrganizationType.company) {
+        return i18n.global.t('form.company.titleAddCompany');
+      } else if (props.organizationType === OrganizationType.school) {
+        return i18n.global.t('form.company.titleAddSchool');
+      } else if (props.organizationType === OrganizationType.family) {
+        return i18n.global.t('form.company.titleAddFamily');
+      }
+      return '';
+    });
+
+    const addNewOrganizationDialogBtn = computed(() => {
+      if (props.label) {
+        return props.label;
+      } else if (props.organizationType === OrganizationType.company) {
+        return i18n.global.t('form.company.buttonAddCompany');
+      } else if (props.organizationType === OrganizationType.school) {
+        return i18n.global.t('form.company.buttonAddSchool');
+      } else if (props.organizationType === OrganizationType.family) {
+        return i18n.global.t('form.company.buttonAddFamily');
+      }
+      return '';
+    });
 
     return {
+      addNewOrganizationDialogTitle,
+      addNewOrganizationDialogBtn,
       company,
       companyNew,
       formFieldLabel,
@@ -301,6 +338,7 @@ export default defineComponent({
       onClose,
       onFilter,
       onSubmit,
+      OrganizationType,
     };
   },
 });
@@ -384,7 +422,7 @@ export default defineComponent({
       data-cy="dialog-add-company"
     >
       <template #title>
-        {{ $t('form.company.titleAddCompany') }}
+        {{ addNewOrganizationDialogTitle }}
       </template>
       <template #content>
         <q-form ref="formRef">
@@ -414,7 +452,7 @@ export default defineComponent({
               data-cy="dialog-button-submit"
               @click="onSubmit"
             >
-              {{ $t('form.company.buttonAddCompany') }}
+              {{ addNewOrganizationDialogBtn }}
             </q-btn>
           </div>
         </div>
