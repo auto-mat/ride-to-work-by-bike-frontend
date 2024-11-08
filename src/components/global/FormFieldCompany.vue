@@ -354,6 +354,17 @@ export default defineComponent({
       return '';
     });
 
+    const organizationFieldValidationTransStrings = computed(() => {
+      if (props.label) {
+        return props.label;
+      } else {
+        return organizationTypesTransStrings[props.organizationType]['form'][
+          'labelShort'
+        ];
+      }
+      return '';
+    });
+
     return {
       addNewOrganizationDialogTitle,
       addNewOrganizationDialogBtn,
@@ -368,6 +379,7 @@ export default defineComponent({
       onClose,
       onFilter,
       onSubmit,
+      organizationFieldValidationTransStrings,
       OrganizationType,
     };
   },
@@ -407,7 +419,7 @@ export default defineComponent({
             (val) =>
               isFilled(val) ||
               $t('form.messageFieldRequired', {
-                fieldName: $t('form.labelCompanyShort'),
+                fieldName: $t(organizationFieldValidationTransStrings),
               }),
           ]"
           @filter="onFilter"
