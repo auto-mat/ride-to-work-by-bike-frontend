@@ -7,6 +7,7 @@ import {
   httpSuccessfullStatus,
   interceptOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
+import { OrganizationType } from '../types/Organization';
 
 const model = ref('');
 
@@ -45,6 +46,7 @@ describe('<FormFieldCompany>', () => {
       cy.mount(FormFieldCompany, {
         props: {
           ...vModelAdapter(model),
+          organizationType: OrganizationType.company,
         },
       });
       cy.viewport('macbook-16');
