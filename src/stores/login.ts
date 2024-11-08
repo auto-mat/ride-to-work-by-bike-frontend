@@ -409,37 +409,6 @@ export const useLoginStore = defineStore('login', {
 
       return data;
     },
-    /**
-     * Login with Facebook
-     * @returns Promise<void>
-     */
-    async loginWithFacebook() {
-      // @ts-expect-error: FB is not typed
-      const { authResponse } = await new Promise(FB.login);
-
-      if (!authResponse) {
-        Notify.create({
-          message: i18n.global.t('login.form.messageGoogleAuthNotAvailable'),
-          color: 'negative',
-        });
-        return;
-      }
-
-      const token = authResponse.accessToken;
-
-      const { data } = await apiFetch<LoginResponse>({
-        endpoint: rideToWorkByBikeConfig.urlApiLogin,
-        method: 'post',
-        payload: {
-          token,
-        },
-        translationKey: 'login',
-        logger: this.$log,
-      });
-
-      // TODO: continue with implementation based on https://jasonwatmore.com/post/2020/10/06/vue-3-facebook-login-tutorial-example?ref=morioh.com&utm_source=morioh.com
-      console.log(data);
-    },
   },
 
   persist: {
