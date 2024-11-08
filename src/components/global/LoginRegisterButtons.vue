@@ -22,12 +22,12 @@
  */
 
 import { defineComponent, inject } from 'vue';
+import { CallbackTypes } from 'vue3-google-login';
 import { useLoginStore } from '../../stores/login';
 import { useI18n } from 'vue-i18n';
 
 // types
 import type { Logger } from '../types/Logger';
-import type { GoogleAuthResponse } from '../types/Login';
 
 export default defineComponent({
   name: 'LoginRegisterButtons',
@@ -42,48 +42,14 @@ export default defineComponent({
     const loginStore = useLoginStore();
     const { t } = useI18n();
 
-    const onGoogleLogin = async (response: GoogleAuthResponse) => {
+    const onGoogleLogin = async (response: CallbackTypes.CodePopupResponse) => {
       if (logger) {
-        logger.debug(`onGoogleLogin - response: ${JSON.stringify(response)}`);
+        logger.debug(
+          `Google Login component response: ${JSON.stringify(response, null, 2)}`,
+        );
       }
-      // process response
-      try {
-        // TODO: confirm the validity of error responses
-        if (response.error) {
-          handleGoogleAuthError(response.error);
-        } else {
-          await loginStore.authenticateWithGoogle(response);
-        }
-      } catch (error) {
-        if (logger) {
-          logger.debug(`Google auth error: ${JSON.stringify(error)}`);
-        }
-      }
-    };
-    /**
-     * Handles Google authentication errors
-     * Shows toast notification based on the error type.
-     * @param {string} error - Error message
-     * @returns {void}
-     */
-    const handleGoogleAuthError = (error: string): void => {
-      if (!logger) {
-        return;
-      }
-      switch (error) {
-        case 'popup_closed_by_user':
-          logger.debug('Login was canceled. Please try again.');
-          break;
-        case 'access_denied':
-          logger.debug('Access denied. Please grant permissions to continue.');
-          break;
-        case 'idpiframe_initialization_failed':
-          logger.debug(
-            'Failed to initialize Google login. Ensure third-party cookies are enabled.',
-          );
-          break;
-        default:
-          logger.debug('An unknown error occurred. Please try again.');
+      if (response) {
+        await loginStore.authenticateWithGoogle(response);
       }
     };
 

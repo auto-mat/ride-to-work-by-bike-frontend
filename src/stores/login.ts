@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 import { Router } from 'vue-router';
+import { CallbackTypes } from 'vue3-google-login';
 
 // composables
 import { i18n } from '../boot/i18n';
@@ -21,7 +22,6 @@ import { useRegisterStore } from './register';
 import type { Logger } from '../components/types/Logger';
 import type { UserLogin } from '../components/types/User';
 import type { LoginResponse } from 'src/components/types/Login';
-import type { GoogleAuthResponse } from '../components/types/Login';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {
@@ -426,14 +426,12 @@ export const useLoginStore = defineStore('login', {
 
       return data;
     },
-    async authenticateWithGoogle(response: GoogleAuthResponse) {
-      this.$log?.debug(
-        `Authenticate with Google - credential: ${response.credential}`,
-      );
+    async authenticateWithGoogle(response: CallbackTypes.CodePopupResponse) {
+      this.$log?.debug(`Authenticate with Google code <${response.code}>.`);
       const payload = {
-        access_token: '', // Google doesn't provide access token in basic response
-        code: '', // Google doesn't provide auth code in basic response
-        id_token: response.credential,
+        access_token: '',
+        code: response.code,
+        id_token: '',
       };
       const { data } = await apiFetch<LoginResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiLoginGoogle,
