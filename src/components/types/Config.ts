@@ -57,6 +57,7 @@ export interface ConfigGlobal {
   urlLoginRegisterBackgroundImage: string;
   urlRTWBBLogo: string;
   checkIsEmailVerifiedInterval: number;
+  googleLoginAppId: string;
 }
 
 export interface ConfigAppVersion {
