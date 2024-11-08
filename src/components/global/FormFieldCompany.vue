@@ -285,15 +285,49 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    let organizationTypesTransStrings = {};
+
+    // Company
+    organizationTypesTransStrings[OrganizationType.company] = {
+      form: {
+        label: i18n.global.t('form.labelCompany'),
+        labelShort: 'form.labelCompanyShort', // trans is done in template with $() func
+      },
+      'form.company': {
+        titleAdd: i18n.global.t('form.company.titleAddCompany'),
+        buttonAdd: i18n.global.t('form.company.buttonAddCompany'),
+      },
+    };
+    // School
+    organizationTypesTransStrings[OrganizationType.school] = {
+      form: {
+        label: i18n.global.t('form.labelSchool'),
+        labelShort: 'form.labelSchoolShort', // trans is done in template with $() func
+      },
+      'form.company': {
+        titleAdd: i18n.global.t('form.company.titleAddSchool'),
+        buttonAdd: i18n.global.t('form.company.buttonAddSchool'),
+      },
+    };
+    // Family
+    organizationTypesTransStrings[OrganizationType.family] = {
+      form: {
+        label: i18n.global.t('form.labelFamily'),
+        labelShort: 'form.labelFamilyShort', // trans is done in template with $() func
+      },
+      'form.company': {
+        titleAdd: i18n.global.t('form.company.titleAddFamily'),
+        buttonAdd: i18n.global.t('form.company.buttonAddFamily'),
+      },
+    };
+
     const formFieldLabel = computed(() => {
       if (props.label) {
         return props.label;
-      } else if (props.organizationType === OrganizationType.company) {
-        return i18n.global.t('form.labelCompany');
-      } else if (props.organizationType === OrganizationType.school) {
-        return i18n.global.t('form.labelSchool');
-      } else if (props.organizationType === OrganizationType.family) {
-        return i18n.global.t('form.labelFamily');
+      } else {
+        return organizationTypesTransStrings[props.organizationType]['form'][
+          'label'
+        ];
       }
       return '';
     });
@@ -301,12 +335,10 @@ export default defineComponent({
     const addNewOrganizationDialogTitle = computed(() => {
       if (props.label) {
         return props.label;
-      } else if (props.organizationType === OrganizationType.company) {
-        return i18n.global.t('form.company.titleAddCompany');
-      } else if (props.organizationType === OrganizationType.school) {
-        return i18n.global.t('form.company.titleAddSchool');
-      } else if (props.organizationType === OrganizationType.family) {
-        return i18n.global.t('form.company.titleAddFamily');
+      } else {
+        return organizationTypesTransStrings[props.organizationType][
+          'form.company'
+        ]['titleAdd'];
       }
       return '';
     });
@@ -314,12 +346,10 @@ export default defineComponent({
     const addNewOrganizationDialogBtn = computed(() => {
       if (props.label) {
         return props.label;
-      } else if (props.organizationType === OrganizationType.company) {
-        return i18n.global.t('form.company.buttonAddCompany');
-      } else if (props.organizationType === OrganizationType.school) {
-        return i18n.global.t('form.company.buttonAddSchool');
-      } else if (props.organizationType === OrganizationType.family) {
-        return i18n.global.t('form.company.buttonAddFamily');
+      } else {
+        return organizationTypesTransStrings[props.organizationType][
+          'form.company'
+        ]['buttonAdd'];
       }
       return '';
     });
