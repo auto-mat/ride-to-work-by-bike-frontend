@@ -47,6 +47,7 @@ export interface ConfigGlobal {
   apiDefaultLang: string;
   urlApiHasUserVerifiedEmail: string;
   urlApiLogin: string;
+  urlApiLoginGoogle: string;
   urlApiOrganizations: string;
   urlApiRefresh: string;
   urlApiRegister: string;

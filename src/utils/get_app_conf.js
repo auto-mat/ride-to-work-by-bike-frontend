@@ -105,6 +105,8 @@ const getAppConfig = (process) => {
       process.env.URL_API_HAS_USER_VERIFIED_EMAIL;
   } else if (process.env.URL_API_LOGIN) {
     config['urlApiLogin'] = process.env.URL_API_LOGIN;
+  } else if (process.env.URL_API_LOGIN_GOOGLE) {
+    config['urlApiLoginGoogle'] = process.env.URL_API_LOGIN_GOOGLE;
   } else if (process.env.URL_API_ORGANIZATIONS) {
     config['urlApiOrganizations'] = process.env.URL_API_ORGANIZATIONS;
   } else if (process.env.URL_API_REFRESH) {
