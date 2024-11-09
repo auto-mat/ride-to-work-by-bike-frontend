@@ -28,6 +28,9 @@ import { CallbackTypes } from 'vue3-google-login';
 // composables
 import { i18n } from '../../boot/i18n';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // stores
 import { useLoginStore } from '../../stores/login';
 
@@ -80,7 +83,15 @@ export default defineComponent({
       }
     };
 
+    /**
+     * Hide Google login button if no client ID is provided.
+     * Client ID is provided in `google_login.js` boot file.
+     */
+    const isGoogleLoginAvailable: boolean =
+      !!rideToWorkByBikeConfig.googleLoginAppId;
+
     return {
+      isGoogleLoginAvailable,
       onGoogleLogin,
       onGoogleLoginError,
     };
@@ -92,6 +103,7 @@ export default defineComponent({
   <div class="bg-primary">
     <!-- Button: Login Google -->
     <GoogleLogin
+      v-if="isGoogleLoginAvailable"
       :callback="onGoogleLogin"
       :error="onGoogleLoginError"
       class="full-width"
@@ -101,7 +113,7 @@ export default defineComponent({
         rounded
         outline
         color="white"
-        class="full-width"
+        class="full-width q-mb-md"
         data-cy="login-register-button-google"
       >
         <!-- Icon -->
@@ -127,7 +139,7 @@ export default defineComponent({
       rounded
       outline
       color="primary"
-      class="full-width q-mt-md"
+      class="full-width"
       data-cy="login-register-button-facebook"
     >
       <!-- Icon -->
