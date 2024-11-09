@@ -38,83 +38,17 @@ describe('<LoginRegisterButtons>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('renders login button google', () => {
-      cy.dataCy('login-register-button-google')
-        .should('be.visible')
-        .and('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '500')
-        .and('have.css', 'text-transform', 'uppercase')
-        .and('have.css', 'border-radius', '28px')
-        .and('have.color', white)
-        .and('contain', i18n.global.t('login.buttons.buttonGoogle'));
-    });
+    coreTests();
 
-    it('renders google button icon', () => {
-      cy.dataCy('login-register-button-google-icon')
-        .should('have.class', 'fab')
-        .and('have.class', 'fa-google')
-        .and('have.color', white);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('height')
-        .should('be.equal', 18);
-      cy.dataCy('login-register-button-google-icon')
-        .invoke('width')
-        .should('be.equal', 18);
-    });
-
-    it('renders login button facebook', () => {
-      cy.dataCy('login-register-button-facebook')
-        .should('be.visible')
-        .and('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '500')
-        .and('have.css', 'text-transform', 'uppercase')
-        .and('have.css', 'border-radius', '28px')
-        .and('have.color', primary)
-        .and('contain', i18n.global.t('login.buttons.buttonFacebook'));
-    });
-
-    it('renders facebook button icon', () => {
-      cy.dataCy('login-register-button-facebook-icon')
-        .should('contain', 'facebook')
-        .and('have.color', primary);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('height')
-        .should('be.equal', 24);
-      cy.dataCy('login-register-button-facebook-icon')
-        .invoke('width')
-        .should('be.equal', 24);
-    });
-
-    it('renders buttons with correct spacing', () => {
-      cy.dataCy('login-register-button-facebook').should(
-        'have.css',
-        'margin-top',
-        '16px',
+    it('renders buttons with correct text', () => {
+      cy.dataCy('login-register-button-google').should(
+        'contain',
+        i18n.global.t('login.buttons.buttonGoogle'),
       );
-    });
-
-    it('sends request to google auth endpoint with Google login info', () => {
-      const loginStore = useLoginStore();
-      // intercept google login BE API call
-      interceptGoogleLoginApi(rideToWorkByBikeConfig, i18n);
-      // mock the Google API response (which we do not control)
-      cy.fixture('googleLoginApiResponse.json').then((googleLoginResponse) => {
-        cy.fixture('loginRegisterResponseChallengeActive.json').then(
-          (loginResponse) => {
-            // login with Google data
-            loginStore.authenticateWithGoogle(googleLoginResponse);
-            // test request to the BE endpoint
-            cy.wait('@loginGoogle').then(({ request, response }) => {
-              expect(request.body.code).to.eq(googleLoginResponse.code);
-              expect(response.statusCode).to.eq(httpSuccessfullStatus);
-              expect(response.body).to.deep.eq(loginResponse);
-            });
-            cy.contains(i18n.global.t('login.apiMessageSuccess')).should(
-              'be.visible',
-            );
-          },
-        );
-      });
+      cy.dataCy('login-register-button-facebook').should(
+        'contain',
+        i18n.global.t('login.buttons.buttonFacebook'),
+      );
     });
   });
 
@@ -129,6 +63,21 @@ describe('<LoginRegisterButtons>', () => {
       cy.viewport('macbook-16');
     });
 
+    coreTests();
+
+    it('renders buttons with correct text', () => {
+      cy.dataCy('login-register-button-google').should(
+        'contain',
+        i18n.global.t('register.buttons.buttonGoogle'),
+      );
+      cy.dataCy('login-register-button-facebook').should(
+        'contain',
+        i18n.global.t('register.buttons.buttonFacebook'),
+      );
+    });
+  });
+
+  function coreTests() {
     it('renders register button google', () => {
       cy.dataCy('login-register-button-google')
         .should('be.visible')
@@ -136,8 +85,7 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', white)
-        .and('contain', i18n.global.t('register.buttons.buttonGoogle'));
+        .and('have.color', white);
     });
 
     it('renders google button icon', () => {
@@ -160,8 +108,7 @@ describe('<LoginRegisterButtons>', () => {
         .and('have.css', 'font-weight', '500')
         .and('have.css', 'text-transform', 'uppercase')
         .and('have.css', 'border-radius', '28px')
-        .and('have.color', primary)
-        .and('contain', i18n.global.t('register.buttons.buttonFacebook'));
+        .and('have.color', primary);
     });
 
     it('renders facebook button icon', () => {
@@ -177,9 +124,9 @@ describe('<LoginRegisterButtons>', () => {
     });
 
     it('renders buttons with correct spacing', () => {
-      cy.dataCy('login-register-button-facebook').should(
+      cy.dataCy('login-register-button-google').should(
         'have.css',
-        'margin-top',
+        'margin-bottom',
         '16px',
       );
     });
@@ -207,5 +154,5 @@ describe('<LoginRegisterButtons>', () => {
         );
       });
     });
-  });
+  }
 });
