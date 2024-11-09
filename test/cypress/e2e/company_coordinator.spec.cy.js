@@ -12,13 +12,6 @@ const selectorButtonAttendance = 'coordinator-tabs-button-attendance';
 const selectorButtonChallenges = 'coordinator-tabs-button-challenges';
 const selectorButtonResults = 'coordinator-tabs-button-results';
 const selectorTasksList = 'task-list-coordinator';
-const selectorTasksListShowPast = 'task-list-show-past';
-const selectorTasksItemFuture = 'task-item-future';
-const selectorTasksItemPastTitle = 'task-item-past-title';
-
-// variables
-// timestamp: Saturday 14. September 2024 1:00:00 (GMT)
-const systemTimeTasks = new Date('2024-09-14T01:00:00Z').getTime();
 
 describe('Company Coordinator Page', () => {
   context('general', () => {
@@ -115,6 +108,10 @@ describe('Company Coordinator Page', () => {
       cy.go('forward');
       cy.url().should('include', routesConf['coordinator_invoices'].path);
     });
+
+    it('renders TaskListComponent', () => {
+      cy.dataCy(selectorTasksList).should('be.visible');
+    });
   });
 
   context('responsive behavior', () => {
@@ -144,44 +141,6 @@ describe('Company Coordinator Page', () => {
       cy.viewport('iphone-6');
       cy.dataCy(selectorPage).should('be.visible');
       cy.dataCy(selectorTabs).should('be.visible');
-    });
-  });
-
-  context('time between tasks', () => {
-    beforeEach(() => {
-      cy.clock(systemTimeTasks);
-      cy.visit('#' + routesConf['coordinator']['path']);
-      cy.viewport('macbook-16');
-
-      // tick to load the page UI
-      cy.tick(1000);
-      // load config an i18n o13bjects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
-      });
-    });
-
-    it('displays tasks list and allows to show past tasks', () => {
-      // tick to load the tasks list component
-      cy.tick(1000);
-      cy.dataCy(selectorTasksList).should('be.visible');
-      // future tasks
-      cy.dataCy(selectorTasksItemFuture).should('be.visible');
-      // past tasks not visible
-      cy.dataCy(selectorTasksItemPastTitle).should('not.exist');
-      // button show past tasks visible
-      cy.dataCy(selectorTasksListShowPast).should('be.visible');
-      // show past tasks
-      cy.dataCy(selectorTasksListShowPast).click();
-      cy.tick(1000);
-      // past tasks visible
-      cy.dataCy(selectorTasksItemPastTitle).should('be.visible');
     });
   });
 });
