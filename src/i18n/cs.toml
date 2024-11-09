@@ -478,8 +478,8 @@ promptWrongEmail = "Máte špatně e-mail?"
 linkRegister = "Registrujte se."
 
 [login.buttons]
-buttonGoogle = "Přihlásit přes Facebook"
-buttonFacebook = "Přihlásit přes Google"
+buttonGoogle = "Přihlásit přes Google"
+buttonFacebook = "Přihlásit přes Facebook"
 
 [login.bannerAppButtons]
 title = "Zaznamenávejte si jízdy z mobilu!"
