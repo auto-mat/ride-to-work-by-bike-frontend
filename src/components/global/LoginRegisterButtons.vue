@@ -21,8 +21,14 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6274%3A28817&mode=dev)
  */
 
+import { Notify } from 'quasar';
 import { defineComponent, inject } from 'vue';
 import { CallbackTypes } from 'vue3-google-login';
+
+// composables
+import { i18n } from '../../boot/i18n';
+
+// stores
 import { useLoginStore } from '../../stores/login';
 
 // types
@@ -51,8 +57,32 @@ export default defineComponent({
       }
     };
 
+    const onGoogleLoginError = (error: CallbackTypes.ErrorPopupResponse) => {
+      if (logger) {
+        logger.error(
+          `Google Login component error: ${JSON.stringify(error.message, null, 2)}`,
+        );
+      }
+      /**
+       * Types of error based on `TokenClientConfig` class defined in
+       * the `vue3-google-login` library.
+       */
+      if (error.type === 'popup_failed_to_open') {
+        Notify.create({
+          message: i18n.global.t('login.messagePopupFailedToOpen'),
+          color: 'negative',
+        });
+      } else if (error.type === 'popup_closed') {
+        Notify.create({
+          message: i18n.global.t('login.messagePopupClosed'),
+          color: 'negative',
+        });
+      }
+    };
+
     return {
       onGoogleLogin,
+      onGoogleLoginError,
     };
   },
 });
@@ -61,7 +91,11 @@ export default defineComponent({
 <template>
   <div class="bg-primary">
     <!-- Button: Login Google -->
-    <GoogleLogin :callback="onGoogleLogin" class="full-width">
+    <GoogleLogin
+      :callback="onGoogleLogin"
+      :error="onGoogleLoginError"
+      class="full-width"
+    >
       <q-btn
         unelevated
         rounded

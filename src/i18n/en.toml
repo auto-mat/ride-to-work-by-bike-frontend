@@ -444,6 +444,8 @@ textListPrizes = "Winners are drawn from those who were most successful in the c
 apiMessageSuccess = "Login was successful"
 apiMessageError = "Login failed. Please try again later. {error}"
 apiMessageErrorWithMessage = "Login failed. Please try again later. Error: {error}"
+messagePopupFailedToOpen = "Failed to open Google login window."
+messagePopupClosed = "Google login window was closed before completing the login."
 
 [loginRegisterMobileMenu]
 labelHelp = "Help"

@@ -444,6 +444,8 @@ titleListPrizes = "Možné výhry"
 apiMessageSuccess = "Prihlásenie bolo úspešné"
 apiMessageError = "Prihlásenie sa nepodarilo. Prosím, skúste to znovu později. {error}"
 apiMessageErrorWithMessage = "Prihlásenie sa nepodarilo. Prosím, skúste to znovu později. Chyba: {error}"
+messagePopupFailedToOpen = "Nepodarilo sa otvoriť okno pre prihlásenie cez Google."
+messagePopupClosed = "Okno pre prihlásenie cez Google bolo zavreté pred dokončením prihlásenia."
 
 [loginRegisterMobileMenu]
 labelHelp = "Pomoc"
