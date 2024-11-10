@@ -51,7 +51,7 @@ export default defineComponent({
 
     const onGoogleLogin = async (response: CallbackTypes.CodePopupResponse) => {
       logger?.debug(
-        `Google Login component response: ${JSON.stringify(response, null, 2)}`,
+        `Google login component response <${JSON.stringify(response, null, 2)}>.`,
       );
       if (response) {
         await loginStore.authenticateWithGoogle(response);
@@ -59,9 +59,7 @@ export default defineComponent({
     };
 
     const onGoogleLoginError = (error: CallbackTypes.ErrorPopupResponse) => {
-      logger?.error(
-        `Google Login component error: ${JSON.stringify(error.message, null, 2)}`,
-      );
+      logger?.error(`Google login component error <${error.message}>.`);
 
       /**
        * Types of error based on `TokenClientConfig` class defined in
