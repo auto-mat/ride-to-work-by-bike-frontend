@@ -19,7 +19,7 @@ describe('Company Coordinator Page', () => {
       cy.visit('#' + routesConf['coordinator']['path']);
       cy.viewport('macbook-16');
 
-      // load config an i18n o13bjects as aliases
+      // load config and i18n object as alias
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
@@ -119,7 +119,7 @@ describe('Company Coordinator Page', () => {
       cy.visit('#' + routesConf['coordinator']['path']);
       cy.viewport('macbook-16');
 
-      // load config an i18n o13bjects as aliases
+      // load config and i18n object as alias
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
