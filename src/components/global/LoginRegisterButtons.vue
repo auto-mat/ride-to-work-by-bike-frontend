@@ -50,22 +50,19 @@ export default defineComponent({
     const loginStore = useLoginStore();
 
     const onGoogleLogin = async (response: CallbackTypes.CodePopupResponse) => {
-      if (logger) {
-        logger.debug(
-          `Google Login component response: ${JSON.stringify(response, null, 2)}`,
-        );
-      }
+      logger?.debug(
+        `Google Login component response: ${JSON.stringify(response, null, 2)}`,
+      );
       if (response) {
         await loginStore.authenticateWithGoogle(response);
       }
     };
 
     const onGoogleLoginError = (error: CallbackTypes.ErrorPopupResponse) => {
-      if (logger) {
-        logger.error(
-          `Google Login component error: ${JSON.stringify(error.message, null, 2)}`,
-        );
-      }
+      logger?.error(
+        `Google Login component error: ${JSON.stringify(error.message, null, 2)}`,
+      );
+
       /**
        * Types of error based on `TokenClientConfig` class defined in
        * the `vue3-google-login` library.
