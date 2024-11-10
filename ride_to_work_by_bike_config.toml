@@ -82,9 +82,9 @@ urlApiLoginGoogle = "auth/google/login/"
 urlApiOrganizations = "organizations/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"
-urlApiRegisterCoordinator = "rest/challenge/registration/coordinator/"
+urlApiRegisterCoordinator = "challenge/registration/coordinator/"
 urlApiResetPassword = "auth/password/reset/"
-urlApiChallengeRegistrationUser = "rest/challenge/registration/user/"
+urlApiChallengeRegistrationUser = "challenge/registration/user/"
 
 checkIsEmailVerifiedInterval = 20 # seconds
 
