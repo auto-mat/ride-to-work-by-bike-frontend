@@ -430,9 +430,9 @@ export const interceptRegisterCoordinatorApi = (
  * Intercept Google login API call
  * It uses the same response data as the login API call.
  * Provides a `@loginGoogle` alias for the intercepted request.
- * @param {ConfigGlobal} config - API config
+ * @param {ConfigGlobal} config - App global config
  * @param {I18n} i18n - i18n instance
- * @return {void}
+ * @returns {void}
  */
 export const interceptGoogleLoginApi = (
   config: ConfigGlobal,
