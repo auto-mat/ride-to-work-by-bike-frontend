@@ -30,6 +30,7 @@ describe('<LoginRegisterButtons>', () => {
   context('variant: login', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
+      rideToWorkByBikeConfig.googleLoginAppId = 'TEST_SECRET';
       cy.mount(LoginRegisterButtons, {
         props: {
           variant: 'login',
