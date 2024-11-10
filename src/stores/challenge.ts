@@ -2,6 +2,8 @@
 import { defineStore } from 'pinia';
 import { PhaseType } from '../components/types/Challenge';
 
+import { timestampToDatetimeString } from 'src/utils';
+
 // enums
 export enum ChallengeStatus {
   before = 'before',
@@ -69,10 +71,16 @@ export const useChallengeStore = defineStore('challenge', {
       if (phase) {
         const startDate: number = new Date(phase.date_from).getTime();
         const endDate: number = new Date(phase.date_to).getTime();
-        this.$log?.debug(`<${phaseType}> phase date from <${startDate}>.`);
-        this.$log?.debug(`<${phaseType}> phase date to <${endDate}>.`);
+        this.$log?.debug(
+          `<${phaseType}> phase date from <${timestampToDatetimeString(startDate / 1000)}>.`,
+        );
+        this.$log?.debug(
+          `<${phaseType}> phase date to <${timestampToDatetimeString(endDate / 1000)}>.`,
+        );
         const now: number = new Date().getTime();
-        this.$log?.debug(`Now date <${now}>.`);
+        this.$log?.debug(
+          `Current date and time is <${timestampToDatetimeString(now / 1000)}>.`,
+        );
         this.$log?.debug(
           `Is challenge in phase type <${phaseType}> <${now >= startDate && now <= endDate}>.`,
         );
