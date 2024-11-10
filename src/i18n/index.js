@@ -10,8 +10,9 @@ export const loadLocaleMessages = async () => {
     if (matched && matched.length > 1) {
       const locale = matched[1];
       // Dynamic import TOML translation file content
-      let localeFileContent = await import(/* @vite-ignore */ localeFile);
-      messages[locale] = localeFileContent.default;
+      localesFiles[localeFile]().then((content) => {
+        messages[locale] = content.default;
+      });
     }
   }
   return messages;
