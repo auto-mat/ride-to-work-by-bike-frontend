@@ -83,7 +83,15 @@ export default defineComponent({
      * Client ID is provided in `google_login.js` boot file.
      */
     const isGoogleLoginAvailable: boolean =
-      !!rideToWorkByBikeConfig.googleLoginAppId;
+      !!rideToWorkByBikeConfig.googleLoginAppId &&
+      rideToWorkByBikeConfig.googleLoginAppId !==
+        rideToWorkByBikeConfig.secretString;
+
+    logger?.debug(
+      'Is Google login button widget available (Google ID' +
+        ` <${rideToWorkByBikeConfig.googleLoginAppId}> is provided)` +
+        ` <${isGoogleLoginAvailable}>.`,
+    );
 
     return {
       isGoogleLoginAvailable,

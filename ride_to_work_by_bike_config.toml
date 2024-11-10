@@ -106,4 +106,5 @@ dateTimeFormatsAllLocales = '''
 
 # SECRETS
 
+secretString = "SECRET"
 googleLoginAppId = "SECRET"
