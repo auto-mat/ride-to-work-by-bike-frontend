@@ -50,12 +50,25 @@ export const useValidation = () => {
     return confirm === password;
   };
 
-  const isFilled = (val: string | number): boolean => {
-    if (typeof val === 'number') {
+  const isFilled = (val: string | number | object): boolean => {
+    // null is object so check first
+    if (val === null) {
+      return false;
+    } else if (typeof val === 'object') {
+      // array
+      if (Array.isArray(val)) {
+        return val.length > 0;
+      }
+      // object
+      return Object.keys(val).length > 0;
+    } else if (typeof val === 'number') {
+      // number
       return val !== 0;
-    } else {
-      return val?.length > 0;
+    } else if (typeof val === 'string') {
+      // string
+      return val.trim().length > 0;
     }
+    return false;
   };
 
   const isAboveZero = (val: string | number): boolean => {
