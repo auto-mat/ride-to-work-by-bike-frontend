@@ -31,7 +31,7 @@ import { useSelectedOrganization } from 'src/composables/useSelectedOrganization
 import formOrganizationOptions from '../../../test/cypress/fixtures/formOrganizationOptions.json';
 
 // types
-import { Organization } from '../types/Organization';
+import { Organization, OrganizationLevel } from '../types/Organization';
 
 export default defineComponent({
   name: 'FormSelectOrganization',
@@ -51,6 +51,7 @@ export default defineComponent({
       addressOptions,
       organizationId,
       organizationOptions,
+      OrganizationLevel,
     };
   },
 });
@@ -59,8 +60,8 @@ export default defineComponent({
 <template>
   <div data-cy="form-select-organization">
     <form-field-select-table
-      variant="company"
       v-model="organizationId"
+      :organization-level="OrganizationLevel.organization"
       :options="organizationOptions"
       :label="$t('form.company.labelCompany')"
       :label-button="$t('register.challenge.buttonAddCompany')"

@@ -41,6 +41,9 @@ import TopBarCountdown from 'src/components/global/TopBarCountdown.vue';
 // composables
 import { useStepperValidation } from 'src/composables/useStepperValidation';
 
+// enums
+import { OrganizationLevel } from 'src/components/types/Organization';
+
 // types
 import type { FormSelectTableOption } from 'src/components/types/Form';
 
@@ -115,18 +118,18 @@ export default defineComponent({
     const teamOptions: FormSelectTableOption[] = [
       {
         label: 'Zelený team',
-        value: 'team-1',
+        value: 34565,
         members: 2,
         maxMembers: 5,
       },
       {
         label: 'Modrý team',
-        value: 'team-2',
+        value: 34566,
         members: 5,
         maxMembers: 5,
       },
     ];
-    const team = ref<string>('');
+    const team = ref<number | null>(null);
 
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
@@ -179,6 +182,7 @@ export default defineComponent({
       teamOptions,
       onBack,
       onContinue,
+      OrganizationLevel,
     };
   },
 });
@@ -387,7 +391,7 @@ export default defineComponent({
             <q-form ref="stepTeamRef">
               <form-field-select-table
                 v-model="team"
-                variant="team"
+                :organization-level="OrganizationLevel.team"
                 :options="teamOptions"
                 :label="$t('form.team.labelTeam')"
                 :label-button="$t('form.team.buttonAddTeam')"

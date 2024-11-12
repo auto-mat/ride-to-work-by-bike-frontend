@@ -49,19 +49,7 @@ import FormAddTeam from '../form/FormAddTeam.vue';
 import { useValidation } from '../../composables/useValidation';
 
 // enums
-import { OrganizationType } from '../types/Organization';
-/**
- * Define enum union
- * @see https://github.com/microsoft/TypeScript/issues/17592#issuecomment-449440944
- */
-enum TeamEnum {
-  team = 'team',
-}
-type SelectTableVariant = TeamEnum | OrganizationType;
-const SelectTableVariant = {
-  ...TeamEnum,
-  ...OrganizationType,
-};
+import { OrganizationType, OrganizationLevel } from '../types/Organization';
 
 // types
 import {
@@ -80,7 +68,7 @@ export default defineComponent({
   },
   props: {
     modelValue: {
-      type: String as () => string | null,
+      type: Number as () => number | null,
       required: true,
     },
     options: {
@@ -103,9 +91,13 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    variant: {
-      type: String as () => SelectTableVariant,
+    organizationLevel: {
+      type: String as () => OrganizationLevel,
       required: true,
+    },
+    organizationType: {
+      type: String as () => OrganizationType,
+      default: OrganizationLevel.organization,
     },
   },
   emits: ['update:modelValue'],
@@ -147,10 +139,10 @@ export default defineComponent({
 
     // v-model value
     const inputValue = computed({
-      get(): string | null {
+      get(): number | null {
         return props.modelValue;
       },
-      set(value: string | null): void {
+      set(value: number | null): void {
         emit('update:modelValue', value);
       },
     });
@@ -203,7 +195,8 @@ export default defineComponent({
       isFilled,
       onClose,
       onSubmit,
-      SelectTableVariant,
+      OrganizationType,
+      OrganizationLevel,
     };
   },
 });
@@ -326,12 +319,13 @@ export default defineComponent({
           <template #content>
             <q-form ref="formRef">
               <form-add-company
-                v-if="variant === SelectTableVariant.company"
-                class="q-mb-lg"
+                v-if="organizationLevel === OrganizationLevel.organization"
                 v-model="companyNew"
+                :organization-type="organizationType"
+                class="q-mb-lg"
               ></form-add-company>
               <form-add-team
-                v-if="variant === SelectTableVariant.team"
+                v-if="organizationLevel === OrganizationLevel.team"
                 class="q-mb-lg"
                 :form-values="teamNew"
                 @update:form-values="teamNew = $event"
@@ -366,7 +360,7 @@ export default defineComponent({
       </q-card>
     </q-field>
     <div
-      v-if="variant === SelectTableVariant.company"
+      v-if="organizationLevel === OrganizationLevel.organization"
       class="text-caption text-grey-7 q-mt-sm"
       data-cy="form-select-table-user-note"
     >

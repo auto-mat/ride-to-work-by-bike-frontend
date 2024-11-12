@@ -7,6 +7,12 @@ export enum OrganizationType {
   family = 'family',
 }
 
+export enum OrganizationLevel {
+  organization = 'organization',
+  subsidiary = 'subsidiary',
+  team = 'team',
+}
+
 export interface Organization {
   subsidiaries: OrganizationSubsidiary[];
   description?: string;
