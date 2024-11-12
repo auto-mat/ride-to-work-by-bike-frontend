@@ -10,7 +10,7 @@
  * Note: This component is commonly used in `RegisterChallengePage`.
  *
  * @props
- * - `modelValue` (Number, required): The object representing selected
+ * - `modelValue` (Number, required): The ID representing selected
  *   company.
  * - `options` (Array<FormSelectTableOption>, required): The object
  *   representing the options.
