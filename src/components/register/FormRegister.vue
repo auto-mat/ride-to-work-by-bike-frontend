@@ -263,19 +263,6 @@ export default defineComponent({
               >.
             </q-checkbox>
           </q-field>
-          <!-- Input: Newsletter -->
-          <q-checkbox
-            dense
-            v-model="isNewsletterSubscription"
-            color="primary"
-            :true-value="true"
-            :false-value="false"
-            class="text-white q-mt-md"
-            style="align-items: flex-start"
-            data-cy="form-register-newsletter-subscription"
-          >
-            <span>{{ $t('register.form.labelNewsletterSubscription') }}</span>
-          </q-checkbox>
         </div>
       </div>
       <!-- Button: submit -->

@@ -43,8 +43,6 @@ const selectorFormRegisterLoginLink = 'form-register-login-link';
 const selectorFormRegisterTextNoActiveChallenge =
   'form-register-text-no-active-challenge';
 const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
-const selectorFormRegisterNewsletterSubscription =
-  'form-register-newsletter-subscription';
 const selectorFormRegisterSeparator = 'form-register-separator';
 
 // variables
@@ -397,16 +395,6 @@ describe('<FormRegister>', () => {
         .and('contain', i18n.global.t('register.form.labelPrivacyConsent1'))
         .and('contain', i18n.global.t('register.form.labelPrivacyConsentLink'))
         .and('contain', i18n.global.t('register.form.labelPrivacyConsent2'));
-      // newsletter subscription
-      cy.dataCy(selectorFormRegisterNewsletterSubscription)
-        .should('be.visible')
-        .and('have.css', 'font-size', `${fontSizeText}px`)
-        .and('have.css', 'font-weight', `${fontWeightText}`)
-        .and('have.color', white)
-        .and(
-          'contain',
-          i18n.global.t('register.form.labelNewsletterSubscription'),
-        );
     });
 
     it('allows to submit form after filling fields', () => {
@@ -483,7 +471,6 @@ describe('<FormRegister>', () => {
         challengeStore.getIsChallengeInPhase(PhaseType.competition),
       ).to.equal(true);
       cy.dataCy(selectorFormRegisterPrivacyConsent).should('not.exist');
-      cy.dataCy(selectorFormRegisterNewsletterSubscription).should('not.exist');
     });
 
     it('allows to submit form after filling fields and accepting privacy policy', () => {
