@@ -10,7 +10,7 @@
  * Note: This component is commonly used in `RegisterChallengePage`.
  *
  * @props
- * - `modelValue` (String, required): The object representing selected
+ * - `modelValue` (Number, required): The object representing selected
  *   company.
  * - `options` (Array<FormSelectTableOption>, required): The object
  *   representing the options.
@@ -19,6 +19,10 @@
  * - `labelButtonDialog` (string): The translation for the add
  *   button inside the dialog.
  * - `titleDialog` (string): The translation for the dialog title.
+ * - `organizationLevel` (OrganizationLevel, required): The organization
+ *   level - table is used for organization or team selection.
+ * - `organizationType` (OrganizationType,
+ *   default: OrganizationType.organization): The organization type.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -26,6 +30,7 @@
  * @components
  * - `DialogDefault`: Used to render a dialog window with form as content.
  * - `FormAddCompany`: Used to render form for registering a new company.
+ * - `FormAddTeam`: Used to render form for registering a new team.
  *
  * @example
  * <form-field-select-table />
