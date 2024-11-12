@@ -3,6 +3,10 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { useSelectedOrganization } from 'src/composables/useSelectedOrganization';
 import { createPinia, setActivePinia } from 'pinia';
+import {
+  OrganizationLevel,
+  OrganizationType,
+} from 'src/components/types/Organization';
 // import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 const { contactEmail } = rideToWorkByBikeConfig;
@@ -63,7 +67,8 @@ describe('<FormFieldSelectTable>', () => {
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
-          variant: 'company',
+          organizationLevel: OrganizationLevel.organization,
+          organizationType: OrganizationType.company,
           label: i18n.global.t('form.company.labelCompany'),
           labelButton: i18n.global.t('register.challenge.buttonAddCompany'),
           labelButtonDialog: i18n.global.t('form.company.buttonAddCompany'),
@@ -191,7 +196,8 @@ describe('<FormFieldSelectTable>', () => {
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
-          variant: 'company',
+          organizationLevel: OrganizationLevel.organization,
+          organizationType: OrganizationType.company,
           modelValue: options.value[0].value,
           label: i18n.global.t('form.company.labelCompany'),
           labelButton: i18n.global.t('register.challenge.buttonAddCompany'),
@@ -215,7 +221,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
-          variant: 'team',
+          organizationLevel: OrganizationLevel.team,
           label: i18n.global.t('form.team.labelTeam'),
           labelButton: i18n.global.t('form.team.buttonAddTeam'),
           labelButtonDialog: i18n.global.t('form.team.buttonAddTeam'),
@@ -281,7 +287,7 @@ describe('<FormFieldSelectTable>', () => {
         .and('contain', i18n.global.t('form.messageOptionRequired'));
     });
 
-    it('renders dialog when for adding a new company', () => {
+    it('renders dialog when for adding a new team', () => {
       cy.dataCy('button-add-option').click();
       cy.dataCy('dialog-add-option').should('be.visible');
       cy.dataCy('dialog-add-option')

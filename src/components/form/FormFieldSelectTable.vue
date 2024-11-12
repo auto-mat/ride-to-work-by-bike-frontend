@@ -102,7 +102,7 @@ export default defineComponent({
     },
     organizationType: {
       type: String as () => OrganizationType,
-      default: OrganizationLevel.organization,
+      default: OrganizationType.company,
     },
   },
   emits: ['update:modelValue'],
