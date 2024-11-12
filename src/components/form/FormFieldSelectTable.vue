@@ -48,6 +48,21 @@ import FormAddTeam from '../form/FormAddTeam.vue';
 // composables
 import { useValidation } from '../../composables/useValidation';
 
+// enums
+import { OrganizationType } from '../types/Organization';
+/**
+ * Define enum union
+ * @see https://github.com/microsoft/TypeScript/issues/17592#issuecomment-449440944
+ */
+enum TeamEnum {
+  team = 'team',
+}
+type SelectTableVariant = TeamEnum | OrganizationType;
+const SelectTableVariant = {
+  ...TeamEnum,
+  ...OrganizationType,
+};
+
 // types
 import {
   FormCompanyFields,
@@ -89,7 +104,7 @@ export default defineComponent({
       required: true,
     },
     variant: {
-      type: String as () => 'company' | 'school' | 'group' | 'team',
+      type: String as () => SelectTableVariant,
       required: true,
     },
   },
@@ -188,6 +203,7 @@ export default defineComponent({
       isFilled,
       onClose,
       onSubmit,
+      SelectTableVariant,
     };
   },
 });
@@ -310,12 +326,12 @@ export default defineComponent({
           <template #content>
             <q-form ref="formRef">
               <form-add-company
-                v-if="variant === 'company'"
+                v-if="variant === SelectTableVariant.company"
                 class="q-mb-lg"
                 v-model="companyNew"
               ></form-add-company>
               <form-add-team
-                v-if="variant === 'team'"
+                v-if="variant === SelectTableVariant.team"
                 class="q-mb-lg"
                 :form-values="teamNew"
                 @update:form-values="teamNew = $event"
@@ -350,7 +366,7 @@ export default defineComponent({
       </q-card>
     </q-field>
     <div
-      v-if="variant === 'company'"
+      v-if="variant === SelectTableVariant.company"
       class="text-caption text-grey-7 q-mt-sm"
       data-cy="form-select-table-user-note"
     >
