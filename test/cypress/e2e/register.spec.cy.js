@@ -300,6 +300,8 @@ describe('Register page', () => {
       // redirected to login page
       cy.url().should('not.include', routesConf['verify_email']['path']);
       cy.url().should('include', routesConf['login']['path']);
+      // logout button is no longer visible
+      cy.dataCy(selectorLogoutButton).should('not.exist');
     });
 
     it('redirects to home page after registering and verifying email and allows logout', () => {

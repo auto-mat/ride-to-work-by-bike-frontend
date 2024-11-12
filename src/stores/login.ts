@@ -27,6 +27,9 @@ import type {
   LoginResponse,
 } from 'src/components/types/Login';
 
+// utils
+import { deepObjectWithSimplePropsCopy } from '../utils';
+
 declare module 'pinia' {
   export interface PiniaCustomProperties {
     $router: Router;
@@ -63,7 +66,7 @@ export const useLoginStore = defineStore('login', {
   state: () => ({
     // property set in pinia.js boot file
     $log: null as Logger | null,
-    user: emptyUser as UserLogin, // persisted
+    user: deepObjectWithSimplePropsCopy(emptyUser) as UserLogin, // persisted
     accessToken: '',
     refreshToken: '', // persisted
     jwtExpiration: null as number | null, // persisted, unit: seconds, https://www.rfc-editor.org/rfc/rfc7519#section-2
@@ -273,7 +276,7 @@ export const useLoginStore = defineStore('login', {
       this.setAccessToken('');
       this.setRefreshToken('');
       this.setJwtExpiration(null);
-      this.setUser(emptyUser);
+      this.setUser(deepObjectWithSimplePropsCopy(emptyUser) as UserLogin);
       this.clearRefreshTokenTimeout();
       this.$log?.debug(`Login store access token <${this.getAccessToken}>.`);
       this.$log?.debug(`Login store refresh token <${this.getRefreshToken}>.`);
