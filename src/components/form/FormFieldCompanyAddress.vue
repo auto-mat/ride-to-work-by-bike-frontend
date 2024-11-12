@@ -36,7 +36,10 @@ import DialogDefault from 'src/components/global/DialogDefault.vue';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
-import type { FormOption } from 'src/components/types/Form';
+import type {
+  FormCompanyAddressFields,
+  FormOption,
+} from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
@@ -49,15 +52,16 @@ export default defineComponent({
       required: true,
     },
     modelValue: {
-      type: String as () => string | null,
+      type: Object as () => FormCompanyAddressFields | null,
       required: true,
     },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const address = computed<string | null>({
+    const address = computed<FormCompanyAddressFields | null>({
       get: () => props.modelValue,
-      set: (value: string | null) => emit('update:modelValue', value),
+      set: (value: FormCompanyAddressFields | null) =>
+        emit('update:modelValue', value),
     });
 
     watch(

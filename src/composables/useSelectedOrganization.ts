@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 // stores
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
@@ -7,6 +7,7 @@ import { useRegisterChallengeStore } from '../stores/registerChallenge';
 import type { Organization } from '../components/types/Organization';
 import type {
   FormCompanyAddressFields,
+  FormOption,
   FormSelectTableOption,
 } from 'src/components/types/Form';
 
@@ -18,12 +19,6 @@ export const useSelectedOrganization = (organizations: Organization[]) => {
     get: (): number | null =>
       store.getOrganizationId ? store.getOrganizationId : null,
     set: (value: number | null) => store.setOrganizationId(value),
-  });
-
-  const addressId = computed<number | null>({
-    get: (): number | null =>
-      store.getSubsidiaryId ? store.getSubsidiaryId : null,
-    set: (value: number | null) => store.setSubsidiaryId(value),
   });
 
   /**
@@ -38,22 +33,63 @@ export const useSelectedOrganization = (organizations: Organization[]) => {
   });
 
   /**
+   * Internal reference state for selected address.
+   * Used as model value in `FormSelectOrganization` component.
+   */
+  const selectedAddress = ref<FormCompanyAddressFields | null>(null);
+
+  /**
+   * Control selected subsidiaryId based on selected address.
+   */
+  watch(selectedAddress, (newVal: FormCompanyAddressFields | null) => {
+    const selectedOrganization = organizations.find(
+      (organization) => organization.id === organizationId.value,
+    );
+
+    if (newVal) {
+      const subsidiary = selectedOrganization?.subsidiaries.find(
+        (subsidiary) => subsidiary.address === newVal,
+      );
+      subsidiaryId.value = subsidiary?.id ?? null;
+    }
+  });
+
+  /**
+   * Computes the subsidiaryId based on selected address and
+   * current store value.
+   */
+  const subsidiaryId = computed<number | null>({
+    get: (): number | null =>
+      store.getSubsidiaryId ? store.getSubsidiaryId : null,
+    set: (value: number | null) => store.setSubsidiaryId(value),
+  });
+
+  /**
    * Computes the address options for the address select
-   * based on the selected business id.
+   * based on the selected organizationId.
    * @returns {FormSelectTableOption[]} - The address options or empty array.
    */
-  const addressOptions = computed<FormSelectTableOption[]>(() => {
+  const addressOptions = computed<FormOption[]>(() => {
     if (!organizationId.value) return [];
 
-    const selectedCompany = organizations.find(
-      (company) => company.id === organizationId.value,
+    const selectedOrganization = organizations.find(
+      (organization) => organization.id === organizationId.value,
     );
-    if (!selectedCompany) return [];
+    if (!selectedOrganization) return [];
 
-    return selectedCompany.subsidiaries.map((subsidiary) => ({
-      label: getAddressString(subsidiary.address),
-      value: subsidiary.id,
-    }));
+    const addressOptions: FormOption[] = [] as FormOption[];
+
+    // add subsidiaries addresses to the options
+    selectedOrganization.subsidiaries.forEach((subsidiary) => {
+      if (subsidiary.address) {
+        addressOptions.push({
+          label: getAddressString(subsidiary.address),
+          value: subsidiary.address,
+        });
+      }
+    });
+
+    return addressOptions;
   });
 
   /**
@@ -80,7 +116,8 @@ export const useSelectedOrganization = (organizations: Organization[]) => {
   }
 
   return {
-    addressId,
+    selectedAddress,
+    subsidiaryId,
     addressOptions,
     organizationId,
     organizationOptions,

@@ -15,6 +15,7 @@ export enum OrganizationLevel {
 
 export interface Organization {
   subsidiaries: OrganizationSubsidiary[];
+  address?: FormCompanyAddressFields;
   description?: string;
   id: number;
   identificationNumber: string;

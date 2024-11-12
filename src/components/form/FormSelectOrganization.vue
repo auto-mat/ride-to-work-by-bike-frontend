@@ -43,11 +43,15 @@ export default defineComponent({
     const organizations: Organization[] =
       formOrganizationOptions as Organization[];
 
-    const { addressId, addressOptions, organizationId, organizationOptions } =
-      useSelectedOrganization(organizations);
+    const {
+      selectedAddress,
+      addressOptions,
+      organizationId,
+      organizationOptions,
+    } = useSelectedOrganization(organizations);
 
     return {
-      addressId,
+      selectedAddress,
       addressOptions,
       organizationId,
       organizationOptions,
@@ -70,7 +74,7 @@ export default defineComponent({
       data-cy="form-select-table-company"
     />
     <form-field-company-address
-      v-model="addressId"
+      v-model="selectedAddress"
       :options="addressOptions"
       data-cy="form-company-address"
     />
