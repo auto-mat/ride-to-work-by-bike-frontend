@@ -74,15 +74,16 @@ describe('<FormFieldCompany>', () => {
       nextTick();
       testCompanyApiResponse();
 
-      cy.dataCy('form-company').find('input').click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
-      // test selected option value
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+        cy.dataCy('form-company').find('input').click();
+        // select option
+        cy.get('.q-menu')
+          .should('be.visible')
+          .within(() => {
+            cy.get('.q-item').first().click();
+          });
+        cy.get('.q-menu').should('not.exist');
+        // test selected option value
         nextTick();
         cy.wrap(model)
           .its('value')
@@ -108,6 +109,7 @@ describe('<FormFieldCompany>', () => {
           .within(() => {
             cy.get('.q-item').first().click();
           });
+        cy.get('.q-menu').should('not.exist');
         // test selected option
         nextTick();
         cy.wrap(model)
