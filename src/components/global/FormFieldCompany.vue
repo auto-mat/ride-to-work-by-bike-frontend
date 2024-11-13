@@ -394,7 +394,7 @@ export default defineComponent({
       class="text-caption text-bold"
       data-cy="form-field-company-label"
     >
-      {{ formFieldLabel }}
+      {{ formFieldLabel }}{{ company }}
     </label>
     <div class="row">
       <div class="col-12 col-sm" data-cy="col-input">

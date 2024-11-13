@@ -84,10 +84,9 @@ describe('<FormFieldCompany>', () => {
       // test selected option value
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
         nextTick();
-        cy.wrap(model.value).should(
-          'eq',
-          formFieldCompanyResponse.results[0].id,
-        );
+        cy.wrap(model)
+          .its('value')
+          .should('eq', formFieldCompanyResponse.results[0].id);
       });
     });
 
@@ -98,19 +97,23 @@ describe('<FormFieldCompany>', () => {
       testCompanyApiResponse();
 
       // search for option
-      cy.dataCy('form-company').find('input').focus();
-      cy.dataCy('form-company').find('input').type('2');
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
-      // test selected option
-      cy.dataCy('form-company')
-        .find('input')
-        .invoke('val')
-        .should('eq', 'Company 2');
+      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+        cy.dataCy('form-company').find('input').focus();
+        cy.dataCy('form-company')
+          .find('input')
+          .type(formFieldCompanyResponse.results[1].name);
+        // select first option from filtered results
+        cy.get('.q-menu')
+          .should('be.visible')
+          .within(() => {
+            cy.get('.q-item').first().click();
+          });
+        // test selected option
+        nextTick();
+        cy.wrap(model)
+          .its('value')
+          .should('eq', formFieldCompanyResponse.results[1].id);
+      });
     });
 
     it('validates company field correctly', () => {
