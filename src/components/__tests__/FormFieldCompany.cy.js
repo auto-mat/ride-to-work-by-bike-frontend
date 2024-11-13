@@ -241,8 +241,8 @@ describe('<FormFieldCompany>', () => {
     });
   });
 
-  function testCompanyApiResponse() {
-    cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+  const testCompanyApiResponse = async () => {
+    await cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
       cy.wait('@getOrganizations').then((interception) => {
         expect(interception.request.headers.authorization).to.include('Bearer');
         expect(interception.response.statusCode).to.equal(
@@ -253,5 +253,5 @@ describe('<FormFieldCompany>', () => {
         );
       });
     });
-  }
+  };
 });
