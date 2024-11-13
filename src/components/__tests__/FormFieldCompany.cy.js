@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import FormFieldCompany from 'components/global/FormFieldCompany.vue';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
@@ -38,8 +38,6 @@ describe('<FormFieldCompany>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      // reset model
-      model.value = '';
       // intercept api
       interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
       // mount component
@@ -53,6 +51,9 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('renders input with label', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       // input wrapper
       cy.dataCy('form-company')
         .find('.q-field__control')
@@ -68,6 +69,9 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('allows user to select option', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       testCompanyApiResponse();
 
       cy.dataCy('form-company').find('input').click();
@@ -77,14 +81,20 @@ describe('<FormFieldCompany>', () => {
         .within(() => {
           cy.get('.q-item').first().click();
         });
-      // test selected option
-      cy.dataCy('form-company')
-        .find('input')
-        .invoke('val')
-        .should('eq', 'Company 1');
+      // test selected option value
+      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+        nextTick();
+        cy.wrap(model.value).should(
+          'eq',
+          formFieldCompanyResponse.results[0].id,
+        );
+      });
     });
 
     it('allows to search through options', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       testCompanyApiResponse();
 
       // search for option
@@ -104,6 +114,9 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('validates company field correctly', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       cy.dataCy('form-company').find('input').focus();
       cy.dataCy('form-company').find('input').blur();
       cy.contains(
@@ -126,10 +139,16 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('renders input and button in a column layout', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       cy.testElementsSideBySide('col-input', 'col-button');
     });
 
     it('allows to add a new company', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       cy.fixture('formFieldCompanyCreateRequest').then(
         (formFieldCompanyCreateRequest) => {
           cy.fixture('formFieldCompanyCreate').then(
@@ -203,6 +222,9 @@ describe('<FormFieldCompany>', () => {
     });
 
     it('renders input and button in a stacked layout', () => {
+      // reset model
+      model.value = '';
+      nextTick();
       cy.testElementPercentageWidth(cy.dataCy('col-input'), 100);
       cy.testElementPercentageWidth(cy.dataCy('col-button'), 100);
     });
