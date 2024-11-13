@@ -80,6 +80,10 @@ describe('<FormFieldCompany>', () => {
         cy.get('.q-menu')
           .should('be.visible')
           .within(() => {
+            cy.get('.q-item').should(
+              'have.length',
+              formFieldCompanyResponse.results.length,
+            );
             cy.get('.q-item').first().click();
           });
         cy.get('.q-menu').should('not.exist');
@@ -107,6 +111,8 @@ describe('<FormFieldCompany>', () => {
         cy.get('.q-menu')
           .should('be.visible')
           .within(() => {
+            // only shows the one filtered option
+            cy.get('.q-item').should('have.length', 1);
             cy.get('.q-item').first().click();
           });
         cy.get('.q-menu').should('not.exist');
