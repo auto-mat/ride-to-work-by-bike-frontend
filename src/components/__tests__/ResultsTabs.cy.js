@@ -2,6 +2,8 @@ import ResultsTabs from 'components/results/ResultsTabs.vue';
 import { i18n } from '../../boot/i18n';
 import { routesConf } from 'src/router/routes_conf';
 
+import { ResultsTabsNames } from '../types/Results';
+
 describe('<ResultsTabs>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
@@ -85,33 +87,19 @@ function coreTests() {
   });
 
   it('allows to switch tabs', () => {
-    // display report
-    cy.dataCy('results-tabs-button-report').click();
-    cy.dataCy('results-tabs-panel-report').should('be.visible');
-    cy.dataCy('results-tabs-title-report').should('be.visible');
-    // display regularity
-    cy.dataCy('results-tabs-button-regularity').click();
-    cy.dataCy('results-tabs-panel-regularity').should('be.visible');
-    cy.dataCy('results-tabs-title-regularity').should('be.visible');
-    // display performance
-    cy.dataCy('results-tabs-button-performance').click();
-    cy.dataCy('results-tabs-panel-performance').should('be.visible');
-    cy.dataCy('results-tabs-title-performance').should('be.visible');
+    Object.values(ResultsTabsNames).forEach((tab) => {
+      cy.dataCy(`results-tabs-button-${tab}`).click();
+      ['title', 'panel'].forEach((element) => {
+        cy.dataCy(`results-tabs-${element}-${tab}`).should('be.visible');
+      });
+    });
   });
 
   it('syncs tab navigation with URL', () => {
-    // initial state
-    cy.dataCy('results-tabs-button-report').click();
-    cy.url().should('include', routesConf['results_report'].path);
-    // switch to list tab
-    cy.dataCy('results-tabs-button-regularity').click();
-    cy.url().should('not.include', routesConf['results_report'].path);
-    cy.url().should('include', routesConf['results_regularity'].path);
-    // switch to map tab
-    cy.dataCy('results-tabs-button-performance').click();
-    cy.url().should('not.include', routesConf['results_regularity'].path);
-    cy.url().should('include', routesConf['results_performance'].path);
-    // popstate
+    Object.values(ResultsTabsNames).forEach((tab) => {
+      cy.dataCy(`results-tabs-button-${tab}`).click();
+      cy.url().should('include', routesConf[`results_${tab}`].path);
+    });
     cy.go('back');
     cy.url().should('include', routesConf['results_regularity'].path);
     cy.dataCy('results-tabs-panel-performance').should('be.visible');

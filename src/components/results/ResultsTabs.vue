@@ -20,7 +20,13 @@ import { defineComponent, ref } from 'vue';
 // routes
 import { routesConf } from 'src/router/routes_conf';
 
-type ResultsTabsOption = 'report' | 'regularity' | 'performance';
+// enum
+import { ResultsTabsNames } from '../types/Results';
+
+type ResultsTabsOption =
+  | ResultsTabsNames.report
+  | ResultsTabsNames.regularity
+  | ResultsTabsNames.performance;
 
 export default defineComponent({
   name: 'ResultsTabs',
@@ -32,7 +38,7 @@ export default defineComponent({
   },
   setup(props) {
     // list of available tabs
-    const tabs: ResultsTabsOption[] = ['report', 'regularity', 'performance'];
+    const tabs: ResultsTabsOption[] = Object.values(ResultsTabsNames);
     const activeTab = ref('' as ResultsTabsOption);
 
     // locked tabs - exposed for testing and further logic
@@ -51,6 +57,7 @@ export default defineComponent({
       routesConf,
       tabs,
       isLocked,
+      ResultsTabsNames,
     };
   },
 });
@@ -70,28 +77,28 @@ export default defineComponent({
     >
       <q-route-tab
         :to="routesConf['results_report'].path"
-        name="report"
+        :name="ResultsTabsNames.report"
         alert-icon="mdi-lock"
-        :alert="isLocked('report')"
-        :disable="isLocked('report')"
+        :alert="isLocked(ResultsTabsNames.report)"
+        :disable="isLocked(ResultsTabsNames.report)"
         :label="$t('results.tabReport')"
         data-cy="results-tabs-button-report"
       />
       <q-route-tab
         :to="routesConf['results_regularity'].path"
-        name="regularity"
+        :name="ResultsTabsNames.regularity"
         alert-icon="mdi-lock"
-        :alert="isLocked('regularity')"
-        :disable="isLocked('regularity')"
+        :alert="isLocked(ResultsTabsNames.regularity)"
+        :disable="isLocked(ResultsTabsNames.regularity)"
         :label="$t('results.tabRegularity')"
         data-cy="results-tabs-button-regularity"
       />
       <q-route-tab
         :to="routesConf['results_performance'].path"
-        name="performance"
+        :name="ResultsTabsNames.performance"
         alert-icon="mdi-lock"
-        :alert="isLocked('performance')"
-        :disable="isLocked('performance')"
+        :alert="isLocked(ResultsTabsNames.performance)"
+        :disable="isLocked(ResultsTabsNames.performance)"
         :label="$t('results.tabPerformance')"
         data-cy="results-tabs-button-performance"
       />

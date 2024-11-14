@@ -142,3 +142,9 @@ export type ResultsUnion =
   | TeamResults
   | OrganizationResults
   | CityResults;
+
+export enum ResultsTabsNames {
+  report = 'report',
+  regularity = 'regularity',
+  performance = 'performance',
+}
