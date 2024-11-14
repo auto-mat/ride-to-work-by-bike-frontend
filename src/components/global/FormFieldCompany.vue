@@ -148,7 +148,7 @@ export default defineComponent({
       isOptionsLoading.value = false;
     };
     /**
-     * Fetch next page
+     * Fetch next page of organizations
      * @param {string} url
      * @returns {Promise<void>}
      */
