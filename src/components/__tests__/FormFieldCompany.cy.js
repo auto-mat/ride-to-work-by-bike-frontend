@@ -38,7 +38,7 @@ describe('<FormFieldCompany>', () => {
   context('desktop', () => {
     beforeEach(() => {
       // intercept api
-      interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(rideToWorkByBikeConfig);
       // reset model value
       model.value = '';
       // mount component
@@ -226,7 +226,7 @@ describe('<FormFieldCompany>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(rideToWorkByBikeConfig);
       // reset model value
       model.value = '';
       // mount component
