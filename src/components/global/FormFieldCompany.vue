@@ -118,6 +118,11 @@ export default defineComponent({
      * @returns {Promise<void>}
      */
     const loadOptions = async (): Promise<void> => {
+      // reset default options
+      logger?.debug(`Reseting default options <${optionsDefault.value}>`);
+      optionsDefault.value = [];
+      logger?.debug(`Default options set to <${optionsDefault.value}>`);
+      // get organizations
       logger?.info('Get organizations from the API.');
       isOptionsLoading.value = true;
       // append access token into HTTP header
