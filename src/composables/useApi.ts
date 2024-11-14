@@ -83,7 +83,7 @@ const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
  */
 const removeAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
   logger?.debug(
-    `Removed base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
+    `Reset base API URL <${api.defaults.baseURL}> for unlocalized API call.`,
   );
   api.defaults.baseURL = apiBase;
 };

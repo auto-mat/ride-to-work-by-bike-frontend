@@ -68,7 +68,6 @@ import {
   requestDefaultHeader,
   requestTokenHeader,
 } from 'src/utils';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 
 export const emptyFormCompanyFields: FormCompanyFields = {
   name: '',
@@ -112,15 +111,7 @@ export default defineComponent({
     const loginStore = useLoginStore();
     const { apiFetch } = useApi();
     // get API base URL
-    const { apiBase, apiDefaultLang, urlApiOrganizations } =
-      rideToWorkByBikeConfig;
-    const apiBaseUrl = getApiBaseUrlWithLang(
-      null,
-      apiBase,
-      apiDefaultLang,
-      i18n,
-    );
-    const urlApiOrganizationsLocalized = `${apiBaseUrl}${urlApiOrganizations}`;
+    const { urlApiOrganizations } = rideToWorkByBikeConfig;
     /**
      * Load options
      * Fetches organizations and saves them into default options
@@ -134,7 +125,7 @@ export default defineComponent({
       requestTokenHeader_.Authorization += loginStore.getAccessToken;
       // fetch organizations
       const { data } = await apiFetch<GetOrganizationsResponse>({
-        endpoint: urlApiOrganizationsLocalized,
+        endpoint: urlApiOrganizations,
         method: 'get',
         translationKey: 'getOrganizations',
         showSuccessMessage: false,
