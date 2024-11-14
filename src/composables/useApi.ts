@@ -76,6 +76,18 @@ const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
   );
 };
 
+/**
+ * Remove Axios base API URL with lang (internationalization)
+ * @param {(Logger|null)} logger - Logger instance
+ * @returns {void}
+ */
+const removeAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
+  logger?.debug(
+    `Removed base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
+  );
+  api.defaults.baseURL = apiBase;
+};
+
 export const useApi = () => {
   const apiFetch = async <T>({
     endpoint,
@@ -85,6 +97,7 @@ export const useApi = () => {
     headers = requestDefaultHeader,
     logger,
     showSuccessMessage = true,
+    localized = true,
   }: {
     endpoint: string;
     payload?: object;
@@ -93,6 +106,7 @@ export const useApi = () => {
     headers?: AxiosRequestHeaders;
     logger: Logger | null;
     showSuccessMessage?: boolean;
+    localized?: boolean;
   }): Promise<ApiResponse<T>> => {
     try {
       logger?.info('Call <api()> function with parameters arguments.');
@@ -104,8 +118,13 @@ export const useApi = () => {
       logger?.debug(
         `<api()> function headers parameter argument <${JSON.stringify(headers)}>.`,
       );
-      // Inject Axios base API URL with lang (internationalization)
-      injectAxioBaseApiUrlWithLang(logger);
+      if (localized) {
+        // Inject Axios base API URL with lang (internationalization)
+        injectAxioBaseApiUrlWithLang(logger);
+      } else {
+        // Remove Axios base API URL with lang (internationalization)
+        removeAxioBaseApiUrlWithLang(logger);
+      }
       const startTime = performance.now();
       const data: apiData = {
         url: endpoint,

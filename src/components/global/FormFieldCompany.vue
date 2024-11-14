@@ -140,25 +140,68 @@ export default defineComponent({
         showSuccessMessage: false,
         headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
         logger,
+        localized: false,
       });
-      // save default option array
       if (data?.results?.length) {
-        logger?.info('Organizations fetched. Saving to default options.');
-        logger?.debug(
-          `Setting default options to <${JSON.stringify(data.results)}>.`,
-        );
-        optionsDefault.value = data.results.map((option) => {
-          return {
-            label: option.name,
-            value: option.id,
-          };
-        });
-        logger?.debug(
-          `Default options set to <${JSON.stringify(optionsDefault.value)}>.`,
-        );
+        pushResultsToOptions(data);
+      }
+      // if data has multiple pages, fetch all pages
+      if (data?.next) {
+        await fetchNextPage(data.next);
       }
       isOptionsLoading.value = false;
     };
+    /**
+     * Fetch next page
+     * @param {string} url
+     * @returns {Promise<void>}
+     */
+    const fetchNextPage = async (url: string): Promise<void> => {
+      logger?.debug(`Fetching next page of organizations from <${url}>.`);
+      // append access token into HTTP header
+      const requestTokenHeader_ = { ...requestTokenHeader };
+      requestTokenHeader_.Authorization += loginStore.getAccessToken;
+      // fetch next page
+      const { data } = await apiFetch<GetOrganizationsResponse>({
+        endpoint: url,
+        method: 'get',
+        translationKey: 'getOrganizations',
+        showSuccessMessage: false,
+        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
+        logger,
+        localized: false,
+      });
+      // store results
+      if (data?.results?.length) {
+        pushResultsToOptions(data);
+      }
+      // if data has multiple pages, fetch all pages
+      if (data?.next) {
+        await fetchNextPage(data.next);
+      }
+    };
+    /**
+     * Push results to options
+     * @param {GetOrganizationsResponse} data
+     * @returns {void}
+     */
+    const pushResultsToOptions = (data: GetOrganizationsResponse): void => {
+      const pageResults = data.results.map((option) => {
+        return {
+          label: option.name,
+          value: option.id,
+        };
+      });
+      logger?.info('Organizations fetched. Saving to default options.');
+      logger?.debug(
+        `Adding options <${JSON.stringify(pageResults)}> to default options.`,
+      );
+      optionsDefault.value.push(...pageResults);
+      logger?.debug(
+        `Default options set to <${JSON.stringify(optionsDefault.value)}>.`,
+      );
+    };
+
     // load options on component mount
     loadOptions();
 
@@ -204,7 +247,7 @@ export default defineComponent({
     // default form state (make a deep copy of empty state)
     const companyNew: FormCompanyFields = deepObjectWithSimplePropsCopy(
       emptyFormCompanyFields,
-    );
+    ) as FormCompanyFields;
     /**
      * Close dialog
      * Resets form and closes dialog

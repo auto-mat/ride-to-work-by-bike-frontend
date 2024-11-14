@@ -380,22 +380,28 @@ export const setupApiChallengeInactive = (
   cy.clock(systemTimeChallengeInactive, ['Date']);
 };
 
-export const interceptOrganizationsApi = (config: ConfigGlobal, i18n: I18n) => {
-  const { apiBase, apiDefaultLang, urlApiOrganizations } = config;
+export const interceptOrganizationsApi = (config: ConfigGlobal) => {
+  const { apiBase, urlApiOrganizations } = config;
   // get API base URL
-  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
-  const urlApiOrganizationsLocalized = `${apiBaseUrl}${urlApiOrganizations}`;
-  // intercept organizations API call (before mounting component)
+  const urlApiOrganizationsPath = `${apiBase}${urlApiOrganizations}`;
   cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
-    cy.intercept('GET', urlApiOrganizationsLocalized, {
-      statusCode: httpSuccessfullStatus,
-      body: formFieldCompanyResponse,
-    }).as('getOrganizations');
+    cy.fixture('formFieldCompanyNext').then((formFieldCompanyNextResponse) => {
+      // intercept organizations API call (before mounting component)
+      cy.intercept('GET', urlApiOrganizationsPath, {
+        statusCode: httpSuccessfullStatus,
+        body: formFieldCompanyResponse,
+      }).as('getOrganizations');
+      // intercept next page API call
+      cy.intercept('GET', formFieldCompanyResponse.next, {
+        statusCode: httpSuccessfullStatus,
+        body: formFieldCompanyNextResponse,
+      }).as('getOrganizationsNextPage');
+    });
   });
   // intercept create organization API call (before mounting component)
   cy.fixture('formFieldCompanyCreate').then(
     (formFieldCompanyCreateResponse) => {
-      cy.intercept('POST', urlApiOrganizationsLocalized, {
+      cy.intercept('POST', urlApiOrganizationsPath, {
         statusCode: httpSuccessfullStatus,
         body: formFieldCompanyCreateResponse,
       }).as('createOrganization');

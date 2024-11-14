@@ -1,12 +1,47 @@
 {
+  "count": 10,
+  "next": "https://test.dopracenakole.cz/rest/organizations/?limit=10&offset=10",
+  "previous": null,
   "results": [
     {
-      "name": "Company 1",
-      "id": 12345671
+      "id": 987,
+      "name": "100MEGA Distribution s.r.o."
     },
     {
-      "name": "Company 2",
-      "id": 12345672
+      "id": 774,
+      "name": "13. Základní škola Plzeň, Habrmannova 45; 326 00"
+    },
+    {
+      "id": 2545,
+      "name": "13.ZŠ Plzeň"
+    },
+    {
+      "id": 2397,
+      "name": "1415 Baťův Institut"
+    },
+    {
+      "id": 538,
+      "name": "1.MŠ KV, Komenského 7, přísp. org."
+    },
+    {
+      "id": 3776,
+      "name": "1. podzemní antikvariát"
+    },
+    {
+      "id": 2272,
+      "name": "1.SDZP družstvo"
+    },
+    {
+      "id": 1707,
+      "name": "1. Slovanské gymnázium "
+    },
+    {
+      "id": 1113,
+      "name": "1.Vlasové závody Praha"
+    },
+    {
+      "id": 2874,
+      "name": "1. ZŠ Plzeň, Západní 18, příspěvková organizace"
     }
   ]
 }

@@ -20,7 +20,7 @@ export interface FormSelectTableOption extends FormOption {
 
 export type FormSelectOption = {
   label: string;
-  value: string;
+  value: string | number;
 };
 
 export type FormCompanyFields = {

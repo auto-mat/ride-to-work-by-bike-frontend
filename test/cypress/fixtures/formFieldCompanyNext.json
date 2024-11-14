@@ -1,0 +1,47 @@
+{
+  "count": 10,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 3619,
+      "name": "23pm, s. r. o."
+    },
+    {
+      "id": 2003,
+      "name": "24. základna dopravního letectva Praha Kbely"
+    },
+    {
+      "id": 3993,
+      "name": "27.materska skola"
+    },
+    {
+      "id": 2778,
+      "name": "2. lékařská fakulta Univerzita Karlovy"
+    },
+    {
+      "id": 603,
+      "name": "2N TELEKOMUNIKACE a.s."
+    },
+    {
+      "id": 3303,
+      "name": "2. ZŠ Napajedla"
+    },
+    {
+      "id": 1569,
+      "name": "3G Consulting Engineers s.r.o."
+    },
+    {
+      "id": 1846,
+      "name": "3. Základní škola Jindřichův Hradec, Jarošovská 746/II"
+    },
+    {
+      "id": 3283,
+      "name": "4mushing"
+    },
+    {
+      "id": 3417,
+      "name": "4. základní škola Plzeň, Kralovická 12, p. o"
+    }
+  ]
+}

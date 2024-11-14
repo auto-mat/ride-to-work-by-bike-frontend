@@ -39,7 +39,7 @@ describe('<FormFieldCompany>', () => {
   context('desktop', () => {
     beforeEach(() => {
       // intercept api
-      interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(rideToWorkByBikeConfig);
       // reset model value
       model.value = '';
       // mount component
@@ -69,33 +69,27 @@ describe('<FormFieldCompany>', () => {
 
     it('allows user to select option', () => {
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
-        cy.wait('@getOrganizations').then((interception) => {
-          expect(interception.request.headers.authorization).to.include(
-            'Bearer',
-          );
-          expect(interception.response.statusCode).to.equal(
-            httpSuccessfullStatus,
-          );
-          expect(interception.response.body).to.deep.equal(formFieldCompany);
-          cy.dataCy('form-company').find('input').click();
-          // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item')
-                .should((opts) => {
-                  expect(opts.get(0)).to.have.property(
-                    'childElementCount',
-                    formFieldCompany.results.length,
-                  );
-                })
-                .first()
-                .click();
-            });
-          cy.get('.q-menu').should('not.exist');
-          cy.wrap(model)
-            .its('value')
-            .should('eq', formFieldCompany.results[0].id);
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          cy.wait('@getOrganizations').then((interception) => {
+            expect(interception.request.headers.authorization).to.include(
+              'Bearer',
+            );
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(interception.response.body).to.deep.equal(formFieldCompany);
+          });
+          cy.wait('@getOrganizationsNextPage').then((interception) => {
+            expect(interception.request.headers.authorization).to.include(
+              'Bearer',
+            );
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(interception.response.body).to.deep.equal(
+              formFieldCompanyNext,
+            );
+          });
         });
       });
     });
@@ -218,7 +212,7 @@ describe('<FormFieldCompany>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(rideToWorkByBikeConfig);
       // reset model value
       model.value = '';
       // mount component

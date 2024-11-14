@@ -55,6 +55,9 @@ export interface OrganizationOption {
 }
 
 export interface GetOrganizationsResponse {
+  count: number;
+  next: string;
+  previous: string;
   results: OrganizationOption[];
 }
 
