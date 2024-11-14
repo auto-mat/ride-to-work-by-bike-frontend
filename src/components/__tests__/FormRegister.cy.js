@@ -10,10 +10,14 @@ import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 import { useLoginStore } from '../../stores/login';
 import {
+  failOnStatusCode,
   httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
   httpInternalServerErrorStatus,
   systemTimeChallengeActive,
   systemTimeChallengeInactive,
+  userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { PhaseType } from '../types/Challenge';
@@ -37,6 +41,8 @@ const selectorFormRegisterPasswordConfirmInput =
   'form-register-password-confirm-input';
 const selectorFormRegisterPasswordConfirmIcon =
   'form-register-password-confirm-icon';
+const selectorFormRegisterPrivacyConsentLink =
+  'form-register-privacy-consent-link';
 const selectorFormRegisterSubmit = 'form-register-submit';
 const selectorFormRegisterLogin = 'form-register-login';
 const selectorFormRegisterLoginLink = 'form-register-login-link';
@@ -54,6 +60,7 @@ const testEmail = 'test@test.com';
 const testPassword = '12345a';
 const { apiBase, apiDefaultLang, urlApiRegister } = rideToWorkByBikeConfig;
 const defaultLoginUserEmailStoreValue = '';
+const urlPrivacyPolicy = rideToWorkByBikeConfig.urlPrivacyPolicy;
 
 const compareRegisterResponseWithStore = (
   loginStore,
@@ -252,6 +259,23 @@ describe('<FormRegister>', () => {
         cy.contains(
           i18n.global.t('register.form.messagePrivacyConsentRequired'),
         ).should('be.visible');
+      });
+    });
+
+    it('renders link to privacy policy', () => {
+      cy.dataCy(selectorFormRegisterPrivacyConsentLink)
+        .should('be.visible')
+        .and('have.attr', 'href', urlPrivacyPolicy);
+      cy.request({
+        url: urlPrivacyPolicy,
+        failOnStatusCode: failOnStatusCode,
+        headers: { ...userAgentHeader },
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
       });
     });
 
