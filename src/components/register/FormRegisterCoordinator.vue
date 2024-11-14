@@ -71,7 +71,7 @@ export default defineComponent({
       terms: false,
     });
 
-    const optionsInstitutionType = computed((): FormOption[] => {
+    const optionsOrganizationType = computed((): FormOption[] => {
       return [
         {
           label: i18n.global.t('form.labelCompanyShort'),
@@ -114,7 +114,7 @@ export default defineComponent({
 
     return {
       formRegisterCoordinator,
-      optionsInstitutionType,
+      optionsOrganizationType,
       onReset,
       onSubmit,
     };
@@ -158,22 +158,22 @@ export default defineComponent({
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-last-name"
           />
-          <!-- Input: institution type -->
+          <!-- Input: organization type -->
           <div class="col-12 col-sm-6">
             <!-- Label -->
             <label
-              for="form-institution-type"
+              for="form-organization-type"
               class="text-grey-10 text-caption text-bold"
             >
-              {{ $t('form.labelInstitutionType') }}
+              {{ $t('form.labelOrganizationType') }}
             </label>
             <!-- Options -->
             <q-option-group
               inline
               dense
-              id="form-institution-type"
+              id="form-organization-type"
               v-model="formRegisterCoordinator.organizationType"
-              :options="optionsInstitutionType"
+              :options="optionsOrganizationType"
               color="primary"
               class="q-mt-sm q-gutter-x-lg"
             />
