@@ -69,7 +69,8 @@ export default defineComponent({
     const isPrivacyConsent = ref<boolean>(false);
     const isNewsletterSubscription = ref<boolean>(false);
 
-    const urlPrivacyPolicy = rideToWorkByBikeConfig.urlPrivacyPolicy;
+    const urlAppDataPrivacyPolicy =
+      rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
@@ -105,7 +106,7 @@ export default defineComponent({
       isStrongPassword,
       onSubmitRegister,
       onReset,
-      urlPrivacyPolicy,
+      urlAppDataPrivacyPolicy,
     };
   },
 });
@@ -255,7 +256,7 @@ export default defineComponent({
                 {{ $t('register.form.labelPrivacyConsent1') }}
                 <!-- TODO: Link to privacy policy page -->
                 <a
-                  :href="urlPrivacyPolicy"
+                  :href="urlAppDataPrivacyPolicy"
                   target="_blank"
                   class="text-white"
                   @click.stop

@@ -60,7 +60,7 @@ const testEmail = 'test@test.com';
 const testPassword = '12345a';
 const { apiBase, apiDefaultLang, urlApiRegister } = rideToWorkByBikeConfig;
 const defaultLoginUserEmailStoreValue = '';
-const urlPrivacyPolicy = rideToWorkByBikeConfig.urlPrivacyPolicy;
+const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
 const compareRegisterResponseWithStore = (
   loginStore,
@@ -265,9 +265,9 @@ describe('<FormRegister>', () => {
     it('renders link to privacy policy', () => {
       cy.dataCy(selectorFormRegisterPrivacyConsentLink)
         .should('be.visible')
-        .and('have.attr', 'href', urlPrivacyPolicy);
+        .and('have.attr', 'href', urlAppDataPrivacyPolicy);
       cy.request({
-        url: urlPrivacyPolicy,
+        url: urlAppDataPrivacyPolicy,
         failOnStatusCode: failOnStatusCode,
         headers: { ...userAgentHeader },
       }).then((resp) => {

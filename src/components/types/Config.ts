@@ -50,7 +50,7 @@ export interface ConfigGlobal {
   urlApiLoginGoogle: string;
   urlApiOrganizations: string;
   urlApiLoginFacebook: string;
-  urlPrivacyPolicy: string;
+  urlAppDataPrivacyPolicy: string;
   urlApiRefresh: string;
   urlApiRegister: string;
   urlApiRegisterCoordinator: string;
