@@ -109,7 +109,7 @@ describe('Login page', () => {
               cy.wrap(win.i18n).as('i18n');
 
               // Set up API intercepts
-              interceptOrganizationsApi(config);
+              interceptOrganizationsApi(config, win.i18n);
               interceptRegisterCoordinatorApi(config, win.i18n);
 
               // Load fixtures and set up request body

@@ -136,7 +136,6 @@ export default defineComponent({
         showSuccessMessage: false,
         headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
         logger,
-        localized: false,
       });
       if (data?.results?.length) {
         pushResultsToOptions(data);
@@ -165,7 +164,6 @@ export default defineComponent({
         showSuccessMessage: false,
         headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
         logger,
-        localized: false,
       });
       // store results
       if (data?.results?.length) {
@@ -295,7 +293,7 @@ export default defineComponent({
       };
       // fetch organizations
       const { data } = await apiFetch<PostOrganizationsResponse>({
-        endpoint: urlApiOrganizationsLocalized,
+        endpoint: urlApiOrganizations,
         method: 'post',
         translationKey: 'createOrganization',
         headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
