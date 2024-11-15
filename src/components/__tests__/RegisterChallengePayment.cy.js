@@ -261,7 +261,7 @@ function coreTests() {
     });
   });
 
-  it('if selected voucher - retains shown voucher after switching back to individual', () => {
+  it('if selected voucher - retains shown voucher after switching between payment subjects', () => {
     cy.get('@voucherHalf').then((voucher) => {
       // select voucher
       cy.dataCy(getRadioOption(optionVoucher)).should('be.visible').click();
