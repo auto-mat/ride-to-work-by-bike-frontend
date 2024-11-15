@@ -639,8 +639,8 @@ titleEmailVerification = "Pokračujte potvrzením e-mailu"
 titleRegister = "Registrace"
 
 [register.buttons]
-buttonGoogle = "Registrovat přes Facebook"
-buttonFacebook = "Registrovat přes Google"
+buttonGoogle = "Registrovat přes Google"
+buttonFacebook = "Registrovat přes Facebook"
 
 [register.challenge]
 buttonAddCompany = "Přidat novou"

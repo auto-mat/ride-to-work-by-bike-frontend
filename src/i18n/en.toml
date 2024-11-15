@@ -636,8 +636,8 @@ titleEmailVerification = "Continue by confirming your email"
 titleRegister = "Registration"
 
 [register.buttons]
-buttonGoogle = "Register via Facebook"
-buttonFacebook = "Register via Google"
+buttonGoogle = "Register via Google"
+buttonFacebook = "Register via Facebook"
 
 [register.challenge]
 buttonAddCompany = "Add new"
