@@ -35,6 +35,50 @@ describe('<FormFieldVoucher>', () => {
     coreTests();
   });
 
+  context('desktop - active voucher HALF', () => {
+    beforeEach(() => {
+      cy.fixture('registerPaymentVoucherHalf').then((voucherHalf) => {
+        cy.mount(FormFieldVoucher, {
+          props: {
+            activeVoucher: voucherHalf,
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('renders active voucher if passed in', () => {
+      cy.fixture('registerPaymentVoucherHalf').then((voucherHalf) => {
+        cy.dataCy(selectorVoucherBannerCode)
+          .should('be.visible')
+          .and('contain', voucherHalf.code)
+          .and('contain', i18n.global.t('form.textVoucher'));
+      });
+    });
+  });
+
+  context('desktop - active voucher FULL', () => {
+    beforeEach(() => {
+      cy.fixture('registerPaymentVoucherFull').then((voucherFull) => {
+        cy.mount(FormFieldVoucher, {
+          props: {
+            activeVoucher: voucherFull,
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('renders active voucher if passed in', () => {
+      cy.fixture('registerPaymentVoucherFull').then((voucherFull) => {
+        cy.dataCy(selectorVoucherBannerCode)
+          .should('be.visible')
+          .and('contain', voucherFull.code)
+          .and('contain', i18n.global.t('form.textVoucher'));
+      });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       cy.mount(FormFieldVoucher, {

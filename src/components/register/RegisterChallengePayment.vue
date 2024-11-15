@@ -137,6 +137,7 @@ export default defineComponent({
       },
     ]);
 
+    const activeVoucher = ref<FormPaymentVoucher | null>(null);
     const selectedPaymentAmount = ref<string>(String(defaultPaymentAmountMin));
     const selectedPaymentAmountCustom = ref<number>(defaultPaymentAmountMin);
     const paymentAmountMax = ref<number>(defaultPaymentAmountMax);
@@ -181,6 +182,10 @@ export default defineComponent({
      * if entry fee is free, display voluntary contribution.
      */
     const onUpdateVoucher = (voucher: FormPaymentVoucher): void => {
+      if (voucher.code) {
+        // set active voucher
+        activeVoucher.value = voucher;
+      }
       // amount = discounted price
       if (voucher.amount) {
         // discount the lowest price in the price options
@@ -209,6 +214,8 @@ export default defineComponent({
      * @return {void}
      */
     const onRemoveVoucher = (): void => {
+      // clear active voucher
+      activeVoucher.value = null;
       isEntryFeeFree.value = false;
       optionsPaymentAmount.shift();
       optionsPaymentAmount.unshift(defaultPaymentOption);
@@ -221,6 +228,7 @@ export default defineComponent({
     };
 
     return {
+      activeVoucher,
       borderRadius,
       formRegisterCoordinator,
       isEntryFeeFree,
@@ -308,6 +316,7 @@ export default defineComponent({
     <!-- Input: Voucher -->
     <div v-if="selectedPaymentSubject === PaymentSubject.voucher">
       <form-field-voucher
+        :active-voucher="activeVoucher"
         @update:voucher="onUpdateVoucher"
         @remove:voucher="onRemoveVoucher"
       />

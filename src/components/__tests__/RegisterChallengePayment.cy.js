@@ -25,6 +25,7 @@ const selectorCoordinatorTerms = 'register-coordinator-terms';
 const selectorSliderNumberInput = 'form-field-slider-number-input';
 const selectorSliderNumberSlider = 'form-field-slider-number-slider';
 const selectorTextPaymentOrganizer = 'text-payment-organizer';
+const selectorVoucherBannerCode = 'voucher-banner-code';
 const selectorVoucherButtonRemove = 'voucher-button-remove';
 const selectorVoucherInput = 'form-field-voucher-input';
 const selectorVoucherSubmit = 'form-field-voucher-submit';
@@ -37,6 +38,7 @@ const optionCustom = 'custom';
 const optionVoucher = 'voucher';
 const optionCompany = 'company';
 const optionSchool = 'school';
+const optionIndividual = 'individual';
 const sliderClickTolerance = 10;
 const testNumberValue = 500;
 
@@ -256,6 +258,26 @@ function coreTests() {
 
       // if voucher FULL is applied, user still has option to add donation
       testDonation();
+    });
+  });
+
+  it('if selected voucher - retains shown voucher after switching back to individual', () => {
+    cy.get('@voucherHalf').then((voucher) => {
+      // select voucher
+      cy.dataCy(getRadioOption(optionVoucher)).should('be.visible').click();
+      cy.dataCy(selectorVoucherInput).type(voucher.code);
+      cy.dataCy(selectorVoucherSubmit).click();
+      // shows voucher
+      cy.dataCy(selectorVoucherBannerCode).should('be.visible');
+      // switch back to individual
+      cy.dataCy(getRadioOption(optionIndividual)).should('be.visible').click();
+      // shows amount selection but not voucher
+      cy.dataCy(selectorPaymentAmount).should('be.visible');
+      cy.dataCy(selectorVoucherBannerCode).should('not.exist');
+      // switch back to voucher
+      cy.dataCy(getRadioOption(optionVoucher)).should('be.visible').click();
+      // shows voucher
+      cy.dataCy(selectorVoucherBannerCode).should('be.visible');
     });
   });
 

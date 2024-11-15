@@ -15,7 +15,7 @@
  * - `FormFieldTextRequired`: Component to render required text field.
  *
  * @example
- * <form-field-voucher @update:voucher="onUpdateVoucher" />
+ * <form-field-voucher :voucher="voucher" @update:voucher="onUpdateVoucher" />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=6410-2305&t=gB7ERmDZorpD4TdE-1)
  */
@@ -45,10 +45,18 @@ export default defineComponent({
   components: {
     FormFieldTextRequired,
   },
+  props: {
+    activeVoucher: {
+      type: Object as () => FormPaymentVoucher | null,
+      default: null,
+    },
+  },
   emits: ['remove:voucher', 'update:voucher'],
   setup(props, { emit }) {
     const code = ref('');
-    const voucher = ref<FormPaymentVoucher | null>(null);
+    const voucher = ref<FormPaymentVoucher | null>(
+      props.activeVoucher ? props.activeVoucher : null,
+    );
 
     /**
      * Submits voucher data to API
