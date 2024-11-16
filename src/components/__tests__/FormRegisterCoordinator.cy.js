@@ -179,33 +179,33 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
         .click();
-      cy.dataCy('form-register-coordinator-responsibility')
-        .find('.q-field__messages')
-        .should(
-          'contain',
-          i18n.global.t(
-            'register.coordinator.form.messageResponsibilityRequired',
-          ),
-        );
+      // responsibility - required message shown
+      cy.contains(
+        i18n.global.t(
+          'register.coordinator.form.messageResponsibilityRequired',
+        ),
+      ).should('be.visible');
       // test responsibility checkbox checked
       cy.dataCy('form-register-coordinator-responsibility')
         .find('.q-checkbox')
         .click();
-      // testing non-existence of element fails on .find() method
-      cy.get(
-        '*[data-cy="form-register-coordinator-responsibility] .q-field__messages',
+      // responsibility - required message hidden
+      cy.contains(
+        i18n.global.t(
+          'register.coordinator.form.messageResponsibilityRequired',
+        ),
       ).should('not.exist');
       // test terms checkbox unchecked
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
         .click();
-      // required message is visible
+      // terms - required message shown
       cy.contains(
         i18n.global.t('register.coordinator.form.messageTermsRequired'),
       ).should('be.visible');
       // test terms checkbox checked
       cy.dataCy('form-register-coordinator-terms').find('.q-checkbox').click();
-      // testing non-existence of element fails on .find() method
+      // terms - required message hidden
       cy.contains(
         i18n.global.t('register.coordinator.form.messageTermsRequired'),
       ).should('not.exist');
