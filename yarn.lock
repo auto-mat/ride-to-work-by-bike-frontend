@@ -549,9 +549,9 @@
   integrity sha512-/Ri4xDDpe12NT6Ex/DRgHzLlobiQXEW/hmG08w1wj/YU7hLemk97c+zHQFp0iZQ9r7YqgLEXZR2sls4HxBf9NA==
 
 "@quasar/app-vite@^1.0.0":
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/@quasar/app-vite/-/app-vite-1.10.2.tgz#69c7a50c7b9d32415204d222e8ea869456f51c8a"
-  integrity sha512-I/YO5m0vHMkAw8ewX8Fz1CSPFdZo+k5vWOTf6hc8B2wBfyYdqC8MsoP3YKJ4zNlBG6OMldrKEBIv+FPT4WNQzw==
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@quasar/app-vite/-/app-vite-1.11.0.tgz#077c758b58f43c20aa5f70dd6d54ad1f3bd2ae96"
+  integrity sha512-PUeqtYs2liA/O17LJ25jzKckB0MG1ZW/iuDC7NvCMZpYT6Ab66AypiYfPf4WGWeAqricorHVNRyMfMpTscR/hA==
   dependencies:
     "@quasar/render-ssr-error" "^1.0.3"
     "@quasar/vite-plugin" "^1.7.0"
@@ -5600,9 +5600,9 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 sass@^1.80.2:
-  version "1.80.7"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.80.7.tgz#7569334c39220f8ca62fcea38dce60f809ba345c"
-  integrity sha512-MVWvN0u5meytrSjsU7AWsbhoXi1sc58zADXFllfZzbsBT1GHjjar6JwBINYPRrkx/zqnQ6uqbQuHgE95O+C+eQ==
+  version "1.81.0"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.81.0.tgz#a9010c0599867909dfdbad057e4a6fbdd5eec941"
+  integrity sha512-Q4fOxRfhmv3sqCLoGfvrC9pRV8btc0UtqL9mN6Yrv6Qi9ScL55CVH1vlPP863ISLEEMNLLuu9P+enCeGHlnzhA==
   dependencies:
     chokidar "^4.0.0"
     immutable "^5.0.2"
