@@ -1,3 +1,4 @@
+import { nextTick } from 'vue';
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
@@ -19,6 +20,7 @@ const compareRegisterResponseWithStore = () => {
     'be.visible',
   );
   const registerStore = useRegisterStore();
+  nextTick();
   expect(registerStore.getIsRegistrationComplete).to.equal(true);
 };
 
@@ -197,17 +199,15 @@ describe('<FormRegisterCoordinator>', () => {
       cy.dataCy('form-register-coordinator-submit')
         .should('be.visible')
         .click();
-      cy.dataCy('form-register-coordinator-terms')
-        .find('.q-field__messages')
-        .should(
-          'contain',
-          i18n.global.t('register.coordinator.form.messageTermsRequired'),
-        );
+      // required message is visible
+      cy.contains(
+        i18n.global.t('register.coordinator.form.messageTermsRequired'),
+      ).should('be.visible');
       // test terms checkbox checked
       cy.dataCy('form-register-coordinator-terms').find('.q-checkbox').click();
       // testing non-existence of element fails on .find() method
-      cy.get(
-        '*[data-cy="form-register-coordinator-terms] .q-field__messages',
+      cy.contains(
+        i18n.global.t('register.coordinator.form.messageTermsRequired'),
       ).should('not.exist');
     });
 
@@ -225,19 +225,23 @@ describe('<FormRegisterCoordinator>', () => {
           .click();
         // submit form
         cy.dataCy('form-register-coordinator-submit').click();
-        cy.wait('@registerCoordinator').then((interception) => {
-          // request body
-          cy.get('@registerRequestBody').then((registerRequestBody) => {
-            expect(interception.request.body).to.deep.equal(
-              registerRequestBody,
-            );
-          });
-          // status code
-          expect(interception.response.statusCode).to.equal(
-            httpSuccessfullStatus,
-          );
-          // check state in store
-          compareRegisterResponseWithStore();
+        // wait for API call to finish
+        cy.get('@registerRequestBody').then((registerRequestBody) => {
+          cy.wait('@registerCoordinator')
+            .then((interception) => {
+              // request body
+              expect(interception.request.body).to.deep.equal(
+                registerRequestBody,
+              );
+              // status code
+              expect(interception.response.statusCode).to.equal(
+                httpSuccessfullStatus,
+              );
+            })
+            .then(() => {
+              // check state in store
+              compareRegisterResponseWithStore();
+            });
         });
       });
     });
