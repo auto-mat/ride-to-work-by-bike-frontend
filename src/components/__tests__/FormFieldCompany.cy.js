@@ -1,4 +1,3 @@
-import { ref } from 'vue';
 import FormFieldCompany from 'components/global/FormFieldCompany.vue';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
@@ -91,6 +90,21 @@ describe('<FormFieldCompany>', () => {
             );
           });
         });
+        cy.dataCy('form-company').find('input').click();
+        // select option
+        cy.get('.q-menu')
+          .should('be.visible')
+          .within(() => {
+            cy.get('.q-item').should(
+              'have.length',
+              formFieldCompany.results.length,
+            );
+            cy.get('.q-item').first().click();
+          });
+        cy.get('.q-menu').should('not.exist');
+        cy.wrap(model)
+          .its('value')
+          .should('eq', formFieldCompany.results[0].id);
       });
     });
 
