@@ -107,7 +107,7 @@ describe('<FormFieldCompany>', () => {
       });
     });
 
-    it.only('allows to search through options', () => {
+    it('allows to search through options', () => {
       // search for option
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
