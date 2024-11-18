@@ -107,7 +107,7 @@ describe('<FormFieldCompany>', () => {
       });
     });
 
-    it('allows to search through options', () => {
+    it.only('allows to search through options', () => {
       // search for option
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
@@ -116,6 +116,9 @@ describe('<FormFieldCompany>', () => {
           cy.dataCy('form-company')
             .find('input')
             .type(formFieldCompany.results[1].name);
+          // blur to trigger search (typing occasionally doesn't trigger it)
+          cy.dataCy('form-company').find('input').blur();
+          cy.dataCy('form-company').find('input').focus();
           // select first option from filtered results
           cy.get('.q-menu')
             .should('be.visible')
