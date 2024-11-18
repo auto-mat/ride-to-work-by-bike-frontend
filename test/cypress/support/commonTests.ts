@@ -5,9 +5,14 @@ import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_
 const layoutBackgroundImageSelector = 'layout-background-image';
 
 // types
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { Interception } from 'cypress/types/net-stubbing';
 import type { I18n } from 'vue-i18n';
 import type { ConfigGlobal } from '../../../src/components/types/Config';
-import { OrganizationType } from 'src/components/types/Organization';
+import type {
+  GetOrganizationsResponse,
+  OrganizationType,
+} from 'src/components/types/Organization';
 
 type AUTWindow = Window & typeof globalThis & ApplicationWindow;
 
@@ -415,6 +420,35 @@ export const interceptOrganizationsApi = (
     },
   );
 };
+
+export function waitForOrganizationsApi(
+  formFieldCompany: GetOrganizationsResponse,
+  formFieldCompanyNext: GetOrganizationsResponse,
+) {
+  cy.wait('@getOrganizations').then(
+    (
+      interception: Interception<
+        AxiosRequestConfig,
+        AxiosResponse<GetOrganizationsResponse>
+      >,
+    ) => {
+      expect(interception.request.headers.authorization).to.include('Bearer');
+      if (interception.response) {
+        expect(interception.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(interception.response.body).to.deep.equal(formFieldCompany);
+      }
+    },
+  );
+  cy.wait('@getOrganizationsNextPage').then((interception) => {
+    expect(interception.request.headers.authorization).to.include('Bearer');
+    if (interception.response) {
+      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
+      expect(interception.response.body).to.deep.equal(formFieldCompanyNext);
+    }
+  });
+}
 
 export const interceptRegisterCoordinatorApi = (
   config: ConfigGlobal,

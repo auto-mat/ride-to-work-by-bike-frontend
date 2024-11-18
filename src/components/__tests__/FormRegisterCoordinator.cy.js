@@ -9,8 +9,10 @@ import {
   httpSuccessfullStatus,
   interceptOrganizationsApi,
   interceptRegisterCoordinatorApi,
+  waitForOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
 import { useRegisterStore } from '../../stores/register';
+import { OrganizationType } from '../../components/types/Organization';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -67,7 +69,11 @@ describe('<FormRegisterCoordinator>', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       // intercept organizations API call (before mounting component)
-      interceptOrganizationsApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        OrganizationType.company,
+      );
       // intercept register coordinator API call (before mounting component)
       interceptRegisterCoordinatorApi(rideToWorkByBikeConfig, i18n);
       // specify data for register coordinator request body
@@ -173,6 +179,12 @@ describe('<FormRegisterCoordinator>', () => {
     });
 
     it('validates checkboxes correctly', () => {
+      // wait for organizations API call
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+        });
+      });
       // fill in other parts of the form to be able to test password
       fillFormRegisterCoordinator();
       // test responsibility checkbox unchecked
@@ -213,6 +225,12 @@ describe('<FormRegisterCoordinator>', () => {
 
     it('submits form correctly', () => {
       cy.fixture('registerResponse').then(() => {
+        // wait for organizations API call
+        cy.fixture('formFieldCompany').then((formFieldCompany) => {
+          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+          });
+        });
         // fill in the form
         fillFormRegisterCoordinator();
         // check responsibility checkbox

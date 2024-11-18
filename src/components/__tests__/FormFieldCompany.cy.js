@@ -6,6 +6,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
   httpSuccessfullStatus,
   interceptOrganizationsApi,
+  waitForOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../types/Organization';
 
@@ -246,17 +247,4 @@ describe('<FormFieldCompany>', () => {
       cy.testElementPercentageWidth(cy.dataCy('col-button'), 100);
     });
   });
-
-  function waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext) {
-    cy.wait('@getOrganizations').then((interception) => {
-      expect(interception.request.headers.authorization).to.include('Bearer');
-      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(interception.response.body).to.deep.equal(formFieldCompany);
-    });
-    cy.wait('@getOrganizationsNextPage').then((interception) => {
-      expect(interception.request.headers.authorization).to.include('Bearer');
-      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(interception.response.body).to.deep.equal(formFieldCompanyNext);
-    });
-  }
 });
