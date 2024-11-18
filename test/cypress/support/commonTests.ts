@@ -7,6 +7,7 @@ const layoutBackgroundImageSelector = 'layout-background-image';
 // types
 import type { I18n } from 'vue-i18n';
 import type { ConfigGlobal } from '../../../src/components/types/Config';
+import { OrganizationType } from 'src/components/types/Organization';
 
 type AUTWindow = Window & typeof globalThis & ApplicationWindow;
 
@@ -380,15 +381,20 @@ export const setupApiChallengeInactive = (
   cy.clock(systemTimeChallengeInactive, ['Date']);
 };
 
-export const interceptOrganizationsApi = (config: ConfigGlobal, i18n: I18n) => {
+export const interceptOrganizationsApi = (
+  config: ConfigGlobal,
+  i18n: I18n,
+  type: OrganizationType,
+) => {
   const { apiBase, apiDefaultLang, urlApiOrganizations } = config;
   // get API base URL
   const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
   const urlApiOrganizationsLocalized = `${apiBaseUrl}${urlApiOrganizations}`;
+  const urlApiOrganizationsLocalizedWithType = `${urlApiOrganizationsLocalized}${type}/`;
   cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
     cy.fixture('formFieldCompanyNext').then((formFieldCompanyNextResponse) => {
       // intercept organizations API call (before mounting component)
-      cy.intercept('GET', urlApiOrganizationsLocalized, {
+      cy.intercept('GET', urlApiOrganizationsLocalizedWithType, {
         statusCode: httpSuccessfullStatus,
         body: formFieldCompanyResponse,
       }).as('getOrganizations');

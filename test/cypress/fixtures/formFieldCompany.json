@@ -1,6 +1,6 @@
 {
   "count": 10,
-  "next": "https://test.dopracenakole.cz/rest/organizations/?limit=10&offset=10",
+  "next": "https://test.dopracenakole.cz/rest/organizations/company/?limit=10&offset=10",
   "previous": null,
   "results": [
     {
