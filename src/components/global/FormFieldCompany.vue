@@ -311,9 +311,6 @@ export default defineComponent({
         // close dialog
         isDialogOpen.value = false;
         logger?.info('Close add company modal dialog.');
-        // refetch organizations
-        logger?.info('Refetching organizations.');
-        await loadOptions();
         // set company to new organization
         logger?.debug(`Setting organization to ID <${data.id}>.`);
         const newCompanyOption: FormSelectOption = {
@@ -322,6 +319,12 @@ export default defineComponent({
         };
         options.value.push(newCompanyOption);
         company.value = newCompanyOption.value;
+        logger?.debug(
+          `Append newly created organization <${JSON.stringify(newCompanyOption, null, 2)}>` +
+            ' into select organizations widget options.',
+        );
+        // Append newly created organization option into all organization select widget options
+        optionsDefault.value.push(newCompanyOption);
       }
     };
 
