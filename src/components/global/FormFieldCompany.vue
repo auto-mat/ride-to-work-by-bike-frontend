@@ -465,7 +465,7 @@ export default defineComponent({
           fill-input
           hide-bottom-space
           input-debounce="0"
-          lazy-rules="true"
+          :lazy-rules="true"
           :model-value="company"
           :options="options"
           :loading="isOptionsLoading"
