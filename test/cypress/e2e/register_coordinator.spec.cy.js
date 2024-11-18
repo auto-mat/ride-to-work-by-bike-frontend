@@ -7,6 +7,7 @@ import {
   testBackgroundImage,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
+import { OrganizationType } from '../../../src/components/types/Organization';
 
 describe('Login page', () => {
   context('desktop', () => {
@@ -109,7 +110,11 @@ describe('Login page', () => {
               cy.wrap(win.i18n).as('i18n');
 
               // Set up API intercepts
-              interceptOrganizationsApi(config, win.i18n);
+              interceptOrganizationsApi(
+                config,
+                win.i18n,
+                OrganizationType.company,
+              );
               interceptRegisterCoordinatorApi(config, win.i18n);
 
               // Load fixtures and set up request body
@@ -141,17 +146,28 @@ describe('Login page', () => {
     });
 
     it('fills in the form, submits it, and redirects to homepage on success', () => {
-      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
-        cy.wait('@getOrganizations').then((interception) => {
-          expect(interception.request.headers.authorization).to.include(
-            'Bearer',
-          );
-          expect(interception.response.statusCode).to.equal(
-            httpSuccessfullStatus,
-          );
-          expect(interception.response.body).to.deep.equal(
-            formFieldCompanyResponse,
-          );
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          cy.wait('@getOrganizations').then((interception) => {
+            expect(interception.request.headers.authorization).to.include(
+              'Bearer',
+            );
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(interception.response.body).to.deep.equal(formFieldCompany);
+          });
+          cy.wait('@getOrganizationsNextPage').then((interception) => {
+            expect(interception.request.headers.authorization).to.include(
+              'Bearer',
+            );
+            expect(interception.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(interception.response.body).to.deep.equal(
+              formFieldCompanyNext,
+            );
+          });
           // fill in the form
           fillFormRegisterCoordinator();
           // check responsibility checkbox

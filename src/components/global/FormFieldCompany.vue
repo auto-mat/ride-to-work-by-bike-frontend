@@ -140,7 +140,6 @@ export default defineComponent({
         showSuccessMessage: false,
         headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
         logger,
-        localized: false,
       });
       if (data?.results?.length) {
         pushResultsToOptions(data);
