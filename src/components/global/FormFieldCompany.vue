@@ -515,11 +515,7 @@ export default defineComponent({
       </div>
     </div>
     <!-- Dialog: Add company -->
-    <dialog-default
-      v-model="isDialogOpen"
-      :form-ref="formRef"
-      data-cy="dialog-add-company"
-    >
+    <dialog-default v-model="isDialogOpen" data-cy="dialog-add-company">
       <template #title>
         {{ addNewOrganizationDialogTitle }}
       </template>
