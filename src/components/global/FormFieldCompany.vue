@@ -10,7 +10,7 @@
  * Used in `FormRegisterCoordinator`, `RegisterChallengePayment`.
  *
  * @props
- * - `modelValue` (string, required): The object representing user input.
+ * - `modelValue` (number, required): The object representing user input.
  *   It should be of type `string`.
  * - `label` (string, optional): The label for the form field.
  * - `organizationType` (string['company'|'school'|'family'], optional): Organization type
@@ -29,7 +29,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject, ref } from 'vue';
+import { computed, defineComponent, inject, ref, watch, toRef } from 'vue';
 import { QForm } from 'quasar';
 
 // components
@@ -92,7 +92,7 @@ export default defineComponent({
   },
   props: {
     modelValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     label: {
@@ -119,9 +119,13 @@ export default defineComponent({
      */
     const loadOptions = async (): Promise<void> => {
       // reset default options
-      logger?.debug(`Reseting default options <${optionsDefault.value}>`);
+      logger?.debug(
+        `Reseting default options <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
+      );
       optionsDefault.value = [];
-      logger?.debug(`Default options set to <${optionsDefault.value}>`);
+      logger?.debug(
+        `Default options set to <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
+      );
       // get organizations
       logger?.info('Get organizations from the API.');
       isOptionsLoading.value = true;
@@ -130,7 +134,7 @@ export default defineComponent({
       requestTokenHeader_.Authorization += loginStore.getAccessToken;
       // fetch organizations
       const { data } = await apiFetch<GetOrganizationsResponse>({
-        endpoint: urlApiOrganizations,
+        endpoint: `${urlApiOrganizations}${props.organizationType}/`,
         method: 'get',
         translationKey: 'getOrganizations',
         showSuccessMessage: false,
@@ -177,7 +181,7 @@ export default defineComponent({
     };
     /**
      * Push results to options
-     * @param {GetOrganizationsResponse} data
+     * @param {GetOrganizationsResponse} data - Organizations response
      * @returns {void}
      */
     const pushResultsToOptions = (data: GetOrganizationsResponse): void => {
@@ -189,11 +193,11 @@ export default defineComponent({
       });
       logger?.info('Organizations fetched. Saving to default options.');
       logger?.debug(
-        `Adding options <${JSON.stringify(pageResults)}> to default options.`,
+        `Adding options <${JSON.stringify(pageResults, null, 2)}> to default options.`,
       );
       optionsDefault.value.push(...pageResults);
       logger?.debug(
-        `Default options set to <${JSON.stringify(optionsDefault.value)}>.`,
+        `Default options set to <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
       );
     };
 
@@ -403,6 +407,20 @@ export default defineComponent({
       return '';
     });
 
+    const organizationType = toRef(props, 'organizationType');
+    watch(organizationType, (newValue, oldValue) => {
+      logger?.debug(
+        `New organization type was selected, new value is  <${newValue}>, old value was <${oldValue}>.`,
+      );
+      // Erase select organization widget value
+      company.value = 0;
+      logger?.debug(
+        `Erase select organization widget value <${company.value}>.`,
+      );
+      // Organization type changed, load new options
+      loadOptions();
+    });
+
     return {
       addNewOrganizationDialogTitle,
       addNewOrganizationDialogBtn,
@@ -447,6 +465,7 @@ export default defineComponent({
           fill-input
           hide-bottom-space
           input-debounce="0"
+          lazy-rules="true"
           :model-value="company"
           :options="options"
           :loading="isOptionsLoading"
