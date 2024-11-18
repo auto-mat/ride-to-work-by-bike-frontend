@@ -148,6 +148,8 @@ export const useApi = () => {
       logger?.error(`Call to <api()> function raise error <${error}>.`);
       if (axios.isAxiosError(error)) {
         let errorMessage = error.message;
+        if (error.response?.data)
+          errorMessage += `. ${Object.values(error.response?.data).join('. ')}`;
         const apiErrorMessage = getResponseDataErrorMessage(error);
         if (apiErrorMessage) errorMessage += `. ${apiErrorMessage}`;
         Notify.create({
