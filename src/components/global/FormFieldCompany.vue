@@ -101,6 +101,7 @@ export default defineComponent({
     },
     organizationType: {
       type: String as () => OrganizationType,
+      required: true,
     },
   },
   setup(props, { emit }) {
@@ -204,9 +205,9 @@ export default defineComponent({
     loadOptions();
 
     // company v-model
-    const company = computed({
-      get: () => props.modelValue,
-      set: (value: string) => {
+    const company = computed<number>({
+      get: (): number => props.modelValue,
+      set: (value: number) => {
         logger?.debug(`Company set to <${value}>.`);
         emit('update:modelValue', value);
       },
@@ -313,7 +314,7 @@ export default defineComponent({
         logger?.info('Close add company modal dialog.');
         // set company to new organization
         logger?.debug(`Setting organization to ID <${data.id}>.`);
-        const newCompanyOption: FormSelectOption = {
+        const newCompanyOption: { label: string; value: number } = {
           label: data.name,
           value: data.id,
         };

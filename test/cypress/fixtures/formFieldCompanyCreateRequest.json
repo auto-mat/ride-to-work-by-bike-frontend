@@ -1,4 +1,5 @@
 {
   "name": "Test Company",
-  "vatId": "12345678"
+  "vatId": "12345678",
+  "organization_type": "company"
 }

@@ -64,9 +64,10 @@ export interface GetOrganizationsResponse {
 export interface PostOrganizationPayload {
   name: string;
   vatId: string;
+  organization_type: OrganizationType;
 }
 
 export interface PostOrganizationsResponse {
-  id: string;
+  id: number;
   name: string;
 }
