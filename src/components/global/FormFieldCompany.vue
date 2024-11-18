@@ -294,8 +294,9 @@ export default defineComponent({
       const payload: PostOrganizationPayload = {
         name: companyNew.name,
         vatId: companyNew.vatId,
+        organization_type: props.organizationType,
       };
-      // fetch organizations
+      // post organization
       const { data } = await apiFetch<PostOrganizationsResponse>({
         endpoint: urlApiOrganizations,
         method: 'post',
