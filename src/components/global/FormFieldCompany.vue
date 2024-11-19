@@ -10,8 +10,8 @@
  * Used in `FormRegisterCoordinator`, `RegisterChallengePayment`.
  *
  * @props
- * - `modelValue` (number, required): The object representing user input.
- *   It should be of type `string`.
+ * - `modelValue` (number|string, required): The object representing user input.
+ *   It should be of type `string` or `number`.
  * - `label` (string, optional): The label for the form field.
  * - `organizationType` (string['company'|'school'|'family'], optional): Organization type
  *
@@ -92,7 +92,7 @@ export default defineComponent({
   },
   props: {
     modelValue: {
-      type: Number,
+      type: [Number, String],
       required: true,
     },
     label: {
@@ -113,6 +113,9 @@ export default defineComponent({
     const { apiFetch } = useApi();
     // get API base URL
     const { urlApiOrganizations } = rideToWorkByBikeConfig;
+    logger.debug(
+      `Initial organization ID model value is <${props.modelValue}>.`,
+    );
     /**
      * Load options
      * Fetches organizations and saves them into default options
@@ -205,9 +208,9 @@ export default defineComponent({
     loadOptions();
 
     // company v-model
-    const company = computed<number>({
-      get: (): number => props.modelValue,
-      set: (value: number) => {
+    const company = computed<number | string>({
+      get: (): number | string => props.modelValue,
+      set: (value: number | string) => {
         logger?.debug(`Company set to <${value}>.`);
         emit('update:modelValue', value);
       },
@@ -417,7 +420,7 @@ export default defineComponent({
         `New organization type was selected, new value is  <${newValue}>, old value was <${oldValue}>.`,
       );
       // Erase select organization widget value
-      company.value = 0;
+      company.value = '';
       logger?.debug(
         `Erase select organization widget value <${company.value}>.`,
       );
