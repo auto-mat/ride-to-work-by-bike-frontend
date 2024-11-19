@@ -146,17 +146,25 @@ function coreTests() {
           .find(classSelectorAvatar)
           .should('have.css', 'border-radius', imageBorderRadius)
           .should('have.css', 'width', imageWidth);
+        // wait until image has no loading indicator
         cy.dataCy(selectorCardFollowImage)
-          .find('img')
-          .should('be.visible')
-          .then(($img) => {
-            cy.testImageHeight($img);
-            expect($img.attr('src')).to.equal(card.image.src);
+          .find('.q-img__loading')
+          .should('not.exist')
+          .then(() => {
+            // test image height
+            cy.dataCy(selectorCardFollowImage)
+              .find('img')
+              .should('be.visible')
+              .then(($img) => {
+                cy.testImageHeight($img);
+                expect($img.attr('src')).to.equal(card.image.src);
+              });
+            // take a snapshot
+            cy.matchImageSnapshotNamed(
+              selectorCardFollowImage,
+              `${Cypress.currentTest.titlePath[0]}-avatar`,
+            );
           });
-        cy.matchImageSnapshotNamed(
-          selectorCardFollowImage,
-          `${Cypress.currentTest.titlePath[0]}-avatar`,
-        );
       });
     });
   });
