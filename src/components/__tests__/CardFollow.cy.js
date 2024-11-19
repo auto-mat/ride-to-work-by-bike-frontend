@@ -148,13 +148,16 @@ function coreTests() {
           .should('have.css', 'width', imageWidth);
         // wait until image has no loading indicator
         cy.dataCy(selectorCardFollowImage)
+          .should('exist')
+          .and('be.visible')
           .find('.q-img__loading')
           .should('not.exist')
           .then(() => {
             // test image height
             cy.dataCy(selectorCardFollowImage)
               .find('img')
-              .should('be.visible')
+              .should('exist')
+              .and('be.visible')
               .then(($img) => {
                 cy.testImageHeight($img);
                 expect($img.attr('src')).to.equal(card.image.src);
