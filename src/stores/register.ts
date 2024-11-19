@@ -142,7 +142,7 @@ export const useRegisterStore = defineStore('register', {
         method: 'get',
         translationKey: 'checkEmailVerification',
         showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
+        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
         logger: this.$log,
       });
 

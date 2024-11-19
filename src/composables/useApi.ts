@@ -82,7 +82,7 @@ export const useApi = () => {
     payload,
     translationKey,
     method = 'get',
-    headers = requestDefaultHeader,
+    headers = requestDefaultHeader(),
     logger,
     showSuccessMessage = true,
   }: {

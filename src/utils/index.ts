@@ -2,10 +2,15 @@
 import type { AxiosRequestHeaders } from 'axios';
 import { ConfigGlobal } from '../components/types';
 
-// config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+/**
+ * Get global app config as lazy function allow to use
+ * this TS module inside Cypress e2e tests, where global
+ * app config is available via Cypress task('getAppConfig')
+ * command.
+ */
+const getAppConfig = (): ConfigGlobal => {
+  return JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG) as ConfigGlobal;
+};
 
 interface RgbaI {
   r: number;
@@ -53,9 +58,11 @@ const timestampToDatetimeString = (timestamp: number): string => {
 
 const bearerTokeAuth = 'Bearer';
 
-const requestDefaultHeader = {
-  Accept: `application/json; version=${rideToWorkByBikeConfig.apiVersion}`,
-} as AxiosRequestHeaders;
+const requestDefaultHeader = (): AxiosRequestHeaders => {
+  return {
+    Accept: `application/json; version=${getAppConfig().apiVersion}`,
+  } as AxiosRequestHeaders;
+};
 
 const requestTokenHeader = {
   Authorization: `${bearerTokeAuth} `,

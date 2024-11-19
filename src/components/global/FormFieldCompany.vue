@@ -142,7 +142,7 @@ export default defineComponent({
         method: 'get',
         translationKey: 'getOrganizations',
         showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
+        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
         logger,
       });
       if (data?.results?.length) {
@@ -170,7 +170,7 @@ export default defineComponent({
         method: 'get',
         translationKey: 'getOrganizations',
         showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
+        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
         logger,
       });
       // store results
@@ -306,7 +306,7 @@ export default defineComponent({
         endpoint: urlApiOrganizations,
         method: 'post',
         translationKey: 'createOrganization',
-        headers: Object.assign(requestDefaultHeader, requestTokenHeader_),
+        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
         payload: payload,
         logger,
       });
