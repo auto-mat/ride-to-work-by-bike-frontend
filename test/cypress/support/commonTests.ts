@@ -1,5 +1,6 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
+import { bearerTokeAuth } from 'src/utils';
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -386,6 +387,14 @@ export const setupApiChallengeInactive = (
   cy.clock(systemTimeChallengeInactive, ['Date']);
 };
 
+/**
+ * Intercept organizations API call
+ * Provides a `@getOrganizations`, `@getOrganizationsNextPage`
+ * `@createOrganization` alias for the intercepted request.
+ * @param {ConfigGlobal} config - App global config
+ * @param {I18n} i18n - i18n instance
+ * @returns {void}
+ */
 export const interceptOrganizationsApi = (
   config: ConfigGlobal,
   i18n: I18n,
@@ -421,34 +430,53 @@ export const interceptOrganizationsApi = (
   );
 };
 
-export function waitForOrganizationsApi(
+/**
+ * Wait for intercept organizations API calls and
+ * comparing request/response object
+ * Wait for a `@getOrganizations`, `@getOrganizationsNextPage`
+ * intercept request.
+ * @param {GetOrganizationsResponse} formFieldCompany - Get organizations API data response
+ * @param {GetOrganizationsRespons} formFieldCompanyNext - Get organizations API data response
+ * @returns {void}
+ */
+export const waitForOrganizationsApi = (
   formFieldCompany: GetOrganizationsResponse,
   formFieldCompanyNext: GetOrganizationsResponse,
-) {
-  cy.wait('@getOrganizations').then(
+) => {
+  cy.wait(['@getOrganizations', '@getOrganizationsNextPage']).spread(
     (
-      interception: Interception<
+      getOrganizations: Interception<
+        AxiosRequestConfig,
+        AxiosResponse<GetOrganizationsResponse>
+      >,
+      getOrganizationsNextPage: Interception<
         AxiosRequestConfig,
         AxiosResponse<GetOrganizationsResponse>
       >,
     ) => {
-      expect(interception.request.headers.authorization).to.include('Bearer');
-      if (interception.response) {
-        expect(interception.response.statusCode).to.equal(
+      expect(getOrganizations.request.headers.authorization).to.include(
+        bearerTokeAuth,
+      );
+      if (getOrganizations.response) {
+        expect(getOrganizations.response.statusCode).to.equal(
           httpSuccessfullStatus,
         );
-        expect(interception.response.body).to.deep.equal(formFieldCompany);
+        expect(getOrganizations.response.body).to.deep.equal(formFieldCompany);
+      }
+      expect(getOrganizationsNextPage.request.headers.authorization).to.include(
+        bearerTokeAuth,
+      );
+      if (getOrganizationsNextPage.response) {
+        expect(getOrganizationsNextPage.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(getOrganizationsNextPage.response.body).to.deep.equal(
+          formFieldCompanyNext,
+        );
       }
     },
   );
-  cy.wait('@getOrganizationsNextPage').then((interception) => {
-    expect(interception.request.headers.authorization).to.include('Bearer');
-    if (interception.response) {
-      expect(interception.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(interception.response.body).to.deep.equal(formFieldCompanyNext);
-    }
-  });
-}
+};
 
 export const interceptRegisterCoordinatorApi = (
   config: ConfigGlobal,

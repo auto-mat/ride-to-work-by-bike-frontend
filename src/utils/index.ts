@@ -51,12 +51,14 @@ const timestampToDatetimeString = (timestamp: number): string => {
   return formatedDateTime;
 };
 
+const bearerTokeAuth = 'Bearer';
+
 const requestDefaultHeader = {
   Accept: `application/json; version=${rideToWorkByBikeConfig.apiVersion}`,
 } as AxiosRequestHeaders;
 
 const requestTokenHeader = {
-  Authorization: 'Bearer ',
+  Authorization: `${bearerTokeAuth} `,
 } as AxiosRequestHeaders;
 
 /*
@@ -84,6 +86,7 @@ const deepObjectWithSimplePropsCopy = (obj: object): object => {
 };
 
 export {
+  bearerTokeAuth,
   deepObjectWithSimplePropsCopy,
   requestDefaultHeader,
   requestTokenHeader,

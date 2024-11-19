@@ -156,8 +156,8 @@ export default defineComponent({
     };
     /**
      * Fetch next page of organizations
-     * @param {string} url
-     * @returns {Promise<void>}
+     * @param {string} url - Get organizations next page API URL
+     * @returns {Promise<void>} - Promise
      */
     const fetchNextPage = async (url: string): Promise<void> => {
       logger?.debug(`Fetching next page of organizations from <${url}>.`);
@@ -264,7 +264,8 @@ export default defineComponent({
     };
     /**
      * Submit new company form
-     * Validates form and calls createOrganization API if valid
+     * Validates form and calls createOrganization() func
+     * API if valid
      * @returns {Promise<void>}
      */
     const onSubmit = async (): Promise<void> => {
@@ -284,7 +285,7 @@ export default defineComponent({
     };
     /**
      * Create organization
-     * Creates a new organization in database
+     * Creates a new organization, POST data
      * @returns {Promise<void>}
      */
     const createOrganization = async (): Promise<void> => {
