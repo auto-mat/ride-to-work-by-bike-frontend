@@ -81,13 +81,21 @@ describe('<FormFieldCompany>', () => {
           cy.get('.q-menu')
             .should('be.visible')
             .within(() => {
-              cy.get('.q-item').should(
-                'have.length',
-                formFieldCompany.results.length +
-                  formFieldCompanyNext.results.length,
-              );
-              cy.get('.q-item').first().click();
+              cy.get('.q-item')
+                .should((opts) => {
+                  expect(
+                    opts.length,
+                    formFieldCompany.results.length +
+                      formFieldCompanyNext.results.length,
+                  );
+                })
+                .first()
+                .click();
             });
+          cy.get('.q-menu').should('not.exist');
+          cy.wrap(model)
+            .its('value')
+            .should('eq', formFieldCompany.results[0].id);
         });
         cy.dataCy('form-company').find('input').click();
         // select option
