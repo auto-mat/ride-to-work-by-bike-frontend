@@ -10,7 +10,7 @@ export const loadLocaleMessages = async () => {
     if (matched && matched.length > 1) {
       const locale = matched[1];
       // Dynamic import TOML translation file content
-      localesFiles[localeFile]().then((content) => {
+      await localesFiles[localeFile]().then((content) => {
         messages[locale] = content.default;
       });
     }
@@ -38,5 +38,13 @@ export const getDateTimeFormats = (locales) => {
   locales.forEach((locale) => {
     dateTimeFormats[locale] = dateTimeFormatsAllLocales;
   });
+  if (process.env.NODE_ENV === 'development') {
+    console.log(
+      `Set date time formats for available locales <${locales.join(', ')}>.`,
+    );
+    console.log(
+      `Date time formats <${JSON.stringify(dateTimeFormats, null, 2)}>.`,
+    );
+  }
   return dateTimeFormats;
 };
