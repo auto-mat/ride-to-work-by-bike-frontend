@@ -121,12 +121,7 @@ describe('<FormFieldCompany>', () => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
           cy.dataCy('form-company').find('input').focus();
-          cy.dataCy('form-company')
-            .find('input')
-            .type(formFieldCompany.results[1].name);
-          // blur to trigger search (typing occasionally doesn't trigger it)
-          cy.dataCy('form-company').find('input').blur();
-          cy.dataCy('form-company').find('input').focus();
+          cy.focused().type(formFieldCompany.results[1].name);
           // select first option from filtered results
           cy.get('.q-menu')
             .should('be.visible')
@@ -147,7 +142,7 @@ describe('<FormFieldCompany>', () => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
           cy.dataCy('form-company').find('input').focus();
-          cy.dataCy('form-company').find('input').blur();
+          cy.focused().blur();
           cy.contains(
             i18n.global.t('form.messageFieldRequired', {
               fieldName: i18n.global.t('form.labelCompanyShort'),
