@@ -78,20 +78,14 @@ describe('<FormFieldCompany>', () => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
           cy.dataCy('form-company').find('input').click();
           // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item')
-                .should((opts) => {
-                  expect(
-                    opts.length,
-                    formFieldCompany.results.length +
-                      formFieldCompanyNext.results.length,
-                  );
-                })
-                .first()
-                .click();
-            });
+          cy.get('.q-menu .q-item')
+            .should(
+              'have.length',
+              formFieldCompany.results.length +
+                formFieldCompanyNext.results.length,
+            )
+            .first()
+            .click();
           cy.get('.q-menu').should('not.exist');
           cy.wrap(model)
             .its('value')
@@ -120,15 +114,11 @@ describe('<FormFieldCompany>', () => {
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-          cy.dataCy('form-company').find('input').focus();
-          cy.focused().type(formFieldCompany.results[1].name);
+          cy.dataCy('form-company')
+            .find('input')
+            .type(formFieldCompany.results[1].name);
           // select first option from filtered results
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              // only shows the one filtered option
-              cy.get('.q-item').should('have.length', 1).first().click();
-            });
+          cy.get('.q-menu .q-item').should('have.length', 1).first().click();
           cy.get('.q-menu').should('not.exist');
           cy.wrap(model)
             .its('value')
