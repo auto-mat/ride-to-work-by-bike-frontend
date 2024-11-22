@@ -26,9 +26,8 @@ const hexToRgb = (hex: string): string | null => {
  */
 function vModelAdapter<T>(modelRef: Ref<T>, modelName = 'modelValue') {
   watch(modelRef, (value) =>
-    Cypress.vueWrapper.setProps({ [modelName]: value }),
+    Cypress.vueWrapper?.setProps({ [modelName]: value }),
   );
-
   return {
     [modelName]: modelRef.value,
     [`onUpdate:${modelName}`]: (emittedValue: T) => {
