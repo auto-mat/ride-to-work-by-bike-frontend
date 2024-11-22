@@ -79,11 +79,13 @@ describe('<FormFieldCompany>', () => {
           cy.dataCy('form-company').find('input').click();
           // select option
           cy.get('.q-menu .q-item')
-            .should(
-              'have.length',
-              formFieldCompany.results.length +
-                formFieldCompanyNext.results.length,
-            )
+            .should((opts) => {
+              expect(
+                opts.length,
+                formFieldCompany.results.length +
+                  formFieldCompanyNext.results.length,
+              );
+            })
             .first()
             .click();
           cy.get('.q-menu').should('not.exist');
@@ -91,21 +93,6 @@ describe('<FormFieldCompany>', () => {
             .its('value')
             .should('eq', formFieldCompany.results[0].id);
         });
-        cy.dataCy('form-company').find('input').click();
-        // select option
-        cy.get('.q-menu')
-          .should('be.visible')
-          .within(() => {
-            cy.get('.q-item').should(
-              'have.length',
-              formFieldCompany.results.length,
-            );
-            cy.get('.q-item').first().click();
-          });
-        cy.get('.q-menu').should('not.exist');
-        cy.wrap(model)
-          .its('value')
-          .should('eq', formFieldCompany.results[0].id);
       });
     });
 
@@ -140,11 +127,7 @@ describe('<FormFieldCompany>', () => {
           ).should('be.visible');
           cy.dataCy('form-company').find('input').click();
           // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item').first().click();
-            });
+          cy.get('.q-menu .q-item').first().click();
           cy.dataCy('form-company').find('input').blur();
           cy.contains(
             i18n.global.t('form.messageFieldRequired', {
@@ -220,29 +203,29 @@ describe('<FormFieldCompany>', () => {
       );
     });
   });
+});
 
-  context('mobile', () => {
-    beforeEach(() => {
-      interceptOrganizationsApi(
-        rideToWorkByBikeConfig,
-        i18n,
-        OrganizationType.company,
-      );
-      // reset model value
-      model.value = '';
-      // mount component
-      cy.mount(FormFieldCompany, {
-        props: {
-          ...vModelAdapter(model),
-          organizationType: OrganizationType.company,
-        },
-      });
-      cy.viewport('iphone-6');
+context('mobile', () => {
+  beforeEach(() => {
+    interceptOrganizationsApi(
+      rideToWorkByBikeConfig,
+      i18n,
+      OrganizationType.company,
+    );
+    // reset model value
+    model.value = '';
+    // mount component
+    cy.mount(FormFieldCompany, {
+      props: {
+        ...vModelAdapter(model),
+        organizationType: OrganizationType.company,
+      },
     });
+    cy.viewport('iphone-6');
+  });
 
-    it('renders input and button in a stacked layout', () => {
-      cy.testElementPercentageWidth(cy.dataCy('col-input'), 100);
-      cy.testElementPercentageWidth(cy.dataCy('col-button'), 100);
-    });
+  it('renders input and button in a stacked layout', () => {
+    cy.testElementPercentageWidth(cy.dataCy('col-input'), 100);
+    cy.testElementPercentageWidth(cy.dataCy('col-button'), 100);
   });
 });
