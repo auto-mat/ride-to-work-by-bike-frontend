@@ -32,6 +32,9 @@ import { useValidation } from 'src/composables/useValidation';
 import { i18n } from 'src/boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
+// enums
+import { OrganizationType } from 'src/components/types/Organization';
+
 // types
 import { FormOption } from '../../components/types/Form';
 
@@ -39,7 +42,7 @@ export default defineComponent({
   name: 'FormFieldOptionGroup',
   props: {
     modelValue: {
-      type: String,
+      type: String as () => OrganizationType | null,
       required: true,
     },
     name: {
@@ -54,10 +57,10 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const inputValue = computed({
-      get() {
+      get(): OrganizationType | null {
         return props.modelValue;
       },
-      set(value: string) {
+      set(value: OrganizationType | null) {
         emit('update:modelValue', value);
       },
     });

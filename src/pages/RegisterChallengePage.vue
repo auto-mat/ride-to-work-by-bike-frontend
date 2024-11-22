@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { QForm, QStepper } from 'quasar';
 
 // config
@@ -42,7 +42,13 @@ import TopBarCountdown from 'src/components/global/TopBarCountdown.vue';
 import { useStepperValidation } from 'src/composables/useStepperValidation';
 
 // enums
-import { OrganizationLevel } from 'src/components/types/Organization';
+import {
+  OrganizationLevel,
+  OrganizationType,
+} from 'src/components/types/Organization';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { FormSelectTableOption } from 'src/components/types/Form';
@@ -113,7 +119,15 @@ export default defineComponent({
     }`;
     const doneIconImgSrcStepper6 = doneIcon;
 
-    const participation = ref<string>('');
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const organizationType = computed({
+      get: (): OrganizationType | null =>
+        registerChallengeStore.getOrganizationType,
+      set: (value: OrganizationType | null) => {
+        registerChallengeStore.setOrganizationType(value);
+      },
+    });
 
     const teamOptions: FormSelectTableOption[] = [
       {
@@ -177,7 +191,7 @@ export default defineComponent({
       iconImgSrcStepper6,
       activeIconImgSrcStepper6,
       doneIconImgSrcStepper6,
-      participation,
+      organizationType,
       team,
       teamOptions,
       onBack,
@@ -283,7 +297,7 @@ export default defineComponent({
               />
             </q-stepper-navigation>
           </q-step>
-          <!-- Step: Participation -->
+          <!-- Step: Organization type -->
           <q-step
             :name="3"
             :title="$t('register.challenge.titleStepParticipation')"
@@ -300,7 +314,7 @@ export default defineComponent({
                 {{ $t('form.participation.titleParticipation') }}
               </p>
               <form-field-option-group
-                v-model="participation"
+                v-model="organizationType"
                 name="participation"
                 label="form.labelParticipation"
               />
