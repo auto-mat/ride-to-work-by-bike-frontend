@@ -13,12 +13,12 @@ const selectorFormTitle = 'form-add-company-title';
 const selectorFormPermission = 'form-add-company-permission';
 const selectorFormName = 'form-add-company-name';
 const selectorFormVatId = 'form-add-company-vat-id';
-const selectorFormStreet = 'form-add-company-street';
-const selectorFormHouseNumber = 'form-add-company-house-number';
-const selectorFormCity = 'form-add-company-city';
-const selectorFormZip = 'form-add-company-zip';
-const selectorFormCityChallenge = 'form-add-company-city-challenge';
-const selectorFormDepartment = 'form-add-company-department';
+const selectorFormStreet = 'form-add-subsidiary-street';
+const selectorFormHouseNumber = 'form-add-subsidiary-house-number';
+const selectorFormCity = 'form-add-subsidiary-city';
+const selectorFormZip = 'form-add-subsidiary-zip';
+const selectorFormCityChallenge = 'form-add-subsidiary-city-challenge';
+const selectorFormDepartment = 'form-add-subsidiary-department';
 
 describe('<FormAddCompany>', () => {
   // default form state (make a deep copy of empty state)

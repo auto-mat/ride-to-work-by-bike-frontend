@@ -27,10 +27,12 @@
  */
 
 // libraries
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, inject, ref, watch } from 'vue';
+import { QForm } from 'quasar';
 
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
+import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
@@ -40,10 +42,12 @@ import type {
   FormCompanyAddressFields,
   FormOption,
 } from 'src/components/types/Form';
+import type { Logger } from 'src/components/types/Logger';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
   components: {
+    FormAddSubsidiary,
     DialogDefault,
   },
   props: {
@@ -58,10 +62,22 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    const formRef = ref<typeof QForm | null>(null);
+    const logger = inject('vuejs3-logger') as Logger | null;
+
     const address = computed<FormCompanyAddressFields | null>({
       get: () => props.modelValue,
       set: (value: FormCompanyAddressFields | null) =>
         emit('update:modelValue', value),
+    });
+
+    const addressNew = ref<FormCompanyAddressFields>({
+      street: '',
+      houseNumber: '',
+      city: '',
+      zip: '',
+      cityChallenge: null,
+      department: '',
     });
 
     watch(
@@ -89,6 +105,10 @@ export default defineComponent({
       const isDialogOpen = ref<boolean>(false);
 
       const onClose = (): void => {
+        if (formRef.value) {
+          formRef.value.reset();
+          logger?.info('Close add company modal dialog and reset form.');
+        }
         isDialogOpen.value = false;
       };
 
@@ -100,6 +120,8 @@ export default defineComponent({
 
     return {
       address,
+      addressNew,
+      formRef,
       isDialogOpen,
       isFilled,
       onClose,
@@ -177,8 +199,11 @@ export default defineComponent({
       {{ $t('form.company.titleAddAddress') }}
     </template>
     <template #content>
-      <q-form>
-        <!-- TODO: add FormAddress -->
+      <q-form ref="formRef">
+        <p data-cy="add-subsidiary-text">
+          {{ $t('form.company.textSubsidiaryAddress') }}
+        </p>
+        <form-add-subsidiary v-model="addressNew" />
       </q-form>
       <!-- Action buttons -->
       <div class="flex justify-end q-mt-sm">

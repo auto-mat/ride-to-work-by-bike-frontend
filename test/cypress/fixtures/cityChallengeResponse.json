@@ -1,0 +1,16 @@
+{
+  "results": [
+    {
+      "id": 123123,
+      "name": "Praha"
+    },
+    {
+      "id": 123124,
+      "name": "Brno"
+    },
+    {
+      "id": 123125,
+      "name": "Liberec"
+    }
+  ]
+}

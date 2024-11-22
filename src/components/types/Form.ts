@@ -34,7 +34,7 @@ export type FormCompanyAddressFields = {
   houseNumber: string;
   city: string;
   zip: string;
-  cityChallenge: string;
+  cityChallenge: number | null;
   department: string;
 };
 

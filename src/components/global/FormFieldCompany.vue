@@ -78,7 +78,7 @@ export const emptyFormCompanyFields: FormCompanyFields = {
       houseNumber: '',
       city: '',
       zip: '',
-      cityChallenge: '',
+      cityChallenge: null,
       department: '',
     },
   ],

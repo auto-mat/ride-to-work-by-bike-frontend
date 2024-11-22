@@ -32,6 +32,7 @@
 import { computed, defineComponent, nextTick, ref } from 'vue';
 
 // components
+import FormAddSubsidiary from './FormAddSubsidiary.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 
@@ -42,11 +43,12 @@ import { useValidation } from '../../composables/useValidation';
 import { OrganizationType } from '../types/Organization';
 
 // types
-import type { FormCompanyFields, FormOption } from '../types/Form';
+import type { FormCompanyFields } from '../types/Form';
 
 export default defineComponent({
   name: 'FormAddCompany',
   components: {
+    FormAddSubsidiary,
     FormFieldTextRequired,
     FormFieldBusinessId,
   },
@@ -66,21 +68,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const company = ref(props.modelValue);
-
-    const optionsCityChallenge: FormOption[] = [
-      {
-        label: 'City 1',
-        value: 'city-1',
-      },
-      {
-        label: 'City 2',
-        value: 'city-2',
-      },
-      {
-        label: 'City 3',
-        value: 'city-3',
-      },
-    ];
 
     const onUpdate = (): void => {
       // wait for next tick to emit the value after update
@@ -103,7 +90,6 @@ export default defineComponent({
     return {
       addressIndex,
       company,
-      optionsCityChallenge,
       OrganizationType,
       isVatShown,
       isFilled,
@@ -168,90 +154,12 @@ export default defineComponent({
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>
-      <div class="row q-col-gutter-lg">
-        <div class="col-12 col-sm-6">
-          <form-field-text-required
-            v-model="company.address[addressIndex].street"
-            name="street"
-            label="form.labelStreet"
-            @update:model-value="onUpdate"
-            data-cy="form-add-company-street"
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <form-field-text-required
-            v-model="company.address[addressIndex].houseNumber"
-            name="houseNumber"
-            label="form.labelHouseNumber"
-            @update:model-value="onUpdate"
-            data-cy="form-add-company-house-number"
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <form-field-text-required
-            v-model="company.address[addressIndex].city"
-            name="city"
-            label="form.labelCity"
-            @update:model-value="onUpdate"
-            data-cy="form-add-company-city"
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <form-field-text-required
-            v-model="company.address[addressIndex].zip"
-            name="zip"
-            label="form.labelZip"
-            @update:model-value="onUpdate"
-            data-cy="form-add-company-zip"
-          />
-        </div>
-        <div class="col-12">
-          <label
-            for="form-city-challenge"
-            class="text-caption text-bold text-gray-10"
-            >{{ $t('form.company.labelCityChallenge') }}</label
-          >
-          <q-select
-            dense
-            outlined
-            emit-value
-            map-options
-            v-model="company.address[addressIndex].cityChallenge"
-            :rules="[
-              (val) =>
-                isFilled(val) ||
-                $t('form.messageFieldRequired', {
-                  fieldName: $t('form.labelCity'),
-                }),
-            ]"
-            id="form-city-challenge"
-            :hint="$t('form.company.hintCityChallenge')"
-            :options="optionsCityChallenge"
-            class="q-mt-sm"
-            data-cy="form-add-company-city-challenge"
-          ></q-select>
-        </div>
-        <div class="col-12">
-          <label
-            for="form-department"
-            class="text-caption text-bold text-gray-10"
-          >
-            {{ $t('form.company.labelDepartment') }}
-          </label>
-          <q-input
-            dense
-            outlined
-            lazy-rules
-            hide-bottom-space
-            v-model="company.address[addressIndex].department"
-            id="form-department"
-            name="department"
-            :hint="$t('form.company.hintDepartment')"
-            class="q-mt-sm"
-            data-cy="form-add-company-department"
-          />
-        </div>
-      </div>
+      <!-- TODO: validate the method of accessing address -->
+      <form-add-subsidiary
+        v-model="company.address[addressIndex]"
+        @update:model-value="onUpdate"
+        data-cy="form-add-company-subsidiary"
+      />
     </div>
   </div>
 </template>
