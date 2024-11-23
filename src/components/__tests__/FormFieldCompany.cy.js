@@ -76,10 +76,11 @@ describe('<FormFieldCompany>', () => {
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-          cy.dataCy('form-company').find('input').click();
+          cy.dataCy('form-company').find('.q-field__append').click();
           // select option
-          cy.get('.q-menu .q-item')
-            .should((opts) => {
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .and((opts) => {
               expect(
                 opts.length,
                 formFieldCompany.results.length +
@@ -102,10 +103,10 @@ describe('<FormFieldCompany>', () => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
           cy.dataCy('form-company')
-            .find('input')
+            .find('.q-field__append')
             .type(formFieldCompany.results[1].name);
           // select first option from filtered results
-          cy.get('.q-menu .q-item').should('have.length', 1).first().click();
+          cy.get('.q-item__label').should('have.length', 1).first().click();
           cy.get('.q-menu').should('not.exist');
           cy.wrap(model)
             .its('value')
@@ -127,8 +128,8 @@ describe('<FormFieldCompany>', () => {
           ).should('be.visible');
           cy.dataCy('form-company').find('input').click();
           // select option
-          cy.get('.q-menu .q-item').first().click();
-          cy.dataCy('form-company').find('input').blur();
+          cy.get('.q-item__label').first().click();
+          cy.focused().blur();
           cy.contains(
             i18n.global.t('form.messageFieldRequired', {
               fieldName: i18n.global.t('form.labelCompanyShort'),
