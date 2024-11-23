@@ -6,7 +6,10 @@ import { PaymentState } from '../../../src/components/types/Profile';
 // colors
 const { getPaletteColor } = colors;
 const green = getPaletteColor('green');
+const negative = getPaletteColor('negative');
+const primary = getPaletteColor('primary');
 const red = getPaletteColor('red');
+const white = getPaletteColor('white');
 
 // selectors
 const selectorAddressSubsidiary = 'profile-details-address-subsidiary';
@@ -32,8 +35,20 @@ const selectorSize = 'profile-details-size';
 const selectorState = 'profile-details-state';
 const selectorTeam = 'profile-details-team';
 const selectorAllowContactPhone = 'profile-allow-contact-phone';
+const selectorDeleteAccount = 'profile-details-delete-account';
+const selectorDeleteAccountIcon = 'profile-details-delete-account-icon';
+const selectorDialogDeleteAccount = 'profile-details-dialog-delete-account';
+const selectorDialogDeleteAccountTitle =
+  'profile-details-dialog-delete-account-title';
+const selectorDialogDeleteAccountDescription =
+  'profile-details-dialog-delete-account-description';
+const selectorDialogDeleteAccountButtonCancel =
+  'profile-details-dialog-delete-account-button-cancel';
+const selectorDialogDeleteAccountButtonDelete =
+  'profile-details-dialog-delete-account-button-delete';
 const selectorTrackingNumber = 'profile-details-tracking-number';
 const selectorTitleChallengeDetails = 'profile-title-challenge-details';
+const selectorTitleDeleteAccount = 'profile-title-delete-account';
 const selectorTitlePersonalDetails = 'profile-title-personal-details';
 const selectorTitleRegistrationDetails = 'profile-title-registration-details';
 const selectorTitleStarterPackage = 'profile-title-starter-package';
@@ -94,10 +109,17 @@ describe('<ProfileDetails>', () => {
         'titleUpdateGender',
         'titleUpdateNickname',
         'titleRegistrationDetails',
+        'titleDeleteAccount',
+        'buttonDeleteAccount',
+        'titleDialogDeleteAccount',
+        'labelDeleteAccount',
+        'labelDeleteAccountDescription',
       ],
       'profile',
       i18n,
     );
+
+    cy.testLanguageStringsInContext(['cancel', 'delete'], 'global', i18n);
   });
 
   context('desktop', () => {
@@ -539,5 +561,63 @@ function coreTests() {
         .should('be.visible')
         .and('contain', i18n.global.t('profile.buttonDownloadInvoice'));
     });
+  });
+
+  it('renders delete account section', () => {
+    // check title
+    cy.dataCy(selectorTitleDeleteAccount)
+      .should('be.visible')
+      .within(() => {
+        cy.dataCy('section-heading-title')
+          .should('be.visible')
+          .and('contain', i18n.global.t('profile.titleDeleteAccount'));
+      });
+    // check button
+    cy.dataCy(selectorDeleteAccount)
+      .should('be.visible')
+      .and('contain', i18n.global.t('profile.buttonDeleteAccount'));
+    // verify icon
+    cy.dataCy(selectorDeleteAccountIcon)
+      .should('be.visible')
+      .and('have.css', 'font-size', '18px')
+      .and('have.class', 'q-mr-sm');
+    // verify button styles
+    cy.dataCy(selectorDeleteAccount).and('have.color', negative);
+  });
+
+  it('shows delete account dialog', () => {
+    // click delete button
+    cy.dataCy(selectorDeleteAccount).click();
+    // verify dialog appears
+    cy.dataCy(selectorDialogDeleteAccount).should('be.visible');
+    // check dialog title
+    cy.dataCy(selectorDialogDeleteAccountTitle)
+      .should('be.visible')
+      .and('contain', i18n.global.t('profile.titleDialogDeleteAccount'));
+    // check dialog description
+    cy.dataCy(selectorDialogDeleteAccountDescription)
+      .should('be.visible')
+      .and('contain', i18n.global.t('profile.labelDeleteAccountDescription'));
+    // verify cancel button
+    cy.dataCy(selectorDialogDeleteAccountButtonCancel)
+      .should('be.visible')
+      .and('contain', i18n.global.t('global.cancel'))
+      .and('have.color', primary);
+    // verify delete button
+    cy.dataCy(selectorDialogDeleteAccountButtonDelete)
+      .should('be.visible')
+      .and('contain', i18n.global.t('global.delete'))
+      .and('have.color', white)
+      .and('have.backgroundColor', negative);
+  });
+
+  it('closes dialog on cancel', () => {
+    // open dialog
+    cy.dataCy(selectorDeleteAccount).click();
+    cy.dataCy(selectorDialogDeleteAccount).should('be.visible');
+    // click cancel button
+    cy.dataCy(selectorDialogDeleteAccountButtonCancel).click();
+    // verify dialog is closed
+    cy.dataCy(selectorDialogDeleteAccount).should('not.exist');
   });
 }
