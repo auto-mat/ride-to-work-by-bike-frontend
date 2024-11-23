@@ -180,11 +180,13 @@ describe('<FormFieldSelectTable>', () => {
       // fill in form
       cy.dataCy('form-add-company-name').find('input').type('AutoMat');
       cy.dataCy('form-add-company-vat-id').find('input').type('87654321');
-      cy.dataCy('form-add-company-street').find('input').type('Slezská');
-      cy.dataCy('form-add-company-house-number').find('input').type('2033/11');
-      cy.dataCy('form-add-company-city').find('input').type('Praha');
-      cy.dataCy('form-add-company-zip').find('input').type('120 00');
-      cy.dataCy('form-add-company-city-challenge').click();
+      cy.dataCy('form-add-subsidiary-street').find('input').type('Slezská');
+      cy.dataCy('form-add-subsidiary-house-number')
+        .find('input')
+        .type('2033/11');
+      cy.dataCy('form-add-subsidiary-city').find('input').type('Praha');
+      cy.dataCy('form-add-subsidiary-zip').find('input').type('120 00');
+      cy.dataCy('form-add-subsidiary-city-challenge').click();
       cy.get('.q-menu').should('be.visible').find('.q-item').first().click();
       // submit
       cy.dataCy('dialog-button-submit').click();
