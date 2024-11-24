@@ -479,6 +479,28 @@ export const interceptFacebookLoginApi = (
   );
 };
 
+export const interceptRegisterChallengeGet = (
+  config: ConfigGlobal,
+  i18n: I18n,
+): void => {
+  const { apiBase, apiDefaultLang, urlApiChallengeRegistrationUser } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(
+    null,
+    apiBase,
+    apiDefaultLang,
+    i18n as I18n,
+  );
+  const urlApiChallengeRegistrationUserLocalized = `${apiBaseUrl}${urlApiChallengeRegistrationUser}`;
+  cy.fixture('formRegisterChallenge.json').then(
+    (formRegisterChallengeValues) => {
+      cy.intercept('GET', urlApiChallengeRegistrationUserLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: formRegisterChallengeValues,
+      }).as('registerChallengeGet');
+    },
+  );
+};
+
 export const fillFormRegisterCoordinator = (): void => {
   cy.fixture('formRegisterCoordinator').then((formRegisterCoordinatorData) => {
     cy.dataCy('form-register-coordinator-first-name')

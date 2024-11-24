@@ -1,6 +1,9 @@
+import { nextTick } from 'vue';
 import {
+  interceptRegisterChallengeGet,
   testLanguageSwitcher,
   testBackgroundImage,
+  httpSuccessfullStatus,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
@@ -67,6 +70,16 @@ const activeIconImgSrcStepper6 = new URL(
   '../../../src/assets/svg/numeric-6-fill.svg',
   cy.config().baseUrl,
 ).href;
+
+// selectors
+const selectorPersonalDetails = {
+  selectorFirstName: 'form-personal-details-first-name',
+  selectorLastName: 'form-personal-details-last-name',
+  selectorNickname: 'form-personal-details-nickname',
+  selectorGender: 'form-personal-details-gender',
+  selectorNewsletter: 'form-field-newsletter',
+  selectorTermsInput: 'form-terms-input',
+};
 
 describe('Register Challenge page', () => {
   context('desktop', () => {
@@ -334,6 +347,91 @@ describe('Register Challenge page', () => {
       // test goint to step 7
       cy.dataCy('step-6').should('be.visible').click();
       cy.dataCy('step-6-continue').should('be.visible');
+    });
+  });
+
+  context('registration in progress', () => {
+    beforeEach(() => {
+      // visit login to setup initial intercepts
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+          interceptRegisterChallengeGet(config, win.i18n);
+        });
+        // reload page to trigger onMounted hook
+        cy.reload();
+      });
+    });
+
+    it('loads the initial values from API', () => {
+      cy.fixture('formRegisterChallenge.json').then(
+        (formRegisterChallengeValues) => {
+          // wait for the API call
+          cy.wait('@registerChallengeGet').then(({ response }) => {
+            // check that response is successful
+            expect(response.statusCode).to.equal(httpSuccessfullStatus);
+            // check that response body is equal to fixture
+            expect(response.body).to.deep.equal(formRegisterChallengeValues);
+          });
+          nextTick();
+          // check that values are set from API
+          cy.window().then((win) => {
+            // first name
+            cy.dataCy(selectorPersonalDetails.selectorFirstName)
+              .find('input')
+              .should(
+                'have.value',
+                formRegisterChallengeValues.personalDetails.firstName,
+              );
+            // last name
+            cy.dataCy(selectorPersonalDetails.selectorLastName)
+              .find('input')
+              .should(
+                'have.value',
+                formRegisterChallengeValues.personalDetails.lastName,
+              );
+            // nickname
+            cy.dataCy(selectorPersonalDetails.selectorNickname)
+              .find('input')
+              .should(
+                'have.value',
+                formRegisterChallengeValues.personalDetails.nickname,
+              );
+            // gender
+            cy.dataCy(selectorPersonalDetails.selectorGender)
+              .find('.q-radio:has(.q-radio__inner--truthy)')
+              .contains(win.i18n.global.t('global.man'));
+            // newsletter
+            cy.dataCy(selectorPersonalDetails.selectorNewsletter)
+              .find('.q-checkbox:has(.q-checkbox__inner--truthy)')
+              .contains(
+                win.i18n.global.t(
+                  'form.personalDetails.labelNewsletterChallenges',
+                ),
+              );
+            // terms
+            cy.dataCy(selectorPersonalDetails.selectorTermsInput).should(
+              'be.checked',
+            );
+
+            /**
+             * TODO: check other values:
+             * - organization type
+             * - organization id
+             * - subsidiary id
+             * - team id
+             * - merch id
+             */
+          });
+        },
+      );
     });
   });
 });

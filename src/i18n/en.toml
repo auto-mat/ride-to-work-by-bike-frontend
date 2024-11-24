@@ -602,6 +602,11 @@ apiMessageError = "Registration failed. Please try again later."
 apiMessageErrorWithMessage = "Registration failed. Please try again later. Error: {error}"
 apiMessageSuccess = "Registration was successful"
 
+[registerChallengeGet]
+apiMessageError = "Failed to get registration data. Please try again later."
+apiMessageErrorWithMessage = "Failed to get registration data. Please try again later. Error: {error}"
+apiMessageSuccess = "Registration data was fetched"
+
 [registerCoordinator]
 apiMessageError = "Coordinator registration failed. Please try again later."
 apiMessageErrorWithMessage = "Coordinator registration failed. Please try again later. Error: {error}"

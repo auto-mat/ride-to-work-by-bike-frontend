@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { QForm, QStepper } from 'quasar';
 
 // config
@@ -43,6 +43,9 @@ import { useStepperValidation } from 'src/composables/useStepperValidation';
 
 // enums
 import { OrganizationLevel } from 'src/components/types/Organization';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { FormSelectTableOption } from 'src/components/types/Form';
@@ -147,6 +150,11 @@ export default defineComponent({
       stepPaymentRef,
       stepPersonalDetailsRef,
       stepTeamRef,
+    });
+
+    onMounted(async () => {
+      const store = useRegisterChallengeStore();
+      await store.getRegisterChallengeValues();
     });
 
     return {

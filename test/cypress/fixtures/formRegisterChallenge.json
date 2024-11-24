@@ -1,0 +1,19 @@
+{
+  "personalDetails": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "nickname": "John Doe",
+    "gender": "male",
+    "phone": "1234567890",
+    "phonePermit": true,
+    "language": "cs",
+    "jobTitle": "Developer",
+    "ageGroup": 30,
+    "terms": true
+  },
+  "newsletter": ["challenge"],
+  "organizationId": null,
+  "subsidiaryId": null,
+  "teamId": null,
+  "merchId": null
+}
