@@ -56,26 +56,26 @@ function coreTests() {
     const registerChallengeStore = useRegisterChallengeStore();
     registerChallengeStore.setOrganizationType(OrganizationType.company);
     // test correct value of the prop via data-cy selector
-    cy.dataCy(`form-select-table-${OrganizationType.company}`)
-      .should('exist')
-      .and('be.visible');
+    cy.dataCy('form-select-table-company')
+      .should('have.attr', 'data-organization-type')
+      .and('equal', OrganizationType.company);
   });
 
   it('renders the "School" version when store organizationType is School', () => {
     const registerChallengeStore = useRegisterChallengeStore();
     registerChallengeStore.setOrganizationType(OrganizationType.school);
     // test correct value of the prop via data-cy selector
-    cy.dataCy(`form-select-table-${OrganizationType.school}`)
-      .should('exist')
-      .and('be.visible');
+    cy.dataCy('form-select-table-company')
+      .should('have.attr', 'data-organization-type')
+      .and('equal', OrganizationType.school);
   });
 
   it('renders the "Family" version when store organizationType is Family', () => {
     const registerChallengeStore = useRegisterChallengeStore();
     registerChallengeStore.setOrganizationType(OrganizationType.family);
     // test correct value of the prop via data-cy selector
-    cy.dataCy(`form-select-table-${OrganizationType.family}`)
-      .should('exist')
-      .and('be.visible');
+    cy.dataCy('form-select-table-company')
+      .should('have.attr', 'data-organization-type')
+      .and('equal', OrganizationType.family);
   });
 }

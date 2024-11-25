@@ -83,7 +83,8 @@ export default defineComponent({
       :organization-level="OrganizationLevel.organization"
       :organization-type="organizationType"
       :options="organizationOptions"
-      :data-cy="`form-select-table-${organizationType}`"
+      data-cy="form-select-table-company"
+      :data-organization-type="organizationType"
     />
     <form-field-company-address
       v-model="selectedAddress"
