@@ -39,8 +39,8 @@ import FormAddCompany from 'src/components/form/FormAddCompany.vue';
 // composables
 import { i18n } from 'src/boot/i18n';
 import { useApi } from 'src/composables/useApi';
+import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 import { useValidation } from 'src/composables/useValidation';
-
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
@@ -57,7 +57,6 @@ import type {
 } from 'src/components/types/Form';
 import type { Logger } from 'src/components/types/Logger';
 import type {
-  GetOrganizationsResponse,
   PostOrganizationPayload,
   PostOrganizationsResponse,
 } from 'src/components/types/Organization';
@@ -102,110 +101,24 @@ export default defineComponent({
     organizationType: {
       type: String as () => OrganizationType,
       required: true,
+      default: OrganizationType.company,
     },
   },
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const options = ref<FormSelectOption[]>([]);
-    const optionsDefault = ref<FormSelectOption[]>([]);
-    const isOptionsLoading = ref<boolean>(false);
+    const optionsFiltered = ref<FormSelectOption[]>([]);
     const loginStore = useLoginStore();
     const { apiFetch } = useApi();
+    const { options, isLoading, loadOrganizations } =
+      useApiGetOrganizations(logger);
     // get API base URL
     const { urlApiOrganizations } = rideToWorkByBikeConfig;
-    logger.debug(
+    logger?.debug(
       `Initial organization ID model value is <${props.modelValue}>.`,
     );
-    /**
-     * Load options
-     * Fetches organizations and saves them into default options
-     * @returns {Promise<void>}
-     */
-    const loadOptions = async (): Promise<void> => {
-      // reset default options
-      logger?.debug(
-        `Reseting default options <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
-      );
-      optionsDefault.value = [];
-      logger?.debug(
-        `Default options set to <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
-      );
-      // get organizations
-      logger?.info('Get organizations from the API.');
-      isOptionsLoading.value = true;
-      // append access token into HTTP header
-      const requestTokenHeader_ = { ...requestTokenHeader };
-      requestTokenHeader_.Authorization += loginStore.getAccessToken;
-      // fetch organizations
-      const { data } = await apiFetch<GetOrganizationsResponse>({
-        endpoint: `${urlApiOrganizations}${props.organizationType}/`,
-        method: 'get',
-        translationKey: 'getOrganizations',
-        showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-        logger,
-      });
-      if (data?.results?.length) {
-        pushResultsToOptions(data);
-      }
-      // if data has multiple pages, fetch all pages
-      if (data?.next) {
-        await fetchNextPage(data.next);
-      }
-      isOptionsLoading.value = false;
-    };
-    /**
-     * Fetch next page of organizations
-     * @param {string} url - Get organizations next page API URL
-     * @returns {Promise<void>} - Promise
-     */
-    const fetchNextPage = async (url: string): Promise<void> => {
-      logger?.debug(`Fetching next page of organizations from <${url}>.`);
-      // append access token into HTTP header
-      const requestTokenHeader_ = { ...requestTokenHeader };
-      requestTokenHeader_.Authorization += loginStore.getAccessToken;
-      // fetch next page
-      const { data } = await apiFetch<GetOrganizationsResponse>({
-        endpoint: url,
-        method: 'get',
-        translationKey: 'getOrganizations',
-        showSuccessMessage: false,
-        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-        logger,
-      });
-      // store results
-      if (data?.results?.length) {
-        pushResultsToOptions(data);
-      }
-      // if data has multiple pages, fetch all pages
-      if (data?.next) {
-        await fetchNextPage(data.next);
-      }
-    };
-    /**
-     * Push results to options
-     * @param {GetOrganizationsResponse} data - Organizations response
-     * @returns {void}
-     */
-    const pushResultsToOptions = (data: GetOrganizationsResponse): void => {
-      const pageResults = data.results.map((option) => {
-        return {
-          label: option.name,
-          value: option.id,
-        };
-      });
-      logger?.info('Organizations fetched. Saving to default options.');
-      logger?.debug(
-        `Adding options <${JSON.stringify(pageResults, null, 2)}> to default options.`,
-      );
-      optionsDefault.value.push(...pageResults);
-      logger?.debug(
-        `Default options set to <${JSON.stringify(optionsDefault.value, null, 2)}>.`,
-      );
-    };
 
     // load options on component mount
-    loadOptions();
+    loadOrganizations(props.organizationType);
 
     // company v-model
     const company = computed<number | string>({
@@ -231,7 +144,7 @@ export default defineComponent({
     const onFilter = (val: string, update: (fn: () => void) => void) => {
       update(() => {
         const valLowerCase = val.toLocaleLowerCase();
-        options.value = optionsDefault.value.filter(
+        optionsFiltered.value = options.value.filter(
           (option) =>
             option.label.toLocaleLowerCase().indexOf(valLowerCase) > -1,
         );
@@ -322,14 +235,14 @@ export default defineComponent({
           label: data.name,
           value: data.id,
         };
-        options.value.push(newCompanyOption);
+        optionsFiltered.value.push(newCompanyOption);
         company.value = newCompanyOption.value;
         logger?.debug(
           `Append newly created organization <${JSON.stringify(newCompanyOption, null, 2)}>` +
             ' into select organizations widget options.',
         );
         // Append newly created organization option into all organization select widget options
-        optionsDefault.value.push(newCompanyOption);
+        options.value.push(newCompanyOption);
       }
     };
 
@@ -426,7 +339,7 @@ export default defineComponent({
         `Erase select organization widget value <${company.value}>.`,
       );
       // Organization type changed, load new options
-      loadOptions();
+      loadOrganizations(newValue);
     });
 
     return {
@@ -438,8 +351,8 @@ export default defineComponent({
       formRef,
       isDialogOpen,
       isFilled,
-      isOptionsLoading,
-      options,
+      isLoading,
+      optionsFiltered,
       onClose,
       onFilter,
       onSubmit,
@@ -475,8 +388,8 @@ export default defineComponent({
           input-debounce="0"
           :lazy-rules="true"
           :model-value="company"
-          :options="options"
-          :loading="isOptionsLoading"
+          :options="optionsFiltered"
+          :loading="isLoading"
           class="q-mt-sm"
           id="form-company"
           name="company"
