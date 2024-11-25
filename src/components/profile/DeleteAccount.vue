@@ -13,7 +13,7 @@
  * @example
  * <delete-account />
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858-104393&t=31rhAtfu6ZZ8sEf1-1)
+ * Figma design is not available for this component.
  */
 
 // libraries
