@@ -14,6 +14,8 @@
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
  * - `LanguageSwitcher`: Component to render a language switcher.
  * - `SectionHeading`: Component to render a section heading.
+ * - `DeleteAccount`: Component to render delete account section with
+ * confirmation dialog.
  *
  * @example
  * <profile-details />
@@ -27,13 +29,13 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 // components
 import AddressDisplay from '../global/AddressDisplay.vue';
 import DetailsItem from '../profile/DetailsItem.vue';
-import DialogDefault from '../global/DialogDefault.vue';
 import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import ProfileCoordinatorContact from './ProfileCoordinatorContact.vue';
 import SectionHeading from '../global/SectionHeading.vue';
+import DeleteAccount from './DeleteAccount.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
@@ -52,13 +54,13 @@ export default defineComponent({
   components: {
     AddressDisplay,
     DetailsItem,
-    DialogDefault,
     FormUpdateEmail,
     FormUpdateGender,
     FormUpdateNickname,
     LanguageSwitcher,
     ProfileCoordinatorContact,
     SectionHeading,
+    DeleteAccount,
   },
   setup() {
     const iconSize = '18px';
@@ -98,15 +100,12 @@ export default defineComponent({
       // TODO: Implement download invoice
     };
 
-    const dialogDeleteAccount = ref(false);
-
     const onDeleteAccount = () => {
       // TODO: Implement delete account
     };
 
     return {
       allowContactPhone,
-      dialogDeleteAccount,
       iconPaymentColor,
       iconPaymentState,
       iconSize,
@@ -363,6 +362,9 @@ export default defineComponent({
       </div>
     </div>
 
+    <!-- Delete account -->
+    <delete-account data-cy="delete-account" />
+
     <!-- Contact participation -->
     <div class="q-mt-xl">
       <q-toggle
@@ -370,75 +372,6 @@ export default defineComponent({
         v-model="allowContactPhone"
         data-cy="profile-allow-contact-phone"
       />
-    </div>
-
-    <section-heading class="q-mt-xl" data-cy="profile-title-delete-account">
-      {{ $t('profile.titleDeleteAccount') }}
-    </section-heading>
-
-    <!-- Delete account -->
-    <!-- TODO: refactor into a separate component -->
-    <div class="q-mt-lg">
-      <!-- Text: Delete account -->
-      <div>
-        {{ $t('profile.labelDeleteAccount') }}
-      </div>
-      <!-- Button: Delete account -->
-      <q-btn
-        unelevated
-        rounded
-        outline
-        color="negative"
-        class="q-mt-md"
-        @click.prevent="dialogDeleteAccount = true"
-        data-cy="profile-details-delete-account"
-      >
-        <q-icon
-          name="mdi-delete"
-          :size="iconSize"
-          class="q-mr-sm"
-          data-cy="profile-details-delete-account-icon"
-        />
-        {{ $t('profile.buttonDeleteAccount') }}
-      </q-btn>
-      <dialog-default
-        v-model="dialogDeleteAccount"
-        data-cy="profile-details-dialog-delete-account"
-      >
-        <template #title>
-          <div data-cy="profile-details-dialog-delete-account-title">
-            {{ $t('profile.titleDialogDeleteAccount') }}
-          </div>
-        </template>
-        <template #content>
-          <div data-cy="profile-details-dialog-delete-account-description">
-            {{ $t('profile.labelDeleteAccountDescription') }}
-          </div>
-          <div class="flex justify-end gap-8 q-mt-md">
-            <!-- Button: Cancel -->
-            <q-btn
-              unelevated
-              rounded
-              outline
-              color="primary"
-              @click="dialogDeleteAccount = false"
-              data-cy="profile-details-dialog-delete-account-button-cancel"
-            >
-              {{ $t('global.cancel') }}
-            </q-btn>
-            <!-- Button: Delete -->
-            <q-btn
-              unelevated
-              rounded
-              color="negative"
-              @click="onDeleteAccount"
-              data-cy="profile-details-dialog-delete-account-button-delete"
-            >
-              {{ $t('global.delete') }}
-            </q-btn>
-          </div>
-        </template>
-      </dialog-default>
     </div>
 
     <!-- Coordinator contact -->
