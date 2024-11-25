@@ -87,6 +87,7 @@ urlApiRegister = "auth/registration/"
 urlApiRegisterCoordinator = "challenge/registration/coordinator/"
 urlApiResetPassword = "auth/password/reset/"
 urlApiChallengeRegistrationUser = "challenge/registration/user/"
+urlApiCities = "cities/"
 
 checkIsEmailVerifiedInterval = 20 # seconds
 
