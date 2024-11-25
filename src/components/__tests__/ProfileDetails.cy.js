@@ -95,17 +95,10 @@ describe('<ProfileDetails>', () => {
         'titleUpdateGender',
         'titleUpdateNickname',
         'titleRegistrationDetails',
-        'titleDeleteAccount',
-        'buttonDeleteAccount',
-        'titleDialogDeleteAccount',
-        'labelDeleteAccount',
-        'labelDeleteAccountDescription',
       ],
       'profile',
       i18n,
     );
-
-    cy.testLanguageStringsInContext(['cancel', 'delete'], 'global', i18n);
   });
 
   context('desktop', () => {

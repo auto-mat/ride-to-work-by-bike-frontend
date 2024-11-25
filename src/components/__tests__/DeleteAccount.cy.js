@@ -23,7 +23,19 @@ const iconSize = 18;
 
 describe('<DeleteAccount>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'titleDeleteAccount',
+        'buttonDeleteAccount',
+        'titleDialogDeleteAccount',
+        'labelDeleteAccount',
+        'labelDeleteAccountDescription',
+      ],
+      'profile',
+      i18n,
+    );
+
+    cy.testLanguageStringsInContext(['cancel', 'delete'], 'global', i18n);
   });
 
   context('desktop', () => {
