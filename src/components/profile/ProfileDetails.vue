@@ -100,10 +100,6 @@ export default defineComponent({
       // TODO: Implement download invoice
     };
 
-    const onDeleteAccount = () => {
-      // TODO: Implement delete account
-    };
-
     return {
       allowContactPhone,
       iconPaymentColor,
@@ -112,7 +108,6 @@ export default defineComponent({
       labelPaymentState,
       profile,
       onDownloadInvoice,
-      onDeleteAccount,
     };
   },
 });
