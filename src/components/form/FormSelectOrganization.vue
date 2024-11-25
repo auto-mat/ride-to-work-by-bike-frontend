@@ -18,7 +18,7 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // components
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
@@ -31,7 +31,14 @@ import { useSelectedOrganization } from 'src/composables/useSelectedOrganization
 import formOrganizationOptions from '../../../test/cypress/fixtures/formOrganizationOptions.json';
 
 // types
-import { Organization, OrganizationLevel } from '../types/Organization';
+import {
+  Organization,
+  OrganizationLevel,
+  OrganizationType,
+} from '../types/Organization';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 export default defineComponent({
   name: 'FormSelectOrganization',
@@ -42,6 +49,13 @@ export default defineComponent({
   setup() {
     const organizations: Organization[] =
       formOrganizationOptions as Organization[];
+
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const organizationType = computed(
+      (): OrganizationType =>
+        registerChallengeStore.getOrganizationType ?? OrganizationType.company,
+    );
 
     const {
       selectedAddress,
@@ -56,6 +70,7 @@ export default defineComponent({
       organizationId,
       organizationOptions,
       OrganizationLevel,
+      organizationType,
     };
   },
 });
@@ -66,8 +81,9 @@ export default defineComponent({
     <form-field-select-table
       v-model="organizationId"
       :organization-level="OrganizationLevel.organization"
+      :organization-type="organizationType"
       :options="organizationOptions"
-      data-cy="form-select-table-company"
+      :data-cy="`form-select-table-${organizationType}`"
     />
     <form-field-company-address
       v-model="selectedAddress"
