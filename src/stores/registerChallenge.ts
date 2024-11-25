@@ -50,7 +50,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setPersonalDetails(personalDetails: RegisterChallengePersonalDetailsForm) {
       Object.assign(this.personalDetails, personalDetails);
     },
-    setOrganizationType(organizationType: OrganizationType) {
+    setOrganizationType(organizationType: OrganizationType | null) {
       this.organizationType = organizationType;
     },
     setOrganizationId(organizationId: number | null) {
