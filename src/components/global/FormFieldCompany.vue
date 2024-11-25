@@ -102,7 +102,6 @@ export default defineComponent({
     organizationType: {
       type: String as () => OrganizationType,
       required: true,
-      default: OrganizationType.company,
     },
   },
   setup(props, { emit }) {
