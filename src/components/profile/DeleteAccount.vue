@@ -48,6 +48,7 @@ export default defineComponent({
 
 <template>
   <div data-cy="delete-account">
+    <!-- Section heading -->
     <section-heading class="q-mt-xl" data-cy="delete-account-title">
       {{ $t('profile.titleDeleteAccount') }}
     </section-heading>
@@ -66,27 +67,33 @@ export default defineComponent({
         @click.prevent="dialogDeleteAccount = true"
         data-cy="delete-account-button"
       >
+        <!-- Icon -->
         <q-icon
           name="mdi-delete"
           :size="iconSize"
           class="q-mr-sm"
           data-cy="delete-account-icon"
         />
+        <!-- Text -->
         {{ $t('profile.buttonDeleteAccount') }}
       </q-btn>
+      <!-- Dialog: Delete account -->
       <dialog-default
         v-model="dialogDeleteAccount"
         data-cy="delete-account-dialog"
       >
+        <!-- Title -->
         <template #title>
           <div data-cy="delete-account-dialog-title">
             {{ $t('profile.titleDialogDeleteAccount') }}
           </div>
         </template>
+        <!-- Content -->
         <template #content>
           <div data-cy="delete-account-dialog-description">
             {{ $t('profile.labelDeleteAccountDescription') }}
           </div>
+          <!-- Buttons -->
           <div class="flex justify-end gap-8 q-mt-md">
             <!-- Button: Cancel -->
             <q-btn
