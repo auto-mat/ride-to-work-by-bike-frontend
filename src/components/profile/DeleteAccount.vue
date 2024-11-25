@@ -4,6 +4,7 @@
  *
  * @description Use this component to render delete account section with
  * confirmation dialog.
+ * Note: This component is used in `ProfileDetails` component.
  *
  * @components
  * - `DialogDefault`: Component to render confirmation dialog.
