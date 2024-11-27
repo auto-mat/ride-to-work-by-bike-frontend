@@ -19,6 +19,16 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config);
+      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+        printLogsToConsole: 'onFail',
+        includeSuccessfulHookLogs: false,
+        printLogsToFile: 'onFail',
+        outputRoot: config.projectRoot + '/test/cypress/logs/',
+        specRoot: 'e2e/',
+        outputTarget: {
+          'cypress-logs|txt': 'txt',
+        },
+      });
       on('task', {
         getAppConfig,
         fileExists,
@@ -35,6 +45,16 @@ module.exports = defineConfig({
   component: {
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config);
+      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+        printLogsToConsole: 'onFail',
+        includeSuccessfulHookLogs: true,
+        printLogsToFile: 'OnFail',
+        outputRoot: config.projectRoot + '/test/cypress/logs/',
+        specRoot: 'component/',
+        outputTarget: {
+          'cypress-logs|txt': 'txt',
+        },
+      });
       on('task', {
         getAppConfig,
       });

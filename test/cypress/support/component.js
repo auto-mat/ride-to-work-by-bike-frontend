@@ -15,8 +15,10 @@
 
 import './commands';
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
 
 addMatchImageSnapshotCommand();
+installLogsCollector();
 
 // Change this if you have a different entrypoint for the main scss.
 import 'src/css/app.scss';

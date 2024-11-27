@@ -112,6 +112,7 @@
     "cypress-image-snapshot": "^4.0.1",
     "cypress-multi-reporters": "^2.0.0",
     "cypress-parallel": "^0.14.0",
+    "cypress-terminal-report": "^7.0.4",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^4.0.0",
