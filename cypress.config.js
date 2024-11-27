@@ -47,7 +47,7 @@ module.exports = defineConfig({
       addMatchImageSnapshotPlugin(on, config);
       require('cypress-terminal-report/src/installLogsPrinter')(on, {
         printLogsToConsole: 'onFail',
-        includeSuccessfulHookLogs: true,
+        includeSuccessfulHookLogs: false,
         printLogsToFile: 'OnFail',
         outputRoot: config.projectRoot + '/test/cypress/logs/',
         specRoot: 'component/',
