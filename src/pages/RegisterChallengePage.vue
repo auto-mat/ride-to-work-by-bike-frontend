@@ -122,9 +122,8 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
 
     const organizationType = computed({
-      get: (): OrganizationType | null =>
-        registerChallengeStore.getOrganizationType,
-      set: (value: OrganizationType | null) => {
+      get: (): OrganizationType => registerChallengeStore.getOrganizationType,
+      set: (value: OrganizationType) => {
         registerChallengeStore.setOrganizationType(value);
       },
     });

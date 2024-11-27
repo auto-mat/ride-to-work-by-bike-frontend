@@ -42,7 +42,7 @@ export default defineComponent({
   name: 'FormFieldOptionGroup',
   props: {
     modelValue: {
-      type: String as () => OrganizationType | null,
+      type: String as () => OrganizationType,
       required: true,
     },
     name: {
@@ -57,10 +57,10 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const inputValue = computed({
-      get(): OrganizationType | null {
+      get(): OrganizationType {
         return props.modelValue;
       },
-      set(value: OrganizationType | null) {
+      set(value: OrganizationType) {
         emit('update:modelValue', value);
       },
     });
