@@ -48,7 +48,7 @@ module.exports = defineConfig({
       require('cypress-terminal-report/src/installLogsPrinter')(on, {
         printLogsToConsole: 'onFail',
         includeSuccessfulHookLogs: false,
-        printLogsToFile: 'OnFail',
+        printLogsToFile: 'onFail',
         outputRoot: config.projectRoot + '/test/cypress/logs/',
         specRoot: 'component/',
         outputTarget: {
