@@ -149,6 +149,15 @@ jobs:
           if-no-files-found: ignore
           retention-days: 3
 
+      - name: Archive runned cypress tests log files
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: cypress-tests-log-files-${{ matrix.os }}
+          path: test/cypress/logs
+          if-no-files-found: ignore
+          retention-days: 3
+
   # dump-github-context:
   #   name: Dump GitHub context
 
