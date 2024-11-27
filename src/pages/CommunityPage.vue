@@ -59,7 +59,7 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const city = ref<string>('');
+    const city = ref<number | null>(null);
 
     const cardsFollow = listCardsFollow as CardFollow[];
     const cardsPost = listCardsPost as CardPost[];

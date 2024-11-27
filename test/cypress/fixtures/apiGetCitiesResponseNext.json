@@ -1,0 +1,59 @@
+{
+  "count": 33,
+  "next": null,
+  "previous": "https://test.dopracenakole.cz/rest/cities?limit=20&offset=0",
+  "results": [
+    {
+      "id": 21,
+      "name": "Pardubice"
+    },
+    {
+      "id": 10,
+      "name": "Plzeň"
+    },
+    {
+      "id": 4,
+      "name": "Praha"
+    },
+    {
+      "id": 20,
+      "name": "Přerov"
+    },
+    {
+      "id": 37,
+      "name": "Příbram"
+    },
+    {
+      "id": 31,
+      "name": "Říčany u Prahy"
+    },
+    {
+      "id": 33,
+      "name": "Rychnov nad Kněžnou"
+    },
+    {
+      "id": 36,
+      "name": "Třebíč"
+    },
+    {
+      "id": 11,
+      "name": "Uherské Hradiště"
+    },
+    {
+      "id": 12,
+      "name": "Ústí nad Labem"
+    },
+    {
+      "id": 35,
+      "name": "Žďár nad Sázavou"
+    },
+    {
+      "id": 32,
+      "name": "Zlín"
+    },
+    {
+      "id": 30,
+      "name": "Znojmo"
+    }
+  ]
+}

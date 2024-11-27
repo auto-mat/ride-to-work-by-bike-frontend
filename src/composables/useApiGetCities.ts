@@ -11,15 +11,14 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { useLoginStore } from '../stores/login';
 
 // types
-import type { FormSelectOption } from '../components/types/Form';
-import type { GetCitiesResponse } from '../components/types/City';
+import type { City, GetCitiesResponse } from '../components/types/City';
 import type { Logger } from '../components/types/Logger';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-export const useApiGetCities = (logger: Logger) => {
-  const options = ref<FormSelectOption[]>([]);
+export const useApiGetCities = (logger: Logger | null) => {
+  const cities = ref<City[]>([]);
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
@@ -30,7 +29,7 @@ export const useApiGetCities = (logger: Logger) => {
    */
   const loadCities = async (): Promise<void> => {
     // reset options
-    options.value = [];
+    cities.value = [];
 
     // get cities
     isLoading.value = true;
@@ -50,7 +49,7 @@ export const useApiGetCities = (logger: Logger) => {
     });
 
     if (data?.results?.length) {
-      pushResultsToOptions(data);
+      cities.value.push(...data.results);
     }
 
     // if data has multiple pages, fetch all pages
@@ -81,7 +80,7 @@ export const useApiGetCities = (logger: Logger) => {
 
     // store results
     if (data?.results?.length) {
-      pushResultsToOptions(data);
+      cities.value.push(...data.results);
     }
 
     // if data has multiple pages, fetch all pages
@@ -90,20 +89,8 @@ export const useApiGetCities = (logger: Logger) => {
     }
   };
 
-  /**
-   * Push results to options
-   */
-  const pushResultsToOptions = (data: GetCitiesResponse): void => {
-    const pageResults = data.results.map((city) => ({
-      label: city.name,
-      value: city.id,
-    }));
-
-    options.value.push(...pageResults);
-  };
-
   return {
-    options,
+    cities,
     isLoading,
     loadCities,
   };

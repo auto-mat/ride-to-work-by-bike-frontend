@@ -44,7 +44,7 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const city = ref<string>('');
+    const city = ref<number | null>(null);
 
     const prizes = listCardsPrizes as unknown;
     const prizesList = prizes as CardOfferType[];

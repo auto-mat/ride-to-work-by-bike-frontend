@@ -19,41 +19,45 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
+
+import { useApiGetCities } from '../../composables/useApiGetCities';
 
 // types
 import { FormOption } from '../../components/types/Form';
+import { Logger } from '../../components/types/Logger';
 
 export default defineComponent({
   name: 'FormFieldSelectCity',
   emits: ['update:modelValue'],
   props: {
     modelValue: {
-      type: String,
+      type: Number as () => number | null,
       required: true,
     },
   },
   setup(props, { emit }) {
     const city = computed({
-      get: (): string => props.modelValue,
-      set: (value): void => emit('update:modelValue', value),
+      get: (): number | null => props.modelValue,
+      set: (value: number | null): void => emit('update:modelValue', value),
     });
 
-    const optionsCity: FormOption[] = [
-      { label: 'Praha', value: 'praha' },
-      { label: 'Ostrava', value: 'ostrava' },
-      { label: 'Brno', value: 'brno' },
-      { label: 'Hradec Králové', value: 'hradec-kralove' },
-      { label: 'Jihlava', value: 'jihlava' },
-      { label: 'Kolín', value: 'kolin' },
-      { label: 'Liberec', value: 'liberec' },
-      { label: 'Most', value: 'most' },
-      { label: 'Pardubice', value: 'pardubice' },
-      { label: 'Třebechovice pod Orebem', value: 'trebechovice-pod-orebem' },
-    ];
+    const logger = inject<Logger>('logger') ?? null;
+    const { cities, isLoading, loadCities } = useApiGetCities(logger);
+    onMounted(() => {
+      loadCities();
+    });
+
+    const optionsCity = computed<FormOption[]>(() =>
+      cities.value.map((city) => ({
+        label: city.name,
+        value: city.id,
+      })),
+    );
 
     return {
       city,
+      isLoading,
       optionsCity,
     };
   },
@@ -75,6 +79,7 @@ export default defineComponent({
       emit-value
       map-options
       v-model="city"
+      :loading="isLoading"
       :options="optionsCity"
       :style="{ 'min-width': '160px' }"
       class="col-auto"

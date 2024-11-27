@@ -36,6 +36,8 @@ import {
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
 } from './commonTests';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
+import { bearerTokeAuth } from 'src/utils';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -288,5 +290,72 @@ Cypress.Commands.add('testSoacialMediaUrlRequest', (rideToWorkByBikeConfig) => {
       return;
     }
     expect(resp.status).to.eq(httpSuccessfullStatus);
+  });
+});
+
+/**
+ * Intercept cities GET API calls
+ * Provides `@getCities` and `@getCitiesNextPage` aliases
+ * @param {object} config - App global config
+ * @param {object} i18n - i18n instance
+ */
+Cypress.Commands.add('interceptCitiesGetApi', (config, i18n) => {
+  const { apiBase, apiDefaultLang, urlApiCities } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
+  const urlApiCitiesLocalized = `${apiBaseUrl}${urlApiCities}`;
+
+  cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+    // intercept initial cities API call
+    cy.intercept('GET', urlApiCitiesLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: citiesResponse,
+    }).as('getCities');
+    // if fixture has next property
+    if (citiesResponse.next) {
+      cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
+        // intercept next page API call
+        cy.intercept('GET', citiesResponse.next, {
+          statusCode: httpSuccessfullStatus,
+          body: citiesResponseNext,
+        }).as('getCitiesNextPage');
+      });
+    }
+  });
+});
+
+/**
+ * Wait for intercept cities API calls and compare request/response object
+ * Wait for `@getCities` and `@getCitiesNextPage` intercepts
+ * @param {object} citiesResponse - Get cities API data response
+ * @param {object} citiesResponseNext - Get cities API data response next page
+ */
+Cypress.Commands.add('waitForCitiesApi', () => {
+  cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+    cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
+      cy.wait(['@getCities', '@getCitiesNextPage']).spread(
+        (getCities, getCitiesNextPage) => {
+          expect(getCities.request.headers.authorization).to.include(
+            bearerTokeAuth,
+          );
+          if (getCities.response) {
+            expect(getCities.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(getCities.response.body).to.deep.equal(citiesResponse);
+          }
+          expect(getCitiesNextPage.request.headers.authorization).to.include(
+            bearerTokeAuth,
+          );
+          if (getCitiesNextPage.response) {
+            expect(getCitiesNextPage.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(getCitiesNextPage.response.body).to.deep.equal(
+              citiesResponseNext,
+            );
+          }
+        },
+      );
+    });
   });
 });

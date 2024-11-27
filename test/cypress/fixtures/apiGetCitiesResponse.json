@@ -1,0 +1,87 @@
+{
+  "count": 33,
+  "next": "https://test.dopracenakole.cz/rest/cities?limit=20&offset=20",
+  "previous": null,
+  "results": [
+    {
+      "id": 41,
+      "name": "Brandýs nad Labem"
+    },
+    {
+      "id": 29,
+      "name": "Břeclav"
+    },
+    {
+      "id": 5,
+      "name": "Brno"
+    },
+    {
+      "id": 14,
+      "name": "České Budějovice"
+    },
+    {
+      "id": 15,
+      "name": "Hradec Králové"
+    },
+    {
+      "id": 26,
+      "name": "Hranice"
+    },
+    {
+      "id": 16,
+      "name": "Jablonec nad Nisou"
+    },
+    {
+      "id": 7,
+      "name": "Jihlava"
+    },
+    {
+      "id": 17,
+      "name": "Jindřichův Hradec"
+    },
+    {
+      "id": 22,
+      "name": "Karviná"
+    },
+    {
+      "id": 34,
+      "name": "Kladno"
+    },
+    {
+      "id": 42,
+      "name": "Krnov"
+    },
+    {
+      "id": 6,
+      "name": "Liberec"
+    },
+    {
+      "id": 44,
+      "name": "Litvínov"
+    },
+    {
+      "id": 40,
+      "name": "Most"
+    },
+    {
+      "id": 27,
+      "name": "Nové Město nad Metují"
+    },
+    {
+      "id": 24,
+      "name": "Nový Jičín"
+    },
+    {
+      "id": 8,
+      "name": "Olomouc"
+    },
+    {
+      "id": 9,
+      "name": "Ostrava"
+    },
+    {
+      "id": 18,
+      "name": "Otrokovice"
+    }
+  ]
+}
