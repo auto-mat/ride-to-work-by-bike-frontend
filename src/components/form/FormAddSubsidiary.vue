@@ -38,6 +38,9 @@ import cityChallengeResponse from '../../../test/cypress/fixtures/cityChallengeR
 // types
 import type { FormCompanyAddressFields, FormOption } from '../types/Form';
 
+// enums
+import { FormSubsidiaryAddressFields } from '../enums/Form';
+
 export default defineComponent({
   name: 'FormAddSubsidiary',
   components: {
@@ -74,6 +77,7 @@ export default defineComponent({
       subsidiary,
       isFilled,
       optionsCityChallenge,
+      FormSubsidiaryAddressFields,
     };
   },
 });
@@ -85,7 +89,7 @@ export default defineComponent({
       <!-- Street -->
       <form-field-text-required
         v-model="subsidiary.street"
-        name="street"
+        :name="FormSubsidiaryAddressFields.street"
         label="form.labelStreet"
         data-cy="form-add-subsidiary-street"
       />
@@ -94,7 +98,7 @@ export default defineComponent({
       <!-- House number -->
       <form-field-text-required
         v-model="subsidiary.houseNumber"
-        name="houseNumber"
+        :name="FormSubsidiaryAddressFields.houseNumber"
         label="form.labelHouseNumber"
         data-cy="form-add-subsidiary-house-number"
       />
@@ -103,7 +107,7 @@ export default defineComponent({
       <!-- City -->
       <form-field-text-required
         v-model="subsidiary.city"
-        name="city"
+        :name="FormSubsidiaryAddressFields.city"
         label="form.labelCity"
         data-cy="form-add-subsidiary-city"
       />
@@ -112,7 +116,7 @@ export default defineComponent({
       <!-- Zip -->
       <form-field-text-required
         v-model="subsidiary.zip"
-        name="zip"
+        :name="FormSubsidiaryAddressFields.zip"
         label="form.labelZip"
         data-cy="form-add-subsidiary-zip"
       />
@@ -142,6 +146,7 @@ export default defineComponent({
         :options="optionsCityChallenge"
         class="q-mt-sm"
         data-cy="form-add-subsidiary-city-challenge"
+        :name="FormSubsidiaryAddressFields.cityChallenge"
       ></q-select>
     </div>
     <div class="col-12">
@@ -156,7 +161,7 @@ export default defineComponent({
         hide-bottom-space
         v-model="subsidiary.department"
         id="form-department"
-        name="department"
+        :name="FormSubsidiaryAddressFields.department"
         :hint="$t('form.company.hintDepartment')"
         class="q-mt-sm"
         data-cy="form-add-subsidiary-department"
