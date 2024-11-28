@@ -42,8 +42,9 @@ export default defineComponent({
       set: (value: number | null): void => emit('update:modelValue', value),
     });
 
-    const logger = inject<Logger>('logger') ?? null;
+    const logger = inject('vuejs3-logger') as Logger | null;
     const { cities, isLoading, loadCities } = useApiGetCities(logger);
+
     onMounted(() => {
       loadCities();
     });
