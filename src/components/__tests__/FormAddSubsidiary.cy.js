@@ -44,13 +44,11 @@ describe('<FormAddSubsidiary>', () => {
         testData.cityChallenge = cityChallengeResponse.results[0].id;
         cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
       });
+      model.value = deepObjectWithSimplePropsCopy(emptyData);
       cy.mount(FormAddSubsidiary, {
         props: {
           ...vModelAdapter(model),
         },
-      }).then(() => {
-        // wait for Vue instance to mount
-        model.value = deepObjectWithSimplePropsCopy(emptyData);
       });
       cy.viewport('macbook-16');
     });
@@ -65,13 +63,11 @@ describe('<FormAddSubsidiary>', () => {
         testData.cityChallenge = cityChallengeResponse.results[0].id;
         cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
       });
+      model.value = deepObjectWithSimplePropsCopy(emptyData);
       cy.mount(FormAddSubsidiary, {
         props: {
           ...vModelAdapter(model),
         },
-      }).then(() => {
-        // wait for Vue instance to mount
-        model.value = deepObjectWithSimplePropsCopy(emptyData);
       });
 
       cy.viewport('iphone-6');
