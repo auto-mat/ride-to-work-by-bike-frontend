@@ -1,4 +1,4 @@
-import { ref, nextTick } from 'vue';
+import { ref } from 'vue';
 import FormAddSubsidiary from 'components/form/FormAddSubsidiary.vue';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
@@ -44,7 +44,6 @@ describe('<FormAddSubsidiary>', () => {
         testData.cityChallenge = cityChallengeResponse.results[0].id;
         cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
       });
-
       cy.mount(FormAddSubsidiary, {
         props: {
           ...vModelAdapter(model),
@@ -53,7 +52,6 @@ describe('<FormAddSubsidiary>', () => {
         // wait for Vue instance to mount
         model.value = deepObjectWithSimplePropsCopy(emptyData);
       });
-
       cy.viewport('macbook-16');
     });
 
@@ -67,7 +65,6 @@ describe('<FormAddSubsidiary>', () => {
         testData.cityChallenge = cityChallengeResponse.results[0].id;
         cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
       });
-
       cy.mount(FormAddSubsidiary, {
         props: {
           ...vModelAdapter(model),
@@ -98,34 +95,28 @@ function coreTests() {
   it('updates model when fields are filled', () => {
     // street
     cy.dataCy(selectorFormStreet).find('input').type(testData.street);
-    cy.wrap(nextTick());
     cy.wrap(model).its('value.street').should('equal', testData.street);
     // house number
     cy.dataCy(selectorFormHouseNumber).find('input').type(testData.houseNumber);
-    cy.wrap(nextTick());
     cy.wrap(model)
       .its('value.houseNumber')
       .should('equal', testData.houseNumber);
     // city
     cy.dataCy(selectorFormCity).find('input').type(testData.city);
-    cy.wrap(nextTick());
     cy.wrap(model).its('value.city').should('equal', testData.city);
     // ZIP
     cy.dataCy(selectorFormZip).find('input').type(testData.zip);
-    cy.wrap(nextTick());
     cy.wrap(model).its('value.zip').should('equal', testData.zip);
     // city challenge
     cy.get('@cityChallenge').then((city) => {
       cy.dataCy(selectorFormCityChallenge).click();
       cy.get('.q-menu').contains(city.name).click();
-      cy.wrap(nextTick());
       cy.wrap(model)
         .its('value.cityChallenge')
         .should('equal', testData.cityChallenge);
     });
     // department
     cy.dataCy(selectorFormDepartment).type(testData.department);
-    cy.wrap(nextTick());
     cy.wrap(model).its('value.department').should('equal', testData.department);
     cy.wrap(model).should('deep.include', {
       value: testData,
