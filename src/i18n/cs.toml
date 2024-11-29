@@ -40,6 +40,11 @@ profile = "Profil"
 results = "Výsledky"
 routes = "Cesty"
 
+[getCities]
+apiMessageError = "Načítání měst selhalo."
+apiMessageErrorWithMessage = "Načítání měst selhalo. Chyba: {error}"
+apiMessageSuccess = "Města byla úspěšně načtena."
+
 [global]
 all = "Všechny"
 and = "a"

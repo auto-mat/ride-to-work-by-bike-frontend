@@ -40,6 +40,11 @@ profile = "Profile"
 results = "Results"
 routes = "Routes"
 
+[getCities]
+apiMessageError = "Fetching cities failed."
+apiMessageErrorWithMessage = "Fetching cities failed. Error: {error}"
+apiMessageSuccess = "Cities fetched successfully."
+
 [global]
 all = "All"
 and = "and"
