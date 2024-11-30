@@ -544,9 +544,9 @@
     "@parcel/watcher-win32-x64" "2.5.0"
 
 "@petamoriken/float16@^3.4.7":
-  version "3.8.7"
-  resolved "https://registry.yarnpkg.com/@petamoriken/float16/-/float16-3.8.7.tgz#16073fb1b9867eaa5b254573484d09100700aaa4"
-  integrity sha512-/Ri4xDDpe12NT6Ex/DRgHzLlobiQXEW/hmG08w1wj/YU7hLemk97c+zHQFp0iZQ9r7YqgLEXZR2sls4HxBf9NA==
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@petamoriken/float16/-/float16-3.9.0.tgz#4e4d129958ba77ed36e6bb3081ac6b8b427df6f8"
+  integrity sha512-rYUZ+VFjPHD0NT2JYKj64NxXxrV642IiyaUxxorTEj0S3hT7B5Ixezyc9Fn+XvSk0ETEBp5VWjGIErzh0ug0Xw==
 
 "@quasar/app-vite@^1.0.0":
   version "1.11.0"
@@ -974,10 +974,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.7.tgz#50ae4353eaaddc04044279812f52c8c65857dbcb"
   integrity sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==
 
-"@types/rbush@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@types/rbush/-/rbush-3.0.3.tgz#f7ba6bc940e0913678f5df119e7a7803f1842ece"
-  integrity sha512-lX55lR0iYCgapxD3IrgujpQA1zDxwZI5qMRelKvmKAsSMplFVr7wmMpG7/6+Op2tjrgEex8o3vjg8CRDrRNYxg==
+"@types/rbush@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/rbush/-/rbush-4.0.0.tgz#b327bf54952e9c924ea6702c36904c2ce1d47f35"
+  integrity sha512-+N+2H39P8X+Hy1I5mC6awlTX54k3FhiUmvt7HWzGJZvF+syUAAxP/stwppS8JE84YHqFgRMv6fCy31202CMFxQ==
 
 "@types/send@*":
   version "0.17.4"
@@ -3407,7 +3407,7 @@ gensync@^1.0.0-beta.2:
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-geotiff@^2.0.7:
+geotiff@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/geotiff/-/geotiff-2.1.3.tgz#993f40f2aa6aa65fb1e0451d86dd22ca8e66910c"
   integrity sha512-PT6uoF5a1+kbC3tHmZSUsLHBp2QJlHasxxxxPW47QIY1VBKpFB+FcDvX+MxER6UzgLQZ0xDzJ9s48B9JbOCTqA==
@@ -4846,15 +4846,15 @@ ol-ext@^4.0.21, ol-ext@^4.0.24:
   integrity sha512-VEf1+mjvbe35mMsszVsugqcvWfeGcU8TwS+GgXm3nGYqiHR7CckX2DWmM9B94QCDnrJWKKXBicfInbkoe2xT7w==
 
 ol@^10.0.0, ol@^10.2.1:
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-10.2.1.tgz#05143d0bbc0d8761385e0acae4ec9074a570bf64"
-  integrity sha512-2bB/y2vEnmzjqynP0NA7Cp8k86No3Psn63Dueicep3E3i09axWRVIG5IS/bylEAGfWQx0QXD/uljkyFoY60Wig==
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-10.3.0.tgz#abdf133734fc5b3bbae9581542afdc7a87491804"
+  integrity sha512-7cq3jdAPQq5d0OZfKH80wl15LyzWk0aqz1TPYUa2+0c+3MkIDND2JxM/ed9xhoA8Ds0CNxj9aRk9vFztxmxmjw==
   dependencies:
-    "@types/rbush" "3.0.3"
+    "@types/rbush" "4.0.0"
     color-rgba "^3.0.0"
     color-space "^2.0.1"
     earcut "^3.0.0"
-    geotiff "^2.0.7"
+    geotiff "^2.1.3"
     pbf "4.0.1"
     rbush "^4.0.0"
 
