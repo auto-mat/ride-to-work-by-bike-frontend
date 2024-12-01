@@ -14,7 +14,7 @@ const selectorFormFieldSliderNumberSlider = 'form-field-slider-number-slider';
 
 // variables
 const defaultValue = 500;
-const valueThousand = '1000';
+const valueThousand = 1000;
 
 describe('<FormFieldSliderNumber>', () => {
   it('has translation for all strings', () => {
