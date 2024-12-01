@@ -148,7 +148,7 @@ export default defineComponent({
         <form-field-text-required
           v-model="code"
           name="voucher"
-          :label="$t('form.labelVoucher')"
+          label="form.labelVoucher"
           data-cy="form-field-voucher-input"
         />
       </div>

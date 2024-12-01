@@ -669,6 +669,8 @@ titleStepParticipation = "Účasť"
 titleStepCompany = "Spoločnosť / škola / skupina"
 titleStepMerch = "Štartovací balíček"
 titleStepTeam = "Tím"
+parseEntryFeePaymentOptionsInvalidNumberError = "Neplatné číslo {value}."
+parseEntryFeePaymentOptionsError = "Chyba spracovania hodnôt možností platby vstupného poplatku {error}."
 
 [register.coordinator]
 title.may = "Registrácia koordinátora na&nbsp;Májovú výzvu"

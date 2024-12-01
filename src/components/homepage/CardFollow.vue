@@ -82,9 +82,9 @@ export default defineComponent({
           <q-avatar size="56px">
             <q-img
               :src="card.image.src"
+              data-cy="card-follow-image"
               :alt="card.image.alt"
               ratio="1"
-              data-cy="card-follow-image"
             />
           </q-avatar>
         </q-item-section>

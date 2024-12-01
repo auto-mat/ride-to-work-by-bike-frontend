@@ -34,7 +34,7 @@ export default defineComponent({
   },
   emits: ['update:donation'],
   setup(props, { emit }) {
-    const defaultPaymentAmountMin = Number(
+    const defaultPaymentAmountMin = parseInt(
       rideToWorkByBikeConfig.entryFeePaymentMin,
     );
     const amount = ref<number>(defaultPaymentAmountMin);

@@ -43,18 +43,20 @@ export default defineComponent({
     },
     min: {
       type: Number,
-      required: true,
+      required: false,
       default: defaultMin,
     },
     max: {
       type: Number,
-      required: true,
+      required: false,
       default: defaultMax,
     },
   },
   setup(props, { emit }) {
     const model = computed({
-      get: (): number => props.modelValue,
+      get: (): number => {
+        return props.modelValue;
+      },
       set: (value: number) => {
         if (value < props.min) {
           value = props.min;
@@ -92,7 +94,7 @@ export default defineComponent({
         dense
         outlined
         type="number"
-        v-model="model"
+        v-model.number="model"
         :min="min"
         :max="max"
         data-cy="form-field-slider-number-input"

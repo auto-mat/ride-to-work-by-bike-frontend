@@ -669,6 +669,8 @@ titleStepParticipation = "Participation"
 titleStepCompany = "Company / school / group"
 titleStepMerch = "Starter package"
 titleStepTeam = "Team"
+parseEntryFeePaymentOptionsInvalidNumberError = "Invalid number <{value}>."
+parseEntryFeePaymentOptionsError = "Error parsing entry fee payment options {error}."
 
 [register.coordinator]
 title.may = "Coordinator registration for&nbsp;the&nbsp;May Challenge"
