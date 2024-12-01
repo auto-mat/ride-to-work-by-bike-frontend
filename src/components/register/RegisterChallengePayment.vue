@@ -297,7 +297,7 @@ export default defineComponent({
      * for 'Entry fee amount' radio button element
      * custom option slider element, must be integer type
      *
-     * @param string val: Input string integer value e.g. '390'
+     * @param {string} val: Input string integer value e.g. '390'
      *
      * @returns void
      */
