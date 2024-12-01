@@ -26,8 +26,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Cypress snapshots
+# Cypress tests snapshots
 /test/cypress/snapshots
+
+# Cypress tests log files
+/test/cypress/logs
 
 # Editor directories and files
 .idea
