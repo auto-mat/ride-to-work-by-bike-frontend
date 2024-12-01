@@ -15,12 +15,11 @@ describe('<FormFieldSelectCity>', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      model.value = null;
       cy.mount(FormFieldSelectCity, {
         props: {
           ...vModelAdapter(model),
         },
-      }).then(() => {
-        model.value = '';
       });
       cy.viewport('macbook-16');
     });
@@ -31,12 +30,11 @@ describe('<FormFieldSelectCity>', () => {
   context('mobile', () => {
     beforeEach(() => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      model.value = null;
       cy.mount(FormFieldSelectCity, {
         props: {
           ...vModelAdapter(model),
         },
-      }).then(() => {
-        model.value = '';
       });
       cy.viewport('iphone-6');
     });

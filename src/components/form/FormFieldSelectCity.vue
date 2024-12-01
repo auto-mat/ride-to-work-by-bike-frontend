@@ -6,7 +6,7 @@
  * It is commonly used in `CommunityPage` and `PrizesPage`.
  *
  * @props
- * - `modelValue` (string, required): The select value.
+ * - `modelValue` (number|null): The select value.
  *   It should be of type `string`.
  *
  * @events
@@ -33,7 +33,8 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Number as () => number | null,
-      required: true,
+      required: false,
+      default: null,
     },
   },
   setup(props, { emit }) {
