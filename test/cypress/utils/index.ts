@@ -36,4 +36,20 @@ function vModelAdapter<T>(modelRef: Ref<T>, modelName = 'modelValue') {
   };
 }
 
-export { hexToRgb, transparentColor, vModelAdapter, whiteColor };
+/**
+ * Returns the selector for a radio option.
+ * Used in RegisterChallengePayment.cy.js and register_challenge.spec.cy.js.
+ * @param value - The value of the radio option.
+ * @returns The selector for the radio option.
+ */
+function getRadioOption(value: string) {
+  return `radio-option-${value}`;
+}
+
+export {
+  getRadioOption,
+  hexToRgb,
+  transparentColor,
+  vModelAdapter,
+  whiteColor,
+};

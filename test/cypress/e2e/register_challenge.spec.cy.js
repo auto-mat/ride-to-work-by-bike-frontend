@@ -1,8 +1,16 @@
 import {
+  interceptOrganizationsApi,
   testLanguageSwitcher,
   testBackgroundImage,
+  waitForOrganizationsApi,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
+import { OrganizationType } from '../../../src/components/types/Organization';
+import { getRadioOption } from 'test/cypress/utils';
+
+// variables
+const optionCompany = 'company';
+const optionSchool = 'school';
 
 const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
@@ -95,6 +103,16 @@ describe('Register Challenge page', () => {
                 config,
                 win.i18n,
                 formOrganizationOptions[0].subsidiaries[0].id,
+              );
+              interceptOrganizationsApi(
+                config,
+                win.i18n,
+                OrganizationType.company,
+              );
+              interceptOrganizationsApi(
+                config,
+                win.i18n,
+                OrganizationType.school,
               );
             },
           );
@@ -235,6 +253,72 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-3-continue').should('be.visible').click();
       // on step 4
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+    });
+
+    it('pre-selects company in step 3 based on payment subject', () => {
+      passToStep2();
+      // switch to company
+      cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+      // select company
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+          cy.dataCy('form-field-company').find('.q-field__append').click();
+          // select option
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .and((opts) => {
+              expect(
+                opts.length,
+                formFieldCompany.results.length +
+                  formFieldCompanyNext.results.length,
+              );
+            })
+            .first()
+            .click();
+          cy.get('.q-menu').should('not.exist');
+        });
+      });
+      // go to next step
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // option company is selected
+      cy.dataCy('form-field-option-group')
+        .find('.q-radio__inner')
+        .first()
+        .should('have.class', 'q-radio__inner--truthy');
+    });
+
+    it('pre-selects school in step 3 based on payment subject', () => {
+      passToStep2();
+      // switch to school
+      cy.dataCy(getRadioOption(optionSchool)).should('be.visible').click();
+      // select school
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+          cy.dataCy('form-field-company').find('.q-field__append').click();
+          // select option
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .and((opts) => {
+              expect(
+                opts.length,
+                formFieldCompany.results.length +
+                  formFieldCompanyNext.results.length,
+              );
+            })
+            .first()
+            .click();
+          cy.get('.q-menu').should('not.exist');
+        });
+      });
+      // go to next step
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // option company is selected
+      cy.dataCy('form-field-option-group')
+        .find('.q-radio__inner')
+        .eq(1)
+        .should('have.class', 'q-radio__inner--truthy');
     });
 
     it('validates fourth step (organization and address)', () => {

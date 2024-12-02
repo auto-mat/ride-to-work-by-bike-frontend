@@ -189,6 +189,9 @@ export default defineComponent({
         `Organization type <${registerChallengeStore.getOrganizationType}>`,
       );
     });
+    const organizationType = computed<OrganizationType>(() => {
+      return registerChallengeStore.getOrganizationType;
+    });
 
     const isVoucherValid = computed((): boolean => {
       return !!activeVoucher.value?.code;
@@ -424,6 +427,7 @@ export default defineComponent({
       isRegistrationCoordinator,
       optionsPaymentAmountComputed,
       optionsPaymentSubject,
+      organizationType,
       paymentAmountMax,
       paymentAmountMin,
       primaryLightColor,
@@ -513,7 +517,7 @@ export default defineComponent({
       <!-- Input: Company -->
       <form-field-company
         v-model="selectedCompany"
-        :organizationType="selectedPaymentSubject"
+        :organization-type="organizationType"
         class="text-grey-10"
         data-cy="form-field-company"
       />
