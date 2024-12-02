@@ -46,6 +46,9 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { Currency } from '../../composables/useFormatPrice';
 import { PaymentAmount, PaymentSubject } from '../enums/Payment';
 
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+
 // types
 import type { FormOption, FormPaymentVoucher } from '../types/Form';
 import type { Logger } from '../types/Logger';
@@ -165,6 +168,26 @@ export default defineComponent({
       phone: '',
       responsibility: false,
       terms: false,
+    });
+
+    const registerChallengeStore = useRegisterChallengeStore();
+    watch(selectedPaymentSubject, (newVal, oldVal) => {
+      logger?.debug(
+        `Selected payment subject changed from <${oldVal}> to <${newVal}>`,
+      );
+      if (newVal === PaymentSubject.company) {
+        logger?.debug(`Set organization type to <${OrganizationType.company}>`);
+        registerChallengeStore.setOrganizationType(OrganizationType.company);
+      } else if (newVal === PaymentSubject.school) {
+        logger?.debug(`Set organization type to <${OrganizationType.school}>`);
+        registerChallengeStore.setOrganizationType(OrganizationType.school);
+      } else {
+        logger?.debug(`Set organization type to <${OrganizationType.none}>`);
+        registerChallengeStore.setOrganizationType(OrganizationType.none);
+      }
+      logger?.debug(
+        `Organization type <${registerChallengeStore.getOrganizationType}>`,
+      );
     });
 
     const isVoucherValid = computed((): boolean => {
