@@ -5,6 +5,7 @@ export enum OrganizationType {
   company = 'company',
   school = 'school',
   family = 'family',
+  none = '',
 }
 
 export enum OrganizationLevel {

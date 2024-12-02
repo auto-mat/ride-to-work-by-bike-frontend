@@ -28,7 +28,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     $log: null as Logger | null,
     personalDetails: emptyFormPersonalDetails,
     payment: null, // TODO: add data type options
-    organizationType: '' as OrganizationType,
+    organizationType: OrganizationType.none,
     organizationId: null as number | null,
     subsidiaryId: null as number | null,
     teamId: null as number | null,

@@ -1,7 +1,12 @@
+import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
+import { computed } from 'vue';
 import RegisterChallengePayment from 'components/register/RegisterChallengePayment.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { OrganizationType } from 'components/types/Organization';
+import { useRegisterChallengeStore } from 'stores/registerChallenge';
+import { getRadioOption } from 'test/cypress/utils';
 
 // selectors
 const selectorBannerPaymentMinimum = 'banner-payment-minimum';
@@ -83,6 +88,7 @@ describe('<RegisterChallengePayment>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('registerPaymentVoucherFull').then((voucherFull) => {
         cy.fixture('registerPaymentVoucherHalf').then((voucherHalf) => {
           cy.wrap(voucherFull).as('voucherFull');
@@ -100,6 +106,7 @@ describe('<RegisterChallengePayment>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('registerPaymentVoucherFull').then((voucherFull) => {
         cy.fixture('registerPaymentVoucherHalf').then((voucherHalf) => {
           cy.wrap(voucherFull).as('voucherFull');
@@ -413,10 +420,45 @@ function coreTests() {
     // if coordinator user still has option to add donation
     testDonation();
   });
-}
 
-function getRadioOption(value) {
-  return `radio-option-${value}`;
+  it('if selected company or school, saves organization type value in store', () => {
+    cy.wrap(useRegisterChallengeStore()).then((store) => {
+      // access store via computed property to correctly track changes
+      const computedStoreProperty = computed(() => store.getOrganizationType);
+      // start in default state (individual)
+      cy.dataCy(getRadioOption(optionIndividual)).should('be.visible').click();
+      // switch to company
+      cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+      // check store value
+      cy.wrap(computedStoreProperty)
+        .its('value')
+        .should('equal', OrganizationType.company);
+      // switch to school
+      cy.dataCy(getRadioOption(optionSchool)).should('be.visible').click();
+      // check store value
+      cy.wrap(computedStoreProperty)
+        .its('value')
+        .should('equal', OrganizationType.school);
+      // switch to individual
+      cy.dataCy(getRadioOption(optionIndividual)).should('be.visible').click();
+      // check store value
+      cy.wrap(computedStoreProperty)
+        .its('value')
+        .should('equal', OrganizationType.none);
+      // switch to company
+      cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+      // check store value
+      cy.wrap(computedStoreProperty)
+        .its('value')
+        .should('equal', OrganizationType.company);
+      // switch to voucher
+      cy.dataCy(getRadioOption(optionVoucher)).should('be.visible').click();
+      // check store value
+      cy.wrap(computedStoreProperty)
+        .its('value')
+        .should('equal', OrganizationType.none);
+    });
+  });
 }
 
 function testDonation() {
