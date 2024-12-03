@@ -1,0 +1,12 @@
+{
+  "id": 54321,
+  "address": {
+    "street": "Test Street",
+    "houseNumber": "123",
+    "city": "Test City",
+    "zip": "12345",
+    "cityChallenge": 1,
+    "department": "Test Department"
+  },
+  "teams": []
+}

@@ -31,6 +31,11 @@ apiMessageError = "Vytvorenie tímu zlyhalo."
 apiMessageErrorWithMessage = "Vytvorenie tímu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Tím bol úspešne vytvorený."
 
+[createSubsidiary]
+apiMessageError = "Vytvorenie pobočky zlyhalo."
+apiMessageErrorWithMessage = "Vytvorenie pobočky zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Pobočka bola úspešne vytvorená."
+
 [drawerMenu]
 buttonParticipation = "Účasť"
 buttonCityAdministration = "Správa mesta"

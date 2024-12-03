@@ -496,7 +496,6 @@ Cypress.Commands.add(
       i18n,
     );
     const urlApiThisCampaignLocalized = `${apiBaseUrl}${urlApiThisCampaign}`;
-
     cy.fixture('apiGetThisCampaign').then((thisCampaignResponse) => {
       cy.intercept('GET', urlApiThisCampaignLocalized, {
         statusCode: responseStatusCode
@@ -1103,6 +1102,53 @@ Cypress.Commands.add('waitForTeamPostApi', () => {
         if (response) {
           expect(response.statusCode).to.equal(httpSuccessfullStatus);
           expect(response.body).to.deep.equal(teamResponse);
+        }
+      });
+    });
+  });
+});
+
+/*
+* Intercept subsidiary POST API call
+* Provides `@postSubsidiary` alias
+* @param {object} config - App global config
+* @param {object} i18n - i18n instance
+* @param {number} organizationId - Organization ID
+*/
+Cypress.Commands.add(
+  'interceptSubsidiaryPostApi',
+  (config, i18n, organizationId) => {
+    const { apiBase, apiDefaultLang, urlApiOrganizations, urlApiSubsidiaries } =
+      config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiSubsidiaryLocalized = `${apiBaseUrl}${urlApiOrganizations}${organizationId}/${urlApiSubsidiaries}`;
+    cy.fixture('apiPostSubsidiaryResponse').then((subsidiaryResponse) => {
+      cy.intercept('POST', urlApiSubsidiaryLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: subsidiaryResponse,
+      }).as('postSubsidiary');
+    });
+  }
+);
+
+/*
+ * Wait for intercept subsidiary POST API call and compare request/response object
+ * Wait for `@postSubsidiary` intercept
+ */
+Cypress.Commands.add('waitForSubsidiaryPostApi', () => {
+  cy.fixture('apiPostSubsidiaryRequest').then((subsidiaryRequest) => {
+    cy.fixture('apiPostSubsidiaryResponse').then((subsidiaryResponse) => {
+      cy.wait('@postSubsidiary').then(({ request, response }) => {
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        expect(request.body).to.deep.equal(subsidiaryRequest);
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(subsidiaryResponse);
         }
       });
     });

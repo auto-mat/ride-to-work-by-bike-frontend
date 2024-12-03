@@ -31,6 +31,11 @@ apiMessageError = "Team creation failed."
 apiMessageErrorWithMessage = "Team creation failed. Error: {error}"
 apiMessageSuccess = "Team was successfully created."
 
+[createSubsidiary]
+apiMessageError = "Subsidiary creation failed."
+apiMessageErrorWithMessage = "Subsidiary creation failed. Error: {error}"
+apiMessageSuccess = "Subsidiary was successfully created."
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"
