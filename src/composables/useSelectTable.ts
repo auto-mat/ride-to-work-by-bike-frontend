@@ -1,61 +1,54 @@
-// libraries
-import { computed } from 'vue';
-
 // composables
 import { i18n } from '../boot/i18n';
 
 // enums
 import { OrganizationLevel } from '../components/types/Organization';
 
-export const useSelectTable = (organizationLevel: OrganizationLevel) => {
-  const label = computed(() => {
-    switch (organizationLevel) {
-      case OrganizationLevel.team:
-        return i18n.global.t('form.team.labelTeam');
-      case OrganizationLevel.subsidiary:
-        return i18n.global.t('form.subsidiary.labelSubsidiary');
-      default:
-        return i18n.global.t('form.company.labelCompany');
-    }
-  });
+// types
+export type SelectTableLabels = {
+  label: string;
+  buttonAddNew: string;
+  buttonDialog: string;
+  titleDialog: string;
+};
 
-  const labelButton = computed(() => {
+export const useSelectTable = () => {
+  const getSelectTableLabels = (
+    organizationLevel: OrganizationLevel,
+  ): SelectTableLabels => {
     switch (organizationLevel) {
       case OrganizationLevel.team:
-        return i18n.global.t('form.team.buttonAddTeam');
+        return {
+          label: i18n.global.t('form.team.labelTeam'),
+          buttonAddNew: i18n.global.t('form.team.buttonAddTeam'),
+          buttonDialog: i18n.global.t('form.team.buttonAddTeam'),
+          titleDialog: i18n.global.t('form.team.titleAddTeam'),
+        };
       case OrganizationLevel.subsidiary:
-        return i18n.global.t('form.subsidiary.buttonAddSubsidiary');
+        return {
+          label: i18n.global.t('form.subsidiary.labelSubsidiary'),
+          buttonAddNew: i18n.global.t('form.subsidiary.buttonAddSubsidiary'),
+          buttonDialog: i18n.global.t('form.subsidiary.buttonAddSubsidiary'),
+          titleDialog: i18n.global.t('form.subsidiary.titleAddSubsidiary'),
+        };
+      case OrganizationLevel.organization:
+        return {
+          label: i18n.global.t('form.company.labelCompany'),
+          buttonAddNew: i18n.global.t('register.challenge.buttonAddCompany'),
+          buttonDialog: i18n.global.t('form.company.buttonAddCompany'),
+          titleDialog: i18n.global.t('form.company.titleAddCompany'),
+        };
       default:
-        return i18n.global.t('register.challenge.buttonAddCompany');
+        return {
+          label: '',
+          buttonAddNew: '',
+          buttonDialog: '',
+          titleDialog: '',
+        };
     }
-  });
-
-  const labelButtonDialog = computed(() => {
-    switch (organizationLevel) {
-      case OrganizationLevel.team:
-        return i18n.global.t('form.team.buttonAddTeam');
-      case OrganizationLevel.subsidiary:
-        return i18n.global.t('form.subsidiary.buttonAddSubsidiary');
-      default:
-        return i18n.global.t('form.company.buttonAddCompany');
-    }
-  });
-
-  const titleDialog = computed(() => {
-    switch (organizationLevel) {
-      case OrganizationLevel.team:
-        return i18n.global.t('form.team.titleAddTeam');
-      case OrganizationLevel.subsidiary:
-        return i18n.global.t('form.subsidiary.titleAddSubsidiary');
-      default:
-        return i18n.global.t('form.company.titleAddCompany');
-    }
-  });
+  };
 
   return {
-    label,
-    labelButton,
-    labelButtonDialog,
-    titleDialog,
+    getSelectTableLabels,
   };
 };

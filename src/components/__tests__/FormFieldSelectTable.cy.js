@@ -29,16 +29,22 @@ describe('<FormFieldSelectTable>', () => {
     cy.testLanguageStringsInContext(
       [
         'buttonAddCompany',
+        'buttonAddFamily',
+        'buttonAddSchool',
         'hintCityChallenge',
         'hintDepartment',
         'labelCityChallenge',
         'labelCompany',
         'labelDepartment',
+        'labelFamily',
+        'labelSchool',
         'textCompanyPermission',
         'textCoordinator',
         'textSubsidiaryAddress',
         'textUserExperience',
         'titleAddCompany',
+        'titleAddFamily',
+        'titleAddSchool',
         'titleSubsidiaryAddress',
       ],
       'form.company',
@@ -67,7 +73,7 @@ describe('<FormFieldSelectTable>', () => {
     );
   });
 
-  context('company desktop', () => {
+  context('organization company', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {
@@ -194,7 +200,7 @@ describe('<FormFieldSelectTable>', () => {
     });
   });
 
-  context('company selected', () => {
+  context('organization company selected', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {
@@ -215,7 +221,79 @@ describe('<FormFieldSelectTable>', () => {
     });
   });
 
-  context('team desktop', () => {
+  context('organization school', () => {
+    beforeEach(() => {
+      cy.mount(FormFieldSelectTable, {
+        props: {
+          options: options.value,
+          organizationLevel: OrganizationLevel.organization,
+          organizationType: OrganizationType.school,
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows correct labels', () => {
+      // label
+      cy.dataCy('form-select-table-query')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.labelSchool'));
+      // button add new
+      cy.dataCy('form-select-table-button')
+        .should('be.visible')
+        .and('contain', i18n.global.t('register.challenge.buttonAddCompany'));
+      cy.dataCy('form-select-table-button').click();
+      // title dialog
+      cy.dataCy('dialog-add-option')
+        .find('h3')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.titleAddSchool'));
+      // scroll to bottom
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
+      // button dialog
+      cy.dataCy('dialog-button-submit')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.buttonAddSchool'));
+    });
+  });
+
+  context('organization family', () => {
+    beforeEach(() => {
+      cy.mount(FormFieldSelectTable, {
+        props: {
+          options: options.value,
+          organizationLevel: OrganizationLevel.organization,
+          organizationType: OrganizationType.family,
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows correct labels', () => {
+      // label
+      cy.dataCy('form-select-table-query')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.labelFamily'));
+      // button add new
+      cy.dataCy('form-select-table-button')
+        .should('be.visible')
+        .and('contain', i18n.global.t('register.challenge.buttonAddCompany'));
+      cy.dataCy('form-select-table-button').click();
+      // title dialog
+      cy.dataCy('dialog-add-option')
+        .find('h3')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.titleAddFamily'));
+      // scroll to bottom
+      cy.dataCy('dialog-body').scrollTo('bottom', { ensureScrollable: false });
+      // button dialog
+      cy.dataCy('dialog-button-submit')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.buttonAddFamily'));
+    });
+  });
+
+  context('team', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {
@@ -317,7 +395,7 @@ describe('<FormFieldSelectTable>', () => {
     });
   });
 
-  context('subsidiary desktop', () => {
+  context('subsidiary', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {

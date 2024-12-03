@@ -16,7 +16,7 @@
  *   representing the options.
  * - `organizationLevel` (OrganizationLevel, required): The organization
  *   level - table is used for organization or team selection.
- * - `organizationType` (OrganizationType,
+ * - `organizationType` (OrganizationType, required,
  *   default: OrganizationType.organization): The organization type.
  *
  * @events
@@ -50,6 +50,7 @@ import FormAddCompany from '../form/FormAddCompany.vue';
 import FormAddTeam from '../form/FormAddTeam.vue';
 
 // composables
+import { useOrganizations } from '../../composables/useOrganizations';
 import { useSelectTable } from '../../composables/useSelectTable';
 import { useValidation } from '../../composables/useValidation';
 
@@ -87,6 +88,7 @@ export default defineComponent({
     },
     organizationType: {
       type: String as () => OrganizationType,
+      required: true,
       default: OrganizationType.company,
     },
   },
@@ -172,8 +174,42 @@ export default defineComponent({
       }
     };
 
-    const { label, labelButton, labelButtonDialog, titleDialog } =
-      useSelectTable(props.organizationLevel);
+    const { getOrganizationLabels } = useOrganizations();
+    const { getSelectTableLabels } = useSelectTable();
+
+    const label = computed(() => {
+      // if level is organization, show label for correct type
+      if (props.organizationLevel === OrganizationLevel.organization) {
+        if (props.organizationType) {
+          return getOrganizationLabels(props.organizationType).labelName;
+        }
+      }
+      return getSelectTableLabels(props.organizationLevel).label;
+    });
+
+    const buttonAddNew = computed(() => {
+      return getSelectTableLabels(props.organizationLevel).buttonAddNew;
+    });
+
+    const buttonDialog = computed(() => {
+      // if level is organization, show button label for correct type
+      if (props.organizationLevel === OrganizationLevel.organization) {
+        if (props.organizationType) {
+          return getOrganizationLabels(props.organizationType).buttonDialog;
+        }
+      }
+      return getSelectTableLabels(props.organizationLevel).buttonDialog;
+    });
+
+    const titleDialog = computed(() => {
+      // if level is organization, show title for correct type
+      if (props.organizationLevel === OrganizationLevel.organization) {
+        if (props.organizationType) {
+          return getOrganizationLabels(props.organizationType).titleDialog;
+        }
+      }
+      return getSelectTableLabels(props.organizationLevel).titleDialog;
+    });
 
     return {
       borderRadius,
@@ -184,8 +220,8 @@ export default defineComponent({
       inputValue,
       isDialogOpen,
       label,
-      labelButton,
-      labelButtonDialog,
+      buttonAddNew,
+      buttonDialog,
       query,
       teamNew,
       titleDialog,
@@ -304,7 +340,7 @@ export default defineComponent({
           >
             <!-- Label -->
             <span class="inline-block q-pl-xs">
-              {{ labelButton }}
+              {{ buttonAddNew }}
             </span>
           </q-btn>
         </q-card-section>
@@ -348,7 +384,7 @@ export default defineComponent({
                   data-cy="dialog-button-submit"
                   @click="onSubmit"
                 >
-                  {{ labelButtonDialog }}
+                  {{ buttonDialog }}
                 </q-btn>
               </div>
             </div>
