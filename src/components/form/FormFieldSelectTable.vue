@@ -16,7 +16,7 @@
  *   representing the options.
  * - `organizationLevel` (OrganizationLevel, required): The organization
  *   level - table is used for organization or team selection.
- * - `organizationType` (OrganizationType, required,
+ * - `organizationType` (OrganizationType,
  *   default: OrganizationType.organization): The organization type.
  *
  * @events
@@ -88,7 +88,6 @@ export default defineComponent({
     },
     organizationType: {
       type: String as () => OrganizationType,
-      required: true,
       default: OrganizationType.company,
     },
   },
