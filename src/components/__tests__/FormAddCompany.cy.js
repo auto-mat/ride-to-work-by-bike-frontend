@@ -29,6 +29,8 @@ describe('<FormAddCompany>', () => {
     cy.testLanguageStringsInContext(
       [
         'labelCompanyShort',
+        'labelFamilyShort',
+        'labelSchoolShort',
         'company.textCompanyPermission',
         'labelTitle',
         'labelBusinessId',
@@ -43,8 +45,6 @@ describe('<FormAddCompany>', () => {
         'company.hintCityChallenge',
         'company.labelDepartment',
         'company.hintDepartment',
-        'labelSchoolShort',
-        'labelFamilyShort',
       ],
       'form',
       i18n,

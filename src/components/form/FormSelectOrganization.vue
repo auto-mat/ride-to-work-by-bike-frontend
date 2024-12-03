@@ -18,7 +18,7 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // components
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';

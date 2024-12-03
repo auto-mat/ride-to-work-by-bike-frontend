@@ -252,9 +252,7 @@ export default defineComponent({
     const { getOrganizationLabels } = useOrganizations();
 
     const formFieldLabel = computed(() => {
-      return props.label
-        ? props.label
-        : getOrganizationLabels(props.organizationType).label;
+      return getOrganizationLabels(props.organizationType).label;
     });
 
     const addNewOrganizationDialogTitle = computed(() => {

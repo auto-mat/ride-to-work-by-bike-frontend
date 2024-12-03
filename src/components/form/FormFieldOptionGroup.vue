@@ -82,7 +82,7 @@ export default defineComponent({
         icon: 'flight_takeoff',
       },
       {
-        label: i18n.global.t('form.participation.labelFamilyShort'),
+        label: i18n.global.t('form.participation.labelFamily'),
         value: OrganizationType.family,
         icon: 'flight_land',
       },
