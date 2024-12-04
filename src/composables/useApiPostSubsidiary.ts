@@ -41,8 +41,8 @@ interface UseApiPostSubsidiaryReturn {
   isLoading: Ref<boolean>;
   createSubsidiary: (
     organizationId: number,
-    subsidiaryData: PostSubsidiaryPayload,
-  ) => Promise<PostSubsidiaryResponse | null>;
+    subsidiaryData: FormCompanyAddressFields,
+  ) => Promise<FormCompanyAddressFields | null>;
 }
 
 /**
@@ -68,7 +68,7 @@ export const useApiPostSubsidiary = (
   const createSubsidiary = async (
     organizationId: number,
     subsidiaryData: FormCompanyAddressFields,
-  ): Promise<PostSubsidiaryResponse | null> => {
+  ): Promise<FormCompanyAddressFields | null> => {
     // parse subsidiary data and create a paylaod for API
     logger?.debug(
       `Creating subsidiary payload from data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
@@ -104,7 +104,29 @@ export const useApiPostSubsidiary = (
       });
 
       isLoading.value = false;
-      return data;
+
+      if (data) {
+        logger?.debug(
+          `Parsing response subsidiary data <${JSON.stringify(data, null, 2)}>.`,
+        );
+        // parse subsidiary data to return
+        const subsidiaryDataParsed: FormCompanyAddressFields = {
+          street: data.address.street,
+          houseNumber: data.address.street_number,
+          city: data.address.city,
+          zip: data.address.psc ? String(data.address.psc) : '',
+          cityChallenge: data.city_id,
+          department: data.address.recipient,
+        };
+        logger?.debug(
+          `Parsed subsidiary data <${JSON.stringify(subsidiaryDataParsed, null, 2)}>.`,
+        );
+
+        return subsidiaryDataParsed;
+      } else {
+        logger?.debug('No data returned from subsidiary creation API.');
+        return null;
+      }
     } catch (error) {
       logger?.error(`Error creating subsidiary: ${error}`);
       isLoading.value = false;
