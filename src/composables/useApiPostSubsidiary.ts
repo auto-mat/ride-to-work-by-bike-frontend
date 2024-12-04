@@ -11,6 +11,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { useLoginStore } from '../stores/login';
 
 // types
+import type { FormCompanyAddressFields } from '../components/types/Form';
 import type { Logger } from '../components/types/Logger';
 
 // utils
@@ -18,7 +19,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 interface PostSubsidiaryPayload {
   address: PostSubsidiaryAddressFields;
-  city_id: number;
+  city_id: number | null;
 }
 
 interface PostSubsidiaryAddressFields {
@@ -31,7 +32,7 @@ interface PostSubsidiaryAddressFields {
 
 interface PostSubsidiaryResponse {
   id: number;
-  city_id: number;
+  city_id: number | null;
   active: boolean;
   address: PostSubsidiaryAddressFields;
 }
@@ -66,10 +67,24 @@ export const useApiPostSubsidiary = (
    */
   const createSubsidiary = async (
     organizationId: number,
-    subsidiaryData: PostSubsidiaryPayload,
+    subsidiaryData: FormCompanyAddressFields,
   ): Promise<PostSubsidiaryResponse | null> => {
+    // parse subsidiary data and create a paylaod for API
     logger?.debug(
-      `Creating subsidiary with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
+      `Creating subsidiary payload from data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
+    );
+    const subsidiaryPayload: PostSubsidiaryPayload = {
+      address: {
+        street: subsidiaryData.street,
+        street_number: subsidiaryData.houseNumber,
+        recipient: subsidiaryData.department,
+        city: subsidiaryData.city,
+        psc: subsidiaryData.zip,
+      },
+      city_id: subsidiaryData.cityChallenge,
+    };
+    logger?.debug(
+      `Created subsidiary payload <${JSON.stringify(subsidiaryPayload, null, 2)}>.`,
     );
     isLoading.value = true;
 
@@ -84,7 +99,7 @@ export const useApiPostSubsidiary = (
         method: 'post',
         translationKey: 'createSubsidiary',
         headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-        payload: subsidiaryData,
+        payload: subsidiaryPayload,
         logger,
       });
 
