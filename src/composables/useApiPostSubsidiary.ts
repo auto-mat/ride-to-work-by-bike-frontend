@@ -12,23 +12,37 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { FormCompanyAddressFields } from '../components/types/Form';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-interface PostSubsidiaryResponse {
-  id: number;
-  address: FormCompanyAddressFields;
+interface PostSubsidiaryPayload {
+  address: PostSubsidiaryAddressFields;
+  city_id: number;
 }
 
-type UseApiPostSubsidiaryReturn = {
+interface PostSubsidiaryAddressFields {
+  street: string;
+  street_number: string;
+  recipient: string;
+  city: string;
+  psc: string | number;
+}
+
+interface PostSubsidiaryResponse {
+  id: number;
+  city_id: number;
+  active: boolean;
+  address: PostSubsidiaryAddressFields;
+}
+
+interface UseApiPostSubsidiaryReturn {
   isLoading: Ref<boolean>;
   createSubsidiary: (
     organizationId: number,
-    subsidiaryData: FormCompanyAddressFields,
+    subsidiaryData: PostSubsidiaryPayload,
   ) => Promise<PostSubsidiaryResponse | null>;
-};
+}
 
 /**
  * Post subsidiary composable
@@ -47,12 +61,12 @@ export const useApiPostSubsidiary = (
    * Create subsidiary
    * Creates a new subsidiary under specified organization
    * @param {number} organizationId - Organization Id to create subsidiary under
-   * @param {FormCompanyAddressFields} subsidiaryData - Subsidiary data to create
+   * @param {PostSubsidiaryPayload} subsidiaryData - Subsidiary data to create
    * @returns {Promise<PostSubsidiaryResponse | null>} - Promise
    */
   const createSubsidiary = async (
     organizationId: number,
-    subsidiaryData: FormCompanyAddressFields,
+    subsidiaryData: PostSubsidiaryPayload,
   ): Promise<PostSubsidiaryResponse | null> => {
     logger?.debug(
       `Creating subsidiary with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
