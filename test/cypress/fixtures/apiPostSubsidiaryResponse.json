@@ -2,9 +2,6 @@
   "id": 5351,
   "city_id": 4,
   "active": true,
-  "box_addressee_name": null,
-  "box_addressee_telephone": null,
-  "box_addressee_email": null,
   "address": {
     "street": "Test Subsidiary Street 4",
     "street_number": "004",
