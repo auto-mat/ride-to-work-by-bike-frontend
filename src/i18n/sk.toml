@@ -26,6 +26,11 @@ apiMessageError = "Overenie e-mailu zlyhalo."
 apiMessageErrorWithMessage = "Overenie e-mailu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "E-mail bol úspešne overený."
 
+[createSubsidiary]
+apiMessageError = "Vytvorenie pobočky zlyhalo."
+apiMessageErrorWithMessage = "Vytvorenie pobočky zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Pobočka bola úspešne vytvorená."
+
 [drawerMenu]
 buttonParticipation = "Účasť"
 buttonCityAdministration = "Správa mesta"

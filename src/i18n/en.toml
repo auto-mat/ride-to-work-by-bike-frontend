@@ -26,6 +26,11 @@ apiMessageError = "Email verification failed."
 apiMessageErrorWithMessage = "Email verification failed. Error: {error}"
 apiMessageSuccess = "Email was successfully verified."
 
+[createSubsidiary]
+apiMessageError = "Subsidiary creation failed."
+apiMessageErrorWithMessage = "Subsidiary creation failed. Error: {error}"
+apiMessageSuccess = "Subsidiary was successfully created."
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"
