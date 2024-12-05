@@ -30,7 +30,7 @@
 
 // libraries
 import { computed, defineComponent, ref } from 'vue';
-import { QForm } from 'quasar';
+import { QCard, QForm } from 'quasar';
 
 import { nextTick } from 'vue';
 
@@ -40,6 +40,12 @@ import FormCardMerch from '../form/FormCardMerch.vue';
 import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import SliderMerch from './SliderMerch.vue';
+
+// composables
+import { i18n } from '../../boot/i18n';
+
+// enums
+import { Gender } from '../types/Profile';
 
 // types
 import type { FormCardMerchType, FormOption } from '../types/Form';
@@ -61,7 +67,7 @@ export default defineComponent({
     const formMerchRef = ref<typeof QForm | null>(null);
 
     // selected options
-    const selectedGender = ref<string>('female');
+    const selectedGender = ref<string>(Gender.female);
     const selectedOption = ref<FormCardMerchType | null>(null);
     const selectedSize = ref<string>('');
     const phone = ref<string>('');
@@ -160,12 +166,12 @@ export default defineComponent({
     ];
     const optionsGender: FormOption[] = [
       {
-        label: 'Female',
-        value: 'female',
+        label: i18n.global.t('global.female'),
+        value: Gender.female,
       },
       {
-        label: 'Male',
-        value: 'male',
+        label: i18n.global.t('global.male'),
+        value: Gender.male,
       },
     ];
     const optionsFemale = computed((): FormCardMerchType[] => {
@@ -173,7 +179,7 @@ export default defineComponent({
         const genderValues = option.gender.map(
           (gender: FormOption) => gender.value,
         );
-        return genderValues.includes('female');
+        return genderValues.includes(Gender.female);
       });
     });
     const optionsMale = computed((): FormCardMerchType[] => {
@@ -181,7 +187,7 @@ export default defineComponent({
         const genderValues = option.gender.map(
           (gender: FormOption) => gender.value,
         );
-        return genderValues.includes('male');
+        return genderValues.includes(Gender.male);
       });
     });
 
@@ -240,6 +246,7 @@ export default defineComponent({
 
     return {
       optionsFemale,
+      Gender,
       isNotMerch,
       isOpen,
       newsletter,
@@ -305,13 +312,13 @@ export default defineComponent({
     >
       <!-- Button: Female -->
       <q-tab
-        name="female"
+        :name="Gender.female"
         :label="$t('global.female')"
         data-cy="list-merch-tab-female"
       />
       <!-- Button: Male -->
       <q-tab
-        name="male"
+        :name="Gender.male"
         :label="$t('global.male')"
         data-cy="list-merch-tab-male"
       />
@@ -322,13 +329,13 @@ export default defineComponent({
     <!-- Tab panels -->
     <q-tab-panels v-model="selectedGender" animated>
       <!-- Tab panel: Female -->
-      <q-tab-panel name="female" class="q-pa-none">
+      <q-tab-panel :name="Gender.female" class="q-pa-none">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
             v-for="option in optionsFemale"
             :option="option"
-            :key="`${option.value}-female`"
+            :key="`${option.value}-${Gender.female}`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-female"
@@ -338,13 +345,13 @@ export default defineComponent({
       </q-tab-panel>
 
       <!-- Tab panel: Male -->
-      <q-tab-panel name="male">
+      <q-tab-panel :name="Gender.male">
         <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
           <!-- Card: Merch (includes dialog) -->
           <FormCardMerch
             v-for="option in optionsMale"
             :option="option"
-            :key="`${option.value}-female`"
+            :key="`${option.value}-${Gender.male}`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-male"
@@ -384,12 +391,12 @@ export default defineComponent({
             <div class="q-pt-sm">
               <span
                 class="text-caption text-weight-medium text-grey-10"
-                v-if="selectedGender === 'female'"
+                v-if="selectedGender === Gender.female"
                 >{{ $t('form.merch.labelSizeFemale') }}</span
               >
               <span
                 class="text-caption text-weight-medium text-grey-10"
-                v-if="selectedGender === 'male'"
+                v-if="selectedGender === Gender.male"
                 >{{ $t('form.merch.labelSizeMale') }}</span
               >
               <form-field-radio-required
