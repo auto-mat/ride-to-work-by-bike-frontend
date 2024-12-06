@@ -4846,9 +4846,9 @@ ol-ext@^4.0.21, ol-ext@^4.0.24:
   integrity sha512-VEf1+mjvbe35mMsszVsugqcvWfeGcU8TwS+GgXm3nGYqiHR7CckX2DWmM9B94QCDnrJWKKXBicfInbkoe2xT7w==
 
 ol@^10.0.0, ol@^10.2.1:
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/ol/-/ol-10.3.0.tgz#abdf133734fc5b3bbae9581542afdc7a87491804"
-  integrity sha512-7cq3jdAPQq5d0OZfKH80wl15LyzWk0aqz1TPYUa2+0c+3MkIDND2JxM/ed9xhoA8Ds0CNxj9aRk9vFztxmxmjw==
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/ol/-/ol-10.3.1.tgz#b11bc0c8c969276c4070e7aa43c95b86e5f25ef3"
+  integrity sha512-D1nRQVLOBCRempVqBFV8pSI5H13BtnhuLDjGl+3NKdMOFyjx/UqRX/tcMspEw3LhFOSPWn1Ev+1KIRV8AlHM7A==
   dependencies:
     "@types/rbush" "4.0.0"
     color-rgba "^3.0.0"
