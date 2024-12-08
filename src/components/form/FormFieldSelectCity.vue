@@ -24,7 +24,6 @@ import { computed, defineComponent, inject, onMounted } from 'vue';
 import { useApiGetCities } from '../../composables/useApiGetCities';
 
 // types
-import { FormOption } from '../../components/types/Form';
 import { Logger } from '../../components/types/Logger';
 
 export default defineComponent({
@@ -44,23 +43,16 @@ export default defineComponent({
     });
 
     const logger = inject('vuejs3-logger') as Logger | null;
-    const { cities, isLoading, loadCities } = useApiGetCities(logger);
+    const { isLoading, options, loadCities } = useApiGetCities(logger);
 
     onMounted(() => {
       loadCities();
     });
 
-    const optionsCity = computed<FormOption[]>(() =>
-      cities.value.map((city) => ({
-        label: city.name,
-        value: city.id,
-      })),
-    );
-
     return {
       city,
       isLoading,
-      optionsCity,
+      options,
     };
   },
 });
@@ -82,7 +74,7 @@ export default defineComponent({
       map-options
       v-model="city"
       :loading="isLoading"
-      :options="optionsCity"
+      :options="options"
       :style="{ 'min-width': '160px' }"
       class="col-auto"
       id="form-select-city"

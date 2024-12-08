@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import FormAddSubsidiary from 'components/form/FormAddSubsidiary.vue';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { deepObjectWithSimplePropsCopy } from '../../../src/utils';
@@ -40,9 +41,10 @@ describe('<FormAddSubsidiary>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.fixture('cityChallengeResponse').then((cityChallengeResponse) => {
-        testData.cityChallenge = cityChallengeResponse.results[0].id;
-        cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      // assign selected city ID from fixture to testData for final comparison
+      cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+        testData.cityChallenge = citiesResponse.results[0].id;
       });
       model.value = deepObjectWithSimplePropsCopy(emptyData);
       cy.mount(FormAddSubsidiary, {
@@ -59,9 +61,10 @@ describe('<FormAddSubsidiary>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.fixture('cityChallengeResponse').then((cityChallengeResponse) => {
-        testData.cityChallenge = cityChallengeResponse.results[0].id;
-        cy.wrap(cityChallengeResponse.results[0]).as('cityChallenge');
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      // assign selected city ID from fixture to testData for final comparison
+      cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+        testData.cityChallenge = citiesResponse.results[0].id;
       });
       model.value = deepObjectWithSimplePropsCopy(emptyData);
       cy.mount(FormAddSubsidiary, {
@@ -104,19 +107,26 @@ function coreTests() {
     cy.dataCy(selectorFormZip).find('input').type(testData.zip);
     cy.wrap(model).its('value.zip').should('equal', testData.zip);
     // city challenge
-    cy.get('@cityChallenge').then((city) => {
-      cy.dataCy(selectorFormCityChallenge).click();
-      cy.get('.q-menu').contains(city.name).click();
-      cy.wrap(model)
-        .its('value.cityChallenge')
-        .should('equal', testData.cityChallenge);
+    cy.dataCy(selectorFormCityChallenge).click();
+    // test loaded city options
+    cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+      cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
+        cy.get('.q-menu .q-item__label')
+          .should('be.visible')
+          .and(
+            'have.length',
+            citiesResponse.results.length + citiesResponseNext.results.length,
+          );
+        cy.get('.q-menu .q-item__label').first().click();
+        cy.wrap(model)
+          .its('value.cityChallenge')
+          .should('equal', citiesResponse.results[0].id);
+      });
     });
     // department
     cy.dataCy(selectorFormDepartment).type(testData.department);
     cy.wrap(model).its('value.department').should('equal', testData.department);
-    cy.wrap(model).should('deep.include', {
-      value: testData,
-    });
+    cy.wrap(model).its('value').should('deep.include', testData);
   });
 }
 
