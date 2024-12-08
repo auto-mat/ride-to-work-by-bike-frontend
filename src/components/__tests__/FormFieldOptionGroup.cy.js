@@ -12,7 +12,17 @@ const colorPrimary = `rgb(${rgbPrimary.r}, ${rgbPrimary.g}, ${rgbPrimary.b})`;
 
 describe('<FormFieldOptionGroup>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'labelColleagues',
+        'textColleagues',
+        'labelSchoolmates',
+        'textSchoolmates',
+        'labelFamily',
+      ],
+      'form.participation',
+      i18n,
+    );
   });
 
   context('desktop', () => {
