@@ -178,6 +178,17 @@ describe('<FormAddCompany>', () => {
       );
     });
 
+    it('hides company related message for company type (simple)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.company,
+          variant: 'simple',
+        },
+      });
+      cy.dataCy(selectorFormPermission).should('not.exist');
+    });
+
     it('shows VAT field for company type (default)', () => {
       cy.mount(FormAddCompany, {
         props: {
@@ -193,6 +204,19 @@ describe('<FormAddCompany>', () => {
       );
     });
 
+    it('shows company related message for company type (default)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.company,
+          variant: 'default',
+        },
+      });
+      cy.dataCy(selectorFormPermission)
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.textCompanyPermission'));
+    });
+
     it('hides VAT field for school type (simple)', () => {
       cy.mount(FormAddCompany, {
         props: {
@@ -206,6 +230,17 @@ describe('<FormAddCompany>', () => {
         'contain',
         i18n.global.t('form.labelSchoolShort'),
       );
+    });
+
+    it('hides company related message for school type (simple)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.school,
+          variant: 'simple',
+        },
+      });
+      cy.dataCy(selectorFormPermission).should('not.exist');
     });
 
     it('hides VAT field for school type (default)', () => {
@@ -237,6 +272,17 @@ describe('<FormAddCompany>', () => {
       );
     });
 
+    it('hides company related message for school type (default)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.school,
+          variant: 'default',
+        },
+      });
+      cy.dataCy(selectorFormPermission).should('not.exist');
+    });
+
     it('hides VAT field for family type (simple)', () => {
       cy.mount(FormAddCompany, {
         props: {
@@ -250,6 +296,17 @@ describe('<FormAddCompany>', () => {
         'contain',
         i18n.global.t('form.labelFamilyShort'),
       );
+    });
+
+    it('hides company related message for family type (simple)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.family,
+          variant: 'simple',
+        },
+      });
+      cy.dataCy(selectorFormPermission).should('not.exist');
     });
 
     it('hides VAT field for family type (default)', () => {
@@ -279,6 +336,17 @@ describe('<FormAddCompany>', () => {
         'contain',
         i18n.global.t('form.labelFamilyShort'),
       );
+    });
+
+    it('hides company related message for family type (default)', () => {
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.family,
+          variant: 'default',
+        },
+      });
+      cy.dataCy(selectorFormPermission).should('not.exist');
     });
 
     it('shows VAT field when organizationType is not provided (simple)', () => {
