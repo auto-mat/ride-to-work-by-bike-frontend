@@ -24,19 +24,18 @@
  */
 
 // libraries
-import { computed, defineComponent, nextTick } from 'vue';
+import { computed, defineComponent, inject, nextTick, onMounted } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
-
-// fixtures
-import cityChallengeResponse from '../../../test/cypress/fixtures/cityChallengeResponse.json';
+import { useApiGetCities } from '../../composables/useApiGetCities';
 
 // types
-import type { FormCompanyAddressFields, FormOption } from '../types/Form';
+import type { FormCompanyAddressFields } from '../types/Form';
+import type { Logger } from '../types/Logger';
 
 // enums
 import { FormSubsidiaryAddressFields } from '../enums/Form';
@@ -65,18 +64,20 @@ export default defineComponent({
       },
     });
 
-    const optionsCityChallenge: FormOption[] =
-      cityChallengeResponse.results.map((city) => ({
-        label: city.name,
-        value: city.id,
-      }));
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const { isLoading, options, loadCities } = useApiGetCities(logger);
+
+    onMounted(() => {
+      loadCities();
+    });
 
     const { isFilled } = useValidation();
 
     return {
       subsidiary,
       isFilled,
-      optionsCityChallenge,
+      isLoading,
+      options,
       FormSubsidiaryAddressFields,
     };
   },
@@ -143,7 +144,8 @@ export default defineComponent({
         ]"
         id="form-city-challenge"
         :hint="$t('form.company.hintCityChallenge')"
-        :options="optionsCityChallenge"
+        :options="options"
+        :loading="isLoading"
         class="q-mt-sm"
         data-cy="form-add-subsidiary-city-challenge"
         :name="FormSubsidiaryAddressFields.cityChallenge"
