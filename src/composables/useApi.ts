@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { Notify } from 'quasar';
 import { api, axios } from '../boot/axios';
 import { i18n } from '../boot/i18n';
+import { ApiBaseUrl } from '../components/enums/Api';
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
 
 // utils
@@ -10,7 +11,7 @@ import { requestDefaultHeader } from '../utils';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
-const { apiDefaultLang, apiBase } = rideToWorkByBikeConfig;
+const { apiDefaultLang, apiBase, apiBaseFeed } = rideToWorkByBikeConfig;
 
 // types
 import type { AxiosRequestHeaders, Method } from 'axios';
@@ -60,23 +61,53 @@ const hasReponseDataNonFieldsErrorsKey = ({
 };
 
 /*
+ * Select Axios base API URL based on the variant
+ * @param {ApiBaseUrl} variant - Base URL variant
+ * @param {(Logger|null)} logger - Logger instance
+ * @returns {string} - Axios base API URL
+ */
+const getAxiosBaseApiUrl = (
+  variant: ApiBaseUrl,
+  logger: Logger | null,
+): string => {
+  logger?.debug(`Get Axios base API URL with variant <${variant}>.`);
+  switch (variant) {
+    case ApiBaseUrl.rest:
+      logger?.debug(`Use endpoint <${apiBase}>.`);
+      return `${apiBase}`;
+    case ApiBaseUrl.feed:
+      logger?.debug(`Use endpoint <${apiBaseFeed}>.`);
+      return `${apiBaseFeed}`;
+    default:
+      logger?.debug(
+        `Defaulting to <${ApiBaseUrl.rest}> variant in getAxiosBaseApiUrl().`,
+      );
+      return `${apiBase}`;
+  }
+};
+
+/*
  * Inject Axios base API URL with lang (internationalization)
+ * @param {string} baseUrl - Axios base API URL
  * @param {(Logger|null)} logger - Logger instance
  * @returns {void}
  */
-const injectAxioBaseApiUrlWithLang = (logger: Logger | null): void => {
+const injectAxioBaseApiUrlWithLang = (
+  baseUrl: string,
+  logger: Logger | null,
+): void => {
   logger?.debug(
-    `Injected base API URL <${api.defaults.baseURL}> with language <${i18n.global.locale}>.`,
+    `Injected base API URL <${baseUrl}> with language <${i18n.global.locale}>.`,
   );
   api.defaults.baseURL = getApiBaseUrlWithLang(
     logger,
-    apiBase,
+    baseUrl,
     apiDefaultLang,
     i18n,
   );
 };
 
-export const useApi = () => {
+export const useApi = (variant: ApiBaseUrl = ApiBaseUrl.rest) => {
   const apiFetch = async <T>({
     endpoint,
     payload,
@@ -105,7 +136,9 @@ export const useApi = () => {
         `<api()> function headers parameter argument <${JSON.stringify(headers)}>.`,
       );
       // Inject Axios base API URL with lang (internationalization)
-      injectAxioBaseApiUrlWithLang(logger);
+      const baseUrl = getAxiosBaseApiUrl(variant, logger);
+      logger?.debug(`Base API URL <${baseUrl}>.`);
+      injectAxioBaseApiUrlWithLang(baseUrl, logger);
       const startTime = performance.now();
       const data: apiData = {
         url: endpoint,
