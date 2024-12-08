@@ -55,6 +55,11 @@ apiMessageError = "Fetching subsidiaries failed."
 apiMessageErrorWithMessage = "Fetching subsidiaries failed. Error: {error}"
 apiMessageSuccess = "Subsidiaries fetched successfully."
 
+[getTeams]
+apiMessageError = "Fetching teams failed."
+apiMessageErrorWithMessage = "Fetching teams failed. Error: {error}"
+apiMessageSuccess = "Teams fetched successfully."
+
 [global]
 all = "All"
 and = "and"

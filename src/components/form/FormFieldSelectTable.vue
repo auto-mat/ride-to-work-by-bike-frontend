@@ -18,6 +18,7 @@
  *   level - table is used for organization or team selection.
  * - `organizationType` (OrganizationType,
  *   default: OrganizationType.organization): The organization type.
+ * - `loading` (Boolean, default: false): The loading state.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -90,6 +91,10 @@ export default defineComponent({
       type: String as () => OrganizationType,
       default: OrganizationType.company,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -105,7 +110,7 @@ export default defineComponent({
           houseNumber: '',
           city: '',
           zip: '',
-          cityChallenge: '',
+          cityChallenge: null,
           department: '',
         },
       ],
@@ -270,6 +275,7 @@ export default defineComponent({
             dense
             outlined
             v-model="query"
+            :loading="loading"
             icon
             id="form-select-table-query"
           >
@@ -426,5 +432,16 @@ export default defineComponent({
 }
 :deep(.text-negative .q-radio__label) {
   color: $negative;
+}
+/**
+ * Fix issue with nesting of fields.
+ * Wrapper field has borderless and dense classes
+ * which interfere with nested outlined field.
+ * Override padding-right to fix the loader position.
+ */
+:deep(
+  .q-field--borderless.q-field--dense .q-field--outlined .q-field__control
+) {
+  padding-right: 12px;
 }
 </style>

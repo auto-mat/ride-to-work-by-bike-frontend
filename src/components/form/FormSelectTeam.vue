@@ -16,16 +16,22 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { defineComponent, inject, ref, watch } from 'vue';
+
+// components
+import FormFieldSelectTable from './FormFieldSelectTable.vue';
+
+// composables
+import { useApiGetTeams } from '../../composables/useApiGetTeams';
 
 // enums
 import { OrganizationLevel } from 'src/components/types/Organization';
 
-// types
-import { FormSelectTableOption } from '../types/Form';
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
-// components
-import FormFieldSelectTable from './FormFieldSelectTable.vue';
+// types
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'FormSelectTeam',
@@ -33,27 +39,30 @@ export default defineComponent({
     FormFieldSelectTable,
   },
   setup() {
-    // TODO: fetch teams from API
-    const teamOptions: FormSelectTableOption[] = [
-      {
-        label: 'Zelený team',
-        value: 34565,
-        members: 2,
-        maxMembers: 5,
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const { options, isLoading, loadTeams } = useApiGetTeams(logger);
+
+    // load teams when subsidiary ID changes
+    const registerChallengeStore = useRegisterChallengeStore();
+    watch(
+      () => registerChallengeStore.getSubsidiaryId,
+      (newValue: number | null) => {
+        logger?.debug(
+          `Resgister challenge store subsidiary ID updated to <${newValue}>`,
+        );
+        if (newValue) {
+          loadTeams(newValue);
+        }
       },
-      {
-        label: 'Modrý team',
-        value: 34566,
-        members: 5,
-        maxMembers: 5,
-      },
-    ];
+      { immediate: true },
+    );
 
     const team = ref<number | null>(null);
 
     return {
+      isLoading,
+      options,
       team,
-      teamOptions,
       OrganizationLevel,
     };
   },
@@ -70,7 +79,8 @@ export default defineComponent({
     <form-field-select-table
       v-model="team"
       :organization-level="OrganizationLevel.team"
-      :options="teamOptions"
+      :options="options"
+      :loading="isLoading"
       data-cy="form-select-table-team"
     />
   </div>

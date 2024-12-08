@@ -361,6 +361,35 @@ Cypress.Commands.add('waitForCitiesApi', () => {
 });
 
 /**
+ * Intercept teams GET API calls
+ * Provides `@getTeams` and `@getTeamsNextPage` aliases
+ * @param {object} config - App global config
+ * @param {object} i18n - i18n instance
+ * @param {number} subsidiaryId - Subsidiary ID
+ */
+Cypress.Commands.add('interceptTeamsGetApi', (config, i18n, subsidiaryId) => {
+  const { apiBase, apiDefaultLang, urlApiSubsidiaries, urlApiTeams } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
+  const urlApiTeamsLocalized = `${apiBaseUrl}${urlApiSubsidiaries}${subsidiaryId}/${urlApiTeams}`;
+
+  cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+    cy.fixture('apiGetTeamsResponseNext').then((teamsResponseNext) => {
+      // intercept initial teams API call
+      cy.intercept('GET', urlApiTeamsLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: teamsResponse,
+      }).as('getTeams');
+
+      // intercept next page API call
+      cy.intercept('GET', teamsResponse.next, {
+        statusCode: httpSuccessfullStatus,
+        body: teamsResponseNext,
+      }).as('getTeamsNextPage');
+    });
+  });
+});
+
+/**
  * Intercept subsidiaries GET API calls
  * Provides `@getSubsidiaries` and `@getSubsidiariesNextPage` aliases
  * @param {object} config - App global config
@@ -993,5 +1022,40 @@ Cypress.Commands.add('fillAndSubmitLoginForm', () => {
     cy.dataCy('form-email-input').type(loginRequest.email);
     cy.dataCy('form-login-password-input').type(loginRequest.password1);
     cy.dataCy('form-login-submit-login').click();
+  });
+});
+
+/**
+ * Wait for intercept teams API calls and compare request/response object
+ * Wait for `@getTeams` and `@getTeamsNextPage` intercepts
+ */
+Cypress.Commands.add('waitForTeamsGetApi', () => {
+  cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+    cy.fixture('apiGetTeamsResponseNext').then((teamsResponseNext) => {
+      cy.wait(['@getTeams', '@getTeamsNextPage']).spread(
+        (getTeams, getTeamsNextPage) => {
+          expect(getTeams.request.headers.authorization).to.include(
+            bearerTokeAuth,
+          );
+          if (getTeams.response) {
+            expect(getTeams.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(getTeams.response.body).to.deep.equal(teamsResponse);
+          }
+          expect(getTeamsNextPage.request.headers.authorization).to.include(
+            bearerTokeAuth,
+          );
+          if (getTeamsNextPage.response) {
+            expect(getTeamsNextPage.response.statusCode).to.equal(
+              httpSuccessfullStatus,
+            );
+            expect(getTeamsNextPage.response.body).to.deep.equal(
+              teamsResponseNext,
+            );
+          }
+        },
+      );
+    });
   });
 });

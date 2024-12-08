@@ -34,7 +34,8 @@ export interface OrganizationSubsidiary {
 
 export interface OrganizationTeam {
   id: number;
-  title: string;
+  name: string;
+  subsidiary: number;
   members: OrganizationMember[];
 }
 

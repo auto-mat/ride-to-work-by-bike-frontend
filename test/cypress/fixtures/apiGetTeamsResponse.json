@@ -1,0 +1,36 @@
+{
+  "count": 3,
+  "next": "https://test.dopracenakole.cz/rest/subsidiaries/1358/teams/?limit=2&offset=2",
+  "previous": null,
+  "results": [
+    {
+      "id": 2451,
+      "name": "Cyklisti z účtárny",
+      "subsidiary": 1358,
+      "members": [
+        {
+          "id": 3451,
+          "name": "Jana Nováková",
+          "payment": { "amount": 399 }
+        },
+        {
+          "id": 3452,
+          "name": "Petr Svoboda",
+          "payment": { "amount": 399 }
+        }
+      ]
+    },
+    {
+      "id": 2452,
+      "name": "IT Běžci",
+      "subsidiary": 1358,
+      "members": [
+        {
+          "id": 3453,
+          "name": "Martin Dvořák",
+          "payment": { "amount": 399 }
+        }
+      ]
+    }
+  ]
+}

@@ -59,6 +59,7 @@ export interface ConfigGlobal {
   urlApiCities: string;
   urlApiSubsidiaries: string;
   urlApiThisCampaign: string;
+  urlApiTeams: string;
   urlLoginRegisterBackgroundImage: string;
   urlRTWBBLogo: string;
   checkIsEmailVerifiedInterval: number;

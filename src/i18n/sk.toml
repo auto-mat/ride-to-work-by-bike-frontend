@@ -55,6 +55,11 @@ apiMessageError = "Načítanie pobočiek zlyhalo."
 apiMessageErrorWithMessage = "Načítanie pobočiek zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Pobočky boli úspešne načítané."
 
+[getTeams]
+apiMessageError = "Načítanie tímov zlyhalo."
+apiMessageErrorWithMessage = "Načítanie tímov zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Tímy boli úspešne načítané."
+
 [global]
 all = "Všetky"
 and = "a"

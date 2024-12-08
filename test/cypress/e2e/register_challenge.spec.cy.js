@@ -91,6 +91,11 @@ describe('Register Challenge page', () => {
                 win.i18n,
                 formOrganizationOptions[0].id,
               );
+              cy.interceptTeamsGetApi(
+                config,
+                win.i18n,
+                formOrganizationOptions[0].subsidiaries[0].id,
+              );
             },
           );
         });

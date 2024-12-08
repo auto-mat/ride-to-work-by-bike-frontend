@@ -55,6 +55,11 @@ apiMessageError = "Načítání poboček selhalo."
 apiMessageErrorWithMessage = "Načítání poboček selhalo. Chyba: {error}"
 apiMessageSuccess = "Pobočky byly úspěšně načteny."
 
+[getTeams]
+apiMessageError = "Načítání týmů selhalo."
+apiMessageErrorWithMessage = "Načítání týmů selhalo. Chyba: {error}"
+apiMessageSuccess = "Týmy byly úspěšně načteny."
+
 [global]
 all = "Všechny"
 and = "a"
