@@ -350,6 +350,37 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-6').should('be.visible').click();
       cy.dataCy('step-6-continue').should('be.visible');
     });
+
+    it('shows correct step title on organization step', () => {
+      cy.get('@i18n').then((i18n) => {
+        // go to step participation (organization type)
+        passToStep3();
+        // select company
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelColleagues'))
+          .click();
+        // title company (visible even if step is not active)
+        cy.contains(i18n.global.t('form.labelCompanyShort')).should(
+          'be.visible',
+        );
+        // select school
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelSchoolmates'))
+          .click();
+        // title school
+        cy.contains(i18n.global.t('form.labelSchoolShort')).should(
+          'be.visible',
+        );
+        // select family
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelFamily'))
+          .click();
+        // title family
+        cy.contains(i18n.global.t('form.labelFamilyShort')).should(
+          'be.visible',
+        );
+      });
+    });
   });
 });
 
