@@ -62,3 +62,10 @@ export type FormPaymentVoucher = {
   name: string;
   amount: number;
 };
+
+export type FormSelectTableLabels = {
+  label: string;
+  buttonAddNew: string;
+  buttonDialog: string;
+  titleDialog: string;
+};

@@ -1,21 +1,15 @@
 // composables
 import { i18n } from '../boot/i18n';
 
+import { FormSelectTableLabels } from '../components/types/Form';
+
 // enums
 import { OrganizationLevel } from '../components/types/Organization';
-
-// types
-export type SelectTableLabels = {
-  label: string;
-  buttonAddNew: string;
-  buttonDialog: string;
-  titleDialog: string;
-};
 
 export const useSelectTable = () => {
   const getSelectTableLabels = (
     organizationLevel: OrganizationLevel,
-  ): SelectTableLabels => {
+  ): FormSelectTableLabels => {
     switch (organizationLevel) {
       case OrganizationLevel.team:
         return {
