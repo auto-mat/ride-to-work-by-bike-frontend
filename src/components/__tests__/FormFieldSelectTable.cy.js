@@ -75,6 +75,7 @@ describe('<FormFieldSelectTable>', () => {
 
   context('organization company', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
@@ -202,6 +203,7 @@ describe('<FormFieldSelectTable>', () => {
 
   context('organization company selected', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
@@ -223,6 +225,7 @@ describe('<FormFieldSelectTable>', () => {
 
   context('organization school', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,
@@ -259,6 +262,7 @@ describe('<FormFieldSelectTable>', () => {
 
   context('organization family', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
           options: options.value,

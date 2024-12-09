@@ -6,6 +6,7 @@ import { OrganizationType } from '../types/Organization';
 import { emptyFormCompanyFields } from '../global/FormFieldCompany.vue';
 import { deepObjectWithSimplePropsCopy } from '../../utils';
 import { FormAddCompanyVariantProp } from '../enums/Form';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // selectors
 const classSelectorDropdownItem = '.q-item';
@@ -53,6 +54,7 @@ describe('<FormAddCompany>', () => {
 
   context('variant: simple', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormAddCompany, {
         props: {
           ...vModelAdapter(model),
@@ -96,6 +98,7 @@ describe('<FormAddCompany>', () => {
 
   context('variant: default', () => {
     beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormAddCompany, {
         props: {
           ...vModelAdapter(model),
@@ -156,6 +159,11 @@ describe('<FormAddCompany>', () => {
           companyAddress.address[0].department,
         );
         cy.dataCy(selectorFormDepartment).blur();
+        // override cityChallenge with fixture data to get correct ID
+        cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+          companyAddress.address[0].cityChallenge =
+            citiesResponse.results[0].id;
+        });
         // verify model updates
         cy.wrap(model).its('value').should('deep.equal', companyAddress);
       });
