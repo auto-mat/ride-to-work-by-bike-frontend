@@ -48,6 +48,7 @@ import { PaymentAmount, PaymentSubject } from '../enums/Payment';
 
 // types
 import type { FormOption, FormPaymentVoucher } from '../types/Form';
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'RegisterChallengePayment',
@@ -66,11 +67,11 @@ export default defineComponent({
     const defaultPaymentAmountMax = parseInt(
       rideToWorkByBikeConfig.entryFeePaymentMax,
     );
-    logger?.debug(`Default max. payement amount <${defaultPaymentAmountMax}>.`);
+    logger?.debug(`Default max. payment amount <${defaultPaymentAmountMax}>.`);
     const defaultPaymentAmountMin = parseInt(
       rideToWorkByBikeConfig.entryFeePaymentMin,
     );
-    logger?.debug(`Default min. payement amount <${defaultPaymentAmountMin}>.`);
+    logger?.debug(`Default min. payment amount <${defaultPaymentAmountMin}>.`);
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
     const { getPaletteColor, lighten } = colors;
     const primaryColor = getPaletteColor('primary');
@@ -154,7 +155,9 @@ export default defineComponent({
     const paymentAmountMax = ref<number>(defaultPaymentAmountMax);
     const paymentAmountMin = ref<number>(defaultPaymentAmountMin);
     //  Model for 'Entry fee payment' radio button element
-    const selectedPaymentSubject = ref<string>(PaymentSubject.individual);
+    const selectedPaymentSubject = ref<PaymentSubject>(
+      PaymentSubject.individual,
+    );
     const selectedCompany = ref<string>('');
     const isRegistrationCoordinator = ref<boolean>(false);
     const formRegisterCoordinator = reactive({
@@ -204,13 +207,13 @@ export default defineComponent({
           ` <${i18n.global.t('register.challenge.labelPaymentAmount')}>` +
           ' radio button element.',
       );
-      let opts = [];
+      let opts: FormOption[] = [];
       if (
         selectedPaymentSubject.value === PaymentSubject.voucher &&
         isVoucherFreeEntry.value
       ) {
         logger?.debug(
-          `Selected payement subject <${selectedPaymentSubject.value}>,` +
+          `Selected payment subject <${selectedPaymentSubject.value}>,` +
             ` is voucher free entry <${isVoucherFreeEntry.value}>.`,
         );
         opts = [];
@@ -220,7 +223,7 @@ export default defineComponent({
         activeVoucher.value?.amount
       ) {
         logger?.debug(
-          `Selected payement subject <${selectedPaymentSubject.value}>,` +
+          `Selected payment subject <${selectedPaymentSubject.value}>,` +
             ` is voucher valid <${isVoucherValid.value}>,` +
             ` active voucher amount <${activeVoucher.value?.amount}>.`,
         );
@@ -240,9 +243,15 @@ export default defineComponent({
             value: PaymentAmount.custom,
           },
         ];
-      } else if (selectedPaymentSubject.value !== PaymentSubject.voucher) {
+      } else if (
+        selectedPaymentSubject.value === PaymentSubject.company ||
+        selectedPaymentSubject.value === PaymentSubject.school ||
+        selectedPaymentSubject.value === PaymentSubject.voucher
+      ) {
+        opts = [];
+      } else if (selectedPaymentSubject.value === PaymentSubject.individual) {
         logger?.debug(
-          `Selected payement subject <${selectedPaymentSubject.value}>.`,
+          `Selected payment subject <${selectedPaymentSubject.value}>.`,
         );
         opts = [
           // min option

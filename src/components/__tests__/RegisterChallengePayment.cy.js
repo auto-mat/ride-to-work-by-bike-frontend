@@ -358,6 +358,9 @@ function coreTests() {
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
       .click();
+    // amount options are hidden
+    cy.dataCy(selectorPaymentAmount).should('not.exist');
+    // company select is shown
     cy.dataCy(selectorCompany).should('be.visible');
     cy.dataCy(selectorCompanyLabel)
       .should('be.visible')
@@ -436,9 +439,12 @@ function coreTests() {
     cy.dataCy(getRadioOption(PaymentSubject.school))
       .should('be.visible')
       .click();
+    // amount options are hidden
+    cy.dataCy(selectorPaymentAmount).should('not.exist');
+    // company select is shown
     cy.dataCy(selectorCompany).should('be.visible');
 
-    // if coordinator user still has option to add donation
+    // user still has option to add donation
     testDonation();
   });
 }
