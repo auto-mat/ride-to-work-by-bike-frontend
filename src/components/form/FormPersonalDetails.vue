@@ -34,6 +34,7 @@ import { i18n } from '../../boot/i18n';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
+import { Gender } from 'src/components/types/Profile';
 import { FormOption } from 'src/components/types/Form';
 import { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
 
@@ -61,11 +62,11 @@ export default defineComponent({
     const genderOptions: FormOption[] = [
       {
         label: i18n.global.t('global.man'),
-        value: 'male',
+        value: Gender.male,
       },
       {
         label: i18n.global.t('global.woman'),
-        value: 'female',
+        value: Gender.female,
       },
     ];
 

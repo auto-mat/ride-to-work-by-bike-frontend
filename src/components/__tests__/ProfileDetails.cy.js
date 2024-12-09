@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 import ProfileDetails from 'components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
-import { PaymentState } from '../../../src/components/types/Profile';
+import { Gender, PaymentState } from '../../../src/components/types/Profile';
 
 // colors
 const { getPaletteColor } = colors;
@@ -53,9 +53,7 @@ const dataSelectorValue = '[data-cy="details-item-value"]';
 
 // variables
 const newNickname = 'Cyklobaron';
-const genderFemale = 'female';
 const genderFemaleKey = 'global.woman';
-const genderMale = 'male';
 const genderMaleKey = 'global.man';
 const newEmail = 'ride@dopracenakole.cz';
 const password = 'password';
@@ -468,7 +466,7 @@ function coreTests() {
       cy.dataCy(selectorGender)
         .find(dataSelectorValue)
         .should('be.visible')
-        .and('have.text', genderFemale);
+        .and('have.text', Gender.female);
       // reset gender
       cy.dataCy(selectorGender)
         .find(dataSelectorEdit)
@@ -487,7 +485,7 @@ function coreTests() {
       cy.dataCy(selectorGender)
         .find(dataSelectorValue)
         .should('be.visible')
-        .and('have.text', genderMale);
+        .and('have.text', Gender.male);
     });
   });
 

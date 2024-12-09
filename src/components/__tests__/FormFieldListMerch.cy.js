@@ -1,6 +1,7 @@
 import { colors } from 'quasar';
 import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
+import { Gender } from 'components/types/Profile';
 
 const { getPaletteColor } = colors;
 const grey8 = getPaletteColor('grey-8');
@@ -13,7 +14,11 @@ describe('<FormFieldListMerch>', () => {
       'form.merch',
       i18n,
     );
-    cy.testLanguageStringsInContext(['male', 'female'], 'global', i18n);
+    cy.testLanguageStringsInContext(
+      [Gender.male, Gender.female],
+      'global',
+      i18n,
+    );
   });
 
   context('desktop', () => {
