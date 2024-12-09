@@ -41,6 +41,7 @@ import TopBarCountdown from 'src/components/global/TopBarCountdown.vue';
 
 // composables
 import { useStepperValidation } from 'src/composables/useStepperValidation';
+import { useOrganizations } from 'src/composables/useOrganizations';
 
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
@@ -124,6 +125,11 @@ export default defineComponent({
       },
     });
 
+    const { getOrganizationLabels } = useOrganizations();
+    const organizationStepTitle = computed(() => {
+      return getOrganizationLabels(organizationType.value).labelShort;
+    });
+
     const step = ref(1);
     const stepperRef = ref<typeof QStepper | null>(null);
     const stepCompanyRef = ref<typeof QForm | null>(null);
@@ -171,6 +177,7 @@ export default defineComponent({
       activeIconImgSrcStepper6,
       doneIconImgSrcStepper6,
       organizationType,
+      organizationStepTitle,
       onBack,
       onContinue,
     };
@@ -322,7 +329,7 @@ export default defineComponent({
           <!-- Step: Company -->
           <q-step
             :name="4"
-            :title="$t('register.challenge.titleStepCompany')"
+            :title="organizationStepTitle"
             :icon="iconImgSrcStepper4"
             :active-icon="activeIconImgSrcStepper4"
             :done-icon="doneIconImgSrcStepper4"

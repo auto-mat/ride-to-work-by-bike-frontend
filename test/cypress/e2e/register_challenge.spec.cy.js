@@ -350,6 +350,53 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-6').should('be.visible').click();
       cy.dataCy('step-6-continue').should('be.visible');
     });
+
+    it('shows correct step title on organization step', () => {
+      cy.get('@i18n').then((i18n) => {
+        // go to step participation (organization type)
+        passToStep3();
+        // select company
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelColleagues'))
+          .click();
+        // title company (visible even if step is not active)
+        cy.contains(i18n.global.t('form.labelCompanyShort')).should(
+          'be.visible',
+        );
+        // no title school
+        cy.contains(i18n.global.t('form.labelSchoolShort')).should('not.exist');
+        // no title family
+        cy.contains(i18n.global.t('form.labelFamilyShort')).should('not.exist');
+        // select school
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelSchoolmates'))
+          .click();
+        // no title company
+        cy.contains(i18n.global.t('form.labelCompanyShort')).should(
+          'not.exist',
+        );
+        // title school
+        cy.contains(i18n.global.t('form.labelSchoolShort')).should(
+          'be.visible',
+        );
+        // no title family
+        cy.contains(i18n.global.t('form.labelFamilyShort')).should('not.exist');
+        // select family
+        cy.dataCy('form-field-option')
+          .contains(i18n.global.t('form.participation.labelFamily'))
+          .click();
+        // no title company
+        cy.contains(i18n.global.t('form.labelCompanyShort')).should(
+          'not.exist',
+        );
+        // no title school
+        cy.contains(i18n.global.t('form.labelSchoolShort')).should('not.exist');
+        // title family
+        cy.contains(i18n.global.t('form.labelFamilyShort')).should(
+          'be.visible',
+        );
+      });
+    });
   });
 });
 
