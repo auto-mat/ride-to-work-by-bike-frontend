@@ -1,5 +1,5 @@
 // libraries
-import { ref, Ref } from 'vue';
+import { computed, ref } from 'vue';
 
 // composables
 import { useApi } from './useApi';
@@ -11,7 +11,9 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { useLoginStore } from '../stores/login';
 
 // types
+import type { ComputedRef, Ref } from 'vue';
 import type { City, GetCitiesResponse } from '../components/types/City';
+import type { FormOption } from '../components/types/Form';
 import type { Logger } from '../components/types/Logger';
 
 // utils
@@ -20,6 +22,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 type useApiGetCitiesReturn = {
   cities: Ref<City[]>;
   isLoading: Ref<boolean>;
+  options: ComputedRef<FormOption[]>;
   loadCities: () => Promise<void>;
 };
 
@@ -114,9 +117,17 @@ export const useApiGetCities = (
     }
   };
 
+  const options = computed<FormOption[]>(() =>
+    cities.value.map((city) => ({
+      label: city.name,
+      value: city.id,
+    })),
+  );
+
   return {
     cities,
     isLoading,
+    options,
     loadCities,
   };
 };

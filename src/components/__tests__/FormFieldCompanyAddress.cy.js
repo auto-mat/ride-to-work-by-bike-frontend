@@ -44,6 +44,7 @@ describe('<FormFieldCompanyAddress>', () => {
         i18n,
         organizationId,
       );
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       model.value = null;
       cy.mount(FormFieldCompanyAddress, {
         props: {
@@ -150,6 +151,7 @@ describe('<FormFieldCompanyAddress>', () => {
         i18n,
         organizationId,
       );
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       model.value = null;
       cy.mount(FormFieldCompanyAddress, {
         props: {
