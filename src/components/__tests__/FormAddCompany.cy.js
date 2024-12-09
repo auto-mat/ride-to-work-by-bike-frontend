@@ -183,7 +183,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.company,
-          variant: 'simple',
+          variant: FormAddCompanyVariantProp.simple,
         },
       });
       cy.dataCy(selectorFormPermission).should('not.exist');
@@ -209,7 +209,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.company,
-          variant: 'default',
+          variant: FormAddCompanyVariantProp.default,
         },
       });
       cy.dataCy(selectorFormPermission)
@@ -237,7 +237,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.school,
-          variant: 'simple',
+          variant: FormAddCompanyVariantProp.simple,
         },
       });
       cy.dataCy(selectorFormPermission).should('not.exist');
@@ -277,7 +277,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.school,
-          variant: 'default',
+          variant: FormAddCompanyVariantProp.default,
         },
       });
       cy.dataCy(selectorFormPermission).should('not.exist');
@@ -303,7 +303,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.family,
-          variant: 'simple',
+          variant: FormAddCompanyVariantProp.simple,
         },
       });
       cy.dataCy(selectorFormPermission).should('not.exist');
@@ -343,7 +343,7 @@ describe('<FormAddCompany>', () => {
         props: {
           ...vModelAdapter(model),
           organizationType: OrganizationType.family,
-          variant: 'default',
+          variant: FormAddCompanyVariantProp.default,
         },
       });
       cy.dataCy(selectorFormPermission).should('not.exist');
