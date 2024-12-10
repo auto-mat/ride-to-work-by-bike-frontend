@@ -255,12 +255,24 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       // select address
       cy.dataCy('form-company-address-input').click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
+      // select subsidiary from dropdown
+      cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
+        cy.fixture('apiGetSubsidiariesResponseNext').then(
+          (subsidiariesResponseNext) => {
+            cy.get('.q-item__label')
+              .should('be.visible')
+              .and((opts) => {
+                expect(
+                  opts.length,
+                  subsidiariesResponse.results.length +
+                    subsidiariesResponseNext.results.length,
+                );
+              })
+              .first()
+              .click();
+          },
+        );
+      });
       // click
       cy.dataCy('step-4-continue').should('be.visible').click();
       // on step 5
