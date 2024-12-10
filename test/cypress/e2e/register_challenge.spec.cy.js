@@ -257,9 +257,9 @@ describe('Register Challenge page', () => {
 
     it('pre-selects company in step 3 based on payment subject', () => {
       passToStep2();
-      // switch to company
+      // in payment step, select "paid by company"
       cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
-      // select company
+      // select paying company (required)
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
@@ -279,9 +279,9 @@ describe('Register Challenge page', () => {
           cy.get('.q-menu').should('not.exist');
         });
       });
-      // go to next step
+      // go to next step "organization type"
       cy.dataCy('step-2-continue').should('be.visible').click();
-      // option company is selected
+      // option "company" is selected
       cy.dataCy('form-field-option-group')
         .find('.q-radio__inner')
         .first()
@@ -290,9 +290,9 @@ describe('Register Challenge page', () => {
 
     it('pre-selects school in step 3 based on payment subject', () => {
       passToStep2();
-      // switch to school
+      // in payment step, select "paid by school"
       cy.dataCy(getRadioOption(optionSchool)).should('be.visible').click();
-      // select school
+      // select paying school (required)
       cy.fixture('formFieldCompany').then((formFieldCompany) => {
         cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
           waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
@@ -312,9 +312,9 @@ describe('Register Challenge page', () => {
           cy.get('.q-menu').should('not.exist');
         });
       });
-      // go to next step
+      // go to next step "organization type"
       cy.dataCy('step-2-continue').should('be.visible').click();
-      // option company is selected
+      // option "school" is selected
       cy.dataCy('form-field-option-group')
         .find('.q-radio__inner')
         .eq(1)
