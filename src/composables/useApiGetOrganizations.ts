@@ -1,11 +1,14 @@
 // libraries
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 // composables
 import { useApi } from './useApi';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
+// enums
+import { OrganizationType } from '../components/types/Organization';
 
 // stores
 import { useLoginStore } from '../stores/login';
@@ -15,11 +18,12 @@ import type { Ref } from 'vue';
 import type { FormSelectOption } from '../components/types/Form';
 import type { GetOrganizationsResponse } from '../components/types/Organization';
 import type { Logger } from '../components/types/Logger';
-import type { OrganizationType } from '../components/types/Organization';
+import type { OrganizationOption } from '../components/types/Organization';
 
 type UseApiGetOrganizationsReturn = {
-  options: Ref<FormSelectOption[]>;
   isLoading: Ref<boolean>;
+  options: Ref<FormSelectOption[]>;
+  organizations: Ref<OrganizationOption[]>;
   loadOrganizations: (organizationType: OrganizationType) => Promise<void>;
 };
 
@@ -35,7 +39,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 export const useApiGetOrganizations = (
   logger: Logger | null,
 ): UseApiGetOrganizationsReturn => {
-  const options = ref<FormSelectOption[]>([]);
+  const organizations = ref<OrganizationOption[]>([]);
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
@@ -45,15 +49,15 @@ export const useApiGetOrganizations = (
    * Fetches organizations and saves them into options
    */
   const loadOrganizations = async (
-    organizationType: OrganizationType,
+    organizationType: OrganizationType = OrganizationType.company,
   ): Promise<void> => {
     // reset options
     logger?.debug(
-      `Reseting default options <${JSON.stringify(options.value, null, 2)}>.`,
+      `Reseting default organizations <${JSON.stringify(organizations.value, null, 2)}>.`,
     );
-    options.value = [];
+    organizations.value = [];
     logger?.debug(
-      `Default options set to <${JSON.stringify(options.value, null, 2)}>.`,
+      `Default organizations set to <${JSON.stringify(organizations.value, null, 2)}>.`,
     );
     // get organizations
     logger?.info('Get organizations from the API.');
@@ -115,23 +119,27 @@ export const useApiGetOrganizations = (
    * @returns {void}
    */
   const pushResultsToOptions = (data: GetOrganizationsResponse): void => {
-    const pageResults = data.results.map((organization) => ({
-      label: organization.name,
-      value: organization.id,
-    }));
     logger?.info('Organizations fetched. Saving to default options.');
     logger?.debug(
-      `Adding options <${JSON.stringify(pageResults, null, 2)}> to default options.`,
+      `Adding organizations <${JSON.stringify(data.results, null, 2)}> to default organizations.`,
     );
-    options.value.push(...pageResults);
+    organizations.value.push(...data.results);
     logger?.debug(
-      `Default options set to <${JSON.stringify(options.value, null, 2)}>.`,
+      `Default organizations set to <${JSON.stringify(organizations.value, null, 2)}>.`,
     );
   };
 
+  const options = computed<FormSelectOption[]>(() => {
+    return organizations.value.map((organization) => ({
+      label: organization.name,
+      value: organization.id,
+    }));
+  });
+
   return {
-    options,
     isLoading,
+    options,
+    organizations,
     loadOrganizations,
   };
 };

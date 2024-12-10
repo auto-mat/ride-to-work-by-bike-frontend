@@ -1,7 +1,6 @@
 import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
-import { useSelectedOrganization } from 'src/composables/useSelectedOrganization';
 import { createPinia, setActivePinia } from 'pinia';
 import {
   OrganizationLevel,
@@ -17,11 +16,19 @@ describe('<FormFieldSelectTable>', () => {
   before(() => {
     setActivePinia(createPinia());
 
-    cy.fixture('formOrganizationOptions').then((formOrganizationOptions) => {
-      const { organizationOptions } = useSelectedOrganization(
-        formOrganizationOptions,
+    cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+      cy.fixture('formFieldCompanyNext').then(
+        (formFieldCompanyNextResponse) => {
+          const organizations = [
+            ...formFieldCompanyResponse.results,
+            ...formFieldCompanyNextResponse.results,
+          ];
+          options = organizations.map((organization) => ({
+            label: organization.name,
+            value: organization.id,
+          }));
+        },
       );
-      options = organizationOptions;
     });
   });
 
@@ -78,7 +85,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.company,
         },
@@ -140,7 +147,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-select-table-search').find('input').focus();
       cy.dataCy('form-select-table-search')
         .find('input')
-        .type(options.value[0].label.substring(0, 3));
+        .type(options[0].label.substring(0, 3));
       // show only one option
       cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
@@ -149,7 +156,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-select-table-search').find('input').blur();
       cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
-        .should('have.length', options.value.length);
+        .should('have.length', options.length);
     });
 
     it('validates company field correctly', () => {
@@ -206,10 +213,10 @@ describe('<FormFieldSelectTable>', () => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.company,
-          modelValue: options.value[0].value,
+          modelValue: options[0].value,
         },
       });
       cy.viewport('macbook-16');
@@ -228,7 +235,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.school,
         },
@@ -265,7 +272,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.family,
         },
@@ -301,7 +308,7 @@ describe('<FormFieldSelectTable>', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.team,
         },
       });
@@ -343,7 +350,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-select-table-search').find('input').focus();
       cy.dataCy('form-select-table-search')
         .find('input')
-        .type(options.value[0].label.substring(0, 3));
+        .type(options[0].label.substring(0, 3));
       // show only one option
       cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
@@ -352,7 +359,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-select-table-search').find('input').blur();
       cy.dataCy('form-select-table-option-group')
         .find('.q-radio__label')
-        .should('have.length', options.value.length);
+        .should('have.length', options.length);
     });
 
     it('validates company field correctly', () => {
@@ -403,7 +410,7 @@ describe('<FormFieldSelectTable>', () => {
     beforeEach(() => {
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options.value,
+          options: options,
           organizationLevel: OrganizationLevel.subsidiary,
         },
       });
