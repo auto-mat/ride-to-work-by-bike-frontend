@@ -460,33 +460,45 @@ function coreTests() {
       // access store via computed property to correctly track changes
       const computedStoreProperty = computed(() => store.getOrganizationType);
       // start in default state (individual)
-      cy.dataCy(getRadioOption(optionIndividual)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.individual))
+        .should('be.visible')
+        .click();
       // switch to company
-      cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.company))
+        .should('be.visible')
+        .click();
       // check store value
       cy.wrap(computedStoreProperty)
         .its('value')
         .should('equal', OrganizationType.company);
       // switch to school
-      cy.dataCy(getRadioOption(optionSchool)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.school))
+        .should('be.visible')
+        .click();
       // check store value
       cy.wrap(computedStoreProperty)
         .its('value')
         .should('equal', OrganizationType.school);
       // switch to individual
-      cy.dataCy(getRadioOption(optionIndividual)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.individual))
+        .should('be.visible')
+        .click();
       // check store value
       cy.wrap(computedStoreProperty)
         .its('value')
         .should('equal', OrganizationType.none);
       // switch to company
-      cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.company))
+        .should('be.visible')
+        .click();
       // check store value
       cy.wrap(computedStoreProperty)
         .its('value')
         .should('equal', OrganizationType.company);
       // switch to voucher
-      cy.dataCy(getRadioOption(optionVoucher)).should('be.visible').click();
+      cy.dataCy(getRadioOption(PaymentSubject.voucher))
+        .should('be.visible')
+        .click();
       // check store value
       cy.wrap(computedStoreProperty)
         .its('value')
