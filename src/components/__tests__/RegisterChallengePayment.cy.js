@@ -7,7 +7,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { PaymentAmount, PaymentSubject } from '../enums/Payment';
 import { OrganizationType } from 'components/types/Organization';
 import { useRegisterChallengeStore } from 'stores/registerChallenge';
-import { getRadioOption } from 'test/cypress/utils';
+import { getRadioOption } from '../../../test/cypress/utils';
 
 // selectors
 const selectorBannerPaymentMinimum = 'banner-payment-minimum';

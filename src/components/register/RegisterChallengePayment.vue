@@ -45,6 +45,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 // enums
 import { Currency } from '../../composables/useFormatPrice';
 import { PaymentAmount, PaymentSubject } from '../enums/Payment';
+import { OrganizationType } from '../types/Organization';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
