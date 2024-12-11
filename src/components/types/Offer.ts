@@ -9,13 +9,6 @@ export interface Offer {
   image: string;
 }
 
-export interface GetOffersResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Offer[];
-}
-
 export interface GetOffersParams {
   orderby: string;
   feed: string;
