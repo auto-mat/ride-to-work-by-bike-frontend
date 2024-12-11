@@ -1,12 +1,12 @@
 import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
+import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 import { createPinia, setActivePinia } from 'pinia';
 import {
   OrganizationLevel,
   OrganizationType,
 } from 'src/components/types/Organization';
-import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 // import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 const { contactEmail } = rideToWorkByBikeConfig;
