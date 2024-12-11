@@ -6,6 +6,7 @@ import {
   OrganizationLevel,
   OrganizationType,
 } from 'src/components/types/Organization';
+import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 // import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 const { contactEmail } = rideToWorkByBikeConfig;
@@ -15,18 +16,18 @@ describe('<FormFieldSelectTable>', () => {
 
   before(() => {
     setActivePinia(createPinia());
-
+    // set value for prop `options` (fetched from API in wrapper component)
     cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
       cy.fixture('formFieldCompanyNext').then(
         (formFieldCompanyNextResponse) => {
+          // get array of organizations
           const organizations = [
             ...formFieldCompanyResponse.results,
             ...formFieldCompanyNextResponse.results,
           ];
-          options = organizations.map((organization) => ({
-            label: organization.name,
-            value: organization.id,
-          }));
+          // map organizations to options
+          const { mapOrganizationToOption } = useApiGetOrganizations();
+          options = organizations.map(mapOrganizationToOption);
         },
       );
     });

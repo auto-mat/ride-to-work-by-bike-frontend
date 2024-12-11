@@ -25,6 +25,9 @@ type UseApiGetOrganizationsReturn = {
   options: Ref<FormSelectOption[]>;
   organizations: Ref<OrganizationOption[]>;
   loadOrganizations: (organizationType: OrganizationType) => Promise<void>;
+  mapOrganizationToOption: (
+    organization: OrganizationOption,
+  ) => FormSelectOption;
 };
 
 // utils
@@ -130,10 +133,14 @@ export const useApiGetOrganizations = (
   };
 
   const options = computed<FormSelectOption[]>(() => {
-    return organizations.value.map((organization) => ({
-      label: organization.name,
-      value: organization.id,
-    }));
+    return organizations.value.map(mapOrganizationToOption);
+  });
+
+  const mapOrganizationToOption = (
+    organization: OrganizationOption,
+  ): FormSelectOption => ({
+    label: organization.name,
+    value: organization.id,
   });
 
   return {
@@ -141,5 +148,6 @@ export const useApiGetOrganizations = (
     options,
     organizations,
     loadOrganizations,
+    mapOrganizationToOption,
   };
 };
