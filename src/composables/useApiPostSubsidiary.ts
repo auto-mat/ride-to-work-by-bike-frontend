@@ -1,6 +1,9 @@
 // libraries
 import { ref, Ref } from 'vue';
 
+// adapters
+import { subsidiaryAdapter } from '../adapters/subsidiaryAdapter';
+
 // composables
 import { useApi } from './useApi';
 
@@ -13,29 +16,10 @@ import { useLoginStore } from '../stores/login';
 // types
 import type { FormCompanyAddressFields } from '../components/types/Form';
 import type { Logger } from '../components/types/Logger';
+import type { SubsidiaryPostApiResponse } from '../components/types/ApiSubsidiary';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
-
-interface PostSubsidiaryPayload {
-  address: PostSubsidiaryAddressFields;
-  city_id: number | null;
-}
-
-interface PostSubsidiaryAddressFields {
-  street: string;
-  street_number: string;
-  recipient: string;
-  city: string;
-  psc: string | number;
-}
-
-interface PostSubsidiaryResponse {
-  id: number;
-  city_id: number | null;
-  active: boolean;
-  address: PostSubsidiaryAddressFields;
-}
 
 interface UseApiPostSubsidiaryReturn {
   isLoading: Ref<boolean>;
@@ -62,27 +46,18 @@ export const useApiPostSubsidiary = (
    * Create subsidiary
    * Creates a new subsidiary under specified organization
    * @param {number} organizationId - Organization Id to create subsidiary under
-   * @param {PostSubsidiaryPayload} subsidiaryData - Subsidiary data to create
-   * @returns {Promise<PostSubsidiaryResponse | null>} - Promise
+   * @param {FormCompanyAddressFields} subsidiaryData - Subsidiary data to create
+   * @returns {Promise<FormCompanyAddressFields | null>} - Promise
    */
   const createSubsidiary = async (
     organizationId: number,
     subsidiaryData: FormCompanyAddressFields,
   ): Promise<FormCompanyAddressFields | null> => {
-    // parse subsidiary data and create a paylaod for API
+    // convert form data to API payload format
     logger?.debug(
       `Creating subsidiary payload from data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
     );
-    const subsidiaryPayload: PostSubsidiaryPayload = {
-      address: {
-        street: subsidiaryData.street,
-        street_number: subsidiaryData.houseNumber,
-        recipient: subsidiaryData.department,
-        city: subsidiaryData.city,
-        psc: subsidiaryData.zip,
-      },
-      city_id: subsidiaryData.cityChallenge,
-    };
+    const subsidiaryPayload = subsidiaryAdapter.toApiPayload(subsidiaryData);
     logger?.debug(
       `Created subsidiary payload <${JSON.stringify(subsidiaryPayload, null, 2)}>.`,
     );
@@ -94,7 +69,7 @@ export const useApiPostSubsidiary = (
 
     try {
       // post subsidiary
-      const { data } = await apiFetch<PostSubsidiaryResponse>({
+      const { data } = await apiFetch<SubsidiaryPostApiResponse>({
         endpoint: `${rideToWorkByBikeConfig.urlApiOrganizations}${organizationId}/${rideToWorkByBikeConfig.urlApiSubsidiaries}`,
         method: 'post',
         translationKey: 'createSubsidiary',
@@ -109,15 +84,7 @@ export const useApiPostSubsidiary = (
         logger?.debug(
           `Parsing response subsidiary data <${JSON.stringify(data, null, 2)}>.`,
         );
-        // parse subsidiary data to return
-        const subsidiaryDataParsed: FormCompanyAddressFields = {
-          street: data.address.street,
-          houseNumber: data.address.street_number,
-          city: data.address.city,
-          zip: data.address.psc ? String(data.address.psc) : '',
-          cityChallenge: data.city_id,
-          department: data.address.recipient,
-        };
+        const subsidiaryDataParsed = subsidiaryAdapter.toFormData(data);
         logger?.debug(
           `Parsed subsidiary data <${JSON.stringify(subsidiaryDataParsed, null, 2)}>.`,
         );
