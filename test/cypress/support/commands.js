@@ -519,6 +519,56 @@ Cypress.Commands.add(
 );
 
 /**
+ * Intercept offers GET API calls
+ * Provides `@getOffers` aliase
+ * @param {object} config - App global config
+ * @param {object|string} i18n - i18n instance or locale lang string e.g. en
+ */
+Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
+  const { apiBaseRtwbbFeed, apiDefaultLang } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(
+    null,
+    apiBaseRtwbbFeed,
+    apiDefaultLang,
+    i18n,
+  );
+  const getOffersParams = {
+    orderby: 'start_date',
+    feed: 'content_to_backend',
+    _post_type: 'locations',
+    _page_subtype: 'event',
+    _number: '100',
+  };
+  const objectToParams = (obj) => {
+    return Object.keys(obj)
+      .map((key) => `${key}=${obj[key]}`)
+      .join('&');
+  };
+  const urlEncodedParams = objectToParams(getOffersParams);
+  const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
+
+  cy.fixture('apiGetOffersResponse').then((offersResponse) => {
+    cy.intercept('GET', urlApiOffersLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: offersResponse,
+    }).as('getOffers');
+  });
+});
+
+/**
+ * Wait for intercept offers API call and compare request/response object
+ * Wait for `@getOffers` intercept.
+ */
+Cypress.Commands.add('waitForOffersApi', () => {
+  cy.fixture('apiGetOffersResponse').then((offersResponse) => {
+    cy.wait('@getOffers').then((getOffers) => {
+      expect(getOffers.response.statusCode).to.equal(httpSuccessfullStatus);
+      expect(getOffers.response.body).to.deep.equal(offersResponse);
+    });
+  });
+});
+
+/**
  * Intercept this campaign GET API call
  * Provides `@thisCampaignRequest` alias
  * @param {Object} config - App global config

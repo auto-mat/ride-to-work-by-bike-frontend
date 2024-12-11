@@ -539,6 +539,7 @@ button = "Všech {count} slev"
 
 [index.cardOffer]
 titleVoucherCode = "Kód voucheru"
+buttonEshop = "Navštívit e-shop"
 unlimitedExpirationDate = "Neomezená doba platnosti"
 
 [index.cardListPost]

@@ -25,14 +25,18 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, inject } from 'vue';
 
 // components
 import CardOffer from './CardOffer.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
+// composables
+import { useApiGetOffers } from '../../composables/useApiGetOffers';
+
 // types
 import { CardOffer as CardOfferType } from '../types';
+import { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'ListCardOffer',
@@ -45,23 +49,25 @@ export default defineComponent({
       type: String,
       required: false,
     },
-    cards: {
-      type: Array as () => CardOfferType[],
-      required: true,
-    },
   },
-  setup(props) {
-    const MAX_CARDS = 6;
+  setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const maxCards = 6;
+
+    const { cards, isLoading, loadOffers } = useApiGetOffers(logger);
+    loadOffers();
 
     const renderedCards = computed((): CardOfferType[] => {
-      return props.cards.slice(0, MAX_CARDS);
+      return cards.value.slice(0, maxCards);
     });
 
     const hasMoreCards = computed((): boolean => {
-      return props.cards.length > MAX_CARDS;
+      return cards.value.length > maxCards;
     });
 
     return {
+      cards,
+      isLoading,
       renderedCards,
       hasMoreCards,
     };

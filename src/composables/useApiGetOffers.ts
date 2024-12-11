@@ -1,18 +1,21 @@
 // libraries
-import { ref, Ref } from 'vue';
+import { computed, ref } from 'vue';
 
 // composables
 import { useApi } from './useApi';
+import { i18n } from '../boot/i18n';
+
+// enums
+import { ApiBaseUrl } from '../components/enums/Api';
 
 // types
+import type { ComputedRef, Ref } from 'vue';
+import type { CardOffer } from '../components/types/Card';
 import type { Logger } from '../components/types/Logger';
-import type {
-  Offer,
-  GetOffersResponse,
-  GetOffersParams,
-} from '../components/types/Offer';
+import type { Offer, GetOffersParams } from '../components/types/Offer';
 
 type UseApiGetOffersReturn = {
+  cards: ComputedRef<CardOffer[]>;
   offers: Ref<Offer[]>;
   isLoading: Ref<boolean>;
   loadOffers: () => Promise<void>;
@@ -29,7 +32,7 @@ export const useApiGetOffers = (
 ): UseApiGetOffersReturn => {
   const offers = ref<Offer[]>([]);
   const isLoading = ref<boolean>(false);
-  const { apiFetch } = useApi(true); // use feed URL
+  const { apiFetch } = useApi(ApiBaseUrl.rtwbbFeedApi); // use feed URL
 
   /**
    * Load offers
@@ -52,11 +55,11 @@ export const useApiGetOffers = (
       feed: 'content_to_backend',
       _post_type: 'locations',
       _page_subtype: 'event',
-      _number: 100,
+      _number: '100',
     };
 
     // fetch offers
-    const { data } = await apiFetch<GetOffersResponse>({
+    const { data } = await apiFetch<Offer[]>({
       endpoint: '/',
       method: 'get',
       translationKey: 'getOffers',
@@ -65,14 +68,40 @@ export const useApiGetOffers = (
       logger,
     });
 
-    if (data?.results?.length) {
-      offers.value.push(...data.results);
+    if (data?.length) {
+      offers.value.push(...data);
     }
 
     isLoading.value = false;
   };
 
+  /**
+   * Use offers to create cards
+   * TODO: Fix metadata, link titles, icon, etc.
+   * @returns {CardOffer[]}
+   */
+  const cards = computed((): CardOffer[] => {
+    return offers.value.map((offer) => {
+      return {
+        title: offer.title,
+        content: offer.content,
+        image: {
+          src: offer.image,
+          alt: '',
+        },
+        code: '',
+        icon: 'pedal_bike',
+        link: {
+          title: i18n.global.t('index.cardOffer.buttonEshop'),
+          url: offer.url,
+        },
+        metadata: [],
+      };
+    });
+  });
+
   return {
+    cards,
     offers,
     isLoading,
     loadOffers,

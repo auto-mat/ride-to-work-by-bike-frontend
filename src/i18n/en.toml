@@ -537,6 +537,7 @@ button = "All {count} offers"
 
 [index.cardOffer]
 titleVoucherCode = "Voucher code"
+buttonEshop = "Visit e-shop"
 unlimitedExpirationDate = "Unlimited validity"
 
 [index.cardListPost]

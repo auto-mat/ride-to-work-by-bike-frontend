@@ -14,7 +14,7 @@ const { borderRadiusCard } = rideToWorkByBikeConfig;
 describe('<CardOffer>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['unlimitedExpirationDate', 'titleVoucherCode'],
+      ['unlimitedExpirationDate', 'titleVoucherCode', 'buttonEshop'],
       'index.cardOffer',
       i18n,
     );
