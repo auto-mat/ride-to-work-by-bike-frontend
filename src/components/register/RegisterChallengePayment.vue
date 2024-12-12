@@ -185,7 +185,6 @@ export default defineComponent({
           break;
         default:
           registerChallengeStore.setOrganizationType(OrganizationType.none);
-          break;
       }
       logger?.debug(
         'Set store organization type to' +
