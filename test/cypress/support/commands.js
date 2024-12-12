@@ -1059,3 +1059,42 @@ Cypress.Commands.add('waitForTeamsGetApi', () => {
     });
   });
 });
+
+/**
+ * Intercept team POST API call
+ * Provides `@postTeam` alias
+ * @param {object} config - App global config
+ * @param {object} i18n - i18n instance
+ * @param {number} subsidiaryId - Subsidiary ID
+ */
+Cypress.Commands.add('interceptTeamPostApi', (config, i18n, subsidiaryId) => {
+  const { apiBase, apiDefaultLang, urlApiSubsidiaries, urlApiTeams } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
+  const urlApiTeamLocalized = `${apiBaseUrl}${urlApiSubsidiaries}${subsidiaryId}/${urlApiTeams}`;
+
+  cy.fixture('apiPostTeamResponse').then((teamResponse) => {
+    cy.intercept('POST', urlApiTeamLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: teamResponse,
+    }).as('postTeam');
+  });
+});
+
+/**
+ * Wait for intercept team POST API call and compare request/response object
+ * Wait for `@postTeam` intercept
+ */
+Cypress.Commands.add('waitForTeamPostApi', () => {
+  cy.fixture('apiPostTeamRequest').then((teamRequest) => {
+    cy.fixture('apiPostTeamResponse').then((teamResponse) => {
+      cy.wait('@postTeam').then(({ request, response }) => {
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        expect(request.body).to.deep.equal(teamRequest);
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(teamResponse);
+        }
+      });
+    });
+  });
+});

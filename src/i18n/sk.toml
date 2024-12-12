@@ -26,6 +26,11 @@ apiMessageError = "Overenie e-mailu zlyhalo."
 apiMessageErrorWithMessage = "Overenie e-mailu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "E-mail bol úspešne overený."
 
+[createTeam]
+apiMessageError = "Vytvorenie tímu zlyhalo."
+apiMessageErrorWithMessage = "Vytvorenie tímu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Tím bol úspešne vytvorený."
+
 [drawerMenu]
 buttonParticipation = "Účasť"
 buttonCityAdministration = "Správa mesta"

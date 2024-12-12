@@ -26,6 +26,11 @@ apiMessageError = "Email verification failed."
 apiMessageErrorWithMessage = "Email verification failed. Error: {error}"
 apiMessageSuccess = "Email was successfully verified."
 
+[createTeam]
+apiMessageError = "Team creation failed."
+apiMessageErrorWithMessage = "Team creation failed. Error: {error}"
+apiMessageSuccess = "Team was successfully created."
+
 [drawerMenu]
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"

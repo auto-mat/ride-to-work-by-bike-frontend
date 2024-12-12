@@ -26,6 +26,11 @@ apiMessageError = "Ověření emailu se nezdařilo."
 apiMessageErrorWithMessage = "Ověření emailu se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Email byl úspěšně ověřen."
 
+[createTeam]
+apiMessageError = "Vytvoření týmu selhalo."
+apiMessageErrorWithMessage = "Vytvoření týmu selhalo. Chyba: {error}"
+apiMessageSuccess = "Tým byl úspěšně vytvořen."
+
 [drawerMenu]
 buttonParticipation = "Účast"
 buttonCityAdministration = "Správa města"
