@@ -9,8 +9,8 @@
  * Used in `FormRegister`, `FormLogin`, `RegisterChallengePayment`.
  *
  * @props
- * - `modelValue` (string, required): The object representing user input.
- *   It should be of type `string`.
+ * - `modelValue` (string|null): The object representing user input.
+ *   It should be of type `string` or `null`.
  * - `options` (object, required): The object representing the options.
  *   Should have props:
  *   - label (string)
@@ -40,7 +40,7 @@ export default defineComponent({
   props: {
     modelValue: {
       type: String as () => string | null,
-      required: true,
+      default: null,
     },
     options: {
       type: Array as () => FormOption[],
