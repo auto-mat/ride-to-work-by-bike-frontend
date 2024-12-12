@@ -38,13 +38,10 @@ function vModelAdapter<T>(modelRef: Ref<T>, modelName = 'modelValue') {
 
 /**
  * Returns the selector for a radio option.
- * Used in RegisterChallengePayment.cy.js and register_challenge.spec.cy.js.
- * @param value - The value of the radio option.
- * @returns The selector for the radio option.
+ * @param {String} val - The value of the radio option.
+ * @returns {String} - The string selector for the radio option.
  */
-function getRadioOption(value: string) {
-  return `radio-option-${value}`;
-}
+const getRadioOption = (val: string): string => `radio-option-${val}`;
 
 export {
   getRadioOption,
