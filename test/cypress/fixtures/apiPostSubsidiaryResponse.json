@@ -1,0 +1,12 @@
+{
+  "id": 5351,
+  "city_id": 4,
+  "active": true,
+  "address": {
+    "street": "Test Subsidiary Street 4",
+    "street_number": "004",
+    "recipient": "Recipient 4",
+    "psc": 50004,
+    "city": "City 4"
+  }
+}
