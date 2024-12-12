@@ -8,10 +8,6 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { getRadioOption } from 'test/cypress/utils';
 
-// variables
-const optionCompany = 'company';
-const optionSchool = 'school';
-
 const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
   cy.config().baseUrl,
@@ -259,7 +255,9 @@ describe('Register Challenge page', () => {
       cy.get('@i18n').then((i18n) => {
         passToStep2();
         // in payment step, select "paid by company"
-        cy.dataCy(getRadioOption(optionCompany)).should('be.visible').click();
+        cy.dataCy(getRadioOption(OrganizationType.company))
+          .should('be.visible')
+          .click();
         // select paying company (required)
         cy.fixture('formFieldCompany').then((formFieldCompany) => {
           cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
@@ -297,7 +295,9 @@ describe('Register Challenge page', () => {
       cy.get('@i18n').then((i18n) => {
         passToStep2();
         // in payment step, select "paid by school"
-        cy.dataCy(getRadioOption(optionSchool)).should('be.visible').click();
+        cy.dataCy(getRadioOption(OrganizationType.school))
+          .should('be.visible')
+          .click();
         // select paying school (required)
         cy.fixture('formFieldCompany').then((formFieldCompany) => {
           cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
