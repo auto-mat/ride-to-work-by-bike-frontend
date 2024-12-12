@@ -90,6 +90,11 @@ describe('Register Challenge page', () => {
           // setup API intercepts
           cy.fixture('formOrganizationOptions').then(
             (formOrganizationOptions) => {
+              interceptOrganizationsApi(
+                config,
+                win.i18n,
+                OrganizationType.company,
+              );
               cy.interceptSubsidiariesGetApi(
                 config,
                 win.i18n,
