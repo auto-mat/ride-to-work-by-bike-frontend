@@ -176,18 +176,20 @@ export default defineComponent({
       logger?.debug(
         `Selected payment subject changed from <${oldVal}> to <${newVal}>`,
       );
-      if (newVal === PaymentSubject.company) {
-        logger?.debug(`Set organization type to <${OrganizationType.company}>`);
-        registerChallengeStore.setOrganizationType(OrganizationType.company);
-      } else if (newVal === PaymentSubject.school) {
-        logger?.debug(`Set organization type to <${OrganizationType.school}>`);
-        registerChallengeStore.setOrganizationType(OrganizationType.school);
-      } else {
-        logger?.debug(`Set organization type to <${OrganizationType.none}>`);
-        registerChallengeStore.setOrganizationType(OrganizationType.none);
+      switch (newVal) {
+        case PaymentSubject.company:
+          registerChallengeStore.setOrganizationType(newVal);
+          break;
+        case PaymentSubject.school:
+          registerChallengeStore.setOrganizationType(newVal);
+          break;
+        default:
+          registerChallengeStore.setOrganizationType(OrganizationType.none);
+          break;
       }
       logger?.debug(
-        `Organization type <${registerChallengeStore.getOrganizationType}>`,
+        'Set store organization type to' +
+          ` <${registerChallengeStore.getOrganizationType}>.`,
       );
     });
     const organizationType = computed<OrganizationType>(() => {
