@@ -416,6 +416,7 @@ export default defineComponent({
           :showing="loading"
           :label="$t('form.labelSpinnerProgressBar')"
           label-class="text-primary"
+          data-cy="spinner-progress-bar"
         />
       </q-card>
     </q-field>

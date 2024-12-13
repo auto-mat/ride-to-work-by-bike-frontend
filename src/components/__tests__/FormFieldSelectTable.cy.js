@@ -161,6 +161,7 @@ describe('<FormFieldSelectTable>', () => {
         .should('have.length', 1);
       cy.dataCy('form-select-table-search').find('input').clear();
       cy.dataCy('form-select-table-search').find('input').blur();
+      cy.dataCy('spinner-progress-bar').should('not.exist');
       cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
         .should('have.length', options.length);
@@ -364,6 +365,7 @@ describe('<FormFieldSelectTable>', () => {
         .should('have.length', 1);
       cy.dataCy('form-select-table-search').find('input').clear();
       cy.dataCy('form-select-table-search').find('input').blur();
+      cy.dataCy('spinner-progress-bar').should('not.exist');
       cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
         .should('have.length', options.length);

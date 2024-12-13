@@ -78,6 +78,7 @@ function coreTests() {
             .its('value')
             .should('equal', subsidiaryIdDefault);
           cy.waitForTeamsGetApi();
+          cy.dataCy('spinner-progress-bar').should('not.exist');
           cy.dataCy(selectorTableOptionGroup)
             .should('be.visible')
             .find('.q-radio__inner')
