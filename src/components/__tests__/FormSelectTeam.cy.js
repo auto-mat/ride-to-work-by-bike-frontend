@@ -11,7 +11,7 @@ const subsidiaryIdDefault = 1972;
 const selectorFormSelectTeam = 'form-select-team';
 const selectorFormSelectTableTeam = 'form-select-table-team';
 const selectorFormSelectTeamInfo = 'form-select-team-info';
-const selectorTableOptionGroup = 'form-select-table-option-group';
+const selectorTableOptionGroup = 'form-select-table-option';
 describe('<FormSelectTeam>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
@@ -80,7 +80,7 @@ function coreTests() {
           cy.waitForTeamsGetApi();
           cy.dataCy(selectorTableOptionGroup)
             .should('be.visible')
-            .children()
+            .find('.q-radio__inner')
             .should(
               'have.length',
               teamsResponse.results.length + teamsResponseNext.results.length,
