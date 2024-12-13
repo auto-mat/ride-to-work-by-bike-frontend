@@ -18,7 +18,7 @@
  */
 
 // libraries
-import { defineComponent, computed, inject, watch } from 'vue';
+import { defineComponent, computed, inject, watch, ref } from 'vue';
 
 // components
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
@@ -42,7 +42,7 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-
+    const opts = ref([]);
     const { options, isLoading, loadOrganizations } =
       useApiGetOrganizations(logger);
 
@@ -66,13 +66,16 @@ export default defineComponent({
       set: (value: number | null) =>
         registerChallengeStore.setSubsidiaryId(value),
     });
-
     watch(
-      () => registerChallengeStore.getOrganizationType,
+      organizationType,
       (newValue: OrganizationType) => {
         logger?.debug(`Organization type updated to <${newValue}>`);
         if (newValue) {
-          loadOrganizations(newValue);
+          loadOrganizations(newValue).then(() => {
+            logger?.info('All organizations data was loaded from the API.');
+            // Lazy loading
+            opts.value = options;
+          });
         }
       },
       { immediate: true },
@@ -81,7 +84,7 @@ export default defineComponent({
     return {
       isLoading,
       organizationId,
-      options,
+      opts,
       subsidiaryId,
       OrganizationLevel,
       organizationType,
@@ -95,7 +98,7 @@ export default defineComponent({
     <form-field-select-table
       v-model="organizationId"
       :loading="isLoading"
-      :options="options"
+      :options="opts.value"
       :organization-level="OrganizationLevel.organization"
       :organization-type="organizationType"
       :data-organization-type="organizationType"
