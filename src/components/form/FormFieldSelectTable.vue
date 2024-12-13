@@ -300,6 +300,8 @@ export default defineComponent({
                   v-model="inputValue"
                   :val="item.value"
                   :label="item.label"
+                  color="primary"
+                  data-cy="form-select-table-option"
                 />
               </q-item-section>
               <!-- Additional description

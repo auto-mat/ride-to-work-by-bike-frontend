@@ -75,7 +75,13 @@ describe('<FormFieldSelectTable>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['labelCity', 'labelHouseNumber', 'labelStreet', 'labelZip'],
+      [
+        'labelCity',
+        'labelHouseNumber',
+        'labelStreet',
+        'labelZip',
+        'labelSpinnerProgressBar',
+      ],
       'form',
       i18n,
     );
@@ -110,7 +116,7 @@ describe('<FormFieldSelectTable>', () => {
         .invoke('width')
         .should('eq', 24);
       // options
-      cy.dataCy('form-select-table-option-group').should('be.visible');
+      cy.dataCy('form-select-table-option').should('be.visible');
       // add new button
       cy.dataCy('form-select-table-button').should('be.visible');
       cy.dataCy('button-add-option').should('be.visible');
@@ -150,12 +156,12 @@ describe('<FormFieldSelectTable>', () => {
         .find('input')
         .type(options[0].label.substring(0, 3));
       // show only one option
-      cy.dataCy('form-select-table-option-group')
+      cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
         .should('have.length', 1);
       cy.dataCy('form-select-table-search').find('input').clear();
       cy.dataCy('form-select-table-search').find('input').blur();
-      cy.dataCy('form-select-table-option-group')
+      cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
         .should('have.length', options.length);
     });
@@ -224,7 +230,7 @@ describe('<FormFieldSelectTable>', () => {
     });
 
     it('shows selected option', () => {
-      cy.dataCy('form-select-table-option-group')
+      cy.dataCy('form-select-table-options')
         .find('.q-radio__inner')
         .first()
         .should('have.class', 'text-primary');
@@ -332,7 +338,7 @@ describe('<FormFieldSelectTable>', () => {
         .invoke('width')
         .should('eq', 24);
       // options
-      cy.dataCy('form-select-table-option-group').should('be.visible');
+      cy.dataCy('form-select-table-option').should('be.visible');
       // add new button
       cy.dataCy('form-select-table-button').should('be.visible');
       cy.dataCy('button-add-option').should('be.visible');
@@ -353,12 +359,12 @@ describe('<FormFieldSelectTable>', () => {
         .find('input')
         .type(options[0].label.substring(0, 3));
       // show only one option
-      cy.dataCy('form-select-table-option-group')
+      cy.dataCy('form-select-table-option')
         .find('.q-radio__label')
         .should('have.length', 1);
       cy.dataCy('form-select-table-search').find('input').clear();
       cy.dataCy('form-select-table-search').find('input').blur();
-      cy.dataCy('form-select-table-option-group')
+      cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
         .should('have.length', options.length);
     });
