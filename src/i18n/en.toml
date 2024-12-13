@@ -255,6 +255,7 @@ labelVoucherEntryFeeDonation = "I want to support the development of sustainable
 labelYourPhone = "Your phone"
 labelYourPosition = "Your job position"
 labelZip = "ZIP code"
+labelSpinnerProgressBar = "Please wait..."
 linkEditBillingDetails = "Change your organisation details"
 linkPrivacyConsent = "Data Protection and Processing Policy"
 linkTerms = "Data Protection and Processing Policy"

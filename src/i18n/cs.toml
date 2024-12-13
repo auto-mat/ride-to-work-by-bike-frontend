@@ -256,6 +256,7 @@ labelVoucherEntryFeeDonation = "Chci podpořit rozvoj udržitelné dopravy pří
 labelYourPhone = "Váš telefon"
 labelYourPosition = "Vaše pracovní pozice"
 labelZip = "PSČ"
+labelSpinnerProgressBar = "Počkejte prosím..."
 linkEditBillingDetails = "Změňte údaje o organizaci"
 linkPrivacyConsent = "Zásad o ochraně a zpracování údajů"
 linkTerms = "Zásad o ochraně a zpracování údajů"

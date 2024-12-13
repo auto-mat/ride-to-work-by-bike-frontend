@@ -18,6 +18,8 @@
  *   level - table is used for organization or team selection.
  * - `organizationType` (OrganizationType,
  *   default: OrganizationType.organization): The organization type.
+ * - `loading` (Boolean): Loading (options data from the API) state
+ *   default: null
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -90,6 +92,10 @@ export default defineComponent({
       type: String as () => OrganizationType,
       default: OrganizationType.company,
     },
+    loading: {
+      type: Boolean,
+      default: null,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -120,7 +126,7 @@ export default defineComponent({
      * a separate input field which controls the list of options.
      */
     const filteredOptions = computed(() => {
-      return props.options.filter(
+      return props.options?.filter(
         (option: FormSelectTableOption | FormOption): boolean =>
           option.label
             .toLocaleLowerCase()
@@ -259,7 +265,7 @@ export default defineComponent({
       <q-card
         flat
         bordered
-        class="full-width q-mt-sm"
+        class="full-width q-mt-sm relative-position"
         :style="{ 'border-radius': borderRadius }"
         data-cy="form-select-table-card"
       >
@@ -282,44 +288,58 @@ export default defineComponent({
         <q-separator />
         <!-- Options list -->
         <q-card-section class="q-pa-xs" data-cy="form-select-table-options">
-          <q-scroll-area style="height: 250px">
-            <q-option-group
-              v-model="inputValue"
-              :options="filteredOptions"
-              color="primary"
-              class="q-pr-sm"
-              data-cy="form-select-table-option-group"
-            >
-              <!-- Slot: Option label -->
-              <template v-slot:label="opt">
-                <div class="full-width row items-center justify-between">
-                  <span>{{ opt.label }}</span>
-                  <!-- Members count -->
-                  <template v-if="opt.members">
-                    <div class="flex">
-                      <div :class="{ 'text-weight-bold': opt.members > 4 }">
-                        {{ opt.members }} / {{ opt.maxMembers }}
-                        {{ $t('form.team.labelMembers', opt.maxMembers) }}
-                      </div>
-                      <!-- Member dot icons -->
-                      <div class="d-flex gap-4">
-                        <q-icon
-                          v-for="i in 5"
-                          :key="i"
-                          name="circle"
-                          size="8px"
-                          class="q-ml-sm"
-                          :class="[
-                            i <= opt.members ? 'text-teal-4' : 'text-grey-4',
-                          ]"
-                        />
-                      </div>
+          <q-virtual-scroll
+            style="max-height: 250px"
+            :items="filteredOptions"
+            separator
+            v-slot="{ item }"
+          >
+            <q-item tag="label" v-ripple>
+              <q-item-section avatar>
+                <q-radio
+                  v-model="inputValue"
+                  :val="item.value"
+                  :label="item.label"
+                />
+              </q-item-section>
+              <!-- Additional description
+              <q-item-section>
+                <q-item-label>Label</q-item-label>
+                <q-item-label caption>Description</q-item-label>
+              </q-item-section>
+              -->
+            </q-item>
+            <!-- REQUIRE CHANGE IT
+            <!~~ Slot: Option label ~~>
+            <template v-slot:label="opt">
+              <div class="full-width row items-center justify-between">
+                <span>{{ opt.label }}</span>
+                <!~~ Members count ~~>
+                <template v-if="opt.members">
+                  <div class="flex">
+                    <div :class="{ 'text-weight-bold': opt.members > 4 }">
+                      {{ opt.members }} / {{ opt.maxMembers }}
+                      {{ $t('form.team.labelMembers', opt.maxMembers) }}
                     </div>
-                  </template>
-                </div>
-              </template>
-            </q-option-group>
-          </q-scroll-area>
+                    <!~~ Member dot icons ~~>
+                    <div class="d-flex gap-4">
+                      <q-icon
+                        v-for="i in 5"
+                        :key="i"
+                        name="circle"
+                        size="8px"
+                        class="q-ml-sm"
+                        :class="[
+                          i <= opt.members ? 'text-teal-4' : 'text-grey-4',
+                        ]"
+                      />
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </template>
+            -->
+          </q-virtual-scroll>
         </q-card-section>
         <!-- Separator -->
         <q-separator />
@@ -389,6 +409,12 @@ export default defineComponent({
             </div>
           </template>
         </dialog-default>
+        <!-- Loading options data progressbar -->
+        <q-inner-loading
+          :showing="loading"
+          :label="$t('form.labelSpinnerProgressBar')"
+          label-class="text-primary"
+        />
       </q-card>
     </q-field>
     <div
