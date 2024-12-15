@@ -1113,7 +1113,7 @@ Cypress.Commands.add('waitForTeamPostApi', () => {
  * Intercept subsidiary POST API call
  * Provides `@postSubsidiary` alias
  * @param {object} config - App global config
- * @param {object} i18n - i18n instance
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
  * @param {number} organizationId - Organization ID
  */
 Cypress.Commands.add(
