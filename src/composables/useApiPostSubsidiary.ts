@@ -61,44 +61,30 @@ export const useApiPostSubsidiary = (
     logger?.debug(
       `Created subsidiary payload <${JSON.stringify(subsidiaryPayload, null, 2)}>.`,
     );
+    logger?.info('Create new subsidiary.');
     isLoading.value = true;
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
     requestTokenHeader_.Authorization += loginStore.getAccessToken;
 
-    try {
-      // post subsidiary
-      const { data } = await apiFetch<SubsidiaryPostApiResponse>({
-        endpoint: `${rideToWorkByBikeConfig.urlApiOrganizations}${organizationId}/${rideToWorkByBikeConfig.urlApiSubsidiaries}`,
-        method: 'post',
-        translationKey: 'createSubsidiary',
-        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-        payload: subsidiaryPayload,
-        logger,
-      });
+    // post subsidiary
+    const { data } = await apiFetch<SubsidiaryPostApiResponse>({
+      endpoint: `${rideToWorkByBikeConfig.urlApiOrganizations}${organizationId}/${rideToWorkByBikeConfig.urlApiSubsidiaries}`,
+      method: 'post',
+      translationKey: 'createSubsidiary',
+      headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
+      payload: subsidiaryPayload,
+      logger,
+    });
 
-      isLoading.value = false;
-
-      if (data) {
-        logger?.debug(
-          `Parsing response subsidiary data <${JSON.stringify(data, null, 2)}>.`,
-        );
-        const subsidiaryDataParsed = subsidiaryAdapter.toFormData(data);
-        logger?.debug(
-          `Parsed subsidiary data <${JSON.stringify(subsidiaryDataParsed, null, 2)}>.`,
-        );
-
-        return subsidiaryDataParsed;
-      } else {
-        logger?.debug('No data returned from subsidiary creation API.');
-        return null;
-      }
-    } catch (error) {
-      logger?.error(`Error creating subsidiary: ${error}`);
-      isLoading.value = false;
-      return null;
-    }
+    isLoading.value = false;
+    const formData = data ? subsidiaryAdapter.toFormData(data) : data;
+    logger?.debug(
+      'Convert newly created and returned subsidiary API data to form data' +
+        ` <${JSON.stringify(formData, null, 2)}>.`,
+    );
+    return formData;
   };
 
   return {
