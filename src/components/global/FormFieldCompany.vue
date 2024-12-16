@@ -102,9 +102,12 @@ export default defineComponent({
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
     const optionsFiltered = ref<FormSelectOption[]>([]);
-    const { options, isLoading, loadOrganizations } =
-      useApiGetOrganizations(logger);
-    const { createOrganization, isLoading: isCreatingOrganization } =
+    const {
+      options,
+      isLoading: isLoadingGetOrganization,
+      loadOrganizations,
+    } = useApiGetOrganizations(logger);
+    const { createOrganization, isLoading: isLoadinPostOrganization } =
       useApiPostOrganization(logger);
     logger?.debug(
       `Initial organization ID model value is <${props.modelValue}>.`,
@@ -266,7 +269,9 @@ export default defineComponent({
       formRef,
       isDialogOpen,
       isFilled,
-      isLoading,
+      isOrganization,
+      isLoadingGetOrganization,
+      isLoadinPostOrganization,
       optionsFiltered,
       messageNoResult,
       options,
@@ -275,7 +280,6 @@ export default defineComponent({
       onSubmit,
       organizationFieldValidationTransStrings,
       OrganizationType,
-      isCreatingOrganization,
     };
   },
 });
@@ -307,7 +311,7 @@ export default defineComponent({
           :lazy-rules="true"
           :model-value="company"
           :options="optionsFiltered"
-          :loading="isLoading"
+          :loading="isLoadingGetOrganization"
           class="q-mt-sm"
           id="form-company"
           name="company"
