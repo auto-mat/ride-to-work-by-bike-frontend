@@ -197,8 +197,8 @@ export default defineComponent({
             // close dialog
             isDialogOpen.value = false;
             logger?.info('Close add company modal dialog.');
-            // set company to new organization
-            logger?.debug(`Setting organization to ID <${data.id}>.`);
+            // Set organizations option to created organization
+            logger?.debug(`Setting organizations options to ID <${data.id}>.`);
             const newCompanyOption: { label: string; value: number } = {
               label: data.name,
               value: data.id,
@@ -206,8 +206,11 @@ export default defineComponent({
             optionsFiltered.value.push(newCompanyOption);
             company.value = newCompanyOption.value;
             logger?.debug(
-              `Append newly created organization <${JSON.stringify(newCompanyOption, null, 2)}>` +
-                ' into select organizations widget options.',
+              `Append newly created organization <${JSON.stringify(
+                newCompanyOption,
+                null,
+                2,
+              )}>` + ' into select organizations widget options.',
             );
             // Append newly created organization option into all organization select widget options
             options.value.push(newCompanyOption);
