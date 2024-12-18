@@ -57,6 +57,7 @@ import { useOrganizations } from '../../composables/useOrganizations';
 import { useSelectTable } from '../../composables/useSelectTable';
 import { useValidation } from '../../composables/useValidation';
 import { useApiPostTeam } from '../../composables/useApiPostTeam';
+import { useApiPostOrganization } from '../../composables/useApiPostOrganization';
 
 // enums
 import { OrganizationType, OrganizationLevel } from '../types/Organization';
@@ -187,6 +188,7 @@ export default defineComponent({
     };
 
     const { createTeam } = useApiPostTeam(logger);
+    const { createOrganization } = useApiPostOrganization(logger);
     const registerChallengeStore = useRegisterChallengeStore();
 
     /**
@@ -196,8 +198,35 @@ export default defineComponent({
      * @returns {Promise<void>}
      */
     const submitDialogForm = async (): Promise<void> => {
+      // create organization
       if (props.organizationLevel === OrganizationLevel.organization) {
-        // TODO: Create a new company
+        if (!props.organizationType) {
+          logger?.info('No organization type provided.');
+          return;
+        }
+
+        logger?.info('Create organization.');
+        const data = await createOrganization(
+          organizationNew.value.name,
+          organizationNew.value.vatId,
+          props.organizationType,
+        );
+
+        if (data?.id) {
+          logger?.debug(
+            `New organization was created with ID <${data.id}> and name <${data.name}>.`,
+          );
+          // emit `create:option` event
+          emit('create:option', data);
+          // close dialog
+          isDialogOpen.value = false;
+          logger?.info('Close add organization modal dialog.');
+          // store data in v-model (emits to parent component)
+          inputValue.value = data.id;
+          logger?.debug(
+            `New organization model ID set to <${inputValue.value}>.`,
+          );
+        }
       } else if (props.organizationLevel === OrganizationLevel.team) {
         logger?.info('Create team.');
         const subsidiaryId = registerChallengeStore.getSubsidiaryId;
