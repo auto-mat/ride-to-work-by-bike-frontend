@@ -33,12 +33,12 @@ export interface CardFollow {
 }
 export interface CardOffer {
   title: string;
-  metadata: CardMetadata[];
-  image: Image;
-  code: string;
-  link: Link;
-  icon: string;
   content: string;
+  image: Image;
+  code?: string;
+  icon?: string;
+  link?: Link;
+  metadata?: CardMetadata[];
 }
 export interface CardPrizeType {
   content: string;

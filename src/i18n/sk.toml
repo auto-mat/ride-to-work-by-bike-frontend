@@ -453,6 +453,7 @@ button = "Všetkých {count} zliav"
 
 [index.cardOffer]
 titleVoucherCode = "Kód kupónu"
+buttonEshop = "Navštíviť e-shop"
 unlimitedExpirationDate = "Neobmedzené obdobie platnosti"
 
 [index.cardListPost]
