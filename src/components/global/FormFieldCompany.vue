@@ -272,7 +272,6 @@ export default defineComponent({
       formRef,
       isDialogOpen,
       isFilled,
-      isOrganization,
       isLoadingGetOrganization,
       isLoadinPostOrganization,
       optionsFiltered,
