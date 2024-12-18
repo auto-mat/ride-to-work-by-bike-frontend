@@ -58,6 +58,7 @@ import { useSelectTable } from '../../composables/useSelectTable';
 import { useValidation } from '../../composables/useValidation';
 import { useApiPostTeam } from '../../composables/useApiPostTeam';
 import { useApiPostOrganization } from '../../composables/useApiPostOrganization';
+import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 
 // enums
 import { OrganizationType, OrganizationLevel } from '../types/Organization';
@@ -160,14 +161,6 @@ export default defineComponent({
     // controls dialog visibility
     const isDialogOpen = ref<boolean>(false);
 
-    // close dialog
-    const onClose = (): void => {
-      if (formRef.value) {
-        formRef.value.reset();
-      }
-      isDialogOpen.value = false;
-    };
-
     /**
      * Validates the form.
      * If form is valid it submits the data.
@@ -188,8 +181,20 @@ export default defineComponent({
     };
 
     const { createTeam } = useApiPostTeam(logger);
-    const { createOrganization } = useApiPostOrganization(logger);
+    const { isLoading: isLoadingCreateOrganization, createOrganization } =
+      useApiPostOrganization(logger);
+    const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
+      useApiPostSubsidiary(logger);
     const registerChallengeStore = useRegisterChallengeStore();
+    const subsidiaryId = computed<number | null>({
+      get: (): number | null => registerChallengeStore.getSubsidiaryId,
+      set: (value: number | null) =>
+        registerChallengeStore.setSubsidiaryId(value),
+    });
+    const isLoading = computed(
+      () =>
+        isLoadingCreateOrganization.value || isLoadingCreateSubsidiary.value,
+    );
 
     /**
      * Submit dialog form based on organization level
@@ -216,16 +221,47 @@ export default defineComponent({
           logger?.debug(
             `New organization was created with ID <${data.id}> and name <${data.name}>.`,
           );
-          // emit `create:option` event
-          emit('create:option', data);
-          // close dialog
-          isDialogOpen.value = false;
-          logger?.info('Close add organization modal dialog.');
-          // store data in v-model (emits to parent component)
+
+          // create subsidiary
+          logger?.info('Create subsidiary.');
+          const subsidiaryData = await createSubsidiary(
+            data.id,
+            organizationNew.value.address,
+          );
+          if (subsidiaryData) {
+            logger?.debug(
+              `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
+            );
+            if (subsidiaryData.id) {
+              // set subsidiary ID in store
+              subsidiaryId.value = subsidiaryData.id;
+              logger?.debug(
+                `Subsidiary ID model set to <${subsidiaryId.value}>.`,
+              );
+            } else {
+              logger?.error('New subsidiary ID not found.');
+            }
+          }
+
+          /**
+           * Set modelValue
+           * This will save the organization ID into the store.
+           * That will in turn trigger the loading of subsidiary options
+           * so we do not need to manually handle the new subsidiary option.
+           */
           inputValue.value = data.id;
           logger?.debug(
             `New organization model ID set to <${inputValue.value}>.`,
           );
+          /**
+           * Emit `create:option` event
+           * This will add new organization to the options list.
+           */
+          emit('create:option', data);
+          // close dialog
+          onClose();
+        } else {
+          logger?.error('New organization ID not found.');
         }
       } else if (props.organizationLevel === OrganizationLevel.team) {
         logger?.info('Create team.');
@@ -242,13 +278,21 @@ export default defineComponent({
           // emit `create:option` event
           emit('create:option', data);
           // close dialog
-          isDialogOpen.value = false;
-          logger?.info('Close add team modal dialog.');
+          onClose();
           // store data in v-model (emits to parent component)
           inputValue.value = data.id;
           logger?.debug(`New team model ID set to <${inputValue.value}>.`);
         }
       }
+    };
+
+    // close dialog
+    const onClose = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
+      isDialogOpen.value = false;
+      logger?.info('Close add option modal dialog.');
     };
 
     const { getOrganizationLabels } = useOrganizations();
@@ -307,6 +351,7 @@ export default defineComponent({
       teamNew,
       titleDialog,
       isFilled,
+      isLoading,
       onClose,
       onSubmit,
       OrganizationType,

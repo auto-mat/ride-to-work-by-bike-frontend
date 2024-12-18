@@ -33,7 +33,8 @@ import { OrganizationLevel, OrganizationType } from '../types/Organization';
 // types
 import type { FormSelectOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
-
+import type { OrganizationOption } from '../types/Organization';
+import type { PostOrganizationResponse } from '../types/apiOrganization';
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
@@ -47,7 +48,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const opts = ref<FormSelectOption[]>([]);
     const formFieldSelectTableRef = ref(null);
-    const { options, isLoading, loadOrganizations } =
+    const { options, organizations, isLoading, loadOrganizations } =
       useApiGetOrganizations(logger);
 
     const registerChallengeStore = useRegisterChallengeStore();
@@ -79,7 +80,7 @@ export default defineComponent({
           loadOrganizations(newValue).then(() => {
             logger?.info('All organizations data was loaded from the API.');
             // Lazy loading
-            opts.value = options;
+            opts.value = options.value;
           });
         }
       },
@@ -92,6 +93,11 @@ export default defineComponent({
       formFieldSelectTableRef.value.selectOrganizationRef.validate();
     };
 
+    const onCreateOption = (data: PostOrganizationResponse): void => {
+      const newOrganization: OrganizationOption = data;
+      organizations.value.push(newOrganization);
+    };
+
     return {
       formFieldSelectTableRef,
       isLoading,
@@ -101,6 +107,7 @@ export default defineComponent({
       OrganizationLevel,
       organizationType,
       onCloseAddSubsidiaryDialog,
+      onCreateOption,
     };
   },
 });
@@ -111,11 +118,12 @@ export default defineComponent({
     <form-field-select-table
       v-model="organizationId"
       :loading="isLoading"
-      :options="opts.value"
+      :options="opts"
       :organization-level="OrganizationLevel.organization"
       :organization-type="organizationType"
       :data-organization-type="organizationType"
       ref="formFieldSelectTableRef"
+      @create:option="onCreateOption"
       data-cy="form-select-table-company"
     />
     <form-field-company-address
