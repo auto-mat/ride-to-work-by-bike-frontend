@@ -1,7 +1,7 @@
 {
-  "count": 10,
+  "count": 20,
   "next": null,
-  "previous": null,
+  "previous": "https://test.dopracenakole.cz/rest/organizations/company/?limit=10&offset=0",
   "results": [
     {
       "id": 3619,

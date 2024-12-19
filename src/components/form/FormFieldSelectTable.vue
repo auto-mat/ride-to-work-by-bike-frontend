@@ -258,6 +258,15 @@ export default defineComponent({
       return getSelectTableLabels(props.organizationLevel).titleDialog;
     });
 
+    const getOptionLabel = (value: number): string => {
+      return (
+        props.options?.find(
+          (option: FormSelectTableOption | FormOption) =>
+            option.value === value,
+        )?.label || ''
+      );
+    };
+
     return {
       borderRadius,
       organizationNew,
@@ -275,6 +284,7 @@ export default defineComponent({
       isFilled,
       onClose,
       onSubmit,
+      getOptionLabel,
       OrganizationType,
       OrganizationLevel,
     };
@@ -333,26 +343,47 @@ export default defineComponent({
           <q-virtual-scroll
             style="max-height: 250px"
             :items="filteredOptions"
+            :virtual-scroll-sticky-size-start="56"
             separator
-            v-slot="{ item }"
           >
-            <q-item tag="label" v-ripple>
-              <q-item-section avatar>
-                <q-radio
-                  v-model="inputValue"
-                  :val="item.value"
-                  :label="item.label"
-                  color="primary"
-                  data-cy="form-select-table-option"
-                />
-              </q-item-section>
-              <!-- Additional description
-              <q-item-section>
-                <q-item-label>Label</q-item-label>
-                <q-item-label caption>Description</q-item-label>
-              </q-item-section>
-              -->
-            </q-item>
+            <template v-slot:before>
+              <q-item
+                class="sticky"
+                v-if="inputValue && getOptionLabel(inputValue)"
+                tag="label"
+              >
+                <q-item-section avatar>
+                  <!-- Show selected option -->
+                  <q-radio
+                    v-model="inputValue"
+                    :val="inputValue"
+                    :label="getOptionLabel(inputValue)"
+                    color="primary"
+                    class="text-weight-bold"
+                    data-cy="form-select-table-option"
+                  />
+                </q-item-section>
+              </q-item>
+            </template>
+            <template v-slot:default="{ item }">
+              <q-item tag="label" :key="item.value" v-ripple>
+                <q-item-section avatar>
+                  <q-radio
+                    v-model="inputValue"
+                    :val="item.value"
+                    :label="item.label"
+                    color="primary"
+                    data-cy="form-select-table-option"
+                  />
+                </q-item-section>
+                <!-- Additional description
+                <q-item-section>
+                  <q-item-label>Label</q-item-label>
+                  <q-item-label caption>Description</q-item-label>
+                </q-item-section>
+                -->
+              </q-item>
+            </template>
             <!-- REQUIRE CHANGE IT
             <!~~ Slot: Option label ~~>
             <template v-slot:label="opt">
@@ -497,5 +528,14 @@ export default defineComponent({
 }
 :deep(.text-negative .q-radio__label) {
   color: $negative;
+}
+
+:deep(.sticky) {
+  position: sticky;
+  top: 0;
+  opacity: 1;
+  z-index: 1;
+  background-color: $white;
+  border-bottom: 1px solid $grey-4;
 }
 </style>
