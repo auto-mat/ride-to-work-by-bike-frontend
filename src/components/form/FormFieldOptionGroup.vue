@@ -73,26 +73,30 @@ export default defineComponent({
         label: i18n.global.t('form.participation.labelColleagues'),
         description: i18n.global.t('form.participation.textColleagues'),
         value: OrganizationType.company,
-        icon: 'favorite',
+        icon: 'svguse:icons/form_field_option_group/icons.svg#colleagues',
       },
       {
         label: i18n.global.t('form.participation.labelSchoolmates'),
         description: i18n.global.t('form.participation.textSchoolmates'),
         value: OrganizationType.school,
-        icon: 'flight_takeoff',
+        icon: 'svguse:icons/form_field_option_group/icons.svg#schoolmates',
       },
       {
         label: i18n.global.t('form.participation.labelFamily'),
         value: OrganizationType.family,
-        icon: 'flight_land',
+        icon: 'svguse:icons/form_field_option_group/icons.svg#family',
       },
     ];
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
-    const { getPaletteColor } = colors;
+    const { getPaletteColor, changeAlpha } = colors;
     const grey3 = getPaletteColor('grey-3');
     const primary = getPaletteColor('primary');
+    const primaryOpacity = changeAlpha(
+      primary,
+      rideToWorkByBikeConfig.colorPrimaryOpacity,
+    );
 
     return {
       borderRadius,
@@ -100,6 +104,7 @@ export default defineComponent({
       inputValue,
       options,
       primary,
+      primaryOpacity,
       isFilled,
     };
   },
@@ -135,13 +140,18 @@ export default defineComponent({
           data-cy="form-field-option"
         >
           <!-- First column: Icon -->
-          <div v-if="opt.label" class="col-auto q-mr-sm">
+          <div v-if="opt.label" class="col-auto q-mr-md">
             <q-avatar
               round
-              class="bg-blue-grey-2"
-              data-cy="form-field-option-icon"
+              :style="{ backgroundColor: primaryOpacity }"
+              data-cy="form-field-option-avatar"
             >
-              <q-icon :name="opt.icon" color="grey-9" size="24px" />
+              <q-icon
+                :name="opt.icon"
+                color="primary"
+                size="24px"
+                data-cy="form-field-option-icon"
+              />
             </q-avatar>
           </div>
           <!-- Second column: Label -->

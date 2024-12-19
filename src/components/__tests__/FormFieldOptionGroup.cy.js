@@ -3,12 +3,21 @@ import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
-const { getPaletteColor, textToRgb } = colors;
+// colors
+const { getPaletteColor, textToRgb, changeAlpha } = colors;
 const white = getPaletteColor('white');
-// get primary color
+const primary = getPaletteColor('primary');
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 const rgbPrimary = textToRgb(rideToWorkByBikeConfig.colorPrimary);
 const colorPrimary = `rgb(${rgbPrimary.r}, ${rgbPrimary.g}, ${rgbPrimary.b})`;
+const primaryOpacity = changeAlpha(
+  primary,
+  rideToWorkByBikeConfig.colorPrimaryOpacity,
+);
+
+// variables
+const avatarSize = 48;
+const iconSize = 24;
 
 describe('<FormFieldOptionGroup>', () => {
   it('has translation for all strings', () => {
@@ -48,9 +57,26 @@ describe('<FormFieldOptionGroup>', () => {
         .first()
         .should('have.backgroundColor', white)
         .should('have.css', 'border-radius', borderRadius);
-      // test icon size
-      cy.dataCy('form-field-option-icon').invoke('height').should('equal', 48);
-      cy.dataCy('form-field-option-icon').invoke('width').should('equal', 48);
+      // test avatar
+      cy.dataCy('form-field-option-avatar')
+        .should('be.visible')
+        .should('have.backgroundColor', primaryOpacity);
+      cy.dataCy('form-field-option-avatar')
+        .invoke('height')
+        .should('equal', avatarSize);
+      cy.dataCy('form-field-option-avatar')
+        .invoke('width')
+        .should('equal', avatarSize);
+      // test icon
+      cy.dataCy('form-field-option-icon')
+        .should('be.visible')
+        .should('have.color', primary);
+      cy.dataCy('form-field-option-icon')
+        .invoke('height')
+        .should('equal', iconSize);
+      cy.dataCy('form-field-option-icon')
+        .invoke('width')
+        .should('equal', iconSize);
     });
 
     it('shows highlighted option', () => {
