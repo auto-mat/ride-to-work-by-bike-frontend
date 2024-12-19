@@ -1,23 +1,35 @@
 {
-  "dialogDescription": "Qui veniam labore nisi laborum nisi occaecat et voluptate aute labore nulla. Velit deserunt eiusmod consequat ea qui esse minim officia culpa ea. Labore excepteur elit quis eiusmod velit aute eiusmod ut. Laboris consectetur sunt amet id ut ullamco eu aliquip minim aliqua nostrud dolor veniam exercitation. Consequat magna consectetur elit nostrud do qui amet deserunt excepteur enim id labore consectetur amet. Esse et et nulla. Aliquip occaecat laboris elit mollit proident occaecat enim anim minim. Voluptate excepteur officia cillum id proident ex dolor esse ad duis aliquip esse laboris.",
-  "dialogImages": ["https://picsum.photos/id/70/340/200"],
-  "dialogTitle": "dialogTitle",
-  "image": "https://picsum.photos/id/70/340/200",
-  "label": "Title",
-  "sizes": [
+  "label": "Triko 2024",
+  "image": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
+  "description": "Dámske triko 2024, velikost XS.",
+  "author": "Auto*Mat",
+  "gender": "female",
+  "material": "Bavlna",
+  "itemIds": [133, 134, 135, 136, 137, 138],
+  "sizeOptions": [
+    {
+      "label": "XS",
+      "value": 133
+    },
+    {
+      "label": "S",
+      "value": 134
+    },
+    {
+      "label": "M",
+      "value": 135
+    },
     {
       "label": "L",
-      "value": "L"
+      "value": 136
     },
     {
       "label": "XL",
-      "value": "XL"
+      "value": 137
     },
     {
       "label": "XXL",
-      "value": "XXL"
+      "value": 138
     }
-  ],
-  "author": "author",
-  "material": "material"
+  ]
 }

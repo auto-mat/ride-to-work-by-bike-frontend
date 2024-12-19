@@ -1224,3 +1224,34 @@ Cypress.Commands.add('waitForMerchandiseApi', () => {
     );
   });
 });
+
+/**
+ * Custom command to select a merchandise item from the list and interact with its dialog
+ * @param {Object} item - The merchandise item to select
+ * @param {Object} options - Additional options for the command
+ * @param {boolean} options.closeDialog - Whether to close the dialog after selection (default: true)
+ * @param {boolean} options.selectSize - Whether to select the size in the dialog (default: true)
+ */
+Cypress.Commands.add('listMerchSelectItem', (item, options = {}) => {
+  const { closeDialog = true } = options;
+  // click the item name to open dialog
+  cy.contains(item.name).click();
+  // verify dialog is visible and contains correct content
+  cy.dataCy('dialog-merch')
+    .should('be.visible')
+    .within(() => {
+      // select size if requested
+      cy.dataCy('form-field-merch-size')
+        .should('be.visible')
+        .contains(item.size)
+        .click();
+      // check correct title and description
+      cy.contains(item.name).should('be.visible');
+      cy.contains(item.description).should('be.visible');
+    });
+  // close dialog if requested
+  if (closeDialog) {
+    cy.dataCy('dialog-close').click();
+    cy.dataCy('dialog-merch').should('not.exist');
+  }
+});

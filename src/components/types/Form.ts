@@ -1,6 +1,3 @@
-// types
-import type { Image } from './Image';
-
 export enum TestPaymentVoucher {
   full = 'FULL',
   half = 'HALF',
@@ -42,19 +39,6 @@ export type FormTeamFields = {
   name: string;
   members?: number;
   maxMembers?: number;
-};
-
-export type FormCardMerchType = {
-  author: string;
-  dialogDescription: string;
-  dialogImages: Image[];
-  dialogTitle: string;
-  gender: FormOption[];
-  value: string;
-  image: string;
-  material: string;
-  label: string;
-  sizes: FormOption[];
 };
 
 export type FormPaymentVoucher = {

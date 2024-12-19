@@ -75,7 +75,7 @@ describe('<FormCardMerch>', () => {
           .and('have.color', black)
           .and('contain', option.author)
           .and('contain', option.material)
-          .and('contain', option.sizes[0].label);
+          .and('contain', option.sizeOptions[0].label);
       });
     });
 

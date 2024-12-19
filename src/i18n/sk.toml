@@ -97,6 +97,7 @@ woman = "Žena"
 routes = "cestu|cest"
 routeLengthUnit = "km"
 rtwbb = "DPNB"
+unisex = "Vhodné pre obe pohlavia"
 weightUnitGram = "g"
 carbonDioxideWeightUnit = "g CO<sub>2</sub>"
 
@@ -308,6 +309,7 @@ labelNewsletter = "Chcem sa dozvedieť viac o udržateľnej mobilite a súhlasí
 labelNoMerch = "Nechcem košeľu ani nákrčník"
 labelSizeFemale = "Veľkosť - dámska:"
 labelSizeMale = "Veľkosť - pánska:"
+labelSizeUnisex = "Veľkosť - unisex:"
 labelTrackDelivery = "Rád by som dostal správu o stave doručenia môjho štartovacieho balíka."
 labelVariant = "Variant"
 
