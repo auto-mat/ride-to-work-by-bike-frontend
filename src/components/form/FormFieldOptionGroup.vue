@@ -31,9 +31,11 @@ import { defineComponent, computed } from 'vue';
 import { useValidation } from 'src/composables/useValidation';
 import { i18n } from 'src/boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
+import { PaymentSubject } from 'src/components/enums/Payment';
 
 // types
 import { FormOption } from '../../components/types/Form';
@@ -67,26 +69,37 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    // get payment subject from registerChallenge store
+    const registerChallengeStore = useRegisterChallengeStore();
+    const paymentSubject = computed(
+      () => registerChallengeStore.getPaymentSubject,
+    );
+
     // TODO: update icons
-    const options: FormOption[] = [
+    const options = computed<FormOption[]>(() => [
       {
         label: i18n.global.t('form.participation.labelColleagues'),
         description: i18n.global.t('form.participation.textColleagues'),
         value: OrganizationType.company,
         icon: 'favorite',
+        disable: paymentSubject.value === PaymentSubject.school,
       },
       {
         label: i18n.global.t('form.participation.labelSchoolmates'),
         description: i18n.global.t('form.participation.textSchoolmates'),
         value: OrganizationType.school,
         icon: 'flight_takeoff',
+        disable: paymentSubject.value === PaymentSubject.company,
       },
       {
         label: i18n.global.t('form.participation.labelFamily'),
         value: OrganizationType.family,
         icon: 'flight_land',
+        disable:
+          paymentSubject.value === PaymentSubject.company ||
+          paymentSubject.value === PaymentSubject.school,
       },
-    ];
+    ]);
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 

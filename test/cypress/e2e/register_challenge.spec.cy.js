@@ -7,6 +7,7 @@ import {
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { getRadioOption } from 'test/cypress/utils';
+import { PaymentSubject } from 'src/components/enums/Payment';
 
 const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
@@ -559,6 +560,142 @@ describe('Register Challenge page', () => {
       // test goint to step 7
       cy.dataCy('step-6').should('be.visible').click();
       cy.dataCy('step-6-continue').should('be.visible');
+    });
+
+    it('when company pays - disables other participation options', () => {
+      cy.get('@i18n').then((i18n) => {
+        // go to payment step
+        passToStep2();
+        // select company
+        cy.dataCy(getRadioOption(PaymentSubject.company))
+          .should('be.visible')
+          .click();
+        // select paying company (required)
+        cy.fixture('formFieldCompany').then((formFieldCompany) => {
+          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+            cy.dataCy('form-field-company').find('.q-field__append').click();
+            // select option
+            cy.get('.q-item__label')
+              .should('be.visible')
+              .and((opts) => {
+                expect(
+                  opts.length,
+                  formFieldCompany.results.length +
+                    formFieldCompanyNext.results.length,
+                );
+              })
+              .first()
+              .click();
+            cy.get('.q-menu').should('not.exist');
+          });
+        });
+        // go to next step
+        cy.dataCy('step-2-continue').should('be.visible').click();
+        // other participation options are disabled
+        cy.dataCy('form-field-option-group').within(() => {
+          // one active option - company
+          cy.get('.q-radio:not(.disabled)')
+            .should('have.length', 1)
+            .and(
+              'contain',
+              i18n.global.t('form.participation.labelColleagues'),
+            );
+          // two disabled options - school and family
+          cy.get('.q-radio.disabled')
+            .should('have.length', 2)
+            .and(
+              'contain',
+              i18n.global.t('form.participation.labelSchoolmates'),
+            )
+            .and('contain', i18n.global.t('form.participation.labelFamily'));
+        });
+      });
+    });
+
+    it('when school pays - disables other participation options', () => {
+      cy.get('@i18n').then((i18n) => {
+        // go to payment step
+        passToStep2();
+        // select school
+        cy.dataCy(getRadioOption(PaymentSubject.school))
+          .should('be.visible')
+          .click();
+        // select paying school (required)
+        cy.fixture('formFieldCompany').then((formFieldCompany) => {
+          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+            cy.dataCy('form-field-company').find('.q-field__append').click();
+            // select option
+            cy.get('.q-item__label')
+              .should('be.visible')
+              .and((opts) => {
+                expect(
+                  opts.length,
+                  formFieldCompany.results.length +
+                    formFieldCompanyNext.results.length,
+                );
+              })
+              .first()
+              .click();
+            cy.get('.q-menu').should('not.exist');
+          });
+        });
+        // go to next step
+        cy.dataCy('step-2-continue').should('be.visible').click();
+        // other participation options are disabled
+        cy.dataCy('form-field-option-group').within(() => {
+          // one active option - school
+          cy.get('.q-radio:not(.disabled)')
+            .should('have.length', 1)
+            .and(
+              'contain',
+              i18n.global.t('form.participation.labelSchoolmates'),
+            );
+          // two disabled options - company and family
+          cy.get('.q-radio.disabled')
+            .should('have.length', 2)
+            .and('contain', i18n.global.t('form.participation.labelColleagues'))
+            .and('contain', i18n.global.t('form.participation.labelFamily'));
+        });
+      });
+    });
+
+    it('when individual payment - all participation options are enabled', () => {
+      // go to payment step
+      passToStep2();
+      // select individual
+      cy.dataCy(getRadioOption(PaymentSubject.individual))
+        .should('be.visible')
+        .click();
+      // go to next step
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // verify step 3
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+      // all options are enabled
+      cy.dataCy('form-field-option-group').within(() => {
+        cy.get('.q-radio:not(.disabled)').should('have.length', 3);
+      });
+    });
+
+    it('when voucher payment - all participation options are enabled', () => {
+      // go to payment step
+      passToStep2();
+      // select voucher
+      cy.dataCy(getRadioOption(PaymentSubject.voucher))
+        .should('be.visible')
+        .click();
+      // enter voucher code
+      cy.dataCy('form-field-voucher-input').type('FULL');
+      cy.dataCy('form-field-voucher-submit').click();
+      // go to next step
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // verify step 3
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+      // all options are enabled
+      cy.dataCy('form-field-option-group').within(() => {
+        cy.get('.q-radio:not(.disabled)').should('have.length', 3);
+      });
     });
 
     it('shows correct step title on organization step', () => {
