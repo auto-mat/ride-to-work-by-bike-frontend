@@ -47,6 +47,7 @@ const testNumberValue = 500;
 // colors
 const { getPaletteColor, lighten } = colors;
 const grey10 = getPaletteColor('grey-10');
+const grey8 = getPaletteColor('grey-8');
 const primary = getPaletteColor('primary');
 const primaryLight = lighten(primary, 90);
 
@@ -80,7 +81,7 @@ describe('<RegisterChallengePayment>', () => {
       'companyCoordinator',
       i18n,
     );
-    cy.testLanguageStringsInContext(['custom'], 'global', i18n);
+    cy.testLanguageStringsInContext(['custom', 'total'], 'global', i18n);
   });
 
   context('desktop', () => {
@@ -651,6 +652,91 @@ function coreTests() {
       cy.wrap(computedStoreProperty)
         .its('value')
         .should('equal', OrganizationType.none);
+    });
+  });
+
+  it('shows correct total price', () => {
+    // individual
+    cy.dataCy(getRadioOption(PaymentSubject.individual))
+      .should('be.visible')
+      .click();
+    cy.dataCy(selectorPaymentAmount).should('be.visible');
+    cy.dataCy(selectorPaymentAmountCustom).should('not.exist');
+    cy.dataCy(selectorDonationCheckbox).should('not.exist');
+    cy.dataCy('total-price')
+      .should('contain', i18n.global.t('global.total'))
+      .and('contain', defaultPaymentAmountMin);
+    // styling
+    cy.dataCy('total-price-label')
+      .should('have.css', 'font-size', '14px')
+      .and('have.css', 'font-weight', '400')
+      .and('have.color', grey8);
+    cy.dataCy('total-price-value')
+      .should('have.css', 'font-size', '24px')
+      .and('have.css', 'font-weight', '700')
+      .and('have.color', grey10);
+    // change amount to test value
+    cy.dataCy(getRadioOption(testNumberValue)).should('be.visible').click();
+    cy.dataCy('total-price')
+      .should('contain', i18n.global.t('global.total'))
+      .and('contain', testNumberValue);
+    // custom amount
+    cy.dataCy(getRadioOption(PaymentAmount.custom))
+      .should('be.visible')
+      .click();
+    // test value should be shown
+    cy.dataCy('total-price')
+      .should('contain', i18n.global.t('global.total'))
+      .and('contain', testNumberValue);
+
+    // school
+    cy.dataCy(getRadioOption(PaymentSubject.school))
+      .should('be.visible')
+      .click();
+    cy.dataCy('total-price').should('not.exist');
+    cy.testPaymentTotalPriceWithDonation(
+      i18n,
+      defaultPaymentAmountMin,
+      testNumberValue,
+    );
+
+    // company
+    cy.dataCy(getRadioOption(PaymentSubject.company))
+      .should('be.visible')
+      .click();
+    cy.dataCy('total-price').should('not.exist');
+    cy.testPaymentTotalPriceWithDonation(
+      i18n,
+      defaultPaymentAmountMin,
+      testNumberValue,
+    );
+
+    // voucher
+    cy.dataCy(getRadioOption(PaymentSubject.voucher))
+      .should('be.visible')
+      .click();
+    cy.dataCy('total-price').should('not.exist');
+    // enter voucher HALF
+    cy.get('@voucherHalf').then((voucher) => {
+      cy.dataCy(selectorVoucherInput).type(voucher.code);
+      cy.dataCy(selectorVoucherSubmit).click();
+      cy.dataCy('total-price')
+        .should('contain', i18n.global.t('global.total'))
+        .and('contain', voucher.amount);
+    });
+    // remove voucher
+    cy.dataCy(selectorVoucherButtonRemove).click();
+    cy.dataCy('total-price').should('not.exist');
+    // enter voucher FULL
+    cy.get('@voucherFull').then((voucher) => {
+      cy.dataCy(selectorVoucherInput).type(voucher.code);
+      cy.dataCy(selectorVoucherSubmit).click();
+      cy.dataCy('total-price').should('not.exist');
+      cy.testPaymentTotalPriceWithDonation(
+        i18n,
+        defaultPaymentAmountMin,
+        testNumberValue,
+      );
     });
   });
 }

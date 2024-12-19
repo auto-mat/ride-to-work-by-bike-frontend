@@ -19,7 +19,7 @@
  */
 
 // libraries
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, onUnmounted, ref, watch } from 'vue';
 
 // components
 import FormFieldSliderNumber from './FormFieldSliderNumber.vue';
@@ -38,22 +38,32 @@ export default defineComponent({
       rideToWorkByBikeConfig.entryFeePaymentMin,
     );
     const amount = ref<number>(defaultPaymentAmountMin);
-    const donation = ref<boolean>(false);
+    const isDonation = ref<boolean>(false);
 
     /**
      * Watch values and emit 'update:donation' event.
      */
-    watch([amount, donation], () => {
-      if (donation.value) {
-        emit('update:donation', amount.value);
-      } else {
-        emit('update:donation', false);
-      }
+    watch(
+      [amount, isDonation],
+      () => {
+        if (isDonation.value) {
+          emit('update:donation', amount.value);
+        } else {
+          // deselecting donation resets donation amount to default
+          amount.value = defaultPaymentAmountMin;
+          emit('update:donation', 0);
+        }
+      },
+      { immediate: true },
+    );
+
+    onUnmounted(() => {
+      emit('update:donation', 0);
     });
 
     return {
       amount,
-      donation,
+      isDonation,
     };
   },
 });
@@ -64,7 +74,7 @@ export default defineComponent({
     <!-- Checkbox: Donation -->
     <q-checkbox
       dense
-      v-model="donation"
+      v-model="isDonation"
       color="primary"
       :true-value="true"
       :false-value="false"
@@ -76,7 +86,7 @@ export default defineComponent({
       </span>
     </q-checkbox>
     <!-- Widget: Slider input -->
-    <div v-if="donation" class="q-mt-md">
+    <div v-if="isDonation" class="q-mt-md">
       <form-field-slider-number
         v-model="amount"
         data-cy="form-field-donation-slider"

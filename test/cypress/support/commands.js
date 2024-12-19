@@ -294,6 +294,33 @@ Cypress.Commands.add('testSoacialMediaUrlRequest', (rideToWorkByBikeConfig) => {
 });
 
 /**
+ * Test payment total price with donation
+ * @param {object} i18n - i18n instance
+ * @param {number} defaultPaymentAmountMin - Default payment amount min
+ * @param {number} testAmountValue - Alternative payment amount value
+ */
+Cypress.Commands.add(
+  'testPaymentTotalPriceWithDonation',
+  (i18n, defaultPaymentAmountMin, testAmountValue) => {
+    // add donation
+    cy.dataCy('form-field-donation-checkbox').should('be.visible').click();
+    // default donation amount
+    cy.dataCy('total-price')
+      .should('contain', i18n.global.t('global.total'))
+      .and('contain', defaultPaymentAmountMin);
+    // enter custom donation
+    cy.dataCy('form-field-slider-number-input').should('be.visible').clear();
+    cy.dataCy('form-field-slider-number-input').type(testAmountValue);
+    cy.dataCy('total-price')
+      .should('contain', i18n.global.t('global.total'))
+      .and('contain', testAmountValue);
+    // remove donation
+    cy.dataCy('form-field-donation-checkbox').should('be.visible').click();
+    cy.dataCy('total-price').should('not.exist');
+  },
+);
+
+/**
  * Intercept cities GET API calls
  * Provides `@getCities` and `@getCitiesNextPage` aliases
  * @param {object} config - App global config

@@ -97,6 +97,7 @@ woman = "Woman"
 routes = "route|routes"
 routeLengthUnit = "km"
 rtwbb = "RTWBB"
+total = "Total"
 weightUnitGram = "g"
 carbonDioxideWeightUnit = "g CO<sub>2</sub>"
 
