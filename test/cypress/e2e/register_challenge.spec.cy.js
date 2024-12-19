@@ -95,7 +95,13 @@ describe('Register Challenge page', () => {
                 win.i18n,
                 OrganizationType.company,
               );
+              cy.interceptCitiesGetApi(config, win.i18n);
               cy.interceptSubsidiariesGetApi(
+                config,
+                win.i18n,
+                formOrganizationOptions[0].id,
+              );
+              cy.interceptSubsidiaryPostApi(
                 config,
                 win.i18n,
                 formOrganizationOptions[0].id,
@@ -410,6 +416,67 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4-continue').should('be.visible').click();
       // on step 5
       cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
+    });
+
+    it('allows user to create a new subsidiary address', () => {
+      passToStep4();
+      checkActiveIcon(4);
+      // select company
+      cy.dataCy('form-select-table-option')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      cy.fixture('apiPostSubsidiaryRequest').then((subsidiaryRequest) => {
+        cy.fixture('apiPostSubsidiaryResponse').then((subsidiaryResponse) => {
+          // open dialog
+          cy.dataCy('button-add-address').click();
+          cy.dataCy('dialog-add-address').should('be.visible');
+          // fill the form
+          cy.dataCy('form-add-subsidiary').within(() => {
+            cy.dataCy('form-add-subsidiary-street').type(
+              subsidiaryRequest.address.street,
+            );
+            cy.dataCy('form-add-subsidiary-house-number').type(
+              subsidiaryRequest.address.street_number,
+            );
+            cy.dataCy('form-add-subsidiary-city').type(
+              subsidiaryRequest.address.city,
+            );
+            cy.dataCy('form-add-subsidiary-zip').type(
+              subsidiaryRequest.address.psc,
+            );
+            cy.dataCy('form-add-subsidiary-department').type(
+              subsidiaryRequest.address.recipient,
+            );
+            // select city challenge
+            cy.dataCy('form-add-subsidiary-city-challenge').click();
+          });
+          // select city challenge (outside the form)
+          cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+            cy.get('.q-menu').within(() => {
+              cy.contains(citiesResponse.results[0].name)
+                .should('be.visible')
+                .click();
+            });
+          });
+          // submit form
+          cy.dataCy('dialog-button-submit').click();
+          // wait for API response
+          cy.waitForSubsidiaryPostApi(subsidiaryResponse);
+          // verify dialog was closed
+          cy.dataCy('dialog-add-address').should('not.exist');
+          // verify the new address is selected in the dropdown
+          cy.dataCy('form-company-address-input')
+            .find('input')
+            .invoke('val')
+            .should('contain', subsidiaryRequest.address.street);
+          // verify we can proceed to step 5
+          cy.dataCy('step-4-continue').click();
+          cy.dataCy('step-5')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+        });
+      });
     });
 
     it('validates fifth step (team)', () => {

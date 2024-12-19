@@ -30,6 +30,7 @@ export const subsidiaryAdapter = {
    */
   toFormData(apiData: SubsidiaryPostApiResponse): FormCompanyAddressFields {
     return {
+      id: apiData.id,
       street: apiData.address.street,
       houseNumber: apiData.address.street_number,
       city: apiData.address.city,

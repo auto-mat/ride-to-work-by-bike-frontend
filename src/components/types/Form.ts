@@ -30,6 +30,7 @@ export type FormCompanyFields = {
 };
 
 export type FormCompanyAddressFields = {
+  id?: number;
   street: string;
   houseNumber: string;
   city: string;

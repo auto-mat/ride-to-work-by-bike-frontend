@@ -26,7 +26,7 @@
 
 // libraries
 import { QForm } from 'quasar';
-import { computed, defineComponent, inject, ref, watch } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 
 // components
 import DialogDefault from 'src/components/global/DialogDefault.vue';
@@ -35,6 +35,7 @@ import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
 // composables
 import { useApiGetSubsidiaries } from 'src/composables/useApiGetSubsidiaries';
 import { useValidation } from 'src/composables/useValidation';
+import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
@@ -42,6 +43,19 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 // types
 import type { FormCompanyAddressFields } from 'src/components/types/Form';
 import type { Logger } from 'src/components/types/Logger';
+import type { OrganizationSubsidiary } from 'src/components/types/Organization';
+
+// utils
+import { deepObjectWithSimplePropsCopy } from '../../utils';
+
+const addressNewEmpty = {
+  street: '',
+  houseNumber: '',
+  city: '',
+  zip: '',
+  cityChallenge: null,
+  department: '',
+};
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
@@ -61,36 +75,55 @@ export default defineComponent({
     const formRef = ref<typeof QForm | null>(null);
     const logger = inject('vuejs3-logger') as Logger | null;
 
-    const address = computed<number | null>({
+    const subsidiaryId = computed<number | null>({
       get: () => props.modelValue,
       set: (value: number | null) => emit('update:modelValue', value),
     });
 
-    const addressNew = ref<FormCompanyAddressFields>({
-      street: '',
-      houseNumber: '',
-      city: '',
-      zip: '',
-      cityChallenge: null,
-      department: '',
-    });
+    const addressNew = ref<FormCompanyAddressFields>(
+      deepObjectWithSimplePropsCopy(
+        addressNewEmpty,
+      ) as FormCompanyAddressFields,
+    );
 
-    const { subsidiaries, isLoading, loadSubsidiaries } =
-      useApiGetSubsidiaries(logger);
+    const {
+      subsidiaries,
+      isLoading: isLoadingSubsidiaries,
+      loadSubsidiaries,
+    } = useApiGetSubsidiaries(logger);
+    const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
+      useApiPostSubsidiary(logger);
+    const isLoading = computed(
+      () => isLoadingSubsidiaries.value || isLoadingCreateSubsidiary.value,
+    );
 
     const store = useRegisterChallengeStore();
+    /**
+     * If organization ID is set, load subsidiaries.
+     * This ensures, that options are loaded on page refresh.
+     */
+    onMounted(async () => {
+      if (store.getOrganizationId) {
+        await loadSubsidiaries(store.getOrganizationId);
+      }
+    });
+    /**
+     * Watch for organization ID changes.
+     * This clears the subsidiary options and state after organization change.
+     * Then loads subsidiaries for the new organization.
+     * Should not be triggered on mounted not to clear saved subsidiary ID.
+     */
     watch(
       () => store.getOrganizationId,
       (newValue) => {
         logger?.debug(
-          `Resgister challenge stote organization ID updated to <${newValue}>`,
+          `Register challenge store organization ID updated to <${newValue}>`,
         );
-        address.value = null;
+        subsidiaryId.value = null;
         if (newValue) {
           loadSubsidiaries(newValue);
         }
       },
-      { immediate: true },
     );
 
     const options = computed(() =>
@@ -101,12 +134,6 @@ export default defineComponent({
     );
 
     const { isFilled } = useValidation();
-    const { isDialogOpen, onClose } = useDialog();
-
-    const onSubmit = async (): Promise<void> => {
-      // TODO: Add address via API
-      isDialogOpen.value = false;
-    };
 
     /**
      * Get a formatted address string from the provided address object.
@@ -131,6 +158,62 @@ export default defineComponent({
       return parts.join(', ');
     };
 
+    const { isDialogOpen, onClose } = useDialog();
+
+    const onSubmit = async (): Promise<void> => {
+      if (formRef.value) {
+        const isFormValid: boolean = await formRef.value.validate();
+
+        if (isFormValid) {
+          const organizationId = store.getOrganizationId;
+
+          if (organizationId) {
+            logger?.info('Create subsidiary.');
+            const data = await createSubsidiary(
+              organizationId,
+              addressNew.value,
+            );
+
+            if (data) {
+              logger?.debug(
+                `New subsidiary was created with data <${JSON.stringify(data, null, 2)}>.`,
+              );
+              if (data.id) {
+                // set subsidiary ID
+                subsidiaryId.value = data.id;
+                logger?.debug(
+                  `Subsidiary ID model set to <${subsidiaryId.value}>.`,
+                );
+                // push new subsidiary to subsidiaries list
+                const newSubsidiary: OrganizationSubsidiary = {
+                  id: data.id,
+                  address: {
+                    street: data.street,
+                    houseNumber: data.houseNumber,
+                    city: data.city,
+                    zip: data.zip,
+                    cityChallenge: data.cityChallenge,
+                    department: data.department,
+                  },
+                  teams: [],
+                };
+                subsidiaries.value.push(newSubsidiary);
+              } else {
+                logger?.error('New subsidiary ID not found.');
+              }
+              onClose();
+            }
+          } else {
+            logger?.info('No organization ID found in the store.');
+            return;
+          }
+        } else {
+          logger?.info('Form validation failed.');
+          return;
+        }
+      }
+    };
+
     /**
      * Provides dialog behaviour
      * @returns {isDialogOpen, onClose}
@@ -143,9 +226,15 @@ export default defineComponent({
       const onClose = (): void => {
         if (formRef.value) {
           formRef.value.reset();
-          logger?.info('Close add company modal dialog and reset form.');
         }
+        addressNew.value = deepObjectWithSimplePropsCopy(
+          addressNewEmpty,
+        ) as FormCompanyAddressFields;
+        logger?.debug(
+          `New address form reset to <${JSON.stringify(addressNew.value, null, 2)}>.`,
+        );
         isDialogOpen.value = false;
+        logger?.info('Close add subsidiary modal dialog.');
       };
 
       return {
@@ -155,13 +244,14 @@ export default defineComponent({
     }
 
     return {
-      address,
+      subsidiaryId,
       addressNew,
       formRef,
       options,
       isDialogOpen,
       isFilled,
       isLoading,
+      isLoadingCreateSubsidiary,
       onClose,
       onSubmit,
     };
@@ -187,9 +277,10 @@ export default defineComponent({
           emit-value
           map-options
           id="form-company-address"
-          v-model="address"
+          v-model="subsidiaryId"
           :hint="$t('form.company.hintAddress')"
           :options="options"
+          :loading="isLoading"
           :rules="[
             (val) =>
               isFilled(val) ||
@@ -252,6 +343,7 @@ export default defineComponent({
             outline
             color="primary"
             data-cy="dialog-button-cancel"
+            :disable="isLoadingCreateSubsidiary"
             @click="onClose"
           >
             {{ $t('navigation.discard') }}
@@ -261,6 +353,8 @@ export default defineComponent({
             unelevated
             color="primary"
             data-cy="dialog-button-submit"
+            :loading="isLoadingCreateSubsidiary"
+            :disable="isLoadingCreateSubsidiary"
             @click="onSubmit"
           >
             {{ $t('form.company.buttonAddSubsidiary') }}

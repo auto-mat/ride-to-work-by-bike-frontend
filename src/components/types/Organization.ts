@@ -29,7 +29,7 @@ export interface Organization {
 
 export interface OrganizationSubsidiary {
   id: number;
-  title: string;
+  title?: string;
   address?: FormCompanyAddressFields;
   teams: OrganizationTeam[];
 }
