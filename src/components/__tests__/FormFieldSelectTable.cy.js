@@ -229,17 +229,18 @@ describe('<FormFieldSelectTable>', () => {
           options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.company,
-          modelValue: options[0].value,
+          modelValue: options[12].value,
         },
       });
       cy.viewport('macbook-16');
     });
 
-    it('shows selected option', () => {
+    it('shows selected option (sticky on top)', () => {
       cy.dataCy('form-select-table-options')
-        .find('.q-radio__inner')
-        .first()
-        .should('have.class', 'text-primary');
+        .find('.q-radio__inner.q-radio__inner--truthy')
+        .siblings('.q-radio__label')
+        .should('contain', options[12].label)
+        .and('be.visible');
     });
   });
 
