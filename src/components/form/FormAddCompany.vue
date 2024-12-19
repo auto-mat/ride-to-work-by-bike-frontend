@@ -154,7 +154,7 @@ export default defineComponent({
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>
-      <!-- TODO: validate the method of accessing address -->
+      <!-- Subsidiary address fields -->
       <form-add-subsidiary
         v-model="company.address"
         @update:model-value="onUpdate"
