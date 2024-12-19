@@ -42,6 +42,7 @@ contactEmail = "kontakt@dopracenakole.cz"
 
 urlRTWBBLogo = "#/"
 urlLoginRegisterBackgroundImage = "/image/login-register-layout.webp"
+backendBaseUrl = "http://test.lvh.me:8021/"
 
 # EXTERNAL URLS
 

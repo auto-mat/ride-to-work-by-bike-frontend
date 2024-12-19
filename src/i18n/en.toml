@@ -97,6 +97,7 @@ woman = "Woman"
 routes = "route|routes"
 routeLengthUnit = "km"
 rtwbb = "RTWBB"
+unisex = "Unisex"
 weightUnitGram = "g"
 carbonDioxideWeightUnit = "g CO<sub>2</sub>"
 
@@ -308,6 +309,7 @@ labelNewsletter = "I want to know more about sustainable mobility and agree to h
 labelNoMerch = "I don't want a shirt or a neck warmer"
 labelSizeFemale = "Size - women's:"
 labelSizeMale = "Size - men's:"
+labelSizeUnisex = "Size - unisex:"
 labelTrackDelivery = "I would like to receive a status report on the delivery of my starter pack."
 labelVariant = "Variant"
 

@@ -33,13 +33,14 @@ import { computed, defineComponent } from 'vue';
 import { useValidation } from 'src/composables/useValidation';
 
 // types
+import type { PropType } from 'vue';
 import type { FormOption } from 'src/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldRadioRequired',
   props: {
     modelValue: {
-      type: String as () => string | null,
+      type: [String, Number] as PropType<string | number | null>,
       default: null,
     },
     options: {
@@ -54,10 +55,10 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const radioValue = computed({
-      get(): string | null {
+      get(): string | number | null {
         return props.modelValue;
       },
-      set(value: string | null) {
+      set(value: string | number | null) {
         emit('update:modelValue', value);
       },
     });

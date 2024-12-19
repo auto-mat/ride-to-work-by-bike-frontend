@@ -29,10 +29,16 @@
  */
 
 // libraries
-import { computed, defineComponent, ref } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 import { QCard, QForm } from 'quasar';
-
-import { nextTick } from 'vue';
 
 // components
 import DialogDefault from '../global/DialogDefault.vue';
@@ -42,13 +48,16 @@ import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import SliderMerch from './SliderMerch.vue';
 
 // composables
+import { useApiGetMerchandise } from '../../composables/useApiGetMerchandise';
 import { i18n } from '../../boot/i18n';
 
 // enums
 import { Gender } from '../types/Profile';
 
 // types
-import type { FormCardMerchType, FormOption } from '../types/Form';
+import type { FormOption } from '../types/Form';
+import type { MerchandiseCard, MerchandiseItem } from '../types/Merchandise';
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'FormFieldListMerch',
@@ -68,149 +77,155 @@ export default defineComponent({
 
     // selected options
     const selectedGender = ref<string>(Gender.female);
-    const selectedOption = ref<FormCardMerchType | null>(null);
-    const selectedSize = ref<string>('');
+    const selectedSize = ref<number | null>(null);
+    const selectedOption = computed<MerchandiseItem | null>(
+      (): MerchandiseItem | null => {
+        return (
+          merchandiseItems.value.find(
+            (item) => item.id === selectedSize.value,
+          ) || null
+        );
+      },
+    );
     const phone = ref<string>('');
     const trackDelivery = ref<boolean>(false);
     const newsletter = ref<boolean>(false);
+    // dialog
+    const isOpen = ref<boolean>(false);
 
     // merch tabs
     const tabsMerchRef = ref<typeof QCard | null>(null);
 
-    // options
-    const options: FormCardMerchType[] = [
-      {
-        value: '1',
-        label: 'Tričko 2023',
-        image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'Tričko Do práce na kole 2023',
-        dialogImages: [
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-        ],
-        dialogDescription:
-          '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
-        gender: [
-          {
-            label: 'Female',
-            value: 'female',
-          },
-          {
-            label: 'Male',
-            value: 'male',
-          },
-        ],
-        sizes: [
-          {
-            label: 'S',
-            value: 'S',
-          },
-          {
-            label: 'M',
-            value: 'M',
-          },
-          {
-            label: 'L',
-            value: 'L',
-          },
-        ],
-        material: 'Bavlna',
-        author: 'Cotton lady',
-      },
-      {
-        value: '2',
-        label: 'Tričko 2022',
-        image: 'https://cdn.quasar.dev/img/mountains.jpg',
-        dialogTitle: 'Tričko Do práce na kole 2022',
-        dialogImages: [
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-          {
-            alt: 'Road lined by trees',
-            src: 'https://cdn.quasar.dev/img/mountains.jpg',
-          },
-        ],
-        dialogDescription:
-          '<p>Biobavlna, originální ilustrace od oceňované výtvarnice a navíc podpora cyklodopravy. To je triko Do práce na kole. Pro pány v klasickém střihu, pro dámy v lehce projmutém.</p><p>"Všem, co jezdí do práce na kole: Jste frajeři a frajerky," vzkazuje autorka designu. A k samotnému motivu dodává: "Když jezdím v létě na kole po Praze, tak svého psa Jonáše, který jinak chodí všude se mnou, musím nechat doma…Tak jen sním o tom, jaké by měl kolo, kdyby na něm uměl, a jak by si jízdu s vlajícíma ušima užíval."</p>',
-        gender: [
-          {
-            label: 'Female',
-            value: 'female',
-          },
-        ],
-        sizes: [
-          {
-            label: 'S',
-            value: 'S',
-          },
-        ],
-        material: 'Bavlna',
-        author: 'Jaromír 99',
-      },
-    ];
-    const optionsGender: FormOption[] = [
-      {
-        label: i18n.global.t('global.female'),
-        value: Gender.female,
-      },
-      {
-        label: i18n.global.t('global.male'),
-        value: Gender.male,
-      },
-    ];
-    const optionsFemale = computed((): FormCardMerchType[] => {
-      return options.filter((option: FormCardMerchType) => {
-        const genderValues = option.gender.map(
-          (gender: FormOption) => gender.value,
-        );
-        return genderValues.includes(Gender.female);
-      });
+    // get merchandise data
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const { merchandiseCards, merchandiseItems, loadMerchandise, isLoading } =
+      useApiGetMerchandise(logger);
+
+    // load merchandise on mount
+    onMounted(async () => {
+      await loadMerchandise();
     });
-    const optionsMale = computed((): FormCardMerchType[] => {
-      return options.filter((option: FormCardMerchType) => {
-        const genderValues = option.gender.map(
-          (gender: FormOption) => gender.value,
-        );
-        return genderValues.includes(Gender.male);
-      });
+
+    // computed properties for gender-specific options
+    const optionsFemale = computed((): MerchandiseCard[] => {
+      return Object.values(merchandiseCards.value[Gender.female] || {});
+    });
+
+    const optionsMale = computed((): MerchandiseCard[] => {
+      return Object.values(merchandiseCards.value[Gender.male] || {});
+    });
+
+    const optionsUnisex = computed((): MerchandiseCard[] => {
+      return Object.values(merchandiseCards.value[Gender.unisex] || {});
+    });
+
+    // get current item's options
+    const currentGenderOptions = computed((): FormOption[] => {
+      return selectedOption.value?.genderOptions || [];
+    });
+
+    const currentSizeOptions = computed((): FormOption[] => {
+      return selectedOption.value?.sizeOptions || [];
+    });
+
+    const currentItemLabelSize = computed((): string => {
+      switch (selectedOption.value?.gender) {
+        case Gender.female:
+          return i18n.global.t('form.merch.labelSizeFemale');
+        case Gender.male:
+          return i18n.global.t('form.merch.labelSizeMale');
+        case Gender.unisex:
+          return i18n.global.t('form.merch.labelSizeUnisex');
+        default:
+          return '';
+      }
     });
 
     /**
      * Checks if given option is selected.
      * Used to display "selected" version of the card button.
-     * @param option FormCardMerchType
+     * @param option MerchandiseCard
      */
-    const isSelected = (option: FormCardMerchType): boolean => {
-      return selectedOption.value?.value === option.value;
+    const isSelected = (option: MerchandiseCard): boolean => {
+      return (
+        !!selectedOption.value &&
+        !!option.itemIds?.includes(selectedOption.value?.id)
+      );
     };
 
-    // dialog
-    const isOpen = ref<boolean>(false);
+    /**
+     * When gender changes, find appropriate card option.
+     * Then run onSelectCardOption logic without opening the dialog.
+     */
+    const onGenderChange = (newGender: string) => {
+      logger?.debug(`Gender was changed to <${newGender}>.`);
+      // find card option in merchandiseCards
+      const cardOption = merchandiseCards.value[newGender as Gender].find(
+        (card) => card.label === selectedOption.value?.label,
+      );
+      if (cardOption) {
+        logger?.debug(
+          `Card option for gender <${newGender}> has been` +
+            ` found <${JSON.stringify(cardOption, null, 2)}>.`,
+        );
+        onSelectCardOption(cardOption, false);
+      } else {
+        logger?.debug(`No card option found for gender <${newGender}>.`);
+        return;
+      }
+    };
+
+    // watch for gender changes
+    watch(selectedGender, onGenderChange);
 
     /**
      * Handles the card "select" button click.
      * Opens the dialog with more details.
-     * @param option FormCardMerchType
+     * @param option MerchandiseCard
      */
-    const onOptionSelect = (option: FormCardMerchType): void => {
-      selectedOption.value = option;
-      isOpen.value = true;
+    const onSelectCardOption = (
+      option: MerchandiseCard,
+      openDialog: boolean = true,
+    ): void => {
+      // find items from the given card option
+      const cardItems = merchandiseItems.value.filter((item) =>
+        option.itemIds?.includes(item.id),
+      );
+      logger?.debug(`Card items <${JSON.stringify(cardItems, null, 2)}>.`);
+      // find item that matches current selected size (compares string labels)
+      const item = cardItems.find(
+        (item) => item.size === selectedOption.value?.size,
+      );
+      // if same-size item exists, select it
+      if (item) {
+        logger?.debug(
+          'Found item matching current size ' +
+            `<${JSON.stringify(item, null, 2)}>.`,
+        );
+        selectedSize.value = item.id;
+        selectedGender.value = item.gender;
+        // if parameter is not overridden, open the dialog
+        if (openDialog) {
+          isOpen.value = true;
+        }
+      }
+      // if same-size item does not exist, select the first available item
+      else if (cardItems.length) {
+        logger?.debug(
+          'No item matching current size, selecting the first available ' +
+            `item <${JSON.stringify(cardItems[0], null, 2)}>.`,
+        );
+        selectedGender.value = cardItems[0].gender;
+        selectedSize.value = cardItems[0].id;
+        // if parameter is not overridden, open the dialog
+        if (openDialog) {
+          isOpen.value = true;
+        }
+      }
+      // if there are no items, do nothing
+      else {
+        logger?.debug('No items match the selected option.');
+      }
     };
 
     /**
@@ -233,7 +248,7 @@ export default defineComponent({
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
-    const onCheckboxUpdate = function (val) {
+    const onCheckboxUpdate = function (val: boolean): void {
       if (!val) {
         nextTick(() => {
           tabsMerchRef.value?.$el.scrollIntoView({
@@ -245,24 +260,29 @@ export default defineComponent({
     };
 
     return {
-      optionsFemale,
+      currentItemLabelSize,
+      formMerchRef,
       Gender,
       isNotMerch,
       isOpen,
       newsletter,
-      optionsGender,
+      optionsFemale,
       optionsMale,
+      optionsUnisex,
       phone,
-      formMerchRef,
       selectedOption,
       selectedSize,
       selectedGender,
+      currentGenderOptions,
+      currentSizeOptions,
       trackDelivery,
-      onOptionSelect,
+      onSelectCardOption,
       onSubmit,
       isSelected,
       tabsMerchRef,
       onCheckboxUpdate,
+      isLoading,
+      merchandiseCards,
     };
   },
 });
@@ -322,6 +342,12 @@ export default defineComponent({
         :label="$t('global.male')"
         data-cy="list-merch-tab-male"
       />
+      <!-- Button: Unisex -->
+      <q-tab
+        :name="Gender.unisex"
+        :label="$t('global.unisex')"
+        data-cy="list-merch-tab-unisex"
+      />
     </q-tabs>
 
     <q-separator />
@@ -335,11 +361,11 @@ export default defineComponent({
           <FormCardMerch
             v-for="option in optionsFemale"
             :option="option"
-            :key="`${option.value}-${Gender.female}`"
+            :key="`${option.label}-${Gender.female}`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-female"
-            @select-option="onOptionSelect(option)"
+            @select-option="onSelectCardOption(option)"
           />
         </div>
       </q-tab-panel>
@@ -351,32 +377,43 @@ export default defineComponent({
           <FormCardMerch
             v-for="option in optionsMale"
             :option="option"
-            :key="`${option.value}-${Gender.male}`"
+            :key="`${option.label}-${Gender.male}`"
             :selected="isSelected(option)"
             class="col-12 col-md-6 col-lg-4"
             data-cy="form-card-merch-male"
-            @select-option="onOptionSelect(option)"
+            @select-option="onSelectCardOption(option)"
+          />
+        </div>
+      </q-tab-panel>
+
+      <!-- Tab panel: Unisex -->
+      <q-tab-panel :name="Gender.unisex">
+        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+          <!-- Card: Merch (includes dialog) -->
+          <FormCardMerch
+            v-for="option in optionsUnisex"
+            :option="option"
+            :key="`${option.label}-${Gender.unisex}`"
+            :selected="isSelected(option)"
+            class="col-12 col-md-6 col-lg-4"
+            data-cy="form-card-merch-unisex"
+            @select-option="onSelectCardOption(option)"
           />
         </div>
       </q-tab-panel>
     </q-tab-panels>
 
     <!-- Input: Merch size (card) - duplicated in dialog -->
-    <div v-if="selectedOption" class="q-pt-sm">
+    <div v-if="currentSizeOptions.length > 1" class="q-pt-sm">
       <span
         class="text-caption text-weight-medium text-grey-10"
-        v-if="selectedGender === Gender.female"
-        >{{ $t('form.merch.labelSizeFemale') }}</span
-      >
-      <span
-        class="text-caption text-weight-medium text-grey-10"
-        v-else-if="selectedGender === Gender.male"
-        >{{ $t('form.merch.labelSizeMale') }}</span
+        v-if="currentItemLabelSize"
+        >{{ currentItemLabelSize }}</span
       >
       <form-field-radio-required
         inline
         v-model="selectedSize"
-        :options="selectedOption.sizes"
+        :options="currentSizeOptions"
         class="q-mt-sm"
         data-cy="form-field-merch-size"
       />
@@ -416,44 +453,39 @@ export default defineComponent({
     <dialog-default v-model="isOpen" data-cy="dialog-merch">
       <template #title>
         <!-- Merch Title -->
-        <span v-if="selectedOption">{{ selectedOption.dialogTitle }}</span>
+        <span v-if="selectedOption">{{ selectedOption.label }}</span>
       </template>
       <template #content>
         <div v-if="selectedOption">
           <!-- Merch Image Slider -->
-          <slider-merch :items="selectedOption.dialogImages" />
+          <slider-merch :items="selectedOption.images" />
           <!-- Merch Description -->
-          <div v-html="selectedOption.dialogDescription"></div>
+          <div v-html="selectedOption.description"></div>
           <q-form ref="formMerchRef">
             <!-- Input: Merch gender -->
-            <div class="q-pt-sm">
+            <div v-if="currentGenderOptions.length" class="q-pt-sm">
               <span class="text-caption text-weight-medium text-grey-10">{{
                 $t('form.merch.labelVariant')
               }}</span>
               <form-field-radio-required
                 inline
                 v-model="selectedGender"
-                :options="selectedOption.gender"
+                :options="currentGenderOptions"
                 class="q-mt-sm"
                 data-cy="form-field-merch-gender"
               />
             </div>
             <!-- Input: Merch size (dialog) - duplicated in card -->
-            <div class="q-pt-sm">
+            <div class="q-pt-sm" v-if="currentSizeOptions.length > 1">
               <span
                 class="text-caption text-weight-medium text-grey-10"
-                v-if="selectedGender === Gender.female"
-                >{{ $t('form.merch.labelSizeFemale') }}</span
-              >
-              <span
-                class="text-caption text-weight-medium text-grey-10"
-                v-else-if="selectedGender === Gender.male"
-                >{{ $t('form.merch.labelSizeMale') }}</span
+                v-if="currentItemLabelSize"
+                >{{ currentItemLabelSize }}</span
               >
               <form-field-radio-required
                 inline
                 v-model="selectedSize"
-                :options="selectedOption.sizes"
+                :options="currentSizeOptions"
                 class="q-mt-sm"
                 data-cy="form-field-merch-size"
               />

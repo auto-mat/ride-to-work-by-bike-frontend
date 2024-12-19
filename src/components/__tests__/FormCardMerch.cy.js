@@ -75,7 +75,7 @@ describe('<FormCardMerch>', () => {
           .and('have.color', black)
           .and('contain', option.author)
           .and('contain', option.material)
-          .and('contain', option.sizes[0].label);
+          .and('contain', option.sizeOptions[0].label);
       });
     });
 
@@ -83,6 +83,52 @@ describe('<FormCardMerch>', () => {
       cy.dataCy('form-card-merch-button')
         .should('be.visible')
         .and('contain.text', i18n.global.t('navigation.select'));
+    });
+  });
+
+  context('localhost image', () => {
+    beforeEach(() => {
+      cy.fixture('cardMerchLocalhost').then((option) => {
+        cy.mount(FormCardMerch, {
+          props: {
+            option: option,
+          },
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders card with image and title', () => {
+      cy.fixture('cardMerchLocalhost').then((option) => {
+        cy.dataCy('form-card-merch').should('be.visible');
+        // rounded corners
+        cy.dataCy('form-card-merch')
+          .should(
+            'have.css',
+            'border-radius',
+            rideToWorkByBikeConfig.borderRadiusCard,
+          )
+          .and('have.css', 'padding', '16px');
+        // remove leading slash from image if it exists
+        const imagePath = option.image.replace(/^\//, '');
+        // ensure that backendBaseUrl ends with a slash
+        const baseUrl = rideToWorkByBikeConfig.backendBaseUrl.replace(
+          /\/?$/,
+          '/',
+        );
+        const imageUrl = baseUrl + imagePath;
+        // image
+        cy.dataCy('form-card-merch-image')
+          .find('img')
+          .should('have.attr', 'src', imageUrl);
+        // title
+        cy.dataCy('form-card-merch-title')
+          .should('be.visible')
+          .and('have.css', 'font-size', '16px')
+          .and('have.css', 'font-weight', '700')
+          .and('have.color', black)
+          .and('contain', option.label);
+      });
     });
   });
 

@@ -31,19 +31,19 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103131&mode=dev)
  */
 
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // types
-import type { FormCardMerchType } from 'src/components/types/Form';
+import type { MerchandiseCard } from '../types/Merchandise';
 
 export default defineComponent({
   name: 'FormCardMerch',
   props: {
     option: {
-      type: Object as () => FormCardMerchType,
+      type: Object as () => MerchandiseCard,
       required: true,
     },
     selected: {
@@ -52,14 +52,41 @@ export default defineComponent({
     },
   },
   emits: ['select-option'],
-  setup() {
+  setup(props, { emit }) {
     const borderRadius: string = rideToWorkByBikeConfig.borderRadiusCard;
     const borderRadiusSmall: string =
       rideToWorkByBikeConfig.borderRadiusCardSmall;
 
+    const selectOption = (option: MerchandiseCard) => {
+      // only emit if option is not selected
+      if (!props.selected) {
+        emit('select-option', option);
+      }
+    };
+
+    const optionImage = computed(() => {
+      if (URL.canParse(props.option.image)) {
+        const url = new URL(props.option.image);
+        // Check if URL has a valid domain and protocol
+        if (url.hostname && url.protocol) {
+          return url.toString();
+        }
+      }
+      // remove leading slash from image if it exists
+      const imagePath = props.option.image.replace(/^\//, '');
+      // ensure that backendBaseUrl ends with a slash
+      const baseUrl = rideToWorkByBikeConfig.backendBaseUrl.replace(
+        /\/?$/,
+        '/',
+      );
+      return baseUrl + imagePath;
+    });
+
     return {
       borderRadius,
       borderRadiusSmall,
+      optionImage,
+      selectOption,
     };
   },
 });
@@ -71,12 +98,13 @@ export default defineComponent({
     :style="{ 'border-radius': borderRadius, 'max-width': '400px' }"
     class="q-pa-md"
     data-cy="form-card-merch"
+    :data-selected="selected ? 'true' : 'false'"
   >
     <q-card-section class="q-pa-none" data-cy="form-card-merch-top">
       <!-- Image -->
       <q-img
         ratio="1.33"
-        :src="option.image"
+        :src="optionImage"
         data-cy="form-card-merch-image"
         :style="{ 'border-radius': borderRadiusSmall }"
       />
@@ -88,7 +116,7 @@ export default defineComponent({
         <a
           href="#"
           class="text-black"
-          @click.prevent="$emit('select-option', option)"
+          @click.prevent="selectOption(option)"
           data-cy="form-card-merch-link"
           >{{ option.label }}</a
         >
@@ -97,20 +125,24 @@ export default defineComponent({
       <dl class="q-my-sm" data-cy="form-card-merch-parameters">
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelSizes') }}:</dt>
-          <dd class="text-weight-bold">
-            <span v-for="(size, index) in option.sizes" :key="size.label">
+          <dd v-if="option.sizeOptions" class="text-weight-bold">
+            <span v-for="(size, index) in option.sizeOptions" :key="size.label">
               {{ size.label }}
-              <span v-if="index < option.sizes.length - 1">, </span>
+              <span v-if="index < option.sizeOptions.length - 1">, </span>
             </span>
           </dd>
         </div>
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelAuthor') }}:</dt>
-          <dd class="text-weight-bold">{{ option.author }}</dd>
+          <dd v-if="option.author" class="text-weight-bold">
+            {{ option.author }}
+          </dd>
         </div>
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelMaterial') }}:</dt>
-          <dd class="text-weight-bold">{{ option.material }}</dd>
+          <dd v-if="option.material" class="text-weight-bold">
+            {{ option.material }}
+          </dd>
         </div>
       </dl>
     </q-card-section>
@@ -120,26 +152,26 @@ export default defineComponent({
     >
       <!-- Button: more info -->
       <q-btn
-        v-show="!selected"
+        v-if="!selected"
         unelevated
         rounded
         outline
         color="primary"
         class="full-width"
-        @click.prevent="$emit('select-option', option)"
+        @click.prevent="selectOption(option)"
         data-cy="button-more-info"
       >
         {{ $t('navigation.select') }}
       </q-btn>
       <q-btn
-        v-show="selected"
+        v-if="selected"
         unelevated
         rounded
         color="secondary"
         text-color="primary"
         icon-right="done"
         class="full-width"
-        @click.prevent="$emit('select-option', option)"
+        :disable="true"
         data-cy="button-selected"
       >
         {{ $t('navigation.selected') }}
