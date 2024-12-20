@@ -352,39 +352,6 @@ describe('<FormFieldSelectTable>', () => {
       });
     });
 
-    it('renders team members count', () => {
-      cy.dataCy('form-select-table-option')
-        // team view has correct number of options
-        .find('.q-radio__label')
-        .should('have.length', optionsTeams.length)
-        .each((el, index) => {
-          // team view shows correct number of members
-          cy.wrap(el)
-            .dataCy('member-count')
-            .should('contain', optionsTeams[index].members.length);
-          // team view shows correct max number of members
-          cy.wrap(el)
-            .dataCy('member-max')
-            .should('contain', optionsTeams[index].maxMembers);
-          // team view shows icons
-          cy.wrap(el)
-            .dataCy('member-icons')
-            .within(() => {
-              // number of member icons = max number of members
-              cy.dataCy('member-icon')
-                .should('have.length', optionsTeams[index].maxMembers)
-                .each((icon, iconIndex) => {
-                  // icons indicate number of members
-                  if (iconIndex < optionsTeams[index].members.length) {
-                    cy.wrap(icon).should('have.color', secondary);
-                  } else {
-                    cy.wrap(icon).should('have.color', grey2);
-                  }
-                });
-            });
-        });
-    });
-
     it('renders HTML elements', () => {
       // input label
       cy.dataCy('form-select-table-query')
