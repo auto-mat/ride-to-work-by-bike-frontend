@@ -392,7 +392,7 @@ export default defineComponent({
                             :class="[
                               i <= item.members.length
                                 ? 'text-secondary'
-                                : 'text-grey-4',
+                                : 'text-grey-2',
                             ]"
                             data-cy="member-icon"
                           />

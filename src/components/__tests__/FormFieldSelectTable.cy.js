@@ -18,7 +18,7 @@ const { contactEmail } = rideToWorkByBikeConfig;
 // colors
 const { getPaletteColor } = colors;
 const secondary = getPaletteColor('secondary');
-const grey4 = getPaletteColor('grey-4');
+const grey2 = getPaletteColor('grey-2');
 
 describe('<FormFieldSelectTable>', () => {
   let options;
@@ -378,7 +378,7 @@ describe('<FormFieldSelectTable>', () => {
                   if (iconIndex < optionsTeams[index].members.length) {
                     cy.wrap(icon).should('have.color', secondary);
                   } else {
-                    cy.wrap(icon).should('have.color', grey4);
+                    cy.wrap(icon).should('have.color', grey2);
                   }
                 });
             });
@@ -524,7 +524,7 @@ describe('<FormFieldSelectTable>', () => {
                   if (iconIndex < optionsTeams[index].members.length) {
                     cy.wrap(icon).should('have.color', secondary);
                   } else {
-                    cy.wrap(icon).should('have.color', grey4);
+                    cy.wrap(icon).should('have.color', grey2);
                   }
                 });
             });
