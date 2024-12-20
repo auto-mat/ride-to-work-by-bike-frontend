@@ -263,6 +263,15 @@ export default defineComponent({
       selectOrganizationRef,
     });
 
+    const isDisabledOption = (option: FormSelectTableOption): boolean => {
+      if (props.organizationLevel === OrganizationLevel.team) {
+        if (option?.members && option?.maxMembers) {
+          return option.members.length >= option.maxMembers;
+        }
+      }
+      return false;
+    };
+
     return {
       borderRadius,
       organizationNew,
@@ -277,6 +286,7 @@ export default defineComponent({
       query,
       teamNew,
       titleDialog,
+      isDisabledOption,
       isFilled,
       onClose,
       onSubmit,
@@ -344,52 +354,55 @@ export default defineComponent({
             v-slot="{ item }"
           >
             <q-item tag="label" v-ripple>
-              <q-item-section avatar>
+              <q-item-section>
                 <q-radio
                   v-model="inputValue"
                   :val="item.value"
-                  :label="item.label"
                   color="primary"
+                  :disable="isDisabledOption(item)"
                   data-cy="form-select-table-option"
-                />
-              </q-item-section>
-              <!-- Additional description
-              <q-item-section>
-                <q-item-label>Label</q-item-label>
-                <q-item-label caption>Description</q-item-label>
-              </q-item-section>
-              -->
-            </q-item>
-            <!-- REQUIRE CHANGE IT
-            <!~~ Slot: Option label ~~>
-            <template v-slot:label="opt">
-              <div class="full-width row items-center justify-between">
-                <span>{{ opt.label }}</span>
-                <!~~ Members count ~~>
-                <template v-if="opt.members">
-                  <div class="flex">
-                    <div :class="{ 'text-weight-bold': opt.members > 4 }">
-                      {{ opt.members }} / {{ opt.maxMembers }}
-                      {{ $t('form.team.labelMembers', opt.maxMembers) }}
-                    </div>
-                    <!~~ Member dot icons ~~>
-                    <div class="d-flex gap-4">
-                      <q-icon
-                        v-for="i in 5"
-                        :key="i"
-                        name="circle"
-                        size="8px"
-                        class="q-ml-sm"
-                        :class="[
-                          i <= opt.members ? 'text-teal-4' : 'text-grey-4',
-                        ]"
-                      />
-                    </div>
+                >
+                  <div
+                    class="full-width row q-gutter-x-md items-center justify-between"
+                  >
+                    <span>{{ item.label }}</span>
+                    <template v-if="item.members?.length > 0">
+                      <div class="row q-gutter-x-sm">
+                        <div
+                          :class="{
+                            'text-weight-bold': item.members.length > 4,
+                          }"
+                        >
+                          <span data-cy="member-count">{{
+                            item.members.length
+                          }}</span>
+                          /
+                          <span data-cy="member-max">{{
+                            item.maxMembers
+                          }}</span>
+                          {{ $t('form.team.labelMembers', item.maxMembers) }}
+                        </div>
+                        <div class="d-flex gap-4" data-cy="member-icons">
+                          <q-icon
+                            v-for="i in 5"
+                            :key="i"
+                            name="circle"
+                            size="8px"
+                            class="q-ml-sm"
+                            :class="[
+                              i <= item.members.length
+                                ? 'text-secondary'
+                                : 'text-grey-4',
+                            ]"
+                            data-cy="member-icon"
+                          />
+                        </div>
+                      </div>
+                    </template>
                   </div>
-                </template>
-              </div>
-            </template>
-            -->
+                </q-radio>
+              </q-item-section>
+            </q-item>
           </q-virtual-scroll>
         </q-card-section>
         <!-- Separator -->

@@ -1,3 +1,5 @@
+import { ref } from 'vue';
+import { colors } from 'quasar';
 import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
@@ -7,13 +9,22 @@ import {
   OrganizationLevel,
   OrganizationType,
 } from 'src/components/types/Organization';
+import { vModelAdapter } from 'app/test/cypress/utils';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useApiGetTeams } from 'src/composables/useApiGetTeams';
 
 const { contactEmail } = rideToWorkByBikeConfig;
 
+// colors
+const { getPaletteColor } = colors;
+const secondary = getPaletteColor('secondary');
+const grey4 = getPaletteColor('grey-4');
+
 describe('<FormFieldSelectTable>', () => {
   let options;
+  let optionsTeams;
   let subsidiaryId;
+  const model = ref(null);
 
   before(() => {
     setActivePinia(createPinia());
@@ -31,6 +42,17 @@ describe('<FormFieldSelectTable>', () => {
           options = organizations.map(mapOrganizationToOption);
         },
       );
+    });
+    cy.fixture('apiGetTeamsResponse').then((apiGetTeamsResponse) => {
+      cy.fixture('apiGetTeamsResponseNext').then((apiGetTeamsResponseNext) => {
+        const teams = [
+          ...apiGetTeamsResponse.results,
+          ...apiGetTeamsResponseNext.results,
+        ];
+        // map teams to options
+        const { mapTeamsToOptions } = useApiGetTeams();
+        optionsTeams = mapTeamsToOptions(teams);
+      });
     });
     // set common subsidiaryId from fixture
     cy.fixture('formOrganizationOptions').then((formOrganizationOptions) => {
@@ -323,11 +345,44 @@ describe('<FormFieldSelectTable>', () => {
       cy.interceptTeamPostApi(rideToWorkByBikeConfig, i18n, subsidiaryId);
       cy.mount(FormFieldSelectTable, {
         props: {
-          options: options,
+          ...vModelAdapter(model),
+          options: optionsTeams,
           organizationLevel: OrganizationLevel.team,
         },
       });
-      cy.viewport('macbook-16');
+    });
+
+    it('renders team members count', () => {
+      cy.dataCy('form-select-table-option')
+        // team view has correct number of options
+        .find('.q-radio__label')
+        .should('have.length', optionsTeams.length)
+        .each((el, index) => {
+          // team view shows correct number of members
+          cy.wrap(el)
+            .dataCy('member-count')
+            .should('contain', optionsTeams[index].members.length);
+          // team view shows correct max number of members
+          cy.wrap(el)
+            .dataCy('member-max')
+            .should('contain', optionsTeams[index].maxMembers);
+          // team view shows icons
+          cy.wrap(el)
+            .dataCy('member-icons')
+            .within(() => {
+              // number of member icons = max number of members
+              cy.dataCy('member-icon')
+                .should('have.length', optionsTeams[index].maxMembers)
+                .each((icon, iconIndex) => {
+                  // icons indicate number of members
+                  if (iconIndex < optionsTeams[index].members.length) {
+                    cy.wrap(icon).should('have.color', secondary);
+                  } else {
+                    cy.wrap(icon).should('have.color', grey4);
+                  }
+                });
+            });
+        });
     });
 
     it('renders HTML elements', () => {
@@ -365,7 +420,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('form-select-table-search').find('input').focus();
       cy.dataCy('form-select-table-search')
         .find('input')
-        .type(options[0].label.substring(0, 3));
+        .type(optionsTeams[0].label.substring(0, 3));
       // show only one option
       cy.dataCy('form-select-table-option')
         .find('.q-radio__label')
@@ -375,7 +430,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('spinner-progress-bar').should('not.exist');
       cy.dataCy('form-select-table-options')
         .find('.q-radio__label')
-        .should('have.length', options.length);
+        .should('have.length', optionsTeams.length);
     });
 
     it('validates company field correctly', () => {
@@ -441,6 +496,39 @@ describe('<FormFieldSelectTable>', () => {
           });
         });
       });
+    });
+
+    it('renders team members count', () => {
+      cy.dataCy('form-select-table-option')
+        // team view has correct number of options
+        .find('.q-radio__label')
+        .should('have.length', optionsTeams.length)
+        .each((el, index) => {
+          // team view shows correct number of members
+          cy.wrap(el)
+            .dataCy('member-count')
+            .should('contain', optionsTeams[index].members.length);
+          // team view shows correct max number of members
+          cy.wrap(el)
+            .dataCy('member-max')
+            .should('contain', optionsTeams[index].maxMembers);
+          // team view shows icons
+          cy.wrap(el)
+            .dataCy('member-icons')
+            .within(() => {
+              // number of member icons = max number of members
+              cy.dataCy('member-icon')
+                .should('have.length', optionsTeams[index].maxMembers)
+                .each((icon, iconIndex) => {
+                  // icons indicate number of members
+                  if (iconIndex < optionsTeams[index].members.length) {
+                    cy.wrap(icon).should('have.color', secondary);
+                  } else {
+                    cy.wrap(icon).should('have.color', grey4);
+                  }
+                });
+            });
+        });
     });
   });
 

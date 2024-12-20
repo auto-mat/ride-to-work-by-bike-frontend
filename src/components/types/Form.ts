@@ -1,3 +1,5 @@
+import type { OrganizationMember } from './Organization';
+
 export enum TestPaymentVoucher {
   full = 'FULL',
   half = 'HALF',
@@ -11,7 +13,7 @@ export type FormOption = {
 };
 
 export interface FormSelectTableOption extends FormOption {
-  members?: number;
+  members?: OrganizationMember[];
   maxMembers?: number;
 }
 
