@@ -33,6 +33,7 @@ export interface Campaign {
   days_active: number;
   year: string;
   campaign_type: string;
+  max_team_members: number;
 }
 
 export interface ThisCampaignResponse {

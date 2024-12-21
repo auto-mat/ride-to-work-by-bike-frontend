@@ -29,6 +29,8 @@ export const useChallengeStore = defineStore('challenge', {
      * Phase object with id `invoices` marks the ability to see invoices.
      */
     phaseSet: [] as Phase[],
+    daysActive: 0,
+    maxTeamMembers: 0,
   }),
 
   getters: {
@@ -50,6 +52,12 @@ export const useChallengeStore = defineStore('challenge', {
     getPhaseSet(): Phase[] {
       return this.phaseSet;
     },
+    getDaysActive(): number {
+      return this.daysActive;
+    },
+    getMaxTeamMembers(): number {
+      return this.maxTeamMembers;
+    },
   },
 
   actions: {
@@ -66,6 +74,26 @@ export const useChallengeStore = defineStore('challenge', {
         );
       } else {
         this.$log?.debug('No phase set found.');
+      }
+
+      if (campaigns.value.length && campaigns.value[0]?.days_active) {
+        this.$log?.debug(
+          `Saving days active <${campaigns.value[0].days_active}>.`,
+        );
+        this.daysActive = campaigns.value[0].days_active;
+        this.$log?.debug(`New days active <${this.daysActive}>.`);
+      } else {
+        this.$log?.debug('No days active found.');
+      }
+
+      if (campaigns.value.length && campaigns.value[0]?.max_team_members) {
+        this.$log?.debug(
+          `Saving max team members <${campaigns.value[0].max_team_members}>.`,
+        );
+        this.maxTeamMembers = campaigns.value[0].max_team_members;
+        this.$log?.debug(`New max team members <${this.maxTeamMembers}>.`);
+      } else {
+        this.$log?.debug('No max team members found.');
       }
     },
     /**

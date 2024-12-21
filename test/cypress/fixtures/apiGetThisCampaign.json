@@ -34,6 +34,7 @@
       "id": 263,
       "slug": "dpnk",
       "days_active": 8,
+      "max_team_members": 5,
       "year": "2024",
       "campaign_type": "https://dpnk.dopracenakole.cz/rest/campaign_type/4/"
     }

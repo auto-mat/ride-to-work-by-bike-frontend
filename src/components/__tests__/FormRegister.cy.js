@@ -442,6 +442,18 @@ describe('<FormRegister>', () => {
       cy.viewport('iphone-6');
     });
 
+    it('stores days active and max team members values in challenge store', () => {
+      cy.waitForThisCampaignApi();
+      cy.wrap(useChallengeStore()).then((challengeStore) => {
+        // access variables as computed properties
+        const daysActive = computed(() => challengeStore.getDaysActive);
+        const maxTeamMembers = computed(() => challengeStore.getMaxTeamMembers);
+        // wait until values are set
+        cy.wrap(daysActive).its('value').should('be.equal', 8);
+        cy.wrap(maxTeamMembers).its('value').should('be.equal', 5);
+      });
+    });
+
     it('shows a text with no active challenge', () => {
       cy.waitForThisCampaignApi();
       const challengeStore = useChallengeStore();
