@@ -60,6 +60,11 @@ apiMessageError = "Načítání měst selhalo."
 apiMessageErrorWithMessage = "Načítání měst selhalo. Chyba: {error}"
 apiMessageSuccess = "Města byla úspěšně načtena."
 
+[getDiscountCoupon]
+apiMessageError = "Uplatnění kuponu selhalo."
+apiMessageErrorWithMessage = "Uplatnění kuponu selhalo. Chyba: {error}"
+apiMessageSuccess = "Kupon byl úspěšně uplatněn."
+
 [getMerchandise]
 apiMessageError = "Načítání startovních balíčků selhalo."
 apiMessageErrorWithMessage = "Načítání startovních balíčků selhalo. Chyba: {error}"

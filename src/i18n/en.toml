@@ -60,6 +60,11 @@ apiMessageError = "Fetching cities failed."
 apiMessageErrorWithMessage = "Fetching cities failed. Error: {error}"
 apiMessageSuccess = "Cities fetched successfully."
 
+[getDiscountCoupon]
+apiMessageError = "Voucher could not be applied."
+apiMessageErrorWithMessage = "Voucher could not be applied. Error: {error}"
+apiMessageSuccess = "Voucher applied successfully."
+
 [getMerchandise]
 apiMessageError = "Fetching merchandise failed."
 apiMessageErrorWithMessage = "Fetching merchandise failed. Error: {error}"

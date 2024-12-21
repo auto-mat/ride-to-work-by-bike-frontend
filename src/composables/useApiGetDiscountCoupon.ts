@@ -1,0 +1,80 @@
+// libraries
+import { ref } from 'vue';
+
+// composables
+import { useApi } from './useApi';
+
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
+// stores
+import { useLoginStore } from '../stores/login';
+
+// types
+import type { Logger } from '../components/types/Logger';
+import type {
+  DiscountCouponResponse,
+  ValidatedCoupon,
+  useApiGetDiscountCouponReturn,
+} from '../components/types/Coupon';
+
+// utils
+import { requestDefaultHeader, requestTokenHeader } from '../utils';
+
+/**
+ * Get discount coupon composable
+ * Used for validating discount coupons
+ * @param {Logger | null} logger
+ * @returns {useApiGetDiscountCouponReturn}
+ */
+export const useApiGetDiscountCoupon = (
+  logger: Logger | null,
+): useApiGetDiscountCouponReturn => {
+  const isLoading = ref<boolean>(false);
+  const loginStore = useLoginStore();
+  const { apiFetch } = useApi();
+
+  /**
+   * Validate discount coupon
+   * @param {string} code - coupon code to validate
+   * @returns {Promise<ValidatedCoupon>} - promise resolving to validation result
+   */
+  const validateCoupon = async (code: string): Promise<ValidatedCoupon> => {
+    logger?.info(`Validating discount coupon <${code}>.`);
+    isLoading.value = true;
+
+    // append access token into HTTP header
+    const requestTokenHeader_ = { ...requestTokenHeader };
+    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+
+    const { data } = await apiFetch<DiscountCouponResponse>({
+      endpoint: `${rideToWorkByBikeConfig.urlApiDiscountCoupon}${code}`,
+      method: 'get',
+      translationKey: 'getDiscountCoupon',
+      showSuccessMessage: true,
+      headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
+      logger,
+    });
+
+    const coupon = data?.results?.[0];
+
+    // return unified response
+    const response: ValidatedCoupon = {
+      valid: !!coupon?.available,
+      discount: coupon?.discount || 0,
+      name: coupon?.name || '',
+    };
+
+    logger?.debug(
+      `Discount coupon validation response <${JSON.stringify(response, null, 2)}>.`,
+    );
+
+    isLoading.value = false;
+    return response;
+  };
+
+  return {
+    isLoading,
+    validateCoupon,
+  };
+};

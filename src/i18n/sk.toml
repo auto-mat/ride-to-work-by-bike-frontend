@@ -55,6 +55,11 @@ apiMessageError = "Načítanie fáz výzvy zlyhalo."
 apiMessageErrorWithMessage = "Načítanie fáz výzvy zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Fázy výzvy boli úspešne načítané."
 
+[getDiscountCoupon]
+apiMessageError = "Uplatnenie kupónu zlyhalo."
+apiMessageErrorWithMessage = "Uplatnenie kupónu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Kupón bol úspešne uplatnený."
+
 [getCities]
 apiMessageError = "Načítanie miest zlyhalo."
 apiMessageErrorWithMessage = "Načítanie miest zlyhalo. Chyba: {error}"
