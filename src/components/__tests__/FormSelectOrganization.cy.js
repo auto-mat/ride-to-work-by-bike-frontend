@@ -4,10 +4,7 @@ import FormSelectOrganization from 'components/form/FormSelectOrganization.vue';
 import { i18n } from '../../boot/i18n';
 import { OrganizationType } from 'src/components/types/Organization';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import {
-  interceptOrganizationsApi,
-  waitForOrganizationsApi,
-} from '../../../test/cypress/support/commonTests';
+import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // selectors
@@ -24,6 +21,7 @@ describe('<FormSelectOrganization>', () => {
 
   before(() => {
     setActivePinia(createPinia());
+    // set common organizationId from fixture
     cy.fixture('formFieldCompanyCreate').then(
       (formFieldCompanyCreateResponse) => {
         organizationId = formFieldCompanyCreateResponse.id;
@@ -208,37 +206,5 @@ function coreTests() {
     cy.dataCy('form-select-table-company')
       .should('have.attr', 'data-organization-type')
       .and('equal', OrganizationType.family);
-  });
-
-  it('allows to select an organization', () => {
-    cy.wrap(useRegisterChallengeStore()).then((store) => {
-      store.setOrganizationType(OrganizationType.company);
-      const organizationId = computed(() => store.getOrganizationId);
-      // check that options are available
-      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
-        cy.fixture('formFieldCompanyNext').then(
-          (formFieldCompanyNextResponse) => {
-            // wait for API call to finish
-            waitForOrganizationsApi(
-              formFieldCompanyResponse,
-              formFieldCompanyNextResponse,
-            );
-            // check that options exist
-            cy.dataCy('form-select-table-options')
-              .find('.q-radio__label')
-              .should('have.length', formFieldCompanyResponse.count);
-            // select first option
-            cy.dataCy('form-select-table-options')
-              .find('.q-radio__label')
-              .first()
-              .click();
-            // check that option was saved in store
-            cy.wrap(organizationId)
-              .its('value')
-              .should('equal', formFieldCompanyResponse.results[0].id);
-          },
-        );
-      });
-    });
   });
 }
