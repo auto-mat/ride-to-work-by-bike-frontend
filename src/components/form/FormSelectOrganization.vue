@@ -116,6 +116,7 @@ export default defineComponent({
       );
       // wait for computed property `options` to update
       await nextTick();
+      // lazy load options array with appended new organization
       opts.value = options.value;
     };
 
