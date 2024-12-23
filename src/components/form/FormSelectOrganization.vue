@@ -47,10 +47,6 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-    // template ref for form-field-company-address
-    const formFieldCompanyAddressRef = ref<
-      typeof FormFieldCompanyAddress | null
-    >(null);
     const formFieldSelectTableRef = ref<typeof FormFieldSelectTable | null>(
       null,
     );
@@ -124,7 +120,6 @@ export default defineComponent({
     };
 
     return {
-      formFieldCompanyAddressRef,
       formFieldSelectTableRef,
       isLoading,
       organizationId,
@@ -153,7 +148,6 @@ export default defineComponent({
       data-cy="form-select-table-company"
     />
     <form-field-company-address
-      ref="formFieldCompanyAddressRef"
       v-model="subsidiaryId"
       data-cy="form-company-address"
       @close:addSubsidiaryDialog="onCloseAddSubsidiaryDialog"

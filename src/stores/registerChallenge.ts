@@ -94,5 +94,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
   },
 
-  persist: true,
+  persist: {
+    omit: ['subsidiaries'],
+  },
 });
