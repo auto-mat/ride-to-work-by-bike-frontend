@@ -33,10 +33,7 @@ import { OrganizationLevel, OrganizationType } from '../types/Organization';
 // types
 import type { FormSelectOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
-import type {
-  OrganizationOption,
-  OrganizationSubsidiary,
-} from '../types/Organization';
+import type { OrganizationOption } from '../types/Organization';
 import type { PostOrganizationResponse } from '../types/apiOrganization';
 
 // stores
@@ -54,9 +51,11 @@ export default defineComponent({
     const formFieldCompanyAddressRef = ref<
       typeof FormFieldCompanyAddress | null
     >(null);
+    const formFieldSelectTableRef = ref<typeof FormFieldSelectTable | null>(
+      null,
+    );
 
     const opts = ref<FormSelectOption[]>([]);
-    const formFieldSelectTableRef = ref(null);
     const { options, organizations, isLoading, loadOrganizations } =
       useApiGetOrganizations(logger);
 
@@ -99,9 +98,15 @@ export default defineComponent({
     const onCloseAddSubsidiaryDialog = () => {
       // Run organization validation proccess before open add subsidiary dialog
       logger?.info('Run select organization widget validation process.');
-      formFieldSelectTableRef.value.selectOrganizationRef.validate();
+      if (formFieldSelectTableRef.value) {
+        formFieldSelectTableRef.value.selectOrganizationRef.validate();
+      }
     };
 
+    /**
+     * Create new organization option.
+     * @param {PostOrganizationResponse} data - The new organization data.
+     */
     const onCreateOption = async (
       data: PostOrganizationResponse,
     ): Promise<void> => {
@@ -113,22 +118,13 @@ export default defineComponent({
       logger?.debug(
         `Organizations array updated to <${JSON.stringify(organizations.value, null, 2)}>.`,
       );
-      // lazy load new options
+      // wait for computed property `options` to update
       await nextTick();
       opts.value = options.value;
     };
 
-    const onCreateSubsidiary = (data: OrganizationSubsidiary): void => {
-      logger?.debug(
-        `Append new subsidiary <${JSON.stringify(data, null, 2)}> to subsidiary options.`,
-      );
-      // append new subsidiary to subsidiary options
-      if (formFieldCompanyAddressRef.value) {
-        formFieldCompanyAddressRef.value.appendSubsidiaryResults([data]);
-      }
-    };
-
     return {
+      formFieldCompanyAddressRef,
       formFieldSelectTableRef,
       isLoading,
       organizationId,
@@ -138,7 +134,6 @@ export default defineComponent({
       organizationType,
       onCloseAddSubsidiaryDialog,
       onCreateOption,
-      onCreateSubsidiary,
     };
   },
 });
@@ -147,15 +142,14 @@ export default defineComponent({
 <template>
   <div data-cy="form-select-organization">
     <form-field-select-table
+      ref="formFieldSelectTableRef"
       v-model="organizationId"
       :loading="isLoading"
       :options="opts"
       :organization-level="OrganizationLevel.organization"
       :organization-type="organizationType"
       :data-organization-type="organizationType"
-      ref="formFieldSelectTableRef"
       @create:option="onCreateOption"
-      @create:subsidiary="onCreateSubsidiary"
       data-cy="form-select-table-company"
     />
     <form-field-company-address

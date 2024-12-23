@@ -74,6 +74,7 @@ import {
   FormSelectTableOption,
   FormTeamFields,
 } from '../types/Form';
+import type { OrganizationSubsidiary } from '../types/Organization';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';
@@ -121,7 +122,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ['update:modelValue', 'create:option', 'create:subsidiary'],
+  emits: ['update:modelValue', 'create:option'],
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
 
@@ -204,6 +205,14 @@ export default defineComponent({
         registerChallengeStore.setSubsidiaryId(value),
     });
 
+    const onChangeOption = (value: number | null): void => {
+      logger?.debug(`Organization option changed <${value}>`);
+      logger?.debug('Resetting subsidiary ID to null');
+      registerChallengeStore.setSubsidiaryId(null);
+      logger?.debug('Reloading subsidiaries');
+      registerChallengeStore.loadSubsidiariesToStore(logger);
+    };
+
     /**
      * Submit dialog form based on organization level
      * If `company`, create a new company (and subsidiary)
@@ -231,20 +240,14 @@ export default defineComponent({
         logger?.debug(
           `New organization was created with ID <${organizationData.id}> and name <${organizationData.name}>.`,
         );
-        /**
-         * Set modelValue (organization ID)
-         * ! Careful, this automatically resets subsidiary ID to null
-         * Subsidiary creation is done after this and result
-         * is manually appended to subsidiay options array.
-         */
+
         logger?.debug(
           `Updating organization model ID from <${inputValue.value}> to <${organizationData.id}>`,
         );
+        // set organization ID in store
         inputValue.value = organizationData.id;
-        /**
-         * Emit `create:option` event
-         * This appends new organization to the options list.
-         */
+
+        // emit event to append data to organization options
         emit('create:option', organizationData);
 
         // create subsidiary
@@ -264,11 +267,23 @@ export default defineComponent({
           );
           registerChallengeStore.setSubsidiaryId(subsidiaryData.id);
           logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
+          // create a new subsidiary array in store
+          const newSubsidiary: OrganizationSubsidiary = {
+            id: subsidiaryData.id,
+            address: {
+              street: subsidiaryData.street,
+              houseNumber: subsidiaryData.houseNumber,
+              city: subsidiaryData.city,
+              zip: subsidiaryData.zip,
+              cityChallenge: subsidiaryData.cityChallenge,
+              department: subsidiaryData.department,
+            },
+            teams: [],
+          };
+          registerChallengeStore.setSubsidiaries([newSubsidiary]);
         } else {
           logger?.error('New subsidiary data not found.');
         }
-        // emit event to append data to subsidiary options
-        emit('create:subsidiary', subsidiaryData);
 
         // close dialog
         onClose();
@@ -369,6 +384,7 @@ export default defineComponent({
       isLoading,
       onClose,
       onSubmit,
+      onChangeOption,
       OrganizationType,
       OrganizationLevel,
       selectOrganizationRef,
@@ -440,6 +456,7 @@ export default defineComponent({
                   :label="item.label"
                   color="primary"
                   data-cy="form-select-table-option"
+                  @update:model-value="onChangeOption"
                 />
               </q-item-section>
               <!-- Additional description

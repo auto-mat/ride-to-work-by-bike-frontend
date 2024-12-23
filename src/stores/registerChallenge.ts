@@ -1,10 +1,16 @@
 // libraries
 import { defineStore } from 'pinia';
 
+// composables
+import { useApiGetSubsidiaries } from 'src/composables/useApiGetSubsidiaries';
+
 // enums
 import { Gender } from '../components/types/Profile';
 import { NewsletterType } from '../components/types/Newsletter';
-import { OrganizationType } from '../components/types/Organization';
+import {
+  OrganizationSubsidiary,
+  OrganizationType,
+} from '../components/types/Organization';
 import { PaymentSubject } from '../components/enums/Payment';
 
 // types
@@ -36,6 +42,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     teamId: null as number | null,
     merchId: null as number | null,
     paymentSubject: PaymentSubject.individual,
+    subsidiaries: [] as OrganizationSubsidiary[],
+    isLoadingSubsidiaries: false,
   }),
 
   getters: {
@@ -47,6 +55,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTeamId: (state): number | null => state.teamId,
     getMerchId: (state): number | null => state.merchId,
     getPaymentSubject: (state): PaymentSubject => state.paymentSubject,
+    getSubsidiaries: (state): OrganizationSubsidiary[] => state.subsidiaries,
   },
 
   actions: {
@@ -70,6 +79,18 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setPaymentSubject(paymentSubject: PaymentSubject) {
       this.paymentSubject = paymentSubject;
+    },
+    setSubsidiaries(subsidiaries: OrganizationSubsidiary[]) {
+      this.subsidiaries = subsidiaries;
+    },
+    async loadSubsidiariesToStore(logger: Logger | null) {
+      const { subsidiaries, loadSubsidiaries } = useApiGetSubsidiaries(logger);
+      if (this.organizationId) {
+        this.isLoadingSubsidiaries = true;
+        await loadSubsidiaries(this.organizationId);
+        this.subsidiaries = subsidiaries.value;
+        this.isLoadingSubsidiaries = false;
+      }
     },
   },
 

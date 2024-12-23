@@ -76,11 +76,6 @@ describe('<FormSelectOrganization>', () => {
   context('create new organization and subsidiary', () => {
     beforeEach(() => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
-      cy.interceptSubsidiariesNewGetApi(
-        rideToWorkByBikeConfig,
-        i18n,
-        organizationId,
-      );
       interceptOrganizationsApi(
         rideToWorkByBikeConfig,
         i18n,
@@ -156,8 +151,6 @@ describe('<FormSelectOrganization>', () => {
                           cy.wrap(subsidiaryId)
                             .its('value')
                             .should('equal', apiPostSubsidiaryResponse.id);
-                          // check that subsidiaries were refetched
-                          cy.waitForSubsidiariesNewApi();
                           // check that the subsidary (address) input has correct value
                           cy.dataCy('form-company-address').should(
                             'contain',
