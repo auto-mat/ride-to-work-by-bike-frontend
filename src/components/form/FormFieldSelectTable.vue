@@ -205,12 +205,20 @@ export default defineComponent({
         registerChallengeStore.setSubsidiaryId(value),
     });
 
+    /**
+     * Triggered by clicking on an option.
+     * If organization option was changed, resets subsidiary ID and reloads
+     * subsidiaries.
+     * @param {number | null} value - ID of the selected option.
+     */
     const onChangeOption = (value: number | null): void => {
-      logger?.debug(`Organization option changed <${value}>`);
-      logger?.debug('Resetting subsidiary ID to null');
-      registerChallengeStore.setSubsidiaryId(null);
-      logger?.debug('Reloading subsidiaries');
-      registerChallengeStore.loadSubsidiariesToStore(logger);
+      if (props.organizationLevel === OrganizationLevel.organization) {
+        logger?.debug(`Organization option changed <${value}>`);
+        logger?.debug('Resetting subsidiary ID to null');
+        registerChallengeStore.setSubsidiaryId(null);
+        logger?.debug('Reloading subsidiaries');
+        registerChallengeStore.loadSubsidiariesToStore(logger);
+      }
     };
 
     /**
