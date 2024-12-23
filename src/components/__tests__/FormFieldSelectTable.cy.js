@@ -38,6 +38,7 @@ describe('<FormFieldSelectTable>', () => {
         },
       );
     });
+    // set common organizationId from fixture
     cy.fixture('formFieldCompanyCreate').then(
       (formFieldCompanyCreateResponse) => {
         organizationId = formFieldCompanyCreateResponse.id;
@@ -106,6 +107,7 @@ describe('<FormFieldSelectTable>', () => {
   context('organization company', () => {
     beforeEach(() => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      // intercept both POST and GET requests for organizations
       interceptOrganizationsApi(
         rideToWorkByBikeConfig,
         i18n,
@@ -247,6 +249,7 @@ describe('<FormFieldSelectTable>', () => {
         (apiPostSubsidiaryRequest) => {
           cy.fixture('formFieldCompanyCreateRequest').then(
             (formFieldCompanyCreateRequest) => {
+              // open add company dialog
               cy.dataCy('button-add-option').click();
               // verify that dialog is visible
               cy.dataCy('dialog-add-option').should('be.visible');
@@ -259,19 +262,21 @@ describe('<FormFieldSelectTable>', () => {
                 formFieldCompanyCreateRequest,
                 apiPostSubsidiaryRequest,
               );
-              // submit tghe form
+              // submit the form
               cy.dataCy('dialog-button-submit').click();
               // wait for API call
               cy.waitForOrganizationPostApi();
               // verify that dialog is closed
               cy.dataCy('dialog-add-option').should('not.exist');
+              // test emitted events
               cy.fixture('formFieldCompanyCreate').then(
                 (formFieldCompanyCreateResponse) => {
-                  // test emitted events
+                  // test that create:option event was emitted
                   cy.wrap(Cypress.vueWrapper.emitted('create:option')).should(
                     'have.length',
                     1,
                   );
+                  // test that event payload is correct
                   cy.wrap(
                     Cypress.vueWrapper.emitted('create:option')[0][0],
                   ).should('deep.equal', formFieldCompanyCreateResponse);
