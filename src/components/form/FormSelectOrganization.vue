@@ -95,6 +95,9 @@ export default defineComponent({
 
     const onCreateOption = (data: PostOrganizationResponse): void => {
       const newOrganization: OrganizationOption = data;
+      logger?.debug(
+        `Add new organization to organizations array <${JSON.stringify(newOrganization, null, 2)}>.`,
+      );
       organizations.value.push(newOrganization);
     };
 

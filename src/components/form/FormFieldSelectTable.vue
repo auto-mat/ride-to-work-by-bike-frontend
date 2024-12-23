@@ -75,6 +75,22 @@ import {
   FormTeamFields,
 } from '../types/Form';
 
+// utils
+import { deepObjectWithSimplePropsCopy } from '../../utils';
+
+const emptyFormCompanyFields: FormCompanyFields = {
+  name: '',
+  vatId: '',
+  address: {
+    street: '',
+    houseNumber: '',
+    city: '',
+    zip: '',
+    cityChallenge: null,
+    department: '',
+  },
+};
+
 export default defineComponent({
   name: 'FormFieldSelectTable',
   components: {
@@ -112,21 +128,12 @@ export default defineComponent({
     // user input for filtering
     const query = ref<string>('');
     const formRef = ref<typeof QForm | null>(null);
-    const organizationNew = ref<FormCompanyFields>({
-      name: '',
-      vatId: '',
-      address: {
-        street: '',
-        houseNumber: '',
-        city: '',
-        zip: '',
-        cityChallenge: null,
-        department: '',
-      },
-    });
-    const teamNew = ref<FormTeamFields>({
-      name: '',
-    });
+    const organizationNew = ref<FormCompanyFields>(
+      deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields,
+    );
+    const teamNew = ref<FormTeamFields>({ name: '' });
     const selectOrganizationRef = ref<typeof QSelect | null>(null);
 
     /**
@@ -203,66 +210,66 @@ export default defineComponent({
      * @returns {Promise<void>}
      */
     const submitDialogForm = async (): Promise<void> => {
-      // create organization
       if (props.organizationLevel === OrganizationLevel.organization) {
+        // create organization
         if (!props.organizationType) {
           logger?.info('No organization type provided.');
           return;
         }
-
         logger?.info('Create organization.');
-        const data = await createOrganization(
+        const organizationData = await createOrganization(
           organizationNew.value.name,
           organizationNew.value.vatId,
           props.organizationType,
         );
 
-        if (data?.id) {
-          logger?.debug(
-            `New organization was created with ID <${data.id}> and name <${data.name}>.`,
-          );
-
-          // create subsidiary
-          logger?.info('Create subsidiary.');
-          const subsidiaryData = await createSubsidiary(
-            data.id,
-            organizationNew.value.address,
-          );
-          if (subsidiaryData) {
-            logger?.debug(
-              `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
-            );
-            if (subsidiaryData.id) {
-              // set subsidiary ID in store
-              subsidiaryId.value = subsidiaryData.id;
-              logger?.debug(
-                `Subsidiary ID model set to <${subsidiaryId.value}>.`,
-              );
-            } else {
-              logger?.error('New subsidiary ID not found.');
-            }
-          }
-
-          /**
-           * Set modelValue
-           * This will save the organization ID into the store.
-           * That will in turn trigger the loading of subsidiary options
-           * so we do not need to manually handle the new subsidiary option.
-           */
-          inputValue.value = data.id;
-          logger?.debug(
-            `New organization model ID set to <${inputValue.value}>.`,
-          );
-          /**
-           * Emit `create:option` event
-           * This will add new organization to the options list.
-           */
-          emit('create:option', data);
-          // close dialog
-          onClose();
-        } else {
+        if (!organizationData?.id) {
           logger?.error('New organization ID not found.');
+          return;
         }
+        logger?.debug(
+          `New organization was created with ID <${organizationData.id}> and name <${organizationData.name}>.`,
+        );
+        // create subsidiary
+        logger?.info('Create subsidiary.');
+        const subsidiaryData = await createSubsidiary(
+          organizationData.id,
+          organizationNew.value.address,
+        );
+
+        if (subsidiaryData?.id) {
+          /**
+           * We are not using early return because if creating subsidiary fails
+           * we still want to run subsequent actions (setting modelValue).
+           */
+          logger?.debug(
+            `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
+          );
+          // set subsidiary ID in store
+          subsidiaryId.value = subsidiaryData.id;
+          logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
+        } else {
+          logger?.error('New subsidiary data not found.');
+        }
+
+        /**
+         * Set modelValue (organization ID)
+         * This will save the organization ID into the store.
+         * We are waiting until createSubsidiary action is done because saving
+         * modelValue triggers reloading subsidiary options list and so we
+         * do not need to manually append the new subsidiary option.
+         */
+        inputValue.value = organizationData.id;
+        logger?.debug(
+          `New organization model ID set to <${inputValue.value}>.`,
+        );
+        /**
+         * Emit `create:option` event
+         * This will add new organization to the options list.
+         */
+        emit('create:option', organizationData);
+        // close dialog
+        onClose();
       } else if (props.organizationLevel === OrganizationLevel.team) {
         logger?.info('Create team.');
         const subsidiaryId = registerChallengeStore.getSubsidiaryId;
@@ -291,6 +298,12 @@ export default defineComponent({
       if (formRef.value) {
         formRef.value.reset();
       }
+      // reset organizationNew and teamNew
+      organizationNew.value = deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields;
+      teamNew.value = { name: '' };
+      // close dialog
       isDialogOpen.value = false;
       logger?.info('Close add option modal dialog.');
     };

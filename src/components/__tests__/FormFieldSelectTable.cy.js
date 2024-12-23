@@ -1,18 +1,24 @@
+import { ref } from 'vue';
 import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 import { createPinia, setActivePinia } from 'pinia';
+import { vModelAdapter } from 'app/test/cypress/utils';
 import {
   OrganizationLevel,
   OrganizationType,
 } from 'src/components/types/Organization';
+import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+// variables
 const { contactEmail } = rideToWorkByBikeConfig;
+const model = ref(null);
 
 describe('<FormFieldSelectTable>', () => {
   let options;
+  let organizationId;
   let subsidiaryId;
 
   before(() => {
@@ -32,6 +38,11 @@ describe('<FormFieldSelectTable>', () => {
         },
       );
     });
+    cy.fixture('formFieldCompanyCreate').then(
+      (formFieldCompanyCreateResponse) => {
+        organizationId = formFieldCompanyCreateResponse.id;
+      },
+    );
     // set common subsidiaryId from fixture
     cy.fixture('formOrganizationOptions').then((formOrganizationOptions) => {
       subsidiaryId = formOrganizationOptions[0].subsidiaries[0].id;
@@ -95,8 +106,19 @@ describe('<FormFieldSelectTable>', () => {
   context('organization company', () => {
     beforeEach(() => {
       cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      interceptOrganizationsApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        OrganizationType.company,
+      );
+      cy.interceptSubsidiaryPostApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        organizationId,
+      );
       cy.mount(FormFieldSelectTable, {
         props: {
+          ...vModelAdapter(model),
           options: options,
           organizationLevel: OrganizationLevel.organization,
           organizationType: OrganizationType.company,
@@ -218,6 +240,93 @@ describe('<FormFieldSelectTable>', () => {
       // submit
       cy.dataCy('dialog-button-submit').click();
       cy.dataCy('dialog-add-option').should('not.exist');
+    });
+
+    it.only('allows to add a new organization', () => {
+      cy.fixture('apiPostSubsidiaryRequest').then(
+        (apiPostSubsidiaryRequest) => {
+          cy.fixture('formFieldCompanyCreateRequest').then(
+            (formFieldCompanyCreateRequest) => {
+              cy.dataCy('button-add-option').click();
+              // dialog
+              cy.dataCy('dialog-add-option').should('be.visible');
+              cy.dataCy('dialog-add-option')
+                .find('h3')
+                .should('be.visible')
+                .and('contain', i18n.global.t('form.company.titleAddCompany'));
+              // fill form
+              cy.dataCy('form-add-company-name')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.name);
+              cy.dataCy('form-add-company-vat-id')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.vatId);
+              cy.dataCy('form-add-subsidiary-street')
+                .find('input')
+                .type(apiPostSubsidiaryRequest.address.street);
+              cy.dataCy('form-add-subsidiary-house-number')
+                .find('input')
+                .type(apiPostSubsidiaryRequest.address.street_number);
+              cy.dataCy('form-add-subsidiary-city')
+                .find('input')
+                .type(apiPostSubsidiaryRequest.address.city);
+              cy.dataCy('form-add-subsidiary-zip')
+                .find('input')
+                .type(apiPostSubsidiaryRequest.address.psc);
+              cy.dataCy('form-add-subsidiary-city-challenge').click();
+              cy.get('.q-menu')
+                .should('be.visible')
+                .find('.q-item')
+                .first()
+                .click();
+              // submit form
+              cy.dataCy('dialog-button-submit').click();
+              // wait for API call
+              cy.waitForOrganizationCreateApi();
+              // verify that dialog is closed
+              cy.dataCy('dialog-add-option').should('not.exist');
+              cy.fixture('formFieldCompanyCreate').then(
+                (formFieldCompanyCreateResponse) => {
+                  // test emitted events
+                  cy.wrap(Cypress.vueWrapper.emitted('create:option')).should(
+                    'have.length',
+                    1,
+                  );
+                  cy.wrap(
+                    Cypress.vueWrapper.emitted('create:option')[0][0],
+                  ).should('deep.equal', formFieldCompanyCreateResponse);
+                  // test that model value was updated
+                  cy.wrap(model)
+                    .its('value')
+                    .should('eq', formFieldCompanyCreateResponse.id);
+                },
+              );
+              // open dialog again
+              cy.dataCy('button-add-option').click();
+              cy.dataCy('dialog-add-option').should('be.visible');
+              // verify that dialog form was reset
+              cy.dataCy('form-add-company-name')
+                .find('input')
+                .should('have.value', '');
+              cy.dataCy('form-add-company-vat-id')
+                .find('input')
+                .should('have.value', '');
+              cy.dataCy('form-add-subsidiary-street')
+                .find('input')
+                .should('have.value', '');
+              cy.dataCy('form-add-subsidiary-house-number')
+                .find('input')
+                .should('have.value', '');
+              cy.dataCy('form-add-subsidiary-city')
+                .find('input')
+                .should('have.value', '');
+              cy.dataCy('form-add-subsidiary-zip')
+                .find('input')
+                .should('have.value', '');
+            },
+          );
+        },
+      );
     });
   });
 
