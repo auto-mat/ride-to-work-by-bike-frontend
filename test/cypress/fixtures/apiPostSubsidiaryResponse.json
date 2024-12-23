@@ -4,9 +4,9 @@
   "active": true,
   "address": {
     "street": "Subsidiary Street",
-    "street_number": "4",
-    "recipient": "Recipient 4",
-    "psc": 50004,
-    "city": "City 4"
+    "street_number": "1",
+    "recipient": "Subsidiary Recipient",
+    "city": "Subsidiary City",
+    "psc": 12345
   }
 }

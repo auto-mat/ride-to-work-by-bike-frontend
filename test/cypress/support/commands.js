@@ -1282,3 +1282,70 @@ Cypress.Commands.add('listMerchSelectItem', (item, options = {}) => {
     cy.dataCy('dialog-merch').should('not.exist');
   }
 });
+
+/**
+ * Wait for intercept organization creation API call and compare request/response object
+ * Wait for `@createOrganization` intercept
+ */
+Cypress.Commands.add('waitForOrganizationPostApi', () => {
+  cy.fixture('formFieldCompanyCreateRequest').then(
+    (formFieldCompanyCreateRequest) => {
+      cy.fixture('formFieldCompanyCreate').then(
+        (formFieldCompanyCreateResponse) => {
+          cy.wait('@createOrganization').then(({ request, response }) => {
+            expect(request.headers.authorization).to.include(bearerTokeAuth);
+            expect(request.body).to.deep.equal({
+              name: formFieldCompanyCreateRequest.name,
+              vatId: formFieldCompanyCreateRequest.vatId,
+              organization_type:
+                formFieldCompanyCreateRequest.organization_type,
+            });
+            if (response) {
+              expect(response.statusCode).to.equal(httpSuccessfullStatus);
+              expect(response.body).to.deep.equal(
+                formFieldCompanyCreateResponse,
+              );
+            }
+          });
+        },
+      );
+    },
+  );
+});
+
+/**
+ * Fill organization and subsidiary form with data
+ * @param {Object} formFieldCompanyCreateRequest - Organization data
+ * @param {Object} apiPostSubsidiaryRequest - Subsidiary data
+ */
+Cypress.Commands.add(
+  'fillOrganizationSubsidiaryForm',
+  (formFieldCompanyCreateRequest, apiPostSubsidiaryRequest) => {
+    // fill organization data
+    cy.dataCy('form-add-company-name')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.name);
+    cy.dataCy('form-add-company-vat-id')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.vatId);
+    // fill subsidiary address data
+    cy.dataCy('form-add-subsidiary-street')
+      .find('input')
+      .type(apiPostSubsidiaryRequest.address.street);
+    cy.dataCy('form-add-subsidiary-house-number')
+      .find('input')
+      .type(apiPostSubsidiaryRequest.address.street_number);
+    cy.dataCy('form-add-subsidiary-city')
+      .find('input')
+      .type(apiPostSubsidiaryRequest.address.city);
+    cy.dataCy('form-add-subsidiary-zip')
+      .find('input')
+      .type(apiPostSubsidiaryRequest.address.psc);
+    cy.dataCy('form-add-subsidiary-department').type(
+      apiPostSubsidiaryRequest.address.recipient,
+    );
+    // select city challenge
+    cy.dataCy('form-add-subsidiary-city-challenge').click();
+    cy.get('.q-menu').should('be.visible').find('.q-item').first().click();
+  },
+);

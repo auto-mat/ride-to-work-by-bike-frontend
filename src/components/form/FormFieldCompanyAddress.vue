@@ -33,7 +33,6 @@ import DialogDefault from 'src/components/global/DialogDefault.vue';
 import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
 
 // composables
-import { useApiGetSubsidiaries } from 'src/composables/useApiGetSubsidiaries';
 import { useValidation } from 'src/composables/useValidation';
 import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 
@@ -86,18 +85,16 @@ export default defineComponent({
       ) as FormCompanyAddressFields,
     );
 
-    const {
-      subsidiaries,
-      isLoading: isLoadingSubsidiaries,
-      loadSubsidiaries,
-    } = useApiGetSubsidiaries(logger);
+    const store = useRegisterChallengeStore();
+
+    const isLoadingSubsidiaries = computed(() => store.isLoadingSubsidiaries);
+    const subsidiaries = computed(() => store.subsidiaries);
+
     const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
       useApiPostSubsidiary(logger);
     const isLoading = computed(
       () => isLoadingSubsidiaries.value || isLoadingCreateSubsidiary.value,
     );
-
-    const store = useRegisterChallengeStore();
     /**
      * If organization ID is set, load subsidiaries.
      * This ensures, that options are loaded on page refresh.
@@ -105,7 +102,7 @@ export default defineComponent({
     onMounted(async () => {
       if (store.getOrganizationId) {
         logger?.info('Loading subsidiaries.');
-        await loadSubsidiaries(store.getOrganizationId);
+        await store.loadSubsidiariesToStore(logger);
       } else {
         logger?.debug(
           `Organization was not selected <${store.getOrganizationId}>,` +
@@ -113,28 +110,9 @@ export default defineComponent({
         );
       }
     });
-    /**
-     * Watch for organization ID changes.
-     * This clears the subsidiary options and state after organization change.
-     * Then loads subsidiaries for the new organization.
-     * Should not be triggered on mounted not to clear saved subsidiary ID.
-     */
-    watch(
-      () => store.getOrganizationId,
-      (newValue) => {
-        logger?.debug(
-          `Register challenge store organization ID updated to <${newValue}>.`,
-        );
-        subsidiaryId.value = null;
-        if (newValue) {
-          logger?.info('Loading subsidiaries.');
-          loadSubsidiaries(newValue);
-        }
-      },
-    );
 
     const options = computed(() =>
-      subsidiaries.value?.map((subsidiary) => ({
+      store.getSubsidiaries?.map((subsidiary) => ({
         label: getAddressString(subsidiary.address),
         value: subsidiary.id,
       })),

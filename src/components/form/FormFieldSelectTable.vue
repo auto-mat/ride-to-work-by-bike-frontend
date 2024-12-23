@@ -57,6 +57,8 @@ import { useOrganizations } from '../../composables/useOrganizations';
 import { useSelectTable } from '../../composables/useSelectTable';
 import { useValidation } from '../../composables/useValidation';
 import { useApiPostTeam } from '../../composables/useApiPostTeam';
+import { useApiPostOrganization } from '../../composables/useApiPostOrganization';
+import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 
 // enums
 import { OrganizationType, OrganizationLevel } from '../types/Organization';
@@ -72,6 +74,23 @@ import {
   FormSelectTableOption,
   FormTeamFields,
 } from '../types/Form';
+import type { OrganizationSubsidiary } from '../types/Organization';
+
+// utils
+import { deepObjectWithSimplePropsCopy } from '../../utils';
+
+const emptyFormCompanyFields: FormCompanyFields = {
+  name: '',
+  vatId: '',
+  address: {
+    street: '',
+    houseNumber: '',
+    city: '',
+    zip: '',
+    cityChallenge: null,
+    department: '',
+  },
+};
 
 export default defineComponent({
   name: 'FormFieldSelectTable',
@@ -110,21 +129,12 @@ export default defineComponent({
     // user input for filtering
     const query = ref<string>('');
     const formRef = ref<typeof QForm | null>(null);
-    const organizationNew = ref<FormCompanyFields>({
-      name: '',
-      vatId: '',
-      address: {
-        street: '',
-        houseNumber: '',
-        city: '',
-        zip: '',
-        cityChallenge: null,
-        department: '',
-      },
-    });
-    const teamNew = ref<FormTeamFields>({
-      name: '',
-    });
+    const organizationNew = ref<FormCompanyFields>(
+      deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields,
+    );
+    const teamNew = ref<FormTeamFields>({ name: '' });
     const selectOrganizationRef = ref<typeof QSelect | null>(null);
 
     /**
@@ -159,14 +169,6 @@ export default defineComponent({
     // controls dialog visibility
     const isDialogOpen = ref<boolean>(false);
 
-    // close dialog
-    const onClose = (): void => {
-      if (formRef.value) {
-        formRef.value.reset();
-      }
-      isDialogOpen.value = false;
-    };
-
     /**
      * Validates the form.
      * If form is valid it submits the data.
@@ -187,17 +189,110 @@ export default defineComponent({
     };
 
     const { createTeam } = useApiPostTeam(logger);
+    const { isLoading: isLoadingCreateOrganization, createOrganization } =
+      useApiPostOrganization(logger);
+    const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
+      useApiPostSubsidiary(logger);
+    const isLoading = computed(
+      () =>
+        isLoadingCreateOrganization.value || isLoadingCreateSubsidiary.value,
+    );
+
     const registerChallengeStore = useRegisterChallengeStore();
+    const subsidiaryId = computed<number | null>({
+      get: (): number | null => registerChallengeStore.getSubsidiaryId,
+      set: (value: number | null) =>
+        registerChallengeStore.setSubsidiaryId(value),
+    });
+
+    /**
+     * Triggered by clicking on an option.
+     * If organization option was changed, resets subsidiary ID and reloads
+     * subsidiaries.
+     * @param {number | null} value - ID of the selected option.
+     */
+    const onChangeOption = (value: number | null): void => {
+      if (props.organizationLevel === OrganizationLevel.organization) {
+        logger?.debug(`Organization option changed <${value}>`);
+        logger?.debug('Resetting subsidiary ID to null');
+        registerChallengeStore.setSubsidiaryId(null);
+        logger?.debug('Reloading subsidiaries');
+        registerChallengeStore.loadSubsidiariesToStore(logger);
+      }
+    };
 
     /**
      * Submit dialog form based on organization level
-     * If `company`, create a new company
+     * If `company`, create a new company (and subsidiary)
      * If `team`, create a new team
      * @returns {Promise<void>}
      */
     const submitDialogForm = async (): Promise<void> => {
       if (props.organizationLevel === OrganizationLevel.organization) {
-        // TODO: Create a new company
+        // create organization
+        if (!props.organizationType) {
+          logger?.info('No organization type provided.');
+          return;
+        }
+        logger?.info('Create organization.');
+        const organizationData = await createOrganization(
+          organizationNew.value.name,
+          organizationNew.value.vatId,
+          props.organizationType,
+        );
+
+        if (!organizationData?.id) {
+          logger?.error('New organization ID not found.');
+          return;
+        }
+        logger?.debug(
+          `New organization was created with ID <${organizationData.id}> and name <${organizationData.name}>.`,
+        );
+
+        logger?.debug(
+          `Updating organization model ID from <${inputValue.value}> to <${organizationData.id}>.`,
+        );
+        // set organization ID in store
+        inputValue.value = organizationData.id;
+        // emit event to append data to organization options
+        emit('create:option', organizationData);
+
+        // create subsidiary
+        logger?.info('Create subsidiary.');
+        const subsidiaryData = await createSubsidiary(
+          organizationData.id,
+          organizationNew.value.address,
+        );
+        if (subsidiaryData?.id) {
+          logger?.debug(
+            `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
+          );
+          // set subsidiary ID in store
+          logger?.debug(
+            `Updating subsidiary ID from <${subsidiaryId.value}> to <${subsidiaryData.id}>`,
+          );
+          registerChallengeStore.setSubsidiaryId(subsidiaryData.id);
+          logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
+          // create a new subsidiary array
+          const newSubsidiary: OrganizationSubsidiary = {
+            id: subsidiaryData.id,
+            address: {
+              street: subsidiaryData.street,
+              houseNumber: subsidiaryData.houseNumber,
+              city: subsidiaryData.city,
+              zip: subsidiaryData.zip,
+              cityChallenge: subsidiaryData.cityChallenge,
+              department: subsidiaryData.department,
+            },
+            teams: [],
+          };
+          // set subsidiary options to array with new subsidiary
+          registerChallengeStore.setSubsidiaries([newSubsidiary]);
+        } else {
+          logger?.error('New subsidiary data not found.');
+        }
+        // close dialog
+        onClose();
       } else if (props.organizationLevel === OrganizationLevel.team) {
         logger?.info('Create team.');
         const subsidiaryId = registerChallengeStore.getSubsidiaryId;
@@ -213,13 +308,27 @@ export default defineComponent({
           // emit `create:option` event
           emit('create:option', data);
           // close dialog
-          isDialogOpen.value = false;
-          logger?.info('Close add team modal dialog.');
+          onClose();
           // store data in v-model (emits to parent component)
           inputValue.value = data.id;
           logger?.debug(`New team model ID set to <${inputValue.value}>.`);
         }
       }
+    };
+
+    // close dialog
+    const onClose = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
+      // reset organizationNew and teamNew
+      organizationNew.value = deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields;
+      teamNew.value = { name: '' };
+      // close dialog
+      isDialogOpen.value = false;
+      logger?.info('Close add option modal dialog.');
     };
 
     const { getOrganizationLabels } = useOrganizations();
@@ -278,8 +387,10 @@ export default defineComponent({
       teamNew,
       titleDialog,
       isFilled,
+      isLoading,
       onClose,
       onSubmit,
+      onChangeOption,
       OrganizationType,
       OrganizationLevel,
       selectOrganizationRef,
@@ -351,6 +462,7 @@ export default defineComponent({
                   :label="item.label"
                   color="primary"
                   data-cy="form-select-table-option"
+                  @update:model-value="onChangeOption"
                 />
               </q-item-section>
               <!-- Additional description
