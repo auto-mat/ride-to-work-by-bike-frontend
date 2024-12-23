@@ -66,6 +66,7 @@ challengeMonth = "may"
 challengeStartDate = "2024-08-01T12:00:00"
 challengeLoggingWindowDays = 8
 defaultDistanceZero = "0.00"
+defaultMaxTeamMembers = 5
 
 # Challenge registration
 entryFeePaymentMin = "390"

@@ -87,4 +87,5 @@ export type useApiGetTeamsReturn = {
   options: Ref<FormSelectTableOption[]>;
   isLoading: Ref<boolean>;
   loadTeams: (subsidiaryId: number) => Promise<void>;
+  mapTeamsToOptions: (teams: OrganizationTeam[]) => FormSelectTableOption[];
 };

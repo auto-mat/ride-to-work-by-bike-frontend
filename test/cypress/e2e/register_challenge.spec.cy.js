@@ -491,7 +491,7 @@ describe('Register Challenge page', () => {
       // Select a team
       cy.dataCy('form-select-table-team')
         .should('be.visible')
-        .find('.q-radio')
+        .find('.q-radio:not(.disabled)')
         .first()
         .click();
       // Continue to step 6
@@ -868,7 +868,7 @@ function passToStep6() {
   // select a team
   cy.dataCy('form-select-table-team')
     .should('be.visible')
-    .find('.q-radio')
+    .find('.q-radio:not(.disabled)')
     .first()
     .click();
   cy.dataCy('step-5-continue').should('be.visible').click();

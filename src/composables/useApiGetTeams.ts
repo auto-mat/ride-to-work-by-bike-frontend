@@ -113,18 +113,27 @@ export const useApiGetTeams = (logger: Logger | null): useApiGetTeamsReturn => {
 
   // Push results to options
   const options = computed<FormSelectTableOption[]>(() => {
-    return teams.value.map((team: OrganizationTeam): FormSelectTableOption => {
+    return mapTeamsToOptions(teams.value);
+  });
+
+  const mapTeamsToOptions = (
+    teams: OrganizationTeam[],
+  ): FormSelectTableOption[] => {
+    return teams.map((team: OrganizationTeam): FormSelectTableOption => {
       return {
         label: team.name,
         value: team.id,
+        members: team.members,
+        maxMembers: rideToWorkByBikeConfig.defaultMaxTeamMembers,
       };
     });
-  });
+  };
 
   return {
     teams,
     options,
     isLoading,
     loadTeams,
+    mapTeamsToOptions,
   };
 };
