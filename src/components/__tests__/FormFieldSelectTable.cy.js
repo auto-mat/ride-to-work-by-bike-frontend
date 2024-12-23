@@ -242,7 +242,7 @@ describe('<FormFieldSelectTable>', () => {
       cy.dataCy('dialog-add-option').should('not.exist');
     });
 
-    it.only('allows to add a new organization', () => {
+    it('allows to add a new organization', () => {
       cy.fixture('apiPostSubsidiaryRequest').then(
         (apiPostSubsidiaryRequest) => {
           cy.fixture('formFieldCompanyCreateRequest').then(
