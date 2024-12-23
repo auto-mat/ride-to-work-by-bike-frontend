@@ -89,6 +89,7 @@ export default defineComponent({
     const {
       subsidiaries,
       isLoading: isLoadingSubsidiaries,
+      appendSubsidiaryResults,
       loadSubsidiaries,
     } = useApiGetSubsidiaries(logger);
     const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
@@ -126,6 +127,9 @@ export default defineComponent({
           `Register challenge store organization ID updated to <${newValue}>.`,
         );
         subsidiaryId.value = null;
+        logger?.debug(
+          `Subsidiary ID reset to <${subsidiaryId.value}> as organization ID changed.`,
+        );
         if (newValue) {
           logger?.info('Loading subsidiaries.');
           loadSubsidiaries(newValue);
@@ -260,6 +264,7 @@ export default defineComponent({
       isLoadingCreateSubsidiary,
       onClose,
       onSubmit,
+      appendSubsidiaryResults,
     };
   },
 });

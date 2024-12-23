@@ -28,6 +28,7 @@ type UseApiGetSubsidiariesReturn = {
   subsidiaries: Ref<OrganizationSubsidiary[]>;
   isLoading: Ref<boolean>;
   loadSubsidiaries: (organizationId: number) => Promise<void>;
+  appendSubsidiaryResults: (results: OrganizationSubsidiary[]) => void;
 };
 
 /**
@@ -78,7 +79,7 @@ export const useApiGetSubsidiaries = (
     });
 
     if (data?.results?.length) {
-      subsidiaries.value.push(...data.results);
+      appendSubsidiaryResults(data.results);
     }
 
     // if data has multiple pages, fetch all pages
@@ -112,7 +113,7 @@ export const useApiGetSubsidiaries = (
 
     // store results
     if (data?.results?.length) {
-      subsidiaries.value.push(...data.results);
+      appendSubsidiaryResults(data.results);
     }
 
     // if data has multiple pages, fetch all pages
@@ -121,9 +122,14 @@ export const useApiGetSubsidiaries = (
     }
   };
 
+  const appendSubsidiaryResults = (results: OrganizationSubsidiary[]) => {
+    subsidiaries.value.push(...results);
+  };
+
   return {
     subsidiaries,
     isLoading,
     loadSubsidiaries,
+    appendSubsidiaryResults,
   };
 };

@@ -18,7 +18,7 @@
  */
 
 // libraries
-import { defineComponent, computed, inject, watch, ref } from 'vue';
+import { defineComponent, computed, inject, nextTick, watch, ref } from 'vue';
 
 // components
 import FormFieldSelectTable from '../form/FormFieldSelectTable.vue';
@@ -33,8 +33,12 @@ import { OrganizationLevel, OrganizationType } from '../types/Organization';
 // types
 import type { FormSelectOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
-import type { OrganizationOption } from '../types/Organization';
+import type {
+  OrganizationOption,
+  OrganizationSubsidiary,
+} from '../types/Organization';
 import type { PostOrganizationResponse } from '../types/apiOrganization';
+
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
@@ -46,6 +50,11 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
+    // template ref for form-field-company-address
+    const formFieldCompanyAddressRef = ref<
+      typeof FormFieldCompanyAddress | null
+    >(null);
+
     const opts = ref<FormSelectOption[]>([]);
     const formFieldSelectTableRef = ref(null);
     const { options, organizations, isLoading, loadOrganizations } =
@@ -93,12 +102,30 @@ export default defineComponent({
       formFieldSelectTableRef.value.selectOrganizationRef.validate();
     };
 
-    const onCreateOption = (data: PostOrganizationResponse): void => {
+    const onCreateOption = async (
+      data: PostOrganizationResponse,
+    ): Promise<void> => {
       const newOrganization: OrganizationOption = data;
       logger?.debug(
         `Add new organization to organizations array <${JSON.stringify(newOrganization, null, 2)}>.`,
       );
       organizations.value.push(newOrganization);
+      logger?.debug(
+        `Organizations array updated to <${JSON.stringify(organizations.value, null, 2)}>.`,
+      );
+      // lazy load new options
+      await nextTick();
+      opts.value = options.value;
+    };
+
+    const onCreateSubsidiary = (data: OrganizationSubsidiary): void => {
+      logger?.debug(
+        `Append new subsidiary <${JSON.stringify(data, null, 2)}> to subsidiary options.`,
+      );
+      // append new subsidiary to subsidiary options
+      if (formFieldCompanyAddressRef.value) {
+        formFieldCompanyAddressRef.value.appendSubsidiaryResults([data]);
+      }
     };
 
     return {
@@ -111,6 +138,7 @@ export default defineComponent({
       organizationType,
       onCloseAddSubsidiaryDialog,
       onCreateOption,
+      onCreateSubsidiary,
     };
   },
 });
@@ -127,9 +155,11 @@ export default defineComponent({
       :data-organization-type="organizationType"
       ref="formFieldSelectTableRef"
       @create:option="onCreateOption"
+      @create:subsidiary="onCreateSubsidiary"
       data-cy="form-select-table-company"
     />
     <form-field-company-address
+      ref="formFieldCompanyAddressRef"
       v-model="subsidiaryId"
       data-cy="form-company-address"
       @close:addSubsidiaryDialog="onCloseAddSubsidiaryDialog"

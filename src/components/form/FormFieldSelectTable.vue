@@ -121,7 +121,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ['update:modelValue', 'create:option'],
+  emits: ['update:modelValue', 'create:option', 'create:subsidiary'],
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
 
@@ -192,20 +192,21 @@ export default defineComponent({
       useApiPostOrganization(logger);
     const { isLoading: isLoadingCreateSubsidiary, createSubsidiary } =
       useApiPostSubsidiary(logger);
+    const isLoading = computed(
+      () =>
+        isLoadingCreateOrganization.value || isLoadingCreateSubsidiary.value,
+    );
+
     const registerChallengeStore = useRegisterChallengeStore();
     const subsidiaryId = computed<number | null>({
       get: (): number | null => registerChallengeStore.getSubsidiaryId,
       set: (value: number | null) =>
         registerChallengeStore.setSubsidiaryId(value),
     });
-    const isLoading = computed(
-      () =>
-        isLoadingCreateOrganization.value || isLoadingCreateSubsidiary.value,
-    );
 
     /**
      * Submit dialog form based on organization level
-     * If `company`, create a new company
+     * If `company`, create a new company (and subsidiary)
      * If `team`, create a new team
      * @returns {Promise<void>}
      */
@@ -230,6 +231,22 @@ export default defineComponent({
         logger?.debug(
           `New organization was created with ID <${organizationData.id}> and name <${organizationData.name}>.`,
         );
+        /**
+         * Set modelValue (organization ID)
+         * ! Careful, this automatically resets subsidiary ID to null
+         * Subsidiary creation is done after this and result
+         * is manually appended to subsidiay options array.
+         */
+        logger?.debug(
+          `Updating organization model ID from <${inputValue.value}> to <${organizationData.id}>`,
+        );
+        inputValue.value = organizationData.id;
+        /**
+         * Emit `create:option` event
+         * This appends new organization to the options list.
+         */
+        emit('create:option', organizationData);
+
         // create subsidiary
         logger?.info('Create subsidiary.');
         const subsidiaryData = await createSubsidiary(
@@ -238,36 +255,21 @@ export default defineComponent({
         );
 
         if (subsidiaryData?.id) {
-          /**
-           * We are not using early return because if creating subsidiary fails
-           * we still want to run subsequent actions (setting modelValue).
-           */
           logger?.debug(
             `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
           );
           // set subsidiary ID in store
-          subsidiaryId.value = subsidiaryData.id;
+          logger?.debug(
+            `Updating subsidiary ID from <${subsidiaryId.value}> to <${subsidiaryData.id}>`,
+          );
+          registerChallengeStore.setSubsidiaryId(subsidiaryData.id);
           logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
         } else {
           logger?.error('New subsidiary data not found.');
         }
+        // emit event to append data to subsidiary options
+        emit('create:subsidiary', subsidiaryData);
 
-        /**
-         * Set modelValue (organization ID)
-         * This will save the organization ID into the store.
-         * We are waiting until createSubsidiary action is done because saving
-         * modelValue triggers reloading subsidiary options list and so we
-         * do not need to manually append the new subsidiary option.
-         */
-        inputValue.value = organizationData.id;
-        logger?.debug(
-          `New organization model ID set to <${inputValue.value}>.`,
-        );
-        /**
-         * Emit `create:option` event
-         * This will add new organization to the options list.
-         */
-        emit('create:option', organizationData);
         // close dialog
         onClose();
       } else if (props.organizationLevel === OrganizationLevel.team) {

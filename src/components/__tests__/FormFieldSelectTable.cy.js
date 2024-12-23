@@ -248,41 +248,21 @@ describe('<FormFieldSelectTable>', () => {
           cy.fixture('formFieldCompanyCreateRequest').then(
             (formFieldCompanyCreateRequest) => {
               cy.dataCy('button-add-option').click();
-              // dialog
+              // verify that dialog is visible
               cy.dataCy('dialog-add-option').should('be.visible');
               cy.dataCy('dialog-add-option')
                 .find('h3')
                 .should('be.visible')
                 .and('contain', i18n.global.t('form.company.titleAddCompany'));
-              // fill form
-              cy.dataCy('form-add-company-name')
-                .find('input')
-                .type(formFieldCompanyCreateRequest.name);
-              cy.dataCy('form-add-company-vat-id')
-                .find('input')
-                .type(formFieldCompanyCreateRequest.vatId);
-              cy.dataCy('form-add-subsidiary-street')
-                .find('input')
-                .type(apiPostSubsidiaryRequest.address.street);
-              cy.dataCy('form-add-subsidiary-house-number')
-                .find('input')
-                .type(apiPostSubsidiaryRequest.address.street_number);
-              cy.dataCy('form-add-subsidiary-city')
-                .find('input')
-                .type(apiPostSubsidiaryRequest.address.city);
-              cy.dataCy('form-add-subsidiary-zip')
-                .find('input')
-                .type(apiPostSubsidiaryRequest.address.psc);
-              cy.dataCy('form-add-subsidiary-city-challenge').click();
-              cy.get('.q-menu')
-                .should('be.visible')
-                .find('.q-item')
-                .first()
-                .click();
-              // submit form
+              // fill in the form
+              cy.fillOrganizationSubsidiaryForm(
+                formFieldCompanyCreateRequest,
+                apiPostSubsidiaryRequest,
+              );
+              // submit tghe form
               cy.dataCy('dialog-button-submit').click();
               // wait for API call
-              cy.waitForOrganizationCreateApi();
+              cy.waitForOrganizationPostApi();
               // verify that dialog is closed
               cy.dataCy('dialog-add-option').should('not.exist');
               cy.fixture('formFieldCompanyCreate').then(
