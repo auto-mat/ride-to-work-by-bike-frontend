@@ -250,11 +250,10 @@ export default defineComponent({
         );
 
         logger?.debug(
-          `Updating organization model ID from <${inputValue.value}> to <${organizationData.id}>`,
+          `Updating organization model ID from <${inputValue.value}> to <${organizationData.id}>.`,
         );
         // set organization ID in store
         inputValue.value = organizationData.id;
-
         // emit event to append data to organization options
         emit('create:option', organizationData);
 
@@ -264,7 +263,6 @@ export default defineComponent({
           organizationData.id,
           organizationNew.value.address,
         );
-
         if (subsidiaryData?.id) {
           logger?.debug(
             `New subsidiary was created with data <${JSON.stringify(subsidiaryData, null, 2)}>.`,
@@ -275,7 +273,7 @@ export default defineComponent({
           );
           registerChallengeStore.setSubsidiaryId(subsidiaryData.id);
           logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
-          // create a new subsidiary array in store
+          // create a new subsidiary array
           const newSubsidiary: OrganizationSubsidiary = {
             id: subsidiaryData.id,
             address: {
@@ -288,11 +286,11 @@ export default defineComponent({
             },
             teams: [],
           };
+          // set subsidiary options to array with new subsidiary
           registerChallengeStore.setSubsidiaries([newSubsidiary]);
         } else {
           logger?.error('New subsidiary data not found.');
         }
-
         // close dialog
         onClose();
       } else if (props.organizationLevel === OrganizationLevel.team) {
