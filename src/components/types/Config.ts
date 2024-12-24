@@ -46,6 +46,7 @@ export interface ConfigGlobal {
   apiBaseRtwbbFeed: string;
   apiVersion: string;
   apiDefaultLang: string;
+  urlApiDiscountCoupon: string;
   urlApiHasUserVerifiedEmail: string;
   urlApiLogin: string;
   urlApiLoginGoogle: string;

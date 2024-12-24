@@ -10,6 +10,7 @@ import { PaymentSubject } from '../components/enums/Payment';
 // types
 import type { Logger } from '../components/types/Logger';
 import type { RegisterChallengePersonalDetailsForm } from '../components/types/RegisterChallenge';
+import type { ValidatedCoupon } from '../components/types/Coupon';
 
 const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   firstName: '',
@@ -36,6 +37,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     teamId: null as number | null,
     merchId: null as number | null,
     paymentSubject: PaymentSubject.individual,
+    voucher: null as ValidatedCoupon | null,
   }),
 
   getters: {
@@ -47,6 +49,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTeamId: (state): number | null => state.teamId,
     getMerchId: (state): number | null => state.merchId,
     getPaymentSubject: (state): PaymentSubject => state.paymentSubject,
+    getVoucher: (state): ValidatedCoupon | null => state.voucher,
   },
 
   actions: {
@@ -70,6 +73,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setPaymentSubject(paymentSubject: PaymentSubject) {
       this.paymentSubject = paymentSubject;
+    },
+    setVoucher(voucher: ValidatedCoupon | null) {
+      this.voucher = voucher;
     },
   },
 

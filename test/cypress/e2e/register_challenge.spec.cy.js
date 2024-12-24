@@ -629,6 +629,45 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-6-continue').should('be.visible');
     });
 
+    it('allows user to apply voucher HALF', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep2();
+          // get default payment amount min
+          const defaultPaymentAmountMin = parseInt(config.entryFeePaymentMin);
+          // switch to paying via voucher
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // apply voucher HALF
+          cy.applyHalfVoucher(config, i18n, defaultPaymentAmountMin).then(
+            (discountAmount) => {
+              // discounted price is shown as option
+              cy.dataCy(getRadioOption(discountAmount)).should('be.visible');
+              // discounted total price is shown
+              cy.dataCy('total-price-value').should('contain', discountAmount);
+            },
+          );
+        });
+      });
+    });
+
+    it('allows user to apply voucher FULL', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep2();
+          // switch to paying via voucher
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // apply voucher FULL
+          cy.applyFullVoucher(config, i18n);
+          // total price is not shown
+          cy.dataCy('total-price-value').should('not.exist');
+        });
+      });
+    });
+
     it('when company pays - disables other participation options', () => {
       cy.get('@i18n').then((i18n) => {
         // go to payment step

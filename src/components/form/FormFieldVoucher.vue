@@ -8,97 +8,128 @@
  *
  * Used in `RegisterChallengePayment` component.
  *
- * @events
- * - `update:voucher`: Emitted after voucher is successfully applied.
- *
  * @components
  * - `FormFieldTextRequired`: Component to render required text field.
  *
  * @example
- * <form-field-voucher :voucher="voucher" @update:voucher="onUpdateVoucher" />
+ * <form-field-voucher />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=6410-2305&t=gB7ERmDZorpD4TdE-1)
  */
 
 // libraries
 import { Notify } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { useFormatPrice } from '../../composables/useFormatPrice';
+import { useApiGetDiscountCoupon } from '../../composables/useApiGetDiscountCoupon';
+
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
-import { TestPaymentVoucher } from '../types/Form';
+import { Currency } from '../../composables/useFormatPrice';
+
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import type { FormPaymentVoucher } from '../types/Form';
-
-// fixtures
-import voucherFull from '../../../test/cypress/fixtures/registerPaymentVoucherFull.json';
-import voucherHalf from '../../../test/cypress/fixtures/registerPaymentVoucherHalf.json';
+import type { ValidatedCoupon } from '../types/Coupon';
 
 export default defineComponent({
   name: 'FormFieldVoucher',
   components: {
     FormFieldTextRequired,
   },
-  props: {
-    activeVoucher: {
-      type: Object as () => FormPaymentVoucher | null,
-      default: null,
-    },
-  },
-  emits: ['remove:voucher', 'update:voucher'],
-  setup(props, { emit }) {
-    const code = ref('');
-    const voucher = ref<FormPaymentVoucher | null>(
-      props.activeVoucher ? props.activeVoucher : null,
+  props: {},
+  setup() {
+    const defaultPaymentAmountMin = parseInt(
+      rideToWorkByBikeConfig.entryFeePaymentMin,
     );
+
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const code = ref('');
+    const voucher = computed<ValidatedCoupon | null>({
+      get: (): ValidatedCoupon | null => registerChallengeStore.getVoucher,
+      set: (voucher: ValidatedCoupon | null) => {
+        registerChallengeStore.setVoucher(voucher);
+      },
+    });
+
+    const { validateCoupon, isLoading } = useApiGetDiscountCoupon(null);
 
     /**
      * Submits voucher data to API
      * If voucher is valid it emits the data
      * @returns {void}
      */
-    const onSubmitVoucher = (): void => {
-      // TODO: Add API call and remove dummy data
-      if (code.value === TestPaymentVoucher.full) {
-        voucher.value = voucherFull;
-      }
-      if (code.value === TestPaymentVoucher.half) {
-        voucher.value = voucherHalf;
-      }
-      if (voucher.value) {
+    const onSubmitVoucher = async (): Promise<void> => {
+      const validatedCoupon: ValidatedCoupon = await validateCoupon(code.value);
+
+      if (validatedCoupon.valid) {
         Notify.create({
           type: 'positive',
           message: i18n.global.t('notify.voucherApplySuccess'),
         });
-        emit('update:voucher', voucher.value);
+        voucher.value = validatedCoupon;
       } else {
         Notify.create({
           type: 'negative',
           message: i18n.global.t('notify.voucherApplyError'),
         });
-        emit('remove:voucher');
+        voucher.value = null;
       }
     };
 
     /**
-     * Resets the code and voucher values and emits a 'remove:voucher' event.
+     * Resets the code and voucher values.
      * @return {void}
      */
     const onRemoveVoucher = (): void => {
       code.value = '';
       voucher.value = null;
-      emit('remove:voucher');
     };
 
+    const { formatPriceCurrency } = useFormatPrice();
+
+    /**
+     * Displays the text string with the discount
+     * If discount is 100% display "Free registration" message
+     * If discount is less than 100% display the discount percentage
+     * as well as computed discount amount (discounted default amount).
+     */
+    const voucherDiscount = computed((): string => {
+      const discount = voucher.value?.discount;
+      if (!discount) return '';
+
+      // calculate discount from min payment amount
+      const discountAmountInt: number = Math.round(
+        (defaultPaymentAmountMin * discount) / 100,
+      );
+
+      if (discount === 100) {
+        return i18n.global.t('register.challenge.labelVoucherFreeRegistration');
+      } else if (discountAmountInt) {
+        return `${i18n.global.t('global.discount')} ${discount}% (${formatPriceCurrency(discountAmountInt, Currency.CZK)})`;
+      }
+
+      return `-${discount}%`;
+    });
+
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
     return {
+      borderRadius,
       code,
+      isLoading,
       voucher,
+      voucherDiscount,
       onRemoveVoucher,
       onSubmitVoucher,
     };
@@ -113,17 +144,18 @@ export default defineComponent({
       inline-actions
       rounded
       class="bg-grey-2 q-my-lg"
+      :style="{ borderRadius }"
       data-cy="voucher-banner"
     >
       <div class="row q-col-gutter-x-md">
         <div class="col-12 col-sm text-grey-10" data-cy="voucher-banner-code">
-          {{ $t('form.textVoucher') }}: {{ voucher.code }}
+          {{ $t('form.textVoucher') }}: {{ voucher.name }}
         </div>
         <div
           class="col-12 col-sm-auto text-weight-bold text-primary"
           data-cy="voucher-banner-name"
         >
-          {{ voucher.name }}
+          {{ voucherDiscount }}
         </div>
       </div>
       <template v-slot:action>
@@ -159,6 +191,7 @@ export default defineComponent({
           unelevated
           color="primary"
           :label="$t('form.buttonVoucherSubmit')"
+          :loading="isLoading"
           @click="onSubmitVoucher"
           class="q-mt-sm"
           data-cy="form-field-voucher-submit"

@@ -51,8 +51,9 @@ import { OrganizationType } from '../types/Organization';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import type { FormOption, FormPaymentVoucher } from '../types/Form';
+import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
+import type { ValidatedCoupon } from '../types/Coupon';
 
 export default defineComponent({
   name: 'RegisterChallengePayment',
@@ -151,7 +152,9 @@ export default defineComponent({
       });
     }
 
-    const activeVoucher = ref<FormPaymentVoucher | null>(null);
+    const activeVoucher = computed<ValidatedCoupon | null>(() => {
+      return registerChallengeStore.getVoucher;
+    });
     // Model for 'Entry fee amount' radio button element must be string type (options values '390', ..., 'custom')
     const selectedPaymentAmount = ref<string>(String(defaultPaymentAmountMin));
     // Model for 'Entry fee amount' radio button element custom option slider element
@@ -181,10 +184,10 @@ export default defineComponent({
       );
       switch (newVal) {
         case PaymentSubject.company:
-          registerChallengeStore.setOrganizationType(newVal);
+          registerChallengeStore.setOrganizationType(OrganizationType.company);
           break;
         case PaymentSubject.school:
-          registerChallengeStore.setOrganizationType(newVal);
+          registerChallengeStore.setOrganizationType(OrganizationType.school);
           break;
         default:
           registerChallengeStore.setOrganizationType(OrganizationType.none);
@@ -199,38 +202,23 @@ export default defineComponent({
     });
 
     const isVoucherValid = computed((): boolean => {
-      return !!activeVoucher.value?.code;
+      return !!activeVoucher.value?.valid;
     });
     const isVoucherFreeEntry = computed((): boolean => {
-      return isVoucherValid.value && !activeVoucher.value?.amount;
+      if (activeVoucher.value?.discount && isVoucherValid.value) {
+        return activeVoucher.value?.discount === 100;
+      }
+      return false;
     });
     const isVoucherDiscountedEntry = computed((): boolean => {
-      return isVoucherValid.value && !!activeVoucher.value?.amount;
-    });
-
-    /**
-     * Handles voucher submission.
-     * Updates payment options, minimum payment amount and current payment amount.
-     * if entry fee is free, display voluntary contribution.
-     */
-    const onUpdateVoucher = (voucher: FormPaymentVoucher): void => {
-      if (voucher.code) {
-        // set active voucher
-        activeVoucher.value = voucher;
-        logger?.debug(`Set active voucher code <${activeVoucher.value}>.`);
+      if (activeVoucher.value?.discount && isVoucherValid.value) {
+        return (
+          activeVoucher.value?.discount > 0 &&
+          activeVoucher.value?.discount < 100
+        );
       }
-    };
-
-    /**
-     * Removes voucher.
-     * Updates payment options, minimum payment amount and current payment amount.
-     * @return {void}
-     */
-    const onRemoveVoucher = (): void => {
-      // clear active voucher
-      activeVoucher.value = null;
-      logger?.debug(`Clear active voucher code <${activeVoucher.value}>.`);
-    };
+      return false;
+    });
 
     const onUpdateDonation = (amount: number): void => {
       donationAmount.value = amount;
@@ -256,20 +244,19 @@ export default defineComponent({
       } else if (
         selectedPaymentSubject.value === PaymentSubject.voucher &&
         isVoucherValid.value &&
-        activeVoucher.value?.amount
+        activeVoucher.value?.discount
       ) {
+        const discountAmount: number =
+          (defaultPaymentAmountMin * activeVoucher.value?.discount) / 100;
         logger?.debug(
           `Selected payment subject <${selectedPaymentSubject.value}>,` +
             ` is voucher valid <${isVoucherValid.value}>,` +
-            ` active voucher amount <${activeVoucher.value?.amount}>.`,
+            ` active voucher amount <${discountAmount}>.`,
         );
         opts = [
           {
-            label: formatPriceCurrency(
-              activeVoucher.value?.amount,
-              Currency.CZK,
-            ),
-            value: String(activeVoucher.value?.amount),
+            label: formatPriceCurrency(discountAmount, Currency.CZK),
+            value: String(discountAmount),
           },
           // other options
           ...paymentOptions,
@@ -514,7 +501,6 @@ export default defineComponent({
     };
 
     return {
-      activeVoucher,
       borderRadius,
       computedCurrentValue,
       formRegisterCoordinator,
@@ -531,9 +517,7 @@ export default defineComponent({
       selectedPaymentSubject,
       Currency,
       formatPriceCurrency,
-      onRemoveVoucher,
       onUpdateDonation,
-      onUpdateVoucher,
       showCompanySchoolElement,
       showCustomPaymentAmountElement,
       showDonationElement,
@@ -582,11 +566,7 @@ export default defineComponent({
     </div>
     <!-- Input: Voucher -->
     <div v-if="showVoucherElement()">
-      <form-field-voucher
-        :active-voucher="activeVoucher"
-        @update:voucher="onUpdateVoucher"
-        @remove:voucher="onRemoveVoucher"
-      />
+      <form-field-voucher />
     </div>
     <!-- Input: Payment amount -->
     <div v-if="showPaymentAmountOptionsElement()" class="q-my-md">
