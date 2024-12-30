@@ -70,7 +70,9 @@ export default route(function (/* { store, ssrContext } */) {
         !isEmailVerified &&
         // only these pages are accessible when authenticated and not verified email
         !to.matched.some(
-          (record) => record.path === routesConf['verify_email']['path'],
+          (record) =>
+            record.path === routesConf['verify_email']['path'] ||
+            record.path === routesConf['confirm_email']['path'],
         )
       ) {
         logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
@@ -78,9 +80,12 @@ export default route(function (/* { store, ssrContext } */) {
           `Router user email is not verified <${!isEmailVerified}>.`,
         );
         logger?.debug(
-          `Router path <${routesConf['verify_email']['path']}>` +
+          `Router path <${routesConf['verify_email']['path']}>,` +
+            ` <${routesConf['confirm_email']['path']}>` +
             ` is not matched <${!to.matched.some(
-              (record) => record.path === routesConf['verify_email']['path'],
+              (record) =>
+                record.path === routesConf['verify_email']['path'] ||
+                record.path === routesConf['confirm_email']['path'],
             )}>.`,
         );
         logger?.debug(
@@ -145,13 +150,14 @@ export default route(function (/* { store, ssrContext } */) {
         );
         next({ path: routesConf['challenge_inactive']['path'] });
       }
-      // if not authenticated and not on pages: login, register, redirect to login page.
+      // if not authenticated and not on pages: login, register, confirm_email redirect to login page.
       else if (
         !isAuthenticated &&
         !to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
-            record.path === routesConf['register']['path'],
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['confirm_email']['path'],
         )
       ) {
         logger?.debug(
@@ -159,11 +165,13 @@ export default route(function (/* { store, ssrContext } */) {
         );
         logger?.debug(
           `Router path <${routesConf['login']['path']}>,` +
-            ` <${routesConf['register']['path']}>` +
+            ` <${routesConf['register']['path']}>,` +
+            ` <${routesConf['confirm_email']['path']}>` +
             ` is not matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
-                record.path === routesConf['register']['path'],
+                record.path === routesConf['register']['path'] ||
+                record.path === routesConf['confirm_email']['path'],
             )}>.`,
         );
         logger?.debug(

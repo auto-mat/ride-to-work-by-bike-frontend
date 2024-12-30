@@ -50,6 +50,7 @@ export interface ConfigGlobal {
   urlApiDiscountCoupon: string;
   urlApiHasOrganizationAdmin: string;
   urlApiHasUserVerifiedEmail: string;
+  urlApiConfirmEmail: string;
   urlApiLogin: string;
   urlApiLoginGoogle: string;
   urlApiOrganizations: string;

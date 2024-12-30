@@ -26,6 +26,11 @@ apiMessageError = "Ověření emailu se nezdařilo."
 apiMessageErrorWithMessage = "Ověření emailu se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Email byl úspěšně ověřen."
 
+[confirmEmail]
+apiMessageError = "Potvrzení emailu se nezdařilo."
+apiMessageErrorWithMessage = "Potvrzení emailu se nezdařilo. Chyba: {error}"
+apiMessageSuccess = "Email byl úspěšně potvrzen."
+
 [createTeam]
 apiMessageError = "Vytvoření týmu selhalo."
 apiMessageErrorWithMessage = "Vytvoření týmu selhalo. Chyba: {error}"
@@ -697,10 +702,13 @@ messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
 messagePrivacyConsentRequired = "Musíte souhlasit se zpracováním osobních údajů"
 submitRegister = "Registrovat se"
+submitConfirmation = "Potvrdit e-mail"
 textEmailVerification = "<p>Právě jsme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na kole.</p><p>Pokud ji nemůžete najít, koukněte i do spamu.</p>"
 textNoActiveChallenge = "Momentálně žádná z výzev Do práce na kole neprobíhá. Můžete se zaregistrovat, rádi vás informujeme, jakmile vypíšeme další."
 titleEmailVerification = "Pokračujte potvrzením e-mailu"
 titleRegister = "Registrace"
+titleEmailConfirmation = "Potvrzení e-mailu"
+textEmailConfirmation = "Prosím potvrďte svoji e-mailovou adresu:<br>{email}."
 
 [register.buttons]
 buttonGoogle = "Registrovat přes Google"

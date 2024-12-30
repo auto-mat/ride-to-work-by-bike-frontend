@@ -26,6 +26,11 @@ apiMessageError = "Overenie e-mailu zlyhalo."
 apiMessageErrorWithMessage = "Overenie e-mailu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "E-mail bol úspešne overený."
 
+[confirmEmail]
+apiMessageError = "Potvrdenie emailu zlyhalo."
+apiMessageErrorWithMessage = "Potvrdenie emailu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Email bol úspešne potvrdený."
+
 [createTeam]
 apiMessageError = "Vytvorenie tímu zlyhalo."
 apiMessageErrorWithMessage = "Vytvorenie tímu zlyhalo. Chyba: {error}"
@@ -694,10 +699,13 @@ messagePasswordConfirmRequired = "Vyplňte prosím heslo"
 messagePasswordConfirmNotMatch = "Heslá sa nezhodujú"
 messagePrivacyConsentRequired = "Musíte súhlasiť s spracovaním osobných údajov"
 submitRegister = "Zaregistrujte sa"
+submitConfirmation = "Potvrdiť e-mail"
 textEmailVerification = "<p>Práve sme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na bicykli.</p><p>Ak ju nemôžete nájsť, pozrite sa aj do spamu.</p>"
 textNoActiveChallenge = "Momentálne neprebieha žiadna výzva Do práce na bicykli. Môžete sa zaregistrovať a my vás radi budeme informovať, keď vypíšeme ďalšiu."
 titleEmailVerification = "Pokračujte potvrdením e-mailu"
 titleRegister = "Registrácia"
+titleEmailConfirmation = "Potvrdenie e-mailovej adresy"
+textEmailConfirmation = "Prosím potvrďte svoju e-mailovú adresu:<br>{email}."
 
 [register.buttons]
 buttonGoogle = "Registrácia cez Google"
