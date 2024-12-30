@@ -35,7 +35,7 @@ export default defineComponent({
 
     if (typeof key !== 'string' || typeof email !== 'string') {
       if (loginStore.isUserLoggedIn) {
-        router.push(routesConf['verify_mail']['path']);
+        router.push(routesConf['verify_email']['path']);
       } else {
         router.push(routesConf['register']['path']);
       }
