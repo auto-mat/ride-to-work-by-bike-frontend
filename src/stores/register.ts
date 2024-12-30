@@ -171,7 +171,7 @@ export const useRegisterStore = defineStore('register', {
     async confirmEmail(key: string): Promise<boolean> {
       const { apiFetch } = useApi();
       // email confirmation
-      const { data } = await apiFetch<ConfirmEmailResponse>({
+      const { success, data } = await apiFetch<ConfirmEmailResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiConfirmEmail,
         method: 'post',
         payload: { key: key },
@@ -180,17 +180,15 @@ export const useRegisterStore = defineStore('register', {
         logger: this.$log,
       });
 
-      // type check data
-      if (data && typeof data?.detail === 'string') {
-        if (data.detail === 'ok') {
-          this.$log?.info('Email confirmation successful.');
-          return true;
-        } else {
-          this.$log?.warn(`Email confirmation failed: ${data.detail}`);
-          return false;
-        }
+      if (success) {
+        this.$log?.info('Email confirmation successful.');
+        return true;
       } else {
-        this.$log?.warn('Email confirmation failed or returned no data.');
+        if (data && typeof data?.detail === 'string') {
+          this.$log?.warn(`Email confirmation failed: ${data.detail}`);
+        } else {
+          this.$log?.warn('Email confirmation failed.');
+        }
         return false;
       }
     },
