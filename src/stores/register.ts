@@ -185,7 +185,7 @@ export const useRegisterStore = defineStore('register', {
         return true;
       } else {
         if (data && typeof data?.detail === 'string') {
-          this.$log?.warn(`Email confirmation failed: ${data.detail}`);
+          this.$log?.warn(`Email confirmation failed <${data.detail}>.`);
         } else {
           this.$log?.warn('Email confirmation failed.');
         }
