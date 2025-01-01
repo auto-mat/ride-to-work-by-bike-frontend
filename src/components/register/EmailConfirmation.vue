@@ -48,19 +48,19 @@ export default defineComponent({
       rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
     );
 
+    const confirmEmail = async () => {
+      const result = await registerStore.confirmEmail(key as string);
+      if (result) router.push(routesConf['register_challenge']['path']);
+    };
+
     return {
+      confirmEmail,
       key,
       email,
       router,
       registerStore,
       whiteOpacity,
     };
-  },
-  methods: {
-    async confirmEmail() {
-      const result = await this.registerStore.confirmEmail(this.key as string);
-      if (result) this.router.push(routesConf['register_challenge']['path']);
-    },
   },
 });
 </script>
