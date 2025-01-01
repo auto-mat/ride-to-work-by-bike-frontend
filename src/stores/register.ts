@@ -166,6 +166,7 @@ export const useRegisterStore = defineStore('register', {
      * Email confirmation
      * Confirms email to the API.
      * Returns true if successful, false if not.
+     * @param {string} key - Confirm email URL key param value
      * @returns {Promise<boolean>}
      */
     async confirmEmail(key: string): Promise<boolean> {
