@@ -22,6 +22,7 @@
         "payment_status": "waiting",
         "payment_amount": 390
       },
+      "organization_type": "company",
       "team_id": 2451,
       "organization_id": 987,
       "subsidiary_id": 1358,

@@ -35,9 +35,12 @@ import {
   httpTooManyRequestsStatus,
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
+  interceptOrganizationsApi,
+  waitForOrganizationsApi,
 } from './commonTests';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from '../../../src/utils';
+import { OrganizationType } from '../../../src/components/types/Organization';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -1707,6 +1710,37 @@ Cypress.Commands.add(
 );
 
 /**
+ * Intercept PayU create order API
+ * Provides `@postPayuCreateOrder` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptPayuCreateOrderPostApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiPayuCreateOrder } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiPayuCreateOrderLocalized = `${apiBaseUrl}${urlApiPayuCreateOrder}`;
+
+    cy.fixture('apiPostPayuCreateOrderResponse.json').then(
+      (apiPostPayuCreateOrderResponse) => {
+        cy.intercept('POST', urlApiPayuCreateOrderLocalized, {
+          statusCode: responseStatusCode || httpSuccessfullStatus,
+          body: responseBody || apiPostPayuCreateOrderResponse,
+        }).as('postPayuCreateOrder');
+      },
+    );
+  },
+);
+
+/**
  * Wait for intercept register challenge GET API call and compare response object
  * Wait for `@getRegisterChallenge` intercept
  */
@@ -1721,5 +1755,246 @@ Cypress.Commands.add('waitForRegisterChallengeGetApi', (response) => {
       );
       expect(getRegisterChallenge.response.body).to.deep.equal(response);
     }
+  });
+});
+
+/**
+ * Wait for PayU create order API call and compare request/response object
+ * Wait for `@postPayuCreateOrder` intercept
+ * @param {Object} requestBody - Expected request body override
+ * @param {Object} responseBody - Expected response body override
+ */
+Cypress.Commands.add(
+  'waitForPayuCreateOrderPostApi',
+  (requestBody = null, responseBody = null) => {
+    cy.fixture('apiPostPayuCreateOrderRequest.json').then(
+      (apiPostPayuCreateOrderRequest) => {
+        cy.wait('@postPayuCreateOrder').then(({ request, response }) => {
+          expect(request.headers.authorization).to.include(bearerTokeAuth);
+
+          // verify request body
+          if (requestBody) {
+            expect(request.body.amount).to.equal(requestBody.amount);
+            expect(request.body).to.haveOwnProperty('client_ip');
+          } else {
+            expect(request.body.amount).to.equal(
+              apiPostPayuCreateOrderRequest.amount,
+            );
+            expect(request.body).to.haveOwnProperty('client_ip');
+          }
+
+          cy.fixture('apiPostPayuCreateOrderResponse.json').then(
+            (apiPostPayuCreateOrderResponse) => {
+              // verify response
+              if (responseBody) {
+                expect(response.statusCode).to.equal(httpSuccessfullStatus);
+                expect(response.body).to.deep.equal(responseBody);
+              } else {
+                expect(response.statusCode).to.equal(httpSuccessfullStatus);
+                expect(response.body).to.deep.equal(
+                  apiPostPayuCreateOrderResponse,
+                );
+              }
+            },
+          );
+        });
+      },
+    );
+  },
+);
+
+Cypress.Commands.add(
+  'interceptRegisterChallengeCoreApiRequests',
+  (config, i18n) => {
+    cy.fixture('formOrganizationOptions').then((formOrganizationOptions) => {
+      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+        // intercept organizations API
+        interceptOrganizationsApi(config, i18n, OrganizationType.company);
+        interceptOrganizationsApi(config, i18n, OrganizationType.school);
+        // for first organization, intercept API call with response true
+        cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
+          (response) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              config,
+              i18n,
+              formFieldCompanyResponse.results[0].id,
+              response,
+            );
+          },
+        );
+        // for second organization, intercept API call with response false
+        cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              config,
+              i18n,
+              formFieldCompanyResponse.results[1].id,
+              response,
+            );
+          },
+        );
+        // intercept subsidiary API
+        cy.interceptSubsidiariesGetApi(
+          config,
+          i18n,
+          formOrganizationOptions[0].id,
+        );
+        // intercept teams for first subsidiary
+        cy.interceptTeamsGetApi(
+          config,
+          i18n,
+          formOrganizationOptions[0].subsidiaries[0].id,
+        );
+        cy.interceptMerchandiseGetApi(config, i18n);
+      });
+    });
+  },
+);
+
+/**
+ * Test that step 1 is loaded correctly
+ * @param {I18n} i18n - i18n instance
+ * @param {Object} registerChallengeResponse - Register challenge response
+ */
+Cypress.Commands.add(
+  'testRegisterChallengeLoadedStepOne',
+  (i18n, registerChallengeResponse) => {
+    cy.waitForRegisterChallengeGetApi(registerChallengeResponse);
+    // opens first step
+    cy.dataCy('step-1').find('.q-stepper__step-content').should('be.visible');
+    // form contains data from fixture
+    cy.dataCy('form-firstName-input').should(
+      'have.value',
+      registerChallengeResponse.results[0].personal_details.first_name,
+    );
+    cy.dataCy('form-lastName-input').should(
+      'have.value',
+      registerChallengeResponse.results[0].personal_details.last_name,
+    );
+    cy.dataCy('form-nickname-input').should(
+      'have.value',
+      registerChallengeResponse.results[0].personal_details.nickname,
+    );
+    // male sex is selected
+    cy.dataCy('form-personal-details-gender')
+      .find('.q-radio__inner')
+      .first()
+      .should('have.class', 'q-radio__inner--truthy');
+    // newsletter challenge is selected
+    cy.dataCy('newsletter-options').within(() => {
+      cy.get('.q-checkbox__inner')
+        .first()
+        .should('have.class', 'q-checkbox__inner--truthy');
+    });
+    // checkbox terms is checked
+    cy.dataCy('form-terms-input')
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--truthy');
+  },
+);
+
+/**
+ * Test that steps 3 to 7 are loaded correctly
+ * @param {I18n} i18n - i18n instance
+ * @param {Object} registerChallengeResponse - Register challenge response
+ */
+Cypress.Commands.add(
+  'testRegisterChallengeLoadedStepsThreeToSeven',
+  (i18n, registerChallengeResponse) => {
+    // check that participation is selected
+    cy.dataCy('form-field-option-group').within(() => {
+      cy.get('.q-radio__inner.q-radio__inner--truthy')
+        .siblings('.q-radio__label')
+        .should('contain', i18n.global.t('form.participation.labelColleagues'));
+    });
+    // go to next step
+    cy.dataCy('step-3-continue').should('be.visible').click();
+    // debug component contains correct data
+    cy.dataCy('debug-register-challenge-ids')
+      .should('be.visible')
+      .within(() => {
+        cy.dataCy('debug-organization-id-value')
+          .should('not.be.empty')
+          .and('contain', registerChallengeResponse.results[0].organization_id);
+        cy.dataCy('debug-subsidiary-id-value')
+          .should('not.be.empty')
+          .and('contain', registerChallengeResponse.results[0].subsidiary_id);
+        cy.dataCy('debug-team-id-value')
+          .should('not.be.empty')
+          .and('contain', registerChallengeResponse.results[0].team_id);
+      });
+    // company is preselected
+    cy.dataCy('form-select-table-company')
+      .should('be.visible')
+      .find('.q-radio__inner')
+      .first()
+      .should('have.class', 'q-radio__inner--truthy');
+    // address is preselected
+    cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
+      cy.dataCy('form-company-address-input').should(
+        'contain',
+        subsidiariesResponse.results[0].address.street,
+      );
+      // go to next step
+      cy.dataCy('step-4-continue').should('be.visible').click();
+      // team is preselected
+      cy.dataCy('form-select-table-team')
+        .should('be.visible')
+        .find('.q-radio__inner')
+        .first()
+        .should('have.class', 'q-radio__inner--truthy');
+      // go to next step
+      cy.dataCy('step-5-continue').should('be.visible').click();
+      // correct merch card is preselected
+      cy.dataCy('form-card-merch-female')
+        .first()
+        .find('[data-cy="button-selected"]')
+        .should('be.visible');
+      // correct size is preselected
+      cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
+        // select our test item (Triko 2024, female, size M)
+        cy.wrap(
+          merchandiseResponse.results.find(
+            (item) =>
+              item.id === registerChallengeResponse.results[0].t_shirt_size_id,
+          ),
+        ).then((item) => {
+          // same size is selected
+          cy.dataCy('form-field-merch-size')
+            .find('.q-radio__inner.q-radio__inner--truthy')
+            .siblings('.q-radio__label')
+            .should('contain', item.size);
+        });
+      });
+      // go to next step
+      cy.dataCy('step-6-continue').should('be.visible').click();
+      // verify step 7 is active
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
+    });
+  },
+);
+
+/**
+ * Select paying company
+ */
+Cypress.Commands.add('selectRegisterChallengePayingOrganization', () => {
+  cy.fixture('formFieldCompany').then((formFieldCompany) => {
+    cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+      waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+      cy.dataCy('form-field-company').find('.q-field__append').click();
+      // select option
+      cy.get('.q-item__label')
+        .should('be.visible')
+        .and((opts) => {
+          expect(
+            opts.length,
+            formFieldCompany.results.length +
+              formFieldCompanyNext.results.length,
+          );
+        })
+        .first()
+        .click();
+      cy.get('.q-menu').should('not.exist');
+    });
   });
 });

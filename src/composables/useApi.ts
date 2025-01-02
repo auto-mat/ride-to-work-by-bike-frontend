@@ -11,7 +11,8 @@ import { requestDefaultHeader } from '../utils';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
-const { apiDefaultLang, apiBase, apiBaseRtwbbFeed } = rideToWorkByBikeConfig;
+const { apiDefaultLang, apiBase, apiBaseRtwbbFeed, apiBaseIpAddress } =
+  rideToWorkByBikeConfig;
 
 // types
 import type { AxiosRequestHeaders, Method } from 'axios';
@@ -78,6 +79,9 @@ const getAxiosBaseApiUrl = (
     case ApiBaseUrl.rtwbbFeedApi:
       logger?.debug(`Use base API URL <${apiBaseRtwbbFeed}> endpoint.`);
       return `${apiBaseRtwbbFeed}`;
+    case ApiBaseUrl.rtwbbIpAddressApi:
+      logger?.debug(`Use base API URL <${apiBaseIpAddress}> endpoint.`);
+      return `${apiBaseIpAddress}`;
     default:
       logger?.debug(`Use default base API URL <${apiBase}> endpoint.`);
       return `${apiBase}`;
@@ -108,6 +112,7 @@ const injectAxioBaseApiUrlWithLang = (
 
 export const useApi = (
   baseUrlEndpointType: ApiBaseUrl = ApiBaseUrl.rtwbbBackendApi,
+  isLocalized: boolean = true,
 ) => {
   const apiFetch = async <T>({
     endpoint,
@@ -138,8 +143,13 @@ export const useApi = (
       );
       // Get Axios base API URL endpoint
       const baseUrl = getAxiosBaseApiUrl(baseUrlEndpointType, logger);
-      // Inject Axios base API URL with lang (internationalization)
-      injectAxioBaseApiUrlWithLang(baseUrl, logger);
+      if (isLocalized) {
+        // Inject Axios base API URL with lang (internationalization)
+        injectAxioBaseApiUrlWithLang(baseUrl, logger);
+      } else {
+        api.defaults.baseURL = baseUrl;
+        logger?.debug(`Base API URL <${api.defaults.baseURL}>.`);
+      }
       const startTime = performance.now();
       const data: apiData = {
         url: endpoint,

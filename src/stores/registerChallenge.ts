@@ -1,5 +1,6 @@
 // libraries
 import { defineStore } from 'pinia';
+import { Notify } from 'quasar';
 
 // adapters
 import { subsidiaryAdapter } from 'src/adapters/subsidiaryAdapter';
@@ -13,9 +14,12 @@ import { useApiGetTeams } from 'src/composables/useApiGetTeams';
 import { useApiGetMerchandise } from 'src/composables/useApiGetMerchandise';
 import { useApiGetFilteredMerchandise } from 'src/composables/useApiGetFilteredMerchandise';
 import { useApiPostRegisterChallenge } from '../composables/useApiPostRegisterChallenge';
+import { useApiGetIpAddress } from '../composables/useApiGetIpAddress';
+import { useApiPostPayuCreateOrder } from '../composables/useApiPostPayuCreateOrder';
 
 // enums
 import { Gender } from '../components/types/Profile';
+import { PaymentState } from '../components/enums/Payment';
 import { NewsletterType } from '../components/types/Newsletter';
 import {
   OrganizationSubsidiary,
@@ -43,6 +47,7 @@ import type {
   RegisterChallengeResult,
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
+import type { IpAddressResponse } from '../components/types/ApiIpAddress';
 
 const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   firstName: '',
@@ -62,13 +67,14 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     $log: null as Logger | null,
     personalDetails: emptyFormPersonalDetails,
     payment: null, // TODO: add data type options
+    paymentAmount: null as number | null,
+    paymentState: PaymentState.none,
+    paymentSubject: PaymentSubject.individual,
     organizationType: OrganizationType.none,
     organizationId: null as number | null,
     subsidiaryId: null as number | null,
     teamId: null as number | null,
     merchId: null as number | null,
-    paymentSubject: PaymentSubject.individual,
-    paymentAmount: null as number | null,
     voucher: null as ValidatedCoupon | null,
     subsidiaries: [] as OrganizationSubsidiary[],
     organizations: [] as OrganizationOption[],
@@ -76,11 +82,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
     isLoadingRegisterChallenge: false,
+    ipAddressData: null as IpAddressResponse | null,
     isLoadingSubsidiaries: false,
     isLoadingOrganizations: false,
     isLoadingTeams: false,
     isLoadingMerchandise: false,
     isLoadingFilteredMerchandise: false,
+    isLoadingPayuOrder: false,
   }),
 
   getters: {
@@ -93,6 +101,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchId: (state): number | null => state.merchId,
     getPaymentSubject: (state): PaymentSubject => state.paymentSubject,
     getPaymentAmount: (state): number | null => state.paymentAmount,
+    getPaymentState: (state): PaymentState => state.paymentState,
     getVoucher: (state): ValidatedCoupon | null => state.voucher,
     getSubsidiaries: (state): OrganizationSubsidiary[] => state.subsidiaries,
     getOrganizations: (state): OrganizationOption[] => state.organizations,
@@ -164,6 +173,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       const currentPriceLevels = challengeStore.getCurrentPriceLevels;
       return currentPriceLevels[PriceLevelCategory.company].price;
     },
+    getIpAddressData: (state): IpAddressResponse | null => state.ipAddressData,
+    getIpAddress: (state): string => state.ipAddressData?.ip || '',
   },
 
   actions: {
@@ -184,6 +195,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setMerchId(merchId: number | null) {
       this.merchId = merchId;
+    },
+    setPaymentState(paymentState: PaymentState) {
+      this.paymentState = paymentState;
     },
     setPaymentSubject(paymentSubject: PaymentSubject) {
       this.paymentSubject = paymentSubject;
@@ -258,6 +272,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.setPaymentSubject(parsedResponse.paymentSubject);
       this.$log?.debug(
         `Payment subject strore updated to <${this.getPaymentSubject}>.`,
+      );
+      this.setPaymentState(parsedResponse.paymentState);
+      this.$log?.debug(
+        `Payment state strore updated to <${this.getPaymentState}>.`,
       );
       /**
        * In case the payment subject has been selected but the organizationType
@@ -416,6 +434,73 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       this.isLoadingFilteredMerchandise = false;
     },
+    /**
+     * Load IP address data from API
+     * @returns {Promise<string>} - IP address
+     */
+    async loadIpAddress(): Promise<string> {
+      const { ipAddressData, loadIpAddress } = useApiGetIpAddress(this.$log);
+      this.$log?.debug('Loading IP address data.');
+      await loadIpAddress();
+      return ipAddressData.value?.ip || '';
+    },
+    /**
+     * Create PayU order and redirect to payment
+     * @returns {Promise<void>}
+     */
+    async createPayuOrder(): Promise<void> {
+      this.$log?.debug('Creating PayU order.');
+      this.isLoadingPayuOrder = true;
+      // get client IP
+      const clientIp = await this.loadIpAddress();
+      if (!clientIp) {
+        Notify.create({
+          message: i18n.global.t('createPayuOrder.apiMessageError'),
+          color: 'negative',
+        });
+        this.$log?.debug('Failed to get client IP address.');
+        this.isLoadingPayuOrder = false;
+        return;
+      }
+      // check payment amount
+      if (!this.paymentAmount || this.paymentAmount <= 0) {
+        Notify.create({
+          message: i18n.global.t('createPayuOrder.apiMessageNoPaymentAmount'),
+          color: 'negative',
+        });
+        this.$log?.debug(
+          `Payment amount <${this.paymentAmount}>, skipping PayU order creation.`,
+        );
+        this.isLoadingPayuOrder = false;
+        return;
+      }
+      // create order
+      const { createOrder } = useApiPostPayuCreateOrder(this.$log);
+      this.$log?.debug(
+        `Creating PayU order with amount <${this.paymentAmount}> and client IP <${clientIp}>.`,
+      );
+      const response = await createOrder(this.paymentAmount, clientIp);
+      // check response and redirect
+      if (response?.status.statusCode === 'SUCCESS' && response.redirectUri) {
+        Notify.create({
+          message: i18n.global.t('createPayuOrder.apiMessageSuccess'),
+          color: 'positive',
+        });
+        this.$log?.debug(
+          `Redirecting to PayU payment page: ${response.redirectUri}`,
+        );
+        window.location.href = response.redirectUri;
+      } else {
+        Notify.create({
+          message: i18n.global.t('createPayuOrder.apiMessageError'),
+          color: 'negative',
+        });
+        this.$log?.error(
+          'Failed to create PayU order or missing redirect URI.',
+        );
+      }
+      this.isLoadingPayuOrder = false;
+    },
   },
 
   persist: {
@@ -425,6 +510,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'teams',
       'merchandiseItems',
       'merchandiseCards',
+      'ipAddressData',
     ],
   },
 });

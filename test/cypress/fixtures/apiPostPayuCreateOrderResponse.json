@@ -1,0 +1,8 @@
+{
+  "status": {
+    "statusCode": "SUCCESS"
+  },
+  "redirectUri": "https://merch-prod.snd.payu.com/pay/?orderId=QB8N27RXGZ241125GUEST000P01",
+  "orderId": "QB8N27RXGZ241125GUEST000P01",
+  "extOrderId": "1-9"
+}

@@ -31,6 +31,12 @@ apiMessageError = "Potvrdenie emailu zlyhalo."
 apiMessageErrorWithMessage = "Potvrdenie emailu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Email bol úspešne potvrdený."
 
+[createPayuOrder]
+apiMessageError = "Vytvorenie objednávky zlyhalo."
+apiMessageErrorWithMessage = "Vytvorenie objednávky zlyhalo. Chyba: {error}"
+apiMessageNoPaymentAmount = "Nie je vyplnená suma."
+apiMessageSuccess = "Objednávka bola úspešne vytvorená."
+
 [createTeam]
 apiMessageError = "Vytvorenie tímu zlyhalo."
 apiMessageErrorWithMessage = "Vytvorenie tímu zlyhalo. Chyba: {error}"
@@ -69,6 +75,11 @@ apiMessageSuccess = "Kupón bol úspešne uplatnený."
 apiMessageError = "Načítanie miest zlyhalo."
 apiMessageErrorWithMessage = "Načítanie miest zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Mestá boli úspešne načítané."
+
+[getIpAddress]
+apiMessageError = "Načítanie IP adresy zlyhalo."
+apiMessageErrorWithMessage = "Načítanie IP adresy zlyhalo. Chyba: {error}"
+apiMessageSuccess = "IP adresa bola úspešne načítaná."
 
 [getMerchandise]
 apiMessageError = "Načítanie startovních balíčkov zlyhalo."
@@ -723,6 +734,7 @@ buttonFacebook = "Registrácia cez Facebook"
 
 [register.challenge]
 buttonAddCompany = "Pridanie novej"
+buttonSubmitPayment = "Pokračovať k platbe"
 labelCompanyOrSchool = "Názov spoločnosti alebo školy"
 labelGender = "Výkonnostná kategória"
 labelPaymentSubject = "Platba vstupného poplatku"
@@ -740,6 +752,8 @@ textGender.male = "Muž"
 textGender.female = "Žena"
 textPaymentMinimum = "<b>Štartovné je účastnícky poplatok v minimálnej výške 390 Kč</b>. Umožníte nám viesť výzvu, poskytovať podporu počas výzvy a poskytnúť vám štartovací balíček. Ak nás chcete podporiť, budeme radi aj za vyššie sumy."
 textPaymentOrganizer = "<p>Výzvu Do práce na bicykli organizuje spoločnosť AutoMat, ktorá sa neustále snaží zlepšovať podmienky pre chodcov a ľudí na bicykloch v Českej republike.</p><p>Ak nás chcete v našom úsilí podporiť, môžete si štartovné na výzvu navýšiť o charitatívny príspevok v ľubovoľnej výške. Pomôžete tak ďalšiemu udržateľnému rozvoju našich miest. Ďakujeme.</p>"
+textRegistrationNoAdmission = "Koordinátor vašej organizácie neuhradil štartovné. Máte možnosť vybrať si inú organizáciu alebo školu, za ktorú budete soutieť, alebo štartovné zaplatiť z vlastného rozpočtu."
+textRegistrationPaid = "Štartovné máte uhradené a po dokončení registrácie môžete začať s výzvou. Ak máte otázky k platbe alebo iným bodom registrácie, môžete nás kontaktovať na <a href='mailto:{contactEmail}'>{contactEmail}</a>."
 textTeamInfo = "V jednom tíme může být max. 5 členů."
 titleDeliveryAddress = "Doručovacia adresa"
 titleRegisterToChallenge.may = "Registrácia na májovú výzvu"

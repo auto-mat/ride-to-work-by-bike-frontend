@@ -2,7 +2,6 @@ import {
   interceptOrganizationsApi,
   testLanguageSwitcher,
   testBackgroundImage,
-  waitForOrganizationsApi,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
@@ -192,6 +191,7 @@ describe('Register Challenge page', () => {
               );
               // intercept without specific response (it is not used)
               cy.interceptRegisterChallengePostApi(config, win.i18n);
+              cy.interceptPayuCreateOrderPostApi(config, win.i18n);
             },
           );
         });
@@ -374,25 +374,7 @@ describe('Register Challenge page', () => {
           .should('be.visible')
           .click();
         // select paying company (required)
-        cy.fixture('formFieldCompany').then((formFieldCompany) => {
-          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-            cy.dataCy('form-field-company').find('.q-field__append').click();
-            // select option
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  formFieldCompany.results.length +
-                    formFieldCompanyNext.results.length,
-                );
-              })
-              .first()
-              .click();
-            cy.get('.q-menu').should('not.exist');
-          });
-        });
+        cy.selectRegisterChallengePayingOrganization();
         // go to next step "organization type"
         cy.dataCy('step-2-continue').should('be.visible').click();
         // option "company" is selected
@@ -414,25 +396,7 @@ describe('Register Challenge page', () => {
           .should('be.visible')
           .click();
         // select paying school (required)
-        cy.fixture('formFieldCompany').then((formFieldCompany) => {
-          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-            cy.dataCy('form-field-company').find('.q-field__append').click();
-            // select option
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  formFieldCompany.results.length +
-                    formFieldCompanyNext.results.length,
-                );
-              })
-              .first()
-              .click();
-            cy.get('.q-menu').should('not.exist');
-          });
-        });
+        cy.selectRegisterChallengePayingOrganization();
         // go to next step "organization type"
         cy.dataCy('step-2-continue').should('be.visible').click();
         // option "school" is selected
@@ -754,25 +718,7 @@ describe('Register Challenge page', () => {
           .should('be.visible')
           .click();
         // select paying company (required)
-        cy.fixture('formFieldCompany').then((formFieldCompany) => {
-          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-            cy.dataCy('form-field-company').find('.q-field__append').click();
-            // select option
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  formFieldCompany.results.length +
-                    formFieldCompanyNext.results.length,
-                );
-              })
-              .first()
-              .click();
-            cy.get('.q-menu').should('not.exist');
-          });
-        });
+        cy.selectRegisterChallengePayingOrganization();
         // go to next step
         cy.dataCy('step-2-continue').should('be.visible').click();
         // other participation options are disabled
@@ -805,25 +751,7 @@ describe('Register Challenge page', () => {
           .should('be.visible')
           .click();
         // select paying school (required)
-        cy.fixture('formFieldCompany').then((formFieldCompany) => {
-          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-            cy.dataCy('form-field-company').find('.q-field__append').click();
-            // select option
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  formFieldCompany.results.length +
-                    formFieldCompanyNext.results.length,
-                );
-              })
-              .first()
-              .click();
-            cy.get('.q-menu').should('not.exist');
-          });
-        });
+        cy.selectRegisterChallengePayingOrganization();
         // go to next step
         cy.dataCy('step-2-continue').should('be.visible').click();
         // other participation options are disabled
@@ -844,6 +772,9 @@ describe('Register Challenge page', () => {
       });
     });
 
+    /**
+     * TODO: Find out how to test with payment subject individual
+     */
     it('when individual payment - all participation options are enabled', () => {
       // go to payment step
       passToStep2();
@@ -851,33 +782,43 @@ describe('Register Challenge page', () => {
       cy.dataCy(getRadioOption(PaymentSubject.individual))
         .should('be.visible')
         .click();
-      // go to next step
-      cy.dataCy('step-2-continue').should('be.visible').click();
-      // verify step 3
-      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
-      // all options are enabled
-      cy.dataCy('form-field-option-group').within(() => {
-        cy.get('.q-radio:not(.disabled)').should('have.length', 3);
-      });
+      cy.dataCy(getRadioOption(500)).click();
+      // submit payment
+      cy.dataCy('step-2-submit-payment').should('be.visible').click();
+      cy.url().should('include', routesConf['register_challenge']['path']);
+      cy.waitForPayuCreateOrderPostApi();
+      // window is redirected to given url
+      cy.url().should('not.include', routesConf['register_challenge']['path']);
+      /**
+       * TODO: Intercept register-challenge get
+       * Go back to the register-challenge page
+       * Verify that the payment is successful (in GET response)
+       * Allow user to pass to the next step
+       */
     });
 
     it('when voucher payment - all participation options are enabled', () => {
-      // go to payment step
-      passToStep2();
-      // select voucher
-      cy.dataCy(getRadioOption(PaymentSubject.voucher))
-        .should('be.visible')
-        .click();
-      // enter voucher code
-      cy.dataCy('form-field-voucher-input').type('FULL');
-      cy.dataCy('form-field-voucher-submit').click();
-      // go to next step
-      cy.dataCy('step-2-continue').should('be.visible').click();
-      // verify step 3
-      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
-      // all options are enabled
-      cy.dataCy('form-field-option-group').within(() => {
-        cy.get('.q-radio:not(.disabled)').should('have.length', 3);
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          // go to payment step
+          passToStep2();
+          // select voucher
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // enter voucher code
+          cy.applyFullVoucher(config, i18n);
+          // go to next step
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          // verify step 3
+          cy.dataCy('step-3')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+          // all options are enabled
+          cy.dataCy('form-field-option-group').within(() => {
+            cy.get('.q-radio:not(.disabled)').should('have.length', 3);
+          });
+        });
       });
     });
 
@@ -1217,39 +1158,194 @@ describe('Register Challenge page', () => {
         },
       );
     });
+
+    it('displays correct nav buttons on payment step based on payment configuration', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          // pass to step 2 (payment)
+          passToStep2();
+
+          // case 1: individual payment
+          cy.dataCy(getRadioOption(PaymentSubject.individual))
+            .should('be.visible')
+            .click();
+          // submit payment button should be visible and enabled
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // next step button should not be visible
+          cy.dataCy('step-2-continue').should('not.exist');
+
+          // case 2: voucher payment with no entered voucher
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // submit payment button should be hidden
+          cy.dataCy('step-2-submit-payment').should('not.exist');
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue').should('be.visible').and('be.disabled');
+
+          // case 3: voucher payment with voucher FULL
+          cy.applyFullVoucher(config, i18n);
+          // submit payment button should be hidden
+          cy.dataCy('step-2-submit-payment').should('not.exist');
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+
+          // remove voucher
+          cy.dataCy('voucher-button-remove').should('be.visible').click();
+
+          // case 4: voucher payment with voucher HALF
+          cy.applyHalfVoucher(config, i18n, defaultPaymentAmountMin);
+          // submit payment button should be visible and enabled
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // next step button should not be visible
+          cy.dataCy('step-2-continue').should('not.exist');
+
+          // case 5: company payment with no donation
+          cy.dataCy(getRadioOption(PaymentSubject.company))
+            .should('be.visible')
+            .click();
+          // submit payment button should be hidden
+          cy.dataCy('step-2-submit-payment').should('not.exist');
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+
+          // case 6: company payment with donation
+          cy.dataCy('form-field-donation-checkbox')
+            .should('be.visible')
+            .click();
+          cy.dataCy('form-field-donation-slider').should('be.visible');
+          // submit payment button should be visible and enabled
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // next step button should not be visible
+          cy.dataCy('step-2-continue').should('not.exist');
+          // disable donation checkbox
+          cy.dataCy('form-field-donation-checkbox')
+            .should('be.visible')
+            .click();
+
+          // case 7: school payment with no donation
+          cy.dataCy(getRadioOption(PaymentSubject.school))
+            .should('be.visible')
+            .click();
+          // submit payment button should be hidden
+          cy.dataCy('step-2-submit-payment').should('not.exist');
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+
+          // case 8: company payment with donation
+          cy.dataCy('form-field-donation-checkbox')
+            .should('be.visible')
+            .click();
+          cy.dataCy('form-field-donation-slider').should('be.visible');
+          // submit payment button should be visible and enabled
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // next step button should not be visible
+          cy.dataCy('step-2-continue').should('not.exist');
+          // disable donation checkbox
+          cy.dataCy('form-field-donation-checkbox')
+            .should('be.visible')
+            .click();
+        });
+      });
+    });
   });
 
-  context('registration in progress', () => {
+  context(
+    'registration in progress (payment individual/voucher - paid)',
+    () => {
+      beforeEach(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          // visit challenge inactive page to load campaign data
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi();
+          cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+            (response) => {
+              cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            },
+          );
+          // intercept common response (not currently used)
+          cy.interceptRegisterChallengePostApi(config, defLocale);
+          cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        });
+        // config is defined without hash in the URL
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+      });
+
+      it('fetches the registration status on load', () => {
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.get('@config').then((config) => {
+            cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+              (registerChallengeResponse) => {
+                cy.testRegisterChallengeLoadedStepOne(
+                  win.i18n,
+                  registerChallengeResponse,
+                );
+                // go to next step
+                cy.dataCy('step-1-continue').should('be.visible').click();
+                // check that the "paid" message is visible
+                cy.dataCy('step-2-paid-message')
+                  .should('be.visible')
+                  .then(($el) => {
+                    const content = $el.text();
+                    cy.stripHtmlTags(
+                      win.i18n.global.t(
+                        'register.challenge.textRegistrationPaid',
+                        { contactEmail: config.contactEmail },
+                      ),
+                    ).then((text) => {
+                      expect(content).to.equal(text);
+                    });
+                  });
+                // go to next step
+                cy.dataCy('step-2-continue')
+                  .should('be.visible')
+                  .and('not.be.disabled')
+                  .click();
+                cy.testRegisterChallengeLoadedStepsThreeToSeven(
+                  win.i18n,
+                  registerChallengeResponse,
+                );
+              },
+            );
+          });
+        });
+      });
+    },
+  );
+
+  context('registration in progress (payment company - waiting)', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
         cy.visit('#' + routesConf['challenge_inactive']['path']);
         cy.waitForThisCampaignApi();
-        cy.fixture('apiGetRegisterChallenge.json').then((response) => {
-          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
-        });
-        // intercept common response (not currently used)
-        cy.interceptRegisterChallengePostApi(config, defLocale);
-        // intercept organizations API
-        interceptOrganizationsApi(config, defLocale, OrganizationType.company);
-        cy.fixture('formOrganizationOptions').then(
-          (formOrganizationOptions) => {
-            // intercept subsidiary API
-            cy.interceptSubsidiariesGetApi(
-              config,
-              defLocale,
-              formOrganizationOptions[0].id,
-            );
-            // intercept teams for first subsidiary
-            cy.interceptTeamsGetApi(
-              config,
-              defLocale,
-              formOrganizationOptions[0].subsidiaries[0].id,
-            );
+        cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
           },
         );
-        cy.interceptMerchandiseGetApi(config, defLocale);
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
       });
       // config is defined without hash in the URL
       cy.visit('#' + routesConf['register_challenge']['path']);
@@ -1259,135 +1355,118 @@ describe('Register Challenge page', () => {
     it('fetches the registration status on load', () => {
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
-        cy.fixture('apiGetRegisterChallenge.json').then(
+        cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
           (registerChallengeResponse) => {
-            cy.waitForRegisterChallengeGetApi(registerChallengeResponse);
-            // opens first step
-            cy.dataCy('step-1')
-              .find('.q-stepper__step-content')
-              .should('be.visible');
-            // form contains data from fixture
-            cy.dataCy('form-firstName-input').should(
-              'have.value',
-              registerChallengeResponse.results[0].personal_details.first_name,
+            cy.testRegisterChallengeLoadedStepOne(
+              win.i18n,
+              registerChallengeResponse,
             );
-            cy.dataCy('form-lastName-input').should(
-              'have.value',
-              registerChallengeResponse.results[0].personal_details.last_name,
-            );
-            cy.dataCy('form-nickname-input').should(
-              'have.value',
-              registerChallengeResponse.results[0].personal_details.nickname,
-            );
-            // male sex is selected
-            cy.dataCy('form-personal-details-gender')
-              .find('.q-radio__inner')
-              .first()
-              .should('have.class', 'q-radio__inner--truthy');
-            // newsletter challenge is selected
-            cy.dataCy('newsletter-options').within(() => {
-              cy.get('.q-checkbox__inner')
-                .first()
-                .should('have.class', 'q-checkbox__inner--truthy');
-            });
-            // checkbox terms is checked
-            cy.dataCy('form-terms-input')
-              .find('.q-checkbox__inner')
-              .should('have.class', 'q-checkbox__inner--truthy');
             // go to next step
             cy.dataCy('step-1-continue').should('be.visible').click();
+            // TODO: check if we can change company before approval
             // check that the company options is selected
             cy.dataCy(getRadioOption(PaymentSubject.company))
               .parents('.q-radio__label')
               .siblings('.q-radio__inner')
               .should('have.class', 'q-radio__inner--truthy');
             // go to next step
-            cy.dataCy('step-2-continue').should('be.visible').click();
-            // check that participation is selected
-            cy.dataCy('form-field-option-group').within(() => {
-              cy.get('.q-radio__inner.q-radio__inner--truthy')
-                .siblings('.q-radio__label')
-                .should(
-                  'contain',
-                  win.i18n.global.t('form.participation.labelColleagues'),
-                );
-            });
+            cy.dataCy('step-2-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            cy.testRegisterChallengeLoadedStepsThreeToSeven(
+              win.i18n,
+              registerChallengeResponse,
+            );
+          },
+        );
+      });
+    });
+  });
+
+  context('registration in progress (payment company - no_admission)', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // visit challenge inactive page to load campaign data
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      // config is defined without hash in the URL
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('fetches the registration status on load', () => {
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
+          (registerChallengeResponse) => {
+            cy.testRegisterChallengeLoadedStepOne(
+              win.i18n,
+              registerChallengeResponse,
+            );
             // go to next step
-            cy.dataCy('step-3-continue').should('be.visible').click();
-            // debug component contains correct data
-            cy.dataCy('debug-register-challenge-ids')
+            cy.dataCy('step-1-continue').should('be.visible').click();
+            // check that the "no admission" message is visible
+            cy.dataCy('step-2-no-admission-message')
               .should('be.visible')
-              .within(() => {
-                cy.dataCy('debug-organization-id-value')
-                  .should('not.be.empty')
-                  .and(
-                    'contain',
-                    registerChallengeResponse.results[0].organization_id,
-                  );
-                cy.dataCy('debug-subsidiary-id-value')
-                  .should('not.be.empty')
-                  .and(
-                    'contain',
-                    registerChallengeResponse.results[0].subsidiary_id,
-                  );
-                cy.dataCy('debug-team-id-value')
-                  .should('not.be.empty')
-                  .and('contain', registerChallengeResponse.results[0].team_id);
+              .and('have.class', 'q-mb-md')
+              .then(($el) => {
+                const content = $el.text();
+                cy.stripHtmlTags(
+                  win.i18n.global.t(
+                    'register.challenge.textRegistrationNoAdmission',
+                  ),
+                ).then((text) => {
+                  expect(content).to.equal(text);
+                });
               });
-            // company is preselected
-            cy.dataCy('form-select-table-company')
+            /**
+             * User is allowed to change payment method to individual or voucher
+             * or select a different paying organization.
+             */
+            // switch to individual payment
+            cy.dataCy(getRadioOption(PaymentSubject.individual))
               .should('be.visible')
-              .find('.q-radio__inner')
-              .first()
-              .should('have.class', 'q-radio__inner--truthy');
-            // address is preselected
-            cy.fixture('apiGetSubsidiariesResponse').then(
-              (subsidiariesResponse) => {
-                cy.dataCy('form-company-address-input').should(
-                  'contain',
-                  subsidiariesResponse.results[0].address.street,
-                );
-                // go to next step
-                cy.dataCy('step-4-continue').should('be.visible').click();
-                // team is preselected
-                cy.dataCy('form-select-table-team')
-                  .should('be.visible')
-                  .find('.q-radio__inner')
-                  .first()
-                  .should('have.class', 'q-radio__inner--truthy');
-                // go to next step
-                cy.dataCy('step-5-continue').should('be.visible').click();
-                // correct merch card is preselected
-                cy.dataCy('form-card-merch-female')
-                  .first()
-                  .find('[data-cy="button-selected"]')
-                  .should('be.visible');
-                // correct size is preselected
-                cy.fixture('apiGetMerchandiseResponse').then(
-                  (merchandiseResponse) => {
-                    // select our test item (Triko 2024, female, size M)
-                    cy.wrap(
-                      merchandiseResponse.results.find(
-                        (item) =>
-                          item.id ===
-                          registerChallengeResponse.results[0].t_shirt_size_id,
-                      ),
-                    ).then((item) => {
-                      // same size is selected
-                      cy.dataCy('form-field-merch-size')
-                        .find('.q-radio__inner.q-radio__inner--truthy')
-                        .siblings('.q-radio__label')
-                        .should('contain', item.size);
-                    });
-                  },
-                );
-                // go to next step
-                cy.dataCy('step-6-continue').should('be.visible').click();
-                // verify step 7 is active
-                cy.dataCy('step-7')
-                  .find('.q-stepper__step-content')
-                  .should('be.visible');
-              },
+              .click();
+            // submit payment button should be visible and enabled
+            cy.dataCy('step-2-submit-payment')
+              .should('be.visible')
+              .and('not.be.disabled');
+            // switch to voucher payment
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            // input voucher should be visible
+            cy.dataCy('form-field-voucher-input').should('be.visible');
+            // switch to company payment
+            cy.dataCy(getRadioOption(PaymentSubject.company))
+              .should('be.visible')
+              .click();
+            /**
+             * Reselect paying company
+             * TODO: add function that will clear subsidiary and team IDs on
+             * organization change.
+             */
+            cy.selectRegisterChallengePayingOrganization();
+            // go to next step
+            cy.dataCy('step-2-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            cy.testRegisterChallengeLoadedStepsThreeToSeven(
+              win.i18n,
+              registerChallengeResponse,
             );
           },
         );
@@ -1417,11 +1496,20 @@ function passToStep2() {
 }
 
 function passToStep3() {
-  passToStep2();
-  // payment - no validation
-  cy.dataCy('step-2-continue').should('be.visible').click();
-  // on step 3
-  cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+  cy.get('@config').then((config) => {
+    cy.get('@i18n').then((i18n) => {
+      passToStep2();
+      // payment - choose a free pass voucher
+      cy.dataCy(getRadioOption(PaymentSubject.voucher))
+        .should('be.visible')
+        .click();
+      cy.applyFullVoucher(config, i18n);
+      // next step button should be visible and enabled
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      // on step 3
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+    });
+  });
 }
 
 function passToStep4() {

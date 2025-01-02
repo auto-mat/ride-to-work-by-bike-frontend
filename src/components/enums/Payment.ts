@@ -8,3 +8,11 @@ export enum PaymentSubject {
 export enum PaymentAmount {
   custom = 'custom',
 }
+
+export enum PaymentState {
+  done = 'done',
+  none = 'none',
+  noAdmission = 'no_admission',
+  waiting = 'waiting',
+  unknown = 'unknown',
+}
