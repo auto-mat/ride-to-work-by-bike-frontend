@@ -192,6 +192,7 @@ describe('Register Challenge page', () => {
               );
               // intercept without specific response (it is not used)
               cy.interceptRegisterChallengePostApi(config, win.i18n);
+              cy.interceptMerchandiseNoneGetApi(config, win.i18n);
             },
           );
         });
@@ -570,26 +571,63 @@ describe('Register Challenge page', () => {
       checkActiveIcon(6);
     });
 
-    /**
-      TODO: Validate sixth step (merch) when step 7 is added
-      // select package tracking
-      cy.dataCy('form-merch-tracking-input').click();
+    it('validates sixth step (merch)', () => {
+      passToStep6();
+      checkActiveIcon(6);
+      // by default, next step button is disabled
+      cy.dataCy('step-6-continue').should('be.visible').and('be.disabled');
+      // check no merch checkbox
+      cy.dataCy('form-merch-no-merch-checkbox').should('be.visible').click();
+      cy.waitForMerchandiseNoneApi();
       // go to next step
-      cy.dataCy('step-6-continue').should('be.visible').click();
-      // step does not change (phone number not valid)
-      cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
-      cy.dataCy('step-7').find('.q-stepper__step-content').should('not.exist');
-      // fill phone number
-      cy.dataCy('form-merch-phone-input')
+      cy.dataCy('step-6-continue')
         .should('be.visible')
-        .find('input')
-        .type('736 123 456');
-      // go to next step
-      cy.dataCy('step-6-continue').should('be.visible').click();
-      // step changes
+        .and('not.be.disabled')
+        .click();
       cy.dataCy('step-6').find('.q-stepper__step-content').should('not.exist');
       cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
-     */
+      // go back to step 6
+      cy.dataCy('step-7-back').should('be.visible').click();
+      cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
+      // uncheck no merch checkbox
+      cy.dataCy('form-merch-no-merch-checkbox').should('be.visible').click();
+      // next step button is disabled
+      cy.dataCy('step-6-continue').should('be.visible').and('be.disabled');
+      // select size
+      cy.fixture('apiGetMerchandiseResponse').then((response) => {
+        const item = response.results[0];
+        // open dialog
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .click();
+        cy.dataCy('dialog-merch')
+          .should('be.visible')
+          .within(() => {
+            cy.contains(item.name).should('be.visible');
+            cy.contains(item.description).should('be.visible');
+          });
+        cy.dataCy('slider-merch').should('be.visible');
+        // close dialog
+        cy.dataCy('dialog-close').click();
+        // first option is selected
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-selected"]')
+          .should('be.visible');
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .should('not.exist');
+      });
+      // next step button is enabled
+      cy.dataCy('step-6-continue')
+        .should('be.visible')
+        .and('not.be.disabled')
+        .click();
+      cy.dataCy('step-6').find('.q-stepper__step-content').should('not.exist');
+      cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
+    });
 
     it('allows user to create a new team', () => {
       passToStep5();

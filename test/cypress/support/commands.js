@@ -1723,3 +1723,53 @@ Cypress.Commands.add('waitForRegisterChallengeGetApi', (response) => {
     }
   });
 });
+
+/**
+ * Intercept "I don't want merchandise" GET API call
+ * Provides `@getMerchandiseNone` alias
+ * @param {Config} config - App global config
+ * @param {I18n|string} i18n - i18n instance or locale lang string e.g. en
+ */
+Cypress.Commands.add('interceptMerchandiseNoneGetApi', (config, i18n) => {
+  const {
+    apiBase,
+    apiDefaultLang,
+    urlApiMerchandise,
+    iDontWantMerchandiseItemCode,
+  } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
+  const urlApiMerchandiseNoneLocalized = `${apiBaseUrl}${urlApiMerchandise}${iDontWantMerchandiseItemCode}/`;
+
+  cy.fixture('apiGetMerchandiseResponseNone').then(
+    (merchandiseNoneResponse) => {
+      cy.intercept('GET', urlApiMerchandiseNoneLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: merchandiseNoneResponse,
+      }).as('getMerchandiseNone');
+    },
+  );
+});
+
+/**
+ * Wait for intercept "I don't want merchandise" API call and compare response object
+ * Wait for `@getMerchandiseNone` intercept
+ */
+Cypress.Commands.add('waitForMerchandiseNoneApi', () => {
+  cy.fixture('apiGetMerchandiseResponseNone').then(
+    (merchandiseNoneResponse) => {
+      cy.wait('@getMerchandiseNone').then((getMerchandiseNone) => {
+        expect(getMerchandiseNone.request.headers.authorization).to.include(
+          bearerTokeAuth,
+        );
+        if (getMerchandiseNone.response) {
+          expect(getMerchandiseNone.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getMerchandiseNone.response.body).to.deep.equal(
+            merchandiseNoneResponse,
+          );
+        }
+      });
+    },
+  );
+});

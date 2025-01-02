@@ -286,7 +286,7 @@ export default defineComponent({
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
-    let iDontWantMerchandiseCachedId;
+    let iDontWantMerchandiseCachedId: number | null = null;
     const onCheckboxUpdate = function (val: boolean): void {
       if (val) {
         if (!iDontWantMerchandiseCachedId) {
@@ -310,6 +310,9 @@ export default defineComponent({
         }
       } else {
         nextTick(() => {
+          // if no merch is selected, reset selected size
+          selectedSize.value = null;
+          // scroll to merch tabs
           tabsMerchRef.value?.$el.scrollIntoView({
             behavior: 'smooth',
             block: 'start',
@@ -357,6 +360,7 @@ export default defineComponent({
         :val="true"
         color="primary"
         @update:model-value="onCheckboxUpdate"
+        data-cy="form-merch-no-merch-checkbox"
       />
     </q-item-section>
     <q-item-section>

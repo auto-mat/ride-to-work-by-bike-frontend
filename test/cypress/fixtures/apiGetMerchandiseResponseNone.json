@@ -1,0 +1,17 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 118,
+      "name": "Žádné-žádné triko nechci",
+      "sex": "",
+      "size": "",
+      "author": "",
+      "material": "",
+      "description": "",
+      "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/2022_%C5%BE%C3%A1dn%C3%A9_triko_edited.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=sOWjhKqzcJT0X23DIVzjBnMomqw%3D&Expires=2051185003"
+    }
+  ]
+}
