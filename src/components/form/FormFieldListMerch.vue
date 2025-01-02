@@ -49,11 +49,13 @@ import SliderMerch from './SliderMerch.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { useApiGetFilteredMerchandise } from '../../composables/useApiGetFilteredMerchandise';
+
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
 import { Gender } from '../types/Profile';
@@ -73,6 +75,7 @@ export default defineComponent({
     SliderMerch,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     // show merch checkbox
     const isNotMerch = ref<boolean>(false);
 
@@ -95,9 +98,10 @@ export default defineComponent({
     const tabsMerchRef = ref<typeof QCard | null>(null);
 
     // get merchandise data
-    const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
 
+    const { merchandise, loadFilteredMerchandise } =
+      useApiGetFilteredMerchandise(logger);
     // load merchandise on mount
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
@@ -106,19 +110,34 @@ export default defineComponent({
         logger?.debug(
           `Merch ID <${registerChallengeStore.getMerchId}> is set.`,
         );
-        // find card that contains the merch ID
-        const item = merchandiseItems.value.find(
-          (item) => item.id === registerChallengeStore.getMerchId,
+        // load merch ID "none" to be able to compare
+        logger?.debug(
+          `Loading filtered merchandise data by code <${rideToWorkByBikeConfig.iDontWantMerchandiseItemCode}> for comparison.`,
         );
-        // select gender and size
-        if (item) {
-          logger?.debug(`Found item <${JSON.stringify(item, null, 2)}>.`);
-          selectedGender.value = item.gender;
-          selectedSize.value = item.id;
+        await loadFilteredMerchandise(
+          rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
+        );
+        const iDontWantMerchandiseId = merchandise.value[0]['id'];
+        // if merch ID is "none" check the checkbox
+        if (registerChallengeStore.getMerchId === iDontWantMerchandiseId) {
+          isNotMerch.value = true;
         } else {
-          logger?.debug(
-            `No item found for merch ID <${registerChallengeStore.getMerchId}>.`,
+          // explicitly set to false
+          isNotMerch.value = false;
+          // find card that contains the merch ID
+          const item = merchandiseItems.value.find(
+            (item) => item.id === registerChallengeStore.getMerchId,
           );
+          // select gender and size
+          if (item) {
+            logger?.debug(`Found item <${JSON.stringify(item, null, 2)}>.`);
+            selectedGender.value = item.gender;
+            selectedSize.value = item.id;
+          } else {
+            logger?.debug(
+              `No item found for merch ID <${registerChallengeStore.getMerchId}>.`,
+            );
+          }
         }
       }
     });
