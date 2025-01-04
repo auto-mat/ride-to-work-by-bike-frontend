@@ -2,6 +2,7 @@ import {
   interceptOrganizationsApi,
   testLanguageSwitcher,
   testBackgroundImage,
+  interceptRegisterCoordinatorApi,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
@@ -196,6 +197,7 @@ describe('Register Challenge page', () => {
               cy.interceptMerchandiseNoneGetApi(config, win.i18n);
               cy.interceptIpAddressGetApi(config);
               cy.interceptPayuCreateOrderPostApi(config, win.i18n);
+              interceptRegisterCoordinatorApi(config, win.i18n);
             },
           );
         });
@@ -487,6 +489,57 @@ describe('Register Challenge page', () => {
           );
         });
       });
+    });
+
+    it('allows to post company coordinator registration', () => {
+      passToStep2();
+      // select company
+      cy.dataCy(getRadioOption(OrganizationType.company)).click();
+      // select paying company (required)
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          cy.dataCy('form-field-company').find('.q-field__append').click();
+          // select option without coordinator
+          cy.get('.q-item__label')
+            .should('be.visible')
+            .and((opts) => {
+              expect(
+                opts.length,
+                formFieldCompany.results.length +
+                  formFieldCompanyNext.results.length,
+              );
+            })
+            .eq(1)
+            .click();
+          cy.get('.q-menu').should('not.exist');
+        });
+      });
+      // click the coordinator checkbox
+      cy.dataCy('register-coordinator-checkbox').should('be.visible').click();
+      cy.fixture('apiPostRegisterCoordinatorRequest').then(
+        (formRegisterCoordinatorData) => {
+          // fill in the register coordinator form
+          cy.dataCy('register-coordinator-job-title')
+            .find('input')
+            .type(formRegisterCoordinatorData.jobTitle);
+          cy.dataCy('register-coordinator-phone')
+            .find('input')
+            .type(formRegisterCoordinatorData.phone);
+          // enable checkbox responsibility
+          cy.dataCy('register-coordinator-responsibility')
+            .find('.q-checkbox')
+            .click();
+          // enable checkbox terms
+          cy.dataCy('register-coordinator-terms').find('.q-checkbox').click();
+          // go to next step
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.waitForRegisterCoordinatorPostApi();
+          // verify that we are on step 3
+          cy.dataCy('step-3')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+        },
+      );
     });
 
     it('validates third step (organization type)', () => {

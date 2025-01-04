@@ -2173,3 +2173,21 @@ Cypress.Commands.add('testAccessRegisterChallengeOnly', () => {
   cy.url().should('not.include', routesConf['profile']['path']);
   cy.url().should('include', routesConf['register_challenge']['path']);
 });
+
+/**
+ * Wait for intercept register coordinator POST API call and compare request object
+ * Wait for `@registerCoordinator` intercept
+ * @returns {void}
+ */
+Cypress.Commands.add('waitForRegisterCoordinatorPostApi', () => {
+  cy.fixture('apiPostRegisterCoordinatorRequest').then(
+    (registerCoordinatorRequest) => {
+      cy.wait('@registerCoordinator').then(({ request, response }) => {
+        expect(request.body).to.deep.equal(registerCoordinatorRequest);
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        }
+      });
+    },
+  );
+});

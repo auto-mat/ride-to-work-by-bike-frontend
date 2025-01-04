@@ -34,9 +34,15 @@ import {
 import { PaymentSubject } from '../components/enums/Payment';
 import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
 
+// stores
+import { useRegisterStore } from './register';
+
 // types
 import type { Logger } from '../components/types/Logger';
-import type { RegisterChallengePersonalDetailsForm } from '../components/types/RegisterChallenge';
+import type {
+  RegisterChallengeCoordinatorForm,
+  RegisterChallengePersonalDetailsForm,
+} from '../components/types/RegisterChallenge';
 import type { ValidatedCoupon } from '../components/types/Coupon';
 import type {
   MerchandiseCard,
@@ -52,6 +58,8 @@ import type {
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
 import type { IpAddressResponse } from '../components/types/ApiIpAddress';
+import type { RegisterCoordinatorRequest } from '../components/types/Register';
+import { deepObjectWithSimplePropsCopy } from 'src/utils';
 
 const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   firstName: '',
@@ -62,6 +70,13 @@ const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   terms: true,
 };
 
+const emptyFormRegisterCoordinator: RegisterChallengeCoordinatorForm = {
+  jobTitle: '',
+  phone: '',
+  responsibility: false,
+  terms: false,
+};
+
 /**
  * Store for the register challenge page.
  * Holds form values and selected options.
@@ -69,7 +84,7 @@ const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
 export const useRegisterChallengeStore = defineStore('registerChallenge', {
   state: () => ({
     $log: null as Logger | null,
-    personalDetails: emptyFormPersonalDetails,
+    personalDetails: deepObjectWithSimplePropsCopy(emptyFormPersonalDetails),
     payment: null, // TODO: add data type options
     paymentAmount: null as number | null,
     paymentState: PaymentState.none,
@@ -85,6 +100,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     teams: [] as OrganizationTeam[],
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
+    formRegisterCoordinator: deepObjectWithSimplePropsCopy(
+      emptyFormRegisterCoordinator,
+    ),
     isLoadingRegisterChallenge: false,
     ipAddressData: null as IpAddressResponse | null,
     isLoadingSubsidiaries: false,
@@ -95,6 +113,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isLoadingPayuOrder: false,
     isPayuTransactionInitiated: false,
     checkPaymentStatusRepetitionCount: 0,
+    isRegistrationCoordinator: false,
   }),
 
   getters: {
@@ -115,6 +134,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
+    getFormRegisterCoordinator: (state): RegisterChallengeCoordinatorForm =>
+      state.formRegisterCoordinator,
+    getIsRegistrationCoordinator: (state): boolean =>
+      state.isRegistrationCoordinator,
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(
@@ -275,6 +298,14 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setIsPayuTransactionInitiated(isPayuTransactionInitiated: boolean) {
       this.isPayuTransactionInitiated = isPayuTransactionInitiated;
+    },
+    setFormRegisterCoordinator(
+      formRegisterCoordinator: RegisterChallengeCoordinatorForm,
+    ) {
+      this.formRegisterCoordinator = formRegisterCoordinator;
+    },
+    setIsRegistrationCoordinator(isRegistrationCoordinator: boolean) {
+      this.isRegistrationCoordinator = isRegistrationCoordinator;
     },
     /**
      * Load registration data from API and set store state
@@ -653,6 +684,34 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         rideToWorkByBikeConfig.checkRegisterChallengeStatusIntervalSeconds *
           1000,
       );
+    },
+    /**
+     * Register coordinator with store data
+     * This is done if the user has selected the "Register coordinator" option.
+     * Function is only called once the full form is validated.
+     * @returns {Promise<void>}
+     */
+    async registerCoordinator(): Promise<void> {
+      if (this.isRegistrationCoordinator) {
+        this.$log?.debug('Register coordinator with store data.');
+        const registerStore = useRegisterStore();
+        const newsletter = registerChallengeAdapter.combineNewsletterValues(
+          this.personalDetails.newsletter,
+        );
+        const payload: RegisterCoordinatorRequest = {
+          firstName: this.personalDetails.firstName,
+          lastName: this.personalDetails.lastName,
+          jobTitle: this.formRegisterCoordinator.jobTitle,
+          newsletter: newsletter,
+          phone: this.formRegisterCoordinator.phone,
+          responsibility: this.formRegisterCoordinator.responsibility,
+          terms: this.formRegisterCoordinator.terms,
+        };
+        this.$log?.debug(
+          `Register coordinator payload <${JSON.stringify(payload)}>.`,
+        );
+        await registerStore.registerCoordinator(payload, false);
+      }
     },
   },
 

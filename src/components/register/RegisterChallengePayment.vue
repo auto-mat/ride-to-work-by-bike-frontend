@@ -49,7 +49,7 @@ import FormFieldSliderNumber from '../form/FormFieldSliderNumber.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormFieldVoucher from '../form/FormFieldVoucher.vue';
 
-import { defaultPaymentAmountMinComputed } from '../../utils/price_levels.ts';
+import { defaultPaymentAmountMinComputed } from '../../utils/price_levels';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -210,13 +210,25 @@ export default defineComponent({
     onMounted(() => {
       checkOrganizationAdmin();
     });
-    const isRegistrationCoordinator = ref<boolean>(false);
+    const isRegistrationCoordinator = computed<boolean>({
+      get: (): boolean => registerChallengeStore.getIsRegistrationCoordinator,
+      set: (value: boolean): void =>
+        registerChallengeStore.setIsRegistrationCoordinator(value),
+    });
     const formRegisterCoordinator = reactive({
       jobTitle: '',
       phone: '',
       responsibility: false,
       terms: false,
     });
+    // sync formRegisterCoordinator values with store
+    watch(
+      formRegisterCoordinator,
+      (newVal) => {
+        registerChallengeStore.setFormRegisterCoordinator(newVal);
+      },
+      { deep: true },
+    );
 
     watch(selectedPaymentSubject, (newVal, oldVal) => {
       logger?.debug(

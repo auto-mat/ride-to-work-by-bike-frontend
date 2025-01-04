@@ -88,7 +88,7 @@ const rgbaColorObjectToString = (rgba: RgbaI): string => {
  *
  * @returns {Object}: Object copy
  */
-const deepObjectWithSimplePropsCopy = (obj: object): object => {
+const deepObjectWithSimplePropsCopy = <T>(obj: T): T => {
   return JSON.parse(JSON.stringify(obj));
 };
 

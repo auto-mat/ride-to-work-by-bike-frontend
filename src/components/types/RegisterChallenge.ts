@@ -34,6 +34,13 @@ export interface RegisterChallengePersonalDetailsForm
   newsletter: NewsletterType[];
 }
 
+export interface RegisterChallengeCoordinatorForm {
+  jobTitle: string;
+  phone: string;
+  responsibility: boolean;
+  terms: boolean;
+}
+
 export interface RegisterChallengePostRequest {
   personalDetails: RegisterChallengePersonalDetailsApi;
   newsletter: NewsletterType[];

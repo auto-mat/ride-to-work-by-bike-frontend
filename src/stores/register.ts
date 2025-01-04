@@ -208,6 +208,7 @@ export const useRegisterStore = defineStore('register', {
      */
     async registerCoordinator(
       payload: RegisterCoordinatorRequest,
+      redirect: boolean = true,
     ): Promise<void> {
       const { apiFetch } = useApi();
       this.$log?.debug(
@@ -235,7 +236,7 @@ export const useRegisterStore = defineStore('register', {
         );
 
         // redirect to home page
-        if (this.$router) {
+        if (this.$router && redirect) {
           this.$log?.debug(
             `Coordinator registration succcesfull, redirect to <${routesConf['home']['path']}> URL.`,
           );
