@@ -697,6 +697,7 @@ apiMessageSuccess = "Registration was successful"
 apiMessageError = "Coordinator registration failed. Please try again later."
 apiMessageErrorWithMessage = "Coordinator registration failed. Please try again later. Error: {error}"
 apiMessageSuccess = "Coordinator registration was successful"
+messageNoOrganizationId = "Please select an organization you want to be a coordinator for."
 
 [register.form]
 hintLogin = "Already have an account?"

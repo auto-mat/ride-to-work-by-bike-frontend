@@ -8,6 +8,7 @@ import { Notify } from 'quasar';
 // adapters
 import { payuAdapter } from 'src/adapters/payuAdapter';
 import { subsidiaryAdapter } from 'src/adapters/subsidiaryAdapter';
+import { registerCoordinatorAdapter } from 'src/adapters/registerCoordinatorAdapter';
 import { registerChallengeAdapter } from '../adapters/registerChallengeAdapter';
 
 // composables
@@ -692,24 +693,27 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      * @returns {Promise<void>}
      */
     async registerCoordinator(): Promise<void> {
-      if (this.isRegistrationCoordinator) {
+      if (this.isRegistrationCoordinator && this.getOrganizationId) {
         this.$log?.debug('Register coordinator with store data.');
         const registerStore = useRegisterStore();
-        const newsletter = registerChallengeAdapter.combineNewsletterValues(
-          this.personalDetails.newsletter,
-        );
-        const payload: RegisterCoordinatorRequest = {
-          firstName: this.personalDetails.firstName,
-          lastName: this.personalDetails.lastName,
-          jobTitle: this.formRegisterCoordinator.jobTitle,
-          newsletter: newsletter,
-          phone: this.formRegisterCoordinator.phone,
-          responsibility: this.formRegisterCoordinator.responsibility,
-          terms: this.formRegisterCoordinator.terms,
-        };
+        const payload =
+          registerCoordinatorAdapter.registerChallengeToApiPayload({
+            formRegisterCoordinator: this.getFormRegisterCoordinator,
+            organizationId: this.getOrganizationId,
+            personalDetails: this.getPersonalDetails,
+          });
         this.$log?.debug(
           `Register coordinator payload <${JSON.stringify(payload)}>.`,
         );
+        if (!payload) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t(
+              'registerCoordinator.messageNoOrganizationId',
+            ),
+          });
+          return;
+        }
         await registerStore.registerCoordinator(payload, false);
       }
     },

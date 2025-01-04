@@ -702,6 +702,7 @@ apiMessageSuccess = "Registrace byla úspěšná"
 apiMessageError = "Registrace koordinátora se nezdařila. Prosím, zkuste to znovu později."
 apiMessageErrorWithMessage = "Registrace koordinátora se nezdařila. Prosím, zkuste to znovu později. Chyba: {error}"
 apiMessageSuccess = "Registrace koordinátora byla úspěšná"
+messageNoOrganizationId = "Prosím vyberte organizaci, pro kterou chcete být koordinátorem."
 
 [register.form]
 hintLogin = "Již máte účet?"
