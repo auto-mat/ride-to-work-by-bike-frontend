@@ -24,6 +24,9 @@
 // libraries
 import { defineComponent, inject, reactive, computed } from 'vue';
 
+// adapters
+import { registerCoordinatorAdapter } from 'src/adapters/registerCoordinatorAdapter';
+
 // components
 import FormFieldCheckboxRequired from './../form/FormFieldCheckboxRequired.vue';
 import FormFieldCompany from '../global/FormFieldCompany.vue';
@@ -99,17 +102,8 @@ export default defineComponent({
 
     const onSubmit = async (): Promise<void> => {
       // build payload
-      const payload: RegisterCoordinatorRequest = {
-        firstName: formRegisterCoordinator.firstName,
-        jobTitle: formRegisterCoordinator.jobTitle,
-        lastName: formRegisterCoordinator.lastName,
-        newsletter: formRegisterCoordinator.newsletter,
-        organizationId:
-          Number(formRegisterCoordinator.organizationId) ?? undefined,
-        phone: formRegisterCoordinator.phone,
-        responsibility: formRegisterCoordinator.responsibility,
-        terms: formRegisterCoordinator.terms,
-      };
+      const payload: RegisterCoordinatorRequest =
+        registerCoordinatorAdapter.toApiPayload(formRegisterCoordinator);
       logger?.debug(
         `Register coordinator payload <${JSON.stringify(payload)}>`,
       );

@@ -1,11 +1,8 @@
-// enums
-import { NewsletterType } from './Newsletter';
-
 export interface RegisterCoordinatorRequest {
   firstName?: string;
   jobTitle?: string;
   lastName?: string;
-  newsletter: NewsletterType[];
+  newsletter: string;
   organizationId?: number;
   phone?: string;
   responsibility?: boolean;
