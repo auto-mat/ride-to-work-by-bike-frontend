@@ -106,7 +106,7 @@ export default defineComponent({
       color="secondary q-mt-lg"
       text-color="primary"
       :label="$t('register.form.submitConfirmation')"
-      data-cy="form-register-submit"
+      data-cy="email-confirmation-submit"
     />
   </div>
 </template>
