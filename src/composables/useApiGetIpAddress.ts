@@ -48,9 +48,7 @@ export const useApiGetIpAddress = (
 
     if (data) {
       ipAddressData.value = data;
-      logger?.debug(
-        `IP address data loaded <${JSON.stringify(data, null, 2)}>.`,
-      );
+      logger?.debug(`IP address data <${JSON.stringify(data, null, 2)}>.`);
     }
 
     isLoading.value = false;

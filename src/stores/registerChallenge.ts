@@ -491,13 +491,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       // create order
       const { createOrder } = useApiPostPayuCreateOrder(this.$log);
       this.$log?.debug(
-        `Creating PayU order with amount <${this.paymentAmount}> and client IP <${clientIp}>.`,
-      );
-      this.$log?.debug(
-        'Creating payment with:' +
-          ` Payment subject <${this.paymentSubject}>` +
-          ` Payment amount <${this.paymentAmount}>` +
-          ` Client IP <${clientIp}>`,
+        `Creating PayU order with amount <${this.getPaymentAmount}>,` +
+          ` payment subject <${this.getPaymentSubject}` +
+          ` and client IP <${clientIp}>.`,
       );
       const payload = payuAdapter.toPayuOrderPayload(
         this.paymentSubject,
@@ -505,7 +501,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.voucher,
         clientIp,
       );
-      this.$log?.debug(`Payload created <${JSON.stringify(payload, null, 2)}>`);
+      this.$log?.debug(
+        `Payload created <${JSON.stringify(payload, null, 2)}>.`,
+      );
       if (!payload) {
         Notify.create({
           message: i18n.global.t('createPayuOrder.payloadCreateError'),
@@ -549,7 +547,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         'Start periodic check of registration status with interval' +
           ` <${rideToWorkByBikeConfig.checkRegisterChallengeStatusIntervalSeconds}> seconds` +
-          ` and max repetitions <${rideToWorkByBikeConfig.checkRegisterChallengeStatusMaxRepetitions}>.`,
+          ` and max. repetitions <${rideToWorkByBikeConfig.checkRegisterChallengeStatusMaxRepetitions}>.`,
       );
       let intervalId: ReturnType<typeof setInterval> | null = null;
 
@@ -565,7 +563,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         }
       };
 
-      // function to run at the interval
+      // function to run the interval
       const checkRegisterChallenge = async (): Promise<void> => {
         this.$log?.debug('Check payment status.');
         // before each call, check if paymentState is done
@@ -593,7 +591,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
             this.checkPaymentStatusRepetitionCount >= maxRepetitions
           ) {
             this.$log?.debug(
-              `Maximum number of payment status checks reached (${maxRepetitions}), stopping periodic check.`,
+              `Maximum number of payment status checks reached (${maxRepetitions}),` +
+                ' stopping periodic check.',
             );
             // if we do reach max iterations count, stop loop
             stopCheck();
@@ -601,7 +600,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           }
         } else {
           this.$log?.debug(
-            'Payment is either not started from UI or already done,' +
+            'Payment is either not started from the UI or already done,' +
               ' disable periodic check.',
           );
           stopCheck();
@@ -609,9 +608,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         }
       };
 
-      this.$log?.debug(
-        `Set interval to ${rideToWorkByBikeConfig.checkRegisterChallengeStatusIntervalSeconds * 1000}`,
-      );
       // start interval
       intervalId = setInterval(
         checkRegisterChallenge,

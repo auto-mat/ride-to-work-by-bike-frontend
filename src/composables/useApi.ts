@@ -148,7 +148,9 @@ export const useApi = (
         injectAxioBaseApiUrlWithLang(baseUrl, logger);
       } else {
         api.defaults.baseURL = baseUrl;
-        logger?.debug(`Base API URL <${api.defaults.baseURL}>.`);
+        logger?.debug(
+          `Base API URL <${api.defaults.baseURL}> does not contains localization.`,
+        );
       }
       const startTime = performance.now();
       const data: apiData = {
