@@ -52,6 +52,7 @@ import { OrganizationType } from 'src/components/types/Organization';
 import { PaymentState, PaymentSubject } from 'src/components/enums/Payment';
 
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 export default defineComponent({
@@ -131,6 +132,7 @@ export default defineComponent({
     }`;
     const doneIconImgSrcStepper7 = doneIcon;
 
+    const challengeStore = useChallengeStore();
     const registerChallengeStore = useRegisterChallengeStore();
 
     const isPayuTransactionInitiated = computed(
@@ -139,6 +141,11 @@ export default defineComponent({
     const paymentState = computed(() => registerChallengeStore.getPaymentState);
 
     onMounted(async () => {
+      // make sure price level is loaded
+      if (!challengeStore.getPriceLevel.length) {
+        await challengeStore.loadPhaseSet();
+      }
+
       await registerChallengeStore.loadRegisterChallengeToStore();
       /**
        * Depending on the paymentState, and isPayuTransactionInitiated flag

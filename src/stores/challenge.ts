@@ -163,6 +163,6 @@ export const useChallengeStore = defineStore('challenge', {
   },
 
   persist: {
-    pick: ['daysActive', 'maxTeamMembers', 'phaseSet'],
+    omit: ['isChallengeActive'],
   },
 });

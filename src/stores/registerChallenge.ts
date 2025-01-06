@@ -177,7 +177,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getDefaultPaymentAmountCompany(): number {
       const challengeStore = useChallengeStore();
       const currentPriceLevels = challengeStore.getCurrentPriceLevels;
-      if (currentPriceLevels) {
+      if (currentPriceLevels[PriceLevelCategory.company]) {
         return currentPriceLevels[PriceLevelCategory.company].price;
       }
       return 0;
