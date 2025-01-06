@@ -952,7 +952,7 @@ describe('Register Challenge page', () => {
       cy.dataCy(getRadioOption(PaymentSubject.individual))
         .should('be.visible')
         .click();
-      cy.dataCy(getRadioOption(500)).click();
+      cy.dataCy(getRadioOption(paymentAmountDonation)).click();
       // submit payment
       cy.dataCy('step-2-submit-payment').should('be.visible').click();
       cy.waitForPayuCreateOrderPostApi();
