@@ -1193,10 +1193,15 @@ Cypress.Commands.add('waitForSubsidiaryPostApi', () => {
  * @param {object|string} i18n - i18n instance or locale lang string e.g. en
  */
 Cypress.Commands.add('interceptMerchandiseGetApi', (config, i18n) => {
-  const { apiBase, apiDefaultLang, urlApiMerchandise } = config;
+  const {
+    apiBase,
+    apiDefaultLang,
+    iDontWantMerchandiseItemCode,
+    urlApiMerchandise,
+  } = config;
   const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
   const urlApiMerchandiseLocalized = `${apiBaseUrl}${urlApiMerchandise}`;
-
+  // intercept call for all merchandise
   cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
     cy.fixture('apiGetMerchandiseResponseNext').then(
       (merchandiseResponseNext) => {
@@ -1214,6 +1219,16 @@ Cypress.Commands.add('interceptMerchandiseGetApi', (config, i18n) => {
       },
     );
   });
+  // intercept call for "I don't want merch ID"
+  const urlApiMerchandiseNoneLocalized = `${apiBaseUrl}${urlApiMerchandise}${iDontWantMerchandiseItemCode}/`;
+  cy.fixture('apiGetMerchandiseResponseNone').then(
+    (merchandiseResponseNone) => {
+      cy.intercept('GET', urlApiMerchandiseNoneLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: merchandiseResponseNone,
+      }).as('getMerchandiseNone');
+    },
+  );
 });
 
 /**
@@ -1943,12 +1958,12 @@ Cypress.Commands.add(
 );
 
 /**
- * Test that steps 3 to 7 are loaded correctly
+ * Test that steps 3 to 5 are loaded correctly
  * @param {I18n} i18n - i18n instance
  * @param {Object} registerChallengeResponse - Register challenge response
  */
 Cypress.Commands.add(
-  'testRegisterChallengeLoadedStepsThreeToSeven',
+  'testRegisterChallengeLoadedStepsThreeToFive',
   (i18n, registerChallengeResponse) => {
     // check that participation is selected
     cy.dataCy('form-field-option-group').within(() => {
@@ -1994,32 +2009,43 @@ Cypress.Commands.add(
         .should('have.class', 'q-radio__inner--truthy');
       // go to next step
       cy.dataCy('step-5-continue').should('be.visible').click();
-      // correct merch card is preselected
-      cy.dataCy('form-card-merch-female')
-        .first()
-        .find('[data-cy="button-selected"]')
-        .should('be.visible');
-      // correct size is preselected
-      cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
-        // select our test item (Triko 2024, female, size M)
-        cy.wrap(
-          merchandiseResponse.results.find(
-            (item) =>
-              item.id === registerChallengeResponse.results[0].t_shirt_size_id,
-          ),
-        ).then((item) => {
-          // same size is selected
-          cy.dataCy('form-field-merch-size')
-            .find('.q-radio__inner.q-radio__inner--truthy')
-            .siblings('.q-radio__label')
-            .should('contain', item.size);
-        });
-      });
-      // go to next step
-      cy.dataCy('step-6-continue').should('be.visible').click();
-      // verify step 7 is active
-      cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
     });
+  },
+);
+
+/**
+ * Test that step 6 is loaded correctly
+ * @param {I18n} i18n - i18n instance
+ * @param {Object} registerChallengeResponse - Register challenge response
+ */
+Cypress.Commands.add(
+  'testRegisterChallengeLoadedStepSix',
+  (i18n, registerChallengeResponse) => {
+    // correct merch card is preselected
+    cy.dataCy('form-card-merch-female')
+      .first()
+      .find('[data-cy="button-selected"]')
+      .should('be.visible');
+    // correct size is preselected
+    cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
+      // select our test item (Triko 2024, female, size M)
+      cy.wrap(
+        merchandiseResponse.results.find(
+          (item) =>
+            item.id === registerChallengeResponse.results[0].t_shirt_size_id,
+        ),
+      ).then((item) => {
+        // same size is selected
+        cy.dataCy('form-field-merch-size')
+          .find('.q-radio__inner.q-radio__inner--truthy')
+          .siblings('.q-radio__label')
+          .should('contain', item.size);
+      });
+    });
+    // go to next step
+    cy.dataCy('step-6-continue').should('be.visible').click();
+    // verify step 7 is active
+    cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
   },
 );
 

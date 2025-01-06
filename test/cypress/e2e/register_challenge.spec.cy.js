@@ -1570,7 +1570,11 @@ describe('Register Challenge page', () => {
                   .should('be.visible')
                   .and('not.be.disabled')
                   .click();
-                cy.testRegisterChallengeLoadedStepsThreeToSeven(
+                cy.testRegisterChallengeLoadedStepsThreeToFive(
+                  win.i18n,
+                  registerChallengeResponse,
+                );
+                cy.testRegisterChallengeLoadedStepSix(
                   win.i18n,
                   registerChallengeResponse,
                 );
@@ -1625,7 +1629,11 @@ describe('Register Challenge page', () => {
               .should('be.visible')
               .and('not.be.disabled')
               .click();
-            cy.testRegisterChallengeLoadedStepsThreeToSeven(
+            cy.testRegisterChallengeLoadedStepsThreeToFive(
+              win.i18n,
+              registerChallengeResponse,
+            );
+            cy.testRegisterChallengeLoadedStepSix(
               win.i18n,
               registerChallengeResponse,
             );
@@ -1645,6 +1653,84 @@ describe('Register Challenge page', () => {
       });
     });
   });
+
+  context(
+    'registration in progress (payment company - waiting + I dont want merch)',
+    () => {
+      beforeEach(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          // visit challenge inactive page to load campaign data
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi();
+          cy.fixture('apiGetRegisterChallengeNoMerch.json').then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+          // intercept common response (not currently used)
+          cy.interceptRegisterChallengePostApi(config, defLocale);
+          cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        });
+        // config is defined without hash in the URL
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+      });
+
+      it('fetches the registration status on load', () => {
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.fixture('apiGetRegisterChallengeNoMerch.json').then(
+            (registerChallengeResponse) => {
+              cy.testRegisterChallengeLoadedStepOne(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // go to next step
+              cy.dataCy('step-1-continue').should('be.visible').click();
+              // check that the company options is selected
+              cy.dataCy(getRadioOption(PaymentSubject.company))
+                .parents('.q-radio__label')
+                .siblings('.q-radio__inner')
+                .should('have.class', 'q-radio__inner--truthy');
+              // go to next step
+              cy.dataCy('step-2-continue')
+                .should('be.visible')
+                .and('not.be.disabled')
+                .click();
+              cy.testRegisterChallengeLoadedStepsThreeToFive(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // validate that step 6 contains "I don't want merch" selected
+              cy.dataCy('form-merch-no-merch-checkbox')
+                .should('be.visible')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy');
+              // merch cards should not be visible
+              cy.dataCy('list-merch').should('not.be.visible');
+              // go to next step
+              cy.dataCy('step-6-continue').should('be.visible').click();
+              // on step 7
+              cy.dataCy('step-7')
+                .find('.q-stepper__step-content')
+                .should('be.visible');
+              // message "waiting for confirmation" is displayed
+              cy.dataCy('step-7-registration-waiting-message')
+                .should('be.visible')
+                .and(
+                  'contain',
+                  win.i18n.global.t(
+                    'register.challenge.textRegistrationWaitingForConfirmation',
+                  ),
+                );
+              cy.dataCy('step-7-continue')
+                .should('be.visible')
+                .and('be.disabled');
+            },
+          );
+        });
+      });
+    },
+  );
 
   context('registration in progress (payment company - no_admission)', () => {
     beforeEach(() => {
@@ -1726,7 +1812,11 @@ describe('Register Challenge page', () => {
               .should('be.visible')
               .and('not.be.disabled')
               .click();
-            cy.testRegisterChallengeLoadedStepsThreeToSeven(
+            cy.testRegisterChallengeLoadedStepsThreeToFive(
+              win.i18n,
+              registerChallengeResponse,
+            );
+            cy.testRegisterChallengeLoadedStepSix(
               win.i18n,
               registerChallengeResponse,
             );
