@@ -78,6 +78,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     // show merch checkbox
     const isNotMerch = ref<boolean>(false);
+    let iDontWantMerchandiseCachedId: number | null = null;
 
     // template ref
     const formMerchRef = ref<typeof QForm | null>(null);
@@ -117,9 +118,11 @@ export default defineComponent({
         await loadFilteredMerchandise(
           rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
         );
-        const iDontWantMerchandiseId = merchandise.value[0]['id'];
+        iDontWantMerchandiseCachedId = merchandise.value[0]['id'];
         // if merch ID is "none" check the checkbox
-        if (registerChallengeStore.getMerchId === iDontWantMerchandiseId) {
+        if (
+          registerChallengeStore.getMerchId === iDontWantMerchandiseCachedId
+        ) {
           isNotMerch.value = true;
         } else {
           // explicitly set to false
@@ -305,7 +308,6 @@ export default defineComponent({
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
-    let iDontWantMerchandiseCachedId: number | null = null;
     const onCheckboxUpdate = function (val: boolean): void {
       if (val) {
         if (!iDontWantMerchandiseCachedId) {
