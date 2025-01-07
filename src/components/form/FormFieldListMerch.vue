@@ -107,7 +107,6 @@ export default defineComponent({
         logger?.debug(
           `Merch ID <${registerChallengeStore.getMerchId}> is set.`,
         );
-        // explicitly set to false
         // find card that contains the merch ID
         const item = merchandiseItems.value.find(
           (item: MerchandiseItem) =>
