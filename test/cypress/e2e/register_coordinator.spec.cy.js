@@ -6,6 +6,7 @@ import {
   testLanguageSwitcher,
   testBackgroundImage,
   waitForOrganizationsApi,
+  systemTimeChallengeActive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
@@ -108,85 +109,89 @@ describe('Login page', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.wrap(win.i18n).as('i18n');
-          // Set up API intercepts
-          cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
-            config,
-            win.i18n,
+          cy.fixture('refreshTokensResponseChallengeActive').then(
+            (refreshTokensResponseChallengeActive) => {
+              cy.fixture('loginRegisterResponseChallengeActive').then(
+                (loginRegisterResponseChallengeActive) => {
+                  // Set up API intercepts
+                  cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+                    config,
+                    win.i18n,
+                    loginRegisterResponseChallengeActive,
+                    null,
+                    refreshTokensResponseChallengeActive,
+                    null,
+                    { has_user_verified_email_address: true },
+                  );
+                  cy.fillAndSubmitLoginForm(config, win.i18n);
+                  cy.wait([
+                    '@loginRequest',
+                    '@refreshAuthTokenRequest',
+                    '@verifyEmailRequest',
+                    '@thisCampaignRequest',
+                  ]);
+                  interceptRegisterCoordinatorApi(config, win.i18n);
+                  interceptOrganizationsApi(
+                    config,
+                    win.i18n,
+                    OrganizationType.company,
+                  );
+                  cy.visit('#' + routesConf['register_coordinator']['path']);
+                },
+              );
+            },
           );
-          cy.fillAndSubmitLoginForm(config, win.i18n);
-          cy.wait([
-            '@loginRequest',
-            '@refreshAuthTokenRequest',
-            '@verifyEmailRequest',
-            '@thisCampaignRequest',
-          ]);
-          interceptRegisterCoordinatorApi(config, win.i18n);
-          interceptOrganizationsApi(config, win.i18n, OrganizationType.company);
-          cy.visit('#' + routesConf['register_coordinator']['path']);
         });
-        // Load fixtures and set up request body
-        cy.fixture('formRegisterCoordinator').then(
-          (formRegisterCoordinatorData) => {
-            cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
-              cy.wrap({
-                firstName: formRegisterCoordinatorData.firstName,
-                jobTitle: formRegisterCoordinatorData.jobTitle,
-                lastName: formRegisterCoordinatorData.lastName,
-                newsletter: formRegisterCoordinatorData.newsletter,
-                organizationId: formFieldCompanyResponse.results[0].id,
-                phone: formRegisterCoordinatorData.phone,
-                responsibility: true,
-                terms: true,
-              }).as('registerRequestBody');
-            });
-          },
-        );
       });
     });
 
     it('fills in the form, submits it, and redirects to homepage on success', () => {
-      cy.fixture('formFieldCompany').then((formFieldCompany) => {
-        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-          waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-          // fill in the form
-          fillFormRegisterCoordinator();
-          // check responsibility checkbox
-          cy.dataCy('form-register-coordinator-responsibility')
-            .find('.q-checkbox')
-            .click();
-          // prevent action on link to avoid accidental redirect
-          cy.dataCy('form-register-coordinator-terms')
-            .find('a')
-            .then(($el) => {
-              $el[0].addEventListener('click', (event) => {
-                event.preventDefault();
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.fixture('formFieldCompany').then((formFieldCompany) => {
+          cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+            waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+            // fill in the form
+            fillFormRegisterCoordinator();
+            // check responsibility checkbox
+            cy.dataCy('form-register-coordinator-responsibility')
+              .find('.q-checkbox')
+              .click();
+            // prevent action on link to avoid accidental redirect
+            cy.dataCy('form-register-coordinator-terms')
+              .find('a')
+              .then(($el) => {
+                $el[0].addEventListener('click', (event) => {
+                  event.preventDefault();
+                });
               });
-            });
-          // check terms checkbox
-          cy.dataCy('form-register-coordinator-terms')
-            .find('.q-checkbox')
-            .click();
-          // reset the action on link
-          cy.dataCy('form-register-coordinator-terms')
-            .find('a')
-            .then(($el) => {
-              $el[0].removeEventListener('click', (event) => {
-                event.preventDefault();
+            // check terms checkbox
+            cy.dataCy('form-register-coordinator-terms')
+              .find('.q-checkbox')
+              .click();
+            // reset the action on link
+            cy.dataCy('form-register-coordinator-terms')
+              .find('a')
+              .then(($el) => {
+                $el[0].removeEventListener('click', (event) => {
+                  event.preventDefault();
+                });
               });
-            });
-          // submit form
-          cy.dataCy('form-register-coordinator-submit').click();
-          // wait for the API call to complete
-          cy.wait('@registerCoordinator').then((interception) => {
-            cy.get('@registerRequestBody').then((registerRequestBody) => {
-              expect(interception.request.body).to.deep.equal(
-                registerRequestBody,
+            // submit form
+            cy.dataCy('form-register-coordinator-submit').click();
+            // wait for the API call to complete
+            cy.wait('@registerCoordinator').then((interception) => {
+              cy.fixture('apiPostRegisterCoordinatorRequest').then(
+                (registerRequestBody) => {
+                  expect(interception.request.body).to.deep.equal(
+                    registerRequestBody,
+                  );
+                  expect(interception.response.statusCode).to.equal(
+                    httpSuccessfullStatus,
+                  );
+                  // check if redirected to homepage
+                  cy.url().should('include', routesConf['home']['path']);
+                },
               );
-              expect(interception.response.statusCode).to.equal(
-                httpSuccessfullStatus,
-              );
-              // check if redirected to homepage
-              cy.url().should('include', routesConf['home']['path']);
             });
           });
         });

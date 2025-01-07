@@ -1,9 +1,16 @@
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "jobTitle": "JD",
-  "newsletter": "challenge-events-mobility",
-  "phone": "732123456",
-  "responsibility": true,
-  "terms": true
+  "user_profile": {
+    "user": {
+      "firstName": "John",
+      "lastName": "Doe"
+    },
+    "newsletter": "challenge-events-mobility",
+    "phone": "+420 736 456 789"
+  },
+  "user_attendance": {
+    "terms": true
+  },
+  "organizationId": 774,
+  "jobTitle": "Developer",
+  "responsibility": true
 }

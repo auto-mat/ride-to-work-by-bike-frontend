@@ -550,17 +550,28 @@ export const interceptFacebookLoginApi = (
 
 export const fillFormRegisterCoordinator = (): void => {
   cy.fixture('formRegisterCoordinator').then((formRegisterCoordinatorData) => {
+    // fill in first name
     cy.dataCy('form-register-coordinator-first-name')
       .find('input')
       .type(formRegisterCoordinatorData.firstName);
+    // fill in last name
     cy.dataCy('form-register-coordinator-last-name')
       .find('input')
       .type(formRegisterCoordinatorData.lastName);
-    cy.dataCy('form-register-coordinator-company').find('input').click();
-    cy.get('.q-menu .q-item').first().click();
+    // select all newsletter options
+    cy.dataCy('newsletter-option').each((newsletterOption) => {
+      cy.wrap(newsletterOption).click();
+    });
+    // select company option #2
+    cy.dataCy('form-register-coordinator-company')
+      .find('.q-field__append')
+      .click();
+    cy.get('.q-menu .q-item').eq(1).click();
+    // fill in job title
     cy.dataCy('form-register-coordinator-job-title')
       .find('input')
       .type(formRegisterCoordinatorData.jobTitle);
+    // fill in phone
     cy.dataCy('form-register-coordinator-phone')
       .find('input')
       .type(formRegisterCoordinatorData.phone);

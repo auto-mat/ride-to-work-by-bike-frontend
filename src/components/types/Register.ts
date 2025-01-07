@@ -1,10 +1,16 @@
 export interface RegisterCoordinatorRequest {
-  firstName?: string;
-  jobTitle?: string;
-  lastName?: string;
-  newsletter: string;
-  organizationId?: number;
-  phone?: string;
-  responsibility?: boolean;
-  terms?: boolean;
+  user_profile: {
+    user: {
+      firstName: string;
+      lastName: string;
+    };
+    newsletter: string | null;
+    phone: string;
+  };
+  user_attendance: {
+    terms: boolean;
+  };
+  organizationId: number | null;
+  jobTitle: string;
+  responsibility: boolean;
 }

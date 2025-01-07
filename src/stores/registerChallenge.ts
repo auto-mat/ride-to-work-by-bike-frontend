@@ -59,7 +59,6 @@ import type {
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
 import type { IpAddressResponse } from '../components/types/ApiIpAddress';
-import type { RegisterCoordinatorRequest } from '../components/types/Register';
 import { deepObjectWithSimplePropsCopy } from 'src/utils';
 
 const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
