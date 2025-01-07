@@ -49,7 +49,6 @@ import SliderMerch from './SliderMerch.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
-import { useApiGetFilteredMerchandise } from '../../composables/useApiGetFilteredMerchandise';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -101,8 +100,6 @@ export default defineComponent({
     // get merchandise data
     const registerChallengeStore = useRegisterChallengeStore();
 
-    const { merchandise, loadFilteredMerchandise } =
-      useApiGetFilteredMerchandise(logger);
     // load merchandise on mount
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
@@ -111,36 +108,23 @@ export default defineComponent({
         logger?.debug(
           `Merch ID <${registerChallengeStore.getMerchId}> is set.`,
         );
-        // load merch ID "none" to be able to compare
-        logger?.debug(
-          `Loading filtered merchandise data by code <${rideToWorkByBikeConfig.iDontWantMerchandiseItemCode}> for comparison.`,
+        // explicitly set to false
+        // find card that contains the merch ID
+        const item = merchandiseItems.value.find(
+          (item: MerchandiseItem) =>
+            item.id === registerChallengeStore.getMerchId,
         );
-        await loadFilteredMerchandise(
-          rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
-        );
-        iDontWantMerchandiseCachedId = merchandise.value[0]['id'];
-        // if merch ID is "none" check the checkbox
-        if (
-          registerChallengeStore.getMerchId === iDontWantMerchandiseCachedId
-        ) {
-          isNotMerch.value = true;
-        } else {
-          // explicitly set to false
+        // select gender and size
+        if (item) {
           isNotMerch.value = false;
-          // find card that contains the merch ID
-          const item = merchandiseItems.value.find(
-            (item) => item.id === registerChallengeStore.getMerchId,
+          logger?.debug(`Found item <${JSON.stringify(item, null, 2)}>.`);
+          selectedGender.value = item.gender;
+          selectedSize.value = item.id;
+        } else {
+          isNotMerch.value = true;
+          logger?.debug(
+            `No item found for merch ID <${registerChallengeStore.getMerchId}>, setting isNotMerch to <${isNotMerch.value}>.`,
           );
-          // select gender and size
-          if (item) {
-            logger?.debug(`Found item <${JSON.stringify(item, null, 2)}>.`);
-            selectedGender.value = item.gender;
-            selectedSize.value = item.id;
-          } else {
-            logger?.debug(
-              `No item found for merch ID <${registerChallengeStore.getMerchId}>.`,
-            );
-          }
         }
       }
     });
