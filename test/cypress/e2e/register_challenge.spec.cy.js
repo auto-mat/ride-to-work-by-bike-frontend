@@ -524,7 +524,7 @@ describe('Register Challenge page', () => {
             .type(formRegisterCoordinatorData.jobTitle);
           cy.dataCy('register-coordinator-phone')
             .find('input')
-            .type(formRegisterCoordinatorData.user_profile.phone);
+            .type(formRegisterCoordinatorData.phone);
           // enable checkbox responsibility
           cy.dataCy('register-coordinator-responsibility')
             .find('.q-checkbox')

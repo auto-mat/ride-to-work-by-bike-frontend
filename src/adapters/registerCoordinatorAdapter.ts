@@ -35,22 +35,16 @@ export const registerCoordinatorAdapter = {
       return null;
     }
     return {
-      user_profile: {
-        user: {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-        },
-        newsletter: newsletterAdapter.combineNewsletterValues(
-          formData.newsletter,
-        ),
-        phone: formData.phone,
-      },
-      user_attendance: {
-        terms: formData.terms,
-      },
-      organizationId: formData.organizationId,
+      firstName: formData.firstName,
       jobTitle: formData.jobTitle,
+      lastName: formData.lastName,
+      newsletter: newsletterAdapter.combineNewsletterValues(
+        formData.newsletter,
+      ),
+      organizationId: formData.organizationId,
+      phone: formData.phone,
       responsibility: formData.responsibility,
+      terms: formData.terms,
     };
   },
 
@@ -73,22 +67,16 @@ export const registerCoordinatorAdapter = {
       return null;
     }
     return {
-      user_profile: {
-        user: {
-          firstName: personalDetails.firstName,
-          lastName: personalDetails.lastName,
-        },
-        newsletter: newsletterAdapter.combineNewsletterValues(
-          personalDetails.newsletter,
-        ),
-        phone: formRegisterCoordinator.phone,
-      },
-      user_attendance: {
-        terms: formRegisterCoordinator.terms,
-      },
-      organizationId: organizationId,
+      firstName: personalDetails.firstName,
+      lastName: personalDetails.lastName,
       jobTitle: formRegisterCoordinator.jobTitle,
+      newsletter: newsletterAdapter.combineNewsletterValues(
+        personalDetails.newsletter,
+      ),
+      organizationId: organizationId,
+      phone: formRegisterCoordinator.phone,
       responsibility: formRegisterCoordinator.responsibility,
+      terms: formRegisterCoordinator.terms,
     };
   },
 };
