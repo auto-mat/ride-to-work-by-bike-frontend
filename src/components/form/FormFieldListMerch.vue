@@ -121,7 +121,8 @@ export default defineComponent({
         } else {
           isNotMerch.value = true;
           logger?.debug(
-            `No item found for merch ID <${registerChallengeStore.getMerchId}>, setting isNotMerch to <${isNotMerch.value}>.`,
+            `No item found for merch ID <${registerChallengeStore.getMerchId}>,` +
+              ` setting isNotMerch to <${isNotMerch.value}>.`,
           );
         }
       }
