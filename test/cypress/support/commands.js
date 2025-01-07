@@ -2183,6 +2183,7 @@ Cypress.Commands.add('waitForRegisterCoordinatorPostApi', () => {
   cy.fixture('apiPostRegisterCoordinatorRequest').then(
     (registerCoordinatorRequest) => {
       cy.wait('@registerCoordinator').then(({ request, response }) => {
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
         expect(request.body).to.deep.equal(registerCoordinatorRequest);
         if (response) {
           expect(response.statusCode).to.equal(httpSuccessfullStatus);

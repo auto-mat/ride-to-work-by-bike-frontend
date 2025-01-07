@@ -211,9 +211,13 @@ export const useRegisterStore = defineStore('register', {
       redirect: boolean = true,
     ): Promise<void> {
       const { apiFetch } = useApi();
+      const loginStore = useLoginStore();
       this.$log?.debug(
         `Register coordinator payload <${JSON.stringify(payload, null, 2)}>.`,
       );
+      // Append access token into HTTP header
+      const requestTokenHeader_ = { ...requestTokenHeader };
+      requestTokenHeader_.Authorization += loginStore.getAccessToken;
       // register
       this.$log?.info('Post API coordinator registration details.');
       const { success } = await apiFetch<null>({
@@ -221,6 +225,7 @@ export const useRegisterStore = defineStore('register', {
         method: 'post',
         payload,
         translationKey: 'registerCoordinator',
+        headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
         logger: this.$log,
       });
 
