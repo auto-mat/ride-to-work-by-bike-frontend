@@ -77,7 +77,6 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     // show merch checkbox
     const isNotMerch = ref<boolean>(false);
-    let iDontWantMerchandiseCachedId: number | null = null;
 
     // template ref
     const formMerchRef = ref<typeof QForm | null>(null);
@@ -292,6 +291,7 @@ export default defineComponent({
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
+    let iDontWantMerchandiseCachedId: number | null = null;
     const onCheckboxUpdate = function (val: boolean): void {
       if (val) {
         if (!iDontWantMerchandiseCachedId) {
