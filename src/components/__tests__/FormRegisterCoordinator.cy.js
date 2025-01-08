@@ -1,4 +1,4 @@
-import { nextTick } from 'vue';
+import { computed } from 'vue';
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
@@ -16,15 +16,6 @@ import { OrganizationType } from '../../components/types/Organization';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
-
-const compareRegisterResponseWithStore = () => {
-  cy.contains(i18n.global.t('registerCoordinator.apiMessageSuccess')).should(
-    'be.visible',
-  );
-  const registerStore = useRegisterStore();
-  nextTick();
-  expect(registerStore.getIsRegistrationComplete).to.equal(true);
-};
 
 describe('<FormRegisterCoordinator>', () => {
   it('has translation for all strings', () => {
@@ -76,23 +67,6 @@ describe('<FormRegisterCoordinator>', () => {
       );
       // intercept register coordinator API call (before mounting component)
       interceptRegisterCoordinatorApi(rideToWorkByBikeConfig, i18n);
-      // specify data for register coordinator request body
-      cy.fixture('formRegisterCoordinator').then(
-        (formRegisterCoordinatorData) => {
-          cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
-            cy.wrap({
-              firstName: formRegisterCoordinatorData.firstName,
-              jobTitle: formRegisterCoordinatorData.jobTitle,
-              lastName: formRegisterCoordinatorData.lastName,
-              newsletter: formRegisterCoordinatorData.newsletter,
-              organizationId: formFieldCompanyResponse.results[0].id,
-              phone: formRegisterCoordinatorData.phone,
-              responsibility: true,
-              terms: true,
-            }).as('registerRequestBody');
-          });
-        },
-      );
       cy.mount(FormRegisterCoordinator, {
         props: {},
       });
@@ -278,23 +252,31 @@ describe('<FormRegisterCoordinator>', () => {
         // submit form
         cy.dataCy('form-register-coordinator-submit').click();
         // wait for API call to finish
-        cy.get('@registerRequestBody').then((registerRequestBody) => {
-          cy.wait('@registerCoordinator')
-            .then((interception) => {
-              // request body
-              expect(interception.request.body).to.deep.equal(
-                registerRequestBody,
+        cy.wait('@registerCoordinator')
+          .then((interception) => {
+            cy.fixture('apiPostRegisterCoordinatorRequest').then(
+              (registerRequestBody) => {
+                expect(interception.request.body).to.deep.equal(
+                  registerRequestBody,
+                );
+                expect(interception.response.statusCode).to.equal(
+                  httpSuccessfullStatus,
+                );
+              },
+            );
+          })
+          .then(() => {
+            // check state in store
+            cy.contains(
+              i18n.global.t('registerCoordinator.apiMessageSuccess'),
+            ).should('be.visible');
+            cy.wrap(useRegisterStore()).then((registerStore) => {
+              const isRegistrationComplete = computed(
+                () => registerStore.getIsRegistrationComplete,
               );
-              // status code
-              expect(interception.response.statusCode).to.equal(
-                httpSuccessfullStatus,
-              );
-            })
-            .then(() => {
-              // check state in store
-              compareRegisterResponseWithStore();
+              cy.wrap(isRegistrationComplete).its('value').should('be.true');
             });
-        });
+          });
       });
     });
   });
