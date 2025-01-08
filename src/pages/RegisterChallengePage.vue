@@ -322,6 +322,10 @@ export default defineComponent({
       return registerChallengeStore.isLoadingPayuOrder;
     });
 
+    const isLoadingRegisterChallenge = computed(() => {
+      return registerChallengeStore.isLoadingRegisterChallenge;
+    });
+
     const onSubmitPayment = () => {
       registerChallengeStore.createPayuOrder();
     };
@@ -379,6 +383,7 @@ export default defineComponent({
       isWaitingForPayamentConfirmation,
       isEnabledPaymentNextStepButton,
       isLoadingPayuOrder,
+      isLoadingRegisterChallenge,
       onSubmitPayment,
       organizationType,
       organizationStepTitle,
@@ -445,6 +450,7 @@ export default defineComponent({
                 rounded
                 color="primary"
                 :label="$t('navigation.continue')"
+                :loading="isLoadingRegisterChallenge"
                 @click="onContinue"
                 data-cy="step-1-continue"
               />
@@ -499,6 +505,7 @@ export default defineComponent({
                 outline
                 color="primary"
                 :label="$t('navigation.back')"
+                :disable="isLoadingRegisterChallenge || isLoadingPayuOrder"
                 @click="onBack"
                 data-cy="step-2-back"
               />
@@ -521,6 +528,7 @@ export default defineComponent({
                 color="primary"
                 :disable="!isEnabledPaymentNextStepButton"
                 :label="$t('navigation.continue')"
+                :loading="isLoadingRegisterChallenge"
                 @click="onContinue"
                 class="q-ml-sm"
                 data-cy="step-2-continue"
@@ -556,6 +564,7 @@ export default defineComponent({
                 unelevated
                 rounded
                 outline
+                :disable="isLoadingRegisterChallenge"
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
@@ -567,6 +576,7 @@ export default defineComponent({
                 @click="onContinue"
                 color="primary"
                 :label="$t('navigation.continue')"
+                :loading="isLoadingRegisterChallenge"
                 class="q-ml-sm"
                 data-cy="step-3-continue"
               />
@@ -595,6 +605,7 @@ export default defineComponent({
                   outline
                   @click="onBack"
                   color="primary"
+                  :disable="isLoadingRegisterChallenge"
                   :label="$t('navigation.back')"
                   data-cy="step-4-back"
                 />
@@ -603,6 +614,7 @@ export default defineComponent({
                   rounded
                   color="primary"
                   :label="$t('navigation.continue')"
+                  :loading="isLoadingRegisterChallenge"
                   @click="onContinue"
                   class="q-ml-sm"
                   data-cy="step-4-continue"
@@ -642,6 +654,7 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
+                :disable="isLoadingRegisterChallenge"
                 data-cy="step-5-back"
               />
               <q-btn
@@ -649,6 +662,7 @@ export default defineComponent({
                 rounded
                 color="primary"
                 :label="$t('navigation.continue')"
+                :loading="isLoadingRegisterChallenge"
                 @click="onContinue"
                 class="q-ml-sm"
                 data-cy="step-5-continue"
@@ -678,6 +692,7 @@ export default defineComponent({
                 @click="onBack"
                 color="primary"
                 :label="$t('navigation.back')"
+                :disable="isLoadingRegisterChallenge"
                 data-cy="step-6-back"
               />
               <q-btn
@@ -685,6 +700,7 @@ export default defineComponent({
                 rounded
                 color="primary"
                 :disable="!merchId"
+                :loading="isLoadingRegisterChallenge"
                 :label="$t('navigation.continue')"
                 @click="onContinue"
                 class="q-ml-sm"

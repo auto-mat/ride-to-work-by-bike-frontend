@@ -1929,6 +1929,7 @@ function passToStep2() {
         .first()
         .click();
       cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-1-continue').find('.q-spinner').should('be.visible');
       // on step 2
       cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
     },
@@ -1946,6 +1947,7 @@ function passToStep3() {
       cy.applyFullVoucher(config, i18n);
       // next step button should be visible and enabled
       cy.dataCy('step-2-continue').should('be.visible').click();
+      cy.dataCy('step-2-continue').find('.q-spinner').should('be.visible');
       // on step 3
       cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
     });
@@ -1956,6 +1958,7 @@ function passToStep4() {
   passToStep3();
   cy.dataCy('form-field-option').first().click();
   cy.dataCy('step-3-continue').should('be.visible').click();
+  // step 3 skip check for loading spinner (not sending data to API)
   // on step 4
   cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
 }
@@ -1977,6 +1980,7 @@ function passToStep5() {
       cy.get('.q-item').first().click();
     });
   cy.dataCy('step-4-continue').should('be.visible').click();
+  // step 4 skip check for loading spinner (not sending data to API)
   // on step 5
   cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
 }
@@ -1990,6 +1994,7 @@ function passToStep6() {
     .first()
     .click();
   cy.dataCy('step-5-continue').should('be.visible').click();
+  cy.dataCy('step-5-continue').find('.q-spinner').should('be.visible');
   // on step 6
   cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
 }
@@ -2014,6 +2019,7 @@ function passToStep7() {
     .type('736 123 456');
   // go to next step
   cy.dataCy('step-6-continue').should('be.visible').click();
+  cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
   // on step 7
   cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
 }
