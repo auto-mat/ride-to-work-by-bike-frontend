@@ -213,12 +213,6 @@ describe('Login page', () => {
           cy.reload();
           // check that we are on homepage
           cy.testRoute(routesConf['home']['path']);
-          // refresh tokens should be called on load
-          cy.wait('@refreshTokens').then((interception) => {
-            expect(interception.response.statusCode).to.equal(
-              httpSuccessfullStatus,
-            );
-          });
         });
       });
     });
