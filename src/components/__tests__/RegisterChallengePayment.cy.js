@@ -12,6 +12,7 @@ import { interceptOrganizationsApi } from '../../../test/cypress/support/commonT
 import { OrganizationType } from '../types/Organization';
 import { getCurrentPriceLevelsUtil } from '../../utils/price_levels';
 import { PriceLevelCategory } from '../../components/enums/Challenge';
+import { Currency, useFormatPrice } from '../../composables/useFormatPrice';
 
 // selectors
 const selectorBannerPaymentMinimum = 'banner-payment-minimum';
@@ -48,6 +49,7 @@ const defaultPaymentAmountMax = parseInt(
 );
 const sliderClickTolerance = 10;
 const testNumberValue = 500;
+const { formatPriceCurrency } = useFormatPrice();
 
 // colors
 const { getPaletteColor, lighten } = colors;
@@ -225,9 +227,11 @@ function coreTests() {
       .and('have.css', 'border-radius', borderRadiusCardSmall)
       .then(($element) => {
         cy.stripHtmlTags(
-          i18n.global.t('register.challenge.textPaymentMinimum'),
+          i18n.global.t('register.challenge.textPaymentMinimum', {
+            amount: formatPriceCurrency(defaultPaymentAmountMin, Currency.CZK),
+          }),
         ).then((text) => {
-          expect($element.text()).to.equal(text);
+          cy.wrap($element.text()).should('equal', text);
         });
       });
     // input subject

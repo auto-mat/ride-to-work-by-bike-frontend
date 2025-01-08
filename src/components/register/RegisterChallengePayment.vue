@@ -582,6 +582,7 @@ export default defineComponent({
     return {
       borderRadius,
       computedCurrentValue,
+      defaultPaymentAmountMin,
       donationAmount,
       formRegisterCoordinator,
       hasOrganizationAdmin,
@@ -624,7 +625,13 @@ export default defineComponent({
       :style="{ backgroundColor: primaryLightColor, borderRadius }"
       data-cy="banner-payment-minimum"
     >
-      <div v-html="$t('register.challenge.textPaymentMinimum')" />
+      <div
+        v-html="
+          $t('register.challenge.textPaymentMinimum', {
+            amount: formatPriceCurrency(defaultPaymentAmountMin, Currency.CZK),
+          })
+        "
+      />
     </q-banner>
     <!-- Input: Payment subject -->
     <div class="q-my-lg">
