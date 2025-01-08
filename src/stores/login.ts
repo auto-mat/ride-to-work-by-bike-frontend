@@ -118,6 +118,22 @@ export const useLoginStore = defineStore('login', {
       }
     },
     /**
+     * Get access token, if token does not exists
+     * refresh it
+     * @returns Promise<string> - Access token
+     */
+    async getAccessTokenWithRefresh(): Promise<string> {
+      if (!this.getAccessToken) {
+        this.$log?.debug(
+          `Access token does not exists <${this.getAccessToken}>,` +
+            ' get (refresh) it again.',
+        );
+        await this.refreshTokens();
+        this.$log?.debug(`New access token <${this.getAccessToken}>.`);
+      }
+      return this.getAccessToken;
+    },
+    /**
      * Login user
      * Checks if email and password are set.
      * If not, shows a notification.

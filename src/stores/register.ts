@@ -139,7 +139,8 @@ export const useRegisterStore = defineStore('register', {
       );
       // Append access token into HTTP header
       const requestTokenHeader_ = { ...requestTokenHeader };
-      requestTokenHeader_.Authorization += loginStore.getAccessToken;
+      requestTokenHeader_.Authorization +=
+        await loginStore.getAccessTokenWithRefresh();
       // check email verification
       const { data } = await apiFetch<HasVerifiedEmailResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiHasUserVerifiedEmail,

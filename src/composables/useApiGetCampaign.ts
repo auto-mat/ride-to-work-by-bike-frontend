@@ -87,7 +87,8 @@ export const useApiGetCampaign = (
     logger?.debug(`Fetching next page of campaign from <${url}>.`);
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // fetch next page
     const { data } = await apiFetch<ThisCampaignResponse>({

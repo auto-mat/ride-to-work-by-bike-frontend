@@ -58,7 +58,8 @@ export const useApiGetHasOrganizationAdmin = (
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     const { data } = await apiFetch<HasOrganizationAdminResponse>({
       endpoint: `${rideToWorkByBikeConfig.urlApiHasOrganizationAdmin}${organizationId}/`,

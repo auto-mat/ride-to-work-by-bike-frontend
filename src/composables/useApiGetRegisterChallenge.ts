@@ -60,7 +60,8 @@ export const useApiGetRegisterChallenge = (
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // fetch registrations
     const { data } = await apiFetch<RegisterChallengeResponse>({

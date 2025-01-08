@@ -67,7 +67,8 @@ export const useApiGetOrganizations = (
     isLoading.value = true;
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
     // fetch organizations
     const { data } = await apiFetch<GetOrganizationsResponse>({
       endpoint: `${rideToWorkByBikeConfig.urlApiOrganizations}${organizationType}/`,
@@ -96,7 +97,8 @@ export const useApiGetOrganizations = (
     logger?.debug(`Fetching next page of organizations from <${url}>.`);
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
     // fetch next page
     const { data } = await apiFetch<GetOrganizationsResponse>({
       endpoint: url,

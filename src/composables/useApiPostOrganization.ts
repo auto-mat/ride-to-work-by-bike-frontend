@@ -62,7 +62,8 @@ export const useApiPostOrganization = (
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // data
     const payload: PostOrganizationPayload = {

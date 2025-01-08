@@ -56,7 +56,8 @@ export const useApiPostPayuCreateOrder = (
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // post order
     const { data } = await apiFetch<PayuCreateOrderResponse>({

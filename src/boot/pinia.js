@@ -1,7 +1,6 @@
 import { markRaw } from 'vue';
 import { boot } from 'quasar/wrappers';
 import { createPinia } from 'pinia';
-import { useLoginStore } from '../stores/login';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 /**
@@ -28,10 +27,4 @@ export default boot(({ app, router }) => {
     store.$router = markRaw(router);
   });
   app.use(pinia);
-
-  // refresh access token on each reload (as it is not persisted)
-  const loginStore = useLoginStore();
-  if (loginStore.refreshToken) {
-    loginStore.refreshTokens();
-  }
 });

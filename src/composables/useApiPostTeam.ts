@@ -55,7 +55,8 @@ export const useApiPostTeam = (logger: Logger | null): UseApiPostTeamReturn => {
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // post team
     const { data } = await apiFetch<TeamPostApiResponse>({

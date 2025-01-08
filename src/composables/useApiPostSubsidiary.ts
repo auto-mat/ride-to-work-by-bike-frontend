@@ -66,7 +66,8 @@ export const useApiPostSubsidiary = (
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization += loginStore.getAccessToken;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // post subsidiary
     const { data } = await apiFetch<SubsidiaryPostApiResponse>({
