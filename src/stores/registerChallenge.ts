@@ -587,6 +587,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           message: i18n.global.t('createPayuOrder.payloadCreateError'),
           color: 'positive',
         });
+        this.isLoadingPayuOrder = false;
         return;
       }
       const response = await createOrder(payload);
