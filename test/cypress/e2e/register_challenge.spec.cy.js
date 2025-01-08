@@ -491,7 +491,7 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it.only('allows to post company coordinator registration', () => {
+    it('allows to post company coordinator registration', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           passToStep2();
