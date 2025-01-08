@@ -8,7 +8,7 @@ export const newsletterAdapter = {
   /**
    * Parse newsletter string from API to array of NewsletterType
    * @param {string} newsletter - Newsletter string from API
-   * @returns {NewsletterType[]} Array of NewsletterType
+   * @returns {NewsletterType[]} - Array of NewsletterType
    */
   parseNewsletterValues(newsletter: string): NewsletterType[] {
     if (!newsletter) return [];
@@ -20,7 +20,7 @@ export const newsletterAdapter = {
   /**
    * Convert array of newsletter types to combined API value
    * @param {NewsletterType[]} newsletters - Array of newsletter types
-   * @returns {string} Combined newsletter string value
+   * @returns {string} - Combined newsletter string value
    */
   combineNewsletterValues(newsletters: NewsletterType[]): string {
     if (!newsletters?.length) return '';
