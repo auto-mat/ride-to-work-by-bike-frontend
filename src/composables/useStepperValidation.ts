@@ -73,7 +73,7 @@ export const useStepperValidation = ({
           await registerChallengeStore.submitStep(
             RegisterChallengeStep.payment,
           );
-          // register coordinator action (only if selected by user)
+          // register coordinator action (runs only if selected by user)
           await registerChallengeStore.registerCoordinator();
           stepperRef.value.next();
         } else {
