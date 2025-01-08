@@ -6,7 +6,7 @@ import { vModelAdapter } from 'app/test/cypress/utils';
 import { createPinia, setActivePinia } from 'pinia';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-
+import { OrganizationType } from 'src/components/types/Organization';
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 
@@ -27,6 +27,8 @@ describe('<FormFieldCompanyAddress>', () => {
         'buttonAddSubsidiary',
         'hintAddress',
         'labelAddress',
+        'labelAddressSchool',
+        'labelAddressFamily',
         'textSubsidiaryAddress',
         'titleAddAddress',
       ],
@@ -68,6 +70,20 @@ describe('<FormFieldCompanyAddress>', () => {
         .and('have.css', 'font-weight', '700')
         .and('have.color', grey10)
         .and('have.text', i18n.global.t('form.company.labelAddress'));
+      // test label when organization type changes to school
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        store.setOrganizationType(OrganizationType.school);
+        cy.dataCy('form-company-address-label')
+          .should('be.visible')
+          .and('have.text', i18n.global.t('form.company.labelAddressSchool'));
+      });
+      // test label when organization type changes to family
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        store.setOrganizationType(OrganizationType.family);
+        cy.dataCy('form-company-address-label')
+          .should('be.visible')
+          .and('have.text', i18n.global.t('form.company.labelAddressFamily'));
+      });
       // input
       cy.dataCy('form-company-address').find('.q-select').should('be.visible');
       // hint

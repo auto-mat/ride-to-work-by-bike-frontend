@@ -38,6 +38,10 @@ import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
 // composables
 import { useValidation } from 'src/composables/useValidation';
 import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
+import { useOrganizations } from '../../composables/useOrganizations';
+
+// enums
+import { OrganizationType } from 'src/components/types/Organization';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
@@ -168,6 +172,16 @@ export default defineComponent({
       }
     };
 
+    const organizationType = computed<OrganizationType>(() => {
+      return store.getOrganizationType;
+    });
+    const { getOrganizationLabels } = useOrganizations();
+    const labelAddress = computed<string>((): string => {
+      return getOrganizationLabels(
+        organizationType.value || OrganizationType.company,
+      ).labelAddress;
+    });
+
     /**
      * Provides dialog behaviour
      * @returns {isDialogOpen, onClose}
@@ -213,6 +227,7 @@ export default defineComponent({
       subsidiaryId,
       addressNew,
       formRef,
+      labelAddress,
       options,
       isDialogOpen,
       isFilled,
@@ -233,7 +248,7 @@ export default defineComponent({
         class="col-12 text-caption text-bold text-grey-10"
         data-cy="form-company-address-label"
       >
-        {{ $t('form.company.labelAddress') }}
+        {{ labelAddress }}
       </label>
       <div class="col-12 col-sm" data-cy="col-input">
         <!-- Input: Autocomplete -->
