@@ -363,11 +363,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
        */
       this.setPaymentSubject(parsedResponse.paymentSubject);
       this.$log?.debug(
-        `Payment subject strore updated to <${this.getPaymentSubject}>.`,
+        `Payment subject store updated to <${this.getPaymentSubject}>.`,
       );
       this.setPaymentState(parsedResponse.paymentState);
       this.$log?.debug(
-        `Payment state strore updated to <${this.getPaymentState}>.`,
+        `Payment state store updated to <${this.getPaymentState}>.`,
       );
       /**
        * In case the payment subject has been selected but the organizationType
@@ -739,11 +739,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         useApiGetHasOrganizationAdmin(this.$log);
       await checkOrganizationAdmin();
       this.$log?.debug(
-        `API response hasOrganizationAdmin.value <${hasOrganizationAdmin.value}>.`,
+        `Has organization admin API response data <${hasOrganizationAdmin.value}>.`,
       );
       this.setHasOrganizationAdmin(hasOrganizationAdmin.value);
       this.$log?.debug(
-        `Organization has coordinator flag set to <${this.hasOrganizationAdmin}>.`,
+        `Organization has coordinator store updated to <${this.hasOrganizationAdmin}>.`,
       );
     },
   },
