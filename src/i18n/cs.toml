@@ -390,6 +390,7 @@ textCoordinator = "Příležitost stát se firemním koordinátorem budete mít 
 textSubsidiaryAddress = "Místo, kam budete jezdit do práce a kam vašemu týmu zašleme startovní balíček. Nemusí jít o sídlo společnosti."
 textUserExperience = "Všiml*a jste si chybného nebo opakujícího se záznamu? Napište nám prosím na <a class=\"text-primary\" href=\"mailto:{email}\">{email}</a>."
 titleAddAddress = "Přidat vaši pobočku"
+titleAddAddressFamily = "Přidat místo pro doručení balíčku"
 titleAddCompany = "Přidat firmu"
 titleAddSchool = "Přidat školu"
 titleAddFamily = "Přidat rodinu"

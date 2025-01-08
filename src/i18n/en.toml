@@ -390,6 +390,7 @@ titleAddCompany = "Add company"
 titleAddSchool = "Add school"
 titleAddFamily = "Add family"
 titleAddAddress = "Add your subsidiary"
+titleAddAddressFamily = "Add a starter pack delivery address"
 titleSubsidiaryAddress = "Your branch address"
 
 [form.subsidiary]

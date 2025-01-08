@@ -390,6 +390,7 @@ titleAddCompany = "Pridať spoločnosť"
 titleAddSchool = "Pridať školu"
 titleAddFamily = "Pridať rodinu"
 titleAddAddress = "Pridajte svoju pobočku"
+titleAddAddressFamily = "Pridajte místo pre doručenie balíčku"
 titleSubsidiaryAddress = "Adresa vašej pobočky"
 
 [form.subsidiary]

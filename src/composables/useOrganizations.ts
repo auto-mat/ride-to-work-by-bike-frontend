@@ -7,6 +7,7 @@ import { OrganizationType } from '../components/types/Organization';
 // types
 export type OrganizationLabels = {
   titleDialog: string;
+  titleDialogAddress: string;
   label: string;
   labelAddress: string;
   labelForCoordinator: string;
@@ -24,6 +25,7 @@ export const useOrganizations = () => {
       case OrganizationType.company:
         return {
           titleDialog: i18n.global.t('form.company.titleAddCompany'),
+          titleDialogAddress: i18n.global.t('form.company.titleAddAddress'),
           label: i18n.global.t('form.labelCompany'), // used in register coordinator form
           labelAddress: i18n.global.t('form.company.labelAddress'),
           labelForCoordinator: i18n.global.t('form.labelCompanyForCoordinator'),
@@ -35,6 +37,7 @@ export const useOrganizations = () => {
       case OrganizationType.school:
         return {
           titleDialog: i18n.global.t('form.company.titleAddSchool'),
+          titleDialogAddress: i18n.global.t('form.company.titleAddAddress'),
           label: i18n.global.t('form.labelSchool'), // used in register coordinator form
           labelAddress: i18n.global.t('form.company.labelAddressSchool'),
           labelForCoordinator: i18n.global.t('form.labelSchoolForCoordinator'),
@@ -46,6 +49,9 @@ export const useOrganizations = () => {
       case OrganizationType.family:
         return {
           titleDialog: i18n.global.t('form.company.titleAddFamily'),
+          titleDialogAddress: i18n.global.t(
+            'form.company.titleAddAddressFamily',
+          ),
           label: i18n.global.t('form.labelFamily'), // used in register coordinator form
           labelAddress: i18n.global.t('form.company.labelAddressFamily'),
           labelForCoordinator: i18n.global.t('form.labelFamilyForCoordinator'),
@@ -57,6 +63,7 @@ export const useOrganizations = () => {
       default:
         return {
           titleDialog: '',
+          titleDialogAddress: '',
           label: '',
           labelAddress: '',
           labelForCoordinator: '',

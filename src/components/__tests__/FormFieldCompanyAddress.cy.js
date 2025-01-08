@@ -145,11 +145,16 @@ describe('<FormFieldCompanyAddress>', () => {
       });
     });
 
-    it('renders dialog for adding a new address', () => {
+    it('renders dialog for adding a new address (company)', () => {
       cy.wrap(useRegisterChallengeStore()).then((store) => {
         // set organization ID in store
-        store.setOrganizationId(organizationId);
+        cy.wrap(store.setOrganizationId(organizationId));
         cy.wrap(store.getOrganizationId).should('eq', organizationId);
+        cy.wrap(store.setOrganizationType(OrganizationType.company));
+        cy.wrap(store.getOrganizationType).should(
+          'eq',
+          OrganizationType.company,
+        );
         cy.dataCy('button-add-address').click();
         cy.dataCy('dialog-add-address').should('be.visible');
         // title
@@ -172,6 +177,50 @@ describe('<FormFieldCompanyAddress>', () => {
         cy.dataCy('dialog-button-submit')
           .should('be.visible')
           .and('have.text', i18n.global.t('form.company.buttonAddSubsidiary'));
+      });
+    });
+
+    it('renders dialog for adding a new address (school)', () => {
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        // set organization ID in store
+        cy.wrap(store.setOrganizationId(organizationId));
+        cy.wrap(store.getOrganizationId).should('eq', organizationId);
+        cy.wrap(store.setOrganizationType(OrganizationType.school));
+        cy.wrap(store.getOrganizationType).should(
+          'eq',
+          OrganizationType.school,
+        );
+        cy.dataCy('button-add-address').click();
+        cy.dataCy('dialog-add-address').should('be.visible');
+        // title
+        cy.dataCy('dialog-add-address')
+          .find('h3')
+          .should('be.visible')
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', i18n.global.t('form.company.titleAddAddress'));
+      });
+    });
+
+    it('renders dialog for adding a new address (family)', () => {
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        // set organization ID in store
+        cy.wrap(store.setOrganizationId(organizationId));
+        cy.wrap(store.getOrganizationId).should('eq', organizationId);
+        cy.wrap(store.setOrganizationType(OrganizationType.family));
+        cy.wrap(store.getOrganizationType).should(
+          'eq',
+          OrganizationType.family,
+        );
+        cy.dataCy('button-add-address').click();
+        cy.dataCy('dialog-add-address').should('be.visible');
+        // title
+        cy.dataCy('dialog-add-address')
+          .find('h3')
+          .should('be.visible')
+          .and('have.css', 'font-size', '20px')
+          .and('have.css', 'font-weight', '500')
+          .and('contain', i18n.global.t('form.company.titleAddAddressFamily'));
       });
     });
 

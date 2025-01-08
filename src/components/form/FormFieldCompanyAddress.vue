@@ -181,6 +181,11 @@ export default defineComponent({
         organizationType.value || OrganizationType.company,
       ).labelAddress;
     });
+    const titleDialogAddress = computed<string>((): string => {
+      return getOrganizationLabels(
+        organizationType.value || OrganizationType.company,
+      ).titleDialogAddress;
+    });
 
     /**
      * Provides dialog behaviour
@@ -233,6 +238,7 @@ export default defineComponent({
       isFilled,
       isLoading,
       isLoadingCreateSubsidiary,
+      titleDialogAddress,
       onClose,
       onSubmit,
     };
@@ -306,7 +312,7 @@ export default defineComponent({
   <!-- Dialog: Add address -->
   <dialog-default v-model="isDialogOpen" data-cy="dialog-add-address">
     <template #title>
-      {{ $t('form.company.titleAddAddress') }}
+      {{ titleDialogAddress }}
     </template>
     <template #content>
       <q-form ref="formRef">
