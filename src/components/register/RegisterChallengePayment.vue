@@ -38,7 +38,6 @@ import {
 // composables
 import { i18n } from '../../boot/i18n';
 import { useFormatPrice } from '../../composables/useFormatPrice';
-import { useApiGetHasOrganizationAdmin } from '../../composables/useApiGetHasOrganizationAdmin';
 
 // components
 import FormFieldCompany from '../global/FormFieldCompany.vue';
@@ -181,8 +180,9 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
 
     // init organization admin status
-    const { hasOrganizationAdmin, checkOrganizationAdmin } =
-      useApiGetHasOrganizationAdmin(logger);
+    const hasOrganizationAdmin = computed<boolean | null>(() => {
+      return registerChallengeStore.getHasOrganizationAdmin;
+    });
     //  Model for 'Entry fee payment' radio button element
     const selectedPaymentSubject = computed<PaymentSubject>({
       get: (): PaymentSubject => registerChallengeStore.getPaymentSubject,
@@ -198,22 +198,14 @@ export default defineComponent({
       set: (value: number | null) =>
         registerChallengeStore.setOrganizationId(value),
     });
-    // watch selected company and check if organization has an administrator
-    watch(selectedCompany, (newVal, oldVal) => {
-      logger?.debug(
-        `Selected organization ID changed from <${oldVal}> to <${newVal}>.`,
-      );
-      if (newVal) {
-        checkOrganizationAdmin();
-      }
-    });
     onMounted(() => {
-      checkOrganizationAdmin();
+      registerChallengeStore.checkOrganizationHasCoordinator();
     });
     const isRegistrationCoordinator = computed<boolean>({
-      get: (): boolean => registerChallengeStore.getIsRegistrationCoordinator,
+      get: (): boolean =>
+        registerChallengeStore.getIsSelectedRegisterCoordinator,
       set: (value: boolean): void =>
-        registerChallengeStore.setIsRegistrationCoordinator(value),
+        registerChallengeStore.setIsSelectedRegisterCoordinator(value),
     });
     const formRegisterCoordinator = reactive({
       jobTitle: '',

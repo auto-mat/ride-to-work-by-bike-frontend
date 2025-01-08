@@ -491,55 +491,94 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it('allows to post company coordinator registration', () => {
-      passToStep2();
-      // select company
-      cy.dataCy(getRadioOption(OrganizationType.company)).click();
-      // select paying company (required)
-      cy.fixture('formFieldCompany').then((formFieldCompany) => {
-        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-          cy.dataCy('form-field-company').find('.q-field__append').click();
-          // select option without coordinator
-          cy.get('.q-item__label')
+    it.only('allows to post company coordinator registration', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep2();
+          // select company
+          cy.dataCy(getRadioOption(OrganizationType.company)).click();
+          // select paying company (required)
+          cy.fixture('formFieldCompany').then((formFieldCompany) => {
+            cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+              cy.dataCy('form-field-company').find('.q-field__append').click();
+              // select option without coordinator
+              cy.get('.q-item__label')
+                .should('be.visible')
+                .and((opts) => {
+                  expect(
+                    opts.length,
+                    formFieldCompany.results.length +
+                      formFieldCompanyNext.results.length,
+                  );
+                })
+                .eq(1)
+                .click();
+              cy.get('.q-menu').should('not.exist');
+            });
+          });
+          cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+            (response) => {
+              cy.waitForHasOrganizationAdminApi(response);
+            },
+          );
+          // click the coordinator checkbox
+          cy.dataCy('register-coordinator-checkbox')
             .should('be.visible')
-            .and((opts) => {
-              expect(
-                opts.length,
-                formFieldCompany.results.length +
-                  formFieldCompanyNext.results.length,
-              );
-            })
-            .eq(1)
             .click();
-          cy.get('.q-menu').should('not.exist');
+          cy.fixture('apiPostRegisterCoordinatorRequest').then(
+            (formRegisterCoordinatorData) => {
+              // fill in the register coordinator form
+              cy.dataCy('register-coordinator-job-title')
+                .find('input')
+                .type(formRegisterCoordinatorData.jobTitle);
+              cy.dataCy('register-coordinator-phone')
+                .find('input')
+                .type(formRegisterCoordinatorData.phone);
+              // enable checkbox responsibility
+              cy.dataCy('register-coordinator-responsibility')
+                .find('.q-checkbox')
+                .click();
+              // enable checkbox terms
+              cy.dataCy('register-coordinator-terms')
+                .find('.q-checkbox')
+                .click();
+              cy.fixture('formFieldCompany').then(
+                (formFieldCompanyResponse) => {
+                  cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
+                    (response) => {
+                      /**
+                       * Before submitting coordinator application intercept
+                       * hasOrganizationAdmin request to return true.
+                       */
+                      cy.interceptHasOrganizationAdminGetApi(
+                        config,
+                        i18n,
+                        formFieldCompanyResponse.results[1].id,
+                        response,
+                      );
+                      // go to next step
+                      cy.dataCy('step-2-continue').should('be.visible').click();
+                      // wait for request
+                      cy.waitForRegisterCoordinatorPostApi();
+                      // verify that we are on step 3
+                      cy.dataCy('step-3')
+                        .find('.q-stepper__step-content')
+                        .should('be.visible');
+                      // go back a step
+                      cy.dataCy('step-3-back').should('be.visible').click();
+                      cy.waitForHasOrganizationAdminApi(response);
+                      // verify that company no longer has the option coordinator
+                      cy.dataCy('register-coordinator-checkbox').should(
+                        'not.exist',
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
         });
       });
-      // click the coordinator checkbox
-      cy.dataCy('register-coordinator-checkbox').should('be.visible').click();
-      cy.fixture('apiPostRegisterCoordinatorRequest').then(
-        (formRegisterCoordinatorData) => {
-          // fill in the register coordinator form
-          cy.dataCy('register-coordinator-job-title')
-            .find('input')
-            .type(formRegisterCoordinatorData.jobTitle);
-          cy.dataCy('register-coordinator-phone')
-            .find('input')
-            .type(formRegisterCoordinatorData.phone);
-          // enable checkbox responsibility
-          cy.dataCy('register-coordinator-responsibility')
-            .find('.q-checkbox')
-            .click();
-          // enable checkbox terms
-          cy.dataCy('register-coordinator-terms').find('.q-checkbox').click();
-          // go to next step
-          cy.dataCy('step-2-continue').should('be.visible').click();
-          cy.waitForRegisterCoordinatorPostApi();
-          // verify that we are on step 3
-          cy.dataCy('step-3')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-        },
-      );
     });
 
     it('validates third step (organization type)', () => {

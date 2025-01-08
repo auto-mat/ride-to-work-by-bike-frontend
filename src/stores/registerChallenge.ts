@@ -21,6 +21,7 @@ import { useApiGetFilteredMerchandise } from 'src/composables/useApiGetFilteredM
 import { useApiPostRegisterChallenge } from '../composables/useApiPostRegisterChallenge';
 import { useApiGetIpAddress } from '../composables/useApiGetIpAddress';
 import { useApiPostPayuCreateOrder } from '../composables/useApiPostPayuCreateOrder';
+import { useApiGetHasOrganizationAdmin } from '../composables/useApiGetHasOrganizationAdmin';
 
 // enums
 import { Gender } from '../components/types/Profile';
@@ -113,7 +114,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isLoadingPayuOrder: false,
     isPayuTransactionInitiated: false,
     checkPaymentStatusRepetitionCount: 0,
-    isRegistrationCoordinator: false,
+    isSelectedRegisterCoordinator: false,
+    hasOrganizationAdmin: null as boolean | null,
   }),
 
   getters: {
@@ -121,6 +123,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.personalDetails,
     getOrganizationType: (state): OrganizationType => state.organizationType,
     getOrganizationId: (state): number | null => state.organizationId,
+    getHasOrganizationAdmin: (state): boolean | null =>
+      state.hasOrganizationAdmin,
     getSubsidiaryId: (state): number | null => state.subsidiaryId,
     getTeamId: (state): number | null => state.teamId,
     getMerchId: (state): number | null => state.merchId,
@@ -134,10 +138,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
+    getIsSelectedRegisterCoordinator: (state): boolean =>
+      state.isSelectedRegisterCoordinator,
     getFormRegisterCoordinator: (state): RegisterChallengeCoordinatorForm =>
       state.formRegisterCoordinator,
-    getIsRegistrationCoordinator: (state): boolean =>
-      state.isRegistrationCoordinator,
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(
@@ -257,8 +261,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setOrganizationType(organizationType: OrganizationType) {
       this.organizationType = organizationType;
     },
-    setOrganizationId(organizationId: number | null) {
-      this.organizationId = organizationId;
+    setOrganizationId(id: number | null): void {
+      this.organizationId = id;
+      this.checkOrganizationHasCoordinator();
     },
     setSubsidiaryId(subsidiaryId: number | null) {
       this.subsidiaryId = subsidiaryId;
@@ -304,8 +309,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     ) {
       this.formRegisterCoordinator = formRegisterCoordinator;
     },
-    setIsRegistrationCoordinator(isRegistrationCoordinator: boolean) {
-      this.isRegistrationCoordinator = isRegistrationCoordinator;
+    setIsSelectedRegisterCoordinator(isSelectedRegisterCoordinator: boolean) {
+      this.isSelectedRegisterCoordinator = isSelectedRegisterCoordinator;
+    },
+    setHasOrganizationAdmin(hasOrganizationAdmin: boolean | null) {
+      this.hasOrganizationAdmin = hasOrganizationAdmin;
     },
     /**
      * Load registration data from API and set store state
@@ -692,7 +700,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      * @returns {Promise<void>}
      */
     async registerCoordinator(): Promise<void> {
-      if (this.isRegistrationCoordinator && this.getOrganizationId) {
+      if (this.isSelectedRegisterCoordinator && this.getOrganizationId) {
         this.$log?.debug('Register coordinator with store data.');
         const registerStore = useRegisterStore();
         const payload =
@@ -714,7 +722,29 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           return;
         }
         await registerStore.registerCoordinator(payload, false);
+        // check if organization has coordinator
+        await this.checkOrganizationHasCoordinator();
+        // if organization is now logged as having a coordinator, reset flag
+        if (this.hasOrganizationAdmin) {
+          this.setIsSelectedRegisterCoordinator(false);
+        }
       }
+    },
+    /**
+     * Check if currently selected organization has a coordinator
+     * @returns {Promise<void>}
+     */
+    async checkOrganizationHasCoordinator(): Promise<void> {
+      const { hasOrganizationAdmin, checkOrganizationAdmin } =
+        useApiGetHasOrganizationAdmin(this.$log);
+      await checkOrganizationAdmin();
+      this.$log?.debug(
+        `API response hasOrganizationAdmin.value <${hasOrganizationAdmin.value}>.`,
+      );
+      this.setHasOrganizationAdmin(hasOrganizationAdmin.value);
+      this.$log?.debug(
+        `Organization has coordinator flag set to <${this.hasOrganizationAdmin}>.`,
+      );
     },
   },
 
