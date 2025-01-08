@@ -91,6 +91,10 @@ export default defineComponent({
     const titleDialog = computed((): string => {
       return getOrganizationLabels(props.organizationType).labelShort;
     });
+    const sectionTitleSubsidiaryAddress = computed((): string => {
+      return getOrganizationLabels(props.organizationType)
+        .sectionTitleSubsidiaryAddress;
+    });
 
     return {
       company,
@@ -98,6 +102,7 @@ export default defineComponent({
       OrganizationType,
       isCompany,
       isFilled,
+      sectionTitleSubsidiaryAddress,
       onUpdate,
       FormAddCompanyVariantProp,
     };
@@ -147,10 +152,13 @@ export default defineComponent({
     </div>
     <div v-if="variant === FormAddCompanyVariantProp.default" class="q-mt-lg">
       <div class="q-mb-md">
-        <h3 class="text-body1 text-bold text-black q-my-none">
-          {{ $t('form.company.titleSubsidiaryAddress') }}
+        <h3
+          class="text-body1 text-bold text-black q-my-none"
+          data-cy="form-add-company-section-subsidiary-title"
+        >
+          {{ sectionTitleSubsidiaryAddress }}
         </h3>
-        <p>
+        <p class="q-mt-sm">
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>

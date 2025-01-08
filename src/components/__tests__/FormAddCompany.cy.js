@@ -21,6 +21,8 @@ const selectorFormCity = 'form-add-subsidiary-city';
 const selectorFormZip = 'form-add-subsidiary-zip';
 const selectorFormCityChallenge = 'form-add-subsidiary-city-challenge';
 const selectorFormDepartment = 'form-add-subsidiary-department';
+const selectorFormSectionSubsidiaryTitle =
+  'form-add-company-section-subsidiary-title';
 
 describe('<FormAddCompany>', () => {
   // default form state (make a deep copy of empty state)
@@ -277,6 +279,10 @@ describe('<FormAddCompany>', () => {
         'contain',
         i18n.global.t('form.labelSchoolShort'),
       );
+      cy.dataCy(selectorFormSectionSubsidiaryTitle).should(
+        'have.text',
+        i18n.global.t('form.company.titleSubsidiaryAddress'),
+      );
     });
 
     it('hides company related message for school type (default)', () => {
@@ -342,6 +348,10 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormTitle).should(
         'contain',
         i18n.global.t('form.labelFamilyShort'),
+      );
+      cy.dataCy(selectorFormSectionSubsidiaryTitle).should(
+        'have.text',
+        i18n.global.t('form.labelAddress'),
       );
     });
 

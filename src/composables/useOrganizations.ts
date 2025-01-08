@@ -17,6 +17,7 @@ export type OrganizationLabels = {
   labelShort: string;
   messageNoResult: string;
   buttonDialog: string;
+  sectionTitleSubsidiaryAddress: string;
 };
 
 export const useOrganizations = () => {
@@ -37,6 +38,9 @@ export const useOrganizations = () => {
           labelShort: i18n.global.t('form.labelCompanyShort'), // used in "add new" dialog
           messageNoResult: i18n.global.t('form.messageNoCompany'),
           buttonDialog: i18n.global.t('form.company.buttonAddCompany'),
+          sectionTitleSubsidiaryAddress: i18n.global.t(
+            'form.company.titleSubsidiaryAddress',
+          ),
         };
       case OrganizationType.school:
         return {
@@ -51,6 +55,9 @@ export const useOrganizations = () => {
           labelShort: i18n.global.t('form.labelSchoolShort'), // used in "add new" dialog
           messageNoResult: i18n.global.t('form.messageNoSchool'),
           buttonDialog: i18n.global.t('form.company.buttonAddSchool'),
+          sectionTitleSubsidiaryAddress: i18n.global.t(
+            'form.company.titleSubsidiaryAddress',
+          ),
         };
       case OrganizationType.family:
         return {
@@ -71,6 +78,7 @@ export const useOrganizations = () => {
           labelShort: i18n.global.t('form.labelFamilyShort'), // used in "add new" dialog
           messageNoResult: i18n.global.t('form.messageNoFamily'),
           buttonDialog: i18n.global.t('form.company.buttonAddFamily'),
+          sectionTitleSubsidiaryAddress: i18n.global.t('form.labelAddress'),
         };
       default:
         return {
@@ -85,6 +93,7 @@ export const useOrganizations = () => {
           labelShort: '',
           messageNoResult: '',
           buttonDialog: '',
+          sectionTitleSubsidiaryAddress: '',
         };
     }
   };
