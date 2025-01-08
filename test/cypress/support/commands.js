@@ -2110,39 +2110,6 @@ Cypress.Commands.add('waitForIpAddressGetApi', () => {
 });
 
 /**
- * Intercept this verify email GET API call
- * Provides `@verifyEmailRequest` alias
- * @param {Object} config - App global config
- * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
- * @param {Object} responseBody - Override default response body
- * @param {Number} responseStatusCode - Override default response HTTP status code
- */
-Cypress.Commands.add(
-  'interceptVerifyEmailApi',
-  (config, i18n, responseBody, responseStatusCode) => {
-    const { apiBase, apiDefaultLang, urlApiHasUserVerifiedEmail } = config;
-    const apiBaseUrl = getApiBaseUrlWithLang(
-      null,
-      apiBase,
-      apiDefaultLang,
-      i18n,
-    );
-    // intercept verify email API call
-    const apiEmailVerificationUrl = `${apiBaseUrl}${urlApiHasUserVerifiedEmail}`;
-    cy.fixture('apiGetVerifyEmailResponse.json').then(
-      (apiGetVerifyEmailResponse) => {
-        cy.intercept('GET', apiEmailVerificationUrl, {
-          statusCode: responseStatusCode
-            ? responseStatusCode
-            : httpSuccessfullStatus,
-          body: responseBody ? responseBody : apiGetVerifyEmailResponse,
-        }).as('verifyEmailRequest');
-      },
-    );
-  },
-);
-
-/**
  * Intercept this confirm email POST API call
  * Provides `@confirmEmailRequest` alias
  * @param {Object} config - App global config
