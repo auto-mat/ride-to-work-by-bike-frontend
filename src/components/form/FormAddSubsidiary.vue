@@ -32,6 +32,13 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // composables
 import { useValidation } from 'src/composables/useValidation';
 import { useApiGetCities } from '../../composables/useApiGetCities';
+import { useOrganizations } from '../../composables/useOrganizations';
+
+// enums
+import { OrganizationType } from 'src/components/types/Organization';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { FormCompanyAddressFields } from '../types/Form';
@@ -73,10 +80,28 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    const registerChallengeStore = useRegisterChallengeStore();
+    const organizationType = computed<OrganizationType>(() => {
+      return registerChallengeStore.getOrganizationType;
+    });
+    const { getOrganizationLabels } = useOrganizations();
+    const hintCityChallenge = computed<string>((): string => {
+      return getOrganizationLabels(
+        organizationType.value || OrganizationType.company,
+      ).hintCityChallenge;
+    });
+    const labelCityChallenge = computed<string>((): string => {
+      return getOrganizationLabels(
+        organizationType.value || OrganizationType.company,
+      ).labelCityChallenge;
+    });
+
     return {
       subsidiary,
+      hintCityChallenge,
       isFilled,
       isLoading,
+      labelCityChallenge,
       options,
       FormSubsidiaryAddressFields,
     };
@@ -122,12 +147,12 @@ export default defineComponent({
         data-cy="form-add-subsidiary-zip"
       />
     </div>
-    <div class="col-12">
+    <div class="col-12" data-cy="form-widget-subsidiary-city-challenge">
       <!-- City challenge -->
       <label
         for="form-city-challenge"
         class="text-caption text-bold text-gray-10"
-        >{{ $t('form.company.labelCityChallenge') }}</label
+        >{{ labelCityChallenge }}</label
       >
       <q-select
         dense
@@ -143,7 +168,7 @@ export default defineComponent({
             }),
         ]"
         id="form-city-challenge"
-        :hint="$t('form.company.hintCityChallenge')"
+        :hint="hintCityChallenge"
         :options="options"
         :loading="isLoading"
         class="q-mt-sm"

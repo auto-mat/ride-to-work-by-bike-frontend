@@ -4,6 +4,8 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { deepObjectWithSimplePropsCopy } from '../../../src/utils';
+import { OrganizationType } from 'src/components/types/Organization';
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // selectors
 const selectorFormStreet = 'form-add-subsidiary-street';
@@ -12,6 +14,8 @@ const selectorFormCity = 'form-add-subsidiary-city';
 const selectorFormZip = 'form-add-subsidiary-zip';
 const selectorFormCityChallenge = 'form-add-subsidiary-city-challenge';
 const selectorFormDepartment = 'form-add-subsidiary-department';
+const selectorFormWidgetSubsidiaryCityChallenge =
+  'form-widget-subsidiary-city-challenge';
 
 // variables
 const testData = {
@@ -36,7 +40,16 @@ const model = ref(deepObjectWithSimplePropsCopy(emptyData));
 
 describe('<FormAddSubsidiary>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'hintCityChallenge',
+        'hintCityChallengeFamily',
+        'labelCityChallenge',
+        'labelCityChallengeFamily',
+      ],
+      'form.company',
+      i18n,
+    );
   });
 
   context('desktop', () => {
@@ -89,6 +102,36 @@ function coreTests() {
     cy.dataCy(selectorFormZip).should('be.visible');
     cy.dataCy(selectorFormCityChallenge).should('be.visible');
     cy.dataCy(selectorFormDepartment).should('be.visible');
+  });
+
+  it('renders correct labels for organization type company', () => {
+    cy.wrap(useRegisterChallengeStore()).then((store) => {
+      cy.wrap(store.setOrganizationType(OrganizationType.company));
+      cy.dataCy(selectorFormWidgetSubsidiaryCityChallenge)
+        .should('contain', i18n.global.t('form.company.labelCityChallenge'))
+        .and('contain', i18n.global.t('form.company.hintCityChallenge'));
+    });
+  });
+
+  it('renders correct labels for organization type school', () => {
+    cy.wrap(useRegisterChallengeStore()).then((store) => {
+      cy.wrap(store.setOrganizationType(OrganizationType.school));
+      cy.dataCy(selectorFormWidgetSubsidiaryCityChallenge)
+        .should('contain', i18n.global.t('form.company.labelCityChallenge'))
+        .and('contain', i18n.global.t('form.company.hintCityChallenge'));
+    });
+  });
+
+  it('renders correct labels for organization type family', () => {
+    cy.wrap(useRegisterChallengeStore()).then((store) => {
+      cy.wrap(store.setOrganizationType(OrganizationType.family));
+      cy.dataCy(selectorFormWidgetSubsidiaryCityChallenge)
+        .should(
+          'contain',
+          i18n.global.t('form.company.labelCityChallengeFamily'),
+        )
+        .and('contain', i18n.global.t('form.company.hintCityChallengeFamily'));
+    });
   });
 
   it('updates model when fields are filled', () => {
