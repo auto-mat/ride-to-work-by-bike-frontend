@@ -36,6 +36,7 @@ import {
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
   interceptOrganizationsApi,
+  interceptedRequestResponseDelay,
   waitForOrganizationsApi,
 } from './commonTests';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
@@ -1667,6 +1668,7 @@ Cypress.Commands.add(
             ? responseStatusCode
             : httpSuccessfullStatus,
           body: responseBody ? responseBody : registerChallengeResponse,
+          delay: interceptedRequestResponseDelay,
         }).as('postRegisterChallenge');
       },
     );

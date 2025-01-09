@@ -589,6 +589,7 @@ export const userAgentHeader = {
   'User-Agent':
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
 };
+export const interceptedRequestResponseDelay = 300;
 
 // access token expiration time: Tuesday 24. September 2024 22:36:03
 const fixtureTokenExpiration = new Date('2024-09-24T20:36:03Z');
