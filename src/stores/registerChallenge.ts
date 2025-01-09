@@ -407,6 +407,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(`Team ID store updated to <${this.getTeamId}>.`);
       this.setMerchId(parsedResponse.merchId);
       this.$log?.debug(`Merch ID store updated to <${this.getMerchId}>.`);
+      this.setTelephone(parsedResponse.telephone);
+      this.$log?.debug(`Telephone store updated to <${this.getTelephone}>.`);
+      this.setTelephoneOptIn(parsedResponse.telephoneOptIn);
+      this.$log?.debug(
+        `Telephone opt-in store updated to <${this.getTelephoneOptIn}>.`,
+      );
     },
     /**
      * Submit a registration step

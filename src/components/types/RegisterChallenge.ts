@@ -45,4 +45,6 @@ export interface RegisterChallengePostRequest {
   personalDetails: RegisterChallengePersonalDetailsApi;
   newsletter: NewsletterType[];
   teamId?: number | null;
+  telephone?: string;
+  telephoneOptIn?: boolean;
 }

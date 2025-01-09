@@ -46,6 +46,8 @@ export const registerChallengeAdapter = {
       subsidiaryId: apiData.subsidiary_id,
       teamId: apiData.team_id,
       merchId: apiData.t_shirt_size_id,
+      telephone: apiData.personal_details.telephone,
+      telephoneOptIn: apiData.personal_details.telephone_opt_in,
       voucher: apiData.personal_details.discount_coupon,
     };
   },
@@ -107,6 +109,12 @@ export const registerChallengeAdapter = {
     }
     if (storeState.merchId !== undefined) {
       payload.t_shirt_size_id = storeState.merchId;
+    }
+    if (storeState.telephone !== undefined) {
+      payload.telephone = storeState.telephone;
+    }
+    if (storeState.telephoneOptIn !== undefined) {
+      payload.telephone_opt_in = storeState.telephoneOptIn;
     }
 
     return payload;

@@ -2043,6 +2043,23 @@ Cypress.Commands.add(
           .should('contain', item.size);
       });
     });
+    // phone number is preselected
+    cy.dataCy('form-phone-input').should(
+      'have.value',
+      registerChallengeResponse.results[0].personal_details.telephone,
+    );
+    // phone opt-in is preselected
+    if (
+      registerChallengeResponse.results[0].personal_details.telephone_opt_in
+    ) {
+      cy.dataCy('form-merch-phone-opt-in-input')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--truthy');
+    } else {
+      cy.dataCy('form-merch-phone-opt-in-input')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--falsy');
+    }
     // go to next step
     cy.dataCy('step-6-continue').should('be.visible').click();
     // verify step 7 is active

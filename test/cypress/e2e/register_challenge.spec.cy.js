@@ -1440,6 +1440,16 @@ describe('Register Challenge page', () => {
       cy.dataCy('dialog-close').click();
       // verify dialog is closed
       cy.dataCy('dialog-merch').should('not.exist');
+      // fill in phone number
+      cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
+        (request) => {
+          cy.dataCy('form-merch-phone-input')
+            .find('input')
+            .type(request.telephone);
+        },
+      );
+      // enable telephone opt-in
+      cy.dataCy('form-merch-phone-opt-in-input').click();
       // go to next step
       cy.dataCy('step-6-continue').should('be.visible').click();
       // test API post request (merchandise)

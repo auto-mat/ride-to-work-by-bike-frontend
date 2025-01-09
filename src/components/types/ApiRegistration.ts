@@ -76,4 +76,6 @@ export interface ToApiPayloadStoreState {
   teamId?: number | null;
   merchId?: number | null;
   voucher?: ValidatedCoupon | null;
+  telephone?: string;
+  telephoneOptIn?: boolean;
 }
