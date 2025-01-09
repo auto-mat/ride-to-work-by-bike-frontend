@@ -87,9 +87,14 @@ export default defineComponent({
       get: () => registerChallengeStore.getMerchId,
       set: (value: number | null) => registerChallengeStore.setMerchId(value),
     });
-    const phone = ref<string>('');
-    const trackDelivery = ref<boolean>(false);
-    const newsletter = ref<boolean>(false);
+    const phone = computed<string>({
+      get: () => registerChallengeStore.getTelephone,
+      set: (value: string) => registerChallengeStore.setTelephone(value),
+    });
+    const telephoneOptIn = computed<boolean>({
+      get: () => registerChallengeStore.getTelephoneOptIn,
+      set: (value: boolean) => registerChallengeStore.setTelephoneOptIn(value),
+    });
     // dialog
     const isOpen = ref<boolean>(false);
 
@@ -332,7 +337,7 @@ export default defineComponent({
       Gender,
       isNotMerch,
       isOpen,
-      newsletter,
+      telephoneOptIn,
       optionsFemale,
       optionsMale,
       optionsUnisex,
@@ -342,7 +347,6 @@ export default defineComponent({
       selectedGender,
       currentGenderOptions,
       currentSizeOptions,
-      trackDelivery,
       onSelectCardOption,
       onSubmit,
       isSelected,
@@ -489,32 +493,22 @@ export default defineComponent({
 
     <!-- Input: Phone number -->
     <form-field-phone
+      v-if="!isNotMerch"
       v-model="phone"
       :hint="$t('form.merch.hintPhone')"
-      :required="trackDelivery"
+      :required="true"
       data-cy="form-merch-phone-input"
-    />
-    <!-- Input: Track delivery checkbox -->
-    <q-checkbox
-      dense
-      v-model="trackDelivery"
-      color="primary"
-      :false-value="false"
-      :label="$t('form.merch.labelTrackDelivery')"
-      :true-value="true"
-      class="text-grey-10 q-mt-lg"
-      data-cy="form-merch-tracking-input"
     />
     <!-- Input: News checkbox -->
     <q-checkbox
       dense
-      v-model="newsletter"
+      v-model="telephoneOptIn"
       color="primary"
       :false-value="false"
       :label="$t('form.merch.labelNewsletter')"
       :true-value="true"
       class="text-grey-10 q-mt-md"
-      data-cy="form-terms-input"
+      data-cy="form-merch-phone-opt-in-input"
     />
 
     <!-- Dialog -->

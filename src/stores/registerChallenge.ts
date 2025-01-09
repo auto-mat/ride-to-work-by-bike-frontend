@@ -104,6 +104,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     formRegisterCoordinator: deepObjectWithSimplePropsCopy(
       emptyFormRegisterCoordinator,
     ),
+    telephone: '',
+    telephoneOptIn: false,
     isLoadingRegisterChallenge: false,
     ipAddressData: null as IpAddressResponse | null,
     isLoadingSubsidiaries: false,
@@ -142,6 +144,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.isSelectedRegisterCoordinator,
     getFormRegisterCoordinator: (state): RegisterChallengeCoordinatorForm =>
       state.formRegisterCoordinator,
+    getTelephone: (state): string => state.telephone,
+    getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(
@@ -301,6 +305,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setMerchandiseCards(cards: Record<Gender, MerchandiseCard[]>) {
       this.merchandiseCards = cards;
     },
+    setTelephone(telephone: string) {
+      this.telephone = telephone;
+    },
+    setTelephoneOptIn(telephoneOptIn: boolean) {
+      this.telephoneOptIn = telephoneOptIn;
+    },
     setIsPayuTransactionInitiated(isPayuTransactionInitiated: boolean) {
       this.isPayuTransactionInitiated = isPayuTransactionInitiated;
     },
@@ -419,7 +429,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         [RegisterChallengeStep.participation]: {},
         [RegisterChallengeStep.organization]: {},
         [RegisterChallengeStep.team]: { teamId: this.teamId },
-        [RegisterChallengeStep.merch]: { merchId: this.merchId },
+        [RegisterChallengeStep.merch]: {
+          merchId: this.merchId,
+          telephone: this.telephone,
+          telephoneOptIn: this.telephoneOptIn,
+        },
         [RegisterChallengeStep.summary]: {},
       };
       // convert store state to API payload

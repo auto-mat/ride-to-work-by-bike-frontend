@@ -1,8 +1,11 @@
+import { computed } from 'vue';
 import { colors } from 'quasar';
+import { createPinia, setActivePinia } from 'pinia';
 import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
 import { Gender } from 'components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 const { getPaletteColor } = colors;
 const grey8 = getPaletteColor('grey-8');
@@ -27,6 +30,7 @@ describe('<FormFieldListMerch>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       // intercept API calls
       cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
 
@@ -253,10 +257,35 @@ describe('<FormFieldListMerch>', () => {
           .should('have.class', 'q-radio__inner--truthy');
       });
     });
+
+    it('updates phone number and phone opt-in in store when user enters values', () => {
+      cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
+        (request) => {
+          cy.wrap(useRegisterChallengeStore()).then((store) => {
+            const telephone = computed(() => store.getTelephone);
+            const telephoneOptIn = computed(() => store.getTelephoneOptIn);
+            // default values
+            cy.wrap(telephone).its('value').should('be.empty');
+            cy.wrap(telephoneOptIn).its('value').should('be.false');
+            // enter values
+            cy.dataCy('form-merch-phone-input')
+              .find('input')
+              .type(request.telephone);
+            cy.dataCy('form-merch-phone-opt-in-input')
+              .should('be.visible')
+              .click();
+            // values are updated
+            cy.wrap(telephone).its('value').should('eq', request.telephone);
+            cy.wrap(telephoneOptIn).its('value').should('be.true');
+          });
+        },
+      );
+    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       // intercept API calls
       cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
 
