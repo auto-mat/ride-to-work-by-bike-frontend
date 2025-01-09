@@ -89,6 +89,8 @@ describe('<RegisterChallengePayment>', () => {
         'textOrganization',
         'textPaymentMinimum',
         'textPaymentOrganizer',
+        'textRegistrationNoAdmission',
+        'textRegistrationNoAdmissionPayU',
       ],
       'register.challenge',
       i18n,

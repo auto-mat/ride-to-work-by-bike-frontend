@@ -2211,3 +2211,19 @@ Cypress.Commands.add('waitForRegisterCoordinatorPostApi', () => {
     },
   );
 });
+
+/**
+ * Test that a specific message is displayed after loading register challenge data
+ * @param {Object} response - Register challenge response data
+ * @param {String} messageSelector - data-cy selector for the message element
+ */
+Cypress.Commands.add(
+  'testRegisterChallengePaymentMessage',
+  (response, messageSelector) => {
+    cy.waitForRegisterChallengeGetApi(response);
+    // verify step 2 is active
+    cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
+    // verify message is displayed
+    cy.dataCy(messageSelector).should('be.visible');
+  },
+);
