@@ -41,8 +41,16 @@
  */
 
 // libraries
-import { computed, defineComponent, defineExpose, inject, ref } from 'vue';
-import { QForm, QSelect } from 'quasar';
+import {
+  computed,
+  defineComponent,
+  defineExpose,
+  inject,
+  nextTick,
+  ref,
+  watch,
+} from 'vue';
+import { QForm, QSelect, QVirtualScroll } from 'quasar';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -125,6 +133,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'create:option'],
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
+    const virtualScrollRef = ref<typeof QVirtualScroll | null>(null);
 
     // user input for filtering
     const query = ref<string>('');
@@ -160,6 +169,26 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+
+    // wait for loading to finish and then scroll to the selected option
+    watch(
+      () => props.loading,
+      (newVal) => {
+        if (!newVal && inputValue.value) {
+          // find index of inputValue in filteredOptions
+          const index: number = filteredOptions.value.findIndex(
+            (option) => option.value === inputValue.value,
+          );
+          scrollToIndex(index);
+        }
+      },
+    );
+    const scrollToIndex = (index: number) => {
+      nextTick(() => {
+        logger?.debug(`Scrolling to index ${index}`);
+        virtualScrollRef.value?.scrollTo(index);
+      });
+    };
 
     const { borderRadiusCardSmall: borderRadius, contactEmail } =
       rideToWorkByBikeConfig;
@@ -402,6 +431,7 @@ export default defineComponent({
       isDisabledOption,
       isFilled,
       isLoading,
+      virtualScrollRef,
       onClose,
       onSubmit,
       onChangeOption,
@@ -463,12 +493,13 @@ export default defineComponent({
         <!-- Options list -->
         <q-card-section class="q-pa-xs" data-cy="form-select-table-options">
           <q-virtual-scroll
+            ref="virtualScrollRef"
             style="max-height: 250px"
             :items="filteredOptions"
             separator
-            v-slot="{ item }"
+            v-slot="{ item, index }"
           >
-            <q-item tag="label" v-ripple>
+            <q-item :key="index" tag="label" v-ripple>
               <q-item-section>
                 <q-radio
                   v-model="inputValue"
