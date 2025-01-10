@@ -227,7 +227,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
     },
     getIsPaymentComplete(): boolean {
-      return this.getPaymentState === PaymentState.done;
+      return [PaymentState.noAdmission, PaymentState.done].includes(
+        this.getPaymentState,
+      );
     },
     getIsOrganizationTypeComplete(): boolean {
       return this.getOrganizationType !== OrganizationType.none;

@@ -1624,16 +1624,39 @@ describe('Register Challenge page', () => {
 
     it('loads payment page - payment status "no_admission" (set-is-paid-from-ui-true)', () => {
       cy.fixture('apiGetRegisterChallengeIndividualNoAdmission.json').then(
-        (response) => {
+        (registerChallengeResponse) => {
           // visit page
           cy.visit('#' + routesConf['register_challenge']['path']);
           // !isPayuTransactionInitiated is set via test title
           cy.dataCy('debug-is-paid-from-ui-value').should('contain', 'true');
-          // intercept "individual paid" registration data
-          cy.testRegisterChallengePaymentMessage(
-            response,
-            'step-2-no-admission-message-payu',
-          );
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.get('@config').then((config) => {
+              cy.testRegisterChallengeLoadedStepOne(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // check that the "paid" message is visible
+              cy.dataCy('step-2-paid-message')
+                .should('be.visible')
+                .then(($el) => {
+                  const content = $el.text();
+                  cy.stripHtmlTags(
+                    win.i18n.global.t(
+                      'register.challenge.textRegistrationPaid',
+                      { contactEmail: config.contactEmail },
+                    ),
+                  ).then((text) => {
+                    expect(content).to.equal(text);
+                  });
+                });
+              // go to next step
+              cy.dataCy('step-2-continue')
+                .should('be.visible')
+                .and('not.be.disabled')
+                .click();
+            });
+          });
         },
       );
     });
@@ -1971,6 +1994,10 @@ describe('Register Challenge page', () => {
     },
   );
 
+  /**
+   * Company payment "no_admission" indicates successful registration.
+   * Works the same as payment state "done".
+   */
   context('registration in progress, company payment "no_admission"', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
@@ -1993,75 +2020,43 @@ describe('Register Challenge page', () => {
       cy.viewport('macbook-16');
     });
 
-    it('fetches the registration status on load', () => {
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
-          (registerChallengeResponse) => {
-            cy.testRegisterChallengeLoadedStepOne(
-              win.i18n,
-              registerChallengeResponse,
-            );
-            // go to next step
-            cy.dataCy('step-1-continue').should('be.visible').click();
-            // check that the "no admission" message is visible
-            cy.dataCy('step-2-no-admission-message')
-              .should('be.visible')
-              .and('have.class', 'q-mb-md')
-              .then(($el) => {
-                const content = $el.text();
-                cy.stripHtmlTags(
-                  win.i18n.global.t(
-                    'register.challenge.textRegistrationNoAdmission',
-                  ),
-                ).then((text) => {
-                  expect(content).to.equal(text);
+    it('fetches the registration status on load (set-is-paid-from-ui-true)', () => {
+      cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
+        (registerChallengeResponse) => {
+          // visit page
+          cy.visit('#' + routesConf['register_challenge']['path']);
+          // !isPayuTransactionInitiated is set via test title
+          cy.dataCy('debug-is-paid-from-ui-value').should('contain', 'true');
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.get('@config').then((config) => {
+              cy.testRegisterChallengeLoadedStepOne(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // check that the "paid" message is visible
+              cy.dataCy('step-2-paid-message')
+                .should('be.visible')
+                .then(($el) => {
+                  const content = $el.text();
+                  cy.stripHtmlTags(
+                    win.i18n.global.t(
+                      'register.challenge.textRegistrationPaid',
+                      { contactEmail: config.contactEmail },
+                    ),
+                  ).then((text) => {
+                    expect(content).to.equal(text);
+                  });
                 });
-              });
-            /**
-             * User is allowed to change payment method to individual or voucher
-             * or select a different paying organization.
-             */
-            // switch to individual payment
-            cy.dataCy(getRadioOption(PaymentSubject.individual))
-              .should('be.visible')
-              .click();
-            // submit payment button should be visible and enabled
-            cy.dataCy('step-2-submit-payment')
-              .should('be.visible')
-              .and('not.be.disabled');
-            // switch to voucher payment
-            cy.dataCy(getRadioOption(PaymentSubject.voucher))
-              .should('be.visible')
-              .click();
-            // input voucher should be visible
-            cy.dataCy('form-field-voucher-input').should('be.visible');
-            // switch to company payment
-            cy.dataCy(getRadioOption(PaymentSubject.company))
-              .should('be.visible')
-              .click();
-            /**
-             * Reselect paying company
-             * TODO: add function that will clear subsidiary and team IDs on
-             * organization change.
-             */
-            cy.selectRegisterChallengePayingOrganization();
-            // go to next step
-            cy.dataCy('step-2-continue')
-              .should('be.visible')
-              .and('not.be.disabled')
-              .click();
-            cy.testRegisterChallengeLoadedStepsThreeToFive(
-              win.i18n,
-              registerChallengeResponse,
-            );
-            cy.testRegisterChallengeLoadedStepSix(
-              win.i18n,
-              registerChallengeResponse,
-            );
-          },
-        );
-      });
+              // go to next step
+              cy.dataCy('step-2-continue')
+                .should('be.visible')
+                .and('not.be.disabled')
+                .click();
+            });
+          });
+        },
+      );
     });
   });
 });

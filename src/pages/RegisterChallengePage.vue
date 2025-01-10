@@ -249,11 +249,15 @@ export default defineComponent({
      * and needs to be fixed by admin.
      */
     const isShownPaymentForm = computed<boolean>((): boolean => {
-      return registerChallengeStore.getPaymentState !== PaymentState.done;
+      return ![PaymentState.noAdmission, PaymentState.done].includes(
+        registerChallengeStore.getPaymentState,
+      );
     });
 
     const isShownRegistrationPaidMessage = computed<boolean>((): boolean => {
-      return registerChallengeStore.getPaymentState === PaymentState.done;
+      return [PaymentState.noAdmission, PaymentState.done].includes(
+        registerChallengeStore.getPaymentState,
+      );
     });
 
     const isWaitingForPayamentConfirmation = computed<boolean>((): boolean => {
@@ -272,10 +276,7 @@ export default defineComponent({
         return (
           [PaymentSubject.company, PaymentSubject.school].includes(
             registerChallengeStore.getPaymentSubject,
-          ) &&
-          [PaymentState.noAdmission, PaymentState.unknown].includes(
-            registerChallengeStore.getPaymentState,
-          )
+          ) && registerChallengeStore.getPaymentState === PaymentState.unknown
         );
       },
     );
@@ -290,10 +291,7 @@ export default defineComponent({
         return (
           ![PaymentSubject.company, PaymentSubject.school].includes(
             registerChallengeStore.getPaymentSubject,
-          ) &&
-          [PaymentState.noAdmission, PaymentState.unknown].includes(
-            registerChallengeStore.getPaymentState,
-          )
+          ) && registerChallengeStore.getPaymentState === PaymentState.unknown
         );
       },
     );
@@ -327,8 +325,10 @@ export default defineComponent({
       const paymentSubject = registerChallengeStore.getPaymentSubject;
       const voucher = registerChallengeStore.getVoucher;
       // conditions
-      const isPaymentDone =
-        registerChallengeStore.getPaymentState === PaymentState.done;
+      const isPaymentDone = [
+        PaymentState.noAdmission,
+        PaymentState.done,
+      ].includes(registerChallengeStore.getPaymentState);
       const isPaymentCompanyOrSchool = [
         PaymentSubject.company,
         PaymentSubject.school,
