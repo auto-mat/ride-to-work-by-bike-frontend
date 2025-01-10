@@ -17,8 +17,8 @@
         "newsletter": "challenge",
         "personal_data_opt_in": true,
         "discount_coupon": "",
-        "payment_subject": "individual",
-        "payment_type": "payu",
+        "payment_subject": "",
+        "payment_type": "",
         "payment_status": "none",
         "payment_amount": null
       },

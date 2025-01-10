@@ -17,10 +17,10 @@
         "newsletter": "challenge",
         "personal_data_opt_in": true,
         "discount_coupon": "",
-        "payment_subject": null,
-        "payment_type": "payu",
+        "payment_subject": "individual",
+        "payment_type": "CARD_TOKEN",
         "payment_status": "done",
-        "payment_amount": null
+        "payment_amount": 390
       },
       "organization_type": "company",
       "team_id": 2451,
