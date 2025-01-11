@@ -782,7 +782,7 @@ function coreTests() {
     );
   });
 
-  it.only('shows checkbox become coordinator if organization has no coordinator and user no coordinator', () => {
+  it('shows checkbox become coordinator if organization has no coordinator and user no coordinator', () => {
     cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
       (response) => {
         cy.waitForIsUserOrganizationAdminApi(response);

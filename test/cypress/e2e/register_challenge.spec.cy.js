@@ -198,6 +198,16 @@ describe('Register Challenge page', () => {
               cy.interceptIpAddressGetApi(config);
               cy.interceptPayuCreateOrderPostApi(config, win.i18n);
               interceptRegisterCoordinatorApi(config, win.i18n);
+
+              cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+                (responseIsUserOrganizationAdminFalse) => {
+                  cy.interceptIsUserOrganizationAdminGetApi(
+                    config,
+                    win.i18n,
+                    responseIsUserOrganizationAdminFalse,
+                  );
+                },
+              );
             },
           );
         });
@@ -495,6 +505,14 @@ describe('Register Challenge page', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           passToStep2();
+          cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+            (responseIsUserOrganizationAdminFalse) => {
+              // user status should reload
+              cy.waitForIsUserOrganizationAdminApi(
+                responseIsUserOrganizationAdminFalse,
+              );
+            },
+          );
           // select company
           cy.dataCy(getRadioOption(OrganizationType.company)).click();
           // select paying company (required)
@@ -545,32 +563,50 @@ describe('Register Challenge page', () => {
               cy.fixture('formFieldCompany').then(
                 (formFieldCompanyResponse) => {
                   cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
-                    (response) => {
-                      /**
-                       * Before submitting coordinator application intercept
-                       * hasOrganizationAdmin request to return true.
-                       */
-                      cy.interceptHasOrganizationAdminGetApi(
-                        config,
-                        i18n,
-                        formFieldCompanyResponse.results[1].id,
-                        response,
-                      );
-                      // go to next step
-                      cy.dataCy('step-2-continue').should('be.visible').click();
-                      // wait for request
-                      cy.waitForRegisterCoordinatorPostApi();
-                      // verify that we are on step 3
-                      cy.dataCy('step-3')
-                        .find('.q-stepper__step-content')
-                        .should('be.visible');
-                      // go back a step
-                      cy.dataCy('step-3-back').should('be.visible').click();
-                      cy.waitForHasOrganizationAdminApi(response);
-                      // verify that company no longer has the option coordinator
-                      cy.dataCy('register-coordinator-checkbox').should(
-                        'not.exist',
-                      );
+                    (responseHasOrganizationAdmin) => {
+                      cy.fixture(
+                        'apiGetIsUserOrganizationAdminResponseTrue',
+                      ).then((responseIsUserOrganizationAdmin) => {
+                        /**
+                         * Before submitting coordinator application intercept
+                         * hasOrganizationAdmin request to return true.
+                         */
+                        cy.interceptHasOrganizationAdminGetApi(
+                          config,
+                          i18n,
+                          formFieldCompanyResponse.results[1].id,
+                          responseHasOrganizationAdmin,
+                        );
+                        // also intercept isUserOrganizationAdmin API
+                        cy.interceptIsUserOrganizationAdminGetApi(
+                          config,
+                          i18n,
+                          responseIsUserOrganizationAdmin,
+                        );
+                        // go to next step
+                        cy.dataCy('step-2-continue')
+                          .should('be.visible')
+                          .click();
+                        // wait for request
+                        cy.waitForRegisterCoordinatorPostApi();
+                        // verify that we are on step 3
+                        cy.dataCy('step-3')
+                          .find('.q-stepper__step-content')
+                          .should('be.visible');
+                        // go back a step
+                        cy.dataCy('step-3-back').should('be.visible').click();
+                        // user status should reload
+                        cy.waitForIsUserOrganizationAdminApi(
+                          responseIsUserOrganizationAdmin,
+                        );
+                        cy.waitForHasOrganizationAdminApi(
+                          responseHasOrganizationAdmin,
+                        );
+                        // verify that company no longer has the option coordinator
+                        cy.dataCy('register-coordinator-checkbox').should(
+                          'not.exist',
+                        );
+                      });
                     },
                   );
                 },

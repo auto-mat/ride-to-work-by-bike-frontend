@@ -755,6 +755,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           return;
         }
         await registerStore.registerCoordinator(payload, false);
+        // check if user is registered as a coordinator
+        this.checkIsUserOrganizationAdmin();
         // check if organization has coordinator
         await this.checkOrganizationHasCoordinator();
         // if organization is now logged as having a coordinator, reset flag
