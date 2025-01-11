@@ -185,7 +185,12 @@ export default defineComponent({
     );
     const scrollToIndex = (index: number) => {
       nextTick(() => {
-        logger?.debug(`Scrolling to index ${index}`);
+        const opt = filteredOptions.value.filter(
+          (opt) => opt.value === inputValue.value,
+        );
+        logger?.debug(
+          `Scrolling to index <${index}> with option value <${JSON.stringify(opt)}>.`,
+        );
         virtualScrollRef.value?.scrollTo(index);
       });
     };
