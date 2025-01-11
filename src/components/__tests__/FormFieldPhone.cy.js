@@ -145,73 +145,58 @@ function testPhoneNumberValidation() {
         i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
       );
     cy.dataCy('form-phone-input').clear();
-    // invalid phone
-    cy.dataCy('form-phone-input').type('+420 609 234 567');
-    cy.dataCy('form-phone-input').blur();
-    cy.dataCy('form-phone')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
-      );
-    cy.dataCy('form-phone-input').clear();
-    // invalid phone
-    cy.dataCy('form-phone-input').type('+420 500 234 567');
-    cy.dataCy('form-phone-input').blur();
-    cy.dataCy('form-phone')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
-      );
-    cy.dataCy('form-phone-input').clear();
-    // invalid phone
-    cy.dataCy('form-phone-input').type('123 456 789');
-    cy.dataCy('form-phone-input').blur();
-    cy.dataCy('form-phone')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
-      );
-    cy.dataCy('form-phone-input').clear();
-    // invalid phone
-    cy.dataCy('form-phone-input').type('+420 6012 34567');
-    cy.dataCy('form-phone-input').blur();
-    cy.dataCy('form-phone')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
-      );
-    cy.dataCy('form-phone-input').clear();
-    // invalid phone
-    cy.dataCy('form-phone-input').type('602 3456 78');
-    cy.dataCy('form-phone-input').blur();
-    cy.dataCy('form-phone')
-      .find('.q-field__messages')
-      .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('register.coordinator.form.messagePhoneInvalid'),
-      );
-    cy.dataCy('form-phone-input').clear();
     // valid phone
-    cy.dataCy('form-phone-input').type('+420 736 123 456');
+    cy.dataCy('form-phone-input').type('+420 736 661 234');
     cy.dataCy('form-phone-input').blur();
     cy.get('.q-field__messages').should('not.be.visible');
     cy.dataCy('form-phone-input').clear();
     // valid phone
-    cy.dataCy('form-phone-input').type('+420736123456');
+    cy.dataCy('form-phone-input').type('+420736661234');
     cy.dataCy('form-phone-input').blur();
     cy.get('.q-field__messages').should('not.be.visible');
     cy.dataCy('form-phone-input').clear();
     // valid phone
-    cy.dataCy('form-phone-input').type('736123456');
+    cy.dataCy('form-phone-input').type('736661234');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // slovak number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+421 901 234 567');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // german number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+49 151 12345678');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // austrian number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+43 660 123456');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // polish number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+48 600 123 456');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // french number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+33 6 12 34 56 78');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // italian number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+39 345 123 4567');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // swiss number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+41 79 123 45 67');
+    cy.dataCy('form-phone-input').blur();
+    cy.get('.q-field__messages').should('not.be.visible');
+    // slovenian number
+    cy.dataCy('form-phone-input').clear();
+    cy.dataCy('form-phone-input').type('+386 40 123 456');
     cy.dataCy('form-phone-input').blur();
     cy.get('.q-field__messages').should('not.be.visible');
   });

@@ -31,18 +31,16 @@ export const useValidation = () => {
       return false;
     }
     /**
-     * Match international phone number entered with delimiters
+     * Matches Czech phone number entered with delimiters
      * (spaces, dots, brackets, etc.)
-     *
-     * Note: does not account for specific mistakes such as:
-     * Leading Zero in Area Code: +420 012 345 678
-     * Too Many Digits: +420 123 456 7890
-     * Starts with an Invalid Country Code: +999 123 456 789
-     *
-     * https://uibakery.io/regex-library/email
      */
-    const regex =
-      /^(\+420\s?)?((5\d{2}|60[1-8]|70[2-5]|72\d|73[0-9]|77[0-9])\s?\d{3}\s?\d{3})$/;
+    // const regex = /^(\+420\s?)?((5\d{2}|60[1-8]|70[2-5]|72\d|73[0-9]|77[0-9])\s?\d{3}\s?\d{3})$/;
+
+    /**
+     * Matches a generic format of a phone number with allowed delimiters.
+     * https://stackoverflow.com/a/20349730
+     */
+    const regex = /^(\+|00)?[1-9][0-9 \-\(\)\.]{7,32}$/;
     return regex.test(value);
   };
 
