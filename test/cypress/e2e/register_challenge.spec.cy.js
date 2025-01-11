@@ -1292,9 +1292,12 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-5-back').should('be.visible').click();
       // organization and address inputs are visible
       cy.dataCy('form-select-table-company').should('be.visible');
-      cy.dataCy('form-company-address-input').should('be.visible');
       // select a different address
-      cy.dataCy('form-company-address-input').click();
+      cy.dataCy('form-company-address')
+        .should('be.visible')
+        .find('.q-field__append')
+        .last()
+        .click();
       // select option
       cy.get('.q-menu')
         .should('be.visible')
@@ -1342,7 +1345,11 @@ describe('Register Challenge page', () => {
         .first()
         .click();
       // set subsidiary
-      cy.dataCy('form-company-address-input').click();
+      cy.dataCy('form-company-address')
+        .should('be.visible')
+        .find('.q-field__append')
+        .last()
+        .click();
       // select option
       cy.get('.q-menu')
         .should('be.visible')
