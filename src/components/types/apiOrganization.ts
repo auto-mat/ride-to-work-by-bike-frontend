@@ -28,13 +28,3 @@ export interface UseApiGetHasOrganizationAdminReturn {
 export interface HasOrganizationAdminResponse {
   has_organization_admin: boolean;
 }
-
-export interface IsUserOrganizationAdminResponse {
-  is_user_organization_admin: boolean;
-}
-
-export interface UseApiIsUserOrganizationAdminReturn {
-  isLoading: Ref<boolean>;
-  isUserOrganizationAdmin: Ref<boolean | null>;
-  checkIsUserOrganizationAdmin: () => Promise<void>;
-}
