@@ -2227,3 +2227,60 @@ Cypress.Commands.add(
     cy.dataCy(messageSelector).should('be.visible');
   },
 );
+
+/**
+ * Intercept is user organization admin GET API call
+ * Provides `@getIsUserOrganizationAdmin` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptIsUserOrganizationAdminGetApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiIsUserOrganizationAdmin } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiIsUserOrganizationAdminLocalized = `${apiBaseUrl}${urlApiIsUserOrganizationAdmin}`;
+
+    cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+      (defaultResponse) => {
+        cy.intercept('GET', urlApiIsUserOrganizationAdminLocalized, {
+          statusCode: responseStatusCode || httpSuccessfullStatus,
+          body: responseBody || defaultResponse,
+        }).as('getIsUserOrganizationAdmin');
+      },
+    );
+  },
+);
+
+/**
+ * Wait for intercept is user organization admin API call and compare response object
+ * Wait for `@getIsUserOrganizationAdmin` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add(
+  'waitForIsUserOrganizationAdminApi',
+  (expectedResponse) => {
+    cy.wait('@getIsUserOrganizationAdmin').then(
+      (getIsUserOrganizationAdmin) => {
+        expect(
+          getIsUserOrganizationAdmin.request.headers.authorization,
+        ).to.include(bearerTokeAuth);
+        if (getIsUserOrganizationAdmin.response) {
+          expect(getIsUserOrganizationAdmin.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getIsUserOrganizationAdmin.response.body).to.deep.equal(
+            expectedResponse,
+          );
+        }
+      },
+    );
+  },
+);

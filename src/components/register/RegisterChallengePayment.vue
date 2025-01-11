@@ -183,6 +183,9 @@ export default defineComponent({
     const hasOrganizationAdmin = computed<boolean | null>(() => {
       return registerChallengeStore.getHasOrganizationAdmin;
     });
+    const isUserOrganizationAdmin = computed<boolean | null>(() => {
+      return registerChallengeStore.getIsUserOrganizationAdmin;
+    });
     //  Model for 'Entry fee payment' radio button element
     const selectedPaymentSubject = computed<PaymentSubject>({
       get: (): PaymentSubject => registerChallengeStore.getPaymentSubject,
@@ -199,7 +202,9 @@ export default defineComponent({
         registerChallengeStore.setOrganizationId(value),
     });
     onMounted(() => {
+      // following two checks can run in parallel
       registerChallengeStore.checkOrganizationHasCoordinator();
+      registerChallengeStore.checkIsUserOrganizationAdmin();
     });
     const isRegistrationCoordinator = computed<boolean>({
       get: (): boolean =>
@@ -564,12 +569,17 @@ export default defineComponent({
         PaymentSubject.school,
       ].includes(selectedPaymentSubject.value);
       if (hasOrganizationAdmin.value === null) return false;
-      const isOrganizationAdmin = hasOrganizationAdmin.value === true;
-      const show = isCorrectPaymentSubject && !isOrganizationAdmin;
+      if (isUserOrganizationAdmin.value === null) return false;
+      const hasOrganizationCoordinator = hasOrganizationAdmin.value === true;
+      const isUserCoordinator = isUserOrganizationAdmin.value === true;
+      const show =
+        isCorrectPaymentSubject &&
+        !hasOrganizationCoordinator &&
+        !isUserCoordinator;
       logger?.debug(
         `Show organization admin element <${show}>,` +
           ` for payment subject <${selectedPaymentSubject.value}>,` +
-          ` and organization has admin <${isOrganizationAdmin}>.`,
+          ` and organization has admin <${hasOrganizationCoordinator}>.`,
       );
       return show;
     };

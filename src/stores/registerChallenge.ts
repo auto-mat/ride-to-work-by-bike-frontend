@@ -22,6 +22,7 @@ import { useApiPostRegisterChallenge } from '../composables/useApiPostRegisterCh
 import { useApiGetIpAddress } from '../composables/useApiGetIpAddress';
 import { useApiPostPayuCreateOrder } from '../composables/useApiPostPayuCreateOrder';
 import { useApiGetHasOrganizationAdmin } from '../composables/useApiGetHasOrganizationAdmin';
+import { useApiIsUserOrganizationAdmin } from '../composables/useApiIsUserOrganizationAdmin';
 
 // enums
 import { Gender } from '../components/types/Profile';
@@ -118,6 +119,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     checkPaymentStatusRepetitionCount: 0,
     isSelectedRegisterCoordinator: false,
     hasOrganizationAdmin: null as boolean | null,
+    isUserOrganizationAdmin: null as boolean | null,
+    isLoadingUserOrganizationAdmin: false,
   }),
 
   getters: {
@@ -258,6 +261,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.getIsMerchIdComplete
       );
     },
+    getIsUserOrganizationAdmin: (state): boolean | null =>
+      state.isUserOrganizationAdmin,
+    getIsLoadingUserOrganizationAdmin: (state): boolean =>
+      state.isLoadingUserOrganizationAdmin,
   },
 
   actions: {
@@ -326,6 +333,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setHasOrganizationAdmin(hasOrganizationAdmin: boolean | null) {
       this.hasOrganizationAdmin = hasOrganizationAdmin;
+    },
+    setIsUserOrganizationAdmin(isUserOrganizationAdmin: boolean | null) {
+      this.isUserOrganizationAdmin = isUserOrganizationAdmin;
     },
     /**
      * Load registration data from API and set store state
@@ -768,6 +778,23 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Organization has coordinator store updated to <${this.hasOrganizationAdmin}>.`,
       );
+    },
+    /**
+     * Check if current user is an organization administrator
+     * @returns {Promise<void>}
+     */
+    async checkIsUserOrganizationAdmin(): Promise<void> {
+      this.isLoadingUserOrganizationAdmin = true;
+      this.$log?.debug('Checking if user is organization admin...');
+      const isAdmin = await useApiIsUserOrganizationAdmin(this.$log);
+      this.$log?.debug(
+        `Is user organization admin API response data <${isAdmin}>.`,
+      );
+      this.setIsUserOrganizationAdmin(isAdmin);
+      this.$log?.debug(
+        `User is organization admin store updated to <${this.isUserOrganizationAdmin}>.`,
+      );
+      this.isLoadingUserOrganizationAdmin = false;
     },
   },
 

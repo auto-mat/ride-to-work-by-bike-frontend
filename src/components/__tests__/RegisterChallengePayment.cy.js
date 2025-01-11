@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
-import { computed } from 'vue';
+import { computed, nextTick } from 'vue';
 import RegisterChallengePayment from 'components/register/RegisterChallengePayment.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -139,6 +139,7 @@ describe('<RegisterChallengePayment>', () => {
             );
           },
         );
+        cy.interceptIsUserOrganizationAdminGetApi(rideToWorkByBikeConfig, i18n);
       });
       cy.mount(RegisterChallengePayment, {
         props: {},
@@ -190,6 +191,7 @@ describe('<RegisterChallengePayment>', () => {
             );
           },
         );
+        cy.interceptIsUserOrganizationAdminGetApi(rideToWorkByBikeConfig, i18n);
       });
       cy.mount(RegisterChallengePayment, {
         props: {},
@@ -605,7 +607,6 @@ function coreTests() {
      * Scenario: Selected company has no company coordinator
      * Displays checkbox with coordinator option
      * If option is checked, displays partial form for registration
-     * TODO: Add condition - NO COORDINATOR IN SELECTED COMPANY
      */
     cy.dataCy(selectorCompany).should('not.exist');
     cy.dataCy(getRadioOption(PaymentSubject.company))
@@ -780,12 +781,21 @@ function coreTests() {
       testNumberValue,
     );
   });
-  it('shows checkbox become coordinator if organization has no coordinator', () => {
+
+  it.only('shows checkbox become coordinator if organization has no coordinator and user no coordinator', () => {
+    cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+      (response) => {
+        cy.waitForIsUserOrganizationAdminApi(response);
+      },
+    );
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
       .click();
     // open organization select
-    cy.dataCy(selectorCompany).should('be.visible').click();
+    cy.dataCy(selectorCompany)
+      .should('be.visible')
+      .find('.q-field__append')
+      .click();
     // from menu select first organization
     cy.get('.q-menu').within(() => {
       cy.get('.q-item').first().click();
@@ -793,7 +803,10 @@ function coreTests() {
     // checkbox become coordinator should not be visible
     cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
     // open organization select
-    cy.dataCy(selectorCompany).should('be.visible').click();
+    cy.dataCy(selectorCompany)
+      .should('be.visible')
+      .find('.q-field__append')
+      .click();
     // select second organization
     cy.get('.q-menu').within(() => {
       cy.get('.q-item').eq(1).click();
@@ -808,6 +821,28 @@ function coreTests() {
         'contain',
         i18n.global.t('companyCoordinator.labelRegisterCoordinator'),
       );
+    // get store
+    cy.wrap(useRegisterChallengeStore()).then((store) => {
+      // access store via computed property to correctly track changes
+      const computedPaymentSubject = computed(
+        () => store.getIsUserOrganizationAdmin,
+      );
+      // set isUserOrganizationAdmin to true
+      cy.wrap(store.setIsUserOrganizationAdmin(true));
+      // start in default state (individual)
+      cy.wrap(computedPaymentSubject).its('value').should('be.true');
+      // checkbox coordinator should not be visible
+      cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
+      // without next tick, the UI updates too fast to be checked
+      nextTick(() => {
+        // set isUserOrganizationAdmin back to false
+        cy.wrap(store.setIsUserOrganizationAdmin(false));
+        // start in default state (individual)
+        cy.wrap(computedPaymentSubject).its('value').should('be.false');
+        // checkbox coordinator should be visible
+        cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
+      });
+    });
     // enable checkbox
     cy.dataCy(selectorCoordinatorCheckbox).click();
     // test coordinator form
