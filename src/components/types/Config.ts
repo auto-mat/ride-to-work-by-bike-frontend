@@ -55,6 +55,7 @@ export interface ConfigGlobal {
   urlApiHasOrganizationAdmin: string;
   urlApiHasUserVerifiedEmail: string;
   urlApiConfirmEmail: string;
+  urlApiIsUserOrganizationAdmin: string;
   urlApiLogin: string;
   urlApiLoginGoogle: string;
   urlApiOrganizations: string;

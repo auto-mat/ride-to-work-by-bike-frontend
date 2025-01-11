@@ -82,6 +82,11 @@ apiMessageError = "Načítanie IP adresy zlyhalo."
 apiMessageErrorWithMessage = "Načítanie IP adresy zlyhalo. Chyba: {error}"
 apiMessageSuccess = "IP adresa bola úspešne načítaná."
 
+[getIsUserOrganizationAdmin]
+apiMessageError = "Načítanie statusu používateľa zlyhalo."
+apiMessageErrorWithMessage = "Načítanie statusu používateľa zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Status používateľa bol načítaný."
+
 [getMerchandise]
 apiMessageError = "Načítanie startovních balíčkov zlyhalo."
 apiMessageErrorWithMessage = "Načítanie startovních balíčkov zlyhalo. Chyba: {error}"

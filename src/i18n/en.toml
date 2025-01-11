@@ -82,6 +82,11 @@ apiMessageError = "Fetching IP address failed."
 apiMessageErrorWithMessage = "Fetching IP address failed. Error: {error}"
 apiMessageSuccess = "IP address fetched successfully."
 
+[getIsUserOrganizationAdmin]
+apiMessageError = "Failed to load user status."
+apiMessageErrorWithMessage = "Failed to load user status. Error: {error}"
+apiMessageSuccess = "User status was successfully loaded."
+
 [getMerchandise]
 apiMessageError = "Fetching merchandise failed."
 apiMessageErrorWithMessage = "Fetching merchandise failed. Error: {error}"
