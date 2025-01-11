@@ -194,9 +194,9 @@ function testPhoneNumberValidation() {
     cy.dataCy('form-phone-input').type('+41 79 123 45 67');
     cy.dataCy('form-phone-input').blur();
     cy.get('.q-field__messages').should('not.be.visible');
-    // slovenian number
+    // british number
     cy.dataCy('form-phone-input').clear();
-    cy.dataCy('form-phone-input').type('+386 40 123 456');
+    cy.dataCy('form-phone-input').type('+44 20 7123 4567');
     cy.dataCy('form-phone-input').blur();
     cy.get('.q-field__messages').should('not.be.visible');
   });
