@@ -258,9 +258,31 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
     },
     getIsPaymentComplete(): boolean {
-      return [PaymentState.noAdmission, PaymentState.done].includes(
-        this.getPaymentState,
-      );
+      const isPaymentStateSuccess = [
+        PaymentState.noAdmission,
+        PaymentState.done,
+      ].includes(this.getPaymentState);
+      const isPaymentCategoryDonation =
+        this.getPaymentCategory === PaymentCategory.donation;
+      const isPaymentSubjectVoucher =
+        this.getPaymentSubject === PaymentSubject.voucher;
+      // payment not successful
+      if (!isPaymentStateSuccess) {
+        return false;
+      }
+      // complete - successful payment of entry fee
+      else if (isPaymentStateSuccess && !isPaymentCategoryDonation) {
+        return true;
+      }
+      // complete - status = voucher (100% discount) + successful donation
+      else if (
+        isPaymentStateSuccess &&
+        isPaymentCategoryDonation &&
+        isPaymentSubjectVoucher
+      ) {
+        return true;
+      }
+      return false;
     },
     getIsOrganizationTypeComplete(): boolean {
       return this.getOrganizationType !== OrganizationType.none;
