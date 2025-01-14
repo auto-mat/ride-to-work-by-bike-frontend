@@ -10,7 +10,7 @@
         "nickname": "FB",
         "sex": "male",
         "telephone": "736123456",
-        "telephone_opt_in": false,
+        "telephone_opt_in": true,
         "language": "cs",
         "occupation": "",
         "age_group": null,
@@ -18,16 +18,16 @@
         "personal_data_opt_in": true,
         "discount_coupon": "",
         "payment_subject": "individual",
-        "payment_type": "",
-        "payment_status": "unknown",
+        "payment_type": "CARD_TOKEN",
+        "payment_status": "done",
         "payment_amount": 390,
-        "payment_category": ""
+        "payment_category": "donation"
       },
       "organization_type": "company",
-      "team_id": null,
-      "organization_id": null,
-      "subsidiary_id": null,
-      "t_shirt_size_id": null
+      "team_id": 2451,
+      "organization_id": 987,
+      "subsidiary_id": 1358,
+      "t_shirt_size_id": 133
     }
   ]
 }

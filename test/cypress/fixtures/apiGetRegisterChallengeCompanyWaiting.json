@@ -20,7 +20,8 @@
         "payment_subject": "company",
         "payment_type": "fc",
         "payment_status": "waiting",
-        "payment_amount": 390
+        "payment_amount": 390,
+        "payment_category": ""
       },
       "organization_type": "company",
       "team_id": 2451,

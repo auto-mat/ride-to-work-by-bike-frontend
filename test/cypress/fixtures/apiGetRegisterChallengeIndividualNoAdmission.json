@@ -20,7 +20,8 @@
         "payment_subject": "individual",
         "payment_type": "",
         "payment_status": "no_admission",
-        "payment_amount": 390
+        "payment_amount": 390,
+        "payment_category": ""
       },
       "organization_type": "company",
       "team_id": null,
