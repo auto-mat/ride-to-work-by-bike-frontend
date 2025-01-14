@@ -27,12 +27,6 @@ export default defineComponent({
   setup() {
     const registerChallengeStore = useRegisterChallengeStore();
 
-    const isDonationFailed = computed<boolean>((): boolean => {
-      return (
-        registerChallengeStore.getIsPaymentUnsuccessful &&
-        registerChallengeStore.getIsPaymentCategoryDonation
-      );
-    });
     const isDonationPaidViaPayu = computed<boolean>((): boolean => {
       return (
         registerChallengeStore.getIsPaymentSuccessful &&
@@ -66,7 +60,6 @@ export default defineComponent({
 
     return {
       borderRadius,
-      isDonationFailed,
       isDonationPaidViaPayu,
       isPayuPaymentFailed,
       isWaitingForPayuPaymentConfirmation,
