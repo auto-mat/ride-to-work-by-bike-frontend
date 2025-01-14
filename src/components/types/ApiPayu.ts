@@ -1,6 +1,7 @@
 import { PaymentSubject } from '../enums/Payment';
 
 export enum PaymentCategory {
+  none = '',
   donation = 'donation',
   entryFee = 'entry_fee',
   entryFeeDonation = 'entry_fee-donation',

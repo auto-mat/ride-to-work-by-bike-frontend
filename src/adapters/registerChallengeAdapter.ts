@@ -4,6 +4,7 @@ import { newsletterAdapter } from './newsletterAdapter';
 // enums
 import { Gender } from '../components/types/Profile';
 import { PaymentState, PaymentSubject } from '../components/enums/Payment';
+import { PaymentCategory } from '../components/types/ApiPayu';
 import { OrganizationType } from '../components/types/Organization';
 
 // types
@@ -42,6 +43,8 @@ export const registerChallengeAdapter = {
         .payment_subject as PaymentSubject,
       paymentState: apiData.personal_details.payment_status as PaymentState,
       paymentAmount: apiData.personal_details.payment_amount,
+      paymentCategory: apiData.personal_details
+        .payment_category as PaymentCategory,
       organizationType: apiData.organization_type as OrganizationType,
       subsidiaryId: apiData.subsidiary_id,
       teamId: apiData.team_id,

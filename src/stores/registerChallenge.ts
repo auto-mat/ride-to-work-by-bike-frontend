@@ -122,7 +122,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     hasOrganizationAdmin: null as boolean | null,
     isUserOrganizationAdmin: null as boolean | null,
     isLoadingUserOrganizationAdmin: false,
-    paymentCategory: PaymentCategory.entryFee,
+    paymentCategory: PaymentCategory.none,
   }),
 
   getters: {
@@ -145,6 +145,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
+    getPaymentCategory: (state): PaymentCategory => state.paymentCategory,
     getIsSelectedRegisterCoordinator: (state): boolean =>
       state.isSelectedRegisterCoordinator,
     getFormRegisterCoordinator: (state): RegisterChallengeCoordinatorForm =>
@@ -313,6 +314,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setMerchId(merchId: number | null) {
       this.merchId = merchId;
     },
+    setPaymentCategory(paymentCategory: PaymentCategory) {
+      this.paymentCategory = paymentCategory;
+    },
     setPaymentState(paymentState: PaymentState) {
       this.paymentState = paymentState;
     },
@@ -416,6 +420,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.setPaymentState(parsedResponse.paymentState);
       this.$log?.debug(
         `Payment state store updated to <${this.getPaymentState}>.`,
+      );
+      this.setPaymentCategory(parsedResponse.paymentCategory);
+      this.$log?.debug(
+        `Payment category store updated to <${this.getPaymentCategory}>.`,
       );
       /**
        * In case the payment subject has been selected but the organizationType
