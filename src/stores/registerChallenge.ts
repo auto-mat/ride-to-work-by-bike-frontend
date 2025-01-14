@@ -36,6 +36,7 @@ import {
 } from '../components/types/Organization';
 import { PaymentSubject } from '../components/enums/Payment';
 import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
+import { PaymentCategory } from '../components/types/ApiPayu';
 
 // stores
 import { useRegisterStore } from './register';
@@ -121,6 +122,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     hasOrganizationAdmin: null as boolean | null,
     isUserOrganizationAdmin: null as boolean | null,
     isLoadingUserOrganizationAdmin: false,
+    paymentCategory: PaymentCategory.entryFee,
   }),
 
   getters: {
@@ -220,6 +222,31 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getIpAddress: (state): string => state.ipAddressData?.ip || '',
     getIsPayuTransactionInitiated: (state): boolean =>
       state.isPayuTransactionInitiated,
+    getIsDonationPayment: (state): boolean => {
+      return (
+        state.paymentCategory === PaymentCategory.donation ||
+        state.paymentCategory === PaymentCategory.entryFeeDonation
+      );
+    },
+    getIsEntryFeePayment: (state): boolean => {
+      return (
+        state.paymentCategory === PaymentCategory.entryFee ||
+        state.paymentCategory === PaymentCategory.entryFeeDonation
+      );
+    },
+    getIsPaymentSuccessful: (state): boolean => {
+      return [PaymentState.done, PaymentState.noAdmission].includes(
+        state.paymentState,
+      );
+    },
+    getIsPaymentSubjectOrganization: (state): boolean => {
+      return [PaymentSubject.company, PaymentSubject.school].includes(
+        state.paymentSubject,
+      );
+    },
+    getIsPaymentUnsuccessful: (state): boolean => {
+      return state.paymentState === PaymentState.unknown;
+    },
     getIsPersonalDetailsComplete(): boolean {
       return (
         this.getPersonalDetails.firstName !== '' &&
@@ -237,7 +264,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getIsOrganizationTypeComplete(): boolean {
       return this.getOrganizationType !== OrganizationType.none;
     },
-
     getIsOrganizationIdComplete(): boolean {
       return this.getOrganizationId !== null;
     },

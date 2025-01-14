@@ -1,6 +1,7 @@
 import type { ValidatedCoupon } from './Coupon';
 import type { RegisterChallengePersonalDetailsForm } from './RegisterChallenge';
 import type { PaymentSubject } from '../enums/Payment';
+import type { PaymentCategory } from './ApiPayu';
 
 // subset of personal details that can be sent in POST requests
 export type CorePersonalDetails = {
@@ -24,6 +25,7 @@ export type CorePersonalDetails = {
 export type PersonalDetails = CorePersonalDetails & {
   payment_type: string;
   payment_status: string;
+  payment_category: PaymentCategory;
 };
 
 export type RegisterChallengeResult = {

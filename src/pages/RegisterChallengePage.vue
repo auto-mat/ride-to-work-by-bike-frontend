@@ -244,21 +244,12 @@ export default defineComponent({
       );
     });
 
-    /**
-     * Show payment form if payment state is not `done` or `unknown`.
-     * Also hide it if payment state is `unknown` as this is a non-valid state
-     * and needs to be fixed by admin.
-     */
     const isShownPaymentForm = computed<boolean>((): boolean => {
-      return ![PaymentState.noAdmission, PaymentState.done].includes(
-        registerChallengeStore.getPaymentState,
-      );
+      return !registerChallengeStore.getIsPaymentSuccessful;
     });
 
     const isShownRegistrationPaidMessage = computed<boolean>((): boolean => {
-      return [PaymentState.noAdmission, PaymentState.done].includes(
-        registerChallengeStore.getPaymentState,
-      );
+      return registerChallengeStore.getIsPaymentSuccessful;
     });
 
     const isWaitingForPayamentConfirmation = computed<boolean>((): boolean => {
@@ -269,30 +260,28 @@ export default defineComponent({
     });
 
     /**
-     * Message shown for "no_admission" state caused by payment being rejected
+     * Message shown for unsuccessful state caused by payment being rejected
      * by organization coordinator.
      */
     const isShownRegistrationNoAdmissionMessageOrganization = computed<boolean>(
       (): boolean => {
         return (
-          [PaymentSubject.company, PaymentSubject.school].includes(
-            registerChallengeStore.getPaymentSubject,
-          ) && registerChallengeStore.getPaymentState === PaymentState.unknown
+          registerChallengeStore.getIsPaymentSubjectOrganization &&
+          registerChallengeStore.getIsPaymentUnsuccessful
         );
       },
     );
 
     /**
-     * Message shown for "no_admission" state caused by payment being rejected
+     * Message shown for unsuccessful state caused by payment being rejected
      * by PayU. In this case, payment_subject is empty (not stored), so we use
      * an inverse condition to check for payment_subject.
      */
     const isShownRegistrationNoAdmissionMessagePayU = computed<boolean>(
       (): boolean => {
         return (
-          ![PaymentSubject.company, PaymentSubject.school].includes(
-            registerChallengeStore.getPaymentSubject,
-          ) && registerChallengeStore.getPaymentState === PaymentState.unknown
+          !registerChallengeStore.getIsPaymentSubjectOrganization &&
+          registerChallengeStore.getIsPaymentUnsuccessful
         );
       },
     );
@@ -303,11 +292,11 @@ export default defineComponent({
 
     /**
      * Show create order button if:
-     * - payment state is not `done` and paymentAmount > 0
+     * - payment state is not not yet successful and paymentAmount > 0
      */
     const isShownCreateOrderButton = computed<boolean>((): boolean => {
       return (
-        registerChallengeStore.getPaymentState !== PaymentState.done &&
+        !registerChallengeStore.getIsPaymentSuccessful &&
         !!isPaymentAmount.value
       );
     });
@@ -318,22 +307,18 @@ export default defineComponent({
 
     /**
      * Explicit conditions for enabling a pass
-     * - payment_state = `done`
+     * - payment_state is successful
      * - payment_subject = company or school
-     * - payment_subject = voucher && discount = 100
+     * - payment_subject = voucher
+     * - voucher discount = 100
      */
     const isEnabledPaymentNextStepButton = computed(() => {
       const paymentSubject = registerChallengeStore.getPaymentSubject;
       const voucher = registerChallengeStore.getVoucher;
       // conditions
-      const isPaymentDone = [
-        PaymentState.noAdmission,
-        PaymentState.done,
-      ].includes(registerChallengeStore.getPaymentState);
-      const isPaymentCompanyOrSchool = [
-        PaymentSubject.company,
-        PaymentSubject.school,
-      ].includes(paymentSubject);
+      const isPaymentDone = registerChallengeStore.getIsPaymentSuccessful;
+      const isPaymentCompanyOrSchool =
+        registerChallengeStore.getIsPaymentSubjectOrganization;
       const isVoucherFreeEntry =
         paymentSubject === PaymentSubject.voucher &&
         voucher?.valid &&
@@ -370,6 +355,7 @@ export default defineComponent({
           );
         }
       }
+      // create PayU order
       await registerChallengeStore.createPayuOrder();
     };
 
@@ -377,7 +363,7 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     const isRegistrationComplete = computed(
-      () => paymentState.value === PaymentState.done,
+      () => registerChallengeStore.getIsRegistrationComplete,
     );
 
     return {
