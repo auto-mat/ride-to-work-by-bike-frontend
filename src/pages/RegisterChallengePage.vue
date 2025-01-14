@@ -50,6 +50,7 @@ import { useOrganizations } from 'src/composables/useOrganizations';
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
 import { PaymentState, PaymentSubject } from 'src/components/enums/Payment';
+import { RegisterChallengeStep } from 'src/components/enums/RegisterChallenge';
 
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
@@ -353,8 +354,23 @@ export default defineComponent({
       return registerChallengeStore.isLoadingRegisterChallenge;
     });
 
-    const onSubmitPayment = () => {
-      registerChallengeStore.createPayuOrder();
+    const onSubmitPayment = async () => {
+      /**
+       * If payment subject is voucher, we need to submit the payment step
+       * before creating the PayU order. This will ensure that voucher
+       * data is stored in the registration
+       */
+      if (registerChallengeStore.getPaymentSubject === PaymentSubject.voucher) {
+        if (!stepPaymentRef.value) return;
+        // validate payment step
+        const isValidPayment: boolean = await stepPaymentRef.value.validate();
+        if (isValidPayment) {
+          await registerChallengeStore.submitStep(
+            RegisterChallengeStep.payment,
+          );
+        }
+      }
+      await registerChallengeStore.createPayuOrder();
     };
 
     const contactEmail = rideToWorkByBikeConfig.contactEmail;
@@ -552,7 +568,7 @@ export default defineComponent({
                 color="primary"
                 :disable="!isPaymentAmount"
                 :label="$t('register.challenge.buttonSubmitPayment')"
-                :loading="isLoadingPayuOrder"
+                :loading="isLoadingRegisterChallenge || isLoadingPayuOrder"
                 @click="onSubmitPayment"
                 class="q-ml-sm"
                 data-cy="step-2-submit-payment"
