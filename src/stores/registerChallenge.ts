@@ -398,6 +398,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         )}>.`,
       );
       const parsedResponse = registerChallengeAdapter.toStoreData(registration);
+      // identify exception case - donation payment made by organization
+      const isPaymentOrganizationDonation =
+        parsedResponse.paymentSubject === PaymentSubject.individual &&
+        parsedResponse.paymentCategory === PaymentCategory.donation;
       // update store state
       this.setPersonalDetails(parsedResponse.personalDetails);
       this.$log?.debug(
@@ -405,18 +409,29 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       /**
        * The paymentAmount value is sent for subject = 'company' or 'school'.
-       * It indicates what was the price for which the user registered.
-       * We store the amount because the price may change.
+       * It is sent to the API after the TEAM step is completed.
+       * If sent earlier, we cannot determine the right coordinator.
+       * paymentAmount indicates what was the price for which the user
+       * registered. We store the amount because the price changes.
        */
       /**
        * The paymentVoucher value is sent when discounted payment is made.
        * We do not need the name value (unless for information purposes)
        * as the payment must be made immediately.
        */
-      this.setPaymentSubject(parsedResponse.paymentSubject);
-      this.$log?.debug(
-        `Payment subject store updated to <${this.getPaymentSubject}>.`,
-      );
+      /**
+       * Update payment subject if not exception case
+       * Exception case is a donation payment made when organization pays the
+       * starting fee. This sends back paymentSubject for the donation
+       * payment. However, we need the paymentSubject for the entry fee
+       * payment.
+       */
+      if (!isPaymentOrganizationDonation) {
+        this.setPaymentSubject(parsedResponse.paymentSubject);
+        this.$log?.debug(
+          `Payment subject store updated to <${this.getPaymentSubject}>.`,
+        );
+      }
       this.setPaymentState(parsedResponse.paymentState);
       this.$log?.debug(
         `Payment state store updated to <${this.getPaymentState}>.`,
