@@ -16,7 +16,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 /**
  * Check if current user is an organization administrator
  * @param {Logger | null} logger
- * @returns {Promise<boolean>} True if user is an organization admin
+ * @returns {Promise<boolean>} - True if user is an organization admin
  */
 export const useApiIsUserOrganizationAdmin = async (
   logger: Logger | null,
