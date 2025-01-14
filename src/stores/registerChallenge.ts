@@ -223,13 +223,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getIpAddress: (state): string => state.ipAddressData?.ip || '',
     getIsPayuTransactionInitiated: (state): boolean =>
       state.isPayuTransactionInitiated,
-    getIsDonationPayment: (state): boolean => {
+    getIsPaymentCategoryDonation: (state): boolean => {
       return (
         state.paymentCategory === PaymentCategory.donation ||
         state.paymentCategory === PaymentCategory.entryFeeDonation
       );
     },
-    getIsEntryFeePayment: (state): boolean => {
+    getIsPaymentCategoryEntryFee: (state): boolean => {
       return (
         state.paymentCategory === PaymentCategory.entryFee ||
         state.paymentCategory === PaymentCategory.entryFeeDonation
@@ -240,13 +240,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         state.paymentState,
       );
     },
+    getIsPaymentUnsuccessful: (state): boolean => {
+      return state.paymentState === PaymentState.unknown;
+    },
     getIsPaymentSubjectOrganization: (state): boolean => {
       return [PaymentSubject.company, PaymentSubject.school].includes(
         state.paymentSubject,
       );
-    },
-    getIsPaymentUnsuccessful: (state): boolean => {
-      return state.paymentState === PaymentState.unknown;
     },
     getIsPersonalDetailsComplete(): boolean {
       return (
@@ -448,7 +448,18 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
        * payment. However, we need the paymentSubject for the entry fee
        * payment.
        */
-      if (!isPaymentOrganizationDonation) {
+      if (isPaymentOrganizationDonation) {
+        if (parsedResponse.organizationType === OrganizationType.company) {
+          this.setPaymentSubject(PaymentSubject.company);
+        } else if (
+          parsedResponse.organizationType === OrganizationType.school
+        ) {
+          this.setPaymentSubject(PaymentSubject.school);
+        }
+        this.$log?.debug(
+          `Payment subject store updated to <${this.getPaymentSubject}>.`,
+        );
+      } else {
         this.setPaymentSubject(parsedResponse.paymentSubject);
         this.$log?.debug(
           `Payment subject store updated to <${this.getPaymentSubject}>.`,
