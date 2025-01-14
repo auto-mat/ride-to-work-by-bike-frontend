@@ -787,7 +787,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      */
     async checkIsUserOrganizationAdmin(): Promise<void> {
       this.isLoadingUserOrganizationAdmin = true;
-      this.$log?.debug('Checking if user is organization admin...');
+      this.$log?.info('Checking if user is organization admin.');
       const isAdmin = await useApiIsUserOrganizationAdmin(this.$log);
       this.$log?.debug(
         `Is user organization admin API response data <${isAdmin}>.`,
