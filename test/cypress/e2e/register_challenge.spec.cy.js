@@ -1681,6 +1681,10 @@ describe('Register Challenge page', () => {
             response,
             'step-2-paid-message',
           );
+          cy.dataCy('register-challenge-payment').should('not.exist');
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
         },
       );
     });
@@ -1776,7 +1780,7 @@ describe('Register Challenge page', () => {
           // intercept "individual paid" registration data
           cy.testRegisterChallengePaymentMessage(
             response,
-            'step-2-no-admission-message-payu',
+            'registration-payu-payment-failed',
           );
         },
       );
@@ -1811,14 +1815,9 @@ describe('Register Challenge page', () => {
         // intercept "individual paid" registration data
         cy.fixture('apiGetRegisterChallengeIndividualNotPaid.json').then(
           (response) => {
-            cy.waitForRegisterChallengeGetApi(response);
-            // we get moved to step 2
-            cy.dataCy('step-2')
-              .find('.q-stepper__step-content')
-              .should('be.visible');
-            // message "waiting for payment" is displayed
-            cy.dataCy('step-2-waiting-for-payment-message').should(
-              'be.visible',
+            cy.testRegisterChallengePaymentMessage(
+              response,
+              'registration-waiting-for-payment-confirmation-message',
             );
             // within timeout window, getRegisterChallenge will be called again
             cy.get('@getRegisterChallenge.all', {
@@ -1895,6 +1894,160 @@ describe('Register Challenge page', () => {
     });
   });
 
+  context('registration in progress, voucher payment FULL', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeVoucherFull.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('loads payment page - voucher payment FULL', () => {
+      cy.fixture('apiGetRegisterChallengeVoucherFull.json').then((response) => {
+        // showing payment form (not the "locked" paid message)
+        cy.dataCy('register-challenge-payment').should('be.visible');
+        // show enabled voucher with voucher name
+        cy.dataCy('voucher-banner').should('be.visible');
+        cy.dataCy('voucher-banner-code')
+          .should('be.visible')
+          .and('contain', response.results[0].personal_details.discount_coupon);
+        // next step button should be visible and enabled
+        cy.dataCy('step-2-continue')
+          .should('be.visible')
+          .and('not.be.disabled');
+      });
+    });
+  });
+
+  context('registration in progress, voucher payment FULL + donation', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeVoucherFullWithDonation.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('loads payment page - voucher payment FULL + donation', () => {
+      cy.fixture('apiGetRegisterChallengeVoucherFullWithDonation.json').then(
+        (response) => {
+          // showing payment form (not the "locked" paid message)
+          cy.dataCy('register-challenge-payment').should('be.visible');
+          // show enabled voucher with voucher name
+          cy.dataCy('voucher-banner').should('be.visible');
+          cy.dataCy('voucher-banner-code')
+            .should('be.visible')
+            .and(
+              'contain',
+              response.results[0].personal_details.discount_coupon,
+            );
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // check that the "donation" message is visible
+          cy.dataCy('registration-donation-payment-successful').should(
+            'be.visible',
+          );
+        },
+      );
+    });
+  });
+
+  context('registration in progress, voucher payment HALF', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeVoucherHalf.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('loads payment page - voucher payment HALF', () => {
+      cy.fixture('apiGetRegisterChallengeVoucherHalf.json').then((response) => {
+        cy.testRegisterChallengePaymentMessage(response, 'step-2-paid-message');
+        cy.dataCy('register-challenge-payment').should('not.exist');
+        cy.dataCy('step-2-continue')
+          .should('be.visible')
+          .and('not.be.disabled');
+      });
+    });
+  });
+
+  context('registration in progress, voucher payment HALF + donation', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeVoucherHalfWithDonation.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('loads payment page - voucher payment HALF + donation', () => {
+      cy.fixture('apiGetRegisterChallengeVoucherHalfWithDonation.json').then(
+        (response) => {
+          cy.testRegisterChallengePaymentMessage(
+            response,
+            'step-2-paid-message',
+          );
+          cy.dataCy('register-challenge-payment').should('not.exist');
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+          // check that the "donation" message is visible
+          cy.dataCy('registration-donation-payment-successful').should(
+            'be.visible',
+          );
+        },
+      );
+    });
+  });
+
   context('registration in progress, company payment "unknown"', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
@@ -1925,7 +2078,7 @@ describe('Register Challenge page', () => {
           // intercept "company paid" registration data
           cy.testRegisterChallengePaymentMessage(
             response,
-            'step-2-no-admission-message',
+            'registration-payu-payment-failed',
           );
         },
       );
@@ -1970,6 +2123,10 @@ describe('Register Challenge page', () => {
               .parents('.q-radio__label')
               .siblings('.q-radio__inner')
               .should('have.class', 'q-radio__inner--truthy');
+            // shows waiting for confirmation message
+            cy.dataCy('registration-waiting-for-coordinator-message').should(
+              'be.visible',
+            );
             // go to next step
             cy.dataCy('step-2-continue')
               .should('be.visible')
@@ -1983,14 +2140,6 @@ describe('Register Challenge page', () => {
               win.i18n,
               registerChallengeResponse,
             );
-            cy.dataCy('step-7-registration-waiting-message')
-              .should('be.visible')
-              .and(
-                'contain',
-                win.i18n.global.t(
-                  'register.challenge.textRegistrationWaitingForConfirmation',
-                ),
-              );
             cy.dataCy('step-7-continue')
               .should('be.visible')
               .and('be.disabled');
@@ -1999,6 +2148,70 @@ describe('Register Challenge page', () => {
       });
     });
   });
+
+  context(
+    'registration in progress, company payment "waiting" + donation',
+    () => {
+      beforeEach(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          // visit challenge inactive page to load campaign data
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi();
+          cy.fixture(
+            'apiGetRegisterChallengeCompanyWaitingWithDonation.json',
+          ).then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+          // intercept common response (not currently used)
+          cy.interceptRegisterChallengePostApi(config, defLocale);
+          cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        });
+        // config is defined without hash in the URL
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+      });
+
+      it('fetches the registration status on load (set-is-paid-from-ui-true)', () => {
+        cy.fixture(
+          'apiGetRegisterChallengeCompanyWaitingWithDonation.json',
+        ).then((registerChallengeResponse) => {
+          // visit page
+          cy.visit('#' + routesConf['register_challenge']['path']);
+          // !isPayuTransactionInitiated is set via test title
+          cy.dataCy('debug-is-paid-from-ui-value').should('contain', 'true');
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.testRegisterChallengeLoadedStepOne(
+              win.i18n,
+              registerChallengeResponse,
+            );
+            // shows form
+            cy.dataCy('register-challenge-payment').should('be.visible');
+            // option company is selected
+            cy.dataCy(getRadioOption(PaymentSubject.company))
+              .parents('.q-radio__label')
+              .siblings('.q-radio__inner')
+              .should('have.class', 'q-radio__inner--truthy');
+            // shows donation message
+            cy.dataCy('registration-donation-payment-successful').should(
+              'be.visible',
+            );
+            // shows waiting for confirmation message
+            cy.dataCy('registration-waiting-for-coordinator-message').should(
+              'be.visible',
+            );
+            // go to next step
+            cy.dataCy('step-2-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+          });
+        });
+      });
+    },
+  );
 
   context(
     'registration in progress, company payment "waiting" + I dont want merch',
@@ -2059,15 +2272,6 @@ describe('Register Challenge page', () => {
               cy.dataCy('step-7')
                 .find('.q-stepper__step-content')
                 .should('be.visible');
-              // message "waiting for confirmation" is displayed
-              cy.dataCy('step-7-registration-waiting-message')
-                .should('be.visible')
-                .and(
-                  'contain',
-                  win.i18n.global.t(
-                    'register.challenge.textRegistrationWaitingForConfirmation',
-                  ),
-                );
               cy.dataCy('step-7-continue')
                 .should('be.visible')
                 .and('be.disabled');

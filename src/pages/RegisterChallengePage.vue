@@ -319,10 +319,12 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     const isRegistrationEntryFeePaidViaPayu = computed((): boolean => {
-      return (
+      const isEntryFeePaid =
         registerChallengeStore.getIsPaymentSuccessful &&
-        registerChallengeStore.getIsPaymentCategoryEntryFee
-      );
+        registerChallengeStore.getIsPaymentCategoryEntryFee;
+      const isNoAdmission =
+        registerChallengeStore.getPaymentState === PaymentState.noAdmission;
+      return isEntryFeePaid || isNoAdmission;
     });
 
     const isRegistrationComplete = computed(
@@ -698,16 +700,6 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-7"
           >
-            <q-banner
-              v-if="isShownRegistrationWaitingMessage"
-              class="bg-warning text-grey-10 q-mb-md"
-              :style="{ borderRadius }"
-              data-cy="step-7-registration-waiting-message"
-            >
-              {{
-                $t('register.challenge.textRegistrationWaitingForConfirmation')
-              }}
-            </q-banner>
             <!-- Content: Summary -->
             <register-challenge-summary />
             <!-- Buttons: Summary -->

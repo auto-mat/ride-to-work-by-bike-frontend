@@ -440,7 +440,20 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
        * The paymentVoucher value is sent when discounted payment is made.
        * We do not need the name value (unless for information purposes)
        * as the payment must be made immediately.
+       * If voucher is saved and paymentAmount is null, we set the voucher
+       * as a full discount voucher.
        */
+      const isVoucherFullDiscount =
+        parsedResponse.voucher &&
+        (!parsedResponse.paymentAmount ||
+          parsedResponse.paymentCategory === PaymentCategory.donation);
+      if (isVoucherFullDiscount) {
+        this.setVoucher({
+          valid: true,
+          discount: 100,
+          name: parsedResponse.voucher,
+        });
+      }
       /**
        * Update payment subject if not exception case
        * Exception case is a donation payment made when organization pays the

@@ -12,12 +12,15 @@
 // libraries
 import { defineComponent, computed } from 'vue';
 
-// stores
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // enums
 import { PaymentState } from '../../components/enums/Payment';
 import { PaymentCategory } from '../types/ApiPayu';
+
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 export default defineComponent({
   name: 'RegisterChallengePaymentMessages',
@@ -64,7 +67,10 @@ export default defineComponent({
       return isStateWaiting || isPaymentDonationWithSubjectOrganization;
     });
 
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
     return {
+      borderRadius,
       isDonationFailed,
       isDonationPaidViaPayu,
       isPayuPaymentFailed,
@@ -81,31 +87,28 @@ export default defineComponent({
     <!-- Message: Waiting for PayU payment confirmation -->
     <q-banner
       v-if="isWaitingForPayuPaymentConfirmation"
-      class="bg-warning text-white q-mt-md"
+      class="bg-warning text-white q-mb-md"
+      :style="{ borderRadius }"
       data-cy="registration-waiting-for-payment-confirmation-message"
     >
-      <template v-slot:avatar>
-        <q-icon name="pending" />
-      </template>
       {{ $t('register.challenge.textPayuWaitingForPayment') }}
     </q-banner>
 
     <!-- Message: Entry fee payment declined by PayU -->
     <q-banner
       v-if="isPayuPaymentFailed"
-      class="bg-negative text-white q-mt-md"
+      class="bg-negative text-white q-mb-md"
+      :style="{ borderRadius }"
       data-cy="registration-payu-payment-failed"
     >
-      <template v-slot:avatar>
-        <q-icon name="error" />
-      </template>
       {{ $t('register.challenge.textPayuPaymentFailed') }}
     </q-banner>
 
     <!-- Message: Donation payment successful -->
     <q-banner
       v-if="isDonationPaidViaPayu"
-      class="bg-positive text-white q-mt-md"
+      class="bg-positive text-white q-mb-md"
+      :style="{ borderRadius }"
       data-cy="registration-donation-payment-successful"
     >
       {{ $t('register.challenge.textDonationPaymentSuccessful') }}
@@ -114,12 +117,10 @@ export default defineComponent({
     <!-- Message: Waiting for coordinator confirmation of entry fee payment -->
     <q-banner
       v-if="isShownRegistrationWaitingMessage"
-      class="bg-warning text-white q-mt-md"
+      class="bg-warning text-white q-mb-md"
+      :style="{ borderRadius }"
       data-cy="registration-waiting-for-coordinator-message"
     >
-      <template v-slot:avatar>
-        <q-icon name="pending" />
-      </template>
       {{ $t('register.challenge.textRegistrationWaitingForConfirmation') }}
     </q-banner>
   </div>
