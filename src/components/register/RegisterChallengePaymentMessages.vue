@@ -34,15 +34,10 @@ export default defineComponent({
       );
     });
     const isDonationPaidViaPayu = computed<boolean>((): boolean => {
-      const isPaymentStateSuccess = [
-        PaymentState.noAdmission,
-        PaymentState.done,
-      ].includes(registerChallengeStore.getPaymentState);
-      const isPaymentCategoryDonation = [
-        PaymentCategory.donation,
-        PaymentCategory.entryFeeDonation,
-      ].includes(registerChallengeStore.getPaymentCategory);
-      return isPaymentStateSuccess && isPaymentCategoryDonation;
+      return (
+        registerChallengeStore.getIsPaymentSuccessful &&
+        registerChallengeStore.getIsPaymentCategoryDonation
+      );
     });
 
     const isPayuPaymentFailed = computed((): boolean => {
