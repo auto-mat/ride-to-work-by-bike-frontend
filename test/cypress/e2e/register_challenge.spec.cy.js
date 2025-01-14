@@ -1423,6 +1423,47 @@ describe('Register Challenge page', () => {
         });
     });
 
+    it('when voucher FULL + donation, submits step before creating PayU order', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep2();
+          cy.fixture(
+            'apiPostRegisterChallengePersonalDetailsRequest.json',
+          ).then((request) => {
+            cy.waitForRegisterChallengePostApi(request);
+          });
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // apply voucher FULL
+          cy.applyFullVoucher(config, i18n);
+          // enable donation checkbox
+          cy.dataCy('form-field-donation-checkbox')
+            .should('be.visible')
+            .click();
+          cy.dataCy('form-field-donation-slider').should('be.visible');
+          // next step button should not be visible
+          cy.dataCy('step-2-continue').should('not.exist');
+          // submit payment
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled')
+            .click();
+          cy.fixture('apiPostRegisterChallengeVoucherFullRequest.json').then(
+            (request) => {
+              cy.waitForRegisterChallengePostApi(request);
+            },
+          );
+          // create PayU order
+          cy.fixture(
+            'apiPostPayuCreateOrderRequestVoucherFullWithDonation.json',
+          ).then((request) => {
+            cy.waitForPayuCreateOrderPostApi(request);
+          });
+        });
+      });
+    });
+
     it('submits form state on 1st 2nd, 5th and 6th step', () => {
       passToStep2();
       // test API post request (personal details)
