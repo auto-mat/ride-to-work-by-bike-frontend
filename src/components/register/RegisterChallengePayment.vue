@@ -698,9 +698,11 @@ export default defineComponent({
         data-cy="form-field-company"
       />
       <!-- Text: Company approval -->
-      <p class="q-mt-lg text-grey-10" data-cy="payment-company-text">
-        {{ $t('register.challenge.textOrganization') }}
-      </p>
+      <p
+        class="q-mt-lg text-grey-10"
+        data-cy="payment-company-text"
+        v-html="$t('register.challenge.textOrganization')"
+      />
     </div>
     <!-- Input: Custom amount -->
     <div v-if="showCustomPaymentAmountElement()">

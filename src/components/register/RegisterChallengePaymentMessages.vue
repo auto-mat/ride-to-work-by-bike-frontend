@@ -75,7 +75,7 @@ export default defineComponent({
     <!-- Message: Waiting for PayU payment confirmation -->
     <q-banner
       v-if="isWaitingForPayuPaymentConfirmation"
-      class="bg-warning text-white q-mb-md"
+      class="bg-warning text-grey-10 q-mb-md"
       :style="{ borderRadius }"
       data-cy="registration-waiting-for-payment-confirmation-message"
     >
@@ -105,7 +105,7 @@ export default defineComponent({
     <!-- Message: Waiting for coordinator confirmation of entry fee payment -->
     <q-banner
       v-if="isShownRegistrationWaitingMessage"
-      class="bg-warning text-white q-mb-md"
+      class="bg-warning text-grey-10 q-mb-md"
       :style="{ borderRadius }"
       data-cy="registration-waiting-for-coordinator-message"
     >

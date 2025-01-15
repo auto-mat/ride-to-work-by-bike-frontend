@@ -89,8 +89,6 @@ describe('<RegisterChallengePayment>', () => {
         'textOrganization',
         'textPaymentMinimum',
         'textPaymentOrganizer',
-        'textRegistrationNoAdmission',
-        'textRegistrationNoAdmissionPayU',
       ],
       'register.challenge',
       i18n,
@@ -596,7 +594,13 @@ function coreTests() {
       .and('have.css', 'font-size', '14px')
       .and('have.css', 'font-weight', '400')
       .and('have.color', grey10)
-      .and('contain', i18n.global.t('register.challenge.textOrganization'));
+      .then(($element) => {
+        cy.stripHtmlTags(
+          i18n.global.t('register.challenge.textOrganization'),
+        ).then((text) => {
+          expect($element.text()).to.equal(text);
+        });
+      });
 
     // if company is paying the fee, user still has option to add donation
     testDonation();
