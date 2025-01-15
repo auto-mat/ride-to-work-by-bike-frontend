@@ -263,10 +263,9 @@ export default defineComponent({
 
     /**
      * Explicit conditions for enabling a pass
-     * - payment_state is successful
-     * - payment_subject = company or school
-     * - payment_subject = voucher
-     * - voucher discount = 100
+     * - paymentState is successful
+     * - paymentSubject = company or school
+     * - paymentSubject = voucher and voucher discount = 100
      */
     const isEnabledPaymentNextStepButton = computed(() => {
       const paymentSubject = registerChallengeStore.getPaymentSubject;
