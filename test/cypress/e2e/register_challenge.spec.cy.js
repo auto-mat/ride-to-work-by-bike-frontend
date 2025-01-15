@@ -1484,7 +1484,99 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it('submits form state on 1st 2nd, 5th and 6th step', () => {
+    it('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
+      cy.window().should('have.property', 'i18n');
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          passToStep2();
+          // test API post request (personal details)
+          cy.fixture(
+            'apiPostRegisterChallengePersonalDetailsRequest.json',
+          ).then((request) => {
+            cy.waitForRegisterChallengePostApi(request);
+          });
+          // on step 2
+          cy.dataCy('step-2')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          // apply voucher FULL
+          cy.applyFullVoucher(config, i18n);
+          // go to next step
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          // test API post request (payment)
+          cy.fixture('apiPostRegisterChallengeVoucherFullRequest.json').then(
+            (request) => {
+              cy.waitForRegisterChallengePostApi(request);
+            },
+          );
+          // select participation - continue
+          cy.dataCy('form-field-option').should('be.visible').first().click();
+          cy.dataCy('step-3-continue').should('be.visible').click();
+          // select company
+          cy.dataCy('form-select-table-company')
+            .should('be.visible')
+            .find('.q-radio')
+            .first()
+            .click();
+          // select address
+          cy.dataCy('form-company-address').should('be.visible').click();
+          // select option
+          cy.get('.q-menu')
+            .should('be.visible')
+            .within(() => {
+              cy.get('.q-item').first().click();
+            });
+          // go to next step
+          cy.dataCy('step-4-continue').should('be.visible').click();
+          // select first available team (this is the second team, first is full)
+          cy.dataCy('form-select-table-team')
+            .should('be.visible')
+            .find('.q-radio:not(.disabled)')
+            .first()
+            .click();
+          // go to next step
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          // test API post request
+          cy.fixture('apiPostRegisterChallengeTeamRequest.json').then(
+            (request) => {
+              cy.waitForRegisterChallengePostApi(request);
+            },
+          );
+          // select first merch option
+          cy.dataCy('form-card-merch-female')
+            .first()
+            .find('[data-cy="form-card-merch-link"]')
+            .click();
+          // close dialog
+          cy.dataCy('dialog-close').click();
+          // verify dialog is closed
+          cy.dataCy('dialog-merch').should('not.exist');
+          // fill in phone number
+          cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
+            (request) => {
+              cy.dataCy('form-merch-phone-input')
+                .find('input')
+                .type(request.telephone);
+            },
+          );
+          // enable telephone opt-in
+          cy.dataCy('form-merch-phone-opt-in-input').click();
+          // go to next step
+          cy.dataCy('step-6-continue').should('be.visible').click();
+          // test API post request (merchandise)
+          cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
+            (request) => {
+              cy.waitForRegisterChallengePostApi(request);
+            },
+          );
+        });
+      });
+    });
+
+    it('submits form state on 1st, 5th and 6th step (company payment)', () => {
       passToStep2();
       // test API post request (personal details)
       cy.fixture('apiPostRegisterChallengePersonalDetailsRequest.json').then(
@@ -1505,12 +1597,6 @@ describe('Register Challenge page', () => {
       });
       // go to next step
       cy.dataCy('step-2-continue').should('be.visible').click();
-      // test API post request (payment)
-      cy.fixture('apiPostRegisterChallengePaymentRequest.json').then(
-        (request) => {
-          cy.waitForRegisterChallengePostApi(request);
-        },
-      );
       // participation is preselected - continue
       cy.dataCy('step-3-continue').should('be.visible').click();
       // organization is preselected - select address
@@ -1532,9 +1618,11 @@ describe('Register Challenge page', () => {
       // go to next step
       cy.dataCy('step-5-continue').should('be.visible').click();
       // test API post request
-      cy.fixture('apiPostRegisterChallengeTeamRequest.json').then((request) => {
-        cy.waitForRegisterChallengePostApi(request);
-      });
+      cy.fixture('apiPostRegisterChallengeTeamCompanyPaymentRequest.json').then(
+        (request) => {
+          cy.waitForRegisterChallengePostApi(request);
+        },
+      );
       // select first merch option
       cy.dataCy('form-card-merch-female')
         .first()
