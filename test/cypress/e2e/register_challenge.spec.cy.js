@@ -133,6 +133,12 @@ describe('Register Challenge page', () => {
                 win.i18n,
                 formOrganizationOptions[0].id,
               );
+              // intercept query for subsidiaries of second organization
+              cy.interceptSubsidiariesGetApi(
+                config,
+                win.i18n,
+                formOrganizationOptions[1].id,
+              );
               cy.interceptSubsidiaryPostApi(
                 config,
                 win.i18n,
@@ -1310,117 +1316,131 @@ describe('Register Challenge page', () => {
 
     it('reset organization, subsidiary and team on parent data change', () => {
       passToStep5();
-      // select a team
-      cy.dataCy('form-select-table-team')
-        .should('be.visible')
-        .find('.q-radio:not(.disabled)')
-        .first()
-        .click();
-      // organization, subsidiary and team are set (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-organization-id-value').should('not.be.empty');
-          cy.dataCy('debug-subsidiary-id-value').should('not.be.empty');
-          cy.dataCy('debug-team-id-value').should('not.be.empty');
-        });
-      // go back
-      cy.dataCy('step-5-back').should('be.visible').click();
-      // organization and address inputs are visible
-      cy.dataCy('form-select-table-company').should('be.visible');
-      // select a different address
-      cy.dataCy('form-company-address')
-        .should('be.visible')
-        .find('.q-field__append')
-        .last()
-        .click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').eq(1).click();
-        });
-      cy.dataCy('step-4-continue').should('be.visible').click();
-      // team is reset (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-team-id-value').should('be.empty');
-        });
-      // select a team
-      cy.dataCy('form-select-table-team')
-        .should('be.visible')
-        .find('.q-radio:not(.disabled)')
-        .first()
-        .click();
-      // team is set (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-team-id-value').should('not.be.empty');
-        });
-      // go back
-      cy.dataCy('step-5-back').should('be.visible').click();
-      // select a different organization
-      cy.dataCy('form-select-table-company')
-        .should('be.visible')
-        .find('.q-radio:not(.disabled)')
-        .eq(1)
-        .click();
-      // subsidiary and team are reset (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-subsidiary-id-value').should('be.empty');
-          cy.dataCy('debug-team-id-value').should('be.empty');
-        });
-      // select the first organization
-      cy.dataCy('form-select-table-company')
-        .should('be.visible')
-        .find('.q-radio:not(.disabled)')
-        .first()
-        .click();
-      // set subsidiary
-      cy.dataCy('form-company-address')
-        .should('be.visible')
-        .find('.q-field__append')
-        .last()
-        .click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
-      // go to step 5
-      cy.dataCy('step-4-continue').should('be.visible').click();
-      // select a team
-      cy.dataCy('form-select-table-team')
-        .should('be.visible')
-        .find('.q-radio:not(.disabled)')
-        .first()
-        .click();
-      // organization, subsidiary and team are set (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-organization-id-value').should('not.be.empty');
-          cy.dataCy('debug-subsidiary-id-value').should('not.be.empty');
-          cy.dataCy('debug-team-id-value').should('not.be.empty');
-        });
-      // go back
-      cy.dataCy('step-5-back').should('be.visible').click();
-      cy.dataCy('step-4-back').should('be.visible').click();
-      // select a different organization type
-      cy.dataCy('form-field-option').eq(1).click();
-      // organization, subsidiary and team are reset (check debug component)
-      cy.dataCy('debug-register-challenge-ids')
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('debug-organization-id-value').should('be.empty');
-          cy.dataCy('debug-subsidiary-id-value').should('be.empty');
-          cy.dataCy('debug-team-id-value').should('be.empty');
-        });
+      cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
+        cy.fixture('apiGetSubsidiariesResponseNext').then(
+          (subsidiariesResponseNext) => {
+            cy.waitForSubsidiariesApi(
+              subsidiariesResponse,
+              subsidiariesResponseNext,
+            );
+            cy.waitForTeamsGetApi();
+            // select first available team
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio:not(.disabled)')
+              .first()
+              .click();
+            // organization, subsidiary and team are set (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should('not.be.empty');
+                cy.dataCy('debug-subsidiary-id-value').should('not.be.empty');
+                cy.dataCy('debug-team-id-value').should('not.be.empty');
+              });
+            // go back
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // organization and address inputs are visible
+            cy.dataCy('form-select-table-company').should('be.visible');
+            // open subsidiary select
+            cy.dataCy('form-company-address')
+              .should('be.visible')
+              .find('.q-field__append')
+              .last()
+              .click();
+            // select different subsidiary (second one)
+            cy.get('.q-menu')
+              .should('be.visible')
+              .within(() => {
+                cy.get('.q-item').eq(1).click();
+              });
+            cy.dataCy('step-4-continue').should('be.visible').click();
+            // wait for teams API refresh
+            cy.waitForTeamsGetApi();
+            // team is reset (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            // select first available team
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio:not(.disabled)')
+              .first()
+              .click();
+            // team is set (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-team-id-value').should('not.be.empty');
+              });
+            // go back
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // select a different organization (second one)
+            cy.dataCy('form-select-table-company')
+              .should('be.visible')
+              .find('.q-radio:not(.disabled)')
+              .eq(1)
+              .click();
+            // wait for subsidiaries API refresh
+            cy.waitForSubsidiariesApi(
+              subsidiariesResponse,
+              subsidiariesResponseNext,
+            );
+            // subsidiary and team are reset (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-subsidiary-id-value').should('be.empty');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            // open subsidiary select
+            cy.dataCy('form-company-address')
+              .should('be.visible')
+              .find('.q-field__append')
+              .last()
+              .click();
+            // select first available subsidiary
+            cy.get('.q-menu')
+              .should('be.visible')
+              .within(() => {
+                cy.get('.q-item').first().click();
+              });
+            // go to step 5
+            cy.dataCy('step-4-continue').should('be.visible').click();
+            // wait for teams API refresh
+            cy.waitForTeamsGetApi();
+            // select first available team
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio:not(.disabled)')
+              .first()
+              .click();
+            // organization, subsidiary and team are set (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should('not.be.empty');
+                cy.dataCy('debug-subsidiary-id-value').should('not.be.empty');
+                cy.dataCy('debug-team-id-value').should('not.be.empty');
+              });
+            // go back
+            cy.dataCy('step-5-back').should('be.visible').click();
+            cy.dataCy('step-4-back').should('be.visible').click();
+            // select a different organization type
+            cy.dataCy('form-field-option').eq(1).click();
+            // organization, subsidiary and team are reset (check debug component)
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should('be.empty');
+                cy.dataCy('debug-subsidiary-id-value').should('be.empty');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+          },
+        );
+      });
     });
 
     it('when voucher FULL + donation, submits step before creating PayU order', () => {

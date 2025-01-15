@@ -83,7 +83,7 @@
     "description": "Leading software solutions provider"
   },
   {
-    "id": 12346,
+    "id": 774,
     "title": "GreenLeaf Eco",
     "identificationNumber": "87654321",
     "identificationNumberVat": "CZ87654321",
@@ -94,7 +94,7 @@
     },
     "subsidiaries": [
       {
-        "id": 23456,
+        "id": 1358,
         "title": "Recycling",
         "address": {
           "street": "Sustainability Road",
@@ -126,7 +126,7 @@
         ]
       },
       {
-        "id": 23457,
+        "id": 805,
         "title": "Renewable Energy",
         "address": {
           "street": "Knowledge Lane",
