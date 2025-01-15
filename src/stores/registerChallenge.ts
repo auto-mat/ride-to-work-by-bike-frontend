@@ -529,9 +529,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       step: RegisterChallengeStep,
     ): Promise<RegisterChallengePostResponse | null> {
       // payload map defines what data is sent to the API for each step
-      const isPaymentOrganization =
-        this.getPaymentSubject === PaymentSubject.company ||
-        this.getPaymentSubject === PaymentSubject.school;
+      const isPaymentOrganization = this.getIsPaymentSubjectOrganization;
       /**
        * Defines what data is sent to the API for each step
        * Data with `null` value is discarded by the
