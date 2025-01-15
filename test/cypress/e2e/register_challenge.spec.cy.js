@@ -697,7 +697,7 @@ describe('Register Challenge page', () => {
       // not on step 5
       cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
       // select address
-      cy.dataCy('form-company-address-input').click();
+      cy.dataCy('form-company-address').find('.q-field__append').last().click();
       // select subsidiary from dropdown
       cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
         cy.fixture('apiGetSubsidiariesResponseNext').then(
@@ -770,8 +770,8 @@ describe('Register Challenge page', () => {
           // verify dialog was closed
           cy.dataCy('dialog-add-address').should('not.exist');
           // verify the new address is selected in the dropdown
-          cy.dataCy('form-company-address-input')
-            .find('input')
+          cy.dataCy('form-company-address')
+            .find('.q-field__input')
             .invoke('val')
             .should('contain', subsidiaryRequest.address.street);
           // verify we can proceed to step 5
@@ -1514,7 +1514,7 @@ describe('Register Challenge page', () => {
       // participation is preselected - continue
       cy.dataCy('step-3-continue').should('be.visible').click();
       // organization is preselected - select address
-      cy.dataCy('form-company-address').should('be.visible').click();
+      cy.dataCy('form-company-address').find('.q-field__append').last().click();
       // select option
       cy.get('.q-menu')
         .should('be.visible')
@@ -2425,8 +2425,20 @@ function passToStep5() {
     .find('.q-radio')
     .first()
     .click();
+  cy.fixture('apiGetSubsidiariesResponse.json').then(
+    (apiGetSubsidiariesResponse) => {
+      cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+        (apiGetSubsidiariesResponseNext) => {
+          cy.waitForSubsidiariesApi(
+            apiGetSubsidiariesResponse,
+            apiGetSubsidiariesResponseNext,
+          );
+        },
+      );
+    },
+  );
   // select address
-  cy.dataCy('form-company-address-input').click();
+  cy.dataCy('form-company-address').find('.q-field__append').last().click();
   // select option
   cy.get('.q-menu')
     .should('be.visible')

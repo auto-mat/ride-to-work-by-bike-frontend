@@ -68,8 +68,24 @@ export default defineComponent({
 
     const subsidiaryId = computed<number | null>({
       get: (): number | null => registerChallengeStore.getSubsidiaryId,
-      set: (value: number | null) =>
-        registerChallengeStore.setSubsidiaryId(value),
+      set: (value: number | null) => {
+        /**
+         * Reset teamId if new value is different from current value
+         * to avoid reset on component mount.
+         */
+        logger?.debug(
+          `Subsidiary ID change to <${value}>, current value is <${registerChallengeStore.getSubsidiaryId}>.`,
+        );
+        if (value !== registerChallengeStore.getSubsidiaryId) {
+          registerChallengeStore.setTeamId(null);
+          logger?.debug(
+            'Subsidiary ID change, reset' +
+              ` team ID <${registerChallengeStore.getTeamId}>.`,
+          );
+        }
+        // set new subsidiaryId value
+        registerChallengeStore.setSubsidiaryId(value);
+      },
     });
 
     const isLoading = computed(
@@ -109,14 +125,6 @@ export default defineComponent({
       );
     };
 
-    const onSubsidiaryIdChange = (): void => {
-      registerChallengeStore.setTeamId(null);
-      logger?.debug(
-        'Subsidiary ID change, reset' +
-          ` team ID <${registerChallengeStore.getTeamId}>.`,
-      );
-    };
-
     const onCloseAddSubsidiaryDialog = () => {
       if (formFieldSelectTableRef.value) {
         // Run organization validation proccess before open add subsidiary dialog
@@ -152,7 +160,6 @@ export default defineComponent({
       onCloseAddSubsidiaryDialog,
       onCreateOption,
       onOrganizationIdChange,
-      onSubsidiaryIdChange,
     };
   },
 });
@@ -175,7 +182,6 @@ export default defineComponent({
     <form-field-company-address
       v-model="subsidiaryId"
       data-cy="form-company-address"
-      @update:model-value="onSubsidiaryIdChange"
       @close:addSubsidiaryDialog="onCloseAddSubsidiaryDialog"
     />
   </div>

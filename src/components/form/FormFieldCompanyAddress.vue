@@ -39,6 +39,7 @@ import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
 import { useValidation } from 'src/composables/useValidation';
 import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 import { useOrganizations } from '../../composables/useOrganizations';
+import { useSelectSearch } from '../../composables/useSelectSearch';
 
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
@@ -48,6 +49,7 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { FormCompanyAddressFields } from 'src/components/types/Form';
+import type { FormSelectOption } from 'src/components/types/Form';
 import type { Logger } from 'src/components/types/Logger';
 import type { OrganizationSubsidiary } from 'src/components/types/Organization';
 
@@ -81,10 +83,14 @@ export default defineComponent({
     const formRef = ref<typeof QForm | null>(null);
     const logger = inject('vuejs3-logger') as Logger | null;
 
-    const subsidiaryId = computed<number | null>({
-      get: () => props.modelValue,
-      set: (value: number | null) => emit('update:modelValue', value),
-    });
+    const selectedSubsidiary = ref<FormSelectOption | null>(null);
+    const setSelectedSubsidiary = (): void => {
+      if (options.value?.length) {
+        selectedSubsidiary.value =
+          options.value.find((option) => option.value === props.modelValue) ||
+          null;
+      }
+    };
 
     const addressNew = ref<FormCompanyAddressFields>(
       deepObjectWithSimplePropsCopy(
@@ -110,6 +116,7 @@ export default defineComponent({
       if (store.getOrganizationId) {
         logger?.info('Loading subsidiaries.');
         await store.loadSubsidiariesToStore(logger);
+        setSelectedSubsidiary();
       } else {
         logger?.debug(
           `Organization was not selected <${store.getOrganizationId}>,` +
@@ -117,15 +124,31 @@ export default defineComponent({
         );
       }
     });
+    watch(selectedSubsidiary, (newValue, oldValue) => {
+      logger?.debug(
+        `Selected subsidiary changed from <${JSON.stringify(oldValue, null, 2)}>` +
+          ` to <${JSON.stringify(newValue, null, 2)}>.`,
+      );
+      if (newValue) {
+        emit('update:modelValue', parseInt(newValue.value as string));
+      } else {
+        emit('update:modelValue', null);
+      }
+    });
 
-    const options = computed(() =>
-      store.getSubsidiaries?.map((subsidiary) => ({
-        label: subsidiaryAdapter.fromFormCompanyAddressFieldsToString(
-          subsidiary.address,
-        ),
-        value: subsidiary.id,
-      })),
+    const options = computed<FormSelectOption[]>((): FormSelectOption[] =>
+      store.getSubsidiaries?.map(
+        (subsidiary) =>
+          ({
+            label: subsidiaryAdapter.fromFormCompanyAddressFieldsToString(
+              subsidiary.address,
+            ),
+            value: subsidiary.id,
+          }) as FormSelectOption,
+      ),
     );
+
+    const { optionsFiltered, onFilter } = useSelectSearch(options);
 
     const { isFilled } = useValidation();
 
@@ -144,8 +167,13 @@ export default defineComponent({
             `New subsidiary was created with data <${JSON.stringify(data, null, 2)}>.`,
           );
           // set subsidiary ID
-          subsidiaryId.value = data.id;
-          logger?.debug(`Subsidiary ID model set to <${subsidiaryId.value}>.`);
+          selectedSubsidiary.value = {
+            label: subsidiaryAdapter.fromFormCompanyAddressFieldsToString(data),
+            value: data.id,
+          };
+          logger?.debug(
+            `Subsidiary ID model set to <${selectedSubsidiary.value}>.`,
+          );
           // push new subsidiary to subsidiaries list
           const newSubsidiary: OrganizationSubsidiary = {
             id: data.id,
@@ -229,17 +257,18 @@ export default defineComponent({
     }
 
     return {
-      subsidiaryId,
+      selectedSubsidiary,
       addressNew,
       formRef,
       labelAddress,
-      options,
+      optionsFiltered,
       isDialogOpen,
       isFilled,
       isLoading,
       isLoadingCreateSubsidiary,
       titleDialogAddress,
       onClose,
+      onFilter,
       onSubmit,
     };
   },
@@ -261,12 +290,15 @@ export default defineComponent({
         <q-select
           dense
           outlined
-          emit-value
-          map-options
+          use-input
+          hide-selected
+          fill-input
+          hide-bottom-space
+          input-debounce="0"
           id="form-company-address"
-          v-model="subsidiaryId"
+          v-model="selectedSubsidiary"
           :hint="$t('form.company.hintAddress')"
-          :options="options"
+          :options="optionsFiltered"
           :loading="isLoading"
           :rules="[
             (val) =>
@@ -275,6 +307,7 @@ export default defineComponent({
                 fieldName: $t('form.labelAddress'),
               }),
           ]"
+          @filter="onFilter"
           data-cy="form-company-address-input"
         >
           <!-- Item: No option -->

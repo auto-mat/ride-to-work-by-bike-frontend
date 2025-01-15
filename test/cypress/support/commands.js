@@ -1998,10 +1998,10 @@ Cypress.Commands.add(
       .should('have.class', 'q-radio__inner--truthy');
     // address is preselected
     cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
-      cy.dataCy('form-company-address-input').should(
-        'contain',
-        subsidiariesResponse.results[0].address.street,
-      );
+      cy.dataCy('form-company-address')
+        .find('.q-field__input')
+        .invoke('val')
+        .should('contain', subsidiariesResponse.results[0].address.street);
       // go to next step
       cy.dataCy('step-4-continue').should('be.visible').click();
       // team is preselected

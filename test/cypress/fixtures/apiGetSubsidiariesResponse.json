@@ -2,7 +2,6 @@
   "count": 20,
   "next": "https://test.dopracenakole.cz/rest/organizations/580/subsidiaries/?limit=20&offset=20",
   "previous": null,
-
   "results": [
     {
       "id": 1358,
@@ -20,9 +19,9 @@
       "address": {
         "street": "Krkonošská",
         "street_number": "177",
-        "recipient": "Vrchlabí",
-        "psc": "54301",
-        "city": "Vrchlabí"
+        "recipient": "Praha",
+        "psc": "10001",
+        "city": "Praha"
       },
       "teams": []
     },

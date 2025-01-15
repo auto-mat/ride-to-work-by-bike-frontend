@@ -127,7 +127,11 @@ describe('<FormFieldCompanyAddress>', () => {
                 subsidiariesResponse,
                 subsidiariesResponseNext,
               );
-              cy.dataCy('form-company-address').find('.q-select').click();
+              // open select menu
+              cy.dataCy('form-company-address')
+                .find('.q-field__append')
+                .last()
+                .click();
               // select option
               cy.get('.q-menu')
                 .should('be.visible')
@@ -143,6 +147,45 @@ describe('<FormFieldCompanyAddress>', () => {
                 .its('value')
                 .should('eq', subsidiariesResponse.results[0].id);
             });
+          },
+        );
+      });
+    });
+
+    it('allows to search through options', () => {
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        store.setOrganizationId(organizationId);
+        cy.wrap(store.getOrganizationId).should('eq', organizationId);
+        /**
+         * Manually load subsidiaries.
+         * In the live application, this is handled by `onMounted` hook,
+         * or calling `loadSubsidiariesToStore` method in another
+         * component.
+         */
+        store.loadSubsidiariesToStore(null);
+        // search for option
+        cy.fixture('apiGetSubsidiariesResponse.json').then(
+          (apiGetSubsidiariesResponse) => {
+            cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+              (apiGetSubsidiariesResponseNext) => {
+                cy.waitForSubsidiariesApi(
+                  apiGetSubsidiariesResponse,
+                  apiGetSubsidiariesResponseNext,
+                );
+                cy.dataCy('form-company-address')
+                  .find('.q-field__append')
+                  .type(apiGetSubsidiariesResponse.results[2].address.street);
+                // select first option from filtered results
+                cy.get('.q-item__label')
+                  .should('have.length', 1)
+                  .first()
+                  .click();
+                cy.get('.q-menu').should('not.exist');
+                cy.wrap(model)
+                  .its('value')
+                  .should('eq', apiGetSubsidiariesResponse.results[2].id);
+              },
+            );
           },
         );
       });

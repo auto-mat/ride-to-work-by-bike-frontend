@@ -50,6 +50,7 @@ import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 import { useApiPostOrganization } from 'src/composables/useApiPostOrganization';
 import { useOrganizations } from 'src/composables/useOrganizations';
 import { useValidation } from 'src/composables/useValidation';
+import { useSelectSearch } from 'src/composables/useSelectSearch';
 
 // enums
 import { FormAddCompanyVariantProp } from '../enums/Form';
@@ -100,7 +101,6 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const optionsFiltered = ref<FormSelectOption[]>([]);
     const {
       options,
       isLoading: isLoadingGetOrganization,
@@ -111,6 +111,8 @@ export default defineComponent({
     logger?.debug(
       `Initial organization ID model value is <${props.modelValue}>.`,
     );
+
+    const { optionsFiltered, onFilter } = useSelectSearch(options);
 
     // load options on component mount
     onMounted(async () => {
@@ -128,37 +130,15 @@ export default defineComponent({
     };
     watch(selectedOrganization, (newValue, oldValue) => {
       logger?.debug(
-        `Selected organization changed from <${JSON.stringify(oldValue, 2, null)}>` +
-          ` to <${JSON.stringify(newValue, 2, null)}>.`,
+        `Selected organization changed from <${JSON.stringify(oldValue, null, 2)}>` +
+          ` to <${JSON.stringify(newValue, null, 2)}>.`,
       );
       if (newValue) {
-        emit('update:modelValue', parseInt(newValue.value));
+        emit('update:modelValue', parseInt(newValue.value as string));
       } else {
         emit('update:modelValue', null);
       }
     });
-
-    /**
-     * Autocomplete functionality for company select
-     * Upon typing, find strings which contain query entered into the select
-     *
-     * Limitation: does not support fuzzy search
-     *
-     * Quasar types are not implemented yet so we provide custom typing
-     * for update function.
-     * See https://github.com/quasarframework/quasar/issues/8914#issuecomment-1313783889
-     *
-     * See https://quasar.dev/vue-components/select#example--text-autocomplete
-     */
-    const onFilter = (val: string, update: (fn: () => void) => void) => {
-      update(() => {
-        const valLowerCase = val.toLocaleLowerCase();
-        optionsFiltered.value = options.value.filter(
-          (option) =>
-            option.label.toLocaleLowerCase().indexOf(valLowerCase) > -1,
-        );
-      });
-    };
 
     /**
      * Logic for "Create company" action
