@@ -431,7 +431,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       /**
        * The paymentAmount value is sent for subject = 'company' or 'school'.
-       * It is sent to the API after the TEAM step is completed.
+       * TODO: It is sent to the API after the TEAM step is completed.
        * If sent earlier, we cannot determine the right coordinator.
        * paymentAmount indicates what was the price for which the user
        * registered. We store the amount because the price changes.
