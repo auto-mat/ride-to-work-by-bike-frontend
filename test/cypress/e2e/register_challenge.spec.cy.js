@@ -1319,10 +1319,6 @@ describe('Register Challenge page', () => {
       cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
         cy.fixture('apiGetSubsidiariesResponseNext').then(
           (subsidiariesResponseNext) => {
-            cy.waitForSubsidiariesApi(
-              subsidiariesResponse,
-              subsidiariesResponseNext,
-            );
             cy.waitForTeamsGetApi();
             // select first available team
             cy.dataCy('form-select-table-team')
