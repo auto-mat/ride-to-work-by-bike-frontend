@@ -571,7 +571,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       // skip API call if payload is empty
       if (Object.keys(payload).length === 0) {
-        this.$log?.debug('Skipping API call for empty payload.');
+        this.$log?.debug(
+          `Empty payload <${JSON.stringify(payload, null, 2)}>, skipping API call.`,
+        );
         return null;
       }
       // post payload to API
