@@ -2,6 +2,21 @@
  * API types for subsidiary-related operations
  */
 
+import type { OrganizationTeam } from './Organization';
+
+export interface GetSubsidiariesResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: SubsidiaryApi[];
+}
+
+export interface SubsidiaryApi {
+  id: number;
+  address: SubsidiaryPostApiAddress;
+  teams: OrganizationTeam[];
+}
+
 export interface SubsidiaryPostApiAddress {
   street: string;
   street_number: string;

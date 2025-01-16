@@ -730,6 +730,16 @@ describe('Register Challenge page', () => {
         .find('.q-radio__label')
         .first()
         .click();
+      cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
+        cy.fixture('apiGetSubsidiariesResponseNext').then(
+          (subsidiariesResponseNext) => {
+            cy.waitForSubsidiariesApi(
+              subsidiariesResponse,
+              subsidiariesResponseNext,
+            );
+          },
+        );
+      });
       cy.fixture('apiPostSubsidiaryRequest').then((subsidiaryRequest) => {
         cy.fixture('apiPostSubsidiaryResponse').then((subsidiaryResponse) => {
           // open dialog

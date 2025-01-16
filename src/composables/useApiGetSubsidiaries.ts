@@ -13,16 +13,13 @@ import { useLoginStore } from '../stores/login';
 // types
 import type { Logger } from '../components/types/Logger';
 import type { OrganizationSubsidiary } from '../components/types/Organization';
+import type { GetSubsidiariesResponse } from '../components/types/ApiSubsidiary';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-interface GetSubsidiariesResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: OrganizationSubsidiary[];
-}
+// adapters
+import { subsidiaryAdapter } from '../adapters/subsidiaryAdapter';
 
 type UseApiGetSubsidiariesReturn = {
   subsidiaries: Ref<OrganizationSubsidiary[]>;
@@ -79,7 +76,9 @@ export const useApiGetSubsidiaries = (
     });
 
     if (data?.results?.length) {
-      subsidiaries.value.push(...data.results);
+      subsidiaries.value.push(
+        ...data.results.map(subsidiaryAdapter.fromApiPayloadGet),
+      );
     }
 
     // if data has multiple pages, fetch all pages
@@ -114,7 +113,9 @@ export const useApiGetSubsidiaries = (
 
     // store results
     if (data?.results?.length) {
-      subsidiaries.value.push(...data.results);
+      subsidiaries.value.push(
+        ...data.results.map(subsidiaryAdapter.fromApiPayloadGet),
+      );
     }
 
     // if data has multiple pages, fetch all pages

@@ -3,7 +3,9 @@ import type { FormCompanyAddressFields } from '../components/types/Form';
 import type {
   SubsidiaryPostApiPayload,
   SubsidiaryPostApiResponse,
+  SubsidiaryApi,
 } from '../components/types/ApiSubsidiary';
+import type { OrganizationSubsidiary } from '../components/types/Organization';
 
 /**
  * Adapter for converting between API and form subsidiary data formats
@@ -37,6 +39,25 @@ export const subsidiaryAdapter = {
       zip: String(apiData.address.psc),
       cityChallenge: apiData.city_id,
       department: apiData.address.recipient,
+    };
+  },
+
+  /**
+   * Convert API GET response to OrganizationSubsidiary format
+   */
+  fromApiPayloadGet(apiData: SubsidiaryApi): OrganizationSubsidiary {
+    return {
+      id: apiData.id,
+      teams: apiData.teams,
+      address: {
+        id: undefined,
+        street: apiData.address.street,
+        houseNumber: apiData.address.street_number,
+        city: apiData.address.city,
+        zip: String(apiData.address.psc),
+        cityChallenge: null,
+        department: apiData.address.recipient,
+      },
     };
   },
 

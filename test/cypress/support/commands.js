@@ -2001,7 +2001,11 @@ Cypress.Commands.add(
       cy.dataCy('form-company-address')
         .find('.q-field__input')
         .invoke('val')
-        .should('contain', subsidiariesResponse.results[0].address.street);
+        .should('contain', subsidiariesResponse.results[0].address.street)
+        .and('contain', subsidiariesResponse.results[0].address.street_number)
+        .and('contain', subsidiariesResponse.results[0].address.recipient)
+        .and('contain', subsidiariesResponse.results[0].address.psc)
+        .and('contain', subsidiariesResponse.results[0].address.city);
       // go to next step
       cy.dataCy('step-4-continue').should('be.visible').click();
       // team is preselected
