@@ -383,6 +383,8 @@ describe('Home page', () => {
         cy.dataCy('list-challenge').should('be.visible');
         // NOT progress slider
         cy.dataCy('slider-progress').should('not.exist');
+        // NOT list progress
+        cy.dataCy('list-progress').should('not.exist');
         // banner questionnaire
         cy.dataCy('banner-image').should('be.visible');
         // heading with background image

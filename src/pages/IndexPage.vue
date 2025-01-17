@@ -68,7 +68,7 @@
         />
         <!-- List: Progress -->
         <list-card-progress
-          v-if="challengeStatus === ChallengeStatusEnum.after"
+          v-if="challengeStatus === ChallengeStatusEnum.during"
           :title="$t('index.cardListProgress.title')"
           :cards="cardsProgress"
           class="q-mt-xl"
