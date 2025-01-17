@@ -812,7 +812,7 @@ describe('Register Challenge page', () => {
       checkActiveIcon(6);
     });
 
-    it.only('validates sixth step (merch)', () => {
+    it('validates sixth step (merch)', () => {
       cy.get('@i18n').then((i18n) => {
         passToStep6();
         checkActiveIcon(6);
