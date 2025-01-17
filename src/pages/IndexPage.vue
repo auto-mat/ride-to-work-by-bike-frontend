@@ -10,7 +10,7 @@
         </page-heading>
         <!-- Countdown: Event -->
         <countdown-event
-          :release-date="releaseDate"
+          :release-date="competitionStart"
           class="q-mb-xl"
           data-cy="countdown-event"
         />
@@ -29,7 +29,7 @@
           data-cy="banner-app"
         />
         <!-- Section: Future challenges -->
-        <template v-if="challengeStatus === ChallengeStatusEnum.before">
+        <template v-if="challengeStatus !== ChallengeStatusEnum.during">
           <!-- Title -->
           <section-heading class="q-mt-xl q-mb-md" data-cy="card-list-title">
             {{ $t('index.cardListChallenge.title') }}
@@ -122,7 +122,7 @@
 <script lang="ts">
 // libraries
 import { colors } from 'quasar';
-import { defineComponent } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // components
 import BannerApp from 'components/homepage/BannerApp.vue';
@@ -185,13 +185,20 @@ export default defineComponent({
     const challengeStore = useChallengeStore();
     const challengeStatus = challengeStore.getChallengeStatus;
 
-    const { challengeStartDate } = rideToWorkByBikeConfig;
-
     const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
 
     const urlCommunity = routesConf['community']['path'];
     const urlResults = routesConf['results']['path'];
+
+    onMounted(async () => {
+      // make sure phase set is loaded
+      if (!challengeStore.getPhaseSet.length) {
+        await challengeStore.loadPhaseSet();
+      }
+    });
+
+    const competitionStart = computed(() => challengeStore.getCompetitionStart);
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
@@ -219,7 +226,7 @@ export default defineComponent({
       maxWidth,
       headingBgTitle: homepage.headingBgTitle,
       primaryOpacity,
-      releaseDate: challengeStartDate,
+      competitionStart,
       urlCommunity,
       urlResults,
     };

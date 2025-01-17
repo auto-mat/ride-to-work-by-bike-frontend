@@ -21,7 +21,7 @@
 
 // libraries
 import { colors } from 'quasar';
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // composables
 import { useCountdown } from '../../composables/useCountdown';
@@ -38,7 +38,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { countdown } = useCountdown(props.dateEnd);
+    const { countdown } = useCountdown(computed(() => props.dateEnd));
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;

@@ -31,28 +31,20 @@ import { useCountdown } from '../../composables/useCountdown';
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
-// stores
-import { useChallengeStore } from '../../stores/challenge';
-
-// types
-import { PhaseType } from '../../components/types/Challenge';
-
 const { formatDate } = date;
 
 export default defineComponent({
   name: 'CountdownEvent',
-  setup() {
+  props: {
+    releaseDate: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
     const fontSize = '48px';
-    const challengeStore = useChallengeStore();
 
-    const competitionPhaseDate = computed(() => {
-      const competitionPhase = challengeStore.getPhaseSet.find(
-        (phase) => phase.phase_type === PhaseType.competition,
-      );
-      return competitionPhase?.date_from || '';
-    });
-
-    const { countdown } = useCountdown(competitionPhaseDate.value);
+    const { countdown } = useCountdown(computed(() => props.releaseDate));
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
@@ -71,7 +63,7 @@ export default defineComponent({
     //   formatString = 'D MMM';
     // }
     const formattedDate = computed(() =>
-      formatDate(new Date(competitionPhaseDate.value), formatString),
+      formatDate(new Date(props.releaseDate), formatString),
     );
 
     if (window.Cypress) {

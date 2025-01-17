@@ -1,11 +1,11 @@
 // libraries
-import { ref, watchEffect, onBeforeUnmount, Ref } from 'vue';
+import { ref, watchEffect, onBeforeUnmount, Ref, ComputedRef } from 'vue';
 
 // types
 import { Countdown } from 'src/components/types';
 
 export const useCountdown = (
-  releaseDate: string,
+  releaseDate: ComputedRef<string>,
 ): { countdown: Ref<Countdown> } => {
   const countdown = ref<Countdown>({
     days: 0,
@@ -17,7 +17,12 @@ export const useCountdown = (
   let countdownInterval: NodeJS.Timeout | null = null;
 
   const startCountdown = (): void => {
-    const targetDate = new Date(releaseDate).getTime();
+    // Clear any existing interval
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+    }
+
+    const targetDate = new Date(releaseDate.value).getTime();
 
     countdownInterval = setInterval((): void => {
       const now = new Date().getTime();
@@ -55,6 +60,7 @@ export const useCountdown = (
     };
   }
 
+  // watch for changes in releaseDate and restart countdown
   watchEffect((): void => {
     startCountdown();
   });

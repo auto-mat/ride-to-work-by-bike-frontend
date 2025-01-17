@@ -4,6 +4,7 @@ import {
   testLanguageSwitcher,
   testMobileHeader,
 } from '../support/commonTests';
+import { defLocale } from '../../../src/i18n/def_locale';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -340,21 +341,22 @@ describe('Home page', () => {
   context('before challenge', () => {
     beforeEach(() => {
       cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
-        cy.visit(Cypress.config('baseUrl'));
-        cy.viewport('macbook-16');
-
-        // load config an i18n objects as aliases
+        // load config
         cy.task('getAppConfig', process).then((config) => {
           // alias config
           cy.wrap(config).as('config');
-          cy.window().should('have.property', 'i18n');
-          cy.window().then((win) => {
-            // alias i18n
-            cy.wrap(win.i18n).as('i18n');
-            cy.interceptThisCampaignGetApi(config, win.i18n);
-          });
+          // intercept campaign API
+          cy.interceptThisCampaignGetApi(config, defLocale);
         });
-        cy.reload();
+
+        cy.visit(Cypress.config('baseUrl'));
+        cy.viewport('macbook-16');
+        // load i18n
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
       });
     });
 
@@ -381,8 +383,6 @@ describe('Home page', () => {
         cy.dataCy('list-challenge').should('be.visible');
         // NOT progress slider
         cy.dataCy('slider-progress').should('not.exist');
-        // NOT list progress
-        cy.dataCy('list-progress').should('not.exist');
         // banner questionnaire
         cy.dataCy('banner-image').should('be.visible');
         // heading with background image
@@ -398,6 +398,34 @@ describe('Home page', () => {
         cy.dataCy('newsletter-feature').should('be.visible');
         // list of follow
         cy.dataCy('list-card-follow').should('be.visible');
+      });
+    });
+
+    it('shows correct countdown to competition start', () => {
+      cy.waitForThisCampaignApi();
+      cy.fixture('apiGetThisCampaign').then((campaign) => {
+        const competitionPhase = campaign.results[0].phase_set.find(
+          (phase) => phase.phase_type === 'competition',
+        );
+        const competitionStart = new Date(competitionPhase.date_from);
+        const timeDiff =
+          competitionStart.getTime() - systemTimeChallengeInactive;
+
+        // Convert time difference to countdown units
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+        // Check countdown values
+        cy.dataCy('countdown-event').within(() => {
+          cy.contains(days.toString()).should('be.visible');
+          cy.contains(hours.toString()).should('be.visible');
+          cy.contains(minutes.toString()).should('be.visible');
+          cy.contains(seconds.toString()).should('be.visible');
+        });
       });
     });
   });

@@ -13,7 +13,7 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // composables
 import { useCountdown } from 'src/composables/useCountdown';
@@ -23,7 +23,7 @@ export default defineComponent({
   name: 'TopBarCountdown',
   setup() {
     const { challengeMonth, challengeStartDate } = rideToWorkByBikeConfig;
-    const { countdown } = useCountdown(challengeStartDate);
+    const { countdown } = useCountdown(computed(() => challengeStartDate));
 
     return {
       challengeMonth,

@@ -69,6 +69,12 @@ export const useChallengeStore = defineStore('challenge', {
     getCurrentPriceLevels(): Record<PriceLevelCategory, PriceLevel> {
       return getCurrentPriceLevelsUtil(this.priceLevel);
     },
+    getCompetitionStart: (state) => {
+      const competitionPhase = state.phaseSet.find(
+        (phase) => phase.phase_type === PhaseType.competition,
+      );
+      return competitionPhase?.date_from || '';
+    },
   },
 
   actions: {
