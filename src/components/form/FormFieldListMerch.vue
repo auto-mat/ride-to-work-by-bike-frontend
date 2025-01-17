@@ -384,99 +384,90 @@ export default defineComponent({
     </q-item-section>
   </q-item>
   <!-- Tabs: Merch -->
-  <q-card
-    ref="tabsMerchRef"
-    v-show="!isNotMerch"
-    flat
-    class="q-mt-lg"
-    style="max-width: 1024px"
-    data-cy="list-merch"
-  >
-    <!-- Tab buttons -->
-    <q-tabs
-      v-model="selectedGender"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="left"
-      data-cy="list-merch-tabs"
-    >
-      <!-- Button: Female -->
-      <q-tab
-        :name="Gender.female"
-        :label="$t('global.female')"
-        data-cy="list-merch-tab-female"
-      />
-      <!-- Button: Male -->
-      <q-tab
-        :name="Gender.male"
-        :label="$t('global.male')"
-        data-cy="list-merch-tab-male"
-      />
-      <!-- Button: Unisex -->
-      <q-tab
-        :name="Gender.unisex"
-        :label="$t('global.unisex')"
-        data-cy="list-merch-tab-unisex"
-      />
-    </q-tabs>
-
-    <q-separator />
-
-    <!-- Tab panels -->
-    <q-tab-panels v-model="selectedGender" animated>
-      <!-- Tab panel: Female -->
-      <q-tab-panel :name="Gender.female" class="q-pa-none">
-        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
-          <!-- Card: Merch (includes dialog) -->
-          <FormCardMerch
-            v-for="option in optionsFemale"
-            :option="option"
-            :key="`${option.label}-${Gender.female}`"
-            :selected="isSelected(option)"
-            class="col-12 col-md-6 col-lg-4"
-            data-cy="form-card-merch-female"
-            @select-option="onSelectCardOption(option)"
-          />
-        </div>
-      </q-tab-panel>
-
-      <!-- Tab panel: Male -->
-      <q-tab-panel :name="Gender.male">
-        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
-          <!-- Card: Merch (includes dialog) -->
-          <FormCardMerch
-            v-for="option in optionsMale"
-            :option="option"
-            :key="`${option.label}-${Gender.male}`"
-            :selected="isSelected(option)"
-            class="col-12 col-md-6 col-lg-4"
-            data-cy="form-card-merch-male"
-            @select-option="onSelectCardOption(option)"
-          />
-        </div>
-      </q-tab-panel>
-
-      <!-- Tab panel: Unisex -->
-      <q-tab-panel :name="Gender.unisex">
-        <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
-          <!-- Card: Merch (includes dialog) -->
-          <FormCardMerch
-            v-for="option in optionsUnisex"
-            :option="option"
-            :key="`${option.label}-${Gender.unisex}`"
-            :selected="isSelected(option)"
-            class="col-12 col-md-6 col-lg-4"
-            data-cy="form-card-merch-unisex"
-            @select-option="onSelectCardOption(option)"
-          />
-        </div>
-      </q-tab-panel>
-    </q-tab-panels>
+  <q-card ref="tabsMerchRef" flat class="q-mt-lg" style="max-width: 1024px">
+    <div v-show="!isNotMerch" data-cy="list-merch">
+      <!-- Tab buttons -->
+      <q-tabs
+        v-model="selectedGender"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="left"
+        data-cy="list-merch-tabs"
+      >
+        <!-- Button: Female -->
+        <q-tab
+          :name="Gender.female"
+          :label="$t('global.female')"
+          data-cy="list-merch-tab-female"
+        />
+        <!-- Button: Male -->
+        <q-tab
+          :name="Gender.male"
+          :label="$t('global.male')"
+          data-cy="list-merch-tab-male"
+        />
+        <!-- Button: Unisex -->
+        <q-tab
+          :name="Gender.unisex"
+          :label="$t('global.unisex')"
+          data-cy="list-merch-tab-unisex"
+        />
+      </q-tabs>
+      <q-separator />
+      <!-- Tab panels -->
+      <q-tab-panels v-model="selectedGender" animated>
+        <!-- Tab panel: Female -->
+        <q-tab-panel :name="Gender.female" class="q-pa-none">
+          <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+            <!-- Card: Merch (includes dialog) -->
+            <FormCardMerch
+              v-for="option in optionsFemale"
+              :option="option"
+              :key="`${option.label}-${Gender.female}`"
+              :selected="isSelected(option)"
+              class="col-12 col-md-6 col-lg-4"
+              data-cy="form-card-merch-female"
+              @select-option="onSelectCardOption(option)"
+            />
+          </div>
+        </q-tab-panel>
+        <!-- Tab panel: Male -->
+        <q-tab-panel :name="Gender.male">
+          <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+            <!-- Card: Merch (includes dialog) -->
+            <FormCardMerch
+              v-for="option in optionsMale"
+              :option="option"
+              :key="`${option.label}-${Gender.male}`"
+              :selected="isSelected(option)"
+              class="col-12 col-md-6 col-lg-4"
+              data-cy="form-card-merch-male"
+              @select-option="onSelectCardOption(option)"
+            />
+          </div>
+        </q-tab-panel>
+        <!-- Tab panel: Unisex -->
+        <q-tab-panel :name="Gender.unisex">
+          <div class="row q-gutter-x-none" data-cy="list-merch-option-group">
+            <!-- Card: Merch (includes dialog) -->
+            <FormCardMerch
+              v-for="option in optionsUnisex"
+              :option="option"
+              :key="`${option.label}-${Gender.unisex}`"
+              :selected="isSelected(option)"
+              class="col-12 col-md-6 col-lg-4"
+              data-cy="form-card-merch-unisex"
+              @select-option="onSelectCardOption(option)"
+            />
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
 
     <!-- Input: Merch size (card) - duplicated in dialog -->
-    <div v-if="currentSizeOptions.length > 1" class="q-pt-sm">
+    <div v-if="!isNotMerch && currentSizeOptions.length > 1" class="q-pt-sm">
       <span
         class="text-caption text-weight-medium text-grey-10"
         v-if="currentItemLabelSize"
@@ -493,14 +484,13 @@ export default defineComponent({
 
     <!-- Input: Phone number -->
     <form-field-phone
-      v-if="!isNotMerch"
       v-model="phone"
       :hint="$t('form.merch.hintPhone')"
       :required="true"
       data-cy="form-merch-phone-input"
     />
     <!-- Input: News checkbox -->
-    <q-checkbox
+    <!-- <q-checkbox
       dense
       v-model="telephoneOptIn"
       color="primary"
@@ -509,7 +499,25 @@ export default defineComponent({
       :true-value="true"
       class="text-grey-10 q-mt-md"
       data-cy="form-merch-phone-opt-in-input"
-    />
+    /> -->
+    <q-item tag="label" v-ripple class="q-mt-md" data-cy="phone-opt-in">
+      <q-item-section avatar top>
+        <q-checkbox
+          dense
+          v-model="telephoneOptIn"
+          :false-value="false"
+          :true-value="true"
+          color="primary"
+          data-cy="form-merch-phone-opt-in-input"
+        />
+      </q-item-section>
+      <q-item-section>
+        <!-- Checkbox title -->
+        <q-item-label class="text-grey-10" data-cy="phone-opt-in-label">{{
+          $t('form.merch.labelNewsletter')
+        }}</q-item-label>
+      </q-item-section>
+    </q-item>
 
     <!-- Dialog -->
     <dialog-default v-model="isOpen" data-cy="dialog-merch">

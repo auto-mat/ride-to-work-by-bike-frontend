@@ -71,10 +71,22 @@ describe('<FormFieldListMerch>', () => {
     });
 
     it('allows to hide merch options', () => {
+      // select no merch
       cy.dataCy('no-merch').click();
+      // merch options are hidden
       cy.dataCy('list-merch').should('not.be.visible');
+      // phone number input is still visible
+      cy.dataCy('form-merch-phone-input').should('be.visible');
+      // phone opt-in input is still visible
+      cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
+      // unselect no merch
       cy.dataCy('no-merch').click();
+      // merch options are visible
       cy.dataCy('list-merch').should('be.visible');
+      // phone number input is still visible
+      cy.dataCy('form-merch-phone-input').should('be.visible');
+      // phone opt-in input is still visible
+      cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
     });
 
     it('allows to switch between tabs', () => {
