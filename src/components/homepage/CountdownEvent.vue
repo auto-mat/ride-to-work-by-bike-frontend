@@ -22,7 +22,7 @@
  */
 
 import { colors, date } from 'quasar';
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 // import { useI18n } from 'vue-i18n'
 
 // composables
@@ -31,19 +31,28 @@ import { useCountdown } from '../../composables/useCountdown';
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
+// stores
+import { useChallengeStore } from '../../stores/challenge';
+
+// types
+import { PhaseType } from '../../components/types/Challenge';
+
 const { formatDate } = date;
 
 export default defineComponent({
   name: 'CountdownEvent',
-  props: {
-    releaseDate: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
+  setup() {
     const fontSize = '48px';
-    const { countdown } = useCountdown(props.releaseDate);
+    const challengeStore = useChallengeStore();
+
+    const competitionPhaseDate = computed(() => {
+      const competitionPhase = challengeStore.getPhaseSet.find(
+        (phase) => phase.phase_type === PhaseType.competition,
+      );
+      return competitionPhase?.date_from || '';
+    });
+
+    const { countdown } = useCountdown(competitionPhaseDate.value);
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
@@ -61,7 +70,9 @@ export default defineComponent({
     // if (locale.value === 'en') {
     //   formatString = 'D MMM';
     // }
-    const formattedDate = formatDate(new Date(props.releaseDate), formatString);
+    const formattedDate = computed(() =>
+      formatDate(new Date(competitionPhaseDate.value), formatString),
+    );
 
     if (window.Cypress) {
       window.countdownEvent = { fontSize: fontSize };
