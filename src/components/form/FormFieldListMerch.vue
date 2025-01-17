@@ -490,16 +490,6 @@ export default defineComponent({
       data-cy="form-merch-phone-input"
     />
     <!-- Input: News checkbox -->
-    <!-- <q-checkbox
-      dense
-      v-model="telephoneOptIn"
-      color="primary"
-      :false-value="false"
-      :label="$t('form.merch.labelNewsletter')"
-      :true-value="true"
-      class="text-grey-10 q-mt-md"
-      data-cy="form-merch-phone-opt-in-input"
-    /> -->
     <q-item tag="label" v-ripple class="q-mt-md" data-cy="phone-opt-in">
       <q-item-section avatar top>
         <q-checkbox
