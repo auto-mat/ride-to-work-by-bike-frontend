@@ -547,14 +547,28 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         },
         [RegisterChallengeStep.participation]: {},
         [RegisterChallengeStep.organization]: {},
-        [RegisterChallengeStep.team]: {
-          teamId: this.teamId,
-          // if payment subject is organization, we send payment subject and amount
-          paymentSubject: isPaymentOrganization ? this.paymentSubject : null,
-          paymentAmount: isPaymentOrganization
-            ? this.getDefaultPaymentAmountCompany
-            : null,
-        },
+        [RegisterChallengeStep.team]: isPaymentOrganization
+          ? /**
+             * If payment subject is organization, we send additional data
+             * paymentSubject - current payment subject
+             * paymentAmount - default payment amount for company
+             * paymentCategory - entry fee
+             * products - entry fee product
+             */
+            {
+              teamId: this.teamId,
+              paymentSubject: this.paymentSubject,
+              paymentAmount: this.getDefaultPaymentAmountCompany,
+              paymentCategory: PaymentCategory.entryFee,
+              products: [
+                {
+                  name: rideToWorkByBikeConfig.rtwbbChallengeEntryFeeOrderedProductName,
+                  unitPrice: this.getDefaultPaymentAmountCompany,
+                  quantity: 1,
+                },
+              ],
+            }
+          : { teamId: this.teamId },
         [RegisterChallengeStep.merch]: {
           merchId: this.merchId,
           telephone: this.telephone,

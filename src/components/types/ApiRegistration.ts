@@ -1,7 +1,7 @@
 import type { ValidatedCoupon } from './Coupon';
 import type { RegisterChallengePersonalDetailsForm } from './RegisterChallenge';
 import type { PaymentSubject } from '../enums/Payment';
-import type { PaymentCategory } from './ApiPayu';
+import type { PaymentCategory, PayuProduct } from './ApiPayu';
 
 // subset of personal details that can be sent in POST requests
 export type CorePersonalDetails = {
@@ -59,6 +59,8 @@ export type RegisterChallengePostPayload = {
   discount_coupon?: string;
   payment_subject?: string;
   payment_amount?: number | null;
+  payment_category?: PaymentCategory;
+  products?: PayuProduct[];
   team_id?: number | null;
   t_shirt_size_id?: number | null;
 };
@@ -75,6 +77,8 @@ export interface ToApiPayloadStoreState {
   personalDetails?: Partial<RegisterChallengePersonalDetailsForm>;
   paymentSubject?: PaymentSubject;
   paymentAmount?: number | null;
+  paymentCategory?: PaymentCategory;
+  products?: PayuProduct[];
   teamId?: number | null;
   merchId?: number | null;
   voucher?: ValidatedCoupon | null;

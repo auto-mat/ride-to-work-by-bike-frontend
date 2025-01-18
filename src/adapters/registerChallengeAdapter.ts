@@ -102,8 +102,13 @@ export const registerChallengeAdapter = {
       if (storeState.paymentAmount !== undefined) {
         payload.payment_amount = storeState.paymentAmount;
       }
+      if (storeState.paymentCategory) {
+        payload.payment_category = storeState.paymentCategory;
+      }
+      if (storeState.products) {
+        payload.products = storeState.products;
+      }
     }
-
     if (storeState.voucher) {
       payload.discount_coupon = storeState.voucher?.name;
     }
