@@ -126,6 +126,10 @@ dateTimeFormatsAllLocales = '''
   "monthYear": {
     "year": "numeric",
     "month": "long"
+  },
+  "monthDay": {
+    "month": "numeric",
+    "day": "numeric"
   }
 }
 '''
