@@ -5,6 +5,7 @@ import {
   testMobileHeader,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
+import { date } from 'quasar';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -410,18 +411,31 @@ describe('Home page', () => {
           (phase) => phase.phase_type === 'competition',
         );
         const competitionStart = new Date(competitionPhase.date_from);
-        const timeDiff =
-          competitionStart.getTime() - systemTimeChallengeInactive;
-
-        // Convert time difference to countdown units
-        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        const currentDate = new Date(systemTimeChallengeInactive);
+        // calculate time difference using Quasar's date utility
+        const days = date.getDateDiff(competitionStart, currentDate, 'days');
+        const totalHours = date.getDateDiff(
+          competitionStart,
+          currentDate,
+          'hours',
         );
-        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-        // Check countdown values
+        // get hours that are not counted as days
+        const hours = totalHours % 24;
+        const totalMinutes = date.getDateDiff(
+          competitionStart,
+          currentDate,
+          'minutes',
+        );
+        // get minutes that are not counted as hours
+        const minutes = totalMinutes % 60;
+        const totalSeconds = date.getDateDiff(
+          competitionStart,
+          currentDate,
+          'seconds',
+        );
+        // get seconds that are not counted as minutes
+        const seconds = totalSeconds % 60;
+        // check countdown values
         cy.dataCy('countdown-event').within(() => {
           cy.contains(days.toString()).should('be.visible');
           cy.contains(hours.toString()).should('be.visible');
