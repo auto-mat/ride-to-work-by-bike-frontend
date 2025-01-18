@@ -98,6 +98,11 @@ describe('<RegisterChallengePayment>', () => {
       'companyCoordinator',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'getHasOrganizationAdmin',
+      i18n,
+    );
     cy.testLanguageStringsInContext(['custom', 'total'], 'global', i18n);
   });
 

@@ -97,6 +97,11 @@ apiMessageError = "Fetching filtered merchandise by code failed."
 apiMessageErrorWithMessage = "Fetching filtered merchandise by code failed. Error: {error}"
 apiMessageSuccess = "Filtered Merchandise by code fetched successfully."
 
+[getHasOrganizationAdmin]
+apiMessageError = "Failed to verify the existence of organization coordinator"
+apiMessageErrorWithMessage = "Failed to verify the existence of organization coordinator. Error: {error}"
+apiMessageSuccess = "Organization coordinator existence was successfully verified."
+
 [getRegisterChallenge]
 apiMessageError = "Fetching registrations failed."
 apiMessageErrorWithMessage = "Fetching registrations failed. Error: {error}"

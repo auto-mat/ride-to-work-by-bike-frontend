@@ -97,6 +97,11 @@ apiMessageError = "Načítanie startovních balíčkov filtrovaných na základe
 apiMessageErrorWithMessage = "Načítanie startovních balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Startovní balíčky filtrované na základe kódu boli úspešne načítané."
 
+[getHasOrganizationAdmin]
+apiMessageError = "Nepodarilo sa overiť existenciu koordinátora organizácie"
+apiMessageErrorWithMessage = "Nepodarilo sa overiť existenciu koordinátora organizácie. Chyba: {error}"
+apiMessageSuccess = "Existencia koordinátora organizácie bola úspešne overená."
+
 [getRegisterChallenge]
 apiMessageError = "Načítanie registrácií zlyhalo."
 apiMessageErrorWithMessage = "Načítanie registrácií zlyhalo. Chyba: {error}"
