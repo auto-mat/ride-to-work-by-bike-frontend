@@ -252,7 +252,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       return (
         this.getPersonalDetails.firstName !== '' &&
         this.getPersonalDetails.lastName !== '' &&
-        this.getPersonalDetails.nickname !== '' &&
         this.getPersonalDetails.gender !== Gender.none &&
         this.getPersonalDetails.terms === true
       );
