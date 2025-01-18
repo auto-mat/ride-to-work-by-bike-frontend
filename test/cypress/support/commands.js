@@ -1661,7 +1661,7 @@ Cypress.Commands.add(
     );
     const urlApiRegisterChallengeLocalized = `${apiBaseUrl}${urlApiRegisterChallenge}`;
 
-    cy.fixture('apiPostRegisterChallengeResponse').then(
+    cy.fixture('apiPostRegisterChallengeResponsePaymentDone').then(
       (registerChallengeResponse) => {
         cy.intercept('POST', urlApiRegisterChallengeLocalized, {
           statusCode: responseStatusCode

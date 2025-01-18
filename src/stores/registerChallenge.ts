@@ -608,6 +608,17 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
 
       const response = await registerChallenge(payload);
+
+      // set paymentState from API POST response
+      if (response?.personal_details?.payment_status) {
+        this.setPaymentState(
+          response.personal_details.payment_status as PaymentState,
+        );
+        this.$log?.debug(
+          `Payment state <${this.getPaymentState}> set from API response.`,
+        );
+      }
+
       this.isLoadingRegisterChallenge = false;
 
       return response;
