@@ -2287,7 +2287,7 @@ describe('Register Challenge page', () => {
           },
         );
         // intercept common response (not currently used)
-        cy.fixture('apiPostRegisterChallengeResponsePaymentUnknown').then(
+        cy.fixture('apiPostRegisterChallengeResponsePaymentUnknown.json').then(
           (registerChallengeResponse) => {
             cy.interceptRegisterChallengePostApi(
               config,
@@ -2296,7 +2296,6 @@ describe('Register Challenge page', () => {
             );
           },
         );
-        cy.interceptRegisterChallengePostApi(config, defLocale);
         cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
       });
       cy.viewport('macbook-16');
