@@ -1,5 +1,6 @@
 // libraries
 import { ref, watchEffect, onBeforeUnmount, Ref, ComputedRef } from 'vue';
+import { date } from 'quasar';
 
 // types
 import { Countdown } from 'src/components/types';
@@ -20,6 +21,17 @@ export const useCountdown = (
     // Clear any existing interval
     if (countdownInterval) {
       clearInterval(countdownInterval);
+    }
+
+    // Validate the date string
+    if (!releaseDate.value || !date.isValid(releaseDate.value)) {
+      countdown.value = {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+      return;
     }
 
     const targetDate = new Date(releaseDate.value).getTime();

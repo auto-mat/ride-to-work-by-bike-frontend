@@ -21,7 +21,7 @@
  * <countdown-event :releaseDate="targetDate" />
  */
 
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 import { defineComponent, computed } from 'vue';
 
 // composables
@@ -53,7 +53,13 @@ export default defineComponent({
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
-    const releaseDateComputed = computed(() => new Date(props.releaseDate));
+    const releaseDateComputed = computed(() => {
+      if (!props.releaseDate || !date.isValid(props.releaseDate)) {
+        return '';
+      } else {
+        return new Date(props.releaseDate);
+      }
+    });
 
     if (window.Cypress) {
       window.countdownEvent = { fontSize: fontSize };
@@ -88,7 +94,9 @@ export default defineComponent({
       >
         {{
           $t('index.countdown.title', {
-            date: $d(releaseDateComputed, 'monthDay'),
+            date: releaseDateComputed
+              ? $d(releaseDateComputed, 'monthDay')
+              : '',
           })
         }}
       </div>
