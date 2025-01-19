@@ -198,16 +198,16 @@ describe('Register Challenge page', () => {
                   );
                 },
               );
-              // intercept without specific response (it is not used)
-              cy.fixture('apiPostRegisterChallengeResponse').then(
-                (registerChallengeResponse) => {
-                  cy.interceptRegisterChallengePostApi(
-                    config,
-                    win.i18n,
-                    registerChallengeResponse,
-                  );
-                },
-              );
+              // intercept with default "payment_status": "none"
+              cy.fixture(
+                'apiPostRegisterChallengeResponsePaymentNone.json',
+              ).then((registerChallengeResponse) => {
+                cy.interceptRegisterChallengePostApi(
+                  config,
+                  win.i18n,
+                  registerChallengeResponse,
+                );
+              });
               cy.interceptMerchandiseNoneGetApi(config, win.i18n);
               cy.interceptIpAddressGetApi(config);
               cy.interceptPayuCreateOrderPostApi(config, win.i18n);
@@ -2017,7 +2017,7 @@ describe('Register Challenge page', () => {
             cy.interceptRegisterChallengeGetApi(config, defLocale, response);
           },
         );
-        cy.fixture('apiPostRegisterChallengeResponse').then(
+        cy.fixture('apiPostRegisterChallengeResponsePaymentNone.json').then(
           (registerChallengeResponse) => {
             cy.interceptRegisterChallengePostApi(
               config,
