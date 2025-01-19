@@ -615,7 +615,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           response.personal_details.payment_status as PaymentState,
         );
         this.$log?.debug(
-          `Payment state <${this.getPaymentState}> set from API response.`,
+          `Update payment state store value to <${this.getPaymentState}>` +
+            ' from the API response.',
         );
       }
 
