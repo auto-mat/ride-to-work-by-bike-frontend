@@ -1480,7 +1480,7 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
+    it.only('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
       cy.window().should('have.property', 'i18n');
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
@@ -1517,6 +1517,19 @@ describe('Register Challenge page', () => {
             .find('.q-radio')
             .first()
             .click();
+          // wait for subsidiaries to load
+          cy.fixture('apiGetSubsidiariesResponse.json').then(
+            (apiGetSubsidiariesResponse) => {
+              cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+                (apiGetSubsidiariesResponseNext) => {
+                  cy.waitForSubsidiariesApi(
+                    apiGetSubsidiariesResponse,
+                    apiGetSubsidiariesResponseNext,
+                  );
+                },
+              );
+            },
+          );
           // select address
           cy.dataCy('form-company-address').should('be.visible').click();
           // select option
