@@ -406,7 +406,7 @@ describe('Home page', () => {
 
     it('shows correct countdown to competition start', () => {
       cy.waitForThisCampaignApi();
-      cy.fixture('apiGetThisCampaign').then((campaign) => {
+      cy.fixture('apiGetThisCampaign.json').then((campaign) => {
         const competitionPhase = campaign.results[0].phase_set.find(
           (phase) => phase.phase_type === 'competition',
         );
@@ -437,10 +437,10 @@ describe('Home page', () => {
         const seconds = totalSeconds % 60;
         // check countdown values
         cy.dataCy('countdown-event').within(() => {
-          cy.contains(days.toString()).should('be.visible');
-          cy.contains(hours.toString()).should('be.visible');
-          cy.contains(minutes.toString()).should('be.visible');
-          cy.contains(seconds.toString()).should('be.visible');
+          cy.dataCy('countdown-days').contains(days.toString());
+          cy.dataCy('countdown-hours').contains(hours.toString());
+          cy.dataCy('countdown-minutes').contains(minutes.toString());
+          cy.dataCy('countdown-seconds').contains(seconds.toString());
         });
       });
     });
