@@ -96,7 +96,7 @@ export default defineComponent({
           $t('index.countdown.title', {
             date: releaseDateComputed
               ? $d(releaseDateComputed, 'monthDay')
-              : '',
+              : releaseDateComputed,
           })
         }}
       </div>
