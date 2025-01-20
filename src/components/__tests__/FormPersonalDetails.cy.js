@@ -2,9 +2,18 @@ import { colors } from 'quasar';
 
 import FormPersonalDetails from 'components/form/FormPersonalDetails.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import {
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  userAgentHeader,
+} from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
+const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
@@ -90,6 +99,23 @@ describe('<FormPersonalDetails>', () => {
       cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
       cy.dataCy('form-terms-link').should('be.visible').click();
       cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
+    });
+
+    it('renders link to privacy policy', () => {
+      cy.dataCy('form-terms-link')
+        .should('be.visible')
+        .and('have.attr', 'href', urlAppDataPrivacyPolicy);
+      cy.request({
+        url: urlAppDataPrivacyPolicy,
+        failOnStatusCode: failOnStatusCode,
+        headers: { ...userAgentHeader },
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
+      });
     });
   });
 });
