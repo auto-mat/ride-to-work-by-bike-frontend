@@ -173,7 +173,6 @@ export default defineComponent({
             <span>
               {{ $t('form.labelPrivacyConsent') }}
               <!-- Link: terms -->
-              <!-- TODO: Link to terms page -->
               <a
                 :href="urlAppDataPrivacyPolicy"
                 target="_blank"
