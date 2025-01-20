@@ -22,7 +22,7 @@ describe('<FormFieldListMerch>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      [Gender.male, Gender.female],
+      [Gender.male, Gender.female, Gender.unisex],
       'global',
       i18n,
     );
