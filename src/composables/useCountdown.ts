@@ -62,14 +62,19 @@ export const useCountdown = (
   }
 
   function setCountdownValues(timeDifference: number): void {
-    const targetDate = new Date(Date.now() + timeDifference);
-    const currentDate = new Date();
+    // convert time difference to seconds
+    const totalSeconds = Math.floor(timeDifference / 1000);
+    // calculate each unit
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = Math.floor(totalSeconds % 60);
 
     countdown.value = {
-      days: date.getDateDiff(targetDate, currentDate, 'days'),
-      hours: date.getDateDiff(targetDate, currentDate, 'hours') % 24,
-      minutes: date.getDateDiff(targetDate, currentDate, 'minutes') % 60,
-      seconds: date.getDateDiff(targetDate, currentDate, 'seconds') % 60,
+      days,
+      hours,
+      minutes,
+      seconds,
     };
   }
 

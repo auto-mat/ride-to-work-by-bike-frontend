@@ -5,7 +5,6 @@ import {
   testMobileHeader,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
-import { date } from 'quasar';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -410,31 +409,17 @@ describe('Home page', () => {
         const competitionPhase = campaign.results[0].phase_set.find(
           (phase) => phase.phase_type === 'competition',
         );
-        const competitionStart = new Date(competitionPhase.date_from);
-        const currentDate = new Date(systemTimeChallengeInactive);
-        // calculate time difference using Quasar's date utility
-        const days = date.getDateDiff(competitionStart, currentDate, 'days');
-        const totalHours = date.getDateDiff(
-          competitionStart,
-          currentDate,
-          'hours',
-        );
-        // get hours that are not counted as days
-        const hours = totalHours % 24;
-        const totalMinutes = date.getDateDiff(
-          competitionStart,
-          currentDate,
-          'minutes',
-        );
-        // get minutes that are not counted as hours
-        const minutes = totalMinutes % 60;
-        const totalSeconds = date.getDateDiff(
-          competitionStart,
-          currentDate,
-          'seconds',
-        );
-        // get seconds that are not counted as minutes
-        const seconds = totalSeconds % 60;
+        const competitionStart = new Date(competitionPhase.date_from).getTime();
+        const currentDate = new Date(systemTimeChallengeInactive).getTime();
+        // calculate time difference in milliseconds
+        const timeDifference = competitionStart - currentDate;
+        // convert to seconds
+        const totalSeconds = Math.floor(timeDifference / 1000);
+        // calculate intervals
+        const days = Math.floor(totalSeconds / (24 * 60 * 60));
+        const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+        const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
         // check countdown values
         cy.dataCy('countdown-event').within(() => {
           cy.dataCy('countdown-days').contains(days.toString());
