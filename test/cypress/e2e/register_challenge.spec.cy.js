@@ -1480,7 +1480,7 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it.only('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
+    it('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
       cy.window().should('have.property', 'i18n');
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
