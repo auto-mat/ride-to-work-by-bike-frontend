@@ -4,6 +4,7 @@ import { date } from 'quasar';
 
 // types
 import { Countdown } from 'src/components/types';
+import { calculateCountdownIntervals } from '../utils';
 
 export const useCountdown = (
   releaseDate: ComputedRef<string>,
@@ -53,29 +54,12 @@ export const useCountdown = (
     countdownInterval: NodeJS.Timeout | null,
   ): void {
     if (timeDifference > 0) {
-      setCountdownValues(timeDifference);
+      countdown.value = calculateCountdownIntervals(timeDifference);
     } else {
       if (countdownInterval) {
         clearInterval(countdownInterval);
       }
     }
-  }
-
-  function setCountdownValues(timeDifference: number): void {
-    // convert time difference to seconds
-    const totalSeconds = Math.floor(timeDifference / 1000);
-    // calculate each unit
-    const days = Math.floor(totalSeconds / (24 * 60 * 60));
-    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-    const seconds = Math.floor(totalSeconds % 60);
-
-    countdown.value = {
-      days,
-      hours,
-      minutes,
-      seconds,
-    };
   }
 
   // watch for changes in releaseDate and restart countdown

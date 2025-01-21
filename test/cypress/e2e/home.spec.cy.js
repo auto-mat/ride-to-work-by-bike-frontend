@@ -5,6 +5,7 @@ import {
   testMobileHeader,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
+import { calculateCountdownIntervals } from '../../../src/utils';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -413,13 +414,10 @@ describe('Home page', () => {
         const currentDate = new Date(systemTimeChallengeInactive).getTime();
         // calculate time difference in milliseconds
         const timeDifference = competitionStart - currentDate;
-        // convert to seconds
-        const totalSeconds = Math.floor(timeDifference / 1000);
-        // calculate intervals
-        const days = Math.floor(totalSeconds / (24 * 60 * 60));
-        const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-        const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-        const seconds = Math.floor(totalSeconds % 60);
+
+        const { days, hours, minutes, seconds } =
+          calculateCountdownIntervals(timeDifference);
+
         // check countdown values
         cy.dataCy('countdown-event').within(() => {
           cy.dataCy('countdown-days').contains(days.toString());
