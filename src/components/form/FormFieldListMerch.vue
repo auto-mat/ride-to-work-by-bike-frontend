@@ -331,12 +331,28 @@ export default defineComponent({
       }
     };
 
+    const hintInputPhone = computed((): string => {
+      if (isNotMerch.value) {
+        return i18n.global.t('form.merch.hintPhoneNoMerch');
+      }
+      return i18n.global.t('form.merch.hintPhoneWithMerch');
+    });
+
+    const labelPhoneOptIn = computed((): string => {
+      if (isNotMerch.value) {
+        return i18n.global.t('form.merch.labelPhoneOptInNoMerch');
+      }
+      return i18n.global.t('form.merch.labelPhoneOptInWithMerch');
+    });
+
     return {
       currentItemLabelSize,
       formMerchRef,
       Gender,
+      hintInputPhone,
       isNotMerch,
       isOpen,
+      labelPhoneOptIn,
       telephoneOptIn,
       optionsFemale,
       optionsMale,
@@ -485,7 +501,7 @@ export default defineComponent({
     <!-- Input: Phone number -->
     <form-field-phone
       v-model="phone"
-      :hint="$t('form.merch.hintPhone')"
+      :hint="hintInputPhone"
       :required="true"
       data-cy="form-merch-phone-input"
     />
@@ -503,9 +519,9 @@ export default defineComponent({
       </q-item-section>
       <q-item-section>
         <!-- Checkbox title -->
-        <q-item-label class="text-grey-10" data-cy="phone-opt-in-label">{{
-          $t('form.merch.labelNewsletter')
-        }}</q-item-label>
+        <q-item-label class="text-grey-10" data-cy="phone-opt-in-label">
+          {{ labelPhoneOptIn }}
+        </q-item-label>
       </q-item-section>
     </q-item>
 

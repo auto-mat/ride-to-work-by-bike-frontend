@@ -17,7 +17,14 @@ const tshirt2024FemaleXsId = 133;
 describe('<FormFieldListMerch>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['labelNoMerch', 'hintNoMerch'],
+      [
+        'labelNoMerch',
+        'hintNoMerch',
+        'hintPhoneNoMerch',
+        'hintPhoneWithMerch',
+        'labelPhoneOptInNoMerch',
+        'labelPhoneOptInWithMerch',
+      ],
       'form.merch',
       i18n,
     );
@@ -70,23 +77,35 @@ describe('<FormFieldListMerch>', () => {
       );
     });
 
-    it('allows to hide merch options', () => {
+    it('allows to select "I do not want merch" option and displays correct hints', () => {
       // select no merch
       cy.dataCy('no-merch').click();
       // merch options are hidden
       cy.dataCy('list-merch').should('not.be.visible');
       // phone number input is still visible
-      cy.dataCy('form-merch-phone-input').should('be.visible');
+      cy.dataCy('form-merch-phone-input')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.merch.hintPhoneNoMerch'));
       // phone opt-in input is still visible
       cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
+      cy.dataCy('phone-opt-in').should(
+        'contain',
+        i18n.global.t('form.merch.labelPhoneOptInNoMerch'),
+      );
       // unselect no merch
       cy.dataCy('no-merch').click();
       // merch options are visible
       cy.dataCy('list-merch').should('be.visible');
       // phone number input is still visible
-      cy.dataCy('form-merch-phone-input').should('be.visible');
+      cy.dataCy('form-merch-phone-input')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.merch.hintPhoneWithMerch'));
       // phone opt-in input is still visible
       cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
+      cy.dataCy('phone-opt-in').should(
+        'contain',
+        i18n.global.t('form.merch.labelPhoneOptInWithMerch'),
+      );
     });
 
     it('allows to switch between tabs', () => {
