@@ -99,9 +99,7 @@ const deepObjectWithSimplePropsCopy = <T>(obj: T): T => {
  * @param {number} timeDifferenceMs - Time difference in milliseconds
  * @returns {Countdown} - Countdown object
  */
-export function calculateCountdownIntervals(
-  timeDifferenceMs: number,
-): Countdown {
+const calculateCountdownIntervals = (timeDifferenceMs: number): Countdown => {
   // convert time difference to seconds
   const totalSeconds = Math.floor(timeDifferenceMs / 1000);
   // calculate each unit
@@ -116,9 +114,10 @@ export function calculateCountdownIntervals(
     minutes,
     seconds,
   };
-}
+};
 
 export {
+  calculateCountdownIntervals,
   bearerTokeAuth,
   deepObjectWithSimplePropsCopy,
   requestDefaultHeader,
