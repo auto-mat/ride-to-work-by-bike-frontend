@@ -101,7 +101,7 @@ describe('<FormPersonalDetails>', () => {
       cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
     });
 
-    it('renders link to privacy policy', () => {
+    it('renders link to data privacy policy', () => {
       cy.dataCy('form-terms-link')
         .should('be.visible')
         .and('have.attr', 'href', urlAppDataPrivacyPolicy);
