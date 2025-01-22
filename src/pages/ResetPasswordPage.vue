@@ -20,8 +20,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import ResetPassword from 'components/password/ResetPassword.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import ResetPassword from '../components/register/ResetPassword.vue';
+import LoginRegisterHeader from '../components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'ResetPasswordPage',

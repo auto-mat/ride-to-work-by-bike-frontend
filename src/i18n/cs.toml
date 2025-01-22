@@ -744,14 +744,17 @@ messagePasswordStrong = "Heslo musí obsahovat alespoň 6 znaků a alespoň 1 p�
 messagePasswordConfirmRequired = "Prosím vyplňte heslo"
 messagePasswordConfirmNotMatch = "Hesla se neshodují"
 messagePrivacyConsentRequired = "Musíte souhlasit se zpracováním osobních údajů"
-submitRegister = "Registrovat se"
 submitConfirmation = "Potvrdit e-mail"
+submitRegister = "Registrovat se"
+submitResetPassword = "Obnovit heslo"
 textEmailVerification = "<p>Právě jsme vám na e-mail <b>{email}</b> poslali pozvánku do systému Do práce na kole.</p><p>Pokud ji nemůžete najít, koukněte i do spamu.</p>"
 textNoActiveChallenge = "Momentálně žádná z výzev Do práce na kole neprobíhá. Můžete se zaregistrovat, rádi vás informujeme, jakmile vypíšeme další."
 titleEmailVerification = "Pokračujte potvrzením e-mailu"
 titleRegister = "Registrace"
+titleResetPassword = "Obnovení hesla"
 titleEmailConfirmation = "Potvrzení e-mailu"
 textEmailConfirmation = "Prosím potvrďte svoji e-mailovou adresu:<br>{email}."
+textResetPassword = "Měníte heslo pro účet s e-mailovou adresou:<br>{email}."
 
 [register.buttons]
 buttonGoogle = "Registrovat přes Google"
