@@ -377,6 +377,11 @@ describe('Register Challenge page', () => {
         .find('.q-radio__label')
         .first()
         .click();
+      // agree with terms
+      cy.dataCy('form-personal-details-terms')
+        .find('.q-checkbox__inner')
+        .first()
+        .click();
       // click
       cy.dataCy('step-1-continue').should('be.visible').click();
       // on step 2

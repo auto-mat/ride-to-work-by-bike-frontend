@@ -2304,6 +2304,10 @@ Cypress.Commands.add('passToStep2', () => {
         .find('.q-radio__label')
         .first()
         .click();
+      cy.dataCy('form-personal-details-terms')
+        .find('.q-checkbox__inner')
+        .first()
+        .click();
       cy.dataCy('step-1-continue').should('be.visible').click();
       cy.dataCy('step-1-continue').find('.q-spinner').should('be.visible');
       // on step 2
