@@ -68,6 +68,7 @@ export interface ConfigGlobal {
   urlApiRegisterChallenge: string;
   urlApiRegisterCoordinator: string;
   urlApiResetPassword: string;
+  urlApiResetPasswordConfirm: string;
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
   urlApiSendRegistrationConfirmationEmail: string;

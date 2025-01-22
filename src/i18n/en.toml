@@ -749,7 +749,7 @@ titleRegister = "Registration"
 titleResetPassword = "Reset password"
 titleEmailConfirmation = "Email address confirmation"
 textEmailConfirmation = "Please confirm your email address:<br>{email}."
-textResetPassword = "You are changing the password for the account with the email address:<br>{email}."
+textResetPassword = "Please fill in a new password and confirm it."
 
 [register.buttons]
 buttonGoogle = "Register via Google"
@@ -821,6 +821,11 @@ messagePasswordConfirmNotMatch = "Passwords don't match"
 messageResponsibilityRequired = "You must agree to provide an entry fee."
 messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
+
+[resetPasswordConfirm]
+messageSuccess = "Password was successfully changed."
+messageError = "Error changing password."
+messageErrorWithMessage = "Error changing password. Error: {error}"
 
 [results]
 buttonPastChallenges = "View previous challenges"

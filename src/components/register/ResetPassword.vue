@@ -11,27 +11,40 @@
  */
 
 // libraries
-import { colors } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { colors, Notify } from 'quasar';
+import { defineComponent, inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useValidation } from '../../composables/useValidation';
+import { useApiPostResetPasswordConfirm } from '../../composables/useApiPostResetPasswordConfirm';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { routesConf } from '../../router/routes_conf';
 
+// enums
+import { LoginFormState } from '../../stores/login';
+
+// store
+import { useLoginStore } from '../../stores/login';
+
+// types
+import type { Logger } from '../types/Logger';
+
 export default defineComponent({
   name: 'ResetPassword',
 
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const loginStore = useLoginStore();
     const router = useRouter();
     const route = useRoute();
     const key = route.query.key;
-    const email = route.query.email;
+    const uid = route.query.uid;
 
-    if (typeof key !== 'string' || typeof email !== 'string') {
+    if (typeof key !== 'string' || typeof uid !== 'string') {
       router.push(routesConf['login']['path']);
     }
 
@@ -41,6 +54,8 @@ export default defineComponent({
     const isPasswordConfirm = ref(true);
 
     const { isFilled, isIdentical, isStrongPassword } = useValidation();
+    const { isLoading, resetPasswordConfirm } =
+      useApiPostResetPasswordConfirm(logger);
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
@@ -49,13 +64,40 @@ export default defineComponent({
       rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
     );
 
-    const onSubmitResetPassword = () => {
-      console.log('onSubmitResetPassword');
+    /**
+     * Submit reset password and handles response
+     * If response is successful, redirects to login page
+     * and sets login form state to `login`.
+     * @returns {Promise<void>}
+     */
+    const onSubmitResetPassword = async (): Promise<void> => {
+      // reset password
+      const response = await resetPasswordConfirm({
+        new_password1: password1.value,
+        new_password2: password2.value,
+        uid: uid as string,
+        token: key as string,
+      });
+      // show success message
+      if (response && response.detail) {
+        Notify.create({
+          message: response.detail,
+          color: 'positive',
+        });
+      } else if (response) {
+        Notify.create({
+          message: i18n.global.t('resetPasswordConfirm.messageSuccess'),
+          color: 'negative',
+        });
+      }
+      // redirect to login page
+      if (response) {
+        loginStore.setLoginFormState(LoginFormState.login);
+        router.push(routesConf['login']['path']);
+      }
     };
 
     return {
-      key,
-      email,
       isFilled,
       isIdentical,
       isStrongPassword,
@@ -65,6 +107,7 @@ export default defineComponent({
       password2,
       whiteOpacity,
       onSubmitResetPassword,
+      isLoading,
     };
   },
 });
@@ -95,11 +138,9 @@ export default defineComponent({
       </h1>
     </div>
     <!-- Text -->
-    <div
-      data-cy="reset-password-text"
-      class="q-mb-lg"
-      v-html="$t('register.form.textResetPassword', { email })"
-    />
+    <div data-cy="reset-password-text" class="q-mb-lg">
+      {{ $t('register.form.textResetPassword') }}
+    </div>
     <!-- Form: register -->
     <q-form @submit.prevent="onSubmitResetPassword">
       <!-- Input: password -->
@@ -194,6 +235,7 @@ export default defineComponent({
         type="submit"
         color="secondary q-mt-lg"
         text-color="primary"
+        :loading="isLoading"
         :label="$t('register.form.submitResetPassword')"
         data-cy="form-reset-password-submit"
       />

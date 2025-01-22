@@ -754,7 +754,7 @@ titleRegister = "Registrace"
 titleResetPassword = "Obnovení hesla"
 titleEmailConfirmation = "Potvrzení e-mailu"
 textEmailConfirmation = "Prosím potvrďte svoji e-mailovou adresu:<br>{email}."
-textResetPassword = "Měníte heslo pro účet s e-mailovou adresou:<br>{email}."
+textResetPassword = "Prosím vyplňte nové heslo a potvrďte ho."
 
 [register.buttons]
 buttonGoogle = "Registrovat přes Google"
@@ -826,6 +826,11 @@ messagePasswordConfirmNotMatch = "Hesla se neshodují"
 messageResponsibilityRequired = "Musíte souhlasit se zajištěním startovného."
 messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
+
+[resetPasswordConfirm]
+messageError = "Chyba při změně hesla."
+messageErrorWithMessage = "Chyba při změně hesla. Chyba: {error}"
+messageSuccess = "Heslo bylo úspěšně změněno."
 
 [results]
 buttonPastChallenges = "Výsledky z dřívějších výzev"
