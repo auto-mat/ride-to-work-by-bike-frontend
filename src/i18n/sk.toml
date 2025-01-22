@@ -717,6 +717,7 @@ apiMessageSuccess = "Registrácia koordinátora bola úspešná"
 messageNoOrganizationId = "Prosím vyberte organizáciu, pre ktorú chcete byť koordinátorom."
 
 [register.form]
+buttonResendConfirmationEmail = "Znovu poslať e-mail"
 hintLogin = "Už máte účet?"
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 hintRegisterAsCoordinator = "Chcete sa stať firemným alebo školským koordinátorom, ale nezúčastniť sa výzvy?"
@@ -889,6 +890,11 @@ tooltipDrawing = "Zapisujete"
 tooltipRouteLength = "Dĺžka trasy"
 tooltipSave = "Uložiť cestu"
 tooltipUndo = "Späť"
+
+[sendRegistrationConfirmationEmail]
+apiMessageError = "Chyba pri odesielaní potvrzovacieho e-mailu."
+apiMessageErrorWithMessage = "Chyba pri odesielaní potvrzovacieho e-mailu. Chyba: {error}"
+apiMessageSuccess = "Potvrzovací e-mail bol úspešne odoslaný."
 
 [statsBar]
 labelFrequency = "pravidelnosť"

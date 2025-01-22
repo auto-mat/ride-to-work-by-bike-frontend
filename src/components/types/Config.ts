@@ -70,6 +70,7 @@ export interface ConfigGlobal {
   urlApiResetPassword: string;
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
+  urlApiSendRegistrationConfirmationEmail: string;
   urlApiSubsidiaries: string;
   urlApiThisCampaign: string;
   urlApiTeams: string;

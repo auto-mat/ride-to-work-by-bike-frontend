@@ -717,6 +717,7 @@ apiMessageSuccess = "Coordinator registration was successful"
 messageNoOrganizationId = "Please select an organization you want to be a coordinator for."
 
 [register.form]
+buttonResendConfirmationEmail = "Resend email"
 hintLogin = "Already have an account?"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
 hintRegisterAsCoordinator = "Do you want to become a company or school coordinator but not participate in the challenge?"
@@ -889,6 +890,11 @@ tooltipDrawing = "Tracing"
 tooltipRouteLength = "Length"
 tooltipSave = "Save path"
 tooltipUndo = "Undo"
+
+[sendRegistrationConfirmationEmail]
+apiMessageError = "Error sending confirmation email."
+apiMessageErrorWithMessage = "Error sending confirmation email. Error: {error}"
+apiMessageSuccess = "confirmation email was successfully sent."
 
 [statsBar]
 labelFrequency = "regularity"
