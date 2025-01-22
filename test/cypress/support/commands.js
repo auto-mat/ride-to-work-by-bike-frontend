@@ -43,7 +43,7 @@ import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_
 import { bearerTokeAuth } from '../../../src/utils';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
-import { getRadioOption } from 'test/cypress/utils';
+import { getRadioOption } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 
 // Fix for ResizeObserver loop issue in Firefox
