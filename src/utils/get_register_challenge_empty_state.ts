@@ -21,7 +21,7 @@ export const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   newsletter: [] as NewsletterType[],
   nickname: '',
   gender: null as Gender | null,
-  terms: true,
+  terms: false,
 };
 
 export const emptyFormRegisterCoordinator: RegisterChallengeCoordinatorForm = {
