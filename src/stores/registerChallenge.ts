@@ -522,7 +522,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     /**
      * Submit a registration step
-     * @param step - The step being submitted
+     * @param {RegisterChallengeStep} step - The step being submitted
+     * @returns {Promise<RegisterChallengePostResponse | null | true>} - API response or true if no data to send
      */
     async submitStep(
       step: RegisterChallengeStep,
