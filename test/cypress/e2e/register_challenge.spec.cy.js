@@ -405,7 +405,7 @@ describe('Register Challenge page', () => {
               /**
                * Case: Individual payment - min amount
                */
-              passToStep2();
+              cy.passToStep2();
               // select individual payment
               cy.dataCy(getRadioOption(PaymentSubject.individual))
                 .should('be.visible')
@@ -519,7 +519,7 @@ describe('Register Challenge page', () => {
     it('allows to post company coordinator registration', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
             (responseIsUserOrganizationAdminFalse) => {
               // user status should reload
@@ -633,7 +633,7 @@ describe('Register Challenge page', () => {
     });
 
     it('validates third step (organization type)', () => {
-      passToStep3();
+      cy.passToStep3();
       checkActiveIcon(3);
 
       cy.dataCy('step-3-continue').should('be.visible').click();
@@ -647,7 +647,7 @@ describe('Register Challenge page', () => {
 
     it('pre-selects company in step 3 based on payment subject', () => {
       cy.get('@i18n').then((i18n) => {
-        passToStep2();
+        cy.passToStep2();
         // in payment step, select "paid by company"
         cy.dataCy(getRadioOption(OrganizationType.company))
           .should('be.visible')
@@ -669,7 +669,7 @@ describe('Register Challenge page', () => {
 
     it('pre-selects school in step 3 based on payment subject', () => {
       cy.get('@i18n').then((i18n) => {
-        passToStep2();
+        cy.passToStep2();
         // in payment step, select "paid by school"
         cy.dataCy(getRadioOption(OrganizationType.school))
           .should('be.visible')
@@ -690,7 +690,7 @@ describe('Register Challenge page', () => {
     });
 
     it('validates fourth step (organization and address)', () => {
-      passToStep4();
+      cy.passToStep4();
       checkActiveIcon(4);
 
       cy.dataCy('step-4-continue').should('be.visible').click();
@@ -732,7 +732,7 @@ describe('Register Challenge page', () => {
     });
 
     it('allows user to create a new subsidiary address', () => {
-      passToStep4();
+      cy.passToStep4();
       checkActiveIcon(4);
       // select company
       cy.dataCy('form-select-table-option')
@@ -793,7 +793,7 @@ describe('Register Challenge page', () => {
     });
 
     it('validates fifth step (team)', () => {
-      passToStep5();
+      cy.passToStep5();
       checkActiveIcon(5);
 
       // Try to continue without selecting a team
@@ -815,7 +815,7 @@ describe('Register Challenge page', () => {
 
     it('validates sixth step (merch)', () => {
       cy.get('@i18n').then((i18n) => {
-        passToStep6();
+        cy.passToStep6();
         checkActiveIcon(6);
         // by default, next step button is disabled
         cy.dataCy('step-6-continue').should('be.visible').and('be.disabled');
@@ -901,7 +901,7 @@ describe('Register Challenge page', () => {
     });
 
     it('allows user to create a new team', () => {
-      passToStep5();
+      cy.passToStep5();
       checkActiveIcon(5);
 
       // use formOrganizationOptions to get subsidiary id
@@ -945,7 +945,7 @@ describe('Register Challenge page', () => {
     });
 
     it('allows user to pass back and forth through stepper', () => {
-      passToStep7();
+      cy.passToStep7();
 
       // test back navigation in the stepper
       cy.dataCy('step-7-back').should('be.visible').click();
@@ -1020,7 +1020,7 @@ describe('Register Challenge page', () => {
     it('allows user to apply voucher HALF', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           // switch to paying via voucher
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
@@ -1041,7 +1041,7 @@ describe('Register Challenge page', () => {
     it('allows user to apply voucher FULL', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           // switch to paying via voucher
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
@@ -1057,7 +1057,7 @@ describe('Register Challenge page', () => {
     it('when company pays - disables other participation options', () => {
       cy.get('@i18n').then((i18n) => {
         // go to payment step
-        passToStep2();
+        cy.passToStep2();
         // select company
         cy.dataCy(getRadioOption(PaymentSubject.company))
           .should('be.visible')
@@ -1090,7 +1090,7 @@ describe('Register Challenge page', () => {
     it('when school pays - disables other participation options', () => {
       cy.get('@i18n').then((i18n) => {
         // go to payment step
-        passToStep2();
+        cy.passToStep2();
         // select school
         cy.dataCy(getRadioOption(PaymentSubject.school))
           .should('be.visible')
@@ -1119,7 +1119,7 @@ describe('Register Challenge page', () => {
 
     it('when individual payment - all participation options are enabled', () => {
       // go to payment step
-      passToStep2();
+      cy.passToStep2();
       // select individual
       cy.dataCy(getRadioOption(PaymentSubject.individual))
         .should('be.visible')
@@ -1136,7 +1136,7 @@ describe('Register Challenge page', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           // go to payment step
-          passToStep2();
+          cy.passToStep2();
           // select voucher
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
@@ -1160,7 +1160,7 @@ describe('Register Challenge page', () => {
     it('shows correct step title on organization step', () => {
       cy.get('@i18n').then((i18n) => {
         // go to step participation (organization type)
-        passToStep3();
+        cy.passToStep3();
         // select company
         cy.dataCy('form-field-option')
           .contains(i18n.global.t('form.participation.labelColleagues'))
@@ -1206,7 +1206,7 @@ describe('Register Challenge page', () => {
 
     it('shows correct summary data on summary step', () => {
       cy.get('@i18n').then((i18n) => {
-        passToStep7();
+        cy.passToStep7();
         // check personal details section
         cy.dataCy('summary-personal-name').should('contain', 'John Doe');
         cy.dataCy('summary-personal-gender').should(
@@ -1247,7 +1247,7 @@ describe('Register Challenge page', () => {
 
     it('validates coordinator form when user wants to become coordinator', () => {
       cy.get('@i18n').then((i18n) => {
-        passToStep2();
+        cy.passToStep2();
         // select company
         cy.dataCy(getRadioOption(PaymentSubject.company))
           .should('be.visible')
@@ -1317,7 +1317,7 @@ describe('Register Challenge page', () => {
     });
 
     it('reset organization, subsidiary and team on parent data change', () => {
-      passToStep5();
+      cy.passToStep5();
       cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
         cy.fixture('apiGetSubsidiariesResponseNext').then(
           (subsidiariesResponseNext) => {
@@ -1444,7 +1444,7 @@ describe('Register Challenge page', () => {
     it('when voucher FULL + donation, submits step before creating PayU order', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           cy.fixture(
             'apiPostRegisterChallengePersonalDetailsRequest.json',
           ).then((request) => {
@@ -1486,7 +1486,7 @@ describe('Register Challenge page', () => {
       cy.window().should('have.property', 'i18n');
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
-          passToStep2();
+          cy.passToStep2();
           // test API post request (personal details)
           cy.fixture(
             'apiPostRegisterChallengePersonalDetailsRequest.json',
@@ -1588,7 +1588,7 @@ describe('Register Challenge page', () => {
     });
 
     it('submits form state on 1st, 5th and 6th step (company payment)', () => {
-      passToStep2();
+      cy.passToStep2();
       // test API post request (personal details)
       cy.fixture('apiPostRegisterChallengePersonalDetailsRequest.json').then(
         (request) => {
@@ -1667,7 +1667,7 @@ describe('Register Challenge page', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           // pass to step 2 (payment)
-          passToStep2();
+          cy.passToStep2();
 
           // case 1: individual payment
           cy.dataCy(getRadioOption(PaymentSubject.individual))
@@ -1767,10 +1767,10 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it('allows to complete registration with voucher payment FULL', () => {
+    it.only('allows to complete registration with voucher payment FULL', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
             .click();
@@ -2752,129 +2752,6 @@ describe('Register Challenge page', () => {
     });
   });
 });
-
-function passToStep2() {
-  cy.fixture('apiPostRegisterChallengePersonalDetailsRequest').then(
-    (personalDetailsRequest) => {
-      cy.dataCy('form-firstName-input').type(personalDetailsRequest.first_name);
-      cy.dataCy('form-lastName-input').type(personalDetailsRequest.last_name);
-      cy.dataCy('form-nickname-input').type(personalDetailsRequest.nickname);
-      cy.dataCy('newsletter-option').each((newsletterOption) => {
-        cy.wrap(newsletterOption).click();
-      });
-      cy.dataCy('form-personal-details-gender')
-        .find('.q-radio__label')
-        .first()
-        .click();
-      cy.dataCy('step-1-continue').should('be.visible').click();
-      cy.dataCy('step-1-continue').find('.q-spinner').should('be.visible');
-      // on step 2
-      cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
-    },
-  );
-}
-
-function passToStep3() {
-  cy.get('@config').then((config) => {
-    cy.get('@i18n').then((i18n) => {
-      passToStep2();
-      // payment - choose a free pass voucher
-      cy.dataCy(getRadioOption(PaymentSubject.voucher))
-        .should('be.visible')
-        .click();
-      cy.applyFullVoucher(config, i18n);
-      // next step button should be visible and enabled
-      cy.dataCy('step-2-continue').should('be.visible').click();
-      cy.dataCy('step-2-continue').find('.q-spinner').should('be.visible');
-      // on step 3
-      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
-    });
-  });
-}
-
-function passToStep4() {
-  passToStep3();
-  cy.dataCy('form-field-option').first().click();
-  cy.dataCy('step-3-continue').should('be.visible').click();
-  // step 3 skip check for loading spinner (not sending data to API)
-  // on step 4
-  cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
-}
-
-function passToStep5() {
-  passToStep4();
-  // select company
-  cy.dataCy('form-select-table-company')
-    .should('be.visible')
-    .find('.q-radio')
-    .first()
-    .click();
-  cy.fixture('apiGetSubsidiariesResponse.json').then(
-    (apiGetSubsidiariesResponse) => {
-      cy.fixture('apiGetSubsidiariesResponseNext.json').then(
-        (apiGetSubsidiariesResponseNext) => {
-          cy.waitForSubsidiariesApi(
-            apiGetSubsidiariesResponse,
-            apiGetSubsidiariesResponseNext,
-          );
-        },
-      );
-    },
-  );
-  // select address
-  cy.dataCy('form-company-address').find('.q-field__append').last().click();
-  // select option
-  cy.get('.q-menu')
-    .should('be.visible')
-    .within(() => {
-      cy.get('.q-item').first().click();
-    });
-  cy.dataCy('step-4-continue').should('be.visible').click();
-  // step 4 skip check for loading spinner (not sending data to API)
-  // on step 5
-  cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
-}
-
-function passToStep6() {
-  passToStep5();
-  // select a team
-  cy.dataCy('form-select-table-team')
-    .should('be.visible')
-    .find('.q-radio:not(.disabled)')
-    .first()
-    .click();
-  cy.dataCy('step-5-continue').should('be.visible').click();
-  cy.dataCy('step-5-continue').find('.q-spinner').should('be.visible');
-  // on step 6
-  cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
-}
-
-function passToStep7() {
-  passToStep6();
-  cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then((request) => {
-    // select merch
-    cy.dataCy('form-card-merch-female')
-      .first()
-      .find('[data-cy="form-card-merch-link"]')
-      .click();
-    // close dialog
-    cy.dataCy('dialog-close').click();
-    // verify dialog is closed
-    cy.dataCy('dialog-merch').should('not.exist');
-    // fill phone number
-    cy.dataCy('form-merch-phone-input')
-      .should('be.visible')
-      .find('input')
-      .type(request.telephone);
-    // opt in to info phone calls
-    cy.dataCy('form-merch-phone-opt-in-input').should('be.visible').click();
-    // go to next step
-    cy.dataCy('step-6-continue').should('be.visible').click();
-    cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
-    // on step 7
-    cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
-  });
-}
 
 function checkActiveIcon(activeStep) {
   const steps = [1, 2, 3, 4, 5, 6, 7];

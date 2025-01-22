@@ -18,6 +18,7 @@ import { routesConf } from '../router/routes_conf';
 // stores
 import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
+import { useRegisterChallengeStore } from './registerChallenge';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -313,6 +314,9 @@ export const useLoginStore = defineStore('login', {
       this.$log?.debug(
         `Login store refresh token timeout <${this.getRefreshTokenTimeout}>.`,
       );
+      // clear registerChallenge store
+      const registerChallengeStore = useRegisterChallengeStore();
+      registerChallengeStore.resetPersistentProperties();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(

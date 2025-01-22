@@ -43,6 +43,8 @@ import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_
 import { bearerTokeAuth } from '../../../src/utils';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
+import { getRadioOption } from 'test/cypress/utils';
+import { PaymentSubject } from '../../../src/components/enums/Payment';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -2288,3 +2290,133 @@ Cypress.Commands.add(
     );
   },
 );
+
+Cypress.Commands.add('passToStep2', () => {
+  cy.fixture('apiPostRegisterChallengePersonalDetailsRequest').then(
+    (personalDetailsRequest) => {
+      cy.dataCy('form-firstName-input').type(personalDetailsRequest.first_name);
+      cy.dataCy('form-lastName-input').type(personalDetailsRequest.last_name);
+      cy.dataCy('form-nickname-input').type(personalDetailsRequest.nickname);
+      cy.dataCy('newsletter-option').each((newsletterOption) => {
+        cy.wrap(newsletterOption).click();
+      });
+      cy.dataCy('form-personal-details-gender')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      cy.dataCy('step-1-continue').find('.q-spinner').should('be.visible');
+      // on step 2
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
+    },
+  );
+});
+
+Cypress.Commands.add('passToStep3', () => {
+  cy.get('@config').then((config) => {
+    cy.get('@i18n').then((i18n) => {
+      cy.passToStep2();
+      // payment - choose a free pass voucher
+      cy.dataCy(getRadioOption(PaymentSubject.voucher))
+        .should('be.visible')
+        .click();
+      cy.applyFullVoucher(config, i18n);
+      // next step button should be visible and enabled
+      cy.dataCy('step-2-continue').should('be.visible').click();
+      cy.dataCy('step-2-continue').find('.q-spinner').should('be.visible');
+      // on step 3
+      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+
+      // override POST register-challenge response (payment status "done")
+      cy.fixture('apiPostRegisterChallengeResponsePaymentDone.json').then(
+        (response) => {
+          cy.interceptRegisterChallengePostApi(config, i18n, response);
+        },
+      );
+    });
+  });
+});
+
+Cypress.Commands.add('passToStep4', () => {
+  cy.passToStep3();
+  cy.dataCy('form-field-option').first().click();
+  cy.dataCy('step-3-continue').should('be.visible').click();
+  // step 3 skip check for loading spinner (not sending data to API)
+  // on step 4
+  cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
+});
+
+Cypress.Commands.add('passToStep5', () => {
+  cy.passToStep4();
+  // select company
+  cy.dataCy('form-select-table-company')
+    .should('be.visible')
+    .find('.q-radio')
+    .first()
+    .click();
+  cy.fixture('apiGetSubsidiariesResponse.json').then(
+    (apiGetSubsidiariesResponse) => {
+      cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+        (apiGetSubsidiariesResponseNext) => {
+          cy.waitForSubsidiariesApi(
+            apiGetSubsidiariesResponse,
+            apiGetSubsidiariesResponseNext,
+          );
+        },
+      );
+    },
+  );
+  // select address
+  cy.dataCy('form-company-address').find('.q-field__append').last().click();
+  // select option
+  cy.get('.q-menu')
+    .should('be.visible')
+    .within(() => {
+      cy.get('.q-item').first().click();
+    });
+  cy.dataCy('step-4-continue').should('be.visible').click();
+  // step 4 skip check for loading spinner (not sending data to API)
+  // on step 5
+  cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
+});
+
+Cypress.Commands.add('passToStep6', () => {
+  cy.passToStep5();
+  // select a team
+  cy.dataCy('form-select-table-team')
+    .should('be.visible')
+    .find('.q-radio:not(.disabled)')
+    .first()
+    .click();
+  cy.dataCy('step-5-continue').should('be.visible').click();
+  cy.dataCy('step-5-continue').find('.q-spinner').should('be.visible');
+  // on step 6
+  cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
+});
+
+Cypress.Commands.add('passToStep7', () => {
+  cy.passToStep6();
+  cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then((request) => {
+    // select merch
+    cy.dataCy('form-card-merch-female')
+      .first()
+      .find('[data-cy="form-card-merch-link"]')
+      .click();
+    // close dialog
+    cy.dataCy('dialog-close').click();
+    // verify dialog is closed
+    cy.dataCy('dialog-merch').should('not.exist');
+    // fill phone number
+    cy.dataCy('form-merch-phone-input')
+      .should('be.visible')
+      .find('input')
+      .type(request.telephone);
+    // opt in to info phone calls
+    cy.dataCy('form-merch-phone-opt-in-input').should('be.visible').click();
+    // go to next step
+    cy.dataCy('step-6-continue').should('be.visible').click();
+    cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
+    // on step 7
+    cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
+  });
+});

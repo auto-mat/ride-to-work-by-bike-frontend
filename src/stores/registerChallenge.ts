@@ -27,7 +27,6 @@ import { useApiIsUserOrganizationAdmin } from '../composables/useApiIsUserOrgani
 // enums
 import { Gender } from '../components/types/Profile';
 import { PaymentState } from '../components/enums/Payment';
-import { NewsletterType } from '../components/types/Newsletter';
 import {
   OrganizationSubsidiary,
   OrganizationType,
@@ -61,24 +60,14 @@ import type {
   RegisterChallengeResult,
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
-import type { IpAddressResponse } from '../components/types/ApiIpAddress';
+
+// utils
 import { deepObjectWithSimplePropsCopy } from 'src/utils';
-
-const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
-  firstName: '',
-  lastName: '',
-  newsletter: [] as NewsletterType[],
-  nickname: '',
-  gender: null as Gender | null,
-  terms: true,
-};
-
-const emptyFormRegisterCoordinator: RegisterChallengeCoordinatorForm = {
-  jobTitle: '',
-  phone: '',
-  responsibility: false,
-  terms: false,
-};
+import {
+  emptyFormPersonalDetails,
+  emptyFormRegisterCoordinator,
+  getRegisterChallengeEmptyPersistentState,
+} from 'src/utils/get_register_challenge_empty_state';
 
 /**
  * Store for the register challenge page.
@@ -88,8 +77,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
   state: () => ({
     $log: null as Logger | null,
     personalDetails: deepObjectWithSimplePropsCopy(emptyFormPersonalDetails),
-    payment: null, // TODO: add data type options
     paymentAmount: null as number | null,
+    paymentCategory: PaymentCategory.none,
     paymentState: PaymentState.none,
     paymentSubject: PaymentSubject.individual,
     organizationType: OrganizationType.none,
@@ -109,20 +98,18 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     telephone: '',
     telephoneOptIn: false,
     isLoadingRegisterChallenge: false,
-    ipAddressData: null as IpAddressResponse | null,
     isLoadingSubsidiaries: false,
     isLoadingOrganizations: false,
     isLoadingTeams: false,
     isLoadingMerchandise: false,
     isLoadingFilteredMerchandise: false,
     isLoadingPayuOrder: false,
+    isLoadingUserOrganizationAdmin: false,
     isPayuTransactionInitiated: false,
     checkPaymentStatusRepetitionCount: 0,
     isSelectedRegisterCoordinator: false,
     hasOrganizationAdmin: null as boolean | null,
     isUserOrganizationAdmin: null as boolean | null,
-    isLoadingUserOrganizationAdmin: false,
-    paymentCategory: PaymentCategory.none,
   }),
 
   getters: {
@@ -219,8 +206,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
       return 0;
     },
-    getIpAddressData: (state): IpAddressResponse | null => state.ipAddressData,
-    getIpAddress: (state): string => state.ipAddressData?.ip || '',
     getIsPayuTransactionInitiated: (state): boolean =>
       state.isPayuTransactionInitiated,
     getIsPaymentCategoryDonation: (state): boolean => {
@@ -944,17 +929,41 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       this.isLoadingUserOrganizationAdmin = false;
     },
+    /**
+     * Reset only persistent properties of the store to their initial empty state
+     * Non-persisted properties remain unchanged
+     */
+    resetPersistentProperties(): void {
+      const emptyPersistentState = getRegisterChallengeEmptyPersistentState();
+      this.$log?.debug(
+        `Reset registerChallenge persistent properties to <${JSON.stringify(
+          emptyPersistentState,
+          null,
+          2,
+        )}>.`,
+      );
+      this.$patch(deepObjectWithSimplePropsCopy(emptyPersistentState));
+    },
   },
 
   persist: {
     omit: [
+      '$log',
       'subsidiaries',
       'organizations',
       'teams',
       'merchandiseItems',
       'merchandiseCards',
-      'ipAddressData',
+      'isLoadingRegisterChallenge',
+      'isLoadingSubsidiaries',
+      'isLoadingOrganizations',
+      'isLoadingTeams',
+      'isLoadingMerchandise',
+      'isLoadingFilteredMerchandise',
+      'isLoadingPayuOrder',
       'checkPaymentStatusRepetitionCount',
+      'isUserOrganizationAdmin',
+      'isLoadingUserOrganizationAdmin',
     ],
   },
 });

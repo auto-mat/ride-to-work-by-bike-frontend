@@ -1,0 +1,31 @@
+{
+  "personalDetails": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "newsletter": ["challenge", "events", "mobility"],
+    "nickname": "JD",
+    "gender": "male",
+    "terms": true
+  },
+  "paymentAmount": 0,
+  "paymentCategory": "",
+  "paymentState": "done",
+  "paymentSubject": "voucher",
+  "organizationType": "company",
+  "organizationId": 987,
+  "subsidiaryId": 1358,
+  "teamId": 2452,
+  "merchId": 133,
+  "voucher": { "valid": true, "discount": 100, "name": "ZD-CZBGSD" },
+  "formRegisterCoordinator": {
+    "jobTitle": "",
+    "phone": "",
+    "responsibility": false,
+    "terms": false
+  },
+  "telephone": "736123456",
+  "telephoneOptIn": true,
+  "isPayuTransactionInitiated": false,
+  "isSelectedRegisterCoordinator": false,
+  "hasOrganizationAdmin": true
+}
