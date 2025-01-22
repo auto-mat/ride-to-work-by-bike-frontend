@@ -3,6 +3,7 @@ import type {
   RegisterChallengePersonalDetailsForm,
   RegisterChallengeCoordinatorForm,
 } from '../components/types/RegisterChallenge';
+
 // enums
 import { Gender } from '../components/types/Profile';
 import { PaymentState } from '../components/enums/Payment';
