@@ -1890,6 +1890,11 @@ describe('Register Challenge page', () => {
                 .find('.q-radio__label')
                 .first()
                 .click();
+              // agree with terms
+              cy.dataCy('form-personal-details-terms')
+                .find('.q-checkbox__inner')
+                .first()
+                .click();
               cy.dataCy('step-1-continue').should('be.visible').click();
               cy.dataCy('step-1-continue')
                 .find('.q-spinner')
@@ -1906,7 +1911,7 @@ describe('Register Challenge page', () => {
     it('does not allow to continue if fails to submit payment step', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep2();
+          cy.passToStep2();
           // override intercept for payment step POST request
           cy.interceptRegisterChallengePostApi(
             config,
@@ -1932,7 +1937,7 @@ describe('Register Challenge page', () => {
     it('does not allow to continue if fails to submit team step', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep5();
+          cy.passToStep5();
           // override intercept for team step POST request
           cy.interceptRegisterChallengePostApi(
             config,
@@ -1958,7 +1963,7 @@ describe('Register Challenge page', () => {
     it('does not allow to continue if fails to submit merchandise step', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          passToStep6();
+          cy.passToStep6();
           // override intercept for merchandise step POST request
           cy.interceptRegisterChallengePostApi(
             config,
