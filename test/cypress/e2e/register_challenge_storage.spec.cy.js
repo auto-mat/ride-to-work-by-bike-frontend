@@ -32,6 +32,7 @@ describe('Register challenge storage', () => {
                     OrganizationType.company,
                   );
                   cy.interceptCitiesGetApi(config, defLocale);
+                  // intercept query for subsidiaries of first organization
                   cy.interceptSubsidiariesGetApi(
                     config,
                     defLocale,
