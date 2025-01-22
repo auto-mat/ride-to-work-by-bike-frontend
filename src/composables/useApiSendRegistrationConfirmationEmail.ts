@@ -1,5 +1,5 @@
 // libraries
-import { ref, Ref } from 'vue';
+import { ref } from 'vue';
 
 // composables
 import { useApi } from './useApi';
@@ -15,15 +15,13 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { SendRegistrationConfirmationEmailResponse } from '../components/types/ApiSendRegistrationConfirmationEmail';
+import type {
+  SendRegistrationConfirmationEmailResponse,
+  UseApiSendRegistrationConfirmationEmailReturn,
+} from '../components/types/ApiSendRegistrationConfirmationEmail';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
-
-type UseApiSendRegistrationConfirmationEmailReturn = {
-  isLoading: Ref<boolean>;
-  sendRegistrationConfirmationEmail: () => Promise<SendRegistrationConfirmationEmailResponse | null>;
-};
 
 /**
  * Send registration confirmation email composable
@@ -41,6 +39,7 @@ export const useApiSendRegistrationConfirmationEmail = (
   /**
    * Send registration confirmation email
    * Triggers sending of a new registration confirmation email
+   * @returns {Promise<SendRegistrationConfirmationEmailResponse | null>} - API response
    */
   const sendRegistrationConfirmationEmail =
     async (): Promise<SendRegistrationConfirmationEmailResponse | null> => {
