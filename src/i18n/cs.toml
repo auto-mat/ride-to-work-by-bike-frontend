@@ -897,6 +897,7 @@ tooltipSave = "Uložit cestu"
 tooltipUndo = "Zpět"
 
 [sendRegistrationConfirmationEmail]
+apiMessageAlreadyConfirmed = "E-mail již byl potvrzen."
 apiMessageError = "Chyba při odesílání potvrzovacího e-mailu."
 apiMessageErrorWithMessage = "Chyba při odesílání potvrzovacího e-mailu. Chyba: {error}"
 apiMessageSuccess = "Potvrzovací e-mail byl úspěšně odeslán."

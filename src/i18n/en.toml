@@ -892,6 +892,7 @@ tooltipSave = "Save path"
 tooltipUndo = "Undo"
 
 [sendRegistrationConfirmationEmail]
+apiMessageAlreadyConfirmed = "Email already confirmed."
 apiMessageError = "Error sending confirmation email."
 apiMessageErrorWithMessage = "Error sending confirmation email. Error: {error}"
 apiMessageSuccess = "Confirmation email was successfully sent."

@@ -71,7 +71,7 @@ describe('Email confirmation', () => {
       });
     });
 
-    it('renders email resend button', () => {
+    it('renders email resend button and shows success message on successful submit', () => {
       cy.get('@i18n').then((i18n) => {
         cy.dataCy('email-verification-resend-button')
           .should('be.visible')
@@ -86,6 +86,38 @@ describe('Email confirmation', () => {
         cy.contains(
           i18n.global.t('sendRegistrationConfirmationEmail.apiMessageSuccess'),
         ).should('be.visible');
+      });
+    });
+
+    it('show info message when email already confirmed', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          // override registration confirmation email POST API intercept
+          cy.fixture(
+            'apiPostSendRegistrationConfirmationEmailResponseFalse.json',
+          ).then((response) => {
+            cy.interceptSendRegistrationConfirmationEmailPostApi(
+              config,
+              i18n,
+              response,
+            );
+            cy.dataCy('email-verification-resend-button')
+              .should('be.visible')
+              .and(
+                'contain',
+                i18n.global.t('register.form.buttonResendConfirmationEmail'),
+              )
+              .click();
+            // wait for API response
+            cy.waitForSendRegistrationConfirmationEmailPostApi(response);
+            // info message is visible
+            cy.contains(
+              i18n.global.t(
+                'sendRegistrationConfirmationEmail.apiMessageAlreadyConfirmed',
+              ),
+            ).should('be.visible');
+          });
+        });
       });
     });
   });

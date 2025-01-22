@@ -58,7 +58,7 @@ export const useApiSendRegistrationConfirmationEmail = (
           method: 'post',
           translationKey: 'sendRegistrationConfirmationEmail',
           headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-          showSuccessMessage: true,
+          showSuccessMessage: false,
           logger,
         });
 

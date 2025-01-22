@@ -20,6 +20,8 @@ const whiteOpacity = changeAlpha(
 const selectorEmailVerification = 'email-verification';
 const selectorEmailVerificationTitle = 'email-verification-title';
 const selectorEmailVerificationText = 'email-verification-text';
+const selectorEmailVerificationResendButton =
+  'email-verification-resend-button';
 const selectorEmailVerificationWrongEmailHint =
   'email-verification-wrong-email-hint';
 const selectorEmailVerificationRegisterLink =
@@ -40,12 +42,23 @@ describe('<EmailVerification>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
+        'buttonResendConfirmationEmail',
         'linkRegister',
         'hintWrongEmail',
         'textEmailVerification',
         'titleEmailVerification',
       ],
       'register.form',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      [
+        'apiMessageError',
+        'apiMessageErrorWithMessage',
+        'apiMessageSuccess',
+        'apiMessageAlreadyConfirmed',
+      ],
+      'sendRegistrationConfirmationEmail',
       i18n,
     );
   });
@@ -153,6 +166,15 @@ function coreTests() {
           });
       },
     );
+    // resend button
+    cy.dataCy(selectorEmailVerificationResendButton)
+      .should('be.visible')
+      .and('have.css', 'font-size', `${fontSizeText}px`)
+      .and('have.color', white)
+      .and(
+        'contain',
+        i18n.global.t('register.form.buttonResendConfirmationEmail'),
+      );
     // wrong email hint
     cy.dataCy(selectorEmailVerificationWrongEmailHint)
       .should('be.visible')

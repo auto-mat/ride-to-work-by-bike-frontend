@@ -18,11 +18,12 @@
  */
 
 // libraries
-import { colors } from 'quasar';
+import { colors, Notify } from 'quasar';
 import { computed, defineComponent, inject, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useApiSendRegistrationConfirmationEmail } from '../../composables/useApiSendRegistrationConfirmationEmail';
 
 // config
@@ -122,7 +123,25 @@ export default defineComponent({
     const { isLoading, sendRegistrationConfirmationEmail } =
       useApiSendRegistrationConfirmationEmail(logger);
     const onResendConfirmationEmail = async (): Promise<void> => {
-      await sendRegistrationConfirmationEmail();
+      const data = await sendRegistrationConfirmationEmail();
+      // show success message if email was sent
+      if (data && data.send_registration_confirmation_email === true) {
+        Notify.create({
+          message: i18n.global.t(
+            'sendRegistrationConfirmationEmail.apiMessageSuccess',
+          ),
+          color: 'positive',
+        });
+      }
+      // show info message if email was already confirmed
+      else if (data && data.send_registration_confirmation_email === false) {
+        Notify.create({
+          message: i18n.global.t(
+            'sendRegistrationConfirmationEmail.apiMessageAlreadyConfirmed',
+          ),
+          color: 'warning',
+        });
+      }
     };
 
     return {
