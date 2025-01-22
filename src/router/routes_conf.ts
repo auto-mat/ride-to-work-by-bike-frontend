@@ -58,6 +58,13 @@ const routesConf: RoutesConf = {
       name: 'login',
     },
   },
+  reset_password: {
+    path: '/reset-password',
+    children: {
+      fullPath: '/reset-password',
+      name: 'reset-password',
+    },
+  },
   prizes: {
     path: '/prizes',
     children: {

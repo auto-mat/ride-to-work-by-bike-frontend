@@ -823,9 +823,9 @@ messageTermsRequired = "Musíte súhlasiť so spracovaním osobných údajov"
 hintPassword = "Musí obsahovať aspoň 6 znakov a aspoň 1 písmeno."
 
 [resetPasswordConfirm]
-messageSuccess = "Heslo bolo úspešne zmenené."
-messageError = "Chyba pri zmene hesla."
-messageErrorWithMessage = "Chyba pri zmene hesla. Chyba: {error}"
+apiMessageError = "Chyba pri zmene hesla."
+apiMessageErrorWithMessage = "Chyba pri zmene hesla. Chyba: {error}"
+apiMessageSuccess = "Heslo bolo úspešne zmenené."
 
 [results]
 buttonPastChallenges = "Výsledky predošlých výziev"

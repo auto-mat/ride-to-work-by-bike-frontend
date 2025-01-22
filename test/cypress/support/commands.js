@@ -2482,3 +2482,61 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Intercept reset password confirm POST API call
+ * Provides `@postResetPasswordConfirm` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptResetPasswordConfirmApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiResetPasswordConfirm } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiResetPasswordConfirmLocalized = `${apiBaseUrl}${urlApiResetPasswordConfirm}`;
+
+    cy.fixture('apiPostResetPasswordConfirmResponseSuccess.json').then(
+      (defaultResponseBody) => {
+        cy.intercept('POST', urlApiResetPasswordConfirmLocalized, {
+          statusCode: responseStatusCode
+            ? responseStatusCode
+            : httpSuccessfullStatus,
+          body: responseBody ? responseBody : defaultResponseBody,
+        }).as('postResetPasswordConfirm');
+      },
+    );
+  },
+);
+
+/**
+ * Wait for intercept reset password confirm POST API call and compare request/response object
+ * Wait for `@postResetPasswordConfirm` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add(
+  'waitForResetPasswordConfirmApi',
+  (expectedResponse = null) => {
+    cy.fixture('apiPostResetPasswordConfirmRequest.json').then(
+      (requestFixture) => {
+        cy.wait('@postResetPasswordConfirm').then(({ request, response }) => {
+          // verify that request matches fixture
+          expect(request.body).to.deep.equal(requestFixture);
+
+          // verify that response if provided
+          if (response && expectedResponse) {
+            expect(response.statusCode).to.equal(httpSuccessfullStatus);
+            expect(response.body).to.deep.equal(expectedResponse);
+          }
+        });
+      },
+    );
+  },
+);

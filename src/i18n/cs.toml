@@ -828,9 +828,9 @@ messageTermsRequired = "Musíte souhlasit se zpracováním osobních údajů"
 hintPassword = "Musí obsahovat alespoň 6 znaků a alespoň 1 písmeno."
 
 [resetPasswordConfirm]
-messageError = "Chyba při změně hesla."
-messageErrorWithMessage = "Chyba při změně hesla. Chyba: {error}"
-messageSuccess = "Heslo bylo úspěšně změněno."
+apiMessageError = "Chyba při změně hesla."
+apiMessageErrorWithMessage = "Chyba při změně hesla. Chyba: {error}"
+apiMessageSuccess = "Heslo bylo úspěšně změněno."
 
 [results]
 buttonPastChallenges = "Výsledky z dřívějších výzev"

@@ -74,6 +74,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // reset password
+  {
+    path: routesConf['reset_password']['path'],
+    component: () => import('layouts/LoginRegisterLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['reset_password']['children']['name'],
+        component: () => import('pages/ResetPasswordPage.vue'),
+      },
+    ],
+  },
   // company coordinator
   {
     path: routesConf['become_coordinator']['path'],
