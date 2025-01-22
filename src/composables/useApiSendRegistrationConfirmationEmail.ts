@@ -10,9 +10,15 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 // enums
 import { ApiBaseUrl } from '../components/enums/Api';
 
+// stores
+import { useLoginStore } from '../stores/login';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type { SendRegistrationConfirmationEmailResponse } from '../components/types/ApiSendRegistrationConfirmationEmail';
+
+// utils
+import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiSendRegistrationConfirmationEmailReturn = {
   isLoading: Ref<boolean>;
@@ -29,6 +35,7 @@ export const useApiSendRegistrationConfirmationEmail = (
   logger: Logger | null,
 ): UseApiSendRegistrationConfirmationEmailReturn => {
   const isLoading = ref<boolean>(false);
+  const loginStore = useLoginStore();
   const { apiFetch } = useApi(ApiBaseUrl.rtwbbBackendApi);
 
   /**
@@ -40,11 +47,17 @@ export const useApiSendRegistrationConfirmationEmail = (
       logger?.info('Send registration confirmation email request to the API.');
       isLoading.value = true;
 
+      // append access token into HTTP header
+      const requestTokenHeader_ = { ...requestTokenHeader };
+      requestTokenHeader_.Authorization +=
+        await loginStore.getAccessTokenWithRefresh();
+
       const { data } =
         await apiFetch<SendRegistrationConfirmationEmailResponse>({
           endpoint: `${rideToWorkByBikeConfig.urlApiSendRegistrationConfirmationEmail}`,
           method: 'post',
           translationKey: 'sendRegistrationConfirmationEmail',
+          headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
           showSuccessMessage: true,
           logger,
         });

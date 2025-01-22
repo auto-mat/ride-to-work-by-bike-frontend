@@ -22,6 +22,9 @@ import { colors } from 'quasar';
 import { computed, defineComponent, inject, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
+// composables
+import { useApiSendRegistrationConfirmationEmail } from '../../composables/useApiSendRegistrationConfirmationEmail';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { routesConf } from '../../router/routes_conf';
@@ -115,9 +118,18 @@ export default defineComponent({
       router.push(routesConf['register']['path']);
     };
 
+    // resend confirmation email
+    const { isLoading, sendRegistrationConfirmationEmail } =
+      useApiSendRegistrationConfirmationEmail(logger);
+    const onResendConfirmationEmail = async (): Promise<void> => {
+      await sendRegistrationConfirmationEmail();
+    };
+
     return {
       email,
+      isLoading,
       onRegisterAgain,
+      onResendConfirmationEmail,
       whiteOpacity,
     };
   },
@@ -154,9 +166,26 @@ export default defineComponent({
     <!-- Text -->
     <div
       data-cy="email-verification-text"
-      class="q-mb-xl"
+      class="q-mb-lg"
       v-html="$t('register.form.textEmailVerification', { email })"
     />
+    <!-- Button: Resend confirmation email -->
+    <div>
+      <q-btn
+        outline
+        unelevated
+        rounded
+        padding="xs xl"
+        type="button"
+        color="white"
+        text-color="white"
+        class="q-mb-xl"
+        :label="$t('register.form.buttonResendConfirmationEmail')"
+        :loading="isLoading"
+        @click="onResendConfirmationEmail"
+        data-cy="email-verification-resend-button"
+      />
+    </div>
     <!-- Link: Register again -->
     <div data-cy="email-verification-wrong-email-hint">
       {{ $t('register.form.hintWrongEmail') }}

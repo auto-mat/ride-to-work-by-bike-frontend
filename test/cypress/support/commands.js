@@ -2424,3 +2424,61 @@ Cypress.Commands.add('passToStep7', () => {
     cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
   });
 });
+
+/**
+ * Intercept send registration confirmation email POST API call
+ * Provides `@postSendRegistrationConfirmationEmail` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptSendRegistrationConfirmationEmailPostApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiSendRegistrationConfirmationEmail } =
+      config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiSendRegistrationConfirmationEmailLocalized = `${apiBaseUrl}${urlApiSendRegistrationConfirmationEmail}`;
+
+    cy.fixture(
+      'apiPostSendRegistrationConfirmationEmailResponseTrue.json',
+    ).then((defaultResponse) => {
+      cy.intercept('POST', urlApiSendRegistrationConfirmationEmailLocalized, {
+        statusCode: responseStatusCode || httpSuccessfullStatus,
+        body: responseBody || defaultResponse,
+      }).as('postSendRegistrationConfirmationEmail');
+    });
+  },
+);
+
+/**
+ * Wait for intercept send registration confirmation email POST API call and compare response object
+ * Wait for `@postSendRegistrationConfirmationEmail` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add(
+  'waitForSendRegistrationConfirmationEmailPostApi',
+  (expectedResponse = null) => {
+    cy.fixture(
+      'apiPostSendRegistrationConfirmationEmailResponseTrue.json',
+    ).then((defaultResponse) => {
+      cy.wait('@postSendRegistrationConfirmationEmail').then(
+        ({ request, response }) => {
+          expect(request.headers.authorization).to.include(bearerTokeAuth);
+          if (response) {
+            expect(response.statusCode).to.equal(httpSuccessfullStatus);
+            expect(response.body).to.deep.equal(
+              expectedResponse || defaultResponse,
+            );
+          }
+        },
+      );
+    });
+  },
+);

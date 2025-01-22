@@ -894,7 +894,7 @@ tooltipUndo = "Undo"
 [sendRegistrationConfirmationEmail]
 apiMessageError = "Error sending confirmation email."
 apiMessageErrorWithMessage = "Error sending confirmation email. Error: {error}"
-apiMessageSuccess = "confirmation email was successfully sent."
+apiMessageSuccess = "Confirmation email was successfully sent."
 
 [statsBar]
 labelFrequency = "regularity"
