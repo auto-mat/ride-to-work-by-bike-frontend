@@ -82,6 +82,10 @@ describe('Email confirmation', () => {
           .click();
         // wait for API response
         cy.waitForSendRegistrationConfirmationEmailPostApi();
+        // success message is visible
+        cy.contains(
+          i18n.global.t('sendRegistrationConfirmationEmail.apiMessageSuccess'),
+        ).should('be.visible');
       });
     });
   });
