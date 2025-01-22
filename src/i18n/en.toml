@@ -823,9 +823,9 @@ messageTermsRequired = "You must consent to the processing of personal data"
 hintPassword = "It must contain at least 6 characters and at least 1 letter."
 
 [resetPasswordConfirm]
-apiMessageSuccess = "Password was successfully changed."
 apiMessageError = "Error changing password."
 apiMessageErrorWithMessage = "Error changing password. Error: {error}"
+apiMessageSuccess = "Password was successfully changed."
 
 [results]
 buttonPastChallenges = "View previous challenges"

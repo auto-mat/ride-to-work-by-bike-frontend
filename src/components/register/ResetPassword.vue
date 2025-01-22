@@ -41,10 +41,13 @@ export default defineComponent({
     const loginStore = useLoginStore();
     const router = useRouter();
     const route = useRoute();
-    const key = route.query.key;
+    const token = route.query.token;
     const uid = route.query.uid;
 
-    if (typeof key !== 'string' || typeof uid !== 'string') {
+    if (typeof token !== 'string' || typeof uid !== 'string') {
+      logger?.debug(
+        `Reset password token <${token}> or uid <${uid}> is not a string. Redirect to login page.`,
+      );
       router.push(routesConf['login']['path']);
     }
 
@@ -76,7 +79,7 @@ export default defineComponent({
         new_password1: password1.value,
         new_password2: password2.value,
         uid: uid as string,
-        token: key as string,
+        token: token as string,
       });
       // show success message
       if (response && response.detail) {
@@ -129,7 +132,7 @@ export default defineComponent({
         <q-icon
           size="40px"
           color="white"
-          name="svguse:icons/password/icons.svg#lock"
+          name="svguse:icons/reset_password/icons.svg#lock"
           data-cy="reset-password-icon"
         />
       </q-avatar>

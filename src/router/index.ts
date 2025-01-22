@@ -112,6 +112,7 @@ export default route(function (/* { store, ssrContext } */) {
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
             record.path === routesConf['verify_email']['path'] ||
+            record.path === routesConf['reset_password']['path'] ||
             record.path === routesConf['challenge_inactive']['path'] ||
             record.path === routesConf['register_challenge']['path'],
         )
@@ -122,12 +123,14 @@ export default route(function (/* { store, ssrContext } */) {
           `Router path <${routesConf['login']['path']}>,` +
             ` <${routesConf['register']['path']}>` +
             ` <${routesConf['verify_email']['path']}>` +
+            ` <${routesConf['reset_password']['path']}>` +
             ` <${routesConf['challenge_inactive']['path']}>` +
             ` is matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
                 record.path === routesConf['register']['path'] ||
                 record.path === routesConf['verify_email']['path'] ||
+                record.path === routesConf['reset_password']['path'] ||
                 record.path === routesConf['challenge_inactive']['path'] ||
                 record.path === routesConf['register_challenge']['path'],
             )}>.`,
@@ -198,15 +201,16 @@ export default route(function (/* { store, ssrContext } */) {
         next({ path: routesConf['register_challenge']['path'] });
       } else if (
         /**
-         * If not authenticated and not on pages: login, register, confirm_email
-         * redirect to login page.
+         * If not authenticated and not on pages: login, register,
+         * confirm_email, reset_password, redirect to login page.
          */
         !isAuthenticated &&
         !to.matched.some(
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
-            record.path === routesConf['confirm_email']['path'],
+            record.path === routesConf['confirm_email']['path'] ||
+            record.path === routesConf['reset_password']['path'],
         )
       ) {
         logger?.debug(
@@ -215,12 +219,14 @@ export default route(function (/* { store, ssrContext } */) {
         logger?.debug(
           `Router path <${routesConf['login']['path']}>,` +
             ` <${routesConf['register']['path']}>,` +
-            ` <${routesConf['confirm_email']['path']}>` +
+            ` <${routesConf['confirm_email']['path']}>,` +
+            ` <${routesConf['reset_password']['path']}>` +
             ` is not matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
                 record.path === routesConf['register']['path'] ||
-                record.path === routesConf['confirm_email']['path'],
+                record.path === routesConf['confirm_email']['path'] ||
+                record.path === routesConf['reset_password']['path'],
             )}>.`,
         );
         logger?.debug(
