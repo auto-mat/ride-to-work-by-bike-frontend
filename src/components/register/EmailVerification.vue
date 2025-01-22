@@ -119,9 +119,12 @@ export default defineComponent({
       router.push(routesConf['register']['path']);
     };
 
-    // resend confirmation email
     const { isLoading, sendRegistrationConfirmationEmail } =
       useApiSendRegistrationConfirmationEmail(logger);
+    /**
+     * Resend confirmation email
+     * @returns {Promise<void>}
+     */
     const onResendConfirmationEmail = async (): Promise<void> => {
       const data = await sendRegistrationConfirmationEmail();
       // show success message if email was sent
