@@ -1767,7 +1767,7 @@ describe('Register Challenge page', () => {
       });
     });
 
-    it.only('allows to complete registration with voucher payment FULL', () => {
+    it('allows to complete registration with voucher payment FULL', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.passToStep2();
