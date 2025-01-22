@@ -90,8 +90,11 @@ export default defineComponent({
           color: 'negative',
         });
       }
-      // redirect to login page
       if (response) {
+        // reset form
+        password1.value = '';
+        password2.value = '';
+        // redirect to login page
         loginStore.setLoginFormState(LoginFormState.login);
         router.push(routesConf['login']['path']);
       }
