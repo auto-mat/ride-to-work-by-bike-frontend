@@ -55,10 +55,13 @@ export const useStepperValidation = ({
         const isValidPersonalDetails: boolean =
           await stepPersonalDetailsRef.value.validate();
         if (isValidPersonalDetails) {
-          await registerChallengeStore.submitStep(
+          const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.personalDetails,
           );
-          stepperRef.value.next();
+          // only if there is a valid response go next
+          if (response) {
+            stepperRef.value.next();
+          }
         } else {
           stepPersonalDetailsRef.value.$el.scrollIntoView({
             behavior: 'smooth',
@@ -70,12 +73,15 @@ export const useStepperValidation = ({
         if (!stepPaymentRef.value) return;
         const isValidPayment: boolean = await stepPaymentRef.value.validate();
         if (isValidPayment) {
-          await registerChallengeStore.submitStep(
+          const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.payment,
           );
           // register coordinator action (runs only if selected by user)
           await registerChallengeStore.registerCoordinator();
-          stepperRef.value.next();
+          // only if there is a valid response go next
+          if (response) {
+            stepperRef.value.next();
+          }
         } else {
           stepPaymentRef.value.$el.scrollIntoView({ behavior: 'smooth' });
         }
@@ -108,8 +114,13 @@ export const useStepperValidation = ({
         if (!stepTeamRef.value) return;
         const isValidTeam: boolean = await stepTeamRef.value.validate();
         if (isValidTeam) {
-          await registerChallengeStore.submitStep(RegisterChallengeStep.team);
-          stepperRef.value.next();
+          const response = await registerChallengeStore.submitStep(
+            RegisterChallengeStep.team,
+          );
+          // only if there is a valid response go next
+          if (response) {
+            stepperRef.value.next();
+          }
         } else {
           stepTeamRef.value.$el.scrollIntoView({ behavior: 'smooth' });
         }
@@ -119,8 +130,13 @@ export const useStepperValidation = ({
         if (!stepMerchRef.value) return;
         const isValidMerch: boolean = await stepMerchRef.value.validate();
         if (isValidMerch) {
-          await registerChallengeStore.submitStep(RegisterChallengeStep.merch);
-          stepperRef.value.next();
+          const response = await registerChallengeStore.submitStep(
+            RegisterChallengeStep.merch,
+          );
+          // only if there is a valid response go next
+          if (response) {
+            stepperRef.value.next();
+          }
         } else {
           stepMerchRef.value.$el.scrollIntoView({ behavior: 'smooth' });
         }

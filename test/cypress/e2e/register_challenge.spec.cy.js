@@ -11,6 +11,7 @@ import { PaymentSubject } from 'src/components/enums/Payment';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getCurrentPriceLevelsUtil } from '../../../src/utils/price_levels';
 import { PriceLevelCategory } from '../../../src/components/enums/Challenge';
+import { HttpStatusCode } from 'axios';
 
 const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
@@ -1851,6 +1852,146 @@ describe('Register Challenge page', () => {
           cy.dataCy('step-7-continue')
             .should('be.visible')
             .and('not.be.disabled');
+        });
+      });
+    });
+
+    it('does not allow to continue if fails to submit personal details step', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          // override intercept for personal details step POST request
+          cy.interceptRegisterChallengePostApi(
+            config,
+            i18n,
+            null,
+            HttpStatusCode.BadRequest,
+          );
+          // try to pass to step 2
+          cy.fixture('apiPostRegisterChallengePersonalDetailsRequest').then(
+            (personalDetailsRequest) => {
+              cy.dataCy('form-firstName-input').type(
+                personalDetailsRequest.first_name,
+              );
+              cy.dataCy('form-lastName-input').type(
+                personalDetailsRequest.last_name,
+              );
+              cy.dataCy('form-nickname-input').type(
+                personalDetailsRequest.nickname,
+              );
+              cy.dataCy('newsletter-option').each((newsletterOption) => {
+                cy.wrap(newsletterOption).click();
+              });
+              cy.dataCy('form-personal-details-gender')
+                .find('.q-radio__label')
+                .first()
+                .click();
+              cy.dataCy('step-1-continue').should('be.visible').click();
+              cy.dataCy('step-1-continue')
+                .find('.q-spinner')
+                .should('be.visible');
+              // still on step 1
+              cy.dataCy('step-2-continue').should('not.exist');
+              cy.dataCy('step-1-continue').should('be.visible');
+            },
+          );
+        });
+      });
+    });
+
+    it('does not allow to continue if fails to submit payment step', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep2();
+          // override intercept for payment step POST request
+          cy.interceptRegisterChallengePostApi(
+            config,
+            i18n,
+            null,
+            HttpStatusCode.BadRequest,
+          );
+          // payment - choose a free pass voucher
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          cy.applyFullVoucher(config, i18n);
+          // next step button should be visible and enabled
+          cy.dataCy('step-2-continue').should('be.visible').click();
+          cy.dataCy('step-2-continue').find('.q-spinner').should('be.visible');
+          // still on step 2
+          cy.dataCy('step-3-continue').should('not.exist');
+          cy.dataCy('step-2-continue').should('be.visible');
+        });
+      });
+    });
+
+    it('does not allow to continue if fails to submit team step', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep5();
+          // override intercept for team step POST request
+          cy.interceptRegisterChallengePostApi(
+            config,
+            i18n,
+            null,
+            HttpStatusCode.BadRequest,
+          );
+          // try to submit team step
+          cy.dataCy('form-select-table-team')
+            .should('be.visible')
+            .find('.q-radio:not(.disabled)')
+            .first()
+            .click();
+          cy.dataCy('step-5-continue').should('be.visible').click();
+          cy.dataCy('step-5-continue').find('.q-spinner').should('be.visible');
+          // still on step 5
+          cy.dataCy('step-6-continue').should('not.exist');
+          cy.dataCy('step-5-continue').should('be.visible');
+        });
+      });
+    });
+
+    it('does not allow to continue if fails to submit merchandise step', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          passToStep6();
+          // override intercept for merchandise step POST request
+          cy.interceptRegisterChallengePostApi(
+            config,
+            i18n,
+            null,
+            HttpStatusCode.BadRequest,
+          );
+          // try to submit merchandise step
+          cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
+            (request) => {
+              // select merch
+              cy.dataCy('form-card-merch-female')
+                .first()
+                .find('[data-cy="form-card-merch-link"]')
+                .click();
+              // close dialog
+              cy.dataCy('dialog-close').click();
+              // verify dialog is closed
+              cy.dataCy('dialog-merch').should('not.exist');
+              // fill phone number
+              cy.dataCy('form-merch-phone-input')
+                .should('be.visible')
+                .find('input')
+                .type(request.telephone);
+              // opt in to info phone calls
+              cy.dataCy('form-merch-phone-opt-in-input')
+                .should('be.visible')
+                .click();
+              // go to next step
+              cy.dataCy('step-6-continue').should('be.visible').click();
+              cy.dataCy('step-6-continue')
+                .find('.q-spinner')
+                .should('be.visible');
+              // still on step 6
+              cy.dataCy('step-7-continue').should('not.exist');
+              cy.dataCy('step-6-continue').should('be.visible');
+            },
+          );
         });
       });
     });
