@@ -62,9 +62,8 @@ export default defineComponent({
         registerChallengeStore.getOrganizationId
           ? registerChallengeStore.getOrganizationId
           : null,
-      set: (value: number | null) => {
-        registerChallengeStore.setOrganizationId(value);
-      },
+      set: (value: number | null) =>
+        registerChallengeStore.setOrganizationId(value),
     });
 
     const subsidiaryId = computed<number | null>({
