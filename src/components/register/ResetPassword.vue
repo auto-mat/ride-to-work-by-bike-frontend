@@ -88,6 +88,7 @@ export default defineComponent({
           color: 'positive',
         });
       } else if (response) {
+        // fallback message
         Notify.create({
           message: i18n.global.t('resetPasswordConfirm.messageSuccess'),
           color: 'negative',

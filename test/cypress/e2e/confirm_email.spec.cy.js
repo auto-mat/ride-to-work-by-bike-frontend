@@ -2,17 +2,16 @@ import { testBackgroundImage } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { HttpStatusCode } from 'axios';
 
-const KEY = 'MzY:1tSMIs:LujGK-G_Q63UHhQA4fTE28pqyI4';
-const EMAIL = 'example%40example.com';
-
 describe('Email confirmation', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit(
-        '#' +
-          routesConf['confirm_email']['path'] +
-          `?key=${encodeURIComponent(KEY)}&email=${encodeURIComponent(EMAIL)}`,
-      );
+      cy.fixture('confirmEmailAddressParams.json').then((params) => {
+        cy.visit(
+          '#' +
+            routesConf['confirm_email']['path'] +
+            `?key=${encodeURIComponent(params.key)}&email=${encodeURIComponent(params.email)}`,
+        );
+      });
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases
@@ -51,19 +50,21 @@ describe('Email confirmation', () => {
 
     it('renders email confirmation message', () => {
       cy.get('@i18n').then((i18n) => {
-        cy.dataCy('email-confirmation-text')
-          .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '400')
-          .then(($el) => {
-            cy.wrap(
-              i18n.global.t('register.form.textEmailConfirmation', {
-                email: EMAIL,
-              }),
-            ).then((translation) => {
-              expect($el.html()).to.equal(translation);
+        cy.fixture('confirmEmailAddressParams.json').then((params) => {
+          cy.dataCy('email-confirmation-text')
+            .should('be.visible')
+            .and('have.css', 'font-size', '14px')
+            .and('have.css', 'font-weight', '400')
+            .then(($el) => {
+              cy.wrap(
+                i18n.global.t('register.form.textEmailConfirmation', {
+                  email: params.email,
+                }),
+              ).then((translation) => {
+                expect($el.html()).to.equal(translation);
+              });
             });
-          });
+        });
       });
     });
 
@@ -86,18 +87,26 @@ describe('Email confirmation', () => {
     it('button click should send request and redirect to register challenge page', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          cy.interceptConfirmEmailApi(config, i18n);
-          cy.dataCy('email-confirmation-submit').click();
-          cy.wait('@confirmEmailRequest').then((interception) => {
-            expect(interception.request.body).to.have.property('key', KEY);
-            cy.fixture('apiGetConfirmEmailResponseOK').then(
-              (apiGetConfirmEmailResponse) => {
-                expect(interception.response.body).to.deep.equal(
-                  apiGetConfirmEmailResponse,
-                );
-                cy.url().should('contain', routesConf['confirm_email']['path']);
-              },
-            );
+          cy.fixture('confirmEmailAddressParams.json').then((params) => {
+            cy.interceptConfirmEmailApi(config, i18n);
+            cy.dataCy('email-confirmation-submit').click();
+            cy.wait('@confirmEmailRequest').then((interception) => {
+              expect(interception.request.body).to.have.property(
+                'key',
+                params.key,
+              );
+              cy.fixture('apiGetConfirmEmailResponseOK').then(
+                (apiGetConfirmEmailResponse) => {
+                  expect(interception.response.body).to.deep.equal(
+                    apiGetConfirmEmailResponse,
+                  );
+                  cy.url().should(
+                    'contain',
+                    routesConf['confirm_email']['path'],
+                  );
+                },
+              );
+            });
           });
         });
       });
@@ -108,18 +117,23 @@ describe('Email confirmation', () => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture('apiGetConfirmEmailResponseFail').then(
             (apiGetConfirmEmailResponseFail) => {
-              cy.interceptConfirmEmailApi(
-                config,
-                i18n,
-                apiGetConfirmEmailResponseFail,
-                HttpStatusCode.NotFound,
-              );
-              cy.dataCy('email-confirmation-submit').click();
-              cy.wait('@confirmEmailRequest').then((interception) => {
-                expect(interception.request.body).to.have.property('key', KEY);
-                expect(interception.response.body).to.deep.equal(
+              cy.fixture('confirmEmailAddressParams.json').then((params) => {
+                cy.interceptConfirmEmailApi(
+                  config,
+                  i18n,
                   apiGetConfirmEmailResponseFail,
+                  HttpStatusCode.NotFound,
                 );
+                cy.dataCy('email-confirmation-submit').click();
+                cy.wait('@confirmEmailRequest').then((interception) => {
+                  expect(interception.request.body).to.have.property(
+                    'key',
+                    params.key,
+                  );
+                  expect(interception.response.body).to.deep.equal(
+                    apiGetConfirmEmailResponseFail,
+                  );
+                });
               });
             },
           );

@@ -12,11 +12,11 @@ const selectorFormResetPasswordSubmit = 'form-reset-password-submit';
 describe('Reset Password', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.fixture('apiPostResetPasswordConfirmRequest').then((request) => {
+      cy.fixture('apiPostResetPasswordConfirmRequest.json').then((request) => {
         cy.visit(
           '#' +
             routesConf['reset_password']['path'] +
-            `?uid=${encodeURIComponent(request.uid)}&key=${encodeURIComponent(request.token)}`,
+            `?uid=${encodeURIComponent(request.uid)}&token=${encodeURIComponent(request.token)}`,
         );
       });
       cy.viewport('macbook-16');

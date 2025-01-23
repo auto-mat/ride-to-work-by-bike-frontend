@@ -36,6 +36,41 @@ describe('Router rules', () => {
       });
     });
 
+    it('before login, allows to access registration-related changes', () => {
+      // access login
+      cy.visit('#' + routesConf['login']['path']);
+      // verify that we are on login page
+      cy.url().should('include', routesConf['login']['path']);
+      cy.dataCy('form-login').should('be.visible');
+      // access register
+      cy.visit('#' + routesConf['register']['path']);
+      // verify that we are on register page
+      cy.url().should('include', routesConf['register']['path']);
+      cy.dataCy('form-register').should('be.visible');
+      // access confirm email
+      cy.visit('#' + routesConf['confirm_email']['path']);
+      // verify that we are on confirm email page
+      cy.fixture('confirmEmailAddressParams.json').then((params) => {
+        cy.visit(
+          '#' +
+            routesConf['confirm_email']['path'] +
+            `?key=${encodeURIComponent(params.key)}&email=${encodeURIComponent(params.email)}`,
+        );
+      });
+      cy.dataCy('email-confirmation').should('be.visible');
+      // access reset password
+      cy.fixture('apiPostResetPasswordConfirmRequest.json').then((request) => {
+        cy.visit(
+          '#' +
+            routesConf['reset_password']['path'] +
+            `?uid=${encodeURIComponent(request.uid)}&token=${encodeURIComponent(request.token)}`,
+        );
+      });
+      // verify that we are on reset password page
+      cy.url().should('include', routesConf['reset_password']['path']);
+      cy.dataCy('reset-password').should('be.visible');
+    });
+
     it('after login, redirects to challenge inactive page', () => {
       cy.fillAndSubmitLoginForm();
       cy.wait(['@loginRequest', '@verifyEmailRequest', '@thisCampaignRequest']);
@@ -43,6 +78,38 @@ describe('Router rules', () => {
       // try to access other pages
       cy.visit('#' + routesConf['prizes']['path']);
       cy.url().should('not.include', routesConf['prizes']['path']);
+      cy.url().should('include', routesConf['challenge_inactive']['path']);
+    });
+
+    it('after login, does not allow to access registration-related pages', () => {
+      cy.fillAndSubmitLoginForm();
+      cy.wait(['@loginRequest', '@verifyEmailRequest', '@thisCampaignRequest']);
+      cy.url().should('include', routesConf['challenge_inactive']['path']);
+      // login
+      cy.visit('#' + routesConf['login']['path']);
+      // verify that access is not allowed
+      cy.url().should('not.include', routesConf['login']['path']);
+      cy.url().should('include', routesConf['challenge_inactive']['path']);
+      // register
+      cy.visit('#' + routesConf['register']['path']);
+      // verify that access is not allowed
+      cy.url().should('not.include', routesConf['register']['path']);
+      cy.url().should('include', routesConf['challenge_inactive']['path']);
+      // confirm email
+      cy.visit('#' + routesConf['confirm_email']['path']);
+      // verify that access is not allowed
+      cy.url().should('not.include', routesConf['confirm_email']['path']);
+      cy.url().should('include', routesConf['challenge_inactive']['path']);
+      // reset password
+      cy.fixture('apiPostResetPasswordConfirmRequest.json').then((request) => {
+        cy.visit(
+          '#' +
+            routesConf['reset_password']['path'] +
+            `?uid=${encodeURIComponent(request.uid)}&token=${encodeURIComponent(request.token)}`,
+        );
+      });
+      // verify that access is not allowed
+      cy.url().should('not.include', routesConf['reset_password']['path']);
       cy.url().should('include', routesConf['challenge_inactive']['path']);
     });
   });
