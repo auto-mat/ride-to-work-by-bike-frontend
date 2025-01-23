@@ -309,6 +309,7 @@ export default defineComponent({
         class="text-body1 q-my-none q-mt-md"
         data-cy="form-reset-finished-description"
       ></p>
+      <!-- Link: back to login -->
       <p class="text-body1 q-my-md">
         <a
           href="#"
