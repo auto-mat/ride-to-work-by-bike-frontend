@@ -11,7 +11,7 @@ import {
   interceptRegisterCoordinatorApi,
   waitForOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
-import { useRegisterStore } from '../../stores/register';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { OrganizationType } from '../../components/types/Organization';
 
 const { getPaletteColor } = colors;
@@ -67,6 +67,15 @@ describe('<FormRegisterCoordinator>', () => {
       );
       // intercept register coordinator API call (before mounting component)
       interceptRegisterCoordinatorApi(rideToWorkByBikeConfig, i18n);
+      cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            response,
+          );
+        },
+      );
       cy.mount(FormRegisterCoordinator, {
         props: {},
       });
@@ -270,12 +279,14 @@ describe('<FormRegisterCoordinator>', () => {
             cy.contains(
               i18n.global.t('registerCoordinator.apiMessageSuccess'),
             ).should('be.visible');
-            cy.wrap(useRegisterStore()).then((registerStore) => {
-              const isRegistrationComplete = computed(
-                () => registerStore.getIsRegistrationComplete,
-              );
-              cy.wrap(isRegistrationComplete).its('value').should('be.true');
-            });
+            cy.wrap(useRegisterChallengeStore()).then(
+              (registerChallengeStore) => {
+                const isUserOrganizationAdmin = computed(
+                  () => registerChallengeStore.getIsUserOrganizationAdmin,
+                );
+                cy.wrap(isUserOrganizationAdmin).its('value').should('be.true');
+              },
+            );
           });
       });
     });

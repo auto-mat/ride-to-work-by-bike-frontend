@@ -60,6 +60,8 @@ export default route(function (/* { store, ssrContext } */) {
         useChallengeStore().getIsChallengeInPhase(PhaseType.competition);
       const isRegistrationComplete: boolean =
         registerChallengeStore.getIsRegistrationComplete;
+      const isUserOrganizationAdmin: boolean =
+        registerChallengeStore.getIsUserOrganizationAdmin || false;
 
       logger?.debug(`Router path <${to.path}>.`);
       logger?.debug(`Router from path <${from.path}>.`);
@@ -68,6 +70,9 @@ export default route(function (/* { store, ssrContext } */) {
       logger?.debug(`Router is challenge active <${isChallengeActive}>.`);
       logger?.debug(
         `Router is registration complete <${isRegistrationComplete}>.`,
+      );
+      logger?.debug(
+        `Router is user organization admin <${isUserOrganizationAdmin}>.`,
       );
 
       if (
@@ -177,9 +182,11 @@ export default route(function (/* { store, ssrContext } */) {
         isEmailVerified &&
         isChallengeActive &&
         !isRegistrationComplete &&
+        !isUserOrganizationAdmin &&
         /**
          * Only these pages are accessible when authenticated, verified email
-         * challenge is active and registration is not complete.
+         * challenge is active, registration is not complete and user is not
+         * organization admin.
          */
         !to.matched.some(
           (record) =>
@@ -207,6 +214,55 @@ export default route(function (/* { store, ssrContext } */) {
         );
         // redirect to register challenge page
         next({ path: routesConf['register_challenge']['path'] });
+      } else if (
+        isAuthenticated &&
+        isEmailVerified &&
+        isChallengeActive &&
+        !isRegistrationComplete &&
+        isUserOrganizationAdmin &&
+        /**
+         * These pages are not accessible when authenticated and verified,
+         * challenge is active, registration is not complete and user is
+         * organization admin.
+         * This is similar to when the registration is complete, however:
+         * - `register_coordinator` is not accessible
+         * - `routes` is not accessible
+         */
+        to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['verify_email']['path'] ||
+            record.path === routesConf['challenge_inactive']['path'] ||
+            record.path === routesConf['routes']['path'] ||
+            record.path === routesConf['register_challenge']['path'],
+        )
+      ) {
+        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
+        logger?.debug(
+          `Router path <${routesConf['login']['path']}>,` +
+            ` <${routesConf['register']['path']}>` +
+            ` <${routesConf['verify_email']['path']}>` +
+            ` <${routesConf['challenge_inactive']['path']}>` +
+            ` <${routesConf['routes']['path']}>` +
+            ` <${routesConf['register_challenge']['path']}>` +
+            ` is matched <${!to.matched.some(
+              (record) =>
+                record.path === routesConf['login']['path'] ||
+                record.path === routesConf['register']['path'] ||
+                record.path === routesConf['verify_email']['path'] ||
+                record.path === routesConf['challenge_inactive']['path'] ||
+                record.path === routesConf['routes']['path'] ||
+                record.path === routesConf['register_challenge']['path'],
+            )}>.`,
+        );
+        logger?.debug(`Router challenge is active <${isChallengeActive}>`);
+        logger?.debug(
+          `Router path redirect to page URL <${routesConf['home']['path']}>.`,
+        );
+        // redirect to home page
+        next({ path: routesConf['home']['path'] });
       } else if (
         /**
          * If not authenticated and not on pages: login, register,

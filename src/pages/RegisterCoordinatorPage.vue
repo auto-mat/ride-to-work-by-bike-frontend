@@ -17,7 +17,8 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 // components
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
@@ -27,6 +28,9 @@ import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
 
+// stores
+import { useRegisterChallengeStore } from 'stores/registerChallenge';
+
 export default defineComponent({
   name: 'RegisterCoordinatorPage',
   components: {
@@ -34,6 +38,19 @@ export default defineComponent({
     FormRegisterCoordinator,
   },
   setup() {
+    const registerChallengeStore = useRegisterChallengeStore();
+    const router = useRouter();
+
+    onMounted(async () => {
+      await registerChallengeStore.checkIsUserOrganizationAdmin();
+      // if user is admin of organization, redirect to home page
+      if (registerChallengeStore.getIsUserOrganizationAdmin) {
+        if (router) {
+          router.push(routesConf['home'].path);
+        }
+      }
+    });
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerFormWidth = rideToWorkByBikeConfig.containerFormWidth;

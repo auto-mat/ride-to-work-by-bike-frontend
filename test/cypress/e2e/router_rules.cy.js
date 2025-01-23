@@ -1,8 +1,14 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import {
+  fillFormRegisterCoordinator,
+  httpSuccessfullStatus,
+  interceptOrganizationsApi,
+  interceptRegisterCoordinatorApi,
   systemTimeChallengeActive,
   systemTimeChallengeInactive,
+  waitForOrganizationsApi,
 } from '../support/commonTests';
+import { OrganizationType } from '../../../src/components/types/Organization';
 
 describe('Router rules', () => {
   context('challenge inactive', () => {
@@ -138,6 +144,12 @@ describe('Router rules', () => {
                     null,
                     { has_user_verified_email_address: true },
                   );
+                  interceptRegisterCoordinatorApi(config, win.i18n);
+                  interceptOrganizationsApi(
+                    config,
+                    win.i18n,
+                    OrganizationType.company,
+                  );
                 },
               );
             },
@@ -180,6 +192,92 @@ describe('Router rules', () => {
       // redirects to register challenge page
       cy.url().should('not.include', routesConf['register_coordinator'].path);
       cy.url().should('include', routesConf['register_challenge'].path);
+    });
+
+    it('when coordinator registration is complete, allows to access all pages but not register-challenge', () => {
+      // fill login form
+      cy.fillAndSubmitLoginForm();
+      cy.wait(['@loginRequest', '@verifyEmailRequest', '@thisCampaignRequest']);
+      cy.url().should('include', routesConf['register_challenge']['path']);
+      cy.testAccessRegisterChallengeOnly();
+      // go to register-coordinator page
+      cy.visit('#' + routesConf['register_coordinator']['path']);
+      // fill in the register-coordinator form
+      cy.fixture('formFieldCompany').then((formFieldCompany) => {
+        cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+          waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+          // fill in the form
+          fillFormRegisterCoordinator();
+          // check responsibility checkbox
+          cy.dataCy('form-register-coordinator-responsibility')
+            .find('.q-checkbox')
+            .click();
+          // prevent action on link to avoid accidental redirect
+          cy.dataCy('form-register-coordinator-terms')
+            .find('a')
+            .then(($el) => {
+              $el[0].addEventListener('click', (event) => {
+                event.preventDefault();
+              });
+            });
+          // check terms checkbox
+          cy.dataCy('form-register-coordinator-terms')
+            .find('.q-checkbox')
+            .click();
+          // reset the action on link
+          cy.dataCy('form-register-coordinator-terms')
+            .find('a')
+            .then(($el) => {
+              $el[0].removeEventListener('click', (event) => {
+                event.preventDefault();
+              });
+            });
+          // intercept isUserOrganizationAdmin API check "true"
+          cy.get('@config').then((config) => {
+            cy.get('@i18n').then((i18n) => {
+              cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+                (response) => {
+                  cy.interceptIsUserOrganizationAdminGetApi(
+                    config,
+                    i18n,
+                    response,
+                  );
+                },
+              );
+            });
+          });
+          // submit form
+          cy.dataCy('form-register-coordinator-submit').click();
+          // wait for the API call to complete
+          cy.wait('@registerCoordinator').then((interception) => {
+            cy.fixture('apiPostRegisterCoordinatorRequest').then(
+              (registerRequestBody) => {
+                expect(interception.request.body).to.deep.equal(
+                  registerRequestBody,
+                );
+                expect(interception.response.statusCode).to.equal(
+                  httpSuccessfullStatus,
+                );
+              },
+            );
+          });
+          // check if redirected to homepage
+          cy.dataCy('index-title').should('be.visible');
+          // `register_coordinator` URL is no longer accessible
+          cy.visit('#' + routesConf['register_coordinator']['path']);
+          cy.url().should(
+            'not.include',
+            routesConf['register_coordinator']['path'],
+          );
+          // redirects to home page
+          cy.dataCy('index-title').should('be.visible');
+          // `routes` URL is not accessible
+          cy.visit('#' + routesConf['routes']['path']);
+          cy.url().should('not.include', routesConf['routes']['path']);
+          // redirects to home page
+          cy.dataCy('index-title').should('be.visible');
+        });
+      });
     });
 
     it('when registration is empty (not started), does not allow to access any pages except register-challenge', () => {
@@ -251,7 +349,7 @@ describe('Router rules', () => {
       cy.testAccessRegisterChallengeOnly();
     });
 
-    it('when individual registration is complete, allows to access all pages but not register-challenge', () => {
+    it('when individual registration is complete, allows to access all pages but not register-challenge nor register-coordinator', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture('apiGetRegisterChallengeIndividualPaidComplete').then(
@@ -278,6 +376,14 @@ describe('Router rules', () => {
       // try accessing register-challenge page again
       cy.visit('#' + routesConf['register_challenge']['path']);
       cy.url().should('not.include', routesConf['register_challenge']['path']);
+      // redirects to home page
+      cy.dataCy('index-title').should('be.visible');
+      // try accessing register-coordinator page
+      cy.visit('#' + routesConf['register_coordinator']['path']);
+      cy.url().should(
+        'not.include',
+        routesConf['register_coordinator']['path'],
+      );
       // redirects to home page
       cy.dataCy('index-title').should('be.visible');
     });

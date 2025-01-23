@@ -2200,6 +2200,9 @@ Cypress.Commands.add('testAccessRegisterChallengeOnly', () => {
   cy.visit('#' + routesConf['profile']['path']);
   cy.url().should('not.include', routesConf['profile']['path']);
   cy.url().should('include', routesConf['register_challenge']['path']);
+  // allowed to access register-coordinator page
+  cy.visit('#' + routesConf['register_coordinator']['path']);
+  cy.url().should('include', routesConf['register_coordinator']['path']);
 });
 
 /**

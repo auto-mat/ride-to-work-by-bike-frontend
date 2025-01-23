@@ -12,7 +12,7 @@ import { routesConf } from '../router/routes_conf';
 
 // stores
 import { useLoginStore } from './login';
-
+import { useRegisterChallengeStore } from './registerChallenge';
 // types
 import type { Logger } from '../components/types/Logger';
 import type { LoginResponse as RegisterResponse } from '../components/types/Login';
@@ -40,21 +40,15 @@ export const useRegisterStore = defineStore('register', {
     // property set in pinia.js boot file
     $log: null as Logger | null,
     isEmailVerified: false,
-    // TODO: Get this state from the API
-    isRegistrationComplete: false,
   }),
 
   getters: {
     getIsEmailVerified: (state): boolean => state.isEmailVerified,
-    getIsRegistrationComplete: (state): boolean => state.isRegistrationComplete,
   },
 
   actions: {
     setIsEmailVerified(awaiting: boolean): void {
       this.isEmailVerified = awaiting;
-    },
-    setIsRegistrationComplete(isComplete: boolean): void {
-      this.isRegistrationComplete = isComplete;
     },
     /**
      * Register user
@@ -236,11 +230,9 @@ export const useRegisterStore = defineStore('register', {
         this.$log?.debug(
           `Register store setting isRegistrationComplete to <${true}>.`,
         );
-        this.setIsRegistrationComplete(true);
-        this.$log?.debug(
-          `Register store isRegistrationComplete set to <${this.getIsRegistrationComplete}>.`,
-        );
-
+        // update `isUserOrganizationAdmin` state in registerChallenge store
+        const registerChallengeStore = useRegisterChallengeStore();
+        await registerChallengeStore.checkIsUserOrganizationAdmin();
         // redirect to home page
         if (this.$router && redirect) {
           this.$log?.debug(
