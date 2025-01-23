@@ -411,6 +411,11 @@ export const interceptOrganizationsApi = (
         statusCode: httpSuccessfullStatus,
         body: formFieldCompanyNextResponse,
       }).as('getOrganizationsNextPage');
+      // alias all organizations
+      cy.wrap([
+        ...formFieldCompanyResponse.results,
+        ...formFieldCompanyNextResponse.results,
+      ]).as('allOrganizations');
     });
   });
   // intercept create organization API call (before mounting component)

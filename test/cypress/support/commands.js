@@ -2078,27 +2078,30 @@ Cypress.Commands.add(
 /**
  * Select paying company
  */
-Cypress.Commands.add('selectRegisterChallengePayingOrganization', () => {
-  cy.fixture('formFieldCompany').then((formFieldCompany) => {
-    cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-      waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-      cy.dataCy('form-field-company').find('.q-field__append').click();
-      // select option
-      cy.get('.q-item__label')
-        .should('be.visible')
-        .and((opts) => {
-          expect(
-            opts.length,
-            formFieldCompany.results.length +
-              formFieldCompanyNext.results.length,
-          );
-        })
-        .first()
-        .click();
-      cy.get('.q-menu').should('not.exist');
+Cypress.Commands.add(
+  'selectRegisterChallengePayingOrganization',
+  (index = 0) => {
+    cy.fixture('formFieldCompany').then((formFieldCompany) => {
+      cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
+        waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
+        cy.dataCy('form-field-company').find('.q-field__append').click();
+        // select option
+        cy.get('.q-item__label')
+          .should('be.visible')
+          .and((opts) => {
+            expect(
+              opts.length,
+              formFieldCompany.results.length +
+                formFieldCompanyNext.results.length,
+            );
+          })
+          .eq(index)
+          .click();
+        cy.get('.q-menu').should('not.exist');
+      });
     });
-  });
-});
+  },
+);
 
 /**
  * Intercept IP address GET API call

@@ -198,8 +198,18 @@ export default defineComponent({
         registerChallengeStore.getOrganizationId
           ? registerChallengeStore.getOrganizationId
           : null,
-      set: (value: number | null) =>
-        registerChallengeStore.setOrganizationId(value),
+      set: (value: number | null) => {
+        if (value !== registerChallengeStore.getOrganizationId) {
+          // reset subsidiaryId
+          registerChallengeStore.setSubsidiaryId(null);
+          // reset teamId
+          registerChallengeStore.setTeamId(null);
+          // reset organizationId
+          registerChallengeStore.setOrganizationId(value);
+          // refetch subsidiaries
+          registerChallengeStore.loadSubsidiariesToStore(logger);
+        }
+      },
     });
     onMounted(() => {
       // following two checks can run in parallel

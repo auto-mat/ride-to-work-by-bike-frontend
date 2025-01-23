@@ -62,8 +62,23 @@ export default defineComponent({
         registerChallengeStore.getOrganizationId
           ? registerChallengeStore.getOrganizationId
           : null,
-      set: (value: number | null) =>
-        registerChallengeStore.setOrganizationId(value),
+      set: (value: number | null) => {
+        /**
+         * Reset subsidiaryId if new value is different from current value
+         * to avoid reset on component mount.
+         */
+        logger?.debug(
+          `Organization ID change to <${value}>, current value is <${registerChallengeStore.getOrganizationId}>.`,
+        );
+        if (value !== registerChallengeStore.getOrganizationId) {
+          registerChallengeStore.setSubsidiaryId(null);
+          logger?.debug(
+            'Organization ID change, reset' +
+              ` subsidiary ID <${registerChallengeStore.getSubsidiaryId}>.`,
+          );
+        }
+        registerChallengeStore.setOrganizationId(value);
+      },
     });
 
     const subsidiaryId = computed<number | null>({

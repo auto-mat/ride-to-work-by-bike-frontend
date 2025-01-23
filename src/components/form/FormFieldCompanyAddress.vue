@@ -124,6 +124,7 @@ export default defineComponent({
         );
       }
     });
+    // on selectedSubsidiary change, emit new value as update:modelValue
     watch(selectedSubsidiary, (newValue, oldValue) => {
       logger?.debug(
         `Selected subsidiary changed from <${JSON.stringify(oldValue, null, 2)}>` +
@@ -135,6 +136,19 @@ export default defineComponent({
         emit('update:modelValue', null);
       }
     });
+    // on props.modelValue change, set select value
+    watch(
+      () => props.modelValue,
+      (newValue, oldValue) => {
+        if (newValue !== oldValue) {
+          logger?.debug(
+            `Selected subsidiary changed from <${oldValue}>` +
+              ` to <${newValue}>. Setting selectedSubsidiary`,
+          );
+          setSelectedSubsidiary();
+        }
+      },
+    );
 
     const options = computed<FormSelectOption[]>((): FormSelectOption[] =>
       store.getSubsidiaries?.map(

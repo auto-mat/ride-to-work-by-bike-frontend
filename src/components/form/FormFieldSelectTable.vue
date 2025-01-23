@@ -410,13 +410,31 @@ export default defineComponent({
       selectOrganizationRef,
     });
 
+    // return true if this is organization select and company is paying
+    const isThisSelectOrganizationAndOrganizationPaying = computed<boolean>(
+      (): boolean => {
+        const isOrganizationSelect: boolean =
+          props.organizationLevel === OrganizationLevel.organization;
+        const isOrganizationPaying: boolean =
+          registerChallengeStore.getIsPaymentSubjectOrganization;
+        return isOrganizationSelect && isOrganizationPaying;
+      },
+    );
+
     const isDisabledOption = (option: FormSelectTableOption): boolean => {
+      // if team select and team has max members
       if (props.organizationLevel === OrganizationLevel.team) {
         if (option?.members && option?.maxMembers) {
           return option.members.length >= option.maxMembers;
         }
       }
-      return false;
+      const organizationId: number | null =
+        registerChallengeStore.getOrganizationId;
+      // if this is other than active option and paying company is selected
+      return (
+        isThisSelectOrganizationAndOrganizationPaying.value &&
+        option.value !== organizationId
+      );
     };
 
     return {
@@ -434,6 +452,7 @@ export default defineComponent({
       teamNew,
       titleDialog,
       isDisabledOption,
+      isThisSelectOrganizationAndOrganizationPaying,
       isFilled,
       isLoading,
       virtualScrollRef,
@@ -571,6 +590,7 @@ export default defineComponent({
             icon="mdi-plus"
             color="primary"
             data-cy="button-add-option"
+            :disable="isThisSelectOrganizationAndOrganizationPaying"
             @click.prevent="isDialogOpen = true"
           >
             <!-- Label -->
