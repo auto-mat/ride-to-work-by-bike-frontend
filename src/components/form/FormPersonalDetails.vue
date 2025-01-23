@@ -20,7 +20,7 @@
  */
 
 // libraries
-import { defineComponent, reactive, watch } from 'vue';
+import { defineComponent, computed } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
@@ -32,14 +32,17 @@ import { i18n } from '../../boot/i18n';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
+
+// enums
+import { Gender } from 'src/components/types/Profile';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import { Gender } from 'src/components/types/Profile';
-import { FormOption } from 'src/components/types/Form';
-import { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
+import type { FormOption } from 'src/components/types/Form';
+import type { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
@@ -50,17 +53,12 @@ export default defineComponent({
   },
   setup() {
     const store = useRegisterChallengeStore();
-    const personalDetails = reactive<RegisterChallengePersonalDetailsForm>(
-      store.getPersonalDetails,
-    );
 
-    watch(
-      personalDetails,
-      (newVal) => {
-        store.setPersonalDetails(newVal);
-      },
-      { deep: true },
-    );
+    const personalDetails = computed<RegisterChallengePersonalDetailsForm>({
+      get: (): RegisterChallengePersonalDetailsForm => store.getPersonalDetails,
+      set: (newVal: RegisterChallengePersonalDetailsForm): void =>
+        store.setPersonalDetails(newVal),
+    });
 
     const genderOptions: FormOption[] = [
       {
@@ -76,10 +74,13 @@ export default defineComponent({
     const urlAppDataPrivacyPolicy =
       rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
+    const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
+
     return {
       genderOptions,
       personalDetails,
       urlAppDataPrivacyPolicy,
+      urlRegisterAsCoordinator,
     };
   },
 });
@@ -87,7 +88,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <div class="row q-col-gutter-md">
+    <div v-if="personalDetails" class="row q-col-gutter-md">
       <!-- Input: First name -->
       <div class="col-12 col-sm">
         <form-field-text-required
@@ -144,6 +145,27 @@ export default defineComponent({
           :hint="$t('form.personalDetails.hintGender')"
           class="q-mt-sm"
         />
+      </div>
+      <!-- Link: Register as coordinator -->
+      <div
+        class="col-12"
+        data-cy="form-personal-details-register-as-coordinator"
+      >
+        <p
+          class="q-my-none q-mt-sm"
+          data-cy="form-personal-details-register-as-coordinator-text"
+        >
+          {{ $t('register.form.hintRegisterAsCoordinator') }}
+        </p>
+        <div class="q-mt-xs q-mb-md">
+          <router-link
+            :to="urlRegisterAsCoordinator"
+            class="text-grey-10"
+            data-cy="form-personal-details-register-as-coordinator-link"
+          >
+            {{ $t('register.form.linkRegisterAsCoordinator') }}
+          </router-link>
+        </div>
       </div>
       <!-- Input: Newsletter -->
       <div class="col-12">

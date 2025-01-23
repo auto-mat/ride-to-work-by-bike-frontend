@@ -2,6 +2,7 @@ import { colors } from 'quasar';
 
 import FormPersonalDetails from 'components/form/FormPersonalDetails.vue';
 import { i18n } from '../../boot/i18n';
+import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
   failOnStatusCode,
@@ -14,6 +15,8 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
+const urlRegisterAsCoordinator =
+  routesConf['register_coordinator'].children.fullPath;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
@@ -85,6 +88,26 @@ describe('<FormPersonalDetails>', () => {
       );
     });
 
+    it('renders link to register as coordinator', () => {
+      cy.dataCy('form-personal-details-register-as-coordinator').should(
+        'be.visible',
+      );
+      cy.dataCy('form-personal-details-register-as-coordinator-text')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.form.hintRegisterAsCoordinator'),
+        );
+      cy.dataCy('form-personal-details-register-as-coordinator-link')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.form.linkRegisterAsCoordinator'),
+        )
+        .invoke('attr', 'href')
+        .should('include', urlRegisterAsCoordinator);
+    });
+
     it('renders checkbox select newsletter', () => {
       cy.dataCy('form-field-newsletter')
         .should('be.visible')
@@ -96,9 +119,17 @@ describe('<FormPersonalDetails>', () => {
 
     it('renders checkbox terms', () => {
       cy.dataCy('form-personal-details-terms').should('be.visible');
-      cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
+      cy.dataCy('form-terms-input').should(
+        'have.attr',
+        'aria-checked',
+        'false',
+      );
       cy.dataCy('form-terms-link').should('be.visible').click();
-      cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
+      cy.dataCy('form-terms-input').should(
+        'have.attr',
+        'aria-checked',
+        'false',
+      );
     });
 
     it('renders link to data privacy policy', () => {
