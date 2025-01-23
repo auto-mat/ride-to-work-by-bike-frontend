@@ -155,6 +155,26 @@ describe('Router rules', () => {
       cy.url().should('include', routesConf['register_challenge']['path']);
     });
 
+    it('allows to navigate to register coordinator page', () => {
+      cy.fillAndSubmitLoginForm();
+      cy.wait(['@loginRequest', '@verifyEmailRequest', '@thisCampaignRequest']);
+      cy.url().should('not.include', routesConf['login']['path']);
+      cy.url().should('not.include', routesConf['verify_email']['path']);
+      cy.url().should('not.include', routesConf['challenge_inactive']['path']);
+      cy.url().should('include', routesConf['register_challenge']['path']);
+      // shows link register as coordinator
+      cy.dataCy('form-personal-details-register-as-coordinator').should(
+        'be.visible',
+      );
+      // click link
+      cy.dataCy('form-personal-details-register-as-coordinator-link')
+        .should('be.visible')
+        .click();
+      // redirects to register coordinator page
+      cy.url().should('not.include', routesConf['register_challenge'].path);
+      cy.url().should('include', routesConf['register_coordinator'].path);
+    });
+
     it('when registration is empty (not started), does not allow to access any pages except register-challenge', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {

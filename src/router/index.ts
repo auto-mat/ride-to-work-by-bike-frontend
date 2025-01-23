@@ -114,7 +114,8 @@ export default route(function (/* { store, ssrContext } */) {
             record.path === routesConf['verify_email']['path'] ||
             record.path === routesConf['reset_password']['path'] ||
             record.path === routesConf['challenge_inactive']['path'] ||
-            record.path === routesConf['register_challenge']['path'],
+            record.path === routesConf['register_challenge']['path'] ||
+            record.path === routesConf['register_coordinator']['path'],
         )
       ) {
         logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
@@ -125,6 +126,8 @@ export default route(function (/* { store, ssrContext } */) {
             ` <${routesConf['verify_email']['path']}>` +
             ` <${routesConf['reset_password']['path']}>` +
             ` <${routesConf['challenge_inactive']['path']}>` +
+            ` <${routesConf['register_challenge']['path']}>` +
+            ` <${routesConf['register_coordinator']['path']}>` +
             ` is matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
@@ -132,7 +135,8 @@ export default route(function (/* { store, ssrContext } */) {
                 record.path === routesConf['verify_email']['path'] ||
                 record.path === routesConf['reset_password']['path'] ||
                 record.path === routesConf['challenge_inactive']['path'] ||
-                record.path === routesConf['register_challenge']['path'],
+                record.path === routesConf['register_challenge']['path'] ||
+                record.path === routesConf['register_coordinator']['path'],
             )}>.`,
         );
         logger?.debug(`Router challenge is active <${isChallengeActive}>`);
@@ -178,7 +182,9 @@ export default route(function (/* { store, ssrContext } */) {
          * challenge is active and registration is not complete.
          */
         !to.matched.some(
-          (record) => record.path === routesConf['register_challenge']['path'],
+          (record) =>
+            record.path === routesConf['register_challenge']['path'] ||
+            record.path === routesConf['register_coordinator']['path'],
         )
       ) {
         logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
@@ -189,9 +195,11 @@ export default route(function (/* { store, ssrContext } */) {
         );
         logger?.debug(
           `Router path <${routesConf['register_challenge']['path']}>` +
+            ` <${routesConf['register_coordinator']['path']}>` +
             ` is not matched <${!to.matched.some(
               (record) =>
-                record.path === routesConf['register_challenge']['path'],
+                record.path === routesConf['register_challenge']['path'] ||
+                record.path === routesConf['register_coordinator']['path'],
             )}>.`,
         );
         logger?.debug(
