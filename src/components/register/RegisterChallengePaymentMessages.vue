@@ -5,6 +5,9 @@
  * @description Use this component to display messages related to the payment
  * process. Displayed on the Payment step of the `RegisterChallengePage`.
  *
+ * @props
+ * - `is-payment-step` (boolean): Whether component is used on the Payment step
+ *
  * @example
  * <register-challenge-payment-messages />
  */
@@ -24,30 +27,40 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 export default defineComponent({
   name: 'RegisterChallengePaymentMessages',
-  setup() {
+  props: {
+    isPaymentStep: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props) {
     const registerChallengeStore = useRegisterChallengeStore();
 
     const isDonationPaidViaPayu = computed<boolean>((): boolean => {
       return (
+        props.isPaymentStep &&
         registerChallengeStore.getIsPaymentSuccessful &&
         registerChallengeStore.getIsPaymentCategoryDonation
       );
     });
 
     const isPayuPaymentFailed = computed((): boolean => {
-      return registerChallengeStore.getIsPaymentUnsuccessful;
+      return (
+        props.isPaymentStep && registerChallengeStore.getIsPaymentUnsuccessful
+      );
     });
 
     const isWaitingForPayuPaymentConfirmation = computed<boolean>(
       (): boolean => {
         return (
+          props.isPaymentStep &&
           registerChallengeStore.getIsPayuTransactionInitiated &&
           registerChallengeStore.getPaymentState === PaymentState.none
         );
       },
     );
 
-    const isShownRegistrationWaitingMessage = computed<boolean>((): boolean => {
+    const isWaitingForConfirmation = computed<boolean>((): boolean => {
       const isStateWaiting =
         registerChallengeStore.getPaymentState === PaymentState.waiting;
       const isPaymentDonationWithSubjectOrganization =
@@ -56,14 +69,41 @@ export default defineComponent({
       return isStateWaiting || isPaymentDonationWithSubjectOrganization;
     });
 
+    // displays messsage on payment step for user to select team
+    const isWaitingForPaymentConfirmation = computed<boolean>((): boolean => {
+      return props.isPaymentStep && isWaitingForConfirmation.value;
+    });
+
+    // displays message on summary step - payment waiting for coordinator approval
+    const isWaitingForCoordinator = computed<boolean>((): boolean => {
+      return (
+        !props.isPaymentStep &&
+        isWaitingForConfirmation.value &&
+        registerChallengeStore.hasOrganizationAdmin === true
+      );
+    });
+
+    // displays message on summary step - organization has no coordinator
+    const isWaitingForConfirmationAndNoCoordinator = computed<boolean>(
+      (): boolean => {
+        return (
+          !props.isPaymentStep &&
+          isWaitingForConfirmation.value &&
+          registerChallengeStore.hasOrganizationAdmin === false
+        );
+      },
+    );
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
       isDonationPaidViaPayu,
       isPayuPaymentFailed,
+      isWaitingForConfirmationAndNoCoordinator,
+      isWaitingForCoordinator,
+      isWaitingForPaymentConfirmation,
       isWaitingForPayuPaymentConfirmation,
-      isShownRegistrationWaitingMessage,
       registerChallengeStore,
     };
   },
@@ -77,7 +117,7 @@ export default defineComponent({
       v-if="isWaitingForPayuPaymentConfirmation"
       class="bg-warning text-grey-10 q-mb-md"
       :style="{ borderRadius }"
-      data-cy="registration-waiting-for-payment-confirmation-message"
+      data-cy="registration-payu-waiting-for-payment"
     >
       {{ $t('register.challenge.textPayuWaitingForPayment') }}
     </q-banner>
@@ -102,14 +142,38 @@ export default defineComponent({
       {{ $t('register.challenge.textDonationPaymentSuccessful') }}
     </q-banner>
 
-    <!-- Message: Waiting for coordinator confirmation of entry fee payment -->
+    <!-- Payment step message: "select team for confirmation" -->
     <q-banner
-      v-if="isShownRegistrationWaitingMessage"
+      v-if="isWaitingForPaymentConfirmation"
       class="bg-warning text-grey-10 q-mb-md"
       :style="{ borderRadius }"
-      data-cy="registration-waiting-for-coordinator-message"
+      data-cy="registration-waiting-for-confirmation"
     >
       {{ $t('register.challenge.textRegistrationWaitingForConfirmation') }}
+    </q-banner>
+
+    <!-- Summary step message: Waiting for coordinator confirmation -->
+    <q-banner
+      v-if="isWaitingForCoordinator"
+      class="bg-warning text-grey-10 q-mb-md"
+      :style="{ borderRadius }"
+      data-cy="registration-waiting-for-coordinator"
+    >
+      {{ $t('register.challenge.textRegistrationWaitingForCoordinator') }}
+    </q-banner>
+
+    <!-- Summary step message: Waiting for confirmation + organization has no coordinator -->
+    <q-banner
+      v-if="isWaitingForConfirmationAndNoCoordinator"
+      class="bg-warning text-grey-10 q-mb-md"
+      :style="{ borderRadius }"
+      data-cy="registration-waiting-for-confirmation-no-coordinator"
+    >
+      {{
+        $t(
+          'register.challenge.textRegistrationWaitingForConfirmationNoCoordinator',
+        )
+      }}
     </q-banner>
   </div>
 </template>

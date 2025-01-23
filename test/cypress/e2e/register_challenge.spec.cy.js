@@ -2199,7 +2199,7 @@ describe('Register Challenge page', () => {
           (response) => {
             cy.testRegisterChallengePaymentMessage(
               response,
-              'registration-waiting-for-payment-confirmation-message',
+              'registration-payu-waiting-for-payment',
             );
             // within timeout window, getRegisterChallenge will be called again
             cy.get('@getRegisterChallenge.all', {
@@ -2522,7 +2522,7 @@ describe('Register Challenge page', () => {
               .siblings('.q-radio__inner')
               .should('have.class', 'q-radio__inner--truthy');
             // shows waiting for confirmation message
-            cy.dataCy('registration-waiting-for-coordinator-message').should(
+            cy.dataCy('registration-waiting-for-confirmation').should(
               'be.visible',
             );
             // go to next step
@@ -2541,11 +2541,119 @@ describe('Register Challenge page', () => {
             cy.dataCy('step-7-continue')
               .should('be.visible')
               .and('be.disabled');
+            // check that the "waiting for coordinator" message is visible
+            cy.dataCy('registration-waiting-for-coordinator')
+              .should('be.visible')
+              .and(
+                'contain',
+                win.i18n.global.t(
+                  'register.challenge.textRegistrationWaitingForCoordinator',
+                ),
+              );
           },
         );
       });
     });
   });
+
+  context(
+    'registration in progress, company payment "waiting" + no coordinator',
+    () => {
+      beforeEach(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          // visit challenge inactive page to load campaign data
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi();
+          cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
+            (response) => {
+              cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            },
+          );
+          // intercept common response (not currently used)
+          cy.fixture('apiPostRegisterChallengeResponsePaymentWaiting').then(
+            (registerChallengeResponse) => {
+              cy.interceptRegisterChallengePostApi(
+                config,
+                defLocale,
+                registerChallengeResponse,
+              );
+            },
+          );
+          cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+          // override has organization admin API call "false"
+          cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+            (response) => {
+              cy.fixture('formFieldCompany').then(
+                (formFieldCompanyResponse) => {
+                  cy.interceptHasOrganizationAdminGetApi(
+                    config,
+                    defLocale,
+                    formFieldCompanyResponse.results[0].id,
+                    response,
+                  );
+                },
+              );
+            },
+          );
+        });
+        // config is defined without hash in the URL
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+      });
+
+      it('fetches the registration status on load', () => {
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
+            (registerChallengeResponse) => {
+              cy.testRegisterChallengeLoadedStepOne(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // go to next step
+              cy.dataCy('step-1-continue').should('be.visible').click();
+              // TODO: check if we can change company before approval
+              // check that the company options is selected
+              cy.dataCy(getRadioOption(PaymentSubject.company))
+                .parents('.q-radio__label')
+                .siblings('.q-radio__inner')
+                .should('have.class', 'q-radio__inner--truthy');
+              // shows waiting for confirmation message
+              cy.dataCy('registration-waiting-for-confirmation').should(
+                'be.visible',
+              );
+              // go to next step
+              cy.dataCy('step-2-continue')
+                .should('be.visible')
+                .and('not.be.disabled')
+                .click();
+              cy.testRegisterChallengeLoadedStepsThreeToFive(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              cy.testRegisterChallengeLoadedStepSix(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              cy.dataCy('step-7-continue')
+                .should('be.visible')
+                .and('be.disabled');
+              // check that the "waiting for coordinator" message is visible
+              cy.dataCy('registration-waiting-for-confirmation-no-coordinator')
+                .should('be.visible')
+                .and(
+                  'contain',
+                  win.i18n.global.t(
+                    'register.challenge.textRegistrationWaitingForConfirmationNoCoordinator',
+                  ),
+                );
+            },
+          );
+        });
+      });
+    },
+  );
 
   context(
     'registration in progress, company payment "waiting" + donation',
@@ -2597,7 +2705,7 @@ describe('Register Challenge page', () => {
               'be.visible',
             );
             // shows waiting for confirmation message
-            cy.dataCy('registration-waiting-for-coordinator-message').should(
+            cy.dataCy('registration-waiting-for-confirmation').should(
               'be.visible',
             );
             // go to next step

@@ -781,6 +781,8 @@ textPayuPaymentFailed = "Vaše platba byla zrušena nebo zamítnuta.  Můžete s
 textDonationPaymentSuccessful = "Vaše platba byla zpracována a benefiční příspěvek byl uhrazen. Děkujeme."
 textRegistrationPaid = "Startovné máte uhrazeno a po dokončení registrace můžete začít s výzvou. Máte-li otázky k platbě nebo jiným bodům registrace, můžete nás kontaktovat na <a href='mailto:{contactEmail}'>{contactEmail}</a>."
 textRegistrationWaitingForConfirmation = "Platbu vašeho startovného musí schválit koordinátor vybrané organizace. Prosím, zadejte adresu a tým, abychom mohli identifikovat vaši koordinátora*ku."
+textRegistrationWaitingForConfirmationNoCoordinator = "Vaše organizace ještě nemá firemního koordinátora, který by schválil vaší platbu. Zkuste proces popohnat, nebo se můžete stát koordinátorem sami."
+textRegistrationWaitingForCoordinator = "Platbu ještě musí schválit koordinátor vaší organizace."
 textPayuWaitingForPayment = "Vaši platbu stále zpracováváme. Prosím zkontrolujte stav registrace za několik minut."
 textTeamInfo = "V jednom týmu může být max. 5 členů."
 titleDeliveryAddress = "Doručovací adresa"

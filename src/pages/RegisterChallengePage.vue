@@ -461,7 +461,10 @@ export default defineComponent({
             <!-- Form: Payment -->
             <q-form ref="stepPaymentRef">
               <!-- Payment messages -->
-              <register-challenge-payment-messages data-cy="payment-messages" />
+              <register-challenge-payment-messages
+                :is-payment-step="true"
+                data-cy="payment-messages"
+              />
               <!-- Text entry fee paid (displayed after PayU payment has been made) -->
               <div
                 v-if="isRegistrationEntryFeePaidViaPayu"
@@ -699,6 +702,7 @@ export default defineComponent({
             class="bg-white q-mt-lg"
             data-cy="step-7"
           >
+            <register-challenge-payment-messages data-cy="summary-messages" />
             <!-- Content: Summary -->
             <register-challenge-summary />
             <!-- Buttons: Summary -->
