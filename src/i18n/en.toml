@@ -575,6 +575,7 @@ descriptionResetFinished = "We have just emailed you a link to reset your passwo
 labelEmail = "E-mail"
 labelPassword = "Password"
 labelPasswordReset = "E-mail"
+linkBackToLogin = "Back to login"
 messageEmailReqired = "Please fill in your e-mail"
 messageEmailInvalid = "Please fill in a valid email"
 messageFacebookAuthNotAuthorized = "Login via Facebook failed"

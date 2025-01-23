@@ -575,6 +575,7 @@ descriptionResetFinished = "Práve sme vám poslali e-mail s odkazom na obnoveni
 labelEmail = "E-mail"
 labelPassword = "Heslo"
 labelPasswordReset = "E-mail"
+linkBackToLogin = "Späť na prihlásenie"
 messageEmailReqired = "Vyplňte prosím svoj e-mail"
 messageEmailInvalid = "Vyplňte prosím platný e-mail"
 messageFacebookAuthNotAuthorized = "Prihlásenie cez Facebook sa nepodarilo"

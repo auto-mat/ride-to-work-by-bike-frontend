@@ -306,13 +306,23 @@ export default defineComponent({
       <!-- Description -->
       <p
         v-html="$t('login.form.descriptionResetFinished', { contactEmail })"
-        class="text-body1 q-my-none q-mt-sm"
+        class="text-body1 q-my-none q-mt-md"
         data-cy="form-reset-finished-description"
       ></p>
+      <p class="text-body1 q-my-md">
+        <a
+          href="#"
+          class="text-body1 text-white"
+          @click.prevent="setFormState(LoginFormState.login)"
+          data-cy="form-reset-finished-button-back"
+        >
+          {{ $t('login.form.linkBackToLogin') }}
+        </a>
+      </p>
       <!-- Prompt: wrong email -->
       <p
         v-html="$t('login.form.promptWrongEmail')"
-        class="text-body1 q-my-none q-mt-lg"
+        class="text-body1 q-my-none q-mt-xl"
         data-cy="form-reset-finished-prompt"
       ></p>
       <!-- Button: new password -->
@@ -320,7 +330,7 @@ export default defineComponent({
         unelevated
         rounded
         outline
-        class="full-width q-mt-lg"
+        class="full-width q-mt-md"
         type="submit"
         color="white"
         text-color="white"

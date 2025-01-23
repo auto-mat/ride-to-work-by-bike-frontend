@@ -337,6 +337,32 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-password-reset-email').should('be.visible');
     });
 
+    it('allows user to navigate back to login from password reset final screen', () => {
+      // click on forgotten password
+      cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+      // type email
+      cy.dataCy('form-password-reset-email')
+        .find('input')
+        .should('be.visible')
+        .type(resetPasswordEmail);
+      // click on submit
+      cy.dataCy('form-password-reset-submit').should('be.visible').click();
+      // wait for reset password API call
+      cy.wait('@resetPasswordRequest').then((interception) => {
+        expect(interception.request.body.email).to.equal(resetPasswordEmail);
+        expect(interception.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(interception.response.body).to.deep.equal(resetPasswordResponse);
+      });
+      // final screen
+      cy.dataCy('form-reset-finished').should('be.visible');
+      // back button
+      cy.dataCy('form-reset-finished-button-back').should('be.visible').click();
+      // login form is visible
+      cy.dataCy('form-login').should('be.visible');
+    });
+
     it('validates login form user inputs', () => {
       cy.dataCy('form-login-submit-login').should('be.visible').click();
       // validate password required
