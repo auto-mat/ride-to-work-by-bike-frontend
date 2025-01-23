@@ -25,6 +25,7 @@ import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
 
 export default defineComponent({
   name: 'RegisterCoordinatorPage',
@@ -36,11 +37,13 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerFormWidth = rideToWorkByBikeConfig.containerFormWidth;
+    const urlRegisterAsUser = routesConf['register_challenge'].path;
 
     return {
       borderRadius,
       challengeMonth,
       containerFormWidth,
+      urlRegisterAsUser,
     };
   },
 });
@@ -77,6 +80,16 @@ export default defineComponent({
           v-html="$t('register.coordinator.info')"
           data-cy="info-content"
         ></div>
+        <!-- Link: Register as a participant -->
+        <div class="q-mt-md">
+          <router-link
+            :to="urlRegisterAsUser"
+            class="text-grey-10"
+            data-cy="info-link-register-as-participant"
+          >
+            {{ $t('register.form.linkRegisterAsParticipant') }}
+          </router-link>
+        </div>
       </div>
 
       <div

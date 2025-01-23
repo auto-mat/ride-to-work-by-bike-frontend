@@ -173,6 +173,13 @@ describe('Router rules', () => {
       // redirects to register coordinator page
       cy.url().should('not.include', routesConf['register_challenge'].path);
       cy.url().should('include', routesConf['register_coordinator'].path);
+      // show link register as participant
+      cy.dataCy('info-link-register-as-participant')
+        .should('be.visible')
+        .click();
+      // redirects to register challenge page
+      cy.url().should('not.include', routesConf['register_coordinator'].path);
+      cy.url().should('include', routesConf['register_challenge'].path);
     });
 
     it('when registration is empty (not started), does not allow to access any pages except register-challenge', () => {

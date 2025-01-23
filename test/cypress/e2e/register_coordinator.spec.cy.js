@@ -91,6 +91,14 @@ describe('Login page', () => {
                 },
               );
             });
+          cy.dataCy('info-link-register-as-participant')
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('register.form.linkRegisterAsParticipant'),
+            )
+            .invoke('attr', 'href')
+            .should('contain', routesConf['register_challenge'].path);
         });
       });
     });
