@@ -22,7 +22,7 @@ import type {
 
 /**
  * Post reset password confirmation composable
- * Used to enable calling the API to confirm user's password reset using token
+ * Exposes behaviour for submitting a new password.
  * @param logger - Logger
  * @returns {UseApiPostResetPasswordConfirmReturn}
  */
@@ -34,7 +34,7 @@ export const useApiPostResetPasswordConfirm = (
 
   /**
    * Reset password confirmation
-   * Confirms user's password reset using the reset token
+   * Confirms user's password reset using the reset token and user ID.
    * @param {PostResetPasswordConfirmPayload} payload - Reset password confirmation payload
    * @returns {Promise<PostResetPasswordConfirmResponse | null>} - Promise
    */
