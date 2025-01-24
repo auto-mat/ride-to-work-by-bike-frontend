@@ -143,9 +143,13 @@ export default defineComponent({
         if (newValue !== oldValue) {
           logger?.debug(
             `Selected subsidiary changed from <${oldValue}>` +
-              ` to <${newValue}>. Setting selectedSubsidiary`,
+              ` to <${newValue}>.`,
           );
           setSelectedSubsidiary();
+          logger?.debug(
+            'Set subsidiary form field option to' +
+              ` <${JSON.stringify(selectedSubsidiary.value, null, 2)}>.`,
+          );
         }
       },
     );
@@ -300,7 +304,7 @@ export default defineComponent({
         {{ labelAddress }}
       </label>
       <div class="col-12 col-sm" data-cy="col-input">
-        <!-- Input: Autocomplete -->
+        <!-- Subsidiary input: Autocomplete -->
         <q-select
           dense
           outlined
