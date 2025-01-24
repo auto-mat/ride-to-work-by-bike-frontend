@@ -60,6 +60,10 @@ export default defineComponent({
         store.setPersonalDetails(newVal),
     });
 
+    const isUserOrganizationAdmin = computed(
+      () => store.getIsUserOrganizationAdmin,
+    );
+
     const genderOptions: FormOption[] = [
       {
         label: i18n.global.t('global.man'),
@@ -78,6 +82,7 @@ export default defineComponent({
 
     return {
       genderOptions,
+      isUserOrganizationAdmin,
       personalDetails,
       urlAppDataPrivacyPolicy,
       urlRegisterAsCoordinator,
@@ -148,6 +153,7 @@ export default defineComponent({
       </div>
       <!-- Link: Register as coordinator -->
       <div
+        v-if="!isUserOrganizationAdmin"
         class="col-12"
         data-cy="form-personal-details-register-as-coordinator"
       >

@@ -1,9 +1,10 @@
 import { colors } from 'quasar';
-
+import { createPinia, setActivePinia } from 'pinia';
 import FormPersonalDetails from 'components/form/FormPersonalDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -42,6 +43,7 @@ describe('<FormPersonalDetails>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(FormPersonalDetails, {
         props: {
           formValues: {
@@ -105,6 +107,15 @@ describe('<FormPersonalDetails>', () => {
         )
         .invoke('attr', 'href')
         .should('include', urlRegisterAsCoordinator);
+    });
+
+    it('does not render link to register as coordinator if user is organization admin', () => {
+      cy.wrap(useRegisterChallengeStore()).then((store) => {
+        store.setIsUserOrganizationAdmin(true);
+      });
+      cy.dataCy('form-personal-details-register-as-coordinator').should(
+        'not.exist',
+      );
     });
 
     it('renders checkbox select newsletter', () => {
