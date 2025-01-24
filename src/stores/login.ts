@@ -272,6 +272,7 @@ export const useLoginStore = defineStore('login', {
     async redirectHomeAfterLogin(): Promise<void> {
       const registerStore = useRegisterStore();
       const challengeStore = useChallengeStore();
+      const registerChallengeStore = useRegisterChallengeStore();
       /**
        * Check if user email address is verified from the API,
        * to prevent to show use confirming email page.
@@ -287,6 +288,13 @@ export const useLoginStore = defineStore('login', {
       this.$log?.debug(
         `Login was successfull, redirect to <${routesConf['home']['path']}> URL.`,
       );
+      /**
+       * Load user coordinator status from the API
+       * to prevent sending user to the register challenge page
+       * if user is already a coordinator.
+       */
+      this.$log?.info('Check the user coordinator status from the API.');
+      await registerChallengeStore.checkIsUserOrganizationAdmin();
       // redirect to home page
       if (this.$router) {
         this.$router.push(routesConf['home']['path']);

@@ -244,38 +244,60 @@ describe('Router rules', () => {
                   );
                 },
               );
+              // submit form
+              cy.dataCy('form-register-coordinator-submit').click();
+              // wait for the API call to complete
+              cy.wait('@registerCoordinator').then((interception) => {
+                cy.fixture('apiPostRegisterCoordinatorRequest').then(
+                  (registerRequestBody) => {
+                    expect(interception.request.body).to.deep.equal(
+                      registerRequestBody,
+                    );
+                    expect(interception.response.statusCode).to.equal(
+                      httpSuccessfullStatus,
+                    );
+                  },
+                );
+              });
+              // check if redirected to homepage
+              cy.dataCy('index-title').should('be.visible');
+              // `register_coordinator` URL is no longer accessible
+              cy.visit('#' + routesConf['register_coordinator']['path']);
+              cy.url().should(
+                'not.include',
+                routesConf['register_coordinator']['path'],
+              );
+              // redirects to home page
+              cy.dataCy('index-title').should('be.visible');
+              // `routes` URL is not accessible
+              cy.visit('#' + routesConf['routes']['path']);
+              cy.url().should('not.include', routesConf['routes']['path']);
+              // redirects to home page
+              cy.dataCy('index-title').should('be.visible');
+              // click on user select
+              cy.dataCy('user-select-desktop').within(() => {
+                cy.dataCy('user-select-input').should('be.visible').click();
+              });
+              // logout
+              cy.dataCy('menu-item')
+                .contains(i18n?.global.t('userSelect.logout'))
+                .click();
+              // redirected to login page
+              cy.url().should('include', routesConf['login']['path']);
+              // login
+              cy.fillAndSubmitLoginForm();
+              cy.wait([
+                '@loginRequest',
+                '@verifyEmailRequest',
+                '@thisCampaignRequest',
+              ]);
+              cy.url().should(
+                'not.include',
+                routesConf['register_challenge']['path'],
+              );
+              cy.dataCy('index-title').should('be.visible');
             });
           });
-          // submit form
-          cy.dataCy('form-register-coordinator-submit').click();
-          // wait for the API call to complete
-          cy.wait('@registerCoordinator').then((interception) => {
-            cy.fixture('apiPostRegisterCoordinatorRequest').then(
-              (registerRequestBody) => {
-                expect(interception.request.body).to.deep.equal(
-                  registerRequestBody,
-                );
-                expect(interception.response.statusCode).to.equal(
-                  httpSuccessfullStatus,
-                );
-              },
-            );
-          });
-          // check if redirected to homepage
-          cy.dataCy('index-title').should('be.visible');
-          // `register_coordinator` URL is no longer accessible
-          cy.visit('#' + routesConf['register_coordinator']['path']);
-          cy.url().should(
-            'not.include',
-            routesConf['register_coordinator']['path'],
-          );
-          // redirects to home page
-          cy.dataCy('index-title').should('be.visible');
-          // `routes` URL is not accessible
-          cy.visit('#' + routesConf['routes']['path']);
-          cy.url().should('not.include', routesConf['routes']['path']);
-          // redirects to home page
-          cy.dataCy('index-title').should('be.visible');
         });
       });
     });
