@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
+import { getGenderLabel } from '../../../src/utils/get_gender_label';
 
 // selectors
 const selectorProfilePage = 'profile-page';
@@ -34,7 +35,6 @@ const selectorButtonMarkAllAsRead = 'button-mark-all-as-read';
 // variables
 // const newEmail = 'ride@dopracenakole.cz';
 // const password = 'testpassword123';
-const genderFemale = 'female';
 const genderFemaleKey = 'global.woman';
 
 describe('Profile page', () => {
@@ -176,7 +176,13 @@ function coreTests() {
                     .click();
                   cy.dataCy(selectorGender)
                     .find(dataSelectorValue)
-                    .should('have.text', genderFemale);
+                    .should(
+                      'have.text',
+                      getGenderLabel(
+                        responseGender.results[0].personal_details.sex,
+                        i18n,
+                      ),
+                    );
                 });
               });
             },

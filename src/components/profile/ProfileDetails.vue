@@ -42,7 +42,7 @@ import DeleteAccount from './DeleteAccount.vue';
 import { i18n } from '../../boot/i18n';
 
 // enums
-import { PaymentState } from '../types/Profile';
+import { Gender, PaymentState } from '../types/Profile';
 
 // fixtures
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
@@ -53,6 +53,9 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
 import type { ToApiPayloadStoreState } from '../../components/types/ApiRegistration';
+
+// utils
+import { getGenderLabel } from '../../utils/get_gender_label';
 
 export default defineComponent({
   name: 'ProfileDetails',
@@ -124,6 +127,18 @@ export default defineComponent({
       registerChallengeStore.loadRegisterChallengeToStore();
     };
 
+    /**
+     * Get gender label
+     * @param {Gender | null} gender - Gender enum value or null
+     * @returns {string} - Gender label or empty string
+     */
+    const genderLabel = (gender: Gender | null): string => {
+      if (!gender) {
+        return '';
+      }
+      return getGenderLabel(gender, i18n);
+    };
+
     return {
       allowContactPhone,
       iconPaymentColor,
@@ -135,6 +150,7 @@ export default defineComponent({
       onUpdatePersonalDetails,
       formPersonalDetails,
       user,
+      genderLabel,
     };
   },
 });
@@ -184,7 +200,7 @@ export default defineComponent({
       <details-item
         editable
         :label="$t('profile.labelGender')"
-        :value="profile.gender"
+        :value="genderLabel(profile.gender)"
         :dialog-title="$t('profile.titleUpdateGender')"
         :empty-label="$t('profile.labelGenderEmpty')"
         class="q-mb-lg"

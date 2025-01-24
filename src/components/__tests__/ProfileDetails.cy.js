@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { PaymentState } from '../../../src/components/types/Profile';
 import { useLoginStore } from '../../stores/login';
+import { getGenderLabel } from '../../utils/get_gender_label';
 
 // colors
 const { getPaletteColor } = colors;
@@ -196,7 +197,7 @@ function coreTests() {
             // row gender
             cy.dataCy(selectorGender)
               .should('be.visible')
-              .and('contain', personalDetails.sex);
+              .and('contain', getGenderLabel(personalDetails.sex, i18n));
             // row language
             cy.dataCy(selectorLanguage).should('be.visible');
             cy.dataCy(selectorLanguageSwitcher).should('be.visible');
@@ -534,7 +535,7 @@ function coreTests() {
           cy.dataCy(selectorGender)
             .find(dataSelectorValue)
             .should('be.visible')
-            .and('have.text', personalDetails.sex);
+            .and('have.text', getGenderLabel(personalDetails.sex, i18n));
           // gender edit button
           cy.dataCy(selectorGender)
             .find(dataSelectorEdit)
@@ -565,7 +566,7 @@ function coreTests() {
           cy.dataCy(selectorGender)
             .find(dataSelectorValue)
             .should('be.visible')
-            .and('have.text', personalDetails.sex);
+            .and('have.text', getGenderLabel(personalDetails.sex, i18n));
           // gender edit button
           cy.dataCy(selectorGender)
             .find(dataSelectorEdit)
@@ -584,7 +585,7 @@ function coreTests() {
           cy.dataCy(selectorGender)
             .find(dataSelectorValue)
             .should('be.visible')
-            .and('have.text', personalDetailsNew.sex);
+            .and('have.text', getGenderLabel(personalDetailsNew.sex, i18n));
           // reset gender
           cy.dataCy(selectorGender)
             .find(dataSelectorEdit)
@@ -615,7 +616,7 @@ function coreTests() {
           cy.dataCy(selectorGender)
             .find(dataSelectorValue)
             .should('be.visible')
-            .and('have.text', personalDetails.sex);
+            .and('have.text', getGenderLabel(personalDetailsNew.sex, i18n));
         },
       );
     });
