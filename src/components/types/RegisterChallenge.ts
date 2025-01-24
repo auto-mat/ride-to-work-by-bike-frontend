@@ -31,7 +31,7 @@ export interface RegisterChallengePersonalDetailsForm
   extends BasePersonalDetails {
   firstName: string;
   gender: Gender | null;
-  id: number;
+  id: number | null;
   lastName: string;
   newsletter: NewsletterType[];
 }

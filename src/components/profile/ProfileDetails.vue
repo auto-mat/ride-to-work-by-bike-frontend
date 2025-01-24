@@ -7,7 +7,6 @@
  * Note: This component is used on `ProfilePage` in `ProfileTabs` component.
  *
  * @components
- * - `AddressDisplay`: Component to display an address.
  * - `DetailsItem`: Component to display a row of data.
  * - `FormUpdateGender`: Component to render a form for updating gender.
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
@@ -27,9 +26,9 @@ import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
+import { subsidiaryAdapter } from '../../adapters/subsidiaryAdapter';
 
 // components
-import AddressDisplay from '../global/AddressDisplay.vue';
 import DetailsItem from '../profile/DetailsItem.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
@@ -63,7 +62,6 @@ import { getGenderLabel } from '../../utils/get_gender_label';
 export default defineComponent({
   name: 'ProfileDetails',
   components: {
-    AddressDisplay,
     DetailsItem,
     FormUpdateGender,
     FormUpdateNickname,
@@ -76,10 +74,13 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
 
+    const loginStore = useLoginStore();
+    const user = computed(() => loginStore.getUser);
+
     const registerChallengeStore = useRegisterChallengeStore();
     // refresh on mounted
-    onMounted(() => {
-      registerChallengeStore.loadRegisterChallengeToStore();
+    onMounted(async () => {
+      await registerChallengeStore.loadRegisterChallengeToStore();
       // load all data
       if (!registerChallengeStore.getOrganizations.length) {
         registerChallengeStore.loadOrganizationsToStore(logger);
@@ -106,8 +107,63 @@ export default defineComponent({
         .labelShort;
     });
 
-    const loginStore = useLoginStore();
-    const user = computed(() => loginStore.getUser);
+    const organization = computed(() => {
+      const org = registerChallengeStore.getOrganizations.find(
+        (organization) =>
+          organization.id === registerChallengeStore.getOrganizationId,
+      );
+      if (org) {
+        return org.name;
+      }
+      return '';
+    });
+
+    const subsidiary = computed(() => {
+      const sub = registerChallengeStore.getSubsidiaries.find(
+        (subsidiary) =>
+          subsidiary.id === registerChallengeStore.getSubsidiaryId,
+      );
+      if (sub) {
+        return subsidiaryAdapter.fromFormCompanyAddressFieldsToString(
+          sub.address,
+        );
+      }
+      return '';
+    });
+
+    const team = computed(() => {
+      const team = registerChallengeStore.getTeams.find(
+        (team) => team.id === registerChallengeStore.getTeamId,
+      );
+      if (team) {
+        return team.name;
+      }
+      return '';
+    });
+
+    const merchandiseItem = computed(() => {
+      return registerChallengeStore.getMerchandiseItems.find(
+        (item) => item.id === registerChallengeStore.getMerchId,
+      );
+    });
+
+    const merchandiseItemLabel = computed(() => {
+      if (merchandiseItem.value) {
+        return merchandiseItem.value.label;
+      }
+      return '';
+    });
+
+    const merchandiseItemSize = computed(() => {
+      if (merchandiseItem.value) {
+        return merchandiseItem.value.size;
+      }
+      return '';
+    });
+
+    const phone = computed(() => {
+      return registerChallengeStore.getTelephone;
+    });
 
     const allowContactPhone = ref(false);
 
@@ -174,8 +230,14 @@ export default defineComponent({
       iconSize,
       isLoading,
       labelPaymentState,
+      merchandiseItemLabel,
+      merchandiseItemSize,
+      organization,
       organizationType,
+      phone,
       profile,
+      subsidiary,
+      team,
       onDownloadInvoice,
       onUpdatePersonalDetails,
       formPersonalDetails,
@@ -284,26 +346,21 @@ export default defineComponent({
         <!-- Organization -->
         <details-item
           :label="$t('profile.labelOrganization')"
-          :value="formPersonalDetails.organization"
+          :value="organization"
           class="col-12 col-sm-6"
           data-cy="profile-details-organization"
         />
         <!-- Address / Subsidiary -->
         <details-item
           :label="$t('profile.labelAddressSubsidiary')"
+          :value="subsidiary"
           class="col-12 col-sm-6"
           data-cy="profile-details-address-subsidiary"
-        >
-          <template #value>
-            <address-display
-              :address="formPersonalDetails.subsidiary.address"
-            />
-          </template>
-        </details-item>
+        />
         <!-- Team -->
         <details-item
           :label="$t('profile.labelTeam')"
-          :value="formPersonalDetails.team"
+          :value="team"
           class="col-12 col-sm-6"
           data-cy="profile-details-team"
         />
@@ -320,54 +377,42 @@ export default defineComponent({
         <!-- Package -->
         <details-item
           :label="$t('profile.labelPackage')"
-          :value="formPersonalDetails.package.title"
+          :value="merchandiseItemLabel"
           class="col-12 col-sm-6"
           data-cy="profile-details-package"
-        >
-          <template #value>
-            <a
-              :href="formPersonalDetails.package.url"
-              data-cy="profile-details-package-link"
-            >
-              {{ formPersonalDetails.package.title }}
-            </a>
-          </template>
-        </details-item>
+        />
         <!-- Size -->
         <details-item
           :label="$t('profile.labelSize')"
-          :value="formPersonalDetails.package.size"
+          :value="merchandiseItemSize"
           class="col-12 col-sm-6"
           data-cy="profile-details-size"
         />
         <!-- State -->
-        <details-item
+        <!-- <details-item
           :label="$t('profile.labelState')"
           :value="formPersonalDetails.package.state"
           class="col-12 col-sm-6"
           data-cy="profile-details-state"
-        />
+        /> -->
         <!-- Tracking number -->
-        <details-item
+        <!-- <details-item
           :label="$t('profile.labelTrackingNumber')"
           :value="formPersonalDetails.package.trackingNumber"
           class="col-12 col-sm-6"
           data-cy="profile-details-tracking-number"
-        />
+        /> -->
         <!-- Delivery address -->
         <details-item
           :label="$t('profile.labelDeliveryAddress')"
+          :value="subsidiary"
           class="col-12 col-sm-6"
           data-cy="profile-details-delivery-address"
-        >
-          <template #value>
-            <address-display :address="formPersonalDetails.deliveryAddress" />
-          </template>
-        </details-item>
+        />
         <!-- Phone number -->
         <details-item
           :label="$t('profile.labelPhone')"
-          :value="formPersonalDetails.phone"
+          :value="phone"
           class="col-12 col-sm-6"
           data-cy="profile-details-phone"
         />
