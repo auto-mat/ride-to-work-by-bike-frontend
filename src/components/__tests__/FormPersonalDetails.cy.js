@@ -129,6 +129,7 @@ describe('<FormPersonalDetails>', () => {
 
     it('renders checkbox terms', () => {
       cy.dataCy('form-personal-details-terms').should('be.visible');
+      // default value is false
       cy.dataCy('form-terms-input').should(
         'have.attr',
         'aria-checked',
