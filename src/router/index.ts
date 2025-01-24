@@ -201,6 +201,9 @@ export default route(function (/* { store, ssrContext } */) {
           `Router registration is not complete <${!isRegistrationComplete}>.`,
         );
         logger?.debug(
+          `Router user is not organization admin <${!isUserOrganizationAdmin}>.`,
+        );
+        logger?.debug(
           `Router path <${routesConf['register_challenge']['path']}>` +
             ` <${routesConf['register_coordinator']['path']}>` +
             ` is not matched <${!to.matched.some(
@@ -224,9 +227,6 @@ export default route(function (/* { store, ssrContext } */) {
          * These pages are not accessible when authenticated and verified,
          * challenge is active, registration is not complete and user is
          * organization admin.
-         * This is similar to when the registration is complete, however:
-         * - `register_coordinator` is not accessible
-         * - `routes` is not accessible
          */
         to.matched.some(
           (record) =>
@@ -258,6 +258,12 @@ export default route(function (/* { store, ssrContext } */) {
             )}>.`,
         );
         logger?.debug(`Router challenge is active <${isChallengeActive}>`);
+        logger?.debug(
+          `Router registration is not complete <${!isRegistrationComplete}>.`,
+        );
+        logger?.debug(
+          `Router user is organization admin <${isUserOrganizationAdmin}>.`,
+        );
         logger?.debug(
           `Router path redirect to page URL <${routesConf['home']['path']}>.`,
         );
