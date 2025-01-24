@@ -21,10 +21,10 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-import NewsletterFeature from '../homepage/NewsletterFeature.vue';
+// import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import ProfileDetails from './ProfileDetails.vue';
-import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
-import TableNotifications from './TableNotifications.vue';
+// import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
+// import TableNotifications from './TableNotifications.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -40,10 +40,10 @@ enum tabsProfile {
 export default defineComponent({
   name: 'ProfileTabs',
   components: {
-    NewsletterFeature,
+    // NewsletterFeature,
     ProfileDetails,
-    ProfileQuestionnaires,
-    TableNotifications,
+    // ProfileQuestionnaires,
+    // TableNotifications,
   },
   setup() {
     const activeTab = ref(tabsProfile.none);
@@ -75,6 +75,7 @@ export default defineComponent({
         :label="$t('profile.tabDetails')"
         data-cy="profile-tabs-button-details"
       />
+      <!--
       <q-route-tab
         :to="routesConf['profile_forms'].path"
         :name="tabsProfile.questionnaires"
@@ -93,6 +94,7 @@ export default defineComponent({
         :label="$t('profile.tabNotifications')"
         data-cy="profile-tabs-button-notifications"
       />
+      -->
     </q-tabs>
     <!-- Separator -->
     <q-separator />
@@ -106,27 +108,29 @@ export default defineComponent({
       >
         <profile-details />
       </q-tab-panel>
-      <!-- Panel: Questionnaires -->
+      <!--
+      Panel: Questionnaires
       <q-tab-panel
         :name="tabsProfile.questionnaires"
         data-cy="profile-tabs-panel-questionnaires"
       >
         <profile-questionnaires />
       </q-tab-panel>
-      <!-- Panel: Newsletter -->
+      Panel: Newsletter
       <q-tab-panel
         :name="tabsProfile.newsletter"
         data-cy="profile-tabs-panel-newsletter"
       >
         <newsletter-feature class="q-mt-lg" />
       </q-tab-panel>
-      <!-- Panel: Notifications -->
+      Panel: Notifications
       <q-tab-panel
         :name="tabsProfile.notifications"
         data-cy="profile-tabs-panel-notifications"
       >
         <table-notifications />
       </q-tab-panel>
+      -->
     </q-tab-panels>
   </div>
 </template>

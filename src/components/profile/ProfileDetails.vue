@@ -24,7 +24,10 @@
  */
 
 // libraries
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
+
+// adapters
+import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
 
 // components
 import AddressDisplay from '../global/AddressDisplay.vue';
@@ -46,8 +49,11 @@ import { PaymentState } from '../types/Profile';
 // fixtures
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
 
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+
 // types
-import type { Profile } from '../types/Profile';
+import type { ToApiPayloadStoreState } from '../../components/types/ApiRegistration';
 
 export default defineComponent({
   name: 'ProfileDetails',
@@ -65,12 +71,19 @@ export default defineComponent({
   setup() {
     const iconSize = '18px';
 
-    const profile: Profile = reactive(formPersonalDetails as Profile);
+    const registerChallengeStore = useRegisterChallengeStore();
+    onMounted(() => {
+      registerChallengeStore.loadRegisterChallengeToStore();
+    });
+
+    const profile = computed(() => {
+      return registerChallengeStore.getPersonalDetails;
+    });
 
     const allowContactPhone = ref(false);
 
     const labelPaymentState = computed(() => {
-      switch (profile.paymentState) {
+      switch (formPersonalDetails.paymentState) {
         case PaymentState.paidByOrganization:
           return i18n.global.t('profile.labelPaymentStatePaidByCompany');
         case PaymentState.paid:
@@ -82,7 +95,7 @@ export default defineComponent({
 
     const iconPaymentColor = computed(() => {
       return [PaymentState.paid, PaymentState.paidByOrganization].includes(
-        profile.paymentState,
+        formPersonalDetails.paymentState as PaymentState,
       )
         ? 'green'
         : 'red';
@@ -90,7 +103,7 @@ export default defineComponent({
 
     const iconPaymentState = computed(() => {
       return [PaymentState.paid, PaymentState.paidByOrganization].includes(
-        profile.paymentState,
+        formPersonalDetails.paymentState as PaymentState,
       )
         ? 'mdi-check-circle-outline'
         : 'mdi-close-circle-outline';
@@ -98,6 +111,15 @@ export default defineComponent({
 
     const onDownloadInvoice = () => {
       // TODO: Implement download invoice
+    };
+
+    const onUpdatePersonalDetails = async (
+      data: ToApiPayloadStoreState,
+    ): Promise<void> => {
+      const payload = registerChallengeAdapter.toApiPayload(data);
+      // post payload to API
+      await registerChallengeStore.postRegisterChallenge(payload);
+      registerChallengeStore.loadRegisterChallengeToStore();
     };
 
     return {
@@ -108,6 +130,8 @@ export default defineComponent({
       labelPaymentState,
       profile,
       onDownloadInvoice,
+      onUpdatePersonalDetails,
+      formPersonalDetails,
     };
   },
 });
@@ -137,16 +161,17 @@ export default defineComponent({
           <form-update-nickname
             :on-close="close"
             :value="profile.nickname"
-            @update:value="profile.nickname = $event"
+            @update:value="
+              onUpdatePersonalDetails({ personalDetails: { nickname: $event } })
+            "
             data-cy="profile-details-form-nickname"
           />
         </template>
       </details-item>
       <!-- Email -->
       <details-item
-        editable
         :label="$t('profile.labelEmail')"
-        :value="profile.email"
+        :value="formPersonalDetails.email"
         :dialog-title="$t('profile.titleUpdateEmail')"
         :empty-label="$t('profile.labelEmailEmpty')"
         class="q-mb-lg"
@@ -156,8 +181,8 @@ export default defineComponent({
           <!-- Form: Update email -->
           <form-update-email
             :on-close="close"
-            :value="profile.email"
-            @update:value="profile.email = $event"
+            :value="formPersonalDetails.email"
+            @update:value="formPersonalDetails.email = $event"
             data-cy="profile-details-form-email"
           />
         </template>
@@ -177,7 +202,9 @@ export default defineComponent({
           <form-update-gender
             :on-close="close"
             :value="profile.gender"
-            @update:value="profile.gender = $event"
+            @update:value="
+              onUpdatePersonalDetails({ personalDetails: { gender: $event } })
+            "
             data-cy="profile-details-form-gender"
           />
         </template>
@@ -185,7 +212,7 @@ export default defineComponent({
       <!-- Language -->
       <details-item
         :label="$t('profile.labelLanguage')"
-        :value="profile.language"
+        :value="formPersonalDetails.language"
         :empty-label="$t('profile.labelLanguageEmpty')"
         class="q-mb-lg"
         data-cy="profile-details-language"
@@ -211,14 +238,14 @@ export default defineComponent({
         <!-- Organization type -->
         <details-item
           :label="$t('profile.labelOrganizationType')"
-          :value="profile.organizationType"
+          :value="formPersonalDetails.organizationType"
           class="col-12 col-sm-6"
           data-cy="profile-details-organization-type"
         />
         <!-- Organization -->
         <details-item
           :label="$t('profile.labelOrganization')"
-          :value="profile.organization"
+          :value="formPersonalDetails.organization"
           class="col-12 col-sm-6"
           data-cy="profile-details-organization"
         />
@@ -229,13 +256,15 @@ export default defineComponent({
           data-cy="profile-details-address-subsidiary"
         >
           <template #value>
-            <address-display :address="profile.subsidiary.address" />
+            <address-display
+              :address="formPersonalDetails.subsidiary.address"
+            />
           </template>
         </details-item>
         <!-- Team -->
         <details-item
           :label="$t('profile.labelTeam')"
-          :value="profile.team"
+          :value="formPersonalDetails.team"
           class="col-12 col-sm-6"
           data-cy="profile-details-team"
         />
@@ -252,37 +281,37 @@ export default defineComponent({
         <!-- Package -->
         <details-item
           :label="$t('profile.labelPackage')"
-          :value="profile.package.title"
+          :value="formPersonalDetails.package.title"
           class="col-12 col-sm-6"
           data-cy="profile-details-package"
         >
           <template #value>
             <a
-              :href="profile.package.url"
+              :href="formPersonalDetails.package.url"
               data-cy="profile-details-package-link"
             >
-              {{ profile.package.title }}
+              {{ formPersonalDetails.package.title }}
             </a>
           </template>
         </details-item>
         <!-- Size -->
         <details-item
           :label="$t('profile.labelSize')"
-          :value="profile.package.size"
+          :value="formPersonalDetails.package.size"
           class="col-12 col-sm-6"
           data-cy="profile-details-size"
         />
         <!-- State -->
         <details-item
           :label="$t('profile.labelState')"
-          :value="profile.package.state"
+          :value="formPersonalDetails.package.state"
           class="col-12 col-sm-6"
           data-cy="profile-details-state"
         />
         <!-- Tracking number -->
         <details-item
           :label="$t('profile.labelTrackingNumber')"
-          :value="profile.package.trackingNumber"
+          :value="formPersonalDetails.package.trackingNumber"
           class="col-12 col-sm-6"
           data-cy="profile-details-tracking-number"
         />
@@ -293,7 +322,7 @@ export default defineComponent({
           data-cy="profile-details-delivery-address"
         >
           <template #value>
-            <address-display :address="profile.deliveryAddress" />
+            <address-display :address="formPersonalDetails.deliveryAddress" />
           </template>
         </details-item>
         <!-- Phone number -->
@@ -319,7 +348,7 @@ export default defineComponent({
         <!-- Package -->
         <details-item
           :label="$t('profile.labelPaymentState')"
-          :value="profile.package.title"
+          :value="formPersonalDetails.package.title"
           class="col-12 col-md-6 items-center"
           data-cy="profile-details-payment-state"
         >
