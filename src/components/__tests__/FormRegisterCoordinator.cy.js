@@ -275,10 +275,11 @@ describe('<FormRegisterCoordinator>', () => {
             );
           })
           .then(() => {
-            // check state in store
+            // check success message
             cy.contains(
               i18n.global.t('registerCoordinator.apiMessageSuccess'),
             ).should('be.visible');
+            // check user coordinator status in `registerChallenge` store
             cy.wrap(useRegisterChallengeStore()).then(
               (registerChallengeStore) => {
                 const isUserOrganizationAdmin = computed(
