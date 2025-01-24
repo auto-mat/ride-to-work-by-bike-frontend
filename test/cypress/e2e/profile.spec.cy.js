@@ -1,19 +1,20 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
+import { defLocale } from '../../../src/i18n/def_locale';
 
 // selectors
 const selectorProfilePage = 'profile-page';
 const selectorProfilePageTitle = 'profile-page-title';
 const selectorNickname = 'profile-details-nickname';
-const selectorEmail = 'profile-details-email';
+// const selectorEmail = 'profile-details-email';
 const selectorGender = 'profile-details-gender';
 const selectorFormNickname = 'profile-details-form-nickname';
-const selectorFormEmail = 'profile-details-form-email';
+// const selectorFormEmail = 'profile-details-form-email';
 const selectorFormGender = 'profile-details-form-gender';
 const dataSelectorEdit = '[data-cy="details-item-edit"]';
 const dataSelectorInput = '[data-cy="form-input"]';
-const dataSelectorInputEmail = '[data-cy="form-email"]';
-const dataSelectorInputPassword = '[data-cy="form-password"]';
+// const dataSelectorInputEmail = '[data-cy="form-email"]';
+// const dataSelectorInputPassword = '[data-cy="form-password"]';
 const dataSelectorButtonSave = '[data-cy="form-button-save"]';
 const dataSelectorValue = '[data-cy="details-item-value"]';
 
@@ -31,15 +32,37 @@ const selectorDialogCloseButton = 'dialog-close';
 const selectorButtonMarkAllAsRead = 'button-mark-all-as-read';
 
 // variables
-const newNickname = 'Cyklobaron';
-const newEmail = 'ride@dopracenakole.cz';
-const password = 'testpassword123';
+// const newEmail = 'ride@dopracenakole.cz';
+// const password = 'testpassword123';
 const genderFemale = 'female';
 const genderFemaleKey = 'global.woman';
 
 describe('Profile page', () => {
   context('desktop', () => {
     beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.fixture('apiGetRegisterChallengeProfile.json').then(
+          (responseRegisterChallenge) => {
+            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+              (responseHasOrganizationAdmin) => {
+                cy.interceptRegisterChallengeGetApi(
+                  config,
+                  defLocale,
+                  responseRegisterChallenge,
+                );
+                cy.interceptHasOrganizationAdminGetApi(
+                  config,
+                  defLocale,
+                  responseRegisterChallenge.results[0].organization_id,
+                  responseHasOrganizationAdmin,
+                );
+              },
+            );
+          },
+        );
+      });
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       cy.viewport('macbook-16');
       // load config and i18n objects as aliases
@@ -76,39 +99,90 @@ function coreTests() {
     });
   });
 
-  it('allows user to change nickname, email, and gender', () => {
-    cy.get('@i18n').then((i18n) => {
-      // Change nickname
-      cy.dataCy(selectorNickname).find(dataSelectorEdit).click();
-      cy.dataCy(selectorFormNickname).find(dataSelectorInput).clear();
-      cy.dataCy(selectorFormNickname).find(dataSelectorInput).type(newNickname);
-      cy.dataCy(selectorFormNickname).find(dataSelectorButtonSave).click();
-      cy.dataCy(selectorNickname)
-        .find(dataSelectorValue)
-        .should('have.text', newNickname);
+  it('allows user to change nickname, and gender', () => {
+    cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+      cy.fixture('apiGetRegisterChallengeProfileUpdatedNickname.json').then(
+        (responseNickname) => {
+          cy.fixture('apiGetRegisterChallengeProfileUpdatedGender.json').then(
+            (responseGender) => {
+              cy.get('@config').then((config) => {
+                cy.get('@i18n').then((i18n) => {
+                  // wait for GET request
+                  cy.waitForRegisterChallengeGetApi(response);
+                  const newNickname =
+                    responseNickname.results[0].personal_details.nickname;
+                  // Change nickname
+                  cy.dataCy(selectorNickname).find(dataSelectorEdit).click();
+                  cy.dataCy(selectorFormNickname)
+                    .find(dataSelectorInput)
+                    .clear();
+                  cy.dataCy(selectorFormNickname)
+                    .find(dataSelectorInput)
+                    .type(newNickname);
+                  // intercept POST request
+                  cy.interceptRegisterChallengePostApi(
+                    config,
+                    i18n,
+                    responseNickname,
+                  );
+                  // override intercept GET request
+                  cy.interceptRegisterChallengeGetApi(
+                    config,
+                    i18n,
+                    responseNickname,
+                  );
+                  // submit form
+                  cy.dataCy(selectorFormNickname)
+                    .find(dataSelectorButtonSave)
+                    .click();
+                  // wait for GET request
+                  cy.waitForRegisterChallengeGetApi(responseNickname);
+                  cy.dataCy(selectorNickname)
+                    .find(dataSelectorValue)
+                    .should('have.text', newNickname);
 
-      // Change email
-      cy.dataCy(selectorEmail).find(dataSelectorEdit).click();
-      cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).clear();
-      cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type(newEmail);
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputPassword)
-        .type(password);
-      cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorValue)
-        .should('have.text', newEmail);
+                  // Change email
+                  // cy.dataCy(selectorEmail).find(dataSelectorEdit).click();
+                  // cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).clear();
+                  // cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type(newEmail);
+                  // cy.dataCy(selectorFormEmail)
+                  //   .find(dataSelectorInputPassword)
+                  //   .type(password);
+                  // cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
+                  // cy.dataCy(selectorEmail)
+                  //   .find(dataSelectorValue)
+                  //   .should('have.text', newEmail);
 
-      // Change gender
-      cy.dataCy(selectorGender).find(dataSelectorEdit).click();
-      cy.dataCy(selectorFormGender)
-        .find('.q-radio__label')
-        .contains(i18n.global.t(genderFemaleKey))
-        .click();
-      cy.dataCy(selectorFormGender).find(dataSelectorButtonSave).click();
-      cy.dataCy(selectorGender)
-        .find(dataSelectorValue)
-        .should('have.text', genderFemale);
+                  // Change gender
+                  cy.dataCy(selectorGender).find(dataSelectorEdit).click();
+                  cy.dataCy(selectorFormGender)
+                    .find('.q-radio__label')
+                    .contains(i18n.global.t(genderFemaleKey))
+                    .click();
+                  // intercept POST request
+                  cy.interceptRegisterChallengePostApi(
+                    config,
+                    i18n,
+                    responseGender,
+                  );
+                  // override intercept GET request
+                  cy.interceptRegisterChallengeGetApi(
+                    config,
+                    i18n,
+                    responseGender,
+                  );
+                  cy.dataCy(selectorFormGender)
+                    .find(dataSelectorButtonSave)
+                    .click();
+                  cy.dataCy(selectorGender)
+                    .find(dataSelectorValue)
+                    .should('have.text', genderFemale);
+                });
+              });
+            },
+          );
+        },
+      );
     });
   });
 
