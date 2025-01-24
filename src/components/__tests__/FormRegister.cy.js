@@ -17,7 +17,7 @@ import {
   httpTooManyRequestsStatusMessage,
   httpInternalServerErrorStatus,
   systemTimeChallengeActive,
-  systemTimeChallengeInactive,
+  systemTimeRegistrationPhaseInactive,
   userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
 import { PhaseType } from '../types/Challenge';
@@ -434,7 +434,7 @@ describe('<FormRegister>', () => {
       cy.clock()
         .as('clock')
         .then((clock) => {
-          clock.setSystemTime(systemTimeChallengeInactive);
+          clock.setSystemTime(systemTimeRegistrationPhaseInactive);
         });
       cy.mount(FormRegister, {
         props: {},

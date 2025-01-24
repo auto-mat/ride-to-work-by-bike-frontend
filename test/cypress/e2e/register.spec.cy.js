@@ -3,7 +3,7 @@ import {
   testBackgroundImage,
   httpInternalServerErrorStatus,
   systemTimeChallengeActive,
-  systemTimeChallengeInactive,
+  systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
@@ -74,7 +74,7 @@ describe('Register page', () => {
 
   context('inactive challenge', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('macbook-16');
         cy.task('getAppConfig', process).then((config) => {
           /**

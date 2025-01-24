@@ -1,7 +1,7 @@
 import {
   testLanguageSwitcher,
   testBackgroundImage,
-  systemTimeChallengeInactive,
+  systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
@@ -23,7 +23,7 @@ const selectorSocialBar = 'social-bar';
 describe('Challenge Inactive page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('macbook-16');
         cy.task('getAppConfig', process).then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
@@ -54,7 +54,7 @@ describe('Challenge Inactive page', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('iphone-6');
         cy.task('getAppConfig', process).then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
