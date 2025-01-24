@@ -131,19 +131,21 @@ describe('Login page', () => {
                     null,
                     { has_user_verified_email_address: true },
                   );
-                  cy.fillAndSubmitLoginForm(config, win.i18n);
-                  cy.wait([
-                    '@loginRequest',
-                    '@refreshAuthTokenRequest',
-                    '@verifyEmailRequest',
-                    '@thisCampaignRequest',
-                  ]);
                   interceptRegisterCoordinatorApi(config, win.i18n);
                   interceptOrganizationsApi(
                     config,
                     win.i18n,
                     OrganizationType.company,
                   );
+                  cy.interceptIsUserOrganizationAdminGetApi(config, win.i18n);
+                  cy.fillAndSubmitLoginForm(config, win.i18n);
+                  cy.wait([
+                    '@loginRequest',
+                    '@refreshAuthTokenRequest',
+                    '@verifyEmailRequest',
+                    '@thisCampaignRequest',
+                    '@getIsUserOrganizationAdmin',
+                  ]);
                   cy.visit('#' + routesConf['register_coordinator']['path']);
                 },
               );
