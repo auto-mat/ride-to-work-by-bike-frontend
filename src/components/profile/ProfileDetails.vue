@@ -9,7 +9,6 @@
  * @components
  * - `AddressDisplay`: Component to display an address.
  * - `DetailsItem`: Component to display a row of data.
- * - `FormUpdateEmail`: Component to render a form for updating email.
  * - `FormUpdateGender`: Component to render a form for updating gender.
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
  * - `LanguageSwitcher`: Component to render a language switcher.
@@ -32,7 +31,6 @@ import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapte
 // components
 import AddressDisplay from '../global/AddressDisplay.vue';
 import DetailsItem from '../profile/DetailsItem.vue';
-import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
@@ -50,6 +48,7 @@ import { PaymentState } from '../types/Profile';
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
 
 // stores
+import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
@@ -60,7 +59,6 @@ export default defineComponent({
   components: {
     AddressDisplay,
     DetailsItem,
-    FormUpdateEmail,
     FormUpdateGender,
     FormUpdateNickname,
     LanguageSwitcher,
@@ -72,13 +70,17 @@ export default defineComponent({
     const iconSize = '18px';
 
     const registerChallengeStore = useRegisterChallengeStore();
+    // refresh on mounted
     onMounted(() => {
       registerChallengeStore.loadRegisterChallengeToStore();
     });
-
+    // profile details
     const profile = computed(() => {
       return registerChallengeStore.getPersonalDetails;
     });
+
+    const loginStore = useLoginStore();
+    const user = computed(() => loginStore.getUser);
 
     const allowContactPhone = ref(false);
 
@@ -132,6 +134,7 @@ export default defineComponent({
       onDownloadInvoice,
       onUpdatePersonalDetails,
       formPersonalDetails,
+      user,
     };
   },
 });
@@ -171,22 +174,12 @@ export default defineComponent({
       <!-- Email -->
       <details-item
         :label="$t('profile.labelEmail')"
-        :value="formPersonalDetails.email"
+        :value="user.email"
         :dialog-title="$t('profile.titleUpdateEmail')"
         :empty-label="$t('profile.labelEmailEmpty')"
         class="q-mb-lg"
         data-cy="profile-details-email"
-      >
-        <template #form="{ close }">
-          <!-- Form: Update email -->
-          <form-update-email
-            :on-close="close"
-            :value="formPersonalDetails.email"
-            @update:value="formPersonalDetails.email = $event"
-            data-cy="profile-details-form-email"
-          />
-        </template>
-      </details-item>
+      />
       <!-- Gender -->
       <details-item
         editable
@@ -328,7 +321,7 @@ export default defineComponent({
         <!-- Phone number -->
         <details-item
           :label="$t('profile.labelPhone')"
-          :value="profile.phone"
+          :value="formPersonalDetails.phone"
           class="col-12 col-sm-6"
           data-cy="profile-details-phone"
         />
