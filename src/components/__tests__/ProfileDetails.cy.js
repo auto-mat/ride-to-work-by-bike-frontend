@@ -99,6 +99,11 @@ describe('<ProfileDetails>', () => {
       'profile',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'putRegisterChallenge',
+      i18n,
+    );
   });
 
   context('desktop', () => {
@@ -356,9 +361,10 @@ function coreTests() {
           // nickname edit form
           cy.dataCy(selectorFormNickname).should('be.visible');
           // intercept POST request
-          cy.interceptRegisterChallengePostApi(
+          cy.interceptRegisterChallengePutApi(
             rideToWorkByBikeConfig,
             i18n,
+            personalDetails.id,
             responseNew,
           );
           // override intercept GET request
@@ -418,9 +424,10 @@ function coreTests() {
             .find(dataSelectorInput)
             .type(personalDetails.nickname);
           // intercept POST request
-          cy.interceptRegisterChallengePostApi(
+          cy.interceptRegisterChallengePutApi(
             rideToWorkByBikeConfig,
             i18n,
+            personalDetails.id,
             response,
           );
           // override intercept GET request
@@ -544,9 +551,10 @@ function coreTests() {
           // gender edit form
           cy.dataCy(selectorFormGender).should('be.visible');
           // intercept POST request
-          cy.interceptRegisterChallengePostApi(
+          cy.interceptRegisterChallengePutApi(
             rideToWorkByBikeConfig,
             i18n,
+            personalDetails.id,
             responseNew,
           );
           // override intercept GET request
@@ -592,9 +600,10 @@ function coreTests() {
             .should('be.visible')
             .click();
           // intercept POST request
-          cy.interceptRegisterChallengePostApi(
+          cy.interceptRegisterChallengePutApi(
             rideToWorkByBikeConfig,
             i18n,
+            personalDetails.id,
             response,
           );
           // override intercept GET request

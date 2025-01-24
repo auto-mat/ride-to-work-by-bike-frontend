@@ -701,6 +701,11 @@ titleUpdateEmail = "Edit e-mail"
 titleUpdateGender = "Edit performance category"
 titleUpdateNickname = "Edit nickname"
 
+[putRegisterChallenge]
+apiMessageError = "Error updating profile."
+apiMessageErrorWithMessage = "Error updating profile. Error: {error}"
+apiMessageSuccess = "Profile was successfully updated."
+
 [refreshTokens]
 messageRefreshTokenRequired = "To refresh tokens, you must log in."
 apiMessageSuccess = "Login token was refreshed."

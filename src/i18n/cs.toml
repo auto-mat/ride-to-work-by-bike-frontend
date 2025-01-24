@@ -705,6 +705,11 @@ titleUpdateEmail = "Upravit e-mail"
 titleUpdateGender = "Upravit výkonnostní kategorii"
 titleUpdateNickname = "Upravit přezdívku"
 
+[putRegisterChallenge]
+apiMessageError = "Chyba při aktualizaci profilu."
+apiMessageErrorWithMessage = "Chyba při aktualizaci profilu. Chyba: {error}"
+apiMessageSuccess = "Profil byl úspěšně aktualizován."
+
 [refreshTokens]
 messageRefreshTokenRequired = "Pro obnovení tokenů je potřeba přihlásit se."
 apiMessageSuccess = "Přihlašovací token byl obnoven."

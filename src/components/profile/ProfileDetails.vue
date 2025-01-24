@@ -40,6 +40,7 @@ import DeleteAccount from './DeleteAccount.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterChallenge';
 
 // enums
 import { Gender, PaymentState } from '../types/Profile';
@@ -118,12 +119,16 @@ export default defineComponent({
       // TODO: Implement download invoice
     };
 
+    // update register challenge data
+    const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
+      registerChallengeStore.$log,
+    );
     const onUpdatePersonalDetails = async (
       data: ToApiPayloadStoreState,
     ): Promise<void> => {
       const payload = registerChallengeAdapter.toApiPayload(data);
       // post payload to API
-      await registerChallengeStore.postRegisterChallenge(payload);
+      await updateChallenge(profile.value.id, payload);
       registerChallengeStore.loadRegisterChallengeToStore();
     };
 
@@ -144,6 +149,7 @@ export default defineComponent({
       iconPaymentColor,
       iconPaymentState,
       iconSize,
+      isLoading,
       labelPaymentState,
       profile,
       onDownloadInvoice,

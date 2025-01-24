@@ -7,6 +7,7 @@ import type { PaymentCategory, PayuProduct } from './ApiPayu';
 export type CorePersonalDetails = {
   first_name: string;
   last_name: string;
+  id: number;
   nickname: string;
   sex: string;
   telephone: string;

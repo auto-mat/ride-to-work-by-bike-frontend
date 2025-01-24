@@ -28,6 +28,7 @@ export const registerChallengeAdapter = {
     const personalDetails: RegisterChallengePersonalDetailsForm = {
       firstName: apiData.personal_details.first_name,
       lastName: apiData.personal_details.last_name,
+      id: apiData.personal_details.id,
       nickname: apiData.personal_details.nickname,
       gender: apiData.personal_details.sex as Gender,
       newsletter: newsletterAdapter.parseNewsletterValues(

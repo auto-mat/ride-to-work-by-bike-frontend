@@ -109,6 +109,7 @@ function coreTests() {
                 cy.get('@i18n').then((i18n) => {
                   // wait for GET request
                   cy.waitForRegisterChallengeGetApi(response);
+                  const personalDetails = response.results[0].personal_details;
                   const newNickname =
                     responseNickname.results[0].personal_details.nickname;
                   // Change nickname
@@ -120,9 +121,10 @@ function coreTests() {
                     .find(dataSelectorInput)
                     .type(newNickname);
                   // intercept POST request
-                  cy.interceptRegisterChallengePostApi(
+                  cy.interceptRegisterChallengePutApi(
                     config,
                     i18n,
+                    personalDetails.id,
                     responseNickname,
                   );
                   // override intercept GET request
@@ -160,9 +162,10 @@ function coreTests() {
                     .contains(i18n.global.t(genderFemaleKey))
                     .click();
                   // intercept POST request
-                  cy.interceptRegisterChallengePostApi(
+                  cy.interceptRegisterChallengePutApi(
                     config,
                     i18n,
+                    personalDetails.id,
                     responseGender,
                   );
                   // override intercept GET request

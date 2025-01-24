@@ -2569,3 +2569,59 @@ Cypress.Commands.add(
       .should('have.color', validationErrorColor);
   },
 );
+
+/**
+ * Intercept register challenge PUT API call
+ * Provides `@putRegisterChallenge` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Number} primaryKeyId - Primary key ID of the registration
+ * @param {Object} responseBody - Override response body
+ * @param {Number} responseStatusCode - Override response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptRegisterChallengePutApi',
+  (
+    config,
+    i18n,
+    primaryKeyId,
+    responseBody = null,
+    responseStatusCode = null,
+  ) => {
+    const { apiBase, apiDefaultLang, urlApiRegisterChallenge } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiRegisterChallengeLocalized = `${apiBaseUrl}${urlApiRegisterChallenge}${primaryKeyId}/`;
+
+    cy.intercept('PUT', urlApiRegisterChallengeLocalized, {
+      statusCode: responseStatusCode || httpSuccessfullStatus,
+      body: responseBody,
+      delay: interceptedRequestResponseDelay,
+    }).as('putRegisterChallenge');
+  },
+);
+
+/**
+ * Wait for intercept register challenge PUT API call and compare request/response object
+ * Wait for `@putRegisterChallenge` intercept
+ * @param {Object} requestBody - Expected request body
+ * @param {Object} responseBody - Expected response body
+ */
+Cypress.Commands.add(
+  'waitForRegisterChallengePutApi',
+  (requestBody, responseBody = null) => {
+    cy.wait('@putRegisterChallenge').then(({ request, response }) => {
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      expect(request.body).to.deep.equal(requestBody);
+      // allow to test only request
+      if (response && responseBody) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(responseBody);
+      }
+    });
+  },
+);
