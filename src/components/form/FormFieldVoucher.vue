@@ -183,34 +183,32 @@ export default defineComponent({
         />
       </template>
     </q-banner>
-    <div
-      v-else
-      class="row items-center q-col-gutter-md"
-      data-cy="voucher-widget"
-    >
-      <div class="col">
-        <!-- Input: Voucher -->
-        <form-field-text-required
-          v-model="code"
-          name="voucher"
-          label="form.labelVoucher"
-          data-cy="form-field-voucher-input"
-          ref="formFieldTextRequiredRef"
-        />
+    <q-form v-else @submit.prevent="onSubmitVoucher">
+      <div class="row items-center q-col-gutter-md" data-cy="voucher-widget">
+        <div class="col">
+          <!-- Input: Voucher -->
+          <form-field-text-required
+            v-model="code"
+            name="voucher"
+            label="form.labelVoucher"
+            data-cy="form-field-voucher-input"
+            ref="formFieldTextRequiredRef"
+          />
+        </div>
+        <div class="col-auto">
+          <!-- Button: Submit -->
+          <q-btn
+            rounded
+            unelevated
+            type="submit"
+            color="primary"
+            class="q-mt-sm"
+            :label="$t('form.buttonVoucherSubmit')"
+            :loading="isLoading"
+            data-cy="form-field-voucher-submit"
+          />
+        </div>
       </div>
-      <div class="col-auto">
-        <!-- Button: Submit -->
-        <q-btn
-          rounded
-          unelevated
-          color="primary"
-          :label="$t('form.buttonVoucherSubmit')"
-          :loading="isLoading"
-          @click="onSubmitVoucher"
-          class="q-mt-sm"
-          data-cy="form-field-voucher-submit"
-        />
-      </div>
-    </div>
+    </q-form>
   </div>
 </template>
