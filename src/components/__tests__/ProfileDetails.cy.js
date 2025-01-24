@@ -6,11 +6,14 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { PaymentState } from '../../../src/components/types/Profile';
 import { useLoginStore } from '../../stores/login';
 import { getGenderLabel } from '../../utils/get_gender_label';
+import { useOrganizations } from '../../composables/useOrganizations';
 
 // colors
 const { getPaletteColor } = colors;
 const green = getPaletteColor('green');
 const red = getPaletteColor('red');
+
+const { getOrganizationLabels } = useOrganizations();
 
 // selectors
 const selectorAddressSubsidiary = 'profile-details-address-subsidiary';
@@ -218,17 +221,22 @@ function coreTests() {
                     i18n.global.t('profile.titleChallengeDetails'),
                   );
               });
-            // row organizationType
             cy.dataCy(selectorOrganizationType)
+              .should('be.visible')
               .find(dataSelectorLabel)
               .should(
                 'contain',
                 i18n.global.t('profile.labelOrganizationType'),
               );
-            cy.dataCy(selectorOrganizationType)
-              .should('be.visible')
-              .find(dataSelectorValue)
-              .should('contain', formPersonalDetails.organizationType);
+            // row organizationType
+            cy.wrap(
+              getOrganizationLabels(response.results[0].organization_type)
+                .labelShort,
+            ).then((organizationType) => {
+              cy.dataCy(selectorOrganizationType)
+                .find(dataSelectorValue)
+                .should('contain', organizationType);
+            });
             // row organization
             cy.dataCy(selectorOrganization)
               .find(dataSelectorLabel)

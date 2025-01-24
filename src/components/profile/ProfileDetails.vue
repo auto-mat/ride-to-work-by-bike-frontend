@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
@@ -41,6 +41,7 @@ import DeleteAccount from './DeleteAccount.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterChallenge';
+import { useOrganizations } from '../../composables/useOrganizations';
 
 // enums
 import { Gender, PaymentState } from '../types/Profile';
@@ -53,6 +54,7 @@ import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
+import type { Logger } from '../types/Logger';
 import type { ToApiPayloadStoreState } from '../../components/types/ApiRegistration';
 
 // utils
@@ -71,16 +73,37 @@ export default defineComponent({
     DeleteAccount,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
 
     const registerChallengeStore = useRegisterChallengeStore();
     // refresh on mounted
     onMounted(() => {
       registerChallengeStore.loadRegisterChallengeToStore();
+      // load all data
+      if (!registerChallengeStore.getOrganizations.length) {
+        registerChallengeStore.loadOrganizationsToStore(logger);
+      }
+      if (!registerChallengeStore.getTeams.length) {
+        registerChallengeStore.loadTeamsToStore(logger);
+      }
+      if (!registerChallengeStore.getSubsidiaries.length) {
+        registerChallengeStore.loadSubsidiariesToStore(logger);
+      }
+      if (!registerChallengeStore.getMerchandiseItems.length) {
+        registerChallengeStore.loadMerchandiseToStore(logger);
+      }
     });
+
     // profile details
     const profile = computed(() => {
       return registerChallengeStore.getPersonalDetails;
+    });
+
+    const { getOrganizationLabels } = useOrganizations();
+    const organizationType = computed(() => {
+      return getOrganizationLabels(registerChallengeStore.getOrganizationType)
+        .labelShort;
     });
 
     const loginStore = useLoginStore();
@@ -151,6 +174,7 @@ export default defineComponent({
       iconSize,
       isLoading,
       labelPaymentState,
+      organizationType,
       profile,
       onDownloadInvoice,
       onUpdatePersonalDetails,
@@ -253,7 +277,7 @@ export default defineComponent({
         <!-- Organization type -->
         <details-item
           :label="$t('profile.labelOrganizationType')"
-          :value="formPersonalDetails.organizationType"
+          :value="organizationType"
           class="col-12 col-sm-6"
           data-cy="profile-details-organization-type"
         />
