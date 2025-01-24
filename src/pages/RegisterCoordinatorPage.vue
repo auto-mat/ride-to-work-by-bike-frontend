@@ -46,6 +46,10 @@ export default defineComponent({
       // if user is admin of organization, redirect to home page
       if (registerChallengeStore.getIsUserOrganizationAdmin) {
         if (router) {
+          logger?.debug(
+            `User is organization admin <${registerChallengeStore.getIsUserOrganizationAdmin}>,` +
+              ` redirect to home page <${routesConf['home'].path}> URL.`,
+          );
           router.push(routesConf['home'].path);
         }
       }
