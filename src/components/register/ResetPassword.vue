@@ -46,7 +46,8 @@ export default defineComponent({
 
     if (typeof token !== 'string' || typeof uid !== 'string') {
       logger?.debug(
-        `Reset password token <${token}> or uid <${uid}> is not a string. Redirect to login page.`,
+        `Reset password token <${token}> or uid <${uid}> is not a string.` +
+          ` Redirect to login page <${routesConf['login']['path']}>.`,
       );
       router.push(routesConf['login']['path']);
     }
@@ -98,8 +99,18 @@ export default defineComponent({
         // reset form
         password1.value = '';
         password2.value = '';
+        logger?.debug(
+          `Reset form field password1 <${password1.value}>` +
+            ` and password2 <${password2.value}>).`,
+        );
         // redirect to login page
         loginStore.setLoginFormState(LoginFormState.login);
+        logger?.debug(
+          `Set login form state store value to <${loginStore.getLoginFormState}>.`,
+        );
+        logger?.debug(
+          `Redirect to login page <${routesConf['login']['path']}>.`,
+        );
         router.push(routesConf['login']['path']);
       }
     };
