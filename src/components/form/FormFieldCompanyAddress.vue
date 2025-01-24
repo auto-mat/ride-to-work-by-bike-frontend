@@ -366,11 +366,13 @@ export default defineComponent({
       {{ titleDialogAddress }}
     </template>
     <template #content>
-      <q-form ref="formRef">
+      <q-form ref="formRef" @submit.prevent="onSubmit">
         <p data-cy="add-subsidiary-text">
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
         <form-add-subsidiary v-model="addressNew" />
+        <!-- Hidden submit button enables Enter key to submit -->
+        <q-btn type="submit" class="hidden" />
       </q-form>
       <!-- Action buttons -->
       <div class="flex justify-end q-mt-sm">

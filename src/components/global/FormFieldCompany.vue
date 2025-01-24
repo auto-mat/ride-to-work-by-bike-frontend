@@ -354,12 +354,14 @@ export default defineComponent({
         {{ addNewOrganizationDialogTitle }}
       </template>
       <template #content>
-        <q-form ref="formRef">
+        <q-form ref="formRef" @submit.prevent="onSubmit">
           <form-add-company
             v-model="companyNew"
             :variant="FormAddCompanyVariantProp.simple"
             :organization-type="organizationType"
           ></form-add-company>
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
         </q-form>
         <!-- Action buttons -->
         <div class="flex justify-end q-mt-sm">
