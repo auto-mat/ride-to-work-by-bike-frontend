@@ -108,6 +108,15 @@ describe('Register Challenge page', () => {
       cy.task('getAppConfig', process).then((config) => {
         cy.interceptThisCampaignGetApi(config, defLocale);
         cy.interceptRegisterChallengeGetApi(config, defLocale);
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
         // visit challenge inactive page to load campaign data
         cy.visit('#' + routesConf['challenge_inactive']['path']);
         cy.waitForThisCampaignApi();
@@ -213,16 +222,6 @@ describe('Register Challenge page', () => {
               cy.interceptIpAddressGetApi(config);
               cy.interceptPayuCreateOrderPostApi(config, win.i18n);
               interceptRegisterCoordinatorApi(config, win.i18n);
-
-              cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-                (responseIsUserOrganizationAdminFalse) => {
-                  cy.interceptIsUserOrganizationAdminGetApi(
-                    config,
-                    win.i18n,
-                    responseIsUserOrganizationAdminFalse,
-                  );
-                },
-              );
             },
           );
         });
@@ -524,15 +523,13 @@ describe('Register Challenge page', () => {
     it('allows to post company coordinator registration', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
-          cy.passToStep2();
           cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-            (responseIsUserOrganizationAdminFalse) => {
+            (response) => {
               // user status should reload
-              cy.waitForIsUserOrganizationAdminApi(
-                responseIsUserOrganizationAdminFalse,
-              );
+              cy.waitForIsUserOrganizationAdminApi(response);
             },
           );
+          cy.passToStep2();
           // select company
           cy.dataCy(getRadioOption(OrganizationType.company)).click();
           // select paying company (required)
