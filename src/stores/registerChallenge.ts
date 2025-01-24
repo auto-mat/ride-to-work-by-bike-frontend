@@ -248,22 +248,20 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       ].includes(this.getPaymentState);
       const isPaymentCategoryDonation =
         this.getPaymentCategory === PaymentCategory.donation;
-      const isPaymentSubjectVoucher =
-        this.getPaymentSubject === PaymentSubject.voucher;
+      const isVoucherFullDiscount =
+        this.getPaymentSubject === PaymentSubject.voucher &&
+        this.getVoucher?.discount === 100;
+
+      // complete - voucher full discount (set from API response)
+      if (isVoucherFullDiscount) {
+        return true;
+      }
       // payment not successful
-      if (!isPaymentStateSuccess) {
+      else if (!isPaymentStateSuccess) {
         return false;
       }
       // complete - successful payment of entry fee
       else if (isPaymentStateSuccess && !isPaymentCategoryDonation) {
-        return true;
-      }
-      // complete - status = voucher (100% discount) + successful donation
-      else if (
-        isPaymentStateSuccess &&
-        isPaymentCategoryDonation &&
-        isPaymentSubjectVoucher
-      ) {
         return true;
       }
       return false;
@@ -425,6 +423,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
        */
       const isVoucherFullDiscount =
         parsedResponse.voucher &&
+        parsedResponse.paymentSubject === PaymentSubject.voucher &&
         (!parsedResponse.paymentAmount ||
           parsedResponse.paymentCategory === PaymentCategory.donation);
       if (isVoucherFullDiscount) {
