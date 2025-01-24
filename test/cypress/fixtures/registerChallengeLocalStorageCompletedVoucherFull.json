@@ -27,5 +27,6 @@
   "telephoneOptIn": true,
   "isPayuTransactionInitiated": false,
   "isSelectedRegisterCoordinator": false,
+  "isUserOrganizationAdmin": false,
   "hasOrganizationAdmin": true
 }

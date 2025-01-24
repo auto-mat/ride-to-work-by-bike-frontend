@@ -49,6 +49,7 @@ export const getRegisterChallengeEmptyPersistentState = () => ({
   telephoneOptIn: false,
   isPayuTransactionInitiated: false,
   isSelectedRegisterCoordinator: false,
+  isUserOrganizationAdmin: null,
   hasOrganizationAdmin: null,
   paymentCategory: PaymentCategory.none,
 });

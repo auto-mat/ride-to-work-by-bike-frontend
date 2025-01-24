@@ -146,11 +146,13 @@ export default defineComponent({
     const router = useRouter();
 
     onMounted(async () => {
+      // check if user is organization admin
+      registerChallengeStore.checkIsUserOrganizationAdmin();
+
       // make sure price level is loaded
       if (!challengeStore.getPriceLevel.length) {
         await challengeStore.loadPhaseSet();
       }
-
       await registerChallengeStore.loadRegisterChallengeToStore();
       /**
        * Depending on the paymentState, and isPayuTransactionInitiated flag

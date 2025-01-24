@@ -93,27 +93,27 @@ describe('Register challenge storage', () => {
                   );
 
                   // for first organization, intercept API call with response true
-                  cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
-                    (response) => {
-                      cy.interceptHasOrganizationAdminGetApi(
-                        config,
-                        defLocale,
-                        formFieldCompanyResponse.results[0].id,
-                        response,
-                      );
-                    },
-                  );
+                  cy.fixture(
+                    'apiGetHasOrganizationAdminResponseTrue.json',
+                  ).then((response) => {
+                    cy.interceptHasOrganizationAdminGetApi(
+                      config,
+                      defLocale,
+                      formFieldCompanyResponse.results[0].id,
+                      response,
+                    );
+                  });
                   // for second organization, intercept API call with response false
-                  cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
-                    (response) => {
-                      cy.interceptHasOrganizationAdminGetApi(
-                        config,
-                        defLocale,
-                        formFieldCompanyResponse.results[1].id,
-                        response,
-                      );
-                    },
-                  );
+                  cy.fixture(
+                    'apiGetHasOrganizationAdminResponseFalse.json',
+                  ).then((response) => {
+                    cy.interceptHasOrganizationAdminGetApi(
+                      config,
+                      defLocale,
+                      formFieldCompanyResponse.results[1].id,
+                      response,
+                    );
+                  });
                 },
               );
             },
@@ -135,11 +135,22 @@ describe('Register challenge storage', () => {
 
   it('handles local storage correctly during registration flow', () => {
     // verify initial state of persistent properties of registerChallenge store
-    cy.window().then((win) => {
-      const store = JSON.parse(win.localStorage.getItem('registerChallenge'));
-      const emptyPersistentState = getRegisterChallengeEmptyPersistentState();
-      expect(store).to.deep.include(emptyPersistentState);
-    });
+    cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+      (response) => {
+        cy.waitForIsUserOrganizationAdminApi(response);
+        cy.window().then((win) => {
+          const store = JSON.parse(
+            win.localStorage.getItem('registerChallenge'),
+          );
+          const emptyPersistentState =
+            getRegisterChallengeEmptyPersistentState();
+          // update value that is fetched on mounted
+          emptyPersistentState.isUserOrganizationAdmin =
+            response.is_user_organization_admin;
+          expect(store).to.deep.include(emptyPersistentState);
+        });
+      },
+    );
 
     // go through registration
     cy.passToStep7();

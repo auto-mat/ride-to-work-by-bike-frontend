@@ -962,7 +962,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'isLoadingFilteredMerchandise',
       'isLoadingPayuOrder',
       'checkPaymentStatusRepetitionCount',
-      'isUserOrganizationAdmin',
       'isLoadingUserOrganizationAdmin',
     ],
   },

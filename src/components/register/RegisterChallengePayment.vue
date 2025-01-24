@@ -212,9 +212,7 @@ export default defineComponent({
       },
     });
     onMounted(() => {
-      // following two checks can run in parallel
       registerChallengeStore.checkOrganizationHasCoordinator();
-      registerChallengeStore.checkIsUserOrganizationAdmin();
     });
     const isRegistrationCoordinator = computed<boolean>({
       get: (): boolean =>
