@@ -15,8 +15,7 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
-const urlRegisterAsCoordinator =
-  routesConf['register_coordinator'].children.fullPath;
+const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
