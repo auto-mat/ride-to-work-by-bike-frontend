@@ -22,7 +22,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
@@ -43,7 +43,8 @@ import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterC
 import { useOrganizations } from '../../composables/useOrganizations';
 
 // enums
-import { Gender, PaymentState } from '../types/Profile';
+import { Gender } from '../types/Profile';
+import { PaymentSubject } from '../../components/enums/Payment';
 
 // fixtures
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
@@ -165,38 +166,50 @@ export default defineComponent({
       return registerChallengeStore.getTelephone;
     });
 
-    const allowContactPhone = ref(false);
+    const isPaymentComplete = computed(() => {
+      return registerChallengeStore.getIsPaymentComplete;
+    });
+
+    const paymentSubject = computed(() => {
+      return registerChallengeStore.getPaymentSubject;
+    });
 
     const labelPaymentState = computed(() => {
-      switch (formPersonalDetails.paymentState) {
-        case PaymentState.paidByOrganization:
-          return i18n.global.t('profile.labelPaymentStatePaidByCompany');
-        case PaymentState.paid:
-          return i18n.global.t('profile.labelPaymentStatePaid');
-        default:
-          return i18n.global.t('profile.labelPaymentStateNotPaid');
+      if (isPaymentComplete.value) {
+        switch (paymentSubject.value) {
+          case PaymentSubject.company:
+          case PaymentSubject.school:
+            return i18n.global.t('profile.labelPaymentStatePaidByCompany');
+          case PaymentSubject.individual:
+          case PaymentSubject.voucher:
+            return i18n.global.t('profile.labelPaymentStatePaid');
+          default:
+            return i18n.global.t('profile.labelPaymentStateNotPaid');
+        }
+      } else {
+        return i18n.global.t('profile.labelPaymentStateNotPaid');
       }
     });
 
     const iconPaymentColor = computed(() => {
-      return [PaymentState.paid, PaymentState.paidByOrganization].includes(
-        formPersonalDetails.paymentState as PaymentState,
-      )
-        ? 'green'
-        : 'red';
+      return isPaymentComplete.value ? 'green' : 'red';
     });
 
     const iconPaymentState = computed(() => {
-      return [PaymentState.paid, PaymentState.paidByOrganization].includes(
-        formPersonalDetails.paymentState as PaymentState,
-      )
+      return isPaymentComplete.value
         ? 'mdi-check-circle-outline'
         : 'mdi-close-circle-outline';
     });
 
-    const onDownloadInvoice = () => {
-      // TODO: Implement download invoice
-    };
+    const telephoneOptIn = computed({
+      get: () => registerChallengeStore.getTelephoneOptIn,
+      set: async (value) => {
+        await onUpdatePersonalDetails({ telephoneOptIn: value });
+      },
+    });
+
+    // TODO: Implement download invoice
+    const onDownloadInvoice = () => {};
 
     // update register challenge data
     const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
@@ -224,7 +237,7 @@ export default defineComponent({
     };
 
     return {
-      allowContactPhone,
+      telephoneOptIn,
       iconPaymentColor,
       iconPaymentState,
       iconSize,
@@ -432,7 +445,6 @@ export default defineComponent({
         <!-- Package -->
         <details-item
           :label="$t('profile.labelPaymentState')"
-          :value="formPersonalDetails.package.title"
           class="col-12 col-md-6 items-center"
           data-cy="profile-details-payment-state"
         >
@@ -450,7 +462,7 @@ export default defineComponent({
             </div>
           </template>
         </details-item>
-        <div class="col-12 col-md-6">
+        <!-- <div class="col-12 col-md-6">
           <q-btn
             unelevated
             rounded
@@ -466,7 +478,7 @@ export default defineComponent({
             />
             {{ $t('profile.buttonDownloadInvoice') }}
           </q-btn>
-        </div>
+        </div> -->
       </div>
     </div>
 
@@ -476,8 +488,9 @@ export default defineComponent({
     <!-- Contact participation -->
     <div class="q-mt-xl">
       <q-toggle
-        :label="$t('profile.labelAllowContactPhone')"
-        v-model="allowContactPhone"
+        :disable="isLoading"
+        :label="$t('profile.labelTelephoneOptIn')"
+        v-model="telephoneOptIn"
         data-cy="profile-allow-contact-phone"
       />
     </div>

@@ -19,7 +19,7 @@
         "discount_coupon": "",
         "payment_subject": "company",
         "payment_type": "fc",
-        "payment_status": "no_admission",
+        "payment_status": "done",
         "payment_amount": 390
       },
       "organization_type": "company",
