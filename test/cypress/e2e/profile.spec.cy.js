@@ -4,6 +4,9 @@ import { defLocale } from '../../../src/i18n/def_locale';
 import { getGenderLabel } from '../../../src/utils/get_gender_label';
 
 // selectors
+const classSelectorToggleInner = '.q-toggle__inner';
+const classSelectorToggleInnerFalsy = 'q-toggle__inner--falsy';
+const classSelectorToggleInnerTruthy = 'q-toggle__inner--truthy';
 const selectorProfilePage = 'profile-page';
 const selectorProfilePageTitle = 'profile-page-title';
 const selectorNickname = 'profile-details-nickname';
@@ -12,6 +15,7 @@ const selectorGender = 'profile-details-gender';
 const selectorFormNickname = 'profile-details-form-nickname';
 // const selectorFormEmail = 'profile-details-form-email';
 const selectorFormGender = 'profile-details-form-gender';
+const selectorTelephoneOptIn = 'profile-details-telephone-opt-in';
 const dataSelectorEdit = '[data-cy="details-item-edit"]';
 const dataSelectorInput = '[data-cy="form-input"]';
 // const dataSelectorInputEmail = '[data-cy="form-email"]';
@@ -105,87 +109,102 @@ function coreTests() {
         (responseNickname) => {
           cy.fixture('apiGetRegisterChallengeProfileUpdatedGender.json').then(
             (responseGender) => {
-              cy.get('@config').then((config) => {
-                cy.get('@i18n').then((i18n) => {
-                  // wait for GET request
-                  cy.waitForRegisterChallengeGetApi(response);
-                  const personalDetails = response.results[0].personal_details;
-                  const newNickname =
-                    responseNickname.results[0].personal_details.nickname;
-                  // Change nickname
-                  cy.dataCy(selectorNickname).find(dataSelectorEdit).click();
-                  cy.dataCy(selectorFormNickname)
-                    .find(dataSelectorInput)
-                    .clear();
-                  cy.dataCy(selectorFormNickname)
-                    .find(dataSelectorInput)
-                    .type(newNickname);
-                  // intercept POST request
-                  cy.interceptRegisterChallengePutApi(
-                    config,
-                    i18n,
-                    personalDetails.id,
-                    responseNickname,
-                  );
-                  // override intercept GET request
-                  cy.interceptRegisterChallengeGetApi(
-                    config,
-                    i18n,
-                    responseNickname,
-                  );
-                  // submit form
-                  cy.dataCy(selectorFormNickname)
-                    .find(dataSelectorButtonSave)
-                    .click();
-                  // wait for GET request
-                  cy.waitForRegisterChallengeGetApi(responseNickname);
-                  cy.dataCy(selectorNickname)
-                    .find(dataSelectorValue)
-                    .should('have.text', newNickname);
-
-                  // Change email
-                  // cy.dataCy(selectorEmail).find(dataSelectorEdit).click();
-                  // cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).clear();
-                  // cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type(newEmail);
-                  // cy.dataCy(selectorFormEmail)
-                  //   .find(dataSelectorInputPassword)
-                  //   .type(password);
-                  // cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
-                  // cy.dataCy(selectorEmail)
-                  //   .find(dataSelectorValue)
-                  //   .should('have.text', newEmail);
-
-                  // Change gender
-                  cy.dataCy(selectorGender).find(dataSelectorEdit).click();
-                  cy.dataCy(selectorFormGender)
-                    .find('.q-radio__label')
-                    .contains(i18n.global.t(genderFemaleKey))
-                    .click();
-                  // intercept POST request
-                  cy.interceptRegisterChallengePutApi(
-                    config,
-                    i18n,
-                    personalDetails.id,
-                    responseGender,
-                  );
-                  // override intercept GET request
-                  cy.interceptRegisterChallengeGetApi(
-                    config,
-                    i18n,
-                    responseGender,
-                  );
-                  cy.dataCy(selectorFormGender)
-                    .find(dataSelectorButtonSave)
-                    .click();
-                  cy.dataCy(selectorGender)
-                    .find(dataSelectorValue)
-                    .should(
-                      'have.text',
-                      getGenderLabel(
-                        responseGender.results[0].personal_details.sex,
-                        i18n,
-                      ),
+              cy.fixture(
+                'apiGetRegisterChallengeProfileUpdatedTelephoneOptIn.json',
+              ).then((responseTelephoneOptIn) => {
+                cy.get('@config').then((config) => {
+                  cy.get('@i18n').then((i18n) => {
+                    // wait for GET request
+                    cy.waitForRegisterChallengeGetApi(response);
+                    const personalDetails =
+                      response.results[0].personal_details;
+                    const newNickname =
+                      responseNickname.results[0].personal_details.nickname;
+                    // change nickname
+                    cy.dataCy(selectorNickname).find(dataSelectorEdit).click();
+                    cy.dataCy(selectorFormNickname)
+                      .find(dataSelectorInput)
+                      .clear();
+                    cy.dataCy(selectorFormNickname)
+                      .find(dataSelectorInput)
+                      .type(newNickname);
+                    // intercept POST request
+                    cy.interceptRegisterChallengePutApi(
+                      config,
+                      i18n,
+                      personalDetails.id,
+                      responseNickname,
                     );
+                    // override intercept GET request
+                    cy.interceptRegisterChallengeGetApi(
+                      config,
+                      i18n,
+                      responseNickname,
+                    );
+                    // submit form
+                    cy.dataCy(selectorFormNickname)
+                      .find(dataSelectorButtonSave)
+                      .click();
+                    // wait for GET request
+                    cy.waitForRegisterChallengeGetApi(responseNickname);
+                    cy.dataCy(selectorNickname)
+                      .find(dataSelectorValue)
+                      .should('have.text', newNickname);
+                    // change gender
+                    cy.dataCy(selectorGender).find(dataSelectorEdit).click();
+                    cy.dataCy(selectorFormGender)
+                      .find('.q-radio__label')
+                      .contains(i18n.global.t(genderFemaleKey))
+                      .click();
+                    // intercept POST request
+                    cy.interceptRegisterChallengePutApi(
+                      config,
+                      i18n,
+                      personalDetails.id,
+                      responseGender,
+                    );
+                    // override intercept GET request
+                    cy.interceptRegisterChallengeGetApi(
+                      config,
+                      i18n,
+                      responseGender,
+                    );
+                    cy.dataCy(selectorFormGender)
+                      .find(dataSelectorButtonSave)
+                      .click();
+                    cy.dataCy(selectorGender)
+                      .find(dataSelectorValue)
+                      .should(
+                        'have.text',
+                        getGenderLabel(
+                          responseGender.results[0].personal_details.sex,
+                          i18n,
+                        ),
+                      );
+                    // telephone opt-in value
+                    cy.dataCy(selectorTelephoneOptIn)
+                      .find(classSelectorToggleInner)
+                      .should('have.class', classSelectorToggleInnerFalsy);
+                    // intercept POST request
+                    cy.interceptRegisterChallengePutApi(
+                      config,
+                      i18n,
+                      personalDetails.id,
+                      responseTelephoneOptIn,
+                    );
+                    // override intercept GET request
+                    cy.interceptRegisterChallengeGetApi(
+                      config,
+                      i18n,
+                      responseTelephoneOptIn,
+                    );
+                    // change telephone opt-in
+                    cy.dataCy(selectorTelephoneOptIn).click();
+                    // should be checked
+                    cy.dataCy(selectorTelephoneOptIn)
+                      .find(classSelectorToggleInner)
+                      .should('have.class', classSelectorToggleInnerTruthy);
+                  });
                 });
               });
             },
