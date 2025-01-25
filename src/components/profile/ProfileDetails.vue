@@ -22,6 +22,7 @@
  */
 
 // libraries
+import { Notify } from 'quasar';
 import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // adapters
@@ -204,7 +205,7 @@ export default defineComponent({
     const telephoneOptIn = computed({
       get: () => registerChallengeStore.getTelephoneOptIn,
       set: async (value) => {
-        await onUpdatePersonalDetails({ telephoneOptIn: value });
+        await onUpdateRegisterChallengeDetails({ telephoneOptIn: value });
       },
     });
 
@@ -215,13 +216,20 @@ export default defineComponent({
     const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
       registerChallengeStore.$log,
     );
-    const onUpdatePersonalDetails = async (
+    const onUpdateRegisterChallengeDetails = async (
       data: ToApiPayloadStoreState,
     ): Promise<void> => {
       const payload = registerChallengeAdapter.toApiPayload(data);
       // post payload to API
-      await updateChallenge(profile.value.id, payload);
-      registerChallengeStore.loadRegisterChallengeToStore();
+      if (profile.value.id) {
+        await updateChallenge(profile.value.id, payload);
+        registerChallengeStore.loadRegisterChallengeToStore();
+      } else {
+        Notify.create({
+          message: i18n.global.t('profile.messageProfileIdMissing'),
+          color: 'negative',
+        });
+      }
     };
 
     /**
@@ -252,7 +260,7 @@ export default defineComponent({
       subsidiary,
       team,
       onDownloadInvoice,
-      onUpdatePersonalDetails,
+      onUpdateRegisterChallengeDetails,
       formPersonalDetails,
       user,
       genderLabel,
@@ -287,7 +295,9 @@ export default defineComponent({
             :value="profile.nickname"
             :loading="isLoading"
             @update:value="
-              onUpdatePersonalDetails({ personalDetails: { nickname: $event } })
+              onUpdateRegisterChallengeDetails({
+                personalDetails: { nickname: $event },
+              })
             "
             data-cy="profile-details-form-nickname"
           />
@@ -319,7 +329,9 @@ export default defineComponent({
             :value="profile.gender"
             :loading="isLoading"
             @update:value="
-              onUpdatePersonalDetails({ personalDetails: { gender: $event } })
+              onUpdateRegisterChallengeDetails({
+                personalDetails: { gender: $event },
+              })
             "
             data-cy="profile-details-form-gender"
           />
