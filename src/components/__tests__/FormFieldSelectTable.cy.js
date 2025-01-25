@@ -27,6 +27,8 @@ const { getPaletteColor } = colors;
 const secondary = getPaletteColor('secondary');
 const grey2 = getPaletteColor('grey-2');
 
+const formAddSubsidiaryZipMask = '___ __';
+
 describe('<FormFieldSelectTable>', () => {
   let options;
   let organizationId;
@@ -343,7 +345,7 @@ describe('<FormFieldSelectTable>', () => {
                 .should('have.value', '');
               cy.dataCy('form-add-subsidiary-zip')
                 .find('input')
-                .should('have.value', '');
+                .should('have.value', formAddSubsidiaryZipMask);
             },
           );
         },
