@@ -21,10 +21,10 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-// import NewsletterFeature from '../homepage/NewsletterFeature.vue';
+import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import ProfileDetails from './ProfileDetails.vue';
-// import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
-// import TableNotifications from './TableNotifications.vue';
+import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
+import TableNotifications from './TableNotifications.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -40,16 +40,23 @@ enum tabsProfile {
 export default defineComponent({
   name: 'ProfileTabs',
   components: {
-    // NewsletterFeature,
+    NewsletterFeature,
     ProfileDetails,
-    // ProfileQuestionnaires,
-    // TableNotifications,
+    ProfileQuestionnaires,
+    TableNotifications,
   },
   setup() {
     const activeTab = ref(tabsProfile.none);
 
+    const isEnabledNewsletter = false;
+    const isEnabledQuestionnaires = false;
+    const isEnabledNotifications = false;
+
     return {
       activeTab,
+      isEnabledNewsletter,
+      isEnabledQuestionnaires,
+      isEnabledNotifications,
       routesConf,
       tabsProfile,
     };
@@ -75,26 +82,27 @@ export default defineComponent({
         :label="$t('profile.tabDetails')"
         data-cy="profile-tabs-button-details"
       />
-      <!--
       <q-route-tab
+        v-if="isEnabledQuestionnaires"
         :to="routesConf['profile_forms'].path"
         :name="tabsProfile.questionnaires"
         :label="$t('profile.tabForms')"
         data-cy="profile-tabs-button-questionnaires"
       />
       <q-route-tab
+        v-if="isEnabledNewsletter"
         :to="routesConf['profile_newsletter'].path"
         :name="tabsProfile.newsletter"
         :label="$t('profile.tabNewsletter')"
         data-cy="profile-tabs-button-newsletter"
       />
       <q-route-tab
+        v-if="isEnabledNotifications"
         :to="routesConf['profile_notifications'].path"
         :name="tabsProfile.notifications"
         :label="$t('profile.tabNotifications')"
         data-cy="profile-tabs-button-notifications"
       />
-      -->
     </q-tabs>
     <!-- Separator -->
     <q-separator />
@@ -108,29 +116,30 @@ export default defineComponent({
       >
         <profile-details />
       </q-tab-panel>
-      <!--
-      Panel: Questionnaires
+      <!-- Panel: Questionnaires -->
       <q-tab-panel
+        v-if="isEnabledQuestionnaires"
         :name="tabsProfile.questionnaires"
         data-cy="profile-tabs-panel-questionnaires"
       >
         <profile-questionnaires />
       </q-tab-panel>
-      Panel: Newsletter
+      <!-- Panel: Newsletter -->
       <q-tab-panel
+        v-if="isEnabledNewsletter"
         :name="tabsProfile.newsletter"
         data-cy="profile-tabs-panel-newsletter"
       >
         <newsletter-feature class="q-mt-lg" />
       </q-tab-panel>
-      Panel: Notifications
+      <!-- Panel: Notifications -->
       <q-tab-panel
+        v-if="isEnabledNotifications"
         :name="tabsProfile.notifications"
         data-cy="profile-tabs-panel-notifications"
       >
         <table-notifications />
       </q-tab-panel>
-      -->
     </q-tab-panels>
   </div>
 </template>

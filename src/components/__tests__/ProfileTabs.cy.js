@@ -44,30 +44,30 @@ describe('<ProfileTabs>', () => {
 });
 
 function coreTests() {
-  it.skip('renders component', () => {
+  it('renders component', () => {
     cy.dataCy(selectorProfileTabs).should('be.visible');
     cy.dataCy(selectorButtonDetails).and(
       'contain',
       i18n.global.t('profile.tabDetails'),
     );
-    cy.dataCy(selectorButtonQuestionnaires).and(
-      'contain',
-      i18n.global.t('profile.tabForms'),
-    );
-    cy.dataCy(selectorButtonNewsletter).and(
-      'contain',
-      i18n.global.t('profile.tabNewsletter'),
-    );
-    cy.dataCy(selectorButtonNotifications).and(
-      'contain',
-      i18n.global.t('profile.tabNotifications'),
-    );
+    // cy.dataCy(selectorButtonQuestionnaires).and(
+    //   'contain',
+    //   i18n.global.t('profile.tabForms'),
+    // );
+    // cy.dataCy(selectorButtonNewsletter).and(
+    //   'contain',
+    //   i18n.global.t('profile.tabNewsletter'),
+    // );
+    // cy.dataCy(selectorButtonNotifications).and(
+    //   'contain',
+    //   i18n.global.t('profile.tabNotifications'),
+    // );
 
     cy.dataCy(selectorButtonDetails).click();
     cy.dataCy(selectorPanelDetails).should('be.visible');
-    cy.dataCy(selectorPanelQuestionnaires).should('not.exist');
-    cy.dataCy(selectorPanelNewsletter).should('not.exist');
-    cy.dataCy(selectorPanelNotifications).should('not.exist');
+    // cy.dataCy(selectorPanelQuestionnaires).should('not.exist');
+    // cy.dataCy(selectorPanelNewsletter).should('not.exist');
+    // cy.dataCy(selectorPanelNotifications).should('not.exist');
   });
 
   it.skip('allows to switch tabs', () => {
