@@ -285,6 +285,7 @@ export default defineComponent({
           <form-update-nickname
             :on-close="close"
             :value="profile.nickname"
+            :loading="isLoading"
             @update:value="
               onUpdatePersonalDetails({ personalDetails: { nickname: $event } })
             "
@@ -316,6 +317,7 @@ export default defineComponent({
           <form-update-gender
             :on-close="close"
             :value="profile.gender"
+            :loading="isLoading"
             @update:value="
               onUpdatePersonalDetails({ personalDetails: { gender: $event } })
             "

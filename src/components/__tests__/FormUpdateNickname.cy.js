@@ -23,7 +23,7 @@ describe('<FormUpdateNickname>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['discardChanges', 'edit'],
+      ['discardChanges', 'save'],
       'navigation',
       i18n,
     );
@@ -82,7 +82,7 @@ function coreTests() {
     // save
     cy.dataCy(selectorButtonSave)
       .should('be.visible')
-      .and('contain', i18n.global.t('navigation.edit'));
+      .and('contain', i18n.global.t('navigation.save'));
   });
 
   it('renders buttons side by side', () => {

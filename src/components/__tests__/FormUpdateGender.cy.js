@@ -17,7 +17,7 @@ describe('<FormUpdateGender>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['labelGender'], 'form', i18n);
     cy.testLanguageStringsInContext(
-      ['discardChanges', 'edit'],
+      ['discardChanges', 'save'],
       'navigation',
       i18n,
     );
@@ -66,7 +66,7 @@ function coreTests() {
     // save
     cy.dataCy(selectorFormButtonSave)
       .should('be.visible')
-      .and('contain', i18n.global.t('navigation.edit'));
+      .and('contain', i18n.global.t('navigation.save'));
   });
 
   it('renders buttons side by side', () => {

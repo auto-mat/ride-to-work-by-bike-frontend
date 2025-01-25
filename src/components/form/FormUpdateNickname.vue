@@ -8,6 +8,7 @@
  * @props
  * - `value` (string, required): Nickname value.
  * - `onClose` (function, required): Function to close the dialog.
+ * - `loading` (boolean, optional): Loading state.
  *
  * @events
  * - `update:value`: Emitted when value successfully changes.
@@ -31,6 +32,10 @@ export default defineComponent({
     onClose: {
       type: Function,
       required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update:value', 'close'],
@@ -99,7 +104,8 @@ export default defineComponent({
         unelevated
         type="submit"
         color="primary"
-        :label="$t('navigation.edit')"
+        :label="$t('navigation.save')"
+        :loading="loading"
         data-cy="form-button-save"
       />
     </div>
