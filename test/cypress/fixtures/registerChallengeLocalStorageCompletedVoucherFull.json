@@ -2,6 +2,7 @@
   "personalDetails": {
     "firstName": "John",
     "lastName": "Doe",
+    "id": null,
     "newsletter": ["challenge", "events", "mobility"],
     "nickname": "JD",
     "gender": "male",
