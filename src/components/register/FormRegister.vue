@@ -9,6 +9,10 @@
  *
  * Note: This component is commonly used in `LoginPage`.
  *
+ * @props
+ * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
+ *                                                              validation error CSS class
+ *                                                              Defaults to `false`.
  * @events
  * - `formSubmit`: Emitted on form submit.
  *
@@ -45,15 +49,24 @@ import { PhaseType } from '../types/Challenge';
 import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 
+import { formFieldCustomValidationErrCssClass } from '../../utils';
+
 export default defineComponent({
   name: 'FormRegister',
+  props: {
+    useFormFieldValidationErrorCssClass: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   components: {
     FormFieldEmail,
     LoginRegisterButtons,
     ShowCurrentDatetime,
   },
   emits: ['formSubmit'],
-  setup() {
+  setup(props) {
     const defaultFormRegisterValue = '';
     const formRegister = reactive({
       email: defaultFormRegisterValue,
@@ -98,6 +111,12 @@ export default defineComponent({
       challengeStore.loadPhaseSet();
     });
 
+    const passwordFormFieldCssClasses = {
+      'q-mt-sm': true,
+    };
+    if (props.useFormFieldValidationErrorCssClass)
+      passwordFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
+
     return {
       whiteOpacity,
       formRegister,
@@ -112,6 +131,8 @@ export default defineComponent({
       isStrongPassword,
       onSubmitRegister,
       onReset,
+      passwordFormFieldCssClasses,
+      props,
       urlAppDataPrivacyPolicy,
     };
   },
@@ -146,6 +167,9 @@ export default defineComponent({
         bg-color="transparent"
         color="white"
         data-cy="form-register-email"
+        :useFormFieldValidationErrorCssClass="
+          props.useFormFieldValidationErrorCssClass
+        "
       />
       <!-- Input: password -->
       <div data-cy="form-register-password">
@@ -173,7 +197,7 @@ export default defineComponent({
               $t('register.form.messagePasswordStrong'),
           ]"
           lazy-rules
-          class="q-mt-sm"
+          :class="passwordFormFieldCssClasses"
           data-cy="form-register-password-input"
         >
           <!-- Icon: show password -->
@@ -218,7 +242,7 @@ export default defineComponent({
               $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
           lazy-rules
-          class="q-mt-sm"
+          :class="passwordFormFieldCssClasses"
           data-cy="form-register-password-confirm-input"
         >
           <!-- Icon: show password -->

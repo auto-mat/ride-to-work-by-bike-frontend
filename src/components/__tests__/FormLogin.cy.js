@@ -1,4 +1,4 @@
-import { colors } from 'quasar';
+import { colors, getCssVar } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { useLoginStore } from 'src/stores/login';
@@ -20,6 +20,10 @@ const { getPaletteColor, changeAlpha } = colors;
 const white = getPaletteColor('white');
 const primary = getPaletteColor('primary');
 const secondary = getPaletteColor('secondary');
+const customFormFieldValidationErrColor = getCssVar(
+  'custom-form-field-validation-err',
+);
+const negative = getPaletteColor('negative');
 const whiteOpacity = changeAlpha(
   white,
   rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
@@ -30,6 +34,9 @@ const classSelectorQNotificationMessage = '.q-notification__message';
 const selectorLoginPromptNoAccount = 'login-prompt-no-account';
 const selectorLoginLinkRegister = 'login-link-register';
 const selectorFormLoginSeparator = 'form-login-separator';
+const selectorFormLoginEmail = 'form-login-email';
+const selectorFormLoginPassword = 'form-login-password';
+const selectorFormPasswordReset = 'form-password-reset';
 
 // variables
 const {
@@ -84,7 +91,7 @@ describe('<FormLogin>', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(FormLogin, {
-        props: {},
+        props: { useFormFieldValidationErrorCssClass: true },
       });
       cy.viewport('macbook-16');
       // get API base URL
@@ -117,20 +124,20 @@ describe('<FormLogin>', () => {
     });
 
     it('renders email field', () => {
-      cy.dataCy('form-login-email').should('be.visible');
-      cy.dataCy('form-login-email')
+      cy.dataCy(selectorFormLoginEmail).should('be.visible');
+      cy.dataCy(selectorFormLoginEmail)
         .find('.q-field__control')
         .should('be.visible')
         .and('have.css', 'border-radius', '8px');
     });
 
     it('renders password field', () => {
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .should('be.visible')
         .find('label[for="form-login-password"]')
         .should('be.visible')
         .and('have.text', i18n.global.t('login.form.labelPassword'));
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .find('.q-field__control')
         .should('be.visible')
         .and('have.css', 'border-radius', '8px');
@@ -149,15 +156,15 @@ describe('<FormLogin>', () => {
     });
 
     it('should allow user to reveal and hide password', () => {
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .find('input')
         .should('have.attr', 'type', 'password');
       cy.dataCy('form-login-password-icon').click();
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .find('input')
         .should('have.attr', 'type', 'text');
       cy.dataCy('form-login-password-icon').click();
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .find('input')
         .should('have.attr', 'type', 'password');
     });
@@ -166,6 +173,37 @@ describe('<FormLogin>', () => {
       cy.dataCy(selectorFormLoginSeparator)
         .should('be.visible')
         .and('have.backgroundColor', whiteOpacity);
+    });
+
+    it('check default form field validation error color', () => {
+      cy.mount(FormLogin, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+      [selectorFormLoginEmail, selectorFormLoginPassword].forEach(
+        (formField) => {
+          cy.checkFormFieldValidationErrColor(formField, negative);
+        },
+      );
+    });
+
+    it('check custom form field validation error color', () => {
+      [selectorFormLoginEmail, selectorFormLoginPassword].forEach(
+        (formField) => {
+          cy.checkFormFieldValidationErrColor(
+            formField,
+            customFormFieldValidationErrColor,
+          );
+        },
+      );
+      cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
+      [selectorFormPasswordReset].forEach((formField) => {
+        cy.checkFormFieldValidationErrColor(
+          formField,
+          customFormFieldValidationErrColor,
+        );
+      });
     });
 
     it('renders forgotten password link', () => {
@@ -220,14 +258,14 @@ describe('<FormLogin>', () => {
 
     it('allows to navigate between states', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
-      cy.dataCy('form-password-reset').should('be.visible');
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
       cy.dataCy('form-password-reset-button-back').should('be.visible').click();
       cy.dataCy('form-login').should('be.visible');
     });
 
     it('renders password reset form title', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
-      cy.dataCy('form-password-reset').should('be.visible');
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
       cy.dataCy('form-password-reset-title')
         .should('be.visible')
         .and('have.color', white)
@@ -238,7 +276,7 @@ describe('<FormLogin>', () => {
 
     it('renders password reset form description', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
-      cy.dataCy('form-password-reset').should('be.visible');
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
       cy.dataCy('form-password-reset-description')
         .should('be.visible')
         .and('have.color', white)
@@ -249,12 +287,12 @@ describe('<FormLogin>', () => {
 
     it('renders password reset form email input', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
-      cy.dataCy('form-password-reset').should('be.visible');
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
     });
 
     it('renders password reset form submit button', () => {
       cy.dataCy('form-login-forgotten-password').should('be.visible').click();
-      cy.dataCy('form-password-reset').should('be.visible');
+      cy.dataCy(selectorFormPasswordReset).should('be.visible');
       cy.dataCy('form-password-reset-submit')
         .should('be.visible')
         .and('have.color', primary)
@@ -367,9 +405,9 @@ describe('<FormLogin>', () => {
       cy.dataCy('form-login-submit-login').should('be.visible').click();
       // validate password required
       // first make email pass
-      cy.dataCy('form-login-email').find('input').type('test@example.com');
+      cy.dataCy(selectorFormLoginEmail).find('input').type('test@example.com');
       cy.dataCy('form-login-submit-login').should('be.visible').click();
-      cy.dataCy('form-login-password')
+      cy.dataCy(selectorFormLoginPassword)
         .find('.q-field__messages')
         .should('be.visible')
         .and('contain', i18n.global.t('login.form.messagePasswordRequired'));

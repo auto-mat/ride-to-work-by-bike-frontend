@@ -1,5 +1,16 @@
+import { colors, getCssVar } from 'quasar';
+
 import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
+
+const { getPaletteColor } = colors;
+
+const customFormFieldValidationErrColor = getCssVar(
+  'custom-form-field-validation-err',
+);
+const negative = getPaletteColor('negative');
+
+const selectorFormFieldEmail = 'form-email';
 
 describe('<FormFieldEmail>', () => {
   it('has translation for all strings', () => {
@@ -18,6 +29,28 @@ describe('<FormFieldEmail>', () => {
         },
       });
       cy.viewport('macbook-16');
+    });
+
+    it('check default form field validation error color', () => {
+      cy.viewport('macbook-16');
+      [selectorFormFieldEmail].forEach((formField) => {
+        cy.checkFormFieldValidationErrColor(formField, negative);
+      });
+    });
+
+    it('check custom form field validation error color', () => {
+      cy.mount(FormFieldTestWrapper, {
+        props: {
+          component: 'FormFieldEmail',
+          useFormFieldValidationErrorCssClass: true,
+        },
+      });
+      [selectorFormFieldEmail].forEach((formField) => {
+        cy.checkFormFieldValidationErrColor(
+          formField,
+          customFormFieldValidationErrColor,
+        );
+      });
     });
 
     it('validates email correctly', () => {

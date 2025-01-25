@@ -16,6 +16,10 @@ const initVars = (): void => {
   setCssVar('secondary', rideToWorkByBikeConfig.colorSecondary);
   setCssVar('info', rideToWorkByBikeConfig.colorGrayLight);
   setCssVar('red', rideToWorkByBikeConfig.colorRed);
+  setCssVar(
+    'custom-form-field-validation-err',
+    rideToWorkByBikeConfig.colorCustomFormFieldValidationErr,
+  );
 };
 
 export { rideToWorkByBikeConfig, initVars };

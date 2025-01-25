@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { colors } from 'quasar';
+import { colors, getCssVar } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormRegister from '../register/FormRegister.vue';
 import { i18n } from '../../boot/i18n';
@@ -29,6 +29,10 @@ const whiteOpacity = changeAlpha(
   white,
   rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
 );
+const customFormFieldValidationErrColor = getCssVar(
+  'custom-form-field-validation-err',
+);
+const negative = getPaletteColor('negative');
 
 // selectors
 const selectorFormRegisterTitle = 'form-register-title';
@@ -101,7 +105,7 @@ describe('<FormRegister>', () => {
       cy.interceptThisCampaignGetApi(rideToWorkByBikeConfig, i18n);
       setActivePinia(createPinia());
       cy.mount(FormRegister, {
-        props: {},
+        props: { useFormFieldValidationErrorCssClass: true },
       });
       cy.viewport('macbook-16');
     });
@@ -170,6 +174,33 @@ describe('<FormRegister>', () => {
       cy.dataCy(selectorFormRegisterSeparator)
         .should('be.visible')
         .and('have.backgroundColor', whiteOpacity);
+    });
+
+    it('check default form field validation error color', () => {
+      cy.mount(FormRegister, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+      [
+        selectorFormRegisterEmail,
+        selectorFormRegisterPassword,
+        selectorFormRegisterPasswordConfirm,
+      ].forEach((formField) => {
+        cy.checkFormFieldValidationErrColor(formField, negative);
+      });
+    });
+
+    it('check custom form field validation error color', () => {
+      [
+        selectorFormRegisterEmail,
+        selectorFormRegisterPassword,
+        selectorFormRegisterPasswordConfirm,
+      ].forEach((formField) => {
+        cy.checkFormFieldValidationErrColor(
+          formField,
+          customFormFieldValidationErrColor,
+        );
+      });
     });
 
     testPasswordInputReveal(selectorFormRegisterPassword);

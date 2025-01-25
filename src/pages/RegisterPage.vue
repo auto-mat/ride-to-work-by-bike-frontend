@@ -46,7 +46,7 @@ export default defineComponent({
 
       <div class="row q-mt-xl">
         <div class="col-12 col-md-4">
-          <form-register />
+          <form-register useFormFieldValidationErrorCssClass />
         </div>
       </div>
     </div>

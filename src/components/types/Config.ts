@@ -9,6 +9,7 @@ export interface ConfigGlobal {
   colorWhite: string;
   colorBlack: string;
   colorRed: string;
+  colorCustomFormFieldValidationErr: string;
   colorSecondaryBackgroundOpacity: number;
   colorWhiteBackgroundOpacity: number;
   image: string;

@@ -1,3 +1,6 @@
+import { colors } from 'quasar';
+
+import { rgbaColorObjectToString } from 'src/utils';
 import {
   testLanguageSwitcher,
   testBackgroundImage,
@@ -7,6 +10,11 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { httpSuccessfullStatus } from '../support/commonTests';
+
+const { hexToRgb } = colors;
+const selectorFormLoginEmail = 'form-login-email';
+const selectorFormLoginPassword = 'form-login-password';
+const selectorFormPasswordReset = 'form-password-reset';
 
 describe('Login page', () => {
   context('desktop', () => {
@@ -30,6 +38,31 @@ describe('Login page', () => {
 
     it('renders page header', () => {
       cy.dataCy('login-register-header').should('be.visible');
+    });
+
+    it('check custom form field validation error color', () => {
+      cy.task('getAppConfig', process).then((config) => {
+        const customFormFieldValidationErrColor = rgbaColorObjectToString(
+          hexToRgb(config.colorCustomFormFieldValidationErr),
+          true,
+        );
+        [selectorFormLoginEmail, selectorFormLoginPassword].forEach(
+          (formField) => {
+            cy.checkFormFieldValidationErrColor(
+              formField,
+              customFormFieldValidationErrColor,
+            );
+          },
+        );
+        cy.dataCy('form-login-forgotten-password').should('be.visible').click();
+        cy.dataCy(selectorFormPasswordReset).should('be.visible');
+        [selectorFormPasswordReset].forEach((formField) => {
+          cy.checkFormFieldValidationErrColor(
+            formField,
+            customFormFieldValidationErrColor,
+          );
+        });
+      });
     });
 
     it('allows user to display and submit contact form', () => {

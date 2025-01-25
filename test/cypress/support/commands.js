@@ -2546,3 +2546,27 @@ Cypress.Commands.add(
     );
   },
 );
+
+/**
+ * Check form field validation error color
+ * @param {String} formField - Form field Cypress selector
+ * @param {String} validationErrorColor - Form field validation error color RGB string
+ *                                        e.g. 'rgb(160, 215, 196)'
+ */
+
+Cypress.Commands.add(
+  'checkFormFieldValidationErrColor',
+  (formField, validationErrorColor) => {
+    // Activate form field validation
+    cy.dataCy(formField).should('be.visible').find('.q-field__control').focus();
+    cy.focused().blur();
+    // Form field
+    cy.dataCy(formField)
+      .find('.q-field__control')
+      .should('have.color', validationErrorColor);
+    // Validation error message
+    cy.dataCy(formField)
+      .find('.q-field__messages')
+      .should('have.color', validationErrorColor);
+  },
+);

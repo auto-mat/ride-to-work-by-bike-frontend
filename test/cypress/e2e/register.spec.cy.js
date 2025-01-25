@@ -1,3 +1,4 @@
+import { colors } from 'quasar';
 import {
   testLanguageSwitcher,
   testBackgroundImage,
@@ -7,6 +8,7 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
+import { rgbaColorObjectToString } from 'src/utils';
 /**
  * Required for localization REST API URL during e2e tests for
  * intercepting API before visiting app URL page when i18n locale
@@ -14,11 +16,15 @@ import { routesConf } from '../../../src/router/routes_conf';
  */
 import { defLocale } from '../../../src/i18n/def_locale';
 
+const { hexToRgb } = colors;
 // selectors
 const selectorLogoutButton = 'logout-button';
 const selectorEmailVerificationRegisterLink =
   'email-verification-register-link';
 const selectorChallengeInactiveInfo = 'challenge-inactive-info';
+const selectorFormRegisterEmail = 'form-register-email';
+const selectorFormRegisterPassword = 'form-register-password';
+const selectorFormRegisterPasswordConfirm = 'form-register-password-confirm';
 
 describe('Register page', () => {
   context('desktop', () => {
@@ -69,6 +75,25 @@ describe('Register page', () => {
         .should('be.visible')
         .invoke('attr', 'href')
         .should('contain', routesConf['login']['path']);
+    });
+
+    it('check custom form field validation error color', () => {
+      cy.task('getAppConfig', process).then((config) => {
+        const customFormFieldValidationErrColor = rgbaColorObjectToString(
+          hexToRgb(config.colorCustomFormFieldValidationErr),
+          true,
+        );
+        [
+          selectorFormRegisterEmail,
+          selectorFormRegisterPassword,
+          selectorFormRegisterPasswordConfirm,
+        ].forEach((formField) => {
+          cy.checkFormFieldValidationErrColor(
+            formField,
+            customFormFieldValidationErrColor,
+          );
+        });
+      });
     });
   });
 

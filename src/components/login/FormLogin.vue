@@ -7,6 +7,10 @@
  * @description * Use this component to render login form.
  * Login form contains password reset.
  *
+ * @props
+ * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
+ *                                                              validation error CSS class
+ *                                                              Defaults to `false`.
  * @events
  * - `formSubmit`: Emitted on form submit.
  *
@@ -42,15 +46,24 @@ import { useLoginStore } from '../../stores/login';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import { formFieldCustomValidationErrCssClass } from '../../utils';
+
 export default defineComponent({
   name: 'FormLogin',
+  props: {
+    useFormFieldValidationErrorCssClass: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   components: {
     BannerAppButtons,
     FormFieldEmail,
     LoginRegisterButtons,
   },
   emits: ['formSubmit'],
-  setup() {
+  setup(props) {
     const loginStore = useLoginStore();
     const formLogin = reactive({
       username: '',
@@ -91,6 +104,12 @@ export default defineComponent({
       rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
     );
 
+    const passwordFormFieldCssClasses = {
+      'q-mt-sm': true,
+    };
+    if (props.useFormFieldValidationErrorCssClass)
+      passwordFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
+
     return {
       contactEmail,
       formPasswordReset,
@@ -104,6 +123,8 @@ export default defineComponent({
       isFilled,
       onSubmitLogin,
       onSubmitPasswordReset,
+      passwordFormFieldCssClasses,
+      props,
       setFormState,
     };
   },
@@ -131,6 +152,9 @@ export default defineComponent({
         bg-color="transparent"
         v-model="formLogin.username"
         data-cy="form-login-email"
+        :useFormFieldValidationErrorCssClass="
+          props.useFormFieldValidationErrorCssClass
+        "
       />
       <!-- Input: password -->
       <div data-cy="form-login-password">
@@ -152,7 +176,7 @@ export default defineComponent({
           :rules="[
             (val) => isFilled(val) || $t('login.form.messagePasswordRequired'),
           ]"
-          class="q-mt-sm"
+          :class="passwordFormFieldCssClasses"
           data-cy="form-login-password-input"
         >
           <!-- Icon: show password -->
@@ -259,6 +283,7 @@ export default defineComponent({
         color="white"
         bg-color="transparent"
         data-cy="form-password-reset-email"
+        useFormFieldValidationErrorCssClass
       />
       <!-- Button: submit -->
       <q-btn

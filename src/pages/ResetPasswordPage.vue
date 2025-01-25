@@ -43,7 +43,7 @@ export default defineComponent({
 
       <div class="row q-mt-xl">
         <div class="col-12 col-md-4">
-          <reset-password />
+          <reset-password useFormFieldValidationErrorCssClass />
         </div>
       </div>
     </div>

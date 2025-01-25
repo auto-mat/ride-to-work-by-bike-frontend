@@ -6,6 +6,10 @@
  * Renders a form that allows users to reset their password after clicking
  * the reset password link from their email.
  *
+ * @props
+ * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
+ *                                                              validation error CSS class
+ *                                                              Defaults to `false`.
  * @example
  * <reset-password />
  */
@@ -33,10 +37,18 @@ import { useLoginStore } from '../../stores/login';
 // types
 import type { Logger } from '../types/Logger';
 
+import { formFieldCustomValidationErrCssClass } from '../../utils';
+
 export default defineComponent({
   name: 'ResetPassword',
-
-  setup() {
+  props: {
+    useFormFieldValidationErrorCssClass: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+  setup(props) {
     const logger = inject('vuejs3-logger') as Logger | null;
     const loginStore = useLoginStore();
     const router = useRouter();
@@ -115,6 +127,12 @@ export default defineComponent({
       }
     };
 
+    const passwordFormFieldCssClasses = {
+      'q-mt-sm': true,
+    };
+    if (props.useFormFieldValidationErrorCssClass)
+      passwordFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
+
     return {
       isFilled,
       isIdentical,
@@ -126,6 +144,7 @@ export default defineComponent({
       whiteOpacity,
       onSubmitResetPassword,
       isLoading,
+      passwordFormFieldCssClasses,
     };
   },
 });
@@ -187,7 +206,7 @@ export default defineComponent({
               $t('register.form.messagePasswordStrong'),
           ]"
           lazy-rules
-          class="q-mt-sm"
+          :class="passwordFormFieldCssClasses"
           data-cy="form-reset-password-input"
         >
           <!-- Icon: show password -->
@@ -229,7 +248,7 @@ export default defineComponent({
               $t('register.form.messagePasswordConfirmNotMatch'),
           ]"
           lazy-rules
-          class="q-mt-sm"
+          :class="passwordFormFieldCssClasses"
           data-cy="form-reset-password-confirm-input"
         >
           <!-- Icon: show password -->

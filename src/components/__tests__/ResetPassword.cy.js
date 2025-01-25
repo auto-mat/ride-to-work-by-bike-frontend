@@ -1,4 +1,4 @@
-import { colors } from 'quasar';
+import { colors, getCssVar } from 'quasar';
 import ResetPassword from 'components/register/ResetPassword.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -11,6 +11,10 @@ const whiteOpacity = changeAlpha(
   white,
   rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
 );
+const customFormFieldValidationErrColor = getCssVar(
+  'custom-form-field-validation-err',
+);
+const negative = getPaletteColor('negative');
 
 // selectors
 const selectorResetPassword = 'reset-password';
@@ -61,7 +65,7 @@ describe('<ResetPassword>', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
       cy.mount(ResetPassword, {
-        props: {},
+        props: { useFormFieldValidationErrorCssClass: true },
       });
     });
 
@@ -72,7 +76,7 @@ describe('<ResetPassword>', () => {
     beforeEach(() => {
       cy.viewport('iphone-6');
       cy.mount(ResetPassword, {
-        props: {},
+        props: { useFormFieldValidationErrorCssClass: true },
       });
     });
 
@@ -144,6 +148,29 @@ function coreTests() {
     cy.dataCy(selectorFormResetPasswordConfirmIcon)
       .invoke('width')
       .should('be.equal', passwordIconSize);
+  });
+
+  it('check default form field validation error color', () => {
+    cy.mount(ResetPassword, {
+      props: {},
+    });
+    cy.viewport('macbook-16');
+    [selectorFormResetPassword, selectorFormResetPasswordConfirm].forEach(
+      (formField) => {
+        cy.checkFormFieldValidationErrColor(formField, negative);
+      },
+    );
+  });
+
+  it('check custom form field validation error color', () => {
+    [selectorFormResetPassword, selectorFormResetPasswordConfirm].forEach(
+      (formField) => {
+        cy.checkFormFieldValidationErrColor(
+          formField,
+          customFormFieldValidationErrColor,
+        );
+      },
+    );
   });
 
   it('validates password correctly', () => {

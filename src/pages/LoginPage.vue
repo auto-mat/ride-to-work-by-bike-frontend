@@ -46,7 +46,7 @@ export default defineComponent({
 
       <div class="row">
         <div class="col-12 col-md-4">
-          <form-login />
+          <form-login useFormFieldValidationErrorCssClass />
         </div>
       </div>
     </div>

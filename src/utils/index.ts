@@ -75,10 +75,14 @@ const requestTokenHeader = {
  * e.g. rgba(255, 255, 255, 0.2)
  *
  * @param {rgbai} rgba: RGBA object returned from hexToRgb() function
+ * @param {boolean} getRgb: if true return RGB string intead of RGBA
  *
  * @return {string}: RGBA string e.g. rgba(255, 255, 255, 0.2)
+ *                   RGB string e.g. rgba(255, 255, 255) accroding
+ *                   usage of `getRgb` param val
  */
-const rgbaColorObjectToString = (rgba: RgbaI): string => {
+const rgbaColorObjectToString = (rgba: RgbaI, getRgb: boolean): string => {
+  if (getRgb) return `rgb(${rgba['r']}, ${rgba['g']}, ${rgba['b']})`;
   return `rgba(${rgba['r']}, ${rgba['g']}, ${rgba['b']}, ${rgba['a'] / 100.0})`;
 };
 
@@ -116,10 +120,14 @@ const calculateCountdownIntervals = (timeDifferenceMs: number): Countdown => {
   };
 };
 
+// Custom form field validation error CSS class
+const formFieldCustomValidationErrCssClass = 'form-field-validation-err';
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
   deepObjectWithSimplePropsCopy,
+  formFieldCustomValidationErrCssClass,
   requestDefaultHeader,
   requestTokenHeader,
   rgbaColorObjectToString,

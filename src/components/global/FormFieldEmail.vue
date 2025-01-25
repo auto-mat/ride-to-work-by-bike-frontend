@@ -19,6 +19,9 @@
  *    Defaults to `false`.
  * - `testing` (boolean, optional): Wheter this is a testing environment.
  *    Defaults to `false`.
+ * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
+ *                                                              validation error CSS class
+ *                                                              Defaults to `false`.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -34,6 +37,8 @@ import { computed, defineComponent } from 'vue';
 
 // composables
 import { useValidation } from 'src/composables/useValidation';
+
+import { formFieldCustomValidationErrCssClass } from '../../utils';
 
 export default defineComponent({
   name: 'FormFieldEmail',
@@ -58,6 +63,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    useFormFieldValidationErrorCssClass: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -69,6 +79,11 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+    const emailFormFieldCssClasses = {
+      'q-mt-sm': true,
+    };
+    if (props.useFormFieldValidationErrorCssClass)
+      emailFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
 
     const { isEmail, isFilled } = useValidation();
 
@@ -76,11 +91,11 @@ export default defineComponent({
       email,
       isFilled,
       isEmail,
+      emailFormFieldCssClasses,
     };
   },
 });
 </script>
-
 <template>
   <div class="col-12 col-sm-6" data-cy="form-email">
     <!-- Label -->
@@ -104,7 +119,7 @@ export default defineComponent({
           }),
         (val) => isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
-      class="q-mt-sm"
+      :class="emailFormFieldCssClasses"
       id="form-email"
       name="email"
       data-cy="form-email-input"

@@ -123,6 +123,11 @@ export default defineComponent({
       type: [Number, String, Boolean, Array, Object] as PropType<DefaultValue>,
       default: '',
     },
+    useFormFieldValidationErrorCssClass: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props) {
     const inputValue = ref(props.defaultValue);
@@ -144,6 +149,7 @@ export default defineComponent({
     :options="options"
     :required="required"
     :validation-message="validationMessage"
+    :useFormFieldValidationErrorCssClass="useFormFieldValidationErrorCssClass"
   >
     <slot />
   </component>

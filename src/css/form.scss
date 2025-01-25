@@ -8,3 +8,9 @@
 .q-checkbox .q-checkbox__svg {
   padding: 3px;
 }
+.form-field-validation-err.q-field--error .q-field__bottom {
+  color: var(--q-custom-form-field-validation-err);
+}
+.form-field-validation-err .text-negative {
+  color: var(--q-custom-form-field-validation-err) !important;
+}

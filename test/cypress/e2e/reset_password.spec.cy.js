@@ -1,13 +1,22 @@
+import { colors } from 'quasar';
+
 import { testBackgroundImage } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { HttpStatusCode } from 'axios';
 
+import { rgbaColorObjectToString } from 'src/utils';
+
+const { hexToRgb } = colors;
+
 const selectorResetPassword = 'reset-password';
 const selectorResetPasswordTitle = 'reset-password-title';
 const selectorResetPasswordText = 'reset-password-text';
-const selectorFormResetPassword = 'form-reset-password-input';
-const selectorFormResetPasswordConfirm = 'form-reset-password-confirm-input';
+const selectorFormResetPasswordInput = 'form-reset-password-input';
+const selectorFormResetPasswordConfirmInput =
+  'form-reset-password-confirm-input';
 const selectorFormResetPasswordSubmit = 'form-reset-password-submit';
+const selectorFormResetPassword = 'form-reset-password';
+const selectorFormResetPasswordConfirm = 'form-reset-password-confirm';
 
 describe('Reset Password', () => {
   context('desktop', () => {
@@ -71,23 +80,44 @@ describe('Reset Password', () => {
     });
 
     it('renders password input fields and submit button', () => {
-      cy.dataCy(selectorFormResetPassword).should('be.visible');
-      cy.dataCy(selectorFormResetPasswordConfirm).should('be.visible');
+      cy.dataCy(selectorFormResetPasswordInput).should('be.visible');
+      cy.dataCy(selectorFormResetPasswordConfirmInput).should('be.visible');
       cy.dataCy(selectorFormResetPasswordSubmit).should('be.visible');
     });
 
+    it('check custom form field validation error color', () => {
+      cy.task('getAppConfig', process).then((config) => {
+        const customFormFieldValidationErrColor = rgbaColorObjectToString(
+          hexToRgb(config.colorCustomFormFieldValidationErr),
+          true,
+        );
+        [selectorFormResetPassword, selectorFormResetPasswordConfirm].forEach(
+          (formField) => {
+            cy.checkFormFieldValidationErrColor(
+              formField,
+              customFormFieldValidationErrColor,
+            );
+          },
+        );
+      });
+    });
     it('submits form successfully and redirects to login', () => {
       cy.fixture('apiPostResetPasswordConfirmRequest').then((request) => {
         // fill in the form
-        cy.dataCy(selectorFormResetPassword).type(request.new_password1);
-        cy.dataCy(selectorFormResetPasswordConfirm).type(request.new_password2);
+        cy.dataCy(selectorFormResetPasswordInput).type(request.new_password1);
+        cy.dataCy(selectorFormResetPasswordConfirmInput).type(
+          request.new_password2,
+        );
         // submit form
         cy.dataCy(selectorFormResetPasswordSubmit).click();
         // wait for API call and verify request
         cy.waitForResetPasswordConfirmApi();
         // verify form is cleared
-        cy.dataCy(selectorFormResetPassword).should('have.value', '');
-        cy.dataCy(selectorFormResetPasswordConfirm).should('have.value', '');
+        cy.dataCy(selectorFormResetPasswordInput).should('have.value', '');
+        cy.dataCy(selectorFormResetPasswordConfirmInput).should(
+          'have.value',
+          '',
+        );
         // verify success notification
         cy.fixture('apiPostResetPasswordConfirmResponseSuccess.json').then(
           (responseBody) => {
@@ -110,8 +140,10 @@ describe('Reset Password', () => {
           );
           cy.fixture('apiPostResetPasswordConfirmRequest').then((request) => {
             // fill in the form
-            cy.dataCy(selectorFormResetPassword).type(request.new_password1);
-            cy.dataCy(selectorFormResetPasswordConfirm).type(
+            cy.dataCy(selectorFormResetPasswordInput).type(
+              request.new_password1,
+            );
+            cy.dataCy(selectorFormResetPasswordConfirmInput).type(
               request.new_password2,
             );
             // submit form
