@@ -124,6 +124,7 @@ export const testDesktopSidebar = (): void => {
   const selectorUserSelectDesktop = 'user-select-desktop';
   const selectorDrawerMenuTop = 'drawer-menu-top';
   const selectorDrawerMenuBottom = 'drawer-menu-bottom';
+  const selectorAutomatLogoBanner = 'automat-logo-banner';
 
   it('renders left drawer', () => {
     cy.dataCy(selectorDrawer).should('be.visible');
@@ -131,6 +132,7 @@ export const testDesktopSidebar = (): void => {
     cy.dataCy(selectorUserSelectDesktop).should('be.visible');
     cy.dataCy(selectorDrawerMenuTop).should('be.visible');
     cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+    cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
   });
 
   testUserSelect(selectorUserSelectDesktop);

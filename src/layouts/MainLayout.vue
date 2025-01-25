@@ -5,6 +5,7 @@ import { i18n } from '../boot/i18n';
 import { useRoute } from 'vue-router';
 
 // components
+import AutomatLogoBanner from 'components/global/AutomatLogoBanner.vue';
 import DrawerHeader from 'components/global/DrawerHeader.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
@@ -34,6 +35,7 @@ if (window.Cypress) {
 export default defineComponent({
   name: 'MainLayout',
   components: {
+    AutomatLogoBanner,
     DrawerHeader,
     DrawerMenu,
     FooterBar,
@@ -96,6 +98,10 @@ export default defineComponent({
       <drawer-menu :items="menuTop" class="q-pt-lg" data-cy="drawer-menu-top" />
       <q-separator color="blue-grey-2 q-my-sm q-mx-lg" />
       <drawer-menu :items="menuBottom" data-cy="drawer-menu-bottom" />
+      <automat-logo-banner
+        class="q-mx-md q-mt-lg"
+        data-cy="automat-logo-banner"
+      />
     </q-drawer>
 
     <q-page-container class="bg-white">

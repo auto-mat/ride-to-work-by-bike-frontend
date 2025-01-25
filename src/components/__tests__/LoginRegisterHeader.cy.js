@@ -14,6 +14,7 @@ const selectorButtonHelp = 'button-help';
 const selectorIconHelp = 'icon-help';
 const selectorLanguageSwitcher = 'language-switcher';
 const selectorLogo = 'header-logo';
+const selectorAutomatLogo = 'automat-logo';
 const selectorLoginRegisterMobileMenu = 'login-register-mobile-menu';
 const selectorLogoutButton = 'logout-button';
 const selectorLogoutButtonIcon = 'logout-button-icon';
@@ -38,7 +39,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.mount(LoginRegisterHeader, {
         props: {},
       });
-      cy.viewport('macbook-16');
+      cy.viewport(1920, 1080);
     });
 
     it('renders logo in desktop size', () => {
@@ -46,6 +47,16 @@ describe('<LoginRegisterHeader>', () => {
         .should('be.visible')
         .invoke('height')
         .should('be.equal', logoHeightDesktop);
+    });
+
+    it('renders automat logo', () => {
+      cy.dataCy(selectorAutomatLogo).should('be.visible');
+    });
+
+    it('renders rtwbb logo and automat logo side by side', () => {
+      cy.dataCy(selectorLogo).should('be.visible');
+      cy.dataCy(selectorAutomatLogo).should('be.visible');
+      cy.testElementsSideBySide(selectorLogo, selectorAutomatLogo);
     });
 
     it('renders help button', () => {
@@ -123,6 +134,14 @@ describe('<LoginRegisterHeader>', () => {
         .should('be.visible')
         .invoke('height')
         .should('be.equal', logoHeightMobile);
+    });
+
+    it('renders automat logo', () => {
+      cy.dataCy(selectorAutomatLogo).should('be.visible');
+    });
+
+    it('renders rtwbb logo and automat logo stacked', () => {
+      cy.testElementsStacked(selectorLogo, selectorAutomatLogo);
     });
 
     it('renders login register mobile menu', () => {

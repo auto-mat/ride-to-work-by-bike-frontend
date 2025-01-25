@@ -10,9 +10,11 @@
  * Note: This component is commonly used in `LoginPage` and `RegisterPage`.
  *
  * @components
+ * - `AutomatLogo`: Component to render the logo.
  * - `HeaderLogo`: Component to render the logo.
  * - `HelpButton`: Component to render help icon with dialog.
  * - `LanguageSwitcher`: Component to render language switcher.
+ * - `LoginRegisterMobileMenu`: Component to render mobile menu.
  *
  * @example
  * <login-register-header />
@@ -25,6 +27,7 @@ import { Screen } from 'quasar';
 import { computed, defineComponent } from 'vue';
 
 // components
+import AutomatLogo from './AutomatLogo.vue';
 import HeaderLogo from './HeaderLogo.vue';
 import HelpButton from './HelpButton.vue';
 import LanguageSwitcher from './LanguageSwitcher.vue';
@@ -36,6 +39,7 @@ import { useLoginStore } from '../../stores/login';
 export default defineComponent({
   name: 'LoginRegisterHeader',
   components: {
+    AutomatLogo,
     HeaderLogo,
     HelpButton,
     LanguageSwitcher,
@@ -72,13 +76,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="flex items-center justify-between q-py-lg">
-    <!-- RTWBB logo -->
-    <header-logo
-      :width="logoWidth"
-      :height="logoHeight"
-      data-cy="header-logo"
-    />
+  <div class="flex items-start justify-between q-py-lg">
+    <div :class="isDesktop ? 'flex items-center' : 'flex column gap-16'">
+      <!-- RTWBB logo -->
+      <header-logo
+        :width="logoWidth"
+        :height="logoHeight"
+        data-cy="header-logo"
+      />
+      <div data-cy="automat-logo">
+        <automat-logo :style="isDesktop ? 'margin-left: 80px' : ''" />
+      </div>
+    </div>
     <div v-if="isDesktop" class="flex items-center gap-32">
       <!-- Logout button -->
       <q-btn

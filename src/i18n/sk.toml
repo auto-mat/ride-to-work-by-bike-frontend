@@ -428,6 +428,8 @@ titleRecentPosts = "Posledné príspevky"
 [index]
 title = "Domovská stránka"
 logoAltText = "Logo Do práce na bicykli"
+logoAutomatAltText = "Logo AutoMat"
+textAutomatOrganizer = "Túto výzvu a ďalšie mestske akcie pořáda AutoMat"
 
 [index.help]
 buttonBackToHelp = "Späť na pomoc"

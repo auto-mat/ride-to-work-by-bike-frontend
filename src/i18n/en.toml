@@ -428,6 +428,8 @@ titleRecentPosts = "Recent posts"
 [index]
 title = "Home"
 logoAltText = "Logo Ride to Work by Bike"
+logoAutomatAltText = "Logo AutoMat"
+textAutomatOrganizer = "This challenge and other urban events are organized by AutoMat"
 
 [index.help]
 buttonBackToHelp = "Back to Help"
