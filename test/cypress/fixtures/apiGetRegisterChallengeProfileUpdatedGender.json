@@ -7,6 +7,7 @@
       "personal_details": {
         "first_name": "Foo",
         "last_name": "Bar",
+        "id": 123,
         "nickname": "FB",
         "sex": "female",
         "telephone": "736123456",

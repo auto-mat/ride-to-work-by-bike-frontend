@@ -11,7 +11,7 @@
         "nickname": "FB",
         "sex": "male",
         "telephone": "736123456",
-        "telephone_opt_in": false,
+        "telephone_opt_in": true,
         "language": "cs",
         "occupation": "",
         "age_group": null,

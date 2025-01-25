@@ -73,6 +73,13 @@ export default defineComponent({
     DeleteAccount,
   },
   setup() {
+    // TODO: Enable additional elements
+    const isEnabledCoordinatorContact = false;
+    const isEnabledDeleteAccount = false;
+    const isEnabledDownloadInvoice = false;
+    const isEnabledPackageState = false;
+    const isEnabledTrackingNumber = false;
+
     const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
 
@@ -193,7 +200,7 @@ export default defineComponent({
     });
 
     const iconPaymentColor = computed(() => {
-      return isPaymentComplete.value ? 'green' : 'red';
+      return isPaymentComplete.value ? 'positive' : 'negative';
     });
 
     const iconPaymentState = computed(() => {
@@ -208,9 +215,6 @@ export default defineComponent({
         await onUpdateRegisterChallengeDetails({ telephoneOptIn: value });
       },
     });
-
-    // TODO: Implement download invoice
-    const onDownloadInvoice = () => {};
 
     // update register challenge data
     const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
@@ -244,6 +248,9 @@ export default defineComponent({
       return getGenderLabel(gender, i18n);
     };
 
+    // TODO: Implement download invoice
+    const onDownloadInvoice = () => {};
+
     return {
       telephoneOptIn,
       iconPaymentColor,
@@ -264,6 +271,11 @@ export default defineComponent({
       formPersonalDetails,
       user,
       genderLabel,
+      isEnabledCoordinatorContact,
+      isEnabledDeleteAccount,
+      isEnabledDownloadInvoice,
+      isEnabledPackageState,
+      isEnabledTrackingNumber,
     };
   },
 });
@@ -416,19 +428,21 @@ export default defineComponent({
           data-cy="profile-details-size"
         />
         <!-- State -->
-        <!-- <details-item
+        <details-item
+          v-if="isEnabledPackageState"
           :label="$t('profile.labelState')"
           :value="formPersonalDetails.package.state"
           class="col-12 col-sm-6"
           data-cy="profile-details-state"
-        /> -->
+        />
         <!-- Tracking number -->
-        <!-- <details-item
+        <details-item
+          v-if="isEnabledTrackingNumber"
           :label="$t('profile.labelTrackingNumber')"
           :value="formPersonalDetails.package.trackingNumber"
           class="col-12 col-sm-6"
           data-cy="profile-details-tracking-number"
-        /> -->
+        />
         <!-- Delivery address -->
         <details-item
           :label="$t('profile.labelDeliveryAddress')"
@@ -476,7 +490,7 @@ export default defineComponent({
             </div>
           </template>
         </details-item>
-        <!-- <div class="col-12 col-md-6">
+        <div v-if="isEnabledDownloadInvoice" class="col-12 col-md-6">
           <q-btn
             unelevated
             rounded
@@ -492,25 +506,26 @@ export default defineComponent({
             />
             {{ $t('profile.buttonDownloadInvoice') }}
           </q-btn>
-        </div> -->
+        </div>
       </div>
     </div>
-
-    <!-- Delete account -->
-    <delete-account data-cy="delete-account" />
 
     <!-- Contact participation -->
     <div class="q-mt-xl">
       <q-toggle
+        v-model="telephoneOptIn"
         :disable="isLoading"
         :label="$t('profile.labelTelephoneOptIn')"
-        v-model="telephoneOptIn"
-        data-cy="profile-allow-contact-phone"
+        data-cy="profile-details-telephone-opt-in"
       />
     </div>
 
+    <!-- Delete account -->
+    <delete-account v-if="isEnabledDeleteAccount" data-cy="delete-account" />
+
     <!-- Coordinator contact -->
     <profile-coordinator-contact
+      v-if="isEnabledCoordinatorContact"
       class="q-mt-xl"
       data-cy="profile-coordinator-contact"
     />

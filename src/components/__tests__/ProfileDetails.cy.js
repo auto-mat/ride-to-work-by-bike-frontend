@@ -3,7 +3,6 @@ import { colors } from 'quasar';
 import ProfileDetails from 'components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { PaymentState } from '../../../src/components/types/Profile';
 import { useLoginStore } from '../../stores/login';
 import { getGenderLabel } from '../../utils/get_gender_label';
 import { useOrganizations } from '../../composables/useOrganizations';
@@ -12,15 +11,18 @@ import { OrganizationType } from '../../components/types/Organization';
 
 // colors
 const { getPaletteColor } = colors;
-const green = getPaletteColor('green');
-const red = getPaletteColor('red');
+const positive = getPaletteColor('positive');
+const negative = getPaletteColor('negative');
 
 const { getOrganizationLabels } = useOrganizations();
 
 // selectors
+const classSelectorToggleInner = '.q-toggle__inner';
+const classSelectorToggleInnerFalsy = 'q-toggle__inner--falsy';
+const classSelectorToggleInnerTruthy = 'q-toggle__inner--truthy';
 const selectorAddressSubsidiary = 'profile-details-address-subsidiary';
 const selectorDeliveryAddress = 'profile-details-delivery-address';
-const selectorDownloadInvoice = 'profile-details-download-invoice';
+// const selectorDownloadInvoice = 'profile-details-download-invoice';
 const selectorEmail = 'profile-details-email';
 const selectorFormEmail = 'profile-details-form-email';
 const selectorFormGender = 'profile-details-form-gender';
@@ -35,11 +37,11 @@ const selectorPackage = 'profile-details-package';
 const selectorPaymentState = 'profile-details-payment-state';
 const selectorPersonalDetails = 'profile-details';
 const selectorPhone = 'profile-details-phone';
-const selectorProfileCoordinatorContact = 'profile-coordinator-contact';
+// const selectorProfileCoordinatorContact = 'profile-coordinator-contact';
 const selectorSize = 'profile-details-size';
 // const selectorState = 'profile-details-state';
 const selectorTeam = 'profile-details-team';
-const selectorAllowContactPhone = 'profile-allow-contact-phone';
+const selectorTelephoneOptIn = 'profile-details-telephone-opt-in';
 const selectorDeleteAccount = 'delete-account';
 // const selectorTrackingNumber = 'profile-details-tracking-number';
 const selectorTitleChallengeDetails = 'profile-title-challenge-details';
@@ -70,7 +72,6 @@ describe('<ProfileDetails>', () => {
         'buttonDownloadInvoice',
         'descriptionNickname',
         'labelAddressSubsidiary',
-        'labelAllowContactPhone',
         'labelDeliveryAddress',
         'labelEmail',
         'labelEmailEmpty',
@@ -91,7 +92,9 @@ describe('<ProfileDetails>', () => {
         'labelSize',
         'labelState',
         'labelTeam',
+        'labelTelephoneOptIn',
         'labelTrackingNumber',
+        'messageProfileIdMissing',
         'titleChallengeDetails',
         'titlePersonalDetails',
         'titleUpdateEmail',
@@ -201,6 +204,204 @@ describe('<ProfileDetails>', () => {
     });
 
     coreTests();
+  });
+
+  context('payment individual - paid', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should('contain', i18n.global.t('profile.labelPaymentStatePaid'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', positive);
+    });
+  });
+
+  context('payment individual - not paid', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeIndividualNotPaid.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should('contain', i18n.global.t('profile.labelPaymentStateNotPaid'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', negative);
+    });
+  });
+
+  context('payment voucher - FULL', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeVoucherFull.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible');
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should('contain', i18n.global.t('profile.labelPaymentStatePaid'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', positive);
+    });
+  });
+
+  context('payment voucher - HALF', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeVoucherHalf.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should('contain', i18n.global.t('profile.labelPaymentStatePaid'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', positive);
+    });
+  });
+
+  context('payment company - waiting', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should('contain', i18n.global.t('profile.labelPaymentStateNotPaid'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', negative);
+    });
+  });
+
+  context('payment company - no admission', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // registration payment state
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPaymentState'));
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorValue)
+        .should(
+          'contain',
+          i18n.global.t('profile.labelPaymentStatePaidByCompany'),
+        );
+      cy.dataCy(selectorPaymentState)
+        .find(dataSelectorIconPaymentState)
+        .should('be.visible')
+        .and('have.color', positive);
+    });
   });
 });
 
@@ -393,11 +594,11 @@ function coreTests() {
             .find(dataSelectorValue)
             .should('contain', response.results[0].personal_details.telephone);
           // contact participation
-          cy.dataCy(selectorAllowContactPhone)
+          cy.dataCy(selectorTelephoneOptIn)
             .should('be.visible')
-            .and('contain', i18n.global.t('profile.labelAllowContactPhone'));
+            .and('contain', i18n.global.t('profile.labelTelephoneOptIn'));
           // coordinator contact
-          cy.dataCy(selectorProfileCoordinatorContact).should('be.visible');
+          // cy.dataCy(selectorProfileCoordinatorContact).should('be.visible');
         });
       });
     });
@@ -694,58 +895,74 @@ function coreTests() {
     });
   });
 
-  it('renders registration details section', () => {
-    cy.fixture('formPersonalDetails').then((formPersonalDetails) => {
-      // title
-      cy.dataCy(selectorTitleRegistrationDetails)
-        .should('be.visible')
-        .within(() => {
-          cy.dataCy('section-heading-title')
-            .should('be.visible')
-            .and('contain', i18n.global.t('profile.titleRegistrationDetails'));
-        });
-      // payment state
-      cy.dataCy(selectorPaymentState)
-        .find(dataSelectorLabel)
-        .should('be.visible');
-      if (formPersonalDetails.paymentState === PaymentState.paid) {
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorValue)
-          .should('contain', i18n.global.t('profile.labelPaymentStatePaid'));
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorIconPaymentState)
-          .should('be.visible')
-          .and('have.color', green);
-      } else if (
-        formPersonalDetails.paymentState === PaymentState.paidByCompany
-      ) {
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorValue)
-          .should(
-            'contain',
-            i18n.global.t('profile.labelPaymentStatePaidByCompany'),
-          );
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorIconPaymentState)
-          .should('be.visible')
-          .and('have.color', green);
-      } else {
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorValue)
-          .should('contain', i18n.global.t('profile.labelPaymentStateNotPaid'));
-        cy.dataCy(selectorPaymentState)
-          .find(dataSelectorIconPaymentState)
-          .should('be.visible')
-          .and('have.color', red);
-      }
-      // download invoice button
-      cy.dataCy(selectorDownloadInvoice)
-        .should('be.visible')
-        .and('contain', i18n.global.t('profile.buttonDownloadInvoice'));
+  it('allows to edit telephone opt-in setting', () => {
+    cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+      cy.fixture(
+        'apiGetRegisterChallengeProfileUpdatedTelephoneOptIn.json',
+      ).then((responseNew) => {
+        const personalDetails = response.results[0].personal_details;
+        cy.waitForRegisterChallengeGetApi(response);
+        // telephone opt-in value
+        cy.dataCy(selectorTelephoneOptIn)
+          .find(classSelectorToggleInner)
+          .should('have.class', classSelectorToggleInnerFalsy);
+        // intercept POST request
+        cy.interceptRegisterChallengePutApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          personalDetails.id,
+          responseNew,
+        );
+        // override intercept GET request
+        cy.interceptRegisterChallengeGetApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          responseNew,
+        );
+        // change telephone opt-in
+        cy.dataCy(selectorTelephoneOptIn).click();
+        // should be checked
+        cy.dataCy(selectorTelephoneOptIn)
+          .find(classSelectorToggleInner)
+          .should('have.class', classSelectorToggleInnerTruthy);
+      });
     });
   });
 
-  it('renders delete account section', () => {
+  it('renders registration details section', () => {
+    // title
+    cy.dataCy(selectorTitleRegistrationDetails)
+      .should('be.visible')
+      .within(() => {
+        cy.dataCy('section-heading-title')
+          .should('be.visible')
+          .and('contain', i18n.global.t('profile.titleRegistrationDetails'));
+      });
+    // payment state
+    cy.dataCy(selectorPaymentState)
+      .find(dataSelectorLabel)
+      .should('be.visible');
+    // registration payment state
+    cy.dataCy(selectorPaymentState)
+      .find(dataSelectorLabel)
+      .should('contain', i18n.global.t('profile.labelPaymentState'));
+    cy.dataCy(selectorPaymentState)
+      .find(dataSelectorValue)
+      .should(
+        'contain',
+        i18n.global.t('profile.labelPaymentStatePaidByCompany'),
+      );
+    cy.dataCy(selectorPaymentState)
+      .find(dataSelectorIconPaymentState)
+      .should('be.visible')
+      .and('have.color', positive);
+    // download invoice button
+    // cy.dataCy(selectorDownloadInvoice)
+    //   .should('be.visible')
+    //   .and('contain', i18n.global.t('profile.buttonDownloadInvoice'));
+  });
+
+  it.skip('renders delete account section', () => {
     cy.dataCy(selectorDeleteAccount).should('be.visible');
   });
 }
