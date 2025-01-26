@@ -16,7 +16,10 @@
         />
         <!-- Banner: Routes -->
         <banner-routes
-          v-if="challengeStatus === ChallengeStatusEnum.during"
+          v-if="
+            isBannerRoutesEnabled &&
+            challengeStatus === ChallengeStatusEnum.during
+          "
           :routes-count="14"
           :variant="BannerRoutesVariantsEnum.default"
           class="q-my-xl"
@@ -24,12 +27,18 @@
         />
         <!-- Banner: App link -->
         <banner-app
+          v-if="isBannerAppEnabled"
           :banner="bannerAppData"
           class="q-my-xl"
           data-cy="banner-app"
         />
         <!-- Section: Future challenges -->
-        <template v-if="challengeStatus !== ChallengeStatusEnum.during">
+        <template
+          v-if="
+            isSectionChallengesEnabled &&
+            challengeStatus !== ChallengeStatusEnum.during
+          "
+        >
           <!-- Title -->
           <section-heading class="q-mt-xl q-mb-md" data-cy="card-list-title">
             {{ $t('index.cardListChallenge.title') }}
@@ -50,13 +59,17 @@
         </template>
         <!-- Banner: Questionnaire -->
         <banner-image
+          v-if="isBannerQuestionnaireEnabled"
           :banner="bannerImageData"
           class="q-mt-xl"
           data-cy="banner-image"
         />
         <!-- Slider: Progress -->
         <slider-progress
-          v-if="challengeStatus === ChallengeStatusEnum.during"
+          v-if="
+            isSliderProgressEnabled &&
+            challengeStatus === ChallengeStatusEnum.during
+          "
           :title="$t('index.progressSlider.title')"
           :cards="cardsProgressSlider"
           class="q-mt-xl"
@@ -68,7 +81,10 @@
         />
         <!-- List: Progress -->
         <list-card-progress
-          v-if="challengeStatus === ChallengeStatusEnum.during"
+          v-if="
+            isListProgressEnabled &&
+            challengeStatus === ChallengeStatusEnum.during
+          "
           :title="$t('index.cardListProgress.title')"
           :cards="cardsProgress"
           class="q-mt-xl"
@@ -83,7 +99,7 @@
           class="q-mb-xl"
           data-cy="heading-background"
         />
-        <div class="q-my-xl" data-cy="list-event">
+        <div v-if="isSectionEventsEnabled" class="q-my-xl" data-cy="list-event">
           <card-event
             v-for="card in cardsEvent"
             :key="card.title"
@@ -93,12 +109,14 @@
           />
         </div>
         <list-card-offer
+          v-if="isSectionOffersEnabled"
           :title="$t('index.cardListOffer.title')"
           :cards="cardsOffer"
           class="q-my-xl"
           data-cy="list-offer"
         />
         <list-card-post
+          v-if="isSectionPostsEnabled"
           :title="$t('index.cardListPost.title')"
           :cards="cardsPost"
           :button="{
@@ -182,6 +200,16 @@ export default defineComponent({
     SliderProgress,
   },
   setup() {
+    const isBannerRoutesEnabled = false;
+    const isBannerAppEnabled = false;
+    const isSectionChallengesEnabled = false;
+    const isBannerQuestionnaireEnabled = false;
+    const isSliderProgressEnabled = false;
+    const isListProgressEnabled = false;
+    const isSectionEventsEnabled = false;
+    const isSectionOffersEnabled = false;
+    const isSectionPostsEnabled = false;
+
     const challengeStore = useChallengeStore();
     const challengeStatus = challengeStore.getChallengeStatus;
 
@@ -229,6 +257,15 @@ export default defineComponent({
       competitionStart,
       urlCommunity,
       urlResults,
+      isBannerRoutesEnabled,
+      isBannerAppEnabled,
+      isSectionChallengesEnabled,
+      isBannerQuestionnaireEnabled,
+      isSliderProgressEnabled,
+      isListProgressEnabled,
+      isSectionEventsEnabled,
+      isSectionOffersEnabled,
+      isSectionPostsEnabled,
     };
   },
 });

@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from 'src/utils';
+import { menuTop, menuBottom } from '../../../src/mocks/layout';
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -130,8 +131,12 @@ export const testDesktopSidebar = (): void => {
     cy.dataCy(selectorDrawer).should('be.visible');
     cy.dataCy(selectorDrawerHeader).should('be.visible');
     cy.dataCy(selectorUserSelectDesktop).should('be.visible');
-    cy.dataCy(selectorDrawerMenuTop).should('be.visible');
-    cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+    if (menuTop.length > 0) {
+      cy.dataCy(selectorDrawerMenuTop).should('be.visible');
+    }
+    if (menuBottom.length > 0) {
+      cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+    }
     cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
   });
 
