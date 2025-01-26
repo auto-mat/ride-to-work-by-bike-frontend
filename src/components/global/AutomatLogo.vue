@@ -47,8 +47,11 @@ export default defineComponent({
     },
   },
   setup(props) {
+    let cyTest;
+    if (window.Cypress) cyTest = true;
     const linkUrl = props.url ? props.url : rideToWorkByBikeConfig.urlAutoMat;
     return {
+      cyTest,
       linkUrl,
     };
   },
@@ -63,6 +66,7 @@ export default defineComponent({
     target="_blank"
     class="q-pa-none"
     data-cy="automat-logo-button"
+    :class="{ 'cy-test-bg-color': cyTest }"
   >
     <!-- White variant -->
     <q-img
@@ -86,3 +90,9 @@ export default defineComponent({
     />
   </q-btn>
 </template>
+
+<style scoped lang="scss">
+.cy-test-bg-color {
+  background-color: yellow;
+}
+</style>
