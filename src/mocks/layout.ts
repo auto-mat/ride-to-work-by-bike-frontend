@@ -19,18 +19,18 @@ export const menuTop: Link[] = [
     name: 'results',
     title: 'results',
   },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#three-circles',
-    name: 'community',
-    title: 'community',
-  },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-badge-percent',
-    name: 'prizes',
-    title: 'discounts',
-  },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#three-circles',
+  //   name: 'community',
+  //   title: 'community',
+  // },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-badge-percent',
+  //   name: 'prizes',
+  //   title: 'discounts',
+  // },
   {
     url: '',
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
@@ -46,18 +46,18 @@ export const menuTop: Link[] = [
 ];
 
 export const menuBottom: Link[] = [
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#email',
-    name: 'invite',
-    title: 'inviteFriends',
-  },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
-    name: 'donate',
-    title: 'donate',
-  },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#email',
+  //   name: 'invite',
+  //   title: 'inviteFriends',
+  // },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
+  //   name: 'donate',
+  //   title: 'donate',
+  // },
 ];
 
 const dummyText =

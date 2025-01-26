@@ -96,7 +96,10 @@ export default defineComponent({
       </div>
       <!-- Navigation menu -->
       <drawer-menu :items="menuTop" class="q-pt-lg" data-cy="drawer-menu-top" />
-      <q-separator color="blue-grey-2 q-my-sm q-mx-lg" />
+      <q-separator
+        v-if="menuBottom.length > 0"
+        color="blue-grey-2 q-my-sm q-mx-lg"
+      />
       <drawer-menu :items="menuBottom" data-cy="drawer-menu-bottom" />
       <automat-logo-banner
         class="q-mx-md q-mt-lg"

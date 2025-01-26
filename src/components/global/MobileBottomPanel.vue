@@ -28,13 +28,21 @@ import { menuBottom, menuTop } from '../../mocks/layout';
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
+    const shownItemsCount = 3;
+
     const menuPanel = computed((): Link[] => {
-      return menuTop.slice(0, 4);
+      return menuTop.slice(0, shownItemsCount);
     });
 
     const isDialogOpen = ref(false);
 
-    return { isDialogOpen, menuPanel, menuBottom, menuTop };
+    return {
+      isDialogOpen,
+      menuPanel,
+      menuBottom,
+      menuTop,
+      shownItemsCount,
+    };
   },
 });
 </script>
@@ -100,7 +108,7 @@ export default defineComponent({
     <q-list padding class="bg-white w-full">
       <!-- Top menu (remaining items) -->
       <q-item
-        v-for="item in menuTop.slice(4)"
+        v-for="item in menuTop.slice(shownItemsCount)"
         :key="item.name"
         :to="{ name: item.name }"
         clickable
@@ -120,7 +128,7 @@ export default defineComponent({
         </q-item-section>
       </q-item>
 
-      <q-separator />
+      <q-separator v-if="menuBottom.length > 0" />
 
       <!-- Bottom menu items -->
       <q-item
