@@ -29,6 +29,7 @@ export interface ConfigGlobal {
   urlGooglePlay: string;
   urlInstagram: string;
   urlProjectSourceCode: string;
+  urlRideToWorkByBikeOldSystemLogin: string;
   urlTwitter: string;
   urlVideoLoggingRoutes: string;
   urlVideoOnboarding: string;

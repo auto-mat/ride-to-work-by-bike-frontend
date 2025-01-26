@@ -181,6 +181,7 @@ tabAttendance = "Účast"
 tabChallenges = "Firemní výzvy"
 tabResults = "Výsledky"
 textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
+textCompanyCoordinatorDisabled = "Portál pro firemní koordinátory najdete po příhlášení ve starém systému <a href='{url}' target='_blank'>Do práce na kole</a>."
 titleCompanyCoordinator = "Firemní koordinátor"
 
 [createOrganization]

@@ -1,23 +1,28 @@
 import { Link } from 'src/components/types';
 
+// config
+import { routesConf } from 'src/router/routes_conf';
+
 export const menuTop: Link[] = [
   {
-    url: '',
+    url: routesConf['home']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-home',
     name: 'home',
     title: 'home',
   },
   {
-    url: '',
+    url: routesConf['routes']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-route',
     name: 'routes',
     title: 'routes',
+    disabled: true,
   },
   {
-    url: '',
+    url: routesConf['results']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#chart-graph',
     name: 'results',
     title: 'results',
+    disabled: true,
   },
   // {
   //   url: '',
@@ -32,13 +37,13 @@ export const menuTop: Link[] = [
   //   title: 'discounts',
   // },
   {
-    url: '',
+    url: routesConf['coordinator']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
     name: 'coordinator',
     title: 'coordinator',
   },
   {
-    url: '',
+    url: routesConf['profile']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#ion-person-outline',
     name: 'profile',
     title: 'profile',

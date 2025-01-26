@@ -63,7 +63,8 @@ export default defineComponent({
       <q-item
         v-for="item in menuPanel"
         :key="item.name"
-        :to="{ name: item.name }"
+        :to="item.disabled ? '' : item.url"
+        :disable="item.disabled"
         clickable
         v-ripple
         class="q-pa-sm"
