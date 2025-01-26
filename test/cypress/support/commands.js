@@ -2553,7 +2553,6 @@ Cypress.Commands.add(
  * @param {String} validationErrorColor - Form field validation error color RGB string
  *                                        e.g. 'rgb(160, 215, 196)'
  */
-
 Cypress.Commands.add(
   'checkFormFieldValidationErrColor',
   (formField, validationErrorColor) => {
