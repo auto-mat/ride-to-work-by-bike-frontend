@@ -13,6 +13,7 @@
  * - `width` (string): logo image width.
  * - `height` (string): logo image height.
  * - `url` (string, default: null): logo image URL link.
+ * - `white` (boolean, default: false): true if white logo variant
  *
  * @example
  * <automat-logo />
@@ -41,6 +42,7 @@ export default defineComponent({
     },
     white: {
       type: Boolean,
+      required: false,
       default: false,
     },
   },
