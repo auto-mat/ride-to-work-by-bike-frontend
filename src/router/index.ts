@@ -58,9 +58,6 @@ export default route(function (/* { store, ssrContext } */) {
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
       const isRegistrationPhaseActive: boolean =
         challengeStore.getIsChallengeInPhase(PhaseType.registration);
-      const isChallengeActive: boolean = challengeStore.getIsChallengeInPhase(
-        PhaseType.competition,
-      );
       const isRegistrationComplete: boolean =
         registerChallengeStore.getIsRegistrationComplete;
       const isUserOrganizationAdmin: boolean =
@@ -73,7 +70,6 @@ export default route(function (/* { store, ssrContext } */) {
       logger?.debug(
         `Router registration phase is active <${isRegistrationPhaseActive}>.`,
       );
-      logger?.debug(`Router challenge phase is active <${isChallengeActive}>.`);
       logger?.debug(
         `Router registration is complete <${isRegistrationComplete}>.`,
       );
