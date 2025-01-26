@@ -66,6 +66,7 @@ export default defineComponent({
             url: urlOldSystem,
           })
         "
+        data-cy="company-coordinator-disabled-text"
       />
     </div>
   </q-page>

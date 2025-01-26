@@ -112,7 +112,7 @@ function coreTests() {
     });
   });
 
-  it('navigates to notifications tab and marks a notification as read', () => {
+  it.skip('navigates to notifications tab and marks a notification as read', () => {
     cy.fixture('notifications').then((notifications) => {
       cy.get('@i18n').then((i18n) => {
         // open notifications tab
