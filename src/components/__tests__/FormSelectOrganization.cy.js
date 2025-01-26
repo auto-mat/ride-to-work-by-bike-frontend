@@ -150,10 +150,12 @@ describe('<FormSelectOrganization>', () => {
                             .its('value')
                             .should('equal', apiPostSubsidiaryResponse.id);
                           // check that the subsidary (address) input has correct value
-                          cy.dataCy('form-company-address').should(
-                            'contain',
-                            apiPostSubsidiaryRequest.address.street,
-                          );
+                          cy.dataCy('form-company-address-input')
+                            .invoke('val')
+                            .should(
+                              'contain',
+                              apiPostSubsidiaryRequest.address.street,
+                            );
                         });
                       },
                     );
