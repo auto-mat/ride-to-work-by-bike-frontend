@@ -1,4 +1,11 @@
 import { routesConf } from '../../../src/router/routes_conf';
+import {
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  failOnStatusCode,
+  userAgentHeader,
+} from '../../../test/cypress/support/commonTests';
 
 // selectors
 const selectorPage = 'company-coordinator-page';
@@ -14,6 +21,7 @@ const selectorButtonResults = 'coordinator-tabs-button-results';
 const selectorTasksList = 'task-list-coordinator';
 const selectorCompanyCoordinatorDisabledText =
   'company-coordinator-disabled-text';
+
 describe('Company Coordinator Page', () => {
   context('general', () => {
     beforeEach(() => {
@@ -46,16 +54,36 @@ describe('Company Coordinator Page', () => {
 
     it('displays company coordinator disabled text', () => {
       cy.get('@i18n').then((i18n) => {
-        cy.dataCy(selectorCompanyCoordinatorDisabledText)
-          .should('be.visible')
-          .then(($el) => {
-            const content = $el.text();
-            cy.stripHtmlTags(
-              i18n.global.t('coordinator.textCompanyCoordinatorDisabled'),
-            ).then((text) => {
-              expect(content).to.equal(text);
+        cy.get('@config').then((config) => {
+          // text
+          cy.dataCy(selectorCompanyCoordinatorDisabledText)
+            .should('be.visible')
+            .then(($el) => {
+              const content = $el.text();
+              cy.stripHtmlTags(
+                i18n.global.t('coordinator.textCompanyCoordinatorDisabled'),
+              ).then((text) => {
+                expect(content).to.equal(text);
+              });
             });
+          // link
+          cy.dataCy(selectorCompanyCoordinatorDisabledText)
+            .find('a')
+            .should('have.attr', 'href')
+            .and('eq', config.urlRideToWorkByBikeOldSystem);
+          // check if the link is accessible
+          cy.request({
+            url: config.urlRideToWorkByBikeOldSystem,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
           });
+        });
       });
     });
 

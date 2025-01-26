@@ -33,8 +33,7 @@ export default defineComponent({
   setup() {
     const isCoordinatorEnabled = false;
 
-    const urlOldSystem =
-      rideToWorkByBikeConfig.urlRideToWorkByBikeOldSystemLogin;
+    const urlOldSystem = rideToWorkByBikeConfig.urlRideToWorkByBikeOldSystem;
 
     return {
       isCoordinatorEnabled,
