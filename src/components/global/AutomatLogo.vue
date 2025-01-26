@@ -62,16 +62,6 @@ export default defineComponent({
     class="q-pa-none"
     data-cy="automat-logo-button"
   >
-    <!-- Red variant -->
-    <q-img
-      v-if="!white"
-      :width="width"
-      :height="height"
-      fit="contain"
-      src="~assets/svg/logo-automat.svg"
-      :alt="$t('index.logoAutomatAltText')"
-      data-cy="automat-logo-image"
-    />
     <!-- White variant -->
     <q-img
       v-if="white"
@@ -79,6 +69,16 @@ export default defineComponent({
       :height="height"
       fit="contain"
       src="~assets/svg/logo-automat-white.svg"
+      :alt="$t('index.logoAutomatAltText')"
+      data-cy="automat-logo-image"
+    />
+    <!-- Red variant -->
+    <q-img
+      v-else
+      :width="width"
+      :height="height"
+      fit="contain"
+      src="~assets/svg/logo-automat.svg"
       :alt="$t('index.logoAutomatAltText')"
       data-cy="automat-logo-image"
     />
