@@ -33,11 +33,12 @@ export default defineComponent({
   setup() {
     const isCoordinatorEnabled = false;
 
-    const urlOldSystem = rideToWorkByBikeConfig.urlRideToWorkByBikeOldSystem;
+    const urlRideToWorkByBikeOldFrontendDjangoApp =
+      rideToWorkByBikeConfig.urlRideToWorkByBikeOldFrontendDjangoApp;
 
     return {
       isCoordinatorEnabled,
-      urlOldSystem,
+      urlRideToWorkByBikeOldFrontendDjangoApp,
     };
   },
 });
@@ -62,7 +63,7 @@ export default defineComponent({
         class="text-body1"
         v-html="
           $t('coordinator.textCompanyCoordinatorDisabled', {
-            url: urlOldSystem,
+            url: urlRideToWorkByBikeOldFrontendDjangoApp,
           })
         "
         data-cy="company-coordinator-disabled-text"
