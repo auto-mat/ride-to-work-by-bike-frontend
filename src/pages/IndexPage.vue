@@ -127,11 +127,7 @@
           data-cy="list-post"
         />
         <newsletter-feature class="q-my-xl" data-cy="newsletter-feature" />
-        <list-card-follow
-          :cards="cardsFollow"
-          class="q-mt-xl"
-          data-cy="list-card-follow"
-        />
+        <list-card-follow class="q-mt-xl" data-cy="list-card-follow" />
       </div>
     </div>
   </q-page>

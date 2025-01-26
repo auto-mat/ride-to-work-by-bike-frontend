@@ -26,6 +26,7 @@ export interface ConfigGlobal {
   urlAppStore: string;
   urlBlog: string;
   urlFacebook: string;
+  urlFacebookRideToWorkByBike: string;
   urlGooglePlay: string;
   urlInstagram: string;
   urlProjectSourceCode: string;

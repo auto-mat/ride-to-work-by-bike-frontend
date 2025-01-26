@@ -16,7 +16,11 @@ const widthHalf = 50;
 
 describe('<ListCardFollow>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['title'], 'index.cardListFollow', i18n);
+    cy.testLanguageStringsInContext(
+      ['title', 'labelFacebook'],
+      'index.cardListFollow',
+      i18n,
+    );
   });
 
   context('desktop', () => {

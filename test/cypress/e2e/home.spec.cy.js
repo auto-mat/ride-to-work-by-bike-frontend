@@ -1,5 +1,10 @@
 import {
   systemTimeRegistrationPhaseInactive,
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  userAgentHeader,
   testDesktopSidebar,
   testLanguageSwitcher,
   testMobileHeader,
@@ -393,6 +398,34 @@ describe('Home page', () => {
         cy.dataCy('newsletter-feature').should('be.visible');
         // list of follow
         cy.dataCy('list-card-follow').should('be.visible');
+      });
+    });
+
+    it('renders follow cards component', () => {
+      cy.get('@config').then((config) => {
+        // card list
+        cy.dataCy('list-card-follow').should('be.visible');
+        // first card
+        cy.dataCy('card-list-follow-item-1').should('be.visible');
+        // no second card
+        cy.dataCy('card-list-follow-item-2').should('not.exist');
+        // first card link
+        cy.dataCy('card-list-follow-item-1')
+          .find('a')
+          .should('have.attr', 'href', config.urlFacebookRideToWorkByBike)
+          .and('have.attr', 'target', '_blank');
+        // check if link is accessible
+        cy.request({
+          url: config.urlFacebookRideToWorkByBike,
+          failOnStatusCode: failOnStatusCode,
+          headers: { ...userAgentHeader },
+        }).then((resp) => {
+          if (resp.status === httpTooManyRequestsStatus) {
+            cy.log(httpTooManyRequestsStatusMessage);
+            return;
+          }
+          expect(resp.status).to.eq(httpSuccessfullStatus);
+        });
       });
     });
 

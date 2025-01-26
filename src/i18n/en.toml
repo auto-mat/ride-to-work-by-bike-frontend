@@ -546,6 +546,7 @@ message = "You can manage your preferences at any time in your profile."
 
 [index.cardListFollow]
 title = "Follow us on Facebook"
+labelFacebook = "Ride to Work by Bike - AutoMat"
 
 [footer]
 buttonBackToTop = "Back to top"

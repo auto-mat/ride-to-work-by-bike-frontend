@@ -548,6 +548,7 @@ message = "Své preference můžete kdykoliv spravovat v Profilu."
 
 [index.cardListFollow]
 title = "Sledujte nás na Facebooku"
+labelFacebook = "Do práce na kole - AutoMat"
 
 [footer]
 buttonBackToTop = "Zpátky nahoru"

@@ -24,11 +24,17 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // components
 import CardFollow from './CardFollow.vue';
 import SectionHeading from '../global/SectionHeading.vue';
+
+// i18n
+import { i18n } from '../../../src/boot/i18n';
+
+// config
+import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 
 // types
 import { CardFollow as CardFollowType } from '../types';
@@ -42,8 +48,33 @@ export default defineComponent({
   props: {
     cards: {
       type: Array as () => CardFollowType[],
-      required: true,
+      required: false,
+      default: () => [],
     },
+  },
+  setup(props) {
+    /**
+     * Default cards
+     * These cards are displayed if no cards are provided in props.
+     * Props are currently used in tests to check layout for multiple cards.
+     * TODO: Remove props once final data source is implemented.
+     */
+    const cardsFollow = ref([
+      {
+        title: i18n.global.t('index.cardListFollow.labelFacebook'),
+        image: {
+          src: '/image/facebook-profile-automat.webp',
+          alt: '',
+        },
+        url: rideToWorkByBikeConfig.urlFacebookRideToWorkByBike,
+      },
+    ] as CardFollowType[]);
+
+    if (props.cards.length) {
+      cardsFollow.value = props.cards;
+    }
+
+    return { cardsFollow };
   },
 });
 </script>
@@ -59,7 +90,7 @@ export default defineComponent({
     <div class="row q-col-gutter-lg items-center" data-cy="card-list-follow">
       <!-- List of folow cards -->
       <div
-        v-for="(card, index) in cards"
+        v-for="(card, index) in cardsFollow"
         :key="card.title"
         class="col-12 col-sm-6"
         data-cy="card-list-follow-item"

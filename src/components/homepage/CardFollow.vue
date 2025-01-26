@@ -44,14 +44,9 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const borderColor = rideToWorkByBikeConfig.colorGrayMiddle;
 
-    const onClickCard = (url: string) => {
-      window.open(url, '_blank');
-    };
-
     return {
       borderRadius,
       borderColor,
-      onClickCard,
     };
   },
 });
@@ -59,62 +54,58 @@ export default defineComponent({
 
 <template>
   <div data-cy="card-follow-wrapper">
-    <q-card
-      v-ripple
-      data-cy="card-follow"
-      class="cursor-pointer q-hoverable q-px-md q-py-md bg-white"
+    <q-item
       bordered
       flat
+      v-ripple
+      :href="card.url"
+      target="_blank"
+      data-cy="card-follow"
+      class="cursor-pointer q-hoverable q-px-md q-py-md bg-white"
       :style="{
         'border-radius': borderRadius,
         border: `1px solid ${borderColor}`,
       }"
-      @click="onClickCard(card.url)"
     >
-      <q-card-section horizontal>
-        <!-- Card avatar -->
-        <q-item-section
-          avatar
-          class="items-center"
-          data-cy="card-follow-avatar"
-        >
-          <!-- Image -->
-          <q-avatar size="56px">
-            <q-img
-              :src="card.image.src"
-              data-cy="card-follow-image"
-              :alt="card.image.alt"
-              ratio="1"
-            />
-          </q-avatar>
-        </q-item-section>
-        <!-- Card content -->
-        <q-item-section class="col q-pl-sm">
-          <div class="row no-wrap items-center">
-            <div class="col">
-              <!-- Link follow on social media -->
-              <q-item-label
-                class="text-body1 text-weight-bold text-grey-10"
-                data-cy="card-follow-title"
-                >{{ card.title }}</q-item-label
-              >
-              <!-- Label: Social media handle -->
-              <q-item-label
-                class="q-mt-xs text-subtitle2 text-weight-regular text-grey-8"
-                data-cy="card-follow-handle"
-                >{{ card.handle }}</q-item-label
-              >
-            </div>
-            <q-icon
-              name="svguse:/icons/lucide.svg#arrow-up-right"
-              size="18px"
-              color="primary"
-              class="col-auto"
-              data-cy="card-follow-link-icon"
-            />
+      <!-- Item section avatar -->
+      <q-item-section avatar class="items-center" data-cy="card-follow-avatar">
+        <!-- Image -->
+        <q-avatar size="56px">
+          <q-img
+            :src="card.image.src"
+            data-cy="card-follow-image"
+            :alt="card.image.alt"
+            ratio="1"
+          />
+        </q-avatar>
+      </q-item-section>
+      <!-- Item section content -->
+      <q-item-section class="col q-pl-sm">
+        <div class="row no-wrap items-center">
+          <div class="col">
+            <!-- Link follow on social media -->
+            <q-item-label
+              class="text-body1 text-weight-bold text-grey-10"
+              data-cy="card-follow-title"
+              >{{ card.title }}</q-item-label
+            >
+            <!-- Label: Social media handle -->
+            <q-item-label
+              v-if="card.handle"
+              class="q-mt-xs text-subtitle2 text-weight-regular text-grey-8"
+              data-cy="card-follow-handle"
+              >{{ card.handle }}</q-item-label
+            >
           </div>
-        </q-item-section>
-      </q-card-section>
-    </q-card>
+          <q-icon
+            name="svguse:/icons/lucide.svg#arrow-up-right"
+            size="18px"
+            color="primary"
+            class="col-auto"
+            data-cy="card-follow-link-icon"
+          />
+        </div>
+      </q-item-section>
+    </q-item>
   </div>
 </template>
