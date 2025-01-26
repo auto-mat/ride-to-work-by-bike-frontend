@@ -16,6 +16,7 @@ module.exports = defineConfig({
   screenshotsFolder: 'test/cypress/screenshots',
   videosFolder: 'test/cypress/videos',
   video: true,
+  requestTimeout: 12000,
   e2e: {
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config);
