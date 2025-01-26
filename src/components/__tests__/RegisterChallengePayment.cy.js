@@ -142,15 +142,27 @@ describe('<RegisterChallengePayment>', () => {
             );
           },
         );
-        cy.interceptIsUserOrganizationAdminGetApi(rideToWorkByBikeConfig, i18n);
       });
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
-      cy.fixture('apiGetThisCampaign.json').then((response) => {
-        cy.wrap(useChallengeStore()).then((storeChallenge) => {
-          storeChallenge.setPriceLevel(response.results[0].price_level);
-        });
+      cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+          (isUserOrganizationAdminResponse) => {
+            cy.wrap(useChallengeStore()).then((storeChallenge) => {
+              storeChallenge.setPriceLevel(
+                thisCampaignReponse.results[0].price_level,
+              );
+            });
+            cy.wrap(useRegisterChallengeStore()).then(
+              (storeRegisterChallenge) => {
+                storeRegisterChallenge.setIsUserOrganizationAdmin(
+                  isUserOrganizationAdminResponse.is_user_organization_admin,
+                );
+              },
+            );
+          },
+        );
       });
       cy.viewport('macbook-16');
     });
@@ -194,15 +206,27 @@ describe('<RegisterChallengePayment>', () => {
             );
           },
         );
-        cy.interceptIsUserOrganizationAdminGetApi(rideToWorkByBikeConfig, i18n);
       });
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
-      cy.fixture('apiGetThisCampaign.json').then((response) => {
-        cy.wrap(useChallengeStore()).then((storeChallenge) => {
-          storeChallenge.setPriceLevel(response.results[0].price_level);
-        });
+      cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+          (isUserOrganizationAdminResponse) => {
+            cy.wrap(useChallengeStore()).then((storeChallenge) => {
+              storeChallenge.setPriceLevel(
+                thisCampaignReponse.results[0].price_level,
+              );
+            });
+            cy.wrap(useRegisterChallengeStore()).then(
+              (storeRegisterChallenge) => {
+                storeRegisterChallenge.setIsUserOrganizationAdmin(
+                  isUserOrganizationAdminResponse.is_user_organization_admin,
+                );
+              },
+            );
+          },
+        );
       });
       cy.viewport('iphone-6');
     });
@@ -792,11 +816,6 @@ function coreTests() {
   });
 
   it('shows checkbox become coordinator if organization has no coordinator and user no coordinator', () => {
-    cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
-      (response) => {
-        cy.waitForIsUserOrganizationAdminApi(response);
-      },
-    );
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
       .click();
