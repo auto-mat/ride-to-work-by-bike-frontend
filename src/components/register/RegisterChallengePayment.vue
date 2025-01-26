@@ -208,6 +208,8 @@ export default defineComponent({
           registerChallengeStore.setOrganizationId(value);
           // refetch subsidiaries
           registerChallengeStore.loadSubsidiariesToStore(logger);
+          // check if organization has coordinator
+          registerChallengeStore.checkOrganizationHasCoordinator();
         }
       },
     });

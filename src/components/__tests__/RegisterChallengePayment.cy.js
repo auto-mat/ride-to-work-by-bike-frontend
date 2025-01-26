@@ -828,6 +828,10 @@ function coreTests() {
     cy.get('.q-menu').within(() => {
       cy.get('.q-item').first().click();
     });
+    // wait for API coordinator status check
+    cy.fixture('apiGetHasOrganizationAdminResponseTrue').then((response) => {
+      cy.waitForHasOrganizationAdminApi(response);
+    });
     // checkbox become coordinator should not be visible
     cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
     // open organization select
@@ -838,6 +842,10 @@ function coreTests() {
     // select second organization
     cy.get('.q-menu').within(() => {
       cy.get('.q-item').eq(1).click();
+    });
+    // wait for API coordinator status check
+    cy.fixture('apiGetHasOrganizationAdminResponseFalse').then((response) => {
+      cy.waitForHasOrganizationAdminApi(response);
     });
     // checkbox become coordinator should be visible
     cy.dataCy(selectorCoordinatorCheckbox)

@@ -28,5 +28,5 @@
   "isPayuTransactionInitiated": false,
   "isSelectedRegisterCoordinator": false,
   "isUserOrganizationAdmin": false,
-  "hasOrganizationAdmin": true
+  "hasOrganizationAdmin": null
 }

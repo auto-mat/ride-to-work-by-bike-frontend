@@ -309,7 +309,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setOrganizationId(id: number | null): void {
       this.organizationId = id;
-      this.checkOrganizationHasCoordinator();
     },
     setSubsidiaryId(subsidiaryId: number | null) {
       this.subsidiaryId = subsidiaryId;

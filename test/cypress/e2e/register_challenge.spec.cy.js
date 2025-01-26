@@ -2627,6 +2627,12 @@ describe('Register Challenge page', () => {
               .should('be.visible')
               .and('not.be.disabled')
               .click();
+            // wait for hasOrganizationAdmin API call
+            cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
+              (response) => {
+                cy.waitForHasOrganizationAdminApi(response);
+              },
+            );
             cy.testRegisterChallengeLoadedStepsThreeToFive(
               win.i18n,
               registerChallengeResponse,
@@ -2725,6 +2731,12 @@ describe('Register Challenge page', () => {
                 .should('be.visible')
                 .and('not.be.disabled')
                 .click();
+              // wait for hasOrganizationAdmin API call
+              cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+                (response) => {
+                  cy.waitForHasOrganizationAdminApi(response);
+                },
+              );
               cy.testRegisterChallengeLoadedStepsThreeToFive(
                 win.i18n,
                 registerChallengeResponse,
