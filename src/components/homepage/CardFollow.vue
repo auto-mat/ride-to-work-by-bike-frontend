@@ -97,6 +97,7 @@ export default defineComponent({
               >{{ card.handle }}</q-item-label
             >
           </div>
+          <!-- Icon: Arrow up right -->
           <q-icon
             name="svguse:/icons/lucide.svg#arrow-up-right"
             size="18px"
