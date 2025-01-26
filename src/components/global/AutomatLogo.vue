@@ -45,9 +45,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { url } = props;
-    let linkUrl;
-    linkUrl = url ? url : rideToWorkByBikeConfig.urlAutoMat;
+    const linkUrl = props.url ? props.url : rideToWorkByBikeConfig.urlAutoMat;
     return {
       linkUrl,
     };
