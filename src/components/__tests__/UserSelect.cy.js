@@ -13,7 +13,7 @@ const selectorMenuItem = 'menu-item';
 // variables
 const avatarSizeLg = 40;
 const avatarSizeSm = 32;
-const menuItemCount = 6;
+const menuItemCount = 2;
 
 describe('<UserSelect>', () => {
   it('has translation for all strings', () => {

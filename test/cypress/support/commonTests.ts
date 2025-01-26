@@ -242,12 +242,12 @@ export const testUserSelect = (selector: string): void => {
   it('checks navigation links in the menu', () => {
     const menuItems = [
       { url: routesConf['profile_details']['children']['fullPath'] },
-      { url: routesConf['profile_newsletter']['children']['fullPath'] },
-      { url: routesConf['routes_app']['children']['fullPath'] },
-      {
-        url: routesConf['profile_notifications']['children']['fullPath'],
-      },
-      { url: routesConf['coordinator']['children']['fullPath'] },
+      // { url: routesConf['profile_newsletter']['children']['fullPath'] },
+      // { url: routesConf['routes_app']['children']['fullPath'] },
+      // {
+      //   url: routesConf['profile_notifications']['children']['fullPath'],
+      // },
+      // { url: routesConf['coordinator']['children']['fullPath'] },
     ];
 
     cy.dataCy(selector).within(() => {

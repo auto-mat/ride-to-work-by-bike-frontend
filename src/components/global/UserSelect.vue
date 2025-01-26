@@ -54,25 +54,25 @@ export default defineComponent({
         title: i18n.global.t('userSelect.profileDetails'),
         url: routesConf['profile_details']['children']['fullPath'],
       },
-      {
-        title: i18n.global.t('userSelect.newsletter'),
-        url: routesConf['profile_newsletter']['children']['fullPath'],
-      },
-      {
-        title: i18n.global.t('userSelect.connectApps'),
-        url: routesConf['routes_app']['children']['fullPath'],
-      },
-      {
-        title: i18n.global.t('userSelect.notifications'),
-        url: routesConf['profile_notifications']['children']['fullPath'],
-      },
+      // {
+      //   title: i18n.global.t('userSelect.newsletter'),
+      //   url: routesConf['profile_newsletter']['children']['fullPath'],
+      // },
+      // {
+      //   title: i18n.global.t('userSelect.connectApps'),
+      //   url: routesConf['routes_app']['children']['fullPath'],
+      // },
+      // {
+      //   title: i18n.global.t('userSelect.notifications'),
+      //   url: routesConf['profile_notifications']['children']['fullPath'],
+      // },
     ];
 
     const menuBottom: Link[] = [
-      {
-        title: i18n.global.t('userSelect.companyCoordinator'),
-        url: routesConf['coordinator']['children']['fullPath'],
-      },
+      // {
+      //   title: i18n.global.t('userSelect.companyCoordinator'),
+      //   url: routesConf['coordinator']['children']['fullPath'],
+      // },
     ];
 
     const onLogout = () => {
