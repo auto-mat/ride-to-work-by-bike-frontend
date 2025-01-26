@@ -39,7 +39,7 @@ describe('Home page', () => {
     testLanguageSwitcher();
     testDesktopSidebar();
 
-    it('allows user to display and submit contact form', () => {
+    it.skip('allows user to display and submit contact form', () => {
       // open help modal
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
@@ -69,7 +69,7 @@ describe('Home page', () => {
       // TODO: test successful submission
     });
 
-    it('validates contact form if there are errors', () => {
+    it.skip('validates contact form if there are errors', () => {
       cy.get('@i18n').then((i18n) => {
         // open contact form
         cy.dataCy('button-help').last().should('be.visible').click();
@@ -220,7 +220,7 @@ describe('Home page', () => {
         .should('have.length', 5);
     });
 
-    it('allows user to display and submit contact form', () => {
+    it.skip('allows user to display and submit contact form', () => {
       // open help modal
       cy.dataCy('button-help').first().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
@@ -248,7 +248,7 @@ describe('Home page', () => {
       // TODO: test successful submission
     });
 
-    it('validates contact form if there are errors', () => {
+    it.skip('validates contact form if there are errors', () => {
       let i18n;
       cy.window().should('have.property', 'i18n');
       cy.window()

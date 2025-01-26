@@ -33,7 +33,8 @@ describe('Login page', () => {
 
     it('renders login register header component', () => {
       cy.dataCy('login-register-header').should('be.visible');
-      cy.dataCy('button-help').should('be.visible');
+      // TODO: enable when help dialog is implemented
+      cy.dataCy('button-help').should('not.exist');
       cy.dataCy('language-switcher').should('be.visible');
     });
 

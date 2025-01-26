@@ -49,7 +49,7 @@ describe('<DrawerHeader>', () => {
     });
   });
 
-  it('renders help button', () => {
+  it.skip('renders help button', () => {
     // button
     cy.dataCy(selectorButtonHelp)
       .should('be.visible')
@@ -65,13 +65,13 @@ describe('<DrawerHeader>', () => {
       .should('be.equal', buttonSize);
   });
 
-  it('renders help icon', () => {
+  it.skip('renders help icon', () => {
     cy.dataCy(selectorIconHelp).and('have.color', white);
     cy.dataCy(selectorIconHelp).invoke('height').should('be.equal', iconSize);
     cy.dataCy(selectorIconHelp).invoke('width').should('be.equal', iconSize);
   });
 
-  it('renders notifications icon', () => {
+  it.skip('renders notifications icon', () => {
     cy.window().then(() => {
       cy.dataCy(selectorButtonNotifications).should('be.visible');
       cy.dataCy(selectorButtonNotifications)

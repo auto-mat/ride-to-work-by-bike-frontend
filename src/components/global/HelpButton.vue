@@ -52,6 +52,7 @@ export default defineComponent({
     MenuLinks,
   },
   setup() {
+    const isButtonHelpEnabled = false;
     const isDialogOpen = ref(false);
     const userEmail = ref('');
     const activeState: Ref<DialogStates> = ref('default');
@@ -82,13 +83,14 @@ export default defineComponent({
       openDialog,
       reset,
       setState,
+      isButtonHelpEnabled,
     };
   },
 });
 </script>
 
 <template>
-  <div>
+  <div v-if="isButtonHelpEnabled">
     <slot name="button" :open-dialog="openDialog">
       <!-- Default slot button -->
       <q-btn

@@ -65,7 +65,7 @@ describe('Login page', () => {
       });
     });
 
-    it('allows user to display and submit contact form', () => {
+    it.skip('allows user to display and submit contact form', () => {
       cy.dataCy('button-help').last().should('be.visible').click();
       cy.dataCy('dialog-header').should('be.visible');
       cy.dataCy('dialog-body').scrollTo(0, 1200, { ensureScrollable: false });
@@ -86,7 +86,7 @@ describe('Login page', () => {
       // TODO: test successful submission
     });
 
-    it('validates contact form if there are errors', () => {
+    it.skip('validates contact form if there are errors', () => {
       cy.get('@i18n').then((i18n) => {
         cy.dataCy('button-help').last().should('be.visible').click();
         cy.dataCy('dialog-header').should('be.visible');

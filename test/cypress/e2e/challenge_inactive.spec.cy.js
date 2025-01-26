@@ -47,7 +47,8 @@ describe('Challenge Inactive page', () => {
     it('renders login register header component', () => {
       cy.waitForThisCampaignApi();
       cy.dataCy(selectorLoginRegisterHeader).should('be.visible');
-      cy.dataCy(selectorButtonHelp).should('be.visible');
+      // TODO: enable when help dialog is implemented
+      cy.dataCy(selectorButtonHelp).should('not.exist');
       cy.dataCy(selectorLanguageSwitcher).should('be.visible');
     });
   });

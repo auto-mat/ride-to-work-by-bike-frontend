@@ -218,7 +218,8 @@ export const testMobileHeader = (): void => {
   const selectorUserSelect = 'user-select-mobile';
 
   it('renders mobile header', () => {
-    cy.dataCy(selectorButtonHelp).should('be.visible');
+    // TODO: enable when help dialog is implemented
+    cy.dataCy(selectorButtonHelp).should('not.exist');
     cy.dataCy(selectorUserSelect).should('be.visible');
   });
 
