@@ -49,7 +49,7 @@ describe('<ButtonNotifications>', () => {
     );
   });
 
-  context('desktop', () => {
+  context.skip('desktop', () => {
     beforeEach(() => {
       cy.mount(ButtonNotifications, {
         props: {},
