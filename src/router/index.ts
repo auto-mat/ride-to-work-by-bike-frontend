@@ -68,17 +68,17 @@ export default route(function (/* { store, ssrContext } */) {
 
       logger?.debug(`Router path <${to.path}>.`);
       logger?.debug(`Router from path <${from.path}>.`);
-      logger?.debug(`Router is authenticated <${isAuthenticated}>.`);
-      logger?.debug(`Router is email verified <${isEmailVerified}>.`);
+      logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+      logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
       logger?.debug(
-        `Router is registration active <${isRegistrationPhaseActive}>.`,
+        `Router registration phase is active <${isRegistrationPhaseActive}>.`,
       );
-      logger?.debug(`Router is challenge active <${isChallengeActive}>.`);
+      logger?.debug(`Router challenge phase is active <${isChallengeActive}>.`);
       logger?.debug(
-        `Router is registration complete <${isRegistrationComplete}>.`,
+        `Router registration is complete <${isRegistrationComplete}>.`,
       );
       logger?.debug(
-        `Router is user organization admin <${isUserOrganizationAdmin}>.`,
+        `Router user is organization admin <${isUserOrganizationAdmin}>.`,
       );
 
       if (

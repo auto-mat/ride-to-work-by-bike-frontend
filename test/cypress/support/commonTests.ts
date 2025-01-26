@@ -604,9 +604,19 @@ export const timeUntilExpiration = timeUntilRefresh * 2;
 // 2 min before JWT expires
 export const systemTimeLoggedIn =
   fixtureTokenExpirationTime - timeUntilExpiration;
-// time before challenge starts
+/**
+ * Time before `registration` phase starts
+ * Registration phase allows users to register for challenge
+ * even when `challenge` phase is not yet active.
+ * The `challenge` phase overlaps is typically contained within
+ * the `registration` phase.
+ * @see apiGetThisCampaign.json fixture for example
+ */
 export const systemTimeRegistrationPhaseInactive = new Date(
   '2024-07-14T23:59:00.000Z',
 );
-// time after challenge starts
+/**
+ * Time after `challenge` phase starts
+ * @see apiGetThisCampaign.json fixture for example
+ */
 export const systemTimeChallengeActive = new Date('2024-09-16T00:01:00.000Z');
