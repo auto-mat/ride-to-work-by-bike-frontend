@@ -1,6 +1,7 @@
 import { colors } from 'quasar';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import { i18n } from '../../boot/i18n';
+import { defaultLocale } from 'src/i18n/def_locale';
 
 const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
@@ -44,7 +45,7 @@ describe('<LanguageSwitcher>', () => {
 
     it('highlights the active language', () => {
       const locales = i18n.global.availableLocales;
-      const initialActiveLocale = i18n.global.locale;
+      const initialActiveLocale = defaultLocale;
       cy.dataCy('switcher-' + initialActiveLocale)
         .find('.q-btn')
         .should('be.visible')
@@ -101,7 +102,7 @@ describe('<LanguageSwitcher>', () => {
 
     it('renders active link for current language', () => {
       const locales = i18n.global.availableLocales;
-      const initialActiveLocale = i18n.global.locale;
+      const initialActiveLocale = defaultLocale;
 
       // active language has active classes
       cy.dataCy('switcher-' + initialActiveLocale)
@@ -150,7 +151,7 @@ describe('<LanguageSwitcher>', () => {
     });
 
     it('highlights the active language', () => {
-      const activeLocale = i18n.global.locale;
+      const activeLocale = defaultLocale;
       cy.dataCy('switcher-' + activeLocale).should('be.visible');
     });
   });

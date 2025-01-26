@@ -4,5 +4,6 @@
   "nickname": "JD",
   "sex": "male",
   "newsletter": "challenge-events-mobility",
-  "personal_data_opt_in": true
+  "personal_data_opt_in": true,
+  "language": "cs"
 }

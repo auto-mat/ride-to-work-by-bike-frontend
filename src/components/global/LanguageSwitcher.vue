@@ -24,8 +24,12 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent, onMounted, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
+import { defaultLocale } from 'src/i18n/def_locale';
+
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 export default defineComponent({
   name: 'LanguageSwitcher',
@@ -36,6 +40,30 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const locales = computed(() => {
+      return Object.keys(i18n.global.messages);
+    });
+
+    onMounted(() => {
+      if (registerChallengeStore.getLanguage) {
+        i18n.global.locale = registerChallengeStore.getLanguage;
+      } else {
+        i18n.global.locale = defaultLocale;
+      }
+    });
+    /**
+     * If language changes in store by update from backend via API,
+     * update the language in i18n.
+     */
+    watch(
+      () => registerChallengeStore.getLanguage,
+      (newVal: string) => {
+        i18n.global.locale = newVal;
+      },
+    );
+
     const isActive = (item: string): boolean => {
       return i18n.global.locale === item;
     };
@@ -56,9 +84,16 @@ export default defineComponent({
       return extendedCssClass;
     };
 
+    const onSetLanguage = (item: string) => {
+      i18n.global.locale = item;
+      registerChallengeStore.setLanguage(item);
+    };
+
     return {
+      locales,
       isActive,
       getButtonClasses,
+      onSetLanguage,
     };
   },
 });
@@ -71,7 +106,7 @@ export default defineComponent({
   >
     <!-- Language switcher items -->
     <li
-      v-for="item in Object.keys($i18n.messages)"
+      v-for="item in locales"
       :key="item"
       class="text-uppercase"
       :data-cy="'switcher-' + item"
@@ -79,7 +114,7 @@ export default defineComponent({
       <q-btn
         unelevated
         round
-        @click.prevent="$i18n.locale = item"
+        @click.prevent="onSetLanguage(item)"
         :class="getButtonClasses(item)"
         size="13px"
         :data-cy="'switcher-button-' + item"

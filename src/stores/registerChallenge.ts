@@ -62,6 +62,7 @@ import type {
 } from '../components/types/ApiRegistration';
 
 // utils
+import { defaultLocale } from 'src/i18n/def_locale';
 import { deepObjectWithSimplePropsCopy } from 'src/utils';
 import {
   emptyFormPersonalDetails,
@@ -97,6 +98,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     ),
     telephone: '',
     telephoneOptIn: false,
+    language: defaultLocale,
     isLoadingRegisterChallenge: false,
     isLoadingSubsidiaries: false,
     isLoadingOrganizations: false,
@@ -139,6 +141,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.formRegisterCoordinator,
     getTelephone: (state): string => state.telephone,
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
+    getLanguage: (state): string => state.language,
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(
@@ -353,6 +356,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setTelephoneOptIn(telephoneOptIn: boolean) {
       this.telephoneOptIn = telephoneOptIn;
     },
+    setLanguage(language: string) {
+      this.language = language;
+    },
     setIsPayuTransactionInitiated(isPayuTransactionInitiated: boolean) {
       this.isPayuTransactionInitiated = isPayuTransactionInitiated;
     },
@@ -502,6 +508,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Telephone opt-in store updated to <${this.getTelephoneOptIn}>.`,
       );
+      if (parsedResponse.language) {
+        this.setLanguage(parsedResponse.language);
+        this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);
+      }
     },
     /**
      * Submit a registration step
@@ -521,6 +531,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       const payloadMap: Record<RegisterChallengeStep, unknown> = {
         [RegisterChallengeStep.personalDetails]: {
           personalDetails: this.personalDetails,
+          language: this.language,
         },
         [RegisterChallengeStep.payment]: {
           // only send payment subject if payment subject is not organization

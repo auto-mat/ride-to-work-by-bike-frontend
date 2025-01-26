@@ -49,7 +49,11 @@ export const getApiBaseUrlWithLang = (
      * intercepting API before visiting app URL page when i18n locale
      * instance is not available for getting current lang
      */
-    const apiBaseUrl = new URL(apiBase);
-    return `${apiBaseUrl.origin}/${i18n}/${apiBaseUrl.pathname}`;
+    if (![apiDefaultLang, 'sk'].includes(i18n as string)) {
+      const apiBaseUrl = new URL(apiBase);
+      return `${apiBaseUrl.origin}/${i18n}/${apiBaseUrl.pathname}`;
+    } else {
+      return apiBase;
+    }
   }
 };

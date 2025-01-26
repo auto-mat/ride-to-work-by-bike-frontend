@@ -31,6 +31,13 @@ export const emptyFormRegisterCoordinator: RegisterChallengeCoordinatorForm = {
   terms: false,
 };
 
+/**
+ * Get empty persistent state for the `registeChallenge` store.
+ * This is used for store properties which should be reset on logout.
+ * It does not have to include all persistent properties. For instance,
+ * `language` should not be reset on logout.
+ * @returns {RegisterChallengePersistentState} Empty persistent state
+ */
 export const getRegisterChallengeEmptyPersistentState = () => ({
   personalDetails: deepObjectWithSimplePropsCopy(emptyFormPersonalDetails),
   paymentAmount: null,

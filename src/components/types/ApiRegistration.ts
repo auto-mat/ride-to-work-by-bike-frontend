@@ -84,4 +84,5 @@ export interface ToApiPayloadStoreState {
   voucher?: ValidatedCoupon | null;
   telephone?: string;
   telephoneOptIn?: boolean;
+  language?: string;
 }

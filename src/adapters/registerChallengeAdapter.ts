@@ -51,6 +51,7 @@ export const registerChallengeAdapter = {
       merchId: apiData.t_shirt_size_id,
       telephone: apiData.personal_details.telephone,
       telephoneOptIn: apiData.personal_details.telephone_opt_in,
+      language: apiData.personal_details.language,
       voucher: apiData.personal_details.discount_coupon,
     };
   },
@@ -123,6 +124,9 @@ export const registerChallengeAdapter = {
     }
     if (storeState.telephoneOptIn !== undefined) {
       payload.telephone_opt_in = storeState.telephoneOptIn;
+    }
+    if (storeState.language !== undefined) {
+      payload.language = storeState.language;
     }
 
     return payload;

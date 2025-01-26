@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from 'src/utils';
+import { defaultLocale } from '../../../src/i18n/def_locale';
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -36,7 +37,7 @@ export const testLanguageSwitcher = (): void => {
       })
       .then(() => {
         const locales = i18n?.global.availableLocales;
-        const initialActiveLocale = i18n?.global.locale;
+        const initialActiveLocale = defaultLocale;
 
         // active language has active class
         cy.dataCy('switcher-' + initialActiveLocale)
