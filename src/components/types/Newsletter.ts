@@ -1,7 +1,7 @@
 export interface NewsletterItem {
-  title: string;
+  id: NewsletterType;
   icon: string;
-  url: string;
+  title: string;
   following: boolean;
 }
 

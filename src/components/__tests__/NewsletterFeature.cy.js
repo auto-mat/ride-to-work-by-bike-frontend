@@ -1,11 +1,15 @@
+import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
+import { defLocale } from '../../i18n/def_locale';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // colors
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
+const white = getPaletteColor('white');
 
 // selectors
 const selectorSectionHeadingTitle = 'section-heading-title';
@@ -47,6 +51,28 @@ describe('<NewsletterFeature>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseGetRegisterChallenge) => {
+          cy.fixture(
+            'apiGetRegisterChallengeProfileUpdatedNewsletter.json',
+          ).then((responsePostRegisterChallenge) => {
+            // intercept GET API call register-challenge
+            cy.interceptRegisterChallengeGetApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge,
+            );
+            // intercept POST API call register-challenge
+            cy.interceptRegisterChallengePutApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge.results[0].personal_details.id,
+              responsePostRegisterChallenge,
+            );
+          });
+        },
+      );
       cy.mount(NewsletterFeature, {
         props: {},
       });
@@ -104,6 +130,28 @@ describe('<NewsletterFeature>', () => {
 
   context('desktop override props', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseGetRegisterChallenge) => {
+          cy.fixture(
+            'apiGetRegisterChallengeProfileUpdatedNewsletter.json',
+          ).then((responsePostRegisterChallenge) => {
+            // intercept GET API call register-challenge
+            cy.interceptRegisterChallengeGetApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge,
+            );
+            // intercept POST API call register-challenge
+            cy.interceptRegisterChallengePutApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge.results[0].personal_details.id,
+              responsePostRegisterChallenge,
+            );
+          });
+        },
+      );
       cy.mount(NewsletterFeature, {
         props,
       });
@@ -124,6 +172,28 @@ describe('<NewsletterFeature>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseGetRegisterChallenge) => {
+          cy.fixture(
+            'apiGetRegisterChallengeProfileUpdatedNewsletter.json',
+          ).then((responsePostRegisterChallenge) => {
+            // intercept GET API call register-challenge
+            cy.interceptRegisterChallengeGetApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge,
+            );
+            // intercept POST API call register-challenge
+            cy.interceptRegisterChallengePutApi(
+              rideToWorkByBikeConfig,
+              defLocale,
+              responseGetRegisterChallenge.results[0].personal_details.id,
+              responsePostRegisterChallenge,
+            );
+          });
+        },
+      );
       cy.mount(NewsletterFeature, {
         props: {},
       });
@@ -178,5 +248,88 @@ function coreTests() {
           );
         });
     });
+  });
+
+  it('loads newsletter settings from API', () => {
+    cy.fixture('apiGetRegisterChallengeProfile.json').then(
+      (responseRegisterChallenge) => {
+        cy.fixture('apiGetRegisterChallengeProfileUpdatedNewsletter.json').then(
+          (responseUpdated) => {
+            cy.fixture(
+              'apiGetRegisterChallengeProfileUpdatedNewsletterAll.json',
+            ).then((responseUpdatedAll) => {
+              // wait for register-challenge GET request
+              cy.waitForRegisterChallengeGetApi(responseRegisterChallenge);
+              // newsletter challenge is enabled
+              cy.dataCy('newsletter-feature-item').each(($item) => {
+                const dataId = $item.attr('data-id');
+                if (dataId === 'challenge') {
+                  cy.wrap($item)
+                    .find('[data-cy="newsletter-item-button"]')
+                    .should('have.class', 'disabled')
+                    .and('have.color', grey10);
+                } else {
+                  cy.wrap($item)
+                    .find('[data-cy="newsletter-item-button"]')
+                    .should('not.have.class', 'disabled')
+                    .and('have.color', white)
+                    .and('have.backgroundColor', primary);
+                }
+              });
+              // follow newsletter mobility
+              cy.dataCy('newsletter-feature-item')
+                .filter('[data-id="mobility"]')
+                .find('[data-cy="newsletter-item-button"]')
+                .click();
+              // override GET request for updated state
+              cy.interceptRegisterChallengeGetApi(
+                rideToWorkByBikeConfig,
+                defLocale,
+                responseUpdated,
+              );
+              // wait for PUT request
+              cy.fixture(
+                'apiPostRegisterChallengeNewsletterChallengeMobilityRequest.json',
+              ).then((request) => {
+                cy.waitForRegisterChallengePutApi(request);
+              });
+              // wait for GET request
+              cy.waitForRegisterChallengeGetApi(responseUpdated);
+              // verify button state changed
+              cy.dataCy('newsletter-feature-item')
+                .filter('[data-id="mobility"]')
+                .find('[data-cy="newsletter-item-button"]')
+                .should('have.class', 'disabled')
+                .and('have.color', grey10);
+              // follow newsletter events
+              cy.dataCy('newsletter-feature-item')
+                .filter('[data-id="events"]')
+                .find('[data-cy="newsletter-item-button"]')
+                .click();
+              // override GET request for updated state
+              cy.interceptRegisterChallengeGetApi(
+                rideToWorkByBikeConfig,
+                defLocale,
+                responseUpdatedAll,
+              );
+              // wait for PUT request
+              cy.fixture(
+                'apiPostRegisterChallengeNewsletterAllRequest.json',
+              ).then((request) => {
+                cy.waitForRegisterChallengePutApi(request);
+              });
+              // wait for GET request
+              cy.waitForRegisterChallengeGetApi(responseUpdatedAll);
+              // verify button state changed
+              cy.dataCy('newsletter-feature-item')
+                .filter('[data-id="events"]')
+                .find('[data-cy="newsletter-item-button"]')
+                .should('have.class', 'disabled')
+                .and('have.color', grey10);
+            });
+          },
+        );
+      },
+    );
   });
 }

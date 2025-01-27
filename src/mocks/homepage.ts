@@ -10,6 +10,7 @@ import {
   ItemBadge,
   NewsletterItem,
   CardOffer,
+  NewsletterType,
 } from 'components/types';
 
 export const headingBgTitle =
@@ -297,24 +298,21 @@ export const cardsProgress: CardProgress[] = [
   },
 ];
 
-export const newsletterItems: NewsletterItem[] = [
+export const newsletterItems: Partial<NewsletterItem>[] = [
   {
+    id: NewsletterType.challenge,
     title: i18n.global.t('index.newsletterFeature.aboutChallenges'),
     icon: 'svguse:icons/newsletter_item/icons.svg#lucide-bike',
-    url: 'https://ecomail.cz/',
-    following: true,
   },
   {
+    id: NewsletterType.event,
     title: i18n.global.t('index.newsletterFeature.aboutEvents'),
     icon: 'svguse:icons/newsletter_item/icons.svg#tabler-calendar',
-    url: 'https://ecomail.cz/',
-    following: true,
   },
   {
+    id: NewsletterType.mobility,
     title: i18n.global.t('index.newsletterFeature.aboutMobility'),
     icon: 'svguse:icons/newsletter_item/icons.svg#tabler-leaf',
-    url: 'https://ecomail.cz/',
-    following: false,
   },
 ];
 

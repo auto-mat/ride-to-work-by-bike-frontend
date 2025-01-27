@@ -63,6 +63,9 @@ Cypress.on('uncaught:exception', (err) => {
 Cypress.Commands.add(
   'testLanguageStringsInContext',
   (translationStrings, translationContext, i18n) => {
+    // store original locale
+    const originalLocale = i18n.global.locale;
+
     const translationKeyList = translationStrings.map(
       (item) => `${translationContext}.${item}`,
     );
@@ -95,6 +98,9 @@ Cypress.Commands.add(
             .and('not.equal', defaultEnglishString);
         });
     });
+
+    // restore original locale
+    i18n.global.locale = originalLocale;
   },
 );
 

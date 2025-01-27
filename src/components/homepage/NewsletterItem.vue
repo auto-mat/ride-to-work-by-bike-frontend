@@ -105,12 +105,10 @@ export default defineComponent({
     <q-btn
       rounded
       unelevated
-      :href="item.url"
       :color="buttonColor"
       :outline="item.following"
       :disable="item.following"
       class="min-w-200"
-      target="_blank"
       @click="onFollow"
       data-cy="newsletter-item-button"
     >

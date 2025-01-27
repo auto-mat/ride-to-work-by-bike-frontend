@@ -22,23 +22,28 @@
  */
 
 // libraries
-import { Screen } from 'quasar';
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { Notify, Screen } from 'quasar';
+import { computed, defineComponent, onMounted, reactive } from 'vue';
+
+// adapters
+import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
 
 // components
 import NewsletterItem from './NewsletterItem.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterChallenge';
 
 // mocks
 import { newsletterItems as newsletterItemsFixture } from '../../mocks/homepage';
 
 // stores
 import { useLoginStore } from '../../stores/login';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import { NewsletterItem as NewsletterItemType } from '../types';
+import { NewsletterItem as NewsletterItemType, NewsletterType } from '../types';
 
 export default defineComponent({
   name: 'NewsletterFeature',
@@ -57,7 +62,20 @@ export default defineComponent({
   },
   setup(props) {
     const loginStore = useLoginStore();
+    const registerChallengeStore = useRegisterChallengeStore();
     const user = reactive(loginStore.getUser);
+
+    onMounted(async () => {
+      await registerChallengeStore.loadRegisterChallengeToStore();
+    });
+
+    const getRegistrationId = computed((): number | null => {
+      return registerChallengeStore.getRegistrationId;
+    });
+
+    const newsletter = computed((): NewsletterType[] | undefined => {
+      return registerChallengeStore.getPersonalDetails?.newsletter;
+    });
 
     const newsletterTitle = computed(() => {
       return props.title
@@ -73,17 +91,48 @@ export default defineComponent({
           });
     });
 
-    const newsletterItems = ref(newsletterItemsFixture as NewsletterItemType[]);
+    const newsletterItems = computed<NewsletterItemType[]>(
+      (): NewsletterItemType[] => {
+        return (newsletterItemsFixture as NewsletterItemType[]).map((item) => {
+          return {
+            ...item,
+            following: newsletter.value?.includes(item.id) || false,
+          };
+        });
+      },
+    );
 
-    const onFollow = (index: number): void => {
-      // TODO: Implement API call to save the follow status
-      newsletterItems.value[index].following = true;
+    // update register challenge data
+    const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
+      registerChallengeStore.$log,
+    );
+    const onFollow = async (id: NewsletterType): Promise<void> => {
+      const newsletterIds: NewsletterType[] = newsletter.value?.length
+        ? [...newsletter.value, id]
+        : [id];
+      // create payload from local storage data structure
+      const payload = registerChallengeAdapter.toApiPayload({
+        personalDetails: {
+          newsletter: newsletterIds,
+        },
+      });
+      // post payload to API
+      if (getRegistrationId.value) {
+        await updateChallenge(getRegistrationId.value, payload);
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      } else {
+        Notify.create({
+          message: i18n.global.t('profile.messagegetRegistrationIdMissing'),
+          color: 'negative',
+        });
+      }
     };
 
     const headingMaxWidth = Screen.sizes.sm;
 
     return {
       headingMaxWidth,
+      isLoading,
       newsletterDescription,
       newsletterItems,
       newsletterTitle,
@@ -140,8 +189,9 @@ export default defineComponent({
         <!-- Item - subscription variant -->
         <newsletter-item
           :item="item"
+          :data-id="item.id"
           data-cy="newsletter-feature-item"
-          @follow="onFollow(index)"
+          @follow="onFollow(item.id)"
         />
         <!-- Separator -->
         <q-separator
