@@ -140,7 +140,7 @@ export default defineComponent({
     <!-- Form: register coordinator -->
     <q-form
       autofocus
-      @submit="onSubmit"
+      @submit.prevent="onSubmit"
       @reset="onReset"
       class="q-gutter-md text-grey-10"
     >

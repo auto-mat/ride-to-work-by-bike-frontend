@@ -2,6 +2,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from 'src/utils';
 import { defaultLocale } from '../../../src/i18n/def_locale';
+import { menuTop, menuBottom } from '../../../src/mocks/layout';
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -131,8 +132,12 @@ export const testDesktopSidebar = (): void => {
     cy.dataCy(selectorDrawer).should('be.visible');
     cy.dataCy(selectorDrawerHeader).should('be.visible');
     cy.dataCy(selectorUserSelectDesktop).should('be.visible');
-    cy.dataCy(selectorDrawerMenuTop).should('be.visible');
-    cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+    if (menuTop.length > 0) {
+      cy.dataCy(selectorDrawerMenuTop).should('be.visible');
+    }
+    if (menuBottom.length > 0) {
+      cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+    }
     cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
   });
 
@@ -219,7 +224,8 @@ export const testMobileHeader = (): void => {
   const selectorUserSelect = 'user-select-mobile';
 
   it('renders mobile header', () => {
-    cy.dataCy(selectorButtonHelp).should('be.visible');
+    // TODO: enable when help dialog is implemented
+    cy.dataCy(selectorButtonHelp).should('not.exist');
     cy.dataCy(selectorUserSelect).should('be.visible');
   });
 
@@ -237,12 +243,12 @@ export const testUserSelect = (selector: string): void => {
   it('checks navigation links in the menu', () => {
     const menuItems = [
       { url: routesConf['profile_details']['children']['fullPath'] },
-      { url: routesConf['profile_newsletter']['children']['fullPath'] },
-      { url: routesConf['routes_app']['children']['fullPath'] },
-      {
-        url: routesConf['profile_notifications']['children']['fullPath'],
-      },
-      { url: routesConf['coordinator']['children']['fullPath'] },
+      // { url: routesConf['profile_newsletter']['children']['fullPath'] },
+      // { url: routesConf['routes_app']['children']['fullPath'] },
+      // {
+      //   url: routesConf['profile_notifications']['children']['fullPath'],
+      // },
+      // { url: routesConf['coordinator']['children']['fullPath'] },
     ];
 
     cy.dataCy(selector).within(() => {
@@ -381,7 +387,7 @@ export const setupApiChallengeInactive = (
     body: { has_user_verified_email_address: verifiedEmail },
   }).as('verifyEmail');
   // set system time to "before challenge"
-  cy.clock(systemTimeChallengeInactive, ['Date']);
+  cy.clock(systemTimeRegistrationPhaseInactive, ['Date']);
 };
 
 /**
@@ -607,7 +613,19 @@ export const timeUntilExpiration = timeUntilRefresh * 2;
 // 2 min before JWT expires
 export const systemTimeLoggedIn =
   fixtureTokenExpirationTime - timeUntilExpiration;
-// time before challenge starts
-export const systemTimeChallengeInactive = new Date('2024-08-14T23:59:00.000Z');
-// time after challenge starts
+/**
+ * Time before `registration` phase starts
+ * Registration phase allows users to register for challenge
+ * even when `challenge` phase is not yet active.
+ * The `challenge` phase overlaps is typically contained within
+ * the `registration` phase.
+ * @see apiGetThisCampaign.json fixture for example
+ */
+export const systemTimeRegistrationPhaseInactive = new Date(
+  '2024-07-14T23:59:00.000Z',
+);
+/**
+ * Time after `challenge` phase starts
+ * @see apiGetThisCampaign.json fixture for example
+ */
 export const systemTimeChallengeActive = new Date('2024-09-16T00:01:00.000Z');

@@ -181,6 +181,7 @@ tabAttendance = "Attendance"
 tabChallenges = "Company challenges"
 tabResults = "Results"
 textBannerReminder = "Have you notified the company that you are a coordinator?"
+textCompanyCoordinatorDisabled = "The management options for company coordinators are available in the old system <a href='{url}' target='_blank'>Ride to Work by Bike</a>."
 titleCompanyCoordinator = "Company coordinator"
 
 [createOrganization]

@@ -3,6 +3,7 @@ export interface Link {
   name?: string;
   icon?: string;
   url?: string;
+  disabled?: boolean;
   target?: '_blank' | '_self' | '_parent' | '_top';
 }
 

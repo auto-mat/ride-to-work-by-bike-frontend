@@ -110,6 +110,8 @@ export default defineComponent({
     if (props.useFormFieldValidationErrorCssClass)
       passwordFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
 
+    const showBannerAppButtons = false;
+
     return {
       contactEmail,
       formPasswordReset,
@@ -126,6 +128,7 @@ export default defineComponent({
       passwordFormFieldCssClasses,
       props,
       setFormState,
+      showBannerAppButtons,
     };
   },
 });
@@ -238,7 +241,7 @@ export default defineComponent({
       </p>
     </div>
     <!-- Links: Mobile app -->
-    <div class="q-mt-xl">
+    <div class="q-mt-xl" v-if="showBannerAppButtons">
       <banner-app-buttons />
     </div>
   </div>

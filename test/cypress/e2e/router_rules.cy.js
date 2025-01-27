@@ -5,7 +5,7 @@ import {
   interceptOrganizationsApi,
   interceptRegisterCoordinatorApi,
   systemTimeChallengeActive,
-  systemTimeChallengeInactive,
+  systemTimeRegistrationPhaseInactive,
   waitForOrganizationsApi,
 } from '../support/commonTests';
 import { OrganizationType } from '../../../src/components/types/Organization';
@@ -13,7 +13,7 @@ import { OrganizationType } from '../../../src/components/types/Organization';
 describe('Router rules', () => {
   context('challenge inactive', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']);
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']);
       cy.viewport('macbook-16');
       cy.visit('#' + routesConf['login']['path']);
 

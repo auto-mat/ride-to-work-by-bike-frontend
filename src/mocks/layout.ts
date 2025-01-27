@@ -1,44 +1,49 @@
 import { Link } from 'src/components/types';
 
+// config
+import { routesConf } from 'src/router/routes_conf';
+
 export const menuTop: Link[] = [
   {
-    url: '',
+    url: routesConf['home']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-home',
     name: 'home',
     title: 'home',
   },
   {
-    url: '',
+    url: routesConf['routes']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-route',
     name: 'routes',
     title: 'routes',
+    disabled: true,
   },
   {
-    url: '',
+    url: routesConf['results']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#chart-graph',
     name: 'results',
     title: 'results',
+    disabled: true,
   },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#three-circles',
+  //   name: 'community',
+  //   title: 'community',
+  // },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-badge-percent',
+  //   name: 'prizes',
+  //   title: 'discounts',
+  // },
   {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#three-circles',
-    name: 'community',
-    title: 'community',
-  },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-badge-percent',
-    name: 'prizes',
-    title: 'discounts',
-  },
-  {
-    url: '',
+    url: routesConf['coordinator']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
     name: 'coordinator',
     title: 'coordinator',
   },
   {
-    url: '',
+    url: routesConf['profile']['children']['fullPath'],
     icon: 'svguse:icons/drawer_menu/icons.svg#ion-person-outline',
     name: 'profile',
     title: 'profile',
@@ -46,18 +51,18 @@ export const menuTop: Link[] = [
 ];
 
 export const menuBottom: Link[] = [
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#email',
-    name: 'invite',
-    title: 'inviteFriends',
-  },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
-    name: 'donate',
-    title: 'donate',
-  },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#email',
+  //   name: 'invite',
+  //   title: 'inviteFriends',
+  // },
+  // {
+  //   url: '',
+  //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
+  //   name: 'donate',
+  //   title: 'donate',
+  // },
 ];
 
 const dummyText =

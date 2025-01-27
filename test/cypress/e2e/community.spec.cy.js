@@ -1,5 +1,6 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
+import { menuTop, menuBottom } from '../../../src/mocks/layout';
 
 describe('Community page', () => {
   context('desktop', () => {
@@ -26,8 +27,12 @@ describe('Community page', () => {
       cy.dataCy('q-drawer').should('be.visible');
       cy.dataCy('drawer-header').should('be.visible');
       cy.dataCy('user-select-desktop').should('be.visible');
-      cy.dataCy('drawer-menu-top').should('be.visible');
-      cy.dataCy('drawer-menu-bottom').should('be.visible');
+      if (menuTop.length > 0) {
+        cy.dataCy('drawer-menu-top').should('be.visible');
+      }
+      if (menuBottom.length > 0) {
+        cy.dataCy('drawer-menu-bottom').should('be.visible');
+      }
     });
   });
 

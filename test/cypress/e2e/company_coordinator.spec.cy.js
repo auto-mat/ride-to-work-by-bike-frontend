@@ -1,4 +1,11 @@
 import { routesConf } from '../../../src/router/routes_conf';
+import {
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  failOnStatusCode,
+  userAgentHeader,
+} from '../../../test/cypress/support/commonTests';
 
 // selectors
 const selectorPage = 'company-coordinator-page';
@@ -12,6 +19,8 @@ const selectorButtonAttendance = 'coordinator-tabs-button-attendance';
 const selectorButtonChallenges = 'coordinator-tabs-button-challenges';
 const selectorButtonResults = 'coordinator-tabs-button-results';
 const selectorTasksList = 'task-list-coordinator';
+const selectorCompanyCoordinatorDisabledText =
+  'company-coordinator-disabled-text';
 
 describe('Company Coordinator Page', () => {
   context('general', () => {
@@ -43,11 +52,46 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it('displays coordinator tabs', () => {
+    it('displays company coordinator disabled text', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          // text
+          cy.dataCy(selectorCompanyCoordinatorDisabledText)
+            .should('be.visible')
+            .then(($el) => {
+              const content = $el.text();
+              cy.stripHtmlTags(
+                i18n.global.t('coordinator.textCompanyCoordinatorDisabled'),
+              ).then((text) => {
+                expect(content).to.equal(text);
+              });
+            });
+          // link
+          cy.dataCy(selectorCompanyCoordinatorDisabledText)
+            .find('a')
+            .should('have.attr', 'href')
+            .and('eq', config.urlRideToWorkByBikeOldSystem);
+          // check if the link is accessible
+          cy.request({
+            url: config.urlRideToWorkByBikeOldSystem,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+      });
+    });
+
+    it.skip('displays coordinator tabs', () => {
       cy.dataCy(selectorTabs).should('be.visible');
     });
 
-    it('allows navigation between tabs', () => {
+    it.skip('allows navigation between tabs', () => {
       // check initial route
       cy.url().should('include', routesConf['coordinator_tasks'].path);
       // test navigation to each tab
@@ -84,7 +128,7 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it('preserves tab state on page refresh', () => {
+    it.skip('preserves tab state on page refresh', () => {
       // navigate to a specific tab
       cy.dataCy(selectorButtonAttendance).click();
       cy.url().should('include', routesConf['coordinator_attendance'].path);
@@ -94,7 +138,7 @@ describe('Company Coordinator Page', () => {
       cy.url().should('include', routesConf['coordinator_attendance'].path);
     });
 
-    it('handles browser navigation', () => {
+    it.skip('handles browser navigation', () => {
       // navigate through tabs
       cy.dataCy(selectorButtonFees).click();
       cy.dataCy(selectorButtonInvoices).click();
@@ -109,7 +153,7 @@ describe('Company Coordinator Page', () => {
       cy.url().should('include', routesConf['coordinator_invoices'].path);
     });
 
-    it('renders TaskListComponent', () => {
+    it.skip('renders TaskListComponent', () => {
       cy.dataCy(selectorTasksList).should('be.visible');
     });
   });
@@ -131,13 +175,13 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it('displays correctly on desktop', () => {
+    it.skip('displays correctly on desktop', () => {
       cy.viewport('macbook-16');
       cy.dataCy(selectorPage).should('be.visible');
       cy.dataCy(selectorTabs).should('be.visible');
     });
 
-    it('displays correctly on mobile', () => {
+    it.skip('displays correctly on mobile', () => {
       cy.viewport('iphone-6');
       cy.dataCy(selectorPage).should('be.visible');
       cy.dataCy(selectorTabs).should('be.visible');

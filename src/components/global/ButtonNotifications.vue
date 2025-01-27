@@ -46,6 +46,8 @@ export default defineComponent({
     DialogDefault,
   },
   setup() {
+    const isButtonNotificationsEnabled = false;
+
     const isDialogOpen = ref<boolean>(false);
 
     const openDialog = (): void => {
@@ -72,13 +74,14 @@ export default defineComponent({
       openDialog,
       onNotificationClick,
       routesConf,
+      isButtonNotificationsEnabled,
     };
   },
 });
 </script>
 
 <template>
-  <div>
+  <div v-if="isButtonNotificationsEnabled">
     <slot
       name="button"
       :open-dialog="openDialog"

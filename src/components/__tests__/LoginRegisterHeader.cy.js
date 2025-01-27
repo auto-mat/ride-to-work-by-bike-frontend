@@ -60,7 +60,7 @@ describe('<LoginRegisterHeader>', () => {
       cy.testElementsSideBySide(selectorLogo, selectorAutomatLogo);
     });
 
-    it('renders help button', () => {
+    it.skip('renders help button', () => {
       // button
       cy.dataCy(selectorButtonHelp)
         .should('be.visible')

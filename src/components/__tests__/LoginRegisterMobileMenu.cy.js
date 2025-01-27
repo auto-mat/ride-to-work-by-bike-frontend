@@ -86,7 +86,7 @@ describe('<LoginRegisterMobileMenu>', () => {
         .and('have.css', 'border', border)
         .and('have.css', 'border-radius', borderRadiusCard);
       // help button
-      cy.dataCy(selectorMenuHelp).should('be.visible');
+      // cy.dataCy(selectorMenuHelp).should('be.visible');
       // language header
       cy.dataCy(selectorMenuLanguageHeader)
         .should('be.visible')
@@ -95,7 +95,7 @@ describe('<LoginRegisterMobileMenu>', () => {
       cy.dataCy(selectorMenuLanguageSwitcher).should('be.visible');
     });
 
-    it('renders help button and displays dialog when clicked', () => {
+    it.skip('renders help button and displays dialog when clicked', () => {
       // open menu
       cy.dataCy(selectorMenuButton).click();
       // help button
@@ -169,7 +169,7 @@ describe('<LoginRegisterMobileMenu>', () => {
       cy.dataCy(selectorMenuDropdown).within(() => {
         cy.dataCy(selectorMenuUserInfo).should('be.visible');
         cy.dataCy(selectorMenuSeparator).first().should('exist');
-        cy.dataCy(selectorMenuHelp).should('be.visible');
+        // cy.dataCy(selectorMenuHelp).should('be.visible');
         cy.dataCy(selectorMenuLogout).should('be.visible');
         cy.dataCy(selectorMenuSeparator).last().should('exist');
         cy.dataCy(selectorMenuLanguageHeader).should('be.visible');

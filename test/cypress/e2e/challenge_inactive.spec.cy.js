@@ -1,7 +1,7 @@
 import {
   testLanguageSwitcher,
   testBackgroundImage,
-  systemTimeChallengeInactive,
+  systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
@@ -23,7 +23,7 @@ const selectorSocialBar = 'social-bar';
 describe('Challenge Inactive page', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('macbook-16');
         cy.task('getAppConfig', process).then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
@@ -47,14 +47,15 @@ describe('Challenge Inactive page', () => {
     it('renders login register header component', () => {
       cy.waitForThisCampaignApi();
       cy.dataCy(selectorLoginRegisterHeader).should('be.visible');
-      cy.dataCy(selectorButtonHelp).should('be.visible');
+      // TODO: enable when help dialog is implemented
+      cy.dataCy(selectorButtonHelp).should('not.exist');
       cy.dataCy(selectorLanguageSwitcher).should('be.visible');
     });
   });
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeInactive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('iphone-6');
         cy.task('getAppConfig', process).then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);

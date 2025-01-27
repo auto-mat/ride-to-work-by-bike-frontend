@@ -17,6 +17,9 @@
 // libraries
 import { defineComponent } from 'vue';
 
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
 // components
 import PageHeading from '../components/global/PageHeading.vue';
 import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
@@ -26,6 +29,17 @@ export default defineComponent({
   components: {
     PageHeading,
     CoordinatorTabs,
+  },
+  setup() {
+    const isCoordinatorEnabled = false;
+
+    const urlRideToWorkByBikeOldFrontendDjangoApp =
+      rideToWorkByBikeConfig.urlRideToWorkByBikeOldFrontendDjangoApp;
+
+    return {
+      isCoordinatorEnabled,
+      urlRideToWorkByBikeOldFrontendDjangoApp,
+    };
   },
 });
 </script>
@@ -39,6 +53,21 @@ export default defineComponent({
       </page-heading>
     </div>
     <!-- Tabs -->
-    <coordinator-tabs class="bg-white q-pb-xl" data-cy="coordinator-tabs" />
+    <coordinator-tabs
+      v-if="isCoordinatorEnabled"
+      class="bg-white q-pb-xl"
+      data-cy="coordinator-tabs"
+    />
+    <div v-else class="q-pa-lg">
+      <p
+        class="text-body1"
+        v-html="
+          $t('coordinator.textCompanyCoordinatorDisabled', {
+            url: urlRideToWorkByBikeOldFrontendDjangoApp,
+          })
+        "
+        data-cy="company-coordinator-disabled-text"
+      />
+    </div>
   </q-page>
 </template>

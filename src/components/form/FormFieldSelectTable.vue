@@ -605,7 +605,7 @@ export default defineComponent({
             {{ titleDialog }}
           </template>
           <template #content>
-            <q-form ref="formRef">
+            <q-form ref="formRef" @submit.prevent="onSubmit">
               <form-add-company
                 v-if="organizationLevel === OrganizationLevel.organization"
                 v-model="organizationNew"
@@ -618,6 +618,8 @@ export default defineComponent({
                 :form-values="teamNew"
                 @update:form-values="teamNew = $event"
               ></form-add-team>
+              <!-- Hidden submit button enables Enter key to submit -->
+              <q-btn type="submit" class="hidden" />
             </q-form>
             <!-- Action buttons -->
             <div class="flex justify-end q-mt-sm">
