@@ -73,8 +73,31 @@ export default defineComponent({
       return registerChallengeStore.getRegistrationId;
     });
 
-    const newsletter = computed((): NewsletterType[] | undefined => {
-      return registerChallengeStore.getPersonalDetails?.newsletter;
+    // update register challenge data
+    const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
+      registerChallengeStore.$log,
+    );
+
+    const newsletter = computed({
+      get: () => registerChallengeStore.getPersonalDetails?.newsletter,
+      set: async (value: NewsletterType[]) => {
+        // create payload from local storage data structure
+        const payload = registerChallengeAdapter.toApiPayload({
+          personalDetails: {
+            newsletter: value,
+          },
+        });
+        // post payload to API
+        if (getRegistrationId.value) {
+          await updateChallenge(getRegistrationId.value, payload);
+          await registerChallengeStore.loadRegisterChallengeToStore();
+        } else {
+          Notify.create({
+            message: i18n.global.t('profile.messagegetRegistrationIdMissing'),
+            color: 'negative',
+          });
+        }
+      },
     });
 
     const newsletterTitle = computed(() => {
@@ -91,52 +114,17 @@ export default defineComponent({
           });
     });
 
-    const newsletterItems = computed<NewsletterItemType[]>(
-      (): NewsletterItemType[] => {
-        return (newsletterItemsFixture as NewsletterItemType[]).map((item) => {
-          return {
-            ...item,
-            following: newsletter.value?.includes(item.id) || false,
-          };
-        });
-      },
-    );
-
-    // update register challenge data
-    const { isLoading, updateChallenge } = useApiPutRegisterChallenge(
-      registerChallengeStore.$log,
-    );
-    const onFollow = async (id: NewsletterType): Promise<void> => {
-      const newsletterIds: NewsletterType[] = newsletter.value?.length
-        ? [...newsletter.value, id]
-        : [id];
-      // create payload from local storage data structure
-      const payload = registerChallengeAdapter.toApiPayload({
-        personalDetails: {
-          newsletter: newsletterIds,
-        },
-      });
-      // post payload to API
-      if (getRegistrationId.value) {
-        await updateChallenge(getRegistrationId.value, payload);
-        await registerChallengeStore.loadRegisterChallengeToStore();
-      } else {
-        Notify.create({
-          message: i18n.global.t('profile.messagegetRegistrationIdMissing'),
-          color: 'negative',
-        });
-      }
-    };
+    const newsletterItems = newsletterItemsFixture as NewsletterItemType[];
 
     const headingMaxWidth = Screen.sizes.sm;
 
     return {
       headingMaxWidth,
       isLoading,
+      newsletter,
       newsletterDescription,
       newsletterItems,
       newsletterTitle,
-      onFollow,
     };
   },
 });
@@ -188,10 +176,11 @@ export default defineComponent({
       >
         <!-- Item - subscription variant -->
         <newsletter-item
+          v-model="newsletter"
+          :loading="isLoading"
           :item="item"
           :data-id="item.id"
           data-cy="newsletter-feature-item"
-          @follow="onFollow(item.id)"
         />
         <!-- Separator -->
         <q-separator

@@ -9,7 +9,6 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
-const white = getPaletteColor('white');
 
 // selectors
 const selectorSectionHeadingTitle = 'section-heading-title';
@@ -265,21 +264,18 @@ function coreTests() {
                 const dataId = $item.attr('data-id');
                 if (dataId === 'challenge') {
                   cy.wrap($item)
-                    .find('[data-cy="newsletter-item-button"]')
-                    .should('have.class', 'disabled')
-                    .and('have.color', grey10);
+                    .find('.q-toggle__inner')
+                    .should('have.class', 'q-toggle__inner--truthy');
                 } else {
                   cy.wrap($item)
-                    .find('[data-cy="newsletter-item-button"]')
-                    .should('not.have.class', 'disabled')
-                    .and('have.color', white)
-                    .and('have.backgroundColor', primary);
+                    .find('.q-toggle__inner')
+                    .should('have.class', 'q-toggle__inner--falsy');
                 }
               });
               // follow newsletter mobility
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="mobility"]')
-                .find('[data-cy="newsletter-item-button"]')
+                .find('.q-toggle__inner')
                 .click();
               // override GET request for updated state
               cy.interceptRegisterChallengeGetApi(
@@ -298,13 +294,12 @@ function coreTests() {
               // verify button state changed
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="mobility"]')
-                .find('[data-cy="newsletter-item-button"]')
-                .should('have.class', 'disabled')
-                .and('have.color', grey10);
+                .find('.q-toggle__inner')
+                .should('have.class', 'q-toggle__inner--truthy');
               // follow newsletter events
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="events"]')
-                .find('[data-cy="newsletter-item-button"]')
+                .find('.q-toggle__inner')
                 .click();
               // override GET request for updated state
               cy.interceptRegisterChallengeGetApi(
@@ -323,9 +318,8 @@ function coreTests() {
               // verify button state changed
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="events"]')
-                .find('[data-cy="newsletter-item-button"]')
-                .should('have.class', 'disabled')
-                .and('have.color', grey10);
+                .find('.q-toggle__inner')
+                .should('have.class', 'q-toggle__inner--truthy');
             });
           },
         );

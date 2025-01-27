@@ -1,28 +1,26 @@
+import { ref } from 'vue';
 import { colors } from 'quasar';
-
 import NewsletterItem from '../homepage/NewsletterItem.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { newsletterItems as newsletterItemsFixture } from '../../mocks/homepage';
+import { vModelAdapter } from '../../../test/cypress/utils';
 
 // colors
 const { getPaletteColor, changeAlpha } = colors;
 const grey10 = getPaletteColor('grey-10');
 const primary = getPaletteColor('primary');
-const white = getPaletteColor('white');
 
 // selectors
 const newsletterItem = 'newsletter-item';
 const newsletterItemAvatar = 'newsletter-item-avatar';
-const newsletterItemButton = 'newsletter-item-button';
+const newsletterItemToggle = 'newsletter-item-toggle';
 const newsletterItemContent = 'newsletter-item-content';
 const newsletterItemFollowIcon = 'newsletter-follow-icon';
 const newsletterItemIcon = 'newsletter-item-icon';
 const newsletterItemTitle = 'newsletter-item-title';
 
 // variables
-const icon = 'people';
-const title = i18n.global.t('index.newsletterFeature.aboutEvents');
-const url = '#';
 const avatarSize = 38;
 const iconSize = 18;
 const colorPrimaryOpacity = changeAlpha(
@@ -30,17 +28,16 @@ const colorPrimaryOpacity = changeAlpha(
   rideToWorkByBikeConfig.colorPrimaryOpacity,
 );
 
+const model = ref([newsletterItemsFixture[0].id]);
+const modelEmpty = ref([]);
+
 describe('<NewsletterItem>', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(NewsletterItem, {
         props: {
-          item: {
-            title,
-            icon,
-            url,
-            following: true,
-          },
+          item: newsletterItemsFixture[0],
+          ...vModelAdapter(model),
         },
       });
       cy.viewport('macbook-16');
@@ -69,13 +66,8 @@ describe('<NewsletterItem>', () => {
 
     it('renders button with icon', () => {
       cy.window().then(() => {
-        cy.dataCy(newsletterItemButton)
+        cy.dataCy(newsletterItemToggle)
           .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.css', 'text-transform', 'uppercase')
-          .and('have.css', 'border-radius', '28px')
-          .and('have.color', grey10)
           .and('contain', i18n.global.t('index.newsletterFeature.following'));
         cy.dataCy(newsletterItemFollowIcon).should('have.color', grey10);
         cy.dataCy(newsletterItemFollowIcon)
@@ -92,12 +84,8 @@ describe('<NewsletterItem>', () => {
     beforeEach(() => {
       cy.mount(NewsletterItem, {
         props: {
-          item: {
-            title,
-            icon,
-            url,
-            following: true,
-          },
+          item: newsletterItemsFixture[0],
+          ...vModelAdapter(model),
         },
       });
       cy.viewport('iphone-6');
@@ -107,13 +95,8 @@ describe('<NewsletterItem>', () => {
 
     it('renders button with icon', () => {
       cy.window().then(() => {
-        cy.dataCy(newsletterItemButton)
+        cy.dataCy(newsletterItemToggle)
           .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.css', 'text-transform', 'uppercase')
-          .and('have.css', 'border-radius', '28px')
-          .and('have.color', grey10)
           .and('contain', i18n.global.t('index.newsletterFeature.following'));
         cy.dataCy(newsletterItemFollowIcon).should('have.color', grey10);
         cy.dataCy(newsletterItemFollowIcon)
@@ -123,7 +106,7 @@ describe('<NewsletterItem>', () => {
           .invoke('width')
           .should('be.eq', iconSize);
       });
-      cy.testElementPercentageWidth(cy.dataCy(newsletterItemButton), 100);
+      cy.testElementPercentageWidth(cy.dataCy(newsletterItemToggle), 100);
     });
 
     it('aligns content to the right', () => {
@@ -151,12 +134,8 @@ describe('<NewsletterItem>', () => {
     beforeEach(() => {
       cy.mount(NewsletterItem, {
         props: {
-          item: {
-            title,
-            icon,
-            url,
-            following: false,
-          },
+          item: newsletterItemsFixture[0],
+          ...vModelAdapter(modelEmpty),
         },
       });
       cy.viewport('macbook-16');
@@ -166,13 +145,8 @@ describe('<NewsletterItem>', () => {
 
     it('renders primary button', () => {
       cy.window().then(() => {
-        cy.dataCy(newsletterItemButton)
+        cy.dataCy(newsletterItemToggle)
           .should('be.visible')
-          .and('have.css', 'font-size', '14px')
-          .and('have.css', 'font-weight', '500')
-          .and('have.css', 'text-transform', 'uppercase')
-          .and('have.color', white)
-          .and('have.backgroundColor', primary)
           .and('contain', i18n.global.t('index.newsletterFeature.follow'))
           .within(() => {
             cy.dataCy(newsletterItemFollowIcon).should('not.be.visible');
@@ -188,9 +162,9 @@ describe('<NewsletterItem>', () => {
           .should('have.css', 'font-size', '14px')
           .and('have.css', 'font-weight', '400')
           .and('have.color', grey10)
-          .and('contain', title)
+          .and('contain', newsletterItemsFixture[0].title)
           .then(($title) => {
-            expect($title.text()).to.equal(title);
+            expect($title.text()).to.equal(newsletterItemsFixture[0].title);
           });
       });
     });
