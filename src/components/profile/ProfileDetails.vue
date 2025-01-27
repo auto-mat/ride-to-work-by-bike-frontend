@@ -160,6 +160,10 @@ export default defineComponent({
       if (merchandiseItem.value) {
         return merchandiseItem.value.label;
       }
+      // if no merch is selected (ID not found in merchandiseItems)
+      else if (registerChallengeStore.getMerchId) {
+        return i18n.global.t('form.merch.labelNoMerch');
+      }
       return '';
     });
 

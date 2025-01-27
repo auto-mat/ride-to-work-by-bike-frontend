@@ -403,6 +403,45 @@ describe('<ProfileDetails>', () => {
         .and('have.color', positive);
     });
   });
+
+  context('payment company - no merch', () => {
+    it('renders registration details section', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfileNoMerch.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+
+      // starter package (label)
+      cy.dataCy(selectorPackage)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelPackage'));
+      // starter package (value)
+      cy.dataCy(selectorPackage)
+        .find(dataSelectorValue)
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.merch.labelNoMerch'));
+      // starter package size (label)
+      cy.dataCy(selectorSize)
+        .find(dataSelectorLabel)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelSize'));
+      // starter package size (value)
+      cy.dataCy(selectorSize)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.labelNoValue'));
+    });
+  });
 });
 
 function coreTests() {
