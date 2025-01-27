@@ -142,6 +142,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTelephone: (state): string => state.telephone,
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
     getLanguage: (state): string => state.language,
+    getRegistrationId: (state): number | null => {
+      return state.personalDetails.id || null;
+    },
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(

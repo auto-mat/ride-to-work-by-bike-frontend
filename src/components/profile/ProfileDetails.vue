@@ -110,6 +110,10 @@ export default defineComponent({
       return registerChallengeStore.getPersonalDetails;
     });
 
+    const registrationId = computed(() => {
+      return registerChallengeStore.getRegistrationId;
+    });
+
     const { getOrganizationLabels } = useOrganizations();
     const organizationType = computed(() => {
       return getOrganizationLabels(registerChallengeStore.getOrganizationType)
@@ -229,8 +233,8 @@ export default defineComponent({
     ): Promise<void> => {
       const payload = registerChallengeAdapter.toApiPayload(data);
       // post payload to API
-      if (profile.value.id) {
-        await updateChallenge(profile.value.id, payload);
+      if (registrationId.value) {
+        await updateChallenge(registrationId.value, payload);
         registerChallengeStore.loadRegisterChallengeToStore();
       } else {
         Notify.create({
