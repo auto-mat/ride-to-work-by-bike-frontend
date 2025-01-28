@@ -8,8 +8,7 @@
  *
  * @props
  * - `releaseDate` (String, required): The target date for the countdown.
- *   This date is expected to be in a specific format.
- *   example: '2025-01-31'
+ *   This should be a valid input for JS `Date` constructor, e.g. '2025-01-31'.
  *
  * @example
  * <top-bar-countdown :release-date="competitionStart" />
