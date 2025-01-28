@@ -6,8 +6,12 @@
  *
  * Note: This component is commonly used in `RegisterChallengePage`.
  *
+ * @props
+ * - `releaseDate` (String, required): The target date for the countdown.
+ *   This date is expected to be in a specific format.
+ *
  * @example
- * <top-bar-countdown />
+ * <top-bar-countdown :release-date="competitionStart" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6485%3A29122&mode=dev)
  */
@@ -18,16 +22,36 @@ import { computed, defineComponent } from 'vue';
 // composables
 import { useCountdown } from 'src/composables/useCountdown';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { i18n } from 'src/boot/i18n';
 
 export default defineComponent({
   name: 'TopBarCountdown',
-  setup() {
-    const { challengeMonth, challengeStartDate } = rideToWorkByBikeConfig;
-    const { countdown } = useCountdown(computed(() => challengeStartDate));
+  props: {
+    releaseDate: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const { challengeMonth } = rideToWorkByBikeConfig;
+    const { countdown } = useCountdown(computed(() => props.releaseDate));
+
+    const countdownText = computed(() => {
+      return i18n.global.t(
+        `register.challenge.textCountdown.${challengeMonth}`,
+        {
+          days: countdown.value.days,
+          hours: countdown.value.hours,
+          minutes: countdown.value.minutes,
+          seconds: countdown.value.seconds,
+        },
+      );
+    });
 
     return {
       challengeMonth,
       countdown,
+      countdownText,
     };
   },
 });
@@ -38,35 +62,6 @@ export default defineComponent({
     class="top-bar justify-center text-white text-weight-bold text-subtitle2 bg-red q-py-sm q-px-sm flex justify-sm-center"
     data-cy="top-bar-countdown"
   >
-    <span v-if="challengeMonth === 'may'">
-      {{
-        $t('register.challenge.textCountdownMay', {
-          days: countdown.days,
-          hours: countdown.hours,
-          minutes: countdown.minutes,
-          seconds: countdown.seconds,
-        })
-      }}
-    </span>
-    <span v-if="challengeMonth === 'september'">
-      {{
-        $t('register.challenge.textCountdownSeptember', {
-          days: countdown.days,
-          hours: countdown.hours,
-          minutes: countdown.minutes,
-          seconds: countdown.seconds,
-        })
-      }}
-    </span>
-    <span v-if="challengeMonth === 'october'">
-      {{
-        $t('register.challenge.textCountdownOctober', {
-          days: countdown.days,
-          hours: countdown.hours,
-          minutes: countdown.minutes,
-          seconds: countdown.seconds,
-        })
-      }}
-    </span>
+    {{ countdownText }}
   </div>
 </template>

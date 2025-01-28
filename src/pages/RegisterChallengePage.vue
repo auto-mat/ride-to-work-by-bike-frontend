@@ -137,6 +137,7 @@ export default defineComponent({
 
     const challengeStore = useChallengeStore();
     const registerChallengeStore = useRegisterChallengeStore();
+    const competitionStart = computed(() => challengeStore.getCompetitionStart);
 
     const isPayuTransactionInitiated = computed(
       () => registerChallengeStore.getIsPayuTransactionInitiated,
@@ -382,13 +383,17 @@ export default defineComponent({
       onContinue,
       onCompleteRegistration,
       registerChallengeStore,
+      competitionStart,
     };
   },
 });
 </script>
 
 <template>
-  <top-bar-countdown data-cy="top-bar-countdown" />
+  <top-bar-countdown
+    :release-date="competitionStart"
+    data-cy="top-bar-countdown"
+  />
   <q-page padding>
     <div class="q-px-lg">
       <!-- Page header -->

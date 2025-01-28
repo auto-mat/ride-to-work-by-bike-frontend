@@ -3,6 +3,7 @@ import {
   testLanguageSwitcher,
   testBackgroundImage,
   interceptRegisterCoordinatorApi,
+  systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
@@ -12,6 +13,7 @@ import { defLocale } from '../../../src/i18n/def_locale';
 import { getCurrentPriceLevelsUtil } from '../../../src/utils/price_levels';
 import { PriceLevelCategory } from '../../../src/components/enums/Challenge';
 import { HttpStatusCode } from 'axios';
+import { calculateCountdownIntervals } from '../../../src/utils';
 
 const doneIcon = new URL(
   '../../../src/assets/svg/check.svg',
@@ -3256,6 +3258,73 @@ describe('Register Challenge page', () => {
           });
         },
       );
+    });
+  });
+
+  context('specific time before challenge', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // visit challenge inactive page to load campaign data
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeCompanyNoAdmission.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.fixture('apiPostRegisterChallengeResponsePaymentNoAdmission').then(
+          (registerChallengeResponse) => {
+            cy.interceptRegisterChallengePostApi(
+              config,
+              defLocale,
+              registerChallengeResponse,
+            );
+          },
+        );
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
+        // config is defined without hash in the URL
+        cy.visit('#' + routesConf['register_challenge']['path']);
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders top banner with countdown', () => {
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.fixture('apiGetThisCampaign.json').then((campaign) => {
+          const competitionPhase = campaign.results[0].phase_set.find(
+            (phase) => phase.phase_type === 'competition',
+          );
+          const competitionStart = new Date(
+            competitionPhase.date_from,
+          ).getTime();
+          const currentDate = new Date(
+            systemTimeRegistrationPhaseInactive,
+          ).getTime();
+          // calculate time difference in milliseconds
+          const timeDifference = competitionStart - currentDate;
+
+          const { days, hours, minutes, seconds } =
+            calculateCountdownIntervals(timeDifference);
+
+          // check countdown values
+          cy.dataCy('top-bar-countdown').should(
+            'contain',
+            win.i18n.global.t('register.challenge.textCountdown.may', {
+              days: days.toString(),
+              hours: hours.toString(),
+              minutes: minutes.toString(),
+              seconds: seconds.toString(),
+            }),
+          );
+        });
+      });
     });
   });
 });

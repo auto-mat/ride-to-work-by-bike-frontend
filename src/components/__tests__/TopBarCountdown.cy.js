@@ -8,7 +8,8 @@ const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const red = getPaletteColor('red');
 
-const { challengeMonth, challengeStartDate } = rideToWorkByBikeConfig;
+const { challengeMonth } = rideToWorkByBikeConfig;
+const challengeStartDate = '2024-08-01';
 
 describe('TopBarCountdown', () => {
   const releaseDate = new Date(challengeStartDate);
@@ -25,7 +26,7 @@ describe('TopBarCountdown', () => {
 
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['textCountdownSeptember', 'textCountdownOctober', 'textCountdownMay'],
+      ['textCountdown.september', 'textCountdown.october', 'textCountdown.may'],
       'register.challenge',
       i18n,
     );
@@ -39,137 +40,49 @@ describe('TopBarCountdown', () => {
         .and('have.css', 'font-weight', '700')
         .and('have.color', white)
         .and('have.backgroundColor', red);
-      if (challengeMonth === 'may') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-      }
-      if (challengeMonth === 'september') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownSeptember', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-      }
-      if (challengeMonth === 'october') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownOctober', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-      }
+      cy.dataCy('top-bar-countdown').should(
+        'contain.text',
+        i18n.global.t(`register.challenge.textCountdown.${challengeMonth}`, {
+          days: '1',
+          hours: '0',
+          minutes: '0',
+          seconds: '0',
+        }),
+      );
     });
   });
 
   it('counts down correctly', () => {
     cy.clock(currentTime.getTime()).then(() => {
-      if (challengeMonth === 'may') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-        cy.tick(1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '0',
-            hours: '23',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-        cy.tick(60 * 60 * 1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '0',
-            hours: '22',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-      }
-      if (challengeMonth === 'september') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownSeptember', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-        cy.tick(1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownSeptember', {
-            days: '0',
-            hours: '23',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-        cy.tick(60 * 60 * 1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '0',
-            hours: '22',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-      }
-      if (challengeMonth === 'october') {
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownOctober', {
-            days: '1',
-            hours: '0',
-            minutes: '0',
-            seconds: '0',
-          }),
-        );
-        cy.tick(1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownOctober', {
-            days: '0',
-            hours: '23',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-        cy.tick(60 * 60 * 1000);
-        cy.dataCy('top-bar-countdown').should(
-          'contain.text',
-          i18n.global.t('register.challenge.textCountdownMay', {
-            days: '0',
-            hours: '22',
-            minutes: '59',
-            seconds: '59',
-          }),
-        );
-      }
+      cy.dataCy('top-bar-countdown').should(
+        'contain.text',
+        i18n.global.t(`register.challenge.textCountdown.${challengeMonth}`, {
+          days: '1',
+          hours: '0',
+          minutes: '0',
+          seconds: '0',
+        }),
+      );
+      cy.tick(1000);
+      cy.dataCy('top-bar-countdown').should(
+        'contain.text',
+        i18n.global.t(`register.challenge.textCountdown.${challengeMonth}`, {
+          days: '0',
+          hours: '23',
+          minutes: '59',
+          seconds: '59',
+        }),
+      );
+      cy.tick(60 * 60 * 1000);
+      cy.dataCy('top-bar-countdown').should(
+        'contain.text',
+        i18n.global.t(`register.challenge.textCountdown.${challengeMonth}`, {
+          days: '0',
+          hours: '22',
+          minutes: '59',
+          seconds: '59',
+        }),
+      );
     });
   });
 });
