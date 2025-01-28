@@ -43,18 +43,25 @@ export default defineComponent({
     SocialBar,
   },
   setup() {
+    const isPostListEnabled = false;
+
     const cards: CardPost[] = listCardsPostFixture;
+
+    // CSS `flex: 1` property
+    const flex = '1';
 
     return {
       cards,
+      isPostListEnabled,
+      flex,
     };
   },
 });
 </script>
 
 <template>
-  <q-page padding class="overflow-hidden">
-    <div class="q-px-lg q-pb-xl">
+  <q-page padding class="overflow-hidden flex">
+    <div class="q-px-lg flex column" :style="{ flex }">
       <!-- Page header -->
       <login-register-header data-cy="login-register-header" />
       <div class="row q-mt-xl">
@@ -62,14 +69,21 @@ export default defineComponent({
           <challenge-inactive-info />
         </div>
       </div>
+      <!--
+        TODO: When enabled, remove the flex properties on page and helper
+        they interfere with swiper making it appear buggy
+       -->
       <list-card-post
+        v-if="isPostListEnabled"
         dark
         title=""
         :cards="cards"
         class="q-mt-xl"
         data-cy="list-card-post"
       />
-      <social-bar class="q-mt-xl" data-cy="social-bar" />
+      <!-- Helper element: Grow to fill page space -->
+      <div :style="{ flex }" />
+      <social-bar class="q-mt-xl q-mb-xl" data-cy="social-bar" />
     </div>
   </q-page>
 </template>
