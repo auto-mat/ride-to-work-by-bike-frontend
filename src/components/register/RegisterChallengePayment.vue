@@ -101,28 +101,30 @@ export default defineComponent({
     const primaryColor = getPaletteColor('primary');
     const primaryLightColor = lighten(primaryColor, 90);
 
-    const optionsPaymentSubject: FormOption[] = reactive([
-      {
-        label: i18n.global.t(
-          'register.challenge.labelPaymentSubjectIndividual',
-        ),
-        value: PaymentSubject.individual,
-      },
-      {
-        label: i18n.global.t('register.challenge.labelPaymentSubjectVoucher'),
-        value: PaymentSubject.voucher,
-      },
-      {
-        label: i18n.global.t('register.challenge.labelPaymentSubjectCompany'),
-        value: PaymentSubject.company,
-      },
-      {
-        label: i18n.global.t('register.challenge.labelPaymentSubjectSchool'),
-        value: PaymentSubject.school,
-      },
-    ]);
+    const optionsPaymentSubject = computed((): FormOption[] => {
+      return [
+        {
+          label: i18n.global.t(
+            'register.challenge.labelPaymentSubjectIndividual',
+          ),
+          value: PaymentSubject.individual,
+        },
+        {
+          label: i18n.global.t('register.challenge.labelPaymentSubjectVoucher'),
+          value: PaymentSubject.voucher,
+        },
+        {
+          label: i18n.global.t('register.challenge.labelPaymentSubjectCompany'),
+          value: PaymentSubject.company,
+        },
+        {
+          label: i18n.global.t('register.challenge.labelPaymentSubjectSchool'),
+          value: PaymentSubject.school,
+        },
+      ];
+    });
     logger?.debug(
-      `Default payment subject options <${JSON.stringify(optionsPaymentSubject, null, 2)}>` +
+      `Default payment subject options <${JSON.stringify(optionsPaymentSubject.value, null, 2)}>` +
         ` for <${i18n.global.t('register.challenge.labelPaymentSubject')}>` +
         'radio button element.',
     );
