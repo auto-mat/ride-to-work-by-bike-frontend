@@ -47,7 +47,7 @@ export default defineComponent({
 
     const cards: CardPost[] = listCardsPostFixture;
 
-    // CSS `flex: 1` property
+    // CSS `flex: 1` property makes element fill available vertical space
     const flex = '1';
 
     return {
