@@ -61,12 +61,16 @@ export default defineComponent({
     >
       <!-- Top menu (first 4 items) -->
       <q-item
+        clickable
+        v-ripple
         v-for="item in menuPanel"
         :key="item.name"
         :to="item.disabled ? '' : item.url"
         :disable="item.disabled"
-        clickable
-        v-ripple
+        v-bind="{
+          ...(item.href ? { href: item.href } : {}),
+          ...(item.href ? { target: '_blank' } : {}),
+        }"
         class="q-pa-sm"
         active-class="text-grey-10"
       >
@@ -109,11 +113,16 @@ export default defineComponent({
     <q-list padding class="bg-white w-full">
       <!-- Top menu (remaining items) -->
       <q-item
-        v-for="item in menuTop.slice(shownItemsCount)"
-        :key="item.name"
-        :to="{ name: item.name }"
         clickable
         v-ripple
+        v-for="item in menuTop.slice(shownItemsCount)"
+        :key="item.name"
+        :to="item.disabled ? '' : item.url"
+        :disable="item.disabled"
+        v-bind="{
+          ...(item.href ? { href: item.href } : {}),
+          ...(item.href ? { target: '_blank' } : {}),
+        }"
         class="q-py-sm q-px-md"
         active-class="text-grey-10"
       >
@@ -133,11 +142,16 @@ export default defineComponent({
 
       <!-- Bottom menu items -->
       <q-item
-        v-for="item in menuBottom"
-        :key="item.name"
-        :to="{ name: item.name }"
         clickable
         v-ripple
+        v-for="item in menuBottom"
+        :key="item.name"
+        :to="item.disabled ? '' : item.url"
+        :disable="item.disabled"
+        v-bind="{
+          ...(item.href ? { href: item.href } : {}),
+          ...(item.href ? { target: '_blank' } : {}),
+        }"
         class="q-py-sm q-px-md items-center"
         active-class="text-grey-10"
       >

@@ -25,6 +25,7 @@ export interface ConfigGlobal {
   urlAutoMat: string;
   urlAppStore: string;
   urlBlog: string;
+  urlDonate: string;
   urlFacebook: string;
   urlFacebookRideToWorkByBike: string;
   urlGooglePlay: string;

@@ -5,6 +5,7 @@ export interface Link {
   url?: string;
   disabled?: boolean;
   target?: '_blank' | '_self' | '_parent' | '_top';
+  href?: string;
 }
 
 export enum SocialLinkId {

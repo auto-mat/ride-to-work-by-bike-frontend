@@ -47,6 +47,10 @@ export default defineComponent({
       clickable
       :to="item.disabled ? '' : item.url"
       :disable="item.disabled"
+      v-bind="{
+        ...(item.href ? { href: item.href } : {}),
+        ...(item.href ? { target: '_blank' } : {}),
+      }"
       active-class="menu-active-item"
       class="flex text-body1 items-center q-px-lg"
       data-cy="drawer-menu-item"

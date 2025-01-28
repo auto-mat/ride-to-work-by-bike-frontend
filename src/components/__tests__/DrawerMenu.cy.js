@@ -2,6 +2,14 @@ import DrawerMenu from '../global/DrawerMenu.vue';
 import { i18n } from '../../boot/i18n';
 import { colors } from 'quasar';
 import { menuBottom, menuTop } from '../../mocks/layout';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import {
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  userAgentHeader,
+} from '../../../test/cypress/support/commonTests';
 
 // colors
 const { getPaletteColor } = colors;
@@ -49,6 +57,27 @@ describe('DrawerMenu', () => {
     });
 
     coreTests();
+
+    it('renders donate item with correct href', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.donate'))
+        .should('have.attr', 'href', rideToWorkByBikeConfig.urlDonate)
+        .should('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
   });
 
   function coreTests() {

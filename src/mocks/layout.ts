@@ -2,6 +2,7 @@ import { Link } from 'src/components/types';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 export const menuTop: Link[] = [
   {
@@ -57,12 +58,13 @@ export const menuBottom: Link[] = [
   //   name: 'invite',
   //   title: 'inviteFriends',
   // },
-  // {
-  //   url: '',
-  //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
-  //   name: 'donate',
-  //   title: 'donate',
-  // },
+  {
+    url: '',
+    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
+    name: 'donate',
+    title: 'donate',
+    href: rideToWorkByBikeConfig.urlDonate,
+  },
 ];
 
 const dummyText =
