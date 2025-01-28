@@ -21,10 +21,10 @@ const selectorListCardPost = 'list-card-post';
 const selectorSocialBar = 'social-bar';
 
 describe('Challenge Inactive page', () => {
-  context.only('desktop', () => {
+  context('desktop', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
-        cy.viewport(1920, 1080);
+        cy.viewport('macbook-16');
         cy.task('getAppConfig', process).then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
           // Visit the challenge inactive page
