@@ -21,12 +21,12 @@ describe('<LoginRegisterButtons>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['buttonGoogle', 'buttonFacebook'],
+      ['buttonGoogle', 'buttonFacebook', 'socialMediaBtnsHint'],
       'login.buttons',
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['buttonGoogle', 'buttonFacebook'],
+      ['buttonGoogle', 'buttonFacebook', 'socialMediaBtnsHint'],
       'register.buttons',
       i18n,
     );
@@ -57,6 +57,13 @@ describe('<LoginRegisterButtons>', () => {
         i18n.global.t('login.buttons.buttonFacebook'),
       );
     });
+
+    it('renders buttons hints with correct text', () => {
+      cy.dataCy('login-social-media-btns-hint').should(
+        'contain',
+        i18n.global.t('login.buttons.socialMediaBtnsHint'),
+      );
+    });
   });
 
   context('variant: register', () => {
@@ -80,6 +87,13 @@ describe('<LoginRegisterButtons>', () => {
       cy.dataCy('login-register-button-facebook').should(
         'contain',
         i18n.global.t('register.buttons.buttonFacebook'),
+      );
+    });
+
+    it('renders buttons hints with correct text', () => {
+      cy.dataCy('register-social-media-btns-hint').should(
+        'contain',
+        i18n.global.t('register.buttons.socialMediaBtnsHint'),
       );
     });
   });

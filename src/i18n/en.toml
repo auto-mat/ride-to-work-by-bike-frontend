@@ -600,6 +600,7 @@ linkRegister = "Register"
 [login.buttons]
 buttonGoogle = "Log in via Google"
 buttonFacebook = "Log in via Facebook"
+socialMediaBtnsHint = "If you use Facebook/Google login, you cannot later log in with e-mail and vice versa."
 
 [login.bannerAppButtons]
 title = "Log your rides from your mobile phone!"
@@ -768,6 +769,7 @@ textResetPassword = "Please fill in a new password and confirm it."
 [register.buttons]
 buttonGoogle = "Register via Google"
 buttonFacebook = "Register via Facebook"
+socialMediaBtnsHint = "If you use Facebook/Google registration, you cannot register later by e-mail and vice versa."
 
 [register.challenge]
 buttonAddCompany = "Add new"

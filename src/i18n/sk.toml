@@ -600,6 +600,7 @@ linkRegister = "Zaregistrujte sa"
 [login.buttons]
 buttonGoogle = "Prihlásenie cez Google"
 buttonFacebook = "Prihlásenie cez Facebook"
+socialMediaBtnsHint = "Ak používate prihlasovanie Facebook/Google, nemôžete sa neskôr prihlásiť pomocou e-mailu a naopak."
 
 [login.bannerAppButtons]
 title = "Nahrávajte svoje jazdy z mobilného telefónu!"
@@ -768,6 +769,7 @@ textResetPassword = "Prosím vyplňte nové heslo a potvrďte ho."
 [register.buttons]
 buttonGoogle = "Registrácia cez Google"
 buttonFacebook = "Registrácia cez Facebook"
+socialMediaBtnsHint = "Ak používate registráciu Facebook/Google, nemôžete sa neskôr zaregistrovať e-mailom a naopak."
 
 [register.challenge]
 buttonAddCompany = "Pridanie novej"

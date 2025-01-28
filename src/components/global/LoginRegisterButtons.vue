@@ -252,5 +252,25 @@ export default defineComponent({
         }}</span>
       </q-btn>
     </v-facebook-login-scope>
+    <div
+      v-if="
+        variant === 'login' &&
+        (isFacebookLoginAvailable || isGoogleLoginAvailable)
+      "
+      class="q-mt-md text-secondary"
+      data-cy="login-social-media-btns-hint"
+    >
+      {{ $t('login.buttons.socialMediaBtnsHint') }}
+    </div>
+    <div
+      v-if="
+        variant === 'register' &&
+        (isFacebookLoginAvailable || isGoogleLoginAvailable)
+      "
+      class="q-mt-md text-secondary"
+      data-cy="register-social-media-btns-hint"
+    >
+      {{ $t('register.buttons.socialMediaBtnsHint') }}
+    </div>
   </div>
 </template>
