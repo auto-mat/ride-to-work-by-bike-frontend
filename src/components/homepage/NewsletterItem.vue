@@ -12,14 +12,18 @@
  * If not subscribed, the button links to an Ecomail newsletter subscription.
  *
  * @props
- * - `item` (NewsletterItemType, required): The newsletter item to be
- *   displayed. It includes properties like icon, title, and following status.
+ * - `modelValue` (Array<NewsletterType>, required): Array of newsletter IDs
+ *    that the user is currently subscribed to.
+ * - `item` (NewsletterItemType, required): The newsletter item to display.
+ * - `loading` (Boolean, optional): Whether the component is in loading state,
+ *    disabling the toggle button. Defaults to false.
  *
  * @emits
- * - `follow` - Event indicating the user's choice to subscribe.
+ * - `update:modelValue`: Emitted when the subscription state changes.
+ *    Payload is the new array of subscribed newsletter IDs.
  *
  * @example
- * <newsletter-item :item="singleNewsletter" @follow="onFollow" />
+ * <newsletter-item v-model="followedNewsletters" :item="newsletterItem" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A105656&mode=dev)
  */
