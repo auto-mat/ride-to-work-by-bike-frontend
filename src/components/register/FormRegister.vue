@@ -114,8 +114,13 @@ export default defineComponent({
     const passwordFormFieldCssClasses = {
       'q-mt-sm': true,
     };
-    if (props.useFormFieldValidationErrorCssClass)
+    const dataPrivacyPolicyFormFieldCssClasses = {};
+    if (props.useFormFieldValidationErrorCssClass) {
       passwordFormFieldCssClasses[formFieldCustomValidationErrCssClass] = true;
+      dataPrivacyPolicyFormFieldCssClasses[
+        formFieldCustomValidationErrCssClass
+      ] = true;
+    }
 
     return {
       whiteOpacity,
@@ -132,6 +137,7 @@ export default defineComponent({
       onSubmitRegister,
       onReset,
       passwordFormFieldCssClasses,
+      dataPrivacyPolicyFormFieldCssClasses,
       props,
       urlAppDataPrivacyPolicy,
     };
@@ -258,8 +264,8 @@ export default defineComponent({
           </template>
         </q-input>
       </div>
-      <!-- Section: checkboxes (only if no challenge is active) -->
-      <div v-if="!isActiveChallenge">
+      <!-- Section: checkboxes -->
+      <div>
         <div class="q-mt-lg">
           <!-- Input: Privacy policy -->
           <q-field
@@ -272,6 +278,7 @@ export default defineComponent({
                 !!val || $t('register.form.messagePrivacyConsentRequired'),
             ]"
             data-cy="form-register-privacy-consent"
+            :class="dataPrivacyPolicyFormFieldCssClasses"
           >
             <q-checkbox
               dense
@@ -296,9 +303,8 @@ export default defineComponent({
                   @click.stop
                   data-cy="form-register-privacy-consent-link"
                   >{{ $t('register.form.labelPrivacyConsentLink') }}</a
-                >
-                {{ $t('register.form.labelPrivacyConsent2') }} </span
-              >.
+                >.
+              </span>
             </q-checkbox>
           </q-field>
         </div>

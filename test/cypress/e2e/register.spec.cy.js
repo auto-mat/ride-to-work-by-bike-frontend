@@ -25,6 +25,7 @@ const selectorChallengeInactiveInfo = 'challenge-inactive-info';
 const selectorFormRegisterEmail = 'form-register-email';
 const selectorFormRegisterPassword = 'form-register-password';
 const selectorFormRegisterPasswordConfirm = 'form-register-password-confirm';
+const selectorFormRegisterPrivacyConsent = 'form-register-privacy-consent';
 
 describe('Register page', () => {
   context('desktop', () => {
@@ -87,6 +88,7 @@ describe('Register page', () => {
           selectorFormRegisterEmail,
           selectorFormRegisterPassword,
           selectorFormRegisterPasswordConfirm,
+          selectorFormRegisterPrivacyConsent,
         ].forEach((formField) => {
           cy.checkFormFieldValidationErrColor(
             formField,
@@ -243,9 +245,7 @@ describe('Register page', () => {
             },
           );
           // fill and submit form
-          cy.fillAndSubmitRegisterForm({
-            checkAcceptPrivacyPolicyCheckbox: false,
-          });
+          cy.fillAndSubmitRegisterForm();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             cy.fixture('registerRequest.json').then((registerRequest) => {
@@ -324,9 +324,7 @@ describe('Register page', () => {
             },
           );
           // fill and submit form
-          cy.fillAndSubmitRegisterForm({
-            checkAcceptPrivacyPolicyCheckbox: false,
-          });
+          cy.fillAndSubmitRegisterForm();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             cy.fixture('registerRequest').then((registerRequest) => {
@@ -383,9 +381,7 @@ describe('Register page', () => {
             },
           );
           // fill form
-          cy.fillAndSubmitRegisterForm({
-            checkAcceptPrivacyPolicyCheckbox: false,
-          });
+          cy.fillAndSubmitRegisterForm();
           // wait for request to complete
           cy.wait('@registerRequest').then((interception) => {
             cy.fixture('registerRequest').then((registerRequest) => {
@@ -454,9 +450,7 @@ describe('Register page', () => {
             },
           );
           // fill form
-          cy.fillAndSubmitRegisterForm({
-            checkAcceptPrivacyPolicyCheckbox: false,
-          });
+          cy.fillAndSubmitRegisterForm();
           cy.wait('@registerRequest').then((interception) => {
             cy.fixture('loginRegisterResponseChallengeActive').then(
               (loginRegisterResponseChallengeActive) => {
