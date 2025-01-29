@@ -23,7 +23,9 @@ import { defineComponent, ref, computed } from 'vue';
 import { Link } from 'components/types';
 
 // mocks
-import { menuBottom, menuTop } from '../../mocks/layout';
+import { getMenuBottom, menuTop } from '../../mocks/layout';
+
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'MobileBottomPanel',
@@ -35,6 +37,7 @@ export default defineComponent({
     });
 
     const isDialogOpen = ref(false);
+    const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
 
     return {
       isDialogOpen,

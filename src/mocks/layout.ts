@@ -2,7 +2,6 @@ import { Link } from 'src/components/types';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 export const menuTop: Link[] = [
   {
@@ -51,21 +50,24 @@ export const menuTop: Link[] = [
   },
 ];
 
-export const menuBottom: Link[] = [
-  // {
-  //   url: '',
-  //   icon: 'svguse:icons/drawer_menu/icons.svg#email',
-  //   name: 'invite',
-  //   title: 'inviteFriends',
-  // },
-  {
-    url: '',
-    icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
-    name: 'donate',
-    title: 'donate',
-    href: rideToWorkByBikeConfig.urlDonate,
-  },
-];
+export const getMenuBottom = (url: string): Link[] => {
+  const menuBottom: Link[] = [
+    // {
+    //   url: '',
+    //   icon: 'svguse:icons/drawer_menu/icons.svg#email',
+    //   name: 'invite',
+    //   title: 'inviteFriends',
+    // },
+    {
+      url: '',
+      icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
+      name: 'donate',
+      title: 'donate',
+      href: url,
+    },
+  ];
+  return menuBottom;
+};
 
 const dummyText =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';

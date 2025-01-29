@@ -2,7 +2,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from 'src/utils';
 import { defaultLocale } from '../../../src/i18n/def_locale';
-import { menuTop, menuBottom } from '../../../src/mocks/layout';
+import { menuTop, getMenuBottom } from '../../../src/mocks/layout';
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -129,16 +129,18 @@ export const testDesktopSidebar = (): void => {
   const selectorAutomatLogoBanner = 'automat-logo-banner';
 
   it('renders left drawer', () => {
-    cy.dataCy(selectorDrawer).should('be.visible');
-    cy.dataCy(selectorDrawerHeader).should('be.visible');
-    cy.dataCy(selectorUserSelectDesktop).should('be.visible');
-    if (menuTop.length > 0) {
-      cy.dataCy(selectorDrawerMenuTop).should('be.visible');
-    }
-    if (menuBottom.length > 0) {
-      cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
-    }
-    cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
+    cy.task('getAppConfig', process).then((config) => {
+      cy.dataCy(selectorDrawer).should('be.visible');
+      cy.dataCy(selectorDrawerHeader).should('be.visible');
+      cy.dataCy(selectorUserSelectDesktop).should('be.visible');
+      if (menuTop.length > 0) {
+        cy.dataCy(selectorDrawerMenuTop).should('be.visible');
+      }
+      if (getMenuBottom(config.urlDonate).length > 0) {
+        cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
+      }
+      cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
+    });
   });
 
   testUserSelect(selectorUserSelectDesktop);

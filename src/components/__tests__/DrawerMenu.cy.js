@@ -1,7 +1,7 @@
 import DrawerMenu from '../global/DrawerMenu.vue';
 import { i18n } from '../../boot/i18n';
 import { colors } from 'quasar';
-import { menuBottom, menuTop } from '../../mocks/layout';
+import { getMenuBottom, menuTop } from '../../mocks/layout';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
   failOnStatusCode,
@@ -48,6 +48,7 @@ describe('DrawerMenu', () => {
 
   context('menu bottom', () => {
     beforeEach(() => {
+      const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,

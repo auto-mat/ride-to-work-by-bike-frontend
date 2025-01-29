@@ -19,7 +19,7 @@ import { routesConf } from '../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // mocks
-import { menuBottom, menuTop } from '../mocks/layout';
+import { getMenuBottom, menuTop } from '../mocks/layout';
 
 declare global {
   interface Window {
@@ -53,7 +53,7 @@ export default defineComponent({
         ? 'none'
         : rideToWorkByBikeConfig.containerContentWidth;
     });
-
+    const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
     return {
       menuBottom,
       menuTop,
