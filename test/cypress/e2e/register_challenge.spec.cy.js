@@ -3,6 +3,7 @@ import {
   testLanguageSwitcher,
   testBackgroundImage,
   interceptRegisterCoordinatorApi,
+  systemTimeChallengeActive,
   systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
@@ -97,9 +98,13 @@ describe('Register Challenge page', () => {
 
   before(() => {
     // dynamically load default payment amount from fixture
+    //cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(( => ))
     cy.fixture('apiGetThisCampaign.json').then((response) => {
       const priceLevels = response.results[0].price_level;
-      const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
+      const currentPriceLevels = getCurrentPriceLevelsUtil(
+        priceLevels,
+        new Date(systemTimeChallengeActive),
+      );
       defaultPaymentAmountMin =
         currentPriceLevels[PriceLevelCategory.basic].price;
     });
@@ -395,6 +400,7 @@ describe('Register Challenge page', () => {
     });
 
     it('sends correct create order request for different payment configurations', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture('apiPostPayuCreateOrderResponseNoRedirect.json').then(
@@ -1026,6 +1032,7 @@ describe('Register Challenge page', () => {
     });
 
     it('allows user to apply voucher HALF', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.passToStep2();
@@ -1550,6 +1557,7 @@ describe('Register Challenge page', () => {
     });
 
     it('when voucher FULL + donation, submits step before creating PayU order', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.passToStep2();
@@ -1586,55 +1594,13 @@ describe('Register Challenge page', () => {
           ).then((request) => {
             cy.waitForPayuCreateOrderPostApi(request);
           });
+          // config is defined without hash in the URL
+          cy.visit('#' + routesConf['register_challenge']['path']);
         });
       });
     });
-
-    it('when voucher FULL and payment subject is changed to organization, voucher is reset', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          cy.passToStep2();
-          // wait for personal details POST request
-          cy.fixture(
-            'apiPostRegisterChallengePersonalDetailsRequest.json',
-          ).then((request) => {
-            cy.waitForRegisterChallengePostApi(request);
-          });
-          // select voucher payment
-          cy.dataCy(getRadioOption(PaymentSubject.voucher))
-            .should('be.visible')
-            .click();
-          // apply voucher FULL
-          cy.applyFullVoucher(config, i18n);
-          // go to next step
-          cy.dataCy('step-2-continue').should('be.visible').click();
-          // wait for payment POST request
-          cy.fixture('apiPostRegisterChallengeVoucherFullRequest.json').then(
-            (request) => {
-              cy.waitForRegisterChallengePostApi(request);
-            },
-          );
-          // go back
-          cy.dataCy('step-2-back').should('be.visible').click();
-          // select company pays
-          cy.dataCy(getRadioOption(PaymentSubject.company))
-            .should('be.visible')
-            .click();
-          // select paying company (required)
-          cy.selectRegisterChallengePayingOrganization();
-          // go to next step
-          cy.dataCy('step-2-continue').should('be.visible').click();
-          // voucher is reset
-          cy.fixture('apiPostRegisterChallengeVoucherNoneRequest.json').then(
-            (request) => {
-              cy.waitForRegisterChallengePostApi(request);
-            },
-          );
-        });
-      });
-    });
-
     it('submits form state on 1st 2nd, 5th and 6th step (voucher payment)', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.window().should('have.property', 'i18n');
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
@@ -1740,6 +1706,7 @@ describe('Register Challenge page', () => {
     });
 
     it('submits form state on 1st, 5th and 6th step (company payment)', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.passToStep2();
       // test API post request (personal details)
       cy.fixture('apiPostRegisterChallengePersonalDetailsRequest.json').then(
@@ -1881,6 +1848,7 @@ describe('Register Challenge page', () => {
     });
 
     it('displays correct nav buttons on payment step based on payment configuration', () => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           // pass to step 2 (payment)

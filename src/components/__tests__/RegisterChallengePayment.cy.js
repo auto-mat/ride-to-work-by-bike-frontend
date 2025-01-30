@@ -18,6 +18,7 @@ import {
   httpSuccessfullStatus,
   httpTooManyRequestsStatus,
   httpTooManyRequestsStatusMessage,
+  systemTimeChallengeActive,
   userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
 
@@ -75,11 +76,13 @@ const optionsPaymentSubject = [
 describe('<RegisterChallengePayment>', () => {
   before(() => {
     // dynamically load default payment amount from fixture
-    cy.fixture('apiGetThisCampaign.json').then((response) => {
-      const priceLevels = response.results[0].price_level;
-      const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
-      defaultPaymentAmountMin =
-        currentPriceLevels[PriceLevelCategory.basic].price;
+    cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        const priceLevels = response.results[0].price_level;
+        const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
+        defaultPaymentAmountMin =
+          currentPriceLevels[PriceLevelCategory.basic].price;
+      });
     });
   });
 
@@ -149,23 +152,25 @@ describe('<RegisterChallengePayment>', () => {
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
-      cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
-          (isUserOrganizationAdminResponse) => {
-            cy.wrap(useChallengeStore()).then((storeChallenge) => {
-              storeChallenge.setPriceLevel(
-                thisCampaignReponse.results[0].price_level,
-              );
-            });
-            cy.wrap(useRegisterChallengeStore()).then(
-              (storeRegisterChallenge) => {
-                storeRegisterChallenge.setIsUserOrganizationAdmin(
-                  isUserOrganizationAdminResponse.is_user_organization_admin,
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
+          cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+            (isUserOrganizationAdminResponse) => {
+              cy.wrap(useChallengeStore()).then((storeChallenge) => {
+                storeChallenge.setPriceLevel(
+                  thisCampaignReponse.results[0].price_level,
                 );
-              },
-            );
-          },
-        );
+              });
+              cy.wrap(useRegisterChallengeStore()).then(
+                (storeRegisterChallenge) => {
+                  storeRegisterChallenge.setIsUserOrganizationAdmin(
+                    isUserOrganizationAdminResponse.is_user_organization_admin,
+                  );
+                },
+              );
+            },
+          );
+        });
       });
       cy.viewport('macbook-16');
     });
@@ -213,23 +218,25 @@ describe('<RegisterChallengePayment>', () => {
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
-      cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
-          (isUserOrganizationAdminResponse) => {
-            cy.wrap(useChallengeStore()).then((storeChallenge) => {
-              storeChallenge.setPriceLevel(
-                thisCampaignReponse.results[0].price_level,
-              );
-            });
-            cy.wrap(useRegisterChallengeStore()).then(
-              (storeRegisterChallenge) => {
-                storeRegisterChallenge.setIsUserOrganizationAdmin(
-                  isUserOrganizationAdminResponse.is_user_organization_admin,
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
+          cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+            (isUserOrganizationAdminResponse) => {
+              cy.wrap(useChallengeStore()).then((storeChallenge) => {
+                storeChallenge.setPriceLevel(
+                  thisCampaignReponse.results[0].price_level,
                 );
-              },
-            );
-          },
-        );
+              });
+              cy.wrap(useRegisterChallengeStore()).then(
+                (storeRegisterChallenge) => {
+                  storeRegisterChallenge.setIsUserOrganizationAdmin(
+                    isUserOrganizationAdminResponse.is_user_organization_admin,
+                  );
+                },
+              );
+            },
+          );
+        });
       });
       cy.viewport('iphone-6');
     });

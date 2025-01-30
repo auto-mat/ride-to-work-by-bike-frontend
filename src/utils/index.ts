@@ -123,10 +123,29 @@ const calculateCountdownIntervals = (timeDifferenceMs: number): Countdown => {
 // Custom form field validation error CSS class
 const formFieldCustomValidationErrCssClass = 'form-field-validation-err';
 
+/**
+ * Get current date time according defined timezone
+ *
+ * https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+ *
+ * @param {Number} yourTimezoneOffset - Your time zone offset in minutes,
+ *                                      with default Europe/Prague timezone
+ *                                      DST offset 120 minutes value
+ * @returns {Date} - Current date time according defined timezone
+ */
+function getCurrentDateTimeAccordingTimezone(
+  yourTimezoneOffset: number = 120,
+): Date {
+  const date = new Date();
+  const timezoneOffset = date.getTimezoneOffset();
+  return new Date(date.getTime() + (yourTimezoneOffset + timezoneOffset));
+}
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
   deepObjectWithSimplePropsCopy,
+  getCurrentDateTimeAccordingTimezone,
   formFieldCustomValidationErrCssClass,
   requestDefaultHeader,
   requestTokenHeader,

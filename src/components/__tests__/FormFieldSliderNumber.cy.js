@@ -8,6 +8,8 @@ import { vModelAdapter } from '../../../test/cypress/utils';
 import { getCurrentPriceLevelsUtil } from '../../utils/price_levels';
 import { PriceLevelCategory } from '../enums/Challenge';
 
+import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
+
 // colors
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -21,7 +23,7 @@ const selectorFormFieldSliderNumberSlider = 'form-field-slider-number-slider';
 // variables
 const defaultValue = 500;
 const valueThousand = 1000;
-const valueHundred = 100;
+const valueThreeHundredNinety = 390;
 let valueMin = 0;
 
 const model = ref(defaultValue);
@@ -31,10 +33,13 @@ function setModelValue(value) {
 
 describe('<FormFieldSliderNumber>', () => {
   before(() => {
-    cy.fixture('apiGetThisCampaign.json').then((response) => {
-      const priceLevels = response.results[0].price_level;
-      const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
-      valueMin = currentPriceLevels[PriceLevelCategory.basic].price;
+    cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        const priceLevels = response.results[0].price_level;
+        const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
+
+        valueMin = currentPriceLevels[PriceLevelCategory.basic].price;
+      });
     });
   });
 
@@ -159,7 +164,7 @@ function interactionTests() {
 
   it('does not allow values below minimum', () => {
     cy.dataCy(selectorFormFieldSliderNumberInput).clear();
-    cy.dataCy(selectorFormFieldSliderNumberInput).type(valueHundred);
+    cy.dataCy(selectorFormFieldSliderNumberInput).type(valueThreeHundredNinety);
     cy.dataCy(selectorFormFieldSliderNumberInput).blur();
     cy.dataCy(selectorFormFieldSliderNumberInput).should(
       'have.value',

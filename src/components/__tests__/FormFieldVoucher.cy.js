@@ -10,6 +10,8 @@ import { useChallengeStore } from '../../stores/challenge';
 import { getCurrentPriceLevelsUtil } from '../../utils/price_levels';
 import { PriceLevelCategory } from '../../components/enums/Challenge';
 
+import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
+
 // colors
 const { getPaletteColor } = colors;
 const grey2 = getPaletteColor('grey-2');
@@ -31,11 +33,13 @@ const { formatPriceCurrency } = useFormatPrice();
 
 describe('<FormFieldVoucher>', () => {
   before(() => {
-    cy.fixture('apiGetThisCampaign.json').then((response) => {
-      const priceLevels = response.results[0].price_level;
-      const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
-      defaultPaymentAmountMin =
-        currentPriceLevels[PriceLevelCategory.basic].price;
+    cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        const priceLevels = response.results[0].price_level;
+        const currentPriceLevels = getCurrentPriceLevelsUtil(priceLevels);
+        defaultPaymentAmountMin =
+          currentPriceLevels[PriceLevelCategory.basic].price;
+      });
     });
   });
 
@@ -120,13 +124,15 @@ describe('<FormFieldVoucher>', () => {
   context('desktop - apply voucher HALF', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(FormFieldVoucher, {
-        props: {},
-      });
-      cy.viewport('macbook-16');
-      cy.fixture('apiGetThisCampaign.json').then((response) => {
-        cy.wrap(useChallengeStore()).then((storeChallenge) => {
-          storeChallenge.setPriceLevel(response.results[0].price_level);
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        cy.mount(FormFieldVoucher, {
+          props: {},
+        });
+        cy.viewport('macbook-16');
+        cy.fixture('apiGetThisCampaign.json').then((response) => {
+          cy.wrap(useChallengeStore()).then((storeChallenge) => {
+            storeChallenge.setPriceLevel(response.results[0].price_level);
+          });
         });
       });
     });
@@ -155,8 +161,10 @@ describe('<FormFieldVoucher>', () => {
   context('desktop - active voucher HALF', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(FormFieldVoucher, {
-        props: {},
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        cy.mount(FormFieldVoucher, {
+          props: {},
+        });
       });
       cy.viewport('macbook-16');
       cy.fixture('apiGetThisCampaign.json').then((response) => {
@@ -194,7 +202,6 @@ describe('<FormFieldVoucher>', () => {
       });
     });
   });
-
   context('desktop - active voucher FULL', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
