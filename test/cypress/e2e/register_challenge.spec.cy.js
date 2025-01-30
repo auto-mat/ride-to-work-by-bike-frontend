@@ -1650,8 +1650,10 @@ describe('Register Challenge page', () => {
               );
             },
           );
-          // select address
-          cy.dataCy('form-company-address').should('be.visible').click();
+          cy.dataCy('form-company-address')
+            .find('.q-field__append')
+            .last()
+            .click();
           // select option
           cy.get('.q-menu')
             .should('be.visible')
