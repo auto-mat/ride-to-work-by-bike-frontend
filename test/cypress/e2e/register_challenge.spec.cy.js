@@ -91,7 +91,8 @@ const activeIconImgSrcStepper7 = new URL(
 ).href;
 const doneIconImgSrcStepper7 = doneIcon;
 
-const paymentAmountDonation = 500;
+let prices;
+let paymentAmountDonation;
 
 describe('Register Challenge page', () => {
   let defaultPaymentAmountMin = 0;
@@ -107,6 +108,10 @@ describe('Register Challenge page', () => {
       );
       defaultPaymentAmountMin =
         currentPriceLevels[PriceLevelCategory.basic].price;
+    });
+    cy.task('getAppConfig', process).then((config) => {
+      prices = config.entryFeePaymentOptions.split(',');
+      paymentAmountDonation = prices[0];
     });
   });
 

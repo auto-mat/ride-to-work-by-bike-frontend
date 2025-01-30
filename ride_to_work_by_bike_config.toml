@@ -74,7 +74,7 @@ defaultDistanceZero = "0.00"
 
 # Challenge registration
 entryFeePaymentMax = "2000"
-entryFeePaymentOptions = "500,700"
+entryFeePaymentOptions = "850,1500"
 rtwbbChallengeEntryFeeOrderedProductName = "RTWBB challenge entry fee"
 rtwbbDonationOrderedProductName = "RTWBB donation"
 checkRegisterChallengeStatusIntervalSeconds = 20

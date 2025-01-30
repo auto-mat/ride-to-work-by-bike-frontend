@@ -51,12 +51,13 @@ const selectorVoucherInput = 'form-field-voucher-input';
 
 // variables
 const borderRadiusCardSmall = rideToWorkByBikeConfig.borderRadiusCardSmall;
+const prices = rideToWorkByBikeConfig.entryFeePaymentOptions.split(',');
 let defaultPaymentAmountMin = 0;
 const defaultPaymentAmountMax = parseInt(
   rideToWorkByBikeConfig.entryFeePaymentMax,
 );
 const sliderClickTolerance = 10;
-const testNumberValue = 500;
+const testNumberValue = prices[0];
 const { formatPriceCurrency } = useFormatPrice();
 
 // colors

@@ -1,5 +1,5 @@
 {
-  "amount": 500,
+  "amount": 850,
   "client_ip": "185.250.215.37",
   "payment_subject": "individual",
   "payment_category": "entry_fee-donation",
@@ -11,7 +11,7 @@
     },
     {
       "name": "RTWBB donation",
-      "unitPrice": 110,
+      "unitPrice": 460,
       "quantity": 1
     }
   ]
