@@ -77,6 +77,8 @@ export default defineComponent({
 
     const urlAppDataPrivacyPolicy =
       rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
+    const urlAppDataTermsOfService =
+      rideToWorkByBikeConfig.urlAppDataTermsOfService;
 
     const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
@@ -85,6 +87,7 @@ export default defineComponent({
       isUserOrganizationAdmin,
       personalDetails,
       urlAppDataPrivacyPolicy,
+      urlAppDataTermsOfService,
       urlRegisterAsCoordinator,
     };
   },
@@ -207,7 +210,18 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-terms-link"
-                >{{ $t('form.linkPrivacyConsent') }}</a
+              >
+                {{ $t('form.linkPrivacyConsent') }}
+              </a>
+              <span>{{ ` ${$t('global.and')} ` }}</span>
+              <a
+                :href="urlAppDataTermsOfService"
+                target="_blank"
+                class="text-primary"
+                @click.stop
+                data-cy="form-service-link"
+              >
+                {{ $t('form.linkTermsOfService') }} </a
               >.
             </span>
           </q-checkbox>

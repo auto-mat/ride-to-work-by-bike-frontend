@@ -68,6 +68,7 @@ export interface ConfigGlobal {
   urlApiMerchandise: string;
   urlApiPayuCreateOrder: string;
   urlAppDataPrivacyPolicy: string;
+  urlAppDataTermsOfService: string;
   urlApiRefresh: string;
   urlApiRegister: string;
   urlApiRegisterChallenge: string;

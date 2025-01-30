@@ -16,6 +16,8 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
+const urlAppDataTermsOfService =
+  rideToWorkByBikeConfig.urlAppDataTermsOfService;
 const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
 describe('<FormPersonalDetails>', () => {
@@ -135,20 +137,55 @@ describe('<FormPersonalDetails>', () => {
         'aria-checked',
         'false',
       );
+      // test clicking on the privacy policy link
       cy.dataCy('form-terms-link').should('be.visible').click();
+      // this click will not change the checkbox value
       cy.dataCy('form-terms-input').should(
         'have.attr',
         'aria-checked',
         'false',
       );
+      // test clicking on the terms of service link
+      cy.dataCy('form-service-link').should('be.visible').click();
+      // this click will not change the checkbox value
+      cy.dataCy('form-terms-input').should(
+        'have.attr',
+        'aria-checked',
+        'false',
+      );
+      // test clicking on the checkbox
+      cy.dataCy('form-personal-details-terms')
+        .find('.q-checkbox__inner')
+        .click();
+      // this click will change the checkbox value
+      cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
     });
 
     it('renders link to data privacy policy', () => {
       cy.dataCy('form-terms-link')
         .should('be.visible')
-        .and('have.attr', 'href', urlAppDataPrivacyPolicy);
+        .and('have.attr', 'href', urlAppDataPrivacyPolicy)
+        .and('have.attr', 'target', '_blank');
       cy.request({
         url: urlAppDataPrivacyPolicy,
+        failOnStatusCode: failOnStatusCode,
+        headers: { ...userAgentHeader },
+      }).then((resp) => {
+        if (resp.status === httpTooManyRequestsStatus) {
+          cy.log(httpTooManyRequestsStatusMessage);
+          return;
+        }
+        expect(resp.status).to.eq(httpSuccessfullStatus);
+      });
+    });
+
+    it('renders link to terms of service', () => {
+      cy.dataCy('form-service-link')
+        .should('be.visible')
+        .and('have.attr', 'href', urlAppDataTermsOfService)
+        .and('have.attr', 'target', '_blank');
+      cy.request({
+        url: urlAppDataTermsOfService,
         failOnStatusCode: failOnStatusCode,
         headers: { ...userAgentHeader },
       }).then((resp) => {
