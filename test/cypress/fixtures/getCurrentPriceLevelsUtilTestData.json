@@ -1,0 +1,403 @@
+{
+  "test_data": {
+    "test_0": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        }
+      ],
+      "actual_date": "2025-01-28",
+      "test_result": {
+        "basic": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        "company": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        }
+      }
+    },
+    "test_1": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        }
+      ],
+      "actual_date": "2025-01-29",
+      "test_result": {
+        "basic": {
+          "name": "basic",
+          "price": 0,
+          "category": "basic",
+          "takes_effect_on": ""
+        },
+        "company": {
+          "name": "company",
+          "price": 0,
+          "category": "company",
+          "takes_effect_on": ""
+        }
+      }
+    },
+    "test_2": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        }
+      ],
+      "actual_date": "2025-01-30",
+      "test_result": {
+        "basic": {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        },
+        "company": {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        }
+      }
+    },
+    "test_3": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        }
+      ],
+      "actual_date": "2025-01-29",
+      "test_result": {
+        "basic": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        "company": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        }
+      }
+    },
+    "test_4": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        }
+      ],
+      "actual_date": "2025-01-28",
+      "test_result": {
+        "basic": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        "company": {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        }
+      }
+    },
+    "test_5": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        }
+      ],
+      "actual_date": "2025-01-27",
+      "test_result": {
+        "basic": {
+          "name": "basic",
+          "price": 0,
+          "category": "basic",
+          "takes_effect_on": ""
+        },
+        "company": {
+          "name": "company",
+          "price": 0,
+          "category": "company",
+          "takes_effect_on": ""
+        }
+      }
+    },
+    "test_6": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-02-05"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-02-05"
+        }
+      ],
+      "actual_date": "2025-02-04",
+      "test_result": {
+        "basic": {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        },
+        "company": {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        }
+      }
+    },
+    "test_7": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-02-05"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-02-05"
+        }
+      ],
+      "actual_date": "2025-02-05",
+      "test_result": {
+        "basic": {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-02-05"
+        },
+        "company": {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-02-05"
+        }
+      }
+    },
+    "test_8": {
+      "input_data": [
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-30"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-02-05"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-02-05"
+        }
+      ],
+      "actual_date": "2025-02-10",
+      "test_result": {
+        "basic": {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-02-05"
+        },
+        "company": {
+          "name": "3. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-02-05"
+        }
+      }
+    }
+  }
+}

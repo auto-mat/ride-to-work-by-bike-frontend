@@ -36,7 +36,6 @@ export const getCurrentPriceLevelsUtil = (
   }
   if (!now) now = getCurrentDateTimeAccordingTimezone();
 
-  console.log('NOW', now);
   const category = 'category';
   const takesEffectOn = 'takes_effect_on';
 
@@ -58,13 +57,34 @@ export const getCurrentPriceLevelsUtil = (
 
   const getCurrentPriceLevel = (priceLevels: Array<PriceLevel>) => {
     const recentPriceLevel = [];
-    for (let index = 0; index < priceLevels.length; ++index) {
+    if (priceLevels.length == 2) {
       if (
-        index + 1 < priceLevels.length &&
-        new Date(priceLevels[index][takesEffectOn]) <= now &&
-        new Date(priceLevels[index + 1][takesEffectOn]) > now
+        new Date(priceLevels[0 + 1][takesEffectOn]).getTime() == now.getTime()
       )
-        recentPriceLevel.push(priceLevels[index]);
+        recentPriceLevel.push(priceLevels[1]);
+      else if (
+        new Date(priceLevels[0][takesEffectOn]) <= now &&
+        new Date(priceLevels[0 + 1][takesEffectOn]) > now
+      )
+        recentPriceLevel.push(priceLevels[0]);
+    } else {
+      for (let index = 0; index < priceLevels.length; ++index) {
+        if (
+          index + 1 < priceLevels.length &&
+          new Date(priceLevels[index][takesEffectOn]) <= now &&
+          new Date(priceLevels[index + 1][takesEffectOn]) > now
+        ) {
+          recentPriceLevel.push(priceLevels[index]);
+        }
+        if (index === priceLevels.length - 1) {
+          if (
+            new Date(priceLevels[index][takesEffectOn]).getTime() ===
+            now.getTime()
+          ) {
+            recentPriceLevel.push(priceLevels[index]);
+          }
+        }
+      }
     }
     return recentPriceLevel.slice(-1)[0];
   };
