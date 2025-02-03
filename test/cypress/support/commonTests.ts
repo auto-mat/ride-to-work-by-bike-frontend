@@ -631,3 +631,11 @@ export const systemTimeRegistrationPhaseInactive = new Date(
  * @see apiGetThisCampaign.json fixture for example
  */
 export const systemTimeChallengeActive = new Date('2024-09-16T00:01:00.000Z');
+/**
+ * Time after `registration` phase starts for May campaign
+ * 1st registration phase starts on 28th January 2025
+ * @see apiGetThisCampaignMay.json fixture for example
+ */
+export const systemTimeRegistrationPhase1May = new Date(
+  '2025-01-28T00:01:00.000Z',
+);

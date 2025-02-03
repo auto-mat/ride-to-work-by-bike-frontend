@@ -4,6 +4,7 @@ import {
   testBackgroundImage,
   interceptRegisterCoordinatorApi,
   systemTimeChallengeActive,
+  systemTimeRegistrationPhase1May,
   systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
@@ -3298,6 +3299,117 @@ describe('Register Challenge page', () => {
               seconds: seconds.toString(),
             }),
           );
+        });
+      });
+    });
+  });
+
+  context('registration with payment voucher 95% discount', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+          cy.interceptThisCampaignGetApi(config, defLocale, campaign);
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi(campaign);
+        });
+        cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+        });
+        cy.fixture('apiGetDiscountCouponResponse95.json').then((response) => {
+          cy.interceptDiscountCouponGetApi(
+            config,
+            defLocale,
+            response.results[0].name,
+            response,
+          );
+        });
+        // intercept register challenge POST API endpoint
+        cy.fixture('apiPostRegisterChallengeResponsePaymentNone.json').then(
+          (response) => {
+            cy.interceptRegisterChallengePostApi(config, defLocale, response);
+          },
+        );
+        cy.interceptIpAddressGetApi(config);
+        cy.interceptPayuCreateOrderPostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('allows to apply 95% discount coupon and continue to payment', () => {
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.fixture('apiGetRegisterChallengeEmpty.json').then(() => {
+          cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+            // extract current price from campaign data
+            const priceLevels = campaign.results[0].price_level;
+            const currentPriceLevels = getCurrentPriceLevelsUtil(
+              priceLevels,
+              new Date(systemTimeRegistrationPhase1May),
+            );
+            // current min price given the date
+            const defaultPaymentAmountMinMay =
+              currentPriceLevels[PriceLevelCategory.basic].price;
+            // pass to step 2
+            cy.passToStep2();
+            // wait for register challenge POST API call
+            cy.fixture(
+              'apiPostRegisterChallengePersonalDetailsRequest.json',
+            ).then((request) => {
+              cy.waitForRegisterChallengePostApi(request);
+            });
+            // select option voucher payment
+            cy.dataCy(getRadioOption(PaymentSubject.voucher)).click();
+            // apply voucher 95% discount
+            cy.fixture('apiGetDiscountCouponResponse95.json').then(
+              (voucherApiResponse) => {
+                // submit voucher
+                cy.dataCy('form-field-voucher-input').type(
+                  voucherApiResponse.results[0].name,
+                );
+                cy.dataCy('form-field-voucher-submit').click();
+                // wait for API response
+                cy.waitForDiscountCouponApi(voucherApiResponse);
+                // check success message
+                cy.contains(
+                  win.i18n.global.t('notify.voucherApplySuccess'),
+                ).should('be.visible');
+                // calculate discount amount
+                const discountAmountInt = Math.round(
+                  defaultPaymentAmountMinMay -
+                    (defaultPaymentAmountMinMay *
+                      voucherApiResponse.results[0].discount) /
+                      100,
+                );
+                // verify banner content
+                cy.dataCy('voucher-banner-code')
+                  .should('be.visible')
+                  .and('contain', voucherApiResponse.results[0].name);
+                cy.dataCy('voucher-banner-name')
+                  .should('be.visible')
+                  .and('contain', win.i18n.global.t('global.discount'))
+                  .and('contain', voucherApiResponse.results[0].discount)
+                  .and('contain', discountAmountInt);
+                // verify total amount
+                cy.dataCy('total-price-value')
+                  .should('be.visible')
+                  .and('contain', discountAmountInt);
+              },
+            );
+            // submit payment button should be visible and enabled
+            cy.dataCy('step-2-submit-payment')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // wait for PayU create order API call
+            cy.fixture(
+              'apiPostPayuCreateOrderRequestVoucher95NoDonation.json',
+            ).then((request) => {
+              cy.waitForPayuCreateOrderPostApi(request);
+            });
+          });
         });
       });
     });

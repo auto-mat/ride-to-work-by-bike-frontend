@@ -1,0 +1,110 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "phase_set": [
+        {
+          "phase_type": "registration",
+          "date_from": "2025-01-28",
+          "date_to": "2025-06-01"
+        },
+        {
+          "phase_type": "competition",
+          "date_from": "2025-05-01",
+          "date_to": "2025-05-31"
+        },
+        {
+          "phase_type": "entry_enabled",
+          "date_from": "2025-05-01",
+          "date_to": "2025-06-03"
+        },
+        {
+          "phase_type": "payment",
+          "date_from": "2025-01-28",
+          "date_to": "2025-06-01"
+        },
+        {
+          "phase_type": "invoices",
+          "date_from": "2025-02-01",
+          "date_to": "2025-06-04"
+        },
+        {
+          "phase_type": "results",
+          "date_from": "2025-05-01",
+          "date_to": "2025-06-30"
+        },
+        {
+          "phase_type": "admissions",
+          "date_from": "2025-02-01",
+          "date_to": "2025-06-03"
+        }
+      ],
+      "days_active": 15,
+      "max_team_members": 5,
+      "price_level": [
+        {
+          "name": "2. vlna registrace",
+          "price": 500,
+          "category": "basic",
+          "takes_effect_on": "2025-03-01"
+        },
+        {
+          "name": "2. vlna registrace",
+          "price": 500,
+          "category": "company",
+          "takes_effect_on": "2025-03-01"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 550,
+          "category": "basic",
+          "takes_effect_on": "2025-04-03"
+        },
+        {
+          "name": "3. vlna registrace",
+          "price": 550,
+          "category": "company",
+          "takes_effect_on": "2025-04-03"
+        },
+        {
+          "name": "4. vlna registrace",
+          "price": 600,
+          "category": "basic",
+          "takes_effect_on": "2025-04-17"
+        },
+        {
+          "name": "4. vlna registrace",
+          "price": 600,
+          "category": "company",
+          "takes_effect_on": "2025-04-17"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "basic",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "1. vlna registrace",
+          "price": 470,
+          "category": "company",
+          "takes_effect_on": "2025-01-28"
+        },
+        {
+          "name": "5. vlna registrace",
+          "price": 650,
+          "category": "basic",
+          "takes_effect_on": "2025-05-01"
+        },
+        {
+          "name": "5. vlna registrace",
+          "price": 650,
+          "category": "company",
+          "takes_effect_on": "2025-05-01"
+        }
+      ]
+    }
+  ]
+}

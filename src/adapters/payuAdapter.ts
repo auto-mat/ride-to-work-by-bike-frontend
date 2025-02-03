@@ -43,9 +43,10 @@ export const payuAdapter = {
       defaultPaymentAmountMinComputed(priceLevels);
     let defaultPaymentAmountCoupon = defaultPaymentAmountBasic;
     if (voucher?.valid && voucher.discount) {
-      defaultPaymentAmountCoupon =
+      defaultPaymentAmountCoupon = Math.round(
         defaultPaymentAmountBasic -
-        (defaultPaymentAmountBasic * voucher.discount) / 100;
+          (defaultPaymentAmountBasic * voucher.discount) / 100,
+      );
     }
 
     const products: PayuProduct[] = [];

@@ -553,7 +553,7 @@ Cypress.Commands.add(
  * Wait for `@thisCampaignRequest` intercept
  * @param {object} thisCampaignResponse - Get this campaign API data response
  */
-Cypress.Commands.add('waitForThisCampaignApi', () => {
+Cypress.Commands.add('waitForThisCampaignApi', (responseBody = null) => {
   cy.fixture('apiGetThisCampaign').then((thisCampaignResponse) => {
     cy.wait('@thisCampaignRequest').then((thisCampaignRequest) => {
       if (thisCampaignRequest.response) {
@@ -561,7 +561,7 @@ Cypress.Commands.add('waitForThisCampaignApi', () => {
           httpSuccessfullStatus,
         );
         expect(thisCampaignRequest.response.body).to.deep.equal(
-          thisCampaignResponse,
+          responseBody ? responseBody : thisCampaignResponse,
         );
       }
     });

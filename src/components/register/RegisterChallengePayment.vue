@@ -311,8 +311,9 @@ export default defineComponent({
       ) {
         const discountAmount: number =
           (defaultPaymentAmountMin.value * activeVoucher.value?.discount) / 100;
-        const discountedAmount: number =
-          defaultPaymentAmountMin.value - discountAmount;
+        const discountedAmount: number = Math.round(
+          defaultPaymentAmountMin.value - discountAmount,
+        );
         logger?.debug(
           `Selected payment subject <${selectedPaymentSubject.value}>,` +
             ` is voucher valid <${isVoucherValid.value}>,` +
