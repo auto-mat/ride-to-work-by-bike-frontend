@@ -16,7 +16,7 @@ import { calculateCountdownIntervals } from '../../../src/utils';
 const failTestTitle = 'allows user to scroll to top using the footer button';
 const fontFamily = 'Poppins';
 const bottomPanelItemsIncludingMenu = 4;
-const bottomPanelDialogItems = 2;
+const bottomPanelDialogItems = 3;
 
 describe('Home page', () => {
   Cypress.on('fail', (err, runnable) => {

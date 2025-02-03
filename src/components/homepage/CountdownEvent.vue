@@ -41,6 +41,7 @@ export default defineComponent({
   setup(props) {
     const fontSize = '48px';
 
+    const { challengeMonth } = rideToWorkByBikeConfig;
     const { countdown } = useCountdown(computed(() => props.releaseDate));
 
     // colors
@@ -66,6 +67,7 @@ export default defineComponent({
     }
 
     return {
+      challengeMonth,
       borderRadius,
       secondaryOpacity,
       countdown,
@@ -93,7 +95,7 @@ export default defineComponent({
         data-cy="title"
       >
         {{
-          $t('index.countdown.title', {
+          $t(`index.countdown.title.${challengeMonth}`, {
             date: releaseDateComputed
               ? $d(releaseDateComputed, 'monthDay')
               : releaseDateComputed,

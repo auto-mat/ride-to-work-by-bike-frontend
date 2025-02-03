@@ -471,7 +471,9 @@ emailRequired = "Please, fill in your email"
 submit = "Submit"
 
 [index.countdown]
-title = "October challenge starts {date}, that is in"
+title.may = "May challenge starts on {date}, that's in"
+title.october = "October challenge starts on {date}, that's in"
+title.september = "September challenge starts on {date}, that's in"
 days = "days"
 hours = "hours"
 minutes = "minutes"

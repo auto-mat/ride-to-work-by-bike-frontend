@@ -29,7 +29,15 @@ describe('<CountdownEvent>', () => {
 
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['title', 'days', 'hours', 'minutes', 'seconds'],
+      [
+        'title.may',
+        'title.october',
+        'title.september',
+        'days',
+        'hours',
+        'minutes',
+        'seconds',
+      ],
       'index.countdown',
       i18n,
     );

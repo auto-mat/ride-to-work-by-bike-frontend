@@ -471,7 +471,9 @@ emailRequired = "Zadajte svoju e-mailovú adresu"
 submit = "Odoslať"
 
 [index.countdown]
-title = "Októbrová výzva začína {date}, to je pre"
+title.may = "Májová výzva začína {date}, to je za"
+title.october = "Októbrová výzva začína {date}, to je za"
+title.september = "Septembrová výzva začína {date}, to je za"
 days = "dní"
 hours = "hodin"
 minutes = "minút"
