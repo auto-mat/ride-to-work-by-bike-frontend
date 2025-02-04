@@ -70,10 +70,10 @@ describe('Company Coordinator Page', () => {
           cy.dataCy(selectorCompanyCoordinatorDisabledText)
             .find('a')
             .should('have.attr', 'href')
-            .and('eq', config.urlRideToWorkByBikeOldSystem);
+            .and('eq', config.urlRideToWorkByBikeOldFrontendDjangoApp);
           // check if the link is accessible
           cy.request({
-            url: config.urlRideToWorkByBikeOldSystem,
+            url: config.urlRideToWorkByBikeOldFrontendDjangoApp,
             failOnStatusCode: failOnStatusCode,
             headers: { ...userAgentHeader },
           }).then((resp) => {
