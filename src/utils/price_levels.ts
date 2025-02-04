@@ -77,10 +77,7 @@ export const getCurrentPriceLevelsUtil = (
           recentPriceLevel.push(priceLevels[index]);
         }
         if (index === priceLevels.length - 1) {
-          if (
-            new Date(priceLevels[index][takesEffectOn]).getTime() ===
-            now.getTime()
-          ) {
+          if (new Date(priceLevels[index][takesEffectOn]) <= now) {
             recentPriceLevel.push(priceLevels[index]);
           }
         }

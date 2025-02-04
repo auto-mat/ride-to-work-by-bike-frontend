@@ -49,16 +49,16 @@
       "actual_date": "2025-01-29",
       "test_result": {
         "basic": {
-          "name": "basic",
-          "price": 0,
+          "name": "1. vlna registrace",
+          "price": 470,
           "category": "basic",
-          "takes_effect_on": ""
+          "takes_effect_on": "2025-01-28"
         },
         "company": {
-          "name": "company",
-          "price": 0,
+          "name": "1. vlna registrace",
+          "price": 470,
           "category": "company",
-          "takes_effect_on": ""
+          "takes_effect_on": "2025-01-28"
         }
       }
     },
@@ -349,38 +349,20 @@
         {
           "name": "1. vlna registrace",
           "price": 470,
-          "category": "company",
-          "takes_effect_on": "2025-01-28"
-        },
-        {
-          "name": "1. vlna registrace",
-          "price": 470,
           "category": "basic",
-          "takes_effect_on": "2025-01-28"
-        },
-        {
-          "name": "2. vlna registrace",
-          "price": 470,
-          "category": "company",
-          "takes_effect_on": "2025-01-30"
+          "takes_effect_on": "2025-01-25"
         },
         {
           "name": "2. vlna registrace",
           "price": 470,
           "category": "basic",
-          "takes_effect_on": "2025-01-30"
-        },
-        {
-          "name": "3. vlna registrace",
-          "price": 500,
-          "category": "company",
-          "takes_effect_on": "2025-02-05"
+          "takes_effect_on": "2025-01-31"
         },
         {
           "name": "3. vlna registrace",
           "price": 500,
           "category": "basic",
-          "takes_effect_on": "2025-02-05"
+          "takes_effect_on": "2025-02-02"
         }
       ],
       "actual_date": "2025-02-10",
@@ -389,13 +371,13 @@
           "name": "3. vlna registrace",
           "price": 500,
           "category": "basic",
-          "takes_effect_on": "2025-02-05"
+          "takes_effect_on": "2025-02-02"
         },
         "company": {
-          "name": "3. vlna registrace",
-          "price": 500,
+          "name": "company",
+          "price": 0,
           "category": "company",
-          "takes_effect_on": "2025-02-05"
+          "takes_effect_on": ""
         }
       }
     }

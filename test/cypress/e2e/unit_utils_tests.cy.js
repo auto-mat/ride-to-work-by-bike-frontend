@@ -2,7 +2,7 @@ import { getCurrentPriceLevelsUtil } from 'src/utils/price_levels';
 
 describe('Test utils functions', function () {
   context('Test getCurrentPriceLevelsUtil() function', () => {
-    it('Test with actual date 2025-01-28', () => {
+    it('Test 0 with actual date 2025-01-28', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-28
@@ -20,7 +20,7 @@ describe('Test utils functions', function () {
       );
     });
 
-    it('Test with actual date 2025-01-29', () => {
+    it('Test 1 with actual date 2025-01-29', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-29
@@ -37,7 +37,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-01-30', () => {
+    it('Test 2 with actual date 2025-01-30', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-30
@@ -54,7 +54,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-01-29', () => {
+    it('Test 3 with actual date 2025-01-29', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-29
@@ -71,7 +71,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-01-28', () => {
+    it('Test 4 with actual date 2025-01-28', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-28
@@ -88,7 +88,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-01-27', () => {
+    it('Test 5 with actual date 2025-01-27', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-01-27
@@ -105,7 +105,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-02-04', () => {
+    it('Test 6 with actual date 2025-02-04', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-02-04
@@ -122,7 +122,7 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-02-05', () => {
+    it('Test 7 with actual date 2025-02-05', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-02-05
@@ -139,19 +139,20 @@ describe('Test utils functions', function () {
         },
       );
     });
-    it('Test with actual date 2025-02-10', () => {
+
+    it('Test 8 with actual date 2025-02-10', () => {
       cy.fixture('getCurrentPriceLevelsUtilTestData.json').then(
         (getCurrentPriceLevelsUtilTestData) => {
           // Test with actual date 2025-02-10
           cy.expect(
             getCurrentPriceLevelsUtil(
-              getCurrentPriceLevelsUtilTestData.test_data.test_7.input_data,
+              getCurrentPriceLevelsUtilTestData.test_data.test_8.input_data,
               new Date(
-                getCurrentPriceLevelsUtilTestData.test_data.test_7.actual_date,
+                getCurrentPriceLevelsUtilTestData.test_data.test_8.actual_date,
               ),
             ),
           ).to.deep.equal(
-            getCurrentPriceLevelsUtilTestData.test_data.test_7.test_result,
+            getCurrentPriceLevelsUtilTestData.test_data.test_8.test_result,
           );
         },
       );
