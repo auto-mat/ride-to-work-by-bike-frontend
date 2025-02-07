@@ -1,10 +1,5 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
-import { useMenu } from 'src/composables/useMenu';
-import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
-import { defaultLocale } from '../../../src/i18n/def_locale';
-
-const { menuTop, getMenuBottom } = useMenu();
 
 describe('Community page', () => {
   context('desktop', () => {
@@ -26,26 +21,6 @@ describe('Community page', () => {
 
     coreTests();
     testDesktopSidebar();
-
-    it('renders left drawer', () => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.dataCy('q-drawer').should('be.visible');
-        cy.dataCy('drawer-header').should('be.visible');
-        cy.dataCy('user-select-desktop').should('be.visible');
-        if (menuTop.length > 0) {
-          cy.dataCy('drawer-menu-top').should('be.visible');
-        }
-        const urlDonate = getApiBaseUrlWithLang(
-          null,
-          config.urlDonate,
-          defaultLocale,
-          defaultLocale,
-        );
-        if (getMenuBottom(urlDonate).length > 0) {
-          cy.dataCy('drawer-menu-bottom').should('be.visible');
-        }
-      });
-    });
   });
 
   context('mobile', () => {

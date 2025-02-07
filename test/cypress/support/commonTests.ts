@@ -4,7 +4,7 @@ import { bearerTokeAuth } from 'src/utils';
 import { defaultLocale } from '../../../src/i18n/def_locale';
 import { useMenu } from 'src/composables/useMenu';
 
-const { menuTop, getMenuBottom } = useMenu();
+const { getMenuTop, getMenuBottom } = useMenu();
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -139,7 +139,11 @@ export const testDesktopSidebar = (): void => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
       cy.dataCy(selectorUserSelectDesktop).should('be.visible');
-      if (menuTop.value.length > 0) {
+      if (
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+        }).length > 0
+      ) {
         cy.dataCy(selectorDrawerMenuTop).should('be.visible');
       }
       const urlDonate = getApiBaseUrlWithLang(

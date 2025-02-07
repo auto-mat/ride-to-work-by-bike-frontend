@@ -23,7 +23,11 @@ import { useMenu } from 'src/composables/useMenu';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // types
+import type { Link } from 'components/types';
 import type { Logger } from 'components/types/Logger';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
@@ -52,6 +56,8 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const route = useRoute();
+    const registerChallengeStore = useRegisterChallengeStore();
+
     const isHomePage = computed(
       () => route.path === routesConf['home']['path'],
     );
@@ -62,7 +68,7 @@ export default defineComponent({
         : rideToWorkByBikeConfig.containerContentWidth;
     });
 
-    const { menuTop, getMenuBottom } = useMenu();
+    const { getMenuTop, getMenuBottom } = useMenu();
     const urlDonate = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
@@ -73,6 +79,14 @@ export default defineComponent({
     });
     const menuBottom = computed(() => {
       return getMenuBottom(urlDonate.value);
+    });
+    const isUserOrganizationAdmin = computed(
+      () => registerChallengeStore.isUserOrganizationAdmin,
+    );
+    const menuTop = computed((): Link[] => {
+      return getMenuTop({
+        isUserOrganizationAdmin: isUserOrganizationAdmin,
+      });
     });
 
     return {

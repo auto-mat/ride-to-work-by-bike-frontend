@@ -1,15 +1,25 @@
 // libraries
-import { computed } from 'vue';
+import { unref } from 'vue';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
 
 // types
+import type { ComputedRef } from 'vue';
 import type { Link } from 'src/components/types';
 
 export const useMenu = () => {
-  const menuTop = computed<Link[]>(() => {
-    const menu: Link[] = [
+  /**
+   * Get the top menu items
+   * @param {boolean} isUserOrganizationAdmin - Whether the user is an organization admin
+   * @returns {Link[]} Array of top menu items
+   */
+  const getMenuTop = ({
+    isUserOrganizationAdmin,
+  }: {
+    isUserOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
+  }): Link[] => {
+    let menuTop: Link[] = [
       {
         url: routesConf['home']['children']['fullPath'],
         icon: 'svguse:icons/drawer_menu/icons.svg#lucide-home',
@@ -30,24 +40,22 @@ export const useMenu = () => {
         title: 'results',
         disabled: true,
       },
-      // {
-      //   url: '',
-      //   icon: 'svguse:icons/drawer_menu/icons.svg#three-circles',
-      //   name: 'community',
-      //   title: 'community',
-      // },
-      // {
-      //   url: '',
-      //   icon: 'svguse:icons/drawer_menu/icons.svg#lucide-badge-percent',
-      //   name: 'prizes',
-      //   title: 'discounts',
-      // },
-      {
-        url: routesConf['coordinator']['children']['fullPath'],
-        icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
-        name: 'coordinator',
-        title: 'coordinator',
-      },
+    ];
+
+    if (unref(isUserOrganizationAdmin)) {
+      menuTop = [
+        ...menuTop,
+        {
+          url: routesConf['coordinator']['children']['fullPath'],
+          icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
+          name: 'coordinator',
+          title: 'coordinator',
+        },
+      ];
+    }
+
+    menuTop = [
+      ...menuTop,
       {
         url: routesConf['profile']['children']['fullPath'],
         icon: 'svguse:icons/drawer_menu/icons.svg#ion-person-outline',
@@ -56,9 +64,14 @@ export const useMenu = () => {
       },
     ];
 
-    return menu;
-  });
+    return menuTop;
+  };
 
+  /**
+   * Get the bottom menu items
+   * @param {string} urlDonate - The URL of the donate page
+   * @returns {Link[]} Array of bottom menu items
+   */
   const getMenuBottom = (urlDonate: string): Link[] => {
     const menuBottom: Link[] = [
       // {
@@ -79,5 +92,5 @@ export const useMenu = () => {
     return menuBottom;
   };
 
-  return { menuTop, getMenuBottom };
+  return { getMenuTop, getMenuBottom };
 };

@@ -29,6 +29,9 @@ import { useMenu } from 'src/composables/useMenu';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+
 // types
 import type { Link } from 'components/types';
 import type { Logger } from '../types/Logger';
@@ -39,11 +42,20 @@ import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
-    const { menuTop, getMenuBottom } = useMenu();
+    const registerChallengeStore = useRegisterChallengeStore();
+    const isUserOrganizationAdmin = computed(
+      () => registerChallengeStore.isUserOrganizationAdmin,
+    );
+    const { getMenuTop, getMenuBottom } = useMenu();
 
     const shownItemsCount = 3;
     const logger = inject('vuejs3-logger') as Logger | null;
 
+    const menuTop = computed((): Link[] => {
+      return getMenuTop({
+        isUserOrganizationAdmin: isUserOrganizationAdmin,
+      });
+    });
     const menuPanel = computed((): Link[] => {
       return menuTop.value.slice(0, shownItemsCount);
     });
