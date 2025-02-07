@@ -75,12 +75,6 @@ export const useMenu = () => {
    */
   const getMenuBottom = (urlDonate: string): Link[] => {
     const menuBottom: Link[] = [
-      // {
-      //   url: '',
-      //   icon: 'svguse:icons/drawer_menu/icons.svg#email',
-      //   name: 'invite',
-      //   title: 'inviteFriends',
-      // },
       {
         url: '',
         icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',
