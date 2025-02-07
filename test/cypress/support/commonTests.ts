@@ -2,7 +2,9 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from 'src/utils';
 import { defaultLocale } from '../../../src/i18n/def_locale';
-import { menuTop, getMenuBottom } from '../../../src/mocks/layout';
+import { useMenu } from 'src/composables/useMenu';
+
+const { menuTop, getMenuBottom } = useMenu();
 
 // selectors
 const layoutBackgroundImageSelector = 'layout-background-image';
@@ -89,7 +91,11 @@ export const testBackgroundImage = (): void => {
       cy.dataCy(layoutBackgroundImageSelector).should('have.css', 'mask-image');
       cy.dataCy(layoutBackgroundImageSelector)
         .find('img')
-        .should('have.attr', 'src', config.urlLoginRegisterBackgroundImage);
+        .should(
+          'have.attr',
+          'src',
+          (config as ConfigGlobal).urlLoginRegisterBackgroundImage,
+        );
       // test background image on different screen sizes
       cy.viewport('iphone-3');
       cy.dataCy(layoutBackgroundImageSelector).should('not.exist');
@@ -133,10 +139,16 @@ export const testDesktopSidebar = (): void => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
       cy.dataCy(selectorUserSelectDesktop).should('be.visible');
-      if (menuTop.length > 0) {
+      if (menuTop.value.length > 0) {
         cy.dataCy(selectorDrawerMenuTop).should('be.visible');
       }
-      if (getMenuBottom(config.urlDonate).length > 0) {
+      const urlDonate = getApiBaseUrlWithLang(
+        null,
+        (config as ConfigGlobal).urlDonate,
+        defaultLocale,
+        defaultLocale,
+      );
+      if (getMenuBottom(urlDonate).length > 0) {
         cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
       }
       cy.dataCy(selectorAutomatLogoBanner).should('be.visible');

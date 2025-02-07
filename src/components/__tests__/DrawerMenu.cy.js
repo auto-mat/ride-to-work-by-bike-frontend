@@ -1,10 +1,11 @@
 import DrawerMenu from '../global/DrawerMenu.vue';
 import { i18n } from '../../boot/i18n';
 import { colors } from 'quasar';
-import { getMenuBottom, menuTop } from '../../mocks/layout';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { defaultLocale } from 'src/i18n/def_locale';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { useMenu } from 'src/composables/useMenu';
+
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -26,23 +27,29 @@ const selectorDrawerMenuItemIcon = 'drawer-menu-item-icon';
 const iconSize = 18;
 const fontSize = '16px';
 
+const { getMenuBottom } = useMenu();
+
 describe('DrawerMenu', () => {
   context('menu top', () => {
     beforeEach(() => {
-      cy.mount(DrawerMenu, {
-        props: {
-          items: menuTop,
-        },
+      cy.fixture('menuTopItems.json').then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
       });
-      cy.wrap(menuTop).as('menu');
     });
 
     it('has translation for all strings', () => {
-      cy.testLanguageStringsInContext(
-        menuTop.map((item) => item.title),
-        'drawerMenu',
-        i18n,
-      );
+      cy.get('@menu').then((menuTop) => {
+        cy.testLanguageStringsInContext(
+          menuTop.map((item) => item.title),
+          'drawerMenu',
+          i18n,
+        );
+      });
     });
 
     coreTests();

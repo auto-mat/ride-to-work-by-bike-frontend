@@ -23,24 +23,29 @@ import { computed, defineComponent, inject, ref } from 'vue';
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
 
-// types
-import { Link } from 'components/types';
+// composables
+import { useMenu } from 'src/composables/useMenu';
 
-// mocks
-import { getMenuBottom, menuTop } from '../../mocks/layout';
-
-import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
-
+// config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+// types
+import type { Link } from 'components/types';
+import type { Logger } from '../types/Logger';
+
+// utils
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
+    const { menuTop, getMenuBottom } = useMenu();
+
     const shownItemsCount = 3;
     const logger = inject('vuejs3-logger') as Logger | null;
 
     const menuPanel = computed((): Link[] => {
-      return menuTop.slice(0, shownItemsCount);
+      return menuTop.value.slice(0, shownItemsCount);
     });
 
     const isDialogOpen = ref(false);

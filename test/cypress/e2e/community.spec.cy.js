@@ -1,6 +1,10 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
-import { menuTop, getMenuBottom } from '../../../src/mocks/layout';
+import { useMenu } from 'src/composables/useMenu';
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '../../../src/i18n/def_locale';
+
+const { menuTop, getMenuBottom } = useMenu();
 
 describe('Community page', () => {
   context('desktop', () => {
@@ -31,7 +35,13 @@ describe('Community page', () => {
         if (menuTop.length > 0) {
           cy.dataCy('drawer-menu-top').should('be.visible');
         }
-        if (getMenuBottom(config.urlDonate).length > 0) {
+        const urlDonate = getApiBaseUrlWithLang(
+          null,
+          config.urlDonate,
+          defaultLocale,
+          defaultLocale,
+        );
+        if (getMenuBottom(urlDonate).length > 0) {
           cy.dataCy('drawer-menu-bottom').should('be.visible');
         }
       });

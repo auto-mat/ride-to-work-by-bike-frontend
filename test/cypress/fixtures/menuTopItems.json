@@ -1,0 +1,44 @@
+[
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#lucide-home",
+    "name": "home",
+    "title": "home"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#lucide-route",
+    "name": "routes",
+    "title": "routes"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#chart-graph",
+    "name": "results",
+    "title": "results"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#three-circles",
+    "name": "community",
+    "title": "community"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#lucide-badge-percent",
+    "name": "prizes",
+    "title": "discounts"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#lucide-building",
+    "name": "coordinator",
+    "title": "coordinator"
+  },
+  {
+    "url": "",
+    "icon": "svguse:icons/drawer_menu/icons.svg#ion-person-outline",
+    "name": "profile",
+    "title": "profile"
+  }
+]

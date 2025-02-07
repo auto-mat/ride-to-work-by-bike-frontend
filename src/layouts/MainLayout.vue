@@ -16,12 +16,16 @@ import UserSelect from 'components/global/UserSelect.vue';
 // routes config
 import { routesConf } from '../router/routes_conf';
 
+// composables
+import { useMenu } from 'src/composables/useMenu';
+
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
-// mocks
-import { getMenuBottom, menuTop } from '../mocks/layout';
+// types
+import type { Logger } from 'components/types/Logger';
 
+// utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
 
 declare global {
@@ -57,6 +61,8 @@ export default defineComponent({
         ? 'none'
         : rideToWorkByBikeConfig.containerContentWidth;
     });
+
+    const { menuTop, getMenuBottom } = useMenu();
     const urlDonate = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
