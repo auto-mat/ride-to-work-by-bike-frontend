@@ -11,7 +11,8 @@ import type { Link } from 'src/components/types';
 export const useMenu = () => {
   /**
    * Get the top menu items
-   * @param {boolean} isUserOrganizationAdmin - Whether the user is an organization admin
+   * @param {ComputedRef<boolean | null> | boolean | null}
+   *   isUserOrganizationAdmin - Whether the user is an organization admin
    * @returns {Link[]} Array of top menu items
    */
   const getMenuTop = ({
