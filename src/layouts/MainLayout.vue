@@ -85,7 +85,7 @@ export default defineComponent({
     );
     const menuTop = computed((): Link[] => {
       return getMenuTop({
-        isUserOrganizationAdmin: isUserOrganizationAdmin,
+        isUserOrganizationAdmin,
       });
     });
 
