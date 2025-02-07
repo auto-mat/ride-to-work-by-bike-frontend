@@ -48,8 +48,7 @@ export default defineComponent({
     );
     const { getMenuTop, getMenuBottom } = useMenu();
 
-    const shownItemsCount =
-      rideToWorkByBikeConfig.mobileBottomPanelVisibleItems;
+    const { mobileBottomPanelVisibleItems } = rideToWorkByBikeConfig;
     const logger = inject('vuejs3-logger') as Logger | null;
 
     const menuTop = computed((): Link[] => {
@@ -58,7 +57,7 @@ export default defineComponent({
       });
     });
     const menuPanel = computed((): Link[] => {
-      return menuTop.value.slice(0, shownItemsCount);
+      return menuTop.value.slice(0, mobileBottomPanelVisibleItems);
     });
 
     const isDialogOpen = ref(false);
@@ -79,7 +78,7 @@ export default defineComponent({
       menuPanel,
       menuBottom,
       menuTop,
-      shownItemsCount,
+      mobileBottomPanelVisibleItems,
     };
   },
 });
@@ -153,7 +152,7 @@ export default defineComponent({
       <q-item
         clickable
         v-ripple
-        v-for="item in menuTop.slice(shownItemsCount)"
+        v-for="item in menuTop.slice(mobileBottomPanelVisibleItems)"
         :key="item.name"
         :to="item.disabled ? '' : item.url"
         :disable="item.disabled"
