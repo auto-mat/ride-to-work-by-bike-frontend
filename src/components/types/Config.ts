@@ -37,6 +37,7 @@ export interface ConfigGlobal {
   urlVideoOnboarding: string;
   urlFreeSoftwareDefinition: string;
   urlYoutube: string;
+  urlSizeConversionChart: string;
   challengeMonth: 'may' | 'october' | 'september';
   containerFormWidth: string;
   containerContentWidth: string;

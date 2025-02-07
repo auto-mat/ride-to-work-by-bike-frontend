@@ -842,6 +842,14 @@ describe('Register Challenge page', () => {
         // check no merch checkbox
         cy.dataCy('form-merch-no-merch-checkbox').should('be.visible').click();
         cy.waitForMerchandiseNoneApi();
+        // Check size conversion char URL link
+        cy.dataCy('form-merch-size-conversion-chart-link')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t('form.merch.labelUrlSizeConversionChartLink'),
+          )
+          .click();
         // next step button is enabled
         cy.dataCy('step-6-continue')
           .should('be.visible')

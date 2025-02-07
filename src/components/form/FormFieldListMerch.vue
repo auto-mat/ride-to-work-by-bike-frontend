@@ -345,6 +345,9 @@ export default defineComponent({
       return i18n.global.t('form.merch.labelPhoneOptInWithMerch');
     });
 
+    const urlSizeConversionChart =
+      rideToWorkByBikeConfig.urlSizeConversionChart;
+
     return {
       currentItemLabelSize,
       formMerchRef,
@@ -370,6 +373,7 @@ export default defineComponent({
       onCheckboxUpdate,
       isLoading,
       merchandiseCards,
+      urlSizeConversionChart,
     };
   },
 });
@@ -496,6 +500,16 @@ export default defineComponent({
         class="q-mt-sm"
         data-cy="form-field-merch-size"
       />
+    </div>
+
+    <div class="q-mb-md">
+      <a
+        class="text-primary"
+        :href="urlSizeConversionChart"
+        target="_blank"
+        data-cy="form-merch-size-conversion-chart-link"
+        >{{ $t('form.merch.labelUrlSizeConversionChartLink') }}</a
+      >
     </div>
 
     <!-- Input: Phone number -->

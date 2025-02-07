@@ -362,6 +362,7 @@ labelSizeMale = "Size - men's:"
 labelSizeUnisex = "Size - unisex:"
 labelTrackDelivery = "I would like to receive a status report on the delivery of my starter pack."
 labelVariant = "Variant"
+labelUrlSizeConversionChartLink = "Size conversion chart"
 
 [form.personalDetails]
 hintGender = "Used to determine the performance category"

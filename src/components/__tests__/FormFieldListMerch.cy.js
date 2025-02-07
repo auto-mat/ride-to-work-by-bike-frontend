@@ -6,6 +6,13 @@ import { i18n } from '../../boot/i18n';
 import { Gender } from 'components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import {
+  failOnStatusCode,
+  httpSuccessfullStatus,
+  httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
+  userAgentHeader,
+} from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const grey8 = getPaletteColor('grey-8');
@@ -24,6 +31,7 @@ describe('<FormFieldListMerch>', () => {
         'hintPhoneWithMerch',
         'labelPhoneOptInNoMerch',
         'labelPhoneOptInWithMerch',
+        'labelUrlSizeConversionChartLink',
       ],
       'form.merch',
       i18n,
@@ -108,6 +116,30 @@ describe('<FormFieldListMerch>', () => {
       );
     });
 
+    it('renders link to size converion chart image', () => {
+      cy.dataCy('form-merch-size-conversion-chart-link')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('form.merch.labelUrlSizeConversionChartLink'),
+        )
+        .and('have.attr', 'href', rideToWorkByBikeConfig.urlSizeConversionChart)
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
     it('allows to switch between tabs', () => {
       cy.dataCy('list-merch-tab-male').click();
       cy.dataCy('form-card-merch-female').should('not.exist');

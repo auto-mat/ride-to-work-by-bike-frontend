@@ -364,6 +364,7 @@ labelSizeMale = "Velikost – pánská:"
 labelSizeUnisex = "Velikost – unisex:"
 labelTrackDelivery = "Chci dostat zprávu o stavu doručování mého startovního balíčku."
 labelVariant = "Varianta"
+labelUrlSizeConversionChartLink = "Tabulka velikosti"
 
 [form.personalDetails]
 hintGender = "Slouží pro rozřazení do výkonnostních kategorií"
