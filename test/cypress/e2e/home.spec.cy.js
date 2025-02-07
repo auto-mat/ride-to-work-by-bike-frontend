@@ -239,6 +239,7 @@ describe('Home page', () => {
       );
       cy.viewport('iphone-6');
     });
+
     coreTests();
     testLanguageSwitcher();
     testMobileHeader();
