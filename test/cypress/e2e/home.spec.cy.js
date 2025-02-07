@@ -10,14 +10,11 @@ import {
   testMobileHeader,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
-import { useMenu } from '../../../src/composables/useMenu';
 import { calculateCountdownIntervals } from '../../../src/utils';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
 const fontFamily = 'Poppins';
-
-const { getMenuBottom, getMenuTop } = useMenu();
 
 describe('Home page', () => {
   Cypress.on('fail', (err, runnable) => {
@@ -248,33 +245,7 @@ describe('Home page', () => {
 
     it('allows user to show and hide bottom panel on mobile', () => {
       cy.get('@config').then((config) => {
-        cy.wrap(
-          getMenuTop({
-            isUserOrganizationAdmin: false,
-          }),
-        ).then((menuTop) => {
-          cy.wrap(getMenuBottom(config)).then((menuBottom) => {
-            cy.dataCy('footer-panel-menu').should('be.visible');
-            cy.dataCy('footer-panel-menu')
-              .should('be.visible')
-              .find('.q-item')
-              // items shown in bottom bar are set to 3+1 for "show more"
-              .should('have.length', config.mobileBottomPanelVisibleItems + 1);
-            // show slide-out dialog panel
-            cy.dataCy('footer-panel-menu-hamburger').click();
-            cy.dataCy('footer-panel-menu-dialog').should('be.visible');
-            cy.dataCy('footer-panel-menu-dialog')
-              .should('be.visible')
-              .find('.q-item')
-              .should(
-                'have.length',
-                // items in slide-out dialog panel are remaining items
-                menuTop.length +
-                  menuBottom.length -
-                  config.mobileBottomPanelVisibleItems,
-              );
-          });
-        });
+        cy.checkMobileBottomPanel(config, false);
       });
     });
 
@@ -316,33 +287,7 @@ describe('Home page', () => {
 
     it('allows user to show and hide bottom panel on mobile', () => {
       cy.get('@config').then((config) => {
-        cy.wrap(
-          getMenuTop({
-            isUserOrganizationAdmin: true,
-          }),
-        ).then((menuTop) => {
-          cy.wrap(getMenuBottom(config)).then((menuBottom) => {
-            cy.dataCy('footer-panel-menu').should('be.visible');
-            cy.dataCy('footer-panel-menu')
-              .should('be.visible')
-              .find('.q-item')
-              // items shown in bottom bar are set to 3+1 for "show more"
-              .should('have.length', config.mobileBottomPanelVisibleItems + 1);
-            // show slide-out dialog panel
-            cy.dataCy('footer-panel-menu-hamburger').click();
-            cy.dataCy('footer-panel-menu-dialog').should('be.visible');
-            cy.dataCy('footer-panel-menu-dialog')
-              .should('be.visible')
-              .find('.q-item')
-              .should(
-                'have.length',
-                // items in slide-out dialog panel are remaining items
-                menuTop.length +
-                  menuBottom.length -
-                  config.mobileBottomPanelVisibleItems,
-              );
-          });
-        });
+        cy.checkMobileBottomPanel(config, true);
       });
     });
 

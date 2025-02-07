@@ -45,6 +45,7 @@ import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
 import { getRadioOption } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
+import { useMenu } from '../../../src/composables/useMenu';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -2628,6 +2629,44 @@ Cypress.Commands.add(
         expect(response.statusCode).to.equal(httpSuccessfullStatus);
         expect(response.body).to.deep.equal(responseBody);
       }
+    });
+  },
+);
+
+/**
+ * Checks the state of the mobile bottom panel menu and its slide-out dialog
+ * @param {Config} config - The app configuration object
+ * @param {boolean} isUserOrganizationAdmin - Whether the user is a coordinator
+ */
+Cypress.Commands.add(
+  'checkMobileBottomPanel',
+  (config, isUserOrganizationAdmin) => {
+    const { getMenuTop, getMenuBottom } = useMenu();
+
+    cy.wrap(getMenuTop({ isUserOrganizationAdmin })).then((menuTop) => {
+      cy.wrap(getMenuBottom(config)).then((menuBottom) => {
+        // Check footer panel menu
+        cy.dataCy('footer-panel-menu').should('be.visible');
+        cy.dataCy('footer-panel-menu')
+          .should('be.visible')
+          .find('.q-item')
+          // items shown in bottom bar are set to 3+1 for "show more"
+          .should('have.length', config.mobileBottomPanelVisibleItems + 1);
+
+        // Show and check slide-out dialog panel
+        cy.dataCy('footer-panel-menu-hamburger').click();
+        cy.dataCy('footer-panel-menu-dialog').should('be.visible');
+        cy.dataCy('footer-panel-menu-dialog')
+          .should('be.visible')
+          .find('.q-item')
+          .should(
+            'have.length',
+            // items in slide-out dialog panel are remaining items
+            menuTop.length +
+              menuBottom.length -
+              config.mobileBottomPanelVisibleItems,
+          );
+      });
     });
   },
 );
