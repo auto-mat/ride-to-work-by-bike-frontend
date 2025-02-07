@@ -27,12 +27,16 @@ const selectorDrawerMenuItemIcon = 'drawer-menu-item-icon';
 const iconSize = 18;
 const fontSize = '16px';
 
-const { getMenuBottom } = useMenu();
+const { getMenuBottom, getMenuTop } = useMenu();
 
 describe('DrawerMenu', () => {
-  context('menu top', () => {
+  context('menu top - user is not coordinator', () => {
     beforeEach(() => {
-      cy.fixture('menuTopItems.json').then((menuTop) => {
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+        }),
+      ).then((menuTop) => {
         cy.mount(DrawerMenu, {
           props: {
             items: menuTop,
@@ -41,6 +45,8 @@ describe('DrawerMenu', () => {
         cy.wrap(menuTop).as('menu');
       });
     });
+
+    coreTests();
 
     it('has translation for all strings', () => {
       cy.get('@menu').then((menuTop) => {
@@ -52,7 +58,46 @@ describe('DrawerMenu', () => {
       });
     });
 
+    it('does not render coordinator item', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.coordinator'))
+        .should('not.exist');
+    });
+  });
+
+  context('menu top - user is coordinator', () => {
+    beforeEach(() => {
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: true,
+        }),
+      ).then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
+      });
+    });
+
     coreTests();
+
+    it('has translation for all strings', () => {
+      cy.get('@menu').then((menuTop) => {
+        cy.testLanguageStringsInContext(
+          menuTop.map((item) => item.title),
+          'drawerMenu',
+          i18n,
+        );
+      });
+    });
+
+    it('renders coordinator item', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.coordinator'))
+        .should('be.visible');
+    });
   });
 
   context('menu bottom', () => {

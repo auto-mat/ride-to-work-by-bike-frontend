@@ -174,6 +174,7 @@ import * as homepage from '../mocks/homepage';
 
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -209,6 +210,8 @@ export default defineComponent({
     const challengeStore = useChallengeStore();
     const challengeStatus = challengeStore.getChallengeStatus;
 
+    const registerChallengeStore = useRegisterChallengeStore();
+
     const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
 
@@ -219,6 +222,10 @@ export default defineComponent({
       // make sure phase set is loaded
       if (!challengeStore.getPhaseSet.length) {
         await challengeStore.loadPhaseSet();
+      }
+      // if the information is not set, check if user is coordinator
+      if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
+        await registerChallengeStore.checkIsUserOrganizationAdmin();
       }
     });
 
