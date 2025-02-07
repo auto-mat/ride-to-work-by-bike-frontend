@@ -52,6 +52,7 @@ export interface ConfigGlobal {
   checkRegisterChallengeStatusMaxRepetitions: number;
   iDontWantMerchandiseItemCode: string;
   notifyMessagePosition: string;
+  mobileBottomPanelVisibleItems: number;
   apiBase: string;
   apiBaseRtwbbFeed: string;
   apiBaseIpAddress: string;

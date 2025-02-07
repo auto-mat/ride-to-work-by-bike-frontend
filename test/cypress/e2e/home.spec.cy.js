@@ -16,7 +16,6 @@ import { calculateCountdownIntervals } from '../../../src/utils';
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
 const fontFamily = 'Poppins';
-const bottomPanelItems = 3;
 
 const { getMenuBottom, getMenuTop } = useMenu();
 
@@ -260,7 +259,7 @@ describe('Home page', () => {
               .should('be.visible')
               .find('.q-item')
               // items shown in bottom bar are set to 3+1 for "show more"
-              .should('have.length', bottomPanelItems + 1);
+              .should('have.length', config.mobileBottomPanelVisibleItems + 1);
             // show slide-out dialog panel
             cy.dataCy('footer-panel-menu-hamburger').click();
             cy.dataCy('footer-panel-menu-dialog').should('be.visible');
@@ -270,7 +269,9 @@ describe('Home page', () => {
               .should(
                 'have.length',
                 // items in slide-out dialog panel are remaining items
-                menuTop.length + menuBottom.length - bottomPanelItems,
+                menuTop.length +
+                  menuBottom.length -
+                  config.mobileBottomPanelVisibleItems,
               );
           });
         });
@@ -326,7 +327,7 @@ describe('Home page', () => {
               .should('be.visible')
               .find('.q-item')
               // items shown in bottom bar are set to 3+1 for "show more"
-              .should('have.length', bottomPanelItems + 1);
+              .should('have.length', config.mobileBottomPanelVisibleItems + 1);
             // show slide-out dialog panel
             cy.dataCy('footer-panel-menu-hamburger').click();
             cy.dataCy('footer-panel-menu-dialog').should('be.visible');
@@ -336,7 +337,9 @@ describe('Home page', () => {
               .should(
                 'have.length',
                 // items in slide-out dialog panel are remaining items
-                menuTop.length + menuBottom.length - bottomPanelItems,
+                menuTop.length +
+                  menuBottom.length -
+                  config.mobileBottomPanelVisibleItems,
               );
           });
         });

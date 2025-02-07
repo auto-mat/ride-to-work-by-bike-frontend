@@ -48,7 +48,8 @@ export default defineComponent({
     );
     const { getMenuTop, getMenuBottom } = useMenu();
 
-    const shownItemsCount = 3;
+    const shownItemsCount =
+      rideToWorkByBikeConfig.mobileBottomPanelVisibleItems;
     const logger = inject('vuejs3-logger') as Logger | null;
 
     const menuTop = computed((): Link[] => {
