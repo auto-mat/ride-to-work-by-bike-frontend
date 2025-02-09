@@ -4,6 +4,8 @@ import { createPinia, setActivePinia } from 'pinia';
 import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -216,7 +218,7 @@ function coreTests() {
       );
   });
 
-  it('renders checkbox terms', () => {
+  it('renders checkbox terms - default lang', () => {
     // checkbox visible
     cy.dataCy('form-register-coordinator-terms')
       .should('be.visible')
@@ -238,7 +240,12 @@ function coreTests() {
         .and(
           'have.attr',
           'href',
-          rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
         )
         .click();
     });
@@ -249,6 +256,7 @@ function coreTests() {
     // test link in checkbox label
     cy.dataCy('form-register-coordinator-terms').within(() => {
       cy.dataCy('form-terms-link')
+        .and('have.attr', 'target', '_blank')
         .invoke('attr', 'href')
         .then((href) => {
           // test link
@@ -263,6 +271,77 @@ function coreTests() {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
+        });
+    });
+    // test checking the checkbox
+    cy.dataCy('form-register-coordinator-terms')
+      .find('.q-checkbox__inner')
+      .click();
+    // checkbox checked
+    cy.dataCy('form-register-coordinator-terms')
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--truthy');
+  });
+
+  it('renders checkbox terms - en lang (localized URL link)', () => {
+    const enLangCode = 'en';
+    const defLocale = i18n.global.locale;
+    i18n.global.locale = enLangCode;
+
+    // checkbox visible
+    cy.dataCy('form-register-coordinator-terms')
+      .should('be.visible')
+      .find('.q-checkbox__label')
+      .should('be.visible')
+      .and('have.color', grey10)
+      .and(
+        'contain',
+        i18n.global.t('register.coordinator.form.labelPrivacyConsent'),
+      );
+    // checkbox unchecked
+    cy.dataCy('form-register-coordinator-terms')
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--falsy');
+    // click link in checkbox label
+    cy.dataCy('form-register-coordinator-terms').within(() => {
+      cy.dataCy('form-terms-link')
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .click();
+    });
+    // checkbox unchecked
+    cy.dataCy('form-register-coordinator-terms')
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--falsy');
+    // test link in checkbox label
+    cy.dataCy('form-register-coordinator-terms').within(() => {
+      cy.dataCy('form-terms-link')
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
+          // test link
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
         });
     });
     // test checking the checkbox

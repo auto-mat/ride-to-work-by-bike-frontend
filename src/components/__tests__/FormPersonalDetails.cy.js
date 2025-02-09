@@ -5,6 +5,8 @@ import { i18n } from '../../boot/i18n';
 import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -15,9 +17,6 @@ import {
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
-const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
-const urlAppDataTermsOfService =
-  rideToWorkByBikeConfig.urlAppDataTermsOfService;
 const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
 describe('<FormPersonalDetails>', () => {
@@ -161,40 +160,136 @@ describe('<FormPersonalDetails>', () => {
       cy.dataCy('form-terms-input').should('have.attr', 'aria-checked', 'true');
     });
 
-    it('renders link to data privacy policy', () => {
+    it('renders link to data privacy policy - default lang', () => {
       cy.dataCy('form-terms-link')
         .should('be.visible')
-        .and('have.attr', 'href', urlAppDataPrivacyPolicy)
-        .and('have.attr', 'target', '_blank');
-      cy.request({
-        url: urlAppDataPrivacyPolicy,
-        failOnStatusCode: failOnStatusCode,
-        headers: { ...userAgentHeader },
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
     });
 
-    it('renders link to terms of service', () => {
+    it('renders link to data privacy policy - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+      const defLocale = i18n.global.locale;
+      i18n.global.locale = enLangCode;
+
+      cy.dataCy('form-terms-link')
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
+        });
+    });
+
+    it('renders link to terms of service - default lang', () => {
       cy.dataCy('form-service-link')
         .should('be.visible')
-        .and('have.attr', 'href', urlAppDataTermsOfService)
-        .and('have.attr', 'target', '_blank');
-      cy.request({
-        url: urlAppDataTermsOfService,
-        failOnStatusCode: failOnStatusCode,
-        headers: { ...userAgentHeader },
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataTermsOfService,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
+
+    it('renders link to terms of service - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+      const defLocale = i18n.global.locale;
+      i18n.global.locale = enLangCode;
+
+      cy.dataCy('form-service-link')
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataTermsOfService,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
+        });
     });
   });
 });

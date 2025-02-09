@@ -3,6 +3,8 @@ import { i18n } from '../../boot/i18n';
 import { colors } from 'quasar';
 import { getMenuBottom, menuTop } from '../../mocks/layout';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -48,7 +50,13 @@ describe('DrawerMenu', () => {
 
   context('menu bottom', () => {
     beforeEach(() => {
-      const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
+      const urlDonate = getApiBaseUrlWithLang(
+        null,
+        rideToWorkByBikeConfig.urlDonate,
+        defaultLocale,
+        i18n,
+      );
+      const menuBottom = getMenuBottom(urlDonate);
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,
@@ -59,13 +67,75 @@ describe('DrawerMenu', () => {
 
     coreTests();
 
-    it('renders donate item with correct href', () => {
+    it('renders donate item with correct href - default lang', () => {
       cy.dataCy(selectorDrawerMenuItem)
         .contains(i18n.global.t('drawerMenu.donate'))
-        .should('have.attr', 'href', rideToWorkByBikeConfig.urlDonate)
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlDonate,
+            defaultLocale,
+            i18n,
+          ),
+        )
         .should('have.attr', 'target', '_blank')
         .invoke('attr', 'href')
         .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
+  });
+
+  context('menu bottom - change lang to en lang', () => {
+    beforeEach(() => {
+      const enLangCode = 'en';
+      i18n.global.locale = enLangCode;
+
+      const urlDonate = getApiBaseUrlWithLang(
+        null,
+        rideToWorkByBikeConfig.urlDonate,
+        defaultLocale,
+        i18n,
+      );
+      const menuBottom = getMenuBottom(urlDonate);
+      cy.mount(DrawerMenu, {
+        props: {
+          items: menuBottom,
+        },
+      });
+      cy.wrap(menuBottom).as('menu');
+    });
+    it('renders donate item with correct href - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.donate'))
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlDonate,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .should('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
           cy.request({
             url: href,
             failOnStatusCode: failOnStatusCode,

@@ -37,6 +37,7 @@ import FormFieldNewsletter from '../form/FormFieldNewsletter.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
 import { useOrganizations } from 'src/composables/useOrganizations';
 
 // config
@@ -52,6 +53,8 @@ import { useRegisterStore } from '../../stores/register';
 // types
 import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
+
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
@@ -127,8 +130,14 @@ export default defineComponent({
       // noop
     };
 
-    const urlAppDataPrivacyPolicy =
-      rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
+    const urlAppDataPrivacyPolicy = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+        defaultLocale,
+        i18n,
+      );
+    });
 
     return {
       fieldOrganizationLabel,

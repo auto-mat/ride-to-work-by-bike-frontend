@@ -21,7 +21,12 @@
 
 // libraries
 import { colors } from 'quasar';
-import { defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
+
+import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
+
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 // components
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
@@ -92,15 +97,24 @@ export default defineComponent({
     const urlFreeSoftwareDefinition =
       rideToWorkByBikeConfig.urlFreeSoftwareDefinition;
 
+    const urlAutoMat = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAutoMat,
+        defaultLocale,
+        i18n,
+      );
+    });
+
     return {
       appInfo,
       deployedAppVersion,
       maxWidth,
       primaryOpacity,
       rideToWorkByBikeDeployedAppVersion,
-      rideToWorkByBikeConfig,
       socialLinks,
       scrollToTop,
+      urlAutoMat,
       urlFreeSoftwareDefinition,
     };
   },
@@ -161,7 +175,7 @@ export default defineComponent({
                   {{ $t('footer.textChallengeOrganizer') }}
                 </span>
                 <a
-                  :href="rideToWorkByBikeConfig.urlAutoMat"
+                  :href="urlAutoMat"
                   class="block"
                   target="_blank"
                   data-cy="footer-auto-mat-logo-link"

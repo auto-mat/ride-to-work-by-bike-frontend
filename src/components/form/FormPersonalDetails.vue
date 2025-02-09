@@ -20,7 +20,7 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
@@ -29,6 +29,7 @@ import FormFieldNewsletter from './FormFieldNewsletter.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -43,6 +44,9 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 // types
 import type { FormOption } from 'src/components/types/Form';
 import type { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
+import type { Logger } from '../types/Logger';
+
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
@@ -52,6 +56,7 @@ export default defineComponent({
     FormFieldNewsletter,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const store = useRegisterChallengeStore();
 
     const personalDetails = computed<RegisterChallengePersonalDetailsForm>({
@@ -75,10 +80,23 @@ export default defineComponent({
       },
     ];
 
-    const urlAppDataPrivacyPolicy =
-      rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
-    const urlAppDataTermsOfService =
-      rideToWorkByBikeConfig.urlAppDataTermsOfService;
+    const urlAppDataPrivacyPolicy = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+        defaultLocale,
+        i18n,
+      );
+    });
+
+    const urlAppDataTermsOfService = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppDataTermsOfService,
+        defaultLocale,
+        i18n,
+      );
+    });
 
     const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 

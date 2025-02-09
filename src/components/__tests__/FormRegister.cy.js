@@ -10,11 +10,12 @@ import registerRequest from '../../../test/cypress/fixtures/registerRequest.json
 import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 import { useLoginStore } from '../../stores/login';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
   httpTooManyRequestsStatus,
-  httpTooManyRequestsStatusMessage,
   httpInternalServerErrorStatus,
   systemTimeChallengeActive,
   systemTimeRegistrationPhaseInactive,
@@ -61,7 +62,6 @@ const fontSizeText = 14;
 const fontWeightText = 400;
 const router = route();
 const defaultLoginUserEmailStoreValue = '';
-const urlAppDataPrivacyPolicy = rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
 const compareRegisterResponseWithStore = (
   loginStore,
@@ -291,7 +291,7 @@ describe('<FormRegister>', () => {
       });
     });
 
-    it('renders link to privacy policy', () => {
+    it('renders link to privacy policy - default lang', () => {
       cy.waitForThisCampaignApi();
       cy.clock()
         .as('clock')
@@ -300,20 +300,74 @@ describe('<FormRegister>', () => {
         });
       cy.dataCy(selectorFormRegisterPrivacyConsentLink)
         .should('be.visible')
-        .and('have.attr', 'href', urlAppDataPrivacyPolicy);
-      cy.request({
-        url: urlAppDataPrivacyPolicy,
-        failOnStatusCode: failOnStatusCode,
-        headers: { ...userAgentHeader },
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
     });
 
+    it('renders link to privacy policy - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+      const defLocale = i18n.global.locale;
+      i18n.global.locale = enLangCode;
+
+      cy.waitForThisCampaignApi();
+      cy.clock()
+        .as('clock')
+        .then((clock) => {
+          clock.setSystemTime(systemTimeChallengeActive);
+        });
+      cy.dataCy(selectorFormRegisterPrivacyConsentLink)
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
+        });
+    });
     it('renders link to login page', () => {
       const urlLogin = router.resolve({ name: 'login' }).href;
       // wrapper

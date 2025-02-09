@@ -2,6 +2,8 @@ import { colors } from 'quasar';
 import FooterBar from '../global/FooterBar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 
 import {
   failOnStatusCode,
@@ -155,23 +157,78 @@ function coreTests() {
     });
   });
 
-  it('renders Auto*Mat logo with separator and text, validate URL link', () => {
+  it('renders Auto*Mat logo with separator and text, validate URL link - default lang', () => {
     cy.window().then(() => {
       // link
       cy.dataCy(selectorFooterAutoMatLogoLink)
         .should('be.visible')
-        .and('have.attr', 'href', rideToWorkByBikeConfig.urlAutoMat);
-      cy.request({
-        url: rideToWorkByBikeConfig.urlAutoMat,
-        failOnStatusCode: failOnStatusCode,
-        headers: { ...userAgentHeader },
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAutoMat,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+      cy.dataCy(selectorFooterAutoMatLogo)
+        .should('be.visible')
+        .and('have.css', 'width', '74px')
+        .and('have.css', 'height', '28px');
+    });
+  });
+
+  it('renders Auto*Mat logo with separator and text, validate URL link - en lang (localized URL link)', () => {
+    const enLangCode = 'en';
+    const defLocale = i18n.global.locale;
+    i18n.global.locale = enLangCode;
+
+    cy.window().then(() => {
+      // link
+      cy.dataCy(selectorFooterAutoMatLogoLink)
+        .should('be.visible')
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAutoMat,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
+        });
       cy.dataCy(selectorFooterAutoMatLogo)
         .should('be.visible')
         .and('have.css', 'width', '74px')

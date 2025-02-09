@@ -32,18 +32,24 @@
  */
 
 // libraries
-import { defineComponent, computed } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
 import { Screen } from 'quasar';
 
 // components
 import CardPost from './CardPost.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
+import { i18n } from '../../boot/i18n';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // types
 import { CardPost as CardPostType } from '../types';
+import type { Logger } from '../types/Logger';
+
+import { defaultLocale } from '../../i18n/def_locale';
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'ListCardPost',
@@ -66,11 +72,19 @@ export default defineComponent({
     },
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
 
-    const buttonUrl = rideToWorkByBikeConfig.urlBlog;
+    const buttonUrl = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlBlog,
+        defaultLocale,
+        i18n,
+      );
+    });
 
     const buttonWidth = computed((): string => {
       return isLargeScreen.value ? 'auto' : '100%';

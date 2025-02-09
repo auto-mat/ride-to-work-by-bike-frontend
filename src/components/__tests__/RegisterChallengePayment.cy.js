@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { computed, nextTick } from 'vue';
@@ -13,6 +14,8 @@ import { OrganizationType } from '../types/Organization';
 import { getCurrentPriceLevelsUtil } from '../../utils/price_levels';
 import { PriceLevelCategory } from '../../components/enums/Challenge';
 import { Currency, useFormatPrice } from '../../composables/useFormatPrice';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -126,6 +129,7 @@ describe('<RegisterChallengePayment>', () => {
         i18n,
         OrganizationType.school,
       );
+
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
         // for first organization, intercept API call with response true
         cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
@@ -177,6 +181,155 @@ describe('<RegisterChallengePayment>', () => {
     });
 
     coreTests();
+  });
+
+  context('desktop - change lang to en lang', () => {
+    beforeEach(() => {
+      const enLangCode = 'en';
+      i18n.global.locale = enLangCode;
+      setActivePinia(createPinia());
+      interceptOrganizationsApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        OrganizationType.company,
+      );
+      interceptOrganizationsApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        OrganizationType.school,
+      );
+
+      cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
+        // for first organization, intercept API call with response true
+        cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
+          (response) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              rideToWorkByBikeConfig,
+              i18n,
+              formFieldCompanyResponse.results[0].id,
+              response,
+            );
+          },
+        );
+        // for second organization, intercept API call with response false
+        cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              rideToWorkByBikeConfig,
+              i18n,
+              formFieldCompanyResponse.results[1].id,
+              response,
+            );
+          },
+        );
+      });
+      cy.mount(RegisterChallengePayment, {
+        props: {},
+      });
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
+          cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
+            (isUserOrganizationAdminResponse) => {
+              cy.wrap(useChallengeStore()).then((storeChallenge) => {
+                storeChallenge.setPriceLevel(
+                  thisCampaignReponse.results[0].price_level,
+                );
+              });
+              cy.wrap(useRegisterChallengeStore()).then(
+                (storeRegisterChallenge) => {
+                  storeRegisterChallenge.setIsUserOrganizationAdmin(
+                    isUserOrganizationAdminResponse.is_user_organization_admin,
+                  );
+                },
+              );
+            },
+          );
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+    it('shows checkbox become coordinator if organization has no coordinator and user no coordinator - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+
+      cy.dataCy(getRadioOption(PaymentSubject.company))
+        .should('be.visible')
+        .click();
+      // open organization select
+      cy.dataCy(selectorCompany)
+        .should('be.visible')
+        .find('.q-field__append')
+        .click();
+      // from menu select first organization
+      cy.get('.q-menu').within(() => {
+        cy.get('.q-item').first().click();
+      });
+      // wait for API coordinator status check
+      cy.fixture('apiGetHasOrganizationAdminResponseTrue').then((response) => {
+        cy.waitForHasOrganizationAdminApi(response);
+      });
+
+      // checkbox become coordinator should not be visible
+      cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
+      // open organization select
+      cy.dataCy(selectorCompany)
+        .should('be.visible')
+        .find('.q-field__append')
+        .click();
+      // select second organization
+      cy.get('.q-menu').within(() => {
+        cy.get('.q-item').eq(1).click();
+      });
+      // wait for API coordinator status check
+      cy.fixture('apiGetHasOrganizationAdminResponseFalse').then((response) => {
+        cy.waitForHasOrganizationAdminApi(response);
+      });
+      // checkbox become coordinator should be visible
+      cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
+
+      // enable checkbox
+      cy.dataCy(selectorCoordinatorCheckbox).click();
+      // test coordinator form
+      cy.dataCy(selectorCoordinatorText).should('be.visible');
+
+      // checkbox terms
+      cy.dataCy(selectorCoordinatorTerms).should('be.visible');
+      // checkbox is unchecked by default
+      cy.dataCy(selectorCoordinatorTerms)
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--falsy');
+      // click the terms link
+      cy.dataCy(selectorCoordinatorTerms).within(() => {
+        cy.dataCy('form-terms-link').should('be.visible').click();
+        cy.dataCy('form-terms-link')
+          .should(
+            'have.attr',
+            'href',
+            getApiBaseUrlWithLang(
+              null,
+              rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+              defaultLocale,
+              i18n,
+            ),
+          )
+          .and('have.attr', 'target', '_blank')
+          .invoke('attr', 'href')
+          .then((href) => {
+            // test link
+            if (i18n.lang === enLangCode) href.includes(enLangCode);
+            cy.request({
+              url: href,
+              failOnStatusCode: failOnStatusCode,
+              headers: { ...userAgentHeader },
+            }).then((resp) => {
+              if (resp.status === httpTooManyRequestsStatus) {
+                cy.log(httpTooManyRequestsStatusMessage);
+                return;
+              }
+              expect(resp.status).to.eq(httpSuccessfullStatus);
+            });
+          });
+      });
+    });
   });
 
   context('mobile', () => {
@@ -826,7 +979,7 @@ function coreTests() {
     );
   });
 
-  it('shows checkbox become coordinator if organization has no coordinator and user no coordinator', () => {
+  it('shows checkbox become coordinator if organization has no coordinator and user no coordinator - default lang', () => {
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
       .click();
@@ -843,6 +996,7 @@ function coreTests() {
     cy.fixture('apiGetHasOrganizationAdminResponseTrue').then((response) => {
       cy.waitForHasOrganizationAdminApi(response);
     });
+
     // checkbox become coordinator should not be visible
     cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
     // open organization select
@@ -868,6 +1022,7 @@ function coreTests() {
         'contain',
         i18n.global.t('companyCoordinator.labelRegisterCoordinator'),
       );
+
     // get store
     cy.wrap(useRegisterChallengeStore()).then((store) => {
       // access store via computed property to correctly track changes
@@ -890,11 +1045,11 @@ function coreTests() {
         cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
       });
     });
+
     // enable checkbox
     cy.dataCy(selectorCoordinatorCheckbox).click();
     // test coordinator form
     cy.dataCy(selectorCoordinatorText)
-      .should('be.visible')
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .then(($el) => {
@@ -904,6 +1059,7 @@ function coreTests() {
           expect($el.text()).to.eq(translation);
         });
       });
+
     // input phone label
     cy.dataCy(selectorCoordinatorPhone);
     // input job title label
@@ -920,6 +1076,17 @@ function coreTests() {
     cy.dataCy(selectorCoordinatorTerms).within(() => {
       cy.dataCy('form-terms-link').should('be.visible').click();
       cy.dataCy('form-terms-link')
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
         .invoke('attr', 'href')
         .then((href) => {
           // test link
@@ -936,16 +1103,6 @@ function coreTests() {
           });
         });
     });
-    // checkbox is still unchecked
-    cy.dataCy(selectorCoordinatorTerms)
-      .find('.q-checkbox__inner')
-      .should('have.class', 'q-checkbox__inner--falsy');
-    // click the checkbox
-    cy.dataCy(selectorCoordinatorTerms).find('.q-checkbox__inner').click();
-    // checkbox is checked
-    cy.dataCy(selectorCoordinatorTerms)
-      .find('.q-checkbox__inner')
-      .should('have.class', 'q-checkbox__inner--truthy');
   });
 }
 

@@ -37,6 +37,7 @@ import {
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
 import { useFormatPrice } from '../../composables/useFormatPrice';
 
 // components
@@ -66,6 +67,8 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
 import type { ValidatedCoupon } from '../types/Coupon';
+
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'RegisterChallengePayment',
@@ -610,8 +613,14 @@ export default defineComponent({
       () => registerChallengeStore.getSelectedOrganizationLabel,
     );
 
-    const urlAppDataPrivacyPolicy =
-      rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
+    const urlAppDataPrivacyPolicy = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+        defaultLocale,
+        i18n,
+      );
+    });
 
     return {
       borderRadius,

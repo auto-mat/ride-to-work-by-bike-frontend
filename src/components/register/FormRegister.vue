@@ -31,7 +31,14 @@
 
 // libraries
 import { colors } from 'quasar';
-import { defineComponent, onMounted, ref, reactive, computed } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+  ref,
+  reactive,
+} from 'vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // composables
@@ -42,6 +49,9 @@ import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 import ShowCurrentDatetime from '../debug/ShowCurrentDatetime.vue';
 
+// types
+import type { Logger } from '../types/Logger';
+
 // enums
 import { PhaseType } from '../types/Challenge';
 
@@ -49,7 +59,11 @@ import { PhaseType } from '../types/Challenge';
 import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 
+import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
+
 import { formFieldCustomValidationErrCssClass } from '../../utils';
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 export default defineComponent({
   name: 'FormRegister',
@@ -67,6 +81,7 @@ export default defineComponent({
   },
   emits: ['formSubmit'],
   setup(props) {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const defaultFormRegisterValue = '';
     const formRegister = reactive({
       email: defaultFormRegisterValue,
@@ -83,9 +98,6 @@ export default defineComponent({
     const isPasswordConfirm = ref<boolean>(true);
     const isPrivacyConsent = ref<boolean>(false);
     const isNewsletterSubscription = ref<boolean>(false);
-
-    const urlAppDataPrivacyPolicy =
-      rideToWorkByBikeConfig.urlAppDataPrivacyPolicy;
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
@@ -121,6 +133,15 @@ export default defineComponent({
         formFieldCustomValidationErrCssClass
       ] = true;
     }
+
+    const urlAppDataPrivacyPolicy = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppDataPrivacyPolicy,
+        defaultLocale,
+        i18n,
+      );
+    });
 
     return {
       whiteOpacity,

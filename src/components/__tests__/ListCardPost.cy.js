@@ -3,6 +3,8 @@ import ListCardPost from '../homepage/ListCardPost.vue';
 import { hexToRgb } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { defaultLocale } from 'src/i18n/def_locale';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 
 import {
   failOnStatusCode,
@@ -14,7 +16,6 @@ import {
 
 // variables
 const title = i18n.global.t('index.cardListPost.title');
-const buttonUrl = rideToWorkByBikeConfig.urlBlog;
 
 const { getPaletteColor } = colors;
 const gray10 = getPaletteColor('grey-10');
@@ -147,25 +148,75 @@ function coreTests() {
       .and('have.css', 'text-align', 'center');
   });
 
-  it('renders button', () => {
+  it('renders button - default lang', () => {
     cy.dataCy('card-list-post-button')
       .should('be.visible')
       .and('have.css', 'border-color', hexToRgb(gray10))
       .and('have.css', 'border-radius', '28px')
       .and('contain', i18n.global.t('index.cardListPost.button'))
+      .and('have.attr', 'target', '_blank')
       .invoke('attr', 'href')
-      .should('equal', buttonUrl);
-    cy.request({
-      url: buttonUrl,
-      failOnStatusCode: failOnStatusCode,
-      headers: { ...userAgentHeader },
-      headers: { ...userAgentHeader },
-    }).then((resp) => {
-      if (resp.status === httpTooManyRequestsStatus) {
-        cy.log(httpTooManyRequestsStatusMessage);
-        return;
-      }
-      expect(resp.status).to.eq(httpSuccessfullStatus);
-    });
+      .should(
+        'equal',
+        getApiBaseUrlWithLang(
+          null,
+          rideToWorkByBikeConfig.urlBlog,
+          defaultLocale,
+          i18n,
+        ),
+      )
+      .then((href) => {
+        cy.request({
+          url: href,
+          failOnStatusCode: failOnStatusCode,
+          headers: { ...userAgentHeader },
+          headers: { ...userAgentHeader },
+        }).then((resp) => {
+          if (resp.status === httpTooManyRequestsStatus) {
+            cy.log(httpTooManyRequestsStatusMessage);
+            return;
+          }
+          expect(resp.status).to.eq(httpSuccessfullStatus);
+        });
+      });
+  });
+
+  it('renders button - en lang (localized URL link)', () => {
+    const enLangCode = 'en';
+    const defLocale = i18n.global.locale;
+    i18n.global.locale = enLangCode;
+
+    cy.dataCy('card-list-post-button')
+      .should('be.visible')
+      .and('have.css', 'border-color', hexToRgb(gray10))
+      .and('have.css', 'border-radius', '28px')
+      .and('contain', i18n.global.t('index.cardListPost.button'))
+      .and('have.attr', 'target', '_blank')
+      .invoke('attr', 'href')
+      .should(
+        'equal',
+        getApiBaseUrlWithLang(
+          null,
+          rideToWorkByBikeConfig.urlBlog,
+          defaultLocale,
+          i18n,
+        ),
+      )
+      .then((href) => {
+        if (i18n.lang === enLangCode) href.includes(enLangCode);
+        cy.request({
+          url: href,
+          failOnStatusCode: failOnStatusCode,
+          headers: { ...userAgentHeader },
+          headers: { ...userAgentHeader },
+        }).then((resp) => {
+          if (resp.status === httpTooManyRequestsStatus) {
+            cy.log(httpTooManyRequestsStatusMessage);
+            return;
+          }
+          expect(resp.status).to.eq(httpSuccessfullStatus);
+        });
+        i18n.global.locale = defLocale;
+      });
   });
 }

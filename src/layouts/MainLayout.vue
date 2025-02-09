@@ -1,7 +1,8 @@
 <script lang="ts">
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
 import { i18n } from '../boot/i18n';
+import { defaultLocale } from '../i18n/def_locale';
 import { useRoute } from 'vue-router';
 
 // components
@@ -20,6 +21,8 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // mocks
 import { getMenuBottom, menuTop } from '../mocks/layout';
+
+import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
 
 declare global {
   interface Window {
@@ -43,6 +46,7 @@ export default defineComponent({
     UserSelect,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const route = useRoute();
     const isHomePage = computed(
       () => route.path === routesConf['home']['path'],
@@ -53,7 +57,18 @@ export default defineComponent({
         ? 'none'
         : rideToWorkByBikeConfig.containerContentWidth;
     });
-    const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
+    const urlDonate = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlDonate,
+        defaultLocale,
+        i18n,
+      );
+    });
+    const menuBottom = computed(() => {
+      return getMenuBottom(urlDonate.value);
+    });
+
     return {
       menuBottom,
       menuTop,

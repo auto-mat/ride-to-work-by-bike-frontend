@@ -20,7 +20,12 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
+
+import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
+
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -47,9 +52,19 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const logger = inject('vuejs3-logger') as Logger | null;
     let cyTest;
     if (window.Cypress) cyTest = true;
-    const linkUrl = props.url ? props.url : rideToWorkByBikeConfig.urlAutoMat;
+    const linkUrl = computed(() => {
+      return props.url
+        ? props.url
+        : getApiBaseUrlWithLang(
+            logger,
+            rideToWorkByBikeConfig.urlAutoMat,
+            defaultLocale,
+            i18n,
+          );
+    });
     return {
       cyTest,
       linkUrl,

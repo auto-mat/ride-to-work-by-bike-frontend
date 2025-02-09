@@ -17,7 +17,11 @@
  */
 
 // libraries
-import { defineComponent, ref, computed } from 'vue';
+import { computed, defineComponent, inject, ref } from 'vue';
+
+// composables
+import { i18n } from '../../boot/i18n';
+import { defaultLocale } from '../../i18n/def_locale';
 
 // types
 import { Link } from 'components/types';
@@ -25,19 +29,32 @@ import { Link } from 'components/types';
 // mocks
 import { getMenuBottom, menuTop } from '../../mocks/layout';
 
+import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
     const shownItemsCount = 3;
+    const logger = inject('vuejs3-logger') as Logger | null;
 
     const menuPanel = computed((): Link[] => {
       return menuTop.slice(0, shownItemsCount);
     });
 
     const isDialogOpen = ref(false);
-    const menuBottom = getMenuBottom(rideToWorkByBikeConfig.urlDonate);
+    const urlDonate = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlDonate,
+        defaultLocale,
+        i18n,
+      );
+    });
+    const menuBottom = computed(() => {
+      return getMenuBottom(urlDonate.value);
+    });
 
     return {
       isDialogOpen,
