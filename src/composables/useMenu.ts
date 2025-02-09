@@ -13,7 +13,7 @@ export const useMenu = () => {
    * Get the top menu items
    * @param {ComputedRef<boolean | null> | boolean | null}
    *   isUserOrganizationAdmin - Whether the user is an organization admin
-   * @returns {Link[]} Array of top menu items
+   * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
     isUserOrganizationAdmin,
@@ -71,7 +71,7 @@ export const useMenu = () => {
   /**
    * Get the bottom menu items
    * @param {string} urlDonate - The URL of the donate page
-   * @returns {Link[]} Array of bottom menu items
+   * @returns {Link[]} - Array of bottom menu items
    */
   const getMenuBottom = (urlDonate: string): Link[] => {
     const menuBottom: Link[] = [
