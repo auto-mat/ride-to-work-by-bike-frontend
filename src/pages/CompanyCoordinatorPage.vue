@@ -15,7 +15,10 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
+
+import { i18n } from '../boot/i18n';
+import { defaultLocale } from '../i18n/def_locale';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -24,6 +27,11 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import PageHeading from '../components/global/PageHeading.vue';
 import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
 
+import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
+
+// types
+import type { Logger } from '../types/Logger';
+
 export default defineComponent({
   name: 'CompanyCoordinatorPage',
   components: {
@@ -31,11 +39,17 @@ export default defineComponent({
     CoordinatorTabs,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const isCoordinatorEnabled = false;
 
-    const urlRideToWorkByBikeOldFrontendDjangoApp =
-      rideToWorkByBikeConfig.urlRideToWorkByBikeOldFrontendDjangoApp;
-
+    const urlRideToWorkByBikeOldFrontendDjangoApp = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlRideToWorkByBikeOldFrontendDjangoApp,
+        defaultLocale,
+        i18n,
+      );
+    });
     return {
       isCoordinatorEnabled,
       urlRideToWorkByBikeOldFrontendDjangoApp,
