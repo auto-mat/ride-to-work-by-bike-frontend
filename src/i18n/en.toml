@@ -375,7 +375,7 @@ titleNewsletter = "What you want to be informed about by e-mail"
 
 [form.participation]
 labelColleagues = "With my colleagues"
-labelSchoolmates = "With my schoolmates"
+labelSchoolmates = "With my schoolmates or colleagues"
 labelFamily = "With my family or friends"
 textColleagues = "You do not need consent from your manager"
 textSchoolmates = "You do not need consent from your school"
@@ -422,7 +422,7 @@ buttonAddTeam = "Add team"
 labelMembers = "member | members"
 labelTeam = "Team name"
 labelTeamName = "Your team name"
-textTeam = "<p>In one team there can be max. 5 members. You can invite them at any time until the end of the challenge registration period. An organization can have any number of teams.</p"
+textTeam = "<p>There can be a maximum of 5 members per team, you can invite members at any time until the end of the registration period. A company can have any number of teams.</p><p>Only teams with more than 1 member can join the inter-team challenges.</p"
 titleAddTeam = "Add team"
 
 [forumPostList]
@@ -749,7 +749,7 @@ labelPrivacyConsent2 = "for the purpose of creating an account and informing abo
 linkLogin = "Sign in"
 labelNewsletterSubscription = "I want to receive information about accompanying events (bike rides, breakfasts...) and action offers."
 linkRegister = "Register again"
-linkRegisterAsCoordinator = "Register as a coordinator"
+linkRegisterAsCoordinator = "Register as a non-competing coordinator"
 linkRegisterAsParticipant = "Register as a participant"
 messageEmailReqired = "Please fill in your e-mail"
 messageEmailInvalid = "Please fill in a valid email"
@@ -819,7 +819,7 @@ parseEntryFeePaymentOptionsError = "Error parsing entry fee payment options {err
 title.may = "Coordinator registration for&nbsp;the&nbsp;May Challenge"
 title.october = "Coordinator registration for&nbsp;the&nbsp;October Challenge"
 titleInfo = "Duties of the coordinator"
-info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting employers or school directors to pay the entry fee.</li><li>Distributing starter packs to participants.</li><li>Organizing any internal company competitions.</li><li>Regularly approving payments for your employees and subsequently generating an invoice.</li></ul><p>You will also have access to the Bike to Work system, where you can find information about your organization's participation and results, including teams and individual participants.</p><p><strong>You will not register participants yourself, you can only approach them to sign up.</strong></p>"
+info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting employers or school directors to pay the entry fee.</li><li>Distributing starter packs to participants.</li><li>Organizing any internal company challenges.</li><li>Regularly approving payments for your employees and subsequently generating an invoice.</li></ul><p>You will also have access to the Bike to Work system, where you can find information about your organization's participation and results, including teams and individual participants.</p><p><strong>You will not register participants yourself, you can only approach them to sign up.</strong></p>"
 
 [register.coordinator.form]
 title = "Registration"
