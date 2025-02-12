@@ -26,7 +26,7 @@ export const useValidation = () => {
     const emails = value.split(',');
     // remove whitespace
     const trimmedEmails = emails.map((email) => email.trim());
-    return trimmedEmails.every((email) => isEmail(email));
+    return trimmedEmails.every((email) => !!email && isEmail(email));
   };
 
   const isPhone = (value: string): boolean => {
