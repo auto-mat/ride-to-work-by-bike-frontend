@@ -1,5 +1,9 @@
 export const useValidation = () => {
   const isEmail = (value: string): boolean => {
+    // if empty, pass - required check is separate from regex validation
+    if (!value) {
+      return true;
+    }
     /**
      * Match 99% of valid email addresses and will not pass validation
      * for email addresses that have, for instance

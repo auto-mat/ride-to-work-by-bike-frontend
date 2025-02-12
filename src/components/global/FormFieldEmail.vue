@@ -17,6 +17,8 @@
  *    Defaults to `transparent`.
  * - `dark` (boolean, optional): Whether the input should be dark.
  *    Defaults to `false`.
+ * - `required` (boolean, default: true): Whether the input is required.
+ *    Defaults to `true`.
  * - `testing` (boolean, optional): Wheter this is a testing environment.
  *    Defaults to `false`.
  * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
@@ -58,6 +60,10 @@ export default defineComponent({
     bgColor: {
       type: String as () => 'white' | 'transparent',
       default: 'transparent',
+    },
+    required: {
+      type: Boolean,
+      default: true,
     },
     testing: {
       type: Boolean,
@@ -113,6 +119,7 @@ export default defineComponent({
       :lazy-rules="!testing"
       :rules="[
         (val) =>
+          !required ||
           isFilled(val) ||
           $t('form.messageFieldRequired', {
             fieldName: $t('form.labelEmail'),
