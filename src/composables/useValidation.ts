@@ -1,9 +1,5 @@
 export const useValidation = () => {
   const isEmail = (value: string): boolean => {
-    // if empty, pass - required check is separate from regex validation
-    if (!value) {
-      return true;
-    }
     /**
      * Match 99% of valid email addresses and will not pass validation
      * for email addresses that have, for instance
@@ -26,7 +22,7 @@ export const useValidation = () => {
     const emails = value.split(',');
     // remove whitespace
     const trimmedEmails = emails.map((email) => email.trim());
-    return trimmedEmails.every((email) => !!email && isEmail(email));
+    return trimmedEmails.every((email) => isEmail(email));
   };
 
   const isPhone = (value: string): boolean => {

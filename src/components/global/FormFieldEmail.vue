@@ -124,7 +124,7 @@ export default defineComponent({
           $t('form.messageFieldRequired', {
             fieldName: $t('form.labelEmail'),
           }),
-        (val) => isEmail(val) || $t('form.messageEmailInvalid'),
+        (val) => !val || isEmail(val) || $t('form.messageEmailInvalid'),
       ]"
       :class="emailFormFieldCssClasses"
       id="form-email"
