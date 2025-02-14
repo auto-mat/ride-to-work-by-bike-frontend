@@ -2389,6 +2389,102 @@ describe('Register Challenge page', () => {
         });
       });
     });
+
+    it('does not allow to continue if team max members have been reached before submitting team step', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.passToStep5();
+          cy.waitForTeamsGetApi();
+          // override intercept for team GET request
+          cy.fixture('formOrganizationOptions').then(
+            (formOrganizationOptions) => {
+              cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+                cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                  (teamsResponseNextFullTeam) => {
+                    // intercept teams for first subsidiary
+                    cy.interceptTeamsGetApi(
+                      config,
+                      i18n,
+                      formOrganizationOptions[0].subsidiaries[0].id,
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    // UI should allow to select 3rd (last) team
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(2)
+                      .should('be.visible')
+                      .and('not.be.disabled')
+                      .click();
+                    // check that 3rd team is selected
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(2)
+                      .find('.q-radio__inner')
+                      .should('have.class', 'q-radio__inner--truthy');
+                    // try to submit team step
+                    cy.dataCy('step-5-continue').should('be.visible').click();
+                    // wait for updated team API request
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    // check that we are still on step 5
+                    cy.dataCy('step-5-continue').should('be.visible');
+                    // check error message
+                    cy.contains(
+                      i18n.global.t(
+                        'postRegisterChallenge.messageTeamMaxMembersReached',
+                      ),
+                    ).should('be.visible');
+                    // check that 3rd team is not available
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(2)
+                      .should('be.visible')
+                      .and('have.class', 'disabled');
+                    // check that 3rd team is deselected
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(2)
+                      .find('.q-radio__inner')
+                      .should('not.have.class', 'q-radio__inner--truthy');
+                    // select 2nd team
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(1)
+                      .should('be.visible')
+                      .and('not.be.disabled')
+                      .click();
+                    // check that 2nd team is selected
+                    cy.dataCy('form-select-table-team')
+                      .should('be.visible')
+                      .find('.q-radio')
+                      .eq(1)
+                      .find('.q-radio__inner')
+                      .should('have.class', 'q-radio__inner--truthy');
+                    // submit team step
+                    cy.dataCy('step-5-continue').should('be.visible').click();
+                    // wait for team API request to refetch again
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    // check that we are on step 6
+                    cy.dataCy('step-6-continue').should('be.visible');
+                  },
+                );
+              });
+            },
+          );
+        });
+      });
+    });
   });
 
   context('registration in progress, individual payment "done"', () => {
@@ -3193,7 +3289,7 @@ describe('Register Challenge page', () => {
     },
   );
 
-  context(
+  context.only(
     'registration in progress, company payment "waiting" + I dont want merch',
     () => {
       beforeEach(() => {

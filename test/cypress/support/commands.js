@@ -1080,36 +1080,43 @@ Cypress.Commands.add('fillAndSubmitLoginForm', () => {
  * Wait for intercept teams API calls and compare request/response object
  * Wait for `@getTeams` and `@getTeamsNextPage` intercepts
  */
-Cypress.Commands.add('waitForTeamsGetApi', () => {
-  cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
-    cy.fixture('apiGetTeamsResponseNext').then((teamsResponseNext) => {
-      cy.wait(['@getTeams', '@getTeamsNextPage']).spread(
-        (getTeams, getTeamsNextPage) => {
-          expect(getTeams.request.headers.authorization).to.include(
-            bearerTokeAuth,
-          );
-          if (getTeams.response) {
-            expect(getTeams.response.statusCode).to.equal(
-              httpSuccessfullStatus,
+Cypress.Commands.add(
+  'waitForTeamsGetApi',
+  (teamsResponse = null, teamsResponseNext = null) => {
+    cy.fixture('apiGetTeamsResponse').then((defaultTeamsResponse) => {
+      cy.fixture('apiGetTeamsResponseNext').then((defaultTeamsResponseNext) => {
+        cy.wait(['@getTeams', '@getTeamsNextPage']).spread(
+          (getTeams, getTeamsNextPage) => {
+            expect(getTeams.request.headers.authorization).to.include(
+              bearerTokeAuth,
             );
-            expect(getTeams.response.body).to.deep.equal(teamsResponse);
-          }
-          expect(getTeamsNextPage.request.headers.authorization).to.include(
-            bearerTokeAuth,
-          );
-          if (getTeamsNextPage.response) {
-            expect(getTeamsNextPage.response.statusCode).to.equal(
-              httpSuccessfullStatus,
+            if (getTeams.response) {
+              expect(getTeams.response.statusCode).to.equal(
+                httpSuccessfullStatus,
+              );
+              expect(getTeams.response.body).to.deep.equal(
+                teamsResponse ? teamsResponse : defaultTeamsResponse,
+              );
+            }
+            expect(getTeamsNextPage.request.headers.authorization).to.include(
+              bearerTokeAuth,
             );
-            expect(getTeamsNextPage.response.body).to.deep.equal(
-              teamsResponseNext,
-            );
-          }
-        },
-      );
+            if (getTeamsNextPage.response) {
+              expect(getTeamsNextPage.response.statusCode).to.equal(
+                httpSuccessfullStatus,
+              );
+              expect(getTeamsNextPage.response.body).to.deep.equal(
+                teamsResponseNext
+                  ? teamsResponseNext
+                  : defaultTeamsResponseNext,
+              );
+            }
+          },
+        );
+      });
     });
-  });
-});
+  },
+);
 
 /**
  * Intercept team POST API call

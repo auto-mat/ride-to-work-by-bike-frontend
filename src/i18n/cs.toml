@@ -662,8 +662,8 @@ labelScheduled = "Po výzvě"
 apiMessageError = "Chyba při ukládání stavu registrace."
 apiMessageErrorWithMessage = "Chyba při ukládání stavu registrace. Chyba: {error}"
 apiMessageSuccess = "Stav registrace byl úspěšně uložen."
-
-
+messageTeamMaxMembersUnavailable = "Nepodařilo se zjistit počet členů týmu. Zkuste to znovu později."
+messageTeamMaxMembersReached = "Tým je plný. Nemůžete přidat další členy."
 
 [profile]
 buttonDeleteAccount = "Smazat"

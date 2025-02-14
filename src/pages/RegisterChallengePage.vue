@@ -191,11 +191,11 @@ export default defineComponent({
         onContinue();
       }
       // handle redirect for completed registration
-      if (registerChallengeStore.getIsRegistrationComplete) {
-        if (router) {
-          router.push(routesConf['home']['path']);
-        }
-      }
+      // if (registerChallengeStore.getIsRegistrationComplete) {
+      //   if (router) {
+      //     router.push(routesConf['home']['path']);
+      //   }
+      // }
     });
 
     const organizationType = computed({

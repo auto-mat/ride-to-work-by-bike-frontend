@@ -660,6 +660,8 @@ labelScheduled = "After challenge"
 apiMessageError = "Error saving registration status."
 apiMessageErrorWithMessage = "Error saving registration status. Error: {error}"
 apiMessageSuccess = "Registration status was successfully saved."
+messageTeamMaxMembersUnavailable = "Failed to get team members count. Please try again later."
+messageTeamMaxMembersReached = "Team is full. You cannot add more members."
 
 [profile]
 buttonDeleteAccount = "Delete"

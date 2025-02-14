@@ -39,6 +39,7 @@ import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
 import { PaymentCategory } from '../components/types/ApiPayu';
 
 // stores
+import { useChallengeStore } from './challenge';
 import { useRegisterStore } from './register';
 
 // types
@@ -53,7 +54,6 @@ import type {
   MerchandiseItem,
 } from '../components/types/Merchandise';
 import { i18n } from '../boot/i18n';
-import { useChallengeStore } from './challenge';
 import { PriceLevelCategory } from '../components/enums/Challenge';
 import type {
   RegisterChallengePostPayload,
@@ -534,7 +534,38 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       if (this.voucher && this.paymentSubject !== PaymentSubject.voucher) {
         this.setVoucher(null);
       }
-      // payload map defines what data is sent to the API for each step
+      // if step = team, check team max members before submitting
+      if (step === RegisterChallengeStep.team) {
+        const challengeStore = useChallengeStore();
+        const maxTeamMembers = challengeStore.getMaxTeamMembers;
+        // refetch teams
+        await this.loadTeamsToStore(this.$log);
+        // check selected team max members
+        const selectedTeam = this.teams.find((team) => team.id === this.teamId);
+        if (!selectedTeam?.members || !maxTeamMembers) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t(
+              'postRegisterChallenge.messageTeamMaxMembersUnavailable',
+            ),
+          });
+          // reset team ID
+          this.setTeamId(null);
+          return null;
+        }
+        if (selectedTeam?.members.length >= maxTeamMembers) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t(
+              'postRegisterChallenge.messageTeamMaxMembersReached',
+            ),
+          });
+          // reset team ID
+          this.setTeamId(null);
+          return null;
+        }
+      }
+
       const isPaymentOrganization = this.getIsPaymentSubjectOrganization;
       /**
        * Defines what data is sent to the API for each step
