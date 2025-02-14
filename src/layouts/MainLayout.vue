@@ -83,9 +83,20 @@ export default defineComponent({
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
+    const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
+    const urlAdmin = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlAppAdmin,
+        defaultLocale,
+        i18n,
+      );
+    });
     const menuTop = computed((): Link[] => {
       return getMenuTop({
         isUserOrganizationAdmin,
+        isUserStaff,
+        urlAdmin,
       });
     });
 

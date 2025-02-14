@@ -139,9 +139,17 @@ export const testDesktopSidebar = (): void => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
       cy.dataCy(selectorUserSelectDesktop).should('be.visible');
+      const urlAdmin = getApiBaseUrlWithLang(
+        null,
+        (config as ConfigGlobal).urlAppAdmin,
+        defaultLocale,
+        defaultLocale,
+      );
       if (
         getMenuTop({
           isUserOrganizationAdmin: false,
+          isUserStaff: false,
+          urlAdmin,
         }).length > 0
       ) {
         cy.dataCy(selectorDrawerMenuTop).should('be.visible');

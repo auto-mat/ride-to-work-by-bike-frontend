@@ -22,6 +22,7 @@ export interface ConfigGlobal {
   borderRadiusButtonSmall: string;
   maxWidthBanner: string;
   contactEmail: string;
+  urlAppAdmin: string;
   urlAutoMat: string;
   urlAppStore: string;
   urlBlog: string;

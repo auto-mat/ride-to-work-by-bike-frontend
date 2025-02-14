@@ -49,6 +49,7 @@ apiMessageErrorWithMessage = "Subsidiary creation failed. Error: {error}"
 apiMessageSuccess = "Subsidiary was successfully created."
 
 [drawerMenu]
+admin = "Administration"
 buttonParticipation = "Participation"
 buttonCityAdministration = "City administration"
 community = "Community"

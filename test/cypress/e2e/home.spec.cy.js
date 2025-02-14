@@ -286,8 +286,17 @@ describe('Home page', () => {
     testMobileHeader();
 
     it('allows user to show and hide bottom panel on mobile', () => {
-      cy.get('@config').then((config) => {
-        cy.checkMobileBottomPanel(config, false);
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.get('@config').then((config) => {
+          cy.checkMobileBottomPanel({
+            config,
+            i18n: win.i18n,
+            defLocale,
+            isUserOrganizationAdmin: false,
+            isUserStaff: false,
+          });
+        });
       });
     });
 
@@ -328,8 +337,17 @@ describe('Home page', () => {
     testMobileHeader();
 
     it('allows user to show and hide bottom panel on mobile', () => {
-      cy.get('@config').then((config) => {
-        cy.checkMobileBottomPanel(config, true);
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.get('@config').then((config) => {
+          cy.checkMobileBottomPanel({
+            config,
+            i18n: win.i18n,
+            defLocale,
+            isUserOrganizationAdmin: true,
+            isUserStaff: false,
+          });
+        });
       });
     });
 
@@ -439,6 +457,40 @@ describe('Home page', () => {
 
     it(failTestTitle, () => {
       cy.window().its('scrollY').should('equal', 0);
+    });
+  });
+
+  context('mobile - user is staff', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept register challenge API with staff user
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+      });
+      // visit index page
+      cy.visit(Cypress.config('baseUrl'));
+      // wait for API intercepts
+      cy.waitForThisCampaignApi();
+      cy.viewport('iphone-6');
+    });
+
+    it('allows user to show and hide bottom panel on mobile', () => {
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.get('@config').then((config) => {
+          cy.checkMobileBottomPanel({
+            config,
+            i18n: win.i18n,
+            defLocale,
+            isUserOrganizationAdmin: false,
+            isUserStaff: true,
+          });
+        });
+      });
     });
   });
 

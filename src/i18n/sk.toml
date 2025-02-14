@@ -49,6 +49,7 @@ apiMessageErrorWithMessage = "Vytvorenie pobočky zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Pobočka bola úspešne vytvorená."
 
 [drawerMenu]
+admin = "Administrácia"
 buttonParticipation = "Účasť"
 buttonCityAdministration = "Správa mesta"
 community = "Komunita"

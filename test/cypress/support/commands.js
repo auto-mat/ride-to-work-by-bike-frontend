@@ -2640,11 +2640,37 @@ Cypress.Commands.add(
  */
 Cypress.Commands.add(
   'checkMobileBottomPanel',
-  (config, isUserOrganizationAdmin) => {
+  ({
+    config,
+    i18n,
+    defLocale,
+    isUserOrganizationAdmin = false,
+    isUserStaff = false,
+  }) => {
     const { getMenuTop, getMenuBottom } = useMenu();
 
-    cy.wrap(getMenuTop({ isUserOrganizationAdmin })).then((menuTop) => {
-      cy.wrap(getMenuBottom(config)).then((menuBottom) => {
+    // get localized URL for menu admin link
+    const urlAdmin = getApiBaseUrlWithLang(
+      null,
+      config.urlAppAdmin,
+      defLocale,
+      i18n,
+    );
+    // get localized URL for menu donate link
+    const urlDonate = getApiBaseUrlWithLang(
+      null,
+      config.urlDonate,
+      defLocale,
+      i18n,
+    );
+    cy.wrap(
+      getMenuTop({
+        isUserOrganizationAdmin,
+        isUserStaff,
+        urlAdmin,
+      }),
+    ).then((menuTop) => {
+      cy.wrap(getMenuBottom(urlDonate)).then((menuBottom) => {
         // Check footer panel menu
         cy.dataCy('footer-panel-menu').should('be.visible');
         cy.dataCy('footer-panel-menu')
@@ -2666,6 +2692,74 @@ Cypress.Commands.add(
               menuBottom.length -
               config.mobileBottomPanelVisibleItems,
           );
+        // check that menu contains donate link
+        cy.dataCy('footer-panel-menu-dialog').within(() => {
+          cy.get('.q-item')
+            .contains('.q-item', i18n.global.t('drawerMenu.donate'))
+            .should('be.visible')
+            .and('have.attr', 'href', urlDonate)
+            .should('have.attr', 'target', '_blank')
+            .invoke('attr', 'href')
+            .then((href) => {
+              cy.request({
+                url: href,
+                failOnStatusCode: failOnStatusCode,
+                headers: { ...userAgentHeader },
+              }).then((resp) => {
+                if (resp.status === httpTooManyRequestsStatus) {
+                  cy.log(httpTooManyRequestsStatusMessage);
+                  return;
+                }
+                expect(resp.status).to.eq(httpSuccessfullStatus);
+              });
+            });
+        });
+        if (isUserOrganizationAdmin) {
+          // user is coordinator - menu should contain coordinator item
+          cy.dataCy('footer-panel-menu-dialog').within(() => {
+            cy.get('.q-item')
+              .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
+              .should('be.visible');
+          });
+        } else {
+          // user is not coordinator - menu should not contain coordinator item
+          cy.dataCy('footer-panel-menu-dialog').within(() => {
+            cy.get('.q-item')
+              .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
+              .should('not.exist');
+          });
+        }
+        if (isUserStaff) {
+          // user is staff - menu should contain admin item
+          cy.dataCy('footer-panel-menu-dialog').within(() => {
+            cy.get('.q-item')
+              .contains('.q-item', i18n.global.t('drawerMenu.admin'))
+              .should('be.visible')
+              .and('have.attr', 'href', urlAdmin)
+              .should('have.attr', 'target', '_blank')
+              .invoke('attr', 'href')
+              .then((href) => {
+                cy.request({
+                  url: href,
+                  failOnStatusCode: failOnStatusCode,
+                  headers: { ...userAgentHeader },
+                }).then((resp) => {
+                  if (resp.status === httpTooManyRequestsStatus) {
+                    cy.log(httpTooManyRequestsStatusMessage);
+                    return;
+                  }
+                  expect(resp.status).to.eq(httpSuccessfullStatus);
+                });
+              });
+          });
+        } else {
+          // user is not staff - menu should not contain admin item
+          cy.dataCy('footer-panel-menu-dialog').within(() => {
+            cy.get('.q-item')
+              .contains('.q-item', i18n.global.t('drawerMenu.admin'))
+              .should('not.exist');
+          });
+        }
       });
     });
   },

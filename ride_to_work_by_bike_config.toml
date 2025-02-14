@@ -49,6 +49,7 @@ urlBaseBackend = "https://test.dopracenakole.cz/"
 
 # EXTERNAL URLS
 
+urlAppAdmin = "https://dpnk.dopracenakole.net/admin"
 urlAppStore = "https://apps.apple.com/cz/app/do-pr%C3%A1ce-na-kole/id1564442780"
 urlAutoMat = "https://auto-mat.cz"
 urlBlog = "https://dopracenakole.cz/novinky-do-prace-na-kole"

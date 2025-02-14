@@ -303,6 +303,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.isUserOrganizationAdmin,
     getIsLoadingUserOrganizationAdmin: (state): boolean =>
       state.isLoadingUserOrganizationAdmin,
+    getIsUserStaff: (state): boolean | null => state.personalDetails.isStaff,
   },
 
   actions: {
