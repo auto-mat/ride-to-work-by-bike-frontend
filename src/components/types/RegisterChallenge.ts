@@ -32,6 +32,7 @@ export interface RegisterChallengePersonalDetailsForm
   firstName: string;
   gender: Gender | null;
   id: number | null;
+  isStaff: boolean;
   lastName: string;
   newsletter: NewsletterType[];
 }

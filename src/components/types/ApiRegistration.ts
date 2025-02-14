@@ -8,6 +8,7 @@ export type CorePersonalDetails = {
   first_name: string;
   last_name: string;
   id: number;
+  is_staff: boolean;
   nickname: string;
   sex: string;
   telephone: string;
