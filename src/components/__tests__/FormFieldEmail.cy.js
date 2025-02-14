@@ -212,5 +212,15 @@ function coreTests() {
     cy.dataCy('form-email-input').blur();
     cy.get('.q-field__messages').should('be.empty');
     cy.dataCy('form-email-input').clear();
+    // valid email (uppercase)
+    cy.dataCy('form-email-input').type('USER@EXAMPLE.ORG');
+    cy.dataCy('form-email-input').blur();
+    cy.get('.q-field__messages').should('be.empty');
+    cy.dataCy('form-email-input').clear();
+    // valid email (uppercase)
+    cy.dataCy('form-email-input').type('uSeR@Example.OrG');
+    cy.dataCy('form-email-input').blur();
+    cy.get('.q-field__messages').should('be.empty');
+    cy.dataCy('form-email-input').clear();
   });
 }
