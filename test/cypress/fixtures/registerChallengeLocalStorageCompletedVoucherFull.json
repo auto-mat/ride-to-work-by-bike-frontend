@@ -3,6 +3,7 @@
     "firstName": "John",
     "lastName": "Doe",
     "id": null,
+    "isStaff": false,
     "newsletter": ["challenge", "events", "mobility"],
     "nickname": "JD",
     "gender": "male",
