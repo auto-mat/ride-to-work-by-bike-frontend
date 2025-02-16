@@ -93,6 +93,11 @@ apiMessageError = "Fetching merchandise failed."
 apiMessageErrorWithMessage = "Fetching merchandise failed. Error: {error}"
 apiMessageSuccess = "Merchandise fetched successfully."
 
+[getMyTeam]
+apiMessageError = "Failed to load team."
+apiMessageErrorWithMessage = "Failed to load team. Error: {error}"
+apiMessageSuccess = "Team was successfully loaded."
+
 [getFilteredMerchandise]
 apiMessageError = "Fetching filtered merchandise by code failed."
 apiMessageErrorWithMessage = "Fetching filtered merchandise by code failed. Error: {error}"

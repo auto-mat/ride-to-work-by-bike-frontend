@@ -93,6 +93,11 @@ apiMessageError = "Načítanie startovních balíčkov zlyhalo."
 apiMessageErrorWithMessage = "Načítanie startovních balíčkov zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Startovní balíčky boli úspešne načítané."
 
+[getMyTeam]
+apiMessageError = "Načítanie tímu zlyhalo."
+apiMessageErrorWithMessage = "Načítanie tímu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Tím bol úspešne načítaný."
+
 [getFilteredMerchandise]
 apiMessageError = "Načítanie startovních balíčkov filtrovaných na základe kódu zlyhalo."
 apiMessageErrorWithMessage = "Načítanie startovních balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"

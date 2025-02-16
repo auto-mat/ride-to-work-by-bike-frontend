@@ -1,6 +1,7 @@
 import { Ref } from 'vue';
 import { Image } from './Image';
 import { FormCompanyAddressFields, FormSelectTableOption } from './Form';
+import type { TeamResults } from './Results';
 
 export enum OrganizationType {
   company = 'company',
@@ -88,4 +89,23 @@ export type useApiGetTeamsReturn = {
   isLoading: Ref<boolean>;
   loadTeams: (subsidiaryId: number) => Promise<void>;
   mapTeamToOption: (team: OrganizationTeam) => FormSelectTableOption;
+};
+
+export interface GetMyTeamResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Array<
+    TeamResults & {
+      member_count: number;
+      is_full: boolean;
+      unapproved_member_count: number;
+    }
+  >;
+}
+
+export type useApiGetMyTeamReturn = {
+  team: Ref<GetMyTeamResponse['results'][0] | null>;
+  isLoading: Ref<boolean>;
+  loadTeam: () => Promise<void>;
 };

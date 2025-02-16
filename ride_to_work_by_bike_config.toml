@@ -96,6 +96,7 @@ apiBaseRtwbbFeed = "https://dopracenakole.cz/feed/"
 apiBaseIpAddress = "https://ipapi.co/json/"
 
 apiVersion = "1.0"
+apiVersion2 = "v2"
 apiDefaultLang = "cs"
 
 urlApiDiscountCoupon = "discount-coupon/"
