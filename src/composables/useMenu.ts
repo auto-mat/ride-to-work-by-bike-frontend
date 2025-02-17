@@ -13,6 +13,10 @@ export const useMenu = () => {
    * Get the top menu items
    * @param {ComputedRef<boolean | null> | boolean | null}
    *   isUserOrganizationAdmin - Whether the user is an organization admin
+   * @param {ComputedRef<boolean | null> | boolean | null}
+   *   isUserStaff - Whether the user is staff member
+   * @param {ComputedRef<string> | string } urlAdmin - RTWBB old Django frontend
+   *                                                   app admin URL
    * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
