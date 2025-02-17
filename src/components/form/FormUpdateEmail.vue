@@ -24,11 +24,14 @@
  */
 
 // libraries
-import { defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
+
+// store
+import { useLoginStore } from '../../stores/login';
 
 export default defineComponent({
   name: 'FormUpdateEmail',
@@ -55,6 +58,9 @@ export default defineComponent({
     const inputValue = ref<string>('');
     const password = ref<string>('');
 
+    const loginStore = useLoginStore();
+    const currentEmail = computed(() => loginStore.getUserEmail);
+
     onMounted(() => {
       inputValue.value = props.value;
     });
@@ -63,8 +69,27 @@ export default defineComponent({
       props.onClose();
     };
 
-    const onUpdateEmail = (): void => {
-      emit('update:value', inputValue.value);
+    const onUpdateEmail = async (): Promise<void> => {
+      // authenticate to confirm password
+      const response = await loginStore.login(
+        {
+          username: currentEmail.value,
+          password: password.value,
+        },
+        {
+          showSuccessMessage: false,
+          redirectAfterLogin: false,
+        },
+      );
+
+      if (!response) {
+        return;
+      }
+
+      emit('update:value', {
+        email: inputValue.value,
+        password: password.value,
+      });
       props.onClose();
     };
 

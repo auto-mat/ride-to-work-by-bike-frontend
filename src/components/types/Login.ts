@@ -11,6 +11,11 @@ export interface LoginResponse {
   user: UserLogin;
 }
 
+export interface LoginOptions {
+  showSuccessMessage: boolean;
+  redirectAfterLogin: boolean;
+}
+
 /**
  * Facebook login types
  * Used in LoginRegisterButtons.vue

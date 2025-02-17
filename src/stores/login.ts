@@ -27,6 +27,7 @@ import type {
   FacebookAuthResponse,
   LoginPayload,
   LoginResponse,
+  LoginOptions,
 } from 'src/components/types/Login';
 
 // utils
@@ -53,6 +54,11 @@ export const emptyUser: UserLogin = {
   last_name: '',
   pk: 0,
   username: '',
+};
+
+export const defaultLoginOptions: Required<LoginOptions> = {
+  showSuccessMessage: true,
+  redirectAfterLogin: true,
 };
 
 export enum LoginFormState {
@@ -141,9 +147,17 @@ export const useLoginStore = defineStore('login', {
      * If yes, sends the login request to the API.
      * If successful, sets the token.
      * @param {LoginPayload} payload - Login input data (username, password)
+     * @param {LoginOptions} options - Login options (showSuccessMessage, redirectAfterLogin)
      * @returns {Promise<LoginResponse | null>} - Response
      */
-    async login(payload: LoginPayload): Promise<LoginResponse | null> {
+    async login(
+      payload: LoginPayload,
+      options?: LoginOptions,
+    ): Promise<LoginResponse | null> {
+      const loginOptions = { ...defaultLoginOptions, ...options };
+      this.$log?.debug(
+        `Login options <${JSON.stringify(loginOptions, null, 2)}>.`,
+      );
       // check that email is set
       if (!payload.username) {
         Notify.create({
@@ -170,9 +184,14 @@ export const useLoginStore = defineStore('login', {
         payload,
         translationKey: 'login',
         logger: this.$log,
+        showSuccessMessage: loginOptions.showSuccessMessage,
       });
 
       await this.processLoginData(data);
+
+      if (data && loginOptions.redirectAfterLogin) {
+        await this.redirectHomeAfterLogin();
+      }
 
       return data;
     },
@@ -194,6 +213,10 @@ export const useLoginStore = defineStore('login', {
       });
 
       await this.processLoginData(data);
+
+      if (data) {
+        await this.redirectHomeAfterLogin();
+      }
 
       return data;
     },
@@ -231,6 +254,10 @@ export const useLoginStore = defineStore('login', {
 
       await this.processLoginData(data);
 
+      if (data) {
+        await this.redirectHomeAfterLogin();
+      }
+
       return data;
     },
     /**
@@ -249,8 +276,6 @@ export const useLoginStore = defineStore('login', {
           loginStore: this,
           $log: this.$log as Logger,
         });
-
-        await this.redirectHomeAfterLogin();
       }
     },
     /**

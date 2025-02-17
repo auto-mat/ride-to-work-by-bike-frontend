@@ -54,6 +54,7 @@ import { PaymentSubject } from '../../components/enums/Payment';
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
 
 // stores
+import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
@@ -87,6 +88,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
 
+    const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
     // refresh on mounted
     onMounted(async () => {
@@ -245,6 +247,29 @@ export default defineComponent({
       }
     };
 
+    const onUpdateEmail = async ({
+      email,
+      password,
+    }: {
+      email: string;
+      password: string;
+    }): Promise<void> => {
+      await onUpdateRegisterChallengeDetails({
+        personalDetails: { email },
+      });
+      // re-authenticate
+      await loginStore.login(
+        {
+          username: email,
+          password: password,
+        },
+        {
+          showSuccessMessage: false,
+          redirectAfterLogin: false,
+        },
+      );
+    };
+
     /**
      * Get gender label
      * @param {Gender | null} gender - Gender enum value or null
@@ -277,6 +302,7 @@ export default defineComponent({
       team,
       onDownloadInvoice,
       onUpdateRegisterChallengeDetails,
+      onUpdateEmail,
       formPersonalDetails,
       genderLabel,
       isEnabledCoordinatorContact,
@@ -339,11 +365,7 @@ export default defineComponent({
             :on-close="close"
             :value="profile.email"
             :loading="isLoading"
-            @update:value="
-              onUpdateRegisterChallengeDetails({
-                personalDetails: { email: $event },
-              })
-            "
+            @update:value="onUpdateEmail"
           />
         </template>
       </details-item>
