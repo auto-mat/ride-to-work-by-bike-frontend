@@ -10,17 +10,17 @@ const classSelectorToggleInnerTruthy = 'q-toggle__inner--truthy';
 const selectorProfilePage = 'profile-page';
 const selectorProfilePageTitle = 'profile-page-title';
 const selectorNickname = 'profile-details-nickname';
-// const selectorEmail = 'profile-details-email';
+const selectorEmail = 'profile-details-email';
 const selectorGender = 'profile-details-gender';
 const selectorFormNickname = 'profile-details-form-nickname';
-// const selectorFormEmail = 'profile-details-form-email';
+const selectorFormEmail = 'profile-details-form-email';
 const selectorFormGender = 'profile-details-form-gender';
 const selectorTelephone = 'profile-details-phone';
 const selectorTelephoneOptIn = 'profile-details-telephone-opt-in';
 const dataSelectorEdit = '[data-cy="details-item-edit"]';
 const dataSelectorInput = '[data-cy="form-input"]';
-// const dataSelectorInputEmail = '[data-cy="form-email"]';
-// const dataSelectorInputPassword = '[data-cy="form-password"]';
+const dataSelectorInputEmail = '[data-cy="form-email-input"]';
+const dataSelectorInputPassword = '[data-cy="form-password"]';
 const dataSelectorButtonSave = '[data-cy="form-button-save"]';
 const dataSelectorValue = '[data-cy="details-item-value"]';
 
@@ -38,8 +38,7 @@ const selectorDialogCloseButton = 'dialog-close';
 const selectorButtonMarkAllAsRead = 'button-mark-all-as-read';
 
 // variables
-// const newEmail = 'ride@dopracenakole.cz';
-// const password = 'testpassword123';
+const password = '123456a';
 const genderFemaleKey = 'global.woman';
 
 describe('Profile page', () => {
@@ -84,6 +83,145 @@ describe('Profile page', () => {
 
     coreTests();
     testDesktopSidebar();
+  });
+
+  context('change email', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.fixture('apiGetRegisterChallengeProfile.json').then(
+          (responseRegisterChallenge) => {
+            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+              (responseHasOrganizationAdmin) => {
+                cy.fixture('refreshTokensResponseChallengeActive').then(
+                  (refreshTokensResponseChallengeActive) => {
+                    cy.fixture('loginRegisterResponseChallengeActive').then(
+                      (loginRegisterResponseChallengeActive) => {
+                        cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+                          config,
+                          defLocale,
+                          loginRegisterResponseChallengeActive,
+                          null,
+                          refreshTokensResponseChallengeActive,
+                          null,
+                          { has_user_verified_email_address: true },
+                        );
+                      },
+                    );
+                  },
+                );
+                cy.interceptRegisterChallengeGetApi(
+                  config,
+                  defLocale,
+                  responseRegisterChallenge,
+                );
+                cy.interceptHasOrganizationAdminGetApi(
+                  config,
+                  defLocale,
+                  responseRegisterChallenge.results[0].organization_id,
+                  responseHasOrganizationAdmin,
+                );
+              },
+            );
+          },
+        );
+      });
+      // go to login page
+      cy.visit('#' + routesConf['login']['children']['fullPath']);
+      // login
+      cy.fillAndSubmitLoginForm();
+      // wait for homepage to load
+      cy.dataCy('index-title').should('be.visible');
+      // go to profile page
+      cy.visit('#' + routesConf['profile']['children']['fullPath']);
+      cy.viewport('macbook-16');
+      // load config and i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
+    });
+
+    it('allows user to change email', () => {
+      cy.fixture('loginRegisterResponseChallengeActive.json').then(
+        (loginRegisterResponseChallengeActive) => {
+          cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+            cy.fixture('apiGetRegisterChallengeProfileUpdatedEmail.json').then(
+              (responseEmail) => {
+                cy.get('@config').then((config) => {
+                  cy.get('@i18n').then((i18n) => {
+                    // wait for GET request
+                    cy.waitForRegisterChallengeGetApi(response);
+                    const personalDetails =
+                      response.results[0].personal_details;
+                    const newEmail =
+                      responseEmail.results[0].personal_details.email;
+                    // email value
+                    cy.dataCy(selectorEmail)
+                      .find(dataSelectorValue)
+                      .should('have.text', personalDetails.email);
+                    // email edit button
+                    cy.dataCy(selectorEmail).find(dataSelectorEdit).click();
+                    // email edit form
+                    cy.dataCy(selectorFormEmail).should('be.visible');
+                    // change email
+                    cy.dataCy(selectorFormEmail)
+                      .find(dataSelectorInputEmail)
+                      .clear();
+                    cy.dataCy(selectorFormEmail)
+                      .find(dataSelectorInputEmail)
+                      .type(newEmail);
+                    // password
+                    cy.dataCy(selectorFormEmail)
+                      .find(dataSelectorInputPassword)
+                      .type(password);
+                    // intercept login API for checking the password
+                    cy.interceptLoginApi(
+                      config,
+                      i18n,
+                      loginRegisterResponseChallengeActive,
+                    );
+                    // intercept POST request
+                    cy.interceptRegisterChallengePutApi(
+                      config,
+                      i18n,
+                      personalDetails.id,
+                      responseEmail,
+                    );
+                    // override intercept GET request
+                    cy.interceptRegisterChallengeGetApi(
+                      config,
+                      i18n,
+                      responseEmail,
+                    );
+                    // save
+                    cy.dataCy('profile-details-form-email')
+                      .find(dataSelectorButtonSave)
+                      .click();
+                    // confirm password
+                    cy.wait('@loginRequest');
+                    // update register-challenge
+                    cy.wait('@putRegisterChallenge');
+                    // re-authenticate
+                    cy.wait('@loginRequest');
+                    // email is different
+                    cy.dataCy(selectorEmail)
+                      .find(dataSelectorValue)
+                      .should('have.text', newEmail);
+                  });
+                });
+              },
+            );
+          });
+        },
+      );
+    });
   });
 });
 

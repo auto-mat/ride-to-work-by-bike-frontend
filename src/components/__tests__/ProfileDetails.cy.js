@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { getGenderLabel } from '../../utils/get_gender_label';
 import { useOrganizations } from '../../composables/useOrganizations';
+import { useLoginStore } from '../../stores/login';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../../components/types/Organization';
 
@@ -61,8 +62,7 @@ const dataSelectorValue = '[data-cy="details-item-value"]';
 // variables
 const genderFemaleKey = 'global.woman';
 const genderMaleKey = 'global.man';
-const newEmail = 'ride@dopracenakole.cz';
-const password = 'password';
+const password = '123456a';
 
 describe('<ProfileDetails>', () => {
   it('has translation for all strings', () => {
@@ -725,86 +725,147 @@ function coreTests() {
     });
   });
 
-  it.skip('allows to edit email', () => {
-    cy.fixture('formPersonalDetails').then((personalDetails) => {
-      // email value
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorValue)
-        .should('be.visible')
-        .and('have.text', personalDetails.email);
-      // email edit button
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorEdit)
-        .should('be.visible')
-        .click();
-      // email edit form
-      cy.dataCy(selectorFormEmail).should('be.visible');
-      // change email
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputEmail)
-        .should('be.visible')
-        .clear();
-      cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type(newEmail);
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputPassword)
-        .type(password);
-      // cancel
-      cy.dataCy(selectorFormEmail).find(dataSelectorButtonCancel).click();
-      // email is the same
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorValue)
-        .should('be.visible')
-        .and('have.text', personalDetails.email);
-      // change email
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorEdit)
-        .should('be.visible')
-        .click();
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputEmail)
-        .should('be.visible')
-        .clear();
-      cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type(newEmail);
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputPassword)
-        .type(password);
-      // save
-      cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
-      // email is different
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorValue)
-        .should('be.visible')
-        .and('have.text', newEmail);
-      // deleting email is not possible
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorEdit)
-        .should('be.visible')
-        .click();
-      cy.dataCy(selectorFormEmail)
-        .should('be.visible')
-        .find(dataSelectorInputEmail)
-        .clear();
-      cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
-      cy.dataCy(selectorFormEmail).should('be.visible');
-      // fill in original email
-      cy.dataCy(selectorFormEmail)
-        .should('be.visible')
-        .find(dataSelectorInputEmail)
-        .type(personalDetails.email);
-      // cannot save without password
-      cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
-      cy.dataCy(selectorFormEmail).should('be.visible');
-      // fill in password
-      cy.dataCy(selectorFormEmail)
-        .find(dataSelectorInputPassword)
-        .type(password);
-      // save (enter)
-      cy.dataCy(selectorFormEmail).find(dataSelectorInputEmail).type('{enter}');
-      cy.dataCy(selectorEmail)
-        .find(dataSelectorValue)
-        .should('be.visible')
-        .and('have.text', personalDetails.email);
-    });
+  it.only('allows to edit email', () => {
+    cy.fixture('loginRegisterResponseChallengeActive.json').then(
+      (loginRegisterResponseChallengeActive) => {
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.fixture('apiGetRegisterChallengeProfileUpdatedEmail.json').then(
+            (responseNew) => {
+              const personalDetails = response.results[0].personal_details;
+              const personalDetailsNew =
+                responseNew.results[0].personal_details;
+              // set current user to store
+              cy.wrap(useLoginStore()).then((loginStore) => {
+                loginStore.setUser(loginRegisterResponseChallengeActive.user);
+              });
+              // email value
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorValue)
+                .should('be.visible')
+                .and('have.text', personalDetails.email);
+              // email edit button
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorEdit)
+                .should('be.visible')
+                .click();
+              // email edit form
+              cy.dataCy(selectorFormEmail).should('be.visible');
+              // change email
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputEmail)
+                .should('be.visible')
+                .clear();
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputEmail)
+                .type(personalDetailsNew.email);
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputPassword)
+                .type(password);
+              // cancel
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorButtonCancel)
+                .click();
+              // email is the same
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorValue)
+                .should('be.visible')
+                .and('have.text', personalDetails.email);
+              // change email
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorEdit)
+                .should('be.visible')
+                .click();
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputEmail)
+                .should('be.visible')
+                .clear();
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputEmail)
+                .type(personalDetailsNew.email);
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputPassword)
+                .type(password);
+              // intercept login API for checking the password
+              cy.interceptLoginApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                loginRegisterResponseChallengeActive,
+              );
+              // intercept register-challenge POST request
+              cy.interceptRegisterChallengePutApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                personalDetails.id,
+                responseNew,
+              );
+              // override intercept register-challenge GET request
+              cy.interceptRegisterChallengeGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                responseNew,
+              );
+              // save
+              cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
+              // confirm password
+              cy.wait('@loginRequest');
+              // update register-challenge
+              cy.wait('@putRegisterChallenge');
+              // re-authenticate
+              cy.wait('@loginRequest');
+              // email is different
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorValue)
+                .should('be.visible')
+                .and('have.text', personalDetailsNew.email);
+              // deleting email is not possible
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorEdit)
+                .should('be.visible')
+                .click();
+              cy.dataCy(selectorFormEmail)
+                .should('be.visible')
+                .find(dataSelectorInputEmail)
+                .clear();
+              cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
+              cy.dataCy(selectorFormEmail).should('be.visible');
+              // fill in original email
+              cy.dataCy(selectorFormEmail)
+                .should('be.visible')
+                .find(dataSelectorInputEmail)
+                .type(personalDetails.email);
+              // cannot save without password
+              cy.dataCy(selectorFormEmail).find(dataSelectorButtonSave).click();
+              cy.dataCy(selectorFormEmail).should('be.visible');
+              // fill in password
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputPassword)
+                .type(password);
+              // override intercept POST request
+              cy.interceptRegisterChallengePutApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                personalDetails.id,
+                response,
+              );
+              // override intercept GET request
+              cy.interceptRegisterChallengeGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                response,
+              );
+              // save (enter)
+              cy.dataCy(selectorFormEmail)
+                .find(dataSelectorInputEmail)
+                .type('{enter}');
+              cy.dataCy(selectorEmail)
+                .find(dataSelectorValue)
+                .should('be.visible')
+                .and('have.text', personalDetails.email);
+            },
+          );
+        });
+      },
+    );
   });
 
   it('allows to edit gender', () => {

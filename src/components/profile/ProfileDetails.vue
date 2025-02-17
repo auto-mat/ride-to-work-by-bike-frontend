@@ -366,6 +366,7 @@ export default defineComponent({
             :value="profile.email"
             :loading="isLoading"
             @update:value="onUpdateEmail"
+            data-cy="profile-details-form-email"
           />
         </template>
       </details-item>
