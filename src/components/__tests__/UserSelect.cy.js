@@ -2,7 +2,6 @@ import { createPinia, setActivePinia } from 'pinia';
 import UserSelect from '../global/UserSelect.vue';
 import { i18n } from '../../boot/i18n';
 import { emptyUser, useLoginStore } from '../../stores/login';
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { fixtureTokenExpirationTime } from '../../../test/cypress/support/commonTests';
 
 // selectors
@@ -33,15 +32,10 @@ describe('<UserSelect>', () => {
     coreTests();
 
     it('shows user email', () => {
-      cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
-        const personalDetails = response.results[0].personal_details;
-        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
-          registerChallengeStore.setPersonalDetails(personalDetails);
-          cy.dataCy(selectorUserSelectInput).should(
-            'contain',
-            personalDetails.email,
-          );
-        });
+      cy.fixture('loggedUser').then((user) => {
+        const loginStore = useLoginStore();
+        loginStore.setUser(user);
+        cy.dataCy(selectorUserSelectInput).should('contain', user.email);
       });
     });
 
