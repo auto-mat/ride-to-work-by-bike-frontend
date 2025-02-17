@@ -24,6 +24,7 @@ import { useApiPostPayuCreateOrder } from '../composables/useApiPostPayuCreateOr
 import { useApiGetHasOrganizationAdmin } from '../composables/useApiGetHasOrganizationAdmin';
 import { useApiIsUserOrganizationAdmin } from '../composables/useApiIsUserOrganizationAdmin';
 import { useApiGetDiscountCoupon } from '../composables/useApiGetDiscountCoupon';
+import { useApiGetMyTeam } from '../composables/useApiGetMyTeam';
 
 // enums
 import { Gender } from '../components/types/Profile';
@@ -33,6 +34,7 @@ import {
   OrganizationType,
   OrganizationOption,
   OrganizationTeam,
+  GetMyTeamResponse,
 } from '../components/types/Organization';
 import { PaymentSubject } from '../components/enums/Payment';
 import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
@@ -94,6 +96,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     teams: [] as OrganizationTeam[],
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
+    myTeam: null as GetMyTeamResponse['results'][0] | null,
     formRegisterCoordinator: deepObjectWithSimplePropsCopy(
       emptyFormRegisterCoordinator,
     ),
@@ -135,6 +138,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
+    getMyTeam: (state): GetMyTeamResponse['results'][0] | null => state.myTeam,
     getPaymentCategory: (state): PaymentCategory => state.paymentCategory,
     getIsSelectedRegisterCoordinator: (state): boolean =>
       state.isSelectedRegisterCoordinator,
@@ -325,6 +329,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setMerchId(merchId: number | null) {
       this.merchId = merchId;
+    },
+    setMyTeam(myTeam: GetMyTeamResponse['results'][0] | null) {
+      this.myTeam = myTeam;
     },
     setPaymentCategory(paymentCategory: PaymentCategory) {
       this.paymentCategory = paymentCategory;
@@ -540,8 +547,16 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         const maxTeamMembers = challengeStore.getMaxTeamMembers;
         // refetch teams
         await this.loadTeamsToStore(this.$log);
+        // load my team info
+        await this.loadMyTeamToStore(this.$log);
         // check selected team max members
+        const myTeam = this.getMyTeam;
+        this.$log?.debug(`My team <${JSON.stringify(myTeam, null, 2)}>.`);
         const selectedTeam = this.teams.find((team) => team.id === this.teamId);
+        this.$log?.debug(
+          `Selected team <${JSON.stringify(selectedTeam, null, 2)}>.`,
+        );
+        // selected team members or max team members are not set - error
         if (!selectedTeam?.members || !maxTeamMembers) {
           Notify.create({
             type: 'negative',
@@ -553,13 +568,24 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           this.setTeamId(null);
           return null;
         }
-        if (selectedTeam?.members.length >= maxTeamMembers) {
+        const isSelectedTeamMembersCountOverMax =
+          selectedTeam?.members.length > maxTeamMembers;
+        const isUserAlreadyMember = myTeam?.members
+          .map((member) => member.id)
+          .includes(this.personalDetails.id as number);
+        this.$log?.debug(
+          `Is selected team members count over max <${isSelectedTeamMembersCountOverMax}>.`,
+        );
+        this.$log?.debug(`Is user already member <${isUserAlreadyMember}>.`);
+        // return if selected team is full and user is not already a member
+        if (isSelectedTeamMembersCountOverMax && !isUserAlreadyMember) {
           Notify.create({
             type: 'negative',
             message: i18n.global.t(
               'postRegisterChallenge.messageTeamMaxMembersReached',
             ),
           });
+          this.$log?.debug('Team max members reached, resetting team ID.');
           // reset team ID
           this.setTeamId(null);
           return null;
@@ -713,6 +739,16 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.teams = teams.value;
         logger?.debug(`Loaded teams <${this.teams}> saved into store.`);
         this.isLoadingTeams = false;
+      }
+    },
+    async loadMyTeamToStore(logger: Logger | null) {
+      const { team, loadTeam } = useApiGetMyTeam(logger);
+      if (this.teamId) {
+        logger?.debug('Load my team');
+        await loadTeam();
+        if (team.value) {
+          this.setMyTeam(team.value);
+        }
       }
     },
     async loadMerchandiseToStore(logger: Logger | null) {
@@ -1007,6 +1043,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'teams',
       'merchandiseItems',
       'merchandiseCards',
+      'myTeam',
       'isLoadingRegisterChallenge',
       'isLoadingSubsidiaries',
       'isLoadingOrganizations',
