@@ -22,6 +22,11 @@ describe('<FormUpdateEmail>', () => {
       'navigation',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['emailUpdateWrongPassword'],
+      'notify',
+      i18n,
+    );
   });
 
   context('desktop', () => {

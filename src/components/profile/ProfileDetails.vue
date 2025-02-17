@@ -264,8 +264,9 @@ export default defineComponent({
           password: password,
         },
         {
-          showSuccessMessage: false,
           redirectAfterLogin: false,
+          showErrorMessage: false,
+          showSuccessMessage: false,
         },
       );
     };

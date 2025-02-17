@@ -25,10 +25,14 @@
 
 // libraries
 import { computed, defineComponent, onMounted, ref } from 'vue';
+import { Notify } from 'quasar';
 
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormFieldPassword from '../global/FormFieldPassword.vue';
+
+// composables
+import { i18n } from '../../boot/i18n';
 
 // store
 import { useLoginStore } from '../../stores/login';
@@ -77,12 +81,17 @@ export default defineComponent({
           password: password.value,
         },
         {
-          showSuccessMessage: false,
           redirectAfterLogin: false,
+          showErrorMessage: false,
+          showSuccessMessage: false,
         },
       );
 
       if (!response) {
+        Notify.create({
+          message: i18n.global.t('notify.emailUpdateWrongPassword'),
+          color: 'negative',
+        });
         return;
       }
 

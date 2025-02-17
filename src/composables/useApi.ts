@@ -122,6 +122,7 @@ export const useApi = (
     headers = requestDefaultHeader(),
     logger,
     showSuccessMessage = true,
+    showErrorMessage = true,
   }: {
     endpoint: string;
     payload?: object;
@@ -130,6 +131,7 @@ export const useApi = (
     headers?: AxiosRequestHeaders;
     logger: Logger | null;
     showSuccessMessage?: boolean;
+    showErrorMessage?: boolean;
   }): Promise<ApiResponse<T>> => {
     try {
       logger?.info('Call <api()> function with parameters arguments.');
@@ -184,14 +186,21 @@ export const useApi = (
           success: true,
         };
       } else {
-        Notify.create({
-          message: i18n.global.t(`${translationKey}.apiMessageError`),
-          color: 'negative',
-        });
+        if (showErrorMessage) {
+          Notify.create({
+            message: i18n.global.t(`${translationKey}.apiMessageError`),
+            color: 'negative',
+          });
+        }
         return { data: null, success: false };
       }
     } catch (error) {
       logger?.error(`Call to <api()> function raise error <${error}>.`);
+      // early return if showErrorMessage is false
+      if (!showErrorMessage) {
+        return { data: null, success: false };
+      }
+      // show error message
       if (axios.isAxiosError(error)) {
         let errorMessage = error.message;
         if (error.response?.data)

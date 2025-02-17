@@ -614,6 +614,7 @@ description = "Stiahnite si aplikáciu a prihlasujte jazdy odkiaľkoľvek."
 [notify]
 voucherApplySuccess = "Voucher bol úspešne uplatnený"
 voucherApplyError = "Neplatný voucher"
+emailUpdateWrongPassword = "Nepovedlo sa overiť prihlasovacie údaje. Pravdepodobne ste zadali nesprávne heslo."
 geolocationError = "Chyba pri pokuse o určenie polohy: {error}"
 geolocationNotSupported = "Váš prehliadač nepodporuje geolokáciu."
 noRouteSelected = "Nie je vybraná žiadna trasa na zaznamenanie."

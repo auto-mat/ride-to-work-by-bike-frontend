@@ -12,8 +12,9 @@ export interface LoginResponse {
 }
 
 export interface LoginOptions {
-  showSuccessMessage: boolean;
   redirectAfterLogin: boolean;
+  showErrorMessage: boolean;
+  showSuccessMessage: boolean;
 }
 
 /**

@@ -155,6 +155,7 @@ export const useLoginStore = defineStore('login', {
       options?: LoginOptions,
     ): Promise<LoginResponse | null> {
       const loginOptions = { ...defaultLoginOptions, ...options };
+      this.$log?.debug(`Login payload <${JSON.stringify(payload, null, 2)}>.`);
       this.$log?.debug(
         `Login options <${JSON.stringify(loginOptions, null, 2)}>.`,
       );
@@ -185,6 +186,7 @@ export const useLoginStore = defineStore('login', {
         translationKey: 'login',
         logger: this.$log,
         showSuccessMessage: loginOptions.showSuccessMessage,
+        showErrorMessage: loginOptions.showErrorMessage,
       });
 
       await this.processLoginData(data);

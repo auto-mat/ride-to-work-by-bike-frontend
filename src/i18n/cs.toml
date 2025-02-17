@@ -616,6 +616,7 @@ description = "Stáhněte si appku a zapisujte jízdy odkudkoliv."
 [notify]
 voucherApplySuccess = "Voucher byl úspěšně uplatněn"
 voucherApplyError = "Neplatný voucher"
+emailUpdateWrongPassword = "Nepovedlo se ověřit přihlašovací údaje. Pravděpodobně jste zadali špatné heslo."
 geolocationError = "Chyba v pokusu o geolokaci: {error}"
 geolocationNotSupported = "Váš prohlížeč nepodporuje geolokaci."
 noRouteSelected = "Není vybrána žádná cesta k zaznamenání."

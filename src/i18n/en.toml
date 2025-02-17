@@ -614,6 +614,7 @@ description = "Download the app and log rides from anywhere."
 [notify]
 voucherApplySuccess = "Voucher successfully redeemed"
 voucherApplyError = "Invalid voucher"
+emailUpdateWrongPassword = "Failed to verify login credentials. Probably you entered a wrong password."
 geolocationError = "Error in geolocation attempt: {error}"
 geolocationNotSupported = "Your browser does not support geolocation."
 noRouteSelected = "No route to log is selected."
