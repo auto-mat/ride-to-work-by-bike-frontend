@@ -8,6 +8,7 @@
  *
  * @components
  * - `DetailsItem`: Component to display a row of data.
+ * - `FormUpdateEmail`: Component to render a form for updating email.
  * - `FormUpdateGender`: Component to render a form for updating gender.
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
  * - `LanguageSwitcher`: Component to render a language switcher.
@@ -31,6 +32,7 @@ import { subsidiaryAdapter } from '../../adapters/subsidiaryAdapter';
 
 // components
 import DetailsItem from '../profile/DetailsItem.vue';
+import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
 import FormUpdatePhone from '../form/FormUpdatePhone.vue';
@@ -52,7 +54,6 @@ import { PaymentSubject } from '../../components/enums/Payment';
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
 
 // stores
-import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
@@ -66,6 +67,7 @@ export default defineComponent({
   name: 'ProfileDetails',
   components: {
     DetailsItem,
+    FormUpdateEmail,
     FormUpdateGender,
     FormUpdateNickname,
     FormUpdatePhone,
@@ -84,9 +86,6 @@ export default defineComponent({
 
     const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
-
-    const loginStore = useLoginStore();
-    const user = computed(() => loginStore.getUser);
 
     const registerChallengeStore = useRegisterChallengeStore();
     // refresh on mounted
@@ -279,7 +278,6 @@ export default defineComponent({
       onDownloadInvoice,
       onUpdateRegisterChallengeDetails,
       formPersonalDetails,
-      user,
       genderLabel,
       isEnabledCoordinatorContact,
       isEnabledDeleteAccount,
@@ -327,13 +325,28 @@ export default defineComponent({
       </details-item>
       <!-- Email -->
       <details-item
+        editable
         :label="$t('profile.labelEmail')"
-        :value="user.email"
+        :value="profile.email"
         :dialog-title="$t('profile.titleUpdateEmail')"
         :empty-label="$t('profile.labelEmailEmpty')"
         class="q-mb-lg"
         data-cy="profile-details-email"
-      />
+      >
+        <template #form="{ close }">
+          <!-- Form: Update email -->
+          <form-update-email
+            :on-close="close"
+            :value="profile.email"
+            :loading="isLoading"
+            @update:value="
+              onUpdateRegisterChallengeDetails({
+                personalDetails: { email: $event },
+              })
+            "
+          />
+        </template>
+      </details-item>
       <!-- Gender -->
       <details-item
         editable

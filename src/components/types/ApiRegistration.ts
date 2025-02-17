@@ -7,6 +7,7 @@ import type { PaymentCategory, PayuProduct } from './ApiPayu';
 export type CorePersonalDetails = {
   first_name: string;
   last_name: string;
+  email: string;
   id: number;
   is_staff: boolean;
   nickname: string;
@@ -49,6 +50,7 @@ export type RegisterChallengeResponse = {
 export type RegisterChallengePostPayload = {
   first_name?: string;
   last_name?: string;
+  email?: string;
   nickname?: string;
   sex?: string;
   telephone?: string;

@@ -30,6 +30,7 @@ export interface RegisterChallengePersonalDetailsApi
 export interface RegisterChallengePersonalDetailsForm
   extends BasePersonalDetails {
   firstName: string;
+  email: string;
   gender: Gender | null;
   id: number | null;
   isStaff: boolean;

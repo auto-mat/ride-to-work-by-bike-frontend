@@ -28,6 +28,7 @@ export const registerChallengeAdapter = {
     const personalDetails: RegisterChallengePersonalDetailsForm = {
       firstName: apiData.personal_details.first_name,
       lastName: apiData.personal_details.last_name,
+      email: apiData.personal_details.email,
       id: apiData.personal_details.id,
       isStaff: apiData.personal_details.is_staff,
       nickname: apiData.personal_details.nickname,
@@ -76,6 +77,9 @@ export const registerChallengeAdapter = {
       }
       if (storePersonalDetails.lastName !== undefined) {
         payload.last_name = storePersonalDetails.lastName;
+      }
+      if (storePersonalDetails.email !== undefined) {
+        payload.email = storePersonalDetails.email;
       }
       if (storePersonalDetails.nickname !== undefined) {
         payload.nickname = storePersonalDetails.nickname;
