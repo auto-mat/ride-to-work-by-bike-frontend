@@ -27,6 +27,12 @@ const selectorDrawerMenuItemIcon = 'drawer-menu-item-icon';
 const iconSize = 18;
 const fontSize = '16px';
 
+const {
+  urlRideToWorkByBikeOldFrontendDjangoApp,
+  urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
+} = rideToWorkByBikeConfig;
+const rtwbbOldFrontendDjangoAdminUrl = `${urlRideToWorkByBikeOldFrontendDjangoApp}/${urlRideToWorkByBikeOldFrontendDjangoAppAdmin}`;
+
 const { getMenuBottom, getMenuTop } = useMenu();
 
 describe('DrawerMenu', () => {
@@ -36,7 +42,7 @@ describe('DrawerMenu', () => {
         getMenuTop({
           isUserOrganizationAdmin: false,
           isUserStaff: false,
-          urlAdmin: rideToWorkByBikeConfig.urlAppAdmin,
+          urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -73,7 +79,7 @@ describe('DrawerMenu', () => {
         getMenuTop({
           isUserOrganizationAdmin: true,
           isUserStaff: false,
-          urlAdmin: rideToWorkByBikeConfig.urlAppAdmin,
+          urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -108,7 +114,7 @@ describe('DrawerMenu', () => {
     beforeEach(() => {
       const urlAdmin = getApiBaseUrlWithLang(
         null,
-        rideToWorkByBikeConfig.urlAppAdmin,
+        rtwbbOldFrontendDjangoAdminUrl,
         defaultLocale,
         i18n,
       );
@@ -149,7 +155,7 @@ describe('DrawerMenu', () => {
           'href',
           getApiBaseUrlWithLang(
             null,
-            rideToWorkByBikeConfig.urlAppAdmin,
+            rtwbbOldFrontendDjangoAdminUrl,
             defaultLocale,
             i18n,
           ),

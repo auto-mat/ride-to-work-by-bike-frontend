@@ -84,10 +84,17 @@ export default defineComponent({
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
     const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
+
+    const {
+      urlRideToWorkByBikeOldFrontendDjangoApp,
+      urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
+    } = rideToWorkByBikeConfig;
+    const rtwbbOldFrontendDjangoAdminUrl = `${urlRideToWorkByBikeOldFrontendDjangoApp}/${urlRideToWorkByBikeOldFrontendDjangoAppAdmin}`;
+
     const urlAdmin = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
-        rideToWorkByBikeConfig.urlAppAdmin,
+        rtwbbOldFrontendDjangoAdminUrl,
         defaultLocale,
         i18n,
       );

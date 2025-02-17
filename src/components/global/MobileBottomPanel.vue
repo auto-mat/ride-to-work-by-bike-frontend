@@ -52,10 +52,16 @@ export default defineComponent({
     const { mobileBottomPanelVisibleItems } = rideToWorkByBikeConfig;
     const logger = inject('vuejs3-logger') as Logger | null;
 
+    const {
+      urlRideToWorkByBikeOldFrontendDjangoApp,
+      urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
+    } = rideToWorkByBikeConfig;
+    const rtwbbOldFrontendDjangoAdminUrl = `${urlRideToWorkByBikeOldFrontendDjangoApp}/${urlRideToWorkByBikeOldFrontendDjangoAppAdmin}`;
+
     const urlAdmin = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
-        rideToWorkByBikeConfig.urlAppAdmin,
+        rtwbbOldFrontendDjangoAdminUrl,
         defaultLocale,
         i18n,
       );

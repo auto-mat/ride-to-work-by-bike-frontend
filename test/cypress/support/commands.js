@@ -2648,11 +2648,16 @@ Cypress.Commands.add(
     isUserStaff = false,
   }) => {
     const { getMenuTop, getMenuBottom } = useMenu();
+    const {
+      urlRideToWorkByBikeOldFrontendDjangoApp,
+      urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
+    } = config;
+    const rtwbbOldFrontendDjangoAdminUrl = `${urlRideToWorkByBikeOldFrontendDjangoApp}/${urlRideToWorkByBikeOldFrontendDjangoAppAdmin}`;
 
     // get localized URL for menu admin link
     const urlAdmin = getApiBaseUrlWithLang(
       null,
-      config.urlAppAdmin,
+      rtwbbOldFrontendDjangoAdminUrl,
       defLocale,
       i18n,
     );

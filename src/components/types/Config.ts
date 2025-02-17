@@ -22,7 +22,6 @@ export interface ConfigGlobal {
   borderRadiusButtonSmall: string;
   maxWidthBanner: string;
   contactEmail: string;
-  urlAppAdmin: string;
   urlAutoMat: string;
   urlAppStore: string;
   urlBlog: string;
@@ -33,6 +32,7 @@ export interface ConfigGlobal {
   urlInstagram: string;
   urlProjectSourceCode: string;
   urlRideToWorkByBikeOldFrontendDjangoApp: string;
+  urlRideToWorkByBikeOldFrontendDjangoAppAdmin: string;
   urlTwitter: string;
   urlVideoLoggingRoutes: string;
   urlVideoOnboarding: string;

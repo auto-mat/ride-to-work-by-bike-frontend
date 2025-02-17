@@ -139,9 +139,15 @@ export const testDesktopSidebar = (): void => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
       cy.dataCy(selectorUserSelectDesktop).should('be.visible');
+
+      const {
+        urlRideToWorkByBikeOldFrontendDjangoApp,
+        urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
+      } = config as ConfigGlobal;
+      const rtwbbOldFrontendDjangoAdminUrl = `${urlRideToWorkByBikeOldFrontendDjangoApp}/${urlRideToWorkByBikeOldFrontendDjangoAppAdmin}`;
       const urlAdmin = getApiBaseUrlWithLang(
         null,
-        (config as ConfigGlobal).urlAppAdmin,
+        rtwbbOldFrontendDjangoAdminUrl,
         defaultLocale,
         defaultLocale,
       );
