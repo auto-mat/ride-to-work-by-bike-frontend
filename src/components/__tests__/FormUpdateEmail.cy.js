@@ -74,6 +74,16 @@ function coreTests() {
   it('validates form on submit', () => {
     // save
     cy.dataCy(selectorFormButtonSave).should('be.visible').click();
+    // validate email required
+    cy.dataCy(selectorFormEmail)
+      .find('.q-field__messages')
+      .should('be.visible')
+      .and(
+        'contain',
+        i18n.global.t('form.messageFieldRequired', {
+          fieldName: i18n.global.t('form.labelEmail'),
+        }),
+      );
     // type invalid email
     cy.dataCy(selectorFormEmail).find('input').clear();
     cy.dataCy(selectorFormEmail).find('input').type(invalidEmail);
