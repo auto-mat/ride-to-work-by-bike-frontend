@@ -56,10 +56,9 @@ export const useApiGetMyTeam = (
       await loginStore.getAccessTokenWithRefresh();
 
     // prepare headers with version
-    const headers = Object.assign(
-      requestDefaultHeader(rideToWorkByBikeConfig.apiVersion2),
-      requestTokenHeader_,
-    );
+    const headers = Object.assign(requestDefaultHeader(), requestTokenHeader_, {
+      'Accept-version': rideToWorkByBikeConfig.apiVersion2,
+    });
 
     // fetch team
     const { data } = await apiFetch<GetMyTeamResponse>({

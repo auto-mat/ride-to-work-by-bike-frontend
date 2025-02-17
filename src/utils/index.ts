@@ -59,9 +59,9 @@ const timestampToDatetimeString = (timestamp: number): string => {
 
 const bearerTokeAuth = 'Bearer';
 
-const requestDefaultHeader = (version: string): AxiosRequestHeaders => {
+const requestDefaultHeader = (): AxiosRequestHeaders => {
   return {
-    Accept: `application/json; version=${version ? version : getAppConfig().apiVersion}`,
+    Accept: `application/json; version=${getAppConfig().apiVersion}`,
   } as AxiosRequestHeaders;
 };
 
@@ -148,6 +148,7 @@ export {
   getCurrentDateTimeAccordingTimezone,
   formFieldCustomValidationErrCssClass,
   requestDefaultHeader,
+  requestV2Header,
   requestTokenHeader,
   rgbaColorObjectToString,
   timestampToDatetimeString,
