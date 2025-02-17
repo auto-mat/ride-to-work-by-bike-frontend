@@ -725,7 +725,7 @@ function coreTests() {
     });
   });
 
-  it.only('allows to edit email', () => {
+  it('allows to edit email', () => {
     cy.fixture('loginRegisterResponseChallengeActive.json').then(
       (loginRegisterResponseChallengeActive) => {
         cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
