@@ -7,12 +7,12 @@ const selectorFormButtonSave = 'form-button-save';
 const selectorFormButtonCancel = 'form-button-cancel';
 const selectorFormMessage = 'form-message';
 const selectorFormEmail = 'form-email';
-// const selectorFormPassword = 'form-password';
+const selectorFormPassword = 'form-password';
 
 // variables
 const invalidEmail = 'abc@me';
 const validEmail = 'abc@me.com';
-// const password = '123456a';
+const password = '123456a';
 
 describe('<FormUpdateEmail>', () => {
   it('has translation for all strings', () => {
@@ -90,20 +90,20 @@ function coreTests() {
     // save
     cy.dataCy(selectorFormButtonSave).should('be.visible').click();
     // validate password required
-    // cy.dataCy(selectorFormPassword)
-    //   .find('.q-field__messages')
-    //   .should('be.visible')
-    //   .and(
-    //     'contain',
-    //     i18n.global.t('form.messageFieldRequired', {
-    //       fieldName: i18n.global.t('form.labelPassword'),
-    //     }),
-    //   );
+    cy.dataCy(selectorFormPassword)
+      .find('.q-field__messages')
+      .should('be.visible')
+      .and(
+        'contain',
+        i18n.global.t('form.messageFieldRequired', {
+          fieldName: i18n.global.t('form.labelPassword'),
+        }),
+      );
     // type valid password
-    // cy.dataCy(selectorFormPassword).find('input').clear();
-    // cy.dataCy(selectorFormPassword).find('input').type(password);
-    // cy.dataCy(selectorFormPassword).find('input').blur();
+    cy.dataCy(selectorFormPassword).find('input').clear();
+    cy.dataCy(selectorFormPassword).find('input').type(password);
+    cy.dataCy(selectorFormPassword).find('input').blur();
     // save
-    // cy.dataCy(selectorFormButtonSave).should('be.visible').click();
+    cy.dataCy(selectorFormButtonSave).should('be.visible').click();
   });
 }

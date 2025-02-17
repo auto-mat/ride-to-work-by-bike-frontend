@@ -28,13 +28,13 @@ import { defineComponent, onMounted, ref } from 'vue';
 
 // components
 import FormFieldEmail from '../global/FormFieldEmail.vue';
-// import FormFieldPassword from '../global/FormFieldPassword.vue';
+import FormFieldPassword from '../global/FormFieldPassword.vue';
 
 export default defineComponent({
   name: 'FormUpdateEmail',
   components: {
     FormFieldEmail,
-    // FormFieldPassword,
+    FormFieldPassword,
   },
   props: {
     value: {
@@ -83,9 +83,9 @@ export default defineComponent({
     <!-- Input: Email -->
     <form-field-email v-model="inputValue" data-cy="form-email" />
     <!-- Message: Confirm password to save changes -->
-    <!-- <p data-cy="form-message">{{ $t('profile.textPasswordConfirm') }}</p> -->
+    <p data-cy="form-message">{{ $t('profile.textPasswordConfirm') }}</p>
     <!-- Input: Password -->
-    <!-- <form-field-password hide-hint v-model="password" data-cy="form-password" /> -->
+    <form-field-password hide-hint v-model="password" data-cy="form-password" />
     <div class="q-mt-xl flex justify-end gap-8">
       <!-- Button: Cancel -->
       <q-btn
