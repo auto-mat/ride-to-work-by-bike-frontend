@@ -236,16 +236,27 @@ function coreTests() {
 
   it('renders description', () => {
     cy.window().then(() => {
-      cy.dataCy(selectorSectionHeadingPerex)
-        .should('have.css', 'font-size', fontSizePerex)
-        .and('have.css', 'font-weight', fontWeightRegular)
-        .and('have.color', grey10)
-        .and('contain', i18n.global.t('index.newsletterFeature.description'))
-        .then(($title) => {
-          expect($title.text()).to.contain(
-            i18n.global.t('index.newsletterFeature.description'),
-          );
-        });
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseGetRegisterChallenge) => {
+          const email =
+            responseGetRegisterChallenge.results[0].personal_details.email;
+          cy.dataCy(selectorSectionHeadingPerex)
+            .should('have.css', 'font-size', fontSizePerex)
+            .and('have.css', 'font-weight', fontWeightRegular)
+            .and('have.color', grey10)
+            .and(
+              'contain',
+              i18n.global.t('index.newsletterFeature.description', {
+                email: email.value ? ` <b>${email.value}</b>` : '',
+              }),
+            )
+            .then(($title) => {
+              expect($title.text()).to.contain(
+                i18n.global.t('index.newsletterFeature.description'),
+              );
+            });
+        },
+      );
     });
   });
 
