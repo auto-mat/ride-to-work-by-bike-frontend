@@ -3,9 +3,9 @@ import { colors } from 'quasar';
 import ProfileDetails from 'components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useLoginStore } from '../../stores/login';
 import { getGenderLabel } from '../../utils/get_gender_label';
 import { useOrganizations } from '../../composables/useOrganizations';
-import { useLoginStore } from '../../stores/login';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../../components/types/Organization';
 
