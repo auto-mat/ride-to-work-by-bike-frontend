@@ -146,6 +146,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getRegistrationId: (state): number | null => {
       return state.personalDetails.id || null;
     },
+    getEmail: (state): string => state.personalDetails.email,
     getSelectedOrganizationLabel: (state): string => {
       if (state.organizationId) {
         const organization = state.organizations.find(

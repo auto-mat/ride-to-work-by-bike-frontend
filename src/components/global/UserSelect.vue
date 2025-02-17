@@ -31,6 +31,7 @@ import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import { useLoginStore } from '../../stores/login';
 
 // types
@@ -47,7 +48,9 @@ export default defineComponent({
   },
   setup(props) {
     const loginStore = useLoginStore();
+    const registerChallengeStore = useRegisterChallengeStore();
     const user = computed(() => loginStore.getUser);
+    const email = computed(() => registerChallengeStore.getEmail);
 
     const menuTop: Link[] = [
       {
@@ -91,6 +94,7 @@ export default defineComponent({
       onLogout,
       size,
       user,
+      email,
     };
   },
 });
@@ -135,7 +139,7 @@ export default defineComponent({
         </q-avatar>
         <!-- User name -->
         <div v-if="variant !== 'mobile'" class="col text-left q-ml-md ellipsis">
-          {{ user.email }}
+          {{ email }}
         </div>
       </template>
       <!-- User menu: Top -->

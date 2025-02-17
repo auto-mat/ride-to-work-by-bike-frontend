@@ -23,7 +23,7 @@
 
 // libraries
 import { Notify, Screen } from 'quasar';
-import { computed, defineComponent, onMounted, reactive } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
@@ -39,7 +39,6 @@ import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterC
 import { newsletterItems } from '../../mocks/homepage';
 
 // stores
-import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
@@ -61,9 +60,7 @@ export default defineComponent({
     NewsletterItem,
   },
   setup(props) {
-    const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
-    const user = reactive(loginStore.getUser);
 
     onMounted(async () => {
       await registerChallengeStore.loadRegisterChallengeToStore();
@@ -71,6 +68,10 @@ export default defineComponent({
 
     const getRegistrationId = computed((): number | null => {
       return registerChallengeStore.getRegistrationId;
+    });
+
+    const email = computed((): string => {
+      return registerChallengeStore.getEmail;
     });
 
     // update register challenge data
@@ -110,7 +111,7 @@ export default defineComponent({
       return props.description
         ? props.description
         : i18n.global.t('index.newsletterFeature.description', {
-            email: user?.email ? ` <b>${user.email}</b>` : '',
+            email: email.value ? ` <b>${email.value}</b>` : '',
           });
     });
 
