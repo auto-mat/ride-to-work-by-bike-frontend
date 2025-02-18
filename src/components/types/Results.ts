@@ -49,6 +49,12 @@ export interface TeamResults {
   gallery_slug: string;
 }
 
+export interface MyTeamResults extends TeamResults {
+  member_count: number;
+  is_full: boolean;
+  unapproved_member_count: number;
+}
+
 export interface MemberResponse {
   count: number;
   next: string | null;

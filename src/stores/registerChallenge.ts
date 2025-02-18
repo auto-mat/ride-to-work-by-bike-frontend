@@ -34,7 +34,6 @@ import {
   OrganizationType,
   OrganizationOption,
   OrganizationTeam,
-  GetMyTeamResponse,
 } from '../components/types/Organization';
 import { PaymentSubject } from '../components/enums/Payment';
 import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
@@ -55,6 +54,7 @@ import type {
   MerchandiseCard,
   MerchandiseItem,
 } from '../components/types/Merchandise';
+import type { MyTeamResults } from '../components/types/Results';
 import { i18n } from '../boot/i18n';
 import { PriceLevelCategory } from '../components/enums/Challenge';
 import type {
@@ -96,7 +96,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     teams: [] as OrganizationTeam[],
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
-    myTeam: null as GetMyTeamResponse['results'][0] | null,
+    myTeam: null as MyTeamResults | null,
     formRegisterCoordinator: deepObjectWithSimplePropsCopy(
       emptyFormRegisterCoordinator,
     ),
@@ -138,7 +138,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
-    getMyTeam: (state): GetMyTeamResponse['results'][0] | null => state.myTeam,
+    getMyTeam: (state): MyTeamResults | null => state.myTeam,
     getPaymentCategory: (state): PaymentCategory => state.paymentCategory,
     getIsSelectedRegisterCoordinator: (state): boolean =>
       state.isSelectedRegisterCoordinator,
@@ -330,7 +330,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setMerchId(merchId: number | null) {
       this.merchId = merchId;
     },
-    setMyTeam(myTeam: GetMyTeamResponse['results'][0] | null) {
+    setMyTeam(myTeam: MyTeamResults | null) {
       this.myTeam = myTeam;
     },
     setPaymentCategory(paymentCategory: PaymentCategory) {

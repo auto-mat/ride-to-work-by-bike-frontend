@@ -12,6 +12,7 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type { MyTeamResults } from '../components/types/Results';
 import type {
   GetMyTeamResponse,
   useApiGetMyTeamReturn,
@@ -29,7 +30,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 export const useApiGetMyTeam = (
   logger: Logger | null,
 ): useApiGetMyTeamReturn => {
-  const team = ref<GetMyTeamResponse['results'][0] | null>(null);
+  const team = ref<MyTeamResults | null>(null);
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
