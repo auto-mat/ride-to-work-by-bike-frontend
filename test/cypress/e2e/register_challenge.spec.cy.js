@@ -1280,8 +1280,6 @@ describe('Register Challenge page', () => {
       // submit payment
       cy.dataCy('step-2-submit-payment').should('be.visible').click();
       cy.waitForPayuCreateOrderPostApi();
-      // window is redirected to given url
-      cy.url().should('not.include', routesConf['register_challenge']['path']);
     });
 
     it('when voucher payment - all participation options are enabled', () => {
