@@ -85,6 +85,7 @@ export default defineComponent({
           codeFormatted.value,
         );
 
+        // when applying voucher, we need to check both validity and availability
         if (validatedCoupon.valid && validatedCoupon.available) {
           Notify.create({
             type: 'positive',
