@@ -17,16 +17,6 @@
           "id": 3455,
           "name": "Jan Procházka",
           "payment": { "amount": 399 }
-        },
-        {
-          "id": 3456,
-          "name": "Petr Novák",
-          "payment": { "amount": 399 }
-        },
-        {
-          "id": 3457,
-          "name": "Pavel Vlček",
-          "payment": { "amount": 399 }
         }
       ]
     }
