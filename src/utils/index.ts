@@ -150,7 +150,6 @@ export {
   getCurrentDateTimeAccordingTimezone,
   formFieldCustomValidationErrCssClass,
   requestDefaultHeader,
-  requestV2Header,
   requestTokenHeader,
   rgbaColorObjectToString,
   timestampToDatetimeString,

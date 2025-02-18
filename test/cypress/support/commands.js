@@ -2026,9 +2026,9 @@ Cypress.Commands.add(
       cy.dataCy('step-4-continue').should('be.visible').click();
       // team is preselected
       cy.dataCy('form-select-table-team')
-        .should('be.visible')
-        .find('.q-radio__inner')
+        .find('.q-radio:not(.disabled)')
         .first()
+        .find('.q-radio__inner')
         .should('have.class', 'q-radio__inner--truthy');
       // go to next step
       cy.dataCy('step-5-continue').should('be.visible').click();
@@ -2776,3 +2776,53 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Intercept my team GET API call
+ * Provides `@getMyTeam` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptMyTeamGetApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiMyTeam } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
+
+    cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+      cy.intercept('GET', urlApiMyTeamLocalized, {
+        statusCode: responseStatusCode || httpSuccessfullStatus,
+        body: responseBody || defaultResponse,
+      }).as('getMyTeam');
+    });
+  },
+);
+
+/**
+ * Wait for intercept my team API call and compare response object
+ * Wait for `@getMyTeam` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
+  cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+    cy.wait('@getMyTeam').then((getMyTeam) => {
+      expect(getMyTeam.request.headers.authorization).to.include(
+        bearerTokeAuth,
+      );
+      if (getMyTeam.response) {
+        expect(getMyTeam.response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(getMyTeam.response.body).to.deep.equal(
+          expectedResponse || defaultResponse,
+        );
+      }
+    });
+  });
+});
