@@ -57,7 +57,7 @@ export interface ConfigGlobal {
   apiBase: string;
   apiBaseRtwbbFeed: string;
   apiBaseIpAddress: string;
-  apiVersion: string;
+  apiDefaultVersion: string;
   apiVersion2: string;
   apiDefaultLang: string;
   urlApiDiscountCoupon: string;

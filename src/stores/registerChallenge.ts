@@ -568,17 +568,23 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           this.setTeamId(null);
           return null;
         }
-        const isSelectedTeamMembersCountOverMax =
-          selectedTeam?.members.length > maxTeamMembers;
-        const isUserAlreadyMember = myTeam?.members
-          .map((member) => member.id)
-          .includes(this.personalDetails.id as number);
+        const isSelectedTeamMembersCountMax =
+          selectedTeam?.members.length >= maxTeamMembers;
         this.$log?.debug(
-          `Is selected team members count over max <${isSelectedTeamMembersCountOverMax}>.`,
+          `Is selected team members count over max <${isSelectedTeamMembersCountMax}>.`,
         );
-        this.$log?.debug(`Is user already member <${isUserAlreadyMember}>.`);
-        // return if selected team is full and user is not already a member
-        if (isSelectedTeamMembersCountOverMax && !isUserAlreadyMember) {
+        // if I already have a team, my team must have members
+        const isUserAlreadyMember =
+          myTeam?.members && myTeam.members.length > 0;
+        this.$log?.debug(`Is user already a member <${isUserAlreadyMember}>.`);
+        /**
+         * If selected team is full and user is not already a member,
+         * notify the user and reset team ID.
+         * If selected team is full and user is already a member,
+         * let user proceed (we should not make user leave the team once they
+         * are already a member).
+         */
+        if (isSelectedTeamMembersCountMax && !isUserAlreadyMember) {
           Notify.create({
             type: 'negative',
             message: i18n.global.t(

@@ -3289,7 +3289,7 @@ describe('Register Challenge page', () => {
     },
   );
 
-  context.only(
+  context(
     'registration in progress, company payment "waiting" + I dont want merch',
     () => {
       beforeEach(() => {
@@ -3725,6 +3725,29 @@ describe('Register Challenge page', () => {
           },
         );
       });
+    });
+  });
+
+  context('registration into a full team', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // visit challenge inactive page to load campaign data
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      // config is defined without hash in the URL
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
     });
   });
 });
