@@ -10,7 +10,7 @@ export const couponAdapter = {
    */
   toValidatedCoupon(response: DiscountCouponResponse | null): ValidatedCoupon {
     const coupon = response?.results?.[0];
-    if (coupon && coupon?.name) {
+    if (coupon && coupon.name) {
       return {
         valid: true,
         available: !!coupon.available || false,
