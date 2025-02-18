@@ -18,7 +18,12 @@
   "subsidiaryId": 1358,
   "teamId": 2452,
   "merchId": 133,
-  "voucher": { "valid": true, "discount": 100, "name": "ZD-CZBGSD" },
+  "voucher": {
+    "valid": true,
+    "available": true,
+    "discount": 100,
+    "name": "ZD-CZBGSD"
+  },
   "formRegisterCoordinator": {
     "jobTitle": "",
     "phone": "",

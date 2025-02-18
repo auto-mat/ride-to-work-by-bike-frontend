@@ -2848,6 +2848,52 @@ describe('Register Challenge page', () => {
     });
   });
 
+  context('registration in progress, voucher payment FULL ONE-TIME', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeVoucherFull.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        cy.fixture('apiGetDiscountCouponResponseOneTime.json').then(
+          (response) => {
+            cy.interceptDiscountCouponGetApi(
+              config,
+              defLocale,
+              response.results[0].name,
+              response,
+            );
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.viewport('macbook-16');
+    });
+
+    it('loads payment page - voucher payment ONE-TIME (valid but not available)', () => {
+      cy.fixture('apiGetRegisterChallengeVoucherFull.json').then((response) => {
+        cy.fixture('apiGetDiscountCouponResponseOneTime.json').then(
+          (responseCoupon) => {
+            cy.waitForDiscountCouponApi(responseCoupon);
+          },
+        );
+        // show enabled voucher with voucher name
+        cy.dataCy('voucher-banner').should('be.visible');
+        cy.dataCy('voucher-banner-code')
+          .should('be.visible')
+          .and('contain', response.results[0].personal_details.discount_coupon);
+      });
+    });
+  });
+
   context('registration in progress, company payment "unknown"', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {

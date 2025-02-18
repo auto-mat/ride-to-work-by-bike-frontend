@@ -51,7 +51,9 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    const formFieldTextRequiredRef = ref(null);
+    const formFieldTextRequiredRef = ref<InstanceType<
+      typeof FormFieldTextRequired
+    > | null>(null);
     const challengeStore = useChallengeStore();
     const defaultPaymentAmountMin = computed(() => {
       return defaultPaymentAmountMinComputed(
@@ -78,12 +80,12 @@ export default defineComponent({
      * @returns {void}
      */
     const onSubmitVoucher = async (): Promise<void> => {
-      if (formFieldTextRequiredRef.value.inputRef.validate()) {
+      if (formFieldTextRequiredRef.value?.inputRef?.validate()) {
         const validatedCoupon: ValidatedCoupon = await validateCoupon(
           codeFormatted.value,
         );
 
-        if (validatedCoupon.valid) {
+        if (validatedCoupon.valid && validatedCoupon.available) {
           Notify.create({
             type: 'positive',
             message: i18n.global.t('notify.voucherApplySuccess'),

@@ -19,6 +19,7 @@ export interface DiscountCoupon {
 
 export interface ValidatedCoupon {
   valid: boolean;
+  available: boolean;
   discount: number;
   name: string;
 }

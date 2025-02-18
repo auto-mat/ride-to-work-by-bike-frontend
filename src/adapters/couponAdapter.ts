@@ -10,10 +10,20 @@ export const couponAdapter = {
    */
   toValidatedCoupon(response: DiscountCouponResponse | null): ValidatedCoupon {
     const coupon = response?.results?.[0];
-    return {
-      valid: !!coupon?.available,
-      discount: coupon?.discount || 0,
-      name: coupon?.name || '',
-    };
+    if (coupon && coupon?.name) {
+      return {
+        valid: true,
+        available: !!coupon.available || false,
+        discount: coupon.discount || 0,
+        name: coupon.name || '',
+      };
+    } else {
+      return {
+        valid: false,
+        available: !!coupon?.available || false,
+        discount: coupon?.discount || 0,
+        name: coupon?.name || '',
+      };
+    }
   },
 };

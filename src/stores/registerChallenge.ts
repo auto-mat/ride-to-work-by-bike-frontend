@@ -430,6 +430,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       /**
        * Re-validate `voucher` value over API every time registration is loaded
        * to prevent incorrect voucher value from being set.
+       * We are only checking validity (existence of the coupon), not
+       * availability (possibility to use the coupon). This is because some
+       * coupons can only be used once, but need to be loaded every time.
        */
       if (parsedResponse.voucher) {
         const { validateCoupon } = useApiGetDiscountCoupon(this.$log);
