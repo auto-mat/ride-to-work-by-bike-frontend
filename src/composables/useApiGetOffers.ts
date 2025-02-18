@@ -64,7 +64,6 @@ export const useApiGetOffers = (
       _number: '100',
       _post_type: 'locations',
       _page_subtype: 'event',
-      _from: '2025-01-01',
     };
 
     // append access token into HTTP header

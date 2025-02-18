@@ -80,8 +80,8 @@ export default defineComponent({
     @click.prevent="modalOpened = true"
   >
     <span class="q-focus-helper"></span>
-    <q-card-section horizontal class="q-px-md q-py-md items-center">
-      <q-card-section class="col-auto items-center">
+    <q-card-section horizontal class="items-center" style="height: 100%">
+      <q-card-section class="col-auto items-center q-pr-none">
         <!-- Icon -->
         <q-icon
           :name="card.icon"
@@ -90,7 +90,7 @@ export default defineComponent({
           data-cy="card-icon"
         />
       </q-card-section>
-      <q-card-section class="col items-center">
+      <q-card-section class="col items-center" style="text-balance: pretty">
         <!-- Title -->
         <div
           v-html="card.title"

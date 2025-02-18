@@ -90,7 +90,7 @@ export default defineComponent({
         data-cy="list-card-offer-item"
       >
         <!-- Card -->
-        <card-offer :card="card" />
+        <card-offer :card="card" style="height: 100%" />
       </div>
     </div>
     <!-- Link more offers -->
