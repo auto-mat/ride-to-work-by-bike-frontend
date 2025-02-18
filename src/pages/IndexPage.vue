@@ -213,7 +213,7 @@ export default defineComponent({
     const isSliderProgressEnabled = false;
     const isListProgressEnabled = false;
     const isSectionEventsEnabled = false;
-    const isSectionOffersEnabled = false;
+    const isSectionOffersEnabled = true;
     const isSectionPostsEnabled = false;
 
     const challengeStore = useChallengeStore();

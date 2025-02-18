@@ -533,11 +533,13 @@ Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
     i18n,
   );
   const getOffersParams = {
-    orderby: 'start_date',
+    order: 'DESC',
+    orderby: 'DATE',
     feed: 'content_to_backend',
+    _number: '100',
     _post_type: 'locations',
     _page_subtype: 'event',
-    _number: '100',
+    _from: '2025-01-01',
   };
   const objectToParams = (obj) => {
     return Object.keys(obj)

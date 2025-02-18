@@ -5,6 +5,9 @@ import { computed, ref } from 'vue';
 import { useApi } from './useApi';
 import { i18n } from '../boot/i18n';
 
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
 // enums
 import { ApiBaseUrl } from '../components/enums/Api';
 
@@ -13,6 +16,9 @@ import type { ComputedRef, Ref } from 'vue';
 import type { CardOffer } from '../components/types/Card';
 import type { Logger } from '../components/types/Logger';
 import type { Offer, GetOffersParams } from '../components/types/Offer';
+
+// utils
+import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiGetOffersReturn = {
   cards: ComputedRef<CardOffer[]>;
@@ -50,13 +56,21 @@ export const useApiGetOffers = (
     isLoading.value = true;
 
     // query parameters
+    // TODO: remove hardcoded values and determine cases for param config
     const params: GetOffersParams = {
-      orderby: 'start_date',
+      order: 'DESC',
+      orderby: 'DATE',
       feed: 'content_to_backend',
+      _number: '100',
       _post_type: 'locations',
       _page_subtype: 'event',
-      _number: '100',
+      _from: '2025-01-01',
     };
+
+    // append access token into HTTP header
+    const requestTokenHeader_ = { ...requestTokenHeader };
+    requestTokenHeader_.Authorization +=
+      rideToWorkByBikeConfig.apiBaseRtwbbFeedBearerToken;
 
     // fetch offers
     const { data } = await apiFetch<Offer[]>({
@@ -66,6 +80,7 @@ export const useApiGetOffers = (
       showSuccessMessage: false,
       params,
       logger,
+      headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
     });
 
     if (data?.length) {

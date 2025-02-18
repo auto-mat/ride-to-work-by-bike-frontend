@@ -76,7 +76,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <div v-if="renderedCards.length > 0">
     <!-- Title -->
     <section-heading class="q-mb-md">
       {{ title }}

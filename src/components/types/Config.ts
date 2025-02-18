@@ -94,6 +94,7 @@ export interface ConfigGlobal {
   checkIsThisCampaignCompetitionPhaseTypeInterval: string;
   googleLoginAppId: string;
   facebookLoginAppId: string;
+  apiBaseRtwbbFeedBearerToken: string;
   secretString: string;
   facebookLoginSdkVersion: string;
   facebookLoginSdkOptions: string;
