@@ -2024,7 +2024,7 @@ Cypress.Commands.add(
         .and('contain', subsidiariesResponse.results[0].address.city);
       // go to next step
       cy.dataCy('step-4-continue').should('be.visible').click();
-      // team is preselected
+      // first available team is preselected (2nd team in fixture results)
       cy.dataCy('form-select-table-team')
         .find('.q-radio:not(.disabled)')
         .first()
