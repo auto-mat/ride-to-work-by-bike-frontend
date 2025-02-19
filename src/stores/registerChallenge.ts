@@ -568,23 +568,23 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           this.setTeamId(null);
           return null;
         }
-        const isSelectedTeamMembersCountMax =
+        // check if selected team is full
+        const isSelectedTeamMembersCountMax: boolean =
           selectedTeam?.members.length >= maxTeamMembers;
         this.$log?.debug(
-          `Is selected team members count over max <${isSelectedTeamMembersCountMax}>.`,
+          `Is selected team full <${isSelectedTeamMembersCountMax}>.`,
         );
-        // if I already have a team, my team must have members
-        const isUserAlreadyMember =
-          myTeam?.members && myTeam.members.length > 0;
-        this.$log?.debug(`Is user already a member <${isUserAlreadyMember}>.`);
+        // check if selected team is my team
+        const isSelectedTeamMyTeam: boolean = myTeam?.id === selectedTeam.id;
+        this.$log?.debug(`Selected team is my team <${isSelectedTeamMyTeam}>.`);
         /**
-         * If selected team is full and user is not already a member,
+         * If selected team is full and it is not my team,
          * notify the user and reset team ID.
-         * If selected team is full and user is already a member,
+         * If selected team is full and it is my team,
          * let user proceed (we should not make user leave the team once they
-         * are already a member).
+         * are already an approved member).
          */
-        if (isSelectedTeamMembersCountMax && !isUserAlreadyMember) {
+        if (isSelectedTeamMembersCountMax && !isSelectedTeamMyTeam) {
           Notify.create({
             type: 'negative',
             message: i18n.global.t(
@@ -753,7 +753,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         logger?.debug('Load my team');
         await loadTeam();
         if (team.value) {
+          logger?.debug(
+            `Setting my team <${JSON.stringify(team.value, null, 2)}>.`,
+          );
           this.setMyTeam(team.value);
+          logger?.debug(
+            `My team set to <${JSON.stringify(this.getMyTeam, null, 2)}>.`,
+          );
         }
       }
     },

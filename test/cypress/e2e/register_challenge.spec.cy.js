@@ -3739,7 +3739,6 @@ describe('Register Challenge page', () => {
         cy.fixture('apiGetRegisterChallengeFullTeam.json').then((response) => {
           cy.interceptRegisterChallengeGetApi(config, defLocale, response);
         });
-        // intercept common response (not currently used)
         cy.interceptRegisterChallengePostApi(config, defLocale);
         cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
         cy.interceptMyTeamGetApi(config, defLocale);
@@ -3749,7 +3748,7 @@ describe('Register Challenge page', () => {
         // alias i18n
         cy.wrap(win.i18n).as('i18n');
       });
-      // config is defined without hash in the URL
+      // visit register challenge page
       cy.visit('#' + routesConf['register_challenge']['path']);
       cy.viewport('macbook-16');
     });
