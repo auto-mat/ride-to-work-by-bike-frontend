@@ -227,6 +227,10 @@ export default defineComponent({
       if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
         await registerChallengeStore.checkIsUserOrganizationAdmin();
       }
+      // load my team data if not available
+      if (!registerChallengeStore.getMyTeam) {
+        await registerChallengeStore.loadMyTeamToStore(null);
+      }
     });
 
     const competitionStart = computed(() => challengeStore.getCompetitionStart);

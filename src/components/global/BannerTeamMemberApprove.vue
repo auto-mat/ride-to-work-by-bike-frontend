@@ -26,23 +26,13 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 // enums
 import { TeamMemberStatus } from '../enums/TeamMember';
 
-// types
-interface TeamMember {
-  id: number;
-  name: string;
-  email: string;
-}
+// stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { useChallengeStore } from '../../stores/challenge';
 
-// TODO: Remove these constants when integrating with store
-const DUMMY_DATA = {
-  isApproved: true,
-  pendingMembersCount: 3,
-  pendingMembers: [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-    { id: 3, name: 'Bob Wilson', email: 'bob@example.com' },
-  ] as TeamMember[],
-};
+// types
+import type { ExtendedMemberResults } from '../types/Results';
+import type { MemberResults } from '../types/Results';
 
 export default defineComponent({
   name: 'BannerTeamMemberApprove',
@@ -51,29 +41,66 @@ export default defineComponent({
   },
   setup() {
     const { borderRadiusCard: borderRadius } = rideToWorkByBikeConfig;
-    const isDialogOpen = ref(false);
-    const memberDecisions = ref(
-      new Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>(),
-    );
+    const isDialogOpen = ref<boolean>(false);
+    const memberDecisions = ref<
+      Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>
+    >(new Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>());
 
-    const openDialog = () => {
+    const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
+
+    const openDialog = (): void => {
       isDialogOpen.value = true;
     };
 
-    const onSave = () => {
+    const onSave = (): void => {
       // TODO: Implement save functionality
       isDialogOpen.value = false;
     };
 
-    const isApproved = computed(() => {
-      return DUMMY_DATA.isApproved;
+    const isApproved = computed<boolean>((): boolean => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam) return false;
+
+      const currentUser = myTeam.members.find(
+        (member: MemberResults) => member.is_me,
+      ) as MemberResults as ExtendedMemberResults;
+      if (!currentUser) return false;
+
+      return currentUser.approved_for_team === TeamMemberStatus.approved;
     });
 
-    const pendingMembersCount = computed(() => {
-      return DUMMY_DATA.pendingMembersCount;
+    const pendingMembersCount = computed<number>((): number => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      return myTeam?.unapproved_member_count || 0;
     });
 
-    const isBannerVisible = computed(() => {
+    const pendingMembers = computed<ExtendedMemberResults[]>(
+      (): ExtendedMemberResults[] => {
+        const myTeam = registerChallengeStore.getMyTeam;
+        if (!myTeam) return [];
+
+        return (myTeam.members as ExtendedMemberResults[]).filter(
+          (member) => member.approved_for_team === TeamMemberStatus.undecided,
+        );
+      },
+    );
+
+    const isTeamFull = computed<boolean>((): boolean => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam) return false;
+
+      const maxTeamMembers = challengeStore.getMaxTeamMembers;
+      if (!maxTeamMembers) return false;
+
+      return myTeam.member_count >= maxTeamMembers;
+    });
+
+    const isBannerVisible = computed<boolean>((): boolean => {
+      // If team is full, don't show the banner
+      if (isTeamFull.value) return false;
+
+      // Otherwise, show if user is not approved or if there are pending members
       return (
         !isApproved.value || (isApproved.value && pendingMembersCount.value > 0)
       );
@@ -94,11 +121,10 @@ export default defineComponent({
       openDialog,
       onSave,
       secondaryOpacity,
-      // TODO: Remove when integrating with store
-      ...DUMMY_DATA,
       isApproved,
       isBannerVisible,
       pendingMembersCount,
+      pendingMembers,
       TeamMemberStatus,
     };
   },

@@ -1,3 +1,6 @@
+// enums
+import { TeamMemberStatus } from '../enums/TeamMember';
+
 export interface Emissions {
   co2: number;
   co: number;
@@ -30,6 +33,11 @@ export interface MemberResults {
   points: number;
   points_display: string;
   team: string;
+}
+
+export interface ExtendedMemberResults extends MemberResults {
+  approved_for_team: TeamMemberStatus;
+  email?: string;
 }
 
 export interface TeamResults {

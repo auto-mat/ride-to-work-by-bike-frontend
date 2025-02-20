@@ -13,17 +13,35 @@
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104393&t=X2rh1VOnQ1CkvTqG-1)
  */
 
+// libraries
+import { defineComponent, onMounted } from 'vue';
+
 // components
 import PageHeading from 'components/global/PageHeading.vue';
 import ProfileTabs from '../components/profile/ProfileTabs.vue';
 
-export default {
+// stores
+import { useRegisterChallengeStore } from '../stores/registerChallenge';
+
+export default defineComponent({
   name: 'ProfilePage',
   components: {
     PageHeading,
     ProfileTabs,
   },
-};
+  setup() {
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    onMounted(async () => {
+      // load my team data if not available
+      if (!registerChallengeStore.getMyTeam) {
+        await registerChallengeStore.loadMyTeamToStore(null);
+      }
+    });
+
+    return {};
+  },
+});
 </script>
 
 <template>
