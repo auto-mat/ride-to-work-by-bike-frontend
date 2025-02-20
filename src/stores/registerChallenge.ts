@@ -558,6 +558,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         );
         // selected team members or max team members are not set - error
         if (!selectedTeam?.members || !maxTeamMembers) {
+          this.$log?.debug(
+            'Selected team members <${selectedTeam?.members}>,' +
+              ' max. team members <${maxTeamMembers}>.',
+          );
           Notify.create({
             type: 'negative',
             message: i18n.global.t(
@@ -566,6 +570,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           });
           // reset team ID
           this.setTeamId(null);
+          this.$log?.debug('Reset team ID to <${this.getTeamId}>.');
           return null;
         }
         // check if selected team is full
@@ -591,9 +596,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
               'postRegisterChallenge.messageTeamMaxMembersReached',
             ),
           });
-          this.$log?.debug('Team max members reached, resetting team ID.');
+          this.$log?.info('Team max members reached.');
           // reset team ID
           this.setTeamId(null);
+          this.$log?.debug('Reset team ID to <${this.getTeamId}>.');
           return null;
         }
       }
@@ -750,7 +756,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     async loadMyTeamToStore(logger: Logger | null) {
       const { team, loadTeam } = useApiGetMyTeam(logger);
       if (this.teamId) {
-        logger?.debug('Load my team');
+        logger?.info('Load my team data.');
         await loadTeam();
         if (team.value) {
           logger?.debug(
