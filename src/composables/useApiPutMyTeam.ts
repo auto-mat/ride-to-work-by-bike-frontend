@@ -70,7 +70,7 @@ export const useApiPutMyTeam = (
     await apiFetch<GetMyTeamResponse>({
       endpoint: rideToWorkByBikeConfig.urlApiMyTeam,
       method: 'put',
-      translationKey: 'updateTeamMembers',
+      translationKey: 'putMyTeam',
       headers,
       payload: { members },
       logger,

@@ -731,6 +731,11 @@ apiMessageError = "Error updating profile."
 apiMessageErrorWithMessage = "Error updating profile. Error: {error}"
 apiMessageSuccess = "Profile was successfully updated."
 
+[putMyTeam]
+apiMessageError = "Error updating team."
+apiMessageErrorWithMessage = "Error updating team. Error: {error}"
+apiMessageSuccess = "Team was successfully updated."
+
 [refreshTokens]
 messageRefreshTokenRequired = "To refresh tokens, you must log in."
 apiMessageSuccess = "Login token was refreshed."

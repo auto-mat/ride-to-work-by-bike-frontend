@@ -731,6 +731,11 @@ apiMessageError = "Chyba pri aktualizácii profilu."
 apiMessageErrorWithMessage = "Chyba pri aktualizácii profilu. Chyba: {error}"
 apiMessageSuccess = "Profil bol úspešne aktualizovaný."
 
+[putMyTeam]
+apiMessageError = "Chyba pri aktualizácii tímu."
+apiMessageErrorWithMessage = "Chyba pri aktualizácii tímu. Chyba: {error}"
+apiMessageSuccess = "Tím bol úspešne aktualizovaný."
+
 [refreshTokens]
 messageRefreshTokenRequired = "Aby ste mohli obnoviť tokeny, musíte sa prihlásiť."
 apiMessageSuccess = "Prihlasovací token bol obnovený."
