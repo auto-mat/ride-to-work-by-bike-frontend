@@ -14,6 +14,14 @@ siteTitle = "Ride to Work by Bike"
 period = "Challenge period"
 transportType = "Means of transport"
 
+[bannerTeamMemberApprove]
+textMembersToApprove = "Someone in your team wants to be approved. Give them the green light?"
+textWaitingForApproval = "Your request to join the team is still pending. Let your colleagues know..."
+buttonApproveMembers = "Approve members"
+dialogTitle = "Approve team members"
+buttonDialogApprove = "Approve"
+buttonDialogDeny = "Deny"
+
 [breadcrumb]
 results = "Results"
 

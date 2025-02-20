@@ -14,6 +14,14 @@ siteTitle = "Do práce na kole"
 period = "Období výzvy"
 transportType = "Způsoby dopravy"
 
+[bannerTeamMemberApprove]
+textMembersToApprove = "Někdo ve vašem týmu touží po schválení. Dáte mu zelenou?"
+textWaitingForApproval = "Vaší žádosti o schválení v týmu zatím nebylo vyhověno. Popožeňte kolegy..."
+buttonApproveMembers = "Schválit členy*ky"
+dialogTitle = "Schválit členy*ky týmu"
+buttonDialogApprove = "Schválit"
+buttonDialogDeny = "Sdmítnout"
+
 [breadcrumb]
 results = "Výsledky"
 
