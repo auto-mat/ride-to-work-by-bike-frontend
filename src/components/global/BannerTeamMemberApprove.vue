@@ -34,6 +34,10 @@ import { useChallengeStore } from '../../stores/challenge';
 import type { ExtendedMemberResults } from '../types/Results';
 import type { MemberResults } from '../types/Results';
 
+// composables
+import { useApiPutMyTeam } from '../../composables/useApiPutMyTeam';
+import { i18n } from '../../boot/i18n';
+
 export default defineComponent({
   name: 'BannerTeamMemberApprove',
   components: {
@@ -48,14 +52,79 @@ export default defineComponent({
 
     const registerChallengeStore = useRegisterChallengeStore();
     const challengeStore = useChallengeStore();
+    const { updateTeamMemberStatus, isLoading } = useApiPutMyTeam(null);
+    const { t } = i18n.global;
 
     const openDialog = (): void => {
       isDialogOpen.value = true;
+      // reset member decisions when opening dialog
+      memberDecisions.value = new Map();
     };
 
-    const onSave = (): void => {
-      // TODO: Implement save functionality
+    const remainingApprovalSlots = computed<number>((): number => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam) return 0;
+
+      const maxTeamMembers = challengeStore.getMaxTeamMembers;
+      if (!maxTeamMembers) return 0;
+
+      return maxTeamMembers - myTeam.member_count;
+    });
+
+    const onSave = async (): Promise<void> => {
+      // generate the payload from the memberDecisions map
+      const payload = Array.from(memberDecisions.value.entries()).map(
+        ([id, status]) => ({
+          id,
+          approved_for_team: status,
+        }),
+      );
+      // if no changes were made, close the dialog
+      if (payload.length === 0) {
+        isDialogOpen.value = false;
+        return;
+      }
+      // submit the changes
+      await updateTeamMemberStatus(payload);
+      // reload team data after successful update
+      await registerChallengeStore.loadMyTeamToStore(null);
       isDialogOpen.value = false;
+    };
+
+    const handleMemberDecision = (
+      memberId: number,
+      status: TeamMemberStatus.approved | TeamMemberStatus.denied,
+    ): void => {
+      // if trying to approve and no slots left, do nothing
+      if (
+        status === TeamMemberStatus.approved &&
+        remainingApprovalSlots.value <= 0
+      ) {
+        return;
+      }
+      // if approving a member would exceed the limit, reject other undecided members
+      if (status === TeamMemberStatus.approved) {
+        // get the number of members set for approval
+        const currentApprovals = Array.from(
+          memberDecisions.value.values(),
+        ).filter((s) => s === TeamMemberStatus.approved).length;
+        // if this is the last slot, reject the remaining undecided members
+        if (currentApprovals + 1 >= remainingApprovalSlots.value) {
+          // auto-reject remaining undecided members
+          pendingMembers.value.forEach((member) => {
+            // for all members not yet selected and except the current one
+            if (
+              !memberDecisions.value.has(member.id) &&
+              member.id !== memberId
+            ) {
+              // set the status to denied
+              memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+            }
+          });
+        }
+      }
+      // set the status for the current member
+      memberDecisions.value.set(memberId, status);
     };
 
     const isApproved = computed<boolean>((): boolean => {
@@ -126,6 +195,10 @@ export default defineComponent({
       pendingMembersCount,
       pendingMembers,
       TeamMemberStatus,
+      remainingApprovalSlots,
+      handleMemberDecision,
+      isLoading,
+      $t: t,
     };
   },
 });
@@ -232,12 +305,16 @@ export default defineComponent({
                           : 'grey'
                       "
                       @click="
-                        memberDecisions.set(
+                        handleMemberDecision(
                           member.id,
                           TeamMemberStatus.approved,
                         )
                       "
                       :label="$t('bannerTeamMemberApprove.buttonDialogApprove')"
+                      :disable="
+                        remainingApprovalSlots <= 0 &&
+                        !memberDecisions.get(member.id)
+                      "
                     />
                     <q-btn
                       outline
@@ -248,7 +325,7 @@ export default defineComponent({
                           : 'grey'
                       "
                       @click="
-                        memberDecisions.set(member.id, TeamMemberStatus.denied)
+                        handleMemberDecision(member.id, TeamMemberStatus.denied)
                       "
                       :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
                     />
@@ -267,6 +344,7 @@ export default defineComponent({
               color="primary"
               @click="isDialogOpen = false"
               data-cy="dialog-button-cancel"
+              :disable="isLoading"
             >
               {{ $t('navigation.discard') }}
             </q-btn>
@@ -276,6 +354,7 @@ export default defineComponent({
               color="primary"
               @click="onSave"
               data-cy="dialog-button-submit"
+              :loading="isLoading"
             >
               {{ $t('navigation.save') }}
             </q-btn>

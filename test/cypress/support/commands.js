@@ -2826,3 +2826,53 @@ Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
     });
   });
 });
+
+/**
+ * Intercept my team PUT API call
+ * Provides `@putMyTeam` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptMyTeamPutApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiMyTeam } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
+
+    cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+      cy.intercept('PUT', urlApiMyTeamLocalized, {
+        statusCode: responseStatusCode || httpSuccessfullStatus,
+        body: responseBody || defaultResponse,
+      }).as('putMyTeam');
+    });
+  },
+);
+
+/**
+ * Wait for intercept my team PUT API call and compare response object
+ * Wait for `@putMyTeam` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add('waitForMyTeamPutApi', (expectedResponse = null) => {
+  cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+    cy.wait('@putMyTeam').then((putMyTeam) => {
+      expect(putMyTeam.request.headers.authorization).to.include(
+        bearerTokeAuth,
+      );
+      if (putMyTeam.response) {
+        expect(putMyTeam.response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(putMyTeam.response.body).to.deep.equal(
+          expectedResponse || defaultResponse,
+        );
+      }
+    });
+  });
+});
