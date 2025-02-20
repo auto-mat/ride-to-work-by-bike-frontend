@@ -20,7 +20,7 @@ textWaitingForApproval = "Vaší žádosti o schválení v týmu zatím nebylo v
 buttonApproveMembers = "Schválit členy*ky"
 dialogTitle = "Schválit členy*ky týmu"
 buttonDialogApprove = "Schválit"
-buttonDialogDeny = "Sdmítnout"
+buttonDialogDeny = "Odmítnout"
 
 [breadcrumb]
 results = "Výsledky"

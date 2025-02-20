@@ -14,6 +14,8 @@
           class="q-mb-xl"
           data-cy="countdown-event"
         />
+        <!-- Banner: Team Member Approve -->
+        <banner-team-member-approve />
         <!-- Banner: Routes -->
         <banner-routes
           v-if="
@@ -142,6 +144,7 @@ import { computed, defineComponent, onMounted } from 'vue';
 import BannerApp from 'components/homepage/BannerApp.vue';
 import BannerImage from 'components/homepage/BannerImage.vue';
 import BannerRoutes from 'components/homepage/BannerRoutes.vue';
+import BannerTeamMemberApprove from 'components/global/BannerTeamMemberApprove.vue';
 import CardChallenge from 'components/homepage/CardChallenge.vue';
 import CardEvent from 'components/homepage/CardEvent.vue';
 import CountdownEvent from 'components/homepage/CountdownEvent.vue';
@@ -182,6 +185,7 @@ export default defineComponent({
     BannerApp,
     BannerImage,
     BannerRoutes,
+    BannerTeamMemberApprove,
     CardChallenge,
     CardEvent,
     CountdownEvent,

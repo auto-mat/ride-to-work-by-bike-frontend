@@ -36,7 +36,6 @@ import type { MemberResults } from '../types/Results';
 
 // composables
 import { useApiPutMyTeam } from '../../composables/useApiPutMyTeam';
-import { i18n } from '../../boot/i18n';
 
 export default defineComponent({
   name: 'BannerTeamMemberApprove',
@@ -53,7 +52,6 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
     const challengeStore = useChallengeStore();
     const { updateTeamMemberStatus, isLoading } = useApiPutMyTeam(null);
-    const { t } = i18n.global;
 
     const openDialog = (): void => {
       isDialogOpen.value = true;
@@ -91,6 +89,14 @@ export default defineComponent({
       isDialogOpen.value = false;
     };
 
+    /**
+     * Handle the member decision
+     * Assign the status to the member and handle the logic related to the max
+     * number of members allowed.
+     * @param {number} memberId - The id of the member
+     * @param {TeamMemberStatus.approved | TeamMemberStatus.denied} status
+     *   - The status of the member
+     */
     const handleMemberDecision = (
       memberId: number,
       status: TeamMemberStatus.approved | TeamMemberStatus.denied,
@@ -198,7 +204,6 @@ export default defineComponent({
       remainingApprovalSlots,
       handleMemberDecision,
       isLoading,
-      $t: t,
     };
   },
 });
@@ -222,7 +227,7 @@ export default defineComponent({
       >
         <!-- Image -->
         <q-img
-          class="col-12 col-sm-auto"
+          class="col-12 col-md-auto"
           src="~assets/svg/banner-routes.svg"
           width="70px"
           height="102px"
@@ -232,7 +237,7 @@ export default defineComponent({
         />
         <!-- Title -->
         <h3
-          class="col-12 col-sm text-h5 text-weight-bold q-my-none"
+          class="col-12 col-md text-h5 text-weight-bold q-my-none"
           data-cy="banner-team-member-approve-title"
         >
           <!-- Approved members -->
@@ -244,26 +249,25 @@ export default defineComponent({
             {{ $t('bannerTeamMemberApprove.textWaitingForApproval') }}
           </span>
         </h3>
-      </div>
-
-      <!-- Button section -->
-      <div
-        v-if="isApproved && pendingMembersCount > 0"
-        class="col-12 flex items-center justify-end q-py-sm q-px-xl"
-        data-cy="banner-team-member-approve-section-button"
-      >
-        <q-btn
-          rounded
-          unelevated
-          color="primary"
-          size="16px"
-          text-color="white"
-          class="q-pa-md text-weight-bold"
-          @click="openDialog"
-          data-cy="banner-team-member-approve-button"
+        <!-- Button section -->
+        <div
+          v-if="isApproved && pendingMembersCount > 0"
+          class="col-12 col-md-auto flex items-center justify-end q-py-sm"
+          data-cy="banner-team-member-approve-section-button"
         >
-          {{ $t('bannerTeamMemberApprove.buttonApproveMembers') }}
-        </q-btn>
+          <q-btn
+            rounded
+            unelevated
+            color="primary"
+            size="16px"
+            text-color="white"
+            class="q-pa-md text-weight-bold"
+            @click="openDialog"
+            data-cy="banner-team-member-approve-button"
+          >
+            {{ $t('bannerTeamMemberApprove.buttonApproveMembers') }}
+          </q-btn>
+        </div>
       </div>
     </div>
 
@@ -275,90 +279,94 @@ export default defineComponent({
       </template>
       <!-- Content -->
       <template #content>
-        <div class="q-pa-md">
-          <!-- Member List -->
-          <div class="q-mb-lg">
-            <div
-              v-for="member in pendingMembers"
-              :key="member.id"
-              class="q-mb-md"
-            >
-              <div class="row items-center q-col-gutter-md">
-                <!-- Member Info -->
-                <div class="col">
-                  <div class="text-subtitle1 text-weight-medium">
-                    {{ member.name }}
-                  </div>
-                  <div class="text-caption text-grey-7">
-                    {{ member.email }}
-                  </div>
+        <!-- Member List -->
+        <div class="q-mb-lg">
+          <div
+            v-for="member in pendingMembers"
+            :key="member.id"
+            class="q-mb-md"
+          >
+            <div class="row items-center q-col-gutter-md">
+              <!-- Member Info -->
+              <div class="col-12 col-sm">
+                <div class="text-subtitle1 text-weight-medium">
+                  {{ member.name }}
                 </div>
-                <!-- Decision Buttons -->
-                <div class="col-auto">
-                  <q-btn-group rounded>
-                    <q-btn
-                      outline
-                      :color="
-                        memberDecisions.get(member.id) ===
-                        TeamMemberStatus.approved
-                          ? 'positive'
-                          : 'grey'
-                      "
-                      @click="
-                        handleMemberDecision(
-                          member.id,
-                          TeamMemberStatus.approved,
-                        )
-                      "
-                      :label="$t('bannerTeamMemberApprove.buttonDialogApprove')"
-                      :disable="
-                        remainingApprovalSlots <= 0 &&
-                        !memberDecisions.get(member.id)
-                      "
-                    />
-                    <q-btn
-                      outline
-                      :color="
-                        memberDecisions.get(member.id) ===
-                        TeamMemberStatus.denied
-                          ? 'negative'
-                          : 'grey'
-                      "
-                      @click="
-                        handleMemberDecision(member.id, TeamMemberStatus.denied)
-                      "
-                      :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
-                    />
-                  </q-btn-group>
+                <div class="text-caption text-grey-7">
+                  {{ member.email }}
                 </div>
+              </div>
+              <!-- Decision Buttons -->
+              <div class="col-12 col-sm-auto">
+                <q-btn
+                  rounded
+                  unelevated
+                  :outline="
+                    memberDecisions.get(member.id) !== TeamMemberStatus.approved
+                  "
+                  :color="
+                    memberDecisions.get(member.id) === TeamMemberStatus.approved
+                      ? 'positive'
+                      : 'primary'
+                  "
+                  @click="
+                    handleMemberDecision(member.id, TeamMemberStatus.approved)
+                  "
+                  :label="$t('bannerTeamMemberApprove.buttonDialogApprove')"
+                  :disable="
+                    remainingApprovalSlots <= 0 &&
+                    !memberDecisions.get(member.id)
+                  "
+                  class="q-mr-sm"
+                />
+                <q-btn
+                  rounded
+                  unelevated
+                  :outline="
+                    memberDecisions.get(member.id) !== TeamMemberStatus.denied
+                  "
+                  :color="
+                    memberDecisions.get(member.id) === TeamMemberStatus.denied
+                      ? 'negative'
+                      : 'primary'
+                  "
+                  @click="
+                    handleMemberDecision(member.id, TeamMemberStatus.denied)
+                  "
+                  :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
+                />
               </div>
             </div>
           </div>
-
-          <!-- Action Buttons -->
-          <div class="flex justify-end gap-8">
-            <q-btn
-              rounded
-              unelevated
-              outline
-              color="primary"
-              @click="isDialogOpen = false"
-              data-cy="dialog-button-cancel"
-              :disable="isLoading"
-            >
-              {{ $t('navigation.discard') }}
-            </q-btn>
-            <q-btn
-              rounded
-              unelevated
-              color="primary"
-              @click="onSave"
-              data-cy="dialog-button-submit"
-              :loading="isLoading"
-            >
-              {{ $t('navigation.save') }}
-            </q-btn>
-          </div>
+        </div>
+        <!-- Separator -->
+        <q-separator
+          class="q-my-md"
+          style="margin-left: -16px; margin-right: -16px"
+        />
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-8">
+          <q-btn
+            rounded
+            unelevated
+            outline
+            color="primary"
+            @click="isDialogOpen = false"
+            data-cy="dialog-button-cancel"
+            :disable="isLoading"
+          >
+            {{ $t('navigation.discard') }}
+          </q-btn>
+          <q-btn
+            rounded
+            unelevated
+            color="primary"
+            @click="onSave"
+            data-cy="dialog-button-submit"
+            :loading="isLoading"
+          >
+            {{ $t('navigation.save') }}
+          </q-btn>
         </div>
       </template>
     </dialog-default>
