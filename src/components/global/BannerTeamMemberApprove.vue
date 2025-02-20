@@ -285,6 +285,7 @@ export default defineComponent({
             v-for="member in pendingMembers"
             :key="member.id"
             class="q-mb-md"
+            data-cy="dialog-approve-members-member"
           >
             <div class="row items-center q-col-gutter-md">
               <!-- Member Info -->
