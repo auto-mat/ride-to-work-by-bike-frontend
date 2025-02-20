@@ -119,6 +119,15 @@ After the user makes the selection and clicks the save button, the form will be 
 
 ---
 
+Step 5:
+
+Write component tests for BannerTeamMemberApprove.vue component in BannerTeamMemberApprove.cy.js file.
+Behavior to test (based on this specification and current implementation):
+
+- [x] Test that component is rendered correctly with correct data, a modal is opened when button clicked with a list of members to approve with names and buttons to approve or reject members.
+- [x] Test that a green button is shown when member is approved and a red button when member is denied.
+- [ ] Test that after approving 4 members, the 5th member is rejected automatically and the button is disabled.
+
 ## Implementation steps
 
 - [x] Update `BannerTeamMemberApprove.vue` component template.
