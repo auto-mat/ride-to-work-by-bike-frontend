@@ -16,6 +16,33 @@ describe('<BannerTeamMemberApprove>', () => {
       cy.mount(BannerTeamMemberApprove, {
         props: {},
       });
+      cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
+        cy.wrap(useChallengeStore()).then((challengeStore) => {
+          cy.fixture('apiGetThisCampaign.json').then((thisCampaignResponse) => {
+            const maxTeamMembers = computed(
+              () => challengeStore.getMaxTeamMembers,
+            );
+            challengeStore.setMaxTeamMembers(
+              thisCampaignResponse.results[0].max_team_members,
+            );
+            // test max team members number in store
+            cy.wrap(maxTeamMembers)
+              .its('value')
+              .should(
+                'be.equal',
+                thisCampaignResponse.results[0].max_team_members,
+              );
+          });
+        });
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          // set myTeam in store
+          const myTeam = computed(() => registerChallengeStore.getMyTeam);
+          registerChallengeStore.setMyTeam(responseMyTeam.results[0]);
+          cy.wrap(myTeam)
+            .its('value')
+            .should('deep.equal', responseMyTeam.results[0]);
+        });
+      });
       cy.viewport('macbook-16');
     });
 
@@ -28,6 +55,33 @@ describe('<BannerTeamMemberApprove>', () => {
       cy.mount(BannerTeamMemberApprove, {
         props: {},
       });
+      cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
+        cy.wrap(useChallengeStore()).then((challengeStore) => {
+          cy.fixture('apiGetThisCampaign.json').then((thisCampaignResponse) => {
+            const maxTeamMembers = computed(
+              () => challengeStore.getMaxTeamMembers,
+            );
+            challengeStore.setMaxTeamMembers(
+              thisCampaignResponse.results[0].max_team_members,
+            );
+            // test max team members number in store
+            cy.wrap(maxTeamMembers)
+              .its('value')
+              .should(
+                'be.equal',
+                thisCampaignResponse.results[0].max_team_members,
+              );
+          });
+        });
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          // set myTeam in store
+          const myTeam = computed(() => registerChallengeStore.getMyTeam);
+          registerChallengeStore.setMyTeam(responseMyTeam.results[0]);
+          cy.wrap(myTeam)
+            .its('value')
+            .should('deep.equal', responseMyTeam.results[0]);
+        });
+      });
       cy.viewport('iphone-6');
     });
 
@@ -38,32 +92,6 @@ describe('<BannerTeamMemberApprove>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
-      // initialize stores
-      cy.wrap(useChallengeStore()).then((challengeStore) => {
-        cy.fixture('apiGetThisCampaign.json').then((thisCampaignResponse) => {
-          const maxTeamMembers = computed(
-            () => challengeStore.getMaxTeamMembers,
-          );
-          challengeStore.setMaxTeamMembers(
-            thisCampaignResponse.results[0].max_team_members,
-          );
-          // test max team members number in store
-          cy.wrap(maxTeamMembers)
-            .its('value')
-            .should(
-              'be.equal',
-              thisCampaignResponse.results[0].max_team_members,
-            );
-        });
-      });
-      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
-        // set myTeam in store
-        const myTeam = computed(() => registerChallengeStore.getMyTeam);
-        registerChallengeStore.setMyTeam(responseMyTeam.results[0]);
-        cy.wrap(myTeam)
-          .its('value')
-          .should('deep.equal', responseMyTeam.results[0]);
-      });
       // component
       cy.dataCy('banner-team-member-approve').should('be.visible');
       // approve members button
