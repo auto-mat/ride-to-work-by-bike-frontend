@@ -101,16 +101,6 @@ export default defineComponent({
       },
     );
 
-    const isTeamFull = computed<boolean>((): boolean => {
-      const myTeam = registerChallengeStore.getMyTeam;
-      if (!myTeam) return false;
-
-      const maxTeamMembers = challengeStore.getMaxTeamMembers;
-      if (!maxTeamMembers) return false;
-
-      return myTeam.member_count >= maxTeamMembers;
-    });
-
     const isBannerVisible = computed<boolean>((): boolean => {
       // if user is not approved, show the banner
       if (!isCurrentUserApproved.value) return true;
@@ -170,7 +160,7 @@ export default defineComponent({
        * If, for some reason, the team is full but we still have pending members
        * mark them all as denied.
        */
-      if (isTeamFull.value && pendingMembersCount.value > 0) {
+      if (remainingApprovalSlots.value <= 0 && pendingMembersCount.value > 0) {
         // show message about other members being denied
         Notify.create({
           message: i18n.global.t(
