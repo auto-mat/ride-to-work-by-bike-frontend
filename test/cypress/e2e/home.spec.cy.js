@@ -12,10 +12,6 @@ import {
 import { defLocale } from '../../../src/i18n/def_locale';
 import { calculateCountdownIntervals } from '../../../src/utils';
 
-// colors
-const positive = 'rgb(33, 186, 69)';
-const negative = 'rgb(193, 0, 21)';
-
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
 const fontFamily = 'Poppins';
@@ -291,23 +287,7 @@ describe('Home page', () => {
     });
 
     it('shows banner team member "undecided" state', () => {
-      cy.get('@i18n').then((i18n) => {
-        cy.waitForThisCampaignApi();
-        cy.fixture('apiGetMyTeamResponseUndecided.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-        // it shows banner in "undecided" state
-        cy.dataCy('banner-team-member-approve').should('be.visible');
-        // title
-        cy.dataCy('banner-team-member-approve-title').should(
-          'contain',
-          i18n.global.t('bannerTeamMemberApprove.textWaitingForApproval'),
-        );
-        // button
-        cy.dataCy('banner-team-member-approve-button').should('not.exist');
-      });
+      cy.testBannerTeamMemberUndecidedState();
     });
   });
 
@@ -361,186 +341,15 @@ describe('Home page', () => {
     });
 
     it('shows banner team member "approved" state', () => {
-      cy.get('@i18n').then((i18n) => {
-        cy.waitForThisCampaignApi();
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-          (responseIsUserOrganizationAdmin) => {
-            cy.waitForIsUserOrganizationAdminApi(
-              responseIsUserOrganizationAdmin,
-            );
-          },
-        );
-        cy.fixture('apiGetMyTeamResponseApproved.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-        // it shows banner in "undecided" state
-        cy.dataCy('banner-team-member-approve').should('be.visible');
-        // title
-        cy.dataCy('banner-team-member-approve-title').should(
-          'contain',
-          i18n.global.t('bannerTeamMemberApprove.textMembersToApprove'),
-        );
-        // open modal
-        cy.dataCy('banner-team-member-approve-button')
-          .should('be.visible')
-          .click();
-        // dialog
-        cy.dataCy('dialog-approve-members').should('be.visible');
-        // first member
-        cy.dataCy('dialog-approve-members-member')
-          .first()
-          .within(() => {
-            // approve member button
-            cy.dataCy('dialog-approve-members-button-approve')
-              .should('be.visible')
-              .click();
-            cy.dataCy('dialog-approve-members-button-approve').should(
-              'have.backgroundColor',
-              positive,
-            );
-          });
-        // second member
-        cy.dataCy('dialog-approve-members-member')
-          .eq(1)
-          .within(() => {
-            // deny member button
-            cy.dataCy('dialog-approve-members-button-deny')
-              .should('be.visible')
-              .click();
-            cy.dataCy('dialog-approve-members-button-deny').should(
-              'have.backgroundColor',
-              negative,
-            );
-          });
-      });
+      cy.testBannerTeamMemberApprovedState();
     });
 
     it('allows user to approve a single member', () => {
-      cy.get('@i18n').then((i18n) => {
-        cy.waitForThisCampaignApi();
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-          (responseIsUserOrganizationAdmin) => {
-            cy.waitForIsUserOrganizationAdminApi(
-              responseIsUserOrganizationAdmin,
-            );
-          },
-        );
-        cy.fixture('apiGetMyTeamResponseApproved.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-        // open modal
-        cy.dataCy('banner-team-member-approve-button')
-          .should('be.visible')
-          .click();
-        // dialog
-        cy.dataCy('dialog-approve-members').should('be.visible');
-        // first member
-        cy.dataCy('dialog-approve-members-member')
-          .first()
-          .within(() => {
-            // approve member button
-            cy.dataCy('dialog-approve-members-button-approve')
-              .should('be.visible')
-              .click();
-            cy.dataCy('dialog-approve-members-button-approve').should(
-              'have.backgroundColor',
-              positive,
-            );
-          });
-        // submit approval
-        cy.dataCy('dialog-button-submit').should('be.visible').click();
-        // wait for API intercept
-        cy.fixture('apiPutMyTeamRequestApproveFirst.json').then(
-          (responsePutMyTeam) => {
-            cy.waitForMyTeamPutApi(responsePutMyTeam);
-          },
-        );
-        // check for success message
-        cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
-          'be.visible',
-        );
-        // wait for refreshing team via GET
-        cy.fixture('apiGetMyTeamResponseApproved.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-      });
+      cy.testApproveSingleTeamMember();
     });
 
     it('allows user to approve max number of members and reject the rest', () => {
-      cy.get('@i18n').then((i18n) => {
-        cy.waitForThisCampaignApi();
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-          (responseIsUserOrganizationAdmin) => {
-            cy.waitForIsUserOrganizationAdminApi(
-              responseIsUserOrganizationAdmin,
-            );
-          },
-        );
-        cy.fixture('apiGetMyTeamResponseApproved.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-        // open modal
-        cy.dataCy('banner-team-member-approve-button')
-          .should('be.visible')
-          .click();
-        // dialog
-        cy.dataCy('dialog-approve-members').should('be.visible');
-        // approve first 4 members
-        cy.dataCy('dialog-approve-members-member').each((member, index) => {
-          if (index < 4) {
-            cy.wrap(member).within(() => {
-              cy.dataCy('dialog-approve-members-button-approve')
-                .should('be.visible')
-                .click();
-              // approve button selected
-              cy.dataCy('dialog-approve-members-button-approve').should(
-                'have.backgroundColor',
-                positive,
-              );
-            });
-          }
-        });
-        // check 5th member
-        cy.dataCy('dialog-approve-members-member')
-          .eq(4)
-          .within(() => {
-            // deny button is selected
-            cy.dataCy('dialog-approve-members-button-deny').should(
-              'have.backgroundColor',
-              negative,
-            );
-            // approve button is disabled
-            cy.dataCy('dialog-approve-members-button-approve').should(
-              'be.disabled',
-            );
-          });
-        // submit approval
-        cy.dataCy('dialog-button-submit').should('be.visible').click();
-        // wait for API intercept
-        cy.fixture('apiPutMyTeamRequestApproveAllRejectRest.json').then(
-          (responsePutMyTeam) => {
-            cy.waitForMyTeamPutApi(responsePutMyTeam);
-          },
-        );
-        // check for success message
-        cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
-          'be.visible',
-        );
-        // wait for refreshing team via GET
-        cy.fixture('apiGetMyTeamResponseApproved.json').then(
-          (responseMyTeam) => {
-            cy.waitForMyTeamGetApi(responseMyTeam);
-          },
-        );
-      });
+      cy.testApproveMaxTeamMembers();
     });
   });
 
