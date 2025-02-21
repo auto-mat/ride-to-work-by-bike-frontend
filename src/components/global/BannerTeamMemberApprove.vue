@@ -73,7 +73,7 @@ export default defineComponent({
       return maxTeamMembers - myTeam.member_count - currentApprovals;
     });
 
-    const isApproved = computed<boolean>((): boolean => {
+    const isCurrentUserApproved = computed<boolean>((): boolean => {
       const myTeam = registerChallengeStore.getMyTeam;
       if (!myTeam) return false;
 
@@ -113,9 +113,9 @@ export default defineComponent({
 
     const isBannerVisible = computed<boolean>((): boolean => {
       // if user is not approved, show the banner
-      if (!isApproved.value) return true;
+      if (!isCurrentUserApproved.value) return true;
       // if user is approved, show the banner if there are pending members
-      return isApproved.value && pendingMembersCount.value > 0;
+      return isCurrentUserApproved.value && pendingMembersCount.value > 0;
     });
 
     /**
@@ -241,7 +241,7 @@ export default defineComponent({
       openDialog,
       onSave,
       secondaryOpacity,
-      isApproved,
+      isCurrentUserApproved,
       isBannerVisible,
       pendingMembersCount,
       pendingMembers,
@@ -287,7 +287,7 @@ export default defineComponent({
           data-cy="banner-team-member-approve-title"
         >
           <!-- Approved members -->
-          <span v-if="isApproved">
+          <span v-if="isCurrentUserApproved">
             {{ $t('bannerTeamMemberApprove.textMembersToApprove') }}
           </span>
           <!-- Waiting for approval -->
@@ -297,7 +297,7 @@ export default defineComponent({
         </h3>
         <!-- Button section -->
         <div
-          v-if="isApproved && pendingMembersCount > 0"
+          v-if="isCurrentUserApproved && pendingMembersCount > 0"
           class="col-12 col-md-auto flex items-center justify-end q-py-sm"
           data-cy="banner-team-member-approve-section-button"
         >
