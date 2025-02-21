@@ -189,19 +189,18 @@ export default defineComponent({
       // generate the payload from the memberDecisions map
       const payload = Array.from(memberDecisions.value.entries()).map(
         ([id, status]) => {
-          // if the member is denied, send team field `null`
-          if (status === TeamMemberStatus.denied) {
-            return {
-              id,
-              approved_for_team: status,
-              team: null,
-            };
-          }
-          // if the member is not denied do not send the team field
-          return {
+          const member = {
             id,
             approved_for_team: status,
           };
+          // if the member is denied, add team: null
+          if (status === TeamMemberStatus.denied) {
+            return {
+              ...member,
+              team: null,
+            };
+          }
+          return member;
         },
       );
       // if no changes were made, close the dialog
