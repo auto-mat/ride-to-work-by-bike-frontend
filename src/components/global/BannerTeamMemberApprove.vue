@@ -58,32 +58,6 @@ export default defineComponent({
     const challengeStore = useChallengeStore();
     const { updateTeamMemberStatus, isLoading } = useApiPutMyTeam(null);
 
-    const openDialog = (): void => {
-      isDialogOpen.value = true;
-      // reset member decisions when opening dialog
-      memberDecisions.value = new Map();
-      /**
-       * If, for some reason, the team is full but we still have pending members
-       * mark them all as denied.
-       */
-      if (isTeamFull.value && pendingMembersCount.value > 0) {
-        // show message about other members being denied
-        Notify.create({
-          message: i18n.global.t(
-            'bannerTeamMemberApprove.messageOtherMembersDenied',
-          ),
-          color: 'warning',
-        });
-        logger?.debug('Team is full and there are pending members');
-        pendingMembers.value.forEach((member) => {
-          memberDecisions.value.set(member.id, TeamMemberStatus.denied);
-        });
-        logger?.debug(
-          `Pending members deined. Member decisions <${memberDecisions.value.size}>`,
-        );
-      }
-    };
-
     const remainingApprovalSlots = computed<number>((): number => {
       const myTeam = registerChallengeStore.getMyTeam;
       if (!myTeam) return 0;
@@ -97,6 +71,51 @@ export default defineComponent({
       ).filter((s) => s === TeamMemberStatus.approved).length;
 
       return maxTeamMembers - myTeam.member_count - currentApprovals;
+    });
+
+    const isApproved = computed<boolean>((): boolean => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam) return false;
+
+      const currentUser = myTeam.members.find(
+        (member: MemberResults) => member.is_me,
+      ) as MemberResults as ExtendedMemberResults;
+      if (!currentUser) return false;
+
+      return currentUser.approved_for_team === TeamMemberStatus.approved;
+    });
+
+    const pendingMembersCount = computed<number>((): number => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      return myTeam?.unapproved_member_count || 0;
+    });
+
+    const pendingMembers = computed<ExtendedMemberResults[]>(
+      (): ExtendedMemberResults[] => {
+        const myTeam = registerChallengeStore.getMyTeam;
+        if (!myTeam) return [];
+
+        return (myTeam.members as ExtendedMemberResults[]).filter(
+          (member) => member.approved_for_team === TeamMemberStatus.undecided,
+        );
+      },
+    );
+
+    const isTeamFull = computed<boolean>((): boolean => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam) return false;
+
+      const maxTeamMembers = challengeStore.getMaxTeamMembers;
+      if (!maxTeamMembers) return false;
+
+      return myTeam.member_count >= maxTeamMembers;
+    });
+
+    const isBannerVisible = computed<boolean>((): boolean => {
+      // if user is not approved, show the banner
+      if (!isApproved.value) return true;
+      // if user is approved, show the banner if there are pending members
+      return isApproved.value && pendingMembersCount.value > 0;
     });
 
     /**
@@ -143,50 +162,31 @@ export default defineComponent({
       memberDecisions.value.set(memberId, status);
     };
 
-    const isApproved = computed<boolean>((): boolean => {
-      const myTeam = registerChallengeStore.getMyTeam;
-      if (!myTeam) return false;
-
-      const currentUser = myTeam.members.find(
-        (member: MemberResults) => member.is_me,
-      ) as MemberResults as ExtendedMemberResults;
-      if (!currentUser) return false;
-
-      return currentUser.approved_for_team === TeamMemberStatus.approved;
-    });
-
-    const pendingMembersCount = computed<number>((): number => {
-      const myTeam = registerChallengeStore.getMyTeam;
-      return myTeam?.unapproved_member_count || 0;
-    });
-
-    const pendingMembers = computed<ExtendedMemberResults[]>(
-      (): ExtendedMemberResults[] => {
-        const myTeam = registerChallengeStore.getMyTeam;
-        if (!myTeam) return [];
-
-        return (myTeam.members as ExtendedMemberResults[]).filter(
-          (member) => member.approved_for_team === TeamMemberStatus.undecided,
+    const openDialog = (): void => {
+      isDialogOpen.value = true;
+      // reset member decisions when opening dialog
+      memberDecisions.value = new Map();
+      /**
+       * If, for some reason, the team is full but we still have pending members
+       * mark them all as denied.
+       */
+      if (isTeamFull.value && pendingMembersCount.value > 0) {
+        // show message about other members being denied
+        Notify.create({
+          message: i18n.global.t(
+            'bannerTeamMemberApprove.messageOtherMembersDenied',
+          ),
+          color: 'warning',
+        });
+        logger?.debug('Team is full and there are pending members');
+        pendingMembers.value.forEach((member) => {
+          memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+        });
+        logger?.debug(
+          `Pending members deined. Member decisions <${memberDecisions.value.size}>`,
         );
-      },
-    );
-
-    const isTeamFull = computed<boolean>((): boolean => {
-      const myTeam = registerChallengeStore.getMyTeam;
-      if (!myTeam) return false;
-
-      const maxTeamMembers = challengeStore.getMaxTeamMembers;
-      if (!maxTeamMembers) return false;
-
-      return myTeam.member_count >= maxTeamMembers;
-    });
-
-    const isBannerVisible = computed<boolean>((): boolean => {
-      // if user is not approved, show the banner
-      if (!isApproved.value) return true;
-      // if user is approved, show the banner if there are pending members
-      return isApproved.value && pendingMembersCount.value > 0;
-    });
+      }
+    };
 
     const onSave = async (): Promise<void> => {
       if (!registerChallengeStore.getTeamId) {
