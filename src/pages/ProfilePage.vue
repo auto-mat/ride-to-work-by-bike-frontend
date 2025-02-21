@@ -14,32 +14,17 @@
  */
 
 // libraries
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 
 // components
 import PageHeading from 'components/global/PageHeading.vue';
 import ProfileTabs from '../components/profile/ProfileTabs.vue';
-
-// stores
-import { useRegisterChallengeStore } from '../stores/registerChallenge';
 
 export default defineComponent({
   name: 'ProfilePage',
   components: {
     PageHeading,
     ProfileTabs,
-  },
-  setup() {
-    const registerChallengeStore = useRegisterChallengeStore();
-
-    onMounted(async () => {
-      // load my team data if not available
-      if (!registerChallengeStore.getMyTeam) {
-        await registerChallengeStore.loadMyTeamToStore(null);
-      }
-    });
-
-    return {};
   },
 });
 </script>

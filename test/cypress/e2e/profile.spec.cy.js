@@ -3,6 +3,10 @@ import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getGenderLabel } from '../../../src/utils/get_gender_label';
 
+// colors
+const positive = 'rgb(33, 186, 69)';
+const negative = 'rgb(193, 0, 21)';
+
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
 const classSelectorToggleInnerFalsy = 'q-toggle__inner--falsy';
@@ -42,42 +46,61 @@ const password = '123456a';
 const genderFemaleKey = 'global.woman';
 
 describe('Profile page', () => {
+  beforeEach(() => {
+    cy.task('getAppConfig', process).then((config) => {
+      cy.wrap(config).as('config');
+      // intercept register challenge API
+      cy.fixture('refreshTokensResponseChallengeActive').then(
+        (refreshTokensResponseChallengeActive) => {
+          cy.fixture('loginRegisterResponseChallengeActive').then(
+            (loginRegisterResponseChallengeActive) => {
+              cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+                config,
+                defLocale,
+                loginRegisterResponseChallengeActive,
+                null,
+                refreshTokensResponseChallengeActive,
+                null,
+                { has_user_verified_email_address: true },
+              );
+            },
+          );
+        },
+      );
+      // intercept register challenge API
+      cy.fixture('apiGetRegisterChallengeProfile').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge,
+          );
+
+          // intercept has organization admin API
+          cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+            (responseHasOrganizationAdmin) => {
+              cy.interceptHasOrganizationAdminGetApi(
+                config,
+                defLocale,
+                responseRegisterChallenge.results[0].organization_id,
+                responseHasOrganizationAdmin,
+              );
+            },
+          );
+        },
+      );
+    });
+  });
+
   context('desktop', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.fixture('apiGetRegisterChallengeProfile.json').then(
-          (responseRegisterChallenge) => {
-            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
-              (responseHasOrganizationAdmin) => {
-                cy.interceptRegisterChallengeGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge,
-                );
-                cy.interceptHasOrganizationAdminGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge.results[0].organization_id,
-                  responseHasOrganizationAdmin,
-                );
-              },
-            );
-          },
-        );
-      });
+      // visit profile page
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       cy.viewport('macbook-16');
-      // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -87,46 +110,6 @@ describe('Profile page', () => {
 
   context('change email', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.fixture('apiGetRegisterChallengeProfile.json').then(
-          (responseRegisterChallenge) => {
-            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
-              (responseHasOrganizationAdmin) => {
-                cy.fixture('refreshTokensResponseChallengeActive').then(
-                  (refreshTokensResponseChallengeActive) => {
-                    cy.fixture('loginRegisterResponseChallengeActive').then(
-                      (loginRegisterResponseChallengeActive) => {
-                        cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
-                          config,
-                          defLocale,
-                          loginRegisterResponseChallengeActive,
-                          null,
-                          refreshTokensResponseChallengeActive,
-                          null,
-                          { has_user_verified_email_address: true },
-                        );
-                      },
-                    );
-                  },
-                );
-                cy.interceptRegisterChallengeGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge,
-                );
-                cy.interceptHasOrganizationAdminGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge.results[0].organization_id,
-                  responseHasOrganizationAdmin,
-                );
-              },
-            );
-          },
-        );
-      });
       // go to login page
       cy.visit('#' + routesConf['login']['children']['fullPath']);
       // login
@@ -136,15 +119,10 @@ describe('Profile page', () => {
       // go to profile page
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       cy.viewport('macbook-16');
-      // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -221,6 +199,232 @@ describe('Profile page', () => {
           });
         },
       );
+    });
+  });
+
+  context('desktop - user team state is "undecided"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept my team API
+        cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+      });
+      cy.visit('#' + routesConf['profile']['children']['fullPath']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "undecided" state', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+        // it shows banner in "undecided" state
+        cy.dataCy('banner-team-member-approve').should('be.visible');
+        // title
+        cy.dataCy('banner-team-member-approve-title').should(
+          'contain',
+          i18n.global.t('bannerTeamMemberApprove.textWaitingForApproval'),
+        );
+        // button
+        cy.dataCy('banner-team-member-approve-button').should('not.exist');
+      });
+    });
+  });
+
+  context('desktop - user team state is "approved"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept my team GET API
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+        // intercept my team PUT API
+        cy.interceptMyTeamPutApi(config, defLocale);
+      });
+      cy.visit('#' + routesConf['profile']['children']['fullPath']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "approved" state', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+        // it shows banner in "undecided" state
+        cy.dataCy('banner-team-member-approve').should('be.visible');
+        // title
+        cy.dataCy('banner-team-member-approve-title').should(
+          'contain',
+          i18n.global.t('bannerTeamMemberApprove.textMembersToApprove'),
+        );
+        // open modal
+        cy.dataCy('banner-team-member-approve-button')
+          .should('be.visible')
+          .click();
+        // dialog
+        cy.dataCy('dialog-approve-members').should('be.visible');
+        // first member
+        cy.dataCy('dialog-approve-members-member')
+          .first()
+          .within(() => {
+            // approve member button
+            cy.dataCy('dialog-approve-members-button-approve')
+              .should('be.visible')
+              .click();
+            cy.dataCy('dialog-approve-members-button-approve').should(
+              'have.backgroundColor',
+              positive,
+            );
+          });
+        // second member
+        cy.dataCy('dialog-approve-members-member')
+          .eq(1)
+          .within(() => {
+            // deny member button
+            cy.dataCy('dialog-approve-members-button-deny')
+              .should('be.visible')
+              .click();
+            cy.dataCy('dialog-approve-members-button-deny').should(
+              'have.backgroundColor',
+              negative,
+            );
+          });
+      });
+    });
+
+    it('allows user to approve a single member', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+        // open modal
+        cy.dataCy('banner-team-member-approve-button')
+          .should('be.visible')
+          .click();
+        // dialog
+        cy.dataCy('dialog-approve-members').should('be.visible');
+        // first member
+        cy.dataCy('dialog-approve-members-member')
+          .first()
+          .within(() => {
+            // approve member button
+            cy.dataCy('dialog-approve-members-button-approve')
+              .should('be.visible')
+              .click();
+            cy.dataCy('dialog-approve-members-button-approve').should(
+              'have.backgroundColor',
+              positive,
+            );
+          });
+        // submit approval
+        cy.dataCy('dialog-button-submit').should('be.visible').click();
+        // wait for API intercept
+        cy.fixture('apiPutMyTeamRequestApproveFirst.json').then(
+          (responsePutMyTeam) => {
+            cy.waitForMyTeamPutApi(responsePutMyTeam);
+          },
+        );
+        // check for success message
+        cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
+          'be.visible',
+        );
+        // wait for refreshing team via GET
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+      });
+    });
+
+    it('allows user to approve max number of members and reject the rest', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+        // open modal
+        cy.dataCy('banner-team-member-approve-button')
+          .should('be.visible')
+          .click();
+        // dialog
+        cy.dataCy('dialog-approve-members').should('be.visible');
+        // approve first 4 members
+        cy.dataCy('dialog-approve-members-member').each((member, index) => {
+          if (index < 4) {
+            cy.wrap(member).within(() => {
+              cy.dataCy('dialog-approve-members-button-approve')
+                .should('be.visible')
+                .click();
+              // approve button selected
+              cy.dataCy('dialog-approve-members-button-approve').should(
+                'have.backgroundColor',
+                positive,
+              );
+            });
+          }
+        });
+        // check 5th member
+        cy.dataCy('dialog-approve-members-member')
+          .eq(4)
+          .within(() => {
+            // deny button is selected
+            cy.dataCy('dialog-approve-members-button-deny').should(
+              'have.backgroundColor',
+              negative,
+            );
+            // approve button is disabled
+            cy.dataCy('dialog-approve-members-button-approve').should(
+              'be.disabled',
+            );
+          });
+        // submit approval
+        cy.dataCy('dialog-button-submit').should('be.visible').click();
+        // wait for API intercept
+        cy.fixture('apiPutMyTeamRequestApproveAllRejectRest.json').then(
+          (responsePutMyTeam) => {
+            cy.waitForMyTeamPutApi(responsePutMyTeam);
+          },
+        );
+        // check for success message
+        cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
+          'be.visible',
+        );
+        // wait for refreshing team via GET
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.waitForMyTeamGetApi(responseMyTeam);
+          },
+        );
+      });
     });
   });
 });

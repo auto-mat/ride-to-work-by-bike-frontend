@@ -31,6 +31,7 @@ import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapte
 import { subsidiaryAdapter } from '../../adapters/subsidiaryAdapter';
 
 // components
+import BannerTeamMemberApprove from '../global/BannerTeamMemberApprove.vue';
 import DetailsItem from '../profile/DetailsItem.vue';
 import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
@@ -54,6 +55,7 @@ import { PaymentSubject } from '../../components/enums/Payment';
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
 
 // stores
+import { useChallengeStore } from '../../stores/challenge';
 import { useLoginStore } from '../../stores/login';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
@@ -67,6 +69,7 @@ import { getGenderLabel } from '../../utils/get_gender_label';
 export default defineComponent({
   name: 'ProfileDetails',
   components: {
+    BannerTeamMemberApprove,
     DetailsItem,
     FormUpdateEmail,
     FormUpdateGender,
@@ -88,11 +91,25 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const iconSize = '18px';
 
+    const challengeStore = useChallengeStore();
     const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
-    // refresh on mounted
     onMounted(async () => {
-      await registerChallengeStore.loadRegisterChallengeToStore();
+      /**
+       * Check if we loaded the register challenge data. We check using teamId
+       * because we need teamId to load myTeam data.
+       */
+      if (!registerChallengeStore.getTeamId) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      // load challenge data if not available
+      if (!challengeStore.getMaxTeamMembers) {
+        await challengeStore.loadPhaseSet();
+      }
+      // load my team data if not available
+      if (!registerChallengeStore.getMyTeam) {
+        await registerChallengeStore.loadMyTeamToStore(logger);
+      }
       // load all data
       if (!registerChallengeStore.getOrganizations.length) {
         registerChallengeStore.loadOrganizationsToStore(logger);
@@ -318,6 +335,8 @@ export default defineComponent({
 
 <template>
   <div data-cy="profile-details">
+    <!-- Banner team member approve -->
+    <banner-team-member-approve class="q-mb-lg" />
     <!-- Title -->
     <section-heading data-cy="profile-title-personal-details">
       {{ $t('profile.titlePersonalDetails') }}
