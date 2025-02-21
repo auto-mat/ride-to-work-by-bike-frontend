@@ -2797,7 +2797,7 @@ Cypress.Commands.add(
     );
     const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
 
-    cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
       cy.intercept('GET', urlApiMyTeamLocalized, {
         statusCode: responseStatusCode || httpSuccessfullStatus,
         body: responseBody || defaultResponse,
@@ -2812,7 +2812,7 @@ Cypress.Commands.add(
  * @param {Object} expectedResponse - Expected response body
  */
 Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
-  cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+  cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
     cy.wait('@getMyTeam').then((getMyTeam) => {
       expect(getMyTeam.request.headers.authorization).to.include(
         bearerTokeAuth,
@@ -2847,7 +2847,7 @@ Cypress.Commands.add(
     );
     const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
 
-    cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
       cy.intercept('PUT', urlApiMyTeamLocalized, {
         statusCode: responseStatusCode || httpSuccessfullStatus,
         body: responseBody || defaultResponse,
@@ -2862,7 +2862,7 @@ Cypress.Commands.add(
  * @param {Object} expectedResponse - Expected response body
  */
 Cypress.Commands.add('waitForMyTeamPutApi', (expectedResponse = null) => {
-  cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+  cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
     cy.wait('@putMyTeam').then((putMyTeam) => {
       expect(putMyTeam.request.headers.authorization).to.include(
         bearerTokeAuth,

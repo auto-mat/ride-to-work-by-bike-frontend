@@ -40,7 +40,7 @@ describe('<BannerTeamMemberApprove>', () => {
       cy.mount(BannerTeamMemberApprove, {
         props: {},
       });
-      cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
         cy.wrap(useChallengeStore()).then((challengeStore) => {
           cy.fixture('apiGetThisCampaign.json').then((thisCampaignResponse) => {
             const maxTeamMembers = computed(
@@ -270,7 +270,7 @@ describe('<BannerTeamMemberApprove>', () => {
       cy.mount(BannerTeamMemberApprove, {
         props: {},
       });
-      cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
         cy.wrap(useChallengeStore()).then((challengeStore) => {
           cy.fixture('apiGetThisCampaign.json').then((thisCampaignResponse) => {
             const maxTeamMembers = computed(
@@ -306,7 +306,7 @@ describe('<BannerTeamMemberApprove>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.fixture('apiGetMyTeamResponse.json').then((responseMyTeam) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
       const unapprovedMembers = responseMyTeam.results[0].members.filter(
         (member) => member.approved_for_team === 'undecided',
       );
