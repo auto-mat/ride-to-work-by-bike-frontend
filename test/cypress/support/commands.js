@@ -2837,7 +2837,7 @@ Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
  */
 Cypress.Commands.add(
   'interceptMyTeamPutApi',
-  (config, i18n, responseBody = null, responseStatusCode = null) => {
+  (config, i18n, teamId, responseBody = null, responseStatusCode = null) => {
     const { apiBase, apiDefaultLang, urlApiMyTeam } = config;
     const apiBaseUrl = getApiBaseUrlWithLang(
       null,
@@ -2845,7 +2845,7 @@ Cypress.Commands.add(
       apiDefaultLang,
       i18n,
     );
-    const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
+    const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}${teamId}/`;
 
     cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
       cy.intercept('PUT', urlApiMyTeamLocalized, {

@@ -26,7 +26,10 @@ interface MemberStatusUpdate {
 
 interface UseApiPutMyTeamReturn {
   isLoading: Ref<boolean>;
-  updateTeamMemberStatus: (members: MemberStatusUpdate[]) => Promise<void>;
+  updateTeamMemberStatus: (
+    teamId: number | string,
+    members: MemberStatusUpdate[],
+  ) => Promise<void>;
 }
 
 /**
@@ -48,6 +51,7 @@ export const useApiPutMyTeam = (
    * @param {MemberStatusUpdate[]} members - Array of member status updates
    */
   const updateTeamMemberStatus = async (
+    teamId: number | string,
     members: MemberStatusUpdate[],
   ): Promise<void> => {
     logger?.debug(
@@ -68,7 +72,7 @@ export const useApiPutMyTeam = (
 
     // update team members
     await apiFetch<GetMyTeamResponse>({
-      endpoint: rideToWorkByBikeConfig.urlApiMyTeam,
+      endpoint: `${rideToWorkByBikeConfig.urlApiMyTeam}${teamId}/`,
       method: 'put',
       translationKey: 'putMyTeam',
       headers,

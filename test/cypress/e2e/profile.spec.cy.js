@@ -87,6 +87,13 @@ describe('Profile page', () => {
               );
             },
           );
+
+          // intercept my team PUT API
+          cy.interceptMyTeamPutApi(
+            config,
+            defLocale,
+            responseRegisterChallenge.results[0].team_id,
+          );
         },
       );
     });
@@ -253,8 +260,6 @@ describe('Profile page', () => {
             cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
           },
         );
-        // intercept my team PUT API
-        cy.interceptMyTeamPutApi(config, defLocale);
       });
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       // alias i18n

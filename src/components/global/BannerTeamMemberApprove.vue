@@ -14,11 +14,14 @@
  */
 
 // libraries
-import { colors } from 'quasar';
+import { colors, Notify } from 'quasar';
 import { computed, defineComponent, inject, ref } from 'vue';
 
 // components
 import DialogDefault from './DialogDefault.vue';
+
+// composables
+import { i18n } from '../../boot/i18n';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -175,6 +178,13 @@ export default defineComponent({
     });
 
     const onSave = async (): Promise<void> => {
+      if (!registerChallengeStore.getTeamId) {
+        Notify.create({
+          message: i18n.global.t('putMyTeam.messageTeamIdNotAvailable'),
+          color: 'negative',
+        });
+        return;
+      }
       // generate the payload from the memberDecisions map
       const payload = Array.from(memberDecisions.value.entries()).map(
         ([id, status]) => {
@@ -199,7 +209,7 @@ export default defineComponent({
         return;
       }
       // submit the changes
-      await updateTeamMemberStatus(payload);
+      await updateTeamMemberStatus(registerChallengeStore.getTeamId, payload);
       // reload team data after successful update
       await registerChallengeStore.loadMyTeamToStore(null);
       isDialogOpen.value = false;

@@ -325,6 +325,13 @@ describe('Home page', () => {
               defLocale,
               responseRegisterChallenge,
             );
+
+            // intercept my team PUT API
+            cy.interceptMyTeamPutApi(
+              config,
+              defLocale,
+              responseRegisterChallenge.results[0].team_id,
+            );
           },
         );
         // intercept is user organization admin API
@@ -343,8 +350,6 @@ describe('Home page', () => {
             cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
           },
         );
-        // intercept my team PUT API
-        cy.interceptMyTeamPutApi(config, defLocale);
       });
       cy.visit(Cypress.config('baseUrl'));
       // alias i18n

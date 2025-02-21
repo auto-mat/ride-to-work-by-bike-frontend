@@ -1063,7 +1063,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'teams',
       'merchandiseItems',
       'merchandiseCards',
-      'myTeam',
       'isLoadingRegisterChallenge',
       'isLoadingSubsidiaries',
       'isLoadingOrganizations',

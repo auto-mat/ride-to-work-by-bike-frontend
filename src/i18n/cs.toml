@@ -737,6 +737,7 @@ apiMessageSuccess = "Profil byl úspěšně aktualizován."
 apiMessageError = "Chyba při aktualizaci týmu."
 apiMessageErrorWithMessage = "Chyba při aktualizaci týmu. Chyba: {error}"
 apiMessageSuccess = "Tým byl úspěšně aktualizován."
+messageTeamIdNotAvailable = "Nepodařilo se zjistit ID týmu. Zkuste to znovu později."
 
 [refreshTokens]
 messageRefreshTokenRequired = "Pro obnovení tokenů je potřeba přihlásit se."

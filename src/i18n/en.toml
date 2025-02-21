@@ -735,6 +735,7 @@ apiMessageSuccess = "Profile was successfully updated."
 apiMessageError = "Error updating team."
 apiMessageErrorWithMessage = "Error updating team. Error: {error}"
 apiMessageSuccess = "Team was successfully updated."
+messageTeamIdNotAvailable = "Failed to get team ID. Please try again later."
 
 [refreshTokens]
 messageRefreshTokenRequired = "To refresh tokens, you must log in."
