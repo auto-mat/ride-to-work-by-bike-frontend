@@ -138,7 +138,7 @@
 <script lang="ts">
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // components
 import BannerApp from 'components/homepage/BannerApp.vue';
@@ -179,6 +179,9 @@ import * as homepage from '../mocks/homepage';
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+// types
+import type { Logger } from '../components/types/Logger';
+
 export default defineComponent({
   name: 'IndexPage',
   components: {
@@ -201,6 +204,8 @@ export default defineComponent({
     SliderProgress,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
+
     const isBannerRoutesEnabled = false;
     const isBannerAppEnabled = false;
     const isSectionChallengesEnabled = false;
@@ -233,7 +238,8 @@ export default defineComponent({
       }
       // load my team data if not available
       if (!registerChallengeStore.getMyTeam) {
-        await registerChallengeStore.loadMyTeamToStore(null);
+        logger?.debug('My team data not available, loading my team data');
+        await registerChallengeStore.loadMyTeamToStore(logger);
       }
     });
 

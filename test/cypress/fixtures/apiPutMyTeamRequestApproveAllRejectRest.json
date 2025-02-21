@@ -1,0 +1,25 @@
+{
+  "members": [
+    {
+      "id": 3452,
+      "approved_for_team": "approved"
+    },
+    {
+      "id": 3453,
+      "approved_for_team": "approved"
+    },
+    {
+      "id": 3454,
+      "approved_for_team": "approved"
+    },
+    {
+      "id": 3456,
+      "approved_for_team": "denied",
+      "team": null
+    },
+    {
+      "id": 3455,
+      "approved_for_team": "approved"
+    }
+  ]
+}

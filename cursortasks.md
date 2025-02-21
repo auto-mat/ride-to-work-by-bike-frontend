@@ -126,7 +126,13 @@ Behavior to test (based on this specification and current implementation):
 
 - [x] Test that component is rendered correctly with correct data, a modal is opened when button clicked with a list of members to approve with names and buttons to approve or reject members.
 - [x] Test that a green button is shown when member is approved and a red button when member is denied.
-- [ ] Test that after approving 4 members, the 5th member is rejected automatically and the button is disabled.
+- [x] Test that after approving 4 members, the 5th member is rejected automatically and the button is disabled.
+
+---
+
+Step 6:
+
+Write end to end tests for pages IndexPage and ProfilePage These can be found in home.spec.cy.js and profile.spec.cy.js respectively.
 
 ## Implementation steps
 

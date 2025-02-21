@@ -177,10 +177,21 @@ export default defineComponent({
     const onSave = async (): Promise<void> => {
       // generate the payload from the memberDecisions map
       const payload = Array.from(memberDecisions.value.entries()).map(
-        ([id, status]) => ({
-          id,
-          approved_for_team: status,
-        }),
+        ([id, status]) => {
+          // if the member is denied, send team field `null`
+          if (status === TeamMemberStatus.denied) {
+            return {
+              id,
+              approved_for_team: status,
+              team: null,
+            };
+          }
+          // if the member is not denied do not send the team field
+          return {
+            id,
+            approved_for_team: status,
+          };
+        },
       );
       // if no changes were made, close the dialog
       if (payload.length === 0) {
@@ -251,6 +262,7 @@ export default defineComponent({
         <!-- Title -->
         <h3
           class="col-12 col-md text-h5 text-weight-bold q-my-none"
+          style="text-wrap: balance"
           data-cy="banner-team-member-approve-title"
         >
           <!-- Approved members -->

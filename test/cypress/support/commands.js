@@ -2861,18 +2861,20 @@ Cypress.Commands.add(
  * Wait for `@putMyTeam` intercept
  * @param {Object} expectedResponse - Expected response body
  */
-Cypress.Commands.add('waitForMyTeamPutApi', (expectedResponse = null) => {
-  cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
-    cy.wait('@putMyTeam').then((putMyTeam) => {
-      expect(putMyTeam.request.headers.authorization).to.include(
-        bearerTokeAuth,
-      );
-      if (putMyTeam.response) {
-        expect(putMyTeam.response.statusCode).to.equal(httpSuccessfullStatus);
-        expect(putMyTeam.response.body).to.deep.equal(
-          expectedResponse || defaultResponse,
-        );
-      }
+Cypress.Commands.add(
+  'waitForMyTeamPutApi',
+  (expectedRequest, expectedResponse = null) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
+      cy.wait('@putMyTeam').then(({ request, response }) => {
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        expect(request.body).to.deep.equal(expectedRequest);
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(
+            expectedResponse || defaultResponse,
+          );
+        }
+      });
     });
-  });
-});
+  },
+);
