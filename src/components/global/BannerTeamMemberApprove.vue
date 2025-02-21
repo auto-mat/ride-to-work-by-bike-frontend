@@ -111,24 +111,28 @@ export default defineComponent({
       ) {
         return;
       }
-      // if approving a member would exceed the limit, reject other undecided members
-      if (status === TeamMemberStatus.approved) {
-        // if this is the last slot, reject the remaining undecided members
-        if (remainingApprovalSlots.value === 1) {
-          // auto-reject remaining undecided members
-          pendingMembers.value.forEach((member) => {
-            // for all members not yet selected and except the current one
-            if (
-              !memberDecisions.value.has(member.id) &&
-              member.id !== memberId
-            ) {
-              // set the status to denied
-              memberDecisions.value.set(member.id, TeamMemberStatus.denied);
-            }
-          });
-        }
+      // if approving a member with last approval slot, reject other undecided members
+      if (
+        status === TeamMemberStatus.approved &&
+        remainingApprovalSlots.value === 1
+      ) {
+        // auto-reject remaining undecided members
+        pendingMembers.value.forEach((member) => {
+          // for all members not yet selected and except the current one
+          if (!memberDecisions.value.has(member.id) && member.id !== memberId) {
+            // set the status to denied
+            memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+          }
+        });
+        // show message about other members being denied
+        Notify.create({
+          message: i18n.global.t(
+            'bannerTeamMemberApprove.messageOtherMembersDenied',
+          ),
+          color: 'warning',
+        });
       }
-      // set the status for the current member
+      // set the status for the selected member
       memberDecisions.value.set(memberId, status);
     };
 

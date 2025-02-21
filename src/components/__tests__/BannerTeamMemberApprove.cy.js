@@ -22,12 +22,13 @@ describe('<BannerTeamMemberApprove>', () => {
     );
     cy.testLanguageStringsInContext(
       [
-        'textMembersToApprove',
-        'textWaitingForApproval',
         'buttonApproveMembers',
-        'dialogTitle',
         'buttonDialogApprove',
         'buttonDialogDeny',
+        'dialogTitle',
+        'messageOtherMembersDenied',
+        'textMembersToApprove',
+        'textWaitingForApproval',
       ],
       'bannerTeamMemberApprove',
       i18n,
@@ -420,6 +421,10 @@ function coreTests() {
         });
       }
     });
+    // shows message about other members being denied
+    cy.contains(
+      i18n.global.t('bannerTeamMemberApprove.messageOtherMembersDenied'),
+    ).should('be.visible');
     // check 5th member
     cy.dataCy('dialog-approve-members-member')
       .eq(4)

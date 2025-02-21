@@ -15,12 +15,13 @@ period = "Challenge period"
 transportType = "Means of transport"
 
 [bannerTeamMemberApprove]
-textMembersToApprove = "Someone in your team wants to be approved. Give them the green light?"
-textWaitingForApproval = "Your request to join the team is still pending. Let your colleagues know..."
 buttonApproveMembers = "Approve members"
-dialogTitle = "Approve team members"
 buttonDialogApprove = "Approve"
 buttonDialogDeny = "Deny"
+dialogTitle = "Approve team members"
+messageOtherMembersDenied = "Your team is full. Other members will be automatically denied."
+textMembersToApprove = "Someone in your team wants to be approved. Give them the green light?"
+textWaitingForApproval = "Your request to join the team is still pending. Let your colleagues know..."
 
 [breadcrumb]
 results = "Results"

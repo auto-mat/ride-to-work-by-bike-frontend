@@ -15,12 +15,13 @@ period = "Obdobie výzvy"
 transportType = "Spôsoby dopravy"
 
 [bannerTeamMemberApprove]
-textMembersToApprove = "Niekto v vašom tíme chce byť schválený. Dajte mu zelenú?"
-textWaitingForApproval = "Vaša žiadosť o prístup do tímu stále čaká na schválenie. Požiadajte o schválenie vašich kolegov..."
 buttonApproveMembers = "Schváliť členov"
-dialogTitle = "Schváliť členov tímu"
 buttonDialogApprove = "Schváliť"
 buttonDialogDeny = "Zamietnuť"
+dialogTitle = "Schváliť členov tímu"
+messageOtherMembersDenied = "Váš tím je plný. Ďalší členovia budú automaticky zamietnutí."
+textMembersToApprove = "Niekto v vašom tíme chce byť schválený. Dajte mu zelenú?"
+textWaitingForApproval = "Vaša žiadosť o prístup do tímu stále čaká na schválenie. Požiadajte o schválenie vašich kolegov..."
 
 [breadcrumb]
 results = "Výsledky"
