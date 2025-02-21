@@ -7,10 +7,11 @@ import { useChallengeStore } from 'stores/challenge';
 import { useRegisterChallengeStore } from 'stores/registerChallenge';
 
 // colors
-const { getPaletteColor } = colors;
+const { changeAlpha, getPaletteColor } = colors;
 const positive = getPaletteColor('positive');
 const negative = getPaletteColor('negative');
-const colorTransparent = 'rgba(0, 0, 0, 0)';
+const black = getPaletteColor('black');
+const colorTransparent = changeAlpha(black, 0);
 
 describe('<BannerTeamMemberApprove>', () => {
   it('has translation for all strings', () => {
@@ -121,7 +122,7 @@ describe('<BannerTeamMemberApprove>', () => {
     });
   });
 
-  // this case should not happen, but is theoretically possible
+  // handle case where team is full and there are still pending members
   context(
     'desktop - approved member with full team and pending members',
     () => {
@@ -179,6 +180,12 @@ describe('<BannerTeamMemberApprove>', () => {
               .click();
             // dialog
             cy.dataCy('dialog-approve-members').should('be.visible');
+            // show message about other members being denied
+            cy.contains(
+              i18n.global.t(
+                'bannerTeamMemberApprove.messageOtherMembersDenied',
+              ),
+            ).should('be.visible');
             // members to approve
             cy.dataCy('dialog-approve-members-member').should(
               'have.length',

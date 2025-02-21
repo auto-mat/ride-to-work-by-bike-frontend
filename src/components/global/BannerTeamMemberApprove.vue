@@ -67,6 +67,13 @@ export default defineComponent({
        * mark them all as denied.
        */
       if (isTeamFull.value && pendingMembersCount.value > 0) {
+        // show message about other members being denied
+        Notify.create({
+          message: i18n.global.t(
+            'bannerTeamMemberApprove.messageOtherMembersDenied',
+          ),
+          color: 'warning',
+        });
         logger?.debug('Team is full and there are pending members');
         pendingMembers.value.forEach((member) => {
           memberDecisions.value.set(member.id, TeamMemberStatus.denied);
