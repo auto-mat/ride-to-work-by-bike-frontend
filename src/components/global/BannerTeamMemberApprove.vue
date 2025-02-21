@@ -158,7 +158,7 @@ export default defineComponent({
           color: 'warning',
         });
       }
-      // set the status for the selected member
+      // set the status for the current member
       memberDecisions.value.set(memberId, status);
     };
 
