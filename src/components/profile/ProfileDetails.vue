@@ -95,10 +95,7 @@ export default defineComponent({
     const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
     onMounted(async () => {
-      /**
-       * Check if we loaded the register challenge data. We check using teamId
-       * because we need teamId to load myTeam data.
-       */
+      // load register challenge data if not available
       if (!registerChallengeStore.getTeamId) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
@@ -110,16 +107,19 @@ export default defineComponent({
       if (!registerChallengeStore.getMyTeam) {
         await registerChallengeStore.loadMyTeamToStore(logger);
       }
-      // load all data
+      // load organizations data if not available
       if (!registerChallengeStore.getOrganizations.length) {
         registerChallengeStore.loadOrganizationsToStore(logger);
       }
+      // load teams data if not available
       if (!registerChallengeStore.getTeams.length) {
         registerChallengeStore.loadTeamsToStore(logger);
       }
+      // load subsidiaries data if not available
       if (!registerChallengeStore.getSubsidiaries.length) {
         registerChallengeStore.loadSubsidiariesToStore(logger);
       }
+      // load merchandise items data if not available
       if (!registerChallengeStore.getMerchandiseItems.length) {
         registerChallengeStore.loadMerchandiseToStore(logger);
       }
