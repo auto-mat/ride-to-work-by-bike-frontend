@@ -26,6 +26,7 @@ describe('<BannerTeamMemberApprove>', () => {
         'buttonApproveMembers',
         'buttonDialogApprove',
         'buttonDialogDeny',
+        'dialogReason',
         'dialogTitle',
         'messageOtherMembersDenied',
         'textMembersToApprove',
@@ -305,7 +306,7 @@ describe('<BannerTeamMemberApprove>', () => {
             .should('deep.equal', responseMyTeam.results[0]);
         });
       });
-      cy.viewport('iphone-6');
+      cy.viewport(320, 1500);
     });
 
     coreTests();
@@ -405,6 +406,13 @@ function coreTests() {
           'have.backgroundColor',
           negative,
         );
+        // deny reason
+        cy.dataCy('dialog-approve-members-member-reason')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t('bannerTeamMemberApprove.dialogReason'),
+          );
       });
   });
 
@@ -542,6 +550,10 @@ function coreTests() {
         );
       });
     });
+    // scroll to bottom for mobile tests
+    cy.dataCy('dialog-body').scrollTo('bottom', {
+      ensureScrollable: false,
+    });
     // close dialog
     cy.dataCy('dialog-button-cancel').should('be.visible').click();
     // dialog is closed
@@ -550,7 +562,7 @@ function coreTests() {
     cy.dataCy('banner-team-member-approve-button').should('be.visible').click();
     // dialog is open
     cy.dataCy('dialog-approve-members').should('be.visible');
-    // all members are denied
+    // no members are selected
     cy.dataCy('dialog-approve-members-member').each((member) => {
       cy.wrap(member).within(() => {
         // deny button is not selected

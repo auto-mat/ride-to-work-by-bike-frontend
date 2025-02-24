@@ -14,12 +14,12 @@
  */
 
 // libraries
-import { colors, Notify } from 'quasar';
+import { colors, Notify, QForm } from 'quasar';
 import { computed, defineComponent, inject, ref } from 'vue';
 
 // components
 import DialogDefault from './DialogDefault.vue';
-
+import FormFieldTextRequired from './FormFieldTextRequired.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 
@@ -45,14 +45,19 @@ export default defineComponent({
   name: 'BannerTeamMemberApprove',
   components: {
     DialogDefault,
+    FormFieldTextRequired,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const { borderRadiusCard: borderRadius } = rideToWorkByBikeConfig;
     const isDialogOpen = ref<boolean>(false);
+    const formRef = ref<InstanceType<typeof QForm> | null>(null);
     const memberDecisions = ref<
       Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>
     >(new Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>());
+    const memberDenialReasons = ref<Map<number, string>>(
+      new Map<number, string>(),
+    );
 
     const registerChallengeStore = useRegisterChallengeStore();
     const challengeStore = useChallengeStore();
@@ -138,6 +143,7 @@ export default defineComponent({
           if (!memberDecisions.value.has(member.id) && member.id !== memberId) {
             // set the status to denied
             memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+            memberDenialReasons.value.set(member.id, '');
           }
         });
         // show message about other members being denied
@@ -150,12 +156,20 @@ export default defineComponent({
       }
       // set the status for the current member
       memberDecisions.value.set(memberId, status);
+      // if denying, initialize empty reason
+      if (status === TeamMemberStatus.denied) {
+        memberDenialReasons.value.set(memberId, '');
+      } else {
+        // if approving, remove any existing reason
+        memberDenialReasons.value.delete(memberId);
+      }
     };
 
     const openDialog = (): void => {
       isDialogOpen.value = true;
       // reset member decisions when opening dialog
       memberDecisions.value = new Map();
+      memberDenialReasons.value = new Map();
       /**
        * If, for some reason, the team is full but we still have pending members
        * mark them all as denied.
@@ -171,14 +185,19 @@ export default defineComponent({
         logger?.debug('Team is full and there are pending members');
         pendingMembers.value.forEach((member) => {
           memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+          memberDenialReasons.value.set(member.id, '');
         });
         logger?.debug(
-          `Pending members deined. Member decisions <${memberDecisions.value.size}>`,
+          `Pending members denied. Member decisions <${memberDecisions.value.size}>`,
         );
       }
     };
 
     const onSave = async (): Promise<void> => {
+      // validate form
+      const isValid = await formRef.value?.validate();
+      if (!isValid) return;
+
       if (!registerChallengeStore.getTeamId) {
         Notify.create({
           message: i18n.global.t('putMyTeam.messageTeamIdNotAvailable'),
@@ -186,6 +205,7 @@ export default defineComponent({
         });
         return;
       }
+
       // generate the payload from the memberDecisions map
       const payload = Array.from(memberDecisions.value.entries()).map(
         ([id, status]) => {
@@ -193,11 +213,13 @@ export default defineComponent({
             id,
             approved_for_team: status,
           };
-          // if the member is denied, add team: null
+          // if the member is denied, add team: null and reason if provided
           if (status === TeamMemberStatus.denied) {
+            const reason = memberDenialReasons.value.get(id);
             return {
               ...member,
               team: null,
+              reason: reason || undefined,
             };
           }
           return member;
@@ -227,6 +249,8 @@ export default defineComponent({
       borderRadius,
       isDialogOpen,
       memberDecisions,
+      memberDenialReasons,
+      formRef,
       openDialog,
       onSave,
       secondaryOpacity,
@@ -314,98 +338,151 @@ export default defineComponent({
       </template>
       <!-- Content -->
       <template #content>
-        <!-- Member List -->
-        <div class="q-mb-lg">
-          <div
-            v-for="member in pendingMembers"
-            :key="member.id"
-            class="q-mb-md"
-            data-cy="dialog-approve-members-member"
-          >
-            <div class="row items-center q-col-gutter-md">
-              <!-- Member Info -->
-              <div class="col-12 col-sm">
-                <div
-                  class="text-subtitle1 text-weight-medium"
-                  data-cy="dialog-approve-members-member-name"
-                >
-                  {{ member.name }}
+        <q-form ref="formRef" @submit.prevent="onSave">
+          <!-- Member List -->
+          <div class="q-mb-md">
+            <div
+              v-for="member in pendingMembers"
+              :key="member.id"
+              class="q-mb-md"
+              data-cy="dialog-approve-members-member"
+            >
+              <div class="row items-center q-col-gutter-md">
+                <!-- Member Info -->
+                <div class="col-12 col-sm">
+                  <div
+                    class="text-subtitle1 text-weight-medium"
+                    data-cy="dialog-approve-members-member-name"
+                  >
+                    {{ member.name }}
+                  </div>
                 </div>
-              </div>
-              <!-- Decision Buttons -->
-              <div class="col-12 col-sm-auto">
-                <q-btn
-                  rounded
-                  unelevated
-                  :outline="
-                    memberDecisions.get(member.id) !== TeamMemberStatus.approved
-                  "
-                  :color="
-                    memberDecisions.get(member.id) === TeamMemberStatus.approved
-                      ? 'positive'
-                      : 'primary'
-                  "
-                  @click="
-                    handleMemberDecision(member.id, TeamMemberStatus.approved)
-                  "
-                  :label="$t('bannerTeamMemberApprove.buttonDialogApprove')"
-                  :disable="
-                    remainingApprovalSlots <= 0 &&
-                    memberDecisions.get(member.id) !== TeamMemberStatus.approved
-                  "
-                  class="q-mr-sm"
-                  data-cy="dialog-approve-members-button-approve"
-                />
-                <q-btn
-                  rounded
-                  unelevated
-                  :outline="
-                    memberDecisions.get(member.id) !== TeamMemberStatus.denied
-                  "
-                  :color="
-                    memberDecisions.get(member.id) === TeamMemberStatus.denied
-                      ? 'negative'
-                      : 'primary'
-                  "
-                  @click="
-                    handleMemberDecision(member.id, TeamMemberStatus.denied)
-                  "
-                  :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
-                  data-cy="dialog-approve-members-button-deny"
-                />
+                <div class="col-12 col-sm-auto">
+                  <div class="row items-center q-col-gutter-md">
+                    <!-- Deny reason -->
+                    <div
+                      v-if="
+                        memberDecisions.get(member.id) ===
+                          TeamMemberStatus.denied &&
+                        memberDenialReasons.get(member.id) !== undefined
+                      "
+                      class="col-12 col-sm q-pb-sm"
+                    >
+                      <form-field-text-required
+                        :model-value="memberDenialReasons.get(member.id)"
+                        name="reason"
+                        :label="$t('bannerTeamMemberApprove.dialogReason')"
+                        :style="{ width: '100%' }"
+                        data-cy="dialog-approve-members-member-reason"
+                        :rules="[
+                          (val) =>
+                            !!val ||
+                            $t('form.messageFieldRequired', {
+                              fieldName: $t(
+                                'bannerTeamMemberApprove.dialogReason',
+                              ),
+                            }),
+                        ]"
+                        @update:model-value="
+                          (value) => {
+                            memberDenialReasons.set(member.id, value);
+                          }
+                        "
+                      />
+                    </div>
+                    <!-- Decision Buttons -->
+                    <div class="col-12 col-sm-auto">
+                      <!-- Button: deny -->
+                      <q-btn
+                        rounded
+                        unelevated
+                        :outline="
+                          memberDecisions.get(member.id) !==
+                          TeamMemberStatus.denied
+                        "
+                        :color="
+                          memberDecisions.get(member.id) ===
+                          TeamMemberStatus.denied
+                            ? 'negative'
+                            : 'primary'
+                        "
+                        @click="
+                          handleMemberDecision(
+                            member.id,
+                            TeamMemberStatus.denied,
+                          )
+                        "
+                        :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
+                        class="q-mr-sm"
+                        data-cy="dialog-approve-members-button-deny"
+                      />
+                      <!-- Button: approve -->
+                      <q-btn
+                        rounded
+                        unelevated
+                        :outline="
+                          memberDecisions.get(member.id) !==
+                          TeamMemberStatus.approved
+                        "
+                        :color="
+                          memberDecisions.get(member.id) ===
+                          TeamMemberStatus.approved
+                            ? 'positive'
+                            : 'primary'
+                        "
+                        @click="
+                          handleMemberDecision(
+                            member.id,
+                            TeamMemberStatus.approved,
+                          )
+                        "
+                        :label="
+                          $t('bannerTeamMemberApprove.buttonDialogApprove')
+                        "
+                        :disable="
+                          remainingApprovalSlots <= 0 &&
+                          memberDecisions.get(member.id) !==
+                            TeamMemberStatus.approved
+                        "
+                        data-cy="dialog-approve-members-button-approve"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Separator -->
-        <q-separator
-          class="q-my-md"
-          style="margin-left: -16px; margin-right: -16px"
-        />
-        <!-- Action Buttons -->
-        <div class="flex justify-end gap-8">
-          <q-btn
-            rounded
-            unelevated
-            outline
-            color="primary"
-            @click="isDialogOpen = false"
-            data-cy="dialog-button-cancel"
-            :disable="isLoading"
-          >
-            {{ $t('navigation.discard') }}
-          </q-btn>
-          <q-btn
-            rounded
-            unelevated
-            color="primary"
-            @click="onSave"
-            data-cy="dialog-button-submit"
-            :loading="isLoading"
-          >
-            {{ $t('navigation.save') }}
-          </q-btn>
-        </div>
+          <!-- Separator -->
+          <q-separator
+            class="q-my-md"
+            style="margin-left: -16px; margin-right: -16px"
+          />
+          <!-- Action Buttons -->
+          <div class="flex justify-end gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="isDialogOpen = false"
+              data-cy="dialog-button-cancel"
+              :disable="isLoading"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              type="submit"
+              color="primary"
+              @click="onSave"
+              data-cy="dialog-button-submit"
+              :loading="isLoading"
+            >
+              {{ $t('navigation.save') }}
+            </q-btn>
+          </div>
+        </q-form>
       </template>
     </dialog-default>
   </div>
