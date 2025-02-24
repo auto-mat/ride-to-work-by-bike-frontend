@@ -306,6 +306,7 @@ describe('<BannerTeamMemberApprove>', () => {
             .should('deep.equal', responseMyTeam.results[0]);
         });
       });
+      // tall viewport allows selecting all members without scrolling in dialog
       cy.viewport(320, 1500);
     });
 
