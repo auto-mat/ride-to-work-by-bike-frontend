@@ -459,6 +459,7 @@ export default defineComponent({
           />
           <!-- Action Buttons -->
           <div class="flex justify-end gap-8">
+            <!-- Button: Cancel -->
             <q-btn
               rounded
               unelevated
@@ -470,6 +471,7 @@ export default defineComponent({
             >
               {{ $t('navigation.discard') }}
             </q-btn>
+            <!-- Button: Submit -->
             <q-btn
               rounded
               unelevated
