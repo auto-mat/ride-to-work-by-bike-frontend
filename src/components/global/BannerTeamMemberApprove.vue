@@ -237,6 +237,13 @@ export default defineComponent({
       isDialogOpen.value = false;
     };
 
+    const isShownDenyReason = (member: ExtendedMemberResults): boolean => {
+      return (
+        memberDecisions.value.get(member.id) === TeamMemberStatus.denied &&
+        memberDenialReasons.value.get(member.id) !== undefined
+      );
+    };
+
     // colors
     const { getPaletteColor, changeAlpha } = colors;
     const secondary = getPaletteColor('secondary');
@@ -244,8 +251,12 @@ export default defineComponent({
       secondary,
       rideToWorkByBikeConfig.colorSecondaryBackgroundOpacity,
     );
+    const black = getPaletteColor('black');
+    const blackOpacity = changeAlpha(black, 0.2);
+    const border = `1px solid ${blackOpacity}`;
 
     return {
+      border,
       borderRadius,
       isDialogOpen,
       memberDecisions,
@@ -262,6 +273,7 @@ export default defineComponent({
       remainingApprovalSlots,
       handleMemberDecision,
       isLoading,
+      isShownDenyReason,
     };
   },
 });
@@ -361,19 +373,18 @@ export default defineComponent({
                   <div class="row items-center q-col-gutter-md">
                     <!-- Deny reason -->
                     <div
-                      v-if="
-                        memberDecisions.get(member.id) ===
-                          TeamMemberStatus.denied &&
-                        memberDenialReasons.get(member.id) !== undefined
-                      "
+                      v-if="isShownDenyReason(member)"
                       class="col-12 col-sm q-pb-sm"
                     >
                       <form-field-text-required
-                        :model-value="memberDenialReasons.get(member.id)"
                         name="reason"
+                        :model-value="memberDenialReasons.get(member.id)"
+                        @update:model-value="
+                          (value) => {
+                            memberDenialReasons.set(member.id, value);
+                          }
+                        "
                         :label="$t('bannerTeamMemberApprove.dialogReason')"
-                        :style="{ width: '100%' }"
-                        data-cy="dialog-approve-members-member-reason"
                         :rules="[
                           (val) =>
                             !!val ||
@@ -383,68 +394,47 @@ export default defineComponent({
                               ),
                             }),
                         ]"
-                        @update:model-value="
-                          (value) => {
-                            memberDenialReasons.set(member.id, value);
-                          }
-                        "
+                        data-cy="dialog-approve-members-member-reason"
                       />
                     </div>
                     <!-- Decision Buttons -->
                     <div class="col-12 col-sm-auto">
-                      <!-- Button: deny -->
-                      <q-btn
+                      <!-- Toggle Buttons -->
+                      <q-btn-toggle
                         rounded
                         unelevated
-                        :outline="
-                          memberDecisions.get(member.id) !==
-                          TeamMemberStatus.denied
+                        :model-value="memberDecisions.get(member.id)"
+                        @update:model-value="
+                          (value) => handleMemberDecision(member.id, value)
                         "
-                        :color="
-                          memberDecisions.get(member.id) ===
-                          TeamMemberStatus.denied
-                            ? 'negative'
-                            : 'primary'
-                        "
-                        @click="
-                          handleMemberDecision(
-                            member.id,
-                            TeamMemberStatus.denied,
-                          )
-                        "
-                        :label="$t('bannerTeamMemberApprove.buttonDialogDeny')"
-                        class="q-mr-sm"
-                        data-cy="dialog-approve-members-button-deny"
-                      />
-                      <!-- Button: approve -->
-                      <q-btn
-                        rounded
-                        unelevated
-                        :outline="
-                          memberDecisions.get(member.id) !==
-                          TeamMemberStatus.approved
-                        "
-                        :color="
-                          memberDecisions.get(member.id) ===
-                          TeamMemberStatus.approved
-                            ? 'positive'
-                            : 'primary'
-                        "
-                        @click="
-                          handleMemberDecision(
-                            member.id,
-                            TeamMemberStatus.approved,
-                          )
-                        "
-                        :label="
-                          $t('bannerTeamMemberApprove.buttonDialogApprove')
-                        "
-                        :disable="
-                          remainingApprovalSlots <= 0 &&
-                          memberDecisions.get(member.id) !==
-                            TeamMemberStatus.approved
-                        "
-                        data-cy="dialog-approve-members-button-approve"
+                        :options="[
+                          {
+                            label: $t(
+                              'bannerTeamMemberApprove.buttonDialogDeny',
+                            ),
+                            value: TeamMemberStatus.denied,
+                            toggleColor: 'negative',
+                            attrs: {
+                              'data-cy': 'dialog-approve-members-button-deny',
+                            },
+                          },
+                          {
+                            label: $t(
+                              'bannerTeamMemberApprove.buttonDialogApprove',
+                            ),
+                            value: TeamMemberStatus.approved,
+                            toggleColor: 'positive',
+                            disable:
+                              remainingApprovalSlots <= 0 &&
+                              memberDecisions.get(member.id) !==
+                                TeamMemberStatus.approved,
+                            attrs: {
+                              'data-cy':
+                                'dialog-approve-members-button-approve',
+                            },
+                          },
+                        ]"
+                        :style="{ border }"
                       />
                     </div>
                   </div>
