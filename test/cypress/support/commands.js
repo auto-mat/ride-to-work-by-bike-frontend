@@ -3041,6 +3041,21 @@ Cypress.Commands.add('testApproveMaxTeamMembers', () => {
             cy.dataCy('dialog-approve-members-button-approve').should(
               'be.disabled',
             );
+          });
+        // submit approval (without entering reason)
+        cy.dataCy('dialog-button-submit').should('be.visible').click();
+        // check 5th member
+        cy.dataCy('dialog-approve-members-member')
+          .eq(4)
+          .within(() => {
+            // error message - reason is required
+            cy.contains(
+              i18n.global.t('form.messageFieldRequired', {
+                fieldName: i18n.global.t(
+                  'bannerTeamMemberApprove.dialogReason',
+                ),
+              }),
+            ).should('be.visible');
             // enter reason for denial
             cy.dataCy('dialog-approve-members-member-reason')
               .should('be.visible')

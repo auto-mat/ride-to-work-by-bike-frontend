@@ -475,7 +475,6 @@ export default defineComponent({
               unelevated
               type="submit"
               color="primary"
-              @click="onSave"
               data-cy="dialog-button-submit"
               :loading="isLoading"
             >
