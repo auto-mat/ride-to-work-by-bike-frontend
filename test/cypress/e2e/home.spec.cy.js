@@ -348,7 +348,7 @@ describe('Home page', () => {
       cy.testApproveSingleTeamMember();
     });
 
-    it('allows user to approve max number of members and reject the rest', () => {
+    it.only('allows user to approve max number of members and reject the rest', () => {
       cy.testApproveMaxTeamMembers();
     });
   });

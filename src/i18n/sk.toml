@@ -22,6 +22,7 @@ dialogReason = "Dôvod zamietnutia"
 dialogTitle = "Schváliť členov tímu"
 messageOtherMembersDenied = "Váš tím je plný. Ďalší členovia budú automaticky zamietnutí."
 textMembersToApprove = "Niekto v vašom tíme chce byť schválený. Dajte mu zelenú?"
+textReasonTeamFull = "Automatické zamietnutie z dôvodu prekročenia maximálneho počtu {maxTeamMembers} účastníkov tímu {teamName}."
 textWaitingForApproval = "Vaša žiadosť o prístup do tímu stále čaká na schválenie. Požiadajte o schválenie vašich kolegov..."
 
 [breadcrumb]

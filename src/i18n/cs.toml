@@ -22,6 +22,7 @@ dialogReason = "Důvod odmítnutí"
 dialogTitle = "Schválit členy*ky týmu"
 messageOtherMembersDenied = "Váš tým je plný. Další členové*ky budou automaticky odmítnuti."
 textMembersToApprove = "Někdo ve vašem týmu touží po schválení. Dáte mu zelenou?"
+textReasonTeamFull = "Automatické odmítnutí z důvodu překročení maximálního počtu {maxTeamMembers} členů*ek týmu {teamName}."
 textWaitingForApproval = "Vaší žádosti o schválení v týmu zatím nebylo vyhověno. Popožeňte kolegy..."
 
 [breadcrumb]

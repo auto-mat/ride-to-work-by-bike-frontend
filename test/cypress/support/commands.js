@@ -3028,49 +3028,53 @@ Cypress.Commands.add('testApproveMaxTeamMembers', () => {
 
     cy.fixture('apiPutMyTeamRequestApproveAllRejectRest.json').then(
       (responsePutMyTeam) => {
-        // check 5th member
-        cy.dataCy('dialog-approve-members-member')
-          .eq(4)
-          .within(() => {
-            // deny button is selected
-            cy.dataCy('dialog-approve-members-button-deny').should(
-              'have.backgroundColor',
-              negative,
-            );
-            // approve button is disabled
-            cy.dataCy('dialog-approve-members-button-approve').should(
-              'be.disabled',
-            );
-          });
-        // submit approval (without entering reason)
-        cy.dataCy('dialog-button-submit').should('be.visible').click();
-        // check 5th member
-        cy.dataCy('dialog-approve-members-member')
-          .eq(4)
-          .within(() => {
-            // error message - reason is required
-            cy.contains(
-              i18n.global.t('form.messageFieldRequired', {
-                fieldName: i18n.global.t(
-                  'bannerTeamMemberApprove.dialogReason',
-                ),
-              }),
-            ).should('be.visible');
-            // enter reason for denial
-            cy.dataCy('dialog-approve-members-member-reason')
-              .should('be.visible')
-              .and(
-                'contain',
-                i18n.global.t('bannerTeamMemberApprove.dialogReason'),
+        cy.fixture('apiGetThisCampaign').then((thisCampaignResponse) => {
+          cy.fixture('apiGetMyTeamResponseApproved.json').then(
+            (responseMyTeam) => {
+              // check 5th member
+              cy.dataCy('dialog-approve-members-member')
+                .eq(4)
+                .within(() => {
+                  // deny button is selected
+                  cy.dataCy('dialog-approve-members-button-deny').should(
+                    'have.backgroundColor',
+                    negative,
+                  );
+                  // approve button is disabled
+                  cy.dataCy('dialog-approve-members-button-approve').should(
+                    'be.disabled',
+                  );
+                  // automatic denial reason
+                  cy.dataCy('dialog-approve-members-member-reason')
+                    .find('input')
+                    .should(
+                      'have.value',
+                      i18n.global.t(
+                        'bannerTeamMemberApprove.textReasonTeamFull',
+                        {
+                          maxTeamMembers:
+                            thisCampaignResponse.results[0].max_team_members,
+                          teamName: responseMyTeam.results[0].name,
+                        },
+                      ),
+                    );
+                });
+              // submit approval
+              cy.dataCy('dialog-button-submit').should('be.visible').click();
+              // update reason message for the expected request
+              responsePutMyTeam.members[3].reason = i18n.global.t(
+                'bannerTeamMemberApprove.textReasonTeamFull',
+                {
+                  maxTeamMembers:
+                    thisCampaignResponse.results[0].max_team_members,
+                  teamName: responseMyTeam.results[0].name,
+                },
               );
-            cy.dataCy('dialog-approve-members-member-reason').type(
-              responsePutMyTeam.members[3].reason,
-            );
-          });
-        // submit approval
-        cy.dataCy('dialog-button-submit').should('be.visible').click();
-        // wait for API intercept
-        cy.waitForMyTeamPutApi(responsePutMyTeam);
+              // wait for API intercept
+              cy.waitForMyTeamPutApi(responsePutMyTeam);
+            },
+          );
+        });
       },
     );
     // check for success message

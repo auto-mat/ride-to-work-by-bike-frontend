@@ -142,10 +142,25 @@ export default defineComponent({
         // auto-reject remaining undecided members
         pendingMembers.value.forEach((member) => {
           // for all members not yet selected and except the current one
-          if (!memberDecisions.value.has(member.id) && member.id !== memberId) {
-            // set the status to denied
+          const memberNotDecidedAndNotCurrent =
+            !memberDecisions.value.has(member.id) && member.id !== memberId;
+          // also for all denied members who are currently missing a reason
+          const memberDeniedAndMissingReason =
+            memberDecisions.value.get(member.id) ===
+              TeamMemberStatus.undecided &&
+            !memberDenialReasons.value.get(member.id);
+          // set the status to undecided and show automatic denial reason
+          if (memberNotDecidedAndNotCurrent || memberDeniedAndMissingReason) {
+            // set the status to undecided
             memberDecisions.value.set(member.id, TeamMemberStatus.undecided);
-            memberDenialReasons.value.set(member.id, '');
+            // set automatic denial reason
+            memberDenialReasons.value.set(
+              member.id,
+              i18n.global.t('bannerTeamMemberApprove.textReasonTeamFull', {
+                maxTeamMembers: challengeStore.getMaxTeamMembers,
+                teamName: registerChallengeStore.getMyTeam?.name || '',
+              }),
+            );
           }
         });
         // show message about other members being denied
