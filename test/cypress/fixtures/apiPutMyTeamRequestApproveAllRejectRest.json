@@ -14,7 +14,7 @@
     },
     {
       "id": 3456,
-      "approved_for_team": "denied",
+      "approved_for_team": "undecided",
       "team": null,
       "reason": "Test reason"
     },

@@ -53,10 +53,12 @@ export default defineComponent({
     const isDialogOpen = ref<boolean>(false);
     const formRef = ref<InstanceType<typeof QForm> | null>(null);
     const memberDecisions = ref<
-      Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>
-    >(new Map<number, TeamMemberStatus.approved | TeamMemberStatus.denied>());
-    const memberDenialReasons = ref<Map<number, string>>(
-      new Map<number, string>(),
+      Map<number, TeamMemberStatus.approved | TeamMemberStatus.undecided>
+    >(
+      new Map<number, TeamMemberStatus.approved | TeamMemberStatus.undecided>(),
+    );
+    const memberDenialReasons = ref<Map<number, string | undefined>>(
+      new Map<number, string | undefined>(),
     );
 
     const registerChallengeStore = useRegisterChallengeStore();
@@ -118,12 +120,12 @@ export default defineComponent({
      * Assign the status to the member and handle the logic related to the max
      * number of members allowed.
      * @param {number} memberId - The id of the member
-     * @param {TeamMemberStatus.approved | TeamMemberStatus.denied} status
+     * @param {TeamMemberStatus.approved | TeamMemberStatus.undecided} status
      *   - The status of the member
      */
     const handleMemberDecision = (
       memberId: number,
-      status: TeamMemberStatus.approved | TeamMemberStatus.denied,
+      status: TeamMemberStatus.approved | TeamMemberStatus.undecided,
     ): void => {
       // if trying to approve and no slots left, do nothing
       if (
@@ -142,7 +144,7 @@ export default defineComponent({
           // for all members not yet selected and except the current one
           if (!memberDecisions.value.has(member.id) && member.id !== memberId) {
             // set the status to denied
-            memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+            memberDecisions.value.set(member.id, TeamMemberStatus.undecided);
             memberDenialReasons.value.set(member.id, '');
           }
         });
@@ -157,7 +159,7 @@ export default defineComponent({
       // set the status for the current member
       memberDecisions.value.set(memberId, status);
       // if denying, initialize empty reason
-      if (status === TeamMemberStatus.denied) {
+      if (status === TeamMemberStatus.undecided) {
         memberDenialReasons.value.set(memberId, '');
       } else {
         // if approving, remove any existing reason
@@ -184,7 +186,7 @@ export default defineComponent({
         });
         logger?.debug('Team is full and there are pending members');
         pendingMembers.value.forEach((member) => {
-          memberDecisions.value.set(member.id, TeamMemberStatus.denied);
+          memberDecisions.value.set(member.id, TeamMemberStatus.undecided);
           memberDenialReasons.value.set(member.id, '');
         });
         logger?.debug(
@@ -214,7 +216,7 @@ export default defineComponent({
             approved_for_team: status,
           };
           // if the member is denied, add team: null and reason if provided
-          if (status === TeamMemberStatus.denied) {
+          if (status === TeamMemberStatus.undecided) {
             const reason = memberDenialReasons.value.get(id);
             return {
               ...member,
@@ -239,7 +241,7 @@ export default defineComponent({
 
     const isShownDenyReason = (member: ExtendedMemberResults): boolean => {
       return (
-        memberDecisions.value.get(member.id) === TeamMemberStatus.denied &&
+        memberDecisions.value.get(member.id) === TeamMemberStatus.undecided &&
         memberDenialReasons.value.get(member.id) !== undefined
       );
     };
@@ -378,7 +380,7 @@ export default defineComponent({
                     >
                       <form-field-text-required
                         name="reason"
-                        :model-value="memberDenialReasons.get(member.id)"
+                        :model-value="memberDenialReasons.get(member.id) || ''"
                         @update:model-value="
                           (value) => {
                             memberDenialReasons.set(member.id, value);
@@ -386,7 +388,7 @@ export default defineComponent({
                         "
                         :label="$t('bannerTeamMemberApprove.dialogReason')"
                         :rules="[
-                          (val) =>
+                          (val: string) =>
                             !!val ||
                             $t('form.messageFieldRequired', {
                               fieldName: $t(
@@ -412,7 +414,7 @@ export default defineComponent({
                             label: $t(
                               'bannerTeamMemberApprove.buttonDialogDeny',
                             ),
-                            value: TeamMemberStatus.denied,
+                            value: TeamMemberStatus.undecided,
                             toggleColor: 'negative',
                             attrs: {
                               'data-cy': 'dialog-approve-members-button-deny',
