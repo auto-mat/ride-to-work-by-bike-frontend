@@ -293,6 +293,7 @@ export default defineComponent({
       } else {
         formMerchRef.value.$el.scrollIntoView({ behavior: 'smooth' });
       }
+      registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
     };
 
     /**
@@ -332,6 +333,7 @@ export default defineComponent({
           });
         });
       }
+      registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
     };
 
     const hintInputPhone = computed((): string => {

@@ -135,6 +135,7 @@ export const useStepperValidation = ({
           );
           // only if there is a valid response go next
           if (response) {
+            registerChallengeStore.setIsMerchandiseSavedIntoDb(true);
             stepperRef.value.next();
           }
         } else {
