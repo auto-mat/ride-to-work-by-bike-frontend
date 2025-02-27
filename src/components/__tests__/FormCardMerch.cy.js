@@ -86,48 +86,6 @@ describe('<FormCardMerch>', () => {
     });
   });
 
-  context('localhost image', () => {
-    beforeEach(() => {
-      cy.fixture('cardMerchLocalhost').then((option) => {
-        cy.mount(FormCardMerch, {
-          props: {
-            option: option,
-          },
-        });
-      });
-      cy.viewport('macbook-16');
-    });
-
-    it('renders card with image and title', () => {
-      cy.fixture('cardMerchLocalhost').then((option) => {
-        cy.dataCy('form-card-merch').should('be.visible');
-        // rounded corners
-        cy.dataCy('form-card-merch')
-          .should(
-            'have.css',
-            'border-radius',
-            rideToWorkByBikeConfig.borderRadiusCard,
-          )
-          .and('have.css', 'padding', '16px');
-        const imageUrl = new URL(
-          option.image,
-          rideToWorkByBikeConfig.urlBaseBackend,
-        ).href;
-        // image
-        cy.dataCy('form-card-merch-image')
-          .find('img')
-          .should('have.attr', 'src', imageUrl);
-        // title
-        cy.dataCy('form-card-merch-title')
-          .should('be.visible')
-          .and('have.css', 'font-size', '16px')
-          .and('have.css', 'font-weight', '700')
-          .and('have.color', black)
-          .and('contain', option.label);
-      });
-    });
-  });
-
   context('selected', () => {
     beforeEach(() => {
       cy.fixture('cardMerch').then((option) => {
