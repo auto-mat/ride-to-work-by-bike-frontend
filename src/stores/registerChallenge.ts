@@ -775,8 +775,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       logger?.info('Loading merchandise data into store.');
       this.isLoadingMerchandise = true;
       await loadMerchandise();
-      this.merchandiseItems = merchandiseItems.value;
-      this.merchandiseCards = merchandiseCards.value;
+      this.setMerchandiseItems(merchandiseItems.value);
+      this.setMerchandiseCards(merchandiseCards.value);
       logger?.debug(
         `Loaded merchandise items <${this.merchandiseItems.length}> and cards saved into store.`,
       );

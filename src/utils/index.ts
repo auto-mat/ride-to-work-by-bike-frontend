@@ -142,10 +142,34 @@ function getCurrentDateTimeAccordingTimezone(
   return new Date(date.getTime() + (yourTimezoneOffset + timezoneOffset));
 }
 
+/**
+ * Get absolute URL path
+ *
+ * Fix localhost img URL path.
+ *
+ * From: /media/upload/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg
+ *
+ * To: http://test.lvh.me:8021/media/upload/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg
+ *
+ * @param {string} inputUrl - Input URL string path
+ * @returns {string} - Absolute URL string path
+ */
+const getAbsoluteUrlpath = (inputUrl: string): string => {
+  if (URL.canParse(inputUrl)) {
+    const url = new URL(inputUrl);
+    // Check if URL has a valid domain and protocol
+    if (url.hostname && url.protocol) {
+      return url.href;
+    }
+  }
+  return new URL(inputUrl, getAppConfig().urlBaseBackend).href;
+};
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
   deepObjectWithSimplePropsCopy,
+  getAbsoluteUrlpath,
   getCurrentDateTimeAccordingTimezone,
   formFieldCustomValidationErrCssClass,
   requestDefaultHeader,

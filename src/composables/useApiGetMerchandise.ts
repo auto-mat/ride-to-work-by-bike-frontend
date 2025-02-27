@@ -27,7 +27,11 @@ import type { Image } from '../components/types/Image';
 import { Gender } from '../components/types/Profile';
 
 // utils
-import { requestDefaultHeader, requestTokenHeader } from '../utils';
+import {
+  getAbsoluteUrlpath,
+  requestDefaultHeader,
+  requestTokenHeader,
+} from '../utils';
 
 /**
  * Get merchandise composable
@@ -81,6 +85,11 @@ export const useApiGetMerchandise = (
     });
 
     if (data?.results?.length) {
+      data.results.forEach((merch, index, array) => {
+        array[index]['t_shirt_preview'] = getAbsoluteUrlpath(
+          array[index]['t_shirt_preview'],
+        );
+      });
       merchandise.value.push(...data.results);
     }
 
@@ -119,6 +128,11 @@ export const useApiGetMerchandise = (
 
     // store results
     if (data?.results?.length) {
+      data.results.forEach((merch, index, array) => {
+        array[index]['t_shirt_preview'] = getAbsoluteUrlpath(
+          array[index]['t_shirt_preview'],
+        );
+      });
       merchandise.value.push(...data.results);
     }
 

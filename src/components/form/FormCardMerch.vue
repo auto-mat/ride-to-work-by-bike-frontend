@@ -31,7 +31,7 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103131&mode=dev)
  */
 
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -64,23 +64,11 @@ export default defineComponent({
       }
     };
 
-    const optionImage = computed(() => {
-      if (URL.canParse(props.option.image)) {
-        const url = new URL(props.option.image);
-        // Check if URL has a valid domain and protocol
-        if (url.hostname && url.protocol) {
-          return url.href;
-        }
-      }
-      return new URL(props.option.image, rideToWorkByBikeConfig.urlBaseBackend)
-        .href;
-    });
-
     return {
       borderRadius,
       borderRadiusSmall,
-      optionImage,
       selectOption,
+      props,
     };
   },
 });
@@ -98,7 +86,7 @@ export default defineComponent({
       <!-- Image -->
       <q-img
         ratio="1.33"
-        :src="optionImage"
+        :src="props.option.image"
         data-cy="form-card-merch-image"
         :style="{ 'border-radius': borderRadiusSmall }"
       />
