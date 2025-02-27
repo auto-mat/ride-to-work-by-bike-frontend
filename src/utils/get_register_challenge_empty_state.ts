@@ -61,4 +61,5 @@ export const getRegisterChallengeEmptyPersistentState = () => ({
   isUserOrganizationAdmin: null,
   hasOrganizationAdmin: null,
   paymentCategory: PaymentCategory.none,
+  isRegistrationInProgressLocalFlag: true,
 });

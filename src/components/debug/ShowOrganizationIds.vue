@@ -25,7 +25,7 @@ export default defineComponent({
     let teamId;
     let paymentState;
     let isPayuTransactionInitiated;
-
+    let isRegistrationInProgressLocalFlag;
     const showComponent = computed(() => !!window.Cypress);
 
     if (showComponent.value) {
@@ -38,6 +38,9 @@ export default defineComponent({
       isPayuTransactionInitiated = computed(
         () => registerChallengeStore.getIsPayuTransactionInitiated,
       );
+      isRegistrationInProgressLocalFlag = computed(
+        () => registerChallengeStore.getIsRegistrationInProgressLocalFlag,
+      );
     }
 
     return {
@@ -47,6 +50,7 @@ export default defineComponent({
       showComponent,
       paymentState,
       isPayuTransactionInitiated,
+      isRegistrationInProgressLocalFlag,
     };
   },
 });
@@ -74,6 +78,12 @@ export default defineComponent({
         DEBUG: is paid from UI
         <span data-cy="debug-is-paid-from-ui-value">{{
           isPayuTransactionInitiated
+        }}</span>
+      </div>
+      <div data-cy="debug-is-registration-in-progress-local-flag">
+        DEBUG: is registration in progress local flag
+        <span data-cy="debug-is-registration-in-progress-local-flag-value">{{
+          isRegistrationInProgressLocalFlag
         }}</span>
       </div>
     </div>

@@ -13,15 +13,19 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useLoginStore } from '../../stores/login';
 
+// types
+import type { Logger } from '../types/Logger';
+
 export default defineComponent({
   name: 'RegisterChallengeSummary',
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
     const loginStore = useLoginStore();
 
@@ -47,6 +51,22 @@ export default defineComponent({
     const subsidiaryAddress = computed(
       () => registerChallengeStore.getSelectedSubsidiaryAddress,
     );
+
+    // confirm registration is complete by setting local flag
+    onMounted(() => {
+      if (
+        registerChallengeStore.getIsRegistrationComplete &&
+        registerChallengeStore.getIsRegistrationInProgressLocalFlag
+      ) {
+        logger?.debug(
+          `Setting current isRegistrationInProgressLocalFlag state from <${registerChallengeStore.getIsRegistrationInProgressLocalFlag}> to <false>.`,
+        );
+        registerChallengeStore.setIsRegistrationInProgressLocalFlag(false);
+        logger?.debug(
+          `Current isRegistrationInProgressLocalFlag state set to <${registerChallengeStore.getIsRegistrationInProgressLocalFlag}>.`,
+        );
+      }
+    });
 
     return {
       personalDetails,

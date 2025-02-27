@@ -1,0 +1,33 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "personal_details": {
+        "first_name": "John",
+        "last_name": "Doe",
+        "nickname": "JD",
+        "sex": "male",
+        "telephone": "736123456",
+        "telephone_opt_in": false,
+        "language": "cs",
+        "occupation": "",
+        "age_group": null,
+        "newsletter": "challenge-events-mobility",
+        "personal_data_opt_in": true,
+        "discount_coupon": "ZD-CZBGSD",
+        "payment_subject": "voucher",
+        "payment_type": "",
+        "payment_status": "done",
+        "payment_amount": null,
+        "payment_category": ""
+      },
+      "organization_type": "company",
+      "team_id": 2452,
+      "organization_id": 987,
+      "subsidiary_id": 1358,
+      "t_shirt_size_id": null
+    }
+  ]
+}

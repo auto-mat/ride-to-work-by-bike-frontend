@@ -46,7 +46,8 @@ export default route(function (/* { store, ssrContext } */) {
   if (
     !window.Cypress ||
     window.Cypress.spec.name === 'register.spec.cy.js' ||
-    window.Cypress.spec.name === 'router_rules.cy.js'
+    window.Cypress.spec.name === 'router_rules.cy.js' ||
+    window.Cypress.spec.name === 'register_challenge_login.spec.cy.js'
   ) {
     Router.beforeEach(async (to, from, next) => {
       const logger = inject('vuejs3-logger') as Logger | null;
@@ -58,8 +59,18 @@ export default route(function (/* { store, ssrContext } */) {
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
       const isRegistrationPhaseActive: boolean =
         challengeStore.getIsChallengeInPhase(PhaseType.registration);
-      const isRegistrationComplete: boolean =
+      /**
+       * Due to saving registration data in local storage,
+       * we need a local flag to confirm completing the registration.
+       * Otherwise, data from local storage may take precedence over
+       * data from API in enforcing router rules.
+       */
+      const isRegistrationInProgressLocalFlag: boolean =
+        registerChallengeStore.getIsRegistrationInProgressLocalFlag;
+      const isRegistrationCompleteInStore: boolean =
         registerChallengeStore.getIsRegistrationComplete;
+      const isRegistrationComplete: boolean =
+        isRegistrationCompleteInStore && !isRegistrationInProgressLocalFlag;
       const isUserOrganizationAdmin: boolean =
         registerChallengeStore.getIsUserOrganizationAdmin || false;
 
@@ -69,6 +80,12 @@ export default route(function (/* { store, ssrContext } */) {
       logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
       logger?.debug(
         `Router registration phase is active <${isRegistrationPhaseActive}>.`,
+      );
+      logger?.debug(
+        `Router registration is in progress local flag <${isRegistrationInProgressLocalFlag}>.`,
+      );
+      logger?.debug(
+        `Router registration is complete in store <${isRegistrationCompleteInStore}>.`,
       );
       logger?.debug(
         `Router registration is complete <${isRegistrationComplete}>.`,

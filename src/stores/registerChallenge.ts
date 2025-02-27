@@ -116,6 +116,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isSelectedRegisterCoordinator: false,
     hasOrganizationAdmin: null as boolean | null,
     isUserOrganizationAdmin: null as boolean | null,
+    isRegistrationInProgressLocalFlag: true as boolean,
   }),
 
   getters: {
@@ -293,6 +294,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getIsMerchIdComplete(): boolean {
       return this.getMerchId !== null;
     },
+    getIsRegistrationInProgressLocalFlag: (state): boolean =>
+      state.isRegistrationInProgressLocalFlag,
     getIsRegistrationComplete(): boolean {
       return (
         this.getIsPersonalDetailsComplete &&
@@ -368,6 +371,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setTelephoneOptIn(telephoneOptIn: boolean) {
       this.telephoneOptIn = telephoneOptIn;
+    },
+    setIsRegistrationInProgressLocalFlag(
+      isRegistrationInProgressLocalFlag: boolean,
+    ) {
+      this.isRegistrationInProgressLocalFlag =
+        isRegistrationInProgressLocalFlag;
     },
     setLanguage(language: string) {
       this.language = language;
@@ -524,6 +533,36 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Telephone opt-in store updated to <${this.getTelephoneOptIn}>.`,
       );
+      /**
+       * If registration is complete after setting data from API, set
+       * isRegistrationInProgressLocalFlag to false.
+       * Otherwise, set isRegistrationInProgressLocalFlag to true.
+       * Flag ensures consistency between backend and frontend.
+       */
+      if (
+        this.getIsRegistrationComplete &&
+        this.getIsRegistrationInProgressLocalFlag
+      ) {
+        this.$log?.debug(
+          `Changing store variable isRegistrationInProgressLocalFlag from <${this.getIsRegistrationInProgressLocalFlag}> to <false>.`,
+        );
+        this.setIsRegistrationInProgressLocalFlag(false);
+        this.$log?.debug(
+          `Store variable isRegistrationInProgressLocalFlag set to <${this.getIsRegistrationInProgressLocalFlag}>.`,
+        );
+      } else if (
+        !this.getIsRegistrationComplete &&
+        !this.getIsRegistrationInProgressLocalFlag
+      ) {
+        this.$log?.debug(
+          `Changing store variable isRegistrationInProgressLocalFlag from <${this.getIsRegistrationInProgressLocalFlag}> to <true>.`,
+        );
+        this.setIsRegistrationInProgressLocalFlag(true);
+        this.$log?.debug(
+          `Store variable isRegistrationInProgressLocalFlag set to <${this.getIsRegistrationInProgressLocalFlag}>.`,
+        );
+      }
+      // set language from API response
       if (parsedResponse.language) {
         this.setLanguage(parsedResponse.language);
         this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);
