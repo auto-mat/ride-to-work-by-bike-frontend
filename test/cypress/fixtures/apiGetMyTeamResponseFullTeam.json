@@ -44,7 +44,7 @@
           "eco_trip_count": 0,
           "approved_for_team": "approved",
           "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3451/",
-          "is_me": false
+          "is_me": true
         },
         {
           "distance": 0.0,
@@ -65,7 +65,7 @@
           "frequency": 0.0,
           "avatar_url": "",
           "eco_trip_count": 0,
-          "approved_for_team": "undecided",
+          "approved_for_team": "approved",
           "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3452/",
           "is_me": false
         },
@@ -88,7 +88,7 @@
           "frequency": 0.0,
           "avatar_url": "",
           "eco_trip_count": 0,
-          "approved_for_team": "undecided",
+          "approved_for_team": "approved",
           "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3453/",
           "is_me": false
         },
@@ -111,7 +111,7 @@
           "frequency": 0.0,
           "avatar_url": "",
           "eco_trip_count": 0,
-          "approved_for_team": "undecided",
+          "approved_for_team": "approved",
           "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3454/",
           "is_me": false
         },
@@ -134,9 +134,32 @@
           "frequency": 0.0,
           "avatar_url": "",
           "eco_trip_count": 0,
-          "approved_for_team": "undecided",
+          "approved_for_team": "approved",
           "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3455/",
-          "is_me": true
+          "is_me": false
+        },
+        {
+          "distance": 0.0,
+          "emissions": {
+            "co2": 0.0,
+            "co": 0.0,
+            "nox": 0.0,
+            "n2o": 0.0,
+            "voc": 0.0,
+            "ch4": 0.0,
+            "so2": 0.0,
+            "solid": 0.0,
+            "pb": 0.0
+          },
+          "working_rides_base_count": 0,
+          "id": 3456,
+          "name": "Karel Novák",
+          "frequency": 0.0,
+          "avatar_url": "",
+          "eco_trip_count": 0,
+          "approved_for_team": "undecided",
+          "rest_url": "https://test.dopracenakole.net/rest/all_userattendance/3456/",
+          "is_me": false
         }
       ],
       "icon": null,
@@ -144,9 +167,9 @@
       "campaign": "https://test.dopracenakole.net/rest/campaign/20/",
       "gallery": "https://test.dopracenakole.net/rest/gallery/21/",
       "gallery_slug": "team-16217-photos",
-      "member_count": 1,
+      "member_count": 5,
       "is_full": false,
-      "unapproved_member_count": 4
+      "unapproved_member_count": 1
     }
   ]
 }

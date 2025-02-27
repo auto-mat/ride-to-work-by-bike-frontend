@@ -254,6 +254,105 @@ describe('Home page', () => {
     });
   });
 
+  context('desktop - user team state is "undecided"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept campaign API
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // intercept register challenge API
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        // intercept my team API
+        cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "undecided" state', () => {
+      cy.testBannerTeamMemberUndecidedState();
+    });
+  });
+
+  context('desktop - user team state is "approved"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept campaign API
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // intercept register challenge API
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+
+            // intercept my team PUT API
+            cy.interceptMyTeamPutApi(
+              config,
+              defLocale,
+              responseRegisterChallenge.results[0].team_id,
+            );
+          },
+        );
+        // intercept is user organization admin API
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        // intercept my team GET API
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "approved" state', () => {
+      cy.testBannerTeamMemberApprovedState();
+    });
+
+    it('allows user to approve a single member', () => {
+      cy.testApproveSingleTeamMember();
+    });
+
+    it('allows user to approve max number of members and reject the rest', () => {
+      cy.testApproveMaxTeamMembers();
+    });
+  });
+
   context('mobile - user is not a coordinator', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
@@ -268,11 +367,15 @@ describe('Home page', () => {
             );
           },
         );
+        cy.fixture('apiGetMyTeamResponseApproved').then((responseMyTeam) => {
+          cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+        });
       });
       // visit index page
       cy.visit(Cypress.config('baseUrl'));
       // wait for API intercepts
       cy.waitForThisCampaignApi();
+      cy.waitForMyTeamApi();
       cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
         (response) => {
           cy.waitForIsUserOrganizationAdminApi(response);

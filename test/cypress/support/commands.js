@@ -47,6 +47,9 @@ import { getRadioOption } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
 
+const positive = 'rgb(33, 186, 69)';
+const negative = 'rgb(193, 0, 21)';
+
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
 const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
@@ -2797,7 +2800,7 @@ Cypress.Commands.add(
     );
     const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}`;
 
-    cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
       cy.intercept('GET', urlApiMyTeamLocalized, {
         statusCode: responseStatusCode || httpSuccessfullStatus,
         body: responseBody || defaultResponse,
@@ -2812,7 +2815,7 @@ Cypress.Commands.add(
  * @param {Object} expectedResponse - Expected response body
  */
 Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
-  cy.fixture('apiGetMyTeamResponse.json').then((defaultResponse) => {
+  cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
     cy.wait('@getMyTeam').then((getMyTeam) => {
       expect(getMyTeam.request.headers.authorization).to.include(
         bearerTokeAuth,
@@ -2823,6 +2826,264 @@ Cypress.Commands.add('waitForMyTeamGetApi', (expectedResponse = null) => {
           expectedResponse || defaultResponse,
         );
       }
+    });
+  });
+});
+
+/**
+ * Intercept my team PUT API call
+ * Provides `@putMyTeam` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptMyTeamPutApi',
+  (config, i18n, teamId, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiMyTeam } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiMyTeamLocalized = `${apiBaseUrl}${urlApiMyTeam}${teamId}/`;
+
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
+      cy.intercept('PUT', urlApiMyTeamLocalized, {
+        statusCode: responseStatusCode || httpSuccessfullStatus,
+        body: responseBody || defaultResponse,
+      }).as('putMyTeam');
+    });
+  },
+);
+
+/**
+ * Wait for intercept my team PUT API call and compare response object
+ * Wait for `@putMyTeam` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
+Cypress.Commands.add(
+  'waitForMyTeamPutApi',
+  (expectedRequest, expectedResponse = null) => {
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((defaultResponse) => {
+      cy.wait('@putMyTeam').then(({ request, response }) => {
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        expect(request.body).to.deep.equal(expectedRequest);
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(
+            expectedResponse || defaultResponse,
+          );
+        }
+      });
+    });
+  },
+);
+
+/**
+ * Test banner team member "undecided" state
+ */
+Cypress.Commands.add('testBannerTeamMemberUndecidedState', () => {
+  cy.get('@i18n').then((i18n) => {
+    cy.waitForThisCampaignApi();
+    cy.fixture('apiGetMyTeamResponseUndecided.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
+    });
+    // it shows banner in "undecided" state
+    cy.dataCy('banner-team-member-approve').should('be.visible');
+    // title
+    cy.dataCy('banner-team-member-approve-title').should(
+      'contain',
+      i18n.global.t('bannerTeamMemberApprove.textWaitingForApproval'),
+    );
+    // button
+    cy.dataCy('banner-team-member-approve-button').should('not.exist');
+  });
+});
+
+/**
+ * Test banner team member "approved" state with member approval/denial
+ */
+Cypress.Commands.add('testBannerTeamMemberApprovedState', () => {
+  cy.get('@i18n').then((i18n) => {
+    cy.waitForThisCampaignApi();
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
+    });
+    // it shows banner in "approved" state
+    cy.dataCy('banner-team-member-approve').should('be.visible');
+    // title
+    cy.dataCy('banner-team-member-approve-title').should(
+      'contain',
+      i18n.global.t('bannerTeamMemberApprove.textMembersToApprove'),
+    );
+    // open modal
+    cy.dataCy('banner-team-member-approve-button').should('be.visible').click();
+    // dialog
+    cy.dataCy('dialog-approve-members').should('be.visible');
+    // first member
+    cy.dataCy('dialog-approve-members-member')
+      .first()
+      .within(() => {
+        // approve member button
+        cy.dataCy('dialog-approve-members-button-approve')
+          .should('be.visible')
+          .click();
+        cy.dataCy('dialog-approve-members-button-approve').should(
+          'have.backgroundColor',
+          positive,
+        );
+      });
+    // second member
+    cy.dataCy('dialog-approve-members-member')
+      .eq(1)
+      .within(() => {
+        // deny member button
+        cy.dataCy('dialog-approve-members-button-deny')
+          .should('be.visible')
+          .click();
+        cy.dataCy('dialog-approve-members-button-deny').should(
+          'have.backgroundColor',
+          negative,
+        );
+      });
+  });
+});
+
+/**
+ * Test approving a single team member
+ */
+Cypress.Commands.add('testApproveSingleTeamMember', () => {
+  cy.get('@i18n').then((i18n) => {
+    cy.waitForThisCampaignApi();
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
+    });
+    // open modal
+    cy.dataCy('banner-team-member-approve-button').should('be.visible').click();
+    // dialog
+    cy.dataCy('dialog-approve-members').should('be.visible');
+    // first member
+    cy.dataCy('dialog-approve-members-member')
+      .first()
+      .within(() => {
+        // approve member button
+        cy.dataCy('dialog-approve-members-button-approve')
+          .should('be.visible')
+          .click();
+        cy.dataCy('dialog-approve-members-button-approve').should(
+          'have.backgroundColor',
+          positive,
+        );
+      });
+    // submit approval
+    cy.dataCy('dialog-button-submit').should('be.visible').click();
+    // wait for API intercept
+    cy.fixture('apiPutMyTeamRequestApproveFirst.json').then(
+      (responsePutMyTeam) => {
+        cy.waitForMyTeamPutApi(responsePutMyTeam);
+      },
+    );
+    // check for success message
+    cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
+      'be.visible',
+    );
+    // wait for refreshing team via GET
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
+    });
+  });
+});
+
+/**
+ * Test approving maximum number of team members and rejecting the rest
+ */
+Cypress.Commands.add('testApproveMaxTeamMembers', () => {
+  cy.get('@i18n').then((i18n) => {
+    cy.waitForThisCampaignApi();
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
+    });
+    // open modal
+    cy.dataCy('banner-team-member-approve-button').should('be.visible').click();
+    // dialog
+    cy.dataCy('dialog-approve-members').should('be.visible');
+    // approve first 4 members
+    cy.dataCy('dialog-approve-members-member').each((member, index) => {
+      if (index < 4) {
+        cy.wrap(member).within(() => {
+          cy.dataCy('dialog-approve-members-button-approve')
+            .should('be.visible')
+            .click();
+          // approve button selected
+          cy.dataCy('dialog-approve-members-button-approve').should(
+            'have.backgroundColor',
+            positive,
+          );
+        });
+      }
+    });
+
+    cy.fixture('apiPutMyTeamRequestApproveAllRejectRest.json').then(
+      (responsePutMyTeam) => {
+        cy.fixture('apiGetThisCampaign').then((thisCampaignResponse) => {
+          cy.fixture('apiGetMyTeamResponseApproved.json').then(
+            (responseMyTeam) => {
+              // check 5th member
+              cy.dataCy('dialog-approve-members-member')
+                .eq(4)
+                .within(() => {
+                  // deny button is selected
+                  cy.dataCy('dialog-approve-members-button-deny').should(
+                    'have.backgroundColor',
+                    negative,
+                  );
+                  // approve button is disabled
+                  cy.dataCy('dialog-approve-members-button-approve').should(
+                    'be.disabled',
+                  );
+                  // automatic denial reason
+                  cy.dataCy('dialog-approve-members-member-reason')
+                    .find('input')
+                    .should(
+                      'have.value',
+                      i18n.global.t(
+                        'bannerTeamMemberApprove.textReasonTeamFull',
+                        {
+                          maxTeamMembers:
+                            thisCampaignResponse.results[0].max_team_members,
+                          teamName: responseMyTeam.results[0].name,
+                        },
+                      ),
+                    );
+                });
+              // submit approval
+              cy.dataCy('dialog-button-submit').should('be.visible').click();
+              // update reason message for the expected request
+              responsePutMyTeam.members[3].reason = i18n.global.t(
+                'bannerTeamMemberApprove.textReasonTeamFull',
+                {
+                  maxTeamMembers:
+                    thisCampaignResponse.results[0].max_team_members,
+                  teamName: responseMyTeam.results[0].name,
+                },
+              );
+              // wait for API intercept
+              cy.waitForMyTeamPutApi(responsePutMyTeam);
+            },
+          );
+        });
+      },
+    );
+    // check for success message
+    cy.contains(i18n.global.t('putMyTeam.apiMessageSuccess')).should(
+      'be.visible',
+    );
+    // wait for refreshing team via GET
+    cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+      cy.waitForMyTeamGetApi(responseMyTeam);
     });
   });
 });

@@ -14,6 +14,17 @@ siteTitle = "Ride to Work by Bike"
 period = "Challenge period"
 transportType = "Means of transport"
 
+[bannerTeamMemberApprove]
+buttonApproveMembers = "Approve members"
+buttonDialogApprove = "Approve"
+buttonDialogDeny = "Deny"
+dialogReason = "Deny reason"
+dialogTitle = "Approve team members"
+messageOtherMembersDenied = "Your team is full. Other members will be automatically denied."
+textMembersToApprove = "Someone in your team wants to be approved. Give them the green light?"
+textReasonTeamFull = "Automatic denial due to exceeding the maximum number of {maxTeamMembers} team members in team {teamName}."
+textWaitingForApproval = "Your request to join the team is still pending. Let your colleagues know..."
+
 [breadcrumb]
 results = "Results"
 
@@ -722,6 +733,12 @@ titleUpdatePhone = "Edit phone number"
 apiMessageError = "Error updating profile."
 apiMessageErrorWithMessage = "Error updating profile. Error: {error}"
 apiMessageSuccess = "Profile was successfully updated."
+
+[putMyTeam]
+apiMessageError = "Error updating team."
+apiMessageErrorWithMessage = "Error updating team. Error: {error}"
+apiMessageSuccess = "Team was successfully updated."
+messageTeamIdNotAvailable = "Failed to get team ID. Please try again later."
 
 [refreshTokens]
 messageRefreshTokenRequired = "To refresh tokens, you must log in."

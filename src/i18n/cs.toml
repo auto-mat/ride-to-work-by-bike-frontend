@@ -14,6 +14,17 @@ siteTitle = "Do práce na kole"
 period = "Období výzvy"
 transportType = "Způsoby dopravy"
 
+[bannerTeamMemberApprove]
+buttonApproveMembers = "Schválit členy*ky"
+buttonDialogApprove = "Schválit"
+buttonDialogDeny = "Odmítnout"
+dialogReason = "Důvod odmítnutí"
+dialogTitle = "Schválit členy*ky týmu"
+messageOtherMembersDenied = "Váš tým je plný. Další členové*ky budou automaticky odmítnuti."
+textMembersToApprove = "Někdo ve vašem týmu touží po schválení. Dáte mu zelenou?"
+textReasonTeamFull = "Automatické odmítnutí z důvodu překročení maximálního počtu {maxTeamMembers} členů*ek týmu {teamName}."
+textWaitingForApproval = "Vaší žádosti o schválení v týmu zatím nebylo vyhověno. Popožeňte kolegy..."
+
 [breadcrumb]
 results = "Výsledky"
 
@@ -724,6 +735,12 @@ titleUpdatePhone = "Upravit telefonní číslo"
 apiMessageError = "Chyba při aktualizaci profilu."
 apiMessageErrorWithMessage = "Chyba při aktualizaci profilu. Chyba: {error}"
 apiMessageSuccess = "Profil byl úspěšně aktualizován."
+
+[putMyTeam]
+apiMessageError = "Chyba při aktualizaci týmu."
+apiMessageErrorWithMessage = "Chyba při aktualizaci týmu. Chyba: {error}"
+apiMessageSuccess = "Tým byl úspěšně aktualizován."
+messageTeamIdNotAvailable = "Nepodařilo se zjistit ID týmu. Zkuste to znovu později."
 
 [refreshTokens]
 messageRefreshTokenRequired = "Pro obnovení tokenů je potřeba přihlásit se."

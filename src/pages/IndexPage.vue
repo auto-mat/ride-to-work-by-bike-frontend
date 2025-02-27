@@ -14,6 +14,8 @@
           class="q-mb-xl"
           data-cy="countdown-event"
         />
+        <!-- Banner: Team Member Approve -->
+        <banner-team-member-approve />
         <!-- Banner: Routes -->
         <banner-routes
           v-if="
@@ -136,12 +138,13 @@
 <script lang="ts">
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // components
 import BannerApp from 'components/homepage/BannerApp.vue';
 import BannerImage from 'components/homepage/BannerImage.vue';
 import BannerRoutes from 'components/homepage/BannerRoutes.vue';
+import BannerTeamMemberApprove from 'components/global/BannerTeamMemberApprove.vue';
 import CardChallenge from 'components/homepage/CardChallenge.vue';
 import CardEvent from 'components/homepage/CardEvent.vue';
 import CountdownEvent from 'components/homepage/CountdownEvent.vue';
@@ -176,12 +179,16 @@ import * as homepage from '../mocks/homepage';
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+// types
+import type { Logger } from '../components/types/Logger';
+
 export default defineComponent({
   name: 'IndexPage',
   components: {
     BannerApp,
     BannerImage,
     BannerRoutes,
+    BannerTeamMemberApprove,
     CardChallenge,
     CardEvent,
     CountdownEvent,
@@ -197,6 +204,8 @@ export default defineComponent({
     SliderProgress,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
+
     const isBannerRoutesEnabled = false;
     const isBannerAppEnabled = false;
     const isSectionChallengesEnabled = false;
@@ -226,6 +235,11 @@ export default defineComponent({
       // if the information is not set, check if user is coordinator
       if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
         await registerChallengeStore.checkIsUserOrganizationAdmin();
+      }
+      // load my team data if not available
+      if (!registerChallengeStore.getMyTeam) {
+        logger?.debug('My team data not available, loading my team data');
+        await registerChallengeStore.loadMyTeamToStore(logger);
       }
     });
 

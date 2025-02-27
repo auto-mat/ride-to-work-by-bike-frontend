@@ -42,42 +42,68 @@ const password = '123456a';
 const genderFemaleKey = 'global.woman';
 
 describe('Profile page', () => {
+  beforeEach(() => {
+    cy.task('getAppConfig', process).then((config) => {
+      cy.wrap(config).as('config');
+      // intercept register challenge API
+      cy.fixture('refreshTokensResponseChallengeActive').then(
+        (refreshTokensResponseChallengeActive) => {
+          cy.fixture('loginRegisterResponseChallengeActive').then(
+            (loginRegisterResponseChallengeActive) => {
+              cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+                config,
+                defLocale,
+                loginRegisterResponseChallengeActive,
+                null,
+                refreshTokensResponseChallengeActive,
+                null,
+                { has_user_verified_email_address: true },
+              );
+            },
+          );
+        },
+      );
+      // intercept register challenge API
+      cy.fixture('apiGetRegisterChallengeProfile').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge,
+          );
+
+          // intercept has organization admin API
+          cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+            (responseHasOrganizationAdmin) => {
+              cy.interceptHasOrganizationAdminGetApi(
+                config,
+                defLocale,
+                responseRegisterChallenge.results[0].organization_id,
+                responseHasOrganizationAdmin,
+              );
+            },
+          );
+
+          // intercept my team PUT API
+          cy.interceptMyTeamPutApi(
+            config,
+            defLocale,
+            responseRegisterChallenge.results[0].team_id,
+          );
+        },
+      );
+    });
+  });
+
   context('desktop', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.fixture('apiGetRegisterChallengeProfile.json').then(
-          (responseRegisterChallenge) => {
-            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
-              (responseHasOrganizationAdmin) => {
-                cy.interceptRegisterChallengeGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge,
-                );
-                cy.interceptHasOrganizationAdminGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge.results[0].organization_id,
-                  responseHasOrganizationAdmin,
-                );
-              },
-            );
-          },
-        );
-      });
+      // visit profile page
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       cy.viewport('macbook-16');
-      // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -87,46 +113,6 @@ describe('Profile page', () => {
 
   context('change email', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.fixture('apiGetRegisterChallengeProfile.json').then(
-          (responseRegisterChallenge) => {
-            cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
-              (responseHasOrganizationAdmin) => {
-                cy.fixture('refreshTokensResponseChallengeActive').then(
-                  (refreshTokensResponseChallengeActive) => {
-                    cy.fixture('loginRegisterResponseChallengeActive').then(
-                      (loginRegisterResponseChallengeActive) => {
-                        cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
-                          config,
-                          defLocale,
-                          loginRegisterResponseChallengeActive,
-                          null,
-                          refreshTokensResponseChallengeActive,
-                          null,
-                          { has_user_verified_email_address: true },
-                        );
-                      },
-                    );
-                  },
-                );
-                cy.interceptRegisterChallengeGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge,
-                );
-                cy.interceptHasOrganizationAdminGetApi(
-                  config,
-                  defLocale,
-                  responseRegisterChallenge.results[0].organization_id,
-                  responseHasOrganizationAdmin,
-                );
-              },
-            );
-          },
-        );
-      });
       // go to login page
       cy.visit('#' + routesConf['login']['children']['fullPath']);
       // login
@@ -136,15 +122,10 @@ describe('Profile page', () => {
       // go to profile page
       cy.visit('#' + routesConf['profile']['children']['fullPath']);
       cy.viewport('macbook-16');
-      // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -221,6 +202,64 @@ describe('Profile page', () => {
           });
         },
       );
+    });
+  });
+
+  context('desktop - user team state is "undecided"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept my team API
+        cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+      });
+      cy.visit('#' + routesConf['profile']['children']['fullPath']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "undecided" state', () => {
+      cy.testBannerTeamMemberUndecidedState();
+    });
+  });
+
+  context('desktop - user team state is "approved"', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        // intercept my team GET API
+        cy.fixture('apiGetMyTeamResponseApproved.json').then(
+          (responseMyTeam) => {
+            cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+          },
+        );
+      });
+      cy.visit('#' + routesConf['profile']['children']['fullPath']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows banner team member "approved" state', () => {
+      cy.testBannerTeamMemberApprovedState();
+    });
+
+    it('allows user to approve a single member', () => {
+      cy.testApproveSingleTeamMember();
+    });
+
+    it('allows user to approve max number of members and reject the rest', () => {
+      cy.testApproveMaxTeamMembers();
     });
   });
 });
