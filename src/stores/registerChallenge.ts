@@ -116,6 +116,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isSelectedRegisterCoordinator: false,
     hasOrganizationAdmin: null as boolean | null,
     isUserOrganizationAdmin: null as boolean | null,
+    /**
+     * Required for indicating state when merch was saved into DB
+     * and allow router to redirect to the home page URL
+     */
     isMerchandiseSavedIntoDb: true,
   }),
 
