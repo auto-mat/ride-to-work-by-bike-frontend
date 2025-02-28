@@ -197,13 +197,13 @@ export default defineComponent({
           ),
           color: 'warning',
         });
-        logger?.debug('Team is full and there are pending members');
+        logger?.info('Team is full and there are pending members.');
         pendingMembers.value.forEach((member) => {
           memberDecisions.value.set(member.id, TeamMemberStatus.denied);
           memberDenialReasons.value.set(member.id, '');
         });
         logger?.debug(
-          `Pending members denied. Member decisions <${memberDecisions.value.size}>`,
+          `Pending members denied. Member decisions <${memberDecisions.value.size}>.`,
         );
       }
     };

@@ -55,7 +55,7 @@ export const useApiPutMyTeam = (
     members: MemberStatusUpdate[],
   ): Promise<void> => {
     logger?.debug(
-      `Updating team member status for members: ${JSON.stringify(members)}`,
+      `Updating team member status for members <${JSON.stringify(members)}>.`,
     );
     isLoading.value = true;
 

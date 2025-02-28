@@ -768,7 +768,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           );
         }
       } else {
-        logger?.debug('No team ID, skipping my team data loading.');
+        logger?.debug(
+          `No team ID <${this.teamId}>, skipping my team data loading.`,
+        );
       }
     },
     async loadMerchandiseToStore(logger: Logger | null) {

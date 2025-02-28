@@ -238,7 +238,7 @@ export default defineComponent({
       }
       // load my team data if not available
       if (!registerChallengeStore.getMyTeam) {
-        logger?.debug('My team data not available, loading my team data');
+        logger?.info('My team data is not available, loading my team data.');
         await registerChallengeStore.loadMyTeamToStore(logger);
       }
     });
