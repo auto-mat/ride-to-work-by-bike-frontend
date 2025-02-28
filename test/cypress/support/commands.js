@@ -43,12 +43,9 @@ import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_
 import { bearerTokeAuth } from '../../../src/utils';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
-import { getRadioOption } from '../utils';
+import { getRadioOption, negativeColor, positiveColor } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
-
-const positive = 'rgb(33, 186, 69)';
-const negative = 'rgb(193, 0, 21)';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -2933,7 +2930,7 @@ Cypress.Commands.add('testBannerTeamMemberApprovedState', () => {
           .click();
         cy.dataCy('dialog-approve-members-button-approve').should(
           'have.backgroundColor',
-          positive,
+          positiveColor,
         );
       });
     // second member
@@ -2946,7 +2943,7 @@ Cypress.Commands.add('testBannerTeamMemberApprovedState', () => {
           .click();
         cy.dataCy('dialog-approve-members-button-deny').should(
           'have.backgroundColor',
-          negative,
+          negativeColor,
         );
       });
   });
@@ -2975,7 +2972,7 @@ Cypress.Commands.add('testApproveSingleTeamMember', () => {
           .click();
         cy.dataCy('dialog-approve-members-button-approve').should(
           'have.backgroundColor',
-          positive,
+          positiveColor,
         );
       });
     // submit approval
@@ -3020,7 +3017,7 @@ Cypress.Commands.add('testApproveMaxTeamMembers', () => {
           // approve button selected
           cy.dataCy('dialog-approve-members-button-approve').should(
             'have.backgroundColor',
-            positive,
+            positiveColor,
           );
         });
       }
@@ -3038,7 +3035,7 @@ Cypress.Commands.add('testApproveMaxTeamMembers', () => {
                   // deny button is selected
                   cy.dataCy('dialog-approve-members-button-deny').should(
                     'have.backgroundColor',
-                    negative,
+                    negativeColor,
                   );
                   // approve button is disabled
                   cy.dataCy('dialog-approve-members-button-approve').should(

@@ -6,6 +6,8 @@ import type { Ref } from 'vue';
 
 const whiteColor = 'rgb(255, 255, 255)';
 const transparentColor = 'rgba(0, 0, 0, 0)';
+const positiveColor = 'rgb(33, 186, 69)';
+const negativeColor = 'rgb(193, 0, 21)';
 
 const hexToRgb = (hex: string): string | null => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -46,6 +48,8 @@ const getRadioOption = (val: string): string => `radio-option-${val}`;
 export {
   getRadioOption,
   hexToRgb,
+  negativeColor,
+  positiveColor,
   transparentColor,
   vModelAdapter,
   whiteColor,
