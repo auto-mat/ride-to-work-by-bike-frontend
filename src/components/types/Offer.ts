@@ -10,10 +10,11 @@ export interface Offer {
 }
 
 export interface GetOffersParams {
+  order: string;
   orderby: string;
   feed: string;
   _post_type: string;
-  _page_subtype: string;
   _number: string;
+  _from: string;
   [key: string]: string; // ensure compatibility with axios params
 }

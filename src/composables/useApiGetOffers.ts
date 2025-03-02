@@ -10,6 +10,12 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // enums
 import { ApiBaseUrl } from '../components/enums/Api';
+import {
+  ApiOfferParamOrder,
+  ApiOfferParamOrderby,
+  ApiOfferParamFeed,
+  ApiOfferParamPostType,
+} from '../components/enums/Offers';
 
 // types
 import type { ComputedRef, Ref } from 'vue';
@@ -56,14 +62,16 @@ export const useApiGetOffers = (
     isLoading.value = true;
 
     // query parameters
-    // TODO: remove hardcoded values and determine cases for param config
-    const params: GetOffersParams = {
-      order: 'DESC',
-      orderby: 'DATE',
-      feed: 'content_to_backend',
-      _number: '100',
-      _post_type: 'locations',
-      _page_subtype: 'event',
+    const currentYear = new Date().getFullYear();
+    const startDate = `${currentYear}-01-01`;
+
+    const params: Partial<GetOffersParams> = {
+      order: ApiOfferParamOrder.DESC,
+      orderby: ApiOfferParamOrderby.DATE,
+      feed: ApiOfferParamFeed.CONTENT_TO_BACKEND,
+      _post_type: ApiOfferParamPostType.LOCATIONS,
+      _number: '1000',
+      _from: startDate,
     };
 
     // append access token into HTTP header
@@ -77,7 +85,7 @@ export const useApiGetOffers = (
       method: 'get',
       translationKey: 'getOffers',
       showSuccessMessage: false,
-      params,
+      params: params as Record<string, string>,
       logger,
       headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
     });
@@ -91,27 +99,30 @@ export const useApiGetOffers = (
 
   /**
    * Use offers to create cards
-   * TODO: Fix metadata, link titles, icon, etc.
+   * Offers are those posts, that do not have a start date.
+   * (Posts with a start date are events.)
    * @returns {CardOffer[]}
    */
   const cards = computed((): CardOffer[] => {
-    return offers.value.map((offer) => {
-      return {
-        title: offer.title,
-        content: offer.content,
-        image: {
-          src: offer.image,
-          alt: '',
-        },
-        code: '',
-        icon: 'pedal_bike',
-        link: {
-          title: i18n.global.t('index.cardOffer.buttonEshop'),
-          url: offer.url,
-        },
-        metadata: [],
-      };
-    });
+    return offers.value
+      .filter((offer) => offer.start_date === '')
+      .map((offer) => {
+        return {
+          title: offer.title,
+          content: offer.content,
+          image: {
+            src: offer.image,
+            alt: '',
+          },
+          code: '',
+          icon: 'pedal_bike',
+          link: {
+            title: i18n.global.t('index.cardOffer.buttonEshop'),
+            url: offer.url,
+          },
+          metadata: [],
+        };
+      });
   });
 
   return {
