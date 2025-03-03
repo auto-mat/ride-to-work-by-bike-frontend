@@ -44,7 +44,8 @@ export const useApiGetOffers = (
 ): UseApiGetOffersReturn => {
   const offers = ref<Offer[]>([]);
   const isLoading = ref<boolean>(false);
-  const { apiFetch } = useApi(ApiBaseUrl.rtwbbFeedApi); // use feed URL
+  // use feed URL for API fetch
+  const { apiFetch } = useApi(ApiBaseUrl.rtwbbFeedApi);
 
   /**
    * Load offers
@@ -99,9 +100,9 @@ export const useApiGetOffers = (
 
   /**
    * Use offers to create cards
-   * Offers are those posts, that do not have a start date.
-   * (Posts with a start date are events.)
-   * @returns {CardOffer[]}
+   * Offers are filtered by checking if start_date is empty.
+   * (If start_date exists, the post is an event.)
+   * @returns {CardOffer[]} - Offers in card format
    */
   const cards = computed((): CardOffer[] => {
     return offers.value
