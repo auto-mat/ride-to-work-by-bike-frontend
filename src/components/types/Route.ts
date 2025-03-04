@@ -3,16 +3,18 @@ import type { TimestampOrNull } from '@quasar/quasar-ui-qcalendar';
 import type { Feature } from 'ol';
 
 export enum TransportDirection {
-  toWork = 'toWork',
-  fromWork = 'fromWork',
+  toWork = 'trip_to',
+  fromWork = 'trip_from',
+  recreational = 'recreational',
 }
 
 export enum TransportType {
-  bike = 'bike',
-  car = 'car',
-  walk = 'walk',
-  bus = 'bus',
-  none = 'none',
+  bike = 'bicycle',
+  walk = 'by_foot',
+  car = 'by_other_vehicle',
+  none = 'no_work',
+  bus = 'hromadna',
+  home = 'telecommute',
 }
 
 export enum RouteTab {

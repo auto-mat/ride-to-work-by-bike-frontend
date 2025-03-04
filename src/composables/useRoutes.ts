@@ -46,8 +46,16 @@ export const useRoutes = () => {
    * @return {string} The transport label.
    */
   const getTransportLabel = (transport: TransportType): string => {
-    if (transport) {
-      return i18n.global.t(`routes.transport.${transport}`);
+    if (transport === TransportType.bike) {
+      return i18n.global.t('routes.transport.bike');
+    } else if (transport === TransportType.walk) {
+      return i18n.global.t('routes.transport.walk');
+    } else if (transport === TransportType.bus) {
+      return i18n.global.t('routes.transport.bus');
+    } else if (transport === TransportType.car) {
+      return i18n.global.t('routes.transport.car');
+    } else if (transport === TransportType.none) {
+      return i18n.global.t('routes.transport.none');
     } else {
       return i18n.global.t('routes.transport.unknown');
     }
