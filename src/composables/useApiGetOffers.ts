@@ -64,7 +64,6 @@ export const useApiGetOffers = (
 
     // query parameters
     const currentYear = new Date().getFullYear();
-    const startDate = `${currentYear}-01-01`;
 
     const params: Partial<GetOffersParams> = {
       order: ApiOfferParamOrder.DESC,
@@ -72,7 +71,7 @@ export const useApiGetOffers = (
       feed: ApiOfferParamFeed.CONTENT_TO_BACKEND,
       _post_type: ApiOfferParamPostType.LOCATIONS,
       _number: '1000',
-      _from: startDate,
+      _year: currentYear.toString(),
     };
 
     // append access token into HTTP header
@@ -108,6 +107,13 @@ export const useApiGetOffers = (
     return offers.value
       .filter((offer) => offer.start_date === '')
       .map((offer) => {
+        let slug = 'sleva';
+        if (offer.categories.length > 0) {
+          slug = offer.categories[0].slug;
+        }
+        const iconId = `card-offer-${slug}`;
+        const icon = `svguse:icons/card_offer/icons.svg#${iconId}`;
+
         return {
           title: offer.title,
           content: offer.content,
@@ -116,7 +122,7 @@ export const useApiGetOffers = (
             alt: '',
           },
           code: '',
-          icon: 'pedal_bike',
+          icon,
           link: {
             title: i18n.global.t('index.cardOffer.buttonEshop'),
             url: offer.url,

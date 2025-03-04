@@ -1,3 +1,6 @@
+// enums
+import { OfferCategorySlug } from '../enums/Offers';
+
 export interface Offer {
   id: number;
   title: string;
@@ -7,6 +10,13 @@ export interface Offer {
   excerpt: string;
   content: string; // html
   image: string;
+  categories: OfferCategory[];
+}
+
+export interface OfferCategory {
+  name: string;
+  slug: OfferCategorySlug;
+  url: string;
 }
 
 export interface GetOffersParams {

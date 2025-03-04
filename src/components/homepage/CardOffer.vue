@@ -85,7 +85,7 @@ export default defineComponent({
         <!-- Icon -->
         <q-icon
           :name="card.icon"
-          color="blue-grey-3"
+          color="primary"
           size="48px"
           data-cy="card-icon"
         />

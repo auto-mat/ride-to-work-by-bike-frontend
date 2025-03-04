@@ -7,6 +7,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 const { getPaletteColor } = colors;
 const black = getPaletteColor('black');
 const white = getPaletteColor('white');
+const primary = getPaletteColor('primary');
 const grey10 = getPaletteColor('grey-10');
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
@@ -117,7 +118,7 @@ function coreTests() {
           .and('have.class', card.icon)
           .and('have.css', 'height', '48px')
           .and('have.css', 'width', '48px')
-          .and('have.color', 'rgb(176, 190, 197)');
+          .and('have.color', primary);
       });
     });
   });
