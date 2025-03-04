@@ -14,7 +14,7 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { defineComponent, ref } from 'vue';
+import { defineComponent, inject, onMounted, ref } from 'vue';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
@@ -25,12 +25,15 @@ import PageHeading from 'components/global/PageHeading.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
 
+// composables
+import { useApiGetOffers } from '../composables/useApiGetOffers';
+
 // fixtures
-import listCardsPrizes from '../../test/cypress/fixtures/listCardsPrizes.json';
 import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
-import { CardOffer as CardOfferType, CardPrizeType } from '../components/types';
+import { CardPrizeType } from '../components/types';
+import type { Logger } from '../components/types/Logger';
 
 export default defineComponent({
   name: 'PrizesPage',
@@ -44,16 +47,20 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const city = ref<number | null>(null);
 
-    const prizes = listCardsPrizes as unknown;
-    const prizesList = prizes as CardOfferType[];
+    const { cards, loadOffers } = useApiGetOffers(logger);
+    onMounted(() => {
+      loadOffers();
+    });
+
     const prizesListAvailable =
       listCardsPrizesAvailable.cards as CardPrizeType[];
 
     return {
       city,
-      prizesList,
+      cards,
       prizesListAvailable,
     };
   },
@@ -89,7 +96,7 @@ export default defineComponent({
           data-cy="discount-offers-list"
         >
           <card-offer
-            v-for="card in prizesList"
+            v-for="card in cards"
             :key="card.title"
             :card="card"
             data-cy="discount-offers-item"

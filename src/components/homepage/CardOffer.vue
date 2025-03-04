@@ -75,7 +75,7 @@ export default defineComponent({
     flat
     bordered
     data-cy="card-offer"
-    class="bg-white cursor-pointer q-hoverable"
+    class="full-height bg-white cursor-pointer q-hoverable"
     :style="{ 'border-radius': borderRadius }"
     @click.prevent="modalOpened = true"
   >
