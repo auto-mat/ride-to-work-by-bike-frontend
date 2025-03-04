@@ -25,7 +25,7 @@
  */
 
 // libraries
-import { defineComponent, computed, inject } from 'vue';
+import { defineComponent, computed, inject, onMounted } from 'vue';
 
 // components
 import CardOffer from './CardOffer.vue';
@@ -55,7 +55,9 @@ export default defineComponent({
     const maxCards = 6;
 
     const { cards, isLoading, loadOffers } = useApiGetOffers(logger);
-    loadOffers();
+    onMounted(() => {
+      loadOffers();
+    });
 
     const renderedCards = computed((): CardOfferType[] => {
       return cards.value.slice(0, maxCards);
