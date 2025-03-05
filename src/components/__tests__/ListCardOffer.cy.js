@@ -4,7 +4,6 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // mocks
 const title = i18n.global.t('index.cardListOffer.title');
-const maxItems = 6;
 
 describe('<ListCardOffer>', () => {
   it('has translation for all strings', () => {
@@ -40,7 +39,10 @@ describe('<ListCardOffer>', () => {
     it('renders correct number of items', () => {
       cy.window().then(() => {
         cy.waitForOffersApi();
-        cy.dataCy('list-card-offer-item').should('have.length', maxItems);
+        cy.dataCy('list-card-offer-item').should(
+          'have.length',
+          rideToWorkByBikeConfig.indexPageVisibleOfferCount,
+        );
       });
     });
 
@@ -93,7 +95,10 @@ describe('<ListCardOffer>', () => {
     it('renders correct number of items', () => {
       cy.window().then(() => {
         cy.waitForOffersApi();
-        cy.dataCy('list-card-offer-item').should('have.length', 6);
+        cy.dataCy('list-card-offer-item').should(
+          'have.length',
+          rideToWorkByBikeConfig.indexPageVisibleOfferCount,
+        );
       });
     });
 

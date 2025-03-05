@@ -38,6 +38,7 @@ import SectionHeading from '../global/SectionHeading.vue';
 import { useApiGetPosts } from '../../composables/useApiGetPosts';
 
 // config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { routesConf } from 'src/router/routes_conf';
 
 // types
@@ -61,7 +62,7 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const maxCards = 6;
+    const maxCards = rideToWorkByBikeConfig.indexPageVisibleOfferCount;
 
     const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
     onMounted(() => {

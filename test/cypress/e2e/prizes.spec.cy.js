@@ -13,9 +13,9 @@ describe('Prizes page', () => {
         cy.interceptOffersGetApi(config, defLocale);
       });
       cy.visit('#' + routesConf['prizes']['path']);
+      // alias i18n
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
-        // alias i18n
         cy.wrap(win.i18n).as('i18n');
       });
     });
@@ -26,18 +26,18 @@ describe('Prizes page', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.visit('#' + routesConf['prizes']['path']);
       cy.viewport('iphone-6');
-
       // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
-        });
+        cy.interceptOffersGetApi(config, defLocale);
+      });
+      cy.visit('#' + routesConf['prizes']['path']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -74,9 +74,14 @@ function coreTests() {
           );
         });
       cy.dataCy('discount-offers-list').should('be.visible');
-      cy.dataCy('discount-offers-item')
-        .should('be.visible')
-        .and('have.length', 7);
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        cy.dataCy('discount-offers-item')
+          .should('be.visible')
+          .and(
+            'have.length',
+            offers.filter((offer) => offer.start_date === '').length,
+          );
+      });
     });
   });
 

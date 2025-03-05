@@ -534,12 +534,18 @@ Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
     i18n,
   );
   const getOffersParams = getOffersFeedParamSet();
+  const objectToParams = (obj) => {
+    return Object.keys(obj)
+      .map((key) => `${key}=${obj[key]}`)
+      .join('&');
+  };
+  const urlEncodedParams = objectToParams(getOffersParams);
+  const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
 
   cy.fixture('apiGetOffersResponse').then((offersResponse) => {
-    cy.intercept('GET', `${apiBaseUrl}/*`, {
+    cy.intercept('GET', urlApiOffersLocalized, {
       statusCode: httpSuccessfullStatus,
       body: offersResponse,
-      query: getOffersParams,
     }).as('getOffers');
   });
 });

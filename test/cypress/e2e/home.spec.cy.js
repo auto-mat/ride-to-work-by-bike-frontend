@@ -748,6 +748,27 @@ function coreTests() {
     cy.dataCy('dialog-card-event').should('be.visible');
   });
 
+  it('renders X number of offers', () => {
+    cy.get('@config').then((config) => {
+      cy.dataCy('list-card-offer-item')
+        .should('be.visible')
+        .and('have.length', config.indexPageVisibleOfferCount);
+    });
+  });
+
+  it('renders "go to all offers" button', () => {
+    cy.fixture('apiGetOffersResponse.json').then((offers) => {
+      cy.dataCy('list-card-offer-button')
+        .should('be.visible')
+        .and(
+          'have.text',
+          i18n.global.t('index.cardListOffer.button', {
+            count: offers.filter((offer) => offer.start_date === '').length,
+          }),
+        );
+    });
+  });
+
   it.skip('allows user to display offer modal', () => {
     cy.dataCy('dialog-offer').should('not.exist');
     cy.dataCy('list-card-offer-item').first().should('be.visible').click();

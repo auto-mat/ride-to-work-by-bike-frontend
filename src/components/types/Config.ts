@@ -54,6 +54,7 @@ export interface ConfigGlobal {
   iDontWantMerchandiseItemCode: string;
   notifyMessagePosition: string;
   mobileBottomPanelVisibleItems: number;
+  indexPageVisibleOfferCount: number;
   apiBase: string;
   apiBaseRtwbbFeed: string;
   apiBaseIpAddress: string;
