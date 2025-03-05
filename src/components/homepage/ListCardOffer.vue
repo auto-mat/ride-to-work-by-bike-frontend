@@ -34,6 +34,9 @@ import SectionHeading from '../global/SectionHeading.vue';
 // composables
 import { useApiGetOffers } from '../../composables/useApiGetOffers';
 
+// config
+import { routesConf } from 'src/router/routes_conf';
+
 // types
 import { CardOffer as CardOfferType } from '../types';
 import { Logger } from '../types/Logger';
@@ -72,6 +75,7 @@ export default defineComponent({
       isLoading,
       renderedCards,
       hasMoreCards,
+      routesConf,
     };
   },
 });
@@ -98,10 +102,11 @@ export default defineComponent({
     <!-- Link more offers -->
     <div v-if="hasMoreCards" class="text-center">
       <q-btn
-        rounded
-        color="black"
-        unelevated
+        :to="routesConf['prizes'].path"
         outline
+        rounded
+        color="primary"
+        unelevated
         :label="$t('index.cardListOffer.button', { count: cards?.length })"
         class="q-mt-md"
         data-cy="list-card-offer-button"
