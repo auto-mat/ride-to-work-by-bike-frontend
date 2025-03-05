@@ -124,6 +124,11 @@ apiMessageError = "Nepodarilo sa overiť existenciu koordinátora organizácie"
 apiMessageErrorWithMessage = "Nepodarilo sa overiť existenciu koordinátora organizácie. Chyba: {error}"
 apiMessageSuccess = "Existencia koordinátora organizácie bola úspešne overená."
 
+[getPosts]
+apiMessageError = "Nepodarilo sa načítať vybrané príspevky."
+apiMessageErrorWithMessage = "Nepodarilo sa načítať vybrané príspevky. Chyba: {error}"
+apiMessageSuccess = "Príspevky boli úspešne načítané."
+
 [getRegisterChallenge]
 apiMessageError = "Načítanie registrácií zlyhalo."
 apiMessageErrorWithMessage = "Načítanie registrácií zlyhalo. Chyba: {error}"

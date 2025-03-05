@@ -27,19 +27,25 @@
 // libraries
 import { defineComponent, computed, inject, onMounted } from 'vue';
 
+// adapters
+import { feedAdapter } from '../../adapters/feedAdapter';
+
 // components
 import CardOffer from './CardOffer.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
 // composables
-import { useApiGetOffers } from '../../composables/useApiGetOffers';
+import { useApiGetPosts } from '../../composables/useApiGetPosts';
 
 // config
 import { routesConf } from 'src/router/routes_conf';
 
 // types
-import { CardOffer as CardOfferType } from '../types';
-import { Logger } from '../types/Logger';
+import type { CardOffer as CardOfferType } from '../types';
+import type { Logger } from '../types/Logger';
+
+// utils
+import { getOffersFeedParamSet } from '../../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'ListCardOffer',
@@ -57,10 +63,11 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const maxCards = 6;
 
-    const { cards, isLoading, loadOffers } = useApiGetOffers(logger);
+    const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
     onMounted(() => {
-      loadOffers();
+      loadPosts(getOffersFeedParamSet());
     });
+    const cards = computed(() => feedAdapter.toCardOffer(posts.value));
 
     const renderedCards = computed((): CardOfferType[] => {
       return cards.value.slice(0, maxCards);
@@ -82,7 +89,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-if="renderedCards.length > 0">
+  <div v-if="renderedCards?.length > 0">
     <!-- Title -->
     <section-heading class="q-mb-md">
       {{ title }}

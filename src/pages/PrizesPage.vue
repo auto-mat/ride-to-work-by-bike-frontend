@@ -14,7 +14,10 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { defineComponent, inject, onMounted, ref } from 'vue';
+import { defineComponent, inject, onMounted, ref, computed } from 'vue';
+
+// adapters
+import { feedAdapter } from '../adapters/feedAdapter';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
@@ -26,7 +29,7 @@ import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
 
 // composables
-import { useApiGetOffers } from '../composables/useApiGetOffers';
+import { useApiGetPosts } from '../composables/useApiGetPosts';
 
 // fixtures
 import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
@@ -34,6 +37,9 @@ import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPri
 // types
 import { CardPrizeType } from '../components/types';
 import type { Logger } from '../components/types/Logger';
+
+// utils
+import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'PrizesPage',
@@ -50,10 +56,11 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const city = ref<number | null>(null);
 
-    const { cards, loadOffers } = useApiGetOffers(logger);
+    const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
     onMounted(() => {
-      loadOffers();
+      loadPosts(getOffersFeedParamSet());
     });
+    const cards = computed(() => feedAdapter.toCardOffer(posts.value));
 
     const prizesListAvailable =
       listCardsPrizesAvailable.cards as CardPrizeType[];
@@ -61,6 +68,7 @@ export default defineComponent({
     return {
       city,
       cards,
+      isLoading,
       prizesListAvailable,
     };
   },

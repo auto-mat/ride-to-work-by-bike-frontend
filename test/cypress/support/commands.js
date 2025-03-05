@@ -46,6 +46,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getRadioOption, negativeColor, positiveColor } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
+import { getOffersFeedParamSet } from '../../../src/utils/get_feed_param_set';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -532,27 +533,13 @@ Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
     apiDefaultLang,
     i18n,
   );
-  const getOffersParams = {
-    order: 'DESC',
-    orderby: 'DATE',
-    feed: 'content_to_backend',
-    _number: '100',
-    _post_type: 'locations',
-    _page_subtype: 'event',
-    _from: '2025-01-01',
-  };
-  const objectToParams = (obj) => {
-    return Object.keys(obj)
-      .map((key) => `${key}=${obj[key]}`)
-      .join('&');
-  };
-  const urlEncodedParams = objectToParams(getOffersParams);
-  const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
+  const getOffersParams = getOffersFeedParamSet();
 
   cy.fixture('apiGetOffersResponse').then((offersResponse) => {
-    cy.intercept('GET', urlApiOffersLocalized, {
+    cy.intercept('GET', `${apiBaseUrl}/*`, {
       statusCode: httpSuccessfullStatus,
       body: offersResponse,
+      query: getOffersParams,
     }).as('getOffers');
   });
 });
@@ -2909,29 +2896,29 @@ Cypress.Commands.add(
 );
 
 /**
-* Wait for intercept my organization admin API call and compare response object
-* Wait for `@getMyOrganizationAdmin` intercept
-* @param {Object} expectedResponse - Expected response body
-*/
+ * Wait for intercept my organization admin API call and compare response object
+ * Wait for `@getMyOrganizationAdmin` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
 Cypress.Commands.add(
- 'waitForMyOrganizationAdminGetApi',
- (expectedResponse = null) => {
-   cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
-     cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
-       expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
-         bearerTokeAuth,
-       );
-       if (getMyOrganizationAdmin.response) {
-         expect(getMyOrganizationAdmin.response.statusCode).to.equal(
-           httpSuccessfullStatus,
-         );
-         expect(getMyOrganizationAdmin.response.body).to.deep.equal(
-           expectedResponse || defaultResponse,
-         );
-       }
-     });
-   });
- },
+  'waitForMyOrganizationAdminGetApi',
+  (expectedResponse = null) => {
+    cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
+      cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
+        expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
+          bearerTokeAuth,
+        );
+        if (getMyOrganizationAdmin.response) {
+          expect(getMyOrganizationAdmin.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getMyOrganizationAdmin.response.body).to.deep.equal(
+            expectedResponse || defaultResponse,
+          );
+        }
+      });
+    });
+  },
 );
 
 /**
