@@ -2526,6 +2526,59 @@ describe('Register Challenge page', () => {
         },
       );
     });
+
+    it('allows to complete registration with individual payment "done"', () => {
+      // visit page
+      cy.visit('#' + routesConf['register_challenge']['path']);
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        // intercept "individual paid" registration data
+        cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+          (response) => {
+            cy.testRegisterChallengePaymentMessage(
+              response,
+              'step-2-paid-message',
+            );
+            cy.dataCy('register-challenge-payment').should('not.exist');
+            cy.dataCy('step-2-continue')
+              .should('be.visible')
+              .and('not.be.disabled');
+            cy.dataCy('step-2-continue').should('be.visible').click();
+            cy.testRegisterChallengeLoadedStepsThreeToFive(win.i18n, response);
+            // select merch size
+            cy.dataCy('form-card-merch-female')
+              .first()
+              .find('[data-cy="button-more-info"]')
+              .click();
+            cy.dataCy('dialog-close').click();
+            // fill in phone number
+            cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
+              (request) => {
+                cy.dataCy('form-merch-phone-input')
+                  .find('input')
+                  .type(request.telephone);
+              },
+            );
+            // next step button is enabled
+            cy.dataCy('step-6-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // go to next step
+            cy.dataCy('step-6')
+              .find('.q-stepper__step-content')
+              .should('not.exist');
+            // button complete registration should be visible and enabled
+            cy.dataCy('step-7-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // confirm that complete registration button redirects to homepage
+            cy.dataCy('index-title').should('be.visible');
+          },
+        );
+      });
+    });
   });
 
   context('registration in progress, individual payment "no_admission"', () => {
@@ -3107,9 +3160,7 @@ describe('Register Challenge page', () => {
                   win.i18n,
                   registerChallengeResponse,
                 );
-                cy.dataCy('step-7-continue')
-                  .should('be.visible')
-                  .and('be.disabled');
+                cy.dataCy('step-7-continue').should('not.exist');
                 // wait for my organization admin API call
                 cy.waitForMyOrganizationAdminGetApi();
                 // check that the "waiting for coordinator" message is visible
@@ -3223,9 +3274,7 @@ describe('Register Challenge page', () => {
                 win.i18n,
                 registerChallengeResponse,
               );
-              cy.dataCy('step-7-continue')
-                .should('be.visible')
-                .and('be.disabled');
+              cy.dataCy('step-7-continue').should('not.exist');
               // check that the "waiting for coordinator" message is visible
               cy.dataCy('registration-waiting-for-confirmation-no-coordinator')
                 .should('be.visible')
@@ -3373,9 +3422,7 @@ describe('Register Challenge page', () => {
               cy.dataCy('step-7')
                 .find('.q-stepper__step-content')
                 .should('be.visible');
-              cy.dataCy('step-7-continue')
-                .should('be.visible')
-                .and('be.disabled');
+              cy.dataCy('step-7-continue').should('not.exist');
             },
           );
         });

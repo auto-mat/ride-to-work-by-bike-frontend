@@ -762,10 +762,10 @@ export default defineComponent({
               />
               <!-- Button: Complete registration -->
               <q-btn
+                v-if="isRegistrationComplete"
                 unelevated
                 rounded
                 color="primary"
-                :disable="!isRegistrationComplete"
                 :label="$t('form.buttonCompleteRegistration')"
                 @click="onCompleteRegistration"
                 class="q-ml-sm"
