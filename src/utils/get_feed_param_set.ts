@@ -4,6 +4,7 @@ import {
   ApiOfferParamOrderby,
   ApiOfferParamFeed,
   ApiOfferParamPostType,
+  ApiOfferParamPageSubtype,
 } from '../components/enums/Offers';
 
 // types
@@ -21,6 +22,8 @@ export const getOffersFeedParamSet = (): Partial<GetOffersParams> => {
     orderby: ApiOfferParamOrderby.DATE,
     feed: ApiOfferParamFeed.CONTENT_TO_BACKEND,
     _post_type: ApiOfferParamPostType.LOCATIONS,
+    _page_subtype: ApiOfferParamPageSubtype.EVENT,
+    _post_parent: '5',
     _number: '1000',
     _year: currentYear.toString(),
   };

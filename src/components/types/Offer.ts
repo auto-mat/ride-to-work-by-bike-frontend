@@ -7,6 +7,7 @@ export interface Offer {
   url: string;
   published: string;
   start_date: string;
+  end_date: string;
   excerpt: string;
   content: string; // html
   image: string;

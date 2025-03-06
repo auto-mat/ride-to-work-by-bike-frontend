@@ -16,6 +16,10 @@ export enum ApiOfferParamPostType {
   LOCATIONS = 'locations',
 }
 
+export enum ApiOfferParamPageSubtype {
+  EVENT = 'event',
+}
+
 export enum OfferCategorySlug {
   ALCO_DRINKS = 'alko-napoje',
   BIKERIDE = 'cyklojizda',

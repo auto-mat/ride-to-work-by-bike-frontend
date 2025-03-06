@@ -11,16 +11,16 @@ import type { Offer } from '../components/types/Offer';
 export const feedAdapter = {
   /**
    * Convert API posts to CardOffer format
-   * Posts are filtered by checking if start_date is empty.
-   * (If start_date exists, the post is an event.)
+   * Posts are filtered by checking if end_date is empty.
+   * (If end_date exists, the post is an event.)
    * @param {Offer[]} posts - Posts from API
    * @returns {CardOffer[]} - Posts in card format
    */
   toCardOffer(posts: Offer[]): CardOffer[] {
     return (
       posts
-        // first filter posts without start_date
-        .filter((post) => post.start_date === '')
+        // first filter posts without end_date
+        .filter((post) => post.end_date === '')
         // map posts to card offer format
         .map((post) => {
           // default icon slug
