@@ -992,6 +992,12 @@ textEmptyTable = "Žiadne výsledky. Skúste zmeniť nastavenia filtra."
 titleFeeApproval = "Platby štartovného na schválenie"
 titleInvoices = "Faktúry"
 
+[teamMembersList]
+approved = "Schválen*á"
+denied = "Zamietnut*á"
+titleMembers = "Členovia vášho tímu"
+undecided = "Čaká na schválenie"
+
 [resetPassword]
 apiMessageError = "Požiadavka na obnovenie hesla sa nepodarila."
 apiMessageErrorWithMessage = "Požiadavka na obnovenie hesla sa nepodarila. Chyba: {error}"

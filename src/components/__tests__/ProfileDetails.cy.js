@@ -1,11 +1,13 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
+import { computed } from 'vue';
 import ProfileDetails from 'components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useLoginStore } from '../../stores/login';
 import { getGenderLabel } from '../../utils/get_gender_label';
 import { useOrganizations } from '../../composables/useOrganizations';
+import { useRegisterChallengeStore } from 'stores/registerChallenge';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../../components/types/Organization';
 
@@ -152,10 +154,25 @@ describe('<ProfileDetails>', () => {
       cy.mount(ProfileDetails, {
         props: {},
       });
+      // initialize store with myTeam array
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          // set myTeam in store
+          const myTeam = computed(() => registerChallengeStore.getMyTeam);
+          registerChallengeStore.setMyTeam(responseMyTeam.results[0]);
+          cy.wrap(myTeam)
+            .its('value')
+            .should('deep.equal', responseMyTeam.results[0]);
+        });
+      });
       cy.viewport('macbook-16');
     });
 
     coreTests();
+
+    it('renders team members list', () => {
+      cy.dataCy('team-members-list').should('be.visible');
+    });
   });
 
   context('mobile', () => {

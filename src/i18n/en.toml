@@ -992,6 +992,12 @@ textEmptyTable = "No results. Try changing the filter settings."
 titleFeeApproval = "Entry fee payments for approval"
 titleInvoices = "Invoices"
 
+[teamMembersList]
+approved = "Approved"
+denied = "Denied"
+titleMembers = "Members of your team"
+undecided = "Waiting for approval"
+
 [resetPassword]
 apiMessageError = "Request to reset password failed."
 apiMessageErrorWithMessage = "Request to reset password failed. Error: {error}"
