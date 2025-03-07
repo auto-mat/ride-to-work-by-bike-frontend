@@ -6,10 +6,13 @@ export interface Offer {
   title: string;
   url: string;
   published: string;
+  voucher: string;
+  voucher_url: string;
+  akce_na_triko: string;
   start_date: string;
-  end_date: string;
+  end_date: string | '';
   excerpt: string;
-  content: string; // html
+  content: string;
   image: string;
   categories: OfferCategory[];
 }

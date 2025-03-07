@@ -14,7 +14,7 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { defineComponent, inject, onMounted, ref, computed } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 
 // adapters
 import { feedAdapter } from '../adapters/feedAdapter';
@@ -42,6 +42,7 @@ import type { Logger } from '../components/types/Logger';
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
 
 // utils
+import { getCitySlugFromId } from '../utils/get_city_slug_from_id';
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
@@ -57,10 +58,10 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const city = ref<number | null>(null);
     const registerChallengeStore = useRegisterChallengeStore();
 
-    const enabledSelectCity = false;
+    const enabledSelectCity = true;
+    const city = ref<number | null>(null);
 
     const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
     const cards = computed(() => feedAdapter.toCardOffer(posts.value));
@@ -72,9 +73,16 @@ export default defineComponent({
       }
       // if cityId is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityId) {
-        await loadPosts(
-          getOffersFeedParamSet(registerChallengeStore.getCityId),
-        );
+        city.value = registerChallengeStore.getCityId;
+        const slug = getCitySlugFromId(registerChallengeStore.getCityId);
+        await loadPosts(getOffersFeedParamSet(slug));
+      }
+    });
+
+    watch(city, (newCity: number | null) => {
+      if (newCity) {
+        const slug = getCitySlugFromId(newCity);
+        loadPosts(getOffersFeedParamSet(slug));
       }
     });
 

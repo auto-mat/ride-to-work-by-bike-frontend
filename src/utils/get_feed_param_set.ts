@@ -15,7 +15,7 @@ import type { GetOffersParams } from '../components/types/Offer';
  * @returns {Partial<GetOffersParams>} Parameter set for offers
  */
 export const getOffersFeedParamSet = (
-  cityId: number,
+  citySlug: string,
 ): Partial<GetOffersParams> => {
   const currentYear = new Date().getFullYear();
 
@@ -25,7 +25,7 @@ export const getOffersFeedParamSet = (
     feed: ApiOfferParamFeed.CONTENT_TO_BACKEND,
     _post_type: ApiOfferParamPostType.LOCATIONS,
     _page_subtype: ApiOfferParamPageSubtype.EVENT,
-    _post_parent: String(cityId),
+    _post_parent: citySlug,
     _number: '1000',
     _year: currentYear.toString(),
   };

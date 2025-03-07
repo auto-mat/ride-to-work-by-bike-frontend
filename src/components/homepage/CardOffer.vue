@@ -90,7 +90,7 @@ export default defineComponent({
           data-cy="card-icon"
         />
       </q-card-section>
-      <q-card-section class="col items-center" style="text-balance: pretty">
+      <q-card-section class="col items-center" style="text-wrap: pretty">
         <!-- Title -->
         <div
           v-html="card.title"
@@ -141,7 +141,7 @@ export default defineComponent({
             data-cy="dialog-content"
           />
           <!-- Voucher -->
-          <div v-if="card?.code" class="q-mt-lg" data-cy="dialog-voucher">
+          <div v-if="card?.voucher" class="q-mt-lg" data-cy="dialog-voucher">
             <h4
               class="text-caption text-uppercase q-my-none"
               data-cy="dialog-voucher-title"
@@ -149,7 +149,7 @@ export default defineComponent({
               {{ $t('index.cardOffer.titleVoucherCode') }}
             </h4>
             <div class="text-h6 q-mt-sm" data-cy="dialog-voucher-code">
-              {{ card.code }}
+              {{ card.voucher }}
             </div>
           </div>
           <!-- Buttons -->
@@ -177,7 +177,11 @@ export default defineComponent({
           />
         </div>
         <!-- Section: Validation -->
-        <offer-validation class="col-12 q-mb-md" data-cy="offer-validation" />
+        <offer-validation
+          v-if="card.tShirtEvent"
+          class="col-12"
+          data-cy="offer-validation"
+        />
       </template>
     </dialog-default>
   </q-card>

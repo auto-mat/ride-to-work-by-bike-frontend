@@ -20,7 +20,7 @@ export const feedAdapter = {
     return (
       posts
         // first filter posts without end_date
-        .filter((post) => post.end_date === '')
+        // .filter((post) => post.end_date === '')
         // map posts to card offer format
         .map((post) => {
           // default icon slug
@@ -32,20 +32,26 @@ export const feedAdapter = {
           // build icon source
           const iconId = `card-offer-${slug}`;
           const icon = `svguse:icons/card_offer/icons.svg#${iconId}`;
+
           return {
+            id: post.id,
             title: post.title,
-            content: post.content,
-            image: {
-              src: post.image,
-              alt: '',
-            },
-            code: '',
+            voucher: post.voucher,
+            voucherUrl: post.voucher_url,
+            tShirtEvent: post.akce_na_triko ? true : false,
             icon,
+            startDate: post.start_date,
+            endDate: post.end_date,
+            excerpt: post.excerpt,
+            content: post.content,
             link: {
               title: i18n.global.t('index.cardOffer.buttonEshop'),
               url: post.url,
             },
-            metadata: [],
+            image: {
+              src: post.image,
+              alt: '',
+            },
           };
         })
     );

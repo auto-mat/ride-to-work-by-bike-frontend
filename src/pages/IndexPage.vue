@@ -189,6 +189,7 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import type { Logger } from '../components/types/Logger';
 
 // utils
+import { getCitySlugFromId } from '../utils/get_city_slug_from_id';
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
@@ -263,9 +264,8 @@ export default defineComponent({
       }
       // if cityId is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityId) {
-        await loadPosts(
-          getOffersFeedParamSet(registerChallengeStore.getCityId),
-        );
+        const slug = getCitySlugFromId(registerChallengeStore.getCityId);
+        await loadPosts(getOffersFeedParamSet(slug));
       }
     });
 

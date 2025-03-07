@@ -32,12 +32,18 @@ export interface CardFollow {
   url: string;
 }
 export interface CardOffer {
+  id: number;
   title: string;
   content: string;
+  excerpt: string;
+  voucher: string;
+  voucherUrl: string;
+  tShirtEvent: boolean;
+  startDate: string;
+  endDate: string;
   image: Image;
-  code?: string;
   icon?: string;
-  link?: Link;
+  link: Link;
   metadata?: CardMetadata[];
 }
 export interface CardPrizeType {
