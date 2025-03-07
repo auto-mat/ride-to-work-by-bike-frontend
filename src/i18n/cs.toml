@@ -543,8 +543,11 @@ title = "Akční nabídky"
 button = "Všech {count} slev"
 
 [index.cardOffer]
+buttonUseVoucher = "Uplatnit voucher"
+offerValidFrom = "Akce začíná {startDate}"
+offerValidTo = "Akce končí {endDate}"
+offerValidFromTo = "Akce začíná {startDate} a končí {endDate}"
 titleVoucherCode = "Kód voucheru"
-buttonEshop = "Navštívit e-shop"
 unlimitedExpirationDate = "Neomezená doba platnosti"
 
 [index.cardListPost]

@@ -15,7 +15,7 @@ const { borderRadiusCard } = rideToWorkByBikeConfig;
 describe('<CardOffer>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['unlimitedExpirationDate', 'titleVoucherCode', 'buttonEshop'],
+      ['unlimitedExpirationDate', 'titleVoucherCode', 'buttonUseVoucher'],
       'index.cardOffer',
       i18n,
     );
@@ -36,11 +36,78 @@ describe('<CardOffer>', () => {
 
     coreTests();
 
-    it('shows modal with two columns', () => {
+    it('renders validation bar', () => {
+      cy.window().then(() => {
+        cy.get('@card').then(() => {
+          cy.dataCy('card-offer').click();
+          // dialog
+          cy.dataCy('dialog-offer').should('be.visible');
+          // validation
+          cy.dataCy('offer-validation').should('be.visible');
+        });
+      });
+    });
+
+    it('renders modal with two columns', () => {
       cy.window().then(() => {
         cy.dataCy('card-offer').click();
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 50);
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-right'), 50);
+      });
+    });
+  });
+
+  context('desktop without t-shirt event', () => {
+    beforeEach(() => {
+      cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+        cy.wrap(listCardsPrizes[1]).as('card');
+        cy.mount(CardOffer, {
+          props: {
+            card: listCardsPrizes[1],
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('does not render validation bar', () => {
+      cy.window().then(() => {
+        cy.get('@card').then(() => {
+          cy.dataCy('card-offer').click();
+          // dialog
+          cy.dataCy('dialog-offer').should('be.visible');
+          // validation
+          cy.dataCy('offer-validation').should('not.exist');
+        });
+      });
+    });
+  });
+
+  context('desktop without voucher code and voucher link', () => {
+    beforeEach(() => {
+      cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+        cy.wrap(listCardsPrizes[1]).as('card');
+        cy.mount(CardOffer, {
+          props: {
+            card: listCardsPrizes[1],
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('does not render voucher link', () => {
+      cy.window().then(() => {
+        cy.get('@card').then(() => {
+          cy.dataCy('card-offer').click();
+          // dialog
+          cy.dataCy('dialog-offer').should('be.visible');
+          // voucher
+          cy.dataCy('dialog-voucher-title').should('not.exist');
+          cy.dataCy('dialog-voucher-code').should('not.exist');
+          // link
+          cy.dataCy('dialog-offer-link').should('not.exist');
+        });
       });
     });
   });
@@ -132,7 +199,7 @@ function coreTests() {
         // metadata
         cy.dataCy('dialog-metadata-item')
           .should('be.visible')
-          .and('have.length', 2);
+          .and('have.length', card.metadata.length);
         cy.dataCy('dialog-metadata-item')
           .first()
           .should('contain', card.metadata[0].text);
@@ -161,9 +228,7 @@ function coreTests() {
           .and('contain', i18n.global.t('index.cardOffer.titleVoucherCode'));
         cy.dataCy('dialog-voucher-code')
           .should('be.visible')
-          .and('contain', card.code);
-        // validation
-        cy.dataCy('offer-validation').should('be.visible');
+          .and('contain', card.voucher);
         // image
         cy.dataCy('dialog-body').scrollTo('bottom', {
           ensureScrollable: false,

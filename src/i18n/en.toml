@@ -541,8 +541,11 @@ title = "Special offers"
 button = "All {count} offers"
 
 [index.cardOffer]
+buttonUseVoucher = "Use my voucher"
+offerValidFrom = "Offer is valid from {startDate}"
+offerValidTo = "Offer is valid until {endDate}"
+offerValidFromTo = "Offer is valid from {startDate} until {endDate}"
 titleVoucherCode = "Voucher code"
-buttonEshop = "Visit e-shop"
 unlimitedExpirationDate = "Unlimited validity"
 
 [index.cardListPost]

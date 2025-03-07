@@ -152,20 +152,18 @@ export default defineComponent({
               {{ card.voucher }}
             </div>
           </div>
-          <!-- Buttons -->
+          <!-- Button: Link -->
           <q-btn
-            v-if="card.link"
-            :to="card.link.url"
-            color="black"
+            v-if="card.voucherUrl"
+            :href="card.voucherUrl"
+            target="_blank"
+            color="primary"
             unelevated
             rounded
             class="q-mt-lg"
+            :label="$t('index.cardOffer.buttonUseVoucher')"
             data-cy="dialog-offer-link"
-          >
-            <div class="flex items-center no-wrap">
-              {{ card.link.title }}
-            </div>
-          </q-btn>
+          />
         </div>
         <!-- Right column: Image -->
         <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-right">

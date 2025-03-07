@@ -43,7 +43,6 @@ export interface CardOffer {
   endDate: string;
   image: Image;
   icon?: string;
-  link: Link;
   metadata?: CardMetadata[];
 }
 export interface CardPrizeType {

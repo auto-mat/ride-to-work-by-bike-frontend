@@ -4,25 +4,22 @@
     "metadata": [
       {
         "id": "validity",
-        "text": "Neomezená doba platnosti",
-        "icon": "calendar"
-      },
-      {
-        "id": "issuer",
-        "text": "AutoMat",
-        "icon": "pedal_bike"
+        "text": "Akce je platná od 19. 3. do 20. 5.",
+        "icon": "mdi-calendar"
       }
     ],
     "image": {
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
+    "voucherUrl": "https://www.foobar.com",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
       "target": "_blank"
     },
+    "tShirtEvent": true,
     "icon": "mdi-trophy",
     "content": "Výtěžek z prodeje benefičního e-shopu slouží k financování charitativní činnosti v rámci projektů Automatu, včetně projektů jako Do práce na kole, Zažít město jinak a Generace U."
   },
@@ -34,7 +31,8 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "",
+    "voucherUrl": "",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
@@ -51,7 +49,8 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
+    "voucherUrl": "",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
@@ -68,7 +67,7 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
@@ -85,7 +84,7 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
@@ -102,7 +101,7 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",
@@ -119,7 +118,7 @@
       "src": "https://picsum.photos/id/70/380/380",
       "alt": "road lined with trees"
     },
-    "code": "65972834",
+    "voucher": "65972834",
     "link": {
       "title": "Navštívit e-shop",
       "url": "#",

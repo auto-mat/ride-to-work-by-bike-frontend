@@ -1,9 +1,13 @@
 // composables
 import { i18n } from '../boot/i18n';
 
+// enums
+import { CardOfferMetadataKey } from '../components/enums/Card';
+
 // types
 import type { CardOffer } from '../components/types/Card';
 import type { Offer } from '../components/types/Offer';
+import type { CardMetadata } from '../components/types/Card';
 
 /**
  * Adapter for converting between API and component feed data formats
@@ -32,6 +36,8 @@ export const feedAdapter = {
           // build icon source
           const iconId = `card-offer-${slug}`;
           const icon = `svguse:icons/card_offer/icons.svg#${iconId}`;
+          // build metadata
+          const metadata = buildOfferMetadata(post);
 
           return {
             id: post.id,
@@ -44,16 +50,52 @@ export const feedAdapter = {
             endDate: post.end_date,
             excerpt: post.excerpt,
             content: post.content,
-            link: {
-              title: i18n.global.t('index.cardOffer.buttonEshop'),
-              url: post.url,
-            },
             image: {
               src: post.image,
               alt: '',
             },
+            metadata,
           };
         })
     );
   },
+};
+
+const buildOfferMetadata = (post: Offer): CardMetadata[] => {
+  const metadata: CardMetadata[] = [];
+  // format dates
+  const startDateFormatted = i18n.global.d(
+    new Date(post.start_date),
+    'numeric',
+  );
+  const endDateFormatted = i18n.global.d(new Date(post.end_date), 'numeric');
+  // validity metadata
+  if (post.start_date && post.end_date) {
+    metadata.push({
+      id: CardOfferMetadataKey.validity,
+      text: i18n.global.t('index.cardOffer.offerValidFromTo', {
+        startDate: startDateFormatted,
+        endDate: endDateFormatted,
+      }),
+      icon: 'mdi-calendar',
+    });
+  } else if (post.start_date) {
+    metadata.push({
+      id: CardOfferMetadataKey.validity,
+      text: i18n.global.t('index.cardOffer.offerValidFrom', {
+        startDate: startDateFormatted,
+      }),
+      icon: 'mdi-calendar',
+    });
+  } else if (post.end_date) {
+    metadata.push({
+      id: CardOfferMetadataKey.validity,
+      text: i18n.global.t('index.cardOffer.offerValidTo', {
+        endDate: endDateFormatted,
+      }),
+      icon: 'mdi-calendar',
+    });
+  }
+
+  return metadata;
 };
