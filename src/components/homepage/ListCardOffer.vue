@@ -17,6 +17,7 @@
  * @components
  * - `CardOffer`: Component to render individual follow cards.
  * - `SectionHeading`: Component to render a heading.
+ * - `SectionColumns`: Component to render a grid of cards.
  *
  * @example
  * <list-card-offer :cards="followList" />
@@ -25,17 +26,12 @@
  */
 
 // libraries
-import { defineComponent, computed, inject, onMounted } from 'vue';
-
-// adapters
-import { feedAdapter } from '../../adapters/feedAdapter';
+import { defineComponent, computed } from 'vue';
 
 // components
 import CardOffer from './CardOffer.vue';
 import SectionHeading from '../global/SectionHeading.vue';
-
-// composables
-import { useApiGetPosts } from '../../composables/useApiGetPosts';
+import SectionColumns from '../homepage/SectionColumns.vue';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -43,44 +39,36 @@ import { routesConf } from 'src/router/routes_conf';
 
 // types
 import type { CardOffer as CardOfferType } from '../types';
-import type { Logger } from '../types/Logger';
-
-// utils
-import { getOffersFeedParamSet } from '../../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'ListCardOffer',
   components: {
     CardOffer,
     SectionHeading,
+    SectionColumns,
   },
   props: {
+    cards: {
+      type: Array as () => CardOfferType[],
+      required: true,
+    },
     title: {
       type: String,
       required: false,
     },
   },
-  setup() {
-    const logger = inject('vuejs3-logger') as Logger | null;
+  setup(props) {
     const maxCards = rideToWorkByBikeConfig.indexPageVisibleOfferCount;
 
-    const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
-    onMounted(() => {
-      loadPosts(getOffersFeedParamSet());
-    });
-    const cards = computed(() => feedAdapter.toCardOffer(posts.value));
-
     const renderedCards = computed((): CardOfferType[] => {
-      return cards.value.slice(0, maxCards);
+      return props.cards.slice(0, maxCards);
     });
 
     const hasMoreCards = computed((): boolean => {
-      return cards.value.length > maxCards;
+      return props.cards.length > maxCards;
     });
 
     return {
-      cards,
-      isLoading,
       renderedCards,
       hasMoreCards,
       routesConf,
@@ -96,17 +84,18 @@ export default defineComponent({
       {{ title }}
     </section-heading>
     <!-- Cards grid -->
-    <div class="row q-col-gutter-lg q-row-gutter-md" data-cy="list-card-offer">
-      <div
+    <section-columns
+      :columns="3"
+      class="q-col-gutter-lg q-mt-md"
+      data-cy="list-card-offer"
+    >
+      <card-offer
         v-for="card in renderedCards"
         :key="card.title"
-        class="col-12 col-sm-6 col-lg-4"
+        :card="card"
         data-cy="list-card-offer-item"
-      >
-        <!-- Card -->
-        <card-offer :card="card" style="height: 100%" />
-      </div>
-    </div>
+      />
+    </section-columns>
     <!-- Link more offers -->
     <div v-if="hasMoreCards" class="text-center">
       <q-btn

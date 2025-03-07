@@ -38,6 +38,9 @@ import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPri
 import { CardPrizeType } from '../components/types';
 import type { Logger } from '../components/types/Logger';
 
+// stores
+import { useRegisterChallengeStore } from '../stores/registerChallenge';
+
 // utils
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
@@ -55,12 +58,25 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const city = ref<number | null>(null);
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const enabledSelectCity = false;
 
     const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
-    onMounted(() => {
-      loadPosts(getOffersFeedParamSet());
-    });
     const cards = computed(() => feedAdapter.toCardOffer(posts.value));
+
+    onMounted(async () => {
+      // if cityId is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCityId) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      // if cityId is available, load posts, else we can't load posts
+      if (registerChallengeStore.getCityId) {
+        await loadPosts(
+          getOffersFeedParamSet(registerChallengeStore.getCityId),
+        );
+      }
+    });
 
     const prizesListAvailable =
       listCardsPrizesAvailable.cards as CardPrizeType[];
@@ -70,6 +86,7 @@ export default defineComponent({
       cards,
       isLoading,
       prizesListAvailable,
+      enabledSelectCity,
     };
   },
 });
@@ -84,6 +101,7 @@ export default defineComponent({
         <template #secondary>
           <!-- Select: City -->
           <form-field-select-city
+            v-if="enabledSelectCity"
             v-model="city"
             data-cy="form-field-select-city"
           />
@@ -113,7 +131,7 @@ export default defineComponent({
       </div>
 
       <!-- Section: Available prizes -->
-      <section class="q-mt-lg" data-cy="available-prizes">
+      <section class="q-mt-xl" data-cy="available-prizes">
         <!-- TODO: Replace with section-heading -->
         <h2 class="text-h6 q-my-none" data-cy="section-heading-title">
           <span v-html="$t('prizes.titleAvailablePrizes', { url: '#' })" />
