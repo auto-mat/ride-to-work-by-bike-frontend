@@ -3164,22 +3164,18 @@ describe('Register Challenge page', () => {
                 // wait for my organization admin API call
                 cy.waitForMyOrganizationAdminGetApi();
                 // check that the "waiting for coordinator" message is visible
-                cy.dataCy('registration-waiting-for-coordinator')
-                  .should('be.visible')
-                  .and(
-                    'contain',
-                    win.i18n.global.t(
-                      'register.challenge.textRegistrationWaitingForCoordinator',
-                    ),
-                  );
                 cy.dataCy('registration-coordinator-details')
                   .should('be.visible')
                   .and(
                     'contain',
-                    win.i18n.global.t('register.challenge.textYourCoordinator'),
-                  )
-                  .and('contain', data.organization_admin[0].admin_name)
-                  .and('contain', data.organization_admin[0].admin_email);
+                    win.i18n.global.t(
+                      'register.challenge.textRegistrationWaitingForCoordinatorWithNameAndEmail',
+                      {
+                        name: data.organization_admin[0].admin_name,
+                        email: data.organization_admin[0].admin_email,
+                      },
+                    ),
+                  );
               });
             },
           );
