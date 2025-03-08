@@ -525,40 +525,45 @@ Cypress.Commands.add(
  * @param {object} config - App global config
  * @param {object|string} i18n - i18n instance or locale lang string e.g. en
  */
-Cypress.Commands.add('interceptOffersGetApi', (config, i18n, citySlug) => {
-  const { apiBaseRtwbbFeed, apiDefaultLang } = config;
-  const apiBaseUrl = getApiBaseUrlWithLang(
-    null,
-    apiBaseRtwbbFeed,
-    apiDefaultLang,
-    i18n,
-  );
-  const getOffersParams = getOffersFeedParamSet(citySlug);
-  const objectToParams = (obj) => {
-    return Object.keys(obj)
-      .map((key) => `${key}=${obj[key]}`)
-      .join('&');
-  };
-  const urlEncodedParams = objectToParams(getOffersParams);
-  const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
+Cypress.Commands.add(
+  'interceptOffersGetApi',
+  (config, i18n, citySlug, offersResponse = null) => {
+    const { apiBaseRtwbbFeed, apiDefaultLang } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBaseRtwbbFeed,
+      apiDefaultLang,
+      i18n,
+    );
+    const getOffersParams = getOffersFeedParamSet(citySlug);
+    const objectToParams = (obj) => {
+      return Object.keys(obj)
+        .map((key) => `${key}=${obj[key]}`)
+        .join('&');
+    };
+    const urlEncodedParams = objectToParams(getOffersParams);
+    const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
 
-  cy.fixture('apiGetOffersResponse').then((offersResponse) => {
-    cy.intercept('GET', urlApiOffersLocalized, {
-      statusCode: httpSuccessfullStatus,
-      body: offersResponse,
-    }).as('getOffers');
-  });
-});
+    cy.fixture('apiGetOffersResponse.json').then((defaultOffersResponse) => {
+      cy.intercept('GET', urlApiOffersLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: offersResponse || defaultOffersResponse,
+      }).as('getOffers');
+    });
+  },
+);
 
 /**
  * Wait for intercept offers API call and compare request/response object
  * Wait for `@getOffers` intercept.
  */
-Cypress.Commands.add('waitForOffersApi', () => {
-  cy.fixture('apiGetOffersResponse').then((offersResponse) => {
+Cypress.Commands.add('waitForOffersApi', (offersResponse = null) => {
+  cy.fixture('apiGetOffersResponse').then((defaultOffersResponse) => {
     cy.wait('@getOffers').then((getOffers) => {
       expect(getOffers.response.statusCode).to.equal(httpSuccessfullStatus);
-      expect(getOffers.response.body).to.deep.equal(offersResponse);
+      expect(getOffers.response.body).to.deep.equal(
+        offersResponse || defaultOffersResponse,
+      );
     });
   });
 });

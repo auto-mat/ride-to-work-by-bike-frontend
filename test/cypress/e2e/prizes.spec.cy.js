@@ -20,6 +20,19 @@ describe('Prizes page', () => {
           );
           cy.interceptCitiesGetApi(config, defLocale);
         });
+        // intercept different response for first selectable city
+        cy.fixture('apiGetCitiesResponse.json').then((citiesResponse) => {
+          cy.fixture('apiGetOffersResponseAlternative.json').then(
+            (offersResponse) => {
+              cy.interceptOffersGetApi(
+                config,
+                defLocale,
+                getCitySlugFromId(citiesResponse.results[0].id),
+                offersResponse,
+              );
+            },
+          );
+        });
       });
       cy.visit('#' + routesConf['prizes']['path']);
       // alias i18n
@@ -48,6 +61,19 @@ describe('Prizes page', () => {
             getCitySlugFromId(response.results[0].city_id),
           );
           cy.interceptCitiesGetApi(config, defLocale);
+        });
+        // intercept different response for first selectable city
+        cy.fixture('apiGetCitiesResponse.json').then((citiesResponse) => {
+          cy.fixture('apiGetOffersResponseAlternative.json').then(
+            (offersResponse) => {
+              cy.interceptOffersGetApi(
+                config,
+                defLocale,
+                getCitySlugFromId(citiesResponse.results[0].id),
+                offersResponse,
+              );
+            },
+          );
         });
       });
       cy.visit('#' + routesConf['prizes']['path']);
@@ -102,6 +128,30 @@ function coreTests() {
         cy.dataCy('discount-offers-item').each((item, index) => {
           cy.wrap(item).should('contain', offers[index].title);
         });
+      });
+    });
+  });
+
+  it('allows to filter the list of offers by selecting a city', () => {
+    cy.waitForOffersApi();
+    cy.dataCy('form-field-select-city').should('be.visible');
+    cy.dataCy('form-field-select-city').find('.q-field__append').click();
+    cy.get('.q-menu')
+      .should('be.visible')
+      .within(() => {
+        cy.get('.q-item').first().click();
+      });
+    cy.fixture('apiGetOffersResponseAlternative.json').then((offers) => {
+      cy.waitForOffersApi(offers);
+      // display list of offers
+      cy.dataCy('discount-offers-list').should('be.visible');
+      // check if list has correct number of items
+      cy.dataCy('discount-offers-item')
+        .should('be.visible')
+        .and('have.length', offers.length);
+      // check that each item has correct data
+      cy.dataCy('discount-offers-item').each((item, index) => {
+        cy.wrap(item).should('contain', offers[index].title);
       });
     });
   });

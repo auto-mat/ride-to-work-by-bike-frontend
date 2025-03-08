@@ -64,11 +64,12 @@ export const feedAdapter = {
 const buildOfferMetadata = (post: Offer): CardMetadata[] => {
   const metadata: CardMetadata[] = [];
   // format dates
-  const startDateFormatted = i18n.global.d(
-    new Date(post.start_date),
-    'monthDay',
-  );
-  const endDateFormatted = i18n.global.d(new Date(post.end_date), 'monthDay');
+  const startDateFormatted: string = post.start_date
+    ? i18n.global.d(new Date(post.start_date), 'monthDay')
+    : '';
+  const endDateFormatted: string = post.end_date
+    ? i18n.global.d(new Date(post.end_date), 'monthDay')
+    : '';
   // validity metadata
   if (post.start_date && post.end_date) {
     metadata.push({
