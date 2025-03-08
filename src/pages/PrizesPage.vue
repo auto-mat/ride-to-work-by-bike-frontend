@@ -77,13 +77,13 @@ export default defineComponent({
         const slug = getCitySlugFromId(registerChallengeStore.getCityId);
         await loadPosts(getOffersFeedParamSet(slug));
       }
-    });
-
-    watch(city, (newCity: number | null) => {
-      if (newCity) {
-        const slug = getCitySlugFromId(newCity);
-        loadPosts(getOffersFeedParamSet(slug));
-      }
+      // initiate watcher after the cityId is loaded
+      watch(city, (newCity: number | null) => {
+        if (newCity) {
+          const slug = getCitySlugFromId(newCity);
+          loadPosts(getOffersFeedParamSet(slug));
+        }
+      });
     });
 
     const prizesListAvailable =

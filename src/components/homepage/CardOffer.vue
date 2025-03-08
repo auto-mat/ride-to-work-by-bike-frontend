@@ -116,7 +116,7 @@ export default defineComponent({
           <div
             v-for="item in card.metadata"
             :key="item.id"
-            class="flex items-center text-blue-grey-7"
+            class="flex no-wrap items-center text-blue-grey-7"
             data-cy="dialog-metadata-item"
           >
             <q-icon

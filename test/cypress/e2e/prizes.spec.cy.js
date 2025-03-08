@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
+import { getCitySlugFromId } from 'src/utils/get_city_slug_from_id';
 
 describe('Prizes page', () => {
   context('desktop', () => {
@@ -10,7 +11,15 @@ describe('Prizes page', () => {
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
-        cy.interceptOffersGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          cy.interceptOffersGetApi(
+            config,
+            defLocale,
+            getCitySlugFromId(response.results[0].city_id),
+          );
+          cy.interceptCitiesGetApi(config, defLocale);
+        });
       });
       cy.visit('#' + routesConf['prizes']['path']);
       // alias i18n
@@ -31,7 +40,15 @@ describe('Prizes page', () => {
       cy.task('getAppConfig', process).then((config) => {
         // alias config
         cy.wrap(config).as('config');
-        cy.interceptOffersGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          cy.interceptOffersGetApi(
+            config,
+            defLocale,
+            getCitySlugFromId(response.results[0].city_id),
+          );
+          cy.interceptCitiesGetApi(config, defLocale);
+        });
       });
       cy.visit('#' + routesConf['prizes']['path']);
       // alias i18n
@@ -62,7 +79,7 @@ function coreTests() {
     });
   });
 
-  it('renders a list of special events', () => {
+  it('renders a list of offers', () => {
     cy.get('@i18n').then((i18n) => {
       cy.waitForOffersApi();
       cy.dataCy('discount-offers-title')
@@ -74,14 +91,17 @@ function coreTests() {
             },
           );
         });
+      // display list of offers
       cy.dataCy('discount-offers-list').should('be.visible');
       cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        // check if list has correct number of items
         cy.dataCy('discount-offers-item')
           .should('be.visible')
-          .and(
-            'have.length',
-            offers.filter((offer) => offer.start_date === '').length,
-          );
+          .and('have.length', offers.length);
+        // check that each item has correct data
+        cy.dataCy('discount-offers-item').each((item, index) => {
+          cy.wrap(item).should('contain', offers[index].title);
+        });
       });
     });
   });

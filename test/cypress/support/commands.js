@@ -525,7 +525,7 @@ Cypress.Commands.add(
  * @param {object} config - App global config
  * @param {object|string} i18n - i18n instance or locale lang string e.g. en
  */
-Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
+Cypress.Commands.add('interceptOffersGetApi', (config, i18n, citySlug) => {
   const { apiBaseRtwbbFeed, apiDefaultLang } = config;
   const apiBaseUrl = getApiBaseUrlWithLang(
     null,
@@ -533,7 +533,7 @@ Cypress.Commands.add('interceptOffersGetApi', (config, i18n) => {
     apiDefaultLang,
     i18n,
   );
-  const getOffersParams = getOffersFeedParamSet();
+  const getOffersParams = getOffersFeedParamSet(citySlug);
   const objectToParams = (obj) => {
     return Object.keys(obj)
       .map((key) => `${key}=${obj[key]}`)

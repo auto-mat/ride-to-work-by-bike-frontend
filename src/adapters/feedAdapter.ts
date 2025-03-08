@@ -66,9 +66,9 @@ const buildOfferMetadata = (post: Offer): CardMetadata[] => {
   // format dates
   const startDateFormatted = i18n.global.d(
     new Date(post.start_date),
-    'numeric',
+    'monthDay',
   );
-  const endDateFormatted = i18n.global.d(new Date(post.end_date), 'numeric');
+  const endDateFormatted = i18n.global.d(new Date(post.end_date), 'monthDay');
   // validity metadata
   if (post.start_date && post.end_date) {
     metadata.push({
