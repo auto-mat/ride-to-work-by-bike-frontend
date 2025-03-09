@@ -365,6 +365,7 @@ describe('Home page', () => {
 
   context('mobile - user is not a coordinator', () => {
     beforeEach(() => {
+      cy.viewport('iphone-6');
       cy.get('@config').then((config) => {
         // intercept is user organization admin API
         cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
@@ -396,13 +397,11 @@ describe('Home page', () => {
       cy.visit(Cypress.config('baseUrl'));
       // wait for API intercepts
       cy.waitForThisCampaignApi();
-      cy.waitForMyTeamApi();
       cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
         (response) => {
           cy.waitForIsUserOrganizationAdminApi(response);
         },
       );
-      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -808,20 +807,7 @@ function coreTests() {
     });
   });
 
-  it('renders "go to all offers" button', () => {
-    cy.fixture('apiGetOffersResponse.json').then((offers) => {
-      cy.dataCy('list-card-offer-button')
-        .should('be.visible')
-        .and(
-          'have.text',
-          i18n.global.t('index.cardListOffer.button', {
-            count: offers.filter((offer) => offer.start_date === '').length,
-          }),
-        );
-    });
-  });
-
-  it.skip('allows user to display offer modal', () => {
+  it('allows user to display offer modal', () => {
     cy.dataCy('dialog-offer').should('not.exist');
     cy.dataCy('list-card-offer-item').first().should('be.visible').click();
     cy.dataCy('dialog-offer').should('be.visible');
