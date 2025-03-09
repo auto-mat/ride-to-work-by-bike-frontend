@@ -1,6 +1,6 @@
 // composables
 import { i18n } from '../boot/i18n';
-import { isOfferValidMoreThanOneDay } from '../utils/get_offer_valid_more_than_one_day';
+import { isOfferValidMoreThanOneDay } from '../utils/get_offer_valid';
 
 // enums
 import { CardOfferMetadataKey } from '../components/enums/Card';

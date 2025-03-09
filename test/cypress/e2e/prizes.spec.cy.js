@@ -1,8 +1,13 @@
 import { routesConf } from '../../../src/router/routes_conf';
-import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
+import {
+  testDesktopSidebar,
+  testMobileHeader,
+  systemTimeOffersInvalid,
+  systemTimeOffersValid,
+} from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getCitySlugFromId } from 'src/utils/get_city_slug_from_id';
-import { isOfferValidMoreThanOneDay } from 'src/utils/get_offer_valid_more_than_one_day';
+import { isOfferValidMoreThanOneDay } from 'src/utils/get_offer_valid';
 
 describe('Prizes page', () => {
   context('desktop', () => {
@@ -161,6 +166,23 @@ function coreTests() {
             cy.wrap(item).should('contain', displayedOffers[index].title);
           });
         },
+      );
+    });
+  });
+
+  it('renders offers as invalid (dimmed) when not currently valid', () => {
+    cy.clock(new Date(systemTimeOffersInvalid), ['Date']).then(() => {
+      cy.waitForOffersApi();
+      cy.dataCy('discount-offers-item').should('have.class', 'light-dimmed');
+    });
+  });
+
+  it('renders offers as valid (not dimmed) when currently valid', () => {
+    cy.clock(new Date(systemTimeOffersValid), ['Date']).then(() => {
+      cy.waitForOffersApi();
+      cy.dataCy('discount-offers-item').should(
+        'not.have.class',
+        'light-dimmed',
       );
     });
   });

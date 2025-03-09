@@ -44,6 +44,9 @@ import { CardOffer as CardOfferType } from '../types';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// utils
+import { isOfferCurrentlyValid } from '../../utils/get_offer_valid';
+
 export default defineComponent({
   name: 'CardOffer',
   components: {
@@ -63,6 +66,7 @@ export default defineComponent({
     return {
       borderRadius,
       modalOpened,
+      isOfferCurrentlyValid,
     };
   },
 });
@@ -76,6 +80,7 @@ export default defineComponent({
     bordered
     data-cy="card-offer"
     class="full-height bg-white cursor-pointer q-hoverable"
+    :class="{ 'light-dimmed': !isOfferCurrentlyValid(card) }"
     :style="{ 'border-radius': borderRadius }"
     @click.prevent="modalOpened = true"
   >
@@ -184,3 +189,10 @@ export default defineComponent({
     </dialog-default>
   </q-card>
 </template>
+
+<style lang="scss" scoped>
+/* Fix dimmed effect on card with border radius */
+.q-card.light-dimmed:after {
+  border-radius: inherit;
+}
+</style>
