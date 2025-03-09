@@ -17,6 +17,7 @@
  * @components
  * - `CardOffer`: Component to render individual follow cards.
  * - `SectionHeading`: Component to render a heading.
+ * - `SectionColumns`: Component to render a grid of cards.
  *
  * @example
  * <list-card-offer :cards="followList" />
@@ -30,70 +31,79 @@ import { defineComponent, computed } from 'vue';
 // components
 import CardOffer from './CardOffer.vue';
 import SectionHeading from '../global/SectionHeading.vue';
+import SectionColumns from '../homepage/SectionColumns.vue';
+
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
 
 // types
-import { CardOffer as CardOfferType } from '../types';
+import type { CardOffer as CardOfferType } from '../types';
 
 export default defineComponent({
   name: 'ListCardOffer',
   components: {
     CardOffer,
     SectionHeading,
+    SectionColumns,
   },
   props: {
-    title: {
-      type: String,
-      required: false,
-    },
     cards: {
       type: Array as () => CardOfferType[],
       required: true,
     },
+    title: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
-    const MAX_CARDS = 6;
+    const maxCards = rideToWorkByBikeConfig.indexPageVisibleOfferCount;
 
     const renderedCards = computed((): CardOfferType[] => {
-      return props.cards.slice(0, MAX_CARDS);
+      return props.cards.slice(0, maxCards);
     });
 
     const hasMoreCards = computed((): boolean => {
-      return props.cards.length > MAX_CARDS;
+      return props.cards.length > maxCards;
     });
 
     return {
       renderedCards,
       hasMoreCards,
+      routesConf,
     };
   },
 });
 </script>
 
 <template>
-  <div>
+  <div v-if="renderedCards?.length > 0">
     <!-- Title -->
     <section-heading class="q-mb-md">
       {{ title }}
     </section-heading>
     <!-- Cards grid -->
-    <div class="row q-col-gutter-lg q-row-gutter-md" data-cy="list-card-offer">
-      <div
+    <section-columns
+      :columns="3"
+      class="q-col-gutter-lg q-mt-md"
+      data-cy="list-card-offer"
+    >
+      <card-offer
         v-for="card in renderedCards"
         :key="card.title"
-        class="col-12 col-sm-6 col-lg-4"
+        :card="card"
         data-cy="list-card-offer-item"
-      >
-        <!-- Card -->
-        <card-offer :card="card" />
-      </div>
-    </div>
+      />
+    </section-columns>
     <!-- Link more offers -->
     <div v-if="hasMoreCards" class="text-center">
       <q-btn
-        rounded
-        color="black"
-        unelevated
+        :to="routesConf['prizes'].path"
         outline
+        rounded
+        color="primary"
+        unelevated
         :label="$t('index.cardListOffer.button', { count: cards?.length })"
         class="q-mt-md"
         data-cy="list-card-offer-button"

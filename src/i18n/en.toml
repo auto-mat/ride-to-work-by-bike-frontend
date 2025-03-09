@@ -124,6 +124,11 @@ apiMessageError = "Failed to verify the existence of organization coordinator"
 apiMessageErrorWithMessage = "Failed to verify the existence of organization coordinator. Error: {error}"
 apiMessageSuccess = "Organization coordinator existence was successfully verified."
 
+[getPosts]
+apiMessageError = "Failed to load selected posts."
+apiMessageErrorWithMessage = "Failed to load selected posts. Error: {error}"
+apiMessageSuccess = "Posts were successfully loaded."
+
 [getRegisterChallenge]
 apiMessageError = "Fetching registrations failed."
 apiMessageErrorWithMessage = "Fetching registrations failed. Error: {error}"
@@ -536,6 +541,10 @@ title = "Special offers"
 button = "All {count} offers"
 
 [index.cardOffer]
+buttonUseVoucher = "Use my voucher"
+offerValidFrom = "Offer is valid from {startDate}"
+offerValidTo = "Offer is valid until {endDate}"
+offerValidFromTo = "Offer is valid from {startDate} until {endDate}"
 titleVoucherCode = "Voucher code"
 unlimitedExpirationDate = "Unlimited validity"
 
