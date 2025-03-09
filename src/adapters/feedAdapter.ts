@@ -1,5 +1,6 @@
 // composables
 import { i18n } from '../boot/i18n';
+import { isOfferValidMoreThanOneDay } from '../utils/get_offer_valid_more_than_one_day';
 
 // enums
 import { CardOfferMetadataKey } from '../components/enums/Card';
@@ -23,8 +24,8 @@ export const feedAdapter = {
   toCardOffer(posts: Offer[]): CardOffer[] {
     return (
       posts
-        // first filter posts without end_date
-        // .filter((post) => post.end_date === '')
+        // first filter that last more than one day
+        .filter((post) => isOfferValidMoreThanOneDay(post))
         // map posts to card offer format
         .map((post) => {
           // default icon slug

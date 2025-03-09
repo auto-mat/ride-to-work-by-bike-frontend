@@ -2,6 +2,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getCitySlugFromId } from 'src/utils/get_city_slug_from_id';
+import { isOfferValidMoreThanOneDay } from 'src/utils/get_offer_valid_more_than_one_day';
 
 describe('Prizes page', () => {
   context('desktop', () => {
@@ -121,13 +122,17 @@ function coreTests() {
       cy.dataCy('discount-offers-list').should('be.visible');
       cy.fixture('apiGetOffersResponse.json').then((offers) => {
         // check if list has correct number of items
-        cy.dataCy('discount-offers-item')
-          .should('be.visible')
-          .and('have.length', offers.length);
-        // check that each item has correct data
-        cy.dataCy('discount-offers-item').each((item, index) => {
-          cy.wrap(item).should('contain', offers[index].title);
-        });
+        cy.wrap(offers.filter(isOfferValidMoreThanOneDay)).then(
+          (displayedOffers) => {
+            cy.dataCy('discount-offers-item')
+              .should('be.visible')
+              .and('have.length', displayedOffers.length);
+            // check that each item has correct data
+            cy.dataCy('discount-offers-item').each((item, index) => {
+              cy.wrap(item).should('contain', displayedOffers[index].title);
+            });
+          },
+        );
       });
     });
   });
@@ -146,13 +151,17 @@ function coreTests() {
       // display list of offers
       cy.dataCy('discount-offers-list').should('be.visible');
       // check if list has correct number of items
-      cy.dataCy('discount-offers-item')
-        .should('be.visible')
-        .and('have.length', offers.length);
-      // check that each item has correct data
-      cy.dataCy('discount-offers-item').each((item, index) => {
-        cy.wrap(item).should('contain', offers[index].title);
-      });
+      cy.wrap(offers.filter(isOfferValidMoreThanOneDay)).then(
+        (displayedOffers) => {
+          cy.dataCy('discount-offers-item')
+            .should('be.visible')
+            .and('have.length', displayedOffers.length);
+          // check that each item has correct data
+          cy.dataCy('discount-offers-item').each((item, index) => {
+            cy.wrap(item).should('contain', displayedOffers[index].title);
+          });
+        },
+      );
     });
   });
 
