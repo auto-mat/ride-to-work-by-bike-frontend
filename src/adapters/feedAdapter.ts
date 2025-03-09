@@ -62,6 +62,11 @@ export const feedAdapter = {
   },
 };
 
+/**
+ * Build array of metadata objects with id, text and icon.
+ * @param {Offer} post - Offer
+ * @returns {CardMetadata[]} - Metadata
+ */
 const buildOfferMetadata = (post: Offer): CardMetadata[] => {
   const metadata: CardMetadata[] = [];
   // format dates
