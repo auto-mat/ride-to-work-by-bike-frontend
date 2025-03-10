@@ -28,9 +28,9 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
     return false;
   }
   // compare dates without time component
-  const startDateString = startDate.toISOString().split('T')[0];
-  const endDateString = endDate.toISOString().split('T')[0];
-  return startDateString !== endDateString;
+  const start = date.startOfDate(startDate, 'day');
+  const end = date.startOfDate(endDate, 'day');
+  return date.getDateDiff(end, start, 'days') > 0;
 };
 
 /**
