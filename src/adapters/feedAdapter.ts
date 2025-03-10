@@ -4,7 +4,7 @@ import { isOfferValidMoreThanOneDay } from '../utils/get_offer_valid';
 
 // enums
 import { CardOfferMetadataKey } from '../components/enums/Card';
-
+import { OfferCategorySlug } from '../components/enums/Offers';
 // types
 import type { CardOffer } from '../components/types/Card';
 import type { Offer } from '../components/types/Offer';
@@ -27,12 +27,12 @@ export const feedAdapter = {
   toCardOffer(posts: Offer[]): CardOffer[] {
     return (
       posts
-        // first filter that last more than one day
+        // first filter offers that last more than one day
         .filter((post) => isOfferValidMoreThanOneDay(post))
         // map posts to card offer format
         .map((post) => {
           // default icon slug
-          let slug = 'sleva';
+          let slug = OfferCategorySlug.DISCOUNT;
           // if post has categories, use first category slug
           if (post.categories.length > 0) {
             slug = post.categories[0].slug;
