@@ -22,6 +22,7 @@ import { defineComponent, onMounted, ref, computed, inject } from 'vue';
 
 // composables
 import { useApiGetTeams } from 'src/composables/useApiGetTeams';
+import { useSelectSearch } from 'src/composables/useSelectSearch';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
@@ -79,12 +80,15 @@ export default defineComponent({
       teams.value.map(mapTeamToOption),
     );
 
+    const { optionsFiltered, onFilter } = useSelectSearch(options);
+
     return {
       selectedTeam,
       closeDialog,
       onUpdateTeam,
       isLoading,
-      options,
+      optionsFiltered,
+      onFilter,
     };
   },
 });
@@ -110,7 +114,7 @@ export default defineComponent({
       hide-bottom-space
       input-debounce="0"
       v-model="selectedTeam"
-      :options="options"
+      :options="optionsFiltered"
       :loading="isLoading"
       :rules="[
         (val) =>
@@ -122,6 +126,7 @@ export default defineComponent({
       class="q-mt-sm"
       id="form-team"
       name="team"
+      @filter="onFilter"
       data-cy="form-input"
     >
       <!-- Item: No option -->

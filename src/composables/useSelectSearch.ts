@@ -2,7 +2,10 @@
 import { ref, watch } from 'vue';
 
 // types
-import type { FormSelectOption } from '../components/types/Form';
+import type {
+  FormSelectOption,
+  FormSelectTableOption,
+} from '../components/types/Form';
 import type { Ref } from 'vue';
 
 /**
@@ -10,7 +13,9 @@ import type { Ref } from 'vue';
  * @param options The full list of options to search through
  * @returns Object containing filtered options and filter function
  */
-export const useSelectSearch = (options: Ref<FormSelectOption[]>) => {
+export const useSelectSearch = (
+  options: Ref<FormSelectOption[] | FormSelectTableOption[]>,
+) => {
   const optionsFiltered = ref<FormSelectOption[]>([]);
 
   /**
