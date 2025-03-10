@@ -44,6 +44,9 @@ import { CardOffer as CardOfferType } from '../types';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// utils
+import { isOfferPast } from '../../utils/get_offer_valid';
+
 export default defineComponent({
   name: 'CardOffer',
   components: {
@@ -63,6 +66,7 @@ export default defineComponent({
     return {
       borderRadius,
       modalOpened,
+      isOfferPast,
     };
   },
 });
@@ -75,22 +79,23 @@ export default defineComponent({
     flat
     bordered
     data-cy="card-offer"
-    class="bg-white cursor-pointer q-hoverable"
+    class="full-height bg-white cursor-pointer q-hoverable"
+    :class="{ 'light-dimmed': isOfferPast(card) }"
     :style="{ 'border-radius': borderRadius }"
     @click.prevent="modalOpened = true"
   >
     <span class="q-focus-helper"></span>
-    <q-card-section horizontal class="q-px-md q-py-md items-center">
-      <q-card-section class="col-auto items-center">
+    <q-card-section horizontal class="items-center" style="height: 100%">
+      <q-card-section class="col-auto items-center q-pr-none">
         <!-- Icon -->
         <q-icon
           :name="card.icon"
-          color="blue-grey-3"
+          color="primary"
           size="48px"
           data-cy="card-icon"
         />
       </q-card-section>
-      <q-card-section class="col items-center">
+      <q-card-section class="col items-center" style="text-wrap: pretty">
         <!-- Title -->
         <div
           v-html="card.title"
@@ -116,7 +121,7 @@ export default defineComponent({
           <div
             v-for="item in card.metadata"
             :key="item.id"
-            class="flex items-center text-blue-grey-7"
+            class="flex no-wrap items-center text-blue-grey-7"
             data-cy="dialog-metadata-item"
           >
             <q-icon
@@ -141,7 +146,7 @@ export default defineComponent({
             data-cy="dialog-content"
           />
           <!-- Voucher -->
-          <div v-if="card?.code" class="q-mt-lg" data-cy="dialog-voucher">
+          <div v-if="card?.voucher" class="q-mt-lg" data-cy="dialog-voucher">
             <h4
               class="text-caption text-uppercase q-my-none"
               data-cy="dialog-voucher-title"
@@ -149,23 +154,21 @@ export default defineComponent({
               {{ $t('index.cardOffer.titleVoucherCode') }}
             </h4>
             <div class="text-h6 q-mt-sm" data-cy="dialog-voucher-code">
-              {{ card.code }}
+              {{ card.voucher }}
             </div>
           </div>
-          <!-- Buttons -->
+          <!-- Button: Link -->
           <q-btn
-            v-if="card.link"
-            :to="card.link.url"
-            color="black"
+            v-if="card.voucherUrl"
+            :href="card.voucherUrl"
+            target="_blank"
+            color="primary"
             unelevated
             rounded
             class="q-mt-lg"
+            :label="$t('index.cardOffer.buttonUseVoucher')"
             data-cy="dialog-offer-link"
-          >
-            <div class="flex items-center no-wrap">
-              {{ card.link.title }}
-            </div>
-          </q-btn>
+          />
         </div>
         <!-- Right column: Image -->
         <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-right">
@@ -177,8 +180,19 @@ export default defineComponent({
           />
         </div>
         <!-- Section: Validation -->
-        <offer-validation class="col-12 q-mb-md" data-cy="offer-validation" />
+        <offer-validation
+          v-if="card.tShirtEvent"
+          class="col-12"
+          data-cy="offer-validation"
+        />
       </template>
     </dialog-default>
   </q-card>
 </template>
+
+<style lang="scss" scoped>
+/* Fix dimmed effect on card with border radius */
+.q-card.light-dimmed:after {
+  border-radius: inherit;
+}
+</style>

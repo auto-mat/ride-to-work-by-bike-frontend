@@ -5,83 +5,103 @@
   "results": [
     {
       "id": 41,
-      "name": "Brandýs nad Labem"
+      "name": "Brandýs nad Labem",
+      "slug": "brandys-nad-labem"
     },
     {
       "id": 29,
-      "name": "Břeclav"
+      "name": "Břeclav",
+      "slug": "breclav"
     },
     {
       "id": 5,
-      "name": "Brno"
+      "name": "Brno",
+      "slug": "brno"
     },
     {
       "id": 14,
-      "name": "České Budějovice"
+      "name": "České Budějovice",
+      "slug": "ceske-budejovice"
     },
     {
       "id": 15,
-      "name": "Hradec Králové"
+      "name": "Hradec Králové",
+      "slug": "hradec-kralove"
     },
     {
       "id": 26,
-      "name": "Hranice"
+      "name": "Hranice",
+      "slug": "hranice"
     },
     {
       "id": 16,
-      "name": "Jablonec nad Nisou"
+      "name": "Jablonec nad Nisou",
+      "slug": "jablonec-nad-nisou"
     },
     {
       "id": 7,
-      "name": "Jihlava"
+      "name": "Jihlava",
+      "slug": "jihlava"
     },
     {
       "id": 17,
-      "name": "Jindřichův Hradec"
+      "name": "Jindřichův Hradec",
+      "slug": "jindrichuv-hradec"
     },
     {
       "id": 22,
-      "name": "Karviná"
+      "name": "Karviná",
+      "slug": "karvina"
     },
     {
       "id": 34,
-      "name": "Kladno"
+      "name": "Kladno",
+      "slug": "kladno"
     },
     {
       "id": 42,
-      "name": "Krnov"
+      "name": "Krnov",
+      "slug": "krnov"
     },
     {
       "id": 6,
-      "name": "Liberec"
+      "name": "Liberec",
+      "slug": "liberec"
     },
     {
       "id": 44,
-      "name": "Litvínov"
+      "name": "Litvínov",
+      "slug": "litvinov"
     },
     {
       "id": 40,
-      "name": "Most"
+      "name": "Most",
+      "slug": "most"
     },
     {
       "id": 27,
-      "name": "Nové Město nad Metují"
+      "name": "Nové Město nad Metují",
+      "slug": "nove-mesto-nad-metuji"
     },
     {
       "id": 24,
-      "name": "Nový Jičín"
+      "name": "Nový Jičín",
+      "slug": "novy-jicin"
     },
     {
       "id": 8,
-      "name": "Olomouc"
+      "name": "Olomouc",
+      "slug": "olomouc"
     },
     {
       "id": 9,
-      "name": "Ostrava"
+      "name": "Ostrava",
+      "slug": "ostrava"
     },
     {
       "id": 18,
-      "name": "Otrokovice"
+      "name": "Otrokovice",
+      "slug": "otrokovice"
     }
   ]
 }

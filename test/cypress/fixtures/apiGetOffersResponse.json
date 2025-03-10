@@ -1,0 +1,65 @@
+[
+  {
+    "id": 18172,
+    "title": "Pivo na triko",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/male-pivo-na-triko",
+    "published": "2025-03-05",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "alko nápoje",
+        "slug": "alko",
+        "url": "https://dopracenakole.cz/kategorie/alko"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/DPNK_Akce713a-600x451.jpg"
+  },
+  {
+    "id": 22239,
+    "title": "Workshop na triko s 50% slevou",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/caj-na-triko-dpnk-hk-27-30-5",
+    "published": "2025-03-05",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "workshop",
+        "slug": "workshop",
+        "url": "https://dopracenakole.cz/kategorie/workshop"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/2025/03/tp-dpnk-600x450.jpg"
+  },
+  {
+    "id": 42994,
+    "title": "Sleva 10 % v e-shopu Lepší Život",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/sleva-10-v-e-shopu-lepsi-zivot",
+    "published": "2025-03-05",
+    "voucher": "NATRIKO10",
+    "voucher_url": "www.lepsizivot.shop",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-06-30",
+    "categories": [
+      {
+        "name": "sleva na produkty",
+        "slug": "sleva-produkty",
+        "url": "https://dopracenakole.cz/kategorie/sleva-produkty"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/dpnksleva-600x400.jpg"
+  }
+]

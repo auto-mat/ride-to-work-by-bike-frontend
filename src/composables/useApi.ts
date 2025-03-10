@@ -28,6 +28,7 @@ interface apiData {
   method: Method;
   headers: AxiosRequestHeaders;
   data?: object;
+  params?: Record<string, string>;
 }
 
 interface errorResponseData {
@@ -123,6 +124,7 @@ export const useApi = (
     logger,
     showSuccessMessage = true,
     showErrorMessage = true,
+    params,
   }: {
     endpoint: string;
     payload?: object;
@@ -132,6 +134,7 @@ export const useApi = (
     logger: Logger | null;
     showSuccessMessage?: boolean;
     showErrorMessage?: boolean;
+    params?: Record<string, string>;
   }): Promise<ApiResponse<T>> => {
     try {
       logger?.info('Call <api()> function with parameters arguments.');
@@ -157,8 +160,9 @@ export const useApi = (
       const startTime = performance.now();
       const data: apiData = {
         url: endpoint,
-        method: method,
-        headers: headers,
+        method,
+        headers,
+        params,
       };
       if (payload) {
         data.data = payload;

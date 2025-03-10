@@ -46,6 +46,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getRadioOption, negativeColor, positiveColor } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
+import { getOffersFeedParamSet } from '../../../src/utils/get_feed_param_set';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -517,6 +518,55 @@ Cypress.Commands.add(
     );
   },
 );
+
+/**
+ * Intercept offers GET API calls
+ * Provides `@getOffers` aliase
+ * @param {object} config - App global config
+ * @param {object|string} i18n - i18n instance or locale lang string e.g. en
+ */
+Cypress.Commands.add(
+  'interceptOffersGetApi',
+  (config, i18n, citySlug, offersResponse = null) => {
+    const { apiBaseRtwbbFeed, apiDefaultLang } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBaseRtwbbFeed,
+      apiDefaultLang,
+      i18n,
+    );
+    const getOffersParams = getOffersFeedParamSet(citySlug);
+    const objectToParams = (obj) => {
+      return Object.keys(obj)
+        .map((key) => `${key}=${obj[key]}`)
+        .join('&');
+    };
+    const urlEncodedParams = objectToParams(getOffersParams);
+    const urlApiOffersLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
+
+    cy.fixture('apiGetOffersResponse.json').then((defaultOffersResponse) => {
+      cy.intercept('GET', urlApiOffersLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: offersResponse || defaultOffersResponse,
+      }).as('getOffers');
+    });
+  },
+);
+
+/**
+ * Wait for intercept offers API call and compare request/response object
+ * Wait for `@getOffers` intercept.
+ */
+Cypress.Commands.add('waitForOffersApi', (offersResponse = null) => {
+  cy.fixture('apiGetOffersResponse').then((defaultOffersResponse) => {
+    cy.wait('@getOffers').then((getOffers) => {
+      expect(getOffers.response.statusCode).to.equal(httpSuccessfullStatus);
+      expect(getOffers.response.body).to.deep.equal(
+        offersResponse || defaultOffersResponse,
+      );
+    });
+  });
+});
 
 /**
  * Intercept this campaign GET API call
@@ -2857,29 +2907,29 @@ Cypress.Commands.add(
 );
 
 /**
-* Wait for intercept my organization admin API call and compare response object
-* Wait for `@getMyOrganizationAdmin` intercept
-* @param {Object} expectedResponse - Expected response body
-*/
+ * Wait for intercept my organization admin API call and compare response object
+ * Wait for `@getMyOrganizationAdmin` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
 Cypress.Commands.add(
- 'waitForMyOrganizationAdminGetApi',
- (expectedResponse = null) => {
-   cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
-     cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
-       expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
-         bearerTokeAuth,
-       );
-       if (getMyOrganizationAdmin.response) {
-         expect(getMyOrganizationAdmin.response.statusCode).to.equal(
-           httpSuccessfullStatus,
-         );
-         expect(getMyOrganizationAdmin.response.body).to.deep.equal(
-           expectedResponse || defaultResponse,
-         );
-       }
-     });
-   });
- },
+  'waitForMyOrganizationAdminGetApi',
+  (expectedResponse = null) => {
+    cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
+      cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
+        expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
+          bearerTokeAuth,
+        );
+        if (getMyOrganizationAdmin.response) {
+          expect(getMyOrganizationAdmin.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getMyOrganizationAdmin.response.body).to.deep.equal(
+            expectedResponse || defaultResponse,
+          );
+        }
+      });
+    });
+  },
 );
 
 /**

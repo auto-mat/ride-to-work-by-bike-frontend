@@ -1,0 +1,217 @@
+[
+  {
+    "id": 41507,
+    "title": "Výstupy na radniční věž Hlásku",
+    "url": "https://dopracenakole.cz/mesto/opava/vystupy-na-radnicni-vez-hlasku",
+    "published": "2025-03-06",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2024-05-01 00:00",
+    "end_date": "2024-05-31",
+    "categories": [
+      {
+        "name": "jiná kultura",
+        "slug": "kultura",
+        "url": "https://dopracenakole.cz/kategorie/kultura"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/hlaska-600x464.jpg"
+  },
+  {
+    "id": 41516,
+    "title": "Vstupné do Obecního domu a Domu umění za polovic",
+    "url": "https://dopracenakole.cz/mesto/opava/vstupne-do-obecniho-domu-a-domu-umeni-za-polovic",
+    "published": "2025-03-06",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2024-05-01 00:00",
+    "end_date": "2024-05-31",
+    "categories": [
+      {
+        "name": "jiná kultura",
+        "slug": "kultura",
+        "url": "https://dopracenakole.cz/kategorie/kultura"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/obecni-dum-zima1-fuchsova-600x597.jpg"
+  },
+  {
+    "id": 44835,
+    "title": "nazev",
+    "url": "https://dopracenakole.cz/mesto/2046-2/046-2/nazev",
+    "published": "2025-01-23",
+    "voucher": "qwer",
+    "voucher_url": "https://2046.cz",
+    "akce_na_triko": "",
+    "start_date": "2024-07-22 00:00",
+    "end_date": "",
+    "categories": [
+      {
+        "name": "sport",
+        "slug": "sport",
+        "url": "https://dopracenakole.cz/kategorie/sport"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": ""
+  },
+  {
+    "id": 25441,
+    "title": "Kola Chrobák – 30% sleva na servis, 15% sleva na kola a doplňky",
+    "url": "https://dopracenakole.cz/mesto/louny/kola-chrobak-10-sleva-na-kola-dily-doplnky-obleceni-servis",
+    "published": "2025-02-18",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-04-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "cykloservis",
+        "slug": "cykloservis",
+        "url": "https://dopracenakole.cz/kategorie/cykloservis"
+      },
+      {
+        "name": "sleva na kola a cyklopotřeby",
+        "slug": "sleva-kola",
+        "url": "https://dopracenakole.cz/kategorie/sleva-kola"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/kch_logo_mensi-9-600x267.jpg"
+  },
+  {
+    "id": 44270,
+    "title": "FOTOSOUTĚŽ",
+    "url": "https://dopracenakole.cz/mesto/koprivnice/prekvapko-na-triko",
+    "published": "2025-02-09",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "ostatní",
+        "slug": "ostatni",
+        "url": "https://dopracenakole.cz/kategorie/ostatni"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/nice-600x400.jpg"
+  },
+  {
+    "id": 45111,
+    "title": "PRVOMÁJOVÁ CYKLOVYJÍŽĎKA",
+    "url": "https://dopracenakole.cz/mesto/koprivnice/fotosoutez",
+    "published": "2025-02-10",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 09:00",
+    "end_date": "",
+    "categories": [
+      {
+        "name": "cyklojízda, procházka, výlet",
+        "slug": "cyklojizda",
+        "url": "https://dopracenakole.cz/kategorie/cyklojizda"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/prvomajovka-600x338-1.jpg"
+  },
+  {
+    "id": 18172,
+    "title": "Pivo na triko",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/male-pivo-na-triko",
+    "published": "2025-03-05",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "alko nápoje",
+        "slug": "alko",
+        "url": "https://dopracenakole.cz/kategorie/alko"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/DPNK_Akce713a-600x451.jpg"
+  },
+  {
+    "id": 42994,
+    "title": "Sleva 10 % v e-shopu Lepší Život",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/sleva-10-v-e-shopu-lepsi-zivot",
+    "published": "2025-03-05",
+    "voucher": "NATRIKO10",
+    "voucher_url": "www.lepsizivot.shop",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-06-30",
+    "categories": [
+      {
+        "name": "sleva na produkty",
+        "slug": "sleva-produkty",
+        "url": "https://dopracenakole.cz/kategorie/sleva-produkty"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/dpnksleva-600x400.jpg"
+  },
+  {
+    "id": 22239,
+    "title": "Workshop na triko s 50% slevou",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/caj-na-triko-dpnk-hk-27-30-5",
+    "published": "2025-03-05",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "workshop",
+        "slug": "workshop",
+        "url": "https://dopracenakole.cz/kategorie/workshop"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/2025/03/tp-dpnk-600x450.jpg"
+  },
+  {
+    "id": 43243,
+    "title": "Sleva 20 % na vstupenky na festival Slunovrat",
+    "url": "https://dopracenakole.cz/mesto/opava/sleva-20-na-vstupenky-na-festival-slunovrat",
+    "published": "2025-03-06",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "sleva na produkty",
+        "slug": "sleva-produkty",
+        "url": "https://dopracenakole.cz/kategorie/sleva-produkty"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "image": "https://dopracenakole.cz/app/uploads/slunovrat-5.png"
+  }
+]

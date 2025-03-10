@@ -140,6 +140,9 @@
 import { colors } from 'quasar';
 import { computed, defineComponent, inject, onMounted } from 'vue';
 
+// adapters
+import { feedAdapter } from '../adapters/feedAdapter';
+
 // components
 import BannerApp from 'components/homepage/BannerApp.vue';
 import BannerImage from 'components/homepage/BannerImage.vue';
@@ -158,6 +161,9 @@ import PageHeading from 'src/components/global/PageHeading.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SectionHeading from 'src/components/global/SectionHeading.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
+
+// composables
+import { useApiGetPosts } from '../composables/useApiGetPosts';
 
 // config
 import { routesConf } from '../router/routes_conf';
@@ -181,6 +187,9 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { Logger } from '../components/types/Logger';
+
+// utils
+import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -213,7 +222,7 @@ export default defineComponent({
     const isSliderProgressEnabled = false;
     const isListProgressEnabled = false;
     const isSectionEventsEnabled = false;
-    const isSectionOffersEnabled = false;
+    const isSectionOffersEnabled = true;
     const isSectionPostsEnabled = false;
 
     const challengeStore = useChallengeStore();
@@ -226,6 +235,13 @@ export default defineComponent({
 
     const urlCommunity = routesConf['community']['path'];
     const urlResults = routesConf['results']['path'];
+
+    const {
+      posts,
+      isLoading: isLoadingPosts,
+      loadPosts,
+    } = useApiGetPosts(logger);
+    const cardsOffer = computed(() => feedAdapter.toCardOffer(posts.value));
 
     onMounted(async () => {
       // make sure phase set is loaded
@@ -240,6 +256,16 @@ export default defineComponent({
       if (!registerChallengeStore.getMyTeam) {
         logger?.info('My team data is not available, loading my team data.');
         await registerChallengeStore.loadMyTeamToStore(logger);
+      }
+      // if citySlug is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCitySlug) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      // if citySlug is available, load posts, else we can't load posts
+      if (registerChallengeStore.getCitySlug) {
+        await loadPosts(
+          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
+        );
       }
     });
 
@@ -262,7 +288,7 @@ export default defineComponent({
       cardsChallenge: homepage.cardsChallenge,
       cardsEvent: homepage.cardsEvent,
       cardsFollow,
-      cardsOffer: homepage.cardsOffer,
+      cardsOffer,
       cardsPost,
       cardsProgress: homepage.cardsProgress,
       cardsProgressSlider,
@@ -274,6 +300,7 @@ export default defineComponent({
       competitionStart,
       urlCommunity,
       urlResults,
+      isLoadingPosts,
       isBannerRoutesEnabled,
       isBannerAppEnabled,
       isSectionChallengesEnabled,

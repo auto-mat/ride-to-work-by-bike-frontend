@@ -13,18 +13,38 @@
  */
 
 // libraries
+import { colors } from 'quasar';
 import { defineComponent } from 'vue';
+
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 export default defineComponent({
   name: 'OfferValidation',
+  setup() {
+    const { changeAlpha, getPaletteColor } = colors;
+    const primary = getPaletteColor('primary');
+    const primaryOpacity = changeAlpha(
+      primary,
+      rideToWorkByBikeConfig.colorPrimaryOpacity,
+    );
+
+    return {
+      backgroundColor: primaryOpacity,
+    };
+  },
 });
 </script>
 
 <template>
-  <div class="bg-grey-1 q-pa-md" data-cy="offer-validation">
+  <div
+    class="q-pa-md q-pb-lg"
+    :style="{ backgroundColor }"
+    data-cy="offer-validation"
+  >
     <!-- Title -->
     <h3
-      class="text-subtitle2 text-weight-bold q-mt-none q-mb-sm"
+      class="text-subtitle2 text-weight-bold q-mt-none q-mb-md"
       data-cy="offer-validation-title"
     >
       {{ $t('offer.titleOfferValidation') }}
@@ -33,12 +53,16 @@ export default defineComponent({
     <div class="row q-col-gutter-x-lg q-col-gutter-y-sm">
       <div class="col-12 col-sm-6">
         <!-- Item: T-Shirt -->
-        <q-item class="q-pa-none" dense data-cy="offer-validation-item">
+        <q-item
+          dense
+          class="full-height q-pa-none"
+          data-cy="offer-validation-item-tshirt"
+        >
           <q-item-section avatar>
             <q-icon
-              color="grey-6"
+              color="primary"
               size="32px"
-              name="mdi-tshirt-crew"
+              name="svguse:icons/card_offer/icons.svg#lucide-shirt"
               data-cy="offer-validation-icon"
             />
           </q-item-section>
@@ -49,12 +73,16 @@ export default defineComponent({
       </div>
       <div class="col-12 col-sm-6">
         <!-- Item: Account -->
-        <q-item class="q-pa-none" dense data-cy="offer-validation-item">
+        <q-item
+          class="full-height q-pa-none"
+          dense
+          data-cy="offer-validation-item-app"
+        >
           <q-item-section avatar>
             <q-icon
-              color="grey-6"
+              color="primary"
               size="32px"
-              name="mdi-monitor-cellphone"
+              name="svguse:icons/card_offer/icons.svg#lucide-monitor-smartphone"
               data-cy="offer-validation-icon"
             />
           </q-item-section>

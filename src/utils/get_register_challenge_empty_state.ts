@@ -52,6 +52,7 @@ export const getRegisterChallengeEmptyPersistentState = () => ({
   merchId: null,
   myTeam: null,
   voucher: null,
+  citySlug: null,
   formRegisterCoordinator: deepObjectWithSimplePropsCopy(
     emptyFormRegisterCoordinator,
   ),
