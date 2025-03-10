@@ -208,7 +208,6 @@ function coreTests() {
           );
         });
       cy.dataCy('available-prizes-list').should('be.visible');
-
       cy.dataCy('available-prizes-item')
         .should('be.visible')
         .and('have.length', 5);
