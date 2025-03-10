@@ -63,15 +63,10 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const modalOpened = ref(false);
 
-    const openVoucherUrl = (url: string) => {
-      window.open(url, '_blank');
-    };
-
     return {
       borderRadius,
       modalOpened,
       isOfferCurrentlyValid,
-      openVoucherUrl,
     };
   },
 });
@@ -172,7 +167,6 @@ export default defineComponent({
             rounded
             class="q-mt-lg"
             :label="$t('index.cardOffer.buttonUseVoucher')"
-            @click.prevent="openVoucherUrl(card.voucherUrl)"
             data-cy="dialog-offer-link"
           />
         </div>
