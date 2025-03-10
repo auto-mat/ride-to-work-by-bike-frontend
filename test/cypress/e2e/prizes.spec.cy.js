@@ -105,8 +105,7 @@ function coreTests() {
             cy.wrap($el).should('contain', translation);
           });
         });
-      // TODO: enable this section to select city
-      // cy.dataCy('form-field-select-city').should('be.visible');
+      cy.dataCy('form-field-select-city').should('be.visible');
     });
   });
 
