@@ -127,7 +127,7 @@ export default defineComponent({
       id="form-team"
       name="team"
       @filter="onFilter"
-      data-cy="form-input"
+      data-cy="form-select"
     >
       <!-- Item: No option -->
       <template v-slot:no-option>
