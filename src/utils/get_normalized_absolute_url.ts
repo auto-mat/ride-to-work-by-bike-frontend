@@ -1,3 +1,10 @@
+/**
+ * Normalizes a URL by ensuring it has a proper HTTPS protocol prefix.
+ * If URL doesn't start with 'http://' or 'https://', it prepends 'https://'.
+ * The function also trims any whitespace from the input URL.
+ * @param {string} url - URL to normalize
+ * @returns {string} Normalized URL with proper HTTPS protocol
+ */
 export const getNormalizedAbsoluteUrl = (url: string): string => {
   // trim whitespace
   url = url.trim();
