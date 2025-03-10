@@ -19,8 +19,8 @@ import { getNormalizedAbsoluteUrl } from '../utils/get_normalized_absolute_url';
 export const feedAdapter = {
   /**
    * Convert API posts to CardOffer format
-   * Posts are filtered by checking if end_date is empty.
-   * (If end_date exists, the post is an event.)
+   * Posts are filtered by checking if offer is valid for more than one day.
+   * (If offer is valid only for one day, it is an event.)
    * @param {Offer[]} posts - Posts from API
    * @returns {CardOffer[]} - Posts in card format
    */
