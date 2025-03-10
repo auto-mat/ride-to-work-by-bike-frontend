@@ -37,6 +37,7 @@ export const registerChallengeAdapter = {
         apiData.personal_details.newsletter,
       ),
       terms: apiData.personal_details.personal_data_opt_in,
+      approvedForTeam: apiData.personal_details.approved_for_team,
     };
 
     return {
@@ -101,6 +102,9 @@ export const registerChallengeAdapter = {
       }
       if (storePersonalDetails.terms !== undefined) {
         payload.personal_data_opt_in = storePersonalDetails.terms;
+      }
+      if (storePersonalDetails.approvedForTeam !== undefined) {
+        payload.approved_for_team = storePersonalDetails.approvedForTeam;
       }
     }
 

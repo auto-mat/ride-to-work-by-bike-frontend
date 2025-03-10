@@ -1,3 +1,7 @@
+// enums
+import { TeamMemberStatus } from '../enums/TeamMember';
+
+// types
 import type { ValidatedCoupon } from './Coupon';
 import type { RegisterChallengePersonalDetailsForm } from './RegisterChallenge';
 import type { PaymentSubject } from '../enums/Payment';
@@ -29,6 +33,7 @@ export type PersonalDetails = CorePersonalDetails & {
   payment_type: string;
   payment_status: string;
   payment_category: PaymentCategory;
+  approved_for_team: TeamMemberStatus;
 };
 
 export type RegisterChallengeResult = {
@@ -67,6 +72,7 @@ export type RegisterChallengePostPayload = {
   products?: PayuProduct[];
   team_id?: number | null;
   t_shirt_size_id?: number | null;
+  approved_for_team?: TeamMemberStatus;
 };
 
 export type RegisterChallengePostResponse = {

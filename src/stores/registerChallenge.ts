@@ -561,63 +561,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
       // if step = team, check team max members before submitting
       if (step === RegisterChallengeStep.team) {
-        const challengeStore = useChallengeStore();
-        const maxTeamMembers = challengeStore.getMaxTeamMembers;
-        // refetch teams
-        await this.loadTeamsToStore(this.$log);
-        // load my team info
-        await this.loadMyTeamToStore(this.$log);
-        // check selected team max members
-        const myTeam = this.getMyTeam;
-        this.$log?.debug(`My team <${JSON.stringify(myTeam, null, 2)}>.`);
-        const selectedTeam = this.teams.find((team) => team.id === this.teamId);
-        this.$log?.debug(
-          `Selected team <${JSON.stringify(selectedTeam, null, 2)}>.`,
-        );
-        // selected team members or max team members are not set - error
-        if (!selectedTeam?.members || !maxTeamMembers) {
-          this.$log?.debug(
-            'Selected team members <${selectedTeam?.members}>,' +
-              ' max. team members <${maxTeamMembers}>.',
-          );
-          Notify.create({
-            type: 'negative',
-            message: i18n.global.t(
-              'postRegisterChallenge.messageTeamMaxMembersUnavailable',
-            ),
-          });
+        const canJoinTeam = await this.validateTeamJoin(this.teamId);
+        if (!canJoinTeam) {
           // reset team ID
           this.setTeamId(null);
-          this.$log?.debug('Reset team ID to <${this.getTeamId}>.');
-          return null;
-        }
-        // check if selected team is full
-        const isSelectedTeamMembersCountMax: boolean =
-          selectedTeam?.members.length >= maxTeamMembers;
-        this.$log?.debug(
-          `Is selected team full <${isSelectedTeamMembersCountMax}>.`,
-        );
-        // check if selected team is my team
-        const isSelectedTeamMyTeam: boolean = myTeam?.id === selectedTeam.id;
-        this.$log?.debug(`Selected team is my team <${isSelectedTeamMyTeam}>.`);
-        /**
-         * If selected team is full and it is not my team,
-         * notify the user and reset team ID.
-         * If selected team is full and it is my team,
-         * let user proceed (we should not make user leave the team once they
-         * are already an approved member).
-         */
-        if (isSelectedTeamMembersCountMax && !isSelectedTeamMyTeam) {
-          Notify.create({
-            type: 'negative',
-            message: i18n.global.t(
-              'postRegisterChallenge.messageTeamMaxMembersReached',
-            ),
-          });
-          this.$log?.info('Team max members reached.');
-          // reset team ID
-          this.setTeamId(null);
-          this.$log?.debug('Reset team ID to <${this.getTeamId}>.');
+          this.$log?.debug(`Reset team ID to <${this.getTeamId}>.`);
           return null;
         }
       }
@@ -723,6 +671,66 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.isLoadingRegisterChallenge = false;
 
       return response;
+    },
+    /**
+     * Validates if user can join a team.
+     * Requirements:
+     * - Team must exist and have members array
+     * - Team must not be full (members.length < maxTeamMembers)
+     * - If team is full, user can only join if it's their current team
+     * @param {number | null} teamId - ID of team to validate
+     * @returns {Promise<boolean>} Whether user can join the team
+     */
+    async validateTeamJoin(teamId: number | null): Promise<boolean> {
+      const challengeStore = useChallengeStore();
+      const maxTeamMembers = challengeStore.getMaxTeamMembers;
+      // refetch teams
+      await this.loadTeamsToStore(this.$log);
+      // load my team info
+      await this.loadMyTeamToStore(this.$log);
+      // check selected team max members
+      const myTeam = this.getMyTeam;
+      this.$log?.debug(`My team <${JSON.stringify(myTeam, null, 2)}>.`);
+      const selectedTeam = this.teams.find((team) => team.id === teamId);
+      this.$log?.debug(
+        `Selected team <${JSON.stringify(selectedTeam, null, 2)}>.`,
+      );
+      // selected team members or max team members are not set - error
+      if (!selectedTeam?.members || !maxTeamMembers) {
+        this.$log?.debug(
+          `Selected team members <${selectedTeam?.members}>,` +
+            ` max. team members <${maxTeamMembers}>.`,
+        );
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t(
+            'postRegisterChallenge.messageTeamMaxMembersUnavailable',
+          ),
+        });
+        return false;
+      }
+      // check if selected team is full
+      const isSelectedTeamMembersCountMax: boolean =
+        selectedTeam?.members.length >= maxTeamMembers;
+      this.$log?.debug(
+        `Is selected team full <${isSelectedTeamMembersCountMax}>.`,
+      );
+      // check if selected team is my team
+      const isSelectedTeamMyTeam: boolean = myTeam?.id === selectedTeam.id;
+      this.$log?.debug(`Selected team is my team <${isSelectedTeamMyTeam}>.`);
+      // if team is full and it's not user's current team, they can't join
+      if (isSelectedTeamMembersCountMax && !isSelectedTeamMyTeam) {
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t(
+            'postRegisterChallenge.messageTeamMaxMembersReached',
+          ),
+        });
+        this.$log?.info('Team max members reached.');
+        return false;
+      }
+      // user can join team
+      return true;
     },
     async loadSubsidiariesToStore(logger: Logger | null) {
       const { subsidiaries, loadSubsidiaries } = useApiGetSubsidiaries(logger);

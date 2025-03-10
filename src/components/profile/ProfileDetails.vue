@@ -11,6 +11,7 @@
  * - `FormUpdateEmail`: Component to render a form for updating email.
  * - `FormUpdateGender`: Component to render a form for updating gender.
  * - `FormUpdateNickname`: Component to render a form for updating nickname.
+ * - `FormUpdateTeam`: Component to render a form for updating team.
  * - `LanguageSwitcher`: Component to render a language switcher.
  * - `SectionHeading`: Component to render a section heading.
  * - `DeleteAccount`: Component to render delete account section with
@@ -38,6 +39,7 @@ import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
 import FormUpdatePhone from '../form/FormUpdatePhone.vue';
+import FormUpdateTeam from '../form/FormUpdateTeam.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import ProfileCoordinatorContact from './ProfileCoordinatorContact.vue';
 import SectionHeading from '../global/SectionHeading.vue';
@@ -52,6 +54,7 @@ import { useOrganizations } from '../../composables/useOrganizations';
 // enums
 import { Gender } from '../types/Profile';
 import { PaymentSubject } from '../../components/enums/Payment';
+import { TeamMemberStatus } from '../../components/enums/TeamMember';
 
 // fixtures
 import formPersonalDetails from '../../../test/cypress/fixtures/formPersonalDetails.json';
@@ -77,6 +80,7 @@ export default defineComponent({
     FormUpdateGender,
     FormUpdateNickname,
     FormUpdatePhone,
+    FormUpdateTeam,
     LanguageSwitcher,
     ProfileCoordinatorContact,
     SectionHeading,
@@ -175,6 +179,10 @@ export default defineComponent({
         return team.name;
       }
       return '';
+    });
+
+    const teamId = computed<number | null>((): number | null => {
+      return registerChallengeStore.getTeamId;
     });
 
     const merchandiseItem = computed(() => {
@@ -291,6 +299,18 @@ export default defineComponent({
       );
     };
 
+    const onUpdateTeam = async (teamId: number | null): Promise<void> => {
+      const canJoinTeam = await registerChallengeStore.validateTeamJoin(teamId);
+      if (teamId && canJoinTeam) {
+        await onUpdateRegisterChallengeDetails({
+          teamId: teamId,
+          personalDetails: {
+            approvedForTeam: TeamMemberStatus.undecided,
+          },
+        });
+      }
+    };
+
     /**
      * Get gender label
      * @param {Gender | null} gender - Gender enum value or null
@@ -321,9 +341,11 @@ export default defineComponent({
       profile,
       subsidiary,
       team,
+      teamId,
       onDownloadInvoice,
       onUpdateRegisterChallengeDetails,
       onUpdateEmail,
+      onUpdateTeam,
       formPersonalDetails,
       genderLabel,
       isEnabledCoordinatorContact,
@@ -467,11 +489,23 @@ export default defineComponent({
         />
         <!-- Team -->
         <details-item
+          editable
           :label="$t('profile.labelTeam')"
+          :dialog-title="$t('profile.titleUpdateTeam')"
           :value="team"
           class="col-12 col-sm-6"
           data-cy="profile-details-team"
-        />
+        >
+          <template #form="{ close }">
+            <!-- Form: Update team -->
+            <form-update-team
+              :model-value="teamId"
+              @close="close"
+              @update:model-value="onUpdateTeam"
+              data-cy="profile-details-form-team"
+            />
+          </template>
+        </details-item>
         <!-- Team members list -->
         <team-members-list class="col-12 q-mt-lg" />
       </div>

@@ -1,3 +1,6 @@
+// enums
+import { TeamMemberStatus } from '../enums/TeamMember';
+
 // types
 import type { NewsletterType } from './Newsletter';
 import type { Gender } from './Profile';
@@ -36,6 +39,7 @@ export interface RegisterChallengePersonalDetailsForm
   isStaff: boolean;
   lastName: string;
   newsletter: NewsletterType[];
+  approvedForTeam?: TeamMemberStatus;
 }
 
 export interface RegisterChallengeCoordinatorForm {
