@@ -96,7 +96,7 @@ describe('<CardOffer>', () => {
       });
     });
 
-    it('does not render voucher link', () => {
+    it('does not render voucher code and voucher link', () => {
       cy.window().then(() => {
         cy.get('@card').then(() => {
           cy.dataCy('card-offer').click();
