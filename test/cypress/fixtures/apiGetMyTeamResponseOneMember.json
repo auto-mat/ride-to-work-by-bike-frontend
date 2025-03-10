@@ -39,6 +39,8 @@
           "working_rides_base_count": 1284,
           "id": 3451,
           "name": "Jana Nováková",
+          "email": "jana.novakova@example.com",
+          "sex": "female",
           "frequency": 0.0,
           "avatar_url": "",
           "eco_trip_count": 0,

@@ -1,5 +1,6 @@
 // enums
 import { TeamMemberStatus } from '../enums/TeamMember';
+import { Gender } from '../types/Profile';
 
 export interface Emissions {
   co2: number;
@@ -38,6 +39,7 @@ export interface MemberResults {
 export interface ExtendedMemberResults extends MemberResults {
   approved_for_team: TeamMemberStatus;
   email?: string;
+  sex?: Gender;
 }
 
 export interface TeamResults {
@@ -61,6 +63,8 @@ export interface MyTeamResults extends TeamResults {
   member_count: number;
   is_full: boolean;
   unapproved_member_count: number;
+  email: string;
+  sex: Gender;
 }
 
 export interface MemberResponse {

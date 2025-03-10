@@ -15,6 +15,7 @@
  * - `SectionHeading`: Component to render a section heading.
  * - `DeleteAccount`: Component to render delete account section with
  * confirmation dialog.
+ * - `TeamMembersList`: Component to render team members list.
  *
  * @example
  * <profile-details />
@@ -41,6 +42,7 @@ import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import ProfileCoordinatorContact from './ProfileCoordinatorContact.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 import DeleteAccount from './DeleteAccount.vue';
+import TeamMembersList from './TeamMembersList.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
@@ -79,6 +81,7 @@ export default defineComponent({
     ProfileCoordinatorContact,
     SectionHeading,
     DeleteAccount,
+    TeamMembersList,
   },
   setup() {
     // TODO: Enable additional elements
@@ -469,6 +472,8 @@ export default defineComponent({
           class="col-12 col-sm-6"
           data-cy="profile-details-team"
         />
+        <!-- Team members list -->
+        <team-members-list class="col-12 q-mt-lg" />
       </div>
     </div>
 
