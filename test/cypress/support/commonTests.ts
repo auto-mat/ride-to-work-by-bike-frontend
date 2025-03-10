@@ -671,10 +671,10 @@ export const systemTimeRegistrationPhase1May = new Date(
   '2025-01-28T00:01:00.000Z',
 );
 /**
- * Time before offers are valid
+ * Time when offers are no longer valid
  * @see apiGetOffersResponse.json fixture for example
  */
-export const systemTimeOffersInvalid = new Date('2025-01-01T00:00:00.000Z');
+export const systemTimeOffersInvalid = new Date('2025-08-30T00:00:00.000Z');
 /**
  * Time when offers are valid
  * @see apiGetOffersResponse.json fixture for example

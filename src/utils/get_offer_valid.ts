@@ -34,30 +34,18 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
 };
 
 /**
- * Check if given offer is currently valid.
- * If no start date is set, the offer is considered valid.
- * If only start date is set, the offer is considered valid
- * if the current date is on or after the start date.
- * If both start and end dates are set, the offer is considered valid
- * if the current date is between the start and end dates.
+ * Check if given offer is past its end date.
+ * Returns true only if the offer has an end date and that date is in the past.
+ * Returns false in all other cases (no end date, or end date is in future).
  * @param {CardOfferType} card - Card offer object
- * @returns {boolean}
+ * @returns {boolean} True if offer has ended, false otherwise
  */
-export const isOfferCurrentlyValid = (card: CardOfferType): boolean => {
-  // no dates set, consider offer valid (default state)
-  if (!card.startDate) return true;
+export const isOfferPast = (card: CardOfferType): boolean => {
+  // if no end date, offer hasn't ended
+  if (!card.endDate) return false;
 
   const now = date.startOfDate(new Date(), 'day');
-  const start = date.startOfDate(new Date(card.startDate), 'day');
-  // only start date is set, check if current date is on or after start
-  if (!card.endDate) {
-    return date.getDateDiff(now, start, 'days') >= 0;
-  }
-  // both dates are set, check if current date is between them
   const end = date.startOfDate(new Date(card.endDate), 'day');
-  return date.isBetweenDates(now, start, end, {
-    inclusiveFrom: true,
-    inclusiveTo: true,
-    onlyDate: true,
-  });
+
+  return date.getDateDiff(now, end, 'days') > 0;
 };

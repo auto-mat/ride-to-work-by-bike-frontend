@@ -45,7 +45,7 @@ import { CardOffer as CardOfferType } from '../types';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // utils
-import { isOfferCurrentlyValid } from '../../utils/get_offer_valid';
+import { isOfferPast } from '../../utils/get_offer_valid';
 
 export default defineComponent({
   name: 'CardOffer',
@@ -66,7 +66,7 @@ export default defineComponent({
     return {
       borderRadius,
       modalOpened,
-      isOfferCurrentlyValid,
+      isOfferPast,
     };
   },
 });
@@ -80,7 +80,7 @@ export default defineComponent({
     bordered
     data-cy="card-offer"
     class="full-height bg-white cursor-pointer q-hoverable"
-    :class="{ 'light-dimmed': !isOfferCurrentlyValid(card) }"
+    :class="{ 'light-dimmed': isOfferPast(card) }"
     :style="{ 'border-radius': borderRadius }"
     @click.prevent="modalOpened = true"
   >
