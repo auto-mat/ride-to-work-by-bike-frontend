@@ -1,7 +1,7 @@
 {
   "count": 33,
   "next": null,
-  "previous": null,
+  "previous": "https://test.dopracenakole.cz/rest/cities?limit=20&offset=0",
   "results": [
     {
       "id": 21,
