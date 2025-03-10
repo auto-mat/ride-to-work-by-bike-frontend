@@ -11,7 +11,6 @@ import {
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { calculateCountdownIntervals } from '../../../src/utils';
-import { getCitySlugFromId } from 'src/utils/get_city_slug_from_id';
 import { isOfferValidMoreThanOneDay } from '../../../src/utils/get_offer_valid';
 import { routesConf } from '../../../src/router/routes_conf';
 
@@ -49,7 +48,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              getCitySlugFromId(response.results[0].city_id),
+              response.results[0].city_slug,
               offers,
             );
             cy.wrap(offers).as('offers');
@@ -386,7 +385,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              getCitySlugFromId(response.results[0].city_id),
+              response.results[0].city_slug,
               offers,
             );
             cy.wrap(offers).as('offers');
@@ -448,7 +447,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              getCitySlugFromId(response.results[0].city_id),
+              response.results[0].city_slug,
               offers,
             );
             cy.wrap(offers).as('offers');

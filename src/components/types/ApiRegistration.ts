@@ -38,7 +38,7 @@ export type RegisterChallengeResult = {
   subsidiary_id: number | null;
   t_shirt_size_id: number | null;
   organization_type: string;
-  city_id: number | null;
+  city_slug: string | null;
 };
 
 export type RegisterChallengeResponse = {

@@ -6,7 +6,6 @@ import {
   systemTimeOffersValid,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
-import { getCitySlugFromId } from 'src/utils/get_city_slug_from_id';
 import { isOfferValidMoreThanOneDay } from 'src/utils/get_offer_valid';
 
 describe('Prizes page', () => {
@@ -22,7 +21,7 @@ describe('Prizes page', () => {
           cy.interceptOffersGetApi(
             config,
             defLocale,
-            getCitySlugFromId(response.results[0].city_id),
+            response.results[0].city_slug,
           );
           cy.interceptCitiesGetApi(config, defLocale);
         });
@@ -33,7 +32,7 @@ describe('Prizes page', () => {
               cy.interceptOffersGetApi(
                 config,
                 defLocale,
-                getCitySlugFromId(citiesResponse.results[0].id),
+                citiesResponse.results[0].slug,
                 offersResponse,
               );
             },
@@ -64,7 +63,7 @@ describe('Prizes page', () => {
           cy.interceptOffersGetApi(
             config,
             defLocale,
-            getCitySlugFromId(response.results[0].city_id),
+            response.results[0].city_slug,
           );
           cy.interceptCitiesGetApi(config, defLocale);
         });
@@ -75,7 +74,7 @@ describe('Prizes page', () => {
               cy.interceptOffersGetApi(
                 config,
                 defLocale,
-                getCitySlugFromId(citiesResponse.results[0].id),
+                citiesResponse.results[0].slug,
                 offersResponse,
               );
             },

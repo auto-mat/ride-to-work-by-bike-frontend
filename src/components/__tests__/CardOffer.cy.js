@@ -229,6 +229,10 @@ function coreTests() {
         cy.dataCy('dialog-voucher-code')
           .should('be.visible')
           .and('contain', card.voucher);
+        // voucher link
+        cy.dataCy('dialog-offer-link')
+          .should('be.visible')
+          .and('have.attr', 'href', card.voucherUrl);
         // image
         cy.dataCy('dialog-body').scrollTo('bottom', {
           ensureScrollable: false,

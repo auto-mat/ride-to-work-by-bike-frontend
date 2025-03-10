@@ -74,7 +74,7 @@ function coreTests() {
         .within(() => {
           cy.get('.q-item').first().click();
         });
-      cy.wrap(model).its('value').should('eq', citiesResponse.results[0].id);
+      cy.wrap(model).its('value').should('eq', citiesResponse.results[0].slug);
     });
   });
 }

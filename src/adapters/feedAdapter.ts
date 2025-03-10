@@ -10,6 +10,9 @@ import type { CardOffer } from '../components/types/Card';
 import type { Offer } from '../components/types/Offer';
 import type { CardMetadata } from '../components/types/Card';
 
+// utils
+import { getNormalizedAbsoluteUrl } from '../utils/get_normalized_absolute_url';
+
 /**
  * Adapter for converting between API and component feed data formats
  */
@@ -37,6 +40,8 @@ export const feedAdapter = {
           // build icon source
           const iconId = `card-offer-${slug}`;
           const icon = `svguse:icons/card_offer/icons.svg#${iconId}`;
+          // normalize voucher url
+          const voucherUrl = getNormalizedAbsoluteUrl(post.voucher_url);
           // build metadata
           const metadata = buildOfferMetadata(post);
 
@@ -44,7 +49,7 @@ export const feedAdapter = {
             id: post.id,
             title: post.title,
             voucher: post.voucher,
-            voucherUrl: post.voucher_url,
+            voucherUrl,
             tShirtEvent: post.akce_na_triko ? true : false,
             icon,
             startDate: post.start_date,

@@ -35,14 +35,13 @@ import { useApiGetPosts } from '../composables/useApiGetPosts';
 import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
-import { CardPrizeType } from '../components/types';
+import type { CardPrizeType } from '../components/types';
 import type { Logger } from '../components/types/Logger';
 
 // stores
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
 
 // utils
-import { getCitySlugFromId } from '../utils/get_city_slug_from_id';
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
@@ -61,27 +60,28 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
 
     const enabledSelectCity = true;
-    const city = ref<number | null>(null);
+    const city = ref<string | null>(null);
 
     const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
     const cards = computed(() => feedAdapter.toCardOffer(posts.value));
 
     onMounted(async () => {
-      // if cityId is not available, try reloading register challenge data
-      if (!registerChallengeStore.getCityId) {
+      // if citySlug is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCitySlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
-      // if cityId is available, load posts, else we can't load posts
-      if (registerChallengeStore.getCityId) {
-        city.value = registerChallengeStore.getCityId;
-        const slug = getCitySlugFromId(registerChallengeStore.getCityId);
-        await loadPosts(getOffersFeedParamSet(slug));
+      // if citySlug is available, load posts, else we can't load posts
+      if (registerChallengeStore.getCitySlug) {
+        await loadPosts(
+          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
+        );
+        // set default value for city select
+        city.value = registerChallengeStore.getCitySlug;
       }
-      // initiate watcher after the cityId is loaded
-      watch(city, (newCity: number | null) => {
-        if (newCity) {
-          const slug = getCitySlugFromId(newCity);
-          loadPosts(getOffersFeedParamSet(slug));
+      // initiate watcher after the citySlug is loaded
+      watch(city, (newSlug: string | null) => {
+        if (newSlug) {
+          loadPosts(getOffersFeedParamSet(newSlug));
         }
       });
     });

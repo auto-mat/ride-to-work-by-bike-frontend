@@ -189,7 +189,6 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import type { Logger } from '../components/types/Logger';
 
 // utils
-import { getCitySlugFromId } from '../utils/get_city_slug_from_id';
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
@@ -258,14 +257,15 @@ export default defineComponent({
         logger?.info('My team data is not available, loading my team data.');
         await registerChallengeStore.loadMyTeamToStore(logger);
       }
-      // if cityId is not available, try reloading register challenge data
-      if (!registerChallengeStore.getCityId) {
+      // if citySlug is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCitySlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
-      // if cityId is available, load posts, else we can't load posts
-      if (registerChallengeStore.getCityId) {
-        const slug = getCitySlugFromId(registerChallengeStore.getCityId);
-        await loadPosts(getOffersFeedParamSet(slug));
+      // if citySlug is available, load posts, else we can't load posts
+      if (registerChallengeStore.getCitySlug) {
+        await loadPosts(
+          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
+        );
       }
     });
 
