@@ -14,7 +14,7 @@ describe('<RegisterChallengePaymentMessages>', () => {
         'textRegistrationWaitingForConfirmation',
         'textRegistrationWaitingForConfirmationNoCoordinator',
         'textRegistrationWaitingForCoordinator',
-        'textYourCoordinator',
+        'textRegistrationWaitingForCoordinatorWithNameAndEmail',
       ],
       'register.challenge',
       i18n,
@@ -241,22 +241,21 @@ describe('<RegisterChallengePaymentMessages>', () => {
       cy.waitForMyOrganizationAdminGetApi();
       // check that the message is visible
       cy.fixture('apiGetMyOrganizationAdmin.json').then((data) => {
-        cy.dataCy('registration-waiting-for-coordinator')
-          .should('be.visible')
-          .and(
-            'contain',
-            i18n.global.t(
-              'register.challenge.textRegistrationWaitingForCoordinator',
-            ),
-          );
         cy.dataCy('registration-coordinator-details')
           .should('be.visible')
           .and(
             'contain',
-            i18n.global.t('register.challenge.textYourCoordinator'),
-          )
-          .and('contain', data.organization_admin[0].admin_name)
-          .and('contain', data.organization_admin[0].admin_email);
+            i18n.global.t(
+              'register.challenge.textRegistrationWaitingForCoordinatorWithNameAndEmail',
+              {
+                name: data.organization_admin[0].admin_name,
+                email: data.organization_admin[0].admin_email,
+              },
+            ),
+          );
+        cy.dataCy('registration-coordinator-details-not-available').should(
+          'not.exist',
+        );
       });
     });
 
@@ -279,18 +278,15 @@ describe('<RegisterChallengePaymentMessages>', () => {
         cy.waitForMyOrganizationAdminGetApi(data);
       });
       // check that the message is visible
-      cy.dataCy('registration-waiting-for-coordinator')
+      cy.dataCy('registration-coordinator-details-not-available')
         .should('be.visible')
         .and(
           'contain',
           i18n.global.t(
             'register.challenge.textRegistrationWaitingForCoordinator',
           ),
-        )
-        .and(
-          'not.contain',
-          i18n.global.t('register.challenge.textYourCoordinator'),
         );
+      // message with details does not exist
       cy.dataCy('registration-coordinator-details').should('not.exist');
     });
 

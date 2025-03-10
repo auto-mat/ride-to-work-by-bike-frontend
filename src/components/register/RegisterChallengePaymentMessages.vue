@@ -190,24 +190,23 @@ export default defineComponent({
       :style="{ borderRadius }"
       data-cy="registration-waiting-for-coordinator"
     >
-      {{ $t('register.challenge.textRegistrationWaitingForCoordinator') }}
-      <!-- Coordinator details -->
+      <!-- Message: Coordinator (details available) -->
       <div
-        v-if="organizationAdmin?.admin_name"
+        v-if="organizationAdmin?.admin_name && organizationAdmin?.admin_email"
         data-cy="registration-coordinator-details"
-      >
-        <!-- Label: Your coordinator -->
-        {{ $t('register.challenge.textYourCoordinator') }}:
-        <!-- Coordinator name -->
-        {{ organizationAdmin.admin_name }}
-        <!-- Coordinator email -->
-        <span
-          v-if="organizationAdmin?.admin_email"
-          data-cy="registration-coordinator-email"
-          >(<a :href="`mailto:${organizationAdmin.admin_email}`">
-            {{ organizationAdmin.admin_email }} </a
-          >)</span
-        >.
+        v-html="
+          $t(
+            'register.challenge.textRegistrationWaitingForCoordinatorWithNameAndEmail',
+            {
+              name: organizationAdmin?.admin_name,
+              email: organizationAdmin?.admin_email,
+            },
+          )
+        "
+      />
+      <!-- Message: Coordinator (details not available) -->
+      <div v-else data-cy="registration-coordinator-details-not-available">
+        {{ $t('register.challenge.textRegistrationWaitingForCoordinator') }}
       </div>
     </q-banner>
 
