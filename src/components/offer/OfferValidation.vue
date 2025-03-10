@@ -54,8 +54,8 @@ export default defineComponent({
       <div class="col-12 col-sm-6">
         <!-- Item: T-Shirt -->
         <q-item
-          class="full-height q-pa-none"
           dense
+          class="full-height q-pa-none"
           data-cy="offer-validation-item-tshirt"
         >
           <q-item-section avatar>
