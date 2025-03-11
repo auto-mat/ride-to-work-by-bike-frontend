@@ -36,6 +36,7 @@ const selectorNotificationState = 'notification-state';
 const selectorNotificationsCountBadge = 'notifications-count-badge';
 const selectorDialogCloseButton = 'dialog-close';
 const selectorButtonMarkAllAsRead = 'button-mark-all-as-read';
+const selectorTeam = 'profile-details-team';
 
 // variables
 const password = '123456a';
@@ -83,7 +84,27 @@ describe('Profile page', () => {
               );
             },
           );
-
+          // intercept subsidiaries API
+          cy.interceptSubsidiariesGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge.results[0].organization_id,
+          );
+          // intercept teams API
+          cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+            cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+              (teamsResponseNextFullTeam) => {
+                cy.interceptTeamsGetApi(
+                  config,
+                  defLocale,
+                  responseRegisterChallenge.results[0].subsidiary_id,
+                  teamsResponse,
+                  teamsResponseNextFullTeam,
+                );
+              },
+            );
+          });
+          cy.interceptMyTeamGetApi(config, defLocale);
           // intercept my team PUT API
           cy.interceptMyTeamPutApi(
             config,
@@ -439,6 +460,194 @@ function coreTests() {
               cy.dataCy(selectorTelephone)
                 .find(dataSelectorValue)
                 .should('have.text', newTelephone);
+            });
+          });
+        },
+      );
+    });
+  });
+
+  it('allows user to change team', () => {
+    cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+      cy.fixture('apiGetRegisterChallengeProfileUpdatedTeam.json').then(
+        (responseNew) => {
+          cy.get('@config').then((config) => {
+            cy.get('@i18n').then((i18n) => {
+              // wait for GET request
+              cy.waitForRegisterChallengeGetApi(response);
+              cy.waitForMyTeamGetApi();
+              cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+                cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                  (teamsResponseNextFullTeam) => {
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                  },
+                );
+              });
+              // team value is read from teams array
+              cy.fixture('apiGetTeamsResponse.json').then(
+                (apiGetTeamsResponse) => {
+                  cy.dataCy(selectorTeam)
+                    .find(dataSelectorValue)
+                    .should('contain', apiGetTeamsResponse.results[0].name);
+                  // click edit team button
+                  cy.dataCy(selectorTeam)
+                    .find(dataSelectorEdit)
+                    .should('be.visible')
+                    .click();
+                  // verify change team dialog title
+                  cy.contains(i18n.global.t('profile.titleUpdateTeam')).should(
+                    'be.visible',
+                  );
+                  // verify team edit form
+                  cy.dataCy('profile-details-form-team').should('be.visible');
+                  // intercept POST request
+                  cy.interceptRegisterChallengePutApi(
+                    config,
+                    i18n,
+                    response.results[0].personal_details.id,
+                    responseNew,
+                  );
+                  // override intercept GET request
+                  cy.interceptRegisterChallengeGetApi(
+                    config,
+                    i18n,
+                    responseNew,
+                  );
+                  // change team to new value
+                  cy.dataCy('profile-details-form-team')
+                    .find('.q-field__append')
+                    .should('be.visible')
+                    .click();
+                  // select new team
+                  cy.contains(apiGetTeamsResponse.results[1].name)
+                    .should('be.visible')
+                    .click();
+                  // save
+                  cy.dataCy('profile-details-form-team')
+                    .find(dataSelectorButtonSave)
+                    .click();
+                  // refetch data about teams to validate change
+                  cy.waitForMyTeamGetApi();
+                  cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+                    cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                      (teamsResponseNextFullTeam) => {
+                        cy.waitForTeamsGetApi(
+                          teamsResponse,
+                          teamsResponseNextFullTeam,
+                        );
+                      },
+                    );
+                  });
+                  cy.waitForRegisterChallengeGetApi(responseNew);
+                  // team is different
+                  cy.dataCy(selectorTeam)
+                    .find(dataSelectorValue)
+                    .should('contain', apiGetTeamsResponse.results[1].name);
+                },
+              );
+            });
+          });
+        },
+      );
+    });
+  });
+
+  it("does not allow to change team if new team's max team members is reached", () => {
+    cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+      cy.fixture('apiGetRegisterChallengeProfileUpdatedTeam.json').then(
+        (responseNew) => {
+          cy.get('@config').then((config) => {
+            cy.get('@i18n').then((i18n) => {
+              // wait for GET request
+              cy.waitForRegisterChallengeGetApi(response);
+              cy.waitForMyTeamGetApi();
+              cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+                cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                  (teamsResponseNextFullTeam) => {
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    const teamsResults = [
+                      ...teamsResponse.results,
+                      ...teamsResponseNextFullTeam.results,
+                    ];
+                    // team value is read from teams array
+                    cy.fixture('apiGetTeamsResponse.json').then(() => {
+                      // initial team name
+                      cy.dataCy(selectorTeam)
+                        .find(dataSelectorValue)
+                        .should('contain', teamsResults[0].name);
+                      // click edit team button
+                      cy.dataCy(selectorTeam)
+                        .find(dataSelectorEdit)
+                        .should('be.visible')
+                        .click();
+                      // verify change team dialog title
+                      cy.contains(
+                        i18n.global.t('profile.titleUpdateTeam'),
+                      ).should('be.visible');
+                      // verify team edit form
+                      cy.dataCy('profile-details-form-team').should(
+                        'be.visible',
+                      );
+                      // intercept POST request
+                      cy.interceptRegisterChallengePutApi(
+                        config,
+                        i18n,
+                        response.results[0].personal_details.id,
+                        responseNew,
+                      );
+                      // override intercept GET request
+                      cy.interceptRegisterChallengeGetApi(
+                        config,
+                        i18n,
+                        responseNew,
+                      );
+                      // change team to new value
+                      cy.dataCy('profile-details-form-team')
+                        .find('.q-field__append')
+                        .should('be.visible')
+                        .click();
+                      // select new FULL team
+                      cy.contains(teamsResults[2].name)
+                        .should('be.visible')
+                        .click();
+                      // save
+                      cy.dataCy('profile-details-form-team')
+                        .find(dataSelectorButtonSave)
+                        .click();
+                      // refetch data about teams to validate change
+                      cy.waitForMyTeamGetApi();
+                      cy.fixture('apiGetTeamsResponse').then(
+                        (teamsResponse) => {
+                          cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                            (teamsResponseNextFullTeam) => {
+                              cy.waitForTeamsGetApi(
+                                teamsResponse,
+                                teamsResponseNextFullTeam,
+                              );
+                            },
+                          );
+                        },
+                      );
+                      // show error message - full team
+                      cy.contains(
+                        i18n.global.t(
+                          'postRegisterChallenge.messageTeamMaxMembersReached',
+                        ),
+                      ).should('be.visible');
+                      // team is the same (despite previously overriding GET request)
+                      cy.dataCy(selectorTeam)
+                        .find(dataSelectorValue)
+                        .should('contain', teamsResults[0].name);
+                    });
+                  },
+                );
+              });
             });
           });
         },

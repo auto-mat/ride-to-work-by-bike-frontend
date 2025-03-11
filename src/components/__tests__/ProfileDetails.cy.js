@@ -207,10 +207,10 @@ describe('<ProfileDetails>', () => {
                 i18n,
                 responseRegisterChallenge.results[0].organization_id,
               );
+              // intercept teams API
               cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
                 cy.fixture('apiGetTeamsResponseNextFullTeam').then(
                   (teamsResponseNextFullTeam) => {
-                    // intercept teams for first subsidiary
                     cy.interceptTeamsGetApi(
                       rideToWorkByBikeConfig,
                       i18n,
