@@ -103,6 +103,7 @@ function coreTests() {
   it('renders correct content for each team member item', () => {
     cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
       cy.dataCy('team-member-item').each((item, index) => {
+        cy.dataCy('team-members-list').click();
         // name
         cy.wrap(item).should(
           'contain',

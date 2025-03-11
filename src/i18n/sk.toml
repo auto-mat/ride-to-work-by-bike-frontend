@@ -997,6 +997,7 @@ approved = "Schválen*á"
 denied = "Zamietnut*á"
 titleMembers = "Členovia vášho tímu"
 undecided = "Čaká na schválenie"
+showHideMembers = "Zobraziť / Skryť členov"
 
 [resetPassword]
 apiMessageError = "Požiadavka na obnovenie hesla sa nepodarila."

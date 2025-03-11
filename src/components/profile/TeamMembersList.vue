@@ -71,50 +71,91 @@ export default defineComponent({
       {{ $t('teamMembersList.titleMembers') }}
     </h3>
     <!-- List -->
-    <q-list bordered separator :style="{ borderRadius }">
-      <!-- Member -->
-      <q-item
-        v-for="member in teamMembers"
-        :key="member.id"
-        data-cy="team-member-item"
-      >
-        <div class="full-width row gap-4 items-center">
-          <!-- Name -->
-          <div class="col-12 col-lg-3">
-            <b data-cy="team-member-name">{{ member.name }}</b>
-          </div>
-          <!-- Email -->
-          <div class="col-12 col-lg-4">
-            <a
-              data-cy="team-member-email"
-              href="mailto:{{ member.email }}"
-              class="text-primary"
-              >{{ member.email }}</a
+    <q-expansion-item header-class="disable-bg-hover" data-cy="team-members">
+      <template v-slot:header>
+        <q-item-section avatar>
+          <q-avatar icon="groups" color="secondary" text-color="primary" />
+        </q-item-section>
+
+        <q-item-section>
+          {{ $t('teamMembersList.showHideMembers') }}
+        </q-item-section>
+      </template>
+      <q-card>
+        <q-card-section>
+          <q-list bordered separator class="rounded-borders">
+            <!-- Member -->
+            <q-expansion-item
+              class="full-width"
+              v-for="member in teamMembers"
+              :key="member.id"
+              header-class="disable-bg-hover"
+              data-cy="team-member-item"
             >
-          </div>
-          <!-- Gender -->
-          <div v-if="member.sex" class="col-12 col-sm">
-            <q-icon
-              v-if="member.sex"
-              :name="member.sex"
-              :color="member.sex == 'male' ? 'blue' : 'red'"
-              size="xs"
-              data-cy="team-member-gender"
-            ></q-icon>
-          </div>
-          <!-- Approval status -->
-          <div class="col-12 col-sm-auto">
-            <q-chip
-              :color="getStatusColor(member)"
-              :icon="getStatusIcon(member)"
-              class="q-ma-none"
-              data-cy="team-member-status-chip"
-            >
-              {{ getStatusLabel(member) }}
-            </q-chip>
-          </div>
-        </div>
-      </q-item>
-    </q-list>
+              <template v-slot:header>
+                <div class="row full-width">
+                  <div class="col-9">
+                    <q-item-section avatar>
+                      <q-chip
+                        color="secondary"
+                        text-color="primary"
+                        size="md"
+                        data-cy="team-member-name"
+                      >
+                        <!-- Gender -->
+                        <q-avatar
+                          :icon="member.sex"
+                          :color="member.sex == 'male' ? 'blue' : 'red'"
+                          text-color="white"
+                          size="md"
+                        />
+                        <!-- Name -->
+                        {{ member.name }}
+                      </q-chip>
+                    </q-item-section>
+                  </div>
+                  <div class="col-sm-auto">
+                    <!-- Team membership status -->
+                    <q-item-section side>
+                      <q-chip
+                        :color="getStatusColor(member)"
+                        :icon="getStatusIcon(member)"
+                        data-cy="team-member-status-chip"
+                      >
+                        {{ getStatusLabel(member) }}
+                      </q-chip>
+                    </q-item-section>
+                  </div>
+                </div>
+              </template>
+              <q-card>
+                <q-card-section>
+                  <!-- Email -->
+                  <q-chip color="secondary" text-color="primary">
+                    <q-avatar
+                      icon="contact_mail"
+                      color="secondary"
+                      text-color="primary"
+                    />
+                    <a
+                      data-cy="team-member-email"
+                      href="mailto:{{ member.email }}"
+                      class="text-primary"
+                      >{{ member.email }}</a
+                    >
+                  </q-chip>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+        </q-card-section>
+      </q-card>
+    </q-expansion-item>
   </div>
 </template>
+
+<style lang="scss">
+.disable-bg-hover.q-hoverable:hover > .q-focus-helper {
+  opacity: 0 !important;
+}
+</style>

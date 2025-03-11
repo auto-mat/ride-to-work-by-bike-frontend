@@ -169,10 +169,6 @@ describe('<ProfileDetails>', () => {
     });
 
     coreTests();
-
-    it('renders team members list', () => {
-      cy.dataCy('team-members-list').should('be.visible');
-    });
   });
 
   context('mobile', () => {
@@ -215,6 +211,17 @@ describe('<ProfileDetails>', () => {
       );
       cy.mount(ProfileDetails, {
         props: {},
+      });
+      // initialize store with myTeam array
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          // set myTeam in store
+          const myTeam = computed(() => registerChallengeStore.getMyTeam);
+          registerChallengeStore.setMyTeam(responseMyTeam.results[0]);
+          cy.wrap(myTeam)
+            .its('value')
+            .should('deep.equal', responseMyTeam.results[0]);
+        });
       });
       cy.viewport('iphone-6');
     });
@@ -1130,6 +1137,12 @@ function coreTests() {
           .should('have.class', classSelectorToggleInnerTruthy);
       });
     });
+  });
+
+  // Team members list
+  it('renders team members list', () => {
+    cy.dataCy('team-members-list').should('be.visible');
+    cy.dataCy('team-members').should('be.visible').click();
   });
 
   it('renders registration details section', () => {

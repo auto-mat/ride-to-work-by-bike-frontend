@@ -997,6 +997,7 @@ approved = "Approved"
 denied = "Denied"
 titleMembers = "Members of your team"
 undecided = "Waiting for approval"
+showHideMembers = "Show / Hide members"
 
 [resetPassword]
 apiMessageError = "Request to reset password failed."
