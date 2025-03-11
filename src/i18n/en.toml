@@ -734,6 +734,7 @@ titleUpdateEmail = "Edit e-mail"
 titleUpdateGender = "Edit performance category"
 titleUpdateNickname = "Edit nickname"
 titleUpdatePhone = "Edit phone number"
+titleUpdateTeam = "Change team"
 
 [putRegisterChallenge]
 apiMessageError = "Error updating profile."

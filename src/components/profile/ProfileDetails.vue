@@ -300,8 +300,11 @@ export default defineComponent({
     };
 
     const onUpdateTeam = async (teamId: number | null): Promise<void> => {
+      logger?.debug(`Selected to change team to team ID <${teamId}>.`);
       const canJoinTeam = await registerChallengeStore.validateTeamJoin(teamId);
+      logger?.debug(`Can join team with ID <${teamId}> <${canJoinTeam}>.`);
       if (teamId && canJoinTeam) {
+        logger?.debug(`Update team to <${teamId}>.`);
         await onUpdateRegisterChallengeDetails({
           teamId: teamId,
           personalDetails: {

@@ -734,6 +734,7 @@ titleUpdateEmail = "Upraviť e-mail"
 titleUpdateGender = "Upraviť kategóriu výkonu"
 titleUpdateNickname = "Upraviť prezývku"
 titleUpdatePhone = "Upraviť telefónne číslo"
+titleUpdateTeam = "Zmeniť tím"
 
 [putRegisterChallenge]
 apiMessageError = "Chyba pri aktualizácii profilu."
