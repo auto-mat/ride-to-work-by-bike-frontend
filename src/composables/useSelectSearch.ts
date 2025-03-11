@@ -10,8 +10,8 @@ import type { Ref } from 'vue';
 
 /**
  * Composable for handling search functionality in select components
- * @param options The full list of options to search through
- * @returns Object containing filtered options and filter function
+ * @param {Ref<FormSelectOption[]|FormSelectTableOption[]>} options - The full list of options to search through
+ * @returns {object} - Object containing filtered options and filter function
  */
 export const useSelectSearch = (
   options: Ref<FormSelectOption[] | FormSelectTableOption[]>,
