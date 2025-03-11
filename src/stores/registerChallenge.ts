@@ -698,7 +698,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       // selected team members or max team members are not set - error
       if (!selectedTeam?.members || !maxTeamMembers) {
         this.$log?.debug(
-          `Selected team members <${selectedTeam?.members}>,` +
+          `Selected team members <${JSON.stringify(selectedTeam?.members, null, 2)}>,` +
             ` max. team members <${maxTeamMembers}>.`,
         );
         Notify.create({
@@ -717,7 +717,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       // check if selected team is my team
       const isSelectedTeamMyTeam: boolean = myTeam?.id === selectedTeam.id;
-      this.$log?.debug(`Selected team is my team <${isSelectedTeamMyTeam}>.`);
+      this.$log?.debug(`Is selected team my team <${isSelectedTeamMyTeam}>.`);
       // if team is full and it's not user's current team, they can't join
       if (isSelectedTeamMembersCountMax && !isSelectedTeamMyTeam) {
         Notify.create({
@@ -775,7 +775,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.isLoadingTeams = true;
         await loadTeams(this.subsidiaryId);
         this.teams = teams.value;
-        logger?.debug(`Loaded teams <${this.teams}> saved into store.`);
+        logger?.debug(
+          `Loaded teams <${JSON.stringify(this.teams, null, 2)}> saved into store.`,
+        );
         this.isLoadingTeams = false;
       }
     },
