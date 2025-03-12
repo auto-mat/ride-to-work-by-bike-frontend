@@ -660,17 +660,18 @@ labelOfferValidationTshirt = "Tričko nebo nákrčník"
 labelOfferValidationAccount = "Aktivní profil zde v systému Pro práci na kole na mobilním telefonu nebo počítači"
 
 [onboarding]
-buttonInviteFriends = "Pozvať priateľov"
-descriptionStep1 = "Pomôžete svojmu zdraviu a duševnej pohode, čistejšiemu ovzdušiu, čistejšej planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
-descriptionInvite = "Napíšte svojim kolegom, spolupracovníkom, priateľom alebo blízkym, aby sa k vám pridali!"
-labelInviteEmailAddresses = "E-mailové adresy oddelené čiarkou"
+buttonInviteFriends = "Prizvať priateľov"
+descriptionStep1 = "Pomôžete tak svojmu zdraviu a psychickej pohode, čistejšiemu ovzdušiu, planéte, zdravším a bezpečnejším mestám. Ako to funguje? Pozrite si video nižšie:"
+descriptionInvite = "Napíšte kolegyniam, kolegom, kamarátkam, kamarátom alebo blízkym, nech sa k vám pridajú do výzvy!"
+labelInviteEmailAddresses = "E-mailové adresy"
+buttonAddEmailField = "Pridať ďalší e-mail"
+buttonRemoveEmailField = "Odobrať e-mail"
 labelLanguage = "Jazyk správy"
-messageInvalidEmailList = "Všetky e-mailové adresy musia byť platné."
-messageRequiredEmailList = "Musí byť vyplnená aspoň jedna adresa."
-textMessage = "Hezký deň,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
-titleMessage = "Pozvánka k Do práce na bicykli od {name}"
-titleStep1 = "Sme radi, že ste prijali túto výzvu spolu s nami!"
-titleStep2 = "Pozvite na výzvu svojich blízkych"
+messageTeamFull = "Tím je plný. Nemôžete pridať ďalších členov."
+textMessage = "Dobrý deň,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
+titleMessage = "Pozvánka na Do práce na bicykli od {name}"
+titleStep1 = "Sme radi, že s nami idete do výzvy!"
+titleStep2 = "Prizvite svojich blízkych do výzvy"
 
 [payment]
 labelOrganization = "Organizácia"
@@ -962,6 +963,11 @@ apiMessageAlreadyConfirmed = "E-mail už bol potvrdený."
 apiMessageError = "Chyba pri odesielaní potvrzovacieho e-mailu."
 apiMessageErrorWithMessage = "Chyba pri odesielaní potvrzovacieho e-mailu. Chyba: {error}"
 apiMessageSuccess = "Potvrzovací e-mail bol úspešne odoslaný."
+
+[sendTeamMembershipInvitationEmail]
+apiMessageError = "Chyba pri odosielaní pozvánky. Skontrolujte si prosím zadané adresy."
+apiMessageErrorWithMessage = "Chyba pri odosielaní pozvánky. Chyba: {error}"
+apiMessageSuccess = "Pozvánka bola úspešne odoslaná"
 
 [statsBar]
 labelFrequency = "pravidelnosť"

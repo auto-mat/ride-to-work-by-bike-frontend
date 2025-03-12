@@ -665,10 +665,11 @@ labelOfferValidationAccount = "Aktivním profilem zde v systému Do práce na ko
 buttonInviteFriends = "Přizvat přátele"
 descriptionStep1 = "Pomůžete tak svému zdraví a psychické pohodě, čistějšímu ovzduší, planetě, zdravějším a bezpečnějším městům. Jak to funguje? Shlédněte video níže:"
 descriptionInvite = "Napište kolegyním, kolegům, kamarádkám, kamarádům nebo blízkým, ať se s vámi přidají do výzvy!"
-labelInviteEmailAddresses = "Emailové adresy, oddělené čárkou"
+labelInviteEmailAddresses = "E-mailové adresy"
+buttonAddEmailField = "Přidat další e-mail"
+buttonRemoveEmailField = "Odebrat e-mail"
 labelLanguage = "Jazyk zprávy"
-messageInvalidEmailList = "Všechny e-mailové adresy musí být platné."
-messageRequiredEmailList = "Alespoň jedna adresa musí být vyplněna."
+messageTeamFull = "Váš tým je plný. Už nemůžete přidat další členy."
 textMessage = "Hezký den,<br />Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing faucibus aliquam congue in adipiscing gravida.<br />Sed magna sit eu nibh ullamcorper id ipsum orci:<ul><li>Aliquam justo tellus sed</li><li>Facilisis faucibus nisl</li><li>Quisque eget quam</li><li>Sagittis non odio</li><li>Est est commodo!</li></ul><p>Duis odio massa tortor morbi id tellus.</p><p>Bibendum vestibulum pellentesque dictum ac lectus eget, faucibus aliquam congue in adipiscing gravida</p>"
 titleMessage = "Pozvánka na Do Práce na Kole od {name}"
 titleStep1 = "Jsme rádi, že s námi jdete do výzvy!"
@@ -964,6 +965,11 @@ apiMessageAlreadyConfirmed = "E-mail již byl potvrzen."
 apiMessageError = "Chyba při odesílání potvrzovacího e-mailu."
 apiMessageErrorWithMessage = "Chyba při odesílání potvrzovacího e-mailu. Chyba: {error}"
 apiMessageSuccess = "Potvrzovací e-mail byl úspěšně odeslán."
+
+[sendTeamMembershipInvitationEmail]
+apiMessageError = "Chyba při odesílání pozvánky. Zkontrolujte si prosím zadané adresy."
+apiMessageErrorWithMessage = "Chyba při odesílání pozvánky. Chyba: {error}"
+apiMessageSuccess = "Pozvánka byla úspěšně odeslána"
 
 [statsBar]
 labelFrequency = "pravidelnost"

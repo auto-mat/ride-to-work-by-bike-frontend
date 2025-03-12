@@ -25,8 +25,6 @@ describe('<OnboardingStepper>', () => {
         'descriptionInvite',
         'labelInviteEmailAddresses',
         'labelLanguage',
-        'messageRequiredEmailList',
-        'messageInvalidEmailList',
         'textMessage',
         'titleMessage',
         'titleStep1',

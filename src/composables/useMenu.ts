@@ -92,10 +92,24 @@ export const useMenu = () => {
   /**
    * Get the bottom menu items
    * @param {string} urlDonate - The URL of the donate page
+   * @param {ComputedRef<number> | number} remainingSlots - Number of slots
+   *   remaining in my team
    * @returns {Link[]} - Array of bottom menu items
    */
-  const getMenuBottom = (urlDonate: string): Link[] => {
+  const getMenuBottom = (
+    urlDonate: string,
+    remainingSlots: ComputedRef<number> | number,
+    openDialog: () => void,
+  ): Link[] => {
     const menuBottom: Link[] = [
+      {
+        url: '',
+        icon: 'svguse:icons/drawer_menu/icons.svg#lucide-mail',
+        name: 'inviteFriends',
+        title: 'inviteFriends',
+        onClick: () => openDialog(),
+        disabled: unref(remainingSlots) <= 0,
+      },
       {
         url: '',
         icon: 'svguse:icons/drawer_menu/icons.svg#lucide-gift',

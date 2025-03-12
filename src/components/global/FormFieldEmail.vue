@@ -24,6 +24,7 @@
  * - `useFormFieldValidationErrorCssClass` (boolean, optional): Use custom email form field
  *                                                              validation error CSS class
  *                                                              Defaults to `false`.
+ * - `hideLabel` (boolean, optional): Whether to hide the label.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -74,6 +75,10 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    hideLabel: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -105,7 +110,7 @@ export default defineComponent({
 <template>
   <div class="col-12 col-sm-6" data-cy="form-email">
     <!-- Label -->
-    <label for="form-email" class="text-caption text-bold">
+    <label v-if="!hideLabel" for="form-email" class="text-caption text-bold">
       {{ $t('form.labelEmail') }}
     </label>
     <!-- Input -->

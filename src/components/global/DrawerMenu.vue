@@ -45,7 +45,7 @@ export default defineComponent({
       :key="item.name"
       dark
       clickable
-      :to="item.disabled ? '' : item.url"
+      :to="item.disabled || item.onClick ? '' : item.url"
       :disable="item.disabled"
       v-bind="{
         ...(item.href ? { href: item.href } : {}),
@@ -54,6 +54,7 @@ export default defineComponent({
       active-class="menu-active-item"
       class="flex text-body1 items-center q-px-lg"
       data-cy="drawer-menu-item"
+      @click="item.onClick && item.onClick()"
     >
       <!-- Link icon -->
       <q-icon

@@ -236,6 +236,10 @@ export default defineComponent({
       if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
         await registerChallengeStore.checkIsUserOrganizationAdmin();
       }
+      // load register challenge data if not available
+      if (!registerChallengeStore.getTeamId) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
       // load my team data if not available
       if (!registerChallengeStore.getMyTeam) {
         logger?.info('My team data is not available, loading my team data.');

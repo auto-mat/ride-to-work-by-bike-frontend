@@ -158,21 +158,21 @@ Cypress.Commands.add('testMessageLanguageSelect', (i18n) => {
       .should('be.visible')
       .then(($el) => {
         const textContent = $el.text();
-        cy.stripHtmlTags(i18n.global.t('onboarding.titleMessage', locale)).then(
-          (text) => {
-            expect(textContent).to.contain(text);
-          },
-        );
+        cy.stripHtmlTags(
+          i18n.global.t('onboarding.titleMessage', {}, { locale }),
+        ).then((text) => {
+          expect(textContent).to.contain(text);
+        });
       });
     cy.dataCy('text-message')
       .should('be.visible')
       .then(($el) => {
         const textContent = $el.text();
-        cy.stripHtmlTags(i18n.global.t('onboarding.textMessage', locale)).then(
-          (text) => {
-            expect(textContent).to.contain(text);
-          },
-        );
+        cy.stripHtmlTags(
+          i18n.global.t('onboarding.textMessage', {}, { locale }),
+        ).then((text) => {
+          expect(textContent).to.contain(text);
+        });
       });
   });
 });
@@ -2653,6 +2653,8 @@ Cypress.Commands.add(
     defLocale,
     isUserOrganizationAdmin = false,
     isUserStaff = false,
+    remainingSlots = 0,
+    openDialog = () => {},
   }) => {
     const { getMenuTop, getMenuBottom } = useMenu();
     const {
@@ -2682,72 +2684,35 @@ Cypress.Commands.add(
         urlAdmin,
       }),
     ).then((menuTop) => {
-      cy.wrap(getMenuBottom(urlDonate)).then((menuBottom) => {
-        // Check footer panel menu
-        cy.dataCy('footer-panel-menu').should('be.visible');
-        cy.dataCy('footer-panel-menu')
-          .should('be.visible')
-          .find('.q-item')
-          // items shown in bottom bar are set to 3+1 for "show more"
-          .should('have.length', config.mobileBottomPanelVisibleItems + 1);
-
-        // Show and check slide-out dialog panel
-        cy.dataCy('footer-panel-menu-hamburger').click();
-        cy.dataCy('footer-panel-menu-dialog').should('be.visible');
-        cy.dataCy('footer-panel-menu-dialog')
-          .should('be.visible')
-          .find('.q-item')
-          .should(
-            'have.length',
-            // items in slide-out dialog panel are remaining items
-            menuTop.length +
-              menuBottom.length -
-              config.mobileBottomPanelVisibleItems,
-          );
-        // check that menu contains donate link
-        cy.dataCy('footer-panel-menu-dialog').within(() => {
-          cy.get('.q-item')
-            .contains('.q-item', i18n.global.t('drawerMenu.donate'))
+      cy.wrap(getMenuBottom(urlDonate, remainingSlots, openDialog)).then(
+        (menuBottom) => {
+          // Check footer panel menu
+          cy.dataCy('footer-panel-menu').should('be.visible');
+          cy.dataCy('footer-panel-menu')
             .should('be.visible')
-            .and('have.attr', 'href', urlDonate)
-            .should('have.attr', 'target', '_blank')
-            .invoke('attr', 'href')
-            .then((href) => {
-              cy.request({
-                url: href,
-                failOnStatusCode: failOnStatusCode,
-                headers: { ...userAgentHeader },
-              }).then((resp) => {
-                if (resp.status === httpTooManyRequestsStatus) {
-                  cy.log(httpTooManyRequestsStatusMessage);
-                  return;
-                }
-                expect(resp.status).to.eq(httpSuccessfullStatus);
-              });
-            });
-        });
-        if (isUserOrganizationAdmin) {
-          // user is coordinator - menu should contain coordinator item
+            .find('.q-item')
+            // items shown in bottom bar are set to 3+1 for "show more"
+            .should('have.length', config.mobileBottomPanelVisibleItems + 1);
+
+          // Show and check slide-out dialog panel
+          cy.dataCy('footer-panel-menu-hamburger').click();
+          cy.dataCy('footer-panel-menu-dialog').should('be.visible');
+          cy.dataCy('footer-panel-menu-dialog')
+            .should('be.visible')
+            .find('.q-item')
+            .should(
+              'have.length',
+              // items in slide-out dialog panel are remaining items
+              menuTop.length +
+                menuBottom.length -
+                config.mobileBottomPanelVisibleItems,
+            );
+          // check that menu contains donate link
           cy.dataCy('footer-panel-menu-dialog').within(() => {
             cy.get('.q-item')
-              .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
-              .should('be.visible');
-          });
-        } else {
-          // user is not coordinator - menu should not contain coordinator item
-          cy.dataCy('footer-panel-menu-dialog').within(() => {
-            cy.get('.q-item')
-              .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
-              .should('not.exist');
-          });
-        }
-        if (isUserStaff) {
-          // user is staff - menu should contain admin item
-          cy.dataCy('footer-panel-menu-dialog').within(() => {
-            cy.get('.q-item')
-              .contains('.q-item', i18n.global.t('drawerMenu.admin'))
+              .contains('.q-item', i18n.global.t('drawerMenu.donate'))
               .should('be.visible')
-              .and('have.attr', 'href', urlAdmin)
+              .and('have.attr', 'href', urlDonate)
               .should('have.attr', 'target', '_blank')
               .invoke('attr', 'href')
               .then((href) => {
@@ -2764,15 +2729,54 @@ Cypress.Commands.add(
                 });
               });
           });
-        } else {
-          // user is not staff - menu should not contain admin item
-          cy.dataCy('footer-panel-menu-dialog').within(() => {
-            cy.get('.q-item')
-              .contains('.q-item', i18n.global.t('drawerMenu.admin'))
-              .should('not.exist');
-          });
-        }
-      });
+          if (isUserOrganizationAdmin) {
+            // user is coordinator - menu should contain coordinator item
+            cy.dataCy('footer-panel-menu-dialog').within(() => {
+              cy.get('.q-item')
+                .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
+                .should('be.visible');
+            });
+          } else {
+            // user is not coordinator - menu should not contain coordinator item
+            cy.dataCy('footer-panel-menu-dialog').within(() => {
+              cy.get('.q-item')
+                .contains('.q-item', i18n.global.t('drawerMenu.coordinator'))
+                .should('not.exist');
+            });
+          }
+          if (isUserStaff) {
+            // user is staff - menu should contain admin item
+            cy.dataCy('footer-panel-menu-dialog').within(() => {
+              cy.get('.q-item')
+                .contains('.q-item', i18n.global.t('drawerMenu.admin'))
+                .should('be.visible')
+                .and('have.attr', 'href', urlAdmin)
+                .should('have.attr', 'target', '_blank')
+                .invoke('attr', 'href')
+                .then((href) => {
+                  cy.request({
+                    url: href,
+                    failOnStatusCode: failOnStatusCode,
+                    headers: { ...userAgentHeader },
+                  }).then((resp) => {
+                    if (resp.status === httpTooManyRequestsStatus) {
+                      cy.log(httpTooManyRequestsStatusMessage);
+                      return;
+                    }
+                    expect(resp.status).to.eq(httpSuccessfullStatus);
+                  });
+                });
+            });
+          } else {
+            // user is not staff - menu should not contain admin item
+            cy.dataCy('footer-panel-menu-dialog').within(() => {
+              cy.get('.q-item')
+                .contains('.q-item', i18n.global.t('drawerMenu.admin'))
+                .should('not.exist');
+            });
+          }
+        },
+      );
     });
   },
 );
@@ -2857,29 +2861,29 @@ Cypress.Commands.add(
 );
 
 /**
-* Wait for intercept my organization admin API call and compare response object
-* Wait for `@getMyOrganizationAdmin` intercept
-* @param {Object} expectedResponse - Expected response body
-*/
+ * Wait for intercept my organization admin API call and compare response object
+ * Wait for `@getMyOrganizationAdmin` intercept
+ * @param {Object} expectedResponse - Expected response body
+ */
 Cypress.Commands.add(
- 'waitForMyOrganizationAdminGetApi',
- (expectedResponse = null) => {
-   cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
-     cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
-       expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
-         bearerTokeAuth,
-       );
-       if (getMyOrganizationAdmin.response) {
-         expect(getMyOrganizationAdmin.response.statusCode).to.equal(
-           httpSuccessfullStatus,
-         );
-         expect(getMyOrganizationAdmin.response.body).to.deep.equal(
-           expectedResponse || defaultResponse,
-         );
-       }
-     });
-   });
- },
+  'waitForMyOrganizationAdminGetApi',
+  (expectedResponse = null) => {
+    cy.fixture('apiGetMyOrganizationAdmin.json').then((defaultResponse) => {
+      cy.wait('@getMyOrganizationAdmin').then((getMyOrganizationAdmin) => {
+        expect(getMyOrganizationAdmin.request.headers.authorization).to.include(
+          bearerTokeAuth,
+        );
+        if (getMyOrganizationAdmin.response) {
+          expect(getMyOrganizationAdmin.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getMyOrganizationAdmin.response.body).to.deep.equal(
+            expectedResponse || defaultResponse,
+          );
+        }
+      });
+    });
+  },
 );
 
 /**
@@ -2931,6 +2935,54 @@ Cypress.Commands.add(
         }
       });
     });
+  },
+);
+
+// intercept send team membership invitation email API request
+Cypress.Commands.add(
+  'interceptSendTeamMembershipInvitationEmailApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiSendTeamMembershipInvitationEmail } =
+      config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiSendTeamMembershipInvitationEmailLocalized = `${apiBaseUrl}${urlApiSendTeamMembershipInvitationEmail}`;
+
+    cy.fixture('apiPostSendTeamMembershipInvitationEmailResponse.json').then(
+      (defaultResponse) => {
+        cy.intercept('POST', urlApiSendTeamMembershipInvitationEmailLocalized, {
+          statusCode: responseStatusCode || httpSuccessfullStatus,
+          body: responseBody || defaultResponse,
+        }).as('sendTeamMembershipInvitationEmailApi');
+      },
+    );
+  },
+);
+
+// wait for send team membership invitation email API request
+Cypress.Commands.add(
+  'waitForSendTeamMembershipInvitationEmailApi',
+  (expectedRequest, expectedResponse = null) => {
+    cy.fixture('apiPostSendTeamMembershipInvitationEmailResponse.json').then(
+      (defaultResponse) => {
+        cy.wait('@sendTeamMembershipInvitationEmailApi').then(
+          ({ request, response }) => {
+            expect(request.headers.authorization).to.include(bearerTokeAuth);
+            expect(request.body).to.deep.equal(expectedRequest);
+            if (response) {
+              expect(response.statusCode).to.equal(httpSuccessfullStatus);
+              expect(response.body).to.deep.equal(
+                expectedResponse || defaultResponse,
+              );
+            }
+          },
+        );
+      },
+    );
   },
 );
 

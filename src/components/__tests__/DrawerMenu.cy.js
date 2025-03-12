@@ -26,6 +26,8 @@ const selectorDrawerMenuItemIcon = 'drawer-menu-item-icon';
 // variables
 const iconSize = 18;
 const fontSize = '16px';
+const remainingTeamSlots = 4;
+const openDialog = () => {};
 
 const {
   urlRideToWorkByBikeOldFrontendDjangoApp,
@@ -186,7 +188,11 @@ describe('DrawerMenu', () => {
         defaultLocale,
         i18n,
       );
-      const menuBottom = getMenuBottom(urlDonate);
+      const menuBottom = getMenuBottom(
+        urlDonate,
+        remainingTeamSlots,
+        openDialog,
+      );
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,
@@ -239,7 +245,11 @@ describe('DrawerMenu', () => {
         defaultLocale,
         i18n,
       );
-      const menuBottom = getMenuBottom(urlDonate);
+      const menuBottom = getMenuBottom(
+        urlDonate,
+        remainingTeamSlots,
+        openDialog,
+      );
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,

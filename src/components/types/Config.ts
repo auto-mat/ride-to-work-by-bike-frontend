@@ -84,6 +84,7 @@ export interface ConfigGlobal {
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
   urlApiSendRegistrationConfirmationEmail: string;
+  urlApiSendTeamMembershipInvitationEmail: string;
   urlApiSubsidiaries: string;
   urlApiThisCampaign: string;
   urlApiTeams: string;

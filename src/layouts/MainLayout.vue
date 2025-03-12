@@ -10,6 +10,7 @@ import AutomatLogoBanner from 'components/global/AutomatLogoBanner.vue';
 import DrawerHeader from 'components/global/DrawerHeader.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
+import DialogInviteFriends from 'components/global/DialogInviteFriends.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 import UserSelect from 'components/global/UserSelect.vue';
 
@@ -27,6 +28,8 @@ import type { Link } from 'components/types';
 import type { Logger } from 'components/types/Logger';
 
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
+import { useInviteFriendsStore } from 'src/stores/inviteFriends';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // utils
@@ -50,12 +53,14 @@ export default defineComponent({
     DrawerHeader,
     DrawerMenu,
     FooterBar,
+    DialogInviteFriends,
     MobileBottomPanel,
     UserSelect,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const route = useRoute();
+    const challengeStore = useChallengeStore();
     const registerChallengeStore = useRegisterChallengeStore();
 
     const isHomePage = computed(
@@ -77,8 +82,16 @@ export default defineComponent({
         i18n,
       );
     });
+
+    const remainingSlots = computed((): number => {
+      const maxTeamMembers = challengeStore.getMaxTeamMembers;
+      const myTeam = registerChallengeStore.getMyTeam;
+      if (!myTeam || !maxTeamMembers) return 0;
+      return maxTeamMembers - myTeam.member_count;
+    });
+    const { openDialog } = useInviteFriendsStore();
     const menuBottom = computed(() => {
-      return getMenuBottom(urlDonate.value);
+      return getMenuBottom(urlDonate.value, remainingSlots.value, openDialog);
     });
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,
@@ -169,6 +182,9 @@ export default defineComponent({
     <q-footer class="position-static md-position-absolute bg-transparent">
       <mobile-bottom-panel />
     </q-footer>
+
+    <!-- Invite friends dialog -->
+    <dialog-invite-friends />
   </q-layout>
 </template>
 

@@ -133,6 +133,8 @@ export const testDesktopSidebar = (): void => {
   const selectorDrawerMenuTop = 'drawer-menu-top';
   const selectorDrawerMenuBottom = 'drawer-menu-bottom';
   const selectorAutomatLogoBanner = 'automat-logo-banner';
+  const remainingTeamSlots = 4;
+  const openDialog = () => {};
 
   it('renders left drawer', () => {
     cy.task('getAppConfig', process).then((config) => {
@@ -166,7 +168,7 @@ export const testDesktopSidebar = (): void => {
         defaultLocale,
         defaultLocale,
       );
-      if (getMenuBottom(urlDonate).length > 0) {
+      if (getMenuBottom(urlDonate, remainingTeamSlots, openDialog).length > 0) {
         cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
       }
       cy.dataCy(selectorAutomatLogoBanner).should('be.visible');
