@@ -36,6 +36,8 @@ subtitle = "Subtitle"
 notifyMessagePosition = "top"
 mobileBottomPanelVisibleItems = 3
 
+indexPageVisibleOfferCount = 6
+
 # CONTACT DETAILS
 
 # Emails
@@ -153,6 +155,7 @@ dateTimeFormatsAllLocales = '''
 secretString = "SECRET"
 googleLoginAppId = "SECRET"
 facebookLoginAppId = "SECRET"
+apiBaseRtwbbFeedBearerToken = "SECRET"
 
 # LIBRARIES
 

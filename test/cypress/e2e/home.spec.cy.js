@@ -11,6 +11,8 @@ import {
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { calculateCountdownIntervals } from '../../../src/utils';
+import { isOfferValidMoreThanOneDay } from '../../../src/utils/get_offer_valid';
+import { routesConf } from '../../../src/router/routes_conf';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
@@ -37,18 +39,27 @@ describe('Home page', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.visit(Cypress.config('baseUrl'));
       cy.viewport('macbook-16');
-
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
-        cy.window().should('have.property', 'i18n');
-        cy.window().then((win) => {
-          // alias i18n
-          cy.wrap(win.i18n).as('i18n');
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.fixture('apiGetOffersResponseAlternative.json').then((offers) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            cy.interceptOffersGetApi(
+              config,
+              defLocale,
+              response.results[0].city_slug,
+              offers,
+            );
+            cy.wrap(offers).as('offers');
+          });
         });
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
       });
     });
 
@@ -256,8 +267,8 @@ describe('Home page', () => {
 
   context('desktop - user team state is "undecided"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.wrap(config).as('config');
+      cy.viewport('macbook-16');
+      cy.get('@config').then((config) => {
         // intercept campaign API
         cy.interceptThisCampaignGetApi(config, defLocale);
         // intercept register challenge API
@@ -283,7 +294,6 @@ describe('Home page', () => {
       cy.window().then((win) => {
         cy.wrap(win.i18n).as('i18n');
       });
-      cy.viewport('macbook-16');
     });
 
     it('shows banner team member "undecided" state', () => {
@@ -293,8 +303,7 @@ describe('Home page', () => {
 
   context('desktop - user team state is "approved"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.wrap(config).as('config');
+      cy.get('@config').then((config) => {
         // intercept campaign API
         cy.interceptThisCampaignGetApi(config, defLocale);
         // intercept register challenge API
@@ -355,8 +364,8 @@ describe('Home page', () => {
 
   context('mobile - user is not a coordinator', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.wrap(config).as('config');
+      cy.viewport('iphone-6');
+      cy.get('@config').then((config) => {
         // intercept is user organization admin API
         cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
           (response) => {
@@ -370,18 +379,28 @@ describe('Home page', () => {
         cy.fixture('apiGetMyTeamResponseApproved').then((responseMyTeam) => {
           cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
         });
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.fixture('apiGetOffersResponse.json').then((offers) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            cy.interceptOffersGetApi(
+              config,
+              defLocale,
+              response.results[0].city_slug,
+              offers,
+            );
+            cy.wrap(offers).as('offers');
+          });
+        });
       });
       // visit index page
       cy.visit(Cypress.config('baseUrl'));
       // wait for API intercepts
       cy.waitForThisCampaignApi();
-      cy.waitForMyTeamApi();
       cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
         (response) => {
           cy.waitForIsUserOrganizationAdminApi(response);
         },
       );
-      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -410,8 +429,8 @@ describe('Home page', () => {
 
   context('mobile - user is coordinator', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.wrap(config).as('config');
+      cy.viewport('iphone-6');
+      cy.get('@config').then((config) => {
         // intercept is user organization admin API
         cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
           (response) => {
@@ -422,6 +441,18 @@ describe('Home page', () => {
             );
           },
         );
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.fixture('apiGetOffersResponse.json').then((offers) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            cy.interceptOffersGetApi(
+              config,
+              defLocale,
+              response.results[0].city_slug,
+              offers,
+            );
+            cy.wrap(offers).as('offers');
+          });
+        });
       });
       // visit index page
       cy.visit(Cypress.config('baseUrl'));
@@ -432,7 +463,6 @@ describe('Home page', () => {
           cy.waitForIsUserOrganizationAdminApi(response);
         },
       );
-      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -565,8 +595,7 @@ describe('Home page', () => {
 
   context('mobile - user is staff', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
-        cy.wrap(config).as('config');
+      cy.get('@config').then((config) => {
         // intercept register challenge API with staff user
         cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
           (response) => {
@@ -601,9 +630,7 @@ describe('Home page', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         // load config
-        cy.task('getAppConfig', process).then((config) => {
-          // alias config
-          cy.wrap(config).as('config');
+        cy.get('@config').then((config) => {
           // intercept campaign API
           cy.interceptThisCampaignGetApi(config, defLocale);
         });
@@ -748,7 +775,38 @@ function coreTests() {
     cy.dataCy('dialog-card-event').should('be.visible');
   });
 
-  it.skip('allows user to display offer modal', () => {
+  it('renders max number of offers', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@offers').then((offers) => {
+        // wait for offers API
+        cy.waitForOffersApi(offers);
+        // calculate max number of offers to render
+        cy.wrap(
+          Math.min(
+            config.indexPageVisibleOfferCount,
+            offers.filter(isOfferValidMoreThanOneDay).length,
+          ),
+        ).then((count) => {
+          cy.dataCy('list-card-offer-item')
+            .should('be.visible')
+            .and('have.length', count);
+        });
+        // if there are more offers than config max, show "all offers" button
+        if (
+          offers.filter(isOfferValidMoreThanOneDay).length >
+          config.indexPageVisibleOfferCount
+        ) {
+          cy.dataCy('list-card-offer-button').should('be.visible').click();
+          // button goes to prizes page
+          cy.url().should('include', routesConf['prizes'].children.fullPath);
+        } else {
+          cy.dataCy('list-card-offer-button').should('not.exist');
+        }
+      });
+    });
+  });
+
+  it('allows user to display offer modal', () => {
     cy.dataCy('dialog-offer').should('not.exist');
     cy.dataCy('list-card-offer-item').first().should('be.visible').click();
     cy.dataCy('dialog-offer').should('be.visible');

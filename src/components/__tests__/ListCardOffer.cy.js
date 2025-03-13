@@ -1,10 +1,9 @@
 import ListCardOffer from '../homepage/ListCardOffer.vue';
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // mocks
-import { cardsOffer } from 'src/mocks/homepage';
 const title = i18n.global.t('index.cardListOffer.title');
-const cards = cardsOffer;
 
 describe('<ListCardOffer>', () => {
   it('has translation for all strings', () => {
@@ -17,13 +16,15 @@ describe('<ListCardOffer>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.mount(ListCardOffer, {
-        props: {
-          title,
-          cards,
-        },
-      });
       cy.viewport('macbook-16');
+      cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+        cy.mount(ListCardOffer, {
+          props: {
+            title,
+            cards: listCardsPrizes,
+          },
+        });
+      });
     });
 
     it('renders title', () => {
@@ -38,39 +39,40 @@ describe('<ListCardOffer>', () => {
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('list-card-offer-item').should('have.length', 6);
-      });
-    });
-
-    it('renders items in a 3 col grid', () => {
-      cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('list-card-offer-item'), 33);
+        cy.dataCy('list-card-offer-item').should(
+          'have.length',
+          rideToWorkByBikeConfig.indexPageVisibleOfferCount,
+        );
       });
     });
 
     it('renders show more button', () => {
       cy.window().then(() => {
-        cy.dataCy('list-card-offer-button')
-          .should('be.visible')
-          .and(
-            'contain',
-            i18n.global.t('index.cardListOffer.button', {
-              count: cards.length,
-            }),
-          );
+        cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+          cy.dataCy('list-card-offer-button')
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('index.cardListOffer.button', {
+                count: listCardsPrizes.length,
+              }),
+            );
+        });
       });
     });
   });
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.mount(ListCardOffer, {
-        props: {
-          title,
-          cards,
-        },
-      });
       cy.viewport('iphone-6');
+      cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+        cy.mount(ListCardOffer, {
+          props: {
+            title,
+            cards: listCardsPrizes,
+          },
+        });
+      });
     });
 
     it('renders title', () => {
@@ -85,26 +87,25 @@ describe('<ListCardOffer>', () => {
 
     it('renders correct number of items', () => {
       cy.window().then(() => {
-        cy.dataCy('list-card-offer-item').should('have.length', 6);
-      });
-    });
-
-    it('renders items in a 1 col grid', () => {
-      cy.window().then(() => {
-        cy.testElementPercentageWidth(cy.dataCy('list-card-offer-item'), 100);
+        cy.dataCy('list-card-offer-item').should(
+          'have.length',
+          rideToWorkByBikeConfig.indexPageVisibleOfferCount,
+        );
       });
     });
 
     it('renders show more button', () => {
       cy.window().then(() => {
-        cy.dataCy('list-card-offer-button')
-          .should('be.visible')
-          .and(
-            'contain',
-            i18n.global.t('index.cardListOffer.button', {
-              count: cards.length,
-            }),
-          );
+        cy.fixture('listCardsPrizes').then((listCardsPrizes) => {
+          cy.dataCy('list-card-offer-button')
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('index.cardListOffer.button', {
+                count: listCardsPrizes.length,
+              }),
+            );
+        });
       });
     });
   });

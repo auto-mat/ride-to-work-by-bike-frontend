@@ -97,6 +97,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
     myTeam: null as MyTeamResults | null,
+    citySlug: null as string | null,
     formRegisterCoordinator: deepObjectWithSimplePropsCopy(
       emptyFormRegisterCoordinator,
     ),
@@ -145,6 +146,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
     getMyTeam: (state): MyTeamResults | null => state.myTeam,
+    getCitySlug: (state): string | null => state.citySlug,
     getPaymentCategory: (state): PaymentCategory => state.paymentCategory,
     getIsSelectedRegisterCoordinator: (state): boolean =>
       state.isSelectedRegisterCoordinator,
@@ -345,6 +347,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setMyTeam(myTeam: MyTeamResults | null) {
       this.myTeam = myTeam;
     },
+    setCitySlug(citySlug: string | null) {
+      this.citySlug = citySlug;
+    },
     setPaymentCategory(paymentCategory: PaymentCategory) {
       this.paymentCategory = paymentCategory;
     },
@@ -542,6 +547,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Telephone opt-in store updated to <${this.getTelephoneOptIn}>.`,
       );
+      this.setCitySlug(parsedResponse.citySlug);
+      this.$log?.debug(`City slug store updated to <${this.getCitySlug}>.`);
       if (parsedResponse.language) {
         this.setLanguage(parsedResponse.language);
         this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);

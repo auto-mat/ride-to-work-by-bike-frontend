@@ -14,7 +14,10 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
+
+// adapters
+import { feedAdapter } from '../adapters/feedAdapter';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
@@ -25,12 +28,21 @@ import PageHeading from 'components/global/PageHeading.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
 
+// composables
+import { useApiGetPosts } from '../composables/useApiGetPosts';
+
 // fixtures
-import listCardsPrizes from '../../test/cypress/fixtures/listCardsPrizes.json';
 import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
 
 // types
-import { CardOffer as CardOfferType, CardPrizeType } from '../components/types';
+import type { CardPrizeType } from '../components/types';
+import type { Logger } from '../components/types/Logger';
+
+// stores
+import { useRegisterChallengeStore } from '../stores/registerChallenge';
+
+// utils
+import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'PrizesPage',
@@ -44,17 +56,45 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const city = ref<number | null>(null);
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const registerChallengeStore = useRegisterChallengeStore();
 
-    const prizes = listCardsPrizes as unknown;
-    const prizesList = prizes as CardOfferType[];
+    const enabledSelectCity = true;
+    const city = ref<string | null>(null);
+
+    const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
+    const cards = computed(() => feedAdapter.toCardOffer(posts.value));
+
+    onMounted(async () => {
+      // if citySlug is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCitySlug) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      // if citySlug is available, load posts, else we can't load posts
+      if (registerChallengeStore.getCitySlug) {
+        await loadPosts(
+          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
+        );
+        // set default value for city select
+        city.value = registerChallengeStore.getCitySlug;
+      }
+      // initiate watcher after the citySlug is loaded
+      watch(city, (newSlug: string | null) => {
+        if (newSlug) {
+          loadPosts(getOffersFeedParamSet(newSlug));
+        }
+      });
+    });
+
     const prizesListAvailable =
       listCardsPrizesAvailable.cards as CardPrizeType[];
 
     return {
       city,
-      prizesList,
+      cards,
+      isLoading,
       prizesListAvailable,
+      enabledSelectCity,
     };
   },
 });
@@ -69,6 +109,7 @@ export default defineComponent({
         <template #secondary>
           <!-- Select: City -->
           <form-field-select-city
+            v-if="enabledSelectCity"
             v-model="city"
             data-cy="form-field-select-city"
           />
@@ -89,7 +130,7 @@ export default defineComponent({
           data-cy="discount-offers-list"
         >
           <card-offer
-            v-for="card in prizesList"
+            v-for="card in cards"
             :key="card.title"
             :card="card"
             data-cy="discount-offers-item"
@@ -98,7 +139,7 @@ export default defineComponent({
       </div>
 
       <!-- Section: Available prizes -->
-      <section class="q-mt-lg" data-cy="available-prizes">
+      <section class="q-mt-xl" data-cy="available-prizes">
         <!-- TODO: Replace with section-heading -->
         <h2 class="text-h6 q-my-none" data-cy="section-heading-title">
           <span v-html="$t('prizes.titleAvailablePrizes', { url: '#' })" />

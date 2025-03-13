@@ -5,55 +5,68 @@
   "results": [
     {
       "id": 21,
-      "name": "Pardubice"
+      "name": "Pardubice",
+      "slug": "pardubice"
     },
     {
       "id": 10,
-      "name": "Plzeň"
+      "name": "Plzeň",
+      "slug": "plzen"
     },
     {
       "id": 4,
-      "name": "Praha"
+      "name": "Praha",
+      "slug": "praha"
     },
     {
       "id": 20,
-      "name": "Přerov"
+      "name": "Přerov",
+      "slug": "prerov"
     },
     {
       "id": 37,
-      "name": "Příbram"
+      "name": "Příbram",
+      "slug": "pribram"
     },
     {
       "id": 31,
-      "name": "Říčany u Prahy"
+      "name": "Říčany u Prahy",
+      "slug": "ricany-u-prahy"
     },
     {
       "id": 33,
-      "name": "Rychnov nad Kněžnou"
+      "name": "Rychnov nad Kněžnou",
+      "slug": "rychnov-n-kneznou"
     },
     {
       "id": 36,
-      "name": "Třebíč"
+      "name": "Třebíč",
+      "slug": "trebic"
     },
     {
       "id": 11,
-      "name": "Uherské Hradiště"
+      "name": "Uherské Hradiště",
+      "slug": "uherske-hradiste"
     },
     {
       "id": 12,
-      "name": "Ústí nad Labem"
+      "name": "Ústí nad Labem",
+      "slug": "usti-nad-labem"
     },
     {
       "id": 35,
-      "name": "Žďár nad Sázavou"
+      "name": "Žďár nad Sázavou",
+      "slug": "zdar-nad-sazavou"
     },
     {
       "id": 32,
-      "name": "Zlín"
+      "name": "Zlín",
+      "slug": "zlin"
     },
     {
       "id": 30,
-      "name": "Znojmo"
+      "name": "Znojmo",
+      "slug": "znojmo"
     }
   ]
 }

@@ -57,6 +57,7 @@ export const registerChallengeAdapter = {
       telephoneOptIn: apiData.personal_details.telephone_opt_in,
       language: apiData.personal_details.language,
       voucher: apiData.personal_details.discount_coupon,
+      citySlug: apiData.city_slug,
     };
   },
 

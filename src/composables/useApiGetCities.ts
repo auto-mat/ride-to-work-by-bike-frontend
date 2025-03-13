@@ -122,7 +122,7 @@ export const useApiGetCities = (
   const options = computed<FormOption[]>(() =>
     cities.value.map((city) => ({
       label: city.name,
-      value: city.id,
+      value: city.slug,
     })),
   );
 

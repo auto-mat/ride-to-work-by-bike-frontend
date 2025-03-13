@@ -670,3 +670,13 @@ export const systemTimeChallengeActive = new Date('2024-09-16T00:01:00.000Z');
 export const systemTimeRegistrationPhase1May = new Date(
   '2025-01-28T00:01:00.000Z',
 );
+/**
+ * Time when offers are no longer valid
+ * @see apiGetOffersResponse.json fixture for example
+ */
+export const systemTimeOffersInvalid = new Date('2025-08-30T00:00:00.000Z');
+/**
+ * Time when offers are valid
+ * @see apiGetOffersResponse.json fixture for example
+ */
+export const systemTimeOffersValid = new Date('2025-05-05T00:00:00.000Z');

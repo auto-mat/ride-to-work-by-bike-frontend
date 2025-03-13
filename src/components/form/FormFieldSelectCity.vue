@@ -6,7 +6,7 @@
  * It is commonly used in `CommunityPage` and `PrizesPage`.
  *
  * @props
- * - `modelValue` (number|null): The select value.
+ * - `modelValue` (string|null) - Selected city slug.
  *   It should be of type `string`.
  *
  * @events
@@ -31,15 +31,15 @@ export default defineComponent({
   emits: ['update:modelValue'],
   props: {
     modelValue: {
-      type: Number as () => number | null,
+      type: String as () => string | null,
       required: false,
       default: null,
     },
   },
   setup(props, { emit }) {
     const city = computed({
-      get: (): number | null => props.modelValue,
-      set: (value: number | null): void => emit('update:modelValue', value),
+      get: (): string | null => props.modelValue,
+      set: (value: string | null): void => emit('update:modelValue', value),
     });
 
     const logger = inject('vuejs3-logger') as Logger | null;
