@@ -29,6 +29,7 @@
 import { registerCommands } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 registerCommands();
 
+import { computed } from 'vue';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -3187,3 +3188,78 @@ Cypress.Commands.add('testApproveMaxTeamMembers', () => {
     });
   });
 });
+
+/**
+ * Intercept commute mode GET API call
+ * Provides `@commuteModeRequest` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptCommuteModeGetApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiCommuteMode } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiCommuteModeLocalized = `${apiBaseUrl}${urlApiCommuteMode}`;
+
+    cy.fixture('apiGetCommuteMode').then((defaultResponseBody) => {
+      cy.intercept('GET', urlApiCommuteModeLocalized, {
+        statusCode: responseStatusCode
+          ? responseStatusCode
+          : httpSuccessfullStatus,
+        body: responseBody ? responseBody : defaultResponseBody,
+      }).as('commuteModeRequest');
+    });
+  },
+);
+
+/**
+ * Wait for intercept commute mode API call and compare request/response object
+ * Wait for `@commuteModeRequest` intercept
+ * @param {object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add('waitForCommuteModeApi', (responseBody = null) => {
+  cy.fixture('apiGetCommuteMode').then((commuteModeResponse) => {
+    cy.wait('@commuteModeRequest').then((commuteModeRequest) => {
+      if (commuteModeRequest.response) {
+        expect(commuteModeRequest.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(commuteModeRequest.response.body).to.deep.equal(
+          responseBody ? responseBody : commuteModeResponse,
+        );
+      }
+    });
+  });
+});
+
+/**
+ * Set up trips store with commute modes from fixture
+ * @param {Object} store - Trips store instance
+ * @param {Object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add(
+  'setupTripsStoreWithCommuteModes',
+  (useTripsStore, responseBody = null) => {
+    cy.fixture('apiGetCommuteMode').then((defaultResponseBody) => {
+      const commuteModeResponse = responseBody
+        ? responseBody
+        : defaultResponseBody;
+      cy.wrap(useTripsStore()).then((tripsStore) => {
+        const commuteModes = computed(() => tripsStore.getCommuteModes);
+        tripsStore.setCommuteModes(commuteModeResponse.results);
+        // verify store state
+        cy.wrap(commuteModes)
+          .its('value')
+          .should('deep.equal', commuteModeResponse.results);
+      });
+    });
+  },
+);

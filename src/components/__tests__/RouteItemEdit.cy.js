@@ -1,8 +1,11 @@
+import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { hexToRgb } from 'app/test/cypress/utils';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import RouteItemEdit from 'components/routes/RouteItemEdit.vue';
 import { i18n } from '../../boot/i18n';
+import { useTripsStore } from 'src/stores/trips';
+import { TransportType } from 'src/components/types/Route';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -18,14 +21,17 @@ describe('<RouteItemEdit>', () => {
 
   context('route no direction label', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
           props: {
             route: routes.toWork,
           },
         });
-        cy.viewport('macbook-16');
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.viewport('macbook-16');
     });
 
     coreTests();
@@ -34,6 +40,7 @@ describe('<RouteItemEdit>', () => {
 
   context('route to work', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
           props: {
@@ -41,6 +48,8 @@ describe('<RouteItemEdit>', () => {
             displayLabel: true,
           },
         });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
         cy.viewport('macbook-16');
       });
     });
@@ -61,19 +70,15 @@ describe('<RouteItemEdit>', () => {
     });
 
     it('renders correct transport type', () => {
-      cy.fixture('routeListItem').then((routes) => {
-        cy.dataCy('description-transport')
-          .should('be.visible')
-          .and(
-            'contain',
-            i18n.global.t(`routes.transport.${routes.toWork.transport}`),
-          );
-      });
+      cy.dataCy('description-transport')
+        .should('be.visible')
+        .and('contain', i18n.global.t('routes.transport.bike'));
     });
   });
 
   context('route from work (0 distance)', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
           props: {
@@ -81,6 +86,8 @@ describe('<RouteItemEdit>', () => {
             displayLabel: true,
           },
         });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
         cy.viewport('macbook-16');
       });
     });
@@ -91,6 +98,7 @@ describe('<RouteItemEdit>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeListItem').then((routes) => {
         cy.mount(RouteItemEdit, {
           props: {
@@ -98,6 +106,8 @@ describe('<RouteItemEdit>', () => {
             displayLabel: true,
           },
         });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
         cy.viewport('iphone-6');
       });
     });
@@ -164,11 +174,15 @@ function coreTests() {
 
   it('hides distance if transport type is "car" or "none"', () => {
     // make sure transport type is bike
-    cy.dataCy('button-toggle-transport').eq(0).click();
+    cy.dataCy('button-toggle-transport')
+      .filter(`[data-value="${TransportType.bike}"]`)
+      .click();
     // distance is shown
     cy.dataCy('section-distance').should('be.visible');
     // change transport type - car
-    cy.dataCy('button-toggle-transport').eq(3).click();
+    cy.dataCy('button-toggle-transport')
+      .filter(`[data-value="${TransportType.car}"]`)
+      .click();
     cy.dataCy('description-transport').should(
       'contain',
       i18n.global.t('routes.transport.car'),
@@ -176,7 +190,9 @@ function coreTests() {
     // distance is not shown
     cy.dataCy('section-distance').should('not.be.visible');
     // change transport type - none
-    cy.dataCy('button-toggle-transport').eq(4).click();
+    cy.dataCy('button-toggle-transport')
+      .filter(`[data-value="${TransportType.none}"]`)
+      .click();
     cy.dataCy('description-transport').should(
       'contain',
       i18n.global.t('routes.transport.none'),
@@ -184,7 +200,9 @@ function coreTests() {
     // distance is not shown
     cy.dataCy('section-distance');
     // change transport type -  bike
-    cy.dataCy('button-toggle-transport').eq(0).click();
+    cy.dataCy('button-toggle-transport')
+      .filter(`[data-value="${TransportType.bike}"]`)
+      .click();
     cy.dataCy('description-transport').should(
       'contain',
       i18n.global.t('routes.transport.bike'),

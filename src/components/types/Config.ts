@@ -60,6 +60,7 @@ export interface ConfigGlobal {
   apiDefaultVersion: string;
   apiVersion2: string;
   apiDefaultLang: string;
+  urlApiCommuteMode: string;
   urlApiDiscountCoupon: string;
   urlApiHasOrganizationAdmin: string;
   urlApiHasUserVerifiedEmail: string;

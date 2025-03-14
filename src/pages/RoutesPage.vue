@@ -19,17 +19,29 @@
 
 <script lang="ts">
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 
 // components
 import PageHeading from 'src/components/global/PageHeading.vue';
 import RouteTabs from 'src/components/routes/RouteTabs.vue';
+
+// stores
+import { useTripsStore } from 'src/stores/trips';
 
 export default defineComponent({
   name: 'RoutesPage',
   components: {
     RouteTabs,
     PageHeading,
+  },
+  setup() {
+    const tripsStore = useTripsStore();
+
+    onMounted(async () => {
+      if (!tripsStore.getCommuteModes.length) {
+        await tripsStore.loadCommuteModes();
+      }
+    });
   },
 });
 </script>

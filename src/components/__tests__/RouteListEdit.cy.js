@@ -1,3 +1,4 @@
+import { createPinia, setActivePinia } from 'pinia';
 import { date, colors } from 'quasar';
 import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
@@ -6,6 +7,7 @@ import { testRouteListDayDate } from '../../../test/cypress/support/commonTests'
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
+import { useTripsStore } from '../../../src/stores/trips';
 
 const { getPaletteColor } = colors;
 
@@ -34,6 +36,7 @@ describe('<RouteListEdit>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
@@ -42,6 +45,8 @@ describe('<RouteListEdit>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -58,6 +63,7 @@ describe('<RouteListEdit>', () => {
   // cy.clock() interferes with select dropdown function
   context('desktop - current date', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
@@ -65,6 +71,8 @@ describe('<RouteListEdit>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -102,6 +110,7 @@ describe('<RouteListEdit>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.clock(new Date('2024-08-15').getTime());
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListEdit, {
@@ -110,6 +119,8 @@ describe('<RouteListEdit>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('iphone-6');
     });
 

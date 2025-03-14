@@ -1,5 +1,7 @@
+import { createPinia, setActivePinia } from 'pinia';
 import RoutesBottomPanel from 'components/routes/RoutesBottomPanel.vue';
 import { i18n } from '../../boot/i18n';
+import { useTripsStore } from 'src/stores/trips';
 
 const routeSingle = 1;
 const routeMultiple = 2;
@@ -11,11 +13,14 @@ describe('<RoutesBottomPanel>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(RoutesBottomPanel, {
         props: {
           isOpen: true,
         },
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -25,12 +30,15 @@ describe('<RoutesBottomPanel>', () => {
 
   context('desktop multiple routes', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(RoutesBottomPanel, {
         props: {
           isOpen: true,
           routeCount: routeMultiple,
         },
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -51,11 +59,14 @@ describe('<RoutesBottomPanel>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.mount(RoutesBottomPanel, {
         props: {
           isOpen: true,
         },
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('iphone-6');
     });
 

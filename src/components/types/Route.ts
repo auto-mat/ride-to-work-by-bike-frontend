@@ -8,11 +8,12 @@ export enum TransportDirection {
 }
 
 export enum TransportType {
-  bike = 'bike',
-  car = 'car',
-  walk = 'walk',
-  bus = 'bus',
-  none = 'none',
+  bike = 'bicycle',
+  car = 'by_other_vehicle',
+  walk = 'by_foot',
+  bus = 'hromadna',
+  home = 'telecommute',
+  none = 'no_work',
 }
 
 export enum RouteTab {
@@ -58,4 +59,28 @@ export interface RouteFeature {
   length: number;
   feature: Feature | null;
   startName: string;
+}
+
+export interface CommuteMode {
+  id: number;
+  slug: TransportType;
+  does_count: boolean;
+  eco: boolean;
+  distance_important: boolean;
+  duration_important: boolean;
+  minimum_distance: number;
+  minimum_duration: number;
+  description_en: string | null;
+  description_cs: string | null;
+  icon: string | null;
+  name_en: string;
+  name_cs: string;
+  points: number;
+}
+
+export interface CommuteModeResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: CommuteMode[];
 }

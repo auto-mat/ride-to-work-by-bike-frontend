@@ -1,5 +1,7 @@
 import FormCompanyChallenge from 'components/form/FormCompanyChallenge.vue';
 import { i18n } from '../../boot/i18n';
+import { TransportType } from '../types/Route';
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 describe('<FormCompanyChallenge>', () => {
   it('has translation for all strings', () => {
@@ -19,11 +21,6 @@ describe('<FormCompanyChallenge>', () => {
         'labelParticipantsTeams',
         'labelParticipantsSubsidiaries',
         'labelTransportAcceptable',
-        'labelTransportBike',
-        'labelTransportBus',
-        'labelTransportCar',
-        'labelTransportNone',
-        'labelTransportWalk',
       ],
       'form',
       i18n,
@@ -32,9 +29,11 @@ describe('<FormCompanyChallenge>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.interceptCommuteModeGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormCompanyChallenge, {
         props: {},
       });
+      cy.waitForCommuteModeApi();
       cy.viewport('macbook-16');
     });
 
@@ -50,9 +49,11 @@ describe('<FormCompanyChallenge>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      cy.interceptCommuteModeGetApi(rideToWorkByBikeConfig, i18n);
       cy.mount(FormCompanyChallenge, {
         props: {},
       });
+      cy.waitForCommuteModeApi();
       cy.viewport('iphone-6');
     });
 
@@ -112,30 +113,30 @@ function coreTests() {
       .find('legend')
       .should('contain', i18n.global.t('form.labelTransportAcceptable'));
     // transport bike
-    cy.dataCy('form-acceptable-transport-bike')
+    cy.dataCy(`form-acceptable-transport-${TransportType.bike}`)
       .should('be.visible')
       .find('.q-checkbox__label')
-      .should('contain', i18n.global.t('form.labelTransportBike'));
+      .should('contain', i18n.global.t('routes.transport.bike'));
     // transport walk
-    cy.dataCy('form-acceptable-transport-walk')
+    cy.dataCy(`form-acceptable-transport-${TransportType.walk}`)
       .should('be.visible')
       .find('.q-checkbox__label')
-      .should('contain', i18n.global.t('form.labelTransportWalk'));
+      .should('contain', i18n.global.t('routes.transport.walk'));
     // transport bus
-    cy.dataCy('form-acceptable-transport-bus')
+    cy.dataCy(`form-acceptable-transport-${TransportType.bus}`)
       .should('be.visible')
       .find('.q-checkbox__label')
-      .should('contain', i18n.global.t('form.labelTransportBus'));
+      .should('contain', i18n.global.t('routes.transport.bus'));
     // transport car
-    cy.dataCy('form-acceptable-transport-car')
+    cy.dataCy(`form-acceptable-transport-${TransportType.car}`)
       .should('be.visible')
       .find('.q-checkbox__label')
-      .should('contain', i18n.global.t('form.labelTransportCar'));
+      .should('contain', i18n.global.t('routes.transport.car'));
     // transport none
-    cy.dataCy('form-acceptable-transport-none')
+    cy.dataCy(`form-acceptable-transport-${TransportType.none}`)
       .should('be.visible')
       .find('.q-checkbox__label')
-      .should('contain', i18n.global.t('form.labelTransportNone'));
+      .should('contain', i18n.global.t('routes.transport.none'));
     // challenge title
     cy.dataCy('form-challenge-title')
       .should('be.visible')

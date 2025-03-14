@@ -30,6 +30,9 @@ import { useRoutes } from '../../composables/useRoutes';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// stores
+import { useTripsStore } from '../../stores/trips';
+
 // enums
 import { TransportType } from '../types/Route';
 
@@ -48,31 +51,17 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const { colorGray: borderColor } = rideToWorkByBikeConfig;
-
     const { getRouteIcon, getTransportLabel } = useRoutes();
+    const tripsStore = useTripsStore();
 
-    const optionsTransport: { value: TransportType; icon: string }[] = [
-      {
-        value: TransportType.bike,
-        icon: getRouteIcon(TransportType.bike),
-      },
-      {
-        value: TransportType.walk,
-        icon: getRouteIcon(TransportType.walk),
-      },
-      {
-        value: TransportType.bus,
-        icon: getRouteIcon(TransportType.bus),
-      },
-      {
-        value: TransportType.car,
-        icon: getRouteIcon(TransportType.car),
-      },
-      {
-        value: TransportType.none,
-        icon: getRouteIcon(TransportType.none),
-      },
-    ];
+    const optionsTransport = computed(() => {
+      const modes = tripsStore.getCommuteModes;
+      return modes.map((mode) => ({
+        value: mode.slug,
+        icon: getRouteIcon(mode.slug),
+        eco: mode.eco,
+      }));
+    });
 
     const transport = computed({
       get: (): TransportType => {
@@ -133,6 +122,7 @@ export default defineComponent({
           :class="{ 'q-ml-sm': index > 0 }"
           @click.prevent="transport = option.value"
           data-cy="button-toggle-transport"
+          :data-value="option.value"
         >
           <q-avatar
             :color="transport === option.value ? 'secondary' : 'white'"

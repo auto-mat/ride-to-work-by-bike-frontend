@@ -21,11 +21,17 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, onMounted } from 'vue';
 
 // components
 import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+
+// composables
+import { useRoutes } from '../../composables/useRoutes';
+
+// stores
+import { useTripsStore } from '../../stores/trips';
 
 // enums
 import { TransportType } from '../types/Route';
@@ -41,6 +47,8 @@ export default defineComponent({
     FormFieldTextRequired,
   },
   setup() {
+    const tripsStore = useTripsStore();
+    const { getRouteIcon, getTransportLabel } = useRoutes();
     const challengeType = ref<ChallengeType>('regularity');
     const challengeParticipants = ref<ChallengeParticipants>('individuals');
     const challengeTransportType = ref<TransportType[]>([
@@ -55,6 +63,21 @@ export default defineComponent({
 
     const iconSize = '18px';
 
+    // load commute modes when component mounts and set default eco modes
+    onMounted(async () => {
+      if (!tripsStore.getCommuteModes.length) {
+        await tripsStore.loadCommuteModes();
+      }
+      // set default eco-friendly transport types
+      challengeTransportType.value = tripsStore.getEcoCommuteModes.map(
+        (mode) => mode.slug,
+      );
+    });
+
+    const commuteModes = computed(() => {
+      return tripsStore.getCommuteModes;
+    });
+
     return {
       challengeType,
       challengeParticipants,
@@ -64,7 +87,10 @@ export default defineComponent({
       challengeInfoUrl,
       challengeStart,
       challengeStop,
+      commuteModes,
       iconSize,
+      getRouteIcon,
+      getTransportLabel,
     };
   },
 });
@@ -145,67 +171,20 @@ export default defineComponent({
         {{ $t('form.labelTransportAcceptable') }}
       </legend>
       <div class="q-gutter-sm">
-        <!-- Bike -->
-        <q-checkbox
-          v-model="challengeTransportType"
-          val="bike"
-          data-cy="form-acceptable-transport-bike"
-        >
-          <q-icon
-            name="pedal_bike"
-            class="q-mr-xs text-grey-6"
-            :size="iconSize"
-          />
-          {{ $t('form.labelTransportBike') }}
-        </q-checkbox>
-        <!-- Walk -->
-        <q-checkbox
-          v-model="challengeTransportType"
-          val="walk"
-          data-cy="form-acceptable-transport-walk"
-        >
-          <q-icon
-            name="directions_walk"
-            class="q-mr-xs text-grey-6"
-            :size="iconSize"
-          />
-          {{ $t('form.labelTransportWalk') }}
-        </q-checkbox>
-        <!-- Public transport -->
-        <q-checkbox
-          v-model="challengeTransportType"
-          val="bus"
-          data-cy="form-acceptable-transport-bus"
-        >
-          <q-icon
-            name="directions_bus"
-            class="q-mr-xs text-grey-6"
-            :size="iconSize"
-          />
-          {{ $t('form.labelTransportBus') }}
-        </q-checkbox>
-        <!-- Car -->
-        <q-checkbox
-          v-model="challengeTransportType"
-          val="car"
-          data-cy="form-acceptable-transport-car"
-        >
-          <q-icon
-            name="directions_car"
-            class="q-mr-xs text-grey-6"
-            :size="iconSize"
-          />
-          {{ $t('form.labelTransportCar') }}
-        </q-checkbox>
-        <!-- None -->
-        <q-checkbox
-          v-model="challengeTransportType"
-          val="none"
-          data-cy="form-acceptable-transport-none"
-        >
-          <q-icon name="block" class="q-mr-xs text-grey-6" :size="iconSize" />
-          {{ $t('form.labelTransportNone') }}
-        </q-checkbox>
+        <template v-for="mode in commuteModes" :key="mode.slug">
+          <q-checkbox
+            v-model="challengeTransportType"
+            :val="mode.slug"
+            :data-cy="'form-acceptable-transport-' + mode.slug"
+          >
+            <q-icon
+              :name="getRouteIcon(mode.slug)"
+              class="q-mr-xs text-grey-6"
+              :size="iconSize"
+            />
+            {{ getTransportLabel(mode.slug) }}
+          </q-checkbox>
+        </template>
       </div>
     </fieldset>
     <!-- Section: Challenge title -->

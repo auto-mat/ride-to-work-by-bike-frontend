@@ -1,6 +1,8 @@
+import { createPinia, setActivePinia } from 'pinia';
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { useTripsStore } from 'src/stores/trips';
 
 // selectors
 const classSelectorCurrentDay = '.q-current-day';
@@ -55,6 +57,7 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - fixed date', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       // set default date
       const now = new Date(2024, 5, 17);
       cy.clock(now);
@@ -62,6 +65,8 @@ describe('<RoutesCalendar>', () => {
       cy.mount(RoutesCalendar, {
         props: {},
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -70,6 +75,7 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - fixed date logged route today', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       // set default date
       const now = new Date(2024, 5, 16);
       cy.clock(now);
@@ -77,6 +83,8 @@ describe('<RoutesCalendar>', () => {
       cy.mount(RoutesCalendar, {
         props: {},
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -139,10 +147,13 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - current date', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       // skipping the cy.clock call, as it breaks the interaction with q-dialog
       cy.mount(RoutesCalendar, {
         props: {},
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 

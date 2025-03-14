@@ -5,14 +5,14 @@
     "toWork": {
       "id": "00001",
       "date": "2024-06-14",
-      "transport": "bike",
+      "transport": "bicycle",
       "distance": "20.00",
       "direction": "toWork"
     },
     "fromWork": {
       "id": "00002",
       "date": "2024-06-14",
-      "transport": "bike",
+      "transport": "bicycle",
       "distance": "5.00",
       "direction": "fromWork"
     }
@@ -23,14 +23,14 @@
     "toWork": {
       "id": "00001",
       "date": "2024-06-15",
-      "transport": "bike",
+      "transport": "bicycle",
       "distance": "21.00",
       "direction": "toWork"
     },
     "fromWork": {
       "id": "00002",
       "date": "2024-06-15",
-      "transport": "bike",
+      "transport": "bicycle",
       "distance": "19.00",
       "direction": "fromWork"
     }
@@ -41,7 +41,7 @@
     "toWork": {
       "id": "00001",
       "date": "2024-06-16",
-      "transport": "bike",
+      "transport": "bicycle",
       "distance": "20.00",
       "direction": "toWork"
     },

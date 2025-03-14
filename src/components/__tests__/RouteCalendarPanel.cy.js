@@ -1,6 +1,8 @@
+import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import RouteCalendarPanel from 'components/routes/RouteCalendarPanel.vue';
 import { i18n } from '../../boot/i18n';
+import { useTripsStore } from 'src/stores/trips';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -26,6 +28,7 @@ describe('<RouteCalendarPanel>', () => {
 
   context('desktop - logged route', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeList').then((listRoutes) => {
         const routes = [listRoutes[0]];
         cy.wrap(routes).as('routes');
@@ -36,6 +39,8 @@ describe('<RouteCalendarPanel>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -44,6 +49,7 @@ describe('<RouteCalendarPanel>', () => {
 
   context('desktop - empty route', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeEmptyToWork').then((routeEmptyToWork) => {
         const routes = [routeEmptyToWork];
         cy.wrap(routes).as('routes');
@@ -54,6 +60,8 @@ describe('<RouteCalendarPanel>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -63,6 +71,7 @@ describe('<RouteCalendarPanel>', () => {
 
   context('desktop - multiple routes', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeList').then((routes) => {
         cy.wrap(routes).as('routes');
         cy.mount(RouteCalendarPanel, {
@@ -72,6 +81,8 @@ describe('<RouteCalendarPanel>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -81,6 +92,7 @@ describe('<RouteCalendarPanel>', () => {
 
   context('mobile - one route', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeList').then((listRoutes) => {
         const routes = [listRoutes[0]];
         cy.wrap(routes).as('routes');
@@ -91,6 +103,8 @@ describe('<RouteCalendarPanel>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('iphone-6');
     });
 
@@ -100,6 +114,7 @@ describe('<RouteCalendarPanel>', () => {
 
   context('mobile - multiple routes', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.fixture('routeList').then((routes) => {
         cy.wrap(routes).as('routes');
         cy.mount(RouteCalendarPanel, {
@@ -109,6 +124,8 @@ describe('<RouteCalendarPanel>', () => {
           },
         });
       });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('iphone-6');
     });
 
