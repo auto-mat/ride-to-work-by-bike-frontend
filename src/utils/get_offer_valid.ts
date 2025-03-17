@@ -12,7 +12,7 @@ import { CardOffer as CardOfferType } from 'src/components/types/Card';
  * If start date is set, but end date is not set,
  * the offer is marked as valid.
  * @param {Offer} post - Offer object
- * @returns {boolean}
+ * @returns {boolean} - True if offer is valid
  */
 export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
   if (!post.start_date) {
@@ -38,7 +38,7 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
  * Returns true only if the offer has an end date and that date is in the past.
  * Returns false in all other cases (no end date, or end date is in future).
  * @param {CardOfferType} card - Card offer object
- * @returns {boolean} True if offer has ended, false otherwise
+ * @returns {boolean} - True if offer has ended, false otherwise
  */
 export const isOfferPast = (card: CardOfferType): boolean => {
   // if no end date, offer hasn't ended
