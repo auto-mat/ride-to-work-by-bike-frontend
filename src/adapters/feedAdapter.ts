@@ -58,7 +58,7 @@ export const feedAdapter = {
             content: post.content,
             image: {
               src: post.image,
-              alt: '',
+              alt: post.title,
             },
             metadata,
           };
