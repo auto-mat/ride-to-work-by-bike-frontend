@@ -42,6 +42,7 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { FormCompanyAddressFields } from '../types/Form';
+import type { FormOption } from '../../components/types/Form';
 import type { Logger } from '../types/Logger';
 
 // enums
@@ -72,7 +73,14 @@ export default defineComponent({
     });
 
     const logger = inject('vuejs3-logger') as Logger | null;
-    const { isLoading, options, loadCities } = useApiGetCities(logger);
+    const { isLoading, cities, loadCities } = useApiGetCities(logger);
+
+    const options = computed<FormOption[]>(() =>
+      cities.value.map((city) => ({
+        label: city.name,
+        value: city.id,
+      })),
+    );
 
     onMounted(() => {
       loadCities();
