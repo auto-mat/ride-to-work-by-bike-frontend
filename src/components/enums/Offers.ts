@@ -1,41 +1,41 @@
 export enum ApiOfferParamOrder {
-  DESC = 'DESC',
-  ASC = 'ASC',
+  desc = 'DESC',
+  asc = 'ASC',
 }
 
 export enum ApiOfferParamOrderby {
-  DATE = 'DATE',
-  TITLE = 'TITLE',
+  date = 'DATE',
+  title = 'TITLE',
 }
 
 export enum ApiOfferParamFeed {
-  CONTENT_TO_BACKEND = 'content_to_backend',
+  contentToBackend = 'content_to_backend',
 }
 
 export enum ApiOfferParamPostType {
-  LOCATIONS = 'locations',
+  locations = 'locations',
 }
 
 export enum ApiOfferParamPageSubtype {
-  EVENT = 'event',
+  event = 'event',
 }
 
 export enum OfferCategorySlug {
-  ALCO_DRINKS = 'alko-napoje',
-  BIKERIDE = 'cyklojizda',
-  THEATRE = 'divadlo',
-  GASTRO = 'gastronomie',
-  CULTURE = 'jina-kultura',
-  COFFEE = 'kava',
-  CINEMA = 'kino',
-  SOFT_DRINKS = 'nealko-napoje',
-  OTHER = 'ostatni',
-  SERVIS = 'servis',
-  BIKE_DISCOUNT = 'sleva-na-kola',
-  DISCOUNT = 'sleva',
-  BREAKFAST = 'snidane',
-  SPORT = 'sport',
-  PARTY = 'party',
-  WELLNESS = 'wellness',
-  WORKSHOP = 'workshop',
+  alcoDrinks = 'alko-napoje',
+  bikeRide = 'cyklojizda',
+  theatre = 'divadlo',
+  gastro = 'gastronomie',
+  culture = 'jina-kultura',
+  coffe = 'kava',
+  cinema = 'kino',
+  softDrinks = 'nealko-napoje',
+  other = 'ostatni',
+  servis = 'servis',
+  bikeDiscount = 'sleva-na-kola',
+  discount = 'sleva',
+  breakfast = 'snidane',
+  sport = 'sport',
+  party = 'party',
+  wellness = 'wellness',
+  workshop = 'workshop',
 }

@@ -20,11 +20,11 @@ export const getOffersFeedParamSet = (
   const currentYear = new Date().getFullYear();
 
   return {
-    order: ApiOfferParamOrder.DESC,
-    orderby: ApiOfferParamOrderby.DATE,
-    feed: ApiOfferParamFeed.CONTENT_TO_BACKEND,
-    _post_type: ApiOfferParamPostType.LOCATIONS,
-    _page_subtype: ApiOfferParamPageSubtype.EVENT,
+    order: ApiOfferParamOrder.desc,
+    orderby: ApiOfferParamOrderby.date,
+    feed: ApiOfferParamFeed.contentToBackend,
+    _post_type: ApiOfferParamPostType.locations,
+    _page_subtype: ApiOfferParamPageSubtype.event,
     _post_parent: citySlug,
     _number: '1000',
     _year: currentYear.toString(),

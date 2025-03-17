@@ -32,7 +32,7 @@ export const feedAdapter = {
         // map posts to card offer format
         .map((post) => {
           // default icon slug
-          let slug = OfferCategorySlug.DISCOUNT;
+          let slug = OfferCategorySlug.discount;
           // if post has categories, use first category slug
           if (post.categories.length > 0) {
             slug = post.categories[0].slug;
