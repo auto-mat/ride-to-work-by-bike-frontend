@@ -73,6 +73,7 @@ export const feedAdapter = {
  * @returns {CardMetadata[]} - Metadata
  */
 const buildOfferMetadata = (post: Offer): CardMetadata[] => {
+  const icon = 'mdi-calendar';
   const metadata: CardMetadata[] = [];
   // format dates
   const startDateFormatted: string = post.start_date
@@ -89,7 +90,7 @@ const buildOfferMetadata = (post: Offer): CardMetadata[] => {
         startDate: startDateFormatted,
         endDate: endDateFormatted,
       }),
-      icon: 'mdi-calendar',
+      icon: icon,
     });
   } else if (post.start_date) {
     metadata.push({
@@ -97,7 +98,7 @@ const buildOfferMetadata = (post: Offer): CardMetadata[] => {
       text: i18n.global.t('index.cardOffer.offerValidFrom', {
         startDate: startDateFormatted,
       }),
-      icon: 'mdi-calendar',
+      icon: icon,
     });
   } else if (post.end_date) {
     metadata.push({
@@ -105,7 +106,7 @@ const buildOfferMetadata = (post: Offer): CardMetadata[] => {
       text: i18n.global.t('index.cardOffer.offerValidTo', {
         endDate: endDateFormatted,
       }),
-      icon: 'mdi-calendar',
+      icon: icon,
     });
   }
 
