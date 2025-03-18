@@ -18,6 +18,7 @@ export enum ApiOfferParamPostType {
 
 export enum ApiOfferParamPageSubtype {
   event = 'event',
+  prize = 'prize',
 }
 
 export enum OfferCategorySlug {

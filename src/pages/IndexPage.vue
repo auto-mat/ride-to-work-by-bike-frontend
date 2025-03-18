@@ -138,7 +138,7 @@
 <script lang="ts">
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, inject, onMounted } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 
 // adapters
 import { feedAdapter } from '../adapters/feedAdapter';
@@ -187,6 +187,7 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type { Offer } from '../components/types/Offer';
 
 // utils
 import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
@@ -236,11 +237,8 @@ export default defineComponent({
     const urlCommunity = routesConf['community']['path'];
     const urlResults = routesConf['results']['path'];
 
-    const {
-      posts,
-      isLoading: isLoadingPosts,
-      loadPosts,
-    } = useApiGetPosts(logger);
+    const posts = ref<Offer[]>([]);
+    const { isLoading: isLoadingPosts, loadPosts } = useApiGetPosts(logger);
     const cardsOffer = computed(() => feedAdapter.toCardOffer(posts.value));
 
     onMounted(async () => {
@@ -263,7 +261,7 @@ export default defineComponent({
       }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCitySlug) {
-        await loadPosts(
+        posts.value = await loadPosts(
           getOffersFeedParamSet(registerChallengeStore.getCitySlug),
         );
       }

@@ -31,18 +31,21 @@ import SectionHeading from '../components/global/SectionHeading.vue';
 // composables
 import { useApiGetPosts } from '../composables/useApiGetPosts';
 
-// fixtures
-import listCardsPrizesAvailable from '../../test/cypress/fixtures/listResultsPrizes.json';
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // types
-import type { CardPrizeType } from '../components/types';
 import type { Logger } from '../components/types/Logger';
+import type { Offer } from '../components/types/Offer';
 
 // stores
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
 
 // utils
-import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
+import {
+  getOffersFeedParamSet,
+  getPrizesFeedParamSet,
+} from '../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'PrizesPage',
@@ -60,10 +63,16 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
 
     const enabledSelectCity = true;
+    const enabledPartners = false;
     const city = ref<string | null>(null);
 
-    const { posts, isLoading, loadPosts } = useApiGetPosts(logger);
-    const cards = computed(() => feedAdapter.toCardOffer(posts.value));
+    const postsOffers = ref<Offer[]>([]);
+    const postsPrizes = ref<Offer[]>([]);
+    const { isLoading, loadPosts } = useApiGetPosts(logger);
+    const cards = computed(() => feedAdapter.toCardOffer(postsOffers.value));
+    const prizesCards = computed(() =>
+      feedAdapter.toCardPrize(postsPrizes.value),
+    );
 
     onMounted(async () => {
       // if citySlug is not available, try reloading register challenge data
@@ -72,29 +81,40 @@ export default defineComponent({
       }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCitySlug) {
-        await loadPosts(
-          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
-        );
+        // load offers and prizes in parallel
+        const [offers, prizes] = await Promise.all([
+          loadPosts(getOffersFeedParamSet(registerChallengeStore.getCitySlug)),
+          loadPosts(getPrizesFeedParamSet(registerChallengeStore.getCitySlug)),
+        ]);
+        postsOffers.value = offers;
+        postsPrizes.value = prizes;
         // set default value for city select
         city.value = registerChallengeStore.getCitySlug;
       }
       // initiate watcher after the citySlug is loaded
-      watch(city, (newSlug: string | null) => {
+      watch(city, async (newSlug: string | null) => {
         if (newSlug) {
-          loadPosts(getOffersFeedParamSet(newSlug));
+          // load offers and prizes in parallel
+          const [offers, prizes] = await Promise.all([
+            loadPosts(getOffersFeedParamSet(newSlug)),
+            loadPosts(getPrizesFeedParamSet(newSlug)),
+          ]);
+          postsOffers.value = offers;
+          postsPrizes.value = prizes;
         }
       });
     });
 
-    const prizesListAvailable =
-      listCardsPrizesAvailable.cards as CardPrizeType[];
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
 
     return {
       city,
       cards,
       isLoading,
-      prizesListAvailable,
+      prizesCards,
       enabledSelectCity,
+      enabledPartners,
+      borderRadius,
     };
   },
 });
@@ -129,12 +149,36 @@ export default defineComponent({
           class="q-col-gutter-lg q-mt-md"
           data-cy="discount-offers-list"
         >
-          <card-offer
-            v-for="card in cards"
-            :key="card.title"
-            :card="card"
-            data-cy="discount-offers-item"
-          />
+          <template v-if="isLoading">
+            <q-card
+              flat
+              bordered
+              class="q-pa-sm"
+              v-for="i in 3"
+              :key="i"
+              :style="{ borderRadius }"
+            >
+              <q-item>
+                <q-item-section avatar>
+                  <q-skeleton type="QAvatar" sizee="48px" animation="fade" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>
+                    <q-skeleton type="text" animation="fade" />
+                    <q-skeleton type="text" animation="fade" />
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-card>
+          </template>
+          <template v-else>
+            <card-offer
+              v-for="card in cards"
+              :key="card.title"
+              :card="card"
+              data-cy="discount-offers-item"
+            />
+          </template>
         </section-columns>
       </div>
 
@@ -154,7 +198,7 @@ export default defineComponent({
             data-cy="available-prizes-list"
           >
             <card-prize
-              v-for="(card, index) in prizesListAvailable"
+              v-for="(card, index) in prizesCards"
               :key="`card-${index}-${card.title}`"
               :card="card"
               data-cy="available-prizes-item"
@@ -164,7 +208,11 @@ export default defineComponent({
       </section>
 
       <!-- Section: Partners -->
-      <list-partners class="q-mt-xl" data-cy="list-partners" />
+      <list-partners
+        v-if="enabledPartners"
+        class="q-mt-xl"
+        data-cy="list-partners"
+      />
     </div>
   </q-page>
 </template>

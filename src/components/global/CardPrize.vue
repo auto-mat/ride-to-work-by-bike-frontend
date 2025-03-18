@@ -44,6 +44,8 @@ export default defineComponent({
     },
   },
   setup() {
+    const enabledCardPrizeDialog = false;
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const cardMaxWidth = Screen.sizes.sm;
     const modalOpened = ref(false);
@@ -52,6 +54,7 @@ export default defineComponent({
       borderRadius,
       cardMaxWidth,
       modalOpened,
+      enabledCardPrizeDialog,
     };
   },
 });
@@ -59,10 +62,11 @@ export default defineComponent({
 
 <template>
   <q-card
-    v-ripple
+    :v-ripple="enabledCardPrizeDialog"
     flat
     bordered
-    class="full-height bg-white cursor-pointer q-hoverable"
+    class="full-height bg-white cursor-pointer"
+    :class="{ 'q-hoverable': enabledCardPrizeDialog }"
     :style="{ 'border-radius': borderRadius, 'max-width': `${cardMaxWidth}px` }"
     data-cy="card-prize"
     @click.prevent="modalOpened = true"
@@ -90,6 +94,7 @@ export default defineComponent({
 
     <!-- Modal dialog -->
     <dialog-default
+      v-if="enabledCardPrizeDialog"
       v-model="modalOpened"
       :horizontal="true"
       data-cy="dialog-prize"

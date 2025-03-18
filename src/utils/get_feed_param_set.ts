@@ -30,3 +30,24 @@ export const getOffersFeedParamSet = (
     _year: currentYear.toString(),
   };
 };
+
+/**
+ * Get parameter set for prizes feed
+ * @returns {Partial<GetOffersParams>} Parameter set for prizes
+ */
+export const getPrizesFeedParamSet = (
+  citySlug: string,
+): Partial<GetOffersParams> => {
+  const currentYear = new Date().getFullYear();
+
+  return {
+    order: ApiOfferParamOrder.desc,
+    orderby: ApiOfferParamOrderby.date,
+    feed: ApiOfferParamFeed.contentToBackend,
+    _post_type: ApiOfferParamPostType.locations,
+    _page_subtype: ApiOfferParamPageSubtype.prize,
+    _post_parent: citySlug,
+    _number: '1000',
+    _year: currentYear.toString(),
+  };
+};

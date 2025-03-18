@@ -18,9 +18,8 @@ import type { Offer, GetOffersParams } from '../components/types/Offer';
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiGetPostsReturn = {
-  posts: Ref<Offer[]>;
   isLoading: Ref<boolean>;
-  loadPosts: (params: Partial<GetOffersParams>) => Promise<void>;
+  loadPosts: (params: Partial<GetOffersParams>) => Promise<Offer[]>;
 };
 
 /**
@@ -30,7 +29,6 @@ type UseApiGetPostsReturn = {
  * @returns {UseApiGetPostsReturn}
  */
 export const useApiGetPosts = (logger: Logger | null): UseApiGetPostsReturn => {
-  const posts = ref<Offer[]>([]);
   const isLoading = ref<boolean>(false);
 
   // use feed URL for API fetch
@@ -40,10 +38,10 @@ export const useApiGetPosts = (logger: Logger | null): UseApiGetPostsReturn => {
    * Load posts from the API
    * @param params - Query parameters for the API call
    */
-  const loadPosts = async (params: Partial<GetOffersParams>): Promise<void> => {
-    // reset posts
-    logger?.debug(`Reseting posts <${JSON.stringify(posts.value, null, 2)}>.`);
-    posts.value = [];
+  const loadPosts = async (
+    params: Partial<GetOffersParams>,
+  ): Promise<Offer[]> => {
+    const posts: Offer[] = [];
 
     // get posts
     logger?.info('Get posts from the API.');
@@ -66,14 +64,14 @@ export const useApiGetPosts = (logger: Logger | null): UseApiGetPostsReturn => {
     });
 
     if (data?.length) {
-      posts.value.push(...data);
+      posts.push(...data);
     }
 
     isLoading.value = false;
+    return posts;
   };
 
   return {
-    posts,
     isLoading,
     loadPosts,
   };

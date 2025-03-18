@@ -9,6 +9,7 @@ import { OfferCategorySlug } from '../components/enums/Offers';
 import type { CardOffer } from '../components/types/Card';
 import type { Offer } from '../components/types/Offer';
 import type { CardMetadata } from '../components/types/Card';
+import type { CardPrizeType } from '../components/types/Card';
 
 // utils
 import { getNormalizedAbsoluteUrl } from '../utils/get_normalized_absolute_url';
@@ -64,6 +65,24 @@ export const feedAdapter = {
           };
         })
     );
+  },
+
+  /**
+   * Convert API posts to CardPrize format
+   * @param {Offer[]} posts - Posts from API
+   * @returns {CardPrize[]} - Posts in card format
+   */
+  toCardPrize(posts: Offer[]): CardPrizeType[] {
+    return posts.map((post) => ({
+      id: post.id.toString(),
+      title: post.title,
+      content: post.content,
+      image: {
+        src: post.image,
+        alt: post.title,
+      },
+      metadata: [],
+    }));
   },
 };
 
