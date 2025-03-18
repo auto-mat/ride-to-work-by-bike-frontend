@@ -40,6 +40,16 @@ describe('Prizes page', () => {
             );
           },
         );
+        cy.fixture('apiGetPrizesResponseAlternative.json').then(
+          (prizesResponse) => {
+            cy.interceptPrizesGetApi(
+              config,
+              defLocale,
+              citiesResponse.results[0].slug,
+              prizesResponse,
+            );
+          },
+        );
       });
     });
   });
@@ -248,6 +258,26 @@ function coreTests() {
         cy.dataCy('available-prizes-item').each((item, index) => {
           cy.wrap(item).should('contain', prizes[index].title);
         });
+      });
+    });
+  });
+
+  it('allows to filter the list of prizes by selecting a city', () => {
+    cy.waitForPrizesApi();
+    cy.dataCy('form-field-select-city').should('be.visible');
+    cy.dataCy('form-field-select-city').find('.q-field__append').click();
+    cy.get('.q-menu')
+      .should('be.visible')
+      .within(() => {
+        cy.get('.q-item').first().click();
+      });
+    cy.fixture('apiGetPrizesResponseAlternative.json').then((prizes) => {
+      cy.waitForPrizesApi(prizes);
+      // display list of prizes
+      cy.dataCy('available-prizes-list').should('be.visible');
+      // check that each item has correct data
+      cy.dataCy('available-prizes-item').each((item, index) => {
+        cy.wrap(item).should('contain', prizes[index].title);
       });
     });
   });
