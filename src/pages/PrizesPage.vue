@@ -33,9 +33,6 @@ import SectionHeading from '../components/global/SectionHeading.vue';
 // composables
 import { useApiGetPosts } from '../composables/useApiGetPosts';
 
-// config
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
-
 // types
 import type { Logger } from '../components/types/Logger';
 import type { Offer } from '../components/types/Offer';
@@ -109,8 +106,6 @@ export default defineComponent({
       });
     });
 
-    const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
-
     return {
       city,
       cards,
@@ -118,7 +113,6 @@ export default defineComponent({
       prizesCards,
       enabledSelectCity,
       enabledPartners,
-      borderRadius,
     };
   },
 });
