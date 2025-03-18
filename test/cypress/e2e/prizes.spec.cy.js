@@ -59,6 +59,57 @@ describe('Prizes page', () => {
     testDesktopSidebar();
   });
 
+  context('desktop - empty offers and prizes', () => {
+    beforeEach(() => {
+      cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+        cy.fixture('apiGetOffersOrPrizesResponseEmpty.json').then(
+          (responseEmpty) => {
+            cy.get('@config').then((config) => {
+              cy.interceptOffersGetApi(
+                config,
+                defLocale,
+                response.results[0].city_slug,
+                responseEmpty,
+              );
+              cy.interceptPrizesGetApi(
+                config,
+                defLocale,
+                response.results[0].city_slug,
+                responseEmpty,
+              );
+            });
+          },
+        );
+      });
+      cy.viewport('macbook-16');
+      cy.visit('#' + routesConf['prizes']['path']);
+      // alias i18n
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+    });
+
+    it('renders empty state for offers and prizes', () => {
+      cy.get('@i18n').then((i18n) => {
+        // empty offers
+        cy.dataCy('discount-offers-title').should('be.visible');
+        cy.dataCy('discount-offers-list').should('not.exist');
+        cy.dataCy('discount-offers-item').should('not.exist');
+        cy.contains(i18n.global.t('prizes.textOffersEmpty')).should(
+          'be.visible',
+        );
+        // empty prizes
+        cy.dataCy('available-prizes').should('be.visible');
+        cy.dataCy('available-prizes-list').should('not.exist');
+        cy.dataCy('available-prizes-item').should('not.exist');
+        cy.contains(i18n.global.t('prizes.textPrizesEmpty')).should(
+          'be.visible',
+        );
+      });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       cy.viewport('iphone-6');
