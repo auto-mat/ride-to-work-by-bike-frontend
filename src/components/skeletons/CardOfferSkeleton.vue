@@ -38,9 +38,11 @@ export default defineComponent({
     data-cy="card-offer-skeleton"
   >
     <q-item>
+      <!-- Avatar -->
       <q-item-section avatar>
         <q-skeleton type="QAvatar" size="48px" animation="fade" />
       </q-item-section>
+      <!-- Title -->
       <q-item-section>
         <q-item-label>
           <q-skeleton type="text" animation="fade" />

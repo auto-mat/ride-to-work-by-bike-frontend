@@ -21,8 +21,9 @@ import { feedAdapter } from '../adapters/feedAdapter';
 
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
-import CardPrize from 'src/components/global/CardPrize.vue';
 import CardOfferSkeleton from '../components/skeletons/CardOfferSkeleton.vue';
+import CardPrize from 'src/components/global/CardPrize.vue';
+import CardPrizeSkeleton from 'src/components/skeletons/CardPrizeSkeleton.vue';
 import FormFieldSelectCity from 'src/components/form/FormFieldSelectCity.vue';
 import ListPartners from '../components/global/ListPartners.vue';
 import PageHeading from 'components/global/PageHeading.vue';
@@ -52,8 +53,9 @@ export default defineComponent({
   name: 'PrizesPage',
   components: {
     CardOffer,
-    CardPrize,
     CardOfferSkeleton,
+    CardPrize,
+    CardPrizeSkeleton,
     FormFieldSelectCity,
     ListPartners,
     PageHeading,
@@ -180,12 +182,17 @@ export default defineComponent({
             class="q-col-gutter-lg"
             data-cy="available-prizes-list"
           >
-            <card-prize
-              v-for="(card, index) in prizesCards"
-              :key="`card-${index}-${card.title}`"
-              :card="card"
-              data-cy="available-prizes-item"
-            />
+            <template v-if="isLoading">
+              <card-prize-skeleton v-for="i in 4" :key="i" />
+            </template>
+            <template v-else>
+              <card-prize
+                v-for="(card, index) in prizesCards"
+                :key="`card-${index}-${card.title}`"
+                :card="card"
+                data-cy="available-prizes-item"
+              />
+            </template>
           </section-columns>
         </div>
       </section>
