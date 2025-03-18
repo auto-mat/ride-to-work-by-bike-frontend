@@ -65,8 +65,8 @@ export default defineComponent({
     :v-ripple="enabledCardPrizeDialog"
     flat
     bordered
-    class="full-height bg-white cursor-pointer"
-    :class="{ 'q-hoverable': enabledCardPrizeDialog }"
+    class="full-height bg-white"
+    :class="{ 'q-hoverable cursor-pointer': enabledCardPrizeDialog }"
     :style="{ 'border-radius': borderRadius, 'max-width': `${cardMaxWidth}px` }"
     data-cy="card-prize"
     @click.prevent="modalOpened = true"
