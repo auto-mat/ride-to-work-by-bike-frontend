@@ -22,6 +22,7 @@ import { feedAdapter } from '../adapters/feedAdapter';
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
 import CardPrize from 'src/components/global/CardPrize.vue';
+import CardOfferSkeleton from '../components/skeletons/CardOfferSkeleton.vue';
 import FormFieldSelectCity from 'src/components/form/FormFieldSelectCity.vue';
 import ListPartners from '../components/global/ListPartners.vue';
 import PageHeading from 'components/global/PageHeading.vue';
@@ -52,6 +53,7 @@ export default defineComponent({
   components: {
     CardOffer,
     CardPrize,
+    CardOfferSkeleton,
     FormFieldSelectCity,
     ListPartners,
     PageHeading,
@@ -150,26 +152,7 @@ export default defineComponent({
           data-cy="discount-offers-list"
         >
           <template v-if="isLoading">
-            <q-card
-              flat
-              bordered
-              class="q-pa-sm"
-              v-for="i in 3"
-              :key="i"
-              :style="{ borderRadius }"
-            >
-              <q-item>
-                <q-item-section avatar>
-                  <q-skeleton type="QAvatar" sizee="48px" animation="fade" />
-                </q-item-section>
-                <q-item-section>
-                  <q-item-label>
-                    <q-skeleton type="text" animation="fade" />
-                    <q-skeleton type="text" animation="fade" />
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-card>
+            <card-offer-skeleton v-for="i in 3" :key="i" />
           </template>
           <template v-else>
             <card-offer
