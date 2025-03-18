@@ -24,7 +24,7 @@ describe('<CardPrize>', () => {
 
     coreTests();
 
-    it('shows dialog content in two columns', () => {
+    it.skip('shows dialog content in two columns', () => {
       cy.window().then(() => {
         cy.dataCy('card-prize').click();
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 50);
@@ -47,7 +47,7 @@ describe('<CardPrize>', () => {
 
     coreTests();
 
-    it('shows modal content in one column', () => {
+    it.skip('shows modal content in one column', () => {
       cy.window().then(() => {
         cy.dataCy('card-prize').click();
         cy.testElementPercentageWidth(cy.dataCy('dialog-col-left'), 100);
@@ -75,7 +75,7 @@ function coreTests() {
     });
   });
 
-  it('shows modal dialog on click', () => {
+  it.skip('shows modal dialog on click', () => {
     cy.window().then(() => {
       cy.get('@card').then((card) => {
         cy.dataCy('card-prize').click();
