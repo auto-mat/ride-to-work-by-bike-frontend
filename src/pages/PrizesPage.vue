@@ -148,35 +148,40 @@ export default defineComponent({
             {{ $t('prizes.textSpecialOffers') }}
           </template>
         </section-heading>
-        <section-columns
-          :columns="3"
-          class="q-col-gutter-lg q-mt-md"
-          data-cy="discount-offers-list"
-        >
-          <template v-if="isLoading">
-            <card-offer-skeleton v-for="i in 3" :key="i" />
-          </template>
-          <template v-else>
-            <card-offer
-              v-for="card in cards"
-              :key="card.title"
-              :card="card"
-              data-cy="discount-offers-item"
-            />
-          </template>
-        </section-columns>
+        <div v-if="cards.length > 0 || isLoading" class="q-mt-lg">
+          <section-columns
+            :columns="3"
+            class="q-col-gutter-lg"
+            data-cy="discount-offers-list"
+          >
+            <template v-if="isLoading">
+              <card-offer-skeleton v-for="i in 3" :key="i" />
+            </template>
+            <template v-else>
+              <card-offer
+                v-for="card in cards"
+                :key="card.title"
+                :card="card"
+                data-cy="discount-offers-item"
+              />
+            </template>
+          </section-columns>
+        </div>
+        <div v-else class="q-mt-lg q-mb-xl text-grey-7">
+          <span>{{ $t('prizes.textOffersEmpty') }}</span>
+        </div>
       </div>
 
       <!-- Section: Available prizes -->
       <section class="q-mt-xl" data-cy="available-prizes">
         <!-- TODO: Replace with section-heading -->
         <h2 class="text-h6 q-my-none" data-cy="section-heading-title">
-          <span v-html="$t('prizes.titleAvailablePrizes', { url: '#' })" />
+          <span v-html="$t('prizes.titleAvailablePrizes')" />
         </h2>
         <div class="q-mt-sm" data-cy="section-heading-perex">
           <span v-html="$t('prizes.textAvailablePrizes')" />
         </div>
-        <div class="q-mt-lg">
+        <div v-if="prizesCards.length > 0 || isLoading" class="q-mt-lg">
           <section-columns
             :columns="4"
             class="q-col-gutter-lg"
@@ -194,6 +199,9 @@ export default defineComponent({
               />
             </template>
           </section-columns>
+        </div>
+        <div v-else class="q-mt-lg q-mb-xl text-grey-7">
+          <span>{{ $t('prizes.textPrizesEmpty') }}</span>
         </div>
       </section>
 

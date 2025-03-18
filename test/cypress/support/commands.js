@@ -46,7 +46,10 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { getRadioOption, negativeColor, positiveColor } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
-import { getOffersFeedParamSet } from '../../../src/utils/get_feed_param_set';
+import {
+  getOffersFeedParamSet,
+  getPrizesFeedParamSet,
+} from '../../../src/utils/get_feed_param_set';
 
 // Fix for ResizeObserver loop issue in Firefox
 // see https://stackoverflow.com/questions/74947338/i-keep-getting-error-resizeobserver-loop-limit-exceeded-in-cypress
@@ -563,6 +566,55 @@ Cypress.Commands.add('waitForOffersApi', (offersResponse = null) => {
       expect(getOffers.response.statusCode).to.equal(httpSuccessfullStatus);
       expect(getOffers.response.body).to.deep.equal(
         offersResponse || defaultOffersResponse,
+      );
+    });
+  });
+});
+
+/**
+ * Intercept prizes GET API calls
+ * Provides `@getPrizes` aliase
+ * @param {object} config - App global config
+ * @param {object|string} i18n - i18n instance or locale lang string e.g. en
+ */
+Cypress.Commands.add(
+  'interceptPrizesGetApi',
+  (config, i18n, citySlug, prizesResponse = null) => {
+    const { apiBaseRtwbbFeed, apiDefaultLang } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBaseRtwbbFeed,
+      apiDefaultLang,
+      i18n,
+    );
+    const getPrizesParams = getPrizesFeedParamSet(citySlug);
+    const objectToParams = (obj) => {
+      return Object.keys(obj)
+        .map((key) => `${key}=${obj[key]}`)
+        .join('&');
+    };
+    const urlEncodedParams = objectToParams(getPrizesParams);
+    const urlApiPrizesLocalized = `${apiBaseUrl}?${urlEncodedParams}`;
+
+    cy.fixture('apiGetPrizesResponse.json').then((defaultPrizesResponse) => {
+      cy.intercept('GET', urlApiPrizesLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: prizesResponse || defaultPrizesResponse,
+      }).as('getPrizes');
+    });
+  },
+);
+
+/**
+ * Wait for intercept prizes API call and compare request/response object
+ * Wait for `@getPrizes` intercept.
+ */
+Cypress.Commands.add('waitForPrizesApi', (prizesResponse = null) => {
+  cy.fixture('apiGetPrizesResponse').then((defaultPrizesResponse) => {
+    cy.wait('@getPrizes').then((getPrizes) => {
+      expect(getPrizes.response.statusCode).to.equal(httpSuccessfullStatus);
+      expect(getPrizes.response.body).to.deep.equal(
+        prizesResponse || defaultPrizesResponse,
       );
     });
   });

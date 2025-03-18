@@ -237,7 +237,9 @@ titleOrganizers = "Challenge organized by"
 [prizes]
 textAvailablePrizes = "The teams that will receive the prize will be drawn from the teams that have achieved an overall regularity of more than 60%."
 textSpecialOffers = "Please note the validity period of the offers. Some are valid for a few days, others expire on the day the call ends, and others expire after the call."
-titleAvailablePrizes = "Prizes available for the <a href='{url}'>Team Regularity Challenge</a>"
+textOffersEmpty = "We haven't found any discounts in your city yet, but we're adding them gradually. Come back in a few days."
+textPrizesEmpty = "Prizes haven't been published yet, you'll see them here soon."
+titleAvailablePrizes = "Prizes available for the Team Regularity Challenge"
 titlePrizes = "Discounts and offers"
 titleSpecialOffers = "Special offers"
 

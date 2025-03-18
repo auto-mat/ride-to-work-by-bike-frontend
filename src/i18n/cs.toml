@@ -238,7 +238,9 @@ titleOrganizers = "Výzvu pořádá"
 [prizes]
 textAvailablePrizes = "Týmy, které obdrží výhru, losujeme z týmů, které splnily celkovou pravidelnost vyšší než 60 %."
 textSpecialOffers = "Pozor na dobu platnosti nabídek. Některé platí několik dní, jiné vyprší v den konce výzvy, jiné platí i po výzvě."
-titleAvailablePrizes = "Možné výhry za výzvu <a href='{url}'>Pravidelnost týmu</a>"
+textOffersEmpty = "Ve vašem městě jsme zatím nenašli žádné slevy, průběžně je ale doplňujeme. Přijďte se podívat za pár dní."
+textPrizesEmpty = "Ceny zatím nebyly zveřejněny, brzy je tu uvidíte."
+titleAvailablePrizes = "Možné výhry za výzvu Pravidelnost týmu"
 titlePrizes = "Slevy a výhry"
 titleSpecialOffers = "Akční nabídky"
 
