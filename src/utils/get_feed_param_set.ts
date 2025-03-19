@@ -12,7 +12,8 @@ import type { GetOffersParams } from '../components/types/Offer';
 
 /**
  * Get parameter set for offers feed
- * @returns {Partial<GetOffersParams>} Parameter set for offers
+ * @params {string} citySlug - City slug string
+ * @returns {Partial<GetOffersParams>} - Parameter set for offers
  */
 export const getOffersFeedParamSet = (
   citySlug: string,
@@ -33,7 +34,8 @@ export const getOffersFeedParamSet = (
 
 /**
  * Get parameter set for prizes feed
- * @returns {Partial<GetOffersParams>} Parameter set for prizes
+ * @params {string} citySlug - City slug string
+ * @returns {Partial<GetOffersParams>} - Parameter set for prizes
  */
 export const getPrizesFeedParamSet = (
   citySlug: string,
