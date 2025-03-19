@@ -74,7 +74,47 @@ function coreTests() {
         .within(() => {
           cy.get('.q-item').first().click();
         });
-      cy.wrap(model).its('value').should('eq', citiesResponse.results[0].slug);
+      cy.wrap(model)
+        .its('value')
+        .should('eq', citiesResponse.results[0].wp_slug);
+    });
+  });
+
+  it('works correctly with non-unique wp_slug', () => {
+    cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+      cy.waitForCitiesApi();
+      // choose city with different slug and wp_slug
+      cy.dataCy('form-select-city').click();
+      cy.get('.q-menu')
+        .should('be.visible')
+        .within(() => {
+          cy.get('.q-item').contains(citiesResponse.results[6].name).click();
+        });
+      // modelValue is set to chosen city wp_slug
+      cy.wrap(model)
+        .its('value')
+        .should('eq', citiesResponse.results[6].wp_slug);
+      // select contains chosen city name
+      cy.dataCy('form-select-city').should(
+        'contain',
+        citiesResponse.results[6].name,
+      );
+      // choose city with same wp_slug as previous city
+      cy.dataCy('form-select-city').click();
+      cy.get('.q-menu')
+        .should('be.visible')
+        .within(() => {
+          cy.get('.q-item').contains(citiesResponse.results[12].name).click();
+        });
+      // modelValue is set to chosen city wp_slug
+      cy.wrap(model)
+        .its('value')
+        .should('eq', citiesResponse.results[12].wp_slug);
+      // select contains chosen city name
+      cy.dataCy('form-select-city').should(
+        'contain',
+        citiesResponse.results[12].name,
+      );
     });
   });
 }
