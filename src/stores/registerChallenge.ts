@@ -98,6 +98,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
     myTeam: null as MyTeamResults | null,
     citySlug: null as string | null,
+    cityWpSlug: null as string | null,
     formRegisterCoordinator: deepObjectWithSimplePropsCopy(
       emptyFormRegisterCoordinator,
     ),
@@ -147,6 +148,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.merchandiseCards,
     getMyTeam: (state): MyTeamResults | null => state.myTeam,
     getCitySlug: (state): string | null => state.citySlug,
+    getCityWpSlug: (state): string | null => state.cityWpSlug,
     getPaymentCategory: (state): PaymentCategory => state.paymentCategory,
     getIsSelectedRegisterCoordinator: (state): boolean =>
       state.isSelectedRegisterCoordinator,
@@ -350,6 +352,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setCitySlug(citySlug: string | null) {
       this.citySlug = citySlug;
     },
+    setCityWpSlug(cityWpSlug: string | null) {
+      this.cityWpSlug = cityWpSlug;
+    },
     setPaymentCategory(paymentCategory: PaymentCategory) {
       this.paymentCategory = paymentCategory;
     },
@@ -549,6 +554,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       this.setCitySlug(parsedResponse.citySlug);
       this.$log?.debug(`City slug store updated to <${this.getCitySlug}>.`);
+      this.setCityWpSlug(parsedResponse.cityWpSlug);
+      this.$log?.debug(
+        `City WP slug store updated to <${this.getCityWpSlug}>.`,
+      );
       if (parsedResponse.language) {
         this.setLanguage(parsedResponse.language);
         this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);

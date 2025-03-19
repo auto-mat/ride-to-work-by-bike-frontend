@@ -256,13 +256,13 @@ export default defineComponent({
         await registerChallengeStore.loadMyTeamToStore(logger);
       }
       // if citySlug is not available, try reloading register challenge data
-      if (!registerChallengeStore.getCitySlug) {
+      if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
       // if citySlug is available, load posts, else we can't load posts
-      if (registerChallengeStore.getCitySlug) {
+      if (registerChallengeStore.getCityWpSlug) {
         posts.value = await loadPosts(
-          getOffersFeedParamSet(registerChallengeStore.getCitySlug),
+          getOffersFeedParamSet(registerChallengeStore.getCityWpSlug),
         );
       }
     });

@@ -58,6 +58,7 @@ export const registerChallengeAdapter = {
       language: apiData.personal_details.language,
       voucher: apiData.personal_details.discount_coupon,
       citySlug: apiData.city_slug,
+      cityWpSlug: apiData.city_wp_slug,
     };
   },
 

@@ -48,7 +48,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              response.results[0].city_slug,
+              response.results[0].city_wp_slug,
               offers,
             );
             cy.wrap(offers).as('offers');
@@ -385,7 +385,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              response.results[0].city_slug,
+              response.results[0].city_wp_slug,
               offers,
             );
             cy.wrap(offers).as('offers');
@@ -447,7 +447,7 @@ describe('Home page', () => {
             cy.interceptOffersGetApi(
               config,
               defLocale,
-              response.results[0].city_slug,
+              response.results[0].city_wp_slug,
               offers,
             );
             cy.wrap(offers).as('offers');

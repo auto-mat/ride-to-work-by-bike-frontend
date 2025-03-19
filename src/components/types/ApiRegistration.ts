@@ -44,6 +44,7 @@ export type RegisterChallengeResult = {
   t_shirt_size_id: number | null;
   organization_type: string;
   city_slug: string | null;
+  city_wp_slug: string | null;
 };
 
 export type RegisterChallengeResponse = {

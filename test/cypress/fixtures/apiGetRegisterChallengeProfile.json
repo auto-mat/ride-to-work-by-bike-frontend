@@ -25,6 +25,7 @@
         "payment_amount": 390
       },
       "city_slug": "praha",
+      "city_wp_slug": "praha",
       "organization_type": "company",
       "team_id": 2451,
       "organization_id": 987,

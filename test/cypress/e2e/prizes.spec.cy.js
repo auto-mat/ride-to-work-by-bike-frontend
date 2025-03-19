@@ -19,12 +19,12 @@ describe('Prizes page', () => {
         cy.interceptOffersGetApi(
           config,
           defLocale,
-          response.results[0].city_slug,
+          response.results[0].city_wp_slug,
         );
         cy.interceptPrizesGetApi(
           config,
           defLocale,
-          response.results[0].city_slug,
+          response.results[0].city_wp_slug,
         );
         cy.interceptCitiesGetApi(config, defLocale);
       });
@@ -78,13 +78,13 @@ describe('Prizes page', () => {
               cy.interceptOffersGetApi(
                 config,
                 defLocale,
-                response.results[0].city_slug,
+                response.results[0].city_wp_slug,
                 responseEmpty,
               );
               cy.interceptPrizesGetApi(
                 config,
                 defLocale,
-                response.results[0].city_slug,
+                response.results[0].city_wp_slug,
                 responseEmpty,
               );
             });

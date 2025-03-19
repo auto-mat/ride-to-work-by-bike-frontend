@@ -77,20 +77,24 @@ export default defineComponent({
 
     onMounted(async () => {
       // if citySlug is not available, try reloading register challenge data
-      if (!registerChallengeStore.getCitySlug) {
+      if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
       // if citySlug is available, load posts, else we can't load posts
-      if (registerChallengeStore.getCitySlug) {
+      if (registerChallengeStore.getCityWpSlug) {
         // load offers and prizes in parallel
         const [offers, prizes] = await Promise.all([
-          loadPosts(getOffersFeedParamSet(registerChallengeStore.getCitySlug)),
-          loadPosts(getPrizesFeedParamSet(registerChallengeStore.getCitySlug)),
+          loadPosts(
+            getOffersFeedParamSet(registerChallengeStore.getCityWpSlug),
+          ),
+          loadPosts(
+            getPrizesFeedParamSet(registerChallengeStore.getCityWpSlug),
+          ),
         ]);
         postsOffers.value = offers;
         postsPrizes.value = prizes;
         // set default value for city select
-        city.value = registerChallengeStore.getCitySlug;
+        city.value = registerChallengeStore.getCityWpSlug;
       }
       // initiate watcher after the citySlug is loaded
       watch(city, async (newSlug: string | null) => {
