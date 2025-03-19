@@ -19,7 +19,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject, onMounted } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 
 import { useApiGetCities } from '../../composables/useApiGetCities';
 
@@ -38,23 +38,35 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const city = computed({
-      get: (): string | null => props.modelValue,
-      set: (value: string | null): void => emit('update:modelValue', value),
-    });
-
     const logger = inject('vuejs3-logger') as Logger | null;
-    const { isLoading, cities, loadCities } = useApiGetCities(logger);
+    const city = ref<FormOption | null>(null);
 
+    const { isLoading, cities, loadCities } = useApiGetCities(logger);
     const options = computed<FormOption[]>(() =>
       cities.value.map((city) => ({
         label: city.name,
         value: city.slug,
+        slug: city.wp_slug,
       })),
     );
 
-    onMounted(() => {
-      loadCities();
+    onMounted(async () => {
+      await loadCities();
+    });
+
+    // update city when modelValue prop is available
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        city.value =
+          options.value.find((option) => option.slug === newValue) ?? null;
+      },
+      { once: true },
+    );
+
+    // emit updated city slug
+    watch(city, (newValue) => {
+      emit('update:modelValue', newValue?.slug ?? null);
     });
 
     return {
@@ -78,8 +90,6 @@ export default defineComponent({
     <q-select
       dense
       outlined
-      emit-value
-      map-options
       v-model="city"
       :loading="isLoading"
       :options="options"

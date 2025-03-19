@@ -6,67 +6,80 @@
     {
       "id": 21,
       "name": "Pardubice",
-      "slug": "pardubice"
+      "slug": "pardubice",
+      "wp_slug": "pardubice"
     },
     {
       "id": 10,
       "name": "Plzeň",
-      "slug": "plzen"
+      "slug": "plzen",
+      "wp_slug": "plzen"
     },
     {
       "id": 4,
       "name": "Praha",
-      "slug": "praha"
+      "slug": "praha",
+      "wp_slug": "praha"
     },
     {
       "id": 20,
       "name": "Přerov",
-      "slug": "prerov"
+      "slug": "prerov",
+      "wp_slug": "prerov"
     },
     {
       "id": 37,
       "name": "Příbram",
-      "slug": "pribram"
+      "slug": "pribram",
+      "wp_slug": "pribram"
     },
     {
       "id": 31,
       "name": "Říčany u Prahy",
-      "slug": "ricany-u-prahy"
+      "slug": "ricany-u-prahy",
+      "wp_slug": "ricany-u-prahy"
     },
     {
       "id": 33,
       "name": "Rychnov nad Kněžnou",
-      "slug": "rychnov-n-kneznou"
+      "slug": "rychnov-n-kneznou",
+      "wp_slug": "rychnov-n-kneznou"
     },
     {
       "id": 36,
       "name": "Třebíč",
-      "slug": "trebic"
+      "slug": "trebic",
+      "wp_slug": "trebic"
     },
     {
       "id": 11,
       "name": "Uherské Hradiště",
-      "slug": "uherske-hradiste"
+      "slug": "uherske-hradiste",
+      "wp_slug": "uherske-hradiste"
     },
     {
       "id": 12,
       "name": "Ústí nad Labem",
-      "slug": "usti-nad-labem"
+      "slug": "usti-nad-labem",
+      "wp_slug": "usti-nad-labem"
     },
     {
       "id": 35,
       "name": "Žďár nad Sázavou",
-      "slug": "zdar-nad-sazavou"
+      "slug": "zdar-nad-sazavou",
+      "wp_slug": "zdar-nad-sazavou"
     },
     {
       "id": 32,
       "name": "Zlín",
-      "slug": "zlin"
+      "slug": "zlin",
+      "wp_slug": "zlin"
     },
     {
       "id": 30,
       "name": "Znojmo",
-      "slug": "znojmo"
+      "slug": "znojmo",
+      "wp_slug": "znojmo"
     }
   ]
 }

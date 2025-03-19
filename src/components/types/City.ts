@@ -2,6 +2,7 @@ export interface City {
   id: number;
   name: string;
   slug: string;
+  wp_slug: string;
 }
 
 export interface GetCitiesResponse {

@@ -6,102 +6,122 @@
     {
       "id": 41,
       "name": "Brandýs nad Labem",
-      "slug": "brandys-nad-labem"
+      "slug": "brandys-nad-labem",
+      "wp_slug": "brandys-nad-labem"
     },
     {
       "id": 29,
       "name": "Břeclav",
-      "slug": "breclav"
+      "slug": "breclav",
+      "wp_slug": "breclav"
     },
     {
       "id": 5,
       "name": "Brno",
-      "slug": "brno"
+      "slug": "brno",
+      "wp_slug": "brno"
     },
     {
       "id": 14,
       "name": "České Budějovice",
-      "slug": "ceske-budejovice"
+      "slug": "ceske-budejovice",
+      "wp_slug": "ceske-budejovice"
     },
     {
       "id": 15,
       "name": "Hradec Králové",
-      "slug": "hradec-kralove"
+      "slug": "hradec-kralove",
+      "wp_slug": "hradec-kralove"
     },
     {
       "id": 26,
       "name": "Hranice",
-      "slug": "hranice"
+      "slug": "hranice",
+      "wp_slug": "hranice"
     },
     {
       "id": 16,
       "name": "Jablonec nad Nisou",
-      "slug": "jablonec-nad-nisou"
+      "slug": "jablonec-nad-nisou",
+      "wp_slug": "liberec"
     },
     {
       "id": 7,
       "name": "Jihlava",
-      "slug": "jihlava"
+      "slug": "jihlava",
+      "wp_slug": "jihlava"
     },
     {
       "id": 17,
       "name": "Jindřichův Hradec",
-      "slug": "jindrichuv-hradec"
+      "slug": "jindrichuv-hradec",
+      "wp_slug": "jindrichuv-hradec"
     },
     {
       "id": 22,
       "name": "Karviná",
-      "slug": "karvina"
+      "slug": "karvina",
+      "wp_slug": "karvina"
     },
     {
       "id": 34,
       "name": "Kladno",
-      "slug": "kladno"
+      "slug": "kladno",
+      "wp_slug": "kladno"
     },
     {
       "id": 42,
       "name": "Krnov",
-      "slug": "krnov"
+      "slug": "krnov",
+      "wp_slug": "krnov"
     },
     {
       "id": 6,
       "name": "Liberec",
-      "slug": "liberec"
+      "slug": "liberec",
+      "wp_slug": "liberec"
     },
     {
       "id": 44,
       "name": "Litvínov",
-      "slug": "litvinov"
+      "slug": "litvinov",
+      "wp_slug": "most"
     },
     {
       "id": 40,
       "name": "Most",
-      "slug": "most"
+      "slug": "most",
+      "wp_slug": "most"
     },
     {
       "id": 27,
       "name": "Nové Město nad Metují",
-      "slug": "nove-mesto-nad-metuji"
+      "slug": "nove-mesto-nad-metuji",
+      "wp_slug": "nove-mesto-nad-metuji"
     },
     {
       "id": 24,
       "name": "Nový Jičín",
-      "slug": "novy-jicin"
+      "slug": "novy-jicin",
+      "wp_slug": "novy-jicin"
     },
     {
       "id": 8,
       "name": "Olomouc",
-      "slug": "olomouc"
+      "slug": "olomouc",
+      "wp_slug": "olomouc"
     },
     {
       "id": 9,
       "name": "Ostrava",
-      "slug": "ostrava"
+      "slug": "ostrava",
+      "wp_slug": "ostrava"
     },
     {
       "id": 18,
       "name": "Otrokovice",
-      "slug": "otrokovice"
+      "slug": "otrokovice",
+      "wp_slug": "otrokovice"
     }
   ]
 }
