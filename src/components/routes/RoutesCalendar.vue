@@ -76,16 +76,13 @@ export default defineComponent({
       return i18n.global.locale;
     });
 
-    // disable logging outside the specified time window
-    const challengeLoggingWindowDays = computed(
-      () => challengeStore.getDaysActive,
-    );
-
     /**
      * Disable logging after a date
+     * Calendar disables all dates after the returned date.
      * This is done based on two conditions:
      * 1. Future date (date is after today)
      * 2. Day is outside the `competition` phase date range
+     * @returns {string | null} date in `YYYY-MM-DD` format
      */
     const disabledAfter = computed((): string | null => {
       const timestampToday = parseTimestamp(today());
@@ -115,15 +112,17 @@ export default defineComponent({
 
     /**
      * Disable logging before a date
+     * Calendar disables all dates before the returned date.
      * This is done based on two conditions:
      * 1. Window of logging days before today
      * 2. Day is outside the `competition` phase date range
+     * @returns {string | null} date in `YYYY-MM-DD` format
      */
     const disabledBefore = computed((): string | null => {
       const timestampToday = parseTimestamp(today());
       const timestampStartOfLoggingWindow = timestampToday
         ? addToDate(timestampToday, {
-            day: -1 * challengeLoggingWindowDays.value,
+            day: -1 * challengeStore.getDaysActive,
           })
         : null;
       const dateStartOfLoggingWindow = makeDate(timestampStartOfLoggingWindow);
