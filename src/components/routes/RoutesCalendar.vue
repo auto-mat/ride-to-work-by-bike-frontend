@@ -312,6 +312,7 @@ export default defineComponent({
         :day-min-height="100"
       >
         <template #day="{ scope: { timestamp, outside } }">
+          <!-- TODO: make the empty slots display only on the challenge days -->
           <div v-if="!timestamp.future" class="q-my-sm" data-cy="calendar-day">
             <!-- Route to work -->
             <calendar-item-display

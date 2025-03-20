@@ -43,10 +43,7 @@ import { routesConf } from 'src/router/routes_conf';
 
 // fixtures
 import routeListFixture from '../../../test/cypress/fixtures/routeList.json';
-import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
-
 const routeList: RouteItem[] = routeListFixture as RouteItem[];
-const routeListCalendar: RouteItem[] = routesListCalendarFixture as RouteItem[];
 
 export default defineComponent({
   name: 'RouteTabs',
@@ -77,7 +74,6 @@ export default defineComponent({
       activeTab,
       lockedTabs,
       routeList,
-      routeListCalendar,
       routesConf,
       RouteTab,
       isLocked,
@@ -148,7 +144,7 @@ export default defineComponent({
         :name="RouteTab.calendar"
         data-cy="route-tabs-panel-calendar"
       >
-        <routes-calendar :routes="routeListCalendar" />
+        <routes-calendar />
       </q-tab-panel>
       <!-- Panel: List -->
       <q-tab-panel :name="RouteTab.list" data-cy="route-tabs-panel-list">
