@@ -38,8 +38,8 @@ const selectorRoutesCalendar = 'routes-calendar';
 // variables
 const routeCountSingle = 1;
 const routeCountMultiple = 2;
-const dateWithNoLoggedRoute = new Date(2024, 8, 27);
-const dateWithLoggedRoute = new Date(2024, 8, 26);
+const dateWithNoLoggedRoute = new Date(2025, 4, 27);
+const dateWithLoggedRoute = new Date(2025, 4, 26);
 
 const dayNames = [
   i18n.global.t('time.mondayShort'),
@@ -68,7 +68,7 @@ describe('<RoutesCalendar>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
-      cy.fixture('apiGetThisCampaign.json').then((response) => {
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
           store.setPhaseSet(response.results[0].phase_set);
@@ -94,7 +94,7 @@ describe('<RoutesCalendar>', () => {
         });
         // setup store with commute modes
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
-        cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.fixture('apiGetThisCampaignMay.json').then((response) => {
           cy.wrap(useChallengeStore()).then((store) => {
             store.setDaysActive(response.results[0].days_active);
             store.setPhaseSet(response.results[0].phase_set);
@@ -125,7 +125,7 @@ describe('<RoutesCalendar>', () => {
          * Above tests suffice for a 1-day logging window case.
          * Following tests apply for past days if days_active > 1.
          */
-        cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.fixture('apiGetThisCampaignMay.json').then((response) => {
           if (response.results[0].days_active > 1) {
             cy.dataCy(selectorRoutesCalendar)
               .find(dataSelectorItemToWorkLogged)
@@ -228,7 +228,7 @@ function coreTests() {
      * Above tests suffice for a 1-day logging window case.
      * Following tests apply for past days if days_active > 1.
      */
-    cy.fixture('apiGetThisCampaign.json').then((response) => {
+    cy.fixture('apiGetThisCampaignMay.json').then((response) => {
       if (response.results[0].days_active > 1) {
         // select a past day's to work route
         cy.get(classSelectorPastDayNotDisabled)
@@ -276,7 +276,7 @@ function coreTests() {
   });
 
   it('it allows to select max number of logged routes', () => {
-    cy.fixture('apiGetThisCampaign.json').then((response) => {
+    cy.fixture('apiGetThisCampaignMay.json').then((response) => {
       // click on all routes to work
       cy.dataCy(selectorRoutesCalendar)
         .find(dataSelectorItemToWorkEmpty)
