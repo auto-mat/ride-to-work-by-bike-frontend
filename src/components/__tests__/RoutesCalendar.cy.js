@@ -1,4 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia';
+import { date } from 'quasar';
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
@@ -40,6 +41,9 @@ const routeCountSingle = 1;
 const routeCountMultiple = 2;
 const dateWithNoLoggedRoute = new Date(2025, 4, 27);
 const dateWithLoggedRoute = new Date(2025, 4, 26);
+const dateFirstDayOfCompetition = new Date(2025, 4, 1);
+const lastDayOfCompetition = new Date(2025, 4, 31);
+const lastDayOfEntryPhase = new Date(2025, 5, 1);
 
 const dayNames = [
   i18n.global.t('time.mondayShort'),
@@ -56,18 +60,25 @@ describe('<RoutesCalendar>', () => {
     cy.testLanguageStringsInContext([], 'index.component', i18n);
   });
 
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
   context('desktop - full logging window', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      // set default date
       const now = dateWithNoLoggedRoute;
       cy.clock(new Date(now), ['Date']);
       cy.wrap(now).as('now');
-      cy.mount(RoutesCalendar, {
-        props: {},
+      cy.fixture('routeListCalendar.json').then((response) => {
+        cy.mount(RoutesCalendar, {
+          props: {
+            routes: response,
+          },
+        });
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with challenge data
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
@@ -89,8 +100,12 @@ describe('<RoutesCalendar>', () => {
         const now = dateWithLoggedRoute;
         cy.clock(new Date(now), ['Date']);
         cy.wrap(now).as('now');
-        cy.mount(RoutesCalendar, {
-          props: {},
+        cy.fixture('routeListCalendar.json').then((response) => {
+          cy.mount(RoutesCalendar, {
+            props: {
+              routes: response,
+            },
+          });
         });
         // setup store with commute modes
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
@@ -164,6 +179,149 @@ describe('<RoutesCalendar>', () => {
       });
     },
   );
+
+  context('desktop - first day of competition - no routes', () => {
+    beforeEach(() => {
+      cy.clock(new Date(dateFirstDayOfCompetition), ['Date']);
+      cy.mount(RoutesCalendar, {
+        props: {
+          routes: [],
+        },
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with challenge data
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders one active calendar day to log routes', () => {
+      // click on all routes to work
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemToWorkEmpty)
+        .each((item) => {
+          cy.wrap(item).click({ force: true });
+        });
+      // should activate exactly 1 route
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemToWorkActive)
+        .should('have.length', 1);
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemFromWorkEmpty)
+        .each((item) => {
+          cy.wrap(item).click({ force: true });
+        });
+      // should activate exactly 1 route
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemFromWorkActive)
+        .should('have.length', 1);
+    });
+  });
+
+  context('desktop - last day of competition - no routes', () => {
+    beforeEach(() => {
+      cy.clock(new Date(lastDayOfCompetition), ['Date']);
+      cy.mount(RoutesCalendar, {
+        props: {
+          routes: [],
+        },
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with challenge data
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('it allows to select max number of logged routes (not limited by last day)', () => {
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        // click on all routes to work
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemToWorkEmpty)
+          .each((item) => {
+            cy.wrap(item).click({ force: true });
+          });
+        // max routes that should be active is the logging window
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemToWorkActive)
+          .should('have.length', response.results[0].days_active);
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemFromWorkEmpty)
+          .each((item) => {
+            cy.wrap(item).click({ force: true });
+          });
+        // max routes that should be active is the logging window
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemFromWorkActive)
+          .should('have.length', response.results[0].days_active);
+      });
+    });
+  });
+
+  context('desktop - last day of entry phase - no routes', () => {
+    beforeEach(() => {
+      cy.clock(new Date(lastDayOfEntryPhase), ['Date']);
+      cy.mount(RoutesCalendar, {
+        props: {
+          routes: [],
+        },
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with challenge data
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('it allows to select days within the intersection of entry phase and logging window', () => {
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        // click on all routes to work
+        const dateDiff = date.getDateDiff(
+          lastDayOfEntryPhase,
+          lastDayOfCompetition,
+          'days',
+        );
+        const maxRoutes = response.results[0].days_active - dateDiff;
+        // we are on the first day of month so we need to go back one month
+        cy.dataCy('calendar-navigation-previous-button').click();
+        // click on all routes to work
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemToWorkEmpty)
+          .each((item) => {
+            cy.wrap(item).click({ force: true });
+          });
+        // max routes that should be active
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemToWorkActive)
+          .should('have.length', maxRoutes);
+        // click on all routes from work
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemFromWorkEmpty)
+          .each((item) => {
+            cy.wrap(item).click({ force: true });
+          });
+        // max routes that should be active
+        cy.dataCy(selectorRoutesCalendar)
+          .find(dataSelectorItemFromWorkActive)
+          .should('have.length', maxRoutes);
+      });
+    });
+  });
 });
 
 function coreTests() {
@@ -283,7 +441,7 @@ function coreTests() {
         .each((item) => {
           cy.wrap(item).click({ force: true });
         });
-      // max routes that should be active is the logging window from config
+      // max routes that should be active is the logging window
       cy.dataCy(selectorRoutesCalendar)
         .find(dataSelectorItemToWorkActive)
         .should('have.length.at.most', response.results[0].days_active);
@@ -292,7 +450,7 @@ function coreTests() {
         .each((item) => {
           cy.wrap(item).click({ force: true });
         });
-      // max routes that should be active is the logging window from config
+      // max routes that should be active is the logging window
       cy.dataCy(selectorRoutesCalendar)
         .find(dataSelectorItemFromWorkActive)
         .should('have.length.at.most', response.results[0].days_active);

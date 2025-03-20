@@ -12,6 +12,9 @@
  * - `CalendarItemDisplay`: Component to render calendar items.
  * - `RouteCalendarPanel`: Component to render dialog panel.
  *
+ * @props
+ * - `routes`: Array of routes to display in the calendar.
+ *
  * @example
  * <routes-calendar />
  *
@@ -25,6 +28,7 @@ import {
   getDate,
   makeDate,
   nextDay,
+  prevDay,
   parseTimestamp,
   QCalendarMonth,
   today,
@@ -44,9 +48,6 @@ import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 import { TransportDirection } from '../types/Route';
 import { PhaseType } from '../types/Challenge';
 
-// fixtures
-import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
-
 // stores
 import { useChallengeStore } from '../../stores/challenge';
 
@@ -61,7 +62,13 @@ export default defineComponent({
     CalendarNavigation,
     RouteCalendarPanel,
   },
-  setup() {
+  props: {
+    routes: {
+      type: Array as PropType<RouteDay[]>,
+      default: () => [],
+    },
+  },
+  setup(props) {
     const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
@@ -103,7 +110,7 @@ export default defineComponent({
 
       return isTomorrowBeforeCompetitionDateTo
         ? getDate(timestampTomorrow)
-        : getDate(timestampCompetitionPhaseDateTo);
+        : getDate(nextDay(timestampCompetitionPhaseDateTo));
     });
 
     /**
@@ -143,7 +150,7 @@ export default defineComponent({
 
       return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
         ? getDate(timestampStartOfLoggingWindow)
-        : getDate(timestampCompetitionPhaseDateFrom);
+        : getDate(prevDay(timestampCompetitionPhaseDateFrom));
     });
 
     // Define calendar CSS vars for calendar theme
@@ -177,7 +184,7 @@ export default defineComponent({
     }
 
     // Get data
-    const days = ref<RouteDay[]>(routesListCalendarFixture as RouteDay[]);
+    const days = ref<RouteDay[]>(props.routes);
 
     const {
       activeRoutes,
