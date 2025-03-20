@@ -541,7 +541,7 @@ title = "Special offers"
 button = "All {count} offers"
 
 [index.cardOffer]
-buttonUseVoucher = "Use my voucher"
+buttonUseVoucher = "Go to website"
 offerValidFrom = "Offer is valid from {startDate}"
 offerValidTo = "Offer is valid until {endDate}"
 offerValidFromTo = "Offer is valid from {startDate} until {endDate}"

@@ -543,7 +543,7 @@ title = "Špeciálne ponuky"
 button = "Všetkých {count} zliav"
 
 [index.cardOffer]
-buttonUseVoucher = "Uplatniť voucher"
+buttonUseVoucher = "Ísť na web"
 offerValidFrom = "Akcia začína {startDate}"
 offerValidTo = "Akcia končí {endDate}"
 offerValidFromTo = "Akcia začína {startDate} a končí {endDate}"
