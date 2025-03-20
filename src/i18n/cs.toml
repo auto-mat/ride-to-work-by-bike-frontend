@@ -545,7 +545,7 @@ title = "Akční nabídky"
 button = "Všech {count} slev"
 
 [index.cardOffer]
-buttonUseVoucher = "Uplatnit voucher"
+buttonUseVoucher = "Jít na web"
 offerValidFrom = "Akce začíná {startDate}"
 offerValidTo = "Akce končí {endDate}"
 offerValidFromTo = "Akce začíná {startDate} a končí {endDate}"
