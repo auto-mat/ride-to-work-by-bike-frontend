@@ -19,9 +19,12 @@
  */
 
 // libraries
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 import {
   addToDate,
+  getDate,
+  makeDate,
+  nextDay,
   parseTimestamp,
   QCalendarMonth,
   today,
@@ -39,6 +42,7 @@ import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 
 // enums
 import { TransportDirection } from '../types/Route';
+import { PhaseType } from '../types/Challenge';
 
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
@@ -70,19 +74,76 @@ export default defineComponent({
       () => challengeStore.getDaysActive,
     );
 
+    /**
+     * Disable logging after a date
+     * This is done based on two conditions:
+     * 1. Future date (date is after today)
+     * 2. Day is outside the `competition` phase date range
+     */
     const disabledAfter = computed((): string | null => {
-      const timestamp = parseTimestamp(today());
-      const timestampFuture = timestamp
-        ? addToDate(timestamp, { day: 1 })
-        : null;
-      return timestampFuture?.date || null;
+      const timestampToday = parseTimestamp(today());
+      const timestampTomorrow = nextDay(timestampToday);
+      const dateTomorrow = makeDate(timestampTomorrow);
+
+      const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
+        PhaseType.competition,
+      )?.date_to;
+      if (!competitionPhaseDateTo) {
+        return getDate(timestampTomorrow) || null;
+      }
+      const timestampCompetitionPhaseDateTo = parseTimestamp(
+        competitionPhaseDateTo,
+      );
+      const dateCompetitionPhaseDateTo = makeDate(
+        timestampCompetitionPhaseDateTo,
+      );
+
+      const isTomorrowBeforeCompetitionDateTo =
+        date.getDateDiff(dateTomorrow, dateCompetitionPhaseDateTo, 'days') < 0;
+
+      return isTomorrowBeforeCompetitionDateTo
+        ? getDate(timestampTomorrow)
+        : getDate(timestampCompetitionPhaseDateTo);
     });
+
+    /**
+     * Disable logging before a date
+     * This is done based on two conditions:
+     * 1. Window of logging days before today
+     * 2. Day is outside the `competition` phase date range
+     */
     const disabledBefore = computed((): string | null => {
-      const timestamp = parseTimestamp(today());
-      const timestampPast = timestamp
-        ? addToDate(timestamp, { day: -1 * challengeLoggingWindowDays.value })
+      const timestampToday = parseTimestamp(today());
+      const timestampStartOfLoggingWindow = timestampToday
+        ? addToDate(timestampToday, {
+            day: -1 * challengeLoggingWindowDays.value,
+          })
         : null;
-      return timestampPast?.date || null;
+      const dateStartOfLoggingWindow = makeDate(timestampStartOfLoggingWindow);
+
+      const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
+        PhaseType.competition,
+      )?.date_from;
+      if (!competitionPhaseDateFrom) {
+        return getDate(timestampStartOfLoggingWindow) || null;
+      }
+      const timestampCompetitionPhaseDateFrom = parseTimestamp(
+        competitionPhaseDateFrom,
+      );
+      const dateCompetitionPhaseDateFrom = makeDate(
+        timestampCompetitionPhaseDateFrom,
+      );
+
+      const isStartOfLoggingWindowAfterCompetitionPhaseDateFrom =
+        date.getDateDiff(
+          dateStartOfLoggingWindow,
+          dateCompetitionPhaseDateFrom,
+          'days',
+        ) > 0;
+
+      return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
+        ? getDate(timestampStartOfLoggingWindow)
+        : getDate(timestampCompetitionPhaseDateFrom);
     });
 
     // Define calendar CSS vars for calendar theme

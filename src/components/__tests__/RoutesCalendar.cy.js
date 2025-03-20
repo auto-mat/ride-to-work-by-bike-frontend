@@ -60,7 +60,7 @@ describe('<RoutesCalendar>', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       // set default date
-      const now = new Date(2024, 5, 17);
+      const now = new Date(2024, 8, 27);
       cy.clock(new Date(now), ['Date']);
       cy.wrap(now).as('now');
       cy.mount(RoutesCalendar, {
@@ -71,6 +71,7 @@ describe('<RoutesCalendar>', () => {
       cy.fixture('apiGetThisCampaign.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       cy.viewport('macbook-16');
@@ -83,7 +84,7 @@ describe('<RoutesCalendar>', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       // set default date
-      const now = new Date(2024, 5, 16);
+      const now = new Date(2024, 8, 26);
       cy.clock(new Date(now), ['Date']);
       cy.wrap(now).as('now');
       cy.mount(RoutesCalendar, {
@@ -94,6 +95,7 @@ describe('<RoutesCalendar>', () => {
       cy.fixture('apiGetThisCampaign.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       cy.viewport('macbook-16');
