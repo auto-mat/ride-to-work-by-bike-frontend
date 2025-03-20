@@ -1,7 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia';
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { useTripsStore } from 'src/stores/trips';
 import { useChallengeStore } from 'src/stores/challenge';
 
@@ -39,7 +38,6 @@ const selectorRoutesCalendar = 'routes-calendar';
 // variables
 const routeCountSingle = 1;
 const routeCountMultiple = 2;
-const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
 
 const dayNames = [
   i18n.global.t('time.mondayShort'),
@@ -121,40 +119,42 @@ describe('<RoutesCalendar>', () => {
         .should('have.length', 0);
       /**
        * Above tests suffice for a 1-day logging window case.
-       * Following tests apply for past days if challengeLoggingWindowDays > 1.
+       * Following tests apply for past days if days_active > 1.
        */
-      if (challengeLoggingWindowDays > 1) {
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemToWorkLogged)
-          .first()
-          .click({ force: true });
-        // only one route should be active
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemFromWorkActive)
-          .should('have.length', 0);
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemToWorkActive)
-          .should('have.length', 1);
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemFromWorkLogged)
-          .first()
-          .click({ force: true });
-        // only one route should be active
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemFromWorkActive)
-          .should('have.length', 1);
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemToWorkActive)
-          .should('have.length', 0);
-        // select today's "to work" route
-        cy.get(classSelectorCurrentDay).find(dataSelectorItemToWork).click();
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemFromWorkActive)
-          .should('have.length', 0);
-        cy.dataCy(selectorRoutesCalendar)
-          .find(dataSelectorItemToWorkActive)
-          .should('have.length', 1);
-      }
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        if (response.results[0].days_active > 1) {
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemToWorkLogged)
+            .first()
+            .click({ force: true });
+          // only one route should be active
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemFromWorkActive)
+            .should('have.length', 0);
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemToWorkActive)
+            .should('have.length', 1);
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemFromWorkLogged)
+            .first()
+            .click({ force: true });
+          // only one route should be active
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemFromWorkActive)
+            .should('have.length', 1);
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemToWorkActive)
+            .should('have.length', 0);
+          // select today's "to work" route
+          cy.get(classSelectorCurrentDay).find(dataSelectorItemToWork).click();
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemFromWorkActive)
+            .should('have.length', 0);
+          cy.dataCy(selectorRoutesCalendar)
+            .find(dataSelectorItemToWorkActive)
+            .should('have.length', 1);
+        }
+      });
     });
   });
 });
@@ -219,37 +219,39 @@ function coreTests() {
     checkTodayToWorkActive();
     /**
      * Above tests suffice for a 1-day logging window case.
-     * Following tests apply for past days if challengeLoggingWindowDays > 1.
+     * Following tests apply for past days if days_active > 1.
      */
-    if (challengeLoggingWindowDays > 1) {
-      // select a past day's to work route
-      cy.get(classSelectorPastDayNotDisabled)
-        .first()
-        .find(dataSelectorItemFromWork)
-        .click();
-      // from work is active
-      checkTodayToWorkActive();
-      checkTodayFromWorkActive();
-      checkPastDayToWorkActive();
-      // disable today's "to work" route
-      cy.get(classSelectorCurrentDay).find(dataSelectorItemToWork).click();
-      checkTodayToWorkInactive();
-      checkTodayFromWorkActive();
-      checkPastDayToWorkActive();
-      // disable today's "from work" route
-      cy.get(classSelectorCurrentDay).find(dataSelectorItemFromWork).click();
-      checkTodayToWorkInactive();
-      checkTodayFromWorkInactive();
-      checkPastDayToWorkActive();
-      // disable a past day's to work route
-      cy.get(classSelectorPastDayNotDisabled)
-        .first()
-        .find(dataSelectorItemFromWork)
-        .click();
-      checkTodayToWorkInactive();
-      checkTodayFromWorkInactive();
-      checkPastDayToWorkInactive();
-    }
+    cy.fixture('apiGetThisCampaign.json').then((response) => {
+      if (response.results[0].days_active > 1) {
+        // select a past day's to work route
+        cy.get(classSelectorPastDayNotDisabled)
+          .first()
+          .find(dataSelectorItemFromWork)
+          .click();
+        // from work is active
+        checkTodayToWorkActive();
+        checkTodayFromWorkActive();
+        checkPastDayToWorkActive();
+        // disable today's "to work" route
+        cy.get(classSelectorCurrentDay).find(dataSelectorItemToWork).click();
+        checkTodayToWorkInactive();
+        checkTodayFromWorkActive();
+        checkPastDayToWorkActive();
+        // disable today's "from work" route
+        cy.get(classSelectorCurrentDay).find(dataSelectorItemFromWork).click();
+        checkTodayToWorkInactive();
+        checkTodayFromWorkInactive();
+        checkPastDayToWorkActive();
+        // disable a past day's to work route
+        cy.get(classSelectorPastDayNotDisabled)
+          .first()
+          .find(dataSelectorItemFromWork)
+          .click();
+        checkTodayToWorkInactive();
+        checkTodayFromWorkInactive();
+        checkPastDayToWorkInactive();
+      }
+    });
   });
 
   it('does not allow to select a day outside current month', () => {
@@ -267,25 +269,27 @@ function coreTests() {
   });
 
   it('it allows to select max number of logged routes', () => {
-    // click on all routes to work
-    cy.dataCy(selectorRoutesCalendar)
-      .find(dataSelectorItemToWorkEmpty)
-      .each((item) => {
-        cy.wrap(item).click({ force: true });
-      });
-    // max routes that should be active is the logging window from config
-    cy.dataCy(selectorRoutesCalendar)
-      .find(dataSelectorItemToWorkActive)
-      .should('have.length.at.most', challengeLoggingWindowDays);
-    cy.dataCy(selectorRoutesCalendar)
-      .find(dataSelectorItemFromWorkEmpty)
-      .each((item) => {
-        cy.wrap(item).click({ force: true });
-      });
-    // max routes that should be active is the logging window from config
-    cy.dataCy(selectorRoutesCalendar)
-      .find(dataSelectorItemFromWorkActive)
-      .should('have.length.at.most', challengeLoggingWindowDays);
+    cy.fixture('apiGetThisCampaign.json').then((response) => {
+      // click on all routes to work
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemToWorkEmpty)
+        .each((item) => {
+          cy.wrap(item).click({ force: true });
+        });
+      // max routes that should be active is the logging window from config
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemToWorkActive)
+        .should('have.length.at.most', response.results[0].days_active);
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemFromWorkEmpty)
+        .each((item) => {
+          cy.wrap(item).click({ force: true });
+        });
+      // max routes that should be active is the logging window from config
+      cy.dataCy(selectorRoutesCalendar)
+        .find(dataSelectorItemFromWorkActive)
+        .should('have.length.at.most', response.results[0].days_active);
+    });
   });
 
   it('renders panel with dynamic heading if routes are selected', () => {
