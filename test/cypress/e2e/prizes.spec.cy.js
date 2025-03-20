@@ -178,6 +178,30 @@ function coreTests() {
             });
           },
         );
+        // check first offer - example without link
+        cy.dataCy('discount-offers-item').first().click();
+        cy.dataCy('dialog-offer').should('be.visible');
+        // has title
+        cy.dataCy('dialog-header')
+          .find('h3')
+          .should('be.visible')
+          .and('contain', offers[0].title);
+        // has no link
+        cy.dataCy('dialog-offer-link').should('not.exist');
+        // close dialog
+        cy.dataCy('dialog-close').should('be.visible').click();
+        // check second offer - example with link
+        cy.dataCy('discount-offers-item').eq(1).click();
+        cy.dataCy('dialog-offer').should('be.visible');
+        // has title
+        cy.dataCy('dialog-header')
+          .find('h3')
+          .should('be.visible')
+          .and('contain', offers[1].title);
+        // has link
+        cy.dataCy('dialog-offer-link')
+          .should('be.visible')
+          .and('have.attr', 'href', offers[1].voucher_url);
       });
     });
   });
