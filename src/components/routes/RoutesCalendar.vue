@@ -37,14 +37,14 @@ import RouteCalendarPanel from './RouteCalendarPanel.vue';
 // composables
 import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 
-// config
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-
 // enums
 import { TransportDirection } from '../types/Route';
 
 // fixtures
 import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
+
+// stores
+import { useChallengeStore } from '../../stores/challenge';
 
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
@@ -58,13 +58,18 @@ export default defineComponent({
     RouteCalendarPanel,
   },
   setup() {
+    const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
     const locale = computed((): string => {
       return i18n.global.locale;
     });
+
     // disable logging outside the specified time window
-    const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
+    const challengeLoggingWindowDays = computed(
+      () => challengeStore.getDaysActive,
+    );
+
     const disabledAfter = computed((): string | null => {
       const timestamp = parseTimestamp(today());
       const timestampFuture = timestamp
@@ -75,7 +80,7 @@ export default defineComponent({
     const disabledBefore = computed((): string | null => {
       const timestamp = parseTimestamp(today());
       const timestampPast = timestamp
-        ? addToDate(timestamp, { day: -1 * challengeLoggingWindowDays })
+        ? addToDate(timestamp, { day: -1 * challengeLoggingWindowDays.value })
         : null;
       return timestampPast?.date || null;
     });

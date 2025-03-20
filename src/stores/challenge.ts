@@ -84,6 +84,9 @@ export const useChallengeStore = defineStore('challenge', {
     setPriceLevel(priceLevel: PriceLevel[]): void {
       this.priceLevel = priceLevel;
     },
+    setDaysActive(daysActive: number | null): void {
+      this.daysActive = daysActive;
+    },
     async loadPhaseSet(): Promise<void> {
       const { campaigns, loadCampaign } = useApiGetCampaign(this.$log);
       await loadCampaign();
