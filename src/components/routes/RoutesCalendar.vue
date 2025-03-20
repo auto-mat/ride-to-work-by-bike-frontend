@@ -12,6 +12,9 @@
  * - `CalendarItemDisplay`: Component to render calendar items.
  * - `RouteCalendarPanel`: Component to render dialog panel.
  *
+ * @props
+ * - `routes`: Array of routes to display in the calendar.
+ *
  * @example
  * <routes-calendar />
  *
@@ -19,9 +22,13 @@
  */
 
 // libraries
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 import {
   addToDate,
+  getDate,
+  makeDate,
+  nextDay,
+  prevDay,
   parseTimestamp,
   QCalendarMonth,
   today,
@@ -37,14 +44,12 @@ import RouteCalendarPanel from './RouteCalendarPanel.vue';
 // composables
 import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 
-// config
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-
 // enums
 import { TransportDirection } from '../types/Route';
+import { PhaseType } from '../types/Challenge';
 
-// fixtures
-import routesListCalendarFixture from '../../../test/cypress/fixtures/routeListCalendar.json';
+// stores
+import { useChallengeStore } from '../../stores/challenge';
 
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
@@ -57,27 +62,94 @@ export default defineComponent({
     CalendarNavigation,
     RouteCalendarPanel,
   },
-  setup() {
+  props: {
+    routes: {
+      type: Array as PropType<RouteDay[]>,
+      default: () => [],
+    },
+  },
+  setup(props) {
+    const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
     const locale = computed((): string => {
       return i18n.global.locale;
     });
-    // disable logging outside the specified time window
-    const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
+
+    /**
+     * Disable logging after a date
+     * Calendar disables all dates after the returned date.
+     * This is done based on two conditions:
+     * 1. Future date (date is after today)
+     * 2. Day is outside the `competition` phase date range
+     * @returns {string | null} date in `YYYY-MM-DD` format
+     */
     const disabledAfter = computed((): string | null => {
-      const timestamp = parseTimestamp(today());
-      const timestampFuture = timestamp
-        ? addToDate(timestamp, { day: 1 })
-        : null;
-      return timestampFuture?.date || null;
+      const timestampToday = parseTimestamp(today());
+      const timestampTomorrow = nextDay(timestampToday);
+      const dateTomorrow = makeDate(timestampTomorrow);
+
+      const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
+        PhaseType.competition,
+      )?.date_to;
+      if (!competitionPhaseDateTo) {
+        return getDate(timestampTomorrow) || null;
+      }
+      const timestampCompetitionPhaseDateTo = parseTimestamp(
+        competitionPhaseDateTo,
+      );
+      const dateCompetitionPhaseDateTo = makeDate(
+        timestampCompetitionPhaseDateTo,
+      );
+
+      const isTomorrowBeforeCompetitionDateTo =
+        date.getDateDiff(dateTomorrow, dateCompetitionPhaseDateTo, 'days') < 0;
+
+      return isTomorrowBeforeCompetitionDateTo
+        ? getDate(timestampTomorrow)
+        : getDate(nextDay(timestampCompetitionPhaseDateTo));
     });
+
+    /**
+     * Disable logging before a date
+     * Calendar disables all dates before the returned date.
+     * This is done based on two conditions:
+     * 1. Window of logging days before today
+     * 2. Day is outside the `competition` phase date range
+     * @returns {string | null} date in `YYYY-MM-DD` format
+     */
     const disabledBefore = computed((): string | null => {
-      const timestamp = parseTimestamp(today());
-      const timestampPast = timestamp
-        ? addToDate(timestamp, { day: -1 * challengeLoggingWindowDays })
+      const timestampToday = parseTimestamp(today());
+      const timestampStartOfLoggingWindow = timestampToday
+        ? addToDate(timestampToday, {
+            day: -1 * challengeStore.getDaysActive,
+          })
         : null;
-      return timestampPast?.date || null;
+      const dateStartOfLoggingWindow = makeDate(timestampStartOfLoggingWindow);
+
+      const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
+        PhaseType.competition,
+      )?.date_from;
+      if (!competitionPhaseDateFrom) {
+        return getDate(timestampStartOfLoggingWindow) || null;
+      }
+      const timestampCompetitionPhaseDateFrom = parseTimestamp(
+        competitionPhaseDateFrom,
+      );
+      const dateCompetitionPhaseDateFrom = makeDate(
+        timestampCompetitionPhaseDateFrom,
+      );
+
+      const isStartOfLoggingWindowAfterCompetitionPhaseDateFrom =
+        date.getDateDiff(
+          dateStartOfLoggingWindow,
+          dateCompetitionPhaseDateFrom,
+          'days',
+        ) > 0;
+
+      return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
+        ? getDate(timestampStartOfLoggingWindow)
+        : getDate(prevDay(timestampCompetitionPhaseDateFrom));
     });
 
     // Define calendar CSS vars for calendar theme
@@ -111,7 +183,7 @@ export default defineComponent({
     }
 
     // Get data
-    const days = ref<RouteDay[]>(routesListCalendarFixture as RouteDay[]);
+    const days = ref<RouteDay[]>(props.routes);
 
     const {
       activeRoutes,
@@ -240,6 +312,7 @@ export default defineComponent({
         :day-min-height="100"
       >
         <template #day="{ scope: { timestamp, outside } }">
+          <!-- TODO: make the empty slots display only on the challenge days -->
           <div v-if="!timestamp.future" class="q-my-sm" data-cy="calendar-day">
             <!-- Route to work -->
             <calendar-item-display

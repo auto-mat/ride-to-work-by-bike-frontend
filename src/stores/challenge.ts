@@ -84,6 +84,12 @@ export const useChallengeStore = defineStore('challenge', {
     setPriceLevel(priceLevel: PriceLevel[]): void {
       this.priceLevel = priceLevel;
     },
+    setDaysActive(daysActive: number | null): void {
+      this.daysActive = daysActive;
+    },
+    setPhaseSet(phaseSet: Phase[]): void {
+      this.phaseSet = phaseSet;
+    },
     async loadPhaseSet(): Promise<void> {
       const { campaigns, loadCampaign } = useApiGetCampaign(this.$log);
       await loadCampaign();
@@ -91,7 +97,7 @@ export const useChallengeStore = defineStore('challenge', {
         this.$log?.debug(
           `Saving phase set <${JSON.stringify(campaigns.value[0].phase_set, null, 2)}>.`,
         );
-        this.phaseSet = campaigns.value[0].phase_set;
+        this.setPhaseSet(campaigns.value[0].phase_set);
         this.$log?.debug(
           `New phase set <${JSON.stringify(this.getPhaseSet, null, 2)}>.`,
         );
@@ -103,7 +109,7 @@ export const useChallengeStore = defineStore('challenge', {
         this.$log?.debug(
           `Set store this campaign active days value <${campaigns.value[0].days_active}>.`,
         );
-        this.daysActive = campaigns.value[0].days_active;
+        this.setDaysActive(campaigns.value[0].days_active);
         this.$log?.debug(
           `New this camapaing active days value <${this.daysActive}>.`,
         );
@@ -115,7 +121,7 @@ export const useChallengeStore = defineStore('challenge', {
         this.$log?.debug(
           `Set store this campaing max team members <${campaigns.value[0].max_team_members}>.`,
         );
-        this.maxTeamMembers = campaigns.value[0].max_team_members;
+        this.setMaxTeamMembers(campaigns.value[0].max_team_members);
         this.$log?.debug(
           `New this campaing max team members value <${this.maxTeamMembers}>.`,
         );
@@ -127,7 +133,7 @@ export const useChallengeStore = defineStore('challenge', {
         this.$log?.debug(
           `Set store this campaign price level <${campaigns.value[0].price_level}>.`,
         );
-        this.priceLevel = campaigns.value[0].price_level;
+        this.setPriceLevel(campaigns.value[0].price_level);
       } else {
         this.$log?.info('No this campaign price level found.');
       }
@@ -142,9 +148,7 @@ export const useChallengeStore = defineStore('challenge', {
      */
     getIsChallengeInPhase(phaseType: PhaseType): boolean {
       this.$log?.debug(`Checking if challenge is in <${phaseType}> phase.`);
-      const phase = this.phaseSet.find(
-        (phase: Phase) => phase.phase_type === phaseType,
-      );
+      const phase = this.getPhaseFromSet(phaseType);
       if (phase) {
         const startDate: number = new Date(phase.date_from).getTime();
         const endDate: number = new Date(phase.date_to).getTime();
@@ -165,6 +169,12 @@ export const useChallengeStore = defineStore('challenge', {
       }
       this.$log?.debug(`No <${phaseType}> phase type found.`);
       return false;
+    },
+    getPhaseFromSet(phaseType: PhaseType): Phase | null {
+      return (
+        this.phaseSet.find((phase: Phase) => phase.phase_type === phaseType) ||
+        null
+      );
     },
   },
 
