@@ -666,7 +666,7 @@ textNoUnreadNotifications = "Nemáte žiadne neprečítané oznámenia"
 
 [offer]
 titleOfferValidation = "Chcete-li ji použít, stačí se na místě prokázat dokladem totožnosti:"
-labelOfferValidationTshirt = "Tričko nebo nákrčník"
+labelOfferValidationTshirt = "Tričkom alebo iným merchom z tohtoročného ročníka"
 labelOfferValidationAccount = "Aktivní profil zde v systému Pro práci na kole na mobilním telefonu nebo počítači"
 
 [onboarding]

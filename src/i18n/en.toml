@@ -664,7 +664,7 @@ textNoUnreadNotifications = "You have no unread notifications"
 
 [offer]
 titleOfferValidation = "To use it, just show proof of identity on the spot:"
-labelOfferValidationTshirt = "T-shirt or neck warmer"
+labelOfferValidationTshirt = "With a t-shirt or other merchandise from this year's edition"
 labelOfferValidationAccount = "An active Ride to Work by Bike profile on your mobile phone or computer"
 
 [onboarding]
