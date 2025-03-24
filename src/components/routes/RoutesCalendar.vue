@@ -22,18 +22,15 @@
  */
 
 // libraries
-import { colors, date } from 'quasar';
+import { colors } from 'quasar';
 import {
-  addToDate,
   getDate,
-  makeDate,
   nextDay,
   prevDay,
-  parseTimestamp,
   QCalendarMonth,
   today,
 } from '@quasar/quasar-ui-qcalendar';
-import { defineComponent, computed, inject, ref, watch } from 'vue';
+import { defineComponent, computed, inject, ref, watch, PropType } from 'vue';
 import { i18n } from '../../boot/i18n';
 
 // components
@@ -43,7 +40,7 @@ import RouteCalendarPanel from './RouteCalendarPanel.vue';
 
 // composables
 import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '../../composables/useRoutes';
 
 // enums
 import { TransportDirection } from '../types/Route';
@@ -51,7 +48,7 @@ import { PhaseType } from '../types/Challenge';
 
 // stores
 import { useChallengeStore } from '../../stores/challenge';
-import { useTripsStore } from 'src/stores/trips';
+import { useTripsStore } from '../../stores/trips';
 
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
@@ -65,7 +62,13 @@ export default defineComponent({
     CalendarNavigation,
     RouteCalendarPanel,
   },
-  setup() {
+  props: {
+    routes: {
+      type: Array as PropType<RouteDay[]>,
+      default: () => [],
+    },
+  },
+  setup(props) {
     const logger = inject('vuejs3-logger') as Logger | null;
     const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
@@ -74,80 +77,15 @@ export default defineComponent({
       return i18n.global.locale;
     });
 
-    /**
-     * Disable logging after a date
-     * Calendar disables all dates after the returned date.
-     * This is done based on two conditions:
-     * 1. Future date (date is after today)
-     * 2. Day is outside the `competition` phase date range
-     * @returns {string | null} - Date in `YYYY-MM-DD` format
-     */
-    const disabledAfter = computed((): string | null => {
-      const timestampToday = parseTimestamp(today());
-      const timestampTomorrow = nextDay(timestampToday);
-      const dateTomorrow = makeDate(timestampTomorrow);
-
-      const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
-        PhaseType.competition,
-      )?.date_to;
-      if (!competitionPhaseDateTo) {
-        return getDate(timestampTomorrow) || null;
-      }
-      const timestampCompetitionPhaseDateTo = parseTimestamp(
-        competitionPhaseDateTo,
-      );
-      const dateCompetitionPhaseDateTo = makeDate(
-        timestampCompetitionPhaseDateTo,
-      );
-
-      const isTomorrowBeforeCompetitionDateTo =
-        date.getDateDiff(dateTomorrow, dateCompetitionPhaseDateTo, 'days') < 0;
-
-      return isTomorrowBeforeCompetitionDateTo
-        ? getDate(timestampTomorrow)
-        : getDate(nextDay(timestampCompetitionPhaseDateTo));
-    });
-
-    /**
-     * Disable logging before a date
-     * Calendar disables all dates before the returned date.
-     * This is done based on two conditions:
-     * 1. Window of logging days before today
-     * 2. Day is outside the `competition` phase date range
-     * @returns {string | null} - Date in `YYYY-MM-DD` format
-     */
+    // get start and end of logging window
+    const { timestampLoggingStart, timestampLoggingEnd } = useRoutes();
     const disabledBefore = computed((): string | null => {
-      const timestampToday = parseTimestamp(today());
-      const timestampStartOfLoggingWindow = timestampToday
-        ? addToDate(timestampToday, {
-            day: -1 * challengeStore.getDaysActive,
-          })
-        : null;
-      const dateStartOfLoggingWindow = makeDate(timestampStartOfLoggingWindow);
-
-      const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
-        PhaseType.competition,
-      )?.date_from;
-      if (!competitionPhaseDateFrom) {
-        return getDate(timestampStartOfLoggingWindow) || null;
-      }
-      const timestampCompetitionPhaseDateFrom = parseTimestamp(
-        competitionPhaseDateFrom,
-      );
-      const dateCompetitionPhaseDateFrom = makeDate(
-        timestampCompetitionPhaseDateFrom,
-      );
-
-      const isStartOfLoggingWindowAfterCompetitionPhaseDateFrom =
-        date.getDateDiff(
-          dateStartOfLoggingWindow,
-          dateCompetitionPhaseDateFrom,
-          'days',
-        ) > 0;
-
-      return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
-        ? getDate(timestampStartOfLoggingWindow)
-        : getDate(prevDay(timestampCompetitionPhaseDateFrom));
+      const timestamp = timestampLoggingStart.value;
+      return timestamp ? getDate(prevDay(timestamp)) : null;
+    });
+    const disabledAfter = computed((): string | null => {
+      const timestamp = timestampLoggingEnd.value;
+      return timestamp ? getDate(nextDay(timestamp)) : null;
     });
 
     const tripsStore = useTripsStore();
@@ -307,6 +245,7 @@ export default defineComponent({
 
 <template>
   <div data-cy="routes-calendar" class="relative-position">
+    Before: {{ disabledBefore }} After: {{ disabledAfter }}
     <!-- Top bar -->
     <div class="row q-pb-sm q-my-lg items-center gap-8">
       <!-- Title -->

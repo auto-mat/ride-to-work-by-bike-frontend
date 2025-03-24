@@ -1,5 +1,13 @@
 // libraries
 import { date } from 'quasar';
+import { computed } from 'vue';
+import {
+  addToDate,
+  makeDate,
+  parseTimestamp,
+  today,
+  Timestamp,
+} from '@quasar/quasar-ui-qcalendar';
 
 // composables
 import { i18n } from 'src/boot/i18n';
@@ -7,8 +15,12 @@ import { i18n } from 'src/boot/i18n';
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
+// stores
+import { useChallengeStore } from '../stores/challenge';
+
 // enums
 import { TransportDirection, TransportType } from 'src/components/types/Route';
+import { PhaseType } from '../components/types/Challenge';
 
 // types
 import type { RouteItem, RouteDay } from 'src/components/types/Route';
@@ -16,6 +28,7 @@ import type { RouteItem, RouteDay } from 'src/components/types/Route';
 export const useRoutes = () => {
   const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
   const { defaultDistanceZero } = rideToWorkByBikeConfig;
+  const challengeStore = useChallengeStore();
 
   /**
    * Returns the icon name corresponding to the given route.
@@ -81,6 +94,83 @@ export const useRoutes = () => {
       ` ${i18n.global.t('global.routeLengthUnit')}`
     );
   };
+
+  /**
+   * Returns timestamp for the first day when logging routes is allowed.
+   * This is done based on two conditions:
+   * 1. Window of logging days before today
+   * 2. Day is outside the `competition` phase date range
+   * @returns {Timestamp | null} - Timestamp or null if timestamp is invalid
+   */
+  const timestampLoggingStart = computed((): Timestamp | null => {
+    // get today's timestamp
+    const timestampToday = parseTimestamp(today());
+    if (!timestampToday) return null;
+    const timestampStartOfLoggingWindow = addToDate(timestampToday, {
+      day: -1 * ((challengeStore.getDaysActive || 0) - 1),
+    });
+    const dateStartOfLoggingWindow = makeDate(timestampStartOfLoggingWindow);
+
+    const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
+      PhaseType.competition,
+    )?.date_from;
+    if (!competitionPhaseDateFrom) {
+      return timestampStartOfLoggingWindow || null;
+    }
+    const timestampCompetitionPhaseDateFrom = parseTimestamp(
+      competitionPhaseDateFrom,
+    );
+    if (!timestampCompetitionPhaseDateFrom) return null;
+    const dateCompetitionPhaseDateFrom = makeDate(
+      timestampCompetitionPhaseDateFrom,
+    );
+
+    const isStartOfLoggingWindowAfterCompetitionPhaseDateFrom =
+      date.getDateDiff(
+        dateStartOfLoggingWindow,
+        dateCompetitionPhaseDateFrom,
+        'days',
+      ) > 0;
+
+    return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
+      ? timestampStartOfLoggingWindow
+      : timestampCompetitionPhaseDateFrom;
+  });
+
+  /**
+   * Returns timestamp for the last day when logging routes is allowed.
+   * Calendar disables all dates after the returned date.
+   * This is done based on two conditions:
+   * 1. Future date (date is after today)
+   * 2. Day is outside the `competition` phase date range
+   * @returns {Timestamp | null} - Timestamp or null if timestamp is invalid
+   */
+  const timestampLoggingEnd = computed((): Timestamp | null => {
+    const timestampToday = parseTimestamp(today());
+    if (!timestampToday) return null;
+    const dateToday = makeDate(timestampToday);
+
+    const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
+      PhaseType.competition,
+    )?.date_to;
+    if (!competitionPhaseDateTo) {
+      return timestampToday || null;
+    }
+    const timestampCompetitionPhaseDateTo = parseTimestamp(
+      competitionPhaseDateTo,
+    );
+    if (!timestampCompetitionPhaseDateTo) return null;
+    const dateCompetitionPhaseDateTo = makeDate(
+      timestampCompetitionPhaseDateTo,
+    );
+
+    const isTomorrowBeforeCompetitionDateTo =
+      date.getDateDiff(dateToday, dateCompetitionPhaseDateTo, 'days') < 0;
+
+    return isTomorrowBeforeCompetitionDateTo
+      ? timestampToday
+      : timestampCompetitionPhaseDateTo;
+  });
 
   /**
    * Creates an array of RouteDay objects for each day between specified
@@ -209,6 +299,8 @@ export const useRoutes = () => {
   };
 
   return {
+    timestampLoggingStart,
+    timestampLoggingEnd,
     createDaysArrayWithRoutes,
     formatDate,
     formatDateName,
