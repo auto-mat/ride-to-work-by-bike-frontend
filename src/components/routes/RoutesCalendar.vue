@@ -82,7 +82,7 @@ export default defineComponent({
      * This is done based on two conditions:
      * 1. Future date (date is after today)
      * 2. Day is outside the `competition` phase date range
-     * @returns {string | null} date in `YYYY-MM-DD` format
+     * @returns {string | null} - Date in `YYYY-MM-DD` format
      */
     const disabledAfter = computed((): string | null => {
       const timestampToday = parseTimestamp(today());
@@ -116,7 +116,7 @@ export default defineComponent({
      * This is done based on two conditions:
      * 1. Window of logging days before today
      * 2. Day is outside the `competition` phase date range
-     * @returns {string | null} date in `YYYY-MM-DD` format
+     * @returns {string | null} - Date in `YYYY-MM-DD` format
      */
     const disabledBefore = computed((): string | null => {
       const timestampToday = parseTimestamp(today());
