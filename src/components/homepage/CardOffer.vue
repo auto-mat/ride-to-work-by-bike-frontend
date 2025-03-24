@@ -110,6 +110,7 @@ export default defineComponent({
       v-model="modalOpened"
       :horizontal="true"
       data-cy="dialog-offer"
+      :minWidth="card?.content ? '50vw' : '30vw'"
     >
       <!-- Title -->
       <template #title>
@@ -138,13 +139,13 @@ export default defineComponent({
       <!-- Content -->
       <template #content>
         <!-- Left column: Content -->
-        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-left">
+        <div
+          class="col-12 col-md-6 q-px-md q-py-md"
+          data-cy="dialog-col-left"
+          v-if="card?.content || card?.voucherUrl"
+        >
           <!-- Content -->
-          <div
-            v-if="card?.content"
-            v-html="card.content"
-            data-cy="dialog-content"
-          />
+          <div v-html="card.content" data-cy="dialog-content" />
           <!-- Voucher -->
           <div v-if="card?.voucher" class="q-mt-lg" data-cy="dialog-voucher">
             <h4
@@ -171,7 +172,13 @@ export default defineComponent({
           />
         </div>
         <!-- Right column: Image -->
-        <div class="col-12 col-md-6 q-px-md q-py-md" data-cy="dialog-col-right">
+        <div
+          :class="{
+            'col-md-6': card?.content || card?.voucherUrl,
+            'col-12 q-px-md q-py-md': true,
+          }"
+          data-cy="dialog-col-right"
+        >
           <!-- Image -->
           <q-img
             :src="card.image.src"
