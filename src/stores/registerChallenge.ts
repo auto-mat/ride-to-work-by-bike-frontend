@@ -228,6 +228,19 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
       return 0;
     },
+    /**
+     * Get default payment amount for school registration
+     * Used when saving challenge registration with school payment.
+     * @returns {number} - Default school payment amount
+     */
+    getDefaultPaymentAmountSchool(): number {
+      const challengeStore = useChallengeStore();
+      const currentPriceLevels = challengeStore.getCurrentPriceLevels;
+      if (currentPriceLevels[PriceLevelCategory.school]) {
+        return currentPriceLevels[PriceLevelCategory.school].price;
+      }
+      return 0;
+    },
     getIsPayuTransactionInitiated: (state): boolean =>
       state.isPayuTransactionInitiated,
     getIsPaymentCategoryDonation: (state): boolean => {
@@ -249,6 +262,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     getIsPaymentUnsuccessful: (state): boolean => {
       return state.paymentState === PaymentState.unknown;
+    },
+    getIsPaymentSubjectSchool: (state): boolean => {
+      return state.paymentSubject === PaymentSubject.school;
     },
     getIsPaymentSubjectOrganization: (state): boolean => {
       return [PaymentSubject.company, PaymentSubject.school].includes(
@@ -587,6 +603,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
 
       const isPaymentOrganization = this.getIsPaymentSubjectOrganization;
+      // set default payment amount for organization
+      let defaultOrganizationPaymentAmount =
+        this.getDefaultPaymentAmountCompany;
+      // if school, set payment amount for school
+      if (this.getIsPaymentSubjectSchool) {
+        defaultOrganizationPaymentAmount = this.getDefaultPaymentAmountSchool;
+      }
       /**
        * Defines what data is sent to the API for each step
        * Data with `null` value is discarded by the
@@ -616,12 +639,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
             {
               teamId: this.teamId,
               paymentSubject: this.paymentSubject,
-              paymentAmount: this.getDefaultPaymentAmountCompany,
+              paymentAmount: defaultOrganizationPaymentAmount,
               paymentCategory: PaymentCategory.entryFee,
               products: [
                 {
                   name: rideToWorkByBikeConfig.rtwbbChallengeEntryFeeOrderedProductName,
-                  unitPrice: this.getDefaultPaymentAmountCompany,
+                  unitPrice: defaultOrganizationPaymentAmount,
                   quantity: 1,
                 },
               ],

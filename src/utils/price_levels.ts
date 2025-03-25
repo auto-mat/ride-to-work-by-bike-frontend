@@ -16,9 +16,16 @@ const emptyPriceLevelCompany = {
   takes_effect_on: '',
 } as PriceLevel;
 
+const emptyPriceLevelSchool = {
+  name: PriceLevelCategory.school,
+  category: PriceLevelCategory.school,
+  price: 0,
+  takes_effect_on: '',
+} as PriceLevel;
+
 /**
  * Get current price levels for each category
- * Returns the most recent price levels for basic and company categories
+ * Returns the most recent price levels for basic, company and school categories
  * based on takes_effect_on date
  * @returns {Record<PriceLevelCategory, PriceLevel>} - Current price levels
  *   by category
@@ -32,6 +39,7 @@ export const getCurrentPriceLevelsUtil = (
     const priceLevelsEmpty = {} as Record<PriceLevelCategory, PriceLevel>;
     priceLevelsEmpty[PriceLevelCategory.basic] = emptyPriceLevelBasic;
     priceLevelsEmpty[PriceLevelCategory.company] = emptyPriceLevelCompany;
+    priceLevelsEmpty[PriceLevelCategory.school] = emptyPriceLevelSchool;
     return priceLevelsEmpty;
   }
   if (!now) now = getCurrentDateTimeAccordingTimezone();
@@ -44,6 +52,9 @@ export const getCurrentPriceLevelsUtil = (
   );
   const priceLevelsCompany = priceLevels.filter(
     (priceLevel) => priceLevel[category] === PriceLevelCategory.company,
+  );
+  const priceLevelsSchool = priceLevels.filter(
+    (priceLevel) => priceLevel[category] === PriceLevelCategory.school,
   );
 
   const sortByDate = (priceLevels: Array<PriceLevel>): Array<PriceLevel> => {
@@ -94,6 +105,9 @@ export const getCurrentPriceLevelsUtil = (
   const currentPriceLevelCategoryComputed = getCurrentPriceLevel(
     sortByDate(priceLevelsCompany),
   );
+  const currentPriceLevelSchoolComputed = getCurrentPriceLevel(
+    sortByDate(priceLevelsSchool),
+  );
   if (currentPriceLevelBasicComputed)
     priceLevelComputed[PriceLevelCategory.basic] =
       currentPriceLevelBasicComputed;
@@ -102,6 +116,10 @@ export const getCurrentPriceLevelsUtil = (
     priceLevelComputed[PriceLevelCategory.company] =
       currentPriceLevelCategoryComputed;
   else priceLevelComputed[PriceLevelCategory.company] = emptyPriceLevelCompany;
+  if (currentPriceLevelSchoolComputed)
+    priceLevelComputed[PriceLevelCategory.school] =
+      currentPriceLevelSchoolComputed;
+  else priceLevelComputed[PriceLevelCategory.school] = emptyPriceLevelSchool;
   return priceLevelComputed;
 };
 

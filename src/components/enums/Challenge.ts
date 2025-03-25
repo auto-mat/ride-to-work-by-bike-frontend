@@ -7,4 +7,5 @@ export enum ChallengeStatus {
 export enum PriceLevelCategory {
   basic = 'basic',
   company = 'company',
+  school = 'school',
 }

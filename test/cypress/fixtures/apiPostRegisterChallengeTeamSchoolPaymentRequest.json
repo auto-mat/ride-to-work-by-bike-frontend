@@ -1,0 +1,13 @@
+{
+  "payment_amount": 234,
+  "payment_subject": "school",
+  "payment_category": "entry_fee",
+  "products": [
+    {
+      "name": "RTWBB challenge entry fee",
+      "unitPrice": 234,
+      "quantity": 1
+    }
+  ],
+  "team_id": 2452
+}
