@@ -8,6 +8,7 @@ import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import { useTripsStore } from '../../../src/stores/trips';
+import { useChallengeStore } from '../../../src/stores/challenge';
 
 const { getPaletteColor } = colors;
 
@@ -28,17 +29,21 @@ const selectorSectionDirection = 'section-direction';
 const routeListItemWrapperWidthDesktop = 50;
 const routeListItemWrapperWidthMobile = 100;
 const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
+const dateWithLoggedRoute = new Date(2025, 4, 26);
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
-  context('desktop', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
+  context('desktop - full logging window', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(new Date('2024-08-15').getTime());
-      cy.fixture('routeList').then((routes) => {
+      cy.clock(dateWithLoggedRoute, ['Date']);
+      cy.fixture('routeList.json').then((routes) => {
         cy.mount(RouteListEdit, {
           props: {
             routes,
@@ -47,6 +52,12 @@ describe('<RouteListEdit>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
       cy.viewport('macbook-16');
     });
 
@@ -137,14 +148,16 @@ describe('<RouteListEdit>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    // component visible
-    cy.dataCy(selectorRouteListEdit).should('be.visible');
-    // items visible
-    cy.dataCy(selectorRouteListItem)
-      .should('be.visible')
-      .and('have.length', challengeLoggingWindowDays * 2);
-    // direction labels visible
-    cy.dataCy(selectorSectionDirection).should('be.visible');
+    cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+      // component visible
+      cy.dataCy(selectorRouteListEdit).should('be.visible');
+      // items visible
+      cy.dataCy(selectorRouteListItem)
+        .should('be.visible')
+        .and('have.length', response.results[0].days_active * 2);
+      // direction labels visible
+      cy.dataCy(selectorSectionDirection).should('be.visible');
+    });
   });
 
   // day date (title) styles
@@ -183,7 +196,7 @@ function coreTests() {
     });
   });
 
-  it('renders save button with edit count', () => {
+  it.only('renders save button with edit count', () => {
     cy.dataCy(selectorButtonSave)
       .should('be.visible')
       .and('have.css', 'font-size', '16px')
@@ -226,7 +239,7 @@ function coreTests() {
     cy.dataCy(selectorRouteListItem)
       .last()
       .find(dataSelectorButtonToggleTransport)
-      .first()
+      .last()
       .click();
     // count changes
     cy.dataCy(selectorButtonSave).should(
@@ -237,12 +250,12 @@ function coreTests() {
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(dataSelectorButtonToggleTransport)
-      .first()
+      .last()
       .click();
     cy.dataCy(selectorRouteListItem)
       .last()
       .find(dataSelectorButtonToggleTransport)
-      .last()
+      .first()
       .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',

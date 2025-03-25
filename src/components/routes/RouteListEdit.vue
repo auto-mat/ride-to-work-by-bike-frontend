@@ -20,17 +20,13 @@
  */
 
 // libraries
-import { date } from 'quasar';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
 
 // composables
 import { useRoutes } from 'src/composables/useRoutes';
-
-// config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
@@ -47,18 +43,11 @@ export default defineComponent({
     RouteItemEdit,
   },
   setup(props) {
-    const { createDaysArrayWithRoutes, formatDate, formatDateName } =
+    const { getLoggableDaysWithRoutes, formatDate, formatDateName } =
       useRoutes();
 
-    const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
-    const todayDate = new Date();
-    const startDate = date.addToDate(todayDate, {
-      days: -1 * challengeLoggingWindowDays,
-    });
-    const endDate = todayDate;
-
-    const days = ref<RouteDay[]>(
-      createDaysArrayWithRoutes(startDate, endDate, props.routes),
+    const days = computed<RouteDay[]>(() =>
+      getLoggableDaysWithRoutes(props.routes),
     );
 
     // dirty state will be tracked within UI to show change count

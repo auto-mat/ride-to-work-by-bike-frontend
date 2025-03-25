@@ -19,7 +19,6 @@
  */
 
 // libraries
-import { date } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // components
@@ -27,9 +26,6 @@ import RouteItemDisplay from './RouteItemDisplay.vue';
 
 // composables
 import { useRoutes } from '../../composables/useRoutes';
-
-// config
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
@@ -46,23 +42,10 @@ export default defineComponent({
     RouteItemDisplay,
   },
   setup(props) {
-    const { formatDate, formatDateName, createDaysArrayWithRoutes } =
+    const { formatDate, formatDateName, getChallengeDaysWithRoutes } =
       useRoutes();
 
-    const { challengeLoggingWindowDays, challengeStartDate } =
-      rideToWorkByBikeConfig;
-    const todayDate = new Date();
-    // Start date is not included in createDaysArrayWithRoutes so we subtract 1 day.
-    const startDate = date.addToDate(new Date(challengeStartDate), {
-      days: -1,
-    });
-    const endDate = date.addToDate(todayDate, {
-      days: -1 * challengeLoggingWindowDays,
-    });
-
-    const days = ref<RouteDay[]>(
-      createDaysArrayWithRoutes(startDate, endDate, props.routes),
-    );
+    const days = ref<RouteDay[]>(getChallengeDaysWithRoutes(props.routes));
 
     return {
       days,

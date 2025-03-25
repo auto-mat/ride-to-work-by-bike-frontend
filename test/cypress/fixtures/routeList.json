@@ -1,58 +1,49 @@
 [
   {
-    "id": "2024-08-15-toWork",
-    "date": "2024-08-15",
+    "id": "00001",
+    "date": "2025-05-24",
     "transport": "bicycle",
-    "distance": "10.00",
+    "distance": "20.00",
     "direction": "toWork",
     "dirty": false
   },
   {
-    "id": "2024-08-14-toWork",
-    "date": "2024-08-14",
-    "transport": "by_other_vehicle",
-    "distance": "0.00",
-    "direction": "toWork",
-    "dirty": false
-  },
-  {
-    "id": "2024-08-14-fromWork",
-    "date": "2024-08-14",
-    "transport": "bicycle",
-    "distance": "12.00",
+    "id": "00002",
+    "date": "2025-05-24",
+    "transport": "by_foot",
+    "distance": "5.00",
     "direction": "fromWork",
     "dirty": false
   },
   {
-    "id": "2024-08-11-fromWork",
-    "date": "2024-08-11",
-    "transport": "hromadna",
-    "distance": "10.00",
+    "id": "00001",
+    "date": "2025-05-25",
+    "transport": "bicycle",
+    "direction": "toWork",
+    "dirty": false
+  },
+  {
+    "id": "00002",
+    "date": "2025-05-25",
+    "transport": "bicycle",
+    "distance": "19.00",
     "direction": "fromWork",
     "dirty": false
   },
   {
-    "id": "2024-08-10-toWork",
-    "date": "2024-08-10",
-    "transport": "by_other_vehicle",
-    "distance": "0.00",
-    "direction": "toWork",
-    "dirty": false
-  },
-  {
-    "id": "2024-08-10-toWork",
-    "date": "2024-08-10",
-    "transport": "by_other_vehicle",
-    "distance": "0.00",
-    "direction": "toWork",
-    "dirty": false
-  },
-  {
-    "id": "2024-08-05-toWork",
-    "date": "2024-08-05",
+    "id": "00001",
+    "date": "2025-05-26",
     "transport": "bicycle",
-    "distance": "15.00",
+    "distance": "20.00",
     "direction": "toWork",
+    "dirty": false
+  },
+  {
+    "id": "",
+    "date": "",
+    "transport": "",
+    "distance": "0.00",
+    "direction": "",
     "dirty": false
   }
 ]

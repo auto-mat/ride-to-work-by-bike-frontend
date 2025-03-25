@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import {
   addToDate,
   makeDate,
+  prevDay,
   parseTimestamp,
   today,
   Timestamp,
@@ -28,7 +29,6 @@ import type { RouteItem, RouteDay } from 'src/components/types/Route';
 export const useRoutes = () => {
   const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
   const { defaultDistanceZero } = rideToWorkByBikeConfig;
-  const challengeStore = useChallengeStore();
 
   /**
    * Returns the icon name corresponding to the given route.
@@ -103,6 +103,7 @@ export const useRoutes = () => {
    * @returns {Timestamp | null} - Timestamp or null if timestamp is invalid
    */
   const timestampLoggingStart = computed((): Timestamp | null => {
+    const challengeStore = useChallengeStore();
     // get today's timestamp
     const timestampToday = parseTimestamp(today());
     if (!timestampToday) return null;
@@ -146,6 +147,7 @@ export const useRoutes = () => {
    * @returns {Timestamp | null} - Timestamp or null if timestamp is invalid
    */
   const timestampLoggingEnd = computed((): Timestamp | null => {
+    const challengeStore = useChallengeStore();
     const timestampToday = parseTimestamp(today());
     if (!timestampToday) return null;
     const dateToday = makeDate(timestampToday);
@@ -171,6 +173,44 @@ export const useRoutes = () => {
       ? timestampToday
       : timestampCompetitionPhaseDateTo;
   });
+
+  const getLoggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
+    const timestampStart = timestampLoggingStart.value;
+    const timestampEnd = timestampLoggingEnd.value;
+    if (!timestampStart || !timestampEnd) return [];
+    const startDate = makeDate(prevDay(timestampStart));
+    const endDate = makeDate(timestampEnd);
+    return createDaysArrayWithRoutes(startDate, endDate, routes);
+  };
+
+  const getChallengeDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
+    const challengeStore = useChallengeStore();
+    const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
+      PhaseType.competition,
+    )?.date_from;
+    if (!competitionPhaseDateFrom) {
+      return [];
+    }
+    const timestampCompetitionPhaseDateFrom = parseTimestamp(
+      competitionPhaseDateFrom,
+    );
+    if (!timestampCompetitionPhaseDateFrom) {
+      return [];
+    }
+    const dateCompetitionPhaseDateFrom = makeDate(
+      prevDay(timestampCompetitionPhaseDateFrom),
+    );
+    const timestampStart = timestampLoggingStart.value;
+    if (!timestampStart) {
+      return [];
+    }
+    const dateEnd = makeDate(prevDay(timestampStart));
+    return createDaysArrayWithRoutes(
+      dateCompetitionPhaseDateFrom,
+      dateEnd,
+      routes,
+    );
+  };
 
   /**
    * Creates an array of RouteDay objects for each day between specified
@@ -301,6 +341,8 @@ export const useRoutes = () => {
   return {
     timestampLoggingStart,
     timestampLoggingEnd,
+    getLoggableDaysWithRoutes,
+    getChallengeDaysWithRoutes,
     createDaysArrayWithRoutes,
     formatDate,
     formatDateName,
