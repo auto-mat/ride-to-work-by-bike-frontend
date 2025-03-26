@@ -8,12 +8,14 @@
  * @props
  * - `modelValue` (string|null) - Selected city slug.
  *   It should be of type `string`.
+ * - `cities` (City[]) - Array of cities from which options are generated.
+ * - `loading` (boolean) - Whether the cities are loading.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
  *
  * @example
- * <form-field-select-city v-model="city" />
+ * <form-field-select-city v-model="city" :cities="cities" :loading="loading" />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104327&t=XckLLHWI3q8VrRFl-1)
  */
