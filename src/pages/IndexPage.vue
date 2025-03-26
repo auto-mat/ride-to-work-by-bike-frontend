@@ -138,7 +138,7 @@
 <script lang="ts">
 // libraries
 import { colors } from 'quasar';
-import { computed, defineComponent, inject, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // adapters
 import { feedAdapter } from '../adapters/feedAdapter';
@@ -162,9 +162,6 @@ import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SectionHeading from 'src/components/global/SectionHeading.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
 
-// composables
-import { useApiGetPosts } from '../composables/useApiGetPosts';
-
 // config
 import { routesConf } from '../router/routes_conf';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -184,13 +181,10 @@ import * as homepage from '../mocks/homepage';
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useFeedStore } from '../stores/feed';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { Offer } from '../components/types/Offer';
-
-// utils
-import { getOffersFeedParamSet } from '../utils/get_feed_param_set';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -215,6 +209,9 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
+    const registerChallengeStore = useRegisterChallengeStore();
+    const feedStore = useFeedStore();
+    const isLoadingPosts = computed(() => feedStore.getIsLoading);
 
     const isBannerRoutesEnabled = false;
     const isBannerAppEnabled = false;
@@ -229,17 +226,15 @@ export default defineComponent({
     const challengeStore = useChallengeStore();
     const challengeStatus = challengeStore.getChallengeStatus;
 
-    const registerChallengeStore = useRegisterChallengeStore();
-
     const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
 
     const urlCommunity = routesConf['community']['path'];
     const urlResults = routesConf['results']['path'];
 
-    const posts = ref<Offer[]>([]);
-    const { isLoading: isLoadingPosts, loadPosts } = useApiGetPosts(logger);
-    const cardsOffer = computed(() => feedAdapter.toCardOffer(posts.value));
+    const cardsOffer = computed(() =>
+      feedAdapter.toCardOffer(feedStore.getPostsOffer),
+    );
 
     onMounted(async () => {
       // make sure phase set is loaded
@@ -261,8 +256,8 @@ export default defineComponent({
       }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityWpSlug) {
-        posts.value = await loadPosts(
-          getOffersFeedParamSet(registerChallengeStore.getCityWpSlug),
+        await feedStore.attemptFeedRefresh(
+          registerChallengeStore.getCityWpSlug,
         );
       }
     });

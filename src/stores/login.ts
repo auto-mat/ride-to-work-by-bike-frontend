@@ -18,6 +18,7 @@ import { routesConf } from '../router/routes_conf';
 // stores
 import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
+import { useFeedStore } from './feed';
 import { useRegisterChallengeStore } from './registerChallenge';
 
 // types
@@ -352,6 +353,9 @@ export const useLoginStore = defineStore('login', {
       // clear registerChallenge store
       const registerChallengeStore = useRegisterChallengeStore();
       registerChallengeStore.resetPersistentProperties();
+      // clear feed store
+      const feedStore = useFeedStore();
+      feedStore.clearStore();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(
