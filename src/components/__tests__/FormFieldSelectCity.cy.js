@@ -1,7 +1,6 @@
 import { ref } from 'vue';
 import FormFieldSelectCity from '../form/FormFieldSelectCity.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { vModelAdapter } from '../../../test/cypress/utils';
 
 // variables
@@ -14,12 +13,20 @@ describe('<FormFieldSelectCity>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       model.value = null;
-      cy.mount(FormFieldSelectCity, {
-        props: {
-          ...vModelAdapter(model),
-        },
+      cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+        cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
+          cy.mount(FormFieldSelectCity, {
+            props: {
+              ...vModelAdapter(model),
+              cities: [
+                ...citiesResponse.results,
+                ...citiesResponseNext.results,
+              ],
+              loading: false,
+            },
+          });
+        });
       });
       cy.viewport('macbook-16');
     });
@@ -29,12 +36,20 @@ describe('<FormFieldSelectCity>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
       model.value = null;
-      cy.mount(FormFieldSelectCity, {
-        props: {
-          ...vModelAdapter(model),
-        },
+      cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+        cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
+          cy.mount(FormFieldSelectCity, {
+            props: {
+              ...vModelAdapter(model),
+              cities: [
+                ...citiesResponse.results,
+                ...citiesResponseNext.results,
+              ],
+              loading: false,
+            },
+          });
+        });
       });
       cy.viewport('iphone-6');
     });
@@ -45,14 +60,13 @@ describe('<FormFieldSelectCity>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.waitForCitiesApi();
     cy.dataCy('form-field-select-city').should('be.visible');
     cy.dataCy('form-select-label')
       .should('be.visible')
       .and('contain', i18n.global.t('form.labelCity'));
     // click select
     cy.dataCy('form-select-city').click();
-
+    // check if all cities are visible
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
       cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
         cy.get('.q-menu .q-item__label')
@@ -67,7 +81,6 @@ function coreTests() {
 
   it('allows to select city and updates modelValue', () => {
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
-      cy.waitForCitiesApi();
       cy.dataCy('form-select-city').click();
       cy.get('.q-menu')
         .should('be.visible')
@@ -82,7 +95,6 @@ function coreTests() {
 
   it('works correctly with non-unique wp_slug', () => {
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
-      cy.waitForCitiesApi();
       // choose city with different slug and wp_slug
       cy.dataCy('form-select-city').click();
       cy.get('.q-menu')
