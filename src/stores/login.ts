@@ -353,7 +353,7 @@ export const useLoginStore = defineStore('login', {
       // clear registerChallenge store
       const registerChallengeStore = useRegisterChallengeStore();
       registerChallengeStore.resetPersistentProperties();
-      // clear feed store
+      // clear feed store on logout
       const feedStore = useFeedStore();
       feedStore.clearStore();
       // redirect to login page
