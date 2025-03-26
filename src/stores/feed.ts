@@ -185,7 +185,7 @@ export const useFeedStore = defineStore('feed', {
     /**
      * Attempt to refresh feed data if needed
      * @param {string} citySlug - City slug to load posts for
-<void>}
+     * @returns {Promise<void>}
      */
     async attemptFeedRefresh(citySlug: string): Promise<void> {
       if (this.needsRefresh) {
