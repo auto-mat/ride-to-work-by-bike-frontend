@@ -84,6 +84,8 @@ export default defineComponent({
       if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
         // set default value for city select
+      }
+      if (registerChallengeStore.getCityWpSlug) {
         city.value = registerChallengeStore.getCityWpSlug;
       }
       if (!cities.value.length) {
