@@ -15,7 +15,7 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104327&t=ZZSrUuLgRLYixhUu-1)
  */
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, onMounted } from 'vue';
 
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
@@ -39,6 +39,9 @@ import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
 import listCardsLocation from '../../test/cypress/fixtures/listCardsLocation.json';
 import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 
+// stores
+import { useFeedStore } from '../stores/feed';
+import { useRegisterChallengeStore } from '../stores/registerChallenge';
 // types
 import type {
   CardPost,
@@ -59,6 +62,12 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
+    const feedStore = useFeedStore();
+    const registerChallengeStore = useRegisterChallengeStore();
+    const isLoadingCities = computed<boolean>(
+      () => feedStore.getIsLoadingCities,
+    );
+    const cities = computed<City[]>(() => feedStore.getCities);
     const city = ref<number | null>(null);
 
     const cardsFollow = listCardsFollow as CardFollow[];
@@ -70,11 +79,26 @@ export default defineComponent({
     };
     const cardsLocation = listCardsLocation as CardLocationType[];
 
+    onMounted(async () => {
+      // if citySlug is not available, try reloading register challenge data
+      if (!registerChallengeStore.getCityWpSlug) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+        // set default value for city select
+        city.value = registerChallengeStore.getCityWpSlug;
+      }
+      if (!cities.value.length) {
+        // load cities
+        await feedStore.loadCities();
+      }
+    });
+
     return {
       buttonPosts,
       cardsFollow,
       cardsPost,
       cardsLocation,
+      isLoadingCities,
+      cities,
       city,
       events,
     };
@@ -96,6 +120,8 @@ export default defineComponent({
           <!-- Select: City -->
           <form-field-select-city
             v-model="city"
+            :cities="cities"
+            :loading="isLoadingCities"
             data-cy="form-field-select-city"
           />
         </template>
