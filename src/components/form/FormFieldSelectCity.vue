@@ -19,13 +19,10 @@
  */
 
 // libraries
-import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
-
-import { useApiGetCities } from '../../composables/useApiGetCities';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 // types
 import type { FormOption } from '../../components/types/Form';
-import type { Logger } from '../../components/types/Logger';
 
 export default defineComponent({
   name: 'FormFieldSelectCity',
@@ -36,23 +33,25 @@ export default defineComponent({
       required: false,
       default: null,
     },
+    cities: {
+      type: Array as () => City[],
+      required: true,
+    },
+    loading: {
+      type: Boolean,
+      required: true,
+    },
   },
   setup(props, { emit }) {
-    const logger = inject('vuejs3-logger') as Logger | null;
     const city = ref<FormOption | null>(null);
 
-    const { isLoading, cities, loadCities } = useApiGetCities(logger);
     const options = computed<FormOption[]>(() =>
-      cities.value.map((city) => ({
+      props.cities.map((city) => ({
         label: city.name,
         value: city.slug,
         slug: city.wp_slug,
       })),
     );
-
-    onMounted(async () => {
-      await loadCities();
-    });
 
     // update city when modelValue prop is available
     watch(
@@ -71,7 +70,6 @@ export default defineComponent({
 
     return {
       city,
-      isLoading,
       options,
     };
   },
@@ -91,7 +89,7 @@ export default defineComponent({
       dense
       outlined
       v-model="city"
-      :loading="isLoading"
+      :loading="loading"
       :options="options"
       :style="{ 'min-width': '160px' }"
       class="col-auto"
