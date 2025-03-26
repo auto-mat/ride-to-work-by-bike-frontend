@@ -90,7 +90,7 @@ export const useFeedStore = defineStore('feed', {
       const lastUpdate = state.lastUpdated;
       if (!lastUpdate) return true;
       const now = new Date();
-      const oneDayAgo = date.addToDate(now, { days: -1 });
+      const oneDayAgo = date.subtractFromDate(now, { days: 1 });
       const timeOneDayAgo = oneDayAgo.getTime();
       this.$log?.debug(
         `Last feed update <${lastUpdate}>, now <${now.getTime()}>, one day ago <${timeOneDayAgo}>`,
