@@ -14,7 +14,7 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 
 // adapters
 import { feedAdapter } from '../adapters/feedAdapter';
@@ -29,9 +29,6 @@ import ListPartners from '../components/global/ListPartners.vue';
 import PageHeading from 'components/global/PageHeading.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
-
-// composables
-import { useApiGetCities } from '../composables/useApiGetCities';
 
 // stores
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
@@ -51,15 +48,13 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
     const feedStore = useFeedStore();
-    const isLoading = computed(() => feedStore.getIsLoading);
-    const {
-      isLoading: isLoadingCities,
-      cities,
-      loadCities,
-    } = useApiGetCities(logger);
+    const isLoading = computed<boolean>(() => feedStore.getIsLoading);
+    const isLoadingCities = computed<boolean>(
+      () => feedStore.getIsLoadingCities,
+    );
+    const cities = computed<City[]>(() => feedStore.getCities);
 
     const enabledSelectCity = true;
     const enabledPartners = false;
@@ -80,7 +75,10 @@ export default defineComponent({
       if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
-      await loadCities();
+      if (!cities.value.length) {
+        // load cities
+        await feedStore.loadCities();
+      }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityWpSlug) {
         // check if feed needs refresh

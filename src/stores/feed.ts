@@ -87,11 +87,18 @@ export const useFeedStore = defineStore('feed', {
      * @returns {boolean} - Whether feed needs refresh
      */
     needsRefresh(state: FeedState): boolean {
-      if (!state.lastUpdated) return true;
+      const lastUpdate = state.lastUpdated;
+      if (!lastUpdate) return true;
       const now = new Date();
-      const lastUpdate = new Date(state.lastUpdated);
-      const oneDayAgo = date.subtractFromDate(now, { days: 1 });
-      return date.isSameDate(lastUpdate, oneDayAgo) || lastUpdate < oneDayAgo;
+      const oneDayAgo = date.addToDate(now, { days: -1 });
+      const timeOneDayAgo = oneDayAgo.getTime();
+      this.$log?.debug(
+        `Last feed update <${lastUpdate}>, now <${now.getTime()}>, one day ago <${timeOneDayAgo}>`,
+      );
+      this.$log?.debug(
+        `Last feed update is older than one day ago <${lastUpdate < timeOneDayAgo}>`,
+      );
+      return lastUpdate < timeOneDayAgo;
     },
   },
 
@@ -145,18 +152,6 @@ export const useFeedStore = defineStore('feed', {
       this.isLoadingCities = loading;
     },
     /**
-     * Clear all store data
-     * @returns {void}
-     */
-    clearStore(): void {
-      this.postsOffer = [];
-      this.postsPrize = [];
-      this.lastUpdated = null;
-      this.isLoading = false;
-      this.cities = [];
-      this.isLoadingCities = false;
-    },
-    /**
      * Load posts from API for a given city slug
      * @param {string} citySlug - City slug to load posts for
      * @returns {Promise<void>}
@@ -173,7 +168,7 @@ export const useFeedStore = defineStore('feed', {
 
       this.setPostsOffer(offers);
       this.setPostsPrize(prizes);
-      this.setLastUpdated(Date.now());
+      this.setLastUpdated(new Date().getTime());
       this.setIsLoading(false);
     },
     /**
@@ -190,7 +185,7 @@ export const useFeedStore = defineStore('feed', {
     /**
      * Attempt to refresh feed data if needed
      * @param {string} citySlug - City slug to load posts for
-     * @returns {Promise<void>}
+<void>}
      */
     async attemptFeedRefresh(citySlug: string): Promise<void> {
       if (this.needsRefresh) {
@@ -200,7 +195,21 @@ export const useFeedStore = defineStore('feed', {
         this.$log?.debug('Feed is up to date, skipping refresh.');
       }
     },
+    /**
+     * Clear all store data
+     * @returns {void}
+     */
+    clearStore(): void {
+      this.postsOffer = [];
+      this.postsPrize = [];
+      this.lastUpdated = null;
+      this.isLoading = false;
+      this.cities = [];
+      this.isLoadingCities = false;
+    },
   },
 
-  persist: true,
+  persist: {
+    omit: ['isLoading', 'isLoadingCities', 'cities'],
+  },
 });
