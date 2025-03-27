@@ -22,7 +22,7 @@
  */
 
 // libraries
-import { colors } from 'quasar';
+import { colors, date } from 'quasar';
 import {
   getDate,
   nextDay,
@@ -107,9 +107,9 @@ export default defineComponent({
       logger?.debug(
         `Create days array with routes <${JSON.stringify(routeItems, null, 2)}>.`,
       );
-      // create days array with routes
+      // create days array with routes (include start date)
       const daysWithRoutes = createDaysArrayWithRoutes(
-        dateFrom,
+        date.subtractFromDate(dateFrom, { days: 1 }),
         dateTo,
         routeItems,
       );

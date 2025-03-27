@@ -174,6 +174,14 @@ export const useRoutes = () => {
       : timestampCompetitionPhaseDateTo;
   });
 
+  /**
+   * Returns an array of RouteDay objects for each day of the logging window.
+   * Start date is included by using prevDay() on the timestampLoggingStart.
+   * Fills in data from routes array based on date and direction.
+   * If data is empty for given day/route, it will create an empty route.
+   * @param {RouteItem[]} routes - The array logged routes.
+   * @return {RouteDay[]} The array representing days with routes.
+   */
   const getLoggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     const timestampStart = timestampLoggingStart.value;
     const timestampEnd = timestampLoggingEnd.value;
@@ -183,6 +191,11 @@ export const useRoutes = () => {
     return createDaysArrayWithRoutes(startDate, endDate, routes);
   };
 
+  /**
+   * Returns an array of RouteDay objects for each day of competition phase.
+   * @param {RouteItem[]} routes - The array logged routes.
+   * @return {RouteDay[]} The array representing days with routes.
+   */
   const getChallengeDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     const challengeStore = useChallengeStore();
     const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
