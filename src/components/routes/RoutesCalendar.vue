@@ -30,7 +30,7 @@ import {
   QCalendarMonth,
   today,
 } from '@quasar/quasar-ui-qcalendar';
-import { defineComponent, computed, inject, ref, watch, PropType } from 'vue';
+import { defineComponent, computed, inject, ref, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
 
 // components
@@ -62,13 +62,7 @@ export default defineComponent({
     CalendarNavigation,
     RouteCalendarPanel,
   },
-  props: {
-    routes: {
-      type: Array as PropType<RouteDay[]>,
-      default: () => [],
-    },
-  },
-  setup(props) {
+  setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
@@ -245,7 +239,6 @@ export default defineComponent({
 
 <template>
   <div data-cy="routes-calendar" class="relative-position">
-    Before: {{ disabledBefore }} After: {{ disabledAfter }}
     <!-- Top bar -->
     <div class="row q-pb-sm q-my-lg items-center gap-8">
       <!-- Title -->
