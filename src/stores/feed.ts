@@ -189,10 +189,10 @@ export const useFeedStore = defineStore('feed', {
      */
     async attemptFeedRefresh(citySlug: string): Promise<void> {
       if (this.needsRefresh) {
-        this.$log?.debug('Feed needs refresh, loading new data.');
+        this.$log?.info('Feed needs refresh, loading new data.');
         await this.loadPosts(citySlug);
       } else {
-        this.$log?.debug('Feed is up to date, skipping refresh.');
+        this.$log?.info('Feed is up to date, skipping refresh.');
       }
     },
     /**
