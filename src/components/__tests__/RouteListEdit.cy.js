@@ -9,6 +9,7 @@ import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import { useTripsStore } from '../../../src/stores/trips';
 import { useChallengeStore } from '../../../src/stores/challenge';
+import { TransportType } from '../../../src/components/types/Route';
 
 const { getPaletteColor } = colors;
 
@@ -43,19 +44,20 @@ describe('<RouteListEdit>', () => {
   context('desktop - full logging window', () => {
     beforeEach(() => {
       cy.clock(dateWithLoggedRoute, ['Date']);
-      cy.fixture('routeList.json').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
-        });
+      cy.mount(RouteListEdit, {
+        props: {},
       });
-      // setup store with commute modes
-      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
           store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('routeItemsCalendar.json').then((response) => {
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(response);
         });
       });
       cy.viewport('macbook-16');
@@ -75,15 +77,22 @@ describe('<RouteListEdit>', () => {
   context('desktop - current date', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
+      cy.mount(RouteListEdit, {
+        props: {},
+      });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('routeItemsCalendar.json').then((response) => {
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(response);
+        });
+      });
       cy.viewport('macbook-16');
     });
 
@@ -122,16 +131,23 @@ describe('<RouteListEdit>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.clock(new Date('2024-08-15').getTime());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
+      cy.clock(dateWithLoggedRoute, ['Date']);
+      cy.mount(RouteListEdit, {
+        props: {},
+      });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('routeItemsCalendar.json').then((response) => {
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(response);
+        });
+      });
       cy.viewport('iphone-6');
     });
 
@@ -205,41 +221,48 @@ function coreTests() {
         'contain',
         i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
       );
+    // check initial state for 1st route
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(`[data-value="${TransportType.bike}"]`)
+      .find('.q-avatar')
+      .should('have.class', 'bg-secondary');
+    // check initial state for 2nd route
+    cy.dataCy(selectorRouteListItem)
+      .eq(1)
+      .find(`[data-value="${TransportType.none}"]`)
+      .find('.q-avatar')
+      .should('have.class', 'bg-secondary');
     // introduce a change
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .find(`[data-value="${TransportType.car}"]`)
       .click();
+    // check save button with edit count
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
-
     // revert change
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .first()
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
-
+    // check save button with edit count
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-
     // introduce two changes
     // change first route
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .find(`[data-value="${TransportType.car}"]`)
       .click();
-    // change last route
+    // change second route
     cy.dataCy(selectorRouteListItem)
-      .last()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .eq(1)
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
     // count changes
     cy.dataCy(selectorButtonSave).should(
@@ -249,19 +272,17 @@ function coreTests() {
     // revert changes
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
     cy.dataCy(selectorRouteListItem)
-      .last()
-      .find(dataSelectorButtonToggleTransport)
-      .first()
+      .eq(1)
+      .find(`[data-value="${TransportType.none}"]`)
       .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-    // test inputting distance value
+    // test changing distance value by deleting '0'
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(dataSelectorInputDistance)
@@ -275,7 +296,6 @@ function coreTests() {
       i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
     // reset distance value
-    /* Erase input value by typing 0 value is not working
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(dataSelectorInputDistance)
@@ -288,6 +308,5 @@ function coreTests() {
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-    */
   });
 }

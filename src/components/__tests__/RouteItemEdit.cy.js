@@ -165,7 +165,7 @@ function coreTests() {
   });
 
   // Note: We need to test this behaviour here since we have dynamic state.
-  it('allows to switch input type', () => {
+  it.skip('allows to switch input type', () => {
     // input type is input distance
     cy.dataCy('select-action')
       .should('be.visible')

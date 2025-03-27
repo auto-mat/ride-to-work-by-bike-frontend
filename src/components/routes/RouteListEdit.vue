@@ -56,7 +56,10 @@ export default defineComponent({
     const dirtyCount = computed((): number => {
       let count = 0;
       days.value.forEach((day) => {
-        if (day.fromWork?.dirty || day.toWork?.dirty) {
+        if (day.fromWork?.dirty) {
+          count += 1;
+        }
+        if (day.toWork?.dirty) {
           count += 1;
         }
       });

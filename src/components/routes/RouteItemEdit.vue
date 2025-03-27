@@ -81,7 +81,9 @@ export default defineComponent({
       emit('update:route', {
         ...props.route,
         action: actionNew,
+        dirty: actionNew !== routeBeforeEdit.value?.action,
       });
+      action.value = actionNew;
     };
 
     const onUpdateDistance = (distanceNew: string): void => {
@@ -89,7 +91,9 @@ export default defineComponent({
       emit('update:route', {
         ...props.route,
         distance: distanceNew,
+        dirty: distanceNew !== routeBeforeEdit.value?.distance,
       });
+      distance.value = distanceNew;
     };
 
     const onUpdateTransportType = (transportTypeNew: TransportType): void => {
