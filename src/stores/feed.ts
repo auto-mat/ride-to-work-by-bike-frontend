@@ -6,6 +6,9 @@ import { date } from 'quasar';
 import { useApiGetPosts } from '../composables/useApiGetPosts';
 import { useApiGetCities } from '../composables/useApiGetCities';
 
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type { Offer } from '../components/types/Offer';
@@ -89,16 +92,20 @@ export const useFeedStore = defineStore('feed', {
     needsRefresh(state: FeedState): boolean {
       const lastUpdate = state.lastUpdated;
       if (!lastUpdate) return true;
-      const now = new Date();
-      const oneDayAgo = date.subtractFromDate(now, { days: 1 });
-      const timeOneDayAgo = oneDayAgo.getTime();
+      const dateNow = new Date();
+      const { feedRefreshCachedPostsIntervalHours } = rideToWorkByBikeConfig;
+      const dateMinusCacheRefreshInterval = date.subtractFromDate(dateNow, {
+        hours: feedRefreshCachedPostsIntervalHours,
+      });
+      const timeNowMinusCacheRefreshInterval =
+        dateMinusCacheRefreshInterval.getTime();
       this.$log?.debug(
-        `Last feed update <${lastUpdate}>, now <${now.getTime()}>, one day ago <${timeOneDayAgo}>`,
+        `Last feed update <${new Date(lastUpdate).toLocaleString()}>, current datetime <${dateNow.toLocaleString()}>, current datetime minus cache refresh interval <${dateMinusCacheRefreshInterval.toLocaleString()}>`,
       );
       this.$log?.debug(
-        `Last feed update is older than one day ago <${lastUpdate < timeOneDayAgo}>`,
+        `Last feed update is older than current datetime minus cache refresh interval <${lastUpdate < timeNowMinusCacheRefreshInterval}>`,
       );
-      return lastUpdate < timeOneDayAgo;
+      return lastUpdate < timeNowMinusCacheRefreshInterval;
     },
   },
 

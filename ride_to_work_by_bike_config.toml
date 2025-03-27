@@ -132,6 +132,7 @@ urlApiThisCampaign = "this_campaign/"
 
 checkIsEmailVerifiedInterval = 20 # seconds
 checkIsThisCampaignCompetitionPhaseTypeInterval = 20 # seconds
+feedRefreshCachedPostsIntervalHours = 24
 
 # DATE TIME FORMATS
 

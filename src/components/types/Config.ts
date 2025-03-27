@@ -51,6 +51,7 @@ export interface ConfigGlobal {
   rtwbbDonationOrderedProductName: string;
   checkRegisterChallengeStatusIntervalSeconds: number;
   checkRegisterChallengeStatusMaxRepetitions: number;
+  feedRefreshCachedPostsIntervalHours: number;
   iDontWantMerchandiseItemCode: string;
   notifyMessagePosition: string;
   mobileBottomPanelVisibleItems: number;
