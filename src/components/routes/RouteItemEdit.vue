@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { computed, defineComponent, watch } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import RouteInputDistance from './RouteInputDistance.vue';
@@ -59,33 +59,58 @@ export default defineComponent({
   },
   emits: ['update:route'],
   setup(props, { emit }) {
+    /**
+     * Save initial route state to compare with the current state.
+     * This is used to determine if the route is `dirty`.
+     */
+    const routeBeforeEdit = ref<RouteItem | null>(null);
+
     const {
       borderRadiusCard: borderRadius,
       colorGray: borderColor,
       defaultDistanceZero,
     } = rideToWorkByBikeConfig;
-    const routes = computed(() => [props.route]);
+
+    const routes = computed<RouteItem[]>(() => [props.route]);
+    // create refs from the route object
     const { action, distance, transportType, isShownDistance } =
       useLogRoutes(routes);
 
-    // watcher for changes compared to the initial state (dirty)
-    watch(
-      [action, distance, transportType],
-      ([actionNew, distanceNew, transportNew]) => {
-        // if settings are the same as initial, mark dirty as false
-        if (
-          actionNew === (props.route?.inputType || 'input-number') &&
-          distanceNew === (props.route?.distance || defaultDistanceZero) &&
-          transportNew === props.route?.transport
-        ) {
-          emit('update:route', false);
-        }
-        // if settings are different from initial, mark dirty as true
-        else {
-          emit('update:route', true);
-        }
-      },
-    );
+    const onUpdateAction = (actionNew: string): void => {
+      saveInitialRouteState();
+      emit('update:route', {
+        ...props.route,
+        action: actionNew,
+      });
+    };
+
+    const onUpdateDistance = (distanceNew: string): void => {
+      saveInitialRouteState();
+      emit('update:route', {
+        ...props.route,
+        distance: distanceNew,
+      });
+    };
+
+    const onUpdateTransportType = (transportTypeNew: TransportType): void => {
+      saveInitialRouteState();
+      emit('update:route', {
+        ...props.route,
+        transport: transportTypeNew,
+        dirty: transportTypeNew !== routeBeforeEdit.value?.transport,
+      });
+      transportType.value = transportTypeNew;
+    };
+
+    /**
+     * If the routeBeforeEdit is not set, this is the first time the route
+     * is being edited. In that case, save the initial route state.
+     */
+    const saveInitialRouteState = (): void => {
+      if (!routeBeforeEdit.value) {
+        routeBeforeEdit.value = props.route;
+      }
+    };
 
     const iconSize = '18px';
 
@@ -99,6 +124,9 @@ export default defineComponent({
       isShownDistance,
       transportType,
       TransportDirection,
+      onUpdateTransportType,
+      onUpdateDistance,
+      onUpdateAction,
     };
   },
 });
@@ -146,16 +174,18 @@ export default defineComponent({
         <!-- Section: Transport type -->
         <route-input-transport-type
           horizontal
-          v-model="transportType"
+          :modelValue="transportType"
+          @update:modelValue="onUpdateTransportType"
           class="q-mt-sm"
           data-cy="section-transport"
         />
         <!-- Section: Distance -->
         <route-input-distance
           v-show="isShownDistance"
-          v-model="distance"
+          :modelValue="distance"
           :modelAction="action"
-          @update:modelAction="action = $event"
+          @update:modelValue="onUpdateDistance"
+          @update:modelAction="onUpdateAction"
           class="q-mt-lg"
           data-cy="section-distance"
         />

@@ -20,7 +20,7 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
@@ -28,27 +28,29 @@ import RouteItemEdit from './RouteItemEdit.vue';
 // composables
 import { useRoutes } from 'src/composables/useRoutes';
 
+// stores
+import { useTripsStore } from 'src/stores/trips';
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteListEdit',
-  props: {
-    routes: {
-      type: Array as () => RouteItem[],
-      required: true,
-    },
-  },
   components: {
     RouteItemEdit,
   },
-  setup(props) {
+  setup() {
+    const tripsStore = useTripsStore();
+    // route composables
     const { getLoggableDaysWithRoutes, formatDate, formatDateName } =
       useRoutes();
+    // get route items from store
+    const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
 
-    const days = computed<RouteDay[]>(() =>
-      getLoggableDaysWithRoutes(props.routes),
-    );
+    const days = ref<RouteDay[]>(getLoggableDaysWithRoutes(routeItems.value));
+    // update current days when route items change in store
+    watch(routeItems, () => {
+      days.value = getLoggableDaysWithRoutes(routeItems.value);
+    });
 
     // dirty state will be tracked within UI to show change count
     const dirtyCount = computed((): number => {
@@ -93,7 +95,7 @@ export default defineComponent({
               class="full-height"
               data-cy="route-list-item"
               :data-id="day.toWork?.id"
-              @update:route="day.toWork.dirty = $event"
+              @update:route="day.toWork = $event"
             />
           </div>
           <!-- Item: Route from work -->
@@ -103,7 +105,7 @@ export default defineComponent({
               class="full-height"
               data-cy="route-list-item"
               :data-id="day.fromWork?.id"
-              @update:route="day.fromWork.dirty = $event"
+              @update:route="day.fromWork = $event"
             />
           </div>
         </div>
