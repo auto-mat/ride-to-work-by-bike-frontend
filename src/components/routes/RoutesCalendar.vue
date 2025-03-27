@@ -23,13 +23,7 @@
 
 // libraries
 import { colors, date } from 'quasar';
-import {
-  getDate,
-  nextDay,
-  prevDay,
-  QCalendarMonth,
-  today,
-} from '@quasar/quasar-ui-qcalendar';
+import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, inject, ref, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
 
@@ -72,14 +66,20 @@ export default defineComponent({
     });
 
     // get start and end of logging window
-    const { timestampLoggingStart, timestampLoggingEnd } = useRoutes();
+    const { dateLoggingStart, dateLoggingEnd } = useRoutes();
     const disabledBefore = computed((): string | null => {
-      const timestamp = timestampLoggingStart.value;
-      return timestamp ? getDate(prevDay(timestamp)) : null;
+      const dateMinusOneDay = date.subtractFromDate(dateLoggingStart.value, {
+        days: 1,
+      });
+      return dateMinusOneDay
+        ? date.formatDate(dateMinusOneDay, 'YYYY-MM-DD')
+        : null;
     });
     const disabledAfter = computed((): string | null => {
-      const timestamp = timestampLoggingEnd.value;
-      return timestamp ? getDate(nextDay(timestamp)) : null;
+      const datePlusOneDay = date.addToDate(dateLoggingEnd.value, { days: 1 });
+      return datePlusOneDay
+        ? date.formatDate(datePlusOneDay, 'YYYY-MM-DD')
+        : null;
     });
 
     const tripsStore = useTripsStore();
