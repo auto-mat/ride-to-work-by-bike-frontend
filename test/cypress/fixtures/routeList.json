@@ -19,6 +19,7 @@
     "id": "2025-05-25-toWork",
     "date": "2025-05-25",
     "transport": "bicycle",
+    "distance": "12.00",
     "direction": "toWork",
     "dirty": false
   },
