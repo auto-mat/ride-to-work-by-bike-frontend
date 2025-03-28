@@ -30,6 +30,7 @@ import { useRoutes } from 'src/composables/useRoutes';
 
 // stores
 import { useTripsStore } from 'src/stores/trips';
+
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
 

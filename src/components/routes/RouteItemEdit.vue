@@ -23,20 +23,24 @@
  */
 
 // libraries
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // components
 import RouteInputDistance from './RouteInputDistance.vue';
 import RouteInputTransportType from './RouteInputTransportType.vue';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useLogRoutes } from '../../composables/useLogRoutes';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
-import { TransportDirection } from '../types/Route';
+import { TransportDirection, TransportType } from '../types/Route';
+
+// stores
+import { useTripsStore } from 'src/stores/trips';
 
 // types
 import type { RouteItem } from '../types/Route';
@@ -59,11 +63,25 @@ export default defineComponent({
   },
   emits: ['update:route'],
   setup(props, { emit }) {
+    const tripsStore = useTripsStore();
     /**
-     * Save initial route state to compare with the current state.
-     * This is used to determine if the route is `dirty`.
+     * Get route state from store.
+     * Store holds current state of routes from the API.
+     * Edits within this component can be compared with the current state.
      */
-    const routeBeforeEdit = ref<RouteItem | null>(null);
+    const routeStateDefault = computed(() => {
+      const storeRoute = tripsStore.getRouteItems.find(
+        (route) => route.id === props.route.id,
+      );
+      if (!storeRoute) {
+        return {
+          transport: TransportType.none,
+          distance: defaultDistanceZero,
+          inputType: 'input-number',
+        };
+      }
+      return storeRoute;
+    });
 
     const {
       borderRadiusCard: borderRadius,
@@ -77,43 +95,51 @@ export default defineComponent({
       useLogRoutes(routes);
 
     const onUpdateAction = (actionNew: string): void => {
-      saveInitialRouteState();
-      emit('update:route', {
-        ...props.route,
-        action: actionNew,
-        dirty: actionNew !== routeBeforeEdit.value?.action,
-      });
       action.value = actionNew;
     };
 
     const onUpdateDistance = (distanceNew: string): void => {
-      saveInitialRouteState();
+      /**
+       * Masked input returns a string with no decimal separator.
+       * We need to format it according to the mask settings.
+       * Mask in `RouteInputDistance` is `##.##`.
+       * Example: 1250 -> 12.50
+       */
+      const distanceNewFormatted = i18n.global.n(
+        distanceNew ? distanceNew / 100.0 : 0,
+        'routeDistanceDecimalNumber',
+        'en',
+      );
+      // compare new distance with the distance from the store
+      const dirty = distanceNewFormatted !== routeStateDefault.value?.distance;
       emit('update:route', {
         ...props.route,
-        distance: distanceNew,
-        dirty: distanceNew !== routeBeforeEdit.value?.distance,
+        distance: distanceNewFormatted,
+        dirty,
       });
-      distance.value = distanceNew;
+      distance.value = distanceNewFormatted;
     };
 
     const onUpdateTransportType = (transportTypeNew: TransportType): void => {
-      saveInitialRouteState();
-      emit('update:route', {
-        ...props.route,
-        transport: transportTypeNew,
-        dirty: transportTypeNew !== routeBeforeEdit.value?.transport,
-      });
-      transportType.value = transportTypeNew;
-    };
-
-    /**
-     * If the routeBeforeEdit is not set, this is the first time the route
-     * is being edited. In that case, save the initial route state.
-     */
-    const saveInitialRouteState = (): void => {
-      if (!routeBeforeEdit.value) {
-        routeBeforeEdit.value = props.route;
+      // compare new transport type with the transport type from the store
+      const dirty = transportTypeNew !== routeStateDefault.value?.transport;
+      // if transport type is change to TransportType.none, set distance to 0
+      if (transportTypeNew === TransportType.none) {
+        const { defaultDistanceZero } = rideToWorkByBikeConfig;
+        emit('update:route', {
+          ...props.route,
+          distance: defaultDistanceZero,
+          transport: transportTypeNew,
+          dirty,
+        });
+      } else {
+        emit('update:route', {
+          ...props.route,
+          transport: transportTypeNew,
+          dirty,
+        });
       }
+      transportType.value = transportTypeNew;
     };
 
     const iconSize = '18px';
@@ -131,6 +157,7 @@ export default defineComponent({
       onUpdateTransportType,
       onUpdateDistance,
       onUpdateAction,
+      routeStateDefault,
     };
   },
 });

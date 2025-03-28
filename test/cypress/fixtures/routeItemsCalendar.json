@@ -3,7 +3,7 @@
     "id": "00001",
     "date": "2025-05-24",
     "direction": "toWork",
-    "distance": "2000",
+    "distance": "20.00",
     "transport": "bicycle",
     "routeFeature": null
   },
@@ -11,7 +11,7 @@
     "id": "00002",
     "date": "2025-05-24",
     "direction": "fromWork",
-    "distance": "500",
+    "distance": "5.00",
     "transport": "bicycle",
     "routeFeature": null
   },
@@ -27,7 +27,7 @@
     "id": "00002",
     "date": "2025-05-25",
     "direction": "fromWork",
-    "distance": "1900",
+    "distance": "19.00",
     "transport": "bicycle",
     "routeFeature": null
   },
@@ -35,7 +35,7 @@
     "id": "00001",
     "date": "2025-05-26",
     "direction": "toWork",
-    "distance": "2000",
+    "distance": "20.00",
     "transport": "bicycle",
     "routeFeature": null
   },
@@ -43,7 +43,7 @@
     "id": "",
     "date": "",
     "direction": "fromWork",
-    "distance": "0",
+    "distance": "0.00",
     "transport": "",
     "routeFeature": null
   }

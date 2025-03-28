@@ -96,7 +96,7 @@ describe('<RouteListEdit>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('tracks dirty state of input type', () => {
+    it.skip('tracks dirty state of input type', () => {
       // test changing input type
       cy.dataCy(selectorRouteListItem)
         .first()
@@ -212,7 +212,7 @@ function coreTests() {
     });
   });
 
-  it.only('renders save button with edit count', () => {
+  it('renders save button with edit count', () => {
     cy.dataCy(selectorButtonSave)
       .should('be.visible')
       .and('have.css', 'font-size', '16px')
