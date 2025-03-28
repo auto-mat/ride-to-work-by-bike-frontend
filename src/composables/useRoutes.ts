@@ -155,7 +155,7 @@ export const useRoutes = () => {
    * Start date is included by using prevDay() on the dateLoggingStart.
    * Fills in data from routes array based on date and direction.
    * If data is empty for given day/route, it will create an empty route.
-   * @param {RouteItem[]} routes - The array logged routes.
+   * @param {RouteItem[]} routes - Array of logged routes.
    * @return {RouteDay[]} The array representing days with routes.
    */
   const getLoggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
@@ -168,28 +168,27 @@ export const useRoutes = () => {
   };
 
   /**
-   * Returns an array of RouteDay objects for each day of competition phase.
-   * @param {RouteItem[]} routes - The array logged routes.
+   * Returns an array of RouteDay which represents days of competition phase,
+   * which precede the logging window and can no longer be logged.
+   * @param {RouteItem[]} routes - Array of logged routes.
    * @return {RouteDay[]} The array representing days with routes.
    */
-  const getChallengeDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
+  const getUnloggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     const challengeStore = useChallengeStore();
     const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
       PhaseType.competition,
     )?.date_from;
-    if (!competitionPhaseDateFrom) {
+    if (!competitionPhaseDateFrom || !dateLoggingStart.value) {
       return [];
     }
-    const dateCompetitionPhaseDateFrom = new Date(competitionPhaseDateFrom);
-    const dateStart = dateLoggingStart.value;
-    if (!dateStart) {
-      return [];
-    }
-    const startDate = date.subtractFromDate(dateCompetitionPhaseDateFrom, {
-      days: 1,
-    });
-    const endDate = date.subtractFromDate(dateStart, { days: 1 });
-    return createDaysArrayWithRoutes(startDate, endDate, routes);
+    // start date is the day when competition phase starts
+    const startDate = new Date(competitionPhaseDateFrom);
+    // end date is the day before the logging window starts
+    return createDaysArrayWithRoutes(
+      date.subtractFromDate(startDate, { days: 1 }),
+      date.subtractFromDate(dateLoggingStart.value, { days: 1 }),
+      routes,
+    );
   };
 
   /**
@@ -322,7 +321,7 @@ export const useRoutes = () => {
     dateLoggingStart,
     dateLoggingEnd,
     getLoggableDaysWithRoutes,
-    getChallengeDaysWithRoutes,
+    getUnloggableDaysWithRoutes,
     createDaysArrayWithRoutes,
     formatDate,
     formatDateName,

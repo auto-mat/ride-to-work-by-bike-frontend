@@ -27,26 +27,27 @@ import RouteItemDisplay from './RouteItemDisplay.vue';
 // composables
 import { useRoutes } from '../../composables/useRoutes';
 
+// stores
+import { useTripsStore } from '../../stores/trips';
+
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteListDisplay',
-  props: {
-    routes: {
-      type: Array as () => RouteItem[],
-      required: true,
-    },
-  },
   components: {
     RouteItemDisplay,
   },
-  setup(props) {
-    const { formatDate, formatDateName, getChallengeDaysWithRoutes } =
+  setup() {
+    const tripsStore = useTripsStore();
+    // get route items from store
+    const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
+
+    const { formatDate, formatDateName, getUnloggableDaysWithRoutes } =
       useRoutes();
 
     const days = computed<RouteDay[]>(() =>
-      getChallengeDaysWithRoutes(props.routes),
+      getUnloggableDaysWithRoutes(routeItems.value),
     );
 
     return {

@@ -169,8 +169,7 @@ function coreTests() {
     cy.dataCy('route-tabs-panel-list').should('be.visible');
     // test panel content
     cy.dataCy('route-list-edit').should('be.visible');
-    // TODO: enable test for route-list-display
-    // cy.dataCy('route-list-display').should('be.visible');
+    cy.dataCy('route-list-display').should('be.visible');
 
     cy.dataCy('route-tabs-button-map').click();
     cy.dataCy('route-tabs-panel-map').should('be.visible');
