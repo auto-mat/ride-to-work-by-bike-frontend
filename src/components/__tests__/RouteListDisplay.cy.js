@@ -9,6 +9,7 @@ import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { useChallengeStore } from '../../../src/stores/challenge';
 import { useTripsStore } from '../../../src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
+import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -17,24 +18,22 @@ const { getTransportLabel } = useRoutes();
 // variables
 const { challengeLoggingWindowDays, challengeStartDate } =
   rideToWorkByBikeConfig;
-const dateWithLoggedRoute = new Date(2025, 4, 26);
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
+  });
+
   context('desktop', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListDisplay, {
-          props: {
-            routes,
-          },
-        });
-        cy.viewport('macbook-16');
+      cy.viewport('macbook-16');
+      cy.mount(RouteListDisplay, {
+        props: {},
       });
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -55,15 +54,9 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListDisplay, {
-          props: {
-            routes,
-          },
-        });
-        cy.viewport('iphone-6');
+      cy.viewport('iphone-6');
+      cy.mount(RouteListDisplay, {
+        props: {},
       });
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {

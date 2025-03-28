@@ -4,8 +4,7 @@ import { i18n } from '../../boot/i18n';
 import { routesConf } from 'src/router/routes_conf';
 import { useChallengeStore } from '../../../src/stores/challenge';
 import { useTripsStore } from '../../../src/stores/trips';
-
-const dateWithLoggedRoute = new Date(2025, 4, 26);
+import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTests';
 
 describe('<RouteTabs>', () => {
   it('has translation for all strings', () => {
@@ -16,10 +15,13 @@ describe('<RouteTabs>', () => {
     );
   });
 
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
+  });
+
   context('desktop', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteTabs, {
         props: {},
       });
@@ -39,8 +41,6 @@ describe('<RouteTabs>', () => {
 
   context('desktop - hidden tabs', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteTabs, {
         props: {
           hidden: ['map', 'app'],
@@ -74,8 +74,6 @@ describe('<RouteTabs>', () => {
 
   context('desktop - locked tabs', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteTabs, {
         props: {
           locked: ['map', 'app'],
@@ -117,8 +115,6 @@ describe('<RouteTabs>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteTabs, {
         props: {},
       });

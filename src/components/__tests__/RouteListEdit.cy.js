@@ -3,7 +3,10 @@ import { date, colors } from 'quasar';
 import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
-import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
+import {
+  testRouteListDayDate,
+  systemTimeLoggingRoutes,
+} from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
@@ -30,7 +33,6 @@ const selectorSectionDirection = 'section-direction';
 const routeListItemWrapperWidthDesktop = 50;
 const routeListItemWrapperWidthMobile = 100;
 const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
-const dateWithLoggedRoute = new Date(2025, 4, 26);
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
@@ -39,11 +41,11 @@ describe('<RouteListEdit>', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
   });
 
   context('desktop - full logging window', () => {
     beforeEach(() => {
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteListEdit, {
         props: {},
       });
@@ -73,65 +75,9 @@ describe('<RouteListEdit>', () => {
     });
   });
 
-  // cy.clock() interferes with select dropdown function
-  context('desktop - current date', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.mount(RouteListEdit, {
-        props: {},
-      });
-      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
-        cy.wrap(useChallengeStore()).then((store) => {
-          store.setDaysActive(response.results[0].days_active);
-          store.setPhaseSet(response.results[0].phase_set);
-        });
-      });
-      // setup store with commute modes
-      cy.setupTripsStoreWithCommuteModes(useTripsStore);
-      cy.fixture('routeItemsCalendar.json').then((response) => {
-        cy.wrap(useTripsStore()).then((store) => {
-          store.setRouteItems(response);
-        });
-      });
-      cy.viewport('macbook-16');
-    });
-
-    it.skip('tracks dirty state of input type', () => {
-      // test changing input type
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorButtonToggleTransport)
-        .first()
-        .click();
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorSelectAction)
-        .select(i18n.global.t('routes.actionTraceMap'));
-      cy.dataCy(selectorButtonSave).should(
-        'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
-      );
-      // reset
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorSelectAction)
-        .select(i18n.global.t('routes.actionInputDistance'));
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorButtonToggleTransport)
-        .last()
-        .click();
-      cy.dataCy(selectorButtonSave).should(
-        'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
-      );
-    });
-  });
-
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.mount(RouteListEdit, {
         props: {},
       });
@@ -304,6 +250,37 @@ function coreTests() {
       .first()
       .find(dataSelectorInputDistance)
       .blur();
+    cy.dataCy(selectorButtonSave).should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+    );
+  });
+
+  it.skip('tracks dirty state of input type', () => {
+    // test changing input type
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorButtonToggleTransport)
+      .first()
+      .click();
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorSelectAction)
+      .select(i18n.global.t('routes.actionTraceMap'));
+    cy.dataCy(selectorButtonSave).should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+    );
+    // reset
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorSelectAction)
+      .select(i18n.global.t('routes.actionInputDistance'));
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorButtonToggleTransport)
+      .last()
+      .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),

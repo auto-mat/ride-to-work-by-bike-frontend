@@ -687,3 +687,7 @@ export const systemTimeOffersInvalid = new Date('2025-08-30T00:00:00.000Z');
  * @see apiGetOffersResponse.json fixture for example
  */
 export const systemTimeOffersValid = new Date('2025-05-05T00:00:00.000Z');
+/**
+ * Date in the middle of the May campaign when routes can be logged
+ */
+export const systemTimeLoggingRoutes = new Date('2025-05-26T00:00:00.000Z');
