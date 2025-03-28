@@ -5,6 +5,8 @@ import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
+import { useChallengeStore } from '../../../src/stores/challenge';
+import { useTripsStore } from '../../../src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 
 const { getPaletteColor } = colors;
@@ -14,7 +16,7 @@ const { getTransportLabel } = useRoutes();
 // variables
 const { challengeLoggingWindowDays, challengeStartDate } =
   rideToWorkByBikeConfig;
-const fixedDate = '2024-08-15';
+const dateWithLoggedRoute = new Date(2025, 4, 26);
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
@@ -23,7 +25,7 @@ describe('<RouteListDisplay>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(new Date(fixedDate).getTime());
+      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {
@@ -32,6 +34,14 @@ describe('<RouteListDisplay>', () => {
         });
         cy.viewport('macbook-16');
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
     });
 
     coreTests();
@@ -43,7 +53,7 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(new Date(fixedDate).getTime());
+      cy.clock(dateWithLoggedRoute, ['Date']);
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
           props: {
@@ -52,6 +62,14 @@ describe('<RouteListDisplay>', () => {
         });
         cy.viewport('iphone-6');
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
     });
 
     coreTests();

@@ -19,7 +19,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // components
 import RouteItemDisplay from './RouteItemDisplay.vue';
@@ -45,7 +45,9 @@ export default defineComponent({
     const { formatDate, formatDateName, getChallengeDaysWithRoutes } =
       useRoutes();
 
-    const days = ref<RouteDay[]>(getChallengeDaysWithRoutes(props.routes));
+    const days = computed<RouteDay[]>(() =>
+      getChallengeDaysWithRoutes(props.routes),
+    );
 
     return {
       days,
