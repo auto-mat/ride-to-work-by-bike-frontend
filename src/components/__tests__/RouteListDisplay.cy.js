@@ -1,4 +1,5 @@
 import { colors, date } from 'quasar';
+import { createPinia, setActivePinia } from 'pinia';
 import { computed } from 'vue';
 import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
@@ -25,6 +26,7 @@ describe('<RouteListDisplay>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.clock(dateWithLoggedRoute, ['Date']);
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
@@ -53,6 +55,7 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      setActivePinia(createPinia());
       cy.clock(dateWithLoggedRoute, ['Date']);
       cy.fixture('routeList').then((routes) => {
         cy.mount(RouteListDisplay, {
