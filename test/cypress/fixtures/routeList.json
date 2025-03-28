@@ -1,14 +1,14 @@
 [
   {
-    "id": "00001",
+    "id": "2025-05-24-toWork",
     "date": "2025-05-24",
     "transport": "bicycle",
-    "distance": "20.00",
+    "distance": "10.00",
     "direction": "toWork",
     "dirty": false
   },
   {
-    "id": "00002",
+    "id": "2025-05-24-fromWork",
     "date": "2025-05-24",
     "transport": "by_foot",
     "distance": "5.00",
@@ -16,14 +16,14 @@
     "dirty": false
   },
   {
-    "id": "00001",
+    "id": "2025-05-25-toWork",
     "date": "2025-05-25",
     "transport": "bicycle",
     "direction": "toWork",
     "dirty": false
   },
   {
-    "id": "00002",
+    "id": "2025-05-25-fromWork",
     "date": "2025-05-25",
     "transport": "bicycle",
     "distance": "19.00",
@@ -31,7 +31,7 @@
     "dirty": false
   },
   {
-    "id": "00001",
+    "id": "2025-05-26-toWork",
     "date": "2025-05-26",
     "transport": "bicycle",
     "distance": "20.00",
@@ -39,11 +39,11 @@
     "dirty": false
   },
   {
-    "id": "",
-    "date": "",
-    "transport": "",
-    "distance": "0.00",
-    "direction": "",
+    "id": "2025-05-26-fromWork",
+    "date": "2025-05-26",
+    "transport": "bicycle",
+    "distance": "15.00",
+    "direction": "fromWork",
     "dirty": false
   }
 ]
