@@ -39,15 +39,8 @@ import RoutesMap from './RoutesMap.vue';
 // enums
 import { RouteTab } from '../types/Route';
 
-// types
-import type { RouteItem } from '../types/Route';
-
 // routes
 import { routesConf } from 'src/router/routes_conf';
-
-// fixtures
-import routeListFixture from '../../../test/cypress/fixtures/routeList.json';
-const routeList: RouteItem[] = routeListFixture as RouteItem[];
 
 export default defineComponent({
   name: 'RouteTabs',
@@ -80,7 +73,6 @@ export default defineComponent({
 
     return {
       activeTab,
-      routeList,
       routesConf,
       RouteTab,
       isLocked,
@@ -166,8 +158,8 @@ export default defineComponent({
         data-cy="route-tabs-panel-list"
       >
         <div class="text-h6">{{ $t('routes.tabList') }}</div>
-        <route-list-edit :routes="routeList" data-cy="route-list-edit" />
-        <route-list-display :routes="routeList" data-cy="route-list-display" />
+        <route-list-edit data-cy="route-list-edit" />
+        <route-list-display data-cy="route-list-display" />
       </q-tab-panel>
       <!-- Panel: Map -->
       <q-tab-panel

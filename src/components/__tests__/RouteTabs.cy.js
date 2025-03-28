@@ -1,6 +1,10 @@
+import { createPinia, setActivePinia } from 'pinia';
 import RouteTabs from 'components/routes/RouteTabs.vue';
 import { i18n } from '../../boot/i18n';
 import { routesConf } from 'src/router/routes_conf';
+import { useChallengeStore } from '../../../src/stores/challenge';
+import { useTripsStore } from '../../../src/stores/trips';
+import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTests';
 
 describe('<RouteTabs>', () => {
   it('has translation for all strings', () => {
@@ -11,11 +15,24 @@ describe('<RouteTabs>', () => {
     );
   });
 
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
+  });
+
   context('desktop', () => {
     beforeEach(() => {
       cy.mount(RouteTabs, {
         props: {},
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -29,6 +46,14 @@ describe('<RouteTabs>', () => {
           hidden: ['map', 'app'],
         },
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -54,6 +79,14 @@ describe('<RouteTabs>', () => {
           locked: ['map', 'app'],
         },
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('macbook-16');
     });
 
@@ -85,6 +118,14 @@ describe('<RouteTabs>', () => {
       cy.mount(RouteTabs, {
         props: {},
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
       cy.viewport('iphone-6');
     });
 

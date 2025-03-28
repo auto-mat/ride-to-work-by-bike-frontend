@@ -20,8 +20,7 @@
  */
 
 // libraries
-import { date } from 'quasar';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
@@ -29,43 +28,39 @@ import RouteItemEdit from './RouteItemEdit.vue';
 // composables
 import { useRoutes } from 'src/composables/useRoutes';
 
-// config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+// stores
+import { useTripsStore } from 'src/stores/trips';
 
 // types
 import type { RouteItem, RouteDay } from '../types/Route';
 
 export default defineComponent({
   name: 'RouteListEdit',
-  props: {
-    routes: {
-      type: Array as () => RouteItem[],
-      required: true,
-    },
-  },
   components: {
     RouteItemEdit,
   },
-  setup(props) {
-    const { createDaysArrayWithRoutes, formatDate, formatDateName } =
+  setup() {
+    const tripsStore = useTripsStore();
+    // route composables
+    const { getLoggableDaysWithRoutes, formatDate, formatDateName } =
       useRoutes();
+    // get route items from store
+    const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
 
-    const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
-    const todayDate = new Date();
-    const startDate = date.addToDate(todayDate, {
-      days: -1 * challengeLoggingWindowDays,
+    const days = ref<RouteDay[]>(getLoggableDaysWithRoutes(routeItems.value));
+    // update current days when route items change in store
+    watch(routeItems, () => {
+      days.value = getLoggableDaysWithRoutes(routeItems.value);
     });
-    const endDate = todayDate;
-
-    const days = ref<RouteDay[]>(
-      createDaysArrayWithRoutes(startDate, endDate, props.routes),
-    );
 
     // dirty state will be tracked within UI to show change count
     const dirtyCount = computed((): number => {
       let count = 0;
       days.value.forEach((day) => {
-        if (day.fromWork?.dirty || day.toWork?.dirty) {
+        if (day.fromWork?.dirty) {
+          count += 1;
+        }
+        if (day.toWork?.dirty) {
           count += 1;
         }
       });
@@ -104,7 +99,7 @@ export default defineComponent({
               class="full-height"
               data-cy="route-list-item"
               :data-id="day.toWork?.id"
-              @update:route="day.toWork.dirty = $event"
+              @update:route="day.toWork = $event"
             />
           </div>
           <!-- Item: Route from work -->
@@ -114,7 +109,7 @@ export default defineComponent({
               class="full-height"
               data-cy="route-list-item"
               :data-id="day.fromWork?.id"
-              @update:route="day.fromWork.dirty = $event"
+              @update:route="day.fromWork = $event"
             />
           </div>
         </div>

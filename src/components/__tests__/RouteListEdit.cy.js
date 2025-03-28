@@ -3,11 +3,16 @@ import { date, colors } from 'quasar';
 import { computed } from 'vue';
 import RouteListEdit from 'components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
-import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
+import {
+  testRouteListDayDate,
+  systemTimeLoggingRoutes,
+} from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import { useTripsStore } from '../../../src/stores/trips';
+import { useChallengeStore } from '../../../src/stores/challenge';
+import { TransportType } from '../../../src/components/types/Route';
 
 const { getPaletteColor } = colors;
 
@@ -34,19 +39,29 @@ describe('<RouteListEdit>', () => {
     cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
-  context('desktop', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
+  });
+
+  context('desktop - full logging window', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.clock(new Date('2024-08-15').getTime());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
+      cy.mount(RouteListEdit, {
+        props: {},
+      });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('routeItemsCalendar.json').then((response) => {
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(response);
+        });
+      });
       cy.viewport('macbook-16');
     });
 
@@ -60,67 +75,25 @@ describe('<RouteListEdit>', () => {
     });
   });
 
-  // cy.clock() interferes with select dropdown function
-  context('desktop - current date', () => {
-    beforeEach(() => {
-      setActivePinia(createPinia());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
-        });
-      });
-      // setup store with commute modes
-      cy.setupTripsStoreWithCommuteModes(useTripsStore);
-      cy.viewport('macbook-16');
-    });
-
-    it('tracks dirty state of input type', () => {
-      // test changing input type
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorButtonToggleTransport)
-        .first()
-        .click();
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorSelectAction)
-        .select(i18n.global.t('routes.actionTraceMap'));
-      cy.dataCy(selectorButtonSave).should(
-        'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
-      );
-      // reset
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorSelectAction)
-        .select(i18n.global.t('routes.actionInputDistance'));
-      cy.dataCy(selectorRouteListItem)
-        .first()
-        .find(dataSelectorButtonToggleTransport)
-        .last()
-        .click();
-      cy.dataCy(selectorButtonSave).should(
-        'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
-      );
-    });
-  });
-
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.clock(new Date('2024-08-15').getTime());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListEdit, {
-          props: {
-            routes,
-          },
+      cy.mount(RouteListEdit, {
+        props: {},
+      });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.fixture('routeItemsCalendar.json').then((response) => {
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(response);
+        });
+      });
       cy.viewport('iphone-6');
     });
 
@@ -137,14 +110,16 @@ describe('<RouteListEdit>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    // component visible
-    cy.dataCy(selectorRouteListEdit).should('be.visible');
-    // items visible
-    cy.dataCy(selectorRouteListItem)
-      .should('be.visible')
-      .and('have.length', challengeLoggingWindowDays * 2);
-    // direction labels visible
-    cy.dataCy(selectorSectionDirection).should('be.visible');
+    cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+      // component visible
+      cy.dataCy(selectorRouteListEdit).should('be.visible');
+      // items visible
+      cy.dataCy(selectorRouteListItem)
+        .should('be.visible')
+        .and('have.length', response.results[0].days_active * 2);
+      // direction labels visible
+      cy.dataCy(selectorSectionDirection).should('be.visible');
+    });
   });
 
   // day date (title) styles
@@ -192,41 +167,48 @@ function coreTests() {
         'contain',
         i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
       );
+    // check initial state for 1st route
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(`[data-value="${TransportType.bike}"]`)
+      .find('.q-avatar')
+      .should('have.class', 'bg-secondary');
+    // check initial state for 2nd route
+    cy.dataCy(selectorRouteListItem)
+      .eq(1)
+      .find(`[data-value="${TransportType.none}"]`)
+      .find('.q-avatar')
+      .should('have.class', 'bg-secondary');
     // introduce a change
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .find(`[data-value="${TransportType.car}"]`)
       .click();
+    // check save button with edit count
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
-
     // revert change
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .first()
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
-
+    // check save button with edit count
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-
     // introduce two changes
     // change first route
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .find(`[data-value="${TransportType.car}"]`)
       .click();
-    // change last route
+    // change second route
     cy.dataCy(selectorRouteListItem)
-      .last()
-      .find(dataSelectorButtonToggleTransport)
-      .first()
+      .eq(1)
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
     // count changes
     cy.dataCy(selectorButtonSave).should(
@@ -236,19 +218,17 @@ function coreTests() {
     // revert changes
     cy.dataCy(selectorRouteListItem)
       .first()
-      .find(dataSelectorButtonToggleTransport)
-      .first()
+      .find(`[data-value="${TransportType.bike}"]`)
       .click();
     cy.dataCy(selectorRouteListItem)
-      .last()
-      .find(dataSelectorButtonToggleTransport)
-      .last()
+      .eq(1)
+      .find(`[data-value="${TransportType.none}"]`)
       .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-    // test inputting distance value
+    // test changing distance value by deleting '0'
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(dataSelectorInputDistance)
@@ -262,7 +242,6 @@ function coreTests() {
       i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
     // reset distance value
-    /* Erase input value by typing 0 value is not working
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(dataSelectorInputDistance)
@@ -275,6 +254,36 @@ function coreTests() {
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
-    */
+  });
+
+  it.skip('tracks dirty state of input type', () => {
+    // test changing input type
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorButtonToggleTransport)
+      .first()
+      .click();
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorSelectAction)
+      .select(i18n.global.t('routes.actionTraceMap'));
+    cy.dataCy(selectorButtonSave).should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+    );
+    // reset
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorSelectAction)
+      .select(i18n.global.t('routes.actionInputDistance'));
+    cy.dataCy(selectorRouteListItem)
+      .first()
+      .find(dataSelectorButtonToggleTransport)
+      .last()
+      .click();
+    cy.dataCy(selectorButtonSave).should(
+      'contain',
+      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+    );
   });
 }

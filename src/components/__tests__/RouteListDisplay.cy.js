@@ -1,11 +1,15 @@
 import { colors, date } from 'quasar';
+import { createPinia, setActivePinia } from 'pinia';
 import { computed } from 'vue';
 import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';
 import { useLogRoutes } from '../../../src/composables/useLogRoutes';
+import { useChallengeStore } from '../../../src/stores/challenge';
+import { useTripsStore } from '../../../src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
+import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTests';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -14,24 +18,31 @@ const { getTransportLabel } = useRoutes();
 // variables
 const { challengeLoggingWindowDays, challengeStartDate } =
   rideToWorkByBikeConfig;
-const fixedDate = '2024-08-15';
 
 describe('<RouteListDisplay>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext([], 'routes', i18n);
   });
 
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.clock(systemTimeLoggingRoutes, ['Date']);
+  });
+
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(new Date(fixedDate).getTime());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListDisplay, {
-          props: {
-            routes,
-          },
-        });
-        cy.viewport('macbook-16');
+      cy.viewport('macbook-16');
+      cy.mount(RouteListDisplay, {
+        props: {},
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
     });
 
     coreTests();
@@ -43,15 +54,18 @@ describe('<RouteListDisplay>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.clock(new Date(fixedDate).getTime());
-      cy.fixture('routeList').then((routes) => {
-        cy.mount(RouteListDisplay, {
-          props: {
-            routes,
-          },
-        });
-        cy.viewport('iphone-6');
+      cy.viewport('iphone-6');
+      cy.mount(RouteListDisplay, {
+        props: {},
       });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
     });
 
     coreTests();
