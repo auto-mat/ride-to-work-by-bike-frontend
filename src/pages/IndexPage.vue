@@ -256,11 +256,9 @@ export default defineComponent({
       }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityWpSlug) {
-        posts.value = await loadPosts(
-          getOffersFeedParamSet(
-            registerChallengeStore.getCityWpSlug,
-            rideToWorkByBikeConfig.apiFeedMaxOffersNumber,
-          ),
+        // refresh feed data if needed
+        await feedStore.attemptFeedRefresh(
+          registerChallengeStore.getCityWpSlug,
         );
       }
     });

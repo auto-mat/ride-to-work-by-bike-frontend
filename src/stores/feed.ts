@@ -175,8 +175,18 @@ export const useFeedStore = defineStore('feed', {
 
       // load offers and prizes in parallel
       const [offers, prizes] = await Promise.all([
-        loadPosts(getOffersFeedParamSet(citySlug)),
-        loadPosts(getPrizesFeedParamSet(citySlug)),
+        loadPosts(
+          getOffersFeedParamSet(
+            citySlug,
+            rideToWorkByBikeConfig.apiFeedMaxOffersNumber,
+          ),
+        ),
+        loadPosts(
+          getPrizesFeedParamSet(
+            citySlug,
+            rideToWorkByBikeConfig.apiFeedMaxPrizesNumber,
+          ),
+        ),
       ]);
 
       this.setPostsOffer(offers);

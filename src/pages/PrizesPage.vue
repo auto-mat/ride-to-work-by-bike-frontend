@@ -14,7 +14,14 @@
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104166&t=pZezzt4Cd9YZ0UzV-1)
  */
-import { computed, defineComponent, onMounted, ref, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+} from 'vue';
 
 // adapters
 import { feedAdapter } from '../adapters/feedAdapter';
@@ -29,9 +36,6 @@ import ListPartners from '../components/global/ListPartners.vue';
 import PageHeading from 'components/global/PageHeading.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
-
-// config
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // stores
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
@@ -84,48 +88,32 @@ export default defineComponent({
       }
       // if citySlug is available, load posts, else we can't load posts
       if (registerChallengeStore.getCityWpSlug) {
-        // load offers and prizes in parallel
-        const [offers, prizes] = await Promise.all([
-          loadPosts(
-            getOffersFeedParamSet(
-              registerChallengeStore.getCityWpSlug,
-              rideToWorkByBikeConfig.apiFeedMaxOffersNumber,
-            ),
-          ),
-          loadPosts(
-            getPrizesFeedParamSet(
-              registerChallengeStore.getCityWpSlug,
-              rideToWorkByBikeConfig.apiFeedMaxPrizesNumber,
-            ),
-          ),
-        ]);
-        postsOffers.value = offers;
-        postsPrizes.value = prizes;
+        // refresh feed data if needed
+        await feedStore.attemptFeedRefresh(
+          registerChallengeStore.getCityWpSlug,
+        );
         // set default value for city select
         city.value = registerChallengeStore.getCityWpSlug;
       }
       // initiate watcher after the citySlug is loaded
       watch(city, async (newSlug: string | null) => {
         if (newSlug) {
-          // load offers and prizes in parallel
-          const [offers, prizes] = await Promise.all([
-            loadPosts(
-              getOffersFeedParamSet(
-                newSlug,
-                rideToWorkByBikeConfig.apiFeedMaxOffersNumber,
-              ),
-            ),
-            loadPosts(
-              getPrizesFeedParamSet(
-                newSlug,
-                rideToWorkByBikeConfig.apiFeedMaxPrizesNumber,
-              ),
-            ),
-          ]);
-          postsOffers.value = offers;
-          postsPrizes.value = prizes;
+          // force refresh feed data
+          await feedStore.loadPosts(newSlug);
         }
       });
+    });
+
+    /**
+     * If user has selected a different city and leaves the page,
+     * clear store data to reset city and associated posts.
+     * This corresponds to the behavior of the city select dropdown,
+     * which gets reset when user leaves the page.
+     */
+    onUnmounted(() => {
+      if (city.value !== registerChallengeStore.getCityWpSlug) {
+        feedStore.clearStore();
+      }
     });
 
     return {
