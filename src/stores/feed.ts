@@ -15,6 +15,7 @@ import type { Offer } from '../components/types/Offer';
 import type { City } from '../components/types/City';
 
 // utils
+import { timestampToDatetimeString } from '../utils';
 import {
   getOffersFeedParamSet,
   getPrizesFeedParamSet,
@@ -100,10 +101,15 @@ export const useFeedStore = defineStore('feed', {
       const timeNowMinusCacheRefreshInterval =
         dateMinusCacheRefreshInterval.getTime();
       this.$log?.debug(
-        `Last feed update <${new Date(lastUpdate).toLocaleString()}>, current datetime <${dateNow.toLocaleString()}>, current datetime minus cache refresh interval <${dateMinusCacheRefreshInterval.toLocaleString()}>`,
+        `Last feed update <${timestampToDatetimeString(lastUpdate / 1000)}>, ` +
+          ` current datetime <${timestampToDatetimeString(dateNow.getTime() / 1000)}>,` +
+          ' current datetime minus cache refresh interval' +
+          ` <${timestampToDatetimeString(dateMinusCacheRefreshInterval.getTime() / 1000)}>.`,
       );
       this.$log?.debug(
-        `Last feed update is older than current datetime minus cache refresh interval <${lastUpdate < timeNowMinusCacheRefreshInterval}>`,
+        'Last feed update is older than current datetime' +
+          ' minus cache refresh interval' +
+          ` <${lastUpdate < timeNowMinusCacheRefreshInterval}>.`,
       );
       return lastUpdate < timeNowMinusCacheRefreshInterval;
     },
