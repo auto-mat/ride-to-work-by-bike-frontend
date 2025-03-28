@@ -87,6 +87,22 @@ export const useRoutes = () => {
     );
   };
 
+  const dateCompetitionPhaseFrom = computed((): Date | null => {
+    const challengeStore = useChallengeStore();
+    const dateString = challengeStore.getPhaseFromSet(
+      PhaseType.competition,
+    )?.date_from;
+    return dateString ? new Date(dateString) : null;
+  });
+
+  const dateCompetitionPhaseTo = computed((): Date | null => {
+    const challengeStore = useChallengeStore();
+    const dateString = challengeStore.getPhaseFromSet(
+      PhaseType.competition,
+    )?.date_to;
+    return dateString ? new Date(dateString) : null;
+  });
+
   /**
    * Returns date for the first day when logging routes is allowed.
    * This is done based on two conditions:
@@ -98,28 +114,24 @@ export const useRoutes = () => {
     const challengeStore = useChallengeStore();
     // get today's date
     const dateToday = new Date();
+    // get start of logging window
     const dateStartOfLoggingWindow = date.subtractFromDate(dateToday, {
       days: (challengeStore.getDaysActive || 0) - 1,
     });
-
-    const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
-      PhaseType.competition,
-    )?.date_from;
-    if (!competitionPhaseDateFrom) {
+    // check if competition phase date range is set
+    if (!dateCompetitionPhaseFrom.value) {
       return dateStartOfLoggingWindow || null;
     }
-    const dateCompetitionPhaseDateFrom = new Date(competitionPhaseDateFrom);
-
     const isStartOfLoggingWindowAfterCompetitionPhaseDateFrom =
       date.getDateDiff(
         dateStartOfLoggingWindow,
-        dateCompetitionPhaseDateFrom,
+        dateCompetitionPhaseFrom.value,
         'days',
       ) > 0;
 
     return isStartOfLoggingWindowAfterCompetitionPhaseDateFrom
       ? dateStartOfLoggingWindow
-      : dateCompetitionPhaseDateFrom;
+      : dateCompetitionPhaseFrom.value;
   });
 
   /**
@@ -131,23 +143,18 @@ export const useRoutes = () => {
    * @returns {Date | null} - Date or null if date is invalid
    */
   const dateLoggingEnd = computed((): Date | null => {
-    const challengeStore = useChallengeStore();
+    // get today's date
     const dateToday = new Date();
-
-    const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
-      PhaseType.competition,
-    )?.date_to;
-    if (!competitionPhaseDateTo) {
+    // check if competition phase date range is set
+    if (!dateCompetitionPhaseTo.value) {
       return dateToday || null;
     }
-    const dateCompetitionPhaseDateTo = new Date(competitionPhaseDateTo);
-
     const isTomorrowBeforeCompetitionDateTo =
-      date.getDateDiff(dateToday, dateCompetitionPhaseDateTo, 'days') < 0;
+      date.getDateDiff(dateToday, dateCompetitionPhaseTo.value, 'days') < 0;
 
     return isTomorrowBeforeCompetitionDateTo
       ? dateToday
-      : dateCompetitionPhaseDateTo;
+      : dateCompetitionPhaseTo.value;
   });
 
   /**
@@ -159,12 +166,15 @@ export const useRoutes = () => {
    * @return {RouteDay[]} The array representing days with routes.
    */
   const getLoggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
-    const dateStart = dateLoggingStart.value;
-    const dateEnd = dateLoggingEnd.value;
-    if (!dateStart || !dateEnd) return [];
-    const startDate = date.subtractFromDate(dateStart, { days: 1 });
-    const endDate = dateEnd;
-    return createDaysArrayWithRoutes(startDate, endDate, routes);
+    // check if logging window date range is set
+    if (!dateLoggingStart.value || !dateLoggingEnd.value) {
+      return [];
+    }
+    return createDaysArrayWithRoutes(
+      date.subtractFromDate(dateLoggingStart.value, { days: 1 }),
+      dateLoggingEnd.value,
+      routes,
+    );
   };
 
   /**
@@ -174,19 +184,32 @@ export const useRoutes = () => {
    * @return {RouteDay[]} The array representing days with routes.
    */
   const getUnloggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
-    const challengeStore = useChallengeStore();
-    const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
-      PhaseType.competition,
-    )?.date_from;
-    if (!competitionPhaseDateFrom || !dateLoggingStart.value) {
+    // check if competition phase date range is set
+    if (!dateCompetitionPhaseFrom.value || !dateLoggingStart.value) {
       return [];
     }
-    // start date is the day when competition phase starts
-    const startDate = new Date(competitionPhaseDateFrom);
     // end date is the day before the logging window starts
     return createDaysArrayWithRoutes(
-      date.subtractFromDate(startDate, { days: 1 }),
+      date.subtractFromDate(dateCompetitionPhaseFrom.value, { days: 1 }),
       date.subtractFromDate(dateLoggingStart.value, { days: 1 }),
+      routes,
+    );
+  };
+
+  /**
+   * Returns an array of RouteDay objects for each day of the competition phase.
+   * @param {RouteItem[]} routes - Array of logged routes.
+   * @return {RouteDay[]} The array representing days with routes.
+   */
+  const getCompetitionDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
+    // check if competition phase date range is set
+    if (!dateCompetitionPhaseFrom.value || !dateCompetitionPhaseTo.value) {
+      return [];
+    }
+    // create days array with routes (include start date)
+    return createDaysArrayWithRoutes(
+      date.subtractFromDate(dateCompetitionPhaseFrom.value, { days: 1 }),
+      dateCompetitionPhaseTo.value,
       routes,
     );
   };
@@ -320,8 +343,11 @@ export const useRoutes = () => {
   return {
     dateLoggingStart,
     dateLoggingEnd,
+    dateCompetitionPhaseFrom,
+    dateCompetitionPhaseTo,
     getLoggableDaysWithRoutes,
     getUnloggableDaysWithRoutes,
+    getCompetitionDaysWithRoutes,
     createDaysArrayWithRoutes,
     formatDate,
     formatDateName,

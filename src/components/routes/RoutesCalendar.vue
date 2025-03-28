@@ -24,7 +24,7 @@
 // libraries
 import { colors, date } from 'quasar';
 import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
-import { defineComponent, computed, inject, ref, watch } from 'vue';
+import { defineComponent, computed, ref, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
 
 // components
@@ -38,16 +38,13 @@ import { useRoutes } from '../../composables/useRoutes';
 
 // enums
 import { TransportDirection } from '../types/Route';
-import { PhaseType } from '../types/Challenge';
 
 // stores
-import { useChallengeStore } from '../../stores/challenge';
 import { useTripsStore } from '../../stores/trips';
 
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
-import type { RouteDay, RouteItem } from '../types/Route';
-import type { Logger } from '../types/Logger';
+import type { RouteDay } from '../types/Route';
 
 export default defineComponent({
   name: 'RoutesCalendar',
@@ -57,16 +54,14 @@ export default defineComponent({
     RouteCalendarPanel,
   },
   setup() {
-    const logger = inject('vuejs3-logger') as Logger | null;
-    const challengeStore = useChallengeStore();
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
     const locale = computed((): string => {
       return i18n.global.locale;
     });
 
-    // get start and end of logging window
     const { dateLoggingStart, dateLoggingEnd } = useRoutes();
+
     const disabledBefore = computed((): string | null => {
       const dateMinusOneDay = date.subtractFromDate(dateLoggingStart.value, {
         days: 1,
@@ -80,43 +75,6 @@ export default defineComponent({
       return datePlusOneDay
         ? date.formatDate(datePlusOneDay, 'YYYY-MM-DD')
         : null;
-    });
-
-    const tripsStore = useTripsStore();
-    const { createDaysArrayWithRoutes } = useRoutes();
-    const routesByDay = computed(() => {
-      // get route items from store
-      const routeItems: RouteItem[] = tripsStore.getRouteItems;
-      // get competition phase dates
-      const competitionPhaseDateTo = challengeStore.getPhaseFromSet(
-        PhaseType.competition,
-      )?.date_to;
-      const competitionPhaseDateFrom = challengeStore.getPhaseFromSet(
-        PhaseType.competition,
-      )?.date_from;
-      // get dates
-      const dateFrom = competitionPhaseDateFrom
-        ? new Date(competitionPhaseDateFrom)
-        : null;
-      const dateTo = competitionPhaseDateTo
-        ? new Date(competitionPhaseDateTo)
-        : null;
-      if (!dateFrom || !dateTo) {
-        return [];
-      }
-      logger?.debug(
-        `Create days array with routes <${JSON.stringify(routeItems, null, 2)}>.`,
-      );
-      // create days array with routes (include start date)
-      const daysWithRoutes = createDaysArrayWithRoutes(
-        date.subtractFromDate(dateFrom, { days: 1 }),
-        dateTo,
-        routeItems,
-      );
-      logger?.debug(
-        `Days with routes <${JSON.stringify(daysWithRoutes, null, 2)}>.`,
-      );
-      return daysWithRoutes;
     });
 
     // Define calendar CSS vars for calendar theme
@@ -149,8 +107,12 @@ export default defineComponent({
       calendar.value?.next();
     }
 
-    // Get data
-    const days = computed<RouteDay[]>(() => routesByDay.value);
+    // Get data for calendar
+    const tripsStore = useTripsStore();
+    const { getCompetitionDaysWithRoutes } = useRoutes();
+    const days = computed<RouteDay[]>(() =>
+      getCompetitionDaysWithRoutes(tripsStore.getRouteItems),
+    );
 
     const {
       activeRoutes,
