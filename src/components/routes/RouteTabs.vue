@@ -159,7 +159,7 @@ export default defineComponent({
       >
         <div class="text-h6">{{ $t('routes.tabList') }}</div>
         <route-list-edit data-cy="route-list-edit" />
-        <route-list-display :routes="routeList" data-cy="route-list-display" />
+        <route-list-display data-cy="route-list-display" />
       </q-tab-panel>
       <!-- Panel: Map -->
       <q-tab-panel
