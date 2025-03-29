@@ -128,11 +128,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     name: routesConf['routes']['children']['name'],
     beforeEnter: (to, from, next) => {
-      const tripsStore = useTripsStore();
-      const isLargeScreen = Screen.gt.sm;
-      const preferredView = tripsStore.getPreferredRouteView;
       // redirect going to the root routes path
       if (to.path === routesConf['routes']['path']) {
+        const tripsStore = useTripsStore();
+        const isLargeScreen = Screen.gt.sm;
+        const preferredView = tripsStore.getPreferredRouteView;
         // use switch to pair preferred view with route name
         switch (preferredView) {
           // calendar view
