@@ -1,5 +1,17 @@
-import type { RouteRecordRaw } from 'vue-router';
+// libraries
+import { Screen } from 'quasar';
+
+// config
 import { routesConf } from './routes_conf';
+
+// enums
+import { RouteTab } from '../components/types/Route';
+
+// stores
+import { useTripsStore } from 'src/stores/trips';
+
+// types
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   // home
@@ -115,7 +127,24 @@ const routes: RouteRecordRaw[] = [
     path: routesConf['routes']['path'],
     component: () => import('layouts/MainLayout.vue'),
     name: routesConf['routes']['children']['name'],
-    redirect: { name: routesConf['routes_calendar']['children']['name'] },
+    beforeEnter: (to, from, next) => {
+      const tripsStore = useTripsStore();
+      const preferredView = tripsStore.getPreferredRouteView;
+      // redirect going to the root routes path
+      if (to.path === routesConf['routes']['path']) {
+        // if user has a preferred view and it's not calendar on mobile, use it
+        if (preferredView !== RouteTab.calendar || !Screen.lt.md) {
+          next({
+            name: routesConf[`routes_${preferredView}`]['children']['name'],
+          });
+        } else {
+          // fallback to list view on mobile
+          next({ name: routesConf['routes_list']['children']['name'] });
+        }
+      } else {
+        next();
+      }
+    },
     children: [
       {
         path: routesConf['routes_calendar']['path'],

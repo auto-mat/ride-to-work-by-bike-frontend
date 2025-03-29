@@ -27,7 +27,8 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { Screen } from 'quasar';
+import { computed, defineComponent, ref, onUnmounted } from 'vue';
 
 // components
 import RoutesApps from './RoutesApps.vue';
@@ -63,6 +64,8 @@ export default defineComponent({
   },
   setup(props) {
     const activeTab = ref('');
+    const tripsStore = useTripsStore();
+
     // getter function for locked state
     const isLocked = (tab: RouteTab): boolean => {
       return props.locked.includes(tab);
@@ -71,12 +74,21 @@ export default defineComponent({
       return props.hidden.includes(tab);
     };
 
+    const isMobile = computed(() => {
+      return Screen.lt.sm;
+    });
+
+    onUnmounted(() => {
+      tripsStore.setPreferredRouteView(activeTab.value as RouteTab);
+    });
+
     return {
       activeTab,
       routesConf,
       RouteTab,
       isLocked,
       isHidden,
+      isMobile,
     };
   },
 });
@@ -95,7 +107,7 @@ export default defineComponent({
       data-cy="route-tabs"
     >
       <q-route-tab
-        v-if="!isHidden(RouteTab.calendar)"
+        v-if="!isHidden(RouteTab.calendar) && !isMobile"
         :to="routesConf['routes_calendar'].path"
         :name="RouteTab.calendar"
         icon="mdi-calendar-blank"
@@ -145,7 +157,7 @@ export default defineComponent({
     <q-tab-panels v-model="activeTab" animated>
       <!-- Panel: Calendar -->
       <q-tab-panel
-        v-if="!isHidden(RouteTab.calendar)"
+        v-if="!isHidden(RouteTab.calendar) && !isMobile"
         :name="RouteTab.calendar"
         data-cy="route-tabs-panel-calendar"
       >

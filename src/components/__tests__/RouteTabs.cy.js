@@ -129,7 +129,24 @@ describe('<RouteTabs>', () => {
       cy.viewport('iphone-6');
     });
 
-    coreTests();
+    it('renders all tabs except calendar', () => {
+      cy.dataCy('route-tabs').should('be.visible');
+      cy.dataCy('route-tabs-button-calendar').should('not.exist');
+      cy.dataCy('route-tabs-button-list')
+        .should('exist')
+        .and('contain', i18n.global.t('routes.tabList'));
+      cy.dataCy('route-tabs-button-map')
+        .should('exist')
+        .and('contain', i18n.global.t('routes.tabMap'));
+      cy.dataCy('route-tabs-button-app')
+        .should('exist')
+        .and('contain', i18n.global.t('routes.tabApp'));
+
+      cy.dataCy('route-tabs-button-list').click();
+      cy.dataCy('route-tabs-panel-list').should('be.visible');
+      cy.dataCy('route-tabs-panel-map').should('not.exist');
+      cy.dataCy('route-tabs-panel-app').should('not.exist');
+    });
   });
 });
 
