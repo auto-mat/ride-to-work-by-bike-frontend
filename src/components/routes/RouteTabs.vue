@@ -74,8 +74,8 @@ export default defineComponent({
       return props.hidden.includes(tab);
     };
 
-    const isMobile = computed(() => {
-      return Screen.lt.sm;
+    const isLargeScreen = computed((): boolean => {
+      return Screen.gt.sm;
     });
 
     onUnmounted(() => {
@@ -88,7 +88,7 @@ export default defineComponent({
       RouteTab,
       isLocked,
       isHidden,
-      isMobile,
+      isLargeScreen,
     };
   },
 });
@@ -107,7 +107,7 @@ export default defineComponent({
       data-cy="route-tabs"
     >
       <q-route-tab
-        v-if="!isHidden(RouteTab.calendar) && !isMobile"
+        v-if="!isHidden(RouteTab.calendar) && isLargeScreen"
         :to="routesConf['routes_calendar'].path"
         :name="RouteTab.calendar"
         icon="mdi-calendar-blank"
@@ -157,7 +157,7 @@ export default defineComponent({
     <q-tab-panels v-model="activeTab" animated>
       <!-- Panel: Calendar -->
       <q-tab-panel
-        v-if="!isHidden(RouteTab.calendar) && !isMobile"
+        v-if="!isHidden(RouteTab.calendar) && isLargeScreen"
         :name="RouteTab.calendar"
         data-cy="route-tabs-panel-calendar"
       >

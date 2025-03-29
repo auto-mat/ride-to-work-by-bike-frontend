@@ -13,7 +13,7 @@ describe('Routes page', () => {
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
       });
-      cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
+      cy.visit('#' + routesConf['routes']['children']['fullPath']);
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
         // alias i18n
@@ -24,6 +24,43 @@ describe('Routes page', () => {
 
     coreTests();
     testDesktopSidebar();
+
+    it('reroutes correctly on large screens and keeps user preferred view', () => {
+      cy.waitForTripsApi();
+      cy.dataCy('route-tabs').should('be.visible');
+      // initial access to routes page - defaults to calendar view
+      cy.dataCy('route-tabs-panel-calendar').should('be.visible');
+      // click on list view button
+      cy.dataCy('route-tabs-button-list').click();
+      // list view is visible
+      cy.dataCy('route-tabs-panel-list').should('be.visible');
+      // calendar view is not visible
+      cy.dataCy('route-tabs-panel-calendar').should('not.exist');
+      // go to home page
+      cy.visit('#' + routesConf['home']['children']['fullPath']);
+      // wait for page to load
+      cy.dataCy('index-title').should('be.visible');
+      // go back to routes page
+      cy.visit('#' + routesConf['routes']['children']['fullPath']);
+      // saved preference - list view is visible
+      cy.dataCy('route-tabs-panel-list').should('be.visible');
+      // calendar view is not visible
+      cy.dataCy('route-tabs-panel-calendar').should('not.exist');
+      // click on calendar view button
+      cy.dataCy('route-tabs-button-calendar').click();
+      // calendar view is visible
+      cy.dataCy('route-tabs-panel-calendar').should('be.visible');
+      // list view is not visible
+      cy.dataCy('route-tabs-panel-list').should('not.exist');
+      // go to home page
+      cy.visit('#' + routesConf['home']['children']['fullPath']);
+      // wait for page to load
+      cy.dataCy('index-title').should('be.visible');
+      // go back to routes page
+      cy.visit('#' + routesConf['routes']['children']['fullPath']);
+      // saved preference - calendar view is visible
+      cy.dataCy('route-tabs-panel-calendar').should('be.visible');
+    });
   });
 
   context('mobile', () => {
@@ -36,7 +73,7 @@ describe('Routes page', () => {
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
       });
-      cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
+      cy.visit('#' + routesConf['routes']['children']['fullPath']);
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
         // alias i18n
@@ -47,6 +84,15 @@ describe('Routes page', () => {
 
     coreTests();
     testMobileHeader();
+
+    it('correctly shows list view on mobile', () => {
+      cy.waitForTripsApi();
+      cy.dataCy('route-tabs').should('be.visible');
+      // initial access to routes page - defaults to list view
+      cy.dataCy('route-tabs-panel-list').should('be.visible');
+      // calendar view is not visible
+      cy.dataCy('route-tabs-panel-calendar').should('not.exist');
+    });
   });
 });
 
@@ -76,14 +122,6 @@ function coreTests() {
           },
         );
       });
-    });
-  });
-
-  it('renders route tabs', () => {
-    cy.window().then(() => {
-      cy.waitForTripsApi();
-      cy.dataCy('route-tabs').should('be.visible');
-      cy.dataCy('route-tabs-panel-calendar').should('be.visible');
     });
   });
 }

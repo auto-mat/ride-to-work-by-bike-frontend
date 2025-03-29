@@ -129,17 +129,37 @@ const routes: RouteRecordRaw[] = [
     name: routesConf['routes']['children']['name'],
     beforeEnter: (to, from, next) => {
       const tripsStore = useTripsStore();
+      const isLargeScreen = Screen.gt.sm;
       const preferredView = tripsStore.getPreferredRouteView;
       // redirect going to the root routes path
       if (to.path === routesConf['routes']['path']) {
-        // if user has a preferred view and it's not calendar on mobile, use it
-        if (preferredView !== RouteTab.calendar || !Screen.lt.md) {
-          next({
-            name: routesConf[`routes_${preferredView}`]['children']['name'],
-          });
-        } else {
-          // fallback to list view on mobile
-          next({ name: routesConf['routes_list']['children']['name'] });
+        // use switch to pair preferred view with route name
+        switch (preferredView) {
+          // calendar view
+          case RouteTab.calendar:
+            if (isLargeScreen) {
+              // go to calendar view on large screens
+              next({ name: routesConf['routes_calendar']['children']['name'] });
+            } else {
+              // go to list view on mobile
+              next({ name: routesConf['routes_list']['children']['name'] });
+            }
+            break;
+          // list view
+          case RouteTab.list:
+            // go to list view on all screens
+            next({ name: routesConf['routes_list']['children']['name'] });
+            break;
+          // fallback
+          default:
+            if (isLargeScreen) {
+              // fallback to calendar view on large screens
+              next({ name: routesConf['routes_calendar']['children']['name'] });
+            } else {
+              // fallback to list view on mobile
+              next({ name: routesConf['routes_list']['children']['name'] });
+            }
+            break;
         }
       } else {
         next();
