@@ -131,8 +131,8 @@ const routes: RouteRecordRaw[] = [
       // redirect going to the root routes path
       if (to.path === routesConf['routes']['path']) {
         const tripsStore = useTripsStore();
-        const isLargeScreen = Screen.gt.sm;
         const preferredView = tripsStore.getPreferredRouteView;
+        const isLargeScreen = Screen.gt.sm;
         // use switch to pair preferred view with route name
         switch (preferredView) {
           // calendar view

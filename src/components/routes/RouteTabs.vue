@@ -78,6 +78,7 @@ export default defineComponent({
       return Screen.gt.sm;
     });
 
+    // when user leaves the routes page, save the last active tab
     onUnmounted(() => {
       tripsStore.setPreferredRouteView(activeTab.value as RouteTab);
     });
