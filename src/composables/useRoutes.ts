@@ -26,7 +26,7 @@ export const useRoutes = () => {
    * Returns the icon name corresponding to the given route.
    *
    * @param {TransportType} transport - The transport type.
-   * @return {string} The icon name.
+   * @return {string} - The icon name.
    */
   const getRouteIcon = (transport: TransportType): string => {
     switch (transport) {
@@ -50,7 +50,7 @@ export const useRoutes = () => {
   /**
    * Get a transport label based on given transport key.
    * @param {TransportType} transport - The transport type.
-   * @return {string} The transport label.
+   * @return {string} - The transport label.
    */
   const getTransportLabel = (transport: TransportType): string => {
     if (!transport) {
@@ -77,7 +77,7 @@ export const useRoutes = () => {
   /**
    * Returns the route distance including the unit.
    * @param {RouteItem} route - The route item.
-   * @return {string} The distance label.
+   * @return {string} - The distance label.
    */
   const getRouteDistance = (route: RouteItem | null): string => {
     if (!route?.distance || route?.distance === defaultDistanceZero) return '';
@@ -163,7 +163,7 @@ export const useRoutes = () => {
    * Fills in data from routes array based on date and direction.
    * If data is empty for given day/route, it will create an empty route.
    * @param {RouteItem[]} routes - Array of logged routes.
-   * @return {RouteDay[]} The array representing days with routes.
+   * @return {RouteDay[]} - The array representing days with routes.
    */
   const getLoggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     // check if logging window date range is set
@@ -181,7 +181,7 @@ export const useRoutes = () => {
    * Returns an array of RouteDay which represents days of competition phase,
    * which precede the logging window and can no longer be logged.
    * @param {RouteItem[]} routes - Array of logged routes.
-   * @return {RouteDay[]} The array representing days with routes.
+   * @return {RouteDay[]} - The array representing days with routes.
    */
   const getUnloggableDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     // check if competition phase date range is set
@@ -199,7 +199,7 @@ export const useRoutes = () => {
   /**
    * Returns an array of RouteDay objects for each day of the competition phase.
    * @param {RouteItem[]} routes - Array of logged routes.
-   * @return {RouteDay[]} The array representing days with routes.
+   * @return {RouteDay[]} - The array representing days with routes.
    */
   const getCompetitionDaysWithRoutes = (routes: RouteItem[]): RouteDay[] => {
     // check if competition phase date range is set
@@ -222,7 +222,7 @@ export const useRoutes = () => {
    * @param {Date} startDate - The start date of the date range.
    * @param {Date} endDate - The end date of the date range.
    * @param {RouteItem[]} routes - The array logged routes.
-   * @return {RouteDay[]} The array representing days with routes.
+   * @return {RouteDay[]} - The array representing days with routes.
    */
   const createDaysArrayWithRoutes = (
     startDate: Date,
@@ -284,7 +284,7 @@ export const useRoutes = () => {
    * @param {RouteItem[]} routes - The list of route items to search through.
    * @param {Date} dateQuery - Route date.
    * @param {TransportDirection} directionQuery - Route direction.
-   * @return {RouteItem | null} Matching route, or null if no match is found.
+   * @return {RouteItem | null} - Matching route, or null if no match is found.
    */
   const getRouteByDateAndDirection = (
     routes: RouteItem[],
