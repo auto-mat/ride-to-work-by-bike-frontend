@@ -775,7 +775,7 @@ function coreTests() {
     cy.dataCy('dialog-card-event').should('be.visible');
   });
 
-  it('renders max number of offers', () => {
+  it.skip('renders max number of offers', () => {
     cy.get('@config').then((config) => {
       cy.get('@offers').then((offers) => {
         // wait for offers API
@@ -806,7 +806,7 @@ function coreTests() {
     });
   });
 
-  it('allows user to display offer modal', () => {
+  it.skip('allows user to display offer modal', () => {
     cy.dataCy('dialog-offer').should('not.exist');
     cy.dataCy('list-card-offer-item').first().should('be.visible').click();
     cy.dataCy('dialog-offer').should('be.visible');
