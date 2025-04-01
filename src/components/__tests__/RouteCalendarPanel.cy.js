@@ -5,6 +5,8 @@ import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/routeCalendarPanelInputTest.json';
+import { TransportType } from 'src/components/types/Route';
+
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 
@@ -211,6 +213,9 @@ function coreTests() {
         );
       cy.dataCy(selectorSectionDistance).should('be.visible');
       cy.dataCy(selectorSectionTransport).should('be.visible');
+      cy.dataCy(selectorRouteCalendarPanel)
+        .find(`[data-value="${TransportType.bike}"]`)
+        .click();
       cy.dataCy(selectorRouteInputDistance).should('be.visible');
       cy.dataCy(selectorRouteInputTransportType).should('be.visible');
     });

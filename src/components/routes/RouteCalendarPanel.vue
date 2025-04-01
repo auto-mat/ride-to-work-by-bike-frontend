@@ -96,10 +96,11 @@ export default defineComponent({
 
     // Determines if save button should be disabled.
     const isSaveBtnDisabled = computed((): boolean => {
+      const noTransport = transportType.value === null;
       const noRoutes = routesCount.value === 0;
       const noDistance =
         isShownDistance.value && distance.value === defaultDistanceZero;
-      return noRoutes || noDistance || isLoading.value;
+      return noRoutes || noDistance ||  noTransport || isLoading.value;
     });
 
     /**
