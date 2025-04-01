@@ -28,7 +28,7 @@ export const useRoutes = () => {
    * @param {TransportType} transport - The transport type.
    * @return {string} - The icon name.
    */
-  const getRouteIcon = (transport: TransportType): string => {
+  const getRouteIcon = (transport: TransportType | null): string => {
     switch (transport) {
       case TransportType.car:
         return `svguse:${customSVGIconsFilePath}#lucide-car-front`;
