@@ -13,7 +13,7 @@ import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import { useTripsStore } from '../../../src/stores/trips';
 import { useChallengeStore } from '../../../src/stores/challenge';
 import { TransportType } from '../../../src/components/types/Route';
-
+import testData from '../../../test/cypress/fixtures/routeCalendarPanelInputTest.json';
 const { getPaletteColor } = colors;
 
 const { getTransportLabel } = useRoutes();
@@ -284,5 +284,75 @@ function coreTests() {
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
+  });
+
+  context.only('API payloads for route entry', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.viewport('macbook-16');
+    });
+
+    // generate tests based on fixture routeCalendarPanelInputTest.json
+    Object.entries(testData).forEach(([testKey, testCase]) => {
+      it(`${testKey}: ${testCase.description}`, () => {
+        // intercept API call with response matching the payload
+        const responseBody = {
+          trips: testCase.apiPayload.trips.map((trip, index) => ({
+            id: index + 1,
+            ...trip,
+            durationSeconds: null,
+            sourceId: null,
+            file: null,
+            description: '',
+            track: null,
+          })),
+        };
+        cy.interceptPostTripsApi(rideToWorkByBikeConfig, i18n, responseBody);
+        // mount component with test data
+        cy.mount(RouteListEdit, {
+          props: {},
+        });
+        cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+          cy.wrap(useChallengeStore()).then((store) => {
+            store.setDaysActive(response.results[0].days_active);
+            store.setPhaseSet(response.results[0].phase_set);
+          });
+        });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        cy.fixture('routeItemsEmpty.json').then((response) => {
+          cy.wrap(useTripsStore()).then((store) => {
+            store.setRouteItems(response);
+          });
+        });
+        // input transport type if provided
+        testCase.propRoutes.forEach((route) => {
+          cy.get(`[data-date="${route.date}"]`)
+            .should('be.visible')
+            .find(`[data-direction="${route.direction}"]`)
+            .should('be.visible')
+            .within(() => {
+              if (testCase.inputValues.transport) {
+                cy.dataCy('button-toggle-transport').should('be.visible');
+                cy.dataCy('section-transport')
+                  .find(`[data-value="${testCase.inputValues.transport}"]`)
+                  .click();
+              }
+              // input distance if provided
+              if (testCase.inputValues.distance) {
+                cy.dataCy('section-input-number').should('be.visible');
+                cy.dataCy('section-input-number').find('input').clear();
+                cy.dataCy('section-input-number')
+                  .find('input')
+                  .type(testCase.inputValues.distance);
+              }
+            });
+          // click save button
+          cy.dataCy(selectorButtonSave).click();
+          // wait for API call and verify payload
+          cy.waitForPostTripsApi(testCase.apiPayload);
+        });
+      });
+    });
   });
 }

@@ -32,6 +32,9 @@ import RouteItemEdit from './RouteItemEdit.vue';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
 import { useRoutes } from 'src/composables/useRoutes';
 
+// enums
+import { TransportDirection } from '../types/Route';
+
 // stores
 import { useTripsStore } from 'src/stores/trips';
 
@@ -115,6 +118,7 @@ export default defineComponent({
       formatDateName,
       isLoadingPostTrips,
       onSave,
+      TransportDirection,
     };
   },
 });
@@ -133,7 +137,7 @@ export default defineComponent({
       <h3 class="text-18 text-grey-10 q-my-none" data-cy="route-list-day-date">
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
-      <div class="q-py-md">
+      <div class="q-py-md" :data-date="day.date">
         <div class="row q-col-gutter-lg">
           <!-- Item: Route to work -->
           <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
@@ -141,6 +145,7 @@ export default defineComponent({
               :route="day.toWork"
               class="full-height"
               data-cy="route-list-item"
+              :data-direction="TransportDirection.toWork"
               :data-id="day.toWork?.id"
               @update:route="day.toWork = $event"
             />
@@ -151,6 +156,7 @@ export default defineComponent({
               :route="day.fromWork"
               class="full-height"
               data-cy="route-list-item"
+              :data-direction="TransportDirection.fromWork"
               :data-id="day.fromWork?.id"
               @update:route="day.fromWork = $event"
             />
