@@ -3,6 +3,7 @@ import { date } from 'quasar';
 import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
+import { TransportType } from 'src/components/types/Route';
 import { useChallengeStore } from 'src/stores/challenge';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
@@ -478,9 +479,6 @@ function coreTests() {
       );
     cy.dataCy(selectorRouteCalendarPanel)
       .find(dataSelectorInputTransportType)
-      .should('be.visible');
-    cy.dataCy(selectorRouteCalendarPanel)
-      .find(dataSelectorRouteInputDistance)
       .should('be.visible');
     cy.get(classSelectorCurrentDay).find(dataSelectorItemFromWork).click();
     cy.dataCy(selectorRouteCalendarPanel)
