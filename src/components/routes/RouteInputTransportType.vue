@@ -22,7 +22,7 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, PropType } from 'vue';
 
 // composables
 import { useRoutes } from '../../composables/useRoutes';
@@ -40,7 +40,7 @@ export default defineComponent({
   name: 'RouteInputTransportType',
   props: {
     modelValue: {
-      type: String as () => TransportType | null,
+      type: [String, null] as PropType<TransportType | null>,
       required: true,
     },
     horizontal: {
@@ -65,9 +65,6 @@ export default defineComponent({
 
     const transport = computed<TransportType | null>({
       get: (): TransportType | null => {
-        if (!props.modelValue) {
-          return null;
-        }
         return props.modelValue;
       },
       set: (value: TransportType | null): void => {

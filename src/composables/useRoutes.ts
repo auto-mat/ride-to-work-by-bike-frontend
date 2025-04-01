@@ -52,7 +52,7 @@ export const useRoutes = () => {
    * @param {TransportType} transport - The transport type.
    * @return {string} - The transport label.
    */
-  const getTransportLabel = (transport: TransportType): string => {
+  const getTransportLabel = (transport: TransportType | null): string => {
     if (!transport) {
       return i18n.global.t('routes.transport.unknown');
     }
