@@ -90,7 +90,7 @@ export default defineComponent({
      * Routes with transport type `none` are displayed as empty.
      */
     const isLogged = computed((): boolean => {
-      return !!route.value?.id && route.value?.transport !== TransportType.none;
+      return !!route.value?.id && route.value?.transport !== null;
     });
 
     const { getRouteDistance, getRouteIcon } = useRoutes();
