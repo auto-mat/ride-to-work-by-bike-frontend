@@ -256,7 +256,7 @@ export const useRoutes = () => {
             : ({
                 id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.fromWork}`,
                 date: date.formatDate(currentDate, routeDateFormat),
-                transport: TransportType.none,
+                transport: null,
                 distance: defaultDistanceZero,
                 direction: TransportDirection.fromWork,
                 dirty: false,
@@ -267,7 +267,7 @@ export const useRoutes = () => {
             : ({
                 id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.toWork}`,
                 date: date.formatDate(currentDate, routeDateFormat),
-                transport: TransportType.none,
+                transport: null,
                 distance: defaultDistanceZero,
                 direction: TransportDirection.toWork,
                 dirty: false,

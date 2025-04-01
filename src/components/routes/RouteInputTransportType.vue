@@ -63,14 +63,14 @@ export default defineComponent({
       }));
     });
 
-    const transport = computed({
-      get: (): TransportType => {
+    const transport = computed<TransportType | null>({
+      get: (): TransportType | null => {
         if (!props.modelValue) {
-          return TransportType.bike;
+          return null;
         }
         return props.modelValue;
       },
-      set: (value: TransportType): void => {
+      set: (value: TransportType | null): void => {
         emit('update:modelValue', value);
       },
     });

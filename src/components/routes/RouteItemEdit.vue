@@ -36,7 +36,11 @@ import { useLogRoutes } from '../../composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
-import { TransportDirection, TransportType } from '../types/Route';
+import {
+  TransportDirection,
+  TransportType,
+  RouteInputType,
+} from '../types/Route';
 
 // stores
 import { useTripsStore } from 'src/stores/trips';
@@ -78,7 +82,7 @@ export default defineComponent({
       );
       if (!storeRoute) {
         return {
-          transport: TransportType.none,
+          transport: null,
           distance: defaultDistanceZero,
           inputType: 'input-number',
         };
@@ -97,7 +101,7 @@ export default defineComponent({
     const { action, distance, transportType, isShownDistance } =
       useLogRoutes(routes);
 
-    const onUpdateAction = (actionNew: string): void => {
+    const onUpdateAction = (actionNew: RouteInputType): void => {
       action.value = actionNew;
     };
 
@@ -117,7 +121,7 @@ export default defineComponent({
         localizedFloatNumStrToFloatNumber(distanceNew);
 
       // compare new distance with the distance from the store
-      const dirty = distanceNewFormatted !== routeStateDefault.value?.distance;
+      const dirty = String(distanceNewFormatted) !== routeStateDefault.value?.distance;
       emit('update:route', {
         ...props.route,
         distance: distanceNew,

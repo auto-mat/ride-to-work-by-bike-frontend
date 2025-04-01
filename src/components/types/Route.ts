@@ -29,7 +29,7 @@ export type RouteItem = {
   direction: TransportDirection;
   dirty?: boolean;
   distance: string;
-  transport: TransportType;
+  transport: TransportType | null;
   inputType?: RouteInputType;
   routeFeature: RouteFeature | null;
 };
