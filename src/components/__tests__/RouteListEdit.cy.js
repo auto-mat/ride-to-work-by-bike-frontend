@@ -176,9 +176,12 @@ function coreTests() {
     // check initial state for 2nd route
     cy.dataCy(selectorRouteListItem)
       .eq(1)
-      .find(`[data-value="${TransportType.none}"]`)
-      .find('.q-avatar')
-      .should('have.class', 'bg-secondary');
+      .within(() => {
+        // no button is selected
+        cy.dataCy('button-toggle-transport')
+          .find('.q-avatar')
+          .should('not.have.class', 'bg-secondary');
+      });
     // introduce a change
     cy.dataCy(selectorRouteListItem)
       .first()
@@ -215,18 +218,14 @@ function coreTests() {
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 2, { count: 2 }),
     );
-    // revert changes
+    // revert 1 change (other change cannot be reverted)
     cy.dataCy(selectorRouteListItem)
       .first()
       .find(`[data-value="${TransportType.bike}"]`)
       .click();
-    cy.dataCy(selectorRouteListItem)
-      .eq(1)
-      .find(`[data-value="${TransportType.none}"]`)
-      .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
     // test changing distance value by deleting '0'
     cy.dataCy(selectorRouteListItem)
@@ -239,7 +238,7 @@ function coreTests() {
       .blur();
     cy.dataCy(selectorButtonSave).should(
       'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+      i18n.global.tc('routes.buttonSaveChangesCount', 2, { count: 2 }),
     );
     // reset distance value
     cy.dataCy(selectorRouteListItem)
