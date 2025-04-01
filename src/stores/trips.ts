@@ -10,15 +10,11 @@ import type { CommuteMode } from '../components/types/Route';
 import type { Logger } from '../components/types/Logger';
 import type { RouteItem } from '../components/types/Route';
 
-// enums
-import { RouteTab } from '../components/types/Route';
-
 interface TripsState {
   $log: Logger | null;
   commuteModes: CommuteMode[];
   routeItems: RouteItem[];
   isLoading: boolean;
-  preferredRouteView: RouteTab;
 }
 
 export const useTripsStore = defineStore('trips', {
@@ -28,7 +24,6 @@ export const useTripsStore = defineStore('trips', {
     commuteModes: [],
     routeItems: [],
     isLoading: false,
-    preferredRouteView: RouteTab.calendar,
   }),
 
   getters: {
@@ -63,11 +58,6 @@ export const useTripsStore = defineStore('trips', {
     getEcoCommuteModes: (state): CommuteMode[] => {
       return state.commuteModes.filter((mode) => mode.eco);
     },
-    /**
-     * Get preferred route view mode
-     * @returns {RouteTab} - Preferred route view mode
-     */
-    getPreferredRouteView: (state): RouteTab => state.preferredRouteView,
   },
 
   actions: {
@@ -117,16 +107,5 @@ export const useTripsStore = defineStore('trips', {
       this.setRouteItems(routeItems);
       this.setIsLoading(false);
     },
-    /**
-     * Set preferred route view mode
-     * @param {RouteTab} view - View mode to set
-     * @returns {void}
-     */
-    setPreferredRouteView(view: RouteTab): void {
-      this.preferredRouteView = view;
-    },
-  },
-  persist: {
-    pick: ['preferredRouteView'],
   },
 });

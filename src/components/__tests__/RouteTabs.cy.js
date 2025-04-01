@@ -131,7 +131,7 @@ describe('<RouteTabs>', () => {
 
     it('renders all tabs except calendar', () => {
       cy.dataCy('route-tabs').should('be.visible');
-      cy.dataCy('route-tabs-button-calendar').should('not.exist');
+      cy.dataCy('route-tabs-button-calendar').should('not.be.visible');
       cy.dataCy('route-tabs-button-list')
         .should('exist')
         .and('contain', i18n.global.t('routes.tabList'));

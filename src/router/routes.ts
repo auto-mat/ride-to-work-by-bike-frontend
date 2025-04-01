@@ -5,10 +5,10 @@ import { Screen } from 'quasar';
 import { routesConf } from './routes_conf';
 
 // enums
-import { RouteTab } from '../components/types/Route';
+//import { RouteTab } from '../components/types/Route';
 
 // stores
-import { useTripsStore } from 'src/stores/trips';
+//import { useTripsStore } from 'src/stores/trips';
 
 // types
 import type { RouteRecordRaw } from 'vue-router';
@@ -130,36 +130,13 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: (to, from, next) => {
       // redirect going to the root routes path
       if (to.path === routesConf['routes']['path']) {
-        const tripsStore = useTripsStore();
-        const preferredView = tripsStore.getPreferredRouteView;
         const isLargeScreen = Screen.gt.sm;
-        // use switch to pair preferred view with route name
-        switch (preferredView) {
-          // calendar view
-          case RouteTab.calendar:
-            if (isLargeScreen) {
-              // go to calendar view on large screens
-              next({ name: routesConf['routes_calendar']['children']['name'] });
-            } else {
-              // go to list view on mobile
-              next({ name: routesConf['routes_list']['children']['name'] });
-            }
-            break;
-          // list view
-          case RouteTab.list:
-            // go to list view on all screens
-            next({ name: routesConf['routes_list']['children']['name'] });
-            break;
-          // fallback
-          default:
-            if (isLargeScreen) {
-              // fallback to calendar view on large screens
-              next({ name: routesConf['routes_calendar']['children']['name'] });
-            } else {
-              // fallback to list view on mobile
-              next({ name: routesConf['routes_list']['children']['name'] });
-            }
-            break;
+        if (isLargeScreen) {
+          // go to calendar view on large screens
+          next({ name: routesConf['routes_calendar']['children']['name'] });
+        } else {
+          // go to list view on mobile
+          next({ name: routesConf['routes_list']['children']['name'] });
         }
       } else {
         next();
