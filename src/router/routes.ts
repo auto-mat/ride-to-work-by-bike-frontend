@@ -4,12 +4,6 @@ import { Screen } from 'quasar';
 // config
 import { routesConf } from './routes_conf';
 
-// enums
-//import { RouteTab } from '../components/types/Route';
-
-// stores
-//import { useTripsStore } from 'src/stores/trips';
-
 // types
 import type { RouteRecordRaw } from 'vue-router';
 
