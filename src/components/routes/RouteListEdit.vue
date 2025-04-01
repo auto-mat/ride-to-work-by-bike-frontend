@@ -20,18 +20,23 @@
  */
 
 // libraries
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, inject, ref, watch } from 'vue';
+
+// adapters
+import { tripsAdapter } from '../../adapters/tripsAdapter';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
 
 // composables
+import { useApiPostTrips } from '../../composables/useApiPostTrips';
 import { useRoutes } from 'src/composables/useRoutes';
 
 // stores
 import { useTripsStore } from 'src/stores/trips';
 
 // types
+import type { Logger } from '../types/Logger';
 import type { RouteItem, RouteDay } from '../types/Route';
 
 export default defineComponent({
@@ -40,10 +45,16 @@ export default defineComponent({
     RouteItemEdit,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const tripsStore = useTripsStore();
     // route composables
     const { getLoggableDaysWithRoutes, formatDate, formatDateName } =
       useRoutes();
+
+    // initialize API composable
+    const { postTrips, isLoading: isLoadingPostTrips } =
+      useApiPostTrips(logger);
+
     // get route items from store
     const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
 
@@ -53,25 +64,57 @@ export default defineComponent({
       days.value = getLoggableDaysWithRoutes(routeItems.value);
     });
 
-    // dirty state will be tracked within UI to show change count
-    const dirtyCount = computed((): number => {
-      let count = 0;
-      days.value.forEach((day) => {
-        if (day.fromWork?.dirty) {
-          count += 1;
-        }
-        if (day.toWork?.dirty) {
-          count += 1;
-        }
-      });
-      return count;
+    /**
+     * Get all route items that are dirty
+     */
+    const routeItemsDirty = computed<RouteItem[]>((): RouteItem[] => {
+      const routeItems = days.value.flatMap((day) => [
+        day.fromWork,
+        day.toWork,
+      ]);
+      return routeItems.filter((routeItem) => routeItem.dirty) as RouteItem[];
     });
+
+    // dirty state will be tracked within UI to show change count
+    const dirtyCount = computed((): number => routeItemsDirty.value.length);
+
+    const onSave = async (): Promise<void> => {
+      // convert route items to trip payload
+      const tripPayload = routeItemsDirty.value.map((route) =>
+        tripsAdapter.toTripPostPayload(route),
+      );
+      // send to API
+      const response = await postTrips(tripPayload);
+      // handle success
+      if (
+        response.success &&
+        response.data?.trips &&
+        response.data.trips.length > 0
+      ) {
+        logger?.info('Routes saved successfully');
+        logger?.debug(
+          `Saved trips <${JSON.stringify(response.data.trips, null, 2)}>.`,
+        );
+        // convert saved trips to route items
+        const savedRouteItems = response.data.trips.map((trip) =>
+          tripsAdapter.toRouteItem(trip),
+        );
+        logger?.debug('Saving new routes to store.');
+        // update store with new route items
+        tripsStore.updateRouteItems(savedRouteItems);
+        logger?.debug(
+          `Updated store route items <${JSON.stringify(tripsStore.getRouteItems, null, 2)}>.`,
+        );
+      }
+    };
 
     return {
       days,
       dirtyCount,
       formatDate,
       formatDateName,
+      isLoadingPostTrips,
+      onSave,
     };
   },
 });
@@ -122,7 +165,10 @@ export default defineComponent({
         color="primary"
         size="16px"
         class="text-weight-bold"
+        :loading="isLoadingPostTrips"
+        :disable="isLoadingPostTrips"
         data-cy="button-save"
+        @click="onSave"
       >
         {{
           $tc('routes.buttonSaveChangesCount', dirtyCount, {
