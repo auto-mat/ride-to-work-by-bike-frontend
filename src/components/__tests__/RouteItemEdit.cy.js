@@ -102,6 +102,83 @@ describe('<RouteItemEdit>', () => {
     testLabelFromWork();
   });
 
+  context('route to work - unlogged', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('routeListItemEmpty').then((routes) => {
+        cy.mount(RouteItemEdit, {
+          props: {
+            route: routes.toWork,
+            displayLabel: true,
+          },
+        });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('renders route with direction label', () => {
+      cy.dataCy('label-direction')
+        .should('be.visible')
+        .and('contain', i18n.global.t('routes.labelDirectionToWork'));
+    });
+
+    it('renders the transport type input', () => {
+      cy.dataCy('section-transport')
+        .should('be.visible')
+        .and('contain', i18n.global.t('routes.transport.unknown'))
+        .within(() => {
+          cy.fixture('apiGetCommuteMode').then((commuteModes) => {
+            cy.dataCy('button-toggle-transport')
+              .should('be.visible')
+              .and('have.length', commuteModes.results.length);
+          });
+        });
+    });
+  });
+
+  context('route from work - unlogged', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('routeListItemEmpty').then((routes) => {
+        cy.mount(RouteItemEdit, {
+          props: {
+            route: routes.fromWork,
+            displayLabel: true,
+          },
+        });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('renders route with direction label', () => {
+      cy.dataCy('label-direction')
+        .should('be.visible')
+        .and('contain', i18n.global.t('routes.labelDirectionFromWork'));
+    });
+
+    it('renders the transport type input - no selected transport type', () => {
+      cy.dataCy('section-transport')
+        .should('be.visible')
+        .and('contain', i18n.global.t('routes.transport.unknown'))
+        .within(() => {
+          cy.fixture('apiGetCommuteMode').then((commuteModes) => {
+            // all buttons are rendered
+            cy.dataCy('button-toggle-transport')
+              .should('be.visible')
+              .and('have.length', commuteModes.results.length);
+            // no button is selected
+            cy.dataCy('button-toggle-transport')
+              .find('.q-avatar')
+              .should('not.have.class', 'bg-secondary');
+          });
+        });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());

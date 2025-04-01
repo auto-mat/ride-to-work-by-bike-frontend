@@ -1,0 +1,16 @@
+{
+  "toWork": {
+    "id": "",
+    "date": "2024-10-01",
+    "transport": null,
+    "distance": "0",
+    "direction": "toWork"
+  },
+  "fromWork": {
+    "id": "",
+    "date": "2024-10-01",
+    "transport": null,
+    "distance": "0",
+    "direction": "fromWork"
+  }
+}
