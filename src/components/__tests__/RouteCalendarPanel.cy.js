@@ -5,7 +5,6 @@ import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/routeCalendarPanelInputTest.json';
-import { TransportType } from 'src/components/types/Route';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
@@ -58,8 +57,30 @@ describe('<RouteCalendarPanel>', () => {
   context('desktop - empty route', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.fixture('routeEmptyToWork').then((routeEmptyToWork) => {
+      cy.fixture('routeCalendarEmptyToWork').then((routeEmptyToWork) => {
         const routes = [routeEmptyToWork];
+        cy.wrap(routes).as('routes');
+        cy.mount(RouteCalendarPanel, {
+          props: {
+            modelValue: true,
+            routes,
+          },
+        });
+      });
+      // setup store with commute modes
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      cy.viewport('macbook-16');
+    });
+
+    coreTests();
+    unloggedRouteTests();
+  });
+
+  context('desktop - empty route', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('routeCalendarEmptyFromWork').then((routeEmptyFromWork) => {
+        const routes = [routeEmptyFromWork];
         cy.wrap(routes).as('routes');
         cy.mount(RouteCalendarPanel, {
           props: {
@@ -213,9 +234,6 @@ function coreTests() {
         );
       cy.dataCy(selectorSectionDistance).should('be.visible');
       cy.dataCy(selectorSectionTransport).should('be.visible');
-      cy.dataCy(selectorRouteCalendarPanel)
-        .find(`[data-value="${TransportType.bike}"]`)
-        .click();
       cy.dataCy(selectorRouteInputDistance).should('be.visible');
       cy.dataCy(selectorRouteInputTransportType).should('be.visible');
     });

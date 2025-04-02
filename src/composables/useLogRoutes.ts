@@ -35,7 +35,7 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
     } else {
       action.value = 'input-number';
       distance.value = defaultDistanceZero;
-      transportType.value = null;
+      transportType.value = TransportType.bike;
     }
   };
 
