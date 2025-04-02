@@ -209,7 +209,7 @@ describe('DrawerMenu', () => {
     it('renders routes item as disabled', () => {
       cy.dataCy(selectorDrawerMenuItem)
         .contains(i18n.global.t('drawerMenu.routes'))
-        .should('have.attr', 'disabled');
+        .should('have.class', 'disabled');
     });
   });
 
@@ -241,7 +241,7 @@ describe('DrawerMenu', () => {
     it('renders routes item as disabled', () => {
       cy.dataCy(selectorDrawerMenuItem)
         .contains(i18n.global.t('drawerMenu.routes'))
-        .should('not.have.attr', 'disabled');
+        .should('not.have.class', 'disabled');
     });
   });
 
