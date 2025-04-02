@@ -8,10 +8,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // selectors
 const classSelectorCurrentDay = '.q-current-day';
-const classSelectorFutureDay = '.q-future-day';
 const classSelectorHeadWeekday = '.q-calendar-month__head--weekday';
-const classSelectorOutsideDay = '.q-outside';
-const classSelectorPastDay = '.q-past-day';
 const classSelectorPastDayNotDisabled = '.q-past-day:not(.q-disabled-day)';
 const dataSelectorButtonSave = '[data-cy="dialog-save-button"]';
 const dataSelectorDialogClose = '[data-cy="dialog-close"]';
@@ -360,18 +357,43 @@ function coreTests() {
   });
 
   // Each calendar day contains two routes
-  it('renders two routes for each past day', () => {
-    // check dates in the past
-    cy.get(classSelectorPastDay)
-      .find(dataSelectorItemToWork)
-      .should('be.visible');
-    cy.get(classSelectorPastDay)
-      .find(dataSelectorItemFromWork)
-      .should('be.visible');
-    // no routes for future dates
-    cy.get(classSelectorFutureDay)
-      .find(dataSelectorItemToWork)
-      .should('not.exist');
+  it('renders two routes for each day of the challenge phase', () => {
+    cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+      // get competition phase from and to
+      const competitionPhaseFrom = response.results[0].phase_set.find(
+        (phase) => phase.phase_type === 'competition',
+      ).date_from;
+      const competitionPhaseTo = response.results[0].phase_set.find(
+        (phase) => phase.phase_type === 'competition',
+      ).date_to;
+      const competitionPhaseFromDate = new Date(competitionPhaseFrom);
+      const competitionPhaseToDate = new Date(competitionPhaseTo);
+      // include from and to dates of competition phase
+      const dateOneDayBeforeFrom = date.subtractFromDate(
+        competitionPhaseFromDate,
+        { days: 1 },
+      );
+      const dateOneDayAfterTo = date.addToDate(competitionPhaseToDate, {
+        days: 1,
+      });
+      // for each calendar day, check that it belongs to competition phase
+      cy.dataCy('calendar-day').each((element) => {
+        // find element with data-date attribute
+        const dayDate = element.attr('data-date');
+        // check that date is between competition phase from and to including
+        const isInCompetitionPhase = date.isBetweenDates(
+          dayDate,
+          dateOneDayBeforeFrom,
+          dateOneDayAfterTo,
+        );
+        cy.wrap(isInCompetitionPhase).should('be.true');
+        // check that day has two routes
+        cy.wrap(element).within(() => {
+          cy.get(dataSelectorItemToWork).should('be.visible');
+          cy.get(dataSelectorItemFromWork).should('be.visible');
+        });
+      });
+    });
   });
 
   // First route of the current date is active
@@ -428,12 +450,12 @@ function coreTests() {
 
   it('does not allow to select a day outside current month', () => {
     // click on outside date
-    cy.get(classSelectorOutsideDay)
+    cy.get('[data-date="2025-06-01"]')
       .find(dataSelectorItemToWork)
       .first()
       .click();
     // date should not be active
-    cy.get(classSelectorOutsideDay)
+    cy.get('[data-date="2025-06-01"]')
       .find(dataSelectorItemToWork)
       .first()
       .find(dataSelectorItemToWorkActive)

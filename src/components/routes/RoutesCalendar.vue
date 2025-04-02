@@ -60,18 +60,27 @@ export default defineComponent({
       return i18n.global.locale;
     });
 
-    const { dateLoggingStart, dateLoggingEnd } = useRoutes();
+    const {
+      dateCompetitionPhaseFrom,
+      dateCompetitionPhaseTo,
+      dateLoggingStart,
+      dateLoggingEnd,
+    } = useRoutes();
 
     const disabledBefore = computed((): string | null => {
-      const dateMinusOneDay = date.subtractFromDate(dateLoggingStart.value, {
-        days: 1,
-      });
+      const dateMinusOneDay = dateLoggingStart.value
+        ? date.subtractFromDate(dateLoggingStart.value, {
+            days: 1,
+          })
+        : null;
       return dateMinusOneDay
         ? date.formatDate(dateMinusOneDay, 'YYYY-MM-DD')
         : null;
     });
     const disabledAfter = computed((): string | null => {
-      const datePlusOneDay = date.addToDate(dateLoggingEnd.value, { days: 1 });
+      const datePlusOneDay = dateLoggingEnd.value
+        ? date.addToDate(dateLoggingEnd.value, { days: 1 })
+        : null;
       return datePlusOneDay
         ? date.formatDate(datePlusOneDay, 'YYYY-MM-DD')
         : null;
@@ -175,6 +184,29 @@ export default defineComponent({
       },
     );
 
+    /**
+     * Checks if timestamp is in competition phase.
+     * @param {Timestamp} timestamp - Timestamp to check.
+     * @return {boolean} - True if timestamp is in competition phase, false otherwise.
+     */
+    const isTimestampInCompetitionPhase = (timestamp: Timestamp): boolean => {
+      if (!dateCompetitionPhaseFrom.value || !dateCompetitionPhaseTo.value) {
+        return false;
+      }
+      const dateOneDayBeforeFrom = date.subtractFromDate(
+        dateCompetitionPhaseFrom.value,
+        { days: 1 },
+      );
+      const dateOneDayAfterTo = date.addToDate(dateCompetitionPhaseTo.value, {
+        days: 1,
+      });
+      return date.isBetweenDates(
+        timestamp.date,
+        dateOneDayBeforeFrom,
+        dateOneDayAfterTo,
+      );
+    };
+
     return {
       activeRouteItems,
       calendar,
@@ -189,6 +221,7 @@ export default defineComponent({
       theme,
       TransportDirection,
       isActive,
+      isTimestampInCompetitionPhase,
       onClickItem,
       onNext,
       onPrev,
@@ -241,9 +274,8 @@ export default defineComponent({
         :day-min-height="100"
       >
         <template #day="{ scope: { timestamp, outside } }">
-          <!-- TODO: make the empty slots display only on the challenge days -->
           <div
-            v-if="!timestamp.future"
+            v-if="isTimestampInCompetitionPhase(timestamp)"
             :data-date="timestamp.date"
             class="q-my-sm"
             data-cy="calendar-day"
