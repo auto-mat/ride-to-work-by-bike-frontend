@@ -54,7 +54,7 @@ describe('<RouteCalendarPanel>', () => {
     coreTests();
   });
 
-  context('desktop - empty route', () => {
+  context('desktop - route to work with empty data (default)', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       cy.fixture('routeCalendarEmptyToWork').then((routeEmptyToWork) => {
@@ -76,7 +76,7 @@ describe('<RouteCalendarPanel>', () => {
     unloggedRouteTests();
   });
 
-  context('desktop - empty route', () => {
+  context('desktop - route from work with empty data (default)', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       cy.fixture('routeCalendarEmptyFromWork').then((routeEmptyFromWork) => {
