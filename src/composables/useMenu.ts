@@ -17,16 +17,20 @@ export const useMenu = () => {
    *   isUserStaff - Whether the user is staff member
    * @param {ComputedRef<string> | string } urlAdmin - RTWBB old Django frontend
    *                                                   app admin URL
+   * @param {ComputedRef<boolean | null> | boolean | null}
+   *   isEntryEnabled - Whether the entry is enabled
    * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
     isUserOrganizationAdmin,
     isUserStaff,
     urlAdmin,
+    isEntryEnabled,
   }: {
     isUserOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
     isUserStaff: ComputedRef<boolean | null> | boolean | null;
     urlAdmin: ComputedRef<string> | string;
+    isEntryEnabled: ComputedRef<boolean | null> | boolean | null;
   }): Link[] => {
     let menuTop: Link[] = [
       {
@@ -40,7 +44,7 @@ export const useMenu = () => {
         icon: 'svguse:icons/drawer_menu/icons.svg#lucide-route',
         name: 'routes',
         title: 'routes',
-        disabled: true,
+        disabled: !unref(isEntryEnabled),
       },
       {
         url: routesConf['results']['children']['fullPath'],

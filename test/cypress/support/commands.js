@@ -2797,6 +2797,7 @@ Cypress.Commands.add(
         isUserOrganizationAdmin,
         isUserStaff,
         urlAdmin,
+        isEntryEnabled: true,
       }),
     ).then((menuTop) => {
       cy.wrap(getMenuBottom(urlDonate)).then((menuBottom) => {

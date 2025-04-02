@@ -1,0 +1,162 @@
+[
+  {
+    "description": "challenge may - before entry enabled phase",
+    "currentDate": "2025-04-30",
+    "menuItems": [
+      {
+        "title": "home",
+        "disabled": false
+      },
+      {
+        "title": "routes",
+        "disabled": true
+      },
+      {
+        "title": "results",
+        "disabled": true
+      }
+    ],
+    "popUpItems": [
+      {
+        "title": "discounts",
+        "disabled": false
+      },
+      {
+        "title": "profile",
+        "disabled": false
+      },
+      {
+        "title": "donate",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "description": "challenge may - entry enabled phase 1st day",
+    "currentDate": "2025-05-01",
+    "menuItems": [
+      {
+        "title": "home",
+        "disabled": false
+      },
+      {
+        "title": "routes",
+        "disabled": false
+      },
+      {
+        "title": "results",
+        "disabled": true
+      }
+    ],
+    "popUpItems": [
+      {
+        "title": "discounts",
+        "disabled": false
+      },
+      {
+        "title": "profile",
+        "disabled": false
+      },
+      {
+        "title": "donate",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "description": "challenge may - competition phase last day",
+    "currentDate": "2025-06-01",
+    "menuItems": [
+      {
+        "title": "home",
+        "disabled": false
+      },
+      {
+        "title": "routes",
+        "disabled": false
+      },
+      {
+        "title": "results",
+        "disabled": true
+      }
+    ],
+    "popUpItems": [
+      {
+        "title": "discounts",
+        "disabled": false
+      },
+      {
+        "title": "profile",
+        "disabled": false
+      },
+      {
+        "title": "donate",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "description": "challenge may - entry enabled phase last day",
+    "currentDate": "2025-06-03",
+    "menuItems": [
+      {
+        "title": "home",
+        "disabled": false
+      },
+      {
+        "title": "routes",
+        "disabled": false
+      },
+      {
+        "title": "results",
+        "disabled": true
+      }
+    ],
+    "popUpItems": [
+      {
+        "title": "discounts",
+        "disabled": false
+      },
+      {
+        "title": "profile",
+        "disabled": false
+      },
+      {
+        "title": "donate",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "description": "challenge may - after entry enabled phase",
+    "currentDate": "2025-06-04",
+    "menuItems": [
+      {
+        "title": "home",
+        "disabled": false
+      },
+      {
+        "title": "routes",
+        "disabled": true
+      },
+      {
+        "title": "results",
+        "disabled": true
+      }
+    ],
+    "popUpItems": [
+      {
+        "title": "discounts",
+        "disabled": false
+      },
+      {
+        "title": "profile",
+        "disabled": false
+      },
+      {
+        "title": "donate",
+        "disabled": false
+      }
+    ]
+  }
+]

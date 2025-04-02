@@ -29,7 +29,11 @@ import { useMenu } from 'src/composables/useMenu';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// enums
+import { PhaseType } from 'src/components/types/Challenge';
+
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
@@ -43,10 +47,20 @@ export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
     const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
     const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
+    const isEntryPhase = computed(() => {
+      return challengeStore.getIsChallengeInPhase(PhaseType.entryEnabled);
+    });
+    const isCompetitionPhase = computed(() => {
+      return challengeStore.getIsChallengeInPhase(PhaseType.competition);
+    });
+    const isEntryEnabled = computed(() => {
+      return isEntryPhase.value || isCompetitionPhase.value;
+    });
     const { getMenuTop, getMenuBottom } = useMenu();
 
     const { mobileBottomPanelVisibleItems } = rideToWorkByBikeConfig;
@@ -71,6 +85,7 @@ export default defineComponent({
         isUserOrganizationAdmin: isUserOrganizationAdmin,
         isUserStaff,
         urlAdmin,
+        isEntryEnabled,
       });
     });
     const menuPanel = computed((): Link[] => {

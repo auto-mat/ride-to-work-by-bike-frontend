@@ -13,20 +13,22 @@ import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 import UserSelect from 'components/global/UserSelect.vue';
 
-// routes config
-import { routesConf } from '../router/routes_conf';
-
 // composables
 import { useMenu } from 'src/composables/useMenu';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
+import { routesConf } from '../router/routes_conf';
+
+// enums
+import { PhaseType } from '../components/types/Challenge';
 
 // types
 import type { Link } from 'components/types';
 import type { Logger } from 'components/types/Logger';
 
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // utils
@@ -57,6 +59,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const route = useRoute();
     const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
 
     const isHomePage = computed(
       () => route.path === routesConf['home']['path'],
@@ -84,6 +87,15 @@ export default defineComponent({
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
     const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
+    const isEntryPhase = computed(() => {
+      return challengeStore.getIsChallengeInPhase(PhaseType.entryEnabled);
+    });
+    const isCompetitionPhase = computed(() => {
+      return challengeStore.getIsChallengeInPhase(PhaseType.competition);
+    });
+    const isEntryEnabled = computed(() => {
+      return isEntryPhase.value || isCompetitionPhase.value;
+    });
 
     const {
       urlRideToWorkByBikeOldFrontendDjangoApp,
@@ -104,6 +116,7 @@ export default defineComponent({
         isUserOrganizationAdmin,
         isUserStaff,
         urlAdmin,
+        isEntryEnabled,
       });
     });
 

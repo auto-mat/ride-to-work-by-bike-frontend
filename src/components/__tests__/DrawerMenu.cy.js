@@ -43,6 +43,7 @@ describe('DrawerMenu', () => {
           isUserOrganizationAdmin: false,
           isUserStaff: false,
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
+          isEntryEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -80,6 +81,7 @@ describe('DrawerMenu', () => {
           isUserOrganizationAdmin: true,
           isUserStaff: false,
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
+          isEntryEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -123,6 +125,7 @@ describe('DrawerMenu', () => {
           isUserOrganizationAdmin: false,
           isUserStaff: true,
           urlAdmin,
+          isEntryEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -175,6 +178,70 @@ describe('DrawerMenu', () => {
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
         });
+    });
+  });
+
+  context('menu top - entry disabled', () => {
+    beforeEach(() => {
+      const urlAdmin = getApiBaseUrlWithLang(
+        null,
+        rtwbbOldFrontendDjangoAdminUrl,
+        defaultLocale,
+        i18n,
+      );
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+          isUserStaff: true,
+          urlAdmin,
+          isEntryEnabled: false,
+        }),
+      ).then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
+      });
+    });
+
+    it('renders routes item as disabled', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.routes'))
+        .should('have.attr', 'disabled');
+    });
+  });
+
+  context('menu top - entry enabled', () => {
+    beforeEach(() => {
+      const urlAdmin = getApiBaseUrlWithLang(
+        null,
+        rtwbbOldFrontendDjangoAdminUrl,
+        defaultLocale,
+        i18n,
+      );
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+          isUserStaff: true,
+          urlAdmin,
+          isEntryEnabled: true,
+        }),
+      ).then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
+      });
+    });
+
+    it('renders routes item as disabled', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.routes'))
+        .should('not.have.attr', 'disabled');
     });
   });
 
