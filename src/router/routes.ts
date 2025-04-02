@@ -121,20 +121,12 @@ const routes: RouteRecordRaw[] = [
     path: routesConf['routes']['path'],
     component: () => import('layouts/MainLayout.vue'),
     name: routesConf['routes']['children']['name'],
-    beforeEnter: (to, from, next) => {
-      // redirect going to the root routes path
-      if (to.path === routesConf['routes']['path']) {
-        const isLargeScreen = Screen.gt.sm;
-        if (isLargeScreen) {
-          // go to calendar view on large screens
-          next({ name: routesConf['routes_calendar']['children']['name'] });
-        } else {
-          // go to list view on mobile
-          next({ name: routesConf['routes_list']['children']['name'] });
-        }
-      } else {
-        next();
+    redirect: () => {
+      const isLargeScreen = Screen.gt.sm;
+      if (isLargeScreen) {
+        return { name: routesConf['routes_calendar']['children']['name'] };
       }
+      return { name: routesConf['routes_list']['children']['name'] };
     },
     children: [
       {
