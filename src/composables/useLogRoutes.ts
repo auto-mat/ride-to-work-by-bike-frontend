@@ -33,6 +33,7 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
       distance.value = routes[0].distance || defaultDistanceZero;
       transportType.value = routes[0].transport || null;
     } else {
+      // multiple routes = unlogged - set default entry values
       action.value = 'input-number';
       distance.value = defaultDistanceZero;
       transportType.value = TransportType.bike;
