@@ -24,8 +24,8 @@ describe('Profile page', () => {
         // alias i18n
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
+          // check if correct items are disabled
           test.menuItems.forEach((item) => {
-            // check if correct items are disabled
             cy.dataCy('q-drawer').within(() => {
               if (item.disabled) {
                 cy.dataCy('drawer-menu-item')
@@ -65,8 +65,8 @@ describe('Profile page', () => {
         // alias i18n
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
+          // check if correct items are disabled
           test.menuItems.forEach((item) => {
-            // check if correct items are disabled
             cy.dataCy('footer-panel').within(() => {
               if (item.disabled) {
                 cy.contains(win.i18n.global.t(`drawerMenu.${item.title}`))
@@ -81,7 +81,9 @@ describe('Profile page', () => {
               }
             });
           });
+          // open pop up menu
           cy.dataCy('footer-panel-menu-hamburger').click();
+          // check if correct items are disabled
           test.popUpItems.forEach((item) => {
             if (item.disabled) {
               cy.contains(win.i18n.global.t(`drawerMenu.${item.title}`))
