@@ -124,15 +124,20 @@ describe('<RouteItemEdit>', () => {
         .and('contain', i18n.global.t('routes.labelDirectionToWork'));
     });
 
-    it('renders the transport type input', () => {
+    it('renders the transport type input - no selected transport type', () => {
       cy.dataCy('section-transport')
         .should('be.visible')
         .and('contain', i18n.global.t('routes.transport.unknown'))
         .within(() => {
           cy.fixture('apiGetCommuteMode').then((commuteModes) => {
+            // all buttons are rendered
             cy.dataCy('button-toggle-transport')
               .should('be.visible')
               .and('have.length', commuteModes.results.length);
+            // no button is selected
+            cy.dataCy('button-toggle-transport')
+              .find('.q-avatar')
+              .should('not.have.class', 'bg-secondary');
           });
         });
     });
