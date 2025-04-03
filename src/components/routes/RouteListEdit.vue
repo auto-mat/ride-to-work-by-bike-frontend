@@ -125,7 +125,7 @@ export default defineComponent({
         data-cy="button-save"
       >
         {{
-          $tc('routes.buttonSaveChangesCount', dirtyCount, {
+          $t('routes.buttonSaveChangesCount', dirtyCount, {
             count: dirtyCount,
           })
         }}

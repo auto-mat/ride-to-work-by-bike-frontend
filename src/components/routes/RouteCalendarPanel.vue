@@ -186,7 +186,7 @@ export default defineComponent({
         >
           <template v-if="routesCount > 0">
             {{
-              $tc('routes.titleBottomPanel', routesCount, {
+              $t('routes.titleBottomPanel', routesCount, {
                 count: routesCount,
               })
             }}

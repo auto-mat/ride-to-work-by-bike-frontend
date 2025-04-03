@@ -77,3 +77,27 @@ export const getNumberFormats = (locales) => {
   }
   return numberFormats;
 };
+
+export const getPluralizationRules = () => {
+  const csSkPluralizationRule = function (choice, choicesLength, orgRule) {
+    // only change pluralization if more than 2 choices are available
+    if (choicesLength > 2) {
+      if (choice === 0) {
+        return 0;
+      }
+      if (choice === 1) {
+        return 1;
+      }
+      if (choice > 1 && choice < 5) {
+        return 2;
+      }
+      return 3;
+    }
+    return orgRule(choice);
+  };
+
+  return {
+    cs: csSkPluralizationRule,
+    sk: csSkPluralizationRule,
+  };
+};
