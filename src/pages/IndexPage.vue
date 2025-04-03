@@ -254,6 +254,13 @@ export default defineComponent({
       if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
       }
+      // if citySlug is available, load posts, else we can't load posts
+      if (isSectionOffersEnabled && registerChallengeStore.getCityWpSlug) {
+        // refresh feed data if needed
+        await feedStore.attemptFeedRefresh(
+          registerChallengeStore.getCityWpSlug,
+        );
+      }
     });
 
     const competitionStart = computed(() => challengeStore.getCompetitionStart);
