@@ -130,7 +130,7 @@ export default defineComponent({
        *  `tripsAdapter` object `toRouteItem()` func,
        *   inner `distance()` func which convert route distance (REST API)
        *   INTEGER NUMBER type (meter unit) into FLOAT NUMBER STRING (km unit)
-       *   1500 (m) to '1.50' (km), according localized number format var
+       *   1500 (m) to '1.50' (km), according localized (en lang) number format var
        *   numberFormatsAllLocales, routeDistanceDecimalNumber key inside
        *   app global config ride_to_work_by_bike_config.toml file.
        * )
