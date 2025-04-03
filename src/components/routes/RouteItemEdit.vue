@@ -120,8 +120,19 @@ export default defineComponent({
       const distanceNewFormatted =
         localizedFloatNumStrToFloatNumber(distanceNew);
 
+      // initial distance is string so we need to parse it to float
+      let distanceInitialFormattedFloat = 0;
+      try {
+        distanceInitialFormattedFloat = parseFloat(
+          routeStateDefault.value?.distance,
+        );
+      } catch (error) {
+        logger?.error(
+          `Error in parseFloat distance <${routeStateDefault.value?.distance}>, ${error}`,
+        );
+      }
       // compare new distance with the distance from the store
-      const dirty = String(distanceNewFormatted) !== routeStateDefault.value?.distance;
+      const dirty = distanceNewFormatted !== distanceInitialFormattedFloat;
       emit('update:route', {
         ...props.route,
         distance: distanceNew,
