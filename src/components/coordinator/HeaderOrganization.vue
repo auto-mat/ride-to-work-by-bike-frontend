@@ -103,7 +103,7 @@ export default defineComponent({
               <q-item-section data-cy="header-organization-branch-count">
                 <!-- Label -->
                 {{ subsidiariesCount }}
-                {{ $tc('coordinator.labelBranches', subsidiariesCount) }}
+                {{ $t('coordinator.labelBranches', subsidiariesCount) }}
               </q-item-section>
             </q-item>
             <!-- Members -->
@@ -115,7 +115,7 @@ export default defineComponent({
               <q-item-section data-cy="header-organization-member-count">
                 <!-- Label -->
                 {{ countMembers }}
-                {{ $tc('coordinator.labelMembers', countMembers) }}
+                {{ $t('coordinator.labelMembers', countMembers) }}
               </q-item-section>
             </q-item>
           </div>

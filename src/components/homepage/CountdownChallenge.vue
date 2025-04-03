@@ -74,7 +74,7 @@ export default defineComponent({
     >
       {{ $t('index.countdownChallenge.title', countdown.days) }}
       <span data-cy="countdown-days">{{ countdown.days }}</span>
-      {{ $tc('time.day', countdown.days) }}
+      {{ $t('time.day', countdown.days) }}
       <span data-cy="countdown-hours">{{ countdown.hours }}</span>
       {{ $t('time.hourShort') }}
       <span data-cy="countdown-minutes">{{ countdown.minutes }}</span>

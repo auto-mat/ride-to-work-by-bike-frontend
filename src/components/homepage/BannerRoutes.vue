@@ -115,7 +115,7 @@ export default defineComponent({
           <span v-if="variant === BannerRoutesVariants.default">
             <!-- TODO: fix conjugation in CZ and SK -->
             {{
-              $tc('index.bannerRoutes.title', routesCount, { n: routesCount })
+              $t('index.bannerRoutes.title', routesCount, { n: routesCount })
             }}
           </span>
           <span v-else-if="variant === BannerRoutesVariants.start">
