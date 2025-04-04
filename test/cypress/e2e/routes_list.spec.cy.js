@@ -4,7 +4,7 @@ import { defLocale } from '../../../src/i18n/def_locale';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
-describe('Routes calendar page', () => {
+describe('Routes list page', () => {
   beforeEach(() => {
     cy.viewport('macbook-16');
     cy.clock(new Date(dateWithLoggedRoute), ['Date']);
@@ -60,7 +60,7 @@ describe('Routes calendar page', () => {
             const testCaseDirection = testCases.test_1.propRoutes[0].direction;
             const testCaseTransport = testCases.test_1.inputValues.transport;
             const testCaseDistance = testCases.test_1.inputValues.distance;
-            // wait for routes calendar to be visible
+            // wait for routes list to be visible
             cy.dataCy('route-list-edit').should('be.visible');
             // update the route list item
             cy.get(`[data-date="${testCaseDate}"]`)
