@@ -23,7 +23,7 @@
           "direction": "trip_to",
           "commuteMode": "bicycle",
           "distanceMeters": 10000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -52,7 +52,7 @@
           "direction": "trip_from",
           "commuteMode": "bicycle",
           "distanceMeters": 10000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -81,7 +81,7 @@
           "direction": "trip_to",
           "commuteMode": "by_foot",
           "distanceMeters": 5000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -110,7 +110,7 @@
           "direction": "trip_from",
           "commuteMode": "by_foot",
           "distanceMeters": 5000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -139,7 +139,7 @@
           "direction": "trip_to",
           "commuteMode": "hromadna",
           "distanceMeters": 8000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -168,7 +168,7 @@
           "direction": "trip_from",
           "commuteMode": "hromadna",
           "distanceMeters": 8000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -197,7 +197,7 @@
           "direction": "trip_to",
           "commuteMode": "telecommute",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -226,7 +226,7 @@
           "direction": "trip_from",
           "commuteMode": "telecommute",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -255,7 +255,7 @@
           "direction": "trip_to",
           "commuteMode": "by_other_vehicle",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -284,7 +284,7 @@
           "direction": "trip_from",
           "commuteMode": "by_other_vehicle",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -313,7 +313,7 @@
           "direction": "trip_to",
           "commuteMode": "no_work",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -342,7 +342,7 @@
           "direction": "trip_from",
           "commuteMode": "no_work",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -371,7 +371,7 @@
           "direction": "trip_to",
           "commuteMode": "by_other_vehicle",
           "distanceMeters": 0,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -400,7 +400,7 @@
           "direction": "trip_to",
           "commuteMode": "by_foot",
           "distanceMeters": 15000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -429,7 +429,7 @@
           "direction": "trip_to",
           "commuteMode": "by_foot",
           "distanceMeters": 15000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -458,7 +458,7 @@
           "direction": "trip_to",
           "commuteMode": "by_foot",
           "distanceMeters": 5000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
@@ -496,14 +496,14 @@
           "direction": "trip_to",
           "commuteMode": "by_foot",
           "distanceMeters": 15000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         },
         {
           "trip_date": "2025-05-25",
           "direction": "trip_from",
           "commuteMode": "by_foot",
           "distanceMeters": 15000,
-          "sourceApplication": "RTWBB"
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
