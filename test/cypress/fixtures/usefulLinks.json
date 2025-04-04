@@ -13,10 +13,5 @@
     "id": "project-code",
     "title": "index.menuLinks.projectCode",
     "icon": "mdi-github"
-  },
-  {
-    "id": "mobile-app",
-    "title": "index.menuLinks.mobileApp",
-    "icon": "smartphone"
   }
 ]
