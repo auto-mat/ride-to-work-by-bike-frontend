@@ -3,10 +3,10 @@ import { boot } from 'quasar/wrappers';
 import { createI18n } from 'vue-i18n';
 
 import {
-  csSkPluralizationRule,
   getDateTimeFormats,
   getNumberFormats,
   loadLocaleMessages,
+  pluralizationRuleCsSkLang,
 } from '../i18n';
 import { defaultLocale, fallbackLocale } from 'src/i18n/def_locale';
 
@@ -23,8 +23,8 @@ export const i18n = createI18n({
   datetimeFormats,
   numberFormats,
   pluralizationRules: {
-    cs: csSkPluralizationRule,
-    sk: csSkPluralizationRule,
+    cs: pluralizationRuleCsSkLang,
+    sk: pluralizationRuleCsSkLang,
   },
 });
 
