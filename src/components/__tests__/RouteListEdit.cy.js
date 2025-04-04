@@ -139,10 +139,8 @@ describe('<RouteListEdit>', () => {
         });
         // setup store with commute modes
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
-        cy.fixture('routeItemsCalendar.json').then(() => {
-          cy.wrap(useTripsStore()).then((store) => {
-            store.setRouteItems(testCase.propRoutes);
-          });
+        cy.wrap(useTripsStore()).then((store) => {
+          store.setRouteItems(testCase.propRoutes);
         });
         // input transport type if provided
         testCase.propRoutes.forEach((route) => {
