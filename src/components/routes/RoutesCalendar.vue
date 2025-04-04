@@ -259,6 +259,7 @@ export default defineComponent({
         animated
         bordered
         hoverable
+        enable-outside-days
         no-active-date
         use-navigation
         short-weekday-label
@@ -273,7 +274,7 @@ export default defineComponent({
         date-type="rounded"
         :day-min-height="100"
       >
-        <template #day="{ scope: { timestamp, outside } }">
+        <template #day="{ scope: { timestamp } }">
           <div
             v-if="isTimestampInCompetitionPhase(timestamp)"
             :data-date="timestamp.date"
@@ -285,7 +286,7 @@ export default defineComponent({
               :active="
                 isActive({ timestamp, direction: TransportDirection.toWork })
               "
-              :disabled="outside || timestamp.disabled"
+              :disabled="timestamp.disabled"
               :direction="TransportDirection.toWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
@@ -297,7 +298,7 @@ export default defineComponent({
               :active="
                 isActive({ timestamp, direction: TransportDirection.fromWork })
               "
-              :disabled="outside || timestamp.disabled"
+              :disabled="timestamp.disabled"
               :direction="TransportDirection.fromWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
