@@ -142,13 +142,14 @@ describe('<RouteListEdit>', () => {
         cy.wrap(useTripsStore()).then((store) => {
           store.setRouteItems(testCase.propRoutes);
         });
-        // input transport type if provided
+        // input each route
         testCase.propRoutes.forEach((route) => {
           cy.get(`[data-date="${route.date}"]`)
             .should('be.visible')
             .find(`[data-direction="${route.direction}"]`)
             .should('be.visible')
             .within(() => {
+              // input transport type if provided
               if (testCase.inputValues.transport) {
                 cy.dataCy('button-toggle-transport').should('be.visible');
                 cy.dataCy('section-transport')
