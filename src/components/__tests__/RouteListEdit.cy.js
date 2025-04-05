@@ -106,7 +106,7 @@ describe('<RouteListEdit>', () => {
     });
   });
 
-  context.only('API payloads for route entry', () => {
+  context('API payloads for route entry', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
     });
