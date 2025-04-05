@@ -1,0 +1,556 @@
+{
+  "test_1": {
+    "description": "empty route - Bike to work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "bicycle",
+      "distance": "10.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 10000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_2": {
+    "description": "empty route - Bike from work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "bicycle",
+      "distance": "10.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "bicycle",
+          "distanceMeters": 10000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_3": {
+    "description": "empty route - Walk to work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "5.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 5000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_4": {
+    "description": "empty route - Walk from work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "5.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "by_foot",
+          "distanceMeters": 5000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_5": {
+    "description": "empty route - Bus to work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "hromadna",
+      "distance": "8.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "hromadna",
+          "distanceMeters": 8000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_6": {
+    "description": "empty route - Bus from work (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "hromadna",
+      "distance": "8.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "hromadna",
+          "distanceMeters": 8000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_7": {
+    "description": "empty route - Telecommute to work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "telecommute",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "telecommute",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_8": {
+    "description": "empty route - Telecommute from work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "telecommute",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "telecommute",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_9": {
+    "description": "empty route - Car to work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_other_vehicle",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_other_vehicle",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_10": {
+    "description": "empty route - Car from work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_other_vehicle",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "by_other_vehicle",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_11": {
+    "description": "empty route - No work to work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "no_work",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "no_work",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_12": {
+    "description": "empty route - No work from work (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "no_work",
+      "distance": null
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "no_work",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_13": {
+    "description": "modify existing route - Bike -> Car - (does not use distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "10.00",
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_other_vehicle",
+      "distance": false
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_other_vehicle",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_14": {
+    "description": "modify existing route - Bike -> Walk - (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "10.00",
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "15.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_15": {
+    "description": "modify existing route - Car -> Walk - (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": "by_other_vehicle",
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "15.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_16": {
+    "description": "modify existing route - Walk -> Walk - (uses distance)",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "14.00",
+        "transport": "by_foot",
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "5.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 5000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_17": {
+    "description": "multiple routes - update both routes",
+    "propRoutes": [
+      {
+        "id": "1",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "1.00",
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "routeFeature": null
+      },
+      {
+        "id": "2",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "2.00",
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "15.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        },
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  "test_18": {
+    "description": "multiple routes - enter both routes",
+    "propRoutes": [
+      {
+        "id": "",
+        "date": "2025-05-25",
+        "direction": "toWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      },
+      {
+        "id": "",
+        "date": "2025-05-25",
+        "direction": "fromWork",
+        "distance": "0.00",
+        "transport": null,
+        "inputType": "input-number",
+        "routeFeature": null
+      }
+    ],
+    "inputValues": {
+      "transport": "by_foot",
+      "distance": "15.00"
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_from",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        },
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 15000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  }
+}

@@ -3511,8 +3511,12 @@ Cypress.Commands.add(
     cy.wait('@postTrips').then(({ request, response }) => {
       // verify authorization header
       expect(request.headers.authorization).to.include(bearerTokeAuth);
-      // verify request body
-      expect(request.body).to.deep.equal(requestBody);
+      // request body comparison accepting different trips array order
+      if (requestBody.trips && Array.isArray(requestBody.trips)) {
+        expect(request.body.trips).to.have.deep.members(requestBody.trips);
+      } else {
+        expect(request.body).to.deep.equal(requestBody);
+      }
       // verify response body
       if (responseBody) {
         expect(response.body).to.deep.equal(responseBody);
