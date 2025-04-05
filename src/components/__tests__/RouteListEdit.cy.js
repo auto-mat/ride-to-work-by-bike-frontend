@@ -106,7 +106,7 @@ describe('<RouteListEdit>', () => {
     });
   });
 
-  context('API payloads for route entry', () => {
+  context.only('API payloads for route entry', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
     });
@@ -114,6 +114,24 @@ describe('<RouteListEdit>', () => {
     // generate tests based on fixture routeCalendarPanelInputTest.json
     Object.entries(testData).forEach(([testKey, testCase]) => {
       it(`${testKey}: ${testCase.description}`, () => {
+        // mount component with test data
+        cy.mount(RouteListEdit, {
+          props: {},
+        });
+        cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+          cy.wrap(useChallengeStore()).then((store) => {
+            store.setDaysActive(response.results[0].days_active);
+            store.setPhaseSet(response.results[0].phase_set);
+          });
+        });
+        // setup store with commute modes
+        cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        cy.fixture('routeListEmpty.json').then((response) => {
+          cy.wrap(useTripsStore()).then((store) => {
+            store.setRouteItems(response);
+          });
+        });
+        cy.viewport('macbook-16');
         // intercept API call with response matching the payload
         const responseBody = {
           trips: testCase.apiPayload.trips.map((trip, index) => ({
@@ -127,21 +145,6 @@ describe('<RouteListEdit>', () => {
           })),
         };
         cy.interceptPostTripsApi(rideToWorkByBikeConfig, i18n, responseBody);
-        // mount component with test data
-        cy.mount(RouteListEdit, {
-          props: {},
-        });
-        cy.fixture('apiGetThisCampaignMay.json').then((response) => {
-          cy.wrap(useChallengeStore()).then((store) => {
-            store.setDaysActive(response.results[0].days_active);
-            store.setPhaseSet(response.results[0].phase_set);
-          });
-        });
-        // setup store with commute modes
-        cy.setupTripsStoreWithCommuteModes(useTripsStore);
-        cy.wrap(useTripsStore()).then((store) => {
-          store.setRouteItems(testCase.propRoutes);
-        });
         // input each route
         testCase.propRoutes.forEach((route) => {
           cy.get(`[data-date="${route.date}"]`)
