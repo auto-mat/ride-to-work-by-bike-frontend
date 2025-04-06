@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
 import { useChallengeStore } from 'src/stores/challenge';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { systemTimeLastDayOfCompetitionMay } from '../../../test/cypress/support/commonTests';
 
 // selectors
 const classSelectorCurrentDay = '.q-current-day';
@@ -42,7 +43,6 @@ const dateSeptemberWithNoLoggedRoute = new Date(2024, 8, 27);
 const dateMayWithNoLoggedRoute = new Date(2025, 4, 27);
 const dateMayWithLoggedRoute = new Date(2025, 4, 26);
 const dateMayFirstDayOfCompetition = new Date(2025, 4, 1);
-const dateMayLastDayOfCompetition = new Date(2025, 5, 1);
 const lastMayDayOfEntryPhase = new Date(2025, 5, 3);
 
 const dayNames = [
@@ -299,7 +299,7 @@ describe('<RoutesCalendar>', () => {
         // click on all routes to work
         const dateDiff = date.getDateDiff(
           lastMayDayOfEntryPhase,
-          dateMayLastDayOfCompetition,
+          systemTimeLastDayOfCompetitionMay,
           'days',
         );
         const maxRoutes = response.results[0].days_active - dateDiff;

@@ -33,7 +33,7 @@
     "propRoutes": [
       {
         "id": "1",
-        "date": "2025-05-25",
+        "date": "2025-05-26",
         "direction": "fromWork",
         "distance": "0.00",
         "transport": "bicycle",
@@ -48,7 +48,7 @@
     "apiPayload": {
       "trips": [
         {
-          "trip_date": "2025-05-25",
+          "trip_date": "2025-05-26",
           "direction": "trip_from",
           "commuteMode": "bicycle",
           "distanceMeters": 10000,
