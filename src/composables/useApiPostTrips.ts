@@ -47,7 +47,7 @@ export const useApiPostTrips = (
   const postTrips = async (
     trips: TripPostPayload[],
   ): Promise<ApiResponse<{ trips: Trip[] }>> => {
-    logger?.debug(`Creating trips <${JSON.stringify(trips)}>.`);
+    logger?.debug(`Creating trips <${JSON.stringify(trips, null, 2)}>.`);
     isLoading.value = true;
 
     // append access token into HTTP header
