@@ -37,11 +37,13 @@ const selectorRoutesCalendar = 'routes-calendar';
 // variables
 const routeCountSingle = 1;
 const routeCountMultiple = 2;
-const dateWithNoLoggedRoute = new Date(2025, 4, 27);
-const dateWithLoggedRoute = new Date(2025, 4, 26);
-const dateFirstDayOfCompetition = new Date(2025, 4, 1);
-const lastDayOfCompetition = new Date(2025, 4, 31);
-const lastDayOfEntryPhase = new Date(2025, 5, 1);
+const dateSeptemberWithNoLoggedRoute = new Date(2024, 8, 27);
+// see apiGetThisCampaignMay.json for phase dates
+const dateMayWithNoLoggedRoute = new Date(2025, 4, 27);
+const dateMayWithLoggedRoute = new Date(2025, 4, 26);
+const dateMayFirstDayOfCompetition = new Date(2025, 4, 1);
+const dateMayLastDayOfCompetition = new Date(2025, 5, 1);
+const lastMayDayOfEntryPhase = new Date(2025, 5, 3);
 
 const dayNames = [
   i18n.global.t('time.mondayShort'),
@@ -64,7 +66,7 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - full logging window', () => {
     beforeEach(() => {
-      const now = dateWithNoLoggedRoute;
+      const now = dateMayWithNoLoggedRoute;
       cy.clock(new Date(now), ['Date']);
       cy.wrap(now).as('now');
       cy.mount(RoutesCalendar, {
@@ -96,7 +98,7 @@ describe('<RoutesCalendar>', () => {
       beforeEach(() => {
         setActivePinia(createPinia());
         // set default date
-        const now = dateWithLoggedRoute;
+        const now = dateMayWithLoggedRoute;
         cy.clock(new Date(now), ['Date']);
         cy.wrap(now).as('now');
         cy.fixture('routeListCalendar.json').then((response) => {
@@ -186,7 +188,7 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - first day of competition - no routes', () => {
     beforeEach(() => {
-      cy.clock(new Date(dateFirstDayOfCompetition), ['Date']);
+      cy.clock(new Date(dateMayFirstDayOfCompetition), ['Date']);
       cy.mount(RoutesCalendar, {
         props: {
           routes: [],
@@ -227,9 +229,9 @@ describe('<RoutesCalendar>', () => {
     });
   });
 
-  context('desktop - last day of competition - no routes', () => {
+  context('desktop - last day of competition (september) - no routes', () => {
     beforeEach(() => {
-      cy.clock(new Date(lastDayOfCompetition), ['Date']);
+      cy.clock(new Date(dateSeptemberWithNoLoggedRoute), ['Date']);
       cy.mount(RoutesCalendar, {
         props: {
           routes: [],
@@ -238,7 +240,7 @@ describe('<RoutesCalendar>', () => {
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
       // setup store with challenge data
-      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
           store.setPhaseSet(response.results[0].phase_set);
@@ -248,7 +250,7 @@ describe('<RoutesCalendar>', () => {
     });
 
     it('it allows to select max number of logged routes (not limited by last day)', () => {
-      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
         // click on all routes to work
         cy.dataCy(selectorRoutesCalendar)
           .find(dataSelectorItemToWorkEmpty)
@@ -274,7 +276,7 @@ describe('<RoutesCalendar>', () => {
 
   context('desktop - last day of entry phase - no routes', () => {
     beforeEach(() => {
-      cy.clock(new Date(lastDayOfEntryPhase), ['Date']);
+      cy.clock(new Date(lastMayDayOfEntryPhase), ['Date']);
       cy.mount(RoutesCalendar, {
         props: {
           routes: [],
@@ -292,12 +294,12 @@ describe('<RoutesCalendar>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('it allows to select days within the intersection of entry phase and logging window', () => {
+    it('allows to select days within the intersection of entry phase and logging window', () => {
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         // click on all routes to work
         const dateDiff = date.getDateDiff(
-          lastDayOfEntryPhase,
-          lastDayOfCompetition,
+          lastMayDayOfEntryPhase,
+          dateMayLastDayOfCompetition,
           'days',
         );
         const maxRoutes = response.results[0].days_active - dateDiff;
