@@ -49,6 +49,11 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const tripsStore = useTripsStore();
+
+    const isLoadingRoutes = computed((): boolean => {
+      return tripsStore.getIsLoading;
+    });
+
     // route composables
     const {
       isEntryEnabled,
@@ -145,6 +150,7 @@ export default defineComponent({
       formatDateName,
       isLargeScreen,
       isLoadingPostTrips,
+      isLoadingRoutes,
       onSave,
       TransportDirection,
       formRef,

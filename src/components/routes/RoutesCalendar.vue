@@ -122,6 +122,9 @@ export default defineComponent({
     const days = computed<RouteDay[]>(() =>
       getCompetitionDaysWithRoutes(tripsStore.getRouteItems),
     );
+    const isLoadingRoutes = computed((): boolean => {
+      return tripsStore.getIsLoading;
+    });
 
     const {
       activeRoutes,
@@ -214,6 +217,7 @@ export default defineComponent({
       disabledBefore,
       isPanelOpen,
       isActiveRouteLogged,
+      isLoadingRoutes,
       locale,
       monthNameAndYear,
       routesMap,
@@ -252,7 +256,7 @@ export default defineComponent({
       />
     </div>
     <!-- Calendar -->
-    <div class="row justify-center q-mt-lg">
+    <div class="relative-position row justify-center q-mt-lg">
       <q-calendar-month
         ref="calendar"
         v-model="selectedDate"
@@ -308,6 +312,12 @@ export default defineComponent({
           </div>
         </template>
       </q-calendar-month>
+      <!-- Loading spinner -->
+      <q-inner-loading
+        :showing="isLoadingRoutes"
+        color="primary"
+        data-cy="spinner-calendar"
+      />
     </div>
     <route-calendar-panel
       v-model="isPanelOpen"

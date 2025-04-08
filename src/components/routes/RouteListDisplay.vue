@@ -40,6 +40,11 @@ export default defineComponent({
   },
   setup() {
     const tripsStore = useTripsStore();
+
+    const isLoadingRoutes = computed((): boolean => {
+      return tripsStore.getIsLoading;
+    });
+
     // get route items from store
     const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
 
@@ -52,6 +57,7 @@ export default defineComponent({
 
     return {
       days,
+      isLoadingRoutes,
       formatDate,
       formatDateName,
     };
@@ -60,7 +66,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="route-list-display">
+  <div class="relative-position" data-cy="route-list-display">
     <!-- Item: Day -->
     <div
       v-for="day in days"
@@ -104,5 +110,11 @@ export default defineComponent({
         </div>
       </div>
     </div>
+    <!-- Loading spinner -->
+    <q-inner-loading
+      :showing="isLoadingRoutes"
+      color="primary"
+      data-cy="spinner-calendar"
+    />
   </div>
 </template>
