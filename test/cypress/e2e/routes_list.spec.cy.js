@@ -84,7 +84,7 @@ describe('Routes list page', () => {
                 }
               });
             // click save button
-            cy.dataCy('button-save').click();
+            cy.dataCy('button-save-bottom').click();
             // wait for API call and verify payload
             cy.waitForPostTripsApi(testCases.test_1.apiPayload);
             // go to calendar page to confirm saving
@@ -176,7 +176,7 @@ describe('Routes list page', () => {
                 }
               });
             // click save button
-            cy.dataCy('button-save').click();
+            cy.dataCy('button-save-bottom').click();
             // wait for API call and verify payload
             cy.waitForPostTripsApi(testCases.test_17.apiPayload);
             // go to calendar page to confirm saving
@@ -280,7 +280,7 @@ describe('Routes list page', () => {
                 }
               });
             // click save button
-            cy.dataCy('button-save').click();
+            cy.dataCy('button-save-bottom').click();
             // wait for API call and verify payload
             cy.waitForPostTripsApi(testCases.test_1.apiPayload);
             // go to calendar page to confirm saving
