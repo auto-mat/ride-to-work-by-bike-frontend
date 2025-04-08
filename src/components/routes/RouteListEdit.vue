@@ -7,8 +7,8 @@
  * `challengeLoggingWindowDays`.
  *
  * @props
- * - `routes` (RouteItem, required): The object representing a list of routes.
- *   It should be of type `RouteItem`.
+ * - `disableSticky` (Boolean, optional): If true, q-page-sticky component
+ *   will be rendered as a div.
  *
  * @components
  * - `RouteItemEdit`: Component to render a single route in edit mode.
