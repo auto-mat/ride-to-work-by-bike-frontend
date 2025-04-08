@@ -69,7 +69,10 @@ export default defineComponent({
       data-cy="route-list-day"
     >
       <!-- Title: Date -->
-      <h3 class="text-18 text-grey-10 q-my-none" data-cy="route-list-day-date">
+      <h3
+        class="text-18 text-grey-10 q-my-none text-capitalize"
+        data-cy="route-list-day-date"
+      >
         {{ formatDateName(day.date) }} ({{ formatDate(day.date) }})
       </h3>
       <div class="q-py-md">
