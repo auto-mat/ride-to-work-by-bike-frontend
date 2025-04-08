@@ -159,6 +159,9 @@ dateTimeFormatsAllLocales = '''
     "day": "numeric",
     "hour": "numeric",
     "minute": "numeric"
+  },
+  "weekday": {
+    "weekday": "long"
   }
 }
 '''

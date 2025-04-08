@@ -352,11 +352,7 @@ export const useRoutes = () => {
       return i18n.global.t('time.yesterday');
     }
 
-    const locale = i18n.global.locale;
-    // format date name with Intl API
-    const formatter = new Intl.DateTimeFormat(locale, { weekday: 'long' });
-
-    return formatter.format(timeStamp);
+    return i18n.global.d(timeStamp, 'weekday');
   };
 
   return {
