@@ -20,7 +20,7 @@
  */
 
 // libraries
-import { Notify } from 'quasar';
+import { Notify, Screen } from 'quasar';
 import { computed, defineComponent, inject, ref, watch } from 'vue';
 import type { QForm } from 'quasar';
 
@@ -50,6 +50,12 @@ export default defineComponent({
   components: {
     RouteItemEdit,
   },
+  props: {
+    disableSticky: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const tripsStore = useTripsStore();
@@ -72,6 +78,10 @@ export default defineComponent({
     // update current days when route items change in store
     watch(routeItems, () => {
       days.value = getLoggableDaysWithRoutes(routeItems.value);
+    });
+
+    const isLargeScreen = computed((): boolean => {
+      return Screen.gt.sm;
     });
 
     /**
@@ -143,6 +153,7 @@ export default defineComponent({
       dirtyCount,
       formatDate,
       formatDateName,
+      isLargeScreen,
       isLoadingPostTrips,
       onSave,
       TransportDirection,
@@ -153,12 +164,33 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-form ref="formRef" data-cy="route-list-edit" @submit.prevent="onSave">
+  <q-form ref="formRef" data-cy="route-list-edit">
+    <!-- First save button -->
+    <div v-if="isLargeScreen" class="flex items-center justify-center q-mt-lg">
+      <q-btn
+        rounded
+        unelevated
+        type="submit"
+        color="primary"
+        size="16px"
+        class="text-weight-bold"
+        :loading="isLoadingPostTrips"
+        :disable="isLoadingPostTrips || dirtyCount === 0"
+        data-cy="button-save-top"
+        @click.prevent="onSave"
+      >
+        {{
+          $t('routes.buttonSaveChangesCount', dirtyCount, {
+            count: dirtyCount,
+          })
+        }}
+      </q-btn>
+    </div>
     <!-- Item: Day -->
     <div
-      v-for="day in days"
+      v-for="(day, index) in days"
       :key="day.date"
-      class="q-my-lg"
+      :class="index === 0 ? 'q-mb-lg' : 'q-my-lg'"
       data-cy="route-list-day"
     >
       <!-- Title: Date -->
@@ -192,7 +224,7 @@ export default defineComponent({
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-center">
+    <div v-if="isLargeScreen" class="flex items-center justify-center">
       <q-btn
         rounded
         unelevated
@@ -202,8 +234,8 @@ export default defineComponent({
         class="text-weight-bold"
         :loading="isLoadingPostTrips"
         :disable="isLoadingPostTrips || dirtyCount === 0"
-        data-cy="button-save"
-        @click="onSave"
+        data-cy="button-save-bottom"
+        @click.prevent="onSave"
       >
         {{
           $t('routes.buttonSaveChangesCount', dirtyCount, {
@@ -212,5 +244,33 @@ export default defineComponent({
         }}
       </q-btn>
     </div>
+    <!-- QPageSticky does not work with Cypress component tests -->
+    <component
+      :is="disableSticky ? 'div' : 'q-page-sticky'"
+      v-if="!isLargeScreen"
+      position="bottom"
+      :offset="[0, 80]"
+    >
+      <div class="bg-white" style="border-radius: 999px">
+        <q-btn
+          rounded
+          unelevated
+          type="submit"
+          color="primary"
+          size="16px"
+          class="text-weight-bold"
+          :loading="isLoadingPostTrips"
+          :disable="isLoadingPostTrips || dirtyCount === 0"
+          data-cy="button-save-sticky"
+          @click.prevent="onSave"
+        >
+          {{
+            $t('routes.buttonSaveChangesCount', dirtyCount, {
+              count: dirtyCount,
+            })
+          }}
+        </q-btn>
+      </div>
+    </component>
   </q-form>
 </template>

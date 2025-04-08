@@ -181,7 +181,6 @@ export default defineComponent({
         :name="RouteTab.list"
         data-cy="route-tabs-panel-list"
       >
-        <div class="text-h6">{{ $t('routes.tabList') }}</div>
         <route-list-edit data-cy="route-list-edit" />
         <route-list-display data-cy="route-list-display" />
       </q-tab-panel>

@@ -23,7 +23,9 @@ const dataSelectorButtonToggleTransport = '[data-cy="button-toggle-transport"]';
 const dataSelectorInputDistance = '[data-cy="input-distance"]';
 const dataSelectorRouteDistance = '[data-cy="route-distance"]';
 const dataSelectorSelectAction = '[data-cy="select-action"]';
-const selectorButtonSave = 'button-save';
+const selectorButtonSaveBottom = 'button-save-bottom';
+const selectorButtonSaveSticky = 'button-save-sticky';
+const selectorButtonSaveTop = 'button-save-top';
 const selectorRouteListEdit = 'route-list-edit';
 const selectorRouteListItem = 'route-list-item';
 const selectorRouteListItemWrapper = 'route-list-item-wrapper';
@@ -33,6 +35,8 @@ const selectorSectionDirection = 'section-direction';
 const routeListItemWrapperWidthDesktop = 50;
 const routeListItemWrapperWidthMobile = 100;
 const { challengeLoggingWindowDays } = rideToWorkByBikeConfig;
+
+let selectorButtonSave;
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
@@ -46,8 +50,12 @@ describe('<RouteListEdit>', () => {
 
   context('desktop - full logging window', () => {
     beforeEach(() => {
+      // test save button top
+      selectorButtonSave = selectorButtonSaveTop;
       cy.mount(RouteListEdit, {
-        props: {},
+        props: {
+          disableSticky: true,
+        },
       });
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -77,8 +85,12 @@ describe('<RouteListEdit>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      // test save button sticky
+      selectorButtonSave = selectorButtonSaveSticky;
       cy.mount(RouteListEdit, {
-        props: {},
+        props: {
+          disableSticky: true,
+        },
       });
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -108,6 +120,8 @@ describe('<RouteListEdit>', () => {
 
   context('API payloads for route entry', () => {
     beforeEach(() => {
+      // test save button bottom
+      selectorButtonSave = selectorButtonSaveBottom;
       cy.viewport('macbook-16');
     });
 
@@ -116,7 +130,9 @@ describe('<RouteListEdit>', () => {
       it(`${testKey}: ${testCase.description}`, () => {
         // mount component with test data
         cy.mount(RouteListEdit, {
-          props: {},
+          props: {
+            disableSticky: true,
+          },
         });
         cy.fixture('apiGetThisCampaignMay.json').then((response) => {
           cy.wrap(useChallengeStore()).then((store) => {
