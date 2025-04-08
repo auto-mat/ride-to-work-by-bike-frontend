@@ -32,6 +32,8 @@ describe('Routes list page', () => {
         cy.interceptTripsGetApi(config, defLocale);
         cy.visit('#' + routesConf['routes_list']['children']['fullPath']);
         cy.waitForCommuteModeApi();
+        cy.dataCy('spinner-route-list-edit').should('be.visible');
+        cy.dataCy('spinner-route-list-display').should('be.visible');
         cy.waitForTripsApi();
       });
     });
@@ -228,6 +230,8 @@ describe('Routes list page', () => {
               cy.interceptTripsGetApi(config, defLocale, trips, tripsNext);
               cy.visit('#' + routesConf['routes_list']['children']['fullPath']);
               cy.waitForCommuteModeApi();
+              cy.dataCy('spinner-route-list-edit').should('be.visible');
+              cy.dataCy('spinner-route-list-display').should('be.visible');
               cy.waitForTripsApi(trips, tripsNext);
             },
           );

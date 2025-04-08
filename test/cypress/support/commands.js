@@ -3339,6 +3339,7 @@ Cypress.Commands.add(
       cy.intercept('GET', urlApiTripsLocalized, {
         statusCode: responseStatusCode || httpSuccessfullStatus,
         body: responseBody,
+        delay: interceptedRequestResponseDelay,
       }).as('getTrips');
       // if fixture has next property
       if (responseBody.next) {
@@ -3348,6 +3349,7 @@ Cypress.Commands.add(
           cy.intercept('GET', responseBody.next, {
             statusCode: responseStatusCode || httpSuccessfullStatus,
             body: responseBodyNext,
+            delay: interceptedRequestResponseDelay,
           }).as('getTripsNextPage');
         });
       }

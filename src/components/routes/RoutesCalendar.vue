@@ -316,7 +316,7 @@ export default defineComponent({
       <q-inner-loading
         :showing="isLoadingRoutes"
         color="primary"
-        data-cy="spinner-calendar"
+        data-cy="spinner-routes-calendar"
       />
     </div>
     <route-calendar-panel

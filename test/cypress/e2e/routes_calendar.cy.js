@@ -33,6 +33,7 @@ describe('Routes calendar page', () => {
         cy.interceptTripsGetApi(config, defLocale);
         cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
         cy.waitForCommuteModeApi();
+        cy.dataCy('spinner-routes-calendar').should('be.visible');
         cy.waitForTripsApi();
       });
     });
@@ -189,6 +190,7 @@ describe('Routes calendar page', () => {
                 '#' + routesConf['routes_calendar']['children']['fullPath'],
               );
               cy.waitForCommuteModeApi();
+              cy.dataCy('spinner-routes-calendar').should('be.visible');
               cy.waitForTripsApi(trips, tripsNext);
             },
           );
@@ -265,6 +267,7 @@ describe('Routes calendar page', () => {
         cy.interceptTripsGetApi(config, defLocale);
         cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
         cy.waitForCommuteModeApi();
+        cy.dataCy('spinner-routes-calendar').should('be.visible');
         cy.waitForTripsApi();
       });
     });
