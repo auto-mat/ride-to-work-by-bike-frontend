@@ -146,7 +146,6 @@ export default defineComponent({
           <q-input
             dense
             outlined
-            :disable="action === RouteInputType.copyYesterday"
             reverse-fill-mask
             v-model="distance"
             :mask="
