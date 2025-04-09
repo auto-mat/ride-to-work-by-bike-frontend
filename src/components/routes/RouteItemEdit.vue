@@ -160,7 +160,7 @@ export default defineComponent({
           // we do not emit `actionNew` - we keep `input-number` action
           return;
         }
-        // type-agnostic comparison
+        // type-agnostic comparison - if no distance, return with message
         if (dayBeforeRoute.distance == 0) {
           Notify.create({
             type: 'warning',
