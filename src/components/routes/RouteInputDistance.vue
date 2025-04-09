@@ -60,8 +60,12 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    modelFile: {
+      type: File,
+      default: null,
+    },
   },
-  emits: ['update:modelValue', 'update:modelAction'],
+  emits: ['update:modelValue', 'update:modelAction', 'update:modelFile'],
   setup(props, { emit }) {
     // model action
     const action = computed({
@@ -84,6 +88,32 @@ export default defineComponent({
       },
     });
 
+    const uploadFile = computed<File | null>({
+      get(): File | null {
+        return props.modelFile;
+      },
+      set(value: File | null): void {
+        emit('update:modelFile', value);
+      },
+    });
+
+    const optionsAction: FormOption[] = [
+      {
+        label: i18n.global.t('routes.actionInputDistance'),
+        value: 'input-number',
+      },
+      {
+        label: i18n.global.t('routes.actionUploadFile'),
+        value: 'upload-file',
+      },
+      /* Disable trace to map action option menu item
+      {
+        label: i18n.global.t('routes.actionTraceMap'),
+        value: 'input-map',
+      },
+      */
+    ];
+
     const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
 
     const { isFilled, isAboveZero } = useValidation();
@@ -105,6 +135,7 @@ export default defineComponent({
       isShownDistance,
       localizedFloatNumStrToFloatNumber,
       RouteInputType,
+      uploadFile,
     };
   },
 });
@@ -201,6 +232,18 @@ export default defineComponent({
             <!-- Label -->
             <span>{{ $t('routes.buttonTraceMap') }}</span>
           </q-btn>
+        </div>
+        <div v-else-if="action === 'upload-file'">
+          <!-- Input: File (limited to 20kb) -->
+          <q-file
+            dense
+            outlined
+            v-model="uploadFile"
+            :label="$t('routes.labelUploadFile')"
+            :hint="$t('routes.hintUploadFile')"
+            accept=".gpx, .gz"
+            max-file-size="20480"
+          />
         </div>
       </div>
     </div>
