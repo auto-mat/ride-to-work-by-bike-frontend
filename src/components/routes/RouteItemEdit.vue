@@ -85,7 +85,7 @@ export default defineComponent({
         return {
           transport: null,
           distance: defaultDistanceZero,
-          inputType: 'input-number',
+          inputType: RouteInputType.inputNumber,
         };
       }
       return storeRoute;

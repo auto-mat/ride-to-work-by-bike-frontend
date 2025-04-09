@@ -2,6 +2,7 @@ import { colors } from 'quasar';
 import RouteInputDistance from 'components/routes/RouteInputDistance.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { RouteInputType } from '../types/Route';
 
 // composables
 const { getPaletteColor } = colors;
@@ -50,7 +51,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
         },
       });
@@ -80,7 +81,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
         },
       });
@@ -108,7 +109,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
         },
       });
@@ -125,7 +126,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
         },
       });
@@ -140,7 +141,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueEmpty,
         },
       });
@@ -154,7 +155,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueMinusOne,
         },
       });
@@ -168,7 +169,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueHalf,
         },
       });
@@ -182,7 +183,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
         },
       });
@@ -197,7 +198,7 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
           hasValidation: false,
         },

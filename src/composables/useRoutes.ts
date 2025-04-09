@@ -12,7 +12,11 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { useChallengeStore } from '../stores/challenge';
 
 // enums
-import { TransportDirection, TransportType } from 'src/components/types/Route';
+import {
+  RouteInputType,
+  TransportDirection,
+  TransportType,
+} from 'src/components/types/Route';
 import { PhaseType } from '../components/types/Challenge';
 
 // types
@@ -275,7 +279,7 @@ export const useRoutes = () => {
                 distance: defaultDistanceZero,
                 direction: TransportDirection.fromWork,
                 dirty: false,
-                inputType: 'input-number',
+                inputType: RouteInputType.inputNumber,
               } as RouteItem),
           toWork: toWork
             ? toWork
@@ -286,7 +290,7 @@ export const useRoutes = () => {
                 distance: defaultDistanceZero,
                 direction: TransportDirection.toWork,
                 dirty: false,
-                inputType: 'input-number',
+                inputType: RouteInputType.inputNumber,
               } as RouteItem),
         });
       }

@@ -88,7 +88,7 @@ export default defineComponent({
       /* Disable trace to map action option menu item
       {
         label: i18n.global.t('routes.actionTraceMap'),
-        value: 'input-map',
+        value: RouteInputType.inputMap,
       },
       */
     ];
