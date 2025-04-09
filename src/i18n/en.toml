@@ -937,6 +937,7 @@ tabPerformance = "Performance"
 tabReport = "Data report"
 
 [routes]
+actionCopyYesterday = "Copy from day before"
 actionInputDistance = "Input distance"
 actionTraceMap = "Trace route"
 buttonLinkNewDevice = "Link another device"

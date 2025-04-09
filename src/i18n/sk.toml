@@ -937,6 +937,7 @@ tabPerformance = "Výkonnosť"
 tabReport = "Data report"
 
 [routes]
+actionCopyYesterday = "Skopírovať predchádzajúci deň"
 actionInputDistance = "Zadať vzdialenosť"
 actionTraceMap = "Zakreslit"
 buttonLinkNewDevice = "Pripojenie ďalších zariadení"

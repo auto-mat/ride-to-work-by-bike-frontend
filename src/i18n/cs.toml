@@ -938,6 +938,7 @@ tabPerformance = "Výkonnost"
 tabReport = "Data report"
 
 [routes]
+actionCopyYesterday = "Zkopírovat předchozí den"
 actionInputDistance = "Zadat vzdálenost"
 actionTraceMap = "Zakreslit do mapy"
 buttonLinkNewDevice = "Propojit další zařízení"
