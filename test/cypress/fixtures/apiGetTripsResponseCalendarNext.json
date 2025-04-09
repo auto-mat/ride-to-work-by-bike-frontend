@@ -1,13 +1,13 @@
 {
-  "count": 2,
+  "count": 3,
   "next": null,
-  "previous": "https://test.dopracenakole.cz/rest/trips/?limit=1&offset=0",
+  "previous": "https://test.dopracenakole.cz/rest/trips/?limit=2&offset=0",
   "results": [
     {
-      "distanceMeters": 5000,
-      "durationSeconds": 1200,
+      "distanceMeters": 3000,
+      "durationSeconds": 1000,
       "commuteMode": "by_foot",
-      "sourceApplication": "app",
+      "sourceApplication": "RTWBB web app",
       "trip_date": "2025-05-24",
       "sourceId": null,
       "file": null,
