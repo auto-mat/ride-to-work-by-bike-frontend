@@ -13,7 +13,12 @@ const grey10 = getPaletteColor('grey-10');
 describe('<RouteItemEdit>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['labelDirectionFromWork', 'labelDirectionToWork'],
+      [
+        'labelDirectionFromWork',
+        'labelDirectionToWork',
+        'messageCopyNoDistance',
+        'messageCopyNoRoute',
+      ],
       'routes',
       i18n,
     );

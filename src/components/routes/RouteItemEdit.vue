@@ -25,7 +25,7 @@
  */
 
 // libraries
-import { date } from 'quasar';
+import { date, Notify } from 'quasar';
 import { computed, defineComponent, inject } from 'vue';
 
 // components
@@ -129,7 +129,6 @@ export default defineComponent({
       useLogRoutes(routes);
 
     const onUpdateAction = (actionNew: RouteInputType): void => {
-      action.value = actionNew;
       /**
        * If action is changed to `copy-yesterday`, check if the day before
        * route exists and has non-zero distance value.
@@ -140,29 +139,37 @@ export default defineComponent({
         const today = new Date(props.route.date);
         // get the day before
         const dayBefore = date.subtractFromDate(today, { day: 1 });
-        // look for the day before route in the edited routes
-        let dayBeforeRoute = props.editedRoutes.find(
-          (route) =>
-            date.isSameDate(new Date(route.date), dayBefore) &&
-            route.direction === props.route.direction,
-        );
-        // if not found in edited routes, look for the day before route in the store
-        if (!dayBeforeRoute) {
-          dayBeforeRoute = tripsStore.getRouteItems.find(
+        // look for the day-before route in edited routes or store
+        const dayBeforeRoute =
+          props.editedRoutes.find(
+            (route) =>
+              date.isSameDate(new Date(route.date), dayBefore) &&
+              route.direction === props.route.direction,
+          ) ||
+          tripsStore.getRouteItems.find(
             (route) =>
               date.isSameDate(new Date(route.date), dayBefore) &&
               route.direction === props.route.direction,
           );
+        // if route has not been found, return with message
+        if (!dayBeforeRoute) {
+          Notify.create({
+            type: 'warning',
+            message: i18n.global.t('routes.messageCopyNoRoute'),
+          });
+          // we do not emit `actionNew` - we keep `input-number` action
+          return;
         }
-        if (dayBeforeRoute) {
-          // get distance to float
-          const dayBeforeRouteDistance = localizedFloatNumStrToFloatNumber(
-            dayBeforeRoute.distance,
-          );
-          if (dayBeforeRouteDistance !== 0) {
-            onUpdateDistance(dayBeforeRoute.distance);
-          }
+        // type-agnostic comparison
+        if (dayBeforeRoute.distance == 0) {
+          Notify.create({
+            type: 'warning',
+            message: i18n.global.t('routes.messageCopyNoDistance'),
+          });
+          // we do not emit `actionNew` - we keep `input-number` action
+          return;
         }
+        onUpdateDistance(dayBeforeRoute.distance);
       } else {
         emit('update:route', {
           ...props.route,
