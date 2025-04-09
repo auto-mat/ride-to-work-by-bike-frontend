@@ -11,18 +11,21 @@
  * - `route` (RouteItem, required): The object representing the route.
  *   It should be of type `RouteItem`
  * - `displayLabel` (boolean, optional): Whether to display direction label.`
+ * - `editedRoutes` (RouteItem[], optional): The array of edited routes.
+ *   It should be of type `RouteItem[]`
  *
  * @components
  * - `RouteInputTransportType`: Component to render a transport type input.
  * - `RouteInputDistance`: Component to render a distance input.
  *
  * @example
- * <route-item-edit :route="route" />
+ * <route-item-edit :route="route" :edited-routes="routeItemsDirty" />
  *
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A104042&mode=dev)
  */
 
 // libraries
+import { date } from 'quasar';
 import { computed, defineComponent, inject } from 'vue';
 
 // components
@@ -30,6 +33,7 @@ import RouteInputDistance from './RouteInputDistance.vue';
 import RouteInputTransportType from './RouteInputTransportType.vue';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useLogRoutes } from '../../composables/useLogRoutes';
 
 // config
@@ -37,9 +41,9 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
 import {
+  RouteInputType,
   TransportDirection,
   TransportType,
-  RouteInputType,
 } from '../types/Route';
 
 // stores
@@ -49,6 +53,7 @@ import { useTripsStore } from 'src/stores/trips';
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
 
 // types
+import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
 import type { RouteItem } from '../types/Route';
 
@@ -66,6 +71,10 @@ export default defineComponent({
     displayLabel: {
       type: Boolean,
       default: false,
+    },
+    editedRoutes: {
+      type: Array as () => RouteItem[],
+      required: true,
     },
   },
   emits: ['update:route'],
@@ -97,6 +106,23 @@ export default defineComponent({
       defaultDistanceZero,
     } = rideToWorkByBikeConfig;
 
+    const optionsAction: FormOption[] = [
+      {
+        label: i18n.global.t('routes.actionInputDistance'),
+        value: RouteInputType.inputNumber,
+      },
+      {
+        label: i18n.global.t('routes.actionCopyYesterday'),
+        value: RouteInputType.copyYesterday,
+      },
+      /* Disable trace to map action option menu item
+      {
+        label: i18n.global.t('routes.actionTraceMap'),
+        value: RouteInputType.inputMap,
+      },
+      */
+    ];
+
     const routes = computed<RouteItem[]>(() => [props.route]);
     // create refs from the route object
     const { action, distance, transportType, isShownDistance } =
@@ -104,6 +130,45 @@ export default defineComponent({
 
     const onUpdateAction = (actionNew: RouteInputType): void => {
       action.value = actionNew;
+      /**
+       * If action is changed to `copy-yesterday`, check if the day before
+       * route exists and has non-zero distance value.
+       * If so, copy the data to the current route.
+       */
+      if (actionNew === RouteInputType.copyYesterday) {
+        // props.route.date is current route.
+        const today = new Date(props.route.date);
+        // get the day before
+        const dayBefore = date.subtractFromDate(today, { day: 1 });
+        // look for the day before route in the edited routes
+        let dayBeforeRoute = props.editedRoutes.find(
+          (route) =>
+            date.isSameDate(new Date(route.date), dayBefore) &&
+            route.direction === props.route.direction,
+        );
+        // if not found in edited routes, look for the day before route in the store
+        if (!dayBeforeRoute) {
+          dayBeforeRoute = tripsStore.getRouteItems.find(
+            (route) =>
+              date.isSameDate(new Date(route.date), dayBefore) &&
+              route.direction === props.route.direction,
+          );
+        }
+        if (dayBeforeRoute) {
+          // get distance to float
+          const dayBeforeRouteDistance = localizedFloatNumStrToFloatNumber(
+            dayBeforeRoute.distance,
+          );
+          if (dayBeforeRouteDistance !== 0) {
+            onUpdateDistance(dayBeforeRoute.distance);
+          }
+        }
+      } else {
+        emit('update:route', {
+          ...props.route,
+          inputType: action.value,
+        });
+      }
     };
 
     const onUpdateDistance = (distanceNew: string): void => {
@@ -140,6 +205,7 @@ export default defineComponent({
       emit('update:route', {
         ...props.route,
         distance: distanceNew,
+        inputType: action.value,
         dirty,
       });
       distance.value = distanceNew;
@@ -179,6 +245,7 @@ export default defineComponent({
       isShownDistance,
       transportType,
       TransportDirection,
+      optionsAction,
       onUpdateTransportType,
       onUpdateDistance,
       onUpdateAction,
@@ -240,6 +307,7 @@ export default defineComponent({
           v-if="isShownDistance"
           :modelValue="distance"
           :modelAction="action"
+          :optionsAction="optionsAction"
           @update:modelValue="onUpdateDistance"
           @update:modelAction="onUpdateAction"
           class="q-mt-lg"

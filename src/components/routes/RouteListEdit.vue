@@ -150,6 +150,7 @@ export default defineComponent({
       isLargeScreen,
       isLoadingTrips,
       onSave,
+      routeItemsDirty,
       TransportDirection,
       formRef,
     };
@@ -204,6 +205,7 @@ export default defineComponent({
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
               <route-item-edit
                 :route="day.toWork"
+                :edited-routes="routeItemsDirty"
                 class="full-height"
                 data-cy="route-list-item"
                 :data-direction="TransportDirection.toWork"
@@ -215,6 +217,7 @@ export default defineComponent({
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
               <route-item-edit
                 :route="day.fromWork"
+                :edited-routes="routeItemsDirty"
                 class="full-height"
                 data-cy="route-list-item"
                 :data-direction="TransportDirection.fromWork"

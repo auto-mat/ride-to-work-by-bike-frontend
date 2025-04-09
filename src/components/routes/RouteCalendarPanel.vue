@@ -41,6 +41,9 @@ import { useRoutes } from 'src/composables/useRoutes';
 import { useLogRoutes } from '../../composables/useLogRoutes';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
 
+// enums
+import { RouteInputType } from '../types/Route';
+
 // adapters
 import { tripsAdapter } from '../../adapters/tripsAdapter';
 
@@ -84,6 +87,19 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+
+    const optionsAction: FormOption[] = [
+      {
+        label: i18n.global.t('routes.actionInputDistance'),
+        value: RouteInputType.inputNumber,
+      },
+      /* Disable trace to map action option menu item
+      {
+        label: i18n.global.t('routes.actionTraceMap'),
+        value: RouteInputType.inputMap,
+      },
+      */
+    ];
 
     // Make props into computed ref so it can be passed as a reactive value.
     const routes = computed(() => props.routes);
@@ -168,6 +184,7 @@ export default defineComponent({
       isSaveBtnDisabled,
       isShownDistance,
       minWidth,
+      optionsAction,
       transportType,
       onSave,
     };
@@ -225,6 +242,7 @@ export default defineComponent({
               v-show="isShownDistance"
               v-model="distance"
               :modelAction="action"
+              :optionsAction="optionsAction"
               @update:modelAction="action = $event"
               class="q-mt-none"
               data-cy="route-input-distance"
