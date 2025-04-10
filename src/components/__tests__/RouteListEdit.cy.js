@@ -52,11 +52,7 @@ describe('<RouteListEdit>', () => {
     beforeEach(() => {
       // test save button top
       selectorButtonSave = selectorButtonSaveTop;
-      cy.mount(RouteListEdit, {
-        props: {
-          disableSticky: true,
-        },
-      });
+      cy.mount(RouteListEdit);
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
@@ -87,11 +83,7 @@ describe('<RouteListEdit>', () => {
     beforeEach(() => {
       // test save button sticky
       selectorButtonSave = selectorButtonSaveSticky;
-      cy.mount(RouteListEdit, {
-        props: {
-          disableSticky: true,
-        },
-      });
+      cy.mount(RouteListEdit);
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
           store.setDaysActive(response.results[0].days_active);
@@ -129,11 +121,7 @@ describe('<RouteListEdit>', () => {
     Object.entries(testData).forEach(([testKey, testCase]) => {
       it(`${testKey}: ${testCase.description}`, () => {
         // mount component with test data
-        cy.mount(RouteListEdit, {
-          props: {
-            disableSticky: true,
-          },
-        });
+        cy.mount(RouteListEdit);
         cy.fixture('apiGetThisCampaignMay.json').then((response) => {
           cy.wrap(useChallengeStore()).then((store) => {
             store.setDaysActive(response.results[0].days_active);
