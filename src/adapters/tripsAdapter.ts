@@ -46,7 +46,8 @@ export const tripsAdapter = {
       direction: direction,
       distance: distance(trip),
       transport,
-      // TODO: Handle the route feature data
+      // TODO: Confirm how/if to load trip file
+      file: trip.file ? new File([trip.file], trip.file) : null,
       routeFeature: null as RouteFeature | null,
     };
   },
@@ -79,6 +80,11 @@ export const tripsAdapter = {
         : 0,
       sourceApplication: rideToWorkByBikeConfig.apiTripsSourceApplicationId,
     };
+
+    // only add file if it exists
+    if (routeItem.file) {
+      payload.file = routeItem.file;
+    }
 
     return payload;
   },

@@ -61,7 +61,7 @@ export default defineComponent({
       default: true,
     },
     modelFile: {
-      type: File,
+      type: [File, null],
       default: null,
     },
   },
@@ -233,7 +233,11 @@ export default defineComponent({
             <span>{{ $t('routes.buttonTraceMap') }}</span>
           </q-btn>
         </div>
-        <div v-else-if="action === 'upload-file'">
+        <div
+          v-else-if="action === 'upload-file'"
+          class="col items-center"
+          data-cy="section-input-map"
+        >
           <!-- Input: File (limited to 20kb) -->
           <q-file
             dense

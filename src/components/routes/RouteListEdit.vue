@@ -113,12 +113,8 @@ export default defineComponent({
         });
         return;
       }
-      // convert route items to trip payload
-      const tripPayload = routeItemsDirty.value.map((route) =>
-        tripsAdapter.toTripPostPayload(route),
-      );
       // send to API
-      const response = await postTrips(tripPayload);
+      const response = await postTrips(routeItemsDirty);
       // handle success
       if (
         response.success &&

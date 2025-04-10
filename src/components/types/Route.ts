@@ -38,6 +38,7 @@ export type RouteItem = {
   transport: TransportType | null;
   inputType?: RouteInputType;
   routeFeature: RouteFeature | null;
+  file: File | null;
 };
 
 export type RouteDay = {

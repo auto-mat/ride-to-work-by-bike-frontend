@@ -1,3 +1,9 @@
+// libraries
+import { unref } from 'vue';
+
+// adapters
+import { tripsAdapter } from '../adapters/tripsAdapter';
+
 // composables
 import { useApi } from './useApi';
 
@@ -9,16 +15,18 @@ import { useLoginStore } from '../stores/login';
 import { useTripsStore } from '../stores/trips';
 
 // types
+import type { ComputedRef } from 'vue';
 import type { Logger } from '../components/types/Logger';
-import type { Trip, TripPostPayload } from '../components/types/Trip';
+import type { Trip } from '../components/types/Trip';
 import type { ApiResponse } from './useApi';
+import type { RouteItem } from '../components/types/Route';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 interface UseApiPostTripsReturn {
   postTrips: (
-    trips: TripPostPayload[],
+    routeItems: RouteItem[] | ComputedRef<RouteItem[]>,
   ) => Promise<ApiResponse<{ trips: Trip[] }>>;
 }
 
@@ -41,8 +49,12 @@ export const useApiPostTrips = (
    * @param {TripPostPayload[]} trips - Array of trips to create or update
    */
   const postTrips = async (
-    trips: TripPostPayload[],
+    routeItems: RouteItem[] | ComputedRef<RouteItem[]>,
   ): Promise<ApiResponse<{ trips: Trip[] }>> => {
+    const trips = unref(routeItems).map((routeItem) =>
+      tripsAdapter.toTripPostPayload(routeItem),
+    );
+
     logger?.debug(`Creating trips <${JSON.stringify(trips, null, 2)}>.`);
     tripsStore.setIsLoading(true);
 

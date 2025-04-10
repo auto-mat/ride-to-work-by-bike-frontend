@@ -21,6 +21,7 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
   const action = ref<RouteInputType>(RouteInputType.inputNumber);
   const distance = ref<string>(defaultDistanceZero);
   const transportType = ref<TransportType | null>(null);
+  const file = ref<File | null>(null);
 
   /**
    * Sets the panel input data based on the provided routes.
@@ -32,11 +33,13 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
       action.value = routes[0].inputType || RouteInputType.inputNumber;
       distance.value = routes[0].distance || defaultDistanceZero;
       transportType.value = routes[0].transport || null;
+      file.value = routes[0].file || null;
     } else {
       // multiple routes = unlogged - set default entry values
       action.value = RouteInputType.inputNumber;
       distance.value = defaultDistanceZero;
       transportType.value = TransportType.bike;
+      file.value = null;
     }
   };
 
@@ -53,6 +56,7 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
   return {
     action,
     distance,
+    file,
     routesCount,
     transportType,
     isShownDistance,

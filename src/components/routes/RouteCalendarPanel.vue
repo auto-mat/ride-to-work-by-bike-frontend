@@ -101,8 +101,14 @@ export default defineComponent({
     // Make props into computed ref so it can be passed as a reactive value.
     const routes = computed(() => props.routes);
     // Get panel input state from a composable.
-    const { action, distance, routesCount, transportType, isShownDistance } =
-      useLogRoutes(routes);
+    const {
+      action,
+      distance,
+      routesCount,
+      transportType,
+      isShownDistance,
+      file,
+    } = useLogRoutes(routes);
 
     // Initialize API composable
     const { postTrips } = useApiPostTrips(logger);
@@ -141,13 +147,10 @@ export default defineComponent({
         ...route,
         transport: transportType.value,
         distance: isShownDistance.value ? distance.value : route.distance,
+        file: file.value ? file.value : null,
       }));
-      // convert route items to trip payload
-      const tripPayload = routeItems.map((route) =>
-        tripsAdapter.toTripPostPayload(route),
-      );
       // send to API
-      const response = await postTrips(tripPayload);
+      const response = await postTrips(routeItems);
       // handle success
       if (
         response.success &&
@@ -176,6 +179,7 @@ export default defineComponent({
     return {
       action,
       distance,
+      file,
       routesCount,
       isOpen,
       isSaveBtnDisabled,
@@ -238,9 +242,11 @@ export default defineComponent({
             <route-input-distance
               v-show="isShownDistance"
               v-model="distance"
+              :modelFile="file"
               :modelAction="action"
               :optionsAction="optionsAction"
               @update:modelAction="action = $event"
+              @update:modelFile="file = $event"
               class="q-mt-none"
               data-cy="route-input-distance"
             />
