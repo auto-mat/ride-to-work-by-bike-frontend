@@ -272,5 +272,11 @@ export default defineComponent({
         </div>
       </q-page-sticky>
     </q-form>
+    <!-- Loading spinner -->
+    <q-inner-loading
+      :showing="isLoadingRoutes"
+      color="primary"
+      data-cy="spinner-route-list-edit"
+    />
   </q-layout>
 </template>
