@@ -50,7 +50,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const tripsStore = useTripsStore();
 
-    const isLoadingRoutes = computed((): boolean => {
+    const isLoadingTrips = computed((): boolean => {
       return tripsStore.getIsLoading;
     });
 
@@ -63,8 +63,7 @@ export default defineComponent({
     } = useRoutes();
 
     // initialize API composable
-    const { postTrips, isLoading: isLoadingPostTrips } =
-      useApiPostTrips(logger);
+    const { postTrips } = useApiPostTrips(logger);
 
     // get route items from store
     const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
@@ -149,8 +148,7 @@ export default defineComponent({
       formatDate,
       formatDateName,
       isLargeScreen,
-      isLoadingPostTrips,
-      isLoadingRoutes,
+      isLoadingTrips,
       onSave,
       TransportDirection,
       formRef,
@@ -174,8 +172,8 @@ export default defineComponent({
           color="primary"
           size="16px"
           class="text-weight-bold"
-          :loading="isLoadingPostTrips"
-          :disable="isLoadingPostTrips || dirtyCount === 0"
+          :loading="isLoadingTrips"
+          :disable="isLoadingTrips || dirtyCount === 0"
           data-cy="button-save-top"
           @click.prevent="onSave"
         >
@@ -236,8 +234,8 @@ export default defineComponent({
           color="primary"
           size="16px"
           class="text-weight-bold"
-          :loading="isLoadingPostTrips"
-          :disable="isLoadingPostTrips || dirtyCount === 0"
+          :loading="isLoadingTrips"
+          :disable="isLoadingTrips || dirtyCount === 0"
           data-cy="button-save-bottom"
           @click.prevent="onSave"
         >
@@ -258,8 +256,8 @@ export default defineComponent({
             color="primary"
             size="16px"
             class="text-weight-bold"
-            :loading="isLoadingPostTrips"
-            :disable="isLoadingPostTrips || dirtyCount === 0"
+            :loading="isLoadingTrips"
+            :disable="isLoadingTrips || dirtyCount === 0"
             data-cy="button-save-sticky"
             @click.prevent="onSave"
           >
@@ -274,7 +272,7 @@ export default defineComponent({
     </q-form>
     <!-- Loading spinner -->
     <q-inner-loading
-      :showing="isLoadingRoutes"
+      :showing="isLoadingTrips"
       color="primary"
       data-cy="spinner-route-list-edit"
     />

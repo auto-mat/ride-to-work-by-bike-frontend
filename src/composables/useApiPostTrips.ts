@@ -1,6 +1,3 @@
-// libraries
-import { ref } from 'vue';
-
 // composables
 import { useApi } from './useApi';
 
@@ -9,9 +6,9 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // stores
 import { useLoginStore } from '../stores/login';
+import { useTripsStore } from '../stores/trips';
 
 // types
-import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
 import type { Trip, TripPostPayload } from '../components/types/Trip';
 import type { ApiResponse } from './useApi';
@@ -20,7 +17,6 @@ import type { ApiResponse } from './useApi';
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 interface UseApiPostTripsReturn {
-  isLoading: Ref<boolean>;
   postTrips: (
     trips: TripPostPayload[],
   ) => Promise<ApiResponse<{ trips: Trip[] }>>;
@@ -35,8 +31,8 @@ interface UseApiPostTripsReturn {
 export const useApiPostTrips = (
   logger: Logger | null,
 ): UseApiPostTripsReturn => {
-  const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
+  const tripsStore = useTripsStore();
   const { apiFetch } = useApi();
 
   /**
@@ -48,7 +44,7 @@ export const useApiPostTrips = (
     trips: TripPostPayload[],
   ): Promise<ApiResponse<{ trips: Trip[] }>> => {
     logger?.debug(`Creating trips <${JSON.stringify(trips, null, 2)}>.`);
-    isLoading.value = true;
+    tripsStore.setIsLoading(true);
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
@@ -71,13 +67,12 @@ export const useApiPostTrips = (
       logger,
     });
 
-    isLoading.value = false;
+    tripsStore.setIsLoading(false);
 
     return response;
   };
 
   return {
-    isLoading,
     postTrips,
   };
 };

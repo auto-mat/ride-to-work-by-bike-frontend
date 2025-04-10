@@ -92,7 +92,7 @@ export default defineComponent({
       useLogRoutes(routes);
 
     // Initialize API composable
-    const { postTrips, isLoading } = useApiPostTrips(logger);
+    const { postTrips } = useApiPostTrips(logger);
 
     // Initialize trips store
     const tripsStore = useTripsStore();
@@ -105,7 +105,7 @@ export default defineComponent({
       const noRoutes = routesCount.value === 0;
       const noDistance =
         isShownDistance.value && distance.value === defaultDistanceZero;
-      return noRoutes || noDistance || noTransport || isLoading.value;
+      return noRoutes || noDistance || noTransport || tripsStore.getIsLoading;
     });
 
     /**
