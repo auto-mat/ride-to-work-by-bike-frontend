@@ -124,7 +124,10 @@ export default defineComponent({
       const noRoutes = routesCount.value === 0;
       const noDistance =
         isShownDistance.value && distance.value === defaultDistanceZero;
-      return noRoutes || noDistance || noTransport || tripsStore.getIsLoading;
+      const noFile = file.value === null;
+      return (
+        noRoutes || (noDistance && noFile) || noTransport || tripsStore.getIsLoading
+      );
     });
 
     /**

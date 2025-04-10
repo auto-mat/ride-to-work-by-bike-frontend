@@ -22,7 +22,11 @@ import type { ApiResponse } from './useApi';
 import type { RouteItem } from '../components/types/Route';
 
 // utils
-import { requestDefaultHeader, requestTokenHeader } from '../utils';
+import {
+  requestDefaultHeader,
+  requestTokenHeader,
+  requestMultipartFormDataHeader,
+} from '../utils';
 
 interface UseApiPostTripsReturn {
   postTrips: (
@@ -67,6 +71,7 @@ export const useApiPostTrips = (
     const headers = Object.assign(
       requestDefaultHeader(rideToWorkByBikeConfig.apiVersion2),
       requestTokenHeader_,
+      requestMultipartFormDataHeader,
     );
 
     // post trips
