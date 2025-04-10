@@ -162,6 +162,10 @@ dateTimeFormatsAllLocales = '''
   },
   "weekday": {
     "weekday": "long"
+  },
+  "monthLongStringDay": {
+    "day": "numeric",
+    "month": "long"
   }
 }
 '''

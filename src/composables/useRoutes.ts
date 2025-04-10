@@ -321,21 +321,19 @@ export const useRoutes = () => {
   /**
    * Formats a given date string into a specific format.
    *
-   * @param dateString - The date string to be formatted.
-   * @return The formatted date string in the format 'D. MMM'.
+   * @param {string} dateString - The date string to be formatted.
+   * @return {string} - The formatted localized date string
    */
   const formatDate = (dateString: string) => {
-    const timeStamp = new Date(dateString);
-    // using quasar date object
-    return date.formatDate(timeStamp, 'D. MMM');
+    return i18n.global.d(new Date(dateString), 'monthLongStringDay');
   };
 
   /**
    * Returns a text-based label for a day based on the given date.
    * Example: "Today", "Yesterday", "Monday"
    *
-   * @param dateString - The date string to be formatted
-   * @return The formatted date name
+   * @param {string } dateString - The date string to be formatted
+   * @return {string } - The formatted localized date name
    */
   const formatDateName = (dateString: string) => {
     const timeStamp = new Date(dateString);
