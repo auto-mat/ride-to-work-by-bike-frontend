@@ -247,6 +247,7 @@ export default defineComponent({
             :hint="$t('routes.hintUploadFile')"
             accept=".gpx, .gz"
             max-file-size="20480"
+            data-cy="input-file"
           />
         </div>
       </div>

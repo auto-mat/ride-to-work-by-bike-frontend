@@ -2,6 +2,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { systemTimeLastDayOfCompetitionMay } from '../support/commonTests';
+import testDataUploadFile from '../fixtures/routesCalendarPanelUploadTestData.json';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
@@ -253,6 +254,63 @@ describe('Routes calendar page', () => {
                 defLocale,
               ),
             );
+          });
+        });
+      });
+    });
+
+    // generate tests based on fixture routesCalendarPanelUploadTestData.json
+    testDataUploadFile.forEach((testCase) => {
+      it(testCase.description, () => {
+        cy.get('@i18n').then((i18n) => {
+          cy.get('@config').then((config) => {
+            // intercept API call with response matching the payload
+            const distanceMeters = testCase.apiResponseDistance;
+            const responseBody = {
+              trips: testCase.apiPayload.trips.map((trip, index) => ({
+                id: index + 1,
+                ...trip,
+                distanceMeters,
+                durationSeconds: null,
+                sourceId: null,
+                description: '',
+                track: null,
+              })),
+            };
+            cy.interceptPostTripsApi(config, i18n, responseBody);
+            // for each logged route, click on the calendar field
+            testCase.loggedRoutes.forEach((route) => {
+              cy.get(`[data-date="${route.date}"]`)
+                .find(
+                  `[data-cy="calendar-item-icon-${route.direction.toLowerCase()}-empty"]`,
+                )
+                .click({ force: true });
+            });
+            // route calendar panel should be open
+            cy.dataCy('route-calendar-panel').should('exist');
+            testCase.inputValues.forEach((inputValue) => {
+              // input transport type
+              cy.dataCy('button-toggle-transport').should('be.visible');
+              cy.dataCy('route-input-transport-type')
+                .find(`[data-value="${inputValue.transport}"]`)
+                .click({ force: true });
+              if (inputValue.inputType === 'upload-file') {
+                // select upload file action
+                cy.dataCy('select-action').should('be.visible');
+                cy.dataCy('select-action').select(
+                  i18n.global.t('routes.actionUploadFile'),
+                );
+                // upload file
+                cy.dataCy('input-file').selectFile(
+                  'test/cypress/fixtures/route.gpx',
+                  { force: true },
+                );
+              }
+            });
+            // click save button
+            cy.dataCy('dialog-save-button').click();
+            // wait for API call and verify payload
+            cy.waitForPostTripsApi(testCase.apiPayload);
           });
         });
       });
