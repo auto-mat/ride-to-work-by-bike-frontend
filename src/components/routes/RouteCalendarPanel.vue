@@ -41,9 +41,6 @@ import { useRoutes } from 'src/composables/useRoutes';
 import { useLogRoutes } from '../../composables/useLogRoutes';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
 
-// enums
-import { RouteInputType } from '../types/Route';
-
 // adapters
 import { tripsAdapter } from '../../adapters/tripsAdapter';
 
@@ -53,9 +50,12 @@ import { useTripsStore } from '../../stores/trips';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import { routeFormFieldOptions } from './utils/';
+
 // types
 import type { RouteItem } from '../types/Route';
 import type { Logger } from '../types/Logger';
+import type { FormOption } from '../types/Form';
 
 export default defineComponent({
   name: 'RouteCalendarPanel',
@@ -89,10 +89,7 @@ export default defineComponent({
     });
 
     const optionsAction: FormOption[] = [
-      {
-        label: i18n.global.t('routes.actionInputDistance'),
-        value: RouteInputType.inputNumber,
-      },
+      ...routeFormFieldOptions,
       /* Disable trace to map action option menu item
       {
         label: i18n.global.t('routes.actionTraceMap'),

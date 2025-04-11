@@ -50,6 +50,7 @@ import {
 import { useTripsStore } from 'src/stores/trips';
 
 // utils
+import { routeFormFieldOptions } from './utils/';
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
 
 // types
@@ -107,10 +108,7 @@ export default defineComponent({
     } = rideToWorkByBikeConfig;
 
     const optionsAction: FormOption[] = [
-      {
-        label: i18n.global.t('routes.actionInputDistance'),
-        value: RouteInputType.inputNumber,
-      },
+      ...routeFormFieldOptions,
       {
         label: i18n.global.t('routes.actionCopyYesterday'),
         value: RouteInputType.copyYesterday,

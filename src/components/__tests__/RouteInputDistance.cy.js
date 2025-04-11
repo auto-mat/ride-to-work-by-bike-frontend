@@ -3,6 +3,7 @@ import RouteInputDistance from 'components/routes/RouteInputDistance.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { RouteInputType } from '../types/Route';
+import { routeFormFieldOptions } from '../routes/utils';
 
 // composables
 const { getPaletteColor } = colors;
@@ -31,10 +32,7 @@ const valueHalf = '0.50';
 const valueEmpty = '';
 const { defaultDistanceZero } = rideToWorkByBikeConfig;
 const optionsAction = [
-  {
-    label: i18n.global.t('routes.actionInputDistance'),
-    value: RouteInputType.inputNumber,
-  },
+  ...routeFormFieldOptions,
   {
     label: i18n.global.t('routes.actionCopyYesterday'),
     value: RouteInputType.copyYesterday,
@@ -239,12 +237,7 @@ describe('<RouteInputDistance>', () => {
         props: {
           modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
-          optionsAction: [
-            {
-              label: i18n.global.t('routes.actionInputDistance'),
-              value: RouteInputType.inputNumber,
-            },
-          ],
+          optionsAction: routeFormFieldOptions,
         },
       });
       cy.viewport('macbook-16');
