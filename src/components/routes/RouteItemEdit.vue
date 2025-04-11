@@ -243,12 +243,14 @@ export default defineComponent({
         emit('update:route', {
           ...props.route,
           dirty: true,
+          inputType: 'upload-file',
           file: fileNew,
         });
       } else {
         emit('update:route', {
           ...props.route,
           dirty: true,
+          inputType: 'upload-file',
           file: null,
         });
       }
