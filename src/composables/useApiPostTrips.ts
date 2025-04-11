@@ -22,11 +22,7 @@ import type { ApiResponse } from './useApi';
 import type { RouteItem } from '../components/types/Route';
 
 // utils
-import {
-  requestDefaultHeader,
-  requestTokenHeader,
-  requestMultipartFormDataHeader,
-} from '../utils';
+import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 interface UseApiPostTripsReturn {
   postTrips: (
@@ -55,8 +51,10 @@ export const useApiPostTrips = (
   const postTrips = async (
     routeItems: RouteItem[] | ComputedRef<RouteItem[]>,
   ): Promise<ApiResponse<{ trips: Trip[] }>> => {
-    const trips = unref(routeItems).map((routeItem) =>
-      tripsAdapter.toTripPostPayload(routeItem),
+    const trips = await Promise.all(
+      unref(routeItems).map(
+        async (routeItem) => await tripsAdapter.toTripPostPayload(routeItem),
+      ),
     );
 
     logger?.debug(`Creating trips <${JSON.stringify(trips, null, 2)}>.`);
@@ -71,7 +69,6 @@ export const useApiPostTrips = (
     const headers = Object.assign(
       requestDefaultHeader(rideToWorkByBikeConfig.apiVersion2),
       requestTokenHeader_,
-      requestMultipartFormDataHeader,
     );
 
     // post trips

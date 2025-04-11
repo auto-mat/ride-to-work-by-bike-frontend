@@ -26,7 +26,7 @@ export interface TripPostPayload {
   commuteMode: string;
   distanceMeters: number;
   sourceApplication: string;
-  file?: File | null;
+  file_encoded_string?: string | ArrayBuffer | null;
   track?: string | null;
   durationSeconds?: number | null;
   sourceId?: string;

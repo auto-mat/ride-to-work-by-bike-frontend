@@ -70,10 +70,6 @@ const requestTokenHeader = {
   Authorization: `${bearerTokeAuth} `,
 } as AxiosRequestHeaders;
 
-const requestMultipartFormDataHeader = {
-  'Content-Type': 'multipart/form-data',
-} as AxiosRequestHeaders;
-
 /*
  * Convert RGBA color object definition returned from
  * hexToRgb() function to string representation

@@ -126,7 +126,10 @@ export default defineComponent({
         isShownDistance.value && distance.value === defaultDistanceZero;
       const noFile = file.value === null;
       return (
-        noRoutes || (noDistance && noFile) || noTransport || tripsStore.getIsLoading
+        noRoutes ||
+        (noDistance && noFile) ||
+        noTransport ||
+        tripsStore.getIsLoading
       );
     });
 
@@ -152,6 +155,9 @@ export default defineComponent({
         distance: isShownDistance.value ? distance.value : route.distance,
         file: file.value ? file.value : null,
       }));
+      logger?.debug(
+        `Saving route items <${JSON.stringify(routeItems, null, 2)}>.`,
+      );
       // send to API
       const response = await postTrips(routeItems);
       // handle success
