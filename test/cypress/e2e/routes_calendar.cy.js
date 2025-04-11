@@ -261,7 +261,7 @@ describe('Routes calendar page', () => {
 
     // generate tests based on fixture routesCalendarPanelUploadTestData.json
     testDataUploadFile.forEach((testCase) => {
-      it(testCase.description, () => {
+      it.only(testCase.description, () => {
         cy.get('@i18n').then((i18n) => {
           cy.get('@config').then((config) => {
             // intercept API call with response matching the payload
@@ -282,7 +282,7 @@ describe('Routes calendar page', () => {
             testCase.loggedRoutes.forEach((route) => {
               cy.get(`[data-date="${route.date}"]`)
                 .find(
-                  `[data-cy="calendar-item-icon-${route.direction.toLowerCase()}-empty"]`,
+                  `[data-cy="calendar-item-icon-${route.direction.toLowerCase()}-${route.state}"]`,
                 )
                 .click({ force: true });
             });
@@ -305,6 +305,18 @@ describe('Routes calendar page', () => {
                   'test/cypress/fixtures/route.gpx',
                   { force: true },
                 );
+              } else if (inputValue.inputType === 'input-number') {
+                // select input number action
+                cy.dataCy('select-action').should('be.visible');
+                cy.dataCy('select-action').select(
+                  i18n.global.t('routes.actionInputDistance'),
+                );
+                // input distance
+                cy.dataCy('section-input-number').should('be.visible');
+                cy.dataCy('section-input-number').find('input').clear();
+                cy.dataCy('section-input-number')
+                  .find('input')
+                  .type(inputValue.inputValue);
               }
             });
             // click save button

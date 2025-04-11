@@ -4,7 +4,8 @@
     "loggedRoutes": [
       {
         "date": "2025-05-20",
-        "direction": "toWork"
+        "direction": "toWork",
+        "state": "empty"
       }
     ],
     "inputValues": [
@@ -23,6 +24,107 @@
           "distanceMeters": 0,
           "sourceApplication": "RTWBB web app",
           "file_encoded_string": "data:application/gpx+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxncHggdmVyc2lvbj0iMS4xIiBjcmVhdG9yPSJHREFMIDMuOS4xIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxucz0iaHR0cDovL3d3dy50b3BvZ3JhZml4LmNvbS9HUFgvMS8xIiB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6Ly93d3cudG9wb2dyYWZpeC5jb20vR1BYLzEvMSBodHRwOi8vd3d3LnRvcG9ncmFmaXguY29tL0dQWC8xLzEvZ3B4LnhzZCI+CjxtZXRhZGF0YT4KPGJvdW5kcyBtaW5sYXQ9IjUwLjI3MTM2OTQzNzI5NjU0MiIgbWlubG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiIG1heGxhdD0iNTAuMzA2MDk0MzMzNTI3Mzk4IiBtYXhsb249IjE0LjUyODc5ODA1NDQ0Mzc0NCIvPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8L21ldGFkYXRhPgo8cnRlPgogIDxydGVwdCBsYXQ9IjUwLjI5MTA5OTQ5MTk3MzE2NCIgbG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMzA1MzA1MTMxMzQwMzMzIiBsb249IjE0LjQyOTM1ODU3ODg3MzU2NSI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yODU1NzUwNzY2NjM3MTIiIGxvbj0iMTQuNDU0NjEzMDQ4ODU5NjQyIj4KICA8L3J0ZXB0PgogIDxydGVwdCBsYXQ9IjUwLjMwNjA5NDMzMzUyNzM5OCIgbG9uPSIxNC40ODE0NDU5MjMyMTk4NDgiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMjcxMzY5NDM3Mjk2NTQyIiBsb249IjE0LjUwMDM4Njc3NTcwOTQwNyI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yOTgyMDIzMTE2NTY3NTIiIGxvbj0iMTQuNTI4Nzk4MDU0NDQzNzQ0Ij4KICA8L3J0ZXB0Pgo8L3J0ZT4KPC9ncHg+Cg=="
+        }
+      ]
+    }
+  },
+  {
+    "description": "logged route - update route by uploading a file",
+    "loggedRoutes": [
+      {
+        "date": "2025-05-24",
+        "direction": "toWork",
+        "state": "logged"
+      }
+    ],
+    "inputValues": [
+      {
+        "transport": "by_foot",
+        "inputType": "upload-file"
+      }
+    ],
+    "apiResponseDistance": 16400,
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-24",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app",
+          "file_encoded_string": "data:application/gpx+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxncHggdmVyc2lvbj0iMS4xIiBjcmVhdG9yPSJHREFMIDMuOS4xIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxucz0iaHR0cDovL3d3dy50b3BvZ3JhZml4LmNvbS9HUFgvMS8xIiB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6Ly93d3cudG9wb2dyYWZpeC5jb20vR1BYLzEvMSBodHRwOi8vd3d3LnRvcG9ncmFmaXguY29tL0dQWC8xLzEvZ3B4LnhzZCI+CjxtZXRhZGF0YT4KPGJvdW5kcyBtaW5sYXQ9IjUwLjI3MTM2OTQzNzI5NjU0MiIgbWlubG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiIG1heGxhdD0iNTAuMzA2MDk0MzMzNTI3Mzk4IiBtYXhsb249IjE0LjUyODc5ODA1NDQ0Mzc0NCIvPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8L21ldGFkYXRhPgo8cnRlPgogIDxydGVwdCBsYXQ9IjUwLjI5MTA5OTQ5MTk3MzE2NCIgbG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMzA1MzA1MTMxMzQwMzMzIiBsb249IjE0LjQyOTM1ODU3ODg3MzU2NSI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yODU1NzUwNzY2NjM3MTIiIGxvbj0iMTQuNDU0NjEzMDQ4ODU5NjQyIj4KICA8L3J0ZXB0PgogIDxydGVwdCBsYXQ9IjUwLjMwNjA5NDMzMzUyNzM5OCIgbG9uPSIxNC40ODE0NDU5MjMyMTk4NDgiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMjcxMzY5NDM3Mjk2NTQyIiBsb249IjE0LjUwMDM4Njc3NTcwOTQwNyI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yOTgyMDIzMTE2NTY3NTIiIGxvbj0iMTQuNTI4Nzk4MDU0NDQzNzQ0Ij4KICA8L3J0ZXB0Pgo8L3J0ZT4KPC9ncHg+Cg=="
+        }
+      ]
+    }
+  },
+  {
+    "description": "empty route - enter distance, then log route by uploading a file",
+    "loggedRoutes": [
+      {
+        "date": "2025-05-20",
+        "direction": "toWork",
+        "state": "empty"
+      }
+    ],
+    "inputValues": [
+      {
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "inputValue": 1000
+      },
+      {
+        "transport": "bicycle",
+        "inputType": "upload-file"
+      }
+    ],
+    "apiResponseDistance": 16400,
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-20",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 0,
+          "sourceApplication": "RTWBB web app",
+          "file_encoded_string": "data:application/gpx+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxncHggdmVyc2lvbj0iMS4xIiBjcmVhdG9yPSJHREFMIDMuOS4xIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4bWxucz0iaHR0cDovL3d3dy50b3BvZ3JhZml4LmNvbS9HUFgvMS8xIiB4c2k6c2NoZW1hTG9jYXRpb249Imh0dHA6Ly93d3cudG9wb2dyYWZpeC5jb20vR1BYLzEvMSBodHRwOi8vd3d3LnRvcG9ncmFmaXguY29tL0dQWC8xLzEvZ3B4LnhzZCI+CjxtZXRhZGF0YT4KPGJvdW5kcyBtaW5sYXQ9IjUwLjI3MTM2OTQzNzI5NjU0MiIgbWlubG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiIG1heGxhdD0iNTAuMzA2MDk0MzMzNTI3Mzk4IiBtYXhsb249IjE0LjUyODc5ODA1NDQ0Mzc0NCIvPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8L21ldGFkYXRhPgo8cnRlPgogIDxydGVwdCBsYXQ9IjUwLjI5MTA5OTQ5MTk3MzE2NCIgbG9uPSIxNC4zOTU0MjI4ODQ4Mjk3NzQiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMzA1MzA1MTMxMzQwMzMzIiBsb249IjE0LjQyOTM1ODU3ODg3MzU2NSI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yODU1NzUwNzY2NjM3MTIiIGxvbj0iMTQuNDU0NjEzMDQ4ODU5NjQyIj4KICA8L3J0ZXB0PgogIDxydGVwdCBsYXQ9IjUwLjMwNjA5NDMzMzUyNzM5OCIgbG9uPSIxNC40ODE0NDU5MjMyMTk4NDgiPgogIDwvcnRlcHQ+CiAgPHJ0ZXB0IGxhdD0iNTAuMjcxMzY5NDM3Mjk2NTQyIiBsb249IjE0LjUwMDM4Njc3NTcwOTQwNyI+CiAgPC9ydGVwdD4KICA8cnRlcHQgbGF0PSI1MC4yOTgyMDIzMTE2NTY3NTIiIGxvbj0iMTQuNTI4Nzk4MDU0NDQzNzQ0Ij4KICA8L3J0ZXB0Pgo8L3J0ZT4KPC9ncHg+Cg=="
+        }
+      ]
+    }
+  },
+  {
+    "description": "enter distance, upload a file, then log route by entering distance",
+    "loggedRoutes": [
+      {
+        "date": "2025-05-20",
+        "direction": "toWork",
+        "state": "empty"
+      }
+    ],
+    "inputValues": [
+      {
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "inputValue": 1000
+      },
+      {
+        "transport": "bicycle",
+        "inputType": "upload-file"
+      },
+      {
+        "transport": "bicycle",
+        "inputType": "input-number",
+        "inputValue": 1000
+      }
+    ],
+    "apiResponseDistance": 10000,
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-20",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 10000,
+          "sourceApplication": "RTWBB web app"
         }
       ]
     }
