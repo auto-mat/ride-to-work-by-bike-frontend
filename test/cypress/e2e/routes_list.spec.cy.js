@@ -352,7 +352,7 @@ describe('Routes list page', () => {
                 });
             });
             // click save button
-            cy.dataCy('button-save').click();
+            cy.dataCy('button-save-bottom').click();
             // wait for API call and verify payload if exists
             if (testCase.apiPayload) {
               cy.waitForPostTripsApi(testCase.apiPayload);
