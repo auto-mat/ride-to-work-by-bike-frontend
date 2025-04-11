@@ -50,9 +50,12 @@ import { useTripsStore } from '../../stores/trips';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import { routeFormFieldOptions } from './utils/';
+
 // types
 import type { RouteItem } from '../types/Route';
 import type { Logger } from '../types/Logger';
+import type { FormOption } from '../types/Form';
 
 export default defineComponent({
   name: 'RouteCalendarPanel',
@@ -84,6 +87,16 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
+
+    const optionsAction: FormOption[] = [
+      ...routeFormFieldOptions,
+      /* Disable trace to map action option menu item
+      {
+        label: i18n.global.t('routes.actionTraceMap'),
+        value: RouteInputType.inputMap,
+      },
+      */
+    ];
 
     // Make props into computed ref so it can be passed as a reactive value.
     const routes = computed(() => props.routes);
@@ -168,6 +181,7 @@ export default defineComponent({
       isSaveBtnDisabled,
       isShownDistance,
       minWidth,
+      optionsAction,
       transportType,
       onSave,
     };
@@ -225,6 +239,7 @@ export default defineComponent({
               v-show="isShownDistance"
               v-model="distance"
               :modelAction="action"
+              :optionsAction="optionsAction"
               @update:modelAction="action = $event"
               class="q-mt-none"
               data-cy="route-input-distance"

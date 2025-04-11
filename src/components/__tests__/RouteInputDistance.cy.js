@@ -2,6 +2,8 @@ import { colors } from 'quasar';
 import RouteInputDistance from 'components/routes/RouteInputDistance.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { RouteInputType } from '../types/Route';
+import { routeFormFieldOptions } from '../routes/utils';
 
 // composables
 const { getPaletteColor } = colors;
@@ -29,12 +31,24 @@ const valueOne = '1.00';
 const valueHalf = '0.50';
 const valueEmpty = '';
 const { defaultDistanceZero } = rideToWorkByBikeConfig;
+const optionsAction = [
+  ...routeFormFieldOptions,
+  {
+    label: i18n.global.t('routes.actionCopyYesterday'),
+    value: RouteInputType.copyYesterday,
+  },
+  {
+    label: i18n.global.t('routes.actionTraceMap'),
+    value: RouteInputType.inputMap,
+  },
+];
 
 describe('<RouteInputDistance>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
         'actionInputDistance',
+        'actionCopyYesterday',
         'actionTraceMap',
         'buttonTraceMap',
         'labelDistance',
@@ -50,8 +64,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
+          optionsAction,
         },
       });
       cy.viewport('macbook-16');
@@ -80,8 +95,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
+          optionsAction,
         },
       });
       cy.viewport('macbook-16');
@@ -108,8 +124,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -125,8 +142,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -140,8 +158,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueEmpty,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -154,8 +173,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueMinusOne,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -168,8 +188,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: valueHalf,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -182,8 +203,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-map',
+          modelAction: RouteInputType.inputMap,
           modelValue: defaultDistanceZero,
+          optionsAction,
         },
       });
       cy.viewport('iphone-6');
@@ -197,8 +219,9 @@ describe('<RouteInputDistance>', () => {
     beforeEach(() => {
       cy.mount(RouteInputDistance, {
         props: {
-          modelAction: 'input-number',
+          modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
+          optionsAction,
           hasValidation: false,
         },
       });
@@ -206,6 +229,30 @@ describe('<RouteInputDistance>', () => {
     });
 
     isNotValidatedTests();
+  });
+
+  context('desktop - single action option', () => {
+    beforeEach(() => {
+      cy.mount(RouteInputDistance, {
+        props: {
+          modelAction: RouteInputType.inputNumber,
+          modelValue: defaultDistanceZero,
+          optionsAction: routeFormFieldOptions,
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('only renders one action option passed in props', () => {
+      cy.dataCy(selectorSelectAction).should('be.visible').click();
+      cy.get('.q-menu').within(() => {
+        cy.get('.q-item').should('have.length', 1);
+        cy.get('.q-item').should(
+          'contain',
+          i18n.global.t('routes.actionInputDistance'),
+        );
+      });
+    });
   });
 });
 

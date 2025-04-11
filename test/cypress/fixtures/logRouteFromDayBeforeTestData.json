@@ -1,0 +1,93 @@
+[
+  {
+    "description": "copy existing route from 25. May to new route on 26. May",
+    "inputValues": {
+      "daysToLog": [
+        { "date": "2025-05-26", "direction": "toWork", "transport": "bicycle" }
+      ]
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-26",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 5000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  {
+    "description": "copy existing route from 24. May to existing route on 25. May",
+    "inputValues": {
+      "daysToLog": [
+        { "date": "2025-05-25", "direction": "toWork", "transport": "by_foot" }
+      ]
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "by_foot",
+          "distanceMeters": 3000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  {
+    "description": "copy route (24. May) to route (25. May) and again to a new route (26. May)",
+    "inputValues": {
+      "daysToLog": [
+        { "date": "2025-05-25", "direction": "toWork", "transport": "bicycle" },
+        { "date": "2025-05-26", "direction": "toWork", "transport": "bicycle" }
+      ]
+    },
+    "apiPayload": {
+      "trips": [
+        {
+          "trip_date": "2025-05-25",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 3000,
+          "sourceApplication": "RTWBB web app"
+        },
+        {
+          "trip_date": "2025-05-26",
+          "direction": "trip_to",
+          "commuteMode": "bicycle",
+          "distanceMeters": 3000,
+          "sourceApplication": "RTWBB web app"
+        }
+      ]
+    }
+  },
+  {
+    "description": "check notification message when route does not exist",
+    "inputValues": {
+      "daysToLog": [
+        {
+          "date": "2025-05-26",
+          "direction": "fromWork",
+          "transport": "bicycle"
+        }
+      ]
+    },
+    "notificationTranslationKey": "routes.messageCopyNoRoute"
+  },
+  {
+    "description": "check notification message when distance is not entered",
+    "inputValues": {
+      "daysToLog": [
+        {
+          "date": "2025-05-25",
+          "direction": "fromWork",
+          "transport": "bicycle"
+        }
+      ]
+    },
+    "notificationTranslationKey": "routes.messageCopyNoDistance"
+  }
+]

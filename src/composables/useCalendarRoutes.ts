@@ -5,7 +5,11 @@ import { computed, ref } from 'vue';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // enums
-import { TransportDirection, TransportType } from '../components/types/Route';
+import {
+  RouteInputType,
+  TransportDirection,
+  TransportType,
+} from '../components/types/Route';
 
 // types
 import type { Ref } from 'vue';
@@ -70,7 +74,7 @@ export const useCalendarRoutes = (days: Ref<RouteDay[]>) => {
             direction: activeRoute.direction,
             transport: TransportType.bike,
             distance: defaultDistanceZero,
-            inputType: 'input-number',
+            inputType: RouteInputType.inputNumber,
             routeFeature: null,
           });
         }

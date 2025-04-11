@@ -2,6 +2,12 @@
 import type { TimestampOrNull } from '@quasar/quasar-ui-qcalendar';
 import type { Feature } from 'ol';
 
+export enum RouteInputType {
+  inputNumber = 'input-number',
+  copyYesterday = 'copy-yesterday',
+  inputMap = 'input-map',
+}
+
 export enum TransportDirection {
   toWork = 'toWork',
   fromWork = 'fromWork',
@@ -33,8 +39,6 @@ export type RouteItem = {
   inputType?: RouteInputType;
   routeFeature: RouteFeature | null;
 };
-
-export type RouteInputType = 'input-number' | 'input-map';
 
 export type RouteDay = {
   id: string;

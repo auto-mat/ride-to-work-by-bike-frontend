@@ -1,19 +1,32 @@
 {
-  "count": 2,
-  "next": "https://test.dopracenakole.cz/rest/trips/?limit=1&offset=1",
+  "count": 3,
+  "next": "https://test.dopracenakole.cz/rest/trips/?limit=2&offset=1",
   "previous": null,
   "results": [
     {
       "distanceMeters": 5000,
       "durationSeconds": 1200,
       "commuteMode": "by_foot",
-      "sourceApplication": "app",
+      "sourceApplication": "RTWBB web app",
       "trip_date": "2025-05-25",
       "sourceId": null,
       "file": null,
       "description": "Morning walk",
       "id": 1771208,
       "direction": "trip_to",
+      "track": null
+    },
+    {
+      "distanceMeters": 0,
+      "durationSeconds": null,
+      "commuteMode": "by_other_vehicle",
+      "sourceApplication": "RTWBB web app",
+      "trip_date": "2025-05-24",
+      "sourceId": null,
+      "file": null,
+      "description": "afternoon",
+      "id": 1771209,
+      "direction": "trip_from",
       "track": null
     }
   ]

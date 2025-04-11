@@ -31,8 +31,8 @@ import { computed, defineComponent } from 'vue';
 import { i18n } from '../../boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
-// types
-import type { FormOption } from '../types/Form';
+// enums
+import { RouteInputType } from '../types/Route';
 
 // utils
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
@@ -50,6 +50,10 @@ export default defineComponent({
     },
     modelAction: {
       type: String,
+      required: true,
+    },
+    optionsAction: {
+      type: Array as () => RouteInputType[],
       required: true,
     },
     hasValidation: {
@@ -80,32 +84,27 @@ export default defineComponent({
       },
     });
 
-    const optionsAction: FormOption[] = [
-      {
-        label: i18n.global.t('routes.actionInputDistance'),
-        value: 'input-number',
-      },
-      /* Disable trace to map action option menu item
-      {
-        label: i18n.global.t('routes.actionTraceMap'),
-        value: 'input-map',
-      },
-      */
-    ];
-
     const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
 
     const { isFilled, isAboveZero } = useValidation();
+
+    const isShownDistance = computed((): boolean => {
+      return [
+        RouteInputType.inputNumber,
+        RouteInputType.copyYesterday,
+      ].includes(action.value as RouteInputType);
+    });
 
     return {
       action,
       customSVGIconsFilePath,
       distance,
-      optionsAction,
       i18n,
       isFilled,
       isAboveZero,
+      isShownDistance,
       localizedFloatNumStrToFloatNumber,
+      RouteInputType,
     };
   },
 });
@@ -135,7 +134,7 @@ export default defineComponent({
           />
         </div>
         <div
-          v-if="action === 'input-number'"
+          v-if="isShownDistance"
           class="col-auto items-center"
           data-cy="section-input-number"
         >
@@ -180,7 +179,7 @@ export default defineComponent({
           </q-input>
         </div>
         <div
-          v-else-if="action === 'input-map'"
+          v-else-if="action === RouteInputType.inputMap"
           class="col-auto items-center"
           data-cy="section-input-map"
         >

@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
+import logRouteFromDayBeforeTestData from '../fixtures/logRouteFromDayBeforeTestData.json';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
@@ -304,6 +305,66 @@ describe('Routes list page', () => {
                 defLocale,
               ),
             );
+          });
+        });
+      });
+    });
+
+    // New generated tests
+    logRouteFromDayBeforeTestData.forEach((testCase) => {
+      it(`${testCase.description}`, () => {
+        cy.get('@i18n').then((i18n) => {
+          cy.get('@config').then((config) => {
+            // intercept API call with response matching the payload
+            if (testCase.apiPayload) {
+              const responseBody = {
+                trips: testCase.apiPayload.trips.map((trip, index) => ({
+                  id: index + 1,
+                  ...trip,
+                  durationSeconds: null,
+                  sourceId: null,
+                  file: null,
+                  description: '',
+                  track: null,
+                })),
+              };
+              cy.interceptPostTripsApi(config, i18n, responseBody);
+            }
+            // for each day to log
+            testCase.inputValues.daysToLog.forEach((dayToLog) => {
+              // find the route by date and direction
+              cy.get(`[data-date="${dayToLog.date}"]`)
+                .should('be.visible')
+                .find(`[data-direction="${dayToLog.direction}"]`)
+                .should('be.visible')
+                .within(() => {
+                  // select transport type
+                  if (dayToLog.transport) {
+                    cy.dataCy('button-toggle-transport').should('be.visible');
+                    cy.dataCy('section-transport')
+                      .find(`[data-value="${dayToLog.transport}"]`)
+                      .click();
+                  }
+                  // select copy from yesterday action
+                  cy.dataCy('select-action').select(
+                    i18n.global.t('routes.actionCopyYesterday'),
+                  );
+                });
+            });
+            // click save button
+            cy.dataCy('button-save-bottom').click();
+            // wait for API call and verify payload if exists
+            if (testCase.apiPayload) {
+              cy.waitForPostTripsApi(testCase.apiPayload);
+            }
+            // check notification if exists
+            if (testCase.notificationTranslationKey) {
+              cy.get('.q-notification').should('be.visible');
+              cy.get('.q-notification').should(
+                'contain',
+                i18n.global.t(testCase.notificationTranslationKey),
+              );
+            }
           });
         });
       });

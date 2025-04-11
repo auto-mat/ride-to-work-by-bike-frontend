@@ -5,11 +5,11 @@ import { computed, ref, watch } from 'vue';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // enums
-import { TransportType } from 'src/components/types/Route';
+import { RouteInputType, TransportType } from 'src/components/types/Route';
 
 // types
 import type { Ref } from 'vue';
-import type { RouteInputType, RouteItem } from 'src/components/types/Route';
+import type { RouteItem } from 'src/components/types/Route';
 
 // utils
 import { hasTransportDistance } from '../utils/has_transport_distance';
@@ -18,7 +18,7 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
   const { defaultDistanceZero } = rideToWorkByBikeConfig;
   const routesCount = computed((): number => routes.value.length);
 
-  const action = ref<RouteInputType>('input-number');
+  const action = ref<RouteInputType>(RouteInputType.inputNumber);
   const distance = ref<string>(defaultDistanceZero);
   const transportType = ref<TransportType | null>(null);
 
@@ -29,12 +29,12 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
    */
   const setInputsFromRoute = (routes: RouteItem[]): void => {
     if (routes.length === 1) {
-      action.value = routes[0].inputType || 'input-number';
+      action.value = routes[0].inputType || RouteInputType.inputNumber;
       distance.value = routes[0].distance || defaultDistanceZero;
       transportType.value = routes[0].transport || null;
     } else {
       // multiple routes = unlogged - set default entry values
-      action.value = 'input-number';
+      action.value = RouteInputType.inputNumber;
       distance.value = defaultDistanceZero;
       transportType.value = TransportType.bike;
     }
