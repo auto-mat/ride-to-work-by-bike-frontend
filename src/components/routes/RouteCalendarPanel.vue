@@ -148,6 +148,13 @@ export default defineComponent({
         });
         return;
       }
+      // reset input values based on selected action
+      if (action.value === 'upload-file') {
+        distance.value = defaultDistanceZero;
+      }
+      if (action.value === 'input-number') {
+        file.value = null;
+      }
       // create route items with settings from panel
       const routeItems: RouteItem[] = routes.value.map((route) => ({
         ...route,
