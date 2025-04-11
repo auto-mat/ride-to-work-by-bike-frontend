@@ -211,6 +211,8 @@ export default defineComponent({
         ...props.route,
         distance: distanceNew,
         inputType: action.value,
+        // clear file (if previously uploaded)
+        file: null,
         dirty,
       });
       distance.value = distanceNew;
@@ -243,7 +245,6 @@ export default defineComponent({
         emit('update:route', {
           ...props.route,
           dirty: true,
-          // save selected action (upload-file)
           inputType: 'upload-file',
           // set distance to zero (file has priority)
           distance: defaultDistanceZero,
