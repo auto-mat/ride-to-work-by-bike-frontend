@@ -188,7 +188,6 @@ export {
   localizedFloatNumStrToFloatNumber,
   requestDefaultHeader,
   requestTokenHeader,
-  requestMultipartFormDataHeader,
   rgbaColorObjectToString,
   timestampToDatetimeString,
 };
