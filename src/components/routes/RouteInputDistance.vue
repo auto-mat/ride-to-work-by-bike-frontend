@@ -245,8 +245,8 @@ export default defineComponent({
             v-model="uploadFile"
             :label="$t('routes.labelUploadFile')"
             :hint="$t('routes.hintUploadFile')"
-            accept=".gpx, .gz"
-            max-file-size="20480"
+            accept="*.gpx, *.gz"
+            max-file-size="5242880"
             data-cy="input-file"
           />
         </div>
