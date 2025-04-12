@@ -261,7 +261,7 @@ export default defineComponent({
           class="col items-center"
           data-cy="section-input-map"
         >
-          <!-- Input: File (limited to 20kb) -->
+          <!-- Input: File -->
           <q-file
             dense
             outlined
