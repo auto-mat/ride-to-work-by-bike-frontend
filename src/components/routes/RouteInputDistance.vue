@@ -25,6 +25,7 @@
  */
 
 // libraries
+import { Notify } from 'quasar';
 import { computed, defineComponent } from 'vue';
 
 // composables
@@ -41,6 +42,7 @@ import { RouteInputType } from '../types/Route';
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
 
 // types
+import type { QRejectedEntry } from 'quasar';
 import type { FormOption } from '../types/Form';
 
 const { defaultDistanceZero } = rideToWorkByBikeConfig;
@@ -71,6 +73,11 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'update:modelAction', 'update:modelFile'],
   setup(props, { emit }) {
+    // constants
+    const maxFileSizeMegabytes = 5;
+    const maxFileSizeBytes = maxFileSizeMegabytes * 1024 * 1024; // convert MB to bytes
+    const acceptedFileFormats = '.gpx, .gz';
+
     // model action
     const action = computed({
       get(): string {
@@ -112,6 +119,32 @@ export default defineComponent({
       ].includes(action.value as RouteInputType);
     });
 
+    /**
+     * Handle file rejection. By displaying a notification.
+     * We expect only one rejected entry (single file upload).
+     * @param rejectedEntries - The rejected entries.
+     */
+    const onFileRejected = (rejectedEntries: QRejectedEntry[]): void => {
+      if (!rejectedEntries.length) {
+        return;
+      }
+      if (rejectedEntries[0].failedPropValidation === 'max-file-size') {
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t('routes.messageFileTooLarge', {
+            size: `${maxFileSizeMegabytes}MB`,
+          }),
+        });
+      } else if (rejectedEntries[0].failedPropValidation === 'accept') {
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t('routes.messageFileInvalidFormat', {
+            formats: acceptedFileFormats,
+          }),
+        });
+      }
+    };
+
     return {
       action,
       customSVGIconsFilePath,
@@ -123,6 +156,9 @@ export default defineComponent({
       localizedFloatNumStrToFloatNumber,
       RouteInputType,
       uploadFile,
+      onFileRejected,
+      acceptedFileFormats,
+      maxFileSizeBytes,
     };
   },
 });
@@ -232,9 +268,10 @@ export default defineComponent({
             v-model="uploadFile"
             :label="$t('routes.labelUploadFile')"
             :hint="$t('routes.hintUploadFile')"
-            accept=".gpx, .gz"
-            max-file-size="5242880"
+            :accept="acceptedFileFormats"
+            :max-file-size="maxFileSizeBytes"
             data-cy="input-file"
+            @rejected="onFileRejected"
           />
         </div>
       </div>
