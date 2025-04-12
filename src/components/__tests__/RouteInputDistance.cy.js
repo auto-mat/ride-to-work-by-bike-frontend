@@ -52,6 +52,8 @@ describe('<RouteInputDistance>', () => {
         'actionTraceMap',
         'buttonTraceMap',
         'labelDistance',
+        'messageFileInvalidFormat',
+        'messageFileTooLarge',
       ],
       'routes',
       i18n,
