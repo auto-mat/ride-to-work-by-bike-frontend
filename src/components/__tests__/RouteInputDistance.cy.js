@@ -50,8 +50,11 @@ describe('<RouteInputDistance>', () => {
         'actionInputDistance',
         'actionCopyYesterday',
         'actionTraceMap',
+        'actionUploadFile',
         'buttonTraceMap',
+        'hintUploadFile',
         'labelDistance',
+        'labelUploadFile',
         'messageFileInvalidFormat',
         'messageFileTooLarge',
       ],
@@ -245,10 +248,10 @@ describe('<RouteInputDistance>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('only renders one action option passed in props', () => {
+    it('renders the number of action options passed in props', () => {
       cy.dataCy(selectorSelectAction).should('be.visible').click();
       cy.get('.q-menu').within(() => {
-        cy.get('.q-item').should('have.length', 1);
+        cy.get('.q-item').should('have.length', routeFormFieldOptions.length);
         cy.get('.q-item').should(
           'contain',
           i18n.global.t('routes.actionInputDistance'),
