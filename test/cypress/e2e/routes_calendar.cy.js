@@ -177,6 +177,71 @@ describe('Routes calendar page', () => {
         });
       });
     });
+
+    it('allows to upload a file and shows notification if file is invalid', () => {
+      cy.get('@i18n').then((i18n) => {
+        // wait for routes calendar to be visible
+        cy.dataCy('routes-calendar').should('be.visible');
+        // click on the calendar item to open panel
+        cy.get('[data-date="2025-05-20"]')
+          .find('[data-cy="calendar-item-icon-towork-empty"]')
+          .click({ force: true });
+        // route calendar panel should be open
+        cy.dataCy('route-calendar-panel').should('exist');
+        // setup initial state
+        cy.dataCy('route-calendar-panel').within(() => {
+          // select transport type
+          cy.dataCy('button-toggle-transport').should('be.visible');
+          cy.dataCy('route-input-transport-type')
+            .find('[data-value="bicycle"]')
+            .click();
+          // select upload file action
+          cy.dataCy('select-action').should('be.visible');
+          cy.dataCy('select-action').select(
+            i18n.global.t('routes.actionUploadFile'),
+          );
+        });
+        // test invalid format
+        cy.dataCy('route-calendar-panel').within(() => {
+          cy.dataCy('input-file').selectFile(
+            'test/cypress/fixtures/route.jpg',
+            { force: true },
+          );
+        });
+        cy.contains(
+          i18n.global.t('routes.messageFileInvalidFormat', {
+            formats: '.gpx, .gz',
+          }),
+        ).should('be.visible');
+        // test file too large
+        cy.dataCy('route-calendar-panel').within(() => {
+          cy.dataCy('input-file').selectFile(
+            'test/cypress/fixtures/routeOverMaxSize.gpx',
+            { force: true },
+          );
+        });
+        cy.contains(
+          i18n.global.t('routes.messageFileTooLarge', {
+            size: '5MB',
+          }),
+        ).should('be.visible');
+        // test valid file
+        cy.dataCy('route-calendar-panel').within(() => {
+          cy.dataCy('input-file').selectFile(
+            'test/cypress/fixtures/route.gpx',
+            { force: true },
+          );
+        });
+        cy.get('.q-notification').should('not.exist');
+        // test valid file
+        cy.dataCy('route-calendar-panel').within(() => {
+          cy.dataCy('input-file').selectFile('test/cypress/fixtures/route.gz', {
+            force: true,
+          });
+        });
+        cy.get('.q-notification').should('not.exist');
+      });
+    });
   });
 
   context('desktop - with logged routes', () => {

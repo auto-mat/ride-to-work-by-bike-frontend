@@ -221,6 +221,73 @@ describe('Routes list page', () => {
         });
       });
     });
+
+    it('allows to upload a file and shows notification if file is invalid', () => {
+      cy.get('@i18n').then((i18n) => {
+        // wait for routes list to be visible
+        cy.dataCy('route-list-edit').should('be.visible');
+        // select and interact with the route item
+        cy.get('[data-date="2025-05-20"]')
+          .should('be.visible')
+          .find('[data-direction="fromWork"]')
+          .should('be.visible')
+          .then(($routeItem) => {
+            // setup initial state
+            cy.wrap($routeItem).within(() => {
+              // select transport type
+              cy.dataCy('button-toggle-transport').should('be.visible');
+              cy.dataCy('section-transport')
+                .find('[data-value="bicycle"]')
+                .click();
+              // select upload file action
+              cy.dataCy('select-action').should('be.visible');
+              cy.dataCy('select-action').select(
+                i18n.global.t('routes.actionUploadFile'),
+              );
+            });
+            // test invalid format
+            cy.wrap($routeItem).within(() => {
+              cy.dataCy('input-file').selectFile(
+                'test/cypress/fixtures/route.jpg',
+                { force: true },
+              );
+            });
+            cy.contains(
+              i18n.global.t('routes.messageFileInvalidFormat', {
+                formats: '.gpx, .gz',
+              }),
+            ).should('be.visible');
+            // test file too large
+            cy.wrap($routeItem).within(() => {
+              cy.dataCy('input-file').selectFile(
+                'test/cypress/fixtures/routeOverMaxSize.gpx',
+                { force: true },
+              );
+            });
+            cy.contains(
+              i18n.global.t('routes.messageFileTooLarge', {
+                size: '5MB',
+              }),
+            ).should('be.visible');
+            // test valid file
+            cy.wrap($routeItem).within(() => {
+              cy.dataCy('input-file').selectFile(
+                'test/cypress/fixtures/route.gpx',
+                { force: true },
+              );
+            });
+            cy.get('.q-notification').should('not.exist');
+            // test valid file
+            cy.wrap($routeItem).within(() => {
+              cy.dataCy('input-file').selectFile(
+                'test/cypress/fixtures/route.gz',
+                { force: true },
+              );
+            });
+            cy.get('.q-notification').should('not.exist');
+          });
+      });
+    });
   });
 
   context('desktop - with logged routes', () => {
