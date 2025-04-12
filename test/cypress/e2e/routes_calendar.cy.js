@@ -3,6 +3,7 @@ import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { systemTimeLastDayOfCompetitionMay } from '../support/commonTests';
 import testDataUploadFile from '../fixtures/routesCalendarPanelUploadTestData.json';
+import { RouteInputType } from '../../../src/components/types/Route';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
@@ -261,7 +262,7 @@ describe('Routes calendar page', () => {
 
     // generate tests based on fixture routesCalendarPanelUploadTestData.json
     testDataUploadFile.forEach((testCase) => {
-      it.only(testCase.description, () => {
+      it(testCase.description, () => {
         cy.get('@i18n').then((i18n) => {
           cy.get('@config').then((config) => {
             // intercept API call with response matching the payload
@@ -294,7 +295,7 @@ describe('Routes calendar page', () => {
               cy.dataCy('route-input-transport-type')
                 .find(`[data-value="${inputValue.transport}"]`)
                 .click({ force: true });
-              if (inputValue.inputType === 'upload-file') {
+              if (inputValue.inputType === RouteInputType.uploadFile) {
                 // select upload file action
                 cy.dataCy('select-action').should('be.visible');
                 cy.dataCy('select-action').select(
