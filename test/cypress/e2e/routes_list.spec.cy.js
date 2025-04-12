@@ -2,6 +2,8 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import logRouteFromDayBeforeTestData from '../fixtures/logRouteFromDayBeforeTestData.json';
+import testDataUploadFile from '../fixtures/routesCalendarPanelUploadTestData.json';
+import { RouteInputType } from 'src/components/types/Route';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
@@ -365,6 +367,75 @@ describe('Routes list page', () => {
                 i18n.global.t(testCase.notificationTranslationKey),
               );
             }
+          });
+        });
+      });
+    });
+
+    // generate tests based on fixture routesCalendarPanelUploadTestData.json
+    testDataUploadFile.forEach((testCase) => {
+      it(testCase.description, () => {
+        cy.get('@i18n').then((i18n) => {
+          cy.get('@config').then((config) => {
+            // intercept API call with response matching the payload
+            const distanceMeters = testCase.apiResponseDistance;
+            const responseBody = {
+              trips: testCase.apiPayload.trips.map((trip, index) => ({
+                id: index + 1,
+                ...trip,
+                distanceMeters,
+                durationSeconds: null,
+                sourceId: null,
+                description: '',
+                track: null,
+              })),
+            };
+            cy.interceptPostTripsApi(config, i18n, responseBody);
+
+            // for each logged route, find and edit the route list item
+            testCase.loggedRoutes.forEach((route) => {
+              cy.get(`[data-date="${route.date}"]`)
+                .find(`[data-direction="${route.direction}"]`)
+                .within(() => {
+                  testCase.inputValues.forEach((inputValue) => {
+                    // input transport type
+                    cy.dataCy('button-toggle-transport').should('be.visible');
+                    cy.dataCy('section-transport')
+                      .find(`[data-value="${inputValue.transport}"]`)
+                      .click();
+                    if (inputValue.inputType === RouteInputType.uploadFile) {
+                      // select upload file action
+                      cy.dataCy('select-action').should('be.visible');
+                      cy.dataCy('select-action').select(
+                        i18n.global.t('routes.actionUploadFile'),
+                      );
+                      // upload file
+                      cy.dataCy('input-file').selectFile(
+                        'test/cypress/fixtures/route.gpx',
+                        { force: true },
+                      );
+                    } else if (
+                      inputValue.inputType === RouteInputType.inputNumber
+                    ) {
+                      // select input number action
+                      cy.dataCy('select-action').should('be.visible');
+                      cy.dataCy('select-action').select(
+                        i18n.global.t('routes.actionInputDistance'),
+                      );
+                      // input distance
+                      cy.dataCy('section-input-number').should('be.visible');
+                      cy.dataCy('section-input-number').find('input').clear();
+                      cy.dataCy('section-input-number')
+                        .find('input')
+                        .type(inputValue.inputValue);
+                    }
+                  });
+                });
+            });
+            // click save button
+            cy.dataCy('button-save-bottom').click();
+            // wait for API call and verify payload
+            cy.waitForPostTripsApi(testCase.apiPayload);
           });
         });
       });

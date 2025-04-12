@@ -171,7 +171,7 @@ export default defineComponent({
       } else {
         emit('update:route', {
           ...props.route,
-          inputType: action.value,
+          inputType: actionNew,
         });
       }
     };
