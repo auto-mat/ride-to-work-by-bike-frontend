@@ -31,13 +31,17 @@ import { computed, defineComponent } from 'vue';
 import { i18n } from '../../boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // enums
 import { RouteInputType } from '../types/Route';
 
 // utils
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
 
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+// types
+import type { FormOption } from '../types/Form';
 
 const { defaultDistanceZero } = rideToWorkByBikeConfig;
 
@@ -53,7 +57,7 @@ export default defineComponent({
       required: true,
     },
     optionsAction: {
-      type: Array as () => RouteInputType[],
+      type: Array as () => FormOption[],
       required: true,
     },
     hasValidation: {
@@ -96,23 +100,6 @@ export default defineComponent({
         emit('update:modelFile', value);
       },
     });
-
-    const optionsAction: FormOption[] = [
-      {
-        label: i18n.global.t('routes.actionInputDistance'),
-        value: 'input-number',
-      },
-      {
-        label: i18n.global.t('routes.actionUploadFile'),
-        value: 'upload-file',
-      },
-      /* Disable trace to map action option menu item
-      {
-        label: i18n.global.t('routes.actionTraceMap'),
-        value: 'input-map',
-      },
-      */
-    ];
 
     const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
 
@@ -234,7 +221,7 @@ export default defineComponent({
           </q-btn>
         </div>
         <div
-          v-else-if="action === 'upload-file'"
+          v-else-if="action === RouteInputType.uploadFile"
           class="col items-center"
           data-cy="section-input-map"
         >

@@ -44,18 +44,22 @@ import { useApiPostTrips } from '../../composables/useApiPostTrips';
 // adapters
 import { tripsAdapter } from '../../adapters/tripsAdapter';
 
-// stores
-import { useTripsStore } from '../../stores/trips';
-
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
-import { routeFormFieldOptions } from './utils/';
+// enums
+import { RouteInputType } from '../types/Route';
+
+// stores
+import { useTripsStore } from '../../stores/trips';
 
 // types
 import type { RouteItem } from '../types/Route';
 import type { Logger } from '../types/Logger';
 import type { FormOption } from '../types/Form';
+
+// utils
+import { routeFormFieldOptions } from './utils/';
 
 export default defineComponent({
   name: 'RouteCalendarPanel',
@@ -149,10 +153,10 @@ export default defineComponent({
         return;
       }
       // reset input values based on selected action
-      if (action.value === 'upload-file') {
+      if (action.value === RouteInputType.uploadFile) {
         distance.value = defaultDistanceZero;
       }
-      if (action.value === 'input-number') {
+      if (action.value === RouteInputType.inputNumber) {
         file.value = null;
       }
       // create route items with settings from panel

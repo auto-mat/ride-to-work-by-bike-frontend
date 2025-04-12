@@ -6,6 +6,7 @@ export enum RouteInputType {
   inputNumber = 'input-number',
   copyYesterday = 'copy-yesterday',
   inputMap = 'input-map',
+  uploadFile = 'upload-file',
 }
 
 export enum TransportDirection {
