@@ -324,6 +324,22 @@ describe('Routes calendar page', () => {
             cy.dataCy('dialog-save-button').click();
             // wait for API call and verify payload
             cy.waitForPostTripsApi(testCase.apiPayload);
+            // panel should be closed
+            cy.dataCy('route-calendar-panel').should('not.exist');
+            // verify that the routes are saved and updated in the UI
+            testCase.loggedRoutes.forEach((route) => {
+              cy.get(`[data-date="${route.date}"]`).find(
+                `[data-cy="calendar-item-icon-${route.direction.toLowerCase()}-logged"]`,
+              );
+              cy.get(`[data-date="${route.date}"]`).should(
+                'contain',
+                i18n.global.n(
+                  testCase.apiResponseDistance / 1000.0,
+                  'routeDistanceDecimalNumber',
+                  defLocale,
+                ),
+              );
+            });
           });
         });
       });
