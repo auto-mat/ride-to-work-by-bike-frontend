@@ -2,7 +2,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { systemTimeLastDayOfCompetitionMay } from '../support/commonTests';
-import testDataUploadFile from '../fixtures/routesCalendarPanelUploadTestData.json';
+import testDataUploadFile from '../fixtures/routesUploadFileTestData.json';
 import { RouteInputType } from '../../../src/components/types/Route';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
