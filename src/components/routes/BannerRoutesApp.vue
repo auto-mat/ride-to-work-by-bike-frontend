@@ -8,6 +8,7 @@
  * @props
  * - `app` (BannerRoutesAppType, required): The object representing banner data.
  *   It should be of type `BannerRoutesAppType`.
+ * - `loading` (boolean, optional): Whether the button is loading.
  *
  * @example
  * <banner-routes-app></banner-routes-app>
@@ -25,6 +26,10 @@ export default defineComponent({
   props: {
     app: {
       type: Object as () => BannerRoutesAppType,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
 });
@@ -78,6 +83,8 @@ export default defineComponent({
             outline
             rounded
             color="primary"
+            :disable="loading"
+            :loading="loading"
             :href="app.button.url"
             target="_blank"
             data-cy="banner-routes-app-button"

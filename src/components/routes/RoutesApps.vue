@@ -54,47 +54,54 @@ export default defineComponent({
 
     onMounted(async () => {
       if (apiTripsThirdPartyAppIdCyclers) {
-        // if app ID is available in config, fetch URL redirect link
-        const url = await loadOpenAppWithRestToken(
+        // if app ID is available in config, fetch URL for connect
+        const response = await loadOpenAppWithRestToken(
           apiTripsThirdPartyAppIdCyclers,
         );
-        apps.value.push({
-          title: 'Cyclers',
-          button: {
+        const url = response.app_url;
+        // if successfully fetched URL, add to apps
+        if (url) {
+          apps.value.push({
             title: 'Cyclers',
-            url,
-          },
-          image: {
-            src: '/image/logo-cyclers.webp',
-            alt: 'Cyclers logo',
-          },
-          linked: false,
-          linkable: true,
-        });
+            button: {
+              title: 'Cyclers',
+              url,
+            },
+            image: {
+              src: '/image/logo-cyclers.webp',
+              alt: 'Cyclers logo',
+            },
+            linked: false,
+            linkable: true,
+          });
+        }
       }
       if (apiTripsThirdPartyAppIdNaKolePrahou) {
-        // if app ID is available in config, fetch URL redirect link
-        const url = await loadOpenAppWithRestToken(
+        // if app ID is available in config, fetch URL for connect
+        const response = await loadOpenAppWithRestToken(
           apiTripsThirdPartyAppIdNaKolePrahou,
         );
-        apps.value.push({
-          title: 'Na kole Prahou',
-          button: {
+        const url = response.app_url;
+        // if successfully fetched URL, add to apps
+        if (url) {
+          apps.value.push({
             title: 'Na kole Prahou',
-            url,
-          },
-          image: {
-            src: '/image/logo-na-kole-prahou.webp',
-            alt: 'Na kole Prahou logo',
-          },
-          linked: false,
-          linkable: true,
-        });
+            button: {
+              title: 'Na kole Prahou',
+              url,
+            },
+            image: {
+              src: '/image/logo-na-kole-prahou.webp',
+              alt: 'Na kole Prahou logo',
+            },
+            linked: false,
+            linkable: true,
+          });
+        }
       }
     });
 
     const enabledAppsForManualLogging = false;
-
     const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
     const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
@@ -126,6 +133,7 @@ export default defineComponent({
           v-for="app in apps"
           :app="app"
           :key="app.title"
+          :loading="isLoading"
           data-cy="banner-routes-app"
         />
       </div>

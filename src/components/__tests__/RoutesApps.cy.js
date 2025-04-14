@@ -17,6 +17,11 @@ describe('<RoutesApps>', () => {
       'routes',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'getOpenAppWithRestToken',
+      i18n,
+    );
   });
 
   context('desktop', () => {

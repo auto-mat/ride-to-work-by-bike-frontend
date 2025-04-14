@@ -124,6 +124,11 @@ apiMessageError = "Nepodarilo sa overiť existenciu koordinátora organizácie"
 apiMessageErrorWithMessage = "Nepodarilo sa overiť existenciu koordinátora organizácie. Chyba: {error}"
 apiMessageSuccess = "Existencia koordinátora organizácie bola úspešne overená."
 
+[getOpenAppWithRestToken]
+apiMessageError = "Nepodarilo sa načítať odkaz pre integráciu s aplikáciou."
+apiMessageErrorWithMessage = "Nepodarilo sa načítať odkaz pre integráciu s aplikáciou. Chyba: {error}"
+apiMessageSuccess = "Odkaz pre integráciu s aplikáciou bol načítaný."
+
 [getPosts]
 apiMessageError = "Nepodarilo sa načítať vybrané príspevky."
 apiMessageErrorWithMessage = "Nepodarilo sa načítať vybrané príspevky. Chyba: {error}"

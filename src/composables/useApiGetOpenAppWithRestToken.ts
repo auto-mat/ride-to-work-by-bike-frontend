@@ -1,5 +1,5 @@
 // libraries
-import { ref, type Ref } from 'vue';
+import { ref } from 'vue';
 
 // composables
 import { useApi } from './useApi';
@@ -12,14 +12,13 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type {
+  OpenAppWithRestTokenResponse,
+  useApiGetOpenAppWithRestTokenReturn,
+} from '../components/types/ApiOpenAppWithRestToken';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
-
-interface useApiGetOpenAppWithRestTokenReturn {
-  isLoading: Ref<boolean>;
-  load: (appId: string) => Promise<string>;
-}
 
 /**
  * Get open app with rest token composable
@@ -37,9 +36,9 @@ export const useApiGetOpenAppWithRestToken = (
   /**
    * Load open app with rest token data
    * @param {string} appId - App ID to fetch data for
-   * @returns {Promise<string>} - Promise resolving to response data
+   * @returns {Promise<OpenAppWithRestTokenResponse>} - Promise resolving to response data
    */
-  const load = async (appId: string): Promise<string> => {
+  const load = async (appId: string): Promise<OpenAppWithRestTokenResponse> => {
     logger?.info(
       `Get open app with rest token for app <${appId}> from the API.`,
     );
@@ -50,7 +49,7 @@ export const useApiGetOpenAppWithRestToken = (
     requestTokenHeader_.Authorization +=
       await loginStore.getAccessTokenWithRefresh();
 
-    const { data } = await apiFetch<string>({
+    const { data } = await apiFetch<OpenAppWithRestTokenResponse>({
       endpoint: `${rideToWorkByBikeConfig.urlApiOpenAppWithRestToken}${appId}`,
       method: 'get',
       translationKey: 'getOpenAppWithRestToken',
@@ -59,10 +58,12 @@ export const useApiGetOpenAppWithRestToken = (
       logger,
     });
 
-    logger?.debug(`Open app with rest token response data <${data}>.`);
+    logger?.debug(
+      `Open app with rest token response data <${JSON.stringify(data)}>.`,
+    );
 
     isLoading.value = false;
-    return data ?? '';
+    return data ?? { app_url: '', token_expiration: '' };
   };
 
   return {

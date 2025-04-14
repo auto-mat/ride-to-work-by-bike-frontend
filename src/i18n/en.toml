@@ -124,6 +124,11 @@ apiMessageError = "Failed to verify the existence of organization coordinator"
 apiMessageErrorWithMessage = "Failed to verify the existence of organization coordinator. Error: {error}"
 apiMessageSuccess = "Organization coordinator existence was successfully verified."
 
+[getOpenAppWithRestToken]
+apiMessageError = "Failed to load the app integration link."
+apiMessageErrorWithMessage = "Failed to load the app integration link. Error: {error}"
+apiMessageSuccess = "App integration link was successfully loaded."
+
 [getPosts]
 apiMessageError = "Failed to load selected posts."
 apiMessageErrorWithMessage = "Failed to load selected posts. Error: {error}"
