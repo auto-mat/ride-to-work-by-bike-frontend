@@ -117,7 +117,7 @@ function coreTests() {
             .and('have.attr', 'target', '_blank');
           // second button - Na kole prahou
           cy.dataCy('banner-routes-app-button')
-            .last()
+            .eq(1)
             .should('have.attr', 'href', responseNaKolePrahou.app_url)
             .and('have.attr', 'target', '_blank');
           // // title manual

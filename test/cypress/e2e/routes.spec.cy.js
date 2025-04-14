@@ -12,6 +12,26 @@ describe('Routes page', () => {
         cy.wrap(config).as('config');
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
+        cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+          (responseNaKolePrahou) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdNaKolePrahou,
+              responseNaKolePrahou,
+            );
+          },
+        );
+        cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
+          (responseCyclers) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdCyclers,
+              responseCyclers,
+            );
+          },
+        );
       });
       cy.visit('#' + routesConf['routes']['children']['fullPath']);
       cy.window().should('have.property', 'i18n');
@@ -50,6 +70,26 @@ describe('Routes page', () => {
         cy.wrap(config).as('config');
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
+        cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+          (responseNaKolePrahou) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdNaKolePrahou,
+              responseNaKolePrahou,
+            );
+          },
+        );
+        cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
+          (responseCyclers) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdCyclers,
+              responseCyclers,
+            );
+          },
+        );
       });
       cy.visit('#' + routesConf['routes']['children']['fullPath']);
       cy.window().should('have.property', 'i18n');
@@ -100,6 +140,46 @@ function coreTests() {
           },
         );
       });
+    });
+  });
+
+  it('shows Apps tab and links to connect to apps', () => {
+    cy.get('@i18n').then((i18n) => {
+      // go to apps tab
+      cy.dataCy('route-tabs-button-app').should('be.visible').click();
+      // check that apps are visible
+      cy.dataCy('banner-routes-app')
+        .should('be.visible')
+        .should('have.length', 2);
+      // check that buttons have correct hrefs
+      cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
+        (responseCyclers) => {
+          cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+            (responseNaKolePrahou) => {
+              cy.dataCy('banner-routes-app')
+                .first()
+                .within(() => {
+                  cy.dataCy('banner-routes-app-title')
+                    .should('be.visible')
+                    .and('contain', i18n.global.t('routes.appCyclers'));
+                  cy.dataCy('banner-routes-app-button')
+                    .should('have.attr', 'href', responseCyclers.app_url)
+                    .and('have.attr', 'target', '_blank');
+                });
+              cy.dataCy('banner-routes-app')
+                .eq(1)
+                .within(() => {
+                  cy.dataCy('banner-routes-app-title')
+                    .should('be.visible')
+                    .and('contain', i18n.global.t('routes.appNaKolePrahou'));
+                  cy.dataCy('banner-routes-app-button')
+                    .should('have.attr', 'href', responseNaKolePrahou.app_url)
+                    .and('have.attr', 'target', '_blank');
+                });
+            },
+          );
+        },
+      );
     });
   });
 }

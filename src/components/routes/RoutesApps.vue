@@ -22,6 +22,7 @@ import BannerRoutesApp from './BannerRoutesApp.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import { useApiGetOpenAppWithRestToken } from '../../composables/useApiGetOpenAppWithRestToken';
 
 // config
@@ -67,14 +68,14 @@ export default defineComponent({
         // if successfully fetched URL, add to apps
         if (url) {
           apps.value.push({
-            title: 'Cyclers',
+            title: i18n.global.t('routes.appCyclers'),
             button: {
-              title: 'Cyclers',
+              title: i18n.global.t('routes.appCyclers'),
               url,
             },
             image: {
               src: '/image/logo-cyclers.webp',
-              alt: 'Cyclers logo',
+              alt: '',
             },
             linked: false,
             linkable: true,
@@ -90,14 +91,14 @@ export default defineComponent({
         // if successfully fetched URL, add to apps
         if (url) {
           apps.value.push({
-            title: 'Na kole Prahou',
+            title: i18n.global.t('routes.appNaKolePrahou'),
             button: {
-              title: 'Na kole Prahou',
+              title: i18n.global.t('routes.appNaKolePrahou'),
               url,
             },
             image: {
               src: '/image/logo-na-kole-prahou.webp',
-              alt: 'Na kole Prahou logo',
+              alt: '',
             },
             linked: false,
             linkable: true,
