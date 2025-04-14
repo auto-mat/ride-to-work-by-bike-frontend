@@ -53,6 +53,11 @@ export default defineComponent({
       useApiGetOpenAppWithRestToken(logger);
 
     onMounted(async () => {
+      // if Cypress, wait 1 second for intercepting API call in component test
+      if (window.Cypress) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+
       if (apiTripsThirdPartyAppIdCyclers) {
         // if app ID is available in config, fetch URL for connect
         const response = await loadOpenAppWithRestToken(

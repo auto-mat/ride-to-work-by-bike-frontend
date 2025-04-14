@@ -3526,3 +3526,53 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Intercept open app with rest token GET API call
+ * Provides `@openAppWithRestTokenRequest` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {String} appId - App ID to fetch data for
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptOpenAppWithRestTokenGetApi',
+  (config, i18n, appId, responseBody, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiOpenAppWithRestToken } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiOpenAppWithRestTokenLocalized = `${apiBaseUrl}${urlApiOpenAppWithRestToken}${appId}`;
+
+    cy.intercept('GET', urlApiOpenAppWithRestTokenLocalized, {
+      statusCode: responseStatusCode
+        ? responseStatusCode
+        : httpSuccessfullStatus,
+      body: responseBody,
+    }).as('openAppWithRestTokenRequest');
+  },
+);
+
+/**
+ * Wait for intercept open app with rest token API call and compare request/response object
+ * Wait for `@openAppWithRestTokenRequest` intercept
+ * @param {object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add('waitForOpenAppWithRestTokenApi', (responseBody) => {
+  cy.wait('@openAppWithRestTokenRequest').then(
+    (openAppWithRestTokenRequest) => {
+      if (openAppWithRestTokenRequest.response) {
+        expect(openAppWithRestTokenRequest.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(openAppWithRestTokenRequest.response.body).to.deep.equal(
+          responseBody,
+        );
+      }
+    },
+  );
+});
