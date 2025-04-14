@@ -51,6 +51,7 @@ export interface ConfigGlobal {
   rtwbbDonationOrderedProductName: string;
   checkRegisterChallengeStatusIntervalSeconds: number;
   checkRegisterChallengeStatusMaxRepetitions: number;
+  tripMaxFileUploadSizeMegabytes: number;
   feedRefreshCachedPostsIntervalHours: number;
   apiFeedMaxOffersNumber: number;
   apiFeedMaxPrizesNumber: number;

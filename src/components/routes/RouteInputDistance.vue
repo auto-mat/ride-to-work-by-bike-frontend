@@ -74,7 +74,8 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:modelAction', 'update:modelFile'],
   setup(props, { emit }) {
     // constants
-    const maxFileSizeMegabytes = 5;
+    const maxFileSizeMegabytes =
+      rideToWorkByBikeConfig.tripMaxFileUploadSizeMegabytes;
     const maxFileSizeBytes = maxFileSizeMegabytes * 1024 * 1024; // convert MB to bytes
     const acceptedFileFormats = '.gpx, .gz';
 
