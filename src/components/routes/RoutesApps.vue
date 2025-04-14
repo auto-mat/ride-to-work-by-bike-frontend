@@ -68,7 +68,7 @@ export default defineComponent({
             src: '/image/logo-cyclers.webp',
             alt: 'Cyclers logo',
           },
-          linked: true,
+          linked: false,
           linkable: true,
         });
       }
@@ -87,7 +87,7 @@ export default defineComponent({
             src: '/image/logo-na-kole-prahou.webp',
             alt: 'Na kole Prahou logo',
           },
-          linked: true,
+          linked: false,
           linkable: true,
         });
       }
