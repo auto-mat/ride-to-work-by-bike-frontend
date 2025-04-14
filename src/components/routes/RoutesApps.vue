@@ -15,7 +15,7 @@
  */
 
 // libraries
-import { defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 
 // components
@@ -39,7 +39,10 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const apps = ref<BannerRoutesAppType[]>([]);
+    const enabledAppsForManualLogging = false;
+    const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
+    const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
+
     const tripsStore = useTripsStore();
     const {
       getUrlAppCyclers,
@@ -48,18 +51,16 @@ export default defineComponent({
     } = storeToRefs(tripsStore);
 
     onMounted(async () => {
-      // if Cypress, wait 1 second for intercepting API call in component test
-      if (window.Cypress) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      }
-
       // load app URLs if not already loaded
       if (!getUrlAppCyclers.value && !getUrlAppNaKolePrahou.value) {
         await tripsStore.loadOpenAppWithRestToken();
       }
+    });
 
+    const apps = computed<BannerRoutesAppType[]>(() => {
+      const result: BannerRoutesAppType[] = [];
       if (getUrlAppCyclers.value) {
-        apps.value.push({
+        result.push({
           title: i18n.global.t('routes.appCyclers'),
           button: {
             title: i18n.global.t('routes.appCyclers'),
@@ -73,9 +74,8 @@ export default defineComponent({
           linkable: true,
         });
       }
-
       if (getUrlAppNaKolePrahou.value) {
-        apps.value.push({
+        result.push({
           title: i18n.global.t('routes.appNaKolePrahou'),
           button: {
             title: i18n.global.t('routes.appNaKolePrahou'),
@@ -89,11 +89,8 @@ export default defineComponent({
           linkable: true,
         });
       }
+      return result;
     });
-
-    const enabledAppsForManualLogging = false;
-    const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
-    const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
     return {
       apps,

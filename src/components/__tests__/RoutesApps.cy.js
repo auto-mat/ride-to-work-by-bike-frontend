@@ -1,11 +1,16 @@
+import { setActivePinia, createPinia } from 'pinia';
 import RoutesApps from 'components/routes/RoutesApps.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { useTripsStore } from 'src/stores/trips';
 
 // const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
 // const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
 describe('<RoutesApps>', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
@@ -29,23 +34,15 @@ describe('<RoutesApps>', () => {
       cy.mount(RoutesApps, {
         props: {},
       });
-      cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
-        (responseNaKolePrahou) => {
-          cy.interceptOpenAppWithRestTokenGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            rideToWorkByBikeConfig.apiTripsThirdPartyAppIdNaKolePrahou,
-            responseNaKolePrahou,
-          );
-        },
-      );
       cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
         (responseCyclers) => {
-          cy.interceptOpenAppWithRestTokenGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            rideToWorkByBikeConfig.apiTripsThirdPartyAppIdCyclers,
-            responseCyclers,
+          cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+            (responseNaKolePrahou) => {
+              cy.wrap(useTripsStore()).then((store) => {
+                store.urlAppCyclers = responseCyclers.app_url;
+                store.urlAppNaKolePrahou = responseNaKolePrahou.app_url;
+              });
+            },
           );
         },
       );
@@ -60,23 +57,15 @@ describe('<RoutesApps>', () => {
       cy.mount(RoutesApps, {
         props: {},
       });
-      cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
-        (responseNaKolePrahou) => {
-          cy.interceptOpenAppWithRestTokenGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            rideToWorkByBikeConfig.apiTripsThirdPartyAppIdNaKolePrahou,
-            responseNaKolePrahou,
-          );
-        },
-      );
       cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
         (responseCyclers) => {
-          cy.interceptOpenAppWithRestTokenGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            rideToWorkByBikeConfig.apiTripsThirdPartyAppIdCyclers,
-            responseCyclers,
+          cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+            (responseNaKolePrahou) => {
+              cy.wrap(useTripsStore()).then((store) => {
+                store.urlAppCyclers = responseCyclers.app_url;
+                store.urlAppNaKolePrahou = responseNaKolePrahou.app_url;
+              });
+            },
           );
         },
       );
@@ -92,9 +81,6 @@ function coreTests() {
     cy.fixture('apiGetOpenAppWithRestTokenCyclers').then((responseCyclers) => {
       cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
         (responseNaKolePrahou) => {
-          // wait for API calls
-          cy.waitForOpenAppWithRestTokenApi(responseCyclers);
-          cy.waitForOpenAppWithRestTokenApi(responseNaKolePrahou);
           // component
           cy.dataCy('routes-apps').should('be.visible');
           // title automatic
