@@ -15,7 +15,8 @@
  */
 
 // libraries
-import { defineComponent, inject, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 
 // components
 import BannerRoutesApp from './BannerRoutesApp.vue';
@@ -23,16 +24,12 @@ import SectionHeading from '../global/SectionHeading.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
-import { useApiGetOpenAppWithRestToken } from '../../composables/useApiGetOpenAppWithRestToken';
+import { useTripsStore } from '../../stores/trips';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
-// fixtures
-// import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
-
 // types
-import type { Logger } from '../types/Logger';
 import type { BannerRoutesAppType } from '../types/Banner';
 
 export default defineComponent({
@@ -42,16 +39,13 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
-    const logger = inject('vuejs3-logger') as Logger | null;
     const apps = ref<BannerRoutesAppType[]>([]);
-
+    const tripsStore = useTripsStore();
     const {
-      apiTripsThirdPartyAppIdCyclers,
-      apiTripsThirdPartyAppIdNaKolePrahou,
-    } = rideToWorkByBikeConfig;
-
-    const { load: loadOpenAppWithRestToken, isLoading } =
-      useApiGetOpenAppWithRestToken(logger);
+      getUrlAppCyclers,
+      getUrlAppNaKolePrahou,
+      getIsLoadingOpenAppWithRestToken,
+    } = storeToRefs(tripsStore);
 
     onMounted(async () => {
       // if Cypress, wait 1 second for intercepting API call in component test
@@ -59,51 +53,41 @@ export default defineComponent({
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
 
-      if (apiTripsThirdPartyAppIdCyclers) {
-        // if app ID is available in config, fetch URL for connect
-        const response = await loadOpenAppWithRestToken(
-          apiTripsThirdPartyAppIdCyclers,
-        );
-        const url = response.app_url;
-        // if successfully fetched URL, add to apps
-        if (url) {
-          apps.value.push({
-            title: i18n.global.t('routes.appCyclers'),
-            button: {
-              title: i18n.global.t('routes.appCyclers'),
-              url,
-            },
-            image: {
-              src: '/image/logo-cyclers.webp',
-              alt: '',
-            },
-            linked: false,
-            linkable: true,
-          });
-        }
+      // load app URLs if not already loaded
+      if (!getUrlAppCyclers.value && !getUrlAppNaKolePrahou.value) {
+        await tripsStore.loadOpenAppWithRestToken();
       }
-      if (apiTripsThirdPartyAppIdNaKolePrahou) {
-        // if app ID is available in config, fetch URL for connect
-        const response = await loadOpenAppWithRestToken(
-          apiTripsThirdPartyAppIdNaKolePrahou,
-        );
-        const url = response.app_url;
-        // if successfully fetched URL, add to apps
-        if (url) {
-          apps.value.push({
+
+      if (getUrlAppCyclers.value) {
+        apps.value.push({
+          title: i18n.global.t('routes.appCyclers'),
+          button: {
+            title: i18n.global.t('routes.appCyclers'),
+            url: getUrlAppCyclers.value,
+          },
+          image: {
+            src: '/image/logo-cyclers.webp',
+            alt: '',
+          },
+          linked: false,
+          linkable: true,
+        });
+      }
+
+      if (getUrlAppNaKolePrahou.value) {
+        apps.value.push({
+          title: i18n.global.t('routes.appNaKolePrahou'),
+          button: {
             title: i18n.global.t('routes.appNaKolePrahou'),
-            button: {
-              title: i18n.global.t('routes.appNaKolePrahou'),
-              url,
-            },
-            image: {
-              src: '/image/logo-na-kole-prahou.webp',
-              alt: '',
-            },
-            linked: false,
-            linkable: true,
-          });
-        }
+            url: getUrlAppNaKolePrahou.value,
+          },
+          image: {
+            src: '/image/logo-na-kole-prahou.webp',
+            alt: '',
+          },
+          linked: false,
+          linkable: true,
+        });
       }
     });
 
@@ -114,7 +98,7 @@ export default defineComponent({
     return {
       apps,
       enabledAppsForManualLogging,
-      isLoading,
+      isLoading: getIsLoadingOpenAppWithRestToken,
       urlAppStore,
       urlGooglePlay,
     };

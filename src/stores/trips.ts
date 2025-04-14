@@ -1,9 +1,13 @@
 // libraries
 import { defineStore } from 'pinia';
 
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
 // composables
 import { useApiGetCommuteMode } from '../composables/useApiGetCommuteMode';
 import { useApiGetTrips } from 'src/composables/useApiGetTrips';
+import { useApiGetOpenAppWithRestToken } from '../composables/useApiGetOpenAppWithRestToken';
 
 // types
 import type { CommuteMode } from '../components/types/Route';
@@ -15,6 +19,9 @@ interface TripsState {
   commuteModes: CommuteMode[];
   routeItems: RouteItem[];
   isLoading: boolean;
+  urlAppCyclers: string;
+  urlAppNaKolePrahou: string;
+  isLoadingOpenAppWithRestToken: boolean;
 }
 
 export const useTripsStore = defineStore('trips', {
@@ -24,6 +31,9 @@ export const useTripsStore = defineStore('trips', {
     commuteModes: [],
     routeItems: [],
     isLoading: false,
+    urlAppCyclers: '',
+    urlAppNaKolePrahou: '',
+    isLoadingOpenAppWithRestToken: false,
   }),
 
   getters: {
@@ -58,6 +68,10 @@ export const useTripsStore = defineStore('trips', {
     getEcoCommuteModes: (state): CommuteMode[] => {
       return state.commuteModes.filter((mode) => mode.eco);
     },
+    getUrlAppCyclers: (state) => state.urlAppCyclers,
+    getUrlAppNaKolePrahou: (state) => state.urlAppNaKolePrahou,
+    getIsLoadingOpenAppWithRestToken: (state) =>
+      state.isLoadingOpenAppWithRestToken,
   },
 
   actions: {
@@ -127,6 +141,32 @@ export const useTripsStore = defineStore('trips', {
       const routeItems = await loadTrips();
       this.setRouteItems(routeItems);
       this.setIsLoading(false);
+    },
+    /**
+     * Load open app with rest token from API
+     * @returns {Promise<void>}
+     */
+    async loadOpenAppWithRestToken(): Promise<void> {
+      const { load } = useApiGetOpenAppWithRestToken(this.$log);
+      const {
+        apiTripsThirdPartyAppIdCyclers,
+        apiTripsThirdPartyAppIdNaKolePrahou,
+      } = rideToWorkByBikeConfig;
+
+      this.isLoadingOpenAppWithRestToken = true;
+      if (apiTripsThirdPartyAppIdCyclers) {
+        const response = await load(apiTripsThirdPartyAppIdCyclers);
+        if (response.app_url) {
+          this.urlAppCyclers = response.app_url;
+        }
+      }
+      if (apiTripsThirdPartyAppIdNaKolePrahou) {
+        const response = await load(apiTripsThirdPartyAppIdNaKolePrahou);
+        if (response.app_url) {
+          this.urlAppNaKolePrahou = response.app_url;
+        }
+      }
+      this.isLoadingOpenAppWithRestToken = false;
     },
   },
 });
