@@ -337,8 +337,12 @@ describe('Routes calendar page', () => {
           cy.get('@config').then((config) => {
             // intercept API call with response matching the payload
             const distanceMeters = testCase.apiResponseDistance;
+            const apiPayload =
+              Cypress.platform === 'win32'
+                ? testCase.apiPayloadWin
+                : testCase.apiPayload;
             const responseBody = {
-              trips: testCase.apiPayload.trips.map((trip, index) => ({
+              trips: apiPayload.trips.map((trip, index) => ({
                 id: index + 1,
                 ...trip,
                 distanceMeters,
@@ -393,7 +397,11 @@ describe('Routes calendar page', () => {
             // click save button
             cy.dataCy('dialog-save-button').click();
             // wait for API call and verify payload
-            cy.waitForPostTripsApi(testCase.apiPayload);
+            if (Cypress.platform === 'win32') {
+              cy.waitForPostTripsApi(testCase.apiPayloadWin);
+            } else {
+              cy.waitForPostTripsApi(testCase.apiPayload);
+            }
             // panel should be closed
             cy.dataCy('route-calendar-panel').should('not.exist');
             // verify that the routes are saved and updated in the UI
