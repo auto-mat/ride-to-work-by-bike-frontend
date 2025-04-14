@@ -13,7 +13,7 @@
         </template>
       </page-heading>
     </div>
-    <route-tabs :hidden="[RouteTab.map, RouteTab.app]" data-cy="route-tabs" />
+    <route-tabs :hidden="[RouteTab.map]" data-cy="route-tabs" />
   </q-page>
 </template>
 

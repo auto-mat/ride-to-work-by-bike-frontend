@@ -90,6 +90,7 @@ export interface ConfigGlobal {
   urlApiResetPasswordConfirm: string;
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
+  urlApiOpenAppWithRestToken: string;
   urlApiSendRegistrationConfirmationEmail: string;
   urlApiSendTeamMembershipInvitationEmail: string;
   urlApiSubsidiaries: string;
@@ -99,6 +100,8 @@ export interface ConfigGlobal {
   urlLoginRegisterBackgroundImage: string;
   urlRTWBBLogo: string;
   urlBaseBackend: string;
+  apiTripsThirdPartyAppIdNaKolePrahou: string;
+  apiTripsThirdPartyAppIdCyclers: string;
   checkIsEmailVerifiedInterval: number;
   checkIsThisCampaignCompetitionPhaseTypeInterval: string;
   googleLoginAppId: string;

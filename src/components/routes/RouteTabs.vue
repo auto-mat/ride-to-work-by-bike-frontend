@@ -199,7 +199,6 @@ export default defineComponent({
         :name="RouteTab.app"
         data-cy="route-tabs-panel-app"
       >
-        <div class="text-h6">{{ $t('routes.tabApp') }}</div>
         <routes-apps data-cy="routes-apps" />
       </q-tab-panel>
     </q-tab-panels>

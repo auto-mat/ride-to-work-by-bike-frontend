@@ -115,6 +115,7 @@ urlApiLoginFacebook = "auth/facebook/login/"
 urlApiMerchandise = "merchandise/"
 urlApiMyOrganizationAdmin = "my-organization-admin/"
 urlApiMyTeam = "my_team/"
+urlApiOpenAppWithRestToken = "open-app-with-rest-token/"
 urlApiPayuCreateOrder = "payu-create-order/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"
@@ -137,6 +138,8 @@ feedRefreshCachedPostsIntervalHours = 24
 apiFeedMaxOffersNumber = 50
 apiFeedMaxPrizesNumber = 50
 apiTripsSourceApplicationId = 'RTWBB web app'
+apiTripsThirdPartyAppIdCyclers = "1"
+apiTripsThirdPartyAppIdNaKolePrahou = "3"
 
 # DATE TIME FORMATS
 

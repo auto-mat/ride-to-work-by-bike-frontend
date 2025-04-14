@@ -15,19 +15,23 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, inject, onMounted, ref } from 'vue';
 
 // components
 import BannerRoutesApp from './BannerRoutesApp.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
+// composables
+import { useApiGetOpenAppWithRestToken } from '../../composables/useApiGetOpenAppWithRestToken';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // fixtures
-import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
+// import apps from '../../../test/cypress/fixtures/bannerRoutesAppList.json';
 
 // types
+import type { Logger } from '../types/Logger';
 import type { BannerRoutesAppType } from '../types/Banner';
 
 export default defineComponent({
@@ -37,11 +41,67 @@ export default defineComponent({
     SectionHeading,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const apps = ref<BannerRoutesAppType[]>([]);
+
+    const {
+      apiTripsThirdPartyAppIdCyclers,
+      apiTripsThirdPartyAppIdNaKolePrahou,
+    } = rideToWorkByBikeConfig;
+
+    const { load: loadOpenAppWithRestToken, isLoading } =
+      useApiGetOpenAppWithRestToken(logger);
+
+    onMounted(async () => {
+      if (apiTripsThirdPartyAppIdCyclers) {
+        // if app ID is available in config, fetch URL redirect link
+        const url = await loadOpenAppWithRestToken(
+          apiTripsThirdPartyAppIdCyclers,
+        );
+        apps.value.push({
+          title: 'Cyclers',
+          button: {
+            title: 'Cyclers',
+            url,
+          },
+          image: {
+            src: '/image/logo-cyclers.webp',
+            alt: 'Cyclers logo',
+          },
+          linked: true,
+          linkable: true,
+        });
+      }
+      if (apiTripsThirdPartyAppIdNaKolePrahou) {
+        // if app ID is available in config, fetch URL redirect link
+        const url = await loadOpenAppWithRestToken(
+          apiTripsThirdPartyAppIdNaKolePrahou,
+        );
+        apps.value.push({
+          title: 'Na kole Prahou',
+          button: {
+            title: 'Na kole Prahou',
+            url,
+          },
+          image: {
+            src: '/image/logo-na-kole-prahou.webp',
+            alt: 'Na kole Prahou logo',
+          },
+          linked: true,
+          linkable: true,
+        });
+      }
+    });
+
+    const enabledAppsForManualLogging = false;
+
     const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
     const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
 
     return {
-      apps: apps as BannerRoutesAppType[],
+      apps,
+      enabledAppsForManualLogging,
+      isLoading,
       urlAppStore,
       urlGooglePlay,
     };
@@ -70,8 +130,8 @@ export default defineComponent({
         />
       </div>
     </section>
-    <!-- Section: Apps for manual logging -->
-    <section class="q-mt-md">
+    <!-- Section: Apps for manual logging (DISABLED) -->
+    <section v-if="enabledAppsForManualLogging" class="q-mt-md">
       <!-- Title -->
       <section-heading class="q-mb-md" data-cy="routes-apps-title-manual">
         {{ $t('routes.titleManualLogging') }}
