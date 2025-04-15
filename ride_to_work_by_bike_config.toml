@@ -85,7 +85,7 @@ rtwbbChallengeEntryFeeOrderedProductName = "RTWBB challenge entry fee"
 rtwbbDonationOrderedProductName = "RTWBB donation"
 checkRegisterChallengeStatusIntervalSeconds = 20
 checkRegisterChallengeStatusMaxRepetitions = 5
-tripMaxFileUploadSizeMegabytes = 5
+tripMaxFileUploadSizeMegabytes = 1
 
 
 # Merchandise
