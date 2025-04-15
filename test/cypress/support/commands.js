@@ -3530,11 +3530,11 @@ Cypress.Commands.add(
 /**
  * Intercept open app with rest token GET API call
  * Provides `@openAppWithRestTokenRequest` alias
- * @param {Object} config - App global config
- * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
- * @param {String} appId - App ID to fetch data for
- * @param {Object} responseBody - Override default response body
- * @param {Number} responseStatusCode - Override default response HTTP status code
+ * @param {object} config - App global config
+ * @param {object|string} i18n - i18n instance or locale lang string e.g. en
+ * @param {string} appId - App ID to fetch data for
+ * @param {object} responseBody - Override default response body
+ * @param {number} responseStatusCode - Override default response HTTP status code
  */
 Cypress.Commands.add(
   'interceptOpenAppWithRestTokenGetApi',
