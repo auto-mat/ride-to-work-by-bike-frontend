@@ -59,7 +59,7 @@ export const useApiGetOpenAppWithRestToken = (
     });
 
     logger?.debug(
-      `Open app with rest token response data <${JSON.stringify(data)}>.`,
+      `Open app with rest token response data <${JSON.stringify(data, null, 2)}>.`,
     );
 
     isLoading.value = false;
