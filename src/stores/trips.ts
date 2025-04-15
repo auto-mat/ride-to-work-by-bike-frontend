@@ -100,6 +100,22 @@ export const useTripsStore = defineStore('trips', {
       this.routeItems = routeItems;
     },
     /**
+     * Set Cyclers app URL
+     * @param {string} url - New URL
+     * @returns {void}
+     */
+    setUrlAppCyclers(url: string): void {
+      this.urlAppCyclers = url;
+    },
+    /**
+     * Set Na kole Prahou app URL
+     * @param {string} url - New URL
+     * @returns {void}
+     */
+    setUrlAppNaKolePrahou(url: string): void {
+      this.urlAppNaKolePrahou = url;
+    },
+    /**
      * Update route items by merging new items with existing ones
      * Routes are identified by date and direction combination
      * @param {RouteItem[]} newRouteItems - Array of new route items to merge
@@ -157,13 +173,13 @@ export const useTripsStore = defineStore('trips', {
       if (apiTripsThirdPartyAppIdCyclers) {
         const response = await load(apiTripsThirdPartyAppIdCyclers);
         if (response.app_url) {
-          this.urlAppCyclers = response.app_url;
+          this.setUrlAppCyclers(response.app_url);
         }
       }
       if (apiTripsThirdPartyAppIdNaKolePrahou) {
         const response = await load(apiTripsThirdPartyAppIdNaKolePrahou);
         if (response.app_url) {
-          this.urlAppNaKolePrahou = response.app_url;
+          this.setUrlAppNaKolePrahou(response.app_url);
         }
       }
       this.isLoadingOpenAppWithRestToken = false;
