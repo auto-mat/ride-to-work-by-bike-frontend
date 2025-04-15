@@ -133,7 +133,7 @@ export default defineComponent({
         Notify.create({
           type: 'negative',
           message: i18n.global.t('routes.messageFileTooLarge', {
-            size: `${maxFileSizeMegabytes}MB`,
+            size: `${maxFileSizeMegabytes} MB`,
           }),
         });
       } else if (rejectedEntries[0].failedPropValidation === 'accept') {
