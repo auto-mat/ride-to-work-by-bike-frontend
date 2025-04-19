@@ -184,5 +184,12 @@ export const useTripsStore = defineStore('trips', {
       }
       this.isLoadingOpenAppWithRestToken = false;
     },
+    /**
+     * Clear route items from store
+     * @returns {void}
+     */
+    clearRouteItems(): void {
+      this.routeItems = [];
+    },
   },
 });

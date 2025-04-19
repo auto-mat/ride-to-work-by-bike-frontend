@@ -20,6 +20,7 @@ import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
 import { useFeedStore } from './feed';
 import { useRegisterChallengeStore } from './registerChallenge';
+import { useTripsStore } from './trips';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -365,6 +366,9 @@ export const useLoginStore = defineStore('login', {
       // clear feed store on logout
       const feedStore = useFeedStore();
       feedStore.clearStore();
+      // clear trips store
+      const tripsStore = useTripsStore();
+      tripsStore.clearRouteItems();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(
