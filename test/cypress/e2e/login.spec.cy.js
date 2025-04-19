@@ -224,6 +224,8 @@ describe('Login page', () => {
               cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
             },
           );
+          cy.interceptCommuteModeGetApi(config, defLocale);
+          cy.interceptTripsGetApi(config, defLocale);
         });
       });
     });
@@ -264,6 +266,38 @@ describe('Login page', () => {
       cy.wait('@getIsUserOrganizationAdmin');
       // above requests run while still on login page
       cy.url().should('include', routesConf['login']['path']);
+    });
+
+    it('reload trips after logout and login', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.fillAndSubmitLoginForm();
+        // wait for login API call
+        cy.dataCy('index-title').should('be.visible');
+        // go to trips page
+        cy.visit('#' + routesConf['routes']['path']);
+        // wait for trips API call
+        cy.wait('@getTrips');
+        cy.wait('@getTripsNextPage');
+        // click on user select
+        cy.dataCy('user-select-desktop').within(() => {
+          cy.dataCy('user-select-input').should('be.visible').click();
+        });
+        // logout
+        cy.dataCy('menu-item')
+          .contains(i18n?.global.t('userSelect.logout'))
+          .click();
+        // redirected to login page
+        cy.url().should('include', routesConf['login']['path']);
+        // login
+        cy.fillAndSubmitLoginForm();
+        // wait for login API call
+        cy.url().should('include', routesConf['home']['path']);
+        // go to trips page
+        cy.visit('#' + routesConf['routes']['path']);
+        // wait for trips API call refresh
+        cy.wait('@getTrips');
+        cy.wait('@getTripsNextPage');
+      });
     });
 
     it('allows user to login and refreshes token 1 min before expiration', () => {
