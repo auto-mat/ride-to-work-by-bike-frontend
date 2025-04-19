@@ -1,5 +1,6 @@
 import {
   systemTimeRegistrationPhaseInactive,
+  systemTimeBeforeCompetitionStart,
   failOnStatusCode,
   httpSuccessfullStatus,
   httpTooManyRequestsStatus,
@@ -740,6 +741,33 @@ describe('Home page', () => {
           cy.dataCy('countdown-minutes').contains(minutes.toString());
           cy.dataCy('countdown-seconds').contains(seconds.toString());
         });
+      });
+    });
+  });
+
+  context('Countdown Event before competition phase starts', () => {
+    beforeEach(() => {
+      cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+        // load config
+        cy.get('@config').then((config) => {
+          // intercept campaign API
+          cy.interceptThisCampaignGetApi(config, defLocale, campaign);
+        });
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows countdown before competition and hides it once competition starts', () => {
+      cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+        cy.clock(new Date(systemTimeBeforeCompetitionStart), ['Date']);
+        cy.visit(Cypress.config('baseUrl'));
+        cy.waitForThisCampaignApi(campaign);
+        // verify countdown is visible before competition phase
+        cy.dataCy('countdown-event').should('be.visible');
+        // tick clock forward to competition phase start
+        cy.tick(5000);
+        // verify countdown is hidden after competition phase starts
+        cy.dataCy('countdown-event').should('not.exist');
       });
     });
   });

@@ -693,6 +693,12 @@ export const systemTimeOffersValid = new Date('2025-05-05T00:00:00.000Z');
  */
 export const systemTimeLoggingRoutes = new Date('2025-05-26T00:00:00.000Z');
 /**
+ * Date immediately before competition phase starts
+ */
+export const systemTimeBeforeCompetitionStart = new Date(
+  '2025-04-30T23:59:59.000Z',
+);
+/**
  * Last day of the competition phase in May campaign
  */
 export const systemTimeLastDayOfCompetitionMay = new Date(

@@ -10,6 +10,7 @@
         </page-heading>
         <!-- Countdown: Event -->
         <countdown-event
+          v-if="isBeforeCompetitionStart"
           :release-date="competitionStart"
           class="q-mb-xl"
           data-cy="countdown-event"
@@ -162,6 +163,9 @@ import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SectionHeading from 'src/components/global/SectionHeading.vue';
 import SliderProgress from 'components/homepage/SliderProgress.vue';
 
+// composables
+import { useIsBeforeCompetitionPhase } from '../composables/useIsBeforeCompetitionPhase';
+
 // config
 import { routesConf } from '../router/routes_conf';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
@@ -263,7 +267,8 @@ export default defineComponent({
       }
     });
 
-    const competitionStart = computed(() => challengeStore.getCompetitionStart);
+    const { isBeforeCompetitionStart, competitionStart } =
+      useIsBeforeCompetitionPhase();
 
     // colors
     const { getPaletteColor, changeAlpha } = colors;
@@ -295,6 +300,7 @@ export default defineComponent({
       urlCommunity,
       urlResults,
       isLoadingPosts,
+      isBeforeCompetitionStart,
       isBannerRoutesEnabled,
       isBannerAppEnabled,
       isSectionChallengesEnabled,
