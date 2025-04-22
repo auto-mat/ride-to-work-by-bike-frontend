@@ -3,7 +3,9 @@ import {
   testLanguageSwitcher,
   testBackgroundImage,
   interceptRegisterCoordinatorApi,
+  systemTimeRegistrationPhaseActive,
   systemTimeChallengeActive,
+  systemTimeBeforeCompetitionStart,
   systemTimeRegistrationPhase1May,
   systemTimeRegistrationPhaseInactive,
 } from '../support/commonTests';
@@ -118,6 +120,7 @@ describe('Register Challenge page', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.clock(systemTimeRegistrationPhaseActive, ['Date']);
       cy.task('getAppConfig', process).then((config) => {
         cy.interceptThisCampaignGetApi(config, defLocale);
         cy.interceptRegisterChallengeGetApi(config, defLocale);
@@ -4196,6 +4199,47 @@ describe('Register Challenge page', () => {
             'not.exist',
           );
         });
+      });
+    });
+  });
+
+  context('registration with payment voucher 95% discount', () => {
+    beforeEach(() => {
+      cy.clock(systemTimeBeforeCompetitionStart, ['Date']);
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+          cy.interceptThisCampaignGetApi(config, defLocale, campaign);
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi(campaign);
+        });
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+        });
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('shows countdown before competition and hides it once competition starts', () => {
+      cy.fixture('apiGetThisCampaignMay.json').then(() => {
+        cy.clock(new Date(systemTimeBeforeCompetitionStart), ['Date']);
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        // verify countdown is visible before competition phase
+        cy.dataCy('top-bar-countdown').should('be.visible');
+        // tick clock forward to competition phase start
+        cy.tick(5000);
+        // verify countdown is hidden after competition phase starts
+        cy.dataCy('top-bar-countdown').should('not.exist');
       });
     });
   });

@@ -47,6 +47,7 @@ import RegisterChallengePaymentMessages from '../components/register/RegisterCha
 // composables
 import { useStepperValidation } from 'src/composables/useStepperValidation';
 import { useOrganizations } from 'src/composables/useOrganizations';
+import { useIsBeforeCompetitionPhase } from 'src/composables/useIsBeforeCompetitionPhase';
 
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
@@ -354,6 +355,8 @@ export default defineComponent({
       secondsToWaitDef.value -= 1;
     }, 1000);
 
+    const { isBeforeCompetitionStart } = useIsBeforeCompetitionPhase();
+
     return {
       borderRadius,
       contactEmail,
@@ -389,6 +392,7 @@ export default defineComponent({
       activeIconImgSrcStepper7,
       doneIconImgSrcStepper7,
       merchId,
+      isBeforeCompetitionStart,
       isPaymentAmount,
       isPeriodicCheckInProgress,
       isRegistrationComplete,
@@ -414,6 +418,7 @@ export default defineComponent({
 
 <template>
   <top-bar-countdown
+    v-if="isBeforeCompetitionStart"
     :release-date="competitionStart"
     data-cy="top-bar-countdown"
   />
