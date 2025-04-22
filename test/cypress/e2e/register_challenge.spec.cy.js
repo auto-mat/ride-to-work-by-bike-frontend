@@ -3,7 +3,6 @@ import {
   testLanguageSwitcher,
   testBackgroundImage,
   interceptRegisterCoordinatorApi,
-  systemTimeRegistrationPhaseActive,
   systemTimeChallengeActive,
   systemTimeBeforeCompetitionStart,
   systemTimeRegistrationPhase1May,
@@ -120,7 +119,6 @@ describe('Register Challenge page', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.clock(systemTimeRegistrationPhaseActive, ['Date']);
       cy.task('getAppConfig', process).then((config) => {
         cy.interceptThisCampaignGetApi(config, defLocale);
         cy.interceptRegisterChallengeGetApi(config, defLocale);
@@ -272,7 +270,6 @@ describe('Register Challenge page', () => {
               'register.challenge.titleRegisterToChallenge.october',
             );
           }
-          cy.dataCy('top-bar-countdown').should('be.visible');
           cy.dataCy('login-register-title')
             .should('be.visible')
             .and('have.color', config.colorWhite)
@@ -4203,7 +4200,7 @@ describe('Register Challenge page', () => {
     });
   });
 
-  context('registration with payment voucher 95% discount', () => {
+  context('Countdown before competition phase', () => {
     beforeEach(() => {
       cy.clock(systemTimeBeforeCompetitionStart, ['Date']);
       cy.task('getAppConfig', process).then((config) => {
