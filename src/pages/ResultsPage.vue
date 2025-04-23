@@ -38,6 +38,6 @@ export default defineComponent({
         {{ $t('results.titleResults') }}
       </page-heading>
     </div>
-    <results-tabs class="q-pb-xl" />
+    <results-tabs class="q-pb-xl" data-cy="results-tabs" />
   </q-page>
 </template>

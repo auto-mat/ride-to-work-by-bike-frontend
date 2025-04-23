@@ -1,5 +1,6 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
+import { defLocale } from '../../../src/i18n/def_locale';
 
 describe('Results page', () => {
   context('desktop', () => {
@@ -16,6 +17,48 @@ describe('Results page', () => {
           // alias i18n
           cy.wrap(win.i18n).as('i18n');
         });
+        cy.interceptVerifyEmailApi(config, defLocale, {
+          has_user_verified_email_address: true,
+        });
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+          (responseIsUserOrganizationAdmin) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              responseIsUserOrganizationAdmin,
+            );
+          },
+        );
+        cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+          resultsResponses.forEach((resultsResponse) => {
+            cy.interceptGetResultsApi(
+              config,
+              defLocale,
+              resultsResponse.key,
+              resultsResponse.response,
+            );
+          });
+        });
+        cy.fixture('apiGetResultsByChallengeResponses').then(
+          (resultsByChallengeResponses) => {
+            resultsByChallengeResponses.forEach(
+              (resultsByChallengeResponse) => {
+                cy.interceptGetResultsByChallengeApi(
+                  config,
+                  defLocale,
+                  resultsByChallengeResponse.key,
+                  resultsByChallengeResponse.response,
+                );
+              },
+            );
+          },
+        );
       });
     });
 

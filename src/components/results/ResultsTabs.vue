@@ -70,7 +70,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div>
+  <div data-cy="results-tabs">
     <!-- Tabs: Report types -->
     <q-tabs
       inline-label
@@ -79,7 +79,7 @@ export default defineComponent({
       active-color="primary"
       indicator-color="primary"
       align="center"
-      data-cy="results-tabs"
+      data-cy="results-tabs-buttons"
     >
       <q-tab
         v-for="reportType in resultsUrls"
