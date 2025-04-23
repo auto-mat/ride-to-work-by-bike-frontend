@@ -91,6 +91,8 @@ export interface ConfigGlobal {
   urlApiRegisterCoordinator: string;
   urlApiResetPassword: string;
   urlApiResetPasswordConfirm: string;
+  urlApiResultsByChallenge: string;
+  urlApiResults: string;
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
   urlApiOpenAppWithRestToken: string;

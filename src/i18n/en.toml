@@ -149,6 +149,16 @@ apiMessageError = "Fetching registrations failed."
 apiMessageErrorWithMessage = "Fetching registrations failed. Error: {error}"
 apiMessageSuccess = "Registrations fetched successfully."
 
+[getResults]
+apiMessageError = "Failed to load results source."
+apiMessageErrorWithMessage = "Failed to load results source. Error: {error}"
+apiMessageSuccess = "Results source was successfully loaded."
+
+[getResultsByChallenge]
+apiMessageError = "Failed to load challenge results source."
+apiMessageErrorWithMessage = "Failed to load challenge results source. Error: {error}"
+apiMessageSuccess = "Challenge results source was successfully loaded."
+
 [getStravaAccount]
 apiMessageError = "Failed to load Strava profile."
 apiMessageErrorWithMessage = "Failed to load Strava profile. Error: {error}"

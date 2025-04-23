@@ -149,6 +149,16 @@ apiMessageError = "Načítání registrací selhalo."
 apiMessageErrorWithMessage = "Načítání registrací selhalo. Chyba: {error}"
 apiMessageSuccess = "Registrace byly úspěšně načteny."
 
+[getResults]
+apiMessageError = "Nepodařilo se načíst zdroj výsledků."
+apiMessageErrorWithMessage = "Nepodařilo se načíst zdroj výsledků. Chyba: {error}"
+apiMessageSuccess = "Zdroj výsledků byl úspěšně načten."
+
+[getResultsByChallenge]
+apiMessageError = "Nepodařilo se načíst zdroj výsledků výzvy."
+apiMessageErrorWithMessage = "Nepodařilo se načíst zdroj výsledků výzvy. Chyba: {error}"
+apiMessageSuccess = "Zdroj výsledků výzvy byl úspěšně načten."
+
 [getStravaAccount]
 apiMessageError = "Nepodařilo se načíst profil aplikace Strava."
 apiMessageErrorWithMessage = "Nepodařilo se načíst profil aplikace Strava. Chyba: {error}"
