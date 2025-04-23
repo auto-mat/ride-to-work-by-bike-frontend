@@ -1,3 +1,9 @@
+// enums
+import {
+  ResultsReportType,
+  ResultsReportTypeByChallenge,
+} from '../enums/Results';
+
 // libraries
 import type { Ref } from 'vue';
 
@@ -7,10 +13,10 @@ export interface ResultsResponse {
 
 export interface useApiGetResultsReturn {
   isLoading: Ref<boolean>;
-  load: (reportType: string) => Promise<ResultsResponse>;
+  load: (reportType: ResultsReportType) => Promise<ResultsResponse>;
 }
 
 export interface useApiGetResultsByChallengeReturn {
   isLoading: Ref<boolean>;
-  load: (reportType: string) => Promise<ResultsResponse>;
+  load: (reportType: ResultsReportTypeByChallenge) => Promise<ResultsResponse>;
 }

@@ -7,6 +7,9 @@ import { useApi } from './useApi';
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
+// enums
+import { ResultsReportType } from '../components/enums/Results';
+
 // stores
 import { useLoginStore } from '../stores/login';
 
@@ -35,10 +38,12 @@ export const useApiGetResults = (
 
   /**
    * Load results data
-   * @param {string} reportType - Report type to fetch data for
+   * @param {ResultsReportType} reportType - Report type to fetch data for
    * @returns {Promise<ResultsResponse>} - Promise resolving to response data
    */
-  const load = async (reportType: string): Promise<ResultsResponse> => {
+  const load = async (
+    reportType: ResultsReportType,
+  ): Promise<ResultsResponse> => {
     logger?.info(`Get results for report type <${reportType}> from the API.`);
     isLoading.value = true;
 
