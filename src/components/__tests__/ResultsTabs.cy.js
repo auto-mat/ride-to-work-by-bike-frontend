@@ -3,6 +3,7 @@ import ResultsTabs from 'src/components/results/ResultsTabs.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { ResultsReportType } from 'src/components/enums/Results';
 
 describe('<ResultsTabs>', () => {
   beforeEach(() => {
@@ -108,9 +109,9 @@ describe('<ResultsTabs>', () => {
         resultsResponses.forEach((resultsResponse) => {
           if (
             [
-              'regularity',
-              'performance-organization',
-              'organizations-review',
+              ResultsReportType.regularity,
+              ResultsReportType.performanceOrganization,
+              ResultsReportType.organizationsReview,
             ].includes(resultsResponse.key)
           ) {
             cy.waitForGetResultsApi(resultsResponse.response);
@@ -152,9 +153,11 @@ describe('<ResultsTabs>', () => {
       cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
         resultsResponses.forEach((resultsResponse) => {
           if (
-            ['regularity', 'performance-city', 'organizations-review'].includes(
-              resultsResponse.key,
-            )
+            [
+              ResultsReportType.regularity,
+              ResultsReportType.performanceCity,
+              ResultsReportType.organizationsReview,
+            ].includes(resultsResponse.key)
           ) {
             cy.waitForGetResultsApi(resultsResponse.response);
             cy.dataCy(`results-tab-${resultsResponse.key}`).should(
