@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 
 // composables
+import { i18n } from 'src/boot/i18n';
 import { useApiGetResults } from 'src/composables/useApiGetResults';
 import { useApiGetResultsByChallenge } from 'src/composables/useApiGetResultsByChallenge';
 
@@ -131,10 +132,22 @@ export const useResultsStore = defineStore('results', {
         const errorMessage: string =
           error instanceof Error ? error.message : '';
         this.$log?.error(`Failed to load results URLs: ${errorMessage}`);
-        Notify.create({
-          type: 'negative',
-          message: errorMessage,
-        });
+        if (errorMessage) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t(
+              'results.messageFailedToLoadResultsUrlsWithMessage',
+              {
+                error: errorMessage,
+              },
+            ),
+          });
+        } else {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t('results.messageFailedToLoadResultsUrls'),
+          });
+        }
       } finally {
         this.isLoading = false;
       }
