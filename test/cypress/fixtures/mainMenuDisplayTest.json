@@ -43,7 +43,7 @@
       },
       {
         "title": "results",
-        "disabled": true
+        "disabled": false
       },
       {
         "title": "discounts",
@@ -73,7 +73,7 @@
       },
       {
         "title": "results",
-        "disabled": true
+        "disabled": false
       },
       {
         "title": "discounts",
@@ -103,7 +103,7 @@
       },
       {
         "title": "results",
-        "disabled": true
+        "disabled": false
       },
       {
         "title": "discounts",
@@ -133,7 +133,7 @@
       },
       {
         "title": "results",
-        "disabled": true
+        "disabled": false
       },
       {
         "title": "discounts",

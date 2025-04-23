@@ -12,6 +12,21 @@ describe('Profile page', () => {
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);
         });
+        cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        cy.interceptMyTeamGetApi(config, defLocale);
+        cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+          (responseIsUserOrganizationAdmin) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              responseIsUserOrganizationAdmin,
+            );
+          },
+        );
       });
     });
 
