@@ -14,13 +14,16 @@
  **/
 
 // libraries
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 
 // components
 import PageHeading from 'components/global/PageHeading.vue';
 
 // enums
-// import { ResultsReportType, ResultsReportTypeByChallenge } from 'src/components/enums/Results';
+import {
+  ResultsReportType,
+  ResultsReportTypeByChallenge,
+} from 'src/components/enums/Results';
 
 // stores
 import { useResultsStore } from 'src/stores/results';
@@ -37,16 +40,23 @@ export default defineComponent({
       resultsStore.loadResultsUrls();
     });
 
-    const resultsUrls = computed(() => resultsStore.resultsUrls);
+    const resultsUrls = computed(() => resultsStore.getAvailableReportTypes);
 
-    // const activeTab = ref<ResultsReportType | ResultsReportTypeByChallenge>(
-    //   ResultsReportType.regularity,
-    // );
-    // const resultsUrls = resultsStore.resultsUrls;
+    const activeTab = ref<ResultsReportType | ResultsReportTypeByChallenge>(
+      ResultsReportType.regularity,
+    );
+
+    const getResultsUrl = (
+      reportType: ResultsReportType | ResultsReportTypeByChallenge,
+    ) => {
+      return resultsStore.getResultsUrl(reportType)?.data_report_url ?? '';
+    };
 
     return {
-      // activeTab,
+      activeTab,
       resultsUrls,
+      resultsStore,
+      getResultsUrl,
     };
   },
 });
@@ -59,22 +69,42 @@ export default defineComponent({
       <page-heading data-cy="results-page-title">
         {{ $t('results.titleResults') }}
       </page-heading>
-
-      <!-- <q-tabs
-        inline-label
-        v-model="activeTab"
-        class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
-        align="center"
-        data-cy="coordinator-tabs"
-      >
-        <q-tab
-          v-for="reportType in resultsUrls.keys()"
-          :key="reportType"
-          :label="reportType"
-        />
-      </q-tabs> -->
     </div>
+    <!-- Tabs: Report types -->
+    <q-tabs
+      inline-label
+      v-model="activeTab"
+      class="text-grey"
+      active-color="primary"
+      indicator-color="primary"
+      align="center"
+      data-cy="coordinator-tabs"
+    >
+      <q-tab
+        v-for="reportType in resultsUrls"
+        :key="reportType"
+        :name="reportType"
+        :label="reportType"
+      />
+    </q-tabs>
+    <!-- Separator -->
+    <q-separator />
+    <!-- Tab panels: Report types -->
+    <q-tab-panels v-model="activeTab" animated>
+      <q-tab-panel
+        v-for="reportType in resultsUrls"
+        :key="reportType"
+        :name="reportType"
+      >
+        <div v-if="getResultsUrl(reportType)">
+          <iframe
+            class="full-width"
+            style="height: 100vh"
+            :src="getResultsUrl(reportType)"
+            frameBorder="0"
+          />
+        </div>
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
