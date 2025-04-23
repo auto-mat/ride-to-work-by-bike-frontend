@@ -20,6 +20,7 @@ import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
 import { useFeedStore } from './feed';
 import { useRegisterChallengeStore } from './registerChallenge';
+import { useResultsStore } from './results';
 import { useTripsStore } from './trips';
 
 // types
@@ -369,6 +370,9 @@ export const useLoginStore = defineStore('login', {
       // clear trips store
       const tripsStore = useTripsStore();
       tripsStore.clearRouteItems();
+      // clear results store
+      const resultsStore = useResultsStore();
+      resultsStore.clearStore();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(

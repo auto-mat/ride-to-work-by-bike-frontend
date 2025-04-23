@@ -14,23 +14,39 @@
  **/
 
 // libraries
-import { defineComponent } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // components
 import PageHeading from 'components/global/PageHeading.vue';
-import ResultsChallengeOngoing from 'components/results/ResultsChallengeOngoing.vue';
-import ResultsChallengeUpcoming from 'components/results/ResultsChallengeUpcoming.vue';
+
+// enums
+// import { ResultsReportType, ResultsReportTypeByChallenge } from 'src/components/enums/Results';
+
+// stores
+import { useResultsStore } from 'src/stores/results';
 
 export default defineComponent({
   name: 'ResultsPage',
   components: {
     PageHeading,
-    ResultsChallengeOngoing,
-    ResultsChallengeUpcoming,
   },
   setup() {
+    const resultsStore = useResultsStore();
+
+    onMounted(() => {
+      resultsStore.loadResultsUrls();
+    });
+
+    const resultsUrls = computed(() => resultsStore.resultsUrls);
+
+    // const activeTab = ref<ResultsReportType | ResultsReportTypeByChallenge>(
+    //   ResultsReportType.regularity,
+    // );
+    // const resultsUrls = resultsStore.resultsUrls;
+
     return {
-      state: 'challenge-upcoming',
+      // activeTab,
+      resultsUrls,
     };
   },
 });
@@ -44,15 +60,21 @@ export default defineComponent({
         {{ $t('results.titleResults') }}
       </page-heading>
 
-      <results-challenge-upcoming
-        v-if="state === 'challenge-upcoming'"
-        data-cy="results-challenge-upcoming"
-      />
-
-      <results-challenge-ongoing
-        v-if="state === 'challenge-ongoing'"
-        data-cy="results-challenge-ongoing"
-      />
+      <!-- <q-tabs
+        inline-label
+        v-model="activeTab"
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="center"
+        data-cy="coordinator-tabs"
+      >
+        <q-tab
+          v-for="reportType in resultsUrls.keys()"
+          :key="reportType"
+          :label="reportType"
+        />
+      </q-tabs> -->
     </div>
   </q-page>
 </template>
