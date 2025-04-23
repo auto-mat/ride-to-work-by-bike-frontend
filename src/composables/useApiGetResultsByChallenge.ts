@@ -25,7 +25,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 /**
  * Get results by challenge composable
- * Used for fetching results data by challenge
+ * Used for fetching results report URLs by challenge
  * @param {Logger | null} logger
  * @returns {useApiGetResultsByChallengeReturn}
  */
@@ -37,8 +37,8 @@ export const useApiGetResultsByChallenge = (
   const { apiFetch } = useApi();
 
   /**
-   * Load results by challenge data
-   * @param {ResultsReportTypeByChallenge} reportType - Report type to fetch data for
+   * Load results report URLs by challenge
+   * @param {ResultsReportTypeByChallenge} reportType - Report type to fetch URLs for
    * @returns {Promise<ResultsResponse>} - Promise resolving to response data
    */
   const load = async (

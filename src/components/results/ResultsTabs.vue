@@ -4,13 +4,8 @@
  *
  * @description * Use this component to render tabs on the ResultsPage.
  *
- * @components
- * - `PageHeading`: Component to render the page heading.
- *
  * @example
  * <results-tabs />
- *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4948%3A125553&mode=dev)
  */
 
 // libraries

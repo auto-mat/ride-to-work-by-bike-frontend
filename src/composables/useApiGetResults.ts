@@ -25,7 +25,7 @@ import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 /**
  * Get results composable
- * Used for fetching results data
+ * Used for fetching results report URLs
  * @param {Logger | null} logger
  * @returns {useApiGetResultsReturn}
  */
@@ -37,8 +37,8 @@ export const useApiGetResults = (
   const { apiFetch } = useApi();
 
   /**
-   * Load results data
-   * @param {ResultsReportType} reportType - Report type to fetch data for
+   * Load results report URLs
+   * @param {ResultsReportType} reportType - Report type to fetch URLs for
    * @returns {Promise<ResultsResponse>} - Promise resolving to response data
    */
   const load = async (
