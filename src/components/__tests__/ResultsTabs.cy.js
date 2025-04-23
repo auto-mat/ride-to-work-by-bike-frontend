@@ -1,107 +1,206 @@
-import ResultsTabs from 'components/results/ResultsTabs.vue';
+import { createPinia, setActivePinia } from 'pinia';
+import ResultsTabs from 'src/components/results/ResultsTabs.vue';
 import { i18n } from '../../boot/i18n';
-import { routesConf } from 'src/router/routes_conf';
-
-import { ResultsTabsNames } from '../types/Results';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 describe('<ResultsTabs>', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    cy.viewport('macbook-16');
+    cy.mount(ResultsTabs, {
+      props: {},
+    });
+    cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+      resultsResponses.forEach((resultsResponse) => {
+        cy.interceptGetResultsApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          resultsResponse.key,
+          resultsResponse.response,
+        );
+      });
+    });
+    cy.fixture('apiGetResultsByChallengeResponses').then(
+      (resultsByChallengeResponses) => {
+        resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+          cy.interceptGetResultsByChallengeApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            resultsByChallengeResponse.key,
+            resultsByChallengeResponse.response,
+          );
+        });
+      },
+    );
+  });
+
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
-        // Not tested - identical
-        // 'tabReport',
-        'tabRegularity',
-        'tabPerformance',
+        'may',
+        'organizationsReview',
+        'performanceCity',
+        'performanceOrganization',
+        'regularity',
+        'septemberJanuary',
+      ],
+      'results.reportType',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      [
+        'messageFailedToLoadResultsUrls',
+        'messageFailedToLoadResultsUrlsWithMessage',
+        'messageNoReport',
       ],
       'results',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'getResults',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
+      'getResultsByChallenge',
+      i18n,
+    );
   });
 
-  context('desktop', () => {
+  it('should load report URLs by challenge', () => {
+    cy.fixture('apiGetResultsByChallengeResponses').then(
+      (resultsByChallengeResponses) => {
+        resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+          cy.waitForGetResultsByChallengeApi(
+            resultsByChallengeResponse.response,
+          );
+          cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+            'be.visible',
+          );
+        });
+      },
+    );
+  });
+
+  context('results page when user is organization admin', () => {
     beforeEach(() => {
-      cy.mount(ResultsTabs, {
-        props: {},
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        registerChallengeStore.setIsUserOrganizationAdmin(true);
       });
-      cy.viewport('macbook-16');
     });
 
-    coreTests();
-  });
-
-  context('desktop - locked tabs', () => {
-    beforeEach(() => {
-      cy.mount(ResultsTabs, {
-        props: {
-          locked: ['report'],
+    it('should load report URLs relevant to organization admin', () => {
+      cy.fixture('apiGetResultsByChallengeResponses').then(
+        (resultsByChallengeResponses) => {
+          resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+            cy.waitForGetResultsByChallengeApi(
+              resultsByChallengeResponse.response,
+            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+              'be.visible',
+            );
+          });
         },
+      );
+      cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+        resultsResponses.forEach((resultsResponse) => {
+          if (
+            [
+              'regularity',
+              'performance-organization',
+              'organizations-review',
+            ].includes(resultsResponse.key)
+          ) {
+            cy.waitForGetResultsApi(resultsResponse.response);
+            cy.dataCy(`results-tab-${resultsResponse.key}`).should(
+              'be.visible',
+            );
+          }
+        });
       });
-      cy.viewport('macbook-16');
-    });
-
-    it('renders tabs as locked', () => {
-      cy.dataCy('results-tabs-button-report')
-        .find('i')
-        .should('have.class', 'mdi-lock');
-    });
-
-    it('does not switch to locked tab', () => {
-      cy.dataCy('results-tabs-button-regularity').click();
-      cy.dataCy('results-tabs-panel-regularity').should('be.visible');
-
-      cy.dataCy('results-tabs-button-report').click();
-      cy.dataCy('results-tabs-panel-report').should('not.exist');
-      cy.dataCy('results-tabs-panel-regularity').should('be.visible');
     });
   });
 
-  context('mobile', () => {
+  context('results page when user is staff', () => {
     beforeEach(() => {
-      cy.mount(ResultsTabs, {
-        props: {},
+      cy.fixture(
+        'apiGetRegisterChallengeIndividualPaidCompleteStaff.json',
+      ).then((registerChallengeResponse) => {
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          registerChallengeStore.setRegisterChallengeFromApi(
+            registerChallengeResponse.results[0],
+          );
+        });
       });
-      cy.viewport('iphone-6');
     });
 
-    coreTests();
+    it('should load report URLs relevant to staff', () => {
+      cy.fixture('apiGetResultsByChallengeResponses').then(
+        (resultsByChallengeResponses) => {
+          resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+            cy.waitForGetResultsByChallengeApi(
+              resultsByChallengeResponse.response,
+            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+              'be.visible',
+            );
+          });
+        },
+      );
+      cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+        resultsResponses.forEach((resultsResponse) => {
+          if (
+            ['regularity', 'performance-city', 'organizations-review'].includes(
+              resultsResponse.key,
+            )
+          ) {
+            cy.waitForGetResultsApi(resultsResponse.response);
+            cy.dataCy(`results-tab-${resultsResponse.key}`).should(
+              'be.visible',
+            );
+          }
+        });
+      });
+    });
+  });
+
+  context('results page when user is organization admin and staff', () => {
+    beforeEach(() => {
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        registerChallengeStore.setIsUserOrganizationAdmin(true);
+      });
+      cy.fixture(
+        'apiGetRegisterChallengeIndividualPaidCompleteStaff.json',
+      ).then((registerChallengeResponse) => {
+        cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+          registerChallengeStore.setRegisterChallengeFromApi(
+            registerChallengeResponse.results[0],
+          );
+        });
+      });
+    });
+
+    it('should load report URLs relevant to organization admin and staff', () => {
+      cy.fixture('apiGetResultsByChallengeResponses').then(
+        (resultsByChallengeResponses) => {
+          resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+            cy.waitForGetResultsByChallengeApi(
+              resultsByChallengeResponse.response,
+            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+              'be.visible',
+            );
+          });
+        },
+      );
+      cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+        resultsResponses.forEach((resultsResponse) => {
+          cy.waitForGetResultsApi(resultsResponse.response);
+          cy.dataCy(`results-tab-${resultsResponse.key}`).should('be.visible');
+        });
+      });
+    });
   });
 });
-
-function coreTests() {
-  it('renders component', () => {
-    cy.dataCy('results-tabs').should('be.visible');
-    cy.dataCy('results-tabs-button-report')
-      .should('be.visible')
-      .and('contain', i18n.global.t('results.tabReport'));
-    cy.dataCy('results-tabs-button-regularity')
-      .should('be.visible')
-      .and('contain', i18n.global.t('results.tabRegularity'));
-    cy.dataCy('results-tabs-button-performance')
-      .should('be.visible')
-      .and('contain', i18n.global.t('results.tabPerformance'));
-
-    cy.dataCy('results-tabs-button-report').click();
-    cy.dataCy('results-tabs-panel-report').should('be.visible');
-    cy.dataCy('results-tabs-panel-regularity').should('not.exist');
-    cy.dataCy('results-tabs-panel-performance').should('not.exist');
-  });
-
-  it('allows to switch tabs', () => {
-    Object.values(ResultsTabsNames).forEach((tab) => {
-      cy.dataCy(`results-tabs-button-${tab}`).click();
-      ['title', 'panel'].forEach((element) => {
-        cy.dataCy(`results-tabs-${element}-${tab}`).should('be.visible');
-      });
-    });
-  });
-
-  it('syncs tab navigation with URL', () => {
-    Object.values(ResultsTabsNames).forEach((tab) => {
-      cy.dataCy(`results-tabs-button-${tab}`).click();
-      cy.url().should('include', routesConf[`results_${tab}`].path);
-    });
-    cy.go('back');
-    cy.url().should('include', routesConf['results_regularity'].path);
-    cy.dataCy('results-tabs-panel-performance').should('be.visible');
-  });
-}
