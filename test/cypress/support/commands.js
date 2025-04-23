@@ -3694,3 +3694,99 @@ Cypress.Commands.add(
     }).as('getStravaDisconnect');
   },
 );
+
+/**
+ * Intercept get results GET API call
+ * Provides `@getResultsRequest` alias
+ * @param {Object} config - App global config
+ * @param {Object|string} i18n - i18n instance or locale lang string e.g. en
+ * @param {string} reportType - Report type to fetch data for
+ * @param {Object} responseBody - Override default response body
+ * @param {number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptGetResultsApi',
+  (config, i18n, reportType, responseBody, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiResults } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiResultsLocalized = `${apiBaseUrl}${urlApiResults}${reportType}/`;
+
+    cy.intercept('GET', urlApiResultsLocalized, {
+      statusCode: responseStatusCode
+        ? responseStatusCode
+        : httpSuccessfullStatus,
+      body: responseBody,
+    }).as('getResultsRequest');
+  },
+);
+
+/**
+ * Wait for intercept get results API call and compare request/response object
+ * Wait for `@getResultsRequest` intercept
+ * @param {object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add('waitForGetResultsApi', (responseBody) => {
+  cy.wait('@getResultsRequest').then((getResultsRequest) => {
+    if (getResultsRequest.response) {
+      expect(getResultsRequest.response.statusCode).to.equal(
+        httpSuccessfullStatus,
+      );
+      expect(getResultsRequest.response.body).to.deep.equal(responseBody);
+    }
+  });
+});
+
+/**
+ * Intercept get results by challenge GET API call
+ * Provides `@getResultsByChallengeRequest` alias
+ * @param {Object} config - App global config
+ * @param {Object|string} i18n - i18n instance or locale lang string e.g. en
+ * @param {string} reportType - Report type to fetch data for
+ * @param {Object} responseBody - Override default response body
+ * @param {number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptGetResultsByChallengeApi',
+  (config, i18n, reportType, responseBody, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiResultsByChallenge } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiResultsByChallengeLocalized = `${apiBaseUrl}${urlApiResultsByChallenge}${reportType}/`;
+
+    cy.intercept('GET', urlApiResultsByChallengeLocalized, {
+      statusCode: responseStatusCode
+        ? responseStatusCode
+        : httpSuccessfullStatus,
+      body: responseBody,
+    }).as('getResultsByChallengeRequest');
+  },
+);
+
+/**
+ * Wait for intercept get results by challenge API call and compare request/response object
+ * Wait for `@getResultsByChallengeRequest` intercept
+ * @param {object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add('waitForGetResultsByChallengeApi', (responseBody) => {
+  cy.wait('@getResultsByChallengeRequest').then(
+    (getResultsByChallengeRequest) => {
+      if (getResultsByChallengeRequest.response) {
+        expect(getResultsByChallengeRequest.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(getResultsByChallengeRequest.response.body).to.deep.equal(
+          responseBody,
+        );
+      }
+    },
+  );
+});

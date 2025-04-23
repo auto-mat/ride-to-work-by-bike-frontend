@@ -41,7 +41,12 @@ export default defineComponent({
 
     const { challengeMonth, dataReportIframeHeight } = rideToWorkByBikeConfig;
 
-    onMounted(() => {
+    onMounted(async () => {
+      // allows Cypress component test to register intercept
+      if (window.Cypress) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+
       resultsStore.loadResultsUrls();
     });
 

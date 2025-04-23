@@ -1,0 +1,26 @@
+[
+  {
+    "key": "regularity",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/3"
+    }
+  },
+  {
+    "key": "performance-city",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/4"
+    }
+  },
+  {
+    "key": "performance-organization",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/5"
+    }
+  },
+  {
+    "key": "organizations-review",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/6"
+    }
+  }
+]
