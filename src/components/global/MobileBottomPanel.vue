@@ -48,7 +48,7 @@ export default defineComponent({
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
     const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
-    const { isEntryEnabled } = useRoutes();
+    const { isEntryEnabled, isResultsEnabled } = useRoutes();
     const { getMenuTop, getMenuBottom } = useMenu();
 
     const { mobileBottomPanelVisibleItems } = rideToWorkByBikeConfig;
@@ -74,6 +74,7 @@ export default defineComponent({
         isUserStaff,
         urlAdmin,
         isEntryEnabled,
+        isResultsEnabled,
       });
     });
     const menuPanel = computed((): Link[] => {

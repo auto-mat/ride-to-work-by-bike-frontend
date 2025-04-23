@@ -151,16 +151,23 @@ export const useChallengeStore = defineStore('challenge', {
       const phase = this.getPhaseFromSet(phaseType);
       if (phase) {
         const startDate: number = new Date(phase.date_from).getTime();
-        const endDate: number = new Date(phase.date_to).getTime();
         this.$log?.debug(
           `<${phaseType}> phase date from <${timestampToDatetimeString(startDate / 1000)}>.`,
-        );
-        this.$log?.debug(
-          `<${phaseType}> phase date to <${timestampToDatetimeString(endDate / 1000)}>.`,
         );
         const now: number = new Date().getTime();
         this.$log?.debug(
           `Current date and time is <${timestampToDatetimeString(now / 1000)}>.`,
+        );
+        // if phase has no end date, only check if we're after start date
+        if (!phase.date_to) {
+          this.$log?.debug(
+            `No end date set for phase <${phaseType}>, checking only if current date is after start date <${now >= startDate}>.`,
+          );
+          return now >= startDate;
+        }
+        const endDate: number = new Date(phase.date_to).getTime();
+        this.$log?.debug(
+          `<${phaseType}> phase date to <${timestampToDatetimeString(endDate / 1000)}>.`,
         );
         this.$log?.debug(
           `Is challenge in phase type <${phaseType}> <${now >= startDate && now <= endDate}>.`,

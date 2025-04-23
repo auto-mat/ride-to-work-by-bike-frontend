@@ -19,6 +19,8 @@ export const useMenu = () => {
    *                                                   app admin URL
    * @param {ComputedRef<boolean | null> | boolean | null}
    *   isEntryEnabled - Whether the entry is enabled
+   * @param {ComputedRef<boolean | null> | boolean | null}
+   *   isResultsEnabled - Whether the results are enabled
    * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
@@ -26,11 +28,13 @@ export const useMenu = () => {
     isUserStaff,
     urlAdmin,
     isEntryEnabled,
+    isResultsEnabled,
   }: {
     isUserOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
     isUserStaff: ComputedRef<boolean | null> | boolean | null;
     urlAdmin: ComputedRef<string> | string;
     isEntryEnabled: ComputedRef<boolean | null> | boolean | null;
+    isResultsEnabled: ComputedRef<boolean | null> | boolean | null;
   }): Link[] => {
     let menuTop: Link[] = [
       {
@@ -51,7 +55,7 @@ export const useMenu = () => {
         icon: 'svguse:icons/drawer_menu/icons.svg#chart-graph',
         name: 'results',
         title: 'results',
-        disabled: true,
+        disabled: !unref(isResultsEnabled),
       },
       {
         url: routesConf['prizes']['children']['fullPath'],

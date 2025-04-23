@@ -21,6 +21,7 @@ export enum PhaseType {
   entryEnabled = 'entry_enabled',
   payment = 'payment',
   invoices = 'invoices',
+  results = 'results',
 }
 
 export interface Phase {

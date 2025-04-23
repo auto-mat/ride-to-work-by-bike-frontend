@@ -106,6 +106,18 @@ export const useRoutes = () => {
     return isEntryPhase || isCompetitionPhase;
   });
 
+  /**
+   * Checks whether user is currently allowed to display results.
+   * @return {boolean} - True if results are allowed, false otherwise.
+   */
+  const isResultsEnabled = computed((): boolean => {
+    const challengeStore = useChallengeStore();
+    const isResultsPhase = challengeStore.getIsChallengeInPhase(
+      PhaseType.results,
+    );
+    return isResultsPhase;
+  });
+
   const dateCompetitionPhaseFrom = computed((): Date | null => {
     const challengeStore = useChallengeStore();
     const dateString = challengeStore.getPhaseFromSet(
@@ -363,6 +375,7 @@ export const useRoutes = () => {
     dateCompetitionPhaseFrom,
     dateCompetitionPhaseTo,
     isEntryEnabled,
+    isResultsEnabled,
     getLoggableDaysWithRoutes,
     getUnloggableDaysWithRoutes,
     getCompetitionDaysWithRoutes,

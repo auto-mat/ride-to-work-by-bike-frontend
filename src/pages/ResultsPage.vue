@@ -79,7 +79,7 @@ export default defineComponent({
 
 <template>
   <q-page class="overflow-hidden" data-cy="q-main">
-    <div class="q-px-lg q-pt-lg bg-white q-pb-xl">
+    <div class="q-px-lg q-pt-lg bg-white">
       <!-- Heading -->
       <page-heading data-cy="results-page-title">
         {{ $t('results.titleResults') }}
@@ -106,7 +106,7 @@ export default defineComponent({
     <!-- Separator -->
     <q-separator />
     <!-- Tab panels: Report types -->
-    <q-tab-panels v-model="activeTab" animated>
+    <q-tab-panels v-model="activeTab" animated class="q-pb-xl">
       <q-tab-panel
         v-for="reportType in resultsUrls"
         :key="reportType"

@@ -44,6 +44,7 @@ describe('DrawerMenu', () => {
           isUserStaff: false,
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
           isEntryEnabled: true,
+          isResultsEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -82,6 +83,7 @@ describe('DrawerMenu', () => {
           isUserStaff: false,
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
           isEntryEnabled: true,
+          isResultsEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -126,6 +128,7 @@ describe('DrawerMenu', () => {
           isUserStaff: true,
           urlAdmin,
           isEntryEnabled: true,
+          isResultsEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -195,6 +198,7 @@ describe('DrawerMenu', () => {
           isUserStaff: true,
           urlAdmin,
           isEntryEnabled: false,
+          isResultsEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -213,7 +217,7 @@ describe('DrawerMenu', () => {
     });
   });
 
-  context('menu top - entry enabled', () => {
+  context('menu top - entry and results enabled', () => {
     beforeEach(() => {
       const urlAdmin = getApiBaseUrlWithLang(
         null,
@@ -227,6 +231,7 @@ describe('DrawerMenu', () => {
           isUserStaff: true,
           urlAdmin,
           isEntryEnabled: true,
+          isResultsEnabled: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -238,10 +243,43 @@ describe('DrawerMenu', () => {
       });
     });
 
-    it('renders routes item as disabled', () => {
+    it('renders routes item as enabled', () => {
       cy.dataCy(selectorDrawerMenuItem)
         .contains(i18n.global.t('drawerMenu.routes'))
         .should('not.have.class', 'disabled');
+    });
+
+    it('renders results item as enabled', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.results'))
+        .should('not.have.class', 'disabled');
+    });
+  });
+
+  context('menu top - results disabled', () => {
+    beforeEach(() => {
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+          isUserStaff: true,
+          urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
+          isEntryEnabled: true,
+          isResultsEnabled: false,
+        }),
+      ).then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
+      });
+    });
+
+    it('renders results item as disabled', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.results'))
+        .should('have.class', 'disabled');
     });
   });
 

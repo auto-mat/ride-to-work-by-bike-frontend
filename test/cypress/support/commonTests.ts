@@ -157,6 +157,7 @@ export const testDesktopSidebar = (): void => {
           isUserStaff: false,
           urlAdmin,
           isEntryEnabled: true,
+          isResultsEnabled: true,
         }).length > 0
       ) {
         cy.dataCy(selectorDrawerMenuTop).should('be.visible');
