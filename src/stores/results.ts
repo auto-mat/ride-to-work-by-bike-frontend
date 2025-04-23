@@ -44,6 +44,32 @@ export const useResultsStore = defineStore('results', {
         | ResultsReportType
         | ResultsReportTypeByChallenge
       )[],
+    getReportTypeLabels: () => {
+      const labels: Record<
+        ResultsReportType | ResultsReportTypeByChallenge,
+        string
+      > = {
+        [ResultsReportType.regularity]: i18n.global.t(
+          'results.reportType.regularity',
+        ),
+        [ResultsReportType.performanceCity]: i18n.global.t(
+          'results.reportType.performanceCity',
+        ),
+        [ResultsReportType.performanceOrganization]: i18n.global.t(
+          'results.reportType.performanceOrganization',
+        ),
+        [ResultsReportType.organizationsReview]: i18n.global.t(
+          'results.reportType.organizationsReview',
+        ),
+        [ResultsReportTypeByChallenge.may]: i18n.global.t(
+          'results.reportType.may',
+        ),
+        [ResultsReportTypeByChallenge.septemberJanuary]: i18n.global.t(
+          'results.reportType.septemberJanuary',
+        ),
+      };
+      return labels;
+    },
   },
 
   actions: {

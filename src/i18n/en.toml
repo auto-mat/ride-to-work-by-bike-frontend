@@ -979,6 +979,14 @@ tabRegularity = "Regularity"
 tabPerformance = "Performance"
 tabReport = "Data report"
 
+[results.reportType]
+may = "May Challenge"
+organizationsReview = "Organizations Overview"
+performanceCity = "Performance in City"
+performanceOrganization = "Performance in Organization"
+regularity = "Regularity in Organization"
+septemberJanuary = "September/January Challenge"
+
 [routes]
 appStrava = "Strava"
 actionCopyYesterday = "Copy from day before"

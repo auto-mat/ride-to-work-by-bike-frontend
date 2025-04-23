@@ -980,6 +980,14 @@ tabRegularity = "Pravidelnost"
 tabPerformance = "Výkonnost"
 tabReport = "Data report"
 
+[results.reportType]
+may = "Květnová výzva"
+organizationsReview = "Přehled organizací"
+performanceCity = "Výkonnost ve měste"
+performanceOrganization = "Výkonnost v organizaci"
+regularity = "Pravidelnost v organizaci"
+septemberJanuary = "Zářijová/Lednová výzva"
+
 [routes]
 appStrava = "Strava"
 actionCopyYesterday = "Zkopírovat předchozí den"

@@ -59,11 +59,18 @@ export default defineComponent({
       return resultsStore.getResultsUrl(reportType)?.data_report_url ?? '';
     };
 
+    const getReportTypeLabel = (
+      reportType: ResultsReportType | ResultsReportTypeByChallenge,
+    ) => {
+      return resultsStore.getReportTypeLabels[reportType];
+    };
+
     return {
       activeTab,
       dataReportIframeHeight,
       resultsUrls,
       resultsStore,
+      getReportTypeLabel,
       getResultsUrl,
     };
   },
@@ -92,7 +99,7 @@ export default defineComponent({
         v-for="reportType in resultsUrls"
         :key="reportType"
         :name="reportType"
-        :label="reportType"
+        :label="getReportTypeLabel(reportType)"
         :data-cy="`results-tab-${reportType}`"
       />
     </q-tabs>
