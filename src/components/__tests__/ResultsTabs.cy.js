@@ -182,23 +182,31 @@ describe('<ResultsTabs>', () => {
       });
     });
 
-    it('should load report URLs relevant to organization admin and staff', () => {
+    it('should load report URLs relevant to organization admin and staff + allows to switch tabs', () => {
       cy.fixture('apiGetResultsByChallengeResponses').then(
         (resultsByChallengeResponses) => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
             cy.waitForGetResultsByChallengeApi(
               resultsByChallengeResponse.response,
             );
-            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
-              'be.visible',
-            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`)
+              .should('be.visible')
+              .click({ force: true });
+            cy.dataCy(
+              `results-tab-panel-${resultsByChallengeResponse.key}`,
+            ).should('be.visible');
           });
         },
       );
       cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
         resultsResponses.forEach((resultsResponse) => {
           cy.waitForGetResultsApi(resultsResponse.response);
-          cy.dataCy(`results-tab-${resultsResponse.key}`).should('be.visible');
+          cy.dataCy(`results-tab-${resultsResponse.key}`)
+            .should('be.visible')
+            .click({ force: true });
+          cy.dataCy(`results-tab-panel-${resultsResponse.key}`).should(
+            'be.visible',
+          );
         });
       });
     });
