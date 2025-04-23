@@ -23,6 +23,9 @@ containerFormWidth = "752px"
 # container used for main layout
 containerContentWidth = "1024px"
 
+# manually selected height that shows reports without internal scrollbar on desktop
+dataReportIframeHeight = "1500px"
+
 borderRadiusButtonSmall = "8px"
 borderRadiusCard = "16px"
 borderRadiusCardSmall = "8px"

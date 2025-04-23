@@ -19,6 +19,9 @@ import { computed, defineComponent, onMounted, ref } from 'vue';
 // components
 import PageHeading from 'components/global/PageHeading.vue';
 
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
 // enums
 import {
   ResultsReportType,
@@ -36,6 +39,8 @@ export default defineComponent({
   setup() {
     const resultsStore = useResultsStore();
 
+    const { challengeMonth, dataReportIframeHeight } = rideToWorkByBikeConfig;
+
     onMounted(() => {
       resultsStore.loadResultsUrls();
     });
@@ -43,7 +48,9 @@ export default defineComponent({
     const resultsUrls = computed(() => resultsStore.getAvailableReportTypes);
 
     const activeTab = ref<ResultsReportType | ResultsReportTypeByChallenge>(
-      ResultsReportType.regularity,
+      challengeMonth === 'may'
+        ? ResultsReportTypeByChallenge.may
+        : ResultsReportTypeByChallenge.septemberJanuary,
     );
 
     const getResultsUrl = (
@@ -54,6 +61,7 @@ export default defineComponent({
 
     return {
       activeTab,
+      dataReportIframeHeight,
       resultsUrls,
       resultsStore,
       getResultsUrl,
@@ -78,13 +86,14 @@ export default defineComponent({
       active-color="primary"
       indicator-color="primary"
       align="center"
-      data-cy="coordinator-tabs"
+      data-cy="results-tabs"
     >
       <q-tab
         v-for="reportType in resultsUrls"
         :key="reportType"
         :name="reportType"
         :label="reportType"
+        :data-cy="`results-tab-${reportType}`"
       />
     </q-tabs>
     <!-- Separator -->
@@ -95,14 +104,19 @@ export default defineComponent({
         v-for="reportType in resultsUrls"
         :key="reportType"
         :name="reportType"
+        :data-cy="`results-tab-panel-${reportType}`"
       >
         <div v-if="getResultsUrl(reportType)">
           <iframe
             class="full-width"
-            style="height: 100vh"
+            :style="{ height: dataReportIframeHeight }"
             :src="getResultsUrl(reportType)"
             frameBorder="0"
+            :data-cy="`results-tab-panel-iframe-${reportType}`"
           />
+        </div>
+        <div v-else class="text-center text-grey-7 text-body-2 q-mt-lg">
+          {{ $t('results.messageNoReport') }}
         </div>
       </q-tab-panel>
     </q-tab-panels>

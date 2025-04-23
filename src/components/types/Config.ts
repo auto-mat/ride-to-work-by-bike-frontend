@@ -17,6 +17,7 @@ export interface ConfigGlobal {
   width: string;
   title: string;
   subtitle: string;
+  dataReportIframeHeight: string;
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
   borderRadiusButtonSmall: string;
