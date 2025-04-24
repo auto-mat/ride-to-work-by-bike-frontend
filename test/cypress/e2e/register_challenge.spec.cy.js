@@ -117,6 +117,21 @@ describe('Register Challenge page', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.task('getAppConfig', process).then((config) => {
+      cy.interceptMyTeamGetApi(config, defLocale);
+      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(
+            config,
+            defLocale,
+            response,
+          );
+        },
+      );
+    });
+  });
+
   context('desktop', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
