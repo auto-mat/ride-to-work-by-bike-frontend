@@ -140,6 +140,7 @@ describe('Login page', () => {
                   );
                   cy.interceptIsUserOrganizationAdminGetApi(config, win.i18n);
                   cy.fillAndSubmitLoginForm(config, win.i18n);
+                  cy.interceptRegisterChallengeGetApi(config, win.i18n);
                   cy.wait([
                     '@loginRequest',
                     '@refreshAuthTokenRequest',
