@@ -157,7 +157,7 @@ export const useResultsStore = defineStore('results', {
       } catch (error: unknown) {
         const errorMessage: string =
           error instanceof Error ? error.message : '';
-        this.$log?.error(`Failed to load results URLs: ${errorMessage}`);
+        this.$log?.error(`Failed to load results URLs <${errorMessage}>.`);
         if (errorMessage) {
           Notify.create({
             type: 'negative',

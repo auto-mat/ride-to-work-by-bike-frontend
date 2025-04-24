@@ -161,7 +161,9 @@ export const useChallengeStore = defineStore('challenge', {
         // if phase has no end date, only check if we're after start date
         if (!phase.date_to) {
           this.$log?.debug(
-            `No end date set for phase <${phaseType}>, checking only if current date is after start date <${now >= startDate}>.`,
+            `No end date set for phase <${phaseType}>,` +
+              ' checking only if current date is after' +
+              ` start date <${now >= startDate}>.`,
           );
           return now >= startDate;
         }

@@ -44,7 +44,7 @@ export const useApiGetResultsByChallenge = (
   const load = async (
     reportType: ResultsReportTypeByChallenge,
   ): Promise<ResultsResponse> => {
-    logger?.info(
+    logger?.debug(
       `Get results by challenge for report type <${reportType}> from the API.`,
     );
     isLoading.value = true;
