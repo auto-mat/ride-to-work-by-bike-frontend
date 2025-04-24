@@ -36,6 +36,24 @@ describe('Router rules', () => {
                   );
                 },
               );
+              cy.fixture('apiGetRegisterChallengeEmpty.json').then(
+                (response) => {
+                  cy.interceptRegisterChallengeGetApi(
+                    config,
+                    win.i18n,
+                    response,
+                  );
+                },
+              );
+              cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+                (response) => {
+                  cy.interceptIsUserOrganizationAdminGetApi(
+                    config,
+                    win.i18n,
+                    response,
+                  );
+                },
+              );
             },
           );
         });
@@ -151,6 +169,18 @@ describe('Router rules', () => {
                     OrganizationType.company,
                   );
                 },
+              );
+            },
+          );
+          cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, win.i18n, response);
+          });
+          cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+            (response) => {
+              cy.interceptIsUserOrganizationAdminGetApi(
+                config,
+                win.i18n,
+                response,
               );
             },
           );
