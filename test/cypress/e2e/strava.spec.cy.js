@@ -1,20 +1,43 @@
 // libraries
 import { routesConf } from '../../../src/router/routes_conf';
 import { StravaScope } from 'src/components/enums/Strava';
+import { defLocale } from '../../../src/i18n/def_locale';
 
 const validCode = 'example_valid_code';
 const invalidCode = 'example_invalid_code';
 describe('Strava Integration', () => {
   beforeEach(() => {
-    cy.visit(`#${routesConf['routes_list']['children']['fullPath']}`);
     cy.task('getAppConfig', process).then((config) => {
+      cy.interceptCommuteModeGetApi(config, defLocale);
+      cy.interceptTripsGetApi(config, defLocale);
+      cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+        (responseNaKolePrahou) => {
+          cy.interceptOpenAppWithRestTokenGetApi(
+            config,
+            defLocale,
+            config.apiTripsThirdPartyAppIdNaKolePrahou,
+            responseNaKolePrahou,
+          );
+        },
+      );
+      cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
+        (responseCyclers) => {
+          cy.interceptOpenAppWithRestTokenGetApi(
+            config,
+            defLocale,
+            config.apiTripsThirdPartyAppIdCyclers,
+            responseCyclers,
+          );
+        },
+      );
       // alias config
       cy.wrap(config).as('config');
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        // alias i18n
-        cy.wrap(win.i18n).as('i18n');
-      });
+    });
+    cy.visit(`#${routesConf['routes_list']['children']['fullPath']}`);
+    cy.window().should('have.property', 'i18n');
+    cy.window().then((win) => {
+      // alias i18n
+      cy.wrap(win.i18n).as('i18n');
     });
   });
 
