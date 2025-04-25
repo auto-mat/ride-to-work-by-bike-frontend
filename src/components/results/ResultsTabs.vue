@@ -105,6 +105,7 @@ export default defineComponent({
             <a
               :href="getResultsUrl(reportType)"
               target="_blank"
+              class="text-primary"
               data-cy="results-link-open-in-new-tab"
             >
               {{ $t('results.linkOpenResultsInNewTab') }}
