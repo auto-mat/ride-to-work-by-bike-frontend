@@ -207,9 +207,22 @@ describe('<ResultsTabs>', () => {
           cy.dataCy(`results-tab-${resultsResponse.key}`)
             .should('be.visible')
             .click({ force: true });
-          cy.dataCy(`results-tab-panel-${resultsResponse.key}`).should(
-            'be.visible',
-          );
+          cy.dataCy(`results-tab-panel-${resultsResponse.key}`)
+            .should('be.visible')
+            .within(() => {
+              cy.dataCy('results-link-open-in-new-tab')
+                .should('be.visible')
+                .and('have.attr', 'target', '_blank')
+                .and(
+                  'have.attr',
+                  'href',
+                  resultsResponse.response.data_report_url,
+                )
+                .and(
+                  'contain',
+                  i18n.global.t('results.linkOpenResultsInNewTab'),
+                );
+            });
         });
       });
     });

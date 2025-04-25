@@ -100,6 +100,17 @@ export default defineComponent({
         :data-cy="`results-tab-panel-${reportType}`"
       >
         <div v-if="getResultsUrl(reportType)">
+          <!-- Link: Open in new tab -->
+          <div class="text-right q-mt-sm q-mb-md">
+            <a
+              :href="getResultsUrl(reportType)"
+              target="_blank"
+              data-cy="results-link-open-in-new-tab"
+            >
+              {{ $t('results.linkOpenResultsInNewTab') }}
+            </a>
+          </div>
+          <!-- Iframe: Report -->
           <iframe
             class="full-width"
             :style="{ height: dataReportIframeHeight }"
@@ -109,6 +120,7 @@ export default defineComponent({
           />
         </div>
         <div v-else class="text-center text-grey-7 text-body-2 q-mt-lg">
+          <!-- Message: No report -->
           {{ $t('results.messageNoReport') }}
         </div>
       </q-tab-panel>
