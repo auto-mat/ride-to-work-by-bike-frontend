@@ -212,6 +212,7 @@ describe('<ResultsTabs>', () => {
             .within(() => {
               cy.dataCy('results-link-open-in-new-tab')
                 .should('be.visible')
+                .and('have.class', 'text-primary')
                 .and('have.attr', 'target', '_blank')
                 .and(
                   'have.attr',
