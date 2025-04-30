@@ -106,9 +106,10 @@ export const useMenu = () => {
   /**
    * Get the bottom menu items
    * @param {string} urlDonate - The URL of the donate page
+   * @param {string} urlContact - The URL of the contact page
    * @returns {Link[]} - Array of bottom menu items
    */
-  const getMenuBottom = (urlDonate: string): Link[] => {
+  const getMenuBottom = (urlDonate: string, urlContact: string): Link[] => {
     const menuBottom: Link[] = [
       {
         url: '',
@@ -116,6 +117,13 @@ export const useMenu = () => {
         name: 'donate',
         title: 'donate',
         href: urlDonate,
+      },
+      {
+        url: '',
+        icon: 'svguse:icons/drawer_menu/icons.svg#lucide-mail-question',
+        name: 'contact',
+        title: 'contact',
+        href: urlContact,
       },
     ];
 

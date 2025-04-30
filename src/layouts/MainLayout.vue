@@ -76,8 +76,16 @@ export default defineComponent({
         i18n,
       );
     });
+    const urlContact = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        rideToWorkByBikeConfig.urlContact,
+        defaultLocale,
+        i18n,
+      );
+    });
     const menuBottom = computed(() => {
-      return getMenuBottom(urlDonate.value);
+      return getMenuBottom(urlDonate.value, urlContact.value);
     });
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,

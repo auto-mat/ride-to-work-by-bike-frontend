@@ -291,7 +291,13 @@ describe('DrawerMenu', () => {
         defaultLocale,
         i18n,
       );
-      const menuBottom = getMenuBottom(urlDonate);
+      const urlContact = getApiBaseUrlWithLang(
+        null,
+        rideToWorkByBikeConfig.urlContact,
+        defaultLocale,
+        i18n,
+      );
+      const menuBottom = getMenuBottom(urlDonate, urlContact);
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,
@@ -331,6 +337,37 @@ describe('DrawerMenu', () => {
           });
         });
     });
+
+    it('renders contact item with correct href - default lang', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.contact'))
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlContact,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .should('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
   });
 
   context('menu bottom - change lang to en lang', () => {
@@ -344,7 +381,13 @@ describe('DrawerMenu', () => {
         defaultLocale,
         i18n,
       );
-      const menuBottom = getMenuBottom(urlDonate);
+      const urlContact = getApiBaseUrlWithLang(
+        null,
+        rideToWorkByBikeConfig.urlContact,
+        defaultLocale,
+        i18n,
+      );
+      const menuBottom = getMenuBottom(urlDonate, urlContact);
       cy.mount(DrawerMenu, {
         props: {
           items: menuBottom,
@@ -352,6 +395,7 @@ describe('DrawerMenu', () => {
       });
       cy.wrap(menuBottom).as('menu');
     });
+
     it('renders donate item with correct href - en lang (localized URL link)', () => {
       const enLangCode = 'en';
 
@@ -363,6 +407,40 @@ describe('DrawerMenu', () => {
           getApiBaseUrlWithLang(
             null,
             rideToWorkByBikeConfig.urlDonate,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .should('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          if (i18n.lang === enLangCode) href.includes(enLangCode);
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
+
+    it('renders contact item with correct href - en lang (localized URL link)', () => {
+      const enLangCode = 'en';
+
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.contact'))
+        .should('be.visible')
+        .and(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlContact,
             defaultLocale,
             i18n,
           ),

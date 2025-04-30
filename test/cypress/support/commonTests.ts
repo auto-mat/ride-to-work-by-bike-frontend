@@ -168,7 +168,13 @@ export const testDesktopSidebar = (): void => {
         defaultLocale,
         defaultLocale,
       );
-      if (getMenuBottom(urlDonate).length > 0) {
+      const urlContact = getApiBaseUrlWithLang(
+        null,
+        (config as ConfigGlobal).urlContact,
+        defaultLocale,
+        defaultLocale,
+      );
+      if (getMenuBottom(urlDonate, urlContact).length > 0) {
         cy.dataCy(selectorDrawerMenuBottom).should('be.visible');
       }
       cy.dataCy(selectorAutomatLogoBanner).should('be.visible');

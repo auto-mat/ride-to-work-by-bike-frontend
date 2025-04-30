@@ -2792,6 +2792,12 @@ Cypress.Commands.add(
       defLocale,
       i18n,
     );
+    const urlContact = getApiBaseUrlWithLang(
+      null,
+      config.urlContact,
+      defLocale,
+      i18n,
+    );
     cy.wrap(
       getMenuTop({
         isUserOrganizationAdmin,
@@ -2801,7 +2807,7 @@ Cypress.Commands.add(
         isResultsEnabled: true,
       }),
     ).then((menuTop) => {
-      cy.wrap(getMenuBottom(urlDonate)).then((menuBottom) => {
+      cy.wrap(getMenuBottom(urlDonate, urlContact)).then((menuBottom) => {
         // Check footer panel menu
         cy.dataCy('footer-panel-menu').should('be.visible');
         cy.dataCy('footer-panel-menu')
@@ -2829,6 +2835,28 @@ Cypress.Commands.add(
             .contains('.q-item', i18n.global.t('drawerMenu.donate'))
             .should('be.visible')
             .and('have.attr', 'href', urlDonate)
+            .should('have.attr', 'target', '_blank')
+            .invoke('attr', 'href')
+            .then((href) => {
+              cy.request({
+                url: href,
+                failOnStatusCode: failOnStatusCode,
+                headers: { ...userAgentHeader },
+              }).then((resp) => {
+                if (resp.status === httpTooManyRequestsStatus) {
+                  cy.log(httpTooManyRequestsStatusMessage);
+                  return;
+                }
+                expect(resp.status).to.eq(httpSuccessfullStatus);
+              });
+            });
+        });
+        // check that menu contains contact link
+        cy.dataCy('footer-panel-menu-dialog').within(() => {
+          cy.get('.q-item')
+            .contains('.q-item', i18n.global.t('drawerMenu.contact'))
+            .should('be.visible')
+            .and('have.attr', 'href', urlContact)
             .should('have.attr', 'target', '_blank')
             .invoke('attr', 'href')
             .then((href) => {
