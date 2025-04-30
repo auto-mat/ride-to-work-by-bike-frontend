@@ -128,7 +128,7 @@ export default defineComponent({
       <section-heading class="q-mb-md" data-cy="routes-apps-title-auto">
         {{ $t('routes.titleAutomaticLogging') }}
         <template #perex>
-          {{ $t('routes.hintAutomaticLogging') }}
+          <div v-html="$t('routes.hintAutomaticLogging')" />
         </template>
       </section-heading>
       <!-- App banners -->

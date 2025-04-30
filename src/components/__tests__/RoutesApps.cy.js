@@ -92,7 +92,14 @@ function coreTests() {
           cy.dataCy('routes-apps-title-auto')
             .find('[data-cy="section-heading-perex"]')
             .should('be.visible')
-            .and('contain.text', i18n.global.t('routes.hintAutomaticLogging'));
+            .then(($el) => {
+              const content = $el.text();
+              cy.stripHtmlTags(
+                i18n.global.t('routes.hintAutomaticLogging'),
+              ).then((text) => {
+                expect(content).to.equal(text);
+              });
+            });
           cy.dataCy('banner-routes-app')
             .should('be.visible')
             .should('have.length', 2);
