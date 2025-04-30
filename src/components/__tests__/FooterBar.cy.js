@@ -236,6 +236,77 @@ function coreTests() {
     });
   });
 
+  it('renders RTWBB logo, validate URL link - default lang', () => {
+    cy.window().then(() => {
+      // link
+      cy.dataCy('footer-logo-link')
+        .should('be.visible')
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlRideToWorkByBike,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+        });
+    });
+  });
+
+  it('renders RTWBB logo, validate URL link - en lang (localized URL link)', () => {
+    const enLangCode = 'en';
+    const defLocale = i18n.global.locale;
+    i18n.global.locale = enLangCode;
+
+    cy.window().then(() => {
+      // link
+      cy.dataCy('footer-logo-link')
+        .should('be.visible')
+        .should(
+          'have.attr',
+          'href',
+          getApiBaseUrlWithLang(
+            null,
+            rideToWorkByBikeConfig.urlRideToWorkByBike,
+            defaultLocale,
+            i18n,
+          ),
+        )
+        .and('have.attr', 'target', '_blank')
+        .invoke('attr', 'href')
+        .then((href) => {
+          cy.request({
+            url: href,
+            failOnStatusCode: failOnStatusCode,
+            headers: { ...userAgentHeader },
+          }).then((resp) => {
+            if (resp.status === httpTooManyRequestsStatus) {
+              cy.log(httpTooManyRequestsStatusMessage);
+              return;
+            }
+            expect(resp.status).to.eq(httpSuccessfullStatus);
+          });
+          i18n.global.locale = defLocale;
+        });
+    });
+  });
+
   it('renders separator between logos', () => {
     cy.dataCy(selectorFooterLogoSeparator).should('be.visible');
   });

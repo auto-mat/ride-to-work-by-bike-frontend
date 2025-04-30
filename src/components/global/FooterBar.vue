@@ -106,7 +106,7 @@ export default defineComponent({
       );
     });
 
-    const { urlRideToWorkByBike } = rideToWorkByBikeConfig;
+    const urlRideToWorkByBike = rideToWorkByBikeConfig.urlRideToWorkByBike;
     const logoLinkUrl = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
