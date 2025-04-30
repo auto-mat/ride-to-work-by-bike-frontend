@@ -106,9 +106,20 @@ export default defineComponent({
       );
     });
 
+    const { urlRideToWorkByBike } = rideToWorkByBikeConfig;
+    const logoLinkUrl = computed(() => {
+      return getApiBaseUrlWithLang(
+        logger,
+        urlRideToWorkByBike,
+        defaultLocale,
+        i18n,
+      );
+    });
+
     return {
       appInfo,
       deployedAppVersion,
+      logoLinkUrl,
       maxWidth,
       primaryOpacity,
       rideToWorkByBikeDeployedAppVersion,
@@ -156,12 +167,14 @@ export default defineComponent({
           >
             <div class="col-12 col-sm-auto flex items-center">
               <!-- Logo -->
-              <q-img
-                src="~assets/svg/logo.svg"
-                width="142px"
-                height="40px"
-                data-cy="footer-logo"
-              />
+              <a :href="logoLinkUrl" target="_blank" data-cy="footer-logo-link">
+                <q-img
+                  src="~assets/svg/logo.svg"
+                  width="142px"
+                  height="40px"
+                  data-cy="footer-logo"
+                />
+              </a>
               <q-separator
                 vertical
                 class="q-mx-lg"
