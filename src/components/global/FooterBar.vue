@@ -22,6 +22,7 @@
 // libraries
 import { colors } from 'quasar';
 import { computed, defineComponent, inject } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
@@ -36,6 +37,7 @@ import { useSocialLinks } from '../../composables/useSocialLinks';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { routesConf } from 'src/router/routes_conf';
 
 // types
 import { ConfigAppVersion } from '../types/Config';
@@ -116,12 +118,19 @@ export default defineComponent({
       );
     });
 
+    // Flag to add space for floating button on routes list page
+    const route = useRoute();
+    const pathIsRoutesList = computed(() => {
+      return route.path === routesConf.routes_list.children.fullPath;
+    });
+
     return {
       appInfo,
       deployedAppVersion,
       logoLinkUrl,
       maxWidth,
       primaryOpacity,
+      pathIsRoutesList,
       rideToWorkByBikeDeployedAppVersion,
       socialLinks,
       scrollToTop,
@@ -316,6 +325,13 @@ export default defineComponent({
               <span v-if="index < appInfo.length - 1" class="gt-sm">|</span>
             </div>
           </div>
+
+          <!-- Add space for floating button on routes list page -->
+          <div
+            v-if="pathIsRoutesList"
+            class="lt-md q-pb-xl"
+            data-cy="footer-routes-list-spacer"
+          />
         </div>
       </div>
     </div>

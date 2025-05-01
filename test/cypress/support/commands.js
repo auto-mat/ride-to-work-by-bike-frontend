@@ -273,6 +273,24 @@ Cypress.Commands.add(
   },
 );
 
+Cypress.Commands.add(
+  'testElementsNoOverlap',
+  (elementSelector, otherElementSelector) => {
+    cy.dataCy(elementSelector).then((element) => {
+      const rect1 = element[0].getBoundingClientRect();
+      cy.dataCy(otherElementSelector).then((otherElement) => {
+        const rect2 = otherElement[0].getBoundingClientRect();
+        const noOverlap =
+          rect1.right < rect2.left ||
+          rect1.left > rect2.right ||
+          rect1.bottom < rect2.top ||
+          rect1.top > rect2.bottom;
+        cy.wrap(noOverlap).should('be.true');
+      });
+    });
+  },
+);
+
 Cypress.Commands.add('testSoacialMediaUrlRequest', (rideToWorkByBikeConfig) => {
   cy.request({
     url: rideToWorkByBikeConfig.urlFacebook,

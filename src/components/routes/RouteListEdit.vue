@@ -155,7 +155,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-layout>
+  <div>
     <q-form ref="formRef" data-cy="route-list-edit">
       <!-- First save routes button on the large screen -->
       <div
@@ -246,28 +246,32 @@ export default defineComponent({
         </q-btn>
       </div>
       <!-- Sticky save routes button on the mobile screen -->
-      <q-page-sticky v-else position="bottom" :offset="[0, 80]" class="z-top">
-        <div class="bg-white" style="border-radius: 999px">
-          <q-btn
-            rounded
-            unelevated
-            type="submit"
-            color="primary"
-            size="16px"
-            class="text-weight-bold"
-            :loading="isLoadingTrips"
-            :disable="isLoadingTrips || dirtyCount === 0"
-            data-cy="button-save-sticky"
-            @click.prevent="onSave"
-          >
-            {{
-              $t('routes.buttonSaveChangesCount', dirtyCount, {
-                count: dirtyCount,
-              })
-            }}
-          </q-btn>
-        </div>
-      </q-page-sticky>
+      <teleport to="body">
+        <q-layout v-if="!isLargeScreen" style="min-height: 0">
+          <q-page-sticky position="bottom" :offset="[0, 80]" class="z-top">
+            <div class="bg-white" style="border-radius: 999px">
+              <q-btn
+                rounded
+                unelevated
+                type="submit"
+                color="primary"
+                size="16px"
+                class="text-weight-bold"
+                :loading="isLoadingTrips"
+                :disable="isLoadingTrips || dirtyCount === 0"
+                data-cy="button-save-sticky"
+                @click.prevent="onSave"
+              >
+                {{
+                  $t('routes.buttonSaveChangesCount', dirtyCount, {
+                    count: dirtyCount,
+                  })
+                }}
+              </q-btn>
+            </div>
+          </q-page-sticky>
+        </q-layout>
+      </teleport>
     </q-form>
     <!-- Loading spinner -->
     <q-inner-loading
@@ -275,5 +279,5 @@ export default defineComponent({
       color="primary"
       data-cy="spinner-route-list-edit"
     />
-  </q-layout>
+  </div>
 </template>

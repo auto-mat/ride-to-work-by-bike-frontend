@@ -25,6 +25,29 @@ describe('Routes list page', () => {
         });
         cy.waitForThisCampaignApi(campaign);
       });
+      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      // intercept is user organization admin API
+      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(
+            config,
+            defLocale,
+            response,
+          );
+        },
+      );
+      // intercept my team GET API
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+      });
     });
   });
 
@@ -516,6 +539,67 @@ describe('Routes list page', () => {
           });
         });
       });
+    });
+  });
+
+  context('mobile - with logged routes', () => {
+    beforeEach(() => {
+      cy.viewport('iphone-6');
+      cy.get('@config').then((config) => {
+        cy.interceptCommuteModeGetApi(config, defLocale);
+        cy.interceptTripsGetApi(config, defLocale);
+        cy.visit('#' + routesConf['routes_list']['children']['fullPath']);
+        cy.waitForCommuteModeApi();
+        cy.dataCy('spinner-route-list-edit').should('be.visible');
+        cy.dataCy('spinner-route-list-display').should('be.visible');
+        cy.waitForTripsApi();
+      });
+    });
+
+    it('shows floating button that does not overlap with footer', () => {
+      cy.dataCy('button-save-sticky').should('be.visible');
+      // scroll down to bottom of page
+      cy.scrollTo('bottom');
+      // check that floating button is visible
+      cy.dataCy('button-save-sticky').should('be.visible');
+      // spacer element should be visible on the bottom of the page
+      cy.dataCy('footer-routes-list-spacer').should('be.visible');
+      // check that footer content is not covered by floating button
+      cy.dataCy('footer-app-info-mobile').should('be.visible');
+      cy.testElementsNoOverlap('footer-app-info-mobile', 'button-save-sticky');
+      cy.dataCy('footer-social-menu').should('be.visible');
+      cy.testElementsNoOverlap('footer-social-menu', 'button-save-sticky');
+      cy.dataCy('language-switcher-footer').should('be.visible');
+      cy.testElementsNoOverlap(
+        'language-switcher-footer',
+        'button-save-sticky',
+      );
+    });
+
+    it('makes space for floating button in footer on routes list page, but nowhere else', () => {
+      // check that spacer element is visible on the bottom of the page
+      cy.dataCy('footer-routes-list-spacer').should('be.visible');
+      // check that spacer element is not visible on other pages
+      cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
+      cy.visit('#' + routesConf['routes_app']['children']['fullPath']);
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
+      // home
+      cy.visit('#' + routesConf['home']['children']['fullPath']);
+      cy.dataCy('index-title').should('be.visible');
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
+      // results
+      cy.visit('#' + routesConf['results']['children']['fullPath']);
+      cy.dataCy('results-page-title').should('be.visible');
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
+      // prizes
+      cy.visit('#' + routesConf['prizes']['children']['fullPath']);
+      cy.dataCy('prizes-page-title').should('be.visible');
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
+      // profile
+      cy.visit('#' + routesConf['profile_details']['children']['fullPath']);
+      cy.dataCy('profile-page-title').should('be.visible');
+      cy.dataCy('footer-routes-list-spacer').should('not.exist');
     });
   });
 });
