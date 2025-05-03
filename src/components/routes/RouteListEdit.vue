@@ -248,7 +248,7 @@ export default defineComponent({
       <!-- Sticky save routes button on the mobile screen -->
       <teleport to="body">
         <q-layout v-if="!isLargeScreen" style="min-height: 0">
-          <q-page-sticky position="bottom" :offset="[0, 80]" class="z-top">
+          <q-page-sticky position="bottom" :offset="[0, 80]">
             <div class="bg-white" style="border-radius: 999px">
               <q-btn
                 rounded
