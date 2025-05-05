@@ -3,6 +3,49 @@ import { testDesktopSidebar, testMobileHeader } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 
 describe('Routes page', () => {
+  beforeEach(() => {
+    cy.viewport('macbook-16');
+    // load config an i18n objects as aliases
+    cy.task('getAppConfig', process).then((config) => {
+      // alias config
+      cy.wrap(config).as('config');
+      cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+        cy.interceptThisCampaignGetApi(config, defLocale, campaign);
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+        cy.waitForThisCampaignApi(campaign);
+      });
+      // intercept register challenge API
+      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      // intercept is user organization admin API
+      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(
+            config,
+            defLocale,
+            response,
+          );
+        },
+      );
+      // intercept my team GET API
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+      });
+    });
+  });
+
   context('desktop', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
@@ -124,15 +167,18 @@ function coreTests() {
             expect($el.text()).to.contain(translation);
           });
         });
-      cy.dataCy('routes-page-instructions')
-        .should('be.visible')
-        .then(($el) => {
-          cy.wrap(i18n.global.t('routes.instructionRouteLogTimeframe')).then(
-            (translation) => {
-              expect($el.text()).to.contain(translation);
-            },
-          );
-        });
+      cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+        cy.dataCy('routes-page-instructions').should(
+          'contain',
+          i18n.global.t('routes.instructionRouteLogTimeframe', {
+            days: campaign.results[0].days_active,
+          }),
+        );
+        cy.dataCy('routes-page-instructions').should(
+          'contain',
+          campaign.results[0].days_active,
+        );
+      });
       cy.dataCy('routes-page-instructions').then(($el) => {
         cy.wrap(i18n.global.t('routes.instructionRouteCombination')).then(
           (translation) => {
