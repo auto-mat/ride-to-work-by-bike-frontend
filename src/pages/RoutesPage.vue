@@ -5,7 +5,13 @@
         {{ $t('routes.titleRoutes') }}
         <template #secondary>
           <div data-cy="routes-page-instructions">
-            <p>{{ $t('routes.instructionRouteLogTimeframe') }}</p>
+            <p>
+              {{
+                $tc('routes.instructionRouteLogTimeframe', daysActive, {
+                  days: daysActive,
+                })
+              }}
+            </p>
             <p class="q-mb-none">
               {{ $t('routes.instructionRouteCombination') }}
             </p>
@@ -19,7 +25,7 @@
 
 <script lang="ts">
 // libraries
-import { defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // components
 import PageHeading from 'src/components/global/PageHeading.vue';
@@ -29,6 +35,7 @@ import RouteTabs from 'src/components/routes/RouteTabs.vue';
 import { RouteTab } from 'src/components/types/Route';
 
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
 import { useTripsStore } from 'src/stores/trips';
 
 export default defineComponent({
@@ -38,7 +45,12 @@ export default defineComponent({
     PageHeading,
   },
   setup() {
+    const challengeStore = useChallengeStore();
     const tripsStore = useTripsStore();
+
+    const daysActive = computed<number>(() => {
+      return challengeStore.getDaysActive;
+    });
 
     onMounted(async () => {
       if (!tripsStore.getCommuteModes.length) {
@@ -51,6 +63,7 @@ export default defineComponent({
     });
 
     return {
+      daysActive,
       RouteTab,
     };
   },
