@@ -24,6 +24,30 @@ describe('Routes calendar page', () => {
         });
         cy.waitForThisCampaignApi(campaign);
       });
+      // intercept register challenge API
+      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            config,
+            defLocale,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      // intercept is user organization admin API
+      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(
+            config,
+            defLocale,
+            response,
+          );
+        },
+      );
+      // intercept my team GET API
+      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
+        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+      });
     });
   });
 
@@ -244,6 +268,24 @@ describe('Routes calendar page', () => {
             );
           });
           cy.get('.q-notification').should('not.exist');
+        });
+      });
+    });
+
+    it('shows instructions for logging routes within X number of days', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+          cy.dataCy('routes-calendar').should('be.visible');
+          cy.dataCy('routes-page-instructions').should(
+            'contain',
+            i18n.global.t('routes.instructionRouteLogTimeframe', {
+              days: campaign.results[0].days_active,
+            }),
+          );
+          cy.dataCy('routes-page-instructions').should(
+            'contain',
+            campaign.results[0].days_active,
+          );
         });
       });
     });
