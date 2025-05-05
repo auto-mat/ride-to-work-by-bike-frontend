@@ -24,30 +24,6 @@ describe('Routes calendar page', () => {
         });
         cy.waitForThisCampaignApi(campaign);
       });
-      // intercept register challenge API
-      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
-        (responseRegisterChallenge) => {
-          cy.interceptRegisterChallengeGetApi(
-            config,
-            defLocale,
-            responseRegisterChallenge,
-          );
-        },
-      );
-      // intercept is user organization admin API
-      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-        (response) => {
-          cy.interceptIsUserOrganizationAdminGetApi(
-            config,
-            defLocale,
-            response,
-          );
-        },
-      );
-      // intercept my team GET API
-      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
-        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
-      });
     });
   });
 
