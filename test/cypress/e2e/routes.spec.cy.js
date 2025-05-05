@@ -4,7 +4,6 @@ import { defLocale } from '../../../src/i18n/def_locale';
 
 describe('Routes page', () => {
   beforeEach(() => {
-    cy.viewport('macbook-16');
     // load config an i18n objects as aliases
     cy.task('getAppConfig', process).then((config) => {
       // alias config
@@ -51,8 +50,6 @@ describe('Routes page', () => {
       cy.viewport('macbook-16');
       // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
         cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
@@ -77,11 +74,6 @@ describe('Routes page', () => {
         );
       });
       cy.visit('#' + routesConf['routes']['children']['fullPath']);
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        // alias i18n
-        cy.wrap(win.i18n).as('i18n');
-      });
       cy.waitForCommuteModeApi();
     });
 
@@ -109,8 +101,6 @@ describe('Routes page', () => {
       cy.viewport('iphone-6');
       // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
-        // alias config
-        cy.wrap(config).as('config');
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
         cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
@@ -135,11 +125,6 @@ describe('Routes page', () => {
         );
       });
       cy.visit('#' + routesConf['routes']['children']['fullPath']);
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        // alias i18n
-        cy.wrap(win.i18n).as('i18n');
-      });
       cy.waitForCommuteModeApi();
     });
 
