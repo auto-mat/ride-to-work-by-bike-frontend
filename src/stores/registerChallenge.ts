@@ -255,6 +255,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         state.paymentCategory === PaymentCategory.entryFeeDonation
       );
     },
+    getIsVoucherFreeEntry: (state): boolean => {
+      return (
+        state.paymentSubject === PaymentSubject.voucher &&
+        state.voucher?.discount === 100
+      );
+    },
     getIsPaymentSuccessful: (state): boolean => {
       return [PaymentState.done, PaymentState.noAdmission].includes(
         state.paymentState,
