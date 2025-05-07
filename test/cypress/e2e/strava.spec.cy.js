@@ -188,6 +188,8 @@ describe('Strava Integration', () => {
           cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
           // check component is visible
           cy.dataCy('strava-app').should('be.visible');
+          // check that URL no longer contains code
+          cy.url().should('not.include', `?code=${validCode}`);
           // open expansion item
           cy.dataCy('strava-app-expansion-item-header')
             .should('be.visible')
@@ -232,6 +234,8 @@ describe('Strava Integration', () => {
           cy.contains(
             i18n.global.t('authStravaAccount.apiMessageErrorWithMessage'),
           );
+          // check that URL no longer contains code
+          cy.url().should('not.include', `?code=${invalidCode}`);
         });
       });
     });

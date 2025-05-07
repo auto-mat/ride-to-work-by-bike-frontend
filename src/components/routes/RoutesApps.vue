@@ -17,7 +17,7 @@
 // libraries
 import { computed, defineComponent, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 // components
 import BannerRoutesApp from './BannerRoutesApp.vue';
@@ -49,6 +49,7 @@ export default defineComponent({
     const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
     const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
     const route = useRoute();
+    const router = useRouter();
     const stravaStore = useStravaStore();
     const tripsStore = useTripsStore();
     const isLoadingAuthStrava = ref<boolean>(false);
@@ -65,6 +66,8 @@ export default defineComponent({
         isLoadingAuthStrava.value = true;
         await stravaStore.authAccount(code);
         isLoadingAuthStrava.value = false;
+        // remove code parameter from URL
+        router.replace({ query: {} });
       }
 
       // load app URLs if not already loaded
