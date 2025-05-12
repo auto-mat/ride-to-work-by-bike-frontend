@@ -420,6 +420,34 @@ describe('Register Challenge page', () => {
       checkActiveIcon(2);
     });
 
+    it('sends correct API payload when empty nickname', () => {
+      cy.dataCy('form-personal-details').should('be.visible');
+      // fill firstName
+      cy.dataCy('form-firstName-input').type('John');
+      // fill lastName
+      cy.dataCy('form-lastName-input').type('Doe');
+      // skip nickname
+      // fill gender
+      cy.dataCy('form-personal-details-gender')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      // skip newsletter
+      // agree with terms
+      cy.dataCy('form-personal-details-terms')
+        .find('.q-checkbox__inner')
+        .first()
+        .click();
+      // click
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      // wait for request
+      cy.fixture('apiPostRegisterChallengePersonalDetailsNoNickname').then(
+        (testData) => {
+          cy.waitForRegisterChallengePostApi(testData);
+        },
+      );
+    });
+
     it('sends correct create order request for different payment configurations', () => {
       cy.clock(systemTimeChallengeActive, ['Date']);
       cy.get('@config').then((config) => {

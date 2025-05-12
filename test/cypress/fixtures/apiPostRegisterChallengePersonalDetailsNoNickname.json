@@ -1,0 +1,9 @@
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "nickname": null,
+  "sex": "male",
+  "newsletter": "",
+  "personal_data_opt_in": true,
+  "language": "cs"
+}

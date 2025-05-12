@@ -58,7 +58,7 @@ export type RegisterChallengePostPayload = {
   first_name?: string;
   last_name?: string;
   email?: string;
-  nickname?: string;
+  nickname?: string | null;
   sex?: string;
   telephone?: string;
   telephone_opt_in?: boolean;

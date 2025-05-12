@@ -31,7 +31,7 @@ export const registerChallengeAdapter = {
       email: apiData.personal_details.email,
       id: apiData.personal_details.id,
       isStaff: apiData.personal_details.is_staff,
-      nickname: apiData.personal_details.nickname,
+      nickname: apiData.personal_details.nickname || '',
       gender: apiData.personal_details.sex as Gender,
       newsletter: newsletterAdapter.parseNewsletterValues(
         apiData.personal_details.newsletter,
@@ -85,7 +85,12 @@ export const registerChallengeAdapter = {
         payload.email = storePersonalDetails.email;
       }
       if (storePersonalDetails.nickname !== undefined) {
-        payload.nickname = storePersonalDetails.nickname;
+        // if nickname is empty string, set it to null
+        if (!storePersonalDetails.nickname) {
+          payload.nickname = null;
+        } else {
+          payload.nickname = storePersonalDetails.nickname;
+        }
       }
       if (storePersonalDetails.gender !== undefined) {
         payload.sex = storePersonalDetails.gender as Gender;
