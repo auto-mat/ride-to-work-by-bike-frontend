@@ -12,6 +12,7 @@ import { useLogRoutes } from '../../../src/composables/useLogRoutes';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import { useTripsStore } from '../../../src/stores/trips';
 import { useChallengeStore } from '../../../src/stores/challenge';
+import { useRegisterChallengeStore } from '../../../src/stores/registerChallenge';
 import { TransportType } from '../../../src/components/types/Route';
 import testData from '../../../test/cypress/fixtures/routeListEditInputTest.json';
 const { getPaletteColor } = colors;
@@ -61,6 +62,8 @@ describe('<RouteListEdit>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup user approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       cy.fixture('routeItemsCalendar.json').then((response) => {
         cy.wrap(useTripsStore()).then((store) => {
           store.setRouteItems(response);
@@ -92,6 +95,8 @@ describe('<RouteListEdit>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup user approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       cy.fixture('routeItemsCalendar.json').then((response) => {
         cy.wrap(useTripsStore()).then((store) => {
           store.setRouteItems(response);
@@ -130,6 +135,8 @@ describe('<RouteListEdit>', () => {
         });
         // setup store with commute modes
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        // setup user approval status
+        cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
         cy.fixture('routeListEmpty.json').then((response) => {
           cy.wrap(useTripsStore()).then((store) => {
             store.setRouteItems(response);
@@ -455,6 +462,38 @@ function coreTests() {
     cy.dataCy(selectorButtonSave).should(
       'contain',
       i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+    );
+  });
+
+  it('shows notification when member is not approved', () => {
+    // setup user approval status - undecided
+    cy.fixture('apiGetMyTeamResponseUndecided').then((response) => {
+      cy.setupRegisterChallengeTeamApprovalStatus(
+        useRegisterChallengeStore,
+        response,
+      );
+    });
+    // pick one editable route
+    cy.get('[data-date="2025-05-12"]')
+      .should('be.visible')
+      .find('[data-direction="fromWork"]')
+      .should('be.visible')
+      .within(() => {
+        // input transport type
+        cy.dataCy('button-toggle-transport').should('be.visible');
+        cy.dataCy('section-transport')
+          .find(`[data-value="${TransportType.bike}"]`)
+          .click();
+        // input distance
+        cy.dataCy('section-input-number').should('be.visible');
+        cy.dataCy('section-input-number').find('input').clear();
+        cy.dataCy('section-input-number').find('input').type('10');
+      });
+    // click save button
+    cy.dataCy(selectorButtonSave).click();
+    // check notification
+    cy.contains(i18n.global.t('postTrips.messageUserNotApproved')).should(
+      'be.visible',
     );
   });
 }
