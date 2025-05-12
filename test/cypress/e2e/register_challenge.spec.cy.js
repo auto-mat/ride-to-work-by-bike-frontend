@@ -3933,6 +3933,7 @@ describe('Register Challenge page', () => {
         cy.interceptRegisterChallengePostApi(config, defLocale);
         cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
         cy.interceptMyTeamGetApi(config, defLocale);
+        cy.interceptMerchandiseGetApi(config, defLocale);
       });
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
@@ -3990,6 +3991,13 @@ describe('Register Challenge page', () => {
         cy.dataCy('step-6')
           .find('.q-stepper__step-content')
           .should('be.visible');
+        // on step 6 (merch) we should see merch options
+        cy.dataCy('text-merch-unavailable').should('not.exist');
+        cy.dataCy('no-merch').should('be.visible');
+        cy.dataCy('list-merch-tabs').should('be.visible');
+        cy.dataCy('form-merch-size-conversion-chart-link').should('be.visible');
+        cy.dataCy('form-merch-phone-input').should('be.visible');
+        cy.dataCy('phone-opt-in').should('be.visible');
       });
     });
 
@@ -4252,6 +4260,113 @@ describe('Register Challenge page', () => {
         cy.tick(5000);
         // verify countdown is hidden after competition phase starts
         cy.dataCy('top-bar-countdown').should('not.exist');
+      });
+    });
+  });
+
+  context('registration without enabled merch', () => {
+    beforeEach(() => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.wrap(config).as('config');
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        // visit challenge inactive page to load campaign data
+        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.waitForThisCampaignApi();
+        cy.fixture('apiGetRegisterChallengeFullTeam.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+        });
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        cy.interceptMyTeamGetApi(config, defLocale);
+        cy.fixture('apiGetMerchandiseResponseUnavailable.json').then(
+          (response) => {
+            cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+              (responseNext) => {
+                cy.interceptMerchandiseGetApi(
+                  config,
+                  defLocale,
+                  response,
+                  responseNext,
+                );
+              },
+            );
+          },
+        );
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+        // visit register challenge page
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+      });
+    });
+
+    it('shows empty merch options when not available', () => {
+      cy.fixture('apiGetTeamsResponse.json').then((responseTeams) => {
+        // we are on step 2
+        cy.dataCy('step-2')
+          .find('.q-stepper__step-content')
+          .should('be.visible');
+        // go to step 3
+        cy.dataCy('step-2-continue').click();
+        // we are on step 3
+        cy.dataCy('step-3')
+          .find('.q-stepper__step-content')
+          .should('be.visible');
+        // go to step 4
+        cy.dataCy('step-3-continue').click();
+        // we are on step 4
+        cy.dataCy('step-4')
+          .find('.q-stepper__step-content')
+          .should('be.visible');
+        // go to step 5
+        cy.dataCy('step-4-continue').click();
+        // we are on step 5
+        cy.dataCy('step-5')
+          .find('.q-stepper__step-content')
+          .should('be.visible');
+        // first teams request is to show teams in the table
+        cy.waitForTeamsGetApi();
+        // check that first team (full) is selected
+        cy.dataCy('form-select-table-option')
+          .first()
+          .find('.q-radio__inner')
+          .should('have.class', 'q-radio__inner--truthy');
+        // check that first team option is disabled
+        cy.dataCy('form-select-table-option')
+          .first()
+          .should('have.class', 'disabled')
+          .and('contain', responseTeams.results[0].name);
+        // click continue button
+        cy.dataCy('step-5-continue').click();
+        // second teams request is to refresh availability
+        cy.waitForTeamsGetApi();
+        // wait for my_team GET API call
+        cy.waitForMyTeamGetApi();
+        // check that we can pass to step 6
+        cy.dataCy('step-6')
+          .find('.q-stepper__step-content')
+          .should('be.visible');
+        // check that merch options are not visible
+        cy.get('@i18n').then((i18n) => {
+          cy.dataCy('text-merch-unavailable')
+            .should('be.visible')
+            .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));
+        });
+        cy.dataCy('no-merch').should('be.visible');
+        cy.dataCy('list-merch-tabs').should('not.be.visible');
+        cy.dataCy('form-field-merch-size').should('not.exist');
+        cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
+        cy.dataCy('form-merch-phone-input').should('be.visible');
+        cy.dataCy('phone-opt-in').should('be.visible');
+        // go to next step is disabled (validation)
+        cy.dataCy('step-6-continue').should('be.disabled');
+        // check the "no merch" checkbox
+        cy.dataCy('form-merch-no-merch-checkbox').click();
+        // go to next step is enabled
+        cy.dataCy('step-6-continue').should('be.enabled');
       });
     });
   });

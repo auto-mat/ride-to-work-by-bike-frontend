@@ -159,15 +159,30 @@ export default defineComponent({
 
     // computed properties for gender-specific options
     const optionsFemale = computed((): MerchandiseCard[] => {
-      return Object.values(merchandiseCards.value[Gender.female] || {});
+      const options = Object.values(
+        merchandiseCards.value[Gender.female] || {},
+      );
+      return options.filter((option) => option.available);
     });
 
     const optionsMale = computed((): MerchandiseCard[] => {
-      return Object.values(merchandiseCards.value[Gender.male] || {});
+      const options = Object.values(merchandiseCards.value[Gender.male] || {});
+      return options.filter((option) => option.available);
     });
 
     const optionsUnisex = computed((): MerchandiseCard[] => {
-      return Object.values(merchandiseCards.value[Gender.unisex] || {});
+      const options = Object.values(
+        merchandiseCards.value[Gender.unisex] || {},
+      );
+      return options.filter((option) => option.available);
+    });
+
+    const optionsEmpty = computed((): boolean => {
+      return (
+        optionsFemale.value.length === 0 &&
+        optionsMale.value.length === 0 &&
+        optionsUnisex.value.length === 0
+      );
     });
 
     // get current item's options
@@ -370,6 +385,7 @@ export default defineComponent({
       optionsFemale,
       optionsMale,
       optionsUnisex,
+      optionsEmpty,
       phone,
       selectedOption,
       selectedSize,
@@ -390,6 +406,14 @@ export default defineComponent({
 </script>
 
 <template>
+  <!-- Message: Merch unavailable -->
+  <q-banner
+    v-if="optionsEmpty"
+    class="bg-warning text-grey-10 rounded-borders q-mb-md"
+    data-cy="text-merch-unavailable"
+  >
+    {{ $t('form.merch.textMerchUnavailable') }}
+  </q-banner>
   <!-- Checkbox: No merch -->
   <q-item tag="label" v-ripple data-cy="no-merch">
     <q-item-section avatar top>
@@ -415,7 +439,7 @@ export default defineComponent({
   </q-item>
   <!-- Tabs: Merch -->
   <q-card ref="tabsMerchRef" flat class="q-mt-lg" style="max-width: 1024px">
-    <div v-show="!isNotMerch" data-cy="list-merch">
+    <div v-show="!isNotMerch && !optionsEmpty" data-cy="list-merch">
       <!-- Tab buttons -->
       <q-tabs
         v-model="selectedGender"
@@ -497,7 +521,10 @@ export default defineComponent({
     </div>
 
     <!-- Input: Merch size (card) - duplicated in dialog -->
-    <div v-if="!isNotMerch && currentSizeOptions.length > 1" class="q-pt-sm">
+    <div
+      v-if="!isNotMerch && !optionsEmpty && currentSizeOptions.length > 1"
+      class="q-pt-sm"
+    >
       <span
         class="text-caption text-weight-medium text-grey-10"
         v-if="currentItemLabelSize"
@@ -512,7 +539,7 @@ export default defineComponent({
       />
     </div>
 
-    <div class="q-mb-md">
+    <div v-if="!optionsEmpty" class="q-mb-md">
       <a
         class="text-primary"
         :href="urlSizeConversionChart"

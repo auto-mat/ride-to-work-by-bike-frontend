@@ -19,6 +19,7 @@ export interface Merchandise {
   material: string;
   description: string;
   t_shirt_preview: string;
+  available: boolean;
 }
 
 export interface GetMerchandiseResponse {
@@ -49,6 +50,7 @@ export interface MerchandiseCard {
   sizeOptions: FormOption[];
   material: string;
   itemIds: number[];
+  available: boolean;
 }
 
 /**

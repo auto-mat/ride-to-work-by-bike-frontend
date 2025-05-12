@@ -34,6 +34,7 @@ describe('<FormFieldListMerch>', () => {
         'labelPhoneOptInNoMerch',
         'labelPhoneOptInWithMerch',
         'labelUrlSizeConversionChartLink',
+        'textMerchUnavailable',
       ],
       'form.merch',
       i18n,
@@ -393,6 +394,43 @@ describe('<FormFieldListMerch>', () => {
           });
         },
       );
+    });
+  });
+
+  context('desktop - merch is unavailable', () => {
+    beforeEach(() => {
+      cy.fixture('apiGetMerchandiseResponseUnavailable').then((response) => {
+        cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+          (responseNext) => {
+            cy.interceptMerchandiseGetApi(
+              rideToWorkByBikeConfig,
+              i18n,
+              response,
+              responseNext,
+            );
+
+            cy.mount(FormFieldListMerch, {
+              props: {},
+            });
+            cy.viewport('macbook-16');
+
+            // wait for API responses
+            cy.waitForMerchandiseApi(response, responseNext);
+          },
+        );
+      });
+    });
+
+    it('does not show merch options', () => {
+      cy.dataCy('text-merch-unavailable')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));
+      cy.dataCy('no-merch').should('be.visible');
+      cy.dataCy('list-merch-tabs').should('not.be.visible');
+      cy.dataCy('form-field-merch-size').should('not.exist');
+      cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
+      cy.dataCy('form-merch-phone-input').should('be.visible');
+      cy.dataCy('phone-opt-in').should('be.visible');
     });
   });
 

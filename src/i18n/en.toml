@@ -438,6 +438,7 @@ labelSizeUnisex = "Size - unisex:"
 labelTrackDelivery = "I would like to receive a status report on the delivery of my starter pack."
 labelVariant = "Variant"
 labelUrlSizeConversionChartLink = "Size conversion chart"
+textMerchUnavailable = "As part of the additional registration for the May Challenge Ride to Work by Bike, we no longer send out participant t-shirts or socks. However, you are entitled to a 200 CZK discount in our benefit e-shop where you can purchase a t-shirt or socks (the discount is valid until June 30, 2025, for every purchase over 500 CZK). The voucher code is 57539805."
 
 [form.personalDetails]
 hintGender = "Used to determine the performance category"

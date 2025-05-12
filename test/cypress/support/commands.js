@@ -1345,83 +1345,111 @@ Cypress.Commands.add('waitForSubsidiaryPostApi', () => {
  * @param {object} config - App global config
  * @param {object|string} i18n - i18n instance or locale lang string e.g. en
  */
-Cypress.Commands.add('interceptMerchandiseGetApi', (config, i18n) => {
-  const {
-    apiBase,
-    apiDefaultLang,
-    iDontWantMerchandiseItemCode,
-    urlApiMerchandise,
-  } = config;
-  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, i18n);
-  const urlApiMerchandiseLocalized = `${apiBaseUrl}${urlApiMerchandise}`;
-  // intercept call for all merchandise
-  cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
-    cy.fixture('apiGetMerchandiseResponseNext').then(
-      (merchandiseResponseNext) => {
-        // intercept initial merchandise API call
-        cy.intercept('GET', urlApiMerchandiseLocalized, {
-          statusCode: httpSuccessfullStatus,
-          body: merchandiseResponse,
-        }).as('getMerchandise');
+Cypress.Commands.add(
+  'interceptMerchandiseGetApi',
+  (
+    config,
+    i18n,
+    merchandiseResponse = null,
+    merchandiseResponseNext = null,
+  ) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      iDontWantMerchandiseItemCode,
+      urlApiMerchandise,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiMerchandiseLocalized = `${apiBaseUrl}${urlApiMerchandise}`;
+    // intercept call for all merchandise
+    cy.fixture('apiGetMerchandiseResponse').then(
+      (merchandiseResponseDefault) => {
+        cy.fixture('apiGetMerchandiseResponseNext').then(
+          (merchandiseResponseNextDefault) => {
+            // intercept initial merchandise API call
+            cy.intercept('GET', urlApiMerchandiseLocalized, {
+              statusCode: httpSuccessfullStatus,
+              body: merchandiseResponse
+                ? merchandiseResponse
+                : merchandiseResponseDefault,
+            }).as('getMerchandise');
 
-        // intercept next page API call
-        cy.intercept('GET', merchandiseResponse.next, {
-          statusCode: httpSuccessfullStatus,
-          body: merchandiseResponseNext,
-        }).as('getMerchandiseNextPage');
+            // intercept next page API call
+            cy.intercept('GET', merchandiseResponseDefault.next, {
+              statusCode: httpSuccessfullStatus,
+              body: merchandiseResponseNext
+                ? merchandiseResponseNext
+                : merchandiseResponseNextDefault,
+            }).as('getMerchandiseNextPage');
+          },
+        );
       },
     );
-  });
-  // intercept call for "I don't want merch ID"
-  const urlApiMerchandiseNoneLocalized = `${apiBaseUrl}${urlApiMerchandise}${iDontWantMerchandiseItemCode}/`;
-  cy.fixture('apiGetMerchandiseResponseNone').then(
-    (merchandiseResponseNone) => {
-      cy.intercept('GET', urlApiMerchandiseNoneLocalized, {
-        statusCode: httpSuccessfullStatus,
-        body: merchandiseResponseNone,
-      }).as('getMerchandiseNone');
-    },
-  );
-});
+    // intercept call for "I don't want merch ID"
+    const urlApiMerchandiseNoneLocalized = `${apiBaseUrl}${urlApiMerchandise}${iDontWantMerchandiseItemCode}/`;
+    cy.fixture('apiGetMerchandiseResponseNone').then(
+      (merchandiseResponseNone) => {
+        cy.intercept('GET', urlApiMerchandiseNoneLocalized, {
+          statusCode: httpSuccessfullStatus,
+          body: merchandiseResponseNone,
+        }).as('getMerchandiseNone');
+      },
+    );
+  },
+);
 
 /**
  * Wait for intercept merchandise API calls and compare response object
  * Wait for `@getMerchandise` and `@getMerchandiseNextPage` intercepts
  */
-Cypress.Commands.add('waitForMerchandiseApi', () => {
-  cy.fixture('apiGetMerchandiseResponse').then((merchandiseResponse) => {
-    cy.fixture('apiGetMerchandiseResponseNext').then(
-      (merchandiseResponseNext) => {
-        cy.wait(['@getMerchandise', '@getMerchandiseNextPage']).spread(
-          (getMerchandise, getMerchandiseNextPage) => {
-            expect(getMerchandise.request.headers.authorization).to.include(
-              bearerTokeAuth,
+Cypress.Commands.add(
+  'waitForMerchandiseApi',
+  (merchandiseResponse = null, merchandiseResponseNext = null) => {
+    cy.fixture('apiGetMerchandiseResponse').then(
+      (merchandiseResponseDefault) => {
+        cy.fixture('apiGetMerchandiseResponseNext').then(
+          (merchandiseResponseNextDefault) => {
+            cy.wait(['@getMerchandise', '@getMerchandiseNextPage']).spread(
+              (getMerchandise, getMerchandiseNextPage) => {
+                expect(getMerchandise.request.headers.authorization).to.include(
+                  bearerTokeAuth,
+                );
+                if (getMerchandise.response) {
+                  expect(getMerchandise.response.statusCode).to.equal(
+                    httpSuccessfullStatus,
+                  );
+                  expect(getMerchandise.response.body).to.deep.equal(
+                    merchandiseResponse
+                      ? merchandiseResponse
+                      : merchandiseResponseDefault,
+                  );
+                }
+                expect(
+                  getMerchandiseNextPage.request.headers.authorization,
+                ).to.include(bearerTokeAuth);
+                if (getMerchandiseNextPage.response) {
+                  expect(getMerchandiseNextPage.response.statusCode).to.equal(
+                    httpSuccessfullStatus,
+                  );
+                  expect(getMerchandiseNextPage.response.body).to.deep.equal(
+                    merchandiseResponseNext
+                      ? merchandiseResponseNext
+                      : merchandiseResponseNextDefault,
+                  );
+                }
+              },
             );
-            if (getMerchandise.response) {
-              expect(getMerchandise.response.statusCode).to.equal(
-                httpSuccessfullStatus,
-              );
-              expect(getMerchandise.response.body).to.deep.equal(
-                merchandiseResponse,
-              );
-            }
-            expect(
-              getMerchandiseNextPage.request.headers.authorization,
-            ).to.include(bearerTokeAuth);
-            if (getMerchandiseNextPage.response) {
-              expect(getMerchandiseNextPage.response.statusCode).to.equal(
-                httpSuccessfullStatus,
-              );
-              expect(getMerchandiseNextPage.response.body).to.deep.equal(
-                merchandiseResponseNext,
-              );
-            }
           },
         );
       },
     );
-  });
-});
+  },
+);
 
 /**
  * Custom command to select a merchandise item from the list and interact with its dialog
@@ -1731,7 +1759,13 @@ Cypress.Commands.add(
       registerChallengeStore.setTeamId(apiGetTeamsResponse.results[0].id);
     });
     cy.wrap(registerChallengeStore.loadMerchandiseToStore(null));
-    cy.waitForMerchandiseApi();
+    cy.fixture('apiGetMerchandiseResponseUnavailable').then((response) => {
+      cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+        (responseNext) => {
+          cy.waitForMerchandiseApi(response, responseNext);
+        },
+      );
+    });
     cy.fixture(apiGetMerchandiseResponse).then((apiGetMerchandiseResponse) => {
       registerChallengeStore.setMerchId(
         apiGetMerchandiseResponse.results[0].id,

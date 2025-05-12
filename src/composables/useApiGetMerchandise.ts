@@ -295,6 +295,7 @@ export const useApiGetMerchandise = (
             material: firstItem.material,
             itemIds: items.map((item) => item.id),
             sizeOptions,
+            available: firstItem.available,
           };
           logger?.debug(`Card data format <${JSON.stringify(card, null, 2)}>.`);
           return card;

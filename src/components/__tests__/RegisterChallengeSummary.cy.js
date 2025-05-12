@@ -49,8 +49,19 @@ describe('<RegisterChallengeSummary>', () => {
   beforeEach(() => {
     // create and activate a fresh Pinia instance
     setActivePinia(createPinia());
-    // merchandise needs to be loaded via API call
-    cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
+    // we test with merchandise unavailable to make sure the merch is always shown
+    cy.fixture('apiGetMerchandiseResponseUnavailable').then((response) => {
+      cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+        (responseNext) => {
+          cy.interceptMerchandiseGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            response,
+            responseNext,
+          );
+        },
+      );
+    });
   });
 
   it('has translation for all strings', () => {

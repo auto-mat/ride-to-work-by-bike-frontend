@@ -12,7 +12,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost XS.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 134,
@@ -23,7 +23,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost S.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 135,
@@ -34,7 +34,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost M.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 136,
@@ -45,7 +45,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost L.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 137,
@@ -56,7 +56,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost XL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 138,
@@ -67,7 +67,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2024, velikost XXL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 139,
@@ -78,7 +78,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost S.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 140,
@@ -89,7 +89,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost M.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 141,
@@ -100,7 +100,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost L.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 142,
@@ -111,7 +111,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost XL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 143,
@@ -122,7 +122,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost XXL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 144,
@@ -133,7 +133,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2024, velikost XXXL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2024.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=4KKJp3eFkUpAim%2F4TT12TCpSiCE%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 159,
@@ -144,7 +144,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2023, velikost S.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 160,
@@ -155,7 +155,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2023, velikost M.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 161,
@@ -166,7 +166,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2023, velikost L.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 162,
@@ -187,7 +187,7 @@
       "material": "Bavlna",
       "description": "Dámske triko 2023, velikost XXL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 164,
@@ -198,7 +198,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2023, velikost S.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 165,
@@ -209,7 +209,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2023, velikost M.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 166,
@@ -220,7 +220,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2023, velikost L.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     }
   ]
 }

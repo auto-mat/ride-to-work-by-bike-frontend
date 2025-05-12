@@ -12,7 +12,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2023, velikost XL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 168,
@@ -23,7 +23,7 @@
       "material": "Bavlna",
       "description": "Pánske triko 2023, velikost XXL.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 157,
@@ -34,7 +34,7 @@
       "material": "Bavlna",
       "description": "Tunel nákrčník",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/2022_n%C3%A1kr%C4%8Dn%C3%ADk_edited.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=sEzrHnEwIyIv0LIjXD6Q2n4w%2B1k%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 170,
@@ -45,7 +45,7 @@
       "material": "Bavlna",
       "description": "Ponožky 2024, velikost 36-40.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/2024_dpnk_cernobile_ponozky.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=VPjQaK4Rrv9MS9COXt%2FMK8J0IVk%3D&Expires=2049394751",
-      "available": true
+      "available": false
     },
     {
       "id": 171,
@@ -56,7 +56,7 @@
       "material": "Bavlna",
       "description": "Ponožky 2024, velikost 41-46.",
       "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/2024_dpnk_cernobile_ponozky.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=VPjQaK4Rrv9MS9COXt%2FMK8J0IVk%3D&Expires=2049394751",
-      "available": true
+      "available": false
     }
   ]
 }
