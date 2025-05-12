@@ -2,6 +2,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import RouteCalendarPanel from 'components/routes/RouteCalendarPanel.vue';
 import { i18n } from '../../boot/i18n';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useChallengeStore } from 'src/stores/challenge';
 import { useTripsStore } from 'src/stores/trips';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -165,6 +166,53 @@ describe('<RouteCalendarPanel>', () => {
     unloggedRouteTests();
   });
 
+  context('unlogged user', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.viewport('macbook-16');
+    });
+
+    it('shows notification when member is not approved', () => {
+      cy.fixture('routeList').then((routes) => {
+        cy.mount(RouteCalendarPanel, {
+          props: {
+            modelValue: true,
+            routes,
+          },
+        });
+      });
+      cy.fixture('apiGetThisCampaignMay.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setDaysActive(response.results[0].days_active);
+          store.setPhaseSet(response.results[0].phase_set);
+        });
+      });
+      cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup register challenge store
+      cy.fixture('apiGetMyTeamResponseUndecided').then((response) => {
+        cy.setupRegisterChallengeTeamApprovalStatus(
+          useRegisterChallengeStore,
+          response,
+        );
+      });
+      // input transport type
+      cy.dataCy('button-toggle-transport').should('be.visible');
+      cy.dataCy(selectorRouteInputTransportType)
+        .find('[data-value="bicycle"]')
+        .click();
+      // input distance
+      cy.dataCy('section-input-number').should('be.visible');
+      cy.dataCy('section-input-number').find('input').clear();
+      cy.dataCy('section-input-number').find('input').type('10');
+      // click save button
+      cy.dataCy(selectorDialogSaveButton).click();
+      // check notification
+      cy.contains(i18n.global.t('postTrips.messageUserNotApproved')).should(
+        'be.visible',
+      );
+    });
+  });
+
   context('API payloads for route entry', () => {
     beforeEach(() => {
       cy.clock(systemTimeLoggingRoutes, ['Date']);
@@ -202,6 +250,8 @@ describe('<RouteCalendarPanel>', () => {
           });
         });
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        // setup register challenge store
+        cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
         // input transport type if provided
         if (testCase.inputValues.transport) {
           cy.dataCy('button-toggle-transport').should('be.visible');

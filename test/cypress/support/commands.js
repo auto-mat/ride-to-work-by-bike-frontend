@@ -3556,6 +3556,35 @@ Cypress.Commands.add(
 );
 
 /**
+ * Set up register challenge store with team approval status
+ * @param {Object} useRegisterChallengeStore - Register challenge store instance
+ * @param {Object} responseBody - Override default response body from fixture
+ */
+Cypress.Commands.add(
+  'setupRegisterChallengeTeamApprovalStatus',
+  (useRegisterChallengeStore, responseBody = null) => {
+    cy.fixture('apiGetMyTeamResponseApproved').then((defaultResponseBody) => {
+      const registerChallengeTeamApprovalStatusResponse = responseBody
+        ? responseBody
+        : defaultResponseBody;
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        const myTeam = computed(() => registerChallengeStore.getMyTeam);
+        registerChallengeStore.setMyTeam(
+          registerChallengeTeamApprovalStatusResponse.results[0],
+        );
+        // verify store state
+        cy.wrap(myTeam)
+          .its('value')
+          .should(
+            'deep.equal',
+            registerChallengeTeamApprovalStatusResponse.results[0],
+          );
+      });
+    });
+  },
+);
+
+/**
  * Intercept post trips API
  * Provides `@postTrips` alias
  * @param {Config} config - App global config
