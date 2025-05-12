@@ -31,6 +31,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useStravaStore } from 'src/stores/strava';
 import { useTripsStore } from '../../stores/trips';
 
@@ -50,6 +51,7 @@ export default defineComponent({
     const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;
     const route = useRoute();
     const router = useRouter();
+    const registerChallengeStore = useRegisterChallengeStore();
     const stravaStore = useStravaStore();
     const tripsStore = useTripsStore();
     const isLoadingAuthStrava = ref<boolean>(false);
@@ -111,6 +113,10 @@ export default defineComponent({
       return result;
     });
 
+    const isCurrentUserApproved = computed<boolean>((): boolean => {
+      return registerChallengeStore.getIsCurrentUserApproved;
+    });
+
     return {
       apps,
       enabledAppsForManualLogging,
@@ -118,6 +124,7 @@ export default defineComponent({
       isLoadingAuthStrava,
       urlAppStore,
       urlGooglePlay,
+      isCurrentUserApproved,
     };
   },
 });
@@ -131,11 +138,17 @@ export default defineComponent({
       <section-heading class="q-mb-md" data-cy="routes-apps-title-auto">
         {{ $t('routes.titleAutomaticLogging') }}
         <template #perex>
-          <div v-html="$t('routes.hintAutomaticLogging')" />
+          <div
+            v-if="isCurrentUserApproved"
+            v-html="$t('routes.hintAutomaticLogging')"
+          />
+          <q-banner v-else class="bg-warning text-gray-10 rounded-borders">
+            {{ $t('routes.hintLoggingNotApproved') }}
+          </q-banner>
         </template>
       </section-heading>
       <!-- App banners -->
-      <div class="flex column gap-16">
+      <div v-if="isCurrentUserApproved" class="flex column gap-16">
         <banner-routes-app
           v-for="app in apps"
           :app="app"

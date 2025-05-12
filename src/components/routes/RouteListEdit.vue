@@ -35,6 +35,7 @@ import { useRoutes } from 'src/composables/useRoutes';
 import { TransportDirection } from '../types/Route';
 
 // stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useTripsStore } from 'src/stores/trips';
 
 // types
@@ -49,7 +50,7 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const tripsStore = useTripsStore();
-
+    const registerChallengeStore = useRegisterChallengeStore();
     const isLoadingTrips = computed((): boolean => {
       return tripsStore.getIsLoading;
     });
@@ -94,6 +95,10 @@ export default defineComponent({
 
     const formRef = ref<QForm | null>(null);
 
+    const isCurrentUserApproved = computed<boolean>((): boolean => {
+      return registerChallengeStore.getIsCurrentUserApproved;
+    });
+
     const onSave = async (): Promise<void> => {
       logger?.info('Saving selected routes.');
       // validate form before submitting
@@ -110,6 +115,14 @@ export default defineComponent({
         Notify.create({
           type: 'negative',
           message: i18n.global.t('postTrips.messageEntryNotEnabled'),
+        });
+        return;
+      }
+      // if user is not approved in team, show notification
+      if (!isCurrentUserApproved.value) {
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t('postTrips.messageUserNotApproved'),
         });
         return;
       }

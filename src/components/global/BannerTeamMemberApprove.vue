@@ -36,7 +36,6 @@ import { useChallengeStore } from '../../stores/challenge';
 // types
 import type { ExtendedMemberResults } from '../types/Results';
 import type { Logger } from '../types/Logger';
-import type { MemberResults } from '../types/Results';
 
 // composables
 import { useApiPutMyTeam } from '../../composables/useApiPutMyTeam';
@@ -79,15 +78,7 @@ export default defineComponent({
     });
 
     const isCurrentUserApproved = computed<boolean>((): boolean => {
-      const myTeam = registerChallengeStore.getMyTeam;
-      if (!myTeam) return false;
-
-      const currentUser = myTeam.members.find(
-        (member: MemberResults) => member.is_me,
-      ) as MemberResults as ExtendedMemberResults;
-      if (!currentUser) return false;
-
-      return currentUser.approved_for_team === TeamMemberStatus.approved;
+      return registerChallengeStore.getIsCurrentUserApproved;
     });
 
     const pendingMembersCount = computed<number>((): number => {

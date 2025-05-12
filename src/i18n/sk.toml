@@ -751,6 +751,7 @@ apiMessageErrorWithMessage = "Chyba pri ukladaní jázd. Chyba: {error}"
 apiMessageSuccess = "Jázdy boli úspešne uložené."
 messageEntryNotEnabled = "Zápis jázd nie je v súčasnosti povolený."
 messageFormValidationFailed = "Nemáte správne vyplnenú niektorú jazdu."
+messageUserNotApproved = "Nemôžete zapísať jazdy, kým nie ste schválený ako člen tímu. Požiadajte kolegov o schválenie."
 
 [profile]
 buttonDeleteAccount = "Zmazať"
@@ -1006,6 +1007,7 @@ buttonSaveChangesCount = "Žiadne zmeny | Uložiť {count} zmenu | Uložiť {cou
 buttonTraceMap = "Zakreslit"
 descriptionRoutes = "<p>Jazdy môžete nahrávať až 8 dní vopred.</p><p>Ak kombinujete vozidlá, zaznamenajte najdlhšiu časť alebo druhú najdlhšiu časť, ak jazdíte sami.</p>"
 hintAutomaticLogging = "Na automatické nahrávanie môžete použiť jednu z týchto aplikácií tretích strán.<br />(Overiť, či ste prepojení s Cyclers či Na kole Prahou môžete z technických dôvodov len priamo v aplikáciách.)"
+hintLoggingNotApproved = "Nie ste schválený ako člen tímu. Pre prepojenie svojho účtu s aplikáciami požiadajte svojich kolegov o schválenie."
 hintLockedSection = "Táto časť sa otvorí hneď po začatí výzvy."
 hintManualLogging = "Okrem tohto webového rozhrania môžete používať aj naše oficiálne mobilné aplikácie:"
 hintTabApp = "Na automatické nahrávanie môžete použiť jednu z týchto aplikácií tretích strán:"

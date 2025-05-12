@@ -51,6 +51,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { RouteInputType } from '../types/Route';
 
 // stores
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useTripsStore } from '../../stores/trips';
 
 // types
@@ -80,6 +81,8 @@ export default defineComponent({
   emits: ['save', 'update:modelValue'],
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
+    const registerChallengeStore = useRegisterChallengeStore();
+
     // styles
     const minWidth = '65vw';
 
@@ -137,6 +140,10 @@ export default defineComponent({
       );
     });
 
+    const isCurrentUserApproved = computed<boolean>((): boolean => {
+      return registerChallengeStore.getIsCurrentUserApproved;
+    });
+
     /**
      * Triggered when panel save button is clicked.
      * Sends API request to update selected routes with panel data.
@@ -149,6 +156,14 @@ export default defineComponent({
         Notify.create({
           type: 'negative',
           message: i18n.global.t('postTrips.messageEntryNotEnabled'),
+        });
+        return;
+      }
+      // if user is not approved in team, show notification
+      if (!isCurrentUserApproved.value) {
+        Notify.create({
+          type: 'negative',
+          message: i18n.global.t('postTrips.messageUserNotApproved'),
         });
         return;
       }

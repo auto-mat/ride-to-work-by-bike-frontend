@@ -38,6 +38,7 @@ import {
 import { PaymentSubject } from '../components/enums/Payment';
 import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
 import { PaymentCategory } from '../components/types/ApiPayu';
+import { TeamMemberStatus } from 'src/components/enums/TeamMember';
 
 // stores
 import { useChallengeStore } from './challenge';
@@ -54,7 +55,11 @@ import type {
   MerchandiseCard,
   MerchandiseItem,
 } from '../components/types/Merchandise';
-import type { MyTeamResults } from '../components/types/Results';
+import type {
+  ExtendedMemberResults,
+  MemberResults,
+  MyTeamResults,
+} from '../components/types/Results';
 import { i18n } from '../boot/i18n';
 import { PriceLevelCategory } from '../components/enums/Challenge';
 import type {
@@ -340,6 +345,17 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.isMerchandiseSavedIntoDb,
     getIsPeriodicCheckInProgress(): boolean {
       return this.isPeriodicCheckInProgress;
+    },
+    getIsCurrentUserApproved(): boolean {
+      const myTeam = this.getMyTeam;
+      if (!myTeam) return false;
+
+      const currentUser = myTeam.members.find(
+        (member: MemberResults) => member.is_me,
+      ) as MemberResults as ExtendedMemberResults;
+      if (!currentUser) return false;
+
+      return currentUser.approved_for_team === TeamMemberStatus.approved;
     },
   },
 
