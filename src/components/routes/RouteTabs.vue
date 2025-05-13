@@ -220,7 +220,14 @@ export default defineComponent({
         data-cy="route-tabs-panel-map"
       >
         <div class="text-h6">{{ $t('routes.tabMap') }}</div>
-        <RoutesMap />
+        <routes-map v-if="isCurrentUserApproved" />
+        <q-banner
+          v-else
+          class="bg-warning text-gray-10 rounded-borders"
+          data-cy="banner-map-not-approved"
+        >
+          {{ $t('routes.hintManualLoggingNotApproved') }}
+        </q-banner>
       </q-tab-panel>
       <!-- Panel: App -->
       <q-tab-panel
