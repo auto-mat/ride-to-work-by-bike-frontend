@@ -43,6 +43,9 @@ import { RouteTab } from '../types/Route';
 // routes
 import { routesConf } from 'src/router/routes_conf';
 
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+
 export default defineComponent({
   name: 'RouteTabs',
   components: {
@@ -77,6 +80,11 @@ export default defineComponent({
       return Screen.gt.sm;
     });
 
+    const registerChallengeStore = useRegisterChallengeStore();
+    const isCurrentUserApproved = computed<boolean>((): boolean => {
+      return registerChallengeStore.getIsCurrentUserApproved;
+    });
+
     let activeTab = ref(RouteTab.list);
     if (isLargeScreen.value) {
       activeTab.value = RouteTab.calendar;
@@ -99,6 +107,7 @@ export default defineComponent({
       isLocked,
       isHidden,
       isLargeScreen,
+      isCurrentUserApproved,
     };
   },
 });
@@ -173,7 +182,14 @@ export default defineComponent({
         :name="RouteTab.calendar"
         data-cy="route-tabs-panel-calendar"
       >
-        <routes-calendar />
+        <routes-calendar v-if="isCurrentUserApproved" />
+        <q-banner
+          v-else
+          class="bg-warning text-gray-10 rounded-borders"
+          data-cy="banner-calendar-not-approved"
+        >
+          {{ $t('routes.hintManualLoggingNotApproved') }}
+        </q-banner>
       </q-tab-panel>
       <!-- Panel: List -->
       <q-tab-panel
@@ -181,8 +197,21 @@ export default defineComponent({
         :name="RouteTab.list"
         data-cy="route-tabs-panel-list"
       >
-        <route-list-edit data-cy="route-list-edit" />
-        <route-list-display data-cy="route-list-display" />
+        <route-list-edit
+          v-if="isCurrentUserApproved"
+          data-cy="route-list-edit"
+        />
+        <q-banner
+          v-else
+          class="bg-warning text-gray-10 rounded-borders"
+          data-cy="banner-list-not-approved"
+        >
+          {{ $t('routes.hintManualLoggingNotApproved') }}
+        </q-banner>
+        <route-list-display
+          v-if="isCurrentUserApproved"
+          data-cy="route-list-display"
+        />
       </q-tab-panel>
       <!-- Panel: Map -->
       <q-tab-panel
@@ -199,7 +228,14 @@ export default defineComponent({
         :name="RouteTab.app"
         data-cy="route-tabs-panel-app"
       >
-        <routes-apps data-cy="routes-apps" />
+        <routes-apps v-if="isCurrentUserApproved" data-cy="routes-apps" />
+        <q-banner
+          v-else
+          class="bg-warning text-gray-10 rounded-borders"
+          data-cy="banner-apps-not-approved"
+        >
+          {{ $t('routes.hintAutomaticLoggingNotApproved') }}
+        </q-banner>
       </q-tab-panel>
     </q-tab-panels>
   </div>
