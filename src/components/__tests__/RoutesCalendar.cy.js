@@ -4,6 +4,7 @@ import RoutesCalendar from 'components/routes/RoutesCalendar.vue';
 import { i18n } from '../../boot/i18n';
 import { useTripsStore } from 'src/stores/trips';
 import { useChallengeStore } from 'src/stores/challenge';
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { systemTimeLastDayOfCompetitionMay } from '../../../test/cypress/support/commonTests';
 
@@ -79,6 +80,8 @@ describe('<RoutesCalendar>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with register challenge team approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       // setup store with challenge data
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -115,6 +118,8 @@ describe('<RoutesCalendar>', () => {
         });
         // setup store with commute modes
         cy.setupTripsStoreWithCommuteModes(useTripsStore);
+        // setup store with register challenge team approval status
+        cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
         cy.fixture('apiGetThisCampaignMay.json').then((response) => {
           cy.wrap(useChallengeStore()).then((store) => {
             store.setDaysActive(response.results[0].days_active);
@@ -196,6 +201,8 @@ describe('<RoutesCalendar>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with register challenge team approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       // setup store with challenge data
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -239,6 +246,8 @@ describe('<RoutesCalendar>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with register challenge team approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       // setup store with challenge data
       cy.fixture('apiGetThisCampaign.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {
@@ -284,6 +293,8 @@ describe('<RoutesCalendar>', () => {
       });
       // setup store with commute modes
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
+      // setup store with register challenge team approval status
+      cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
       // setup store with challenge data
       cy.fixture('apiGetThisCampaignMay.json').then((response) => {
         cy.wrap(useChallengeStore()).then((store) => {

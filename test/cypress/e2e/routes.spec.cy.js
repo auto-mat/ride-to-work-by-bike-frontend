@@ -10,37 +10,33 @@ describe('Routes page', () => {
       cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
         cy.interceptThisCampaignGetApi(config, defLocale, campaign);
-        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        // intercept register challenge API
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        // intercept is user organization admin API
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        cy.visit('#' + routesConf['home']['path']);
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           // alias i18n
           cy.wrap(win.i18n).as('i18n');
         });
         cy.waitForThisCampaignApi(campaign);
-      });
-      // intercept register challenge API
-      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
-        (responseRegisterChallenge) => {
-          cy.interceptRegisterChallengeGetApi(
-            config,
-            defLocale,
-            responseRegisterChallenge,
-          );
-        },
-      );
-      // intercept is user organization admin API
-      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-        (response) => {
-          cy.interceptIsUserOrganizationAdminGetApi(
-            config,
-            defLocale,
-            response,
-          );
-        },
-      );
-      // intercept my team GET API
-      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
-        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
       });
     });
   });
@@ -50,6 +46,8 @@ describe('Routes page', () => {
       cy.viewport('macbook-16');
       // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
+        // intercept my team GET API
+        cy.interceptMyTeamGetApi(config, defLocale);
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
         cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
@@ -96,11 +94,82 @@ describe('Routes page', () => {
     });
   });
 
+  context('user not approved in team', () => {
+    beforeEach(() => {
+      cy.viewport('macbook-16');
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetMyTeamResponseUndecided').then((response) => {
+          cy.interceptMyTeamGetApi(config, defLocale, response);
+        });
+        cy.interceptCommuteModeGetApi(config, defLocale);
+        cy.interceptTripsGetApi(config, defLocale);
+        cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
+          (responseNaKolePrahou) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdNaKolePrahou,
+              responseNaKolePrahou,
+            );
+          },
+        );
+        cy.fixture('apiGetOpenAppWithRestTokenCyclers').then(
+          (responseCyclers) => {
+            cy.interceptOpenAppWithRestTokenGetApi(
+              config,
+              defLocale,
+              config.apiTripsThirdPartyAppIdCyclers,
+              responseCyclers,
+            );
+          },
+        );
+      });
+    });
+
+    it('renders warning banners when user is not approved in team', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.visit('#' + routesConf['routes']['children']['fullPath']);
+        cy.waitForCommuteModeApi();
+        // initial state
+        cy.url().should('include', routesConf['routes_calendar'].path);
+        // calendar is not visible
+        cy.dataCy('routes-calendar').should('not.exist');
+        cy.dataCy('banner-calendar-not-approved')
+          .should('be.visible')
+          .and('contain', i18n.global.t('routes.hintManualLoggingNotApproved'));
+        // switch to list tab
+        cy.dataCy('route-tabs-button-list').click();
+        cy.url().should('include', routesConf['routes_list'].path);
+        // lists are not visible
+        cy.dataCy('route-list-edit').should('not.exist');
+        cy.dataCy('route-list-display').should('not.exist');
+        // banner is visible
+        cy.dataCy('banner-list-not-approved')
+          .should('be.visible')
+          .and('contain', i18n.global.t('routes.hintManualLoggingNotApproved'));
+        // switch to app tab
+        cy.dataCy('route-tabs-button-app').click();
+        cy.url().should('include', routesConf['routes_app'].path);
+        // apps are not visible
+        cy.dataCy('routes-apps').should('not.exist');
+        // banner is visible
+        cy.dataCy('banner-apps-not-approved')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t('routes.hintAutomaticLoggingNotApproved'),
+          );
+      });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       cy.viewport('iphone-6');
       // load config an i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
+        // intercept my team GET API
+        cy.interceptMyTeamGetApi(config, defLocale);
         cy.interceptCommuteModeGetApi(config, defLocale);
         cy.interceptTripsGetApi(config, defLocale);
         cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(

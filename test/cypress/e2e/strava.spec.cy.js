@@ -8,6 +8,30 @@ const invalidCode = 'example_invalid_code';
 describe('Strava Integration', () => {
   beforeEach(() => {
     cy.task('getAppConfig', process).then((config) => {
+      cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
+        cy.interceptThisCampaignGetApi(config, defLocale, campaign);
+        cy.interceptMyTeamGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        // intercept is user organization admin API
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        cy.visit('#' + routesConf['home']['path']);
+      });
       cy.interceptCommuteModeGetApi(config, defLocale);
       cy.interceptTripsGetApi(config, defLocale);
       cy.fixture('apiGetOpenAppWithRestTokenNaKolePrahou').then(
@@ -129,6 +153,12 @@ describe('Strava Integration', () => {
             i18n,
             'apiGetStravaAuthCreated.json',
             validCode,
+          );
+          // intercept GET request for account
+          cy.interceptGetStravaAccount(
+            config,
+            i18n,
+            'apiGetStravaAccountEmpty.json',
           );
           // visit routes_app page with valid code
           cy.visit(

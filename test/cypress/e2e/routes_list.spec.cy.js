@@ -17,36 +17,33 @@ describe('Routes list page', () => {
       cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
         cy.interceptThisCampaignGetApi(config, defLocale, campaign);
-        cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.interceptMyTeamGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        // intercept is user organization admin API
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        cy.visit('#' + routesConf['home']['path']);
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           // alias i18n
           cy.wrap(win.i18n).as('i18n');
         });
         cy.waitForThisCampaignApi(campaign);
-      });
-      cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
-        (responseRegisterChallenge) => {
-          cy.interceptRegisterChallengeGetApi(
-            config,
-            defLocale,
-            responseRegisterChallenge,
-          );
-        },
-      );
-      // intercept is user organization admin API
-      cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-        (response) => {
-          cy.interceptIsUserOrganizationAdminGetApi(
-            config,
-            defLocale,
-            response,
-          );
-        },
-      );
-      // intercept my team GET API
-      cy.fixture('apiGetMyTeamResponseApproved.json').then((responseMyTeam) => {
-        cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
       });
     });
   });
