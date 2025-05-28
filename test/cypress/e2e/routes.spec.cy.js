@@ -128,7 +128,7 @@ describe('Routes page', () => {
 
     it('renders warning banners when user is not approved in team', () => {
       cy.get('@i18n').then((i18n) => {
-        cy.visit('#' + routesConf['routes']['children']['fullPath']);
+        cy.visit('#' + routesConf['routes_calendar']['children']['fullPath']);
         cy.waitForCommuteModeApi();
         // initial state
         cy.url().should('include', routesConf['routes_calendar'].path);
