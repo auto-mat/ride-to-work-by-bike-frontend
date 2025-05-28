@@ -5,9 +5,9 @@
         {{ $t('routes.titleRoutes') }}
         <template #secondary>
           <div data-cy="routes-page-instructions">
-            <p>
+            <p v-if="daysActive">
               {{
-                $tc('routes.instructionRouteLogTimeframe', daysActive, {
+                $t('routes.instructionRouteLogTimeframe', {
                   days: daysActive,
                 })
               }}
