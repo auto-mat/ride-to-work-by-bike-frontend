@@ -54,10 +54,15 @@ export default route(function (/* { store, ssrContext } */) {
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const registerChallengeStore = useRegisterChallengeStore();
+
       const isAuthenticated: boolean = await loginStore.validateAccessToken();
       const isEmailVerified: boolean = registerStore.getIsEmailVerified;
       const isRegistrationPhaseActive: boolean =
         challengeStore.getIsChallengeInPhase(PhaseType.registration);
+      const isAppAccessible: boolean =
+        challengeStore.getIsChallengeInPhase(PhaseType.registration) ||
+        challengeStore.getIsChallengeInPhase(PhaseType.entryEnabled) ||
+        challengeStore.getIsChallengeInPhase(PhaseType.results);
       const isRegistrationComplete: boolean =
         registerChallengeStore.getIsRegistrationComplete;
       const isUserOrganizationAdmin: boolean =
@@ -71,6 +76,9 @@ export default route(function (/* { store, ssrContext } */) {
         `Router registration phase is active <${isRegistrationPhaseActive}>.`,
       );
       logger?.debug(
+        `Router registration app is accessible <${isAppAccessible}>`,
+      );
+      logger?.debug(
         `Router registration is complete <${isRegistrationComplete}>.`,
       );
       logger?.debug(
@@ -78,10 +86,47 @@ export default route(function (/* { store, ssrContext } */) {
       );
 
       if (
+        !isAuthenticated &&
+        /**
+         * Only these pages are accessible when NOT authenticated
+         */
+        !to.matched.some(
+          (record) =>
+            record.path === routesConf['login']['path'] ||
+            record.path === routesConf['register']['path'] ||
+            record.path === routesConf['confirm_email']['path'] ||
+            record.path === routesConf['reset_password']['path'],
+        )
+      ) {
+        logger?.debug(
+          `Router user is not authenticated <${!isAuthenticated}>.`,
+        );
+        logger?.debug(
+          `Router path <${routesConf['login']['path']}>,` +
+            ` <${routesConf['register']['path']}>,` +
+            ` <${routesConf['confirm_email']['path']}>,` +
+            ` <${routesConf['reset_password']['path']}>` +
+            ` is not matched <${!to.matched.some(
+              (record) =>
+                record.path === routesConf['login']['path'] ||
+                record.path === routesConf['register']['path'] ||
+                record.path === routesConf['confirm_email']['path'] ||
+                record.path === routesConf['reset_password']['path'],
+            )}>.`,
+        );
+        logger?.debug(
+          `Router path redirect to page URL <${routesConf['login']['path']}>.`,
+        );
+        // redirect to login page
+        next({ path: routesConf['login']['path'] });
+      } else if (
         isAuthenticated &&
         !isEmailVerified &&
-        // only these pages are accessible when authenticated and not verified email
         !to.matched.some(
+          /**
+           * Only these pages are accessible when authenticated and email
+           * is NOT verified
+           */
           (record) =>
             record.path === routesConf['verify_email']['path'] ||
             record.path === routesConf['confirm_email']['path'],
@@ -108,13 +153,45 @@ export default route(function (/* { store, ssrContext } */) {
       } else if (
         isAuthenticated &&
         isEmailVerified &&
-        isRegistrationPhaseActive &&
+        !isAppAccessible &&
+        !to.matched.some(
+          /**
+           * Only these pages are accessible when authenticated, email
+           * is verified and app is NOT accessible.
+           */
+          (record) => record.path === routesConf['challenge_inactive']['path'],
+        )
+      ) {
+        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
+        logger?.debug(
+          `Router registration phase is not active <${!isRegistrationPhaseActive}>`,
+        );
+        logger?.debug(
+          `Router path <${routesConf['challenge_inactive']['path']}>` +
+            ` is not matched <${!to.matched.some(
+              (record) =>
+                record.path === routesConf['challenge_inactive']['path'],
+            )}>.`,
+        );
+        logger?.debug(
+          `Router path redirect to page URL <${routesConf['challenge_inactive']['path']}>.`,
+        );
+        // redirect to challenge inactive page
+        next({ path: routesConf['challenge_inactive']['path'] });
+      } else if (
+        isAuthenticated &&
+        isEmailVerified &&
+        isAppAccessible &&
         isRegistrationComplete &&
-        /**
-         * These pages are not accessible when authenticated and verified,
-         * registration phase is active and registration is complete.
-         */
         to.matched.some(
+          /**
+           * These pages are NOT accessible when authenticated,
+           * email is verified, app is accessible, and registration is complete
+           * or not active.
+           *
+           * Access: "app full"
+           */
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
@@ -160,42 +237,16 @@ export default route(function (/* { store, ssrContext } */) {
       } else if (
         isAuthenticated &&
         isEmailVerified &&
-        !isRegistrationPhaseActive &&
-        !to.matched.some(
-          /**
-           * Only these pages are accessible when authenticated, verified email
-           * and registration phase is not active.
-           */
-          (record) => record.path === routesConf['challenge_inactive']['path'],
-        )
-      ) {
-        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
-        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
-        logger?.debug(
-          `Router registration phase is not active <${!isRegistrationPhaseActive}>`,
-        );
-        logger?.debug(
-          `Router path <${routesConf['challenge_inactive']['path']}>` +
-            ` is not matched <${!to.matched.some(
-              (record) =>
-                record.path === routesConf['challenge_inactive']['path'],
-            )}>.`,
-        );
-        logger?.debug(
-          `Router path redirect to page URL <${routesConf['challenge_inactive']['path']}>.`,
-        );
-        // redirect to challenge inactive page
-        next({ path: routesConf['challenge_inactive']['path'] });
-      } else if (
-        isAuthenticated &&
-        isEmailVerified &&
-        isRegistrationPhaseActive &&
+        isAppAccessible &&
         !isRegistrationComplete &&
         !isUserOrganizationAdmin &&
+        isRegistrationPhaseActive &&
         /**
-         * Only these pages are accessible when authenticated, verified email
-         * registration phase is active, registration is not complete and user is not
-         * organization admin.
+         * Only these pages are accessible when authenticated, email
+         * is verified, app is accessible, registration is not complete,
+         * user is not organization admin and registration phase is active.
+         *
+         * Access: "register challenge"
          */
         !to.matched.some(
           (record) =>
@@ -231,9 +282,46 @@ export default route(function (/* { store, ssrContext } */) {
       } else if (
         isAuthenticated &&
         isEmailVerified &&
-        isRegistrationPhaseActive &&
+        isAppAccessible &&
+        !isRegistrationComplete &&
+        !isUserOrganizationAdmin &&
+        !isRegistrationPhaseActive &&
+        /**
+         * Only these pages are accessible when authenticated, email
+         * is verified, app is accessible, registration is NOT complete,
+         * user is NOT organization admin and registration phase
+         * is NOT active.
+         *
+         * Access: "challenge inactive"
+         */
+        !to.matched.some(
+          (record) => record.path === routesConf['challenge_inactive']['path'],
+        )
+      ) {
+        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
+        logger?.debug(
+          `Router registration phase is not active <${!isRegistrationPhaseActive}>`,
+        );
+        logger?.debug(
+          `Router path <${routesConf['challenge_inactive']['path']}>` +
+            ` is not matched <${!to.matched.some(
+              (record) =>
+                record.path === routesConf['challenge_inactive']['path'],
+            )}>.`,
+        );
+        logger?.debug(
+          `Router path redirect to page URL <${routesConf['challenge_inactive']['path']}>.`,
+        );
+        // redirect to challenge inactive page
+        next({ path: routesConf['challenge_inactive']['path'] });
+      } else if (
+        isAuthenticated &&
+        isEmailVerified &&
+        isAppAccessible &&
         !isRegistrationComplete &&
         isUserOrganizationAdmin &&
+        isRegistrationPhaseActive &&
         /**
          * These pages are not accessible when authenticated and verified,
          * registration phase is active, registration is not complete and user is
@@ -282,44 +370,65 @@ export default route(function (/* { store, ssrContext } */) {
         );
         // redirect to home page
         next({ path: routesConf['home']['path'] });
+        // pass
       } else if (
-        /**
-         * If not authenticated and not on pages: login, register,
-         * confirm_email, reset_password, redirect to login page.
-         */
-        !isAuthenticated &&
-        !to.matched.some(
+        isAuthenticated &&
+        isEmailVerified &&
+        isAppAccessible &&
+        !isRegistrationComplete &&
+        isUserOrganizationAdmin &&
+        !isRegistrationPhaseActive &&
+        to.matched.some(
+          /**
+           * These pages are NOT accessible when authenticated,
+           * email is verified, app is accessible, and registration is complete
+           * or not active.
+           *
+           * Access: "app full"
+           */
           (record) =>
             record.path === routesConf['login']['path'] ||
             record.path === routesConf['register']['path'] ||
-            record.path === routesConf['confirm_email']['path'] ||
-            record.path === routesConf['reset_password']['path'],
+            record.path === routesConf['verify_email']['path'] ||
+            record.path === routesConf['reset_password']['path'] ||
+            record.path === routesConf['challenge_inactive']['path'] ||
+            record.path === routesConf['register_challenge']['path'] ||
+            record.path === routesConf['register_coordinator']['path'],
         )
       ) {
+        logger?.debug(`Router user is authenticated <${isAuthenticated}>.`);
+        logger?.debug(`Router user email is verified <${isEmailVerified}>.`);
         logger?.debug(
-          `Router user is not authenticated <${!isAuthenticated}>.`,
+          `Router registration phase is active <${isRegistrationPhaseActive}>`,
+        );
+        logger?.debug(
+          `Router registration is complete <${isRegistrationComplete}>`,
         );
         logger?.debug(
           `Router path <${routesConf['login']['path']}>,` +
-            ` <${routesConf['register']['path']}>,` +
-            ` <${routesConf['confirm_email']['path']}>,` +
+            ` <${routesConf['register']['path']}>` +
+            ` <${routesConf['verify_email']['path']}>` +
             ` <${routesConf['reset_password']['path']}>` +
-            ` is not matched <${!to.matched.some(
+            ` <${routesConf['challenge_inactive']['path']}>` +
+            ` <${routesConf['register_challenge']['path']}>` +
+            ` <${routesConf['register_coordinator']['path']}>` +
+            ` is matched <${!to.matched.some(
               (record) =>
                 record.path === routesConf['login']['path'] ||
                 record.path === routesConf['register']['path'] ||
-                record.path === routesConf['confirm_email']['path'] ||
-                record.path === routesConf['reset_password']['path'],
+                record.path === routesConf['verify_email']['path'] ||
+                record.path === routesConf['reset_password']['path'] ||
+                record.path === routesConf['challenge_inactive']['path'] ||
+                record.path === routesConf['register_challenge']['path'] ||
+                record.path === routesConf['register_coordinator']['path'],
             )}>.`,
         );
         logger?.debug(
-          `Router path redirect to page URL <${routesConf['login']['path']}>.`,
+          `Router path redirect to page URL <${routesConf['home']['path']}>.`,
         );
-        // redirect to login page
-        next({ path: routesConf['login']['path'] });
-      }
-      // pass
-      else {
+        // redirect to home page
+        next({ path: routesConf['home']['path'] });
+      } else {
         logger?.info('Router call <next()> function.');
         next();
       }
