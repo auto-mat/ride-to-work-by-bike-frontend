@@ -17,17 +17,15 @@
 - register challenge (register-challenge, register-coordinator)
 - app full (home, routes, prizes, results, profile)
 
-|-----------|----------------|----------------|-----------------------|------------|-----------------------|-------------------------------|
-| Logged in | Email Verified | App Accessible | Registration Complete | User Admin | Registration Active | Access |
-|-----------|----------------|----------------|-----------------------|------------|-----------------------|-------------------------------|
-| x | - | - | - | - | - | login |
-| ✓ | x | - | - | - | - | verify email |
-| ✓ | ✓ | x | - | - | - | challenge inactive |
-| ✓ | ✓ | ✓ | ✓ | - | - | app full |
-| ✓ | ✓ | ✓ | x | x | ✓ | register challenge |
-| ✓ | ✓ | ✓ | x | x | x | challenge inactive |
-| ✓ | ✓ | ✓ | x | ✓ | ✓ | app full + register-challenge |
-| ✓ | ✓ | ✓ | x | ✓ | x | app full |
-|-----------|----------------|----------------|-----------------------|------------|-----------------------|-------------------------------|
+| Logged in | Email Verified | App Accessible | Registration Complete | User Admin | Registration Active |            Access             |
+| :-------: | :------------: | :------------: | :-------------------: | :--------: | :-----------------: | :---------------------------: |
+|     x     |       -        |       -        |           -           |     -      |          -          |             login             |
+|     ✓     |       x        |       -        |           -           |     -      |          -          |         verify email          |
+|     ✓     |       ✓        |       x        |           -           |     -      |          -          |      challenge inactive       |
+|     ✓     |       ✓        |       ✓        |           ✓           |     -      |          -          |           app full            |
+|     ✓     |       ✓        |       ✓        |           x           |     x      |          ✓          |      register challenge       |
+|     ✓     |       ✓        |       ✓        |           x           |     x      |          x          |      challenge inactive       |
+|     ✓     |       ✓        |       ✓        |           x           |     ✓      |          ✓          | app full + register-challenge |
+|     ✓     |       ✓        |       ✓        |           x           |     ✓      |          x          |           app full            |
 
 - User Admin decides on further access inside the full app access (company coordinator), but this is not yet implemented via router rules.
