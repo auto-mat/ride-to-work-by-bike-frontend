@@ -29,3 +29,4 @@
 |     ✓     |       ✓        |       ✓        |           ✗           |     ✓      |          ✗          |           app full            |
 
 - User Admin decides on further access inside the full app access (company coordinator), but this is not yet implemented via router rules.
+- Access "app full + register-challenge" only allows register-challenge route (not register-coordinator).
