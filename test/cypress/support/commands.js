@@ -3830,7 +3830,7 @@ Cypress.Commands.add(
         ? responseStatusCode
         : httpSuccessfullStatus,
       body: responseBody,
-    }).as('getResultsRequest');
+    }).as(`getResultsRequest-${reportType}`);
   },
 );
 
@@ -3839,8 +3839,8 @@ Cypress.Commands.add(
  * Wait for `@getResultsRequest` intercept
  * @param {object} responseBody - Override default response body from fixture
  */
-Cypress.Commands.add('waitForGetResultsApi', (responseBody) => {
-  cy.wait('@getResultsRequest').then((getResultsRequest) => {
+Cypress.Commands.add('waitForGetResultsApi', (responseBody, reportType) => {
+  cy.wait(`@getResultsRequest-${reportType}`).then((getResultsRequest) => {
     if (getResultsRequest.response) {
       expect(getResultsRequest.response.statusCode).to.equal(
         httpSuccessfullStatus,
@@ -3876,7 +3876,7 @@ Cypress.Commands.add(
         ? responseStatusCode
         : httpSuccessfullStatus,
       body: responseBody,
-    }).as('getResultsByChallengeRequest');
+    }).as(`getResultsByChallengeRequest-${reportType}`);
   },
 );
 
@@ -3885,17 +3885,20 @@ Cypress.Commands.add(
  * Wait for `@getResultsByChallengeRequest` intercept
  * @param {object} responseBody - Override default response body from fixture
  */
-Cypress.Commands.add('waitForGetResultsByChallengeApi', (responseBody) => {
-  cy.wait('@getResultsByChallengeRequest').then(
-    (getResultsByChallengeRequest) => {
-      if (getResultsByChallengeRequest.response) {
-        expect(getResultsByChallengeRequest.response.statusCode).to.equal(
-          httpSuccessfullStatus,
-        );
-        expect(getResultsByChallengeRequest.response.body).to.deep.equal(
-          responseBody,
-        );
-      }
-    },
-  );
-});
+Cypress.Commands.add(
+  'waitForGetResultsByChallengeApi',
+  (responseBody, reportType) => {
+    cy.wait(`@getResultsByChallengeRequest-${reportType}`).then(
+      (getResultsByChallengeRequest) => {
+        if (getResultsByChallengeRequest.response) {
+          expect(getResultsByChallengeRequest.response.statusCode).to.equal(
+            httpSuccessfullStatus,
+          );
+          expect(getResultsByChallengeRequest.response.body).to.deep.equal(
+            responseBody,
+          );
+        }
+      },
+    );
+  },
+);

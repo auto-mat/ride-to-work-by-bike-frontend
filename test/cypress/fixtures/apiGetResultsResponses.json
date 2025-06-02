@@ -6,6 +6,12 @@
     }
   },
   {
+    "key": "team-regularity-city",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/7"
+    }
+  },
+  {
     "key": "performance-city",
     "response": {
       "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/4"

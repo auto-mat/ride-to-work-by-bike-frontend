@@ -991,6 +991,7 @@ performanceCity = "Performance in City"
 performanceOrganization = "Performance in Organization"
 regularity = "Regularity in Organization"
 septemberJanuary = "September/January Challenge"
+teamRegularityCity = "Team regularity in cities"
 
 [routes]
 appStrava = "Strava"

@@ -992,6 +992,7 @@ performanceCity = "Výkonnost ve měste"
 performanceOrganization = "Výkonnost v organizaci"
 regularity = "Pravidelnost v organizaci"
 septemberJanuary = "Zářijová/Lednová výzva"
+teamRegularityCity = "Týmová pravidelnost ve městech"
 
 [routes]
 appStrava = "Strava"

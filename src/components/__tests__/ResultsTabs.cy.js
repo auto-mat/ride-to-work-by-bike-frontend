@@ -45,6 +45,7 @@ describe('<ResultsTabs>', () => {
         'performanceOrganization',
         'regularity',
         'septemberJanuary',
+        'teamRegularityCity',
       ],
       'results.reportType',
       i18n,
@@ -76,6 +77,7 @@ describe('<ResultsTabs>', () => {
         resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
           cy.waitForGetResultsByChallengeApi(
             resultsByChallengeResponse.response,
+            resultsByChallengeResponse.key,
           );
           cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
             'be.visible',
@@ -98,6 +100,7 @@ describe('<ResultsTabs>', () => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
             cy.waitForGetResultsByChallengeApi(
               resultsByChallengeResponse.response,
+              resultsByChallengeResponse.key,
             );
             cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
               'be.visible',
@@ -110,11 +113,15 @@ describe('<ResultsTabs>', () => {
           if (
             [
               ResultsReportType.regularity,
+              ResultsReportType.teamRegularityCity,
               ResultsReportType.performanceOrganization,
               ResultsReportType.organizationsReview,
             ].includes(resultsResponse.key)
           ) {
-            cy.waitForGetResultsApi(resultsResponse.response);
+            cy.waitForGetResultsApi(
+              resultsResponse.response,
+              resultsResponse.key,
+            );
             cy.dataCy(`results-tab-${resultsResponse.key}`).should(
               'be.visible',
             );
@@ -143,6 +150,7 @@ describe('<ResultsTabs>', () => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
             cy.waitForGetResultsByChallengeApi(
               resultsByChallengeResponse.response,
+              resultsByChallengeResponse.key,
             );
             cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
               'be.visible',
@@ -159,7 +167,10 @@ describe('<ResultsTabs>', () => {
               ResultsReportType.organizationsReview,
             ].includes(resultsResponse.key)
           ) {
-            cy.waitForGetResultsApi(resultsResponse.response);
+            cy.waitForGetResultsApi(
+              resultsResponse.response,
+              resultsResponse.key,
+            );
             cy.dataCy(`results-tab-${resultsResponse.key}`).should(
               'be.visible',
             );
@@ -191,6 +202,7 @@ describe('<ResultsTabs>', () => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
             cy.waitForGetResultsByChallengeApi(
               resultsByChallengeResponse.response,
+              resultsByChallengeResponse.key,
             );
             cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`)
               .should('be.visible')
@@ -203,7 +215,10 @@ describe('<ResultsTabs>', () => {
       );
       cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
         resultsResponses.forEach((resultsResponse) => {
-          cy.waitForGetResultsApi(resultsResponse.response);
+          cy.waitForGetResultsApi(
+            resultsResponse.response,
+            resultsResponse.key,
+          );
           cy.dataCy(`results-tab-${resultsResponse.key}`)
             .should('be.visible')
             .click({ force: true });

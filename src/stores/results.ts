@@ -52,6 +52,9 @@ export const useResultsStore = defineStore('results', {
         [ResultsReportType.regularity]: i18n.global.t(
           'results.reportType.regularity',
         ),
+        [ResultsReportType.teamRegularityCity]: i18n.global.t(
+          'results.reportType.teamRegularityCity',
+        ),
         [ResultsReportType.performanceCity]: i18n.global.t(
           'results.reportType.performanceCity',
         ),
@@ -128,6 +131,7 @@ export const useResultsStore = defineStore('results', {
         // add organization admin report types
         if (isUserOrganizationAdmin) {
           [
+            ResultsReportType.teamRegularityCity,
             ResultsReportType.performanceOrganization,
             ResultsReportType.organizationsReview,
           ].forEach((type) => reportTypesPerRole.add(type));
