@@ -1,0 +1,74 @@
+[
+  {
+    "description": "User logged in and verified - App not accessible",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseFalse.json",
+    "dates": ["2025-01-27T00:00:00.000Z", "2025-07-01T00:00:00.000Z"],
+    "access": "challenge_inactive",
+    "accessRoutes": false
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration complete - Entry phase not active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeIndividualPaidComplete.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseFalse.json",
+    "dates": ["2025-01-28T00:00:00.000Z", "2025-06-30T00:00:00.000Z"],
+    "access": "app_full",
+    "accessRoutes": false
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration complete - Entry phase active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeIndividualPaidComplete.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseFalse.json",
+    "dates": ["2025-05-01T00:00:00.000Z", "2025-06-03T00:00:00.000Z"],
+    "access": "app_full",
+    "accessRoutes": true
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration not complete - Registration active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseFalse.json",
+    "dates": ["2025-01-28T00:00:00.000Z", "2025-06-01T00:00:00.000Z"],
+    "access": "register_challenge",
+    "accessRoutes": false
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration not complete - Registration not active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseFalse.json",
+    "dates": ["2025-06-02T00:00:00.000Z", "2025-06-30T00:00:00.000Z"],
+    "access": "challenge_inactive",
+    "accessRoutes": false
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration not complete - User Admin - Registration active - Entry phase active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseTrue.json",
+    "dates": ["2025-01-28T00:00:00.000Z", "2025-06-01T00:00:00.000Z"],
+    "access": "app_full_register-challenge",
+    "accessRoutes": true
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration not complete - User Admin - Registration not active - Entry phase active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseTrue.json",
+    "dates": ["2025-06-02T00:00:00.000Z", "2025-06-03T00:00:00.000Z"],
+    "access": "app_full",
+    "accessRoutes": true
+  },
+  {
+    "description": "User logged in and verified - App accessible - Registration not complete - User Admin - Registration not active - Entry phase not active",
+    "fixtureCampaign": "apiGetThisCampaignMay.json",
+    "fixtureRegisterChallenge": "apiGetRegisterChallengeEmpty.json",
+    "fixtureOrganizationAdmin": "apiGetIsUserOrganizationAdminResponseTrue.json",
+    "dates": ["2025-06-04T00:00:00.000Z", "2025-06-30T00:00:00.000Z"],
+    "access": "app_full",
+    "accessRoutes": false
+  }
+]
