@@ -89,6 +89,8 @@ export default route(function (/* { store, ssrContext } */) {
         !isAuthenticated &&
         /**
          * Only these pages are accessible when NOT authenticated
+         *
+         * Access: "login"
          */
         !to.matched.some(
           (record) =>
@@ -124,8 +126,10 @@ export default route(function (/* { store, ssrContext } */) {
         !isEmailVerified &&
         !to.matched.some(
           /**
-           * Only these pages are accessible when authenticated and email
-           * is NOT verified
+           * Only these pages are accessible when authenticated
+           * and NOT verified email
+           *
+           * Access: "verify email"
            */
           (record) =>
             record.path === routesConf['verify_email']['path'] ||
@@ -156,8 +160,10 @@ export default route(function (/* { store, ssrContext } */) {
         !isAppAccessible &&
         !to.matched.some(
           /**
-           * Only these pages are accessible when authenticated, email
-           * is verified and app is NOT accessible.
+           * Only these pages are accessible when authenticated and verified
+           * and app is NOT accessible.
+           *
+           * Access: "challenge inactive"
            */
           (record) => record.path === routesConf['challenge_inactive']['path'],
         )
@@ -186,9 +192,8 @@ export default route(function (/* { store, ssrContext } */) {
         isRegistrationComplete &&
         to.matched.some(
           /**
-           * These pages are NOT accessible when authenticated,
-           * email is verified, app is accessible, and registration is complete
-           * or not active.
+           * These pages are NOT accessible when authenticated and verified,
+           * app is accessible and registration is complete.
            *
            * Access: "app full"
            */
@@ -242,9 +247,9 @@ export default route(function (/* { store, ssrContext } */) {
         !isUserOrganizationAdmin &&
         isRegistrationPhaseActive &&
         /**
-         * Only these pages are accessible when authenticated, email
-         * is verified, app is accessible, registration is not complete,
-         * user is not organization admin and registration phase is active.
+         * Only these pages are accessible when authenticated and verified,
+         * app is accessible, registration is NOT complete,
+         * user is NOT organization admin and registration phase is active.
          *
          * Access: "register challenge"
          */
@@ -326,6 +331,8 @@ export default route(function (/* { store, ssrContext } */) {
          * These pages are not accessible when authenticated and verified,
          * registration phase is active, registration is not complete and user is
          * organization admin.
+         *
+         * Access: "app full + register-challenge"
          */
         to.matched.some(
           (record) =>
@@ -381,8 +388,8 @@ export default route(function (/* { store, ssrContext } */) {
         to.matched.some(
           /**
            * These pages are NOT accessible when authenticated,
-           * email is verified, app is accessible, and registration is complete
-           * or not active.
+           * email is verified, app is accessible, registration is NOT complete
+           * user is organization admin and registration phase is NOT active.
            *
            * Access: "app full"
            */

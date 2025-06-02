@@ -366,6 +366,54 @@ Cypress.Commands.add(
 );
 
 /**
+ * Verify route access from given initial route
+ * Used in testing router rules in `router_rules.cy.js`
+ * @param {string} targetRouteName - route name from `routes_conf.ts` file
+ * @param {string} initialRouteName - route name from `routes_conf.ts` file
+ */
+Cypress.Commands.add(
+  'verifyRouteAccessAllowedFromInitial',
+  (targetRouteName, initialRouteName) => {
+    cy.visit('#' + routesConf[targetRouteName]['children']['fullPath']);
+    cy.url().should(
+      'include',
+      routesConf[targetRouteName]['children']['fullPath'],
+    );
+    cy.url().then((url) => {
+      const currentPath = url.split('#')[1] || '';
+      const targetFullPath =
+        routesConf[targetRouteName]['children']['fullPath'];
+      const initialFullPath =
+        routesConf[initialRouteName]['children']['fullPath'];
+      expect(currentPath).to.equal(targetFullPath);
+      expect(currentPath).to.not.equal(initialFullPath);
+    });
+  },
+);
+
+/**
+ * Verify that given route cannot be accessed from the initial route
+ * Used in testing router rules in `router_rules.cy.js`
+ * @param {string} targetRouteName - route name from `routes_conf.ts` file
+ * @param {string} initialRouteName - route name from `routes_conf.ts` file
+ */
+Cypress.Commands.add(
+  'verifyRouteAccessDeniedFromInitial',
+  (targetRouteName, initialRouteName) => {
+    cy.visit('#' + routesConf[targetRouteName]['children']['fullPath']);
+    cy.url().then((url) => {
+      const currentPath = url.split('#')[1] || '';
+      const targetFullPath =
+        routesConf[targetRouteName]['children']['fullPath'];
+      const initialFullPath =
+        routesConf[initialRouteName]['children']['fullPath'];
+      expect(currentPath).to.not.equal(targetFullPath);
+      expect(currentPath).to.equal(initialFullPath);
+    });
+  },
+);
+
+/**
  * Intercept cities GET API calls
  * Provides `@getCities` and `@getCitiesNextPage` aliases
  * @param {object} config - App global config

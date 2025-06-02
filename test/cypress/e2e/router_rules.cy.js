@@ -483,6 +483,9 @@ describe('Router rules', () => {
                 );
               },
             );
+            cy.interceptMyTeamGetApi(config, defLocale);
+            cy.interceptCitiesGetApi(config, defLocale);
+
             cy.visit('#' + routesConf['login']['path']);
             cy.fillAndSubmitLoginForm();
             cy.wait([
@@ -490,7 +493,8 @@ describe('Router rules', () => {
               '@verifyEmailRequest',
               '@thisCampaignRequest',
             ]);
-            // Access
+
+            // test access
             if (test.access === 'challenge_inactive') {
               // test that we are on challenge inactive page
               cy.url().should(
@@ -498,60 +502,64 @@ describe('Router rules', () => {
                 routesConf['challenge_inactive']['path'],
               );
               // test access to other pages
-              // prizes
-              cy.visit('#' + routesConf['prizes']['path']);
-              cy.url().should('not.include', routesConf['prizes']['path']);
-              cy.url().should(
-                'include',
-                routesConf['challenge_inactive']['path'],
+              cy.verifyRouteAccessDeniedFromInitial(
+                'login',
+                'challenge_inactive',
               );
-              // login
-              cy.visit('#' + routesConf['login']['path']);
-              cy.url().should('not.include', routesConf['login']['path']);
-              cy.url().should(
-                'include',
-                routesConf['challenge_inactive']['path'],
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'verify_email',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'reset_password',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register_challenge',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register_coordinator',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'routes_list',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'results',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'prizes',
+                'challenge_inactive',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'profile_details',
+                'challenge_inactive',
               );
             }
             if (test.access === 'app_full') {
-              // test that we are on home page
+              // home page title
               cy.dataCy('index-title').should('be.visible');
-              // test access to routes page via checking
-              cy.window().should('have.property', 'i18n');
-              cy.window().then((win) => {
-                if (test.accessRoutes) {
-                  cy.dataCy('drawer-menu-item')
-                    .contains(win.i18n.global.t('drawerMenu.routes'))
-                    .should('be.visible')
-                    .and('not.have.class', 'disabled');
-                } else {
-                  cy.dataCy('drawer-menu-item')
-                    .contains(win.i18n.global.t('drawerMenu.routes'))
-                    .should('be.visible')
-                    .and('have.class', 'disabled');
-                }
-              });
-
-              // test access to other pages
-              // login
-              cy.visit('#' + routesConf['login']['path']);
-              cy.url().should('not.include', routesConf['login']['path']);
-              cy.dataCy('index-title').should('be.visible');
-              // register challenge
-              cy.visit('#' + routesConf['register_challenge']['path']);
-              cy.url().should(
-                'not.include',
-                routesConf['register_challenge']['path'],
+              cy.verifyRouteAccessDeniedFromInitial('login', 'home');
+              cy.verifyRouteAccessDeniedFromInitial('register', 'home');
+              cy.verifyRouteAccessDeniedFromInitial('verify_email', 'home');
+              cy.verifyRouteAccessDeniedFromInitial('reset_password', 'home');
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register_challenge',
+                'home',
               );
-              cy.dataCy('index-title').should('be.visible');
-              // register coordinator
-              // TODO: verify this should be forbidden
-              cy.visit('#' + routesConf['register_coordinator']['path']);
-              cy.url().should(
-                'not.include',
-                routesConf['register_coordinator']['path'],
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register_coordinator',
+                'home',
               );
-              cy.dataCy('index-title').should('be.visible');
+              cy.verifyRouteAccessAllowedFromInitial('prizes', 'home');
+              cy.verifyRouteAccessAllowedFromInitial('profile', 'prizes');
             }
             if (test.access === 'register_challenge') {
               // test that we are on register challenge page
@@ -560,44 +568,55 @@ describe('Router rules', () => {
                 routesConf['register_challenge']['path'],
               );
               // test access to other pages
-              // prizes
-              cy.visit('#' + routesConf['prizes']['path']);
-              cy.url().should('not.include', routesConf['prizes']['path']);
-              cy.url().should(
-                'include',
-                routesConf['register_challenge']['path'],
+              cy.verifyRouteAccessDeniedFromInitial(
+                'login',
+                'register_challenge',
               );
-              // login
-              cy.visit('#' + routesConf['login']['path']);
-              cy.url().should('not.include', routesConf['login']['path']);
-              cy.url().should(
-                'include',
-                routesConf['register_challenge']['path'],
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'verify_email',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'reset_password',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'routes_list',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'results',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'prizes',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessDeniedFromInitial(
+                'profile_details',
+                'register_challenge',
+              );
+              cy.verifyRouteAccessAllowedFromInitial(
+                'register_coordinator',
+                'register_challenge',
               );
             }
             if (test.access === 'app_full_register-challenge') {
-              // test that we are on home page
+              // home page title
               cy.dataCy('index-title').should('be.visible');
-              // test access to other pages
-              // login
-              cy.visit('#' + routesConf['login']['path']);
-              cy.url().should('not.include', routesConf['login']['path']);
-              cy.dataCy('index-title').should('be.visible');
-              // register challenge
-              cy.visit('#' + routesConf['register_challenge']['path']);
-              cy.url().should(
-                'include',
-                routesConf['register_challenge']['path'],
+              cy.verifyRouteAccessDeniedFromInitial('login', 'home');
+              cy.verifyRouteAccessDeniedFromInitial('register', 'home');
+              cy.verifyRouteAccessDeniedFromInitial('verify_email', 'home');
+              cy.verifyRouteAccessDeniedFromInitial(
+                'register_coordinator',
+                'home',
               );
-              cy.dataCy('index-title').should('not.exist');
-              // register coordinator
-              // TODO: verify this should be forbidden
-              cy.visit('#' + routesConf['register_coordinator']['path']);
-              cy.url().should(
-                'not.include',
-                routesConf['register_coordinator']['path'],
-              );
-              cy.dataCy('index-title').should('be.visible');
+              cy.verifyRouteAccessAllowedFromInitial('prizes', 'home');
+              cy.verifyRouteAccessAllowedFromInitial('profile', 'prizes');
             }
           }
         });
