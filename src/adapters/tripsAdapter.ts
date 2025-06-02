@@ -76,7 +76,7 @@ export const tripsAdapter = {
       direction,
       commuteMode: routeItem.transport,
       distanceMeters: hasTransportDistance(routeItem.transport)
-        ? distanceMeters
+        ? Math.round(distanceMeters)
         : 0,
       sourceApplication: rideToWorkByBikeConfig.apiTripsSourceApplicationId,
     };
