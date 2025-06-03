@@ -2,31 +2,31 @@
   {
     "key": "regularity",
     "response": {
-      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/3"
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/11d87a37-c391-45fd-8f97-dd2c52b869bc"
     }
   },
   {
     "key": "team-regularity-city",
     "response": {
-      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/7"
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/a017d6b1-b7a3-4744-ad0c-40ebface3476"
     }
   },
   {
     "key": "performance-city",
     "response": {
-      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/4"
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/b431fe05-1dbe-4462-8627-af584e327791"
     }
   },
   {
     "key": "performance-organization",
     "response": {
-      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/5"
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/bdf0c0b6-29ac-4595-84f8-5205e32e7d5a"
     }
   },
   {
     "key": "organizations-review",
     "response": {
-      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/6"
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/4db3c6ac-6e88-4db4-aaca-7b7fa3e1da65"
     }
   }
 ]
