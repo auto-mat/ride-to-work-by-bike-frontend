@@ -131,16 +131,16 @@ export const useResultsStore = defineStore('results', {
         // add organization admin report types
         if (isUserOrganizationAdmin) {
           [
-            ResultsReportType.teamRegularityCity,
             ResultsReportType.performanceOrganization,
             ResultsReportType.organizationsReview,
           ].forEach((type) => reportTypesPerRole.add(type));
         }
         // add staff report types
         if (isUserStaff) {
-          [ResultsReportType.organizationsReview].forEach((type) =>
-            reportTypesPerRole.add(type),
-          );
+          [
+            ResultsReportType.teamRegularityCity,
+            ResultsReportType.organizationsReview,
+          ].forEach((type) => reportTypesPerRole.add(type));
         }
         // prepare requests for all role-specific report types
         for (const type of reportTypesPerRole) {
