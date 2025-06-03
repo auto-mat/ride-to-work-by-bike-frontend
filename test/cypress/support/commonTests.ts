@@ -585,10 +585,12 @@ export const systemTimeLoggedIn =
  * even when `challenge` phase is not yet active.
  * The `challenge` phase overlaps is typically contained within
  * the `registration` phase.
+ * When the tests are run in local environment, they adopt local time.
+ * We set the time to 21:59:00 so in the GMT+2 timezone the time is 23:59:00.
  * @see apiGetThisCampaign.json fixture for example
  */
 export const systemTimeRegistrationPhaseInactive = new Date(
-  '2024-07-14T23:59:00.000Z',
+  '2024-07-14T21:59:00.000Z',
 );
 /**
  * Time after `registration` phase starts
