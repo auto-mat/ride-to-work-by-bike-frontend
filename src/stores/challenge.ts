@@ -1,4 +1,5 @@
 // libraries
+import { date } from 'quasar';
 import { defineStore } from 'pinia';
 import { PhaseType } from '../components/types/Challenge';
 
@@ -156,31 +157,44 @@ export const useChallengeStore = defineStore('challenge', {
       this.$log?.debug(`Checking if challenge is in <${phaseType}> phase.`);
       const phase = this.getPhaseFromSet(phaseType);
       if (phase) {
-        const startDate: number = new Date(phase.date_from).getTime();
+        const startDate: Date = new Date(phase.date_from);
         this.$log?.debug(
-          `<${phaseType}> phase date from <${timestampToDatetimeString(startDate / 1000)}>.`,
+          `<${phaseType}> phase date from <${timestampToDatetimeString(startDate.getTime() / 1000)}>.`,
         );
-        const now: number = new Date().getTime();
+        const now: Date = new Date();
         this.$log?.debug(
-          `Current date and time is <${timestampToDatetimeString(now / 1000)}>.`,
+          `Current date and time is <${timestampToDatetimeString(now.getTime() / 1000)}>.`,
         );
         // if phase has no end date, only check if we're after start date
         if (!phase.date_to) {
           this.$log?.debug(
             `No end date set for phase <${phaseType}>,` +
               ' checking only if current date is after' +
-              ` start date <${now >= startDate}>.`,
+              ` start date <${date.getDateDiff(now, startDate, 'days') >= 0}>.`,
           );
-          return now >= startDate;
+          return date.getDateDiff(now, startDate, 'days') >= 0;
         }
-        const endDate: number = new Date(phase.date_to).getTime();
+        const endDate: Date = new Date(phase.date_to);
         this.$log?.debug(
-          `<${phaseType}> phase date to <${timestampToDatetimeString(endDate / 1000)}>.`,
+          `<${phaseType}> phase date to <${timestampToDatetimeString(endDate.getTime() / 1000)}>.`,
         );
         this.$log?.debug(
-          `Is challenge in phase type <${phaseType}> <${now >= startDate && now <= endDate}>.`,
+          `Is challenge in phase type <${phaseType}> <${date.isBetweenDates(
+            now,
+            startDate,
+            endDate,
+            {
+              inclusiveFrom: true,
+              inclusiveTo: true,
+              onlyDate: true,
+            },
+          )}>.`,
         );
-        return now >= startDate && now <= endDate;
+        return date.isBetweenDates(now, startDate, endDate, {
+          inclusiveFrom: true,
+          inclusiveTo: true,
+          onlyDate: true,
+        });
       }
       this.$log?.debug(`No <${phaseType}> phase type found.`);
       return false;
