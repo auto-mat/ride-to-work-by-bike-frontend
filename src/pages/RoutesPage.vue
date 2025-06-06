@@ -7,9 +7,13 @@
           <div data-cy="routes-page-instructions">
             <p>
               {{
-                $tc('routes.instructionRouteLogTimeframe', daysActive, {
-                  days: daysActive,
-                })
+                $t(
+                  'routes.instructionRouteLogTimeframe',
+                  {
+                    days: daysActive,
+                  },
+                  daysActive,
+                )
               }}
             </p>
             <p class="q-mb-none">
