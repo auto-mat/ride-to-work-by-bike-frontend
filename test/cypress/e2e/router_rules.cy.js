@@ -618,6 +618,25 @@ describe('Router rules', () => {
               cy.verifyRouteAccessAllowedFromInitial('prizes', 'home');
               cy.verifyRouteAccessAllowedFromInitial('profile', 'prizes');
             }
+            // test access to routes via checking menu item disabled state
+            if (
+              ['app_full', 'app_full_register-challenge'].includes(test.access)
+            ) {
+              cy.window().should('have.property', 'i18n');
+              cy.window().then((win) => {
+                if (test.accessRoutes) {
+                  cy.dataCy('drawer-menu-item')
+                    .contains(win.i18n.global.t('drawerMenu.routes'))
+                    .should('be.visible')
+                    .and('not.have.class', 'disabled');
+                } else {
+                  cy.dataCy('drawer-menu-item')
+                    .contains(win.i18n.global.t('drawerMenu.routes'))
+                    .should('be.visible')
+                    .and('have.class', 'disabled');
+                }
+              });
+            }
           }
         });
       });
