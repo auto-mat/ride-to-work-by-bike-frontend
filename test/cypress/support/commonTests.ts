@@ -579,18 +579,23 @@ export const timeUntilExpiration = timeUntilRefresh * 2;
 // 2 min before JWT expires
 export const systemTimeLoggedIn =
   fixtureTokenExpirationTime - timeUntilExpiration;
+
+// Timezone offset for local environment
+const timeZoneOffset = -2;
 /**
  * Time before `registration` phase starts
  * Registration phase allows users to register for challenge
  * even when `challenge` phase is not yet active.
  * The `challenge` phase overlaps is typically contained within
  * the `registration` phase.
- * When the tests are run in local environment, they adopt local time.
- * We set the time to 21:59:00 so in the GMT+2 timezone the time is 23:59:00.
  * @see apiGetThisCampaign.json fixture for example
+ * TODO: Replace with timezone-agnostic helper in future refactor.
  */
 export const systemTimeRegistrationPhaseInactive = new Date(
-  '2024-07-14T21:59:00.000Z',
+  '2024-07-14T23:59:00.000Z',
+);
+systemTimeRegistrationPhaseInactive.setHours(
+  systemTimeRegistrationPhaseInactive.getHours() + timeZoneOffset,
 );
 /**
  * Time after `registration` phase starts
