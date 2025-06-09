@@ -91,7 +91,7 @@ export default defineComponent({
 
     onMounted(async () => {
       // allows Cypress component test to register intercept
-      if (window.Cypress) {
+      if (window.Cypress && window.Cypress.testingType === 'component') {
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
 
