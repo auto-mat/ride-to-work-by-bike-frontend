@@ -5,9 +5,12 @@ import { defLocale } from '../../../src/i18n/def_locale';
 
 const validCode = 'example_valid_code';
 const invalidCode = 'example_invalid_code';
-describe('Strava Integration', () => {
+
+context('Strava Integration', () => {
   beforeEach(() => {
     cy.task('getAppConfig', process).then((config) => {
+      // alias config
+      cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
         cy.interceptThisCampaignGetApi(config, defLocale, campaign);
         cy.interceptMyTeamGetApi(config, defLocale);
@@ -18,19 +21,26 @@ describe('Strava Integration', () => {
               defLocale,
               responseRegisterChallenge,
             );
-          },
-        );
-        // intercept is user organization admin API
-        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
-          (response) => {
-            cy.interceptIsUserOrganizationAdminGetApi(
-              config,
-              defLocale,
-              response,
+            // intercept is user organization admin API
+            cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+              (response) => {
+                cy.interceptIsUserOrganizationAdminGetApi(
+                  config,
+                  defLocale,
+                  response,
+                );
+              },
             );
+            cy.visit('#' + routesConf['home']['path']);
+            cy.window().should('have.property', 'i18n');
+            cy.window().then((win) => {
+              // alias i18n
+              cy.wrap(win.i18n).as('i18n');
+            });
+            cy.waitForThisCampaignApi(campaign);
+            cy.waitForRegisterChallengeGetApi(responseRegisterChallenge);
           },
         );
-        cy.visit('#' + routesConf['home']['path']);
       });
       cy.interceptCommuteModeGetApi(config, defLocale);
       cy.interceptTripsGetApi(config, defLocale);
@@ -54,219 +64,190 @@ describe('Strava Integration', () => {
           );
         },
       );
-      // alias config
-      cy.wrap(config).as('config');
-    });
-    cy.visit(`#${routesConf['routes_list']['children']['fullPath']}`);
-    cy.window().should('have.property', 'i18n');
-    cy.window().then((win) => {
-      // alias i18n
-      cy.wrap(win.i18n).as('i18n');
+      cy.interceptGetStravaAccount(
+        config,
+        defLocale,
+        'apiGetStravaAccountEmpty.json',
+      );
     });
   });
 
-  describe('Make a connection to Strava account', () => {
-    it('should connect to Strava account (scope read)', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          // intercept GET request for account
-          cy.interceptGetStravaAccount(
-            config,
-            i18n,
-            'apiGetStravaAccountEmpty.json',
-          );
-          // visit app page
-          cy.visit(`#${routesConf['routes_app']['children']['fullPath']}`);
-          // wait for GET request
-          cy.wait('@getStravaAccount');
-          // intercept GET request for connect with scope
-          // !auth_url in fixture response contains ?strava=test
-          cy.interceptGetStravaConnectAccount(
-            config,
-            i18n,
-            'apiGetStravaConnectExists.json',
-            StravaScope.read,
-          );
-          // check component is visible
-          cy.dataCy('strava-app').should('be.visible');
-          // open expansion item
-          cy.dataCy('strava-app-expansion-item-header')
-            .should('be.visible')
-            .click();
-          // shows connect button
-          cy.dataCy('strava-app-connect-button').should('be.visible').click();
-          // wait for GET request
-          cy.wait('@getStravaConnectAccount');
-          // validate redirect - url contains ?strava=test
-          cy.url().should('include', '?strava=test');
-        });
-      });
-    });
-
-    it('should connect to Strava account (scope read_all)', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          // intercept GET request for account
-          cy.interceptGetStravaAccount(
-            config,
-            i18n,
-            'apiGetStravaAccountEmpty.json',
-          );
-          // visit app page
-          cy.visit(`#${routesConf['routes_app']['children']['fullPath']}`);
-          // wait for GET request
-          cy.wait('@getStravaAccount');
-          // intercept GET request for connect with scope
-          // !auth_url in fixture response contains ?strava=test
-          cy.interceptGetStravaConnectAccount(
-            config,
-            i18n,
-            'apiGetStravaConnectExists.json',
-            StravaScope.readAll,
-          );
-          // check component is visible
-          cy.dataCy('strava-app').should('be.visible');
-          // open expansion item
-          cy.dataCy('strava-app-expansion-item-header')
-            .should('be.visible')
-            .click();
-          // shows toggle button for scope
-          cy.dataCy('strava-app-sync-all-toggle').should('be.visible').check();
-          // shows connect button
-          cy.dataCy('strava-app-connect-button').should('be.visible').click();
-          // wait for GET request
-          cy.wait('@getStravaConnectAccount');
-          // validate redirect - url contains ?strava=test
-          cy.url().should('include', '?strava=test');
-        });
+  it('should connect to Strava account (scope read)', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        // visit app page
+        cy.visit(`#${routesConf['routes_app']['children']['fullPath']}`);
+        // wait for GET request
+        cy.wait('@getStravaAccount');
+        // intercept GET request for connect with scope
+        // !auth_url in fixture response contains ?strava=test
+        cy.interceptGetStravaConnectAccount(
+          config,
+          i18n,
+          'apiGetStravaConnectExists.json',
+          StravaScope.read,
+        );
+        // check component is visible
+        cy.dataCy('strava-app').should('be.visible');
+        // open expansion item
+        cy.dataCy('strava-app-expansion-item-header')
+          .should('be.visible')
+          .click();
+        // shows connect button
+        cy.dataCy('strava-app-connect-button').should('be.visible').click();
+        // wait for GET request
+        cy.wait('@getStravaConnectAccount');
+        // validate redirect - url contains ?strava=test
+        cy.url().should('include', '?strava=test');
       });
     });
   });
 
-  describe('Successfully create new Strava account', () => {
-    it('should successfully create new Strava account', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          // intercept GET request for auth with valid code
-          cy.interceptGetStravaAuthWithParam(
-            config,
-            i18n,
-            'apiGetStravaAuthCreated.json',
-            validCode,
-          );
-          // intercept GET request for account
-          cy.interceptGetStravaAccount(
-            config,
-            i18n,
-            'apiGetStravaAccountEmpty.json',
-          );
-          // visit routes_app page with valid code
-          cy.visit(
-            `#${routesConf['routes_app']['children']['fullPath']}?code=${validCode}`,
-          );
-          // verify loading state
-          cy.dataCy('spinner-auth-strava')
+  it('should connect to Strava account (scope read_all)', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        // visit app page
+        cy.visit(`#${routesConf['routes_app']['children']['fullPath']}`);
+        // wait for GET request
+        cy.wait('@getStravaAccount');
+        // intercept GET request for connect with scope
+        // !auth_url in fixture response contains ?strava=test
+        cy.interceptGetStravaConnectAccount(
+          config,
+          i18n,
+          'apiGetStravaConnectExists.json',
+          StravaScope.readAll,
+        );
+        // check component is visible
+        cy.dataCy('strava-app').should('be.visible');
+        // open expansion item
+        cy.dataCy('strava-app-expansion-item-header')
+          .should('be.visible')
+          .click();
+        // shows toggle button for scope
+        cy.dataCy('strava-app-sync-all-toggle').should('be.visible').check();
+        // shows connect button
+        cy.dataCy('strava-app-connect-button').should('be.visible').click();
+        // wait for GET request
+        cy.wait('@getStravaConnectAccount');
+        // validate redirect - url contains ?strava=test
+        cy.url().should('include', '?strava=test');
+      });
+    });
+  });
+
+  it('should successfully create new Strava account', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        // intercept GET request for auth with valid code
+        cy.interceptGetStravaAuthWithParam(
+          config,
+          i18n,
+          'apiGetStravaAuthCreated.json',
+          validCode,
+        );
+        // visit routes_app page with valid code
+        cy.visit(
+          `#${routesConf['routes_app']['children']['fullPath']}?code=${validCode}`,
+        );
+        // verify loading state
+        cy.dataCy('spinner-auth-strava')
+          .should('be.visible')
+          .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // wait for GET request
+        cy.wait('@getStravaAuthWithParam');
+        // verify success notification
+        cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
+        // check component is visible
+        cy.dataCy('strava-app').should('be.visible');
+        // open expansion item
+        cy.dataCy('strava-app-expansion-item-header')
+          .should('be.visible')
+          .click();
+        cy.fixture('apiGetStravaAuthCreated.json').then((response) => {
+          // verify UI info
+          cy.dataCy('strava-app-connected-user')
             .should('be.visible')
-            .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
-          // wait for GET request
-          cy.wait('@getStravaAuthWithParam');
-          // verify success notification
-          cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
-          // check component is visible
-          cy.dataCy('strava-app').should('be.visible');
-          // open expansion item
-          cy.dataCy('strava-app-expansion-item-header')
-            .should('be.visible')
-            .click();
-          cy.fixture('apiGetStravaAuthCreated.json').then((response) => {
-            // verify UI info
-            cy.dataCy('strava-app-connected-user')
-              .should('be.visible')
-              .and('contain', response.account[0].strava_username)
-              .and(
-                'contain',
-                `${response.account[0].first_name} ${response.account[0].last_name}`,
-              );
-          });
+            .and('contain', response.account[0].strava_username)
+            .and(
+              'contain',
+              `${response.account[0].first_name} ${response.account[0].last_name}`,
+            );
         });
       });
     });
   });
 
-  describe('Successfully update existing Strava account', () => {
-    it('should successfully update existing Strava account', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          // intercept GET request for auth with valid code
-          cy.interceptGetStravaAuthWithParam(
-            config,
-            i18n,
-            'apiGetStravaAuthUpdated.json',
-            validCode,
-          );
-          // visit connect-apps page with valid code
-          cy.visit(
-            `#${routesConf['routes_app']['children']['fullPath']}?code=${validCode}`,
-          );
-          // verify loading state
-          cy.dataCy('spinner-auth-strava')
+  it('should successfully update existing Strava account', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        // intercept GET request for auth with valid code
+        cy.interceptGetStravaAuthWithParam(
+          config,
+          i18n,
+          'apiGetStravaAuthUpdated.json',
+          validCode,
+        );
+        // visit connect-apps page with valid code
+        cy.visit(
+          `#${routesConf['routes_app']['children']['fullPath']}?code=${validCode}`,
+        );
+        // verify loading state
+        cy.dataCy('spinner-auth-strava')
+          .should('be.visible')
+          .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // await GET request
+        cy.wait('@getStravaAuthWithParam');
+        // verify success notification
+        cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
+        // check component is visible
+        cy.dataCy('strava-app').should('be.visible');
+        // check that URL no longer contains code
+        cy.url().should('not.include', `?code=${validCode}`);
+        // open expansion item
+        cy.dataCy('strava-app-expansion-item-header')
+          .should('be.visible')
+          .click();
+        cy.fixture('apiGetStravaAuthUpdated.json').then((response) => {
+          // verify UI info
+          cy.dataCy('strava-app-connected-user')
             .should('be.visible')
-            .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
-          // await GET request
-          cy.wait('@getStravaAuthWithParam');
-          // verify success notification
-          cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
-          // check component is visible
-          cy.dataCy('strava-app').should('be.visible');
-          // check that URL no longer contains code
-          cy.url().should('not.include', `?code=${validCode}`);
-          // open expansion item
-          cy.dataCy('strava-app-expansion-item-header')
-            .should('be.visible')
-            .click();
-          cy.fixture('apiGetStravaAuthUpdated.json').then((response) => {
-            // verify UI info
-            cy.dataCy('strava-app-connected-user')
-              .should('be.visible')
-              .and('contain', response.account[0].strava_username)
-              .and(
-                'contain',
-                `${response.account[0].first_name} ${response.account[0].last_name}`,
-              );
-          });
+            .and('contain', response.account[0].strava_username)
+            .and(
+              'contain',
+              `${response.account[0].first_name} ${response.account[0].last_name}`,
+            );
         });
       });
     });
   });
 
-  describe('Error during auth to Strava account - invalid code', () => {
-    it('should handle invalid auth code', () => {
-      cy.get('@config').then((config) => {
-        cy.get('@i18n').then((i18n) => {
-          // intercept GET request for auth with invalid code
-          cy.interceptGetStravaAuthWithParam(
-            config,
-            i18n,
-            'apiGetStravaAuthError.json',
-            invalidCode,
-          );
-          // visit connect-apps page with invalid code
-          cy.visit(
-            `#${routesConf['routes_app']['children']['fullPath']}?code=${invalidCode}`,
-          );
-          // verify loading state
-          cy.dataCy('spinner-auth-strava')
-            .should('be.visible')
-            .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
-          // await GET request
-          cy.wait('@getStravaAuthWithParam');
-          // verify error notification
-          cy.contains(
-            i18n.global.t('authStravaAccount.apiMessageErrorWithMessage'),
-          );
-          // check that URL no longer contains code
-          cy.url().should('not.include', `?code=${invalidCode}`);
-        });
+  it('should handle invalid auth code', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        // intercept GET request for auth with invalid code
+        cy.interceptGetStravaAuthWithParam(
+          config,
+          i18n,
+          'apiGetStravaAuthError.json',
+          invalidCode,
+        );
+        // visit connect-apps page with invalid code
+        cy.visit(
+          `#${routesConf['routes_app']['children']['fullPath']}?code=${invalidCode}`,
+        );
+        // verify loading state
+        cy.dataCy('spinner-auth-strava')
+          .should('be.visible')
+          .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // await GET request
+        cy.wait('@getStravaAuthWithParam');
+        // verify error notification
+        cy.contains(
+          i18n.global.t('authStravaAccount.apiMessageErrorWithMessage'),
+        );
+        // check that URL no longer contains code
+        cy.url().should('not.include', `?code=${invalidCode}`);
       });
     });
   });
