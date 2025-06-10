@@ -61,7 +61,7 @@ function coreTests() {
         .and('contain', organization.subsidiaries.length)
         .and(
           'contain',
-          i18n.global.tc(
+          i18n.global.t(
             'coordinator.labelBranches',
             organization.subsidiaries.length,
           ),
@@ -72,7 +72,7 @@ function coreTests() {
         .and('contain', organization.members.length)
         .and(
           'contain',
-          i18n.global.tc(
+          i18n.global.t(
             'coordinator.labelMembers',
             organization.members.length,
           ),

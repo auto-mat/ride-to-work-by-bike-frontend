@@ -246,7 +246,7 @@ function coreTests() {
       .and('have.css', 'font-weight', '700')
       .and(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 0, { count: 0 }),
       )
       .and('have.class', 'disabled');
     // check initial state for 1st route
@@ -273,7 +273,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 1, { count: 1 }),
       )
       .and('not.have.class', 'disabled');
     // revert change
@@ -285,7 +285,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 0, { count: 0 }),
       )
       .and('have.class', 'disabled');
     // introduce two changes
@@ -303,7 +303,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 2, { count: 2 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 2, { count: 2 }),
       )
       .and('not.have.class', 'disabled');
     // revert 1 change (other change cannot be reverted)
@@ -314,7 +314,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 1, { count: 1 }),
       )
       .and('not.have.class', 'disabled');
     // test changing distance value by deleting '0'
@@ -329,7 +329,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 2, { count: 2 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 2, { count: 2 }),
       )
       .and('not.have.class', 'disabled');
     // reset distance value
@@ -344,7 +344,7 @@ function coreTests() {
     cy.dataCy(selectorButtonSave)
       .should(
         'contain',
-        i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+        i18n.global.t('routes.buttonSaveChangesCount', 1, { count: 1 }),
       )
       .and('not.have.class', 'disabled');
   });
@@ -447,7 +447,7 @@ function coreTests() {
       .select(i18n.global.t('routes.actionTraceMap'));
     cy.dataCy(selectorButtonSave).should(
       'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 1, { count: 1 }),
+      i18n.global.t('routes.buttonSaveChangesCount', 1, { count: 1 }),
     );
     // reset
     cy.dataCy(selectorRouteListItem)
@@ -461,7 +461,7 @@ function coreTests() {
       .click();
     cy.dataCy(selectorButtonSave).should(
       'contain',
-      i18n.global.tc('routes.buttonSaveChangesCount', 0, { count: 0 }),
+      i18n.global.t('routes.buttonSaveChangesCount', 0, { count: 0 }),
     );
   });
 
