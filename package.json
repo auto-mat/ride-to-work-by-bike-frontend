@@ -108,7 +108,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "autoprefixer": "^10.4.2",
-    "cypress": "^13.2.0",
+    "cypress": "^14.0.0",
     "cypress-image-snapshot": "^4.0.1",
     "cypress-multi-reporters": "^2.0.0",
     "cypress-parallel": "^0.15.0",
