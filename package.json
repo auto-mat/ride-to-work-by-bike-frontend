@@ -86,7 +86,7 @@
     "ol": "^10.2.1",
     "ol-contextmenu": "^5.5.0",
     "ol-ext": "^4.0.24",
-    "pinia": "^2.2.2",
+    "pinia": "^3.0.0",
     "pinia-plugin-persistedstate": "^4.0.0",
     "quasar": "^2.6.0",
     "swiper": "^11.0.0",
