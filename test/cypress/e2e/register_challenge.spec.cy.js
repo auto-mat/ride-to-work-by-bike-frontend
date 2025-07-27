@@ -148,6 +148,7 @@ describe('Register Challenge page', () => {
         );
         // visit challenge inactive page to load campaign data
         cy.visit('#' + routesConf['challenge_inactive']['path']);
+        cy.dataCy('challenge-inactive-info').should('be.visible');
         cy.waitForThisCampaignApi();
         // config is defined without hash in the URL
         cy.visit('#' + routesConf['register_challenge']['path']);
