@@ -76,6 +76,7 @@ export const useCalendarRoutes = (days: Ref<RouteDay[]>) => {
             distance: defaultDistanceZero,
             inputType: RouteInputType.inputNumber,
             routeFeature: null,
+            file: null,
           });
         }
       }

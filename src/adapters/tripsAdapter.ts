@@ -74,10 +74,11 @@ export const tripsAdapter = {
     const payload: TripPostPayload = {
       trip_date: routeItem.date,
       direction,
-      commuteMode: routeItem.transport,
-      distanceMeters: hasTransportDistance(routeItem.transport)
-        ? Math.round(distanceMeters)
-        : 0,
+      commuteMode: routeItem.transport || '',
+      distanceMeters:
+        routeItem.transport && hasTransportDistance(routeItem.transport)
+          ? Math.round(distanceMeters)
+          : 0,
       sourceApplication: rideToWorkByBikeConfig.apiTripsSourceApplicationId,
     };
 

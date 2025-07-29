@@ -50,7 +50,9 @@ export const useLogRoutes = (routes: Ref<RouteItem[]>) => {
   });
 
   const isShownDistance = computed((): boolean => {
-    return hasTransportDistance(transportType.value);
+    return transportType.value
+      ? hasTransportDistance(transportType.value)
+      : false;
   });
 
   return {

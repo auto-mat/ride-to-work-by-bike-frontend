@@ -16,7 +16,7 @@ import type { Ref } from 'vue';
 export const useSelectSearch = (
   options: Ref<FormSelectOption[] | FormSelectTableOption[]>,
 ) => {
-  const optionsFiltered = ref<FormSelectOption[]>([]);
+  const optionsFiltered = ref<(FormSelectOption | FormSelectTableOption)[]>([]);
 
   /**
    * Filter function for select components
