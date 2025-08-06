@@ -407,12 +407,35 @@ describe('Routes calendar page', () => {
                 );
                 // input distance
                 cy.dataCy('section-input-number').should('be.visible');
-                cy.dataCy('section-input-number').find('input').clear();
+                cy.dataCy('section-input-number')
+                  .find('input')
+                  .should('be.visible')
+                  .clear();
+                cy.dataCy('section-input-number')
+                  .find('input')
+                  .then(($input) => {
+                    expect($input.val().replace(',', '.')).to.equal(
+                      config.defaultDistanceZero,
+                    );
+                  });
                 cy.dataCy('section-input-number')
                   .find('input')
                   .type(inputValue.inputValue);
               }
             });
+            // for number distance input, verify UI state before submitting
+            if (apiPayload.trips[0].distanceMeters) {
+              const expectedInputNumbers =
+                apiPayload.trips[0].distanceMeters / 10;
+              // ensure the distance input contains the expected value
+              cy.dataCy('section-input-number')
+                .find('input')
+                .then(($input) => {
+                  expect($input.val().replace(/[,.]/g, '')).to.equal(
+                    expectedInputNumbers.toString(),
+                  );
+                });
+            }
             // click save button
             cy.dataCy('dialog-save-button').click();
             // wait for API call and verify payload
