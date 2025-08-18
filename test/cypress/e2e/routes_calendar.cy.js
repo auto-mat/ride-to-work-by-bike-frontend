@@ -425,6 +425,7 @@ describe('Routes calendar page', () => {
             });
             // for number distance input, verify UI state before submitting
             if (apiPayload.trips[0].distanceMeters) {
+              // divide meters (e.g 1000) by 10 to get the input number without decimal point (e.g. 1.00 -> 100)
               const expectedInputNumbers =
                 apiPayload.trips[0].distanceMeters / 10;
               // ensure the distance input contains the expected value
