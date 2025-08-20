@@ -1,5 +1,6 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-require-imports */
+import path from 'node:path';
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
@@ -68,6 +69,11 @@ module.exports = configure(function (ctx) {
         ),
       },
 
+      alias: {
+        src: path.resolve(__dirname, './src'),
+        '@': path.resolve(__dirname, './src'),
+      },
+
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
@@ -126,7 +132,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      https: true,
+      // https: true,
       open: true, // opens browser window automatically
     },
 

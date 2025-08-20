@@ -6,6 +6,7 @@ import {
   defineConfigWithVueTs,
   vueTsConfigs,
 } from '@vue/eslint-config-typescript';
+import pluginCypress from 'eslint-plugin-cypress/flat';
 
 // the following is optional, if you want prettier too:
 import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
@@ -95,22 +96,17 @@ export default defineConfigWithVueTs(
   },
 
   {
-    files: ['src-pwa/custom-service-worker.ts'],
-    languageOptions: {
-      globals: {
-        ...globals.serviceworker,
-      },
-    },
-  },
+    name: 'custom/cypress',
 
-  {
-    files: ['**/*.cy.{js,jsx,ts,tsx}'],
-    plugins: {
-      cypress: (await import('eslint-plugin-cypress')).default,
-    },
+    files: ['test/cypress/**/*.{js,jsx,ts,tsx}', '**/*.cy.{js,jsx,ts,tsx}'],
+    extends: [
+      // Add Cypress-specific lint rules, globals and Cypress plugin
+      // See https://github.com/cypress-io/eslint-plugin-cypress#rules
+      pluginCypress.configs.recommended,
+    ],
     rules: {
-      ...(await import('eslint-plugin-cypress')).default.configs.recommended
-        .rules,
+      // Allow chai-style assertions, e.g. `expect(foo).to.be.true`
+      '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
 

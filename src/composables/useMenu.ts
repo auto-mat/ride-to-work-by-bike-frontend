@@ -2,11 +2,11 @@
 import { unref } from 'vue';
 
 // config
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '../router/routes_conf';
 
 // types
 import type { ComputedRef } from 'vue';
-import type { Link } from 'src/components/types';
+import type { Link } from '../components/types';
 
 export const useMenu = () => {
   /**
