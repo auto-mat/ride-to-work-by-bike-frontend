@@ -5,7 +5,9 @@ import { defineConfig } from 'cypress';
 import path from 'path';
 import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin';
 
-const getAppConfig = require(path.join(__dirname, 'src/utils/get_app_conf'));
+const { getAppConfig } = require(
+  path.join(__dirname, 'src/utils/get_app_conf'),
+);
 
 export default defineConfig({
   fixturesFolder: 'test/cypress/fixtures',
