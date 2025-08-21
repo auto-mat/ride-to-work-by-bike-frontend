@@ -5,11 +5,14 @@ import { computed, ref, watch } from 'vue';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // enums
-import { RouteInputType, TransportType } from 'src/components/types/Route';
+import {
+  RouteInputType,
+  TransportType,
+} from '../../src/components/types/Route';
 
 // types
 import type { Ref } from 'vue';
-import type { RouteItem } from 'src/components/types/Route';
+import type { RouteItem } from '../../src/components/types/Route';
 
 // utils
 import { hasTransportDistance } from '../utils/has_transport_distance';

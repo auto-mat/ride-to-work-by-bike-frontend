@@ -3,7 +3,7 @@ import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getGenderLabel } from '../../../src/utils/get_gender_label';
 import { interceptOrganizationsApi } from '../support/commonTests';
-import { OrganizationType } from 'src/components/types/Organization';
+import { OrganizationType } from '../../../src/components/types/Organization';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';

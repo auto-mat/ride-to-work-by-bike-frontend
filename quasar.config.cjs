@@ -110,7 +110,18 @@ module.exports = configure(function (ctx) {
             promiseImportName: (i) => `__tla_${i}`,
           },
         ],
+        ['vite-plugin-checker', {
+          vueTsc: true,
+          eslint: {
+            lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
+            useFlatConfig: true
+          }
+        }, { server: false }]
       ],
+
+      typescript: {
+        vueShim: true,
+      }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
