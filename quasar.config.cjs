@@ -1,6 +1,5 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-require-imports */
-import path from 'node:path';
 
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
