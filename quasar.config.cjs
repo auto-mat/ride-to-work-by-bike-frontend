@@ -69,11 +69,6 @@ module.exports = configure(function (ctx) {
         ),
       },
 
-      alias: {
-        src: path.resolve(__dirname, './src'),
-        '@': path.resolve(__dirname, './src'),
-      },
-
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
