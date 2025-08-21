@@ -220,7 +220,9 @@ export const testUserSelect = (selector: string): void => {
       cy.dataCy(selectorUserSelectInput).should('be.visible').click();
     });
     cy.get(classSelectorMenu)
-      .should('be.visible')
+      .should('exist')
+      .and('not.have.class', 'q-transition--fade-enter-from')
+      .and('be.visible')
       .within(() => {
         menuItems.forEach((item, index) => {
           cy.dataCy(selectorMenuItem)
