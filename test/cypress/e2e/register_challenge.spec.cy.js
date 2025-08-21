@@ -10,8 +10,8 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { OrganizationType } from '../../../src/components/types/Organization';
-import { getRadioOption } from 'test/cypress/utils';
-import { PaymentSubject } from 'src/components/enums/Payment';
+import { getRadioOption } from '../../../test/cypress/utils';
+import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getCurrentPriceLevelsUtil } from 'src/utils/price_levels';
 import { getCurrentPriceLevelsUtilWithReward } from '../../../src/utils/price_levels_with_reward';
@@ -305,7 +305,6 @@ describe('Register Challenge page', () => {
     });
 
     it('renders stepper component', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           // display stepper with correct styles
