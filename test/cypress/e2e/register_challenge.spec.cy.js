@@ -594,25 +594,8 @@ describe('Register Challenge page', () => {
           cy.passToStep2();
           // select company
           cy.dataCy(getRadioOption(OrganizationType.company)).click();
-          // select paying company (required)
-          cy.fixture('formFieldCompany').then((formFieldCompany) => {
-            cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
-              cy.dataCy('form-field-company').find('.q-field__append').click();
-              // select option without coordinator
-              cy.get('.q-item__label')
-                .should('be.visible')
-                .and((opts) => {
-                  expect(
-                    opts.length,
-                    formFieldCompany.results.length +
-                      formFieldCompanyNext.results.length,
-                  );
-                })
-                .eq(1)
-                .click();
-              cy.get('.q-menu').should('not.exist');
-            });
-          });
+          // select paying company
+          cy.selectRegisterChallengePayingOrganization(1);
           cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
             (response) => {
               cy.waitForHasOrganizationAdminApi(response);

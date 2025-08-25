@@ -2315,19 +2315,30 @@ Cypress.Commands.add(
     cy.fixture('formFieldCompany').then((formFieldCompany) => {
       cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
         waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-        cy.dataCy('form-field-company').find('.q-field__append').click();
-        // select option
-        cy.get('.q-item__label')
+        cy.dataCy('form-field-company')
+          .find('.q-select')
+          .should('not.contain', 'q-spinner');
+        cy.dataCy('form-field-company')
+          .find('.q-field__append')
+          .last()
           .should('be.visible')
-          .and((opts) => {
-            expect(
-              opts.length,
-              formFieldCompany.results.length +
-                formFieldCompanyNext.results.length,
-            );
-          })
-          .eq(index)
           .click();
+        // select option
+        cy.get('.q-menu')
+          .should('be.visible')
+          .within(() => {
+            cy.get('.q-item__label')
+              .should('be.visible')
+              .and((opts) => {
+                expect(
+                  opts.length,
+                  formFieldCompany.results.length +
+                    formFieldCompanyNext.results.length,
+                );
+              })
+              .eq(index)
+              .click();
+          });
         cy.get('.q-menu').should('not.exist');
       });
     });
