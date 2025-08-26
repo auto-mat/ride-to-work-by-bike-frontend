@@ -211,7 +211,8 @@ context('Strava Integration', () => {
         cy.fixture('apiGetStravaAuthUpdated.json').then((response) => {
           // verify UI info
           cy.dataCy('strava-app-connected-user')
-            .should('be.visible')
+            .should('exist')
+            .and('be.visible')
             .and('contain', response.account[0].strava_username)
             .and(
               'contain',
