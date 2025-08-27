@@ -90,8 +90,6 @@ export default defineComponent({
     });
 
     onMounted(async () => {
-      // allows Cypress component test to register intercept
-
       if (!stravaStore.getAccount) {
         await stravaStore.loadAccount();
       }
