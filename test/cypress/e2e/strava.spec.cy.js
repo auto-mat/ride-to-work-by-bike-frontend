@@ -154,6 +154,8 @@ context('Strava Integration', () => {
         cy.dataCy('spinner-auth-strava')
           .should('be.visible')
           .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // await GET request
+        cy.wait('@getStravaAccount');
         // wait for GET request
         cy.wait('@getStravaAuthWithParam');
         // verify success notification
@@ -196,6 +198,8 @@ context('Strava Integration', () => {
         cy.dataCy('spinner-auth-strava')
           .should('be.visible')
           .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // await GET request
+        cy.wait('@getStravaAccount');
         // await GET request
         cy.wait('@getStravaAuthWithParam');
         // verify success notification
