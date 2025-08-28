@@ -154,6 +154,8 @@ context('Strava Integration', () => {
         cy.dataCy('spinner-auth-strava')
           .should('be.visible')
           .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
+        // await GET request
+        cy.wait('@getStravaAccount');
         // wait for GET request
         cy.wait('@getStravaAuthWithParam');
         // verify success notification
@@ -167,7 +169,8 @@ context('Strava Integration', () => {
         cy.fixture('apiGetStravaAuthCreated.json').then((response) => {
           // verify UI info
           cy.dataCy('strava-app-connected-user')
-            .should('be.visible')
+            .should('exist')
+            .and('be.visible')
             .and('contain', response.account[0].strava_username)
             .and(
               'contain',
@@ -197,6 +200,8 @@ context('Strava Integration', () => {
           .should('be.visible')
           .and('contain', i18n.global.t('routes.titleRoutesConnectApps'));
         // await GET request
+        cy.wait('@getStravaAccount');
+        // await GET request
         cy.wait('@getStravaAuthWithParam');
         // verify success notification
         cy.contains(i18n.global.t('authStravaAccount.apiMessageSuccess'));
@@ -211,7 +216,8 @@ context('Strava Integration', () => {
         cy.fixture('apiGetStravaAuthUpdated.json').then((response) => {
           // verify UI info
           cy.dataCy('strava-app-connected-user')
-            .should('be.visible')
+            .should('exist')
+            .and('be.visible')
             .and('contain', response.account[0].strava_username)
             .and(
               'contain',
