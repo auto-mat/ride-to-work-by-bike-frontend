@@ -56,17 +56,18 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
       - run: node -v
 
-      - name: Run Cypress e2e test on Mozilla Firefox/OS ${{ matrix.os }}
-        uses: cypress-io/github-action@v6
-        # env:
-        #   DEBUG: "cypress:*"
-        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
-        with:
-          start: yarn dev
-          browser: firefox
-          wait-on-timeout: ${{ env.timeout }}
-          wait-on: ${{ env.dev_server_url }}
-          command: yarn test:e2e:ci:firefox
+      # Temporarily disabled due to Firefox 141 incompatibility with Cypress 13.x
+      # - name: Run Cypress e2e test on Mozilla Firefox/OS ${{ matrix.os }}
+      #   uses: cypress-io/github-action@v6
+      #   env:
+      #   #   DEBUG: "cypress:*"
+      #   #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+      #   with:
+      #     start: yarn dev
+      #     browser: firefox
+      #     wait-on-timeout: ${{ env.timeout }}
+      #     wait-on: ${{ env.dev_server_url }}
+      #     command: yarn test:e2e:ci:firefox
 
       - name: Run Cypress e2e test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
@@ -92,17 +93,18 @@ jobs:
           wait-on: ${{ env.dev_server_url }}
           command: yarn test:e2e:ci:edge
 
-      - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
-        uses: cypress-io/github-action@v6
-        # env:
-        #   DEBUG: "cypress:*"
-        #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
-        with:
-          install: false
-          browser: firefox
-          wait-on-timeout: ${{ env.timeout }}
-          wait-on: ${{ env.dev_server_url }}
-          command: yarn test:component:ci:firefox
+      # Temporarily disabled due to Firefox 141 incompatibility with Cypress 13.x
+      # - name: Run Cypress component test on Mozilla Firefox/OS ${{ matrix.os }}
+      #   uses: cypress-io/github-action@v6
+      #   env:
+      #   #   DEBUG: "cypress:*"
+      #   #   CYPRESS_INTERNAL_BROWSER_CONNECT_TIMEOUT: ${{ env.browser_connect_timeout }}
+      #   with:
+      #     install: false
+      #     browser: firefox
+      #     wait-on-timeout: ${{ env.timeout }}
+      #     wait-on: ${{ env.dev_server_url }}
+      #     command: yarn test:component:ci:firefox
 
       - name: Run Cypress component test on Google Chrome/OS ${{ matrix.os }}
         uses: cypress-io/github-action@v6
