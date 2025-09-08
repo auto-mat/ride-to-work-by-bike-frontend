@@ -2307,6 +2307,28 @@ Cypress.Commands.add(
 );
 
 /**
+ * Select element from dropdown menu
+ */
+Cypress.Commands.add('selectDropdownMenu', (dataCy, index = 0, length = 0) => {
+  // ensure dropdown icon is visible
+  cy.dataCy(dataCy)
+    .find('.q-field__append')
+    .last()
+    .find('i')
+    .should('be.visible')
+    .and('have.class', 'q-select__dropdown-icon');
+  // click dropdown icon
+  cy.dataCy(dataCy).find('.q-field__append').last().click();
+  cy.get('.q-menu').should('be.visible');
+  if (length > 0) {
+    cy.get('.q-menu .q-item').should('have.length', length);
+  }
+  // select option
+  cy.get('.q-menu .q-item').eq(index).click();
+  cy.get('.q-menu').should('not.exist');
+});
+
+/**
  * Select paying company
  */
 Cypress.Commands.add(
@@ -2315,31 +2337,11 @@ Cypress.Commands.add(
     cy.fixture('formFieldCompany').then((formFieldCompany) => {
       cy.fixture('formFieldCompanyNext').then((formFieldCompanyNext) => {
         waitForOrganizationsApi(formFieldCompany, formFieldCompanyNext);
-        cy.dataCy('form-field-company')
-          .find('.q-select')
-          .should('not.contain', 'q-spinner');
-        cy.dataCy('form-field-company')
-          .find('.q-field__append')
-          .last()
-          .should('be.visible')
-          .click();
-        // select option
-        cy.get('.q-menu')
-          .should('be.visible')
-          .within(() => {
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  formFieldCompany.results.length +
-                    formFieldCompanyNext.results.length,
-                );
-              })
-              .eq(index)
-              .click();
-          });
-        cy.get('.q-menu').should('not.exist');
+        cy.selectDropdownMenu(
+          'form-field-company',
+          index,
+          formFieldCompany.results.length + formFieldCompanyNext.results.length,
+        );
       });
     });
   },
