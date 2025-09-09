@@ -752,23 +752,20 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-4-continue').should('be.visible').click();
       // not on step 5
       cy.dataCy('step-5').find('.q-stepper__step-content').should('not.exist');
-      // select address
-      cy.dataCy('form-company-address').find('.q-field__append').last().click();
       // select subsidiary from dropdown
       cy.fixture('apiGetSubsidiariesResponse').then((subsidiariesResponse) => {
         cy.fixture('apiGetSubsidiariesResponseNext').then(
           (subsidiariesResponseNext) => {
-            cy.get('.q-item__label')
-              .should('be.visible')
-              .and((opts) => {
-                expect(
-                  opts.length,
-                  subsidiariesResponse.results.length +
-                    subsidiariesResponseNext.results.length,
-                );
-              })
-              .first()
-              .click();
+            cy.waitForSubsidiariesApi(
+              subsidiariesResponse,
+              subsidiariesResponseNext,
+            );
+            cy.selectDropdownMenu(
+              'form-company-address',
+              0,
+              subsidiariesResponse.results.length +
+                subsidiariesResponseNext.results.length,
+            );
           },
         );
       });
@@ -1184,21 +1181,16 @@ describe('Register Challenge page', () => {
                     apiGetSubsidiariesResponse,
                     apiGetSubsidiariesResponseNext,
                   );
+                  cy.selectDropdownMenu(
+                    'form-company-address',
+                    0,
+                    apiGetSubsidiariesResponse.results.length +
+                      apiGetSubsidiariesResponseNext.results.length,
+                  );
                 },
               );
             },
           );
-          // select address
-          cy.dataCy('form-company-address')
-            .find('.q-field__append')
-            .last()
-            .click();
-          // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item').first().click();
-            });
           // go back to step 3
           cy.dataCy('step-4-back').should('be.visible').click();
           // go back to step 2
@@ -1517,18 +1509,8 @@ describe('Register Challenge page', () => {
             cy.dataCy('step-5-back').should('be.visible').click();
             // organization and address inputs are visible
             cy.dataCy('form-select-table-company').should('be.visible');
-            // open subsidiary select
-            cy.dataCy('form-company-address')
-              .should('be.visible')
-              .find('.q-field__append')
-              .last()
-              .click();
             // select different subsidiary (second one)
-            cy.get('.q-menu')
-              .should('be.visible')
-              .within(() => {
-                cy.get('.q-item').eq(1).click();
-              });
+            cy.selectDropdownMenu('form-company-address', 1);
             cy.dataCy('step-4-continue').should('be.visible').click();
             // wait for teams API refresh
             cy.waitForTeamsGetApi();
@@ -1570,18 +1552,8 @@ describe('Register Challenge page', () => {
                 cy.dataCy('debug-subsidiary-id-value').should('be.empty');
                 cy.dataCy('debug-team-id-value').should('be.empty');
               });
-            // open subsidiary select
-            cy.dataCy('form-company-address')
-              .should('be.visible')
-              .find('.q-field__append')
-              .last()
-              .click();
-            // select first available subsidiary
-            cy.get('.q-menu')
-              .should('be.visible')
-              .within(() => {
-                cy.get('.q-item').first().click();
-              });
+            // select address
+            cy.selectDropdownMenu('form-company-address', 0);
             // go to step 5
             cy.dataCy('step-4-continue').should('be.visible').click();
             // wait for teams API refresh
@@ -1712,16 +1684,7 @@ describe('Register Challenge page', () => {
               );
             },
           );
-          cy.dataCy('form-company-address')
-            .find('.q-field__append')
-            .last()
-            .click();
-          // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item').first().click();
-            });
+          cy.selectDropdownMenu('form-company-address', 0);
           // go to next step
           cy.dataCy('step-4-continue').should('be.visible').click();
           // select first available team (this is the second team, first is full)
@@ -1800,13 +1763,24 @@ describe('Register Challenge page', () => {
       // participation is preselected - continue
       cy.dataCy('step-3-continue').should('be.visible').click();
       // organization is preselected - select address
-      cy.dataCy('form-company-address').find('.q-field__append').last().click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
+      cy.fixture('apiGetSubsidiariesResponse.json').then(
+        (apiGetSubsidiariesResponse) => {
+          cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+            (apiGetSubsidiariesResponseNext) => {
+              cy.waitForSubsidiariesApi(
+                apiGetSubsidiariesResponse,
+                apiGetSubsidiariesResponseNext,
+              );
+              cy.selectDropdownMenu(
+                'form-company-address',
+                0,
+                apiGetSubsidiariesResponse.results.length +
+                  apiGetSubsidiariesResponseNext.results.length,
+              );
+            },
+          );
+        },
+      );
       // go to next step
       cy.dataCy('step-4-continue').should('be.visible').click();
       // select first available team (this is the second team, first is full)
@@ -1883,13 +1857,24 @@ describe('Register Challenge page', () => {
       // participation is preselected - continue
       cy.dataCy('step-3-continue').should('be.visible').click();
       // organization is preselected - select address
-      cy.dataCy('form-company-address').find('.q-field__append').last().click();
-      // select option
-      cy.get('.q-menu')
-        .should('be.visible')
-        .within(() => {
-          cy.get('.q-item').first().click();
-        });
+      cy.fixture('apiGetSubsidiariesResponse.json').then(
+        (apiGetSubsidiariesResponse) => {
+          cy.fixture('apiGetSubsidiariesResponseNext.json').then(
+            (apiGetSubsidiariesResponseNext) => {
+              cy.waitForSubsidiariesApi(
+                apiGetSubsidiariesResponse,
+                apiGetSubsidiariesResponseNext,
+              );
+              cy.selectDropdownMenu(
+                'form-company-address',
+                0,
+                apiGetSubsidiariesResponse.results.length +
+                  apiGetSubsidiariesResponseNext.results.length,
+              );
+            },
+          );
+        },
+      );
       // go to next step
       cy.dataCy('step-4-continue').should('be.visible').click();
       // select first available team (this is the second team, first is full)
@@ -2133,26 +2118,16 @@ describe('Register Challenge page', () => {
                     apiGetSubsidiariesResponse,
                     apiGetSubsidiariesResponseNext,
                   );
+                  cy.selectDropdownMenu(
+                    'form-company-address',
+                    0,
+                    apiGetSubsidiariesResponse.results.length +
+                      apiGetSubsidiariesResponseNext.results.length,
+                  );
                 },
               );
             },
           );
-          // wait for addresses to be loaded
-          cy.dataCy('form-company-address')
-            .find('.q-select')
-            .should('not.contain', 'q-spinner');
-          // select address
-          cy.dataCy('form-company-address')
-            .find('.q-field__append')
-            .last()
-            .should('be.visible')
-            .click();
-          // select option
-          cy.get('.q-menu')
-            .should('be.visible')
-            .within(() => {
-              cy.get('.q-item').first().click();
-            });
           // go to next step
           cy.dataCy('step-4-continue').should('be.visible').click();
           // select first available team (this is the second team, first is full)
