@@ -37,7 +37,7 @@ export default defineConfig({
       return config;
     },
     baseUrl: 'http://localhost:9000/',
-    supportFile: 'test/cypress/support/e2e.ts',
+    supportFile: 'test/cypress/support/e2e.js',
     specPattern: 'test/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     defaultCommandTimeout: 60000,
   },
@@ -59,7 +59,7 @@ export default defineConfig({
       });
       return config;
     },
-    supportFile: 'test/cypress/support/component.ts',
+    supportFile: 'test/cypress/support/component.js',
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
     indexHtmlFile: 'test/cypress/support/component-index.html',
     devServer: injectQuasarDevServerConfig(),
