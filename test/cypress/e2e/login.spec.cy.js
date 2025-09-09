@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import { rgbaColorObjectToString } from 'src/utils';
+import { rgbaColorObjectToString } from '../../../src/utils';
 import {
   testLanguageSwitcher,
   testBackgroundImage,

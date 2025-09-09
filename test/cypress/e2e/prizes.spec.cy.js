@@ -6,7 +6,7 @@ import {
   systemTimeOffersValid,
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
-import { isOfferValidMoreThanOneDay } from 'src/utils/get_offer_valid';
+import { isOfferValidMoreThanOneDay } from '../../../src/utils/get_offer_valid';
 
 describe('Prizes page', () => {
   beforeEach(() => {
