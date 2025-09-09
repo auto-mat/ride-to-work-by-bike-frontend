@@ -2616,18 +2616,16 @@ Cypress.Commands.add('passToStep5', () => {
             apiGetSubsidiariesResponse,
             apiGetSubsidiariesResponseNext,
           );
+          cy.selectDropdownMenu(
+            'form-company-address',
+            0,
+            apiGetSubsidiariesResponse.results.length +
+              apiGetSubsidiariesResponseNext.results.length,
+          );
         },
       );
     },
   );
-  // select address
-  cy.dataCy('form-company-address').find('.q-field__append').last().click();
-  // select option
-  cy.get('.q-menu')
-    .should('be.visible')
-    .within(() => {
-      cy.get('.q-item').first().click();
-    });
   cy.dataCy('step-4-continue').should('be.visible').click();
   // step 4 skip check for loading spinner (not sending data to API)
   // on step 5
