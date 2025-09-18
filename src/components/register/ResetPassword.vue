@@ -123,6 +123,10 @@ export default defineComponent({
         logger?.debug(
           `Redirect to login page <${routesConf['login']['path']}>.`,
         );
+        // allows Cypress E2E test to test UI before redirecting
+        if (window.Cypress) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
         router.push(routesConf['login']['path']);
       }
     };
