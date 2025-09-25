@@ -148,6 +148,9 @@ describe('Login page', () => {
                     '@thisCampaignRequest',
                     '@getIsUserOrganizationAdmin',
                   ]);
+                  // confirm we are on home page
+                  cy.dataCy('index-title').should('be.visible');
+                  // visit register coordinator page
                   cy.visit('#' + routesConf['register_coordinator']['path']);
                 },
               );
