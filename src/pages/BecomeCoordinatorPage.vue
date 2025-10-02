@@ -14,11 +14,13 @@
 import { defineComponent } from 'vue';
 
 // components
+import FormCoordinatorApplication from 'components/form/FormCoordinatorApplication.vue';
 import PageHeading from 'components/global/PageHeading.vue';
 
 export default defineComponent({
   name: 'BecomeCoordinatorPage',
   components: {
+    FormCoordinatorApplication,
     PageHeading,
   },
   setup() {
@@ -47,7 +49,7 @@ export default defineComponent({
             data-cy="company-coordinator-text"
           />
           <div class="q-mt-lg">
-            <!-- TODO: Form apply -->
+            <form-coordinator-application />
           </div>
         </div>
         <div class="col-lg-4">

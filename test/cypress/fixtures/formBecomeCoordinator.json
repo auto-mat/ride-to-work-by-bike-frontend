@@ -1,0 +1,26 @@
+{
+  "input": {
+    "jobTitle": "Senior Developer",
+    "phone": "732123456"
+  },
+  "request": {
+    "firstName": "Foo",
+    "lastName": "Bar",
+    "jobTitle": "Senior Developer",
+    "newsletter": "challenge",
+    "organizationId": 987,
+    "phone": "732123456",
+    "responsibility": true,
+    "terms": true
+  },
+  "response": {
+    "firstName": "Foo",
+    "lastName": "Bar",
+    "jobTitle": "Senior Developer",
+    "newsletter": "challenge",
+    "organizationId": 987,
+    "phone": "732123456",
+    "responsibility": true,
+    "terms": true
+  }
+}

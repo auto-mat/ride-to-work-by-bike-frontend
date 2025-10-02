@@ -44,6 +44,7 @@ import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_
 import { bearerTokeAuth } from '../../../src/utils';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
+import { defLocale } from '../../../src/i18n/def_locale';
 import { getRadioOption, negativeColor, positiveColor } from '../utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { useMenu } from '../../../src/composables/useMenu';
@@ -3962,5 +3963,122 @@ Cypress.Commands.add(
         }
       },
     );
+  },
+);
+
+/**
+ * Intercept register coordinator API call
+ * @param {Object} config - App configuration object
+ * @param {Object} i18n - Internationalization object
+ * @param {Object} responseBody - Expected response body (optional)
+ */
+Cypress.Commands.add(
+  'interceptRegisterCoordinatorApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const { apiBase, apiDefaultLang, urlApiRegisterCoordinator } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiRegisterCoordinatorLocalized = `${apiBaseUrl}${urlApiRegisterCoordinator}`;
+
+    cy.intercept('POST', urlApiRegisterCoordinatorLocalized, {
+      statusCode: responseStatusCode || httpSuccessfullStatus,
+      body: responseBody,
+    }).as('registerCoordinator');
+  },
+);
+
+/**
+ * Wait for register coordinator API call and compare request/response object
+ * Wait for `@registerCoordinator` intercept
+ * @param {Object} requestBody - Expected request body to compare against
+ * @param {Object} responseBody - Expected response body to compare against (optional)
+ */
+Cypress.Commands.add(
+  'waitForRegisterCoordinatorApi',
+  (requestBody, responseBody = null) => {
+    cy.wait('@registerCoordinator').then(({ request, response }) => {
+      // verify request body
+      expect(request.body).to.deep.equal(requestBody);
+      // verify response body if provided
+      if (responseBody) {
+        expect(response.body).to.deep.equal(responseBody);
+      }
+    });
+  },
+);
+
+/**
+ * Performs authenticated login flow for E2E tests
+ *
+ * @param {Object} config - App configuration object
+ * @param {Object} i18n - Internationalization object
+ * @returns {void}
+ */
+Cypress.Commands.add('performAuthenticatedLogin', (config, i18n) => {
+  // Load required fixtures
+  cy.fixture('refreshTokensResponseChallengeActive').then(
+    (refreshTokensResponseChallengeActive) => {
+      cy.fixture('loginRegisterResponseChallengeActive').then(
+        (loginRegisterResponseChallengeActive) => {
+          // set up API intercepts
+          cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+            config,
+            i18n,
+            loginRegisterResponseChallengeActive,
+            null,
+            refreshTokensResponseChallengeActive,
+            null,
+            { has_user_verified_email_address: true },
+          );
+          // intercept APIs that get called after login
+          cy.interceptMyTeamGetApi(config, i18n);
+          // perform login
+          cy.fillAndSubmitLoginForm(config, i18n);
+          // wait for authentication flow to complete
+          cy.wait([
+            '@loginRequest',
+            '@verifyEmailRequest',
+            '@thisCampaignRequest',
+          ]);
+          // confirm we are on home page
+          cy.dataCy('index-title').should('be.visible');
+        },
+      );
+    },
+  );
+});
+
+/**
+ * Setup authenticated coordinator test environment
+ * Sets up API intercepts, performs login, and navigates to become coordinator page
+ * @param {Object} config - App configuration object
+ * @param {Object} i18n - Internationalization object
+ * @param {string} registerChallengeFixture - Fixture file name for register challenge response
+ */
+Cypress.Commands.add(
+  'setupCoordinatorTest',
+  (
+    config,
+    i18n,
+    registerChallengeFixture = 'apiGetRegisterChallengeProfile.json',
+  ) => {
+    cy.fixture(registerChallengeFixture).then((response) => {
+      cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+    });
+    cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+      (response) => {
+        cy.interceptIsUserOrganizationAdminGetApi(config, defLocale, response);
+      },
+    );
+    cy.fixture('formBecomeCoordinator').then((testData) => {
+      cy.interceptRegisterCoordinatorApi(config, i18n, testData.response);
+    });
+    cy.performAuthenticatedLogin(config, i18n);
+    cy.visit('#' + routesConf['become_coordinator']['path']);
+    cy.dataCy('company-coordinator-title').should('be.visible');
   },
 );

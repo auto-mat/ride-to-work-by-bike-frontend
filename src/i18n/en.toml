@@ -835,6 +835,8 @@ apiMessageSuccess = "Registration was successful"
 apiMessageError = "Coordinator registration failed. Please try again later."
 apiMessageErrorWithMessage = "Coordinator registration failed. Please try again later. Error: {error}"
 apiMessageSuccess = "Coordinator registration was successful"
+messageMissingPersonalDetails = "The form could not be submitted. Your profile is missing important information: first name, last name."
+messageMissingOrganizationId = "The form could not be submitted. Your profile is missing your organization ID."
 messageNoOrganizationId = "Please select an organization you want to be a coordinator for."
 
 [register.form]

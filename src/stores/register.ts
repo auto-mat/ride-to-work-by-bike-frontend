@@ -13,10 +13,14 @@ import { routesConf } from '../router/routes_conf';
 // stores
 import { useLoginStore } from './login';
 import { useRegisterChallengeStore } from './registerChallenge';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type { LoginResponse as RegisterResponse } from '../components/types/Login';
-import type { RegisterCoordinatorRequest } from '../components/types/Register';
+import type {
+  RegisterCoordinatorRequest,
+  RegisterCoordinatorResponse,
+} from '../components/types/Register';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from 'src/utils';
@@ -215,7 +219,7 @@ export const useRegisterStore = defineStore('register', {
         await loginStore.getAccessTokenWithRefresh();
       // register
       this.$log?.info('Post API coordinator registration details.');
-      const { success } = await apiFetch<null>({
+      const { data, success } = await apiFetch<RegisterCoordinatorResponse>({
         endpoint: rideToWorkByBikeConfig.urlApiRegisterCoordinator,
         method: 'post',
         payload,
@@ -230,8 +234,12 @@ export const useRegisterStore = defineStore('register', {
         this.$log?.debug(
           `Register store setting isRegistrationComplete to <${true}>.`,
         );
-        // update `isUserOrganizationAdmin` state in registerChallenge store
+
+        // set values returned from API into registerChallenge store
         const registerChallengeStore = useRegisterChallengeStore();
+        registerChallengeStore.setTelephone(data?.phone || '');
+
+        // update `isUserOrganizationAdmin` state in registerChallenge store
         await registerChallengeStore.checkIsUserOrganizationAdmin();
         // redirect to home page
         if (this.$router && redirect) {
