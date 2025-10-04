@@ -443,13 +443,22 @@ describe('<FormLogin>', () => {
         expect(result).to.equal(null);
         cy.get(classSelectorQNotificationMessage)
           .should('be.visible')
-          .and('contain', i18n.global.t('login.form.messageEmailReqired'));
+          .and('contain', i18n.global.t('login.form.messagePasswordRequired'));
       });
     });
 
     it('shows error if API call fails (error has message)', () => {
       const store = useLoginStore();
-      cy.wrap(store.login({ username, password })).then((result) => {
+      cy.wrap(
+        store.login(
+          { username, password },
+          {
+            redirectAfterLogin: false,
+            showSuccessMessage: true,
+            showErrorMessage: true,
+          },
+        ),
+      ).then((result) => {
         expect(result).to.equal(null);
         cy.get(classSelectorQNotificationMessage)
           .should('be.visible')
@@ -460,7 +469,16 @@ describe('<FormLogin>', () => {
     it('calls API and shows error if login fails', () => {
       const store = useLoginStore();
       // intercept login API call
-      cy.wrap(store.login({ username, password })).then(() => {
+      cy.wrap(
+        store.login(
+          { username, password },
+          {
+            redirectAfterLogin: false,
+            showSuccessMessage: true,
+            showErrorMessage: true,
+          },
+        ),
+      ).then(() => {
         cy.get(classSelectorQNotificationMessage)
           .should('be.visible')
           .and('contain', i18n.global.t('login.apiMessageError'));
