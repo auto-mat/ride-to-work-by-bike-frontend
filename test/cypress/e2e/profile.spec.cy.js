@@ -6,7 +6,7 @@ import {
   interceptOrganizationsApi,
   systemTimeChallengeActive,
 } from '../support/commonTests';
-import { OrganizationType } from 'src/components/types/Organization';
+import { OrganizationType } from '../../../src/components/types/Organization';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
