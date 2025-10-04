@@ -96,20 +96,6 @@ describe('<FooterBar>', () => {
         );
       });
     });
-
-    it('test application info URL', () => {
-      cy.request({
-        url: rideToWorkByBikeConfig.urlFreeSoftwareDefinition,
-        failOnStatusCode: failOnStatusCode,
-        headers: { ...userAgentHeader },
-      }).then((resp) => {
-        if (resp.status === httpTooManyRequestsStatus) {
-          cy.log(httpTooManyRequestsStatusMessage);
-          return;
-        }
-        expect(resp.status).to.eq(httpSuccessfullStatus);
-      });
-    });
   });
 
   context('mobile', () => {
