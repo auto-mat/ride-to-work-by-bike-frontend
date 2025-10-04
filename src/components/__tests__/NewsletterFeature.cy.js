@@ -269,8 +269,10 @@ function coreTests() {
               'apiGetRegisterChallengeProfileUpdatedNewsletterAll.json',
             ).then((responseUpdatedAll) => {
               // wait for register-challenge GET request
+              cy.get('@getRegisterChallenge.all').should('have.length', 1);
+              // check loaded data
               cy.waitForRegisterChallengeGetApi(responseRegisterChallenge);
-              // newsletter challenge is enabled
+              // UI shows newsletter challenge is enabled
               cy.dataCy('newsletter-feature-item').each(($item) => {
                 const dataId = $item.attr('data-id');
                 if (dataId === 'challenge') {
@@ -283,7 +285,7 @@ function coreTests() {
                     .should('have.class', 'q-toggle__inner--falsy');
                 }
               });
-              // follow newsletter mobility
+              // set newsletter mobility to enabled
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="mobility"]')
                 .find('.q-toggle__inner')
@@ -295,19 +297,22 @@ function coreTests() {
                 responseUpdated,
               );
               // wait for PUT request
+              cy.get('@putRegisterChallenge.all').should('have.length', 1);
+              // check sent data
               cy.fixture(
                 'apiPostRegisterChallengeNewsletterChallengeMobilityRequest.json',
               ).then((request) => {
                 cy.waitForRegisterChallengePutApi(request);
               });
               // wait for GET request
+              cy.get('@getRegisterChallenge.all').should('have.length', 2);
               cy.waitForRegisterChallengeGetApi(responseUpdated);
-              // verify button state changed
+              // verify that mobility state changed to enabled
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="mobility"]')
                 .find('.q-toggle__inner')
                 .should('have.class', 'q-toggle__inner--truthy');
-              // follow newsletter events
+              // set newsletter events to enabled
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="events"]')
                 .find('.q-toggle__inner')
@@ -319,14 +324,18 @@ function coreTests() {
                 responseUpdatedAll,
               );
               // wait for PUT request
+              cy.get('@putRegisterChallenge.all').should('have.length', 2);
+              // check sent data
               cy.fixture(
                 'apiPostRegisterChallengeNewsletterAllRequest.json',
               ).then((request) => {
                 cy.waitForRegisterChallengePutApi(request);
               });
               // wait for GET request
+              cy.get('@getRegisterChallenge.all').should('have.length', 3);
+              // check loaded data
               cy.waitForRegisterChallengeGetApi(responseUpdatedAll);
-              // verify button state changed
+              // verify that events state changed to enabled
               cy.dataCy('newsletter-feature-item')
                 .filter('[data-id="events"]')
                 .find('.q-toggle__inner')
