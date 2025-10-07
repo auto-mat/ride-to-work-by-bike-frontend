@@ -27,10 +27,11 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import PageHeading from '../components/global/PageHeading.vue';
 import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
 
+// utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
 
 // types
-import type { Logger } from '../types/Logger';
+import type { Logger } from '../components/types/Logger';
 
 export default defineComponent({
   name: 'CompanyCoordinatorPage',
@@ -40,7 +41,7 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const isCoordinatorEnabled = false;
+    const isCoordinatorEnabled = true;
 
     const urlRideToWorkByBikeOldFrontendDjangoApp = computed(() => {
       return getApiBaseUrlWithLang(
@@ -50,6 +51,7 @@ export default defineComponent({
         i18n,
       );
     });
+
     return {
       isCoordinatorEnabled,
       urlRideToWorkByBikeOldFrontendDjangoApp,

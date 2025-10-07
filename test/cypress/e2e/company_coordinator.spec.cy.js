@@ -52,7 +52,7 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it('displays company coordinator disabled text', () => {
+    it.skip('displays company coordinator disabled text', () => {
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
           // text
@@ -87,11 +87,11 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it.skip('displays coordinator tabs', () => {
+    it('displays coordinator tabs', () => {
       cy.dataCy(selectorTabs).should('be.visible');
     });
 
-    it.skip('allows navigation between tabs', () => {
+    it('allows navigation between tabs', () => {
       // check initial route
       cy.url().should('include', routesConf['coordinator_tasks'].path);
       // test navigation to each tab
@@ -128,7 +128,7 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it.skip('preserves tab state on page refresh', () => {
+    it('preserves tab state on page refresh', () => {
       // navigate to a specific tab
       cy.dataCy(selectorButtonAttendance).click();
       cy.url().should('include', routesConf['coordinator_attendance'].path);
@@ -138,7 +138,7 @@ describe('Company Coordinator Page', () => {
       cy.url().should('include', routesConf['coordinator_attendance'].path);
     });
 
-    it.skip('handles browser navigation', () => {
+    it('handles browser navigation', () => {
       // navigate through tabs
       cy.dataCy(selectorButtonFees).click();
       cy.dataCy(selectorButtonInvoices).click();
@@ -153,7 +153,7 @@ describe('Company Coordinator Page', () => {
       cy.url().should('include', routesConf['coordinator_invoices'].path);
     });
 
-    it.skip('renders TaskListComponent', () => {
+    it('renders TaskListComponent', () => {
       cy.dataCy(selectorTasksList).should('be.visible');
     });
   });
@@ -175,13 +175,13 @@ describe('Company Coordinator Page', () => {
       });
     });
 
-    it.skip('displays correctly on desktop', () => {
+    it('displays correctly on desktop', () => {
       cy.viewport('macbook-16');
       cy.dataCy(selectorPage).should('be.visible');
       cy.dataCy(selectorTabs).should('be.visible');
     });
 
-    it.skip('displays correctly on mobile', () => {
+    it('displays correctly on mobile', () => {
       cy.viewport('iphone-6');
       cy.dataCy(selectorPage).should('be.visible');
       cy.dataCy(selectorTabs).should('be.visible');
