@@ -3931,19 +3931,28 @@ describe('Register Challenge page', () => {
           .find('.q-stepper__step-content')
           .should('be.visible');
         // go to step 3
-        cy.dataCy('step-2-continue').click();
+        cy.dataCy('step-2-continue')
+          .should('be.visible')
+          .and('not.contain', 'q-spinner')
+          .click();
         // we are on step 3
         cy.dataCy('step-3')
           .find('.q-stepper__step-content')
           .should('be.visible');
         // go to step 4
-        cy.dataCy('step-3-continue').click();
+        cy.dataCy('step-3-continue')
+          .should('be.visible')
+          .and('not.contain', 'q-spinner')
+          .click();
         // we are on step 4
         cy.dataCy('step-4')
           .find('.q-stepper__step-content')
           .should('be.visible');
         // go to step 5
-        cy.dataCy('step-4-continue').click();
+        cy.dataCy('step-4-continue')
+          .should('be.visible')
+          .and('not.contain', 'q-spinner')
+          .click();
         // we are on step 5
         cy.dataCy('step-5')
           .find('.q-stepper__step-content')
@@ -3961,7 +3970,10 @@ describe('Register Challenge page', () => {
           .should('have.class', 'disabled')
           .and('contain', responseTeams.results[0].name);
         // click continue button
-        cy.dataCy('step-5-continue').click();
+        cy.dataCy('step-5-continue')
+          .should('be.visible')
+          .and('not.contain', 'q-spinner')
+          .click();
         // second teams request is to refresh availability
         cy.waitForTeamsGetApi();
         // wait for my_team GET API call
@@ -3993,19 +4005,28 @@ describe('Register Challenge page', () => {
                   .find('.q-stepper__step-content')
                   .should('be.visible');
                 // go to step 3
-                cy.dataCy('step-2-continue').click();
+                cy.dataCy('step-2-continue')
+                  .should('be.visible')
+                  .and('not.contain', 'q-spinner')
+                  .click();
                 // we are on step 3
                 cy.dataCy('step-3')
                   .find('.q-stepper__step-content')
                   .should('be.visible');
                 // go to step 4
-                cy.dataCy('step-3-continue').click();
+                cy.dataCy('step-3-continue')
+                  .should('be.visible')
+                  .and('not.contain', 'q-spinner')
+                  .click();
                 // we are on step 4
                 cy.dataCy('step-4')
                   .find('.q-stepper__step-content')
                   .should('be.visible');
                 // go to step 5
-                cy.dataCy('step-4-continue').click();
+                cy.dataCy('step-4-continue')
+                  .should('be.visible')
+                  .and('not.contain', 'q-spinner')
+                  .click();
                 // we are on step 5
                 cy.dataCy('step-5')
                   .find('.q-stepper__step-content')
@@ -4023,7 +4044,10 @@ describe('Register Challenge page', () => {
                   .should('have.class', 'disabled')
                   .and('contain', responseTeams.results[0].name);
                 // click continue button
-                cy.dataCy('step-5-continue').click();
+                cy.dataCy('step-5-continue')
+                  .should('be.visible')
+                  .and('not.contain', 'q-spinner')
+                  .click();
                 // second teams request is to refresh availability
                 cy.waitForTeamsGetApi();
                 // wait for my_team GET API call
