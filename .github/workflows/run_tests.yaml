@@ -41,7 +41,7 @@ jobs:
         shell: bash
 
       - name: Checkout app repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
@@ -176,7 +176,7 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           # Disabling shallow clone is recommended for improving relevancy of reporting
@@ -209,7 +209,7 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -251,7 +251,7 @@ jobs:
 
     steps:
       - name: Checkout k8 repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: auto-mat/k8s
           token: ${{ secrets.GH_PAT }}
