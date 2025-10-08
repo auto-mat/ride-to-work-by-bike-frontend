@@ -121,10 +121,15 @@
   dependencies:
     "@babel/types" "^7.28.4"
 
-"@babel/runtime@^7.12.5", "@babel/runtime@^7.26.7":
+"@babel/runtime@^7.12.5":
   version "7.27.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
   integrity sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==
+
+"@babel/runtime@^7.26.9":
+  version "7.28.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.4.tgz#a70226016fabe25c5783b2f22d3e1c9bc5ca3326"
+  integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
 
 "@babel/template@^7.27.2":
   version "7.27.2"
@@ -780,7 +785,7 @@
     "@types/geojson" "^7946.0.10"
     tslib "^2.8.1"
 
-"@turf/buffer@^7.0.0":
+"@turf/buffer@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@turf/buffer/-/buffer-7.2.0.tgz#781f3bbf9ff48279351502693a782683b690840b"
   integrity sha512-QH1FTr5Mk4z1kpQNztMD8XBOZfpOXPOtlsxaSAj2kDIf5+LquA6HtJjZrjUngnGtzG5+XwcfyRL4ImvLnFjm5Q==
@@ -813,7 +818,7 @@
     "@types/geojson" "^7946.0.10"
     tslib "^2.8.1"
 
-"@turf/helpers@^7.0.0", "@turf/helpers@^7.2.0":
+"@turf/helpers@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@turf/helpers/-/helpers-7.2.0.tgz#5771308108c98d608eb8e7f16dcd0eb3fb8a3417"
   integrity sha512-cXo7bKNZoa7aC7ydLmUR02oB3IgDe7MxiPuRz3cCtYQHn+BJ6h1tihmamYDWWUlPHgSNF0i3ATc4WmDECZafKw==
@@ -972,6 +977,11 @@
   integrity sha512-bJFoMATwIGaxxx8VJPeM8TonI8t579oRvgAuT8zFugJsJZgzqv0Fu8Mhp68iecjzG7cnN3mO2dJQ5uUM2EFrgQ==
   dependencies:
     undici-types "~6.21.0"
+
+"@types/pako@^2.0.3":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/pako/-/pako-2.0.4.tgz#c3575ef8125e176c345fa0e7b301c1db41170c15"
+  integrity sha512-VWDCbrLeVXJM9fihYodcLiIv0ku+AlOa/TQ1SvYOaBuyrSKgEcro95LJyIsJ4vSo6BXIxOKxiJAat04CmST9Fw==
 
 "@types/qs@*":
   version "6.9.17"
@@ -1501,11 +1511,6 @@ at-least-node@^1.0.0:
   resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-atob@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
-  integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
 autoprefixer@^10.4.2:
   version "10.4.21"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.4.21.tgz#77189468e7a8ad1d9a37fbc08efc9f480cf0a95d"
@@ -1664,11 +1669,6 @@ browserslist@^4.24.0, browserslist@^4.24.4:
     electron-to-chromium "^1.5.160"
     node-releases "^2.0.19"
     update-browserslist-db "^1.1.3"
-
-btoa@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/btoa/-/btoa-1.2.1.tgz#01a9909f8b2c93f6bf680ba26131eb30f7fa3d73"
-  integrity sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==
 
 buffer-crc32@^0.2.1, buffer-crc32@^0.2.13, buffer-crc32@~0.2.3:
   version "0.2.13"
@@ -2481,10 +2481,10 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dom-to-image-more@^3.3.1:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/dom-to-image-more/-/dom-to-image-more-3.6.0.tgz#76ec03b6e1adaf117c88c72090b2dd3dcfb6532b"
-  integrity sha512-0BB0M9gRRP7znKBNLRAvNyWnkDIzSgMSDcS7WdPDzPnWhW2YJqxUR/dCHiJ2HdCV3K2rVky5Vba8UF31mvrCuQ==
+dom-to-image-more@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/dom-to-image-more/-/dom-to-image-more-3.7.1.tgz#40badc7ac4e4d578e928ca7edbb8ec50e3958622"
+  integrity sha512-XajsuvCLnPVuYFsFOuGuTvFogMTZEQmYLlySPoDRNZWUk953CIoUTS2rqXpwyFjqDgi2fC+Wk9GSlL1UbAvfbw==
 
 dompurify@^3.2.4:
   version "3.2.6"
@@ -3271,6 +3271,15 @@ fast-levenshtein@^2.0.6:
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
 
+fast-png@^6.2.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/fast-png/-/fast-png-6.4.0.tgz#807fc353ccab060d09151b7d082786e02d8e92d6"
+  integrity sha512-kAqZq1TlgBjZcLr5mcN6NP5Rv4V2f22z00c3g8vRrwkcqjerx7BEhPbOnWCPqaHUl2XWQBJQvOT/FQhdMT7X/Q==
+  dependencies:
+    "@types/pako" "^2.0.3"
+    iobuffer "^5.3.2"
+    pako "^2.1.0"
+
 fast-uri@^3.0.1:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/fast-uri/-/fast-uri-3.0.3.tgz#892a1c91802d5d7860de728f18608a0573142241"
@@ -3524,11 +3533,6 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
-
-geographiclib-geodesic@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/geographiclib-geodesic/-/geographiclib-geodesic-2.1.1.tgz#5f9c02f2e0db5403055ba637f76d9e58b2215863"
-  integrity sha512-lkd8EUkPSByobWu9BPMHTdYA5AUZxOa8McmUNtBE9KrvUJEvSADnN6gTDmhXbi6NzdA16LtWLpSxLE/lIIRhyA==
 
 geotiff@^2.1.3:
   version "2.1.3"
@@ -3959,6 +3963,11 @@ inquirer@^8.2.1:
     through "^2.3.6"
     wrap-ansi "^6.0.1"
 
+iobuffer@^5.3.2:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/iobuffer/-/iobuffer-5.4.0.tgz#f85dff957fd0579257472f0a4cfe5ed3430e63e1"
+  integrity sha512-DRebOWuqDvxunfkNJAlc3IzWIPD5xVxwUNbHr7xKB8E6aLJxIPfNX3CoMJghcFjpv6RWQsrcJbghtEwSPoJqMA==
+
 ipaddr.js@1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
@@ -4331,14 +4340,13 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jspdf@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/jspdf/-/jspdf-3.0.1.tgz#d81e1964f354f60412516eb2449ea2cccd4d2a3b"
-  integrity sha512-qaGIxqxetdoNnFQQXxTKUD9/Z7AloLaw94fFsOiJMxbfYdBbrBuhWmbzI8TVjrw7s3jBY1PFHofBKMV/wZPapg==
+jspdf@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/jspdf/-/jspdf-3.0.3.tgz#346595a43781bfe01c9dcc7bd1993b453436be30"
+  integrity sha512-eURjAyz5iX1H8BOYAfzvdPfIKK53V7mCpBTe7Kb16PaM8JSXEcUQNBQaiWMI8wY5RvNOPj4GccMjTlfwRBd+oQ==
   dependencies:
-    "@babel/runtime" "^7.26.7"
-    atob "^2.1.2"
-    btoa "^1.2.1"
+    "@babel/runtime" "^7.26.9"
+    fast-png "^6.2.0"
     fflate "^0.8.1"
   optionalDependencies:
     canvg "^3.0.11"
@@ -4958,19 +4966,19 @@ ohash@^2.0.11:
   resolved "https://registry.yarnpkg.com/ohash/-/ohash-2.0.11.tgz#60b11e8cff62ca9dee88d13747a5baa145f5900b"
   integrity sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ==
 
-ol-contextmenu@^5.4.0, ol-contextmenu@^5.5.0:
+ol-contextmenu@^5.5.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/ol-contextmenu/-/ol-contextmenu-5.5.0.tgz#277b097b79ce78e52ef9332b62f3cf7c4971da42"
   integrity sha512-IglB0OfzSmcP++dykqrQU62lJAn/4O61hxyD0s5V03HE70Efm6EgSaNq8YOlgEbnqfUL+7F3fS7VI3UV+0+NZg==
   dependencies:
     tiny-emitter "^2.1.0"
 
-ol-ext@^4.0.21, ol-ext@^4.0.24:
+ol-ext@^4.0.24, ol-ext@^4.0.34:
   version "4.0.35"
   resolved "https://registry.yarnpkg.com/ol-ext/-/ol-ext-4.0.35.tgz#85f74d31529e91d0eaf1ebd92b5756a8a76161f4"
   integrity sha512-S0lG0K1q9Tx7jzNlSMJhX6+iNTXK3/D9xwwBS2uiM50ZJu9Q1U+wis9Y6YhvPM8gT4ICx40kyRXPPIvZtyo5WQ==
 
-ol@^10.0.0, ol@^10.2.1:
+ol@^10.2.1, ol@^10.6.0:
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/ol/-/ol-10.6.1.tgz#950f3914b4eec978f087b36aa74ce1e18c41ab09"
   integrity sha512-xp174YOwPeLj7c7/8TCIEHQ4d41tgTDDhdv6SqNdySsql5/MaFJEJkjlsYcvOPt7xA6vrum/QG4UdJ0iCGT1cg==
@@ -5134,7 +5142,7 @@ package-json-from-dist@^1.0.0:
   resolved "https://registry.yarnpkg.com/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz#4f1471a010827a86f94cfd9b0727e36d267de505"
   integrity sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==
 
-pako@^2.0.4:
+pako@^2.0.4, pako@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/pako/-/pako-2.1.0.tgz#266cc37f98c7d883545d11335c00fbd4062c9a86"
   integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
@@ -5425,12 +5433,11 @@ process@^0.11.10:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
 
-proj4@^2.11.0:
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/proj4/-/proj4-2.17.0.tgz#cf196487829e463656607a7d3118ab51d838684b"
-  integrity sha512-BqVoruVAOUgkw5U9Ns76+E2nHZG0Y42tbkC+0BpyqjhwPIai29hoivyQoyelEKFSfaV3zkR3NqPRD0EwPM4Wug==
+proj4@^2.19.10:
+  version "2.19.10"
+  resolved "https://registry.yarnpkg.com/proj4/-/proj4-2.19.10.tgz#ca2a51627d4dfa20f68f3babed3380f8ef626262"
+  integrity sha512-uL6/C6kA8+ncJAEDmUeV8PmNJcTlRLDZZa4/87CzRpb8My4p+Ame4LhC4G3H/77z2icVqcu3nNL9h5buSdnY+g==
   dependencies:
-    geographiclib-geodesic "^2.1.1"
     mgrs "1.0.0"
     wkt-parser "^1.5.1"
 
@@ -6715,23 +6722,23 @@ vue3-google-login@^2.0.33:
   resolved "https://registry.yarnpkg.com/vue3-google-login/-/vue3-google-login-2.0.34.tgz#b51ac66d4c3559051c5ef3dd42772e5718d59744"
   integrity sha512-YLEYcv8eKzA7BLsTciDogvxXxyJga4879HkmvWjYsm1t0mJ0Vx5A1EWKMx0YCtMQ2VwQJGy3F8aOw6zO+KkUhA==
 
-vue3-openlayers@^11.0.0:
-  version "11.6.2"
-  resolved "https://registry.yarnpkg.com/vue3-openlayers/-/vue3-openlayers-11.6.2.tgz#dc1b0d622576e04ca18f7e88d162987796988a87"
-  integrity sha512-Wml8Hijlpq5ihFoboEKSvoQziIH5oTkAUbMz5NpGd1nbXIJk1zz5QXmd53xmLyXe4s/cItfr4rjb24jSalCc5w==
+vue3-openlayers@^12.0.0:
+  version "12.1.1"
+  resolved "https://registry.yarnpkg.com/vue3-openlayers/-/vue3-openlayers-12.1.1.tgz#c06ac0b55ac86a48751d39c936d25f262375d3e6"
+  integrity sha512-XyfhRGBmbItWGUxApEEKNJIwhe3VA9PWQZ2jDpz67hxfixDS1U0vJPQMnNPtDXuGDPUu2B9RmUgHJZvi/tIRTQ==
   dependencies:
-    "@turf/buffer" "^7.0.0"
-    "@turf/helpers" "^7.0.0"
-    dom-to-image-more "^3.3.1"
+    "@turf/buffer" "^7.2.0"
+    "@turf/helpers" "^7.2.0"
+    dom-to-image-more "^3.7.1"
     file-saver "^2.0.5"
-    jspdf "^3.0.1"
-    ol "^10.0.0"
-    ol-contextmenu "^5.4.0"
-    ol-ext "^4.0.21"
-    proj4 "^2.11.0"
-    vue "^3.4.35"
+    jspdf "^3.0.2"
+    ol "^10.6.0"
+    ol-contextmenu "^5.5.0"
+    ol-ext "^4.0.34"
+    proj4 "^2.19.10"
+    vue "^3.5.0"
 
-vue@^3.0.0, vue@^3.4.35:
+vue@^3.0.0, vue@^3.5.0:
   version "3.5.22"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.22.tgz#2b8ddb94ee4b640ef12fe7f6efe1cf16f3b582e7"
   integrity sha512-toaZjQ3a/G/mYaLSbV+QsQhIdMo9x5rrqIpYRObsJ6T/J+RyCSFwN2LHNVH9v8uIcljDNa3QzPVdv3Y6b9hAJQ==
