@@ -6,6 +6,7 @@
  * Note: Used on `CompanyCoordinatorPage`.
  *
  * @components
+ * - `TabCoordinatorAttendance`: Component to render attendance data.
  * - `TaskListCoordinator`: Component to render a list of tasks.
  *
  * @example
@@ -16,6 +17,7 @@
 import { defineComponent, ref } from 'vue';
 
 // components
+import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
@@ -35,6 +37,7 @@ enum tabsCoordinator {
 export default defineComponent({
   name: 'CoordinatorTabs',
   components: {
+    TabCoordinatorAttendance,
     TaskListCoordinator,
   },
   setup() {
@@ -142,7 +145,7 @@ export default defineComponent({
         :name="tabsCoordinator.attendance"
         data-cy="coordinator-tabs-panel-attendance"
       >
-        <!-- TODO: add content -->
+        <tab-coordinator-attendance data-cy="tab-coordinator-attendance" />
       </q-tab-panel>
       <!-- Panel: Challenges -->
       <q-tab-panel
