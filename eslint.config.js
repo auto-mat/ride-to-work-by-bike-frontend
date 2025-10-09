@@ -90,6 +90,9 @@ export default defineConfigWithVueTs(
       // does not work with type definitions
       'no-unused-vars': 'off',
 
+      // disable no-require-imports (needed in auto-compiled create_component_file script)
+      '@typescript-eslint/no-require-imports': 'off',
+
       // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     },
