@@ -58,7 +58,7 @@ export default defineConfigWithVueTs(
   //     ],
   //   }
   // },
-  vueTsConfigs.recommendedTypeChecked,
+  vueTsConfigs.recommended,
 
   {
     languageOptions: {
