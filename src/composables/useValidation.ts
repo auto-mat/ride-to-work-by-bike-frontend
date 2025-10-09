@@ -40,7 +40,7 @@ export const useValidation = () => {
      * Matches a generic format of a phone number with allowed delimiters.
      * https://stackoverflow.com/a/20349730
      */
-    const regex = /^(\+|00)?[1-9][0-9 \-\(\)\.]{7,32}$/;
+    const regex = /^(\+|00)?[1-9][0-9 \-().]{7,32}$/;
     return regex.test(value);
   };
 
