@@ -88,6 +88,9 @@ module.exports = configure(function (ctx) {
         // Fix dynamic module import error during Cypress component tests on the OS MS Windows
         viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
         viteConf.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
+        // Fix dynamic import for SVG files which breaks tests
+        viteConf.build = viteConf.build || {}
+        viteConf.build.assetsInlineLimit = 0
       },
 
       viteVuePluginOptions: {
