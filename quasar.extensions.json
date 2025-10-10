@@ -3,7 +3,8 @@
     "harnesses": []
   },
   "@quasar/testing-e2e-cypress": {
-    "options": ["scripts"]
+    "port": 8080,
+    "options": []
   },
   "@quasar/qcalendar": {}
 }

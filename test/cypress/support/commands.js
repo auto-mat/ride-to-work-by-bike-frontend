@@ -1,5 +1,5 @@
 // ***********************************************
-// This example commands.js shows you how to
+// This example commands.ts shows you how to
 // create various custom commands and overwrite
 // existing commands.
 //
@@ -21,7 +21,7 @@
 // Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
 //
 //
-// -- This is will overwrite an existing command --
+// -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 // DO NOT REMOVE
