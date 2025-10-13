@@ -18,6 +18,7 @@ export interface AdminTeamMember {
   payment_type: string;
   payment_category: PaymentCategory;
   payment_amount: string;
+  discount_coupon: string;
   user_profile_id: number;
 }
 
