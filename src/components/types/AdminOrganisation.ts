@@ -4,10 +4,6 @@ import { PaymentState } from '../enums/Payment';
 import { TeamMemberStatus } from '../enums/TeamMember';
 import { PaymentCategory } from './ApiPayu';
 
-/**
- * Admin Team Member interface
- * Represents a team member as seen in the admin organization view
- */
 export interface AdminTeamMember {
   id: number;
   name: string;
@@ -25,10 +21,6 @@ export interface AdminTeamMember {
   user_profile_id: number;
 }
 
-/**
- * Admin Team interface
- * Represents a team with separated paid/unpaid members
- */
 export interface AdminTeam {
   id: number;
   name: string;
@@ -37,10 +29,6 @@ export interface AdminTeam {
   members_with_paid_entry_fee: AdminTeamMember[];
 }
 
-/**
- * Admin Subsidiary interface
- * Represents a subsidiary with its teams
- */
 export interface AdminSubsidiary {
   id: number;
   street: string;
@@ -50,10 +38,6 @@ export interface AdminSubsidiary {
   teams: AdminTeam[];
 }
 
-/**
- * Admin Organisation interface
- * Represents an organization with all its subsidiaries and nested data
- */
 export interface AdminOrganisation {
   name: string;
   psc: number;
@@ -67,10 +51,6 @@ export interface AdminOrganisation {
   subsidiaries: AdminSubsidiary[];
 }
 
-/**
- * Admin Organisation API Response interface
- * Standard paginated response wrapper for admin organization data
- */
 export interface GetAdminOrganisationResponse {
   count: number;
   next: string | null;
