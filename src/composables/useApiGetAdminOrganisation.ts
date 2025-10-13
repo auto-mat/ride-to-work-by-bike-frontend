@@ -64,10 +64,7 @@ export const useApiGetAdminOrganisation = (
       await loginStore.getAccessTokenWithRefresh();
 
     // prepare headers with version
-    const headers = Object.assign(
-      requestDefaultHeader(rideToWorkByBikeConfig.apiVersion2),
-      requestTokenHeader_,
-    );
+    const headers = Object.assign(requestDefaultHeader(), requestTokenHeader_);
 
     // fetch admin organisations
     const { data } = await apiFetch<GetAdminOrganisationResponse>({
