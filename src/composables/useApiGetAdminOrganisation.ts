@@ -29,7 +29,7 @@ type UseApiGetAdminOrganisationReturn = {
 /**
  * Get admin organisation composable
  * Used to enable calling the API to get organizations for admin view
- * @param logger - Logger
+ * @param {Logger | null} logger - Logger
  * @returns {UseApiGetAdminOrganisationReturn}
  */
 export const useApiGetAdminOrganisation = (

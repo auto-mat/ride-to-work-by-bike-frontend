@@ -15,7 +15,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 import { i18n } from '../boot/i18n';
 import { defaultLocale } from '../i18n/def_locale';
@@ -26,6 +26,9 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 // components
 import PageHeading from '../components/global/PageHeading.vue';
 import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
+
+// stores
+import { useAdminOrganisationStore } from '../stores/adminOrganisation';
 
 // utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
@@ -42,6 +45,7 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const isCoordinatorEnabled = true;
+    const adminOrganisationStore = useAdminOrganisationStore();
 
     const urlRideToWorkByBikeOldFrontendDjangoApp = computed(() => {
       return getApiBaseUrlWithLang(
@@ -50,6 +54,12 @@ export default defineComponent({
         defaultLocale,
         i18n,
       );
+    });
+
+    onMounted(async () => {
+      if (adminOrganisationStore.getAdminOrganisations.length === 0) {
+        await adminOrganisationStore.loadAdminOrganisations();
+      }
     });
 
     return {
