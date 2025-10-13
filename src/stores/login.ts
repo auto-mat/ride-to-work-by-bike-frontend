@@ -16,6 +16,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { routesConf } from '../router/routes_conf';
 
 // stores
+import { useAdminOrganisationStore } from './adminOrganisation';
 import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
 import { useFeedStore } from './feed';
@@ -374,6 +375,9 @@ export const useLoginStore = defineStore('login', {
       // clear results store
       const resultsStore = useResultsStore();
       resultsStore.clearStore();
+      // clear admin organisation store
+      const adminOrganisationStore = useAdminOrganisationStore();
+      adminOrganisationStore.clearStore();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(
