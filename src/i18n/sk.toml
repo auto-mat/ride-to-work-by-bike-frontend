@@ -85,6 +85,11 @@ apiMessageError = "Odstránenie účtu Strava sa nepodarilo."
 apiMessageErrorWithMessage = "Odstránenie účtu Strava sa nepodarilo. Error: {error}"
 apiMessageSuccess = "Účet používateľa Strava {account} bol úspešne odstránený."
 
+[getAdminOrganisations]
+apiMessageError = "Načítanie údajov organizácie zlyhalo."
+apiMessageErrorWithMessage = "Načítanie údajov organizácie zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Údaje organizácie boli úspešne načítané."
+
 [getCampaign]
 apiMessageError = "Načítanie fáz výzvy zlyhalo."
 apiMessageErrorWithMessage = "Načítanie fáz výzvy zlyhalo. Chyba: {error}"

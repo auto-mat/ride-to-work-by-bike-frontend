@@ -85,6 +85,11 @@ apiMessageError = "Deleting the Strava account failed."
 apiMessageErrorWithMessage = "Deleting the Strava account failed. Error: {error}"
 apiMessageSuccess = "The Strava user account {account} was successfully deleted."
 
+[getAdminOrganisations]
+apiMessageError = "Loading organization data failed."
+apiMessageErrorWithMessage = "Loading organization data failed. Error: {error}"
+apiMessageSuccess = "Organization data loaded successfully."
+
 [getCampaign]
 apiMessageError = "Fetching campaign failed."
 apiMessageErrorWithMessage = "Fetching campaign failed. Error: {error}"

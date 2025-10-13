@@ -85,6 +85,11 @@ apiMessageError = "Odstranění účtu aplikace Strava selhalo."
 apiMessageErrorWithMessage = "Odstranění účtu aplikace Strava selhalo. Chyba: {error}"
 apiMessageSuccess = "Uživatelský účet aplikace Strava {account} byl úspěšně odstraněn."
 
+[getAdminOrganisations]
+apiMessageError = "Načítání dat organizace selhalo."
+apiMessageErrorWithMessage = "Načítání dat organizace selhalo. Chyba: {error}"
+apiMessageSuccess = "Data organizace byla úspěšně načtena."
+
 [getCampaign]
 apiMessageError = "Načítání fází výzvy selhalo."
 apiMessageErrorWithMessage = "Načítání fází výzvy selhalo. Chyba: {error}"
