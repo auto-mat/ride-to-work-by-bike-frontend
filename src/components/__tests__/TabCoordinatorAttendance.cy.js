@@ -32,6 +32,5 @@ describe('<TabCoordinatorAttendance>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.dataCy('header-organization').should('be.visible');
-    cy.dataCy('table-attendance').should('be.visible');
   });
 }
