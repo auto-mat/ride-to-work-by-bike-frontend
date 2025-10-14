@@ -44,7 +44,7 @@ export interface AdminOrganisation {
   name: string;
   psc: number;
   street: string;
-  street_number: string;
+  street_number: number;
   recipient: string;
   city: string;
   ico: number;
