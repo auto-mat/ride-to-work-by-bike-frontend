@@ -15,17 +15,11 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 
 // components
 import HeaderOrganization from './HeaderOrganization.vue';
 import TableAttendance from './TableAttendance.vue';
-
-// stores
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
-
-// types
-import type { Organization } from '../types/Organization';
 
 export default defineComponent({
   name: 'TabCoordinatorAttendance',
@@ -34,48 +28,14 @@ export default defineComponent({
     TableAttendance,
   },
   setup() {
-    const registerChallengeStore = useRegisterChallengeStore();
-
-    const organizationName = computed((): string => {
-      const org = registerChallengeStore.getOrganizations.find(
-        (organization) =>
-          organization.id === registerChallengeStore.getOrganizationId,
-      );
-      if (org) {
-        return org.name;
-      }
-      return '';
-    });
-
-    // TODO: Load dynamic data
-    const organization = computed((): Organization => {
-      return {
-        address: undefined,
-        description: undefined,
-        id: 123,
-        identificationNumber: '87654321',
-        organizationType: registerChallengeStore.getOrganizationType,
-        title: organizationName.value,
-        subsidiaries: [
-          {
-            id: 123,
-            teams: [],
-            title: 'Test',
-          },
-        ],
-      };
-    });
-
-    return {
-      organization,
-    };
+    return {};
   },
 });
 </script>
 
 <template>
   <div>
-    <header-organization :organization="organization" class="q-mt-sm" />
+    <header-organization class="q-mt-sm" />
     <table-attendance class="q-mt-xl" />
   </div>
 </template>

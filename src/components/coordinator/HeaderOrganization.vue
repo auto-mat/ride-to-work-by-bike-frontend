@@ -6,10 +6,6 @@
  * organization.
  * Note: This component is commonly used on `CompanyCoordinatorPage`.
  *
- * @props
- * - `organization` (Organization, required): The object representing an
- * organization. It should be of type `Organization`.
- *
  * @emits
  * - `export`: Emitted when the user clicks on the export button.
  *   It should have no payload and be handled in the parent component.
@@ -23,34 +19,64 @@
 // libraries
 import { computed, defineComponent } from 'vue';
 
+// stores
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+
 // types
-import type { Organization } from '../types/Organization';
+import type { AdminSubsidiary } from '../types/AdminOrganisation';
 
 export default defineComponent({
   name: 'HeaderOrganization',
-  props: {
-    organization: {
-      type: Object as () => Organization,
-      required: true,
-    },
-  },
   emits: ['export'],
-  setup(props) {
-    const subsidiariesCount = computed((): number => {
-      return props.organization?.subsidiaries?.length
-        ? props.organization.subsidiaries.length
-        : 0;
+  setup() {
+    const adminOrganisationStore = useAdminOrganisationStore();
+
+    const organizationTitle = computed((): string => {
+      return adminOrganisationStore.getCurrentAdminOrganisation?.name ?? '';
     });
 
-    const countMembers = computed((): number => {
-      return props.organization?.members?.length
-        ? props.organization.members.length
-        : 0;
+    const organizationId = computed((): number => {
+      return adminOrganisationStore.getCurrentAdminOrganisation?.ico ?? 0;
+    });
+
+    const subsidiaries = computed((): AdminSubsidiary[] => {
+      return (
+        adminOrganisationStore.getCurrentAdminOrganisation?.subsidiaries ?? []
+      );
+    });
+
+    const subsidiariesCount = computed((): number => {
+      return subsidiaries.value.length;
+    });
+
+    /**
+     * Count members of all teams in all subsidiaries
+     * @returns {number} - The number of members
+     */
+    const membersCount = computed((): number => {
+      if (!subsidiaries.value.length) {
+        return 0;
+      }
+      return subsidiaries.value.reduce((totalMembers, subsidiary): number => {
+        const subsidiaryMembers = subsidiary.teams.reduce(
+          (teamTotal, team): number => {
+            const teamMemberCount =
+              team.members_without_paid_entry_fee_by_org_coord.length +
+              team.members_with_paid_entry_fee_by_org_coord.length +
+              team.other_members.length;
+            return teamTotal + teamMemberCount;
+          },
+          0,
+        );
+        return totalMembers + subsidiaryMembers;
+      }, 0);
     });
 
     return {
+      organizationId,
+      organizationTitle,
       subsidiariesCount,
-      countMembers,
+      membersCount,
     };
   },
 });
@@ -60,20 +86,9 @@ export default defineComponent({
   <div class="row q-col-gutter-y-md items-center" data-cy="header-organization">
     <!-- Organization data -->
     <div class="col-12 col-sm row q-col-gutter-x-md">
-      <div class="col-auto">
+      <div class="col-auto q-mr-md">
         <q-avatar square size="96px" data-cy="header-organization-image">
-          <!-- Image -->
-          <q-img
-            v-if="organization.image"
-            :src="organization.image.src"
-            ratio="1"
-            width="96"
-            height="96"
-            :alt="organization.image.alt"
-          />
-          <!-- Fallback: Icon -->
           <q-icon
-            v-else
             color="secondary"
             name="svguse:icons/drawer_menu/icons.svg#lucide-building"
             size="96px"
@@ -88,17 +103,14 @@ export default defineComponent({
             class="text-h5 text-weight-bold q-my-none"
             data-cy="header-organization-title"
           >
-            {{ organization.title }}
+            {{ organizationTitle }}
           </h3>
           <!-- Metadata -->
           <div class="row text-subtitle2 q-col-gutter-x-lg q-mt-xs">
             <!-- Organization ID -->
-            <div
-              v-if="organization.identificationNumber"
-              class="col-auto q-py-sm"
-            >
+            <div v-if="organizationId" class="col-auto q-py-sm">
               {{ $t('coordinator.labelOrganizationId') }}:
-              {{ organization.identificationNumber }}
+              {{ organizationId }}
             </div>
             <!-- Branch -->
             <q-chip
@@ -112,13 +124,13 @@ export default defineComponent({
             </q-chip>
             <!-- Members -->
             <q-chip
-              v-if="countMembers"
+              v-if="membersCount"
               color="transparent"
               icon="mdi-account"
               data-cy="header-organization-member-count"
             >
-              {{ countMembers }}
-              {{ $t('coordinator.labelMembers', countMembers) }}
+              {{ membersCount }}
+              {{ $t('coordinator.labelMembers', membersCount) }}
             </q-chip>
           </div>
         </div>
