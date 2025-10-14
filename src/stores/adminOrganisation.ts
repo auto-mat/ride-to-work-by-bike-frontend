@@ -24,6 +24,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
   getters: {
     getAdminOrganisations: (state) => state.adminOrganisations,
     getIsLoading: (state) => state.isLoading,
+    getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
   },
 
   actions: {
