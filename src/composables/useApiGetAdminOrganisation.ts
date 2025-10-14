@@ -68,7 +68,8 @@ export const useApiGetAdminOrganisation = (
 
     // fetch admin organisations
     const { data } = await apiFetch<GetAdminOrganisationResponse>({
-      endpoint: rideToWorkByBikeConfig.urlApiOrganizationAdminOrganization,
+      endpoint:
+        rideToWorkByBikeConfig.urlApiOrganizationAdminOrganizationStructure,
       method: 'get',
       translationKey: 'getAdminOrganisations',
       showSuccessMessage: false,
