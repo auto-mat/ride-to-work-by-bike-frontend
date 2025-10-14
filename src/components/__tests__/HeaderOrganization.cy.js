@@ -1,6 +1,10 @@
 import { colors } from 'quasar';
+import { computed } from 'vue';
+import { createPinia, setActivePinia } from 'pinia';
 import HeaderOrganization from 'components/coordinator/HeaderOrganization.vue';
 import { i18n } from '../../boot/i18n';
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 
 const { getPaletteColor } = colors;
 const secondary = getPaletteColor('secondary');
@@ -12,132 +16,69 @@ describe('<HeaderOrganization>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.fixture('headerOrganization').then((data) => {
-        cy.wrap(data.default).as('organization');
-        cy.mount(HeaderOrganization, {
-          props: {
-            organization: data.default,
-          },
+      setActivePinia(createPinia());
+      cy.mount(HeaderOrganization);
+      cy.viewport('macbook-16');
+    });
+
+    testData.forEach((test) => {
+      it(test.description, () => {
+        // initiate store state
+        cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+          const adminOrganisations = computed(
+            () => adminOrganisationStore.getAdminOrganisations,
+          );
+          adminOrganisationStore.setAdminOrganisations(test.storeData);
+          cy.wrap(adminOrganisations)
+            .its('value')
+            .should('deep.equal', test.storeData);
         });
-        cy.viewport('macbook-16');
+        // test elements layout
+        cy.testElementsSideBySide(
+          'header-organization-branch-count',
+          'header-organization-member-count',
+        );
+        // test icon
+        cy.dataCy('header-organization-image-icon').should('be.visible');
+        cy.dataCy('header-organization-image-icon').should(
+          'have.color',
+          secondary,
+        );
+        // test organization data
+        cy.dataCy('header-organization').should('be.visible');
+        cy.dataCy('header-organization-title')
+          .should('be.visible')
+          .and('contain', test.displayData.organizationTitle);
+        // test subsidiaries count
+        cy.dataCy('header-organization-branch-count')
+          .should('be.visible')
+          .and('contain', test.displayData.subsidiariesCount)
+          .and(
+            'contain',
+            i18n.global.t(
+              'coordinator.labelBranches',
+              test.displayData.subsidiariesCount,
+            ),
+          );
+        // test members count
+        cy.dataCy('header-organization-member-count')
+          .should('be.visible')
+          .and('contain', test.displayData.membersCount)
+          .and(
+            'contain',
+            i18n.global.t(
+              'coordinator.labelMembers',
+              test.displayData.membersCount,
+            ),
+          );
+        // test export button
+        cy.dataCy('header-organization-button-export')
+          .should('be.visible')
+          .and('contain', i18n.global.t('coordinator.buttonExportMembers'));
+        cy.dataCy('header-organization-button-export')
+          .find('i')
+          .should('have.class', 'mdi-download');
       });
-    });
-
-    coreTests();
-    imageTests();
-
-    it('renders organization data in a row', () => {
-      cy.testElementsSideBySide(
-        'header-organization-branch-count',
-        'header-organization-member-count',
-      );
-    });
-  });
-
-  context('mobile', () => {
-    beforeEach(() => {
-      cy.fixture('headerOrganization').then((data) => {
-        cy.wrap(data.default).as('organization');
-        cy.mount(HeaderOrganization, {
-          props: {
-            organization: data.default,
-          },
-        });
-        cy.viewport('iphone-6');
-      });
-    });
-
-    coreTests();
-    imageTests();
-  });
-
-  context('no image', () => {
-    beforeEach(() => {
-      cy.fixture('headerOrganization').then((data) => {
-        cy.wrap(data.noImage).as('organization');
-        cy.mount(HeaderOrganization, {
-          props: {
-            organization: data.noImage,
-          },
-        });
-        cy.viewport('macbook-16');
-      });
-    });
-
-    coreTests();
-
-    it('renders fallback icon', () => {
-      cy.dataCy('header-organization-image-icon').should('be.visible');
-      cy.dataCy('header-organization-image-icon').should(
-        'have.color',
-        secondary,
-      );
     });
   });
 });
-
-function coreTests() {
-  it('renders component', () => {
-    cy.dataCy('header-organization').should('be.visible');
-  });
-
-  it('renders title', () => {
-    cy.get('@organization').then((organization) => {
-      cy.dataCy('header-organization-title')
-        .should('be.visible')
-        .and('contain', organization.title);
-    });
-  });
-
-  it('renders branch count', () => {
-    cy.get('@organization').then((organization) => {
-      cy.dataCy('header-organization-branch-count')
-        .should('be.visible')
-        .and('contain', organization.subsidiaries.length)
-        .and(
-          'contain',
-          i18n.global.t(
-            'coordinator.labelBranches',
-            organization.subsidiaries.length,
-          ),
-        );
-    });
-  });
-
-  it('renders member count', () => {
-    cy.get('@organization').then((organization) => {
-      cy.dataCy('header-organization-member-count')
-        .should('be.visible')
-        .and('contain', organization.members.length)
-        .and(
-          'contain',
-          i18n.global.t(
-            'coordinator.labelMembers',
-            organization.members.length,
-          ),
-        );
-    });
-  });
-
-  it('renders export button', () => {
-    cy.dataCy('header-organization-button-export')
-      .should('be.visible')
-      .and('contain', i18n.global.t('coordinator.buttonExportMembers'));
-    cy.dataCy('header-organization-button-export')
-      .find('i')
-      .should('have.class', 'mdi-download');
-  });
-}
-
-function imageTests() {
-  it('renders image', () => {
-    cy.get('@organization').then((organization) => {
-      cy.dataCy('header-organization-image').should('be.visible');
-      cy.testImageSrcAlt(
-        'header-organization-image',
-        organization.image.src,
-        organization.image.alt,
-      );
-    });
-  });
-}

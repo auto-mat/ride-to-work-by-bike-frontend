@@ -23,7 +23,10 @@ import { computed, defineComponent } from 'vue';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // types
-import type { AdminSubsidiary } from '../types/AdminOrganisation';
+import type {
+  AdminOrganisation,
+  AdminSubsidiary,
+} from '../types/AdminOrganisation';
 
 export default defineComponent({
   name: 'HeaderOrganization',
@@ -31,18 +34,20 @@ export default defineComponent({
   setup() {
     const adminOrganisationStore = useAdminOrganisationStore();
 
+    const currentAdminOrganisation = computed((): AdminOrganisation => {
+      return adminOrganisationStore.getCurrentAdminOrganisation ?? {};
+    });
+
     const organizationTitle = computed((): string => {
-      return adminOrganisationStore.getCurrentAdminOrganisation?.name ?? '';
+      return currentAdminOrganisation.value.name ?? '';
     });
 
     const organizationId = computed((): number => {
-      return adminOrganisationStore.getCurrentAdminOrganisation?.ico ?? 0;
+      return currentAdminOrganisation.value.ico ?? 0;
     });
 
     const subsidiaries = computed((): AdminSubsidiary[] => {
-      return (
-        adminOrganisationStore.getCurrentAdminOrganisation?.subsidiaries ?? []
-      );
+      return currentAdminOrganisation.value.subsidiaries ?? [];
     });
 
     const subsidiariesCount = computed((): number => {
@@ -114,7 +119,6 @@ export default defineComponent({
             </div>
             <!-- Branch -->
             <q-chip
-              v-if="subsidiariesCount"
               color="transparent"
               icon="mdi-office-building"
               data-cy="header-organization-branch-count"
@@ -124,7 +128,6 @@ export default defineComponent({
             </q-chip>
             <!-- Members -->
             <q-chip
-              v-if="membersCount"
               color="transparent"
               icon="mdi-account"
               data-cy="header-organization-member-count"

@@ -1,0 +1,458 @@
+[
+  {
+    "description": "display data for organization with 1 subsidiary, multiple teams, and mixed members",
+    "storeData": [
+      {
+        "name": "Stavební firma Černý a synové s.r.o.",
+        "psc": 11000,
+        "street": "Hlavní",
+        "street_number": 123,
+        "recipient": "Stavební firma Černý a synové s.r.o.",
+        "city": "Praha",
+        "ico": 12345678,
+        "dic": "CZ12345678",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 1001,
+            "psc": 11000,
+            "street": "Hlavní",
+            "street_number": 123,
+            "city": "Praha",
+            "icon_url": null,
+            "teams": [
+              {
+                "id": 2001,
+                "name": "Projektanti",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 10001,
+                    "name": "Jan Novák",
+                    "nickname": "jnovak",
+                    "date_of_challenge_registration": "2025-01-15T10:30:00.000000",
+                    "email": "jan.novak@cerny.cz",
+                    "telephone": "123456789",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "waiting",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 50001
+                  },
+                  {
+                    "id": 10002,
+                    "name": "Petra Svobodová",
+                    "nickname": null,
+                    "date_of_challenge_registration": "2025-01-16T09:15:00.000000",
+                    "email": "petra.svobodova@cerny.cz",
+                    "telephone": "123456790",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "waiting",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 50002
+                  }
+                ],
+                "members_with_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 10003,
+                    "name": "Martin Dvořák",
+                    "nickname": "mdvorak",
+                    "date_of_challenge_registration": "2025-01-10T14:20:00.000000",
+                    "email": "martin.dvorak@cerny.cz",
+                    "telephone": "123456791",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 50003
+                  }
+                ],
+                "other_members": [
+                  {
+                    "id": 10004,
+                    "name": "Alena Procházková",
+                    "nickname": "aprochazka",
+                    "date_of_challenge_registration": "2024-12-20T11:00:00.000000",
+                    "email": "alena.prochazkova@cerny.cz",
+                    "telephone": "123456792",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "None",
+                    "payment_category": "None",
+                    "payment_amount": "0",
+                    "discount_coupon": "DISC-001",
+                    "user_profile_id": 50004
+                  },
+                  {
+                    "id": 10005,
+                    "name": "Tomáš Kučera",
+                    "nickname": null,
+                    "date_of_challenge_registration": "2024-12-22T13:45:00.000000",
+                    "email": "tomas.kucera@cerny.cz",
+                    "telephone": "123456793",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "none",
+                    "payment_type": "None",
+                    "payment_category": "None",
+                    "payment_amount": "None",
+                    "discount_coupon": "",
+                    "user_profile_id": 50005
+                  }
+                ]
+              },
+              {
+                "id": 2002,
+                "name": "Administrativa",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 10006,
+                    "name": "Eva Marková",
+                    "nickname": "emarkova",
+                    "date_of_challenge_registration": "2025-01-12T08:30:00.000000",
+                    "email": "eva.markova@cerny.cz",
+                    "telephone": "123456794",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 50006
+                  }
+                ],
+                "other_members": [
+                  {
+                    "id": 10007,
+                    "name": "František Veselý",
+                    "nickname": null,
+                    "date_of_challenge_registration": "2024-12-18T16:20:00.000000",
+                    "email": "frantisek.vesely@cerny.cz",
+                    "telephone": "123456795",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "None",
+                    "payment_category": "None",
+                    "payment_amount": "None",
+                    "discount_coupon": "DISC-002",
+                    "user_profile_id": 50007
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "displayData": {
+      "organizationTitle": "Stavební firma Černý a synové s.r.o.",
+      "organizationId": 12345678,
+      "subsidiariesCount": 1,
+      "membersCount": 7
+    }
+  },
+  {
+    "description": "display data for organization with 3 subsidiaries, subsidiary with no team, team with no members",
+    "storeData": [
+      {
+        "name": "Moravské pivovary a.s.",
+        "psc": 15000,
+        "street": "Pivovarská",
+        "street_number": 456,
+        "recipient": "Moravské pivovary a.s.",
+        "city": "Brno",
+        "ico": 87654321,
+        "dic": "CZ87654321",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 3001,
+            "psc": 15000,
+            "street": "Pivovarská",
+            "street_number": 456,
+            "city": "Brno",
+            "icon_url": null,
+            "teams": [
+              {
+                "id": 4001,
+                "name": "Obchodní tým",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 20001,
+                    "name": "Jana Novotná",
+                    "nickname": "jnovotna",
+                    "date_of_challenge_registration": "2025-02-01T10:00:00.000000",
+                    "email": "jana.novotna@moravske-pivovary.cz",
+                    "telephone": "555001001",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "waiting",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60001
+                  },
+                  {
+                    "id": 20002,
+                    "name": "Petr Horák",
+                    "nickname": null,
+                    "date_of_challenge_registration": "2025-02-02T11:30:00.000000",
+                    "email": "petr.horak@moravske-pivovary.cz",
+                    "telephone": "555001002",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "waiting",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60002
+                  }
+                ],
+                "members_with_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 20003,
+                    "name": "Lucie Němcová",
+                    "nickname": "lnemcova",
+                    "date_of_challenge_registration": "2025-01-20T14:15:00.000000",
+                    "email": "lucie.nemcova@moravske-pivovary.cz",
+                    "telephone": "555001003",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60003
+                  },
+                  {
+                    "id": 20004,
+                    "name": "Michal Pokorný",
+                    "nickname": "mpokorny",
+                    "date_of_challenge_registration": "2025-01-21T15:30:00.000000",
+                    "email": "michal.pokorny@moravske-pivovary.cz",
+                    "telephone": "555001004",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60004
+                  }
+                ],
+                "other_members": [
+                  {
+                    "id": 20005,
+                    "name": "Radek Pospíšil",
+                    "nickname": "rpospisil",
+                    "date_of_challenge_registration": "2024-12-10T12:00:00.000000",
+                    "email": "radek.pospisil@moravske-pivovary.cz",
+                    "telephone": "555001005",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "None",
+                    "payment_category": "None",
+                    "payment_amount": "None",
+                    "discount_coupon": "PIVOVAR-DISC",
+                    "user_profile_id": 60005
+                  }
+                ]
+              },
+              {
+                "id": 4002,
+                "name": "Výroba",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 20006,
+                    "name": "Kristýna Málková",
+                    "nickname": null,
+                    "date_of_challenge_registration": "2025-02-05T13:20:00.000000",
+                    "email": "kristyna.malkova@moravske-pivovary.cz",
+                    "telephone": "555001006",
+                    "sex": "female",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "waiting",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60006
+                  }
+                ],
+                "members_with_paid_entry_fee_by_org_coord": [
+                  {
+                    "id": 20007,
+                    "name": "Jaroslav Beneš",
+                    "nickname": "jbenes",
+                    "date_of_challenge_registration": "2025-01-28T09:45:00.000000",
+                    "email": "jaroslav.benes@moravske-pivovary.cz",
+                    "telephone": "555001007",
+                    "sex": "male",
+                    "avatar_url": "",
+                    "approved_for_team": "approved",
+                    "payment_status": "done",
+                    "payment_type": "fc",
+                    "payment_category": "entry_fee",
+                    "payment_amount": "390",
+                    "discount_coupon": "",
+                    "user_profile_id": 60007
+                  }
+                ],
+                "other_members": []
+              }
+            ]
+          },
+          {
+            "id": 3002,
+            "psc": 16000,
+            "street": "Nádražní",
+            "street_number": 789,
+            "city": "Ostrava",
+            "icon_url": null,
+            "teams": [
+              {
+                "id": 4003,
+                "name": "IT oddělení",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              },
+              {
+                "id": 4004,
+                "name": "Prázdný tým",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              }
+            ]
+          },
+          {
+            "id": 3003,
+            "psc": 17000,
+            "street": "Tylova",
+            "street_number": 12,
+            "city": "Plzeň",
+            "icon_url": null,
+            "teams": []
+          }
+        ]
+      }
+    ],
+    "displayData": {
+      "organizationTitle": "Moravské pivovary a.s.",
+      "organizationId": 87654321,
+      "subsidiariesCount": 3,
+      "membersCount": 7
+    }
+  },
+  {
+    "description": "display data for organization with no subsidiaries",
+    "storeData": [
+      {
+        "name": "Zahradnické centrum Kytička s.r.o.",
+        "psc": 50000,
+        "street": "Zelená",
+        "street_number": 88,
+        "recipient": "Zahradnické centrum Kytička s.r.o.",
+        "city": "Hradec Králové",
+        "ico": 11223344,
+        "dic": "CZ11223344",
+        "active": true,
+        "subsidiaries": []
+      }
+    ],
+    "displayData": {
+      "organizationTitle": "Zahradnické centrum Kytička s.r.o.",
+      "organizationId": 11223344,
+      "subsidiariesCount": 0,
+      "membersCount": 0
+    }
+  },
+  {
+    "description": "display data for organization with subsidiary and team but no members",
+    "storeData": [
+      {
+        "name": "Tiskárna Rychlotisk v.o.s.",
+        "psc": 70000,
+        "street": "Papírenská",
+        "street_number": 25,
+        "recipient": "Tiskárna Rychlotisk v.o.s.",
+        "city": "Olomouc",
+        "ico": 99887766,
+        "dic": "CZ99887766",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 5001,
+            "psc": 70000,
+            "street": "Papírenská",
+            "street_number": 25,
+            "city": "Olomouc",
+            "icon_url": null,
+            "teams": [
+              {
+                "id": 6001,
+                "name": "Grafici",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              },
+              {
+                "id": 6002,
+                "name": "Obsluha strojů",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "displayData": {
+      "organizationTitle": "Tiskárna Rychlotisk v.o.s.",
+      "organizationId": 99887766,
+      "subsidiariesCount": 1,
+      "membersCount": 0
+    }
+  }
+]
