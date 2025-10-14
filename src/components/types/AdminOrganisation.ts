@@ -26,8 +26,9 @@ export interface AdminTeam {
   id: number;
   name: string;
   icon_url: string | null;
-  members_without_paid_entry_fee: AdminTeamMember[];
-  members_with_paid_entry_fee: AdminTeamMember[];
+  members_without_paid_entry_fee_by_org_coord: AdminTeamMember[];
+  members_with_paid_entry_fee_by_org_coord: AdminTeamMember[];
+  other_members: AdminTeamMember[];
 }
 
 export interface AdminSubsidiary {
