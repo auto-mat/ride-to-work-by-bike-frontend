@@ -33,6 +33,7 @@ export interface AdminTeam {
 
 export interface AdminSubsidiary {
   id: number;
+  psc: number;
   street: string;
   street_number: number;
   city: string;
