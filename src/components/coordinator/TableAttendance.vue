@@ -103,11 +103,11 @@ export default defineComponent({
         {{ subsidiaryData.subsidiary?.city }}
       </h3>
       <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
-        <div>
+        <div data-cy="table-attendance-city-challenge">
           {{ $t('coordinator.labelCityChallenge') }}:
           {{ subsidiaryData.subsidiary?.city }}
         </div>
-        <div>
+        <div data-cy="table-attendance-teams">
           {{ subsidiaryData.subsidiary?.teams?.length }}
           {{
             $t(
@@ -116,7 +116,7 @@ export default defineComponent({
             )
           }}
         </div>
-        <div>
+        <div data-cy="table-attendance-members">
           {{ subsidiaryData.members?.length }}
           {{ $t('coordinator.labelMembers', subsidiaryData.members?.length) }}
         </div>
