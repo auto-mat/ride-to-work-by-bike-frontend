@@ -54,10 +54,7 @@ export default defineComponent({
       return subsidiaries.value.length;
     });
 
-    /**
-     * Count members of all teams in all subsidiaries
-     * @returns {number} - The number of members
-     */
+    // provides total count of members of all teams in all subsidiaries
     const membersCount = computed((): number => {
       if (!subsidiaries.value.length) {
         return 0;
