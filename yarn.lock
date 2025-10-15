@@ -2289,9 +2289,9 @@ cypress-parallel@^0.15.0:
     yargs "15.3.1"
 
 cypress-terminal-report@^7.0.4:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/cypress-terminal-report/-/cypress-terminal-report-7.2.1.tgz#28f4a9c857e932b4c50a3d5c5b0fd0690db3e5a6"
-  integrity sha512-Mm6gWjenl/WlxStMRHqeZhN+rlKaxuNLwOCN13tCJbr8bcBXicHu0lXf7QYKuMxF7fEixNeWneu49C3ncmPhpg==
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/cypress-terminal-report/-/cypress-terminal-report-7.3.2.tgz#18bf51c2760d2bc799e44245e6f00a3f6f95f77b"
+  integrity sha512-R4HFlCJ4VMNmcKUlMYDx7OCFSOXzur7kVMZYTDYZnkMmXTxgaquCJ31xNHRB8x9W++Nal/it17Am9Ru/9aRlgQ==
   dependencies:
     chalk "^4.0.0"
     compare-versions "^6.1.1"
