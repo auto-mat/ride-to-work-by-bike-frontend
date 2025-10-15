@@ -232,8 +232,8 @@ export default defineComponent({
                 size="18px"
                 :color="
                   props.row.paymentState === PaymentState.done
-                    ? AttendanceTablePayColumnIconsColors.paid
-                    : AttendanceTablePayColumnIconsColors.scheduled
+                    ? AttendanceTablePayColumnIconsColors.done
+                    : AttendanceTablePayColumnIconsColors.default
                 "
                 class="q-mr-xs"
               />

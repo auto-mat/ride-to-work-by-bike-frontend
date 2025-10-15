@@ -742,9 +742,12 @@ titleStep2 = "Přizvěte své blízké do výzvy"
 
 [payment]
 labelOrganization = "Organizací"
-labelPaid = "Zaplaceno"
 labelRegistration = "Při registraci"
-labelScheduled = "Po výzvě"
+labelDone = "Platba schválena"
+labelNoAdmission = "Neschváleno"
+labelWaiting = "Čeká na schválení"
+labelUnknown = "Neznámý"
+labelNone = "Neexistuje"
 
 [postRegisterChallenge]
 apiMessageError = "Chyba při ukládání stavu registrace."

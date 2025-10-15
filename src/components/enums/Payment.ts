@@ -16,3 +16,8 @@ export enum PaymentState {
   waiting = 'waiting',
   unknown = 'unknown',
 }
+
+export enum PaymentType {
+  organization = 'organization',
+  registration = 'registration',
+}

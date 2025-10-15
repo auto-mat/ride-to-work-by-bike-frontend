@@ -7,11 +7,8 @@ import { i18n } from 'src/boot/i18n';
 // TODO: import format price
 
 // enums
-import {
-  AttendanceTablePayColumnIcons,
-  InvoiceTableFileId,
-} from '../components/types/Table';
-import { PaymentState, PaymentType } from '../components/types/Payment';
+import { InvoiceTableFileId } from '../components/types/Table';
+import { PaymentState, PaymentType } from '../components/enums/Payment';
 
 // types
 import type { QTableProps } from 'quasar';
@@ -481,21 +478,30 @@ export const useTableAttendance = () => {
 
   const getPaymentStateIcon = (paymentState: PaymentState): string => {
     switch (paymentState) {
-      case PaymentState.paid:
-        return AttendanceTablePayColumnIcons[PaymentState.paid];
-      case PaymentState.scheduled:
-        return AttendanceTablePayColumnIcons[PaymentState.scheduled];
+      case PaymentState.done:
+        return 'check';
+      case PaymentState.waiting:
+        return 'svguse:icons/table_attendance/icons.svg#calendar';
+      case PaymentState.none:
+      case PaymentState.noAdmission:
+      case PaymentState.unknown:
       default:
-        return '';
+        return 'help_outline';
     }
   };
 
   const getPaymentStateLabel = (paymentState: PaymentState): string => {
     switch (paymentState) {
-      case PaymentState.paid:
-        return i18n.global.t('payment.labelPaid');
-      case PaymentState.scheduled:
-        return i18n.global.t('payment.labelScheduled');
+      case PaymentState.done:
+        return i18n.global.t('payment.labelDone');
+      case PaymentState.waiting:
+        return i18n.global.t('payment.labelWaiting');
+      case PaymentState.none:
+        return i18n.global.t('payment.labelNone');
+      case PaymentState.noAdmission:
+        return i18n.global.t('payment.labelNoAdmission');
+      case PaymentState.unknown:
+        return i18n.global.t('payment.labelUnknown');
       default:
         return '';
     }

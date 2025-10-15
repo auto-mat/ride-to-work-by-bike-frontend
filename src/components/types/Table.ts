@@ -68,8 +68,8 @@ export enum AttendanceTablePayColumnIcons {
 }
 
 export enum AttendanceTablePayColumnIconsColors {
-  paid = AttendanceTableFeeColumnIconsColors.approved,
-  scheduled = 'primary',
+  default = 'primary',
+  done = 'positive',
 }
 
 export enum InvoicesTableColumns {

@@ -63,7 +63,15 @@ describe('<TableAttendance>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['labelOrganization', 'labelRegistration', 'labelScheduled'],
+      [
+        'labelOrganization',
+        'labelRegistration',
+        'labelDone',
+        'labelNoAdmission',
+        'labelWaiting',
+        'labelUnknown',
+        'labelNone',
+      ],
       'payment',
       i18n,
     );
