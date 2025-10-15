@@ -80,6 +80,11 @@ describe('<TableAttendance>', () => {
       'payment',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['labelCityChallenge', 'labelTeams', 'labelMembers'],
+      'coordinator',
+      i18n,
+    );
   });
 
   context('desktop', () => {
