@@ -12,7 +12,7 @@
 
 // libraries
 import { QTable } from 'quasar';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 
 // composables
 import { useTable, useTableAttendance } from '../../composables/useTable';
@@ -35,8 +35,22 @@ export default defineComponent({
   name: 'TableAttendance',
   setup() {
     const tableRefs = ref<QTable[]>([]);
+    const { subsidiariesData } = useTableAttendanceData();
+
     // sort by name initially
     onMounted(() => {
+      sortGroups();
+    });
+    // sort when subsidiaries are reloaded
+    watch(
+      () => subsidiariesData.value,
+      () => {
+        nextTick(() => {
+          sortGroups();
+        });
+      },
+    );
+    function sortGroups() {
       if (tableRefs.value && tableRefs.value.length > 0) {
         tableRefs.value.forEach((table) => {
           if (table) {
@@ -44,7 +58,7 @@ export default defineComponent({
           }
         });
       }
-    });
+    }
 
     const {
       columns,
@@ -54,7 +68,6 @@ export default defineComponent({
       getPaymentTypeLabel,
     } = useTableAttendance();
     const { sortByTeam } = useTable();
-    const { subsidiariesData } = useTableAttendanceData();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     /**
