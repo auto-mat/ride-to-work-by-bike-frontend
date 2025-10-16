@@ -5,7 +5,6 @@ import TableAttendance from 'components/coordinator/TableAttendance.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
-import tableAttendanceTestData from '../../../test/cypress/fixtures/tableAttendanceTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // colors
@@ -152,12 +151,16 @@ function coreTests() {
           .should('be.visible')
           .and('have.css', 'border-radius', borderRadius);
         if (allMembers.length === 0) {
-          // no members - table should be empty
+          // no members - no member rows
           cy.dataCy(selectorTable)
             .eq(subsidiaryIndex)
             .within(() => {
               cy.dataCy(selectorTableRow).should('not.exist');
             });
+          // empty table state
+          cy.get('.q-table__bottom--nodata')
+            .should('be.visible')
+            .and('contain', i18n.global.t('table.textNoData'));
         } else {
           // test table rows
           cy.dataCy(selectorTable)
@@ -168,7 +171,7 @@ function coreTests() {
                 .should('be.visible')
                 .and('have.color', grey10)
                 .and('have.length.at.least', 1);
-              // test all cells are visible (at least once)
+              // tests that all cells are visible (first row)
               [
                 selectorTableName,
                 selectorTableNickname,
@@ -180,7 +183,7 @@ function coreTests() {
               ].forEach((selector) => {
                 cy.dataCy(selector).first().should('be.visible');
               });
-              // test contact icon (first occurrence)
+              // test contact icon (first row)
               cy.dataCy(selectorTableContact)
                 .first()
                 .within(() => {
@@ -194,7 +197,7 @@ function coreTests() {
                     .invoke('width')
                     .should('be.equal', iconSize);
                 });
-              // test payment state icons (first occurrence)
+              // test payment state icons (first row)
               cy.dataCy(selectorTablePaymentState)
                 .first()
                 .within(() => {
@@ -207,7 +210,7 @@ function coreTests() {
                     .invoke('width')
                     .should('be.equal', iconSize);
                 });
-              // test fee approved icons (first occurrence)
+              // test fee approved icons (first row)
               cy.dataCy(selectorTableFeeApproved)
                 .first()
                 .within(() => {
@@ -246,95 +249,109 @@ function coreTests() {
 
 function dataDisplayTests() {
   it('display members in correct order and correct data for each member', () => {
-    // initiate store state
-    cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
-      const adminOrganisations = computed(
-        () => adminOrganisationStore.getAdminOrganisations,
-      );
-      adminOrganisationStore.setAdminOrganisations(
-        tableAttendanceTestData.storeData,
-      );
-      cy.wrap(adminOrganisations)
-        .its('value')
-        .should('deep.equal', tableAttendanceTestData.storeData);
-    });
-    const display = tableAttendanceTestData.displayData;
-    // address
-    cy.dataCy(selectorSubsidiaryHeader)
-      .should('be.visible')
-      .and('contain', display.subsidiaryAddress);
-    // challenge city
-    cy.dataCy(selectorCityChallenge)
-      .should('be.visible')
-      .and('contain', display.subsidiaryCityChallenge);
-    // team count
-    cy.dataCy(selectorTeams)
-      .should('be.visible')
-      .and('contain', display.teamCount);
-    // members count
-    cy.dataCy(selectorMembers)
-      .should('be.visible')
-      .and('contain', display.membersCount);
-    // teams order (alphabetical)
-    cy.dataCy(selectorTableTeamHeader).each((teamHeader, index) => {
-      cy.wrap(teamHeader)
+    cy.fixture('tableAttendanceTestData').then((tableAttendanceTestData) => {
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        const adminOrganisations = computed(
+          () => adminOrganisationStore.getAdminOrganisations,
+        );
+        adminOrganisationStore.setAdminOrganisations(
+          tableAttendanceTestData.storeData,
+        );
+        cy.wrap(adminOrganisations)
+          .its('value')
+          .should('deep.equal', tableAttendanceTestData.storeData);
+      });
+      const display = tableAttendanceTestData.displayData;
+      // address
+      cy.dataCy(selectorSubsidiaryHeader)
         .should('be.visible')
-        .and('contain', display.orderedTeamNames[index]);
-    });
-    // first member of "Administrativa" team
-    cy.dataCy(selectorTableRow).each((table, index) => {
-      if (display.orderedMembersFirstTeam[index]) {
-        cy.wrap(table).within(() => {
-          // name
-          if (display.orderedMembersFirstTeam[index].name) {
-            cy.dataCy(selectorTableName)
-              .should('be.visible')
-              .and('contain', display.orderedMembersFirstTeam[index].name);
-          }
-          // nickname
-          if (display.orderedMembersFirstTeam[index].nickname) {
-            cy.dataCy(selectorTableNickname)
-              .should('be.visible')
-              .and('contain', display.orderedMembersFirstTeam[index].nickname);
-          }
-          // contact icon
-          cy.dataCy(selectorTableContact).within(() => {
-            cy.dataCy(selectorTableContactIcon).should('be.visible');
-          });
-          // approved
-          if (display.orderedMembersFirstTeam[index].approved) {
-            cy.dataCy(selectorTableFeeApproved).within(() => {
-              cy.get(classSelectorIcon).should('contain', 'check');
+        .and('contain', display.subsidiaryAddress);
+      // challenge city
+      cy.dataCy(selectorCityChallenge)
+        .should('be.visible')
+        .and('contain', display.subsidiaryCityChallenge);
+      // team count
+      cy.dataCy(selectorTeams)
+        .should('be.visible')
+        .and('contain', display.teamCount);
+      // members count
+      cy.dataCy(selectorMembers)
+        .should('be.visible')
+        .and('contain', display.membersCount);
+      // teams order (alphabetical)
+      cy.dataCy(selectorTableTeamHeader).each((teamHeader, index) => {
+        cy.wrap(teamHeader)
+          .should('be.visible')
+          .and('contain', display.orderedTeamNames[index]);
+      });
+      // first member of "Administrativa" team
+      cy.dataCy(selectorTableRow).each((table, index) => {
+        if (display.orderedMembers[index]) {
+          cy.wrap(table).within(() => {
+            // name
+            if (display.orderedMembers[index].name) {
+              cy.dataCy(selectorTableName)
+                .should('be.visible')
+                .and('contain', display.orderedMembers[index].name);
+            }
+            // nickname
+            if (display.orderedMembers[index].nickname) {
+              cy.dataCy(selectorTableNickname)
+                .should('be.visible')
+                .and('contain', display.orderedMembers[index].nickname);
+            } else {
+              cy.dataCy(selectorTableNickname)
+                .should('be.visible')
+                .and('be.empty');
+            }
+            // contact icon
+            cy.dataCy(selectorTableContact).within(() => {
+              cy.dataCy(selectorTableContactIcon).should('be.visible');
             });
-          }
-          // payment type
-          if (display.orderedMembersFirstTeam[index].paymentType) {
-            cy.dataCy(selectorTablePaymentType)
-              .should('be.visible')
-              .and(
-                'contain',
-                i18n.global.t(
-                  display.orderedMembersFirstTeam[index].paymentType,
-                ),
-              );
-          }
-          // payment state
-          if (display.orderedMembersFirstTeam[index].paymentState) {
-            cy.dataCy(selectorTablePaymentState)
-              .should('be.visible')
-              .and(
-                'contain',
-                i18n.global.t(
-                  display.orderedMembersFirstTeam[index].paymentState,
-                ),
-              );
-          }
-          // button actions
-          cy.dataCy(selectorTableActions).within(() => {
-            cy.get('button').should('exist');
+            // approved
+            if (display.orderedMembers[index].approved) {
+              cy.dataCy(selectorTableFeeApproved).within(() => {
+                cy.get(classSelectorIcon).should('contain', 'check');
+              });
+            } else {
+              cy.dataCy(selectorTableFeeApproved).within(() => {
+                cy.get(classSelectorIcon).should('contain', 'close');
+              });
+            }
+            // payment type
+            if (display.orderedMembers[index].paymentType) {
+              cy.dataCy(selectorTablePaymentType)
+                .should('be.visible')
+                .and(
+                  'contain',
+                  i18n.global.t(display.orderedMembers[index].paymentType),
+                );
+            } else {
+              cy.dataCy(selectorTablePaymentType)
+                .should('be.visible')
+                .and('be.empty');
+            }
+            // payment state
+            if (display.orderedMembers[index].paymentState) {
+              cy.dataCy(selectorTablePaymentState)
+                .should('be.visible')
+                .and(
+                  'contain',
+                  i18n.global.t(display.orderedMembers[index].paymentState),
+                );
+            } else {
+              cy.dataCy(selectorTablePaymentState)
+                .should('be.visible')
+                .and('be.empty');
+            }
+            // button actions
+            cy.dataCy(selectorTableActions).within(() => {
+              cy.get('button').should('exist');
+            });
           });
-        });
-      }
+        }
+      });
     });
   });
 }

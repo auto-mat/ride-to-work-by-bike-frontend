@@ -88,8 +88,8 @@
                   "telephone": "123456792",
                   "sex": "female",
                   "avatar_url": "",
-                  "approved_for_team": "approved",
-                  "payment_status": "done",
+                  "approved_for_team": "denied",
+                  "payment_status": "unknown",
                   "payment_type": "None",
                   "payment_category": "None",
                   "payment_amount": "0",
@@ -170,7 +170,7 @@
     "teamCount": 2,
     "membersCount": 7,
     "orderedTeamNames": ["Administrativa", "Projektanti"],
-    "orderedMembersFirstTeam": [
+    "orderedMembers": [
       {
         "name": "Eva Marková",
         "nickname": "emarkova",
@@ -184,6 +184,13 @@
         "approved": true,
         "paymentType": "payment.labelRegistration",
         "paymentState": "payment.labelDone"
+      },
+      {
+        "name": "Alena Procházková",
+        "nickname": "aprochazka",
+        "approved": false,
+        "paymentType": "payment.labelRegistration",
+        "paymentState": "payment.labelUnknown"
       }
     ]
   }
