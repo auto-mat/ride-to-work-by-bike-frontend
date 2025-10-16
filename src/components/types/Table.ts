@@ -65,6 +65,7 @@ export enum AttendanceTableFeeColumnIconsColors {
 export enum AttendanceTablePayColumnIcons {
   paid = 'check',
   scheduled = 'svguse:icons/table_attendance/icons.svg#calendar',
+  unknown = 'help_outline',
 }
 
 export enum AttendanceTablePayColumnIconsColors {

@@ -7,7 +7,10 @@ import { i18n } from 'src/boot/i18n';
 // TODO: import format price
 
 // enums
-import { InvoiceTableFileId } from '../components/types/Table';
+import {
+  AttendanceTablePayColumnIcons,
+  InvoiceTableFileId,
+} from '../components/types/Table';
 import { PaymentState, PaymentType } from '../components/enums/Payment';
 
 // types
@@ -491,14 +494,14 @@ export const useTableAttendance = () => {
   const getPaymentStateIcon = (paymentState: PaymentState): string => {
     switch (paymentState) {
       case PaymentState.done:
-        return 'check';
+        return AttendanceTablePayColumnIcons.paid;
       case PaymentState.waiting:
-        return 'svguse:icons/table_attendance/icons.svg#calendar';
+        return AttendanceTablePayColumnIcons.scheduled;
       case PaymentState.none:
       case PaymentState.noAdmission:
       case PaymentState.unknown:
       default:
-        return 'help_outline';
+        return AttendanceTablePayColumnIcons.unknown;
     }
   };
 
