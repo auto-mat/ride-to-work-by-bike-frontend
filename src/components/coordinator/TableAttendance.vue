@@ -195,6 +195,7 @@ export default defineComponent({
               :props="props"
               data-cy="table-attendance-contact"
             >
+              <!-- TODO: implement feature - copiable contact details -->
               <q-icon
                 size="18px"
                 color="primary"
