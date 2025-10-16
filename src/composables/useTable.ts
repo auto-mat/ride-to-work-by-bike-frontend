@@ -27,6 +27,18 @@ const formatPrice = (value: number | string | null) => {
   return String(value);
 };
 
+export const paginationLabel = (
+  firstRowIndex: number,
+  endRowIndex: number,
+  totalRowsNumber: number,
+): string => {
+  return i18n.global.t('table.textPagination', {
+    firstRowIndex,
+    endRowIndex,
+    totalRowsNumber,
+  });
+};
+
 export const useTable = () => {
   // Used in the `ResultsDetailPage`
   const tableResultsColumns: QTableProps['columns'] = [

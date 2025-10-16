@@ -15,7 +15,11 @@ import { QTable } from 'quasar';
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 
 // composables
-import { useTable, useTableAttendance } from '../../composables/useTable';
+import {
+  paginationLabel,
+  useTable,
+  useTableAttendance,
+} from '../../composables/useTable';
 import { useTableAttendanceData } from '../../composables/useTableAttendanceData';
 
 // enums
@@ -94,6 +98,7 @@ export default defineComponent({
       getPaymentStateIcon,
       getPaymentStateLabel,
       getPaymentTypeLabel,
+      paginationLabel,
       sortByTeam,
       PaymentState,
     };
@@ -147,6 +152,11 @@ export default defineComponent({
         row-key="name"
         :sort-method="sortByTeam"
         :style="{ borderRadius }"
+        :no-data-label="$t('table.textNoData')"
+        :no-results-label="$t('table.textNoResults')"
+        :loading-label="$t('table.textLoading')"
+        :rows-per-page-label="$t('table.textRowsPerPage')"
+        :pagination-label="paginationLabel"
         data-cy="table-attendance-table"
       >
         <template v-slot:body="props">
