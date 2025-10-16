@@ -126,7 +126,7 @@ export default defineComponent({
           class="full-width row flex-center text-grey-10 q-gutter-sm"
           data-cy="table-no-data"
         >
-          <span>{{ $t('table.textEmptyTable') }}</span>
+          <span>{{ $t('table.textNoData') }}</span>
         </div>
       </template>
     </q-table>

@@ -76,7 +76,7 @@ describe('<TableFeeApproval>', () => {
         'labelName',
         'labelNickname',
         'labelTeam',
-        'textEmptyTable',
+        'textNoData',
         'titleFeeApproval',
       ],
       'table',
