@@ -211,6 +211,7 @@ export default defineComponent({
                     ? AttendanceTableFeeColumnIconsColors.approved
                     : AttendanceTableFeeColumnIconsColors.unapproved
                 "
+                data-cy="table-attendance-fee-approved-icon"
               />
             </q-td>
             <!-- Payment Type -->

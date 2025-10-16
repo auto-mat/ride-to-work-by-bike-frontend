@@ -6,7 +6,7 @@
  *
  * @components
  * - `HeaderOrganization`: Component to display a header with organization information.
- * - `TableAttendance`: Component to display a table with attendance data.
+ * - `TableAttendance`: Component to display tables with attendance data.
  *
  * @example
  * <tab-coordinator-attendance />
