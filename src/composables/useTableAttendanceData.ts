@@ -56,17 +56,13 @@ function transformMemberToRow(
 }
 
 /**
- * Composable for transforming admin organisation data to table attendance format
- * @returns {Ref<{subsidiariesData: TableAttendanceSubsidiaryData[]}>} - Object containing subsidiaries data
+ * Build data object for attendance tables (one per subsidiary)
+ * @returns {Ref<{subsidiariesData: TableAttendanceSubsidiaryData[]}>} - Array of subsidiary data objects
  */
 export const useTableAttendanceData = (): {
   subsidiariesData: Ref<TableAttendanceSubsidiaryData[]>;
 } => {
   const adminOrganisationStore = useAdminOrganisationStore();
-  /**
-   * Computed property that transforms store data into table format
-   * Returns array of objects, one per subsidiary, each containing flattened member rows
-   */
   const subsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() => {
     const organisation = adminOrganisationStore.getCurrentAdminOrganisation;
 
@@ -75,10 +71,10 @@ export const useTableAttendanceData = (): {
     }
 
     return organisation.subsidiaries.map((subsidiary: AdminSubsidiary) => {
-      // Collect all members from all teams in this subsidiary
+      // collect all members from all teams in this subsidiary
       const allMembers: TableAttendanceRow[] = [];
       subsidiary.teams.forEach((team: AdminTeam) => {
-        // Process members_with_paid_entry_fee_by_org_coord - PaymentType.organization
+        // process members with entry fee paid by org coordinator
         team.members_with_paid_entry_fee_by_org_coord.forEach(
           (member: AdminTeamMember) => {
             allMembers.push(
@@ -86,7 +82,7 @@ export const useTableAttendanceData = (): {
             );
           },
         );
-        // Process members_without_paid_entry_fee_by_org_coord - PaymentType.organization
+        // process members without entry fee paid by org coordinator
         team.members_without_paid_entry_fee_by_org_coord.forEach(
           (member: AdminTeamMember) => {
             allMembers.push(
@@ -94,7 +90,7 @@ export const useTableAttendanceData = (): {
             );
           },
         );
-        // Process other_members - PaymentType.registration
+        // process other_members who pay their entry fee themselves
         team.other_members.forEach((member: AdminTeamMember) => {
           allMembers.push(
             transformMemberToRow(member, team.name, PaymentType.registration),
