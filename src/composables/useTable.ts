@@ -11,7 +11,7 @@ import {
   AttendanceTablePayColumnIcons,
   InvoiceTableFileId,
 } from '../components/types/Table';
-import { PaymentState, PaymentType } from '../components/types/Payment';
+import { PaymentState, PaymentType } from '../components/enums/Payment';
 
 // types
 import type { QTableProps } from 'quasar';
@@ -28,6 +28,18 @@ type FilterMethodInput = { search: string; filter: string };
 
 const formatPrice = (value: number | string | null) => {
   return String(value);
+};
+
+export const paginationLabel = (
+  firstRowIndex: number,
+  endRowIndex: number,
+  totalRowsNumber: number,
+): string => {
+  return i18n.global.t('table.textPagination', {
+    firstRowIndex,
+    endRowIndex,
+    totalRowsNumber,
+  });
 };
 
 export const useTable = () => {
@@ -481,21 +493,30 @@ export const useTableAttendance = () => {
 
   const getPaymentStateIcon = (paymentState: PaymentState): string => {
     switch (paymentState) {
-      case PaymentState.paid:
-        return AttendanceTablePayColumnIcons[PaymentState.paid];
-      case PaymentState.scheduled:
-        return AttendanceTablePayColumnIcons[PaymentState.scheduled];
+      case PaymentState.done:
+        return AttendanceTablePayColumnIcons.paid;
+      case PaymentState.waiting:
+        return AttendanceTablePayColumnIcons.scheduled;
+      case PaymentState.none:
+      case PaymentState.noAdmission:
+      case PaymentState.unknown:
       default:
-        return '';
+        return AttendanceTablePayColumnIcons.unknown;
     }
   };
 
   const getPaymentStateLabel = (paymentState: PaymentState): string => {
     switch (paymentState) {
-      case PaymentState.paid:
-        return i18n.global.t('payment.labelPaid');
-      case PaymentState.scheduled:
-        return i18n.global.t('payment.labelScheduled');
+      case PaymentState.done:
+        return i18n.global.t('payment.labelDone');
+      case PaymentState.waiting:
+        return i18n.global.t('payment.labelWaiting');
+      case PaymentState.none:
+        return i18n.global.t('payment.labelNone');
+      case PaymentState.noAdmission:
+        return i18n.global.t('payment.labelNoAdmission');
+      case PaymentState.unknown:
+        return i18n.global.t('payment.labelUnknown');
       default:
         return '';
     }

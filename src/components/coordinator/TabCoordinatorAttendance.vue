@@ -6,6 +6,7 @@
  *
  * @components
  * - `HeaderOrganization`: Component to display a header with organization information.
+ * - `TableAttendance`: Component to display tables with attendance data.
  *
  * @example
  * <tab-coordinator-attendance />
@@ -18,11 +19,13 @@ import { defineComponent } from 'vue';
 
 // components
 import HeaderOrganization from './HeaderOrganization.vue';
+import TableAttendance from './TableAttendance.vue';
 
 export default defineComponent({
   name: 'TabCoordinatorAttendance',
   components: {
     HeaderOrganization,
+    TableAttendance,
   },
   setup() {
     return {};
@@ -33,5 +36,6 @@ export default defineComponent({
 <template>
   <div>
     <header-organization class="q-mt-sm" />
+    <table-attendance class="q-mt-xl" />
   </div>
 </template>

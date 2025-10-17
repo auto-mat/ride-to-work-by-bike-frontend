@@ -3,7 +3,7 @@ import { i18n } from '../../boot/i18n';
 
 describe('<TableFilter>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext(['textEmptyTable'], 'table', i18n);
+    cy.testLanguageStringsInContext(['textNoData'], 'table', i18n);
     cy.testLanguageStringsInContext(['all'], 'global', i18n);
   });
 
@@ -108,6 +108,6 @@ function coreTests() {
       .should('have.length', 0);
     cy.dataCy('table-no-data')
       .should('be.visible')
-      .and('contain', i18n.global.t('table.textEmptyTable'));
+      .and('contain', i18n.global.t('table.textNoData'));
   });
 }

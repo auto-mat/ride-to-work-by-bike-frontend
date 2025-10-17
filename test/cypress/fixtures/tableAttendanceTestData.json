@@ -1,0 +1,197 @@
+{
+  "storeData": [
+    {
+      "name": "Stavební firma Černý a synové s.r.o.",
+      "psc": 11000,
+      "street": "Hlavní",
+      "street_number": 123,
+      "recipient": "Stavební firma Černý a synové s.r.o.",
+      "city": "Praha",
+      "ico": 12345678,
+      "dic": "CZ12345678",
+      "active": true,
+      "subsidiaries": [
+        {
+          "id": 1001,
+          "psc": 11000,
+          "street": "Hlavní",
+          "street_number": 123,
+          "city": "Praha",
+          "icon_url": null,
+          "teams": [
+            {
+              "id": 2001,
+              "name": "Projektanti",
+              "icon_url": null,
+              "members_without_paid_entry_fee_by_org_coord": [
+                {
+                  "id": 10001,
+                  "name": "Jan Novák",
+                  "nickname": "jnovak",
+                  "date_of_challenge_registration": "2025-01-15T10:30:00.000000",
+                  "email": "jan.novak@cerny.cz",
+                  "telephone": "123456789",
+                  "sex": "male",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "390",
+                  "discount_coupon": "",
+                  "user_profile_id": 50001
+                },
+                {
+                  "id": 10002,
+                  "name": "Petra Svobodová",
+                  "nickname": null,
+                  "date_of_challenge_registration": "2025-01-16T09:15:00.000000",
+                  "email": "petra.svobodova@cerny.cz",
+                  "telephone": "123456790",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "390",
+                  "discount_coupon": "",
+                  "user_profile_id": 50002
+                }
+              ],
+              "members_with_paid_entry_fee_by_org_coord": [
+                {
+                  "id": 10003,
+                  "name": "Martin Dvořák",
+                  "nickname": "mdvorak",
+                  "date_of_challenge_registration": "2025-01-10T14:20:00.000000",
+                  "email": "martin.dvorak@cerny.cz",
+                  "telephone": "123456791",
+                  "sex": "male",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "done",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "390",
+                  "discount_coupon": "",
+                  "user_profile_id": 50003
+                }
+              ],
+              "other_members": [
+                {
+                  "id": 10004,
+                  "name": "Alena Procházková",
+                  "nickname": "aprochazka",
+                  "date_of_challenge_registration": "2024-12-20T11:00:00.000000",
+                  "email": "alena.prochazkova@cerny.cz",
+                  "telephone": "123456792",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "denied",
+                  "payment_status": "unknown",
+                  "payment_type": "None",
+                  "payment_category": "None",
+                  "payment_amount": "0",
+                  "discount_coupon": "DISC-001",
+                  "user_profile_id": 50004
+                },
+                {
+                  "id": 10005,
+                  "name": "Tomáš Kučera",
+                  "nickname": null,
+                  "date_of_challenge_registration": "2024-12-22T13:45:00.000000",
+                  "email": "tomas.kucera@cerny.cz",
+                  "telephone": "123456793",
+                  "sex": "male",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "none",
+                  "payment_type": "None",
+                  "payment_category": "None",
+                  "payment_amount": "None",
+                  "discount_coupon": "",
+                  "user_profile_id": 50005
+                }
+              ]
+            },
+            {
+              "id": 2002,
+              "name": "Administrativa",
+              "icon_url": null,
+              "members_without_paid_entry_fee_by_org_coord": [],
+              "members_with_paid_entry_fee_by_org_coord": [
+                {
+                  "id": 10006,
+                  "name": "Eva Marková",
+                  "nickname": "emarkova",
+                  "date_of_challenge_registration": "2025-01-12T08:30:00.000000",
+                  "email": "eva.markova@cerny.cz",
+                  "telephone": "123456794",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "390",
+                  "discount_coupon": "",
+                  "user_profile_id": 50006
+                }
+              ],
+              "other_members": [
+                {
+                  "id": 10007,
+                  "name": "František Veselý",
+                  "nickname": null,
+                  "date_of_challenge_registration": "2024-12-18T16:20:00.000000",
+                  "email": "frantisek.vesely@cerny.cz",
+                  "telephone": "123456795",
+                  "sex": "male",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "done",
+                  "payment_type": "None",
+                  "payment_category": "None",
+                  "payment_amount": "None",
+                  "discount_coupon": "DISC-002",
+                  "user_profile_id": 50007
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "displayData": {
+    "subsidiaryAddress": "Hlavní 123, Praha",
+    "subsidiaryCityChallenge": "Praha",
+    "teamCount": 2,
+    "membersCount": 7,
+    "orderedTeamNames": ["Administrativa", "Projektanti"],
+    "orderedMembers": [
+      {
+        "name": "Eva Marková",
+        "nickname": "emarkova",
+        "approved": true,
+        "paymentType": "payment.labelOrganization",
+        "paymentState": "payment.labelWaiting"
+      },
+      {
+        "name": "František Veselý",
+        "nickname": null,
+        "approved": true,
+        "paymentType": "payment.labelRegistration",
+        "paymentState": "payment.labelDone"
+      },
+      {
+        "name": "Alena Procházková",
+        "nickname": "aprochazka",
+        "approved": false,
+        "paymentType": "payment.labelRegistration",
+        "paymentState": "payment.labelUnknown"
+      }
+    ]
+  }
+}
