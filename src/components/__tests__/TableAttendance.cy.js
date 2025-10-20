@@ -67,7 +67,7 @@ describe('<TableAttendance>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['labelCityChallenge', 'labelTeams', 'labelMembers'],
+      ['labelCityChallenge', 'labelTeams', 'labelMembers', 'textClickToCopy'],
       'coordinator',
       i18n,
     );

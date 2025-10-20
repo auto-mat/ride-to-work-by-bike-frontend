@@ -213,6 +213,10 @@ export default defineComponent({
                 "
                 data-cy="table-attendance-contact-phone-icon"
               >
+                <q-tooltip>
+                  {{ $t('coordinator.textClickToCopy') }}:
+                  {{ props.row.telephone }}
+                </q-tooltip>
                 <q-icon
                   :size="iconSize"
                   :color="props.row.telephone ? 'primary' : 'grey-5'"
@@ -230,6 +234,9 @@ export default defineComponent({
                 @click="props.row.email && copyToClipboard(props.row.email)"
                 data-cy="table-attendance-contact-email-icon"
               >
+                <q-tooltip>
+                  {{ $t('coordinator.textClickToCopy') }}: {{ props.row.email }}
+                </q-tooltip>
                 <q-icon
                   :size="iconSize"
                   :color="props.row.email ? 'primary' : 'grey-5'"
