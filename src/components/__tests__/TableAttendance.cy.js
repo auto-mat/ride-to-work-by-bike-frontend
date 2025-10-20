@@ -12,6 +12,7 @@ const { getPaletteColor } = colors;
 const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 const grey10 = getPaletteColor('grey-10');
+const grey5 = getPaletteColor('grey-5');
 
 // selectors
 const classSelectorIcon = '.q-icon';
@@ -22,7 +23,8 @@ const selectorTableRow = 'table-attendance-row';
 const selectorTableName = 'table-attendance-name';
 const selectorTableNickname = 'table-attendance-nickname';
 const selectorTableContact = 'table-attendance-contact';
-const selectorTableContactIcon = 'table-attendance-contact-icon';
+const selectorTablePhoneIcon = 'table-attendance-contact-phone-icon';
+const selectorTableEmailIcon = 'table-attendance-contact-email-icon';
 const selectorTableFeeApproved = 'table-attendance-fee-approved';
 const selectorTablePaymentType = 'table-attendance-payment-type';
 const selectorTablePaymentState = 'table-attendance-payment-state';
@@ -67,6 +69,11 @@ describe('<TableAttendance>', () => {
     cy.testLanguageStringsInContext(
       ['labelCityChallenge', 'labelTeams', 'labelMembers'],
       'coordinator',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['copiedToClipboard', 'copyFailed', 'clipboardApiNotAvailable'],
+      'notify',
       i18n,
     );
   });
@@ -183,17 +190,26 @@ function coreTests() {
               ].forEach((selector) => {
                 cy.dataCy(selector).first().should('be.visible');
               });
-              // test contact icon (first row)
+              // test contact icons (first row)
               cy.dataCy(selectorTableContact)
                 .first()
                 .within(() => {
-                  cy.dataCy(selectorTableContactIcon)
+                  cy.dataCy(selectorTablePhoneIcon)
+                    .find('i')
                     .should('be.visible')
-                    .and('have.color', primary);
-                  cy.dataCy(selectorTableContactIcon)
                     .invoke('height')
                     .should('be.equal', iconSize);
-                  cy.dataCy(selectorTableContactIcon)
+                  cy.dataCy(selectorTablePhoneIcon)
+                    .find('i')
+                    .invoke('width')
+                    .should('be.equal', iconSize);
+                  cy.dataCy(selectorTableEmailIcon)
+                    .find('i')
+                    .should('be.visible')
+                    .invoke('height')
+                    .should('be.equal', iconSize);
+                  cy.dataCy(selectorTableEmailIcon)
+                    .find('i')
                     .invoke('width')
                     .should('be.equal', iconSize);
                 });
@@ -305,9 +321,40 @@ function dataDisplayTests() {
                 .should('be.visible')
                 .and('be.empty');
             }
-            // contact icon
+            // contact icons
             cy.dataCy(selectorTableContact).within(() => {
-              cy.dataCy(selectorTableContactIcon).should('be.visible');
+              // phone
+              if (display.orderedMembers[index].telephone) {
+                cy.dataCy(selectorTablePhoneIcon)
+                  .should('be.visible')
+                  .and('not.have.class', 'disabled');
+                cy.dataCy(selectorTablePhoneIcon)
+                  .find('i')
+                  .should('have.color', primary);
+              } else {
+                cy.dataCy(selectorTablePhoneIcon)
+                  .should('be.visible')
+                  .and('have.class', 'disabled');
+                cy.dataCy(selectorTablePhoneIcon)
+                  .find('i')
+                  .should('have.color', grey5);
+              }
+              // email
+              if (display.orderedMembers[index].email) {
+                cy.dataCy(selectorTableEmailIcon)
+                  .should('be.visible')
+                  .and('not.have.class', 'disabled');
+                cy.dataCy(selectorTableEmailIcon)
+                  .find('i')
+                  .should('have.color', primary);
+              } else {
+                cy.dataCy(selectorTableEmailIcon)
+                  .should('be.visible')
+                  .and('have.class', 'disabled');
+                cy.dataCy(selectorTableEmailIcon)
+                  .find('i')
+                  .should('have.color', grey5);
+              }
             });
             // approved
             if (display.orderedMembers[index].approved) {
@@ -350,6 +397,79 @@ function dataDisplayTests() {
               cy.get('button').should('exist');
             });
           });
+        }
+      });
+    });
+  });
+
+  it('should copy contact information to clipboard when clicking enabled icons', () => {
+    cy.fixture('tableAttendanceTestData').then((tableAttendanceTestData) => {
+      // mock clipboard API
+      cy.window().then((win) => {
+        win.navigator.clipboard = {
+          writeText: cy.stub().resolves(),
+        };
+      });
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        const adminOrganisations = computed(
+          () => adminOrganisationStore.getAdminOrganisations,
+        );
+        adminOrganisationStore.setAdminOrganisations(
+          tableAttendanceTestData.storeData,
+        );
+        cy.wrap(adminOrganisations)
+          .its('value')
+          .should('deep.equal', tableAttendanceTestData.storeData);
+      });
+      const display = tableAttendanceTestData.displayData;
+      // test clipboard functionality
+      cy.dataCy(selectorTableRow).each((table, index) => {
+        if (display.orderedMembers[index]) {
+          if (display.orderedMembers[index].telephone) {
+            cy.wrap(table).within(() => {
+              cy.dataCy(selectorTableContact).within(() => {
+                cy.dataCy(selectorTablePhoneIcon)
+                  .should('not.have.class', 'disabled')
+                  .click();
+                cy.window().then((win) => {
+                  expect(
+                    win.navigator.clipboard.writeText,
+                  ).to.have.been.calledWith(
+                    display.orderedMembers[index].telephone,
+                  );
+                });
+              });
+            });
+            cy.contains(i18n.global.t('notify.copiedToClipboard')).should(
+              'be.visible',
+            );
+            cy.contains(i18n.global.t('notify.copiedToClipboard')).should(
+              'not.be.visible',
+            );
+          }
+          if (display.orderedMembers[index].email) {
+            cy.wrap(table).within(() => {
+              cy.dataCy(selectorTableContact).within(() => {
+                cy.dataCy(selectorTableEmailIcon)
+                  .should('not.have.class', 'disabled')
+                  .click();
+                cy.window().then((win) => {
+                  expect(
+                    win.navigator.clipboard.writeText,
+                  ).to.have.been.calledWith(
+                    display.orderedMembers[index].email,
+                  );
+                });
+              });
+            });
+            cy.contains(i18n.global.t('notify.copiedToClipboard')).should(
+              'be.visible',
+            );
+            cy.contains(i18n.global.t('notify.copiedToClipboard')).should(
+              'not.be.visible',
+            );
+          }
         }
       });
     });

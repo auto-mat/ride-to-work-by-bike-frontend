@@ -19,7 +19,8 @@ import type {
 export interface TableAttendanceRow {
   name: string;
   nickname: string | null;
-  contact: string;
+  email: string;
+  telephone: string;
   isFeeApproved: boolean;
   paymentType: PaymentType;
   paymentState: PaymentState;
@@ -47,7 +48,8 @@ function transformMemberToRow(
   return {
     name: member.name,
     nickname: member.nickname,
-    contact: member.email,
+    email: member.email,
+    telephone: member.telephone,
     isFeeApproved: member.approved_for_team === TeamMemberStatus.approved,
     paymentType,
     paymentState: member.payment_status,

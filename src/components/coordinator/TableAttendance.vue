@@ -21,6 +21,7 @@ import {
   useTableAttendance,
 } from '../../composables/useTable';
 import { useTableAttendanceData } from '../../composables/useTableAttendanceData';
+import { useCopyToClipboard } from '../../composables/useCopyToClipboard';
 
 // enums
 import { PaymentState } from '../enums/Payment';
@@ -64,6 +65,7 @@ export default defineComponent({
       }
     }
 
+    const { copyToClipboard } = useCopyToClipboard();
     const {
       columns,
       visibleColumns,
@@ -85,12 +87,16 @@ export default defineComponent({
       // TODO: Add teams
     ]);
 
+    const iconSize = '18px';
+
     return {
       AttendanceTableFeeColumnIcons,
       AttendanceTableFeeColumnIconsColors,
       AttendanceTablePayColumnIconsColors,
       borderRadius,
       columns,
+      copyToClipboard,
+      iconSize,
       subsidiariesData,
       tableRefs,
       teams,
@@ -195,13 +201,41 @@ export default defineComponent({
               :props="props"
               data-cy="table-attendance-contact"
             >
-              <!-- TODO: implement feature - copiable contact details -->
-              <q-icon
-                size="18px"
-                color="primary"
-                name="svguse:icons/table_attendance/icons.svg#info"
-                data-cy="table-attendance-contact-icon"
-              />
+              <!-- Phone -->
+              <q-btn
+                flat
+                dense
+                round
+                size="sm"
+                :disable="!props.row.telephone"
+                @click="
+                  props.row.telephone && copyToClipboard(props.row.telephone)
+                "
+                data-cy="table-attendance-contact-phone-icon"
+              >
+                <q-icon
+                  :size="iconSize"
+                  :color="props.row.telephone ? 'primary' : 'grey-5'"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#phone"
+                />
+              </q-btn>
+              <!-- Email -->
+              <q-btn
+                flat
+                dense
+                round
+                size="sm"
+                class="q-ml-xs"
+                :disable="!props.row.email"
+                @click="props.row.email && copyToClipboard(props.row.email)"
+                data-cy="table-attendance-contact-email-icon"
+              >
+                <q-icon
+                  :size="iconSize"
+                  :color="props.row.email ? 'primary' : 'grey-5'"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#email"
+                />
+              </q-btn>
             </q-td>
             <!-- Fee Approved -->
             <q-td
@@ -211,7 +245,7 @@ export default defineComponent({
               data-cy="table-attendance-fee-approved"
             >
               <q-icon
-                size="18px"
+                :size="iconSize"
                 :name="
                   props.row.isFeeApproved
                     ? AttendanceTableFeeColumnIcons.approved
@@ -241,7 +275,7 @@ export default defineComponent({
             >
               <q-icon
                 :name="getPaymentStateIcon(props.row.paymentState)"
-                size="18px"
+                :size="iconSize"
                 :color="
                   props.row.paymentState === PaymentState.done
                     ? AttendanceTablePayColumnIconsColors.done

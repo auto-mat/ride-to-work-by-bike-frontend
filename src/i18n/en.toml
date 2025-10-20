@@ -705,6 +705,9 @@ emailUpdateWrongPassword = "Failed to verify login credentials. Probably you ent
 geolocationError = "Error in geolocation attempt: {error}"
 geolocationNotSupported = "Your browser does not support geolocation."
 noRouteSelected = "No route to log is selected."
+clipboardApiNotAvailable = "Clipboard copy function is not available"
+copiedToClipboard = "Copied to clipboard"
+copyFailed = "Failed to copy to clipboard"
 
 [notifications]
 buttonMarkAllAsRead = "Mark all as read"

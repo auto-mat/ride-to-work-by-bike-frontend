@@ -707,6 +707,9 @@ emailUpdateWrongPassword = "Nepovedlo sa overiť prihlasovacie údaje. Pravdepod
 geolocationError = "Chyba pri pokuse o určenie polohy: {error}"
 geolocationNotSupported = "Váš prehliadač nepodporuje geolokáciu."
 noRouteSelected = "Nie je vybraná žiadna trasa na zaznamenanie."
+clipboardApiNotAvailable = "Funkcia kopírovania do schránky nie je k dispozícii"
+copiedToClipboard = "Skopírované do schránky"
+copyFailed = "Nepodarilo sa skopírovať do schránky"
 
 [notifications]
 buttonMarkAllAsRead = "Označiť všetko ako prečítané"
