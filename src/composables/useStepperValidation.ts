@@ -47,13 +47,19 @@ export const useStepperValidation = ({
   const onContinue = async (): Promise<void> => {
     if (!stepperRef.value) return;
 
+    let isValidPersonalDetails: boolean;
+    let isValidPayment: boolean;
+    let isValidParticipation: boolean;
+    let isValidCompany: boolean;
+    let isValidTeam: boolean;
+    let isValidMerch: boolean;
+
     // determine step
     switch (step.value) {
       // validate personal details step
       case 1:
         if (!stepPersonalDetailsRef.value) return;
-        const isValidPersonalDetails: boolean =
-          await stepPersonalDetailsRef.value.validate();
+        isValidPersonalDetails = await stepPersonalDetailsRef.value.validate();
         if (isValidPersonalDetails) {
           const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.personalDetails,
@@ -71,7 +77,7 @@ export const useStepperValidation = ({
       // validate payment step
       case 2:
         if (!stepPaymentRef.value) return;
-        const isValidPayment: boolean = await stepPaymentRef.value.validate();
+        isValidPayment = await stepPaymentRef.value.validate();
         if (isValidPayment) {
           const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.payment,
@@ -89,8 +95,7 @@ export const useStepperValidation = ({
       // validate participation step
       case 3:
         if (!stepParticipationRef.value) return;
-        const isValidParticipation: boolean =
-          await stepParticipationRef.value.validate();
+        isValidParticipation = await stepParticipationRef.value.validate();
         if (isValidParticipation) {
           // no API submission needed
           stepperRef.value.next();
@@ -101,7 +106,7 @@ export const useStepperValidation = ({
       // validate company step
       case 4:
         if (!stepCompanyRef.value) return;
-        const isValidCompany: boolean = await stepCompanyRef.value.validate();
+        isValidCompany = await stepCompanyRef.value.validate();
         if (isValidCompany) {
           // no API submission needed
           stepperRef.value.next();
@@ -112,7 +117,7 @@ export const useStepperValidation = ({
       // validate team step
       case 5:
         if (!stepTeamRef.value) return;
-        const isValidTeam: boolean = await stepTeamRef.value.validate();
+        isValidTeam = await stepTeamRef.value.validate();
         if (isValidTeam) {
           const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.team,
@@ -128,7 +133,7 @@ export const useStepperValidation = ({
       // validate merch step
       case 6:
         if (!stepMerchRef.value) return;
-        const isValidMerch: boolean = await stepMerchRef.value.validate();
+        isValidMerch = await stepMerchRef.value.validate();
         if (isValidMerch) {
           const response = await registerChallengeStore.submitStep(
             RegisterChallengeStep.merch,

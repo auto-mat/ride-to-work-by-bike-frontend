@@ -43,12 +43,12 @@ const getResponseDataErrorMessage = (error: AxiosError): string | void => {
 };
 
 const hasErrorReponse = (error: AxiosError): string | void => {
-  if (error.hasOwnProperty('response'))
+  if (error['response'])
     return hasReponseData(error?.response as errorResponse);
 };
 
 const hasReponseData = (response: errorResponse): string | void => {
-  if (response.hasOwnProperty('data'))
+  if (response['data'])
     return hasReponseDataNonFieldsErrorsKey({ data: response?.data });
 };
 
@@ -59,7 +59,7 @@ const hasReponseDataNonFieldsErrorsKey = ({
   data: errorResponseData;
   nonFieldErrors?: string;
 }): string | void => {
-  if (data.hasOwnProperty(nonFieldErrors)) return data[nonFieldErrors][0];
+  if (data[nonFieldErrors]) return data[nonFieldErrors][0];
 };
 
 /*

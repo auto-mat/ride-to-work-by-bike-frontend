@@ -45,8 +45,7 @@ export default defineComponent({
   },
   setup(props) {
     const { url } = props;
-    let linkUrl;
-    linkUrl = url ? url : rideToWorkByBikeConfig.urlRTWBBLogo;
+    const linkUrl = url ? url : rideToWorkByBikeConfig.urlRTWBBLogo;
     return {
       linkUrl,
     };
