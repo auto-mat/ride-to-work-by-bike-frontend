@@ -406,9 +406,20 @@ function dataDisplayTests() {
     cy.fixture('tableAttendanceTestData').then((tableAttendanceTestData) => {
       // mock clipboard API
       cy.window().then((win) => {
-        win.navigator.clipboard = {
-          writeText: cy.stub().resolves(),
-        };
+        if (!win.navigator.clipboard) {
+          // for browsers/test environments without navigator.clipboard object
+          Object.defineProperty(win.navigator, 'clipboard', {
+            value: {
+              writeText: cy.stub().resolves(),
+            },
+            writable: true,
+          });
+        } else {
+          // for browsers with navigator.clipboard
+          cy.stub(win.navigator, 'clipboard').value({
+            writeText: cy.stub().resolves(),
+          });
+        }
       });
       // initiate store state
       cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
