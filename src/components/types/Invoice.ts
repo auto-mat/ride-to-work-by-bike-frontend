@@ -1,8 +1,14 @@
+export enum InvoicePaymentStatus {
+  paymentAcceptedByOrganization = 1005,
+  invoiceCreated = 1006,
+  invoicePaid = 1007,
+}
+
 export interface InvoicePayment {
   id: number;
   amount: number;
   userprofile_id: number;
-  payment_status: number;
+  payment_status: InvoicePaymentStatus;
   pay_type: string;
   pay_category: string;
 }
