@@ -7,7 +7,7 @@
  * Shown on `CompanyCoordinatoFees` page.
  *
  * @props
- * - `approved` (bool, optional): To showing fee not approved/aprroved team members.
+ * - `approved` (bool, optional): To showing fee not approved/approved team members.
  *                                Defaults to `false`.
  *
  * @example
