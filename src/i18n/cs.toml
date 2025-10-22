@@ -100,6 +100,11 @@ apiMessageError = "Načítání měst selhalo."
 apiMessageErrorWithMessage = "Načítání měst selhalo. Chyba: {error}"
 apiMessageSuccess = "Města byla úspěšně načtena."
 
+[getCoordinatorInvoices]
+apiMessageError = "Načítání faktur selhalo."
+apiMessageErrorWithMessage = "Načítání faktur selhalo. Chyba: {error}"
+apiMessageSuccess = "Faktury byly úspěšně načteny."
+
 [getDiscountCoupon]
 apiMessageError = "Uplatnění kuponu selhalo."
 apiMessageErrorWithMessage = "Uplatnění kuponu selhalo. Chyba: {error}"

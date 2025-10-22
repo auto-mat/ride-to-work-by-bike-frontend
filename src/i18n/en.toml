@@ -100,6 +100,11 @@ apiMessageError = "Fetching cities failed."
 apiMessageErrorWithMessage = "Fetching cities failed. Error: {error}"
 apiMessageSuccess = "Cities fetched successfully."
 
+[getCoordinatorInvoices]
+apiMessageError = "Loading invoices failed."
+apiMessageErrorWithMessage = "Loading invoices failed. Error: {error}"
+apiMessageSuccess = "Invoices were successfully loaded."
+
 [getDiscountCoupon]
 apiMessageError = "Voucher could not be applied."
 apiMessageErrorWithMessage = "Voucher could not be applied. Error: {error}"

@@ -99,6 +99,7 @@ export interface ConfigGlobal {
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
   urlApiOpenAppWithRestToken: string;
+  urlApiCoordinatorInvoices: string;
   urlApiOrganizationAdminOrganizationStructure: string;
   urlApiSendRegistrationConfirmationEmail: string;
   urlApiSendTeamMembershipInvitationEmail: string;

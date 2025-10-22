@@ -95,6 +95,11 @@ apiMessageError = "Načítanie fáz výzvy zlyhalo."
 apiMessageErrorWithMessage = "Načítanie fáz výzvy zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Fázy výzvy boli úspešne načítané."
 
+[getCoordinatorInvoices]
+apiMessageError = "Načítanie faktúr zlyhalo."
+apiMessageErrorWithMessage = "Načítanie faktúr zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Faktúry boli úspešne načítané."
+
 [getDiscountCoupon]
 apiMessageError = "Uplatnenie kupónu zlyhalo."
 apiMessageErrorWithMessage = "Uplatnenie kupónu zlyhalo. Chyba: {error}"
