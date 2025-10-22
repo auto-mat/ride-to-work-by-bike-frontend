@@ -288,6 +288,11 @@ titleNational = "Národní partneři"
 titleMedia = "Mediální partneři"
 titleOrganizers = "Výzvu pořádá"
 
+[makeInvoice]
+apiMessageError = "Vytvoření faktury selhalo."
+apiMessageErrorWithMessage = "Vytvoření faktury selhalo. Chyba: {error}"
+apiMessageSuccess = "Faktura byla úspěšně vytvořena."
+
 [prizes]
 textAvailablePrizes = "Týmy, které obdrží výhru, losujeme z týmů, které splnily celkovou pravidelnost vyšší než 66,6 %."
 textEventsEmpty = "Ve vašem městě zatím nejsou naplánované žádné události."

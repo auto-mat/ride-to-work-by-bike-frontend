@@ -288,6 +288,11 @@ titleNational = "National partners"
 titleMedia = "Media partners"
 titleOrganizers = "Challenge organized by"
 
+[makeInvoice]
+apiMessageError = "Invoice creation failed."
+apiMessageErrorWithMessage = "Invoice creation failed. Error: {error}"
+apiMessageSuccess = "Invoice was successfully created."
+
 [prizes]
 textAvailablePrizes = "The teams that will receive the prize will be drawn from the teams that have achieved an overall regularity of more than 66.6%."
 textEventsEmpty = "No events are currently planned in your city."
