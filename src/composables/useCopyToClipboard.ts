@@ -10,13 +10,13 @@ type UseCopyToClipboardReturn = {
 
 /**
  * Provide functionality to copy text to clipboard and show notifications.
- * @returns {UseCopyToClipboardReturn} Object with copyToClipboard function
+ * @returns {UseCopyToClipboardReturn} - Object with copyToClipboard function
  */
 export const useCopyToClipboard = (): UseCopyToClipboardReturn => {
   /**
    * Copy text to clipboard and show notification
    * @param {string} text - Text to copy to clipboard
-   * @returns {Promise<boolean>} Success status
+   * @returns {Promise<boolean>} - Success status
    */
   const copyToClipboard = async (text: string): Promise<boolean> => {
     try {
