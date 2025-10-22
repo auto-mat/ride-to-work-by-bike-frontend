@@ -6,6 +6,10 @@
  * approval.
  * Shown on `CompanyCoordinatoFees` page.
  *
+ * @props
+ * - `approved` (bool, optional): To showing fee not approved/aprroved team members.
+ *                                Defaults to `false`.
+ *
  * @example
  * <table-fee-approval />
  *
