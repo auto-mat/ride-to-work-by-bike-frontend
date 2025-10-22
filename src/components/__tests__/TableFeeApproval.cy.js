@@ -1,4 +1,4 @@
-import { colors, date } from 'quasar';
+import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
@@ -14,7 +14,6 @@ const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 
 // composables
-const { formatDate } = date;
 const { formatPrice } = useTable();
 
 // selectors
@@ -185,15 +184,21 @@ describe('<TableFeeApproval>', () => {
                     .and('be.empty');
                 }
                 // date
-                cy.dataCy(selectorTableDate)
-                  .should('be.visible')
-                  .and(
-                    'contain',
-                    formatDate(
-                      new Date(String(display[index].dateCreated)),
-                      'D. MMM. YYYY',
-                    ),
-                  );
+                if (display[index].dateCreated) {
+                  cy.dataCy(selectorTableDate)
+                    .should('be.visible')
+                    .and(
+                      'contain',
+                      i18n.global.d(
+                        new Date(display[index].dateCreated),
+                        'numeric',
+                      ),
+                    );
+                } else {
+                  cy.dataCy(selectorTableDate)
+                    .should('be.visible')
+                    .and('be.empty');
+                }
               });
             }
           });
@@ -334,15 +339,21 @@ describe('<TableFeeApproval>', () => {
                     .and('be.empty');
                 }
                 // date
-                cy.dataCy(selectorTableDate)
-                  .should('be.visible')
-                  .and(
-                    'contain',
-                    formatDate(
-                      new Date(String(display[index].dateCreated)),
-                      'D. MMM. YYYY',
-                    ),
-                  );
+                if (display[index].dateCreated) {
+                  cy.dataCy(selectorTableDate)
+                    .should('be.visible')
+                    .and(
+                      'contain',
+                      i18n.global.d(
+                        new Date(display[index].dateCreated),
+                        'numeric',
+                      ),
+                    );
+                } else {
+                  cy.dataCy(selectorTableDate)
+                    .should('be.visible')
+                    .and('be.empty');
+                }
               });
             }
           });

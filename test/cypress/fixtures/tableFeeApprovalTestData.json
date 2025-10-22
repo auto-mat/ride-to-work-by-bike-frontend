@@ -28,7 +28,7 @@
                   "id": 10001,
                   "name": "Jan Novák",
                   "nickname": "jnovak",
-                  "date_of_challenge_registration": "2025-01-15T10:30:00.000000",
+                  "date_of_challenge_registration": "",
                   "email": "jan.novak@cerny.cz",
                   "telephone": "123456789",
                   "sex": "male",
@@ -154,7 +154,7 @@
         "email": "jan.novak@cerny.cz",
         "nickname": "jnovak",
         "amount": 390,
-        "dateCreated": "2025-01-15T10:30:00.000000",
+        "dateCreated": "",
         "address": "Hlavní 123, Praha"
       }
     ],

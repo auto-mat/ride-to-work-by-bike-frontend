@@ -174,11 +174,8 @@ export default defineComponent({
               :props="props"
               data-cy="table-fee-approval-date"
             >
-              <!-- Loop over data to get formatted content -->
-              <template v-for="col in props.cols" :key="col.field">
-                <span v-if="col.field === 'dateCreated'">
-                  {{ col.value }}
-                </span>
+              <template v-if="props.row.dateCreated">
+                {{ $d(new Date(props.row.dateCreated), 'numeric') }}
               </template>
             </q-td>
           </q-tr>
