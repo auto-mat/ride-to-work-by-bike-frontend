@@ -1146,7 +1146,8 @@ textNoResults = "Žiadne výsledky. Skúste zmeniť nastavenie filtrov."
 textLoading = "Načítavam dáta"
 textRowsPerPage = "Počet výsledkov na stránku"
 textPagination = "{firstRowIndex}-{endRowIndex} / {totalRowsNumber}"
-titleFeeApproval = "Platby štartovného na schválenie"
+titleFeeApprovalApproved = "Už schválené"
+titleFeeApprovalNotApproved = "Platby štartovného na schválenie"
 titleInvoices = "Faktúry"
 
 [teamMembersList]

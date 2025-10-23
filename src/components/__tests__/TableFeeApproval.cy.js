@@ -43,7 +43,6 @@ describe('<TableFeeApproval>', () => {
         'labelNickname',
         'labelTeam',
         'textNoData',
-        'titleFeeApproval',
       ],
       'table',
       i18n,

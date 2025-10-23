@@ -83,17 +83,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="q-pa-md" data-cy="table-fee-approval">
+  <div data-cy="table-fee-approval">
     <div>
-      <!-- Title -->
-      <h3
-        class="text-body1 text-bold text-black q-my-none"
-        data-cy="table-fee-approval-title"
-      >
-        {{ $t('table.titleFeeApproval') }}
-      </h3>
-    </div>
-    <div class="q-my-lg">
       <!-- Table -->
       <q-table
         ref="tableRef"

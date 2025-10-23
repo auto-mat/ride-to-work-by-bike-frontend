@@ -1146,7 +1146,8 @@ textNoResults = "No results. Try changing the filter settings."
 textLoading = "Loading data"
 textRowsPerPage = "Results per page"
 textPagination = "{firstRowIndex}-{endRowIndex} of {totalRowsNumber}"
-titleFeeApproval = "Entry fee payments for approval"
+titleFeeApprovalApproved = "Already approved"
+titleFeeApprovalNotApproved = "Entry fee payments for approval"
 titleInvoices = "Invoices"
 
 [teamMembersList]
