@@ -57,9 +57,15 @@ export default defineComponent({
     });
 
     onMounted(async () => {
+      // for independent data sets, we fetch in parallel
+      const promises = [];
       if (adminOrganisationStore.getAdminOrganisations.length === 0) {
-        await adminOrganisationStore.loadAdminOrganisations();
+        promises.push(adminOrganisationStore.loadAdminOrganisations());
       }
+      if (adminOrganisationStore.getAdminInvoices.length === 0) {
+        promises.push(adminOrganisationStore.loadAdminInvoices());
+      }
+      await Promise.all(promises);
     });
 
     return {
