@@ -13,13 +13,13 @@ import type {
 } from 'src/components/types/AdminOrganisation';
 
 export interface TableFeeApprovalRow {
+  id: number;
   name: string;
   email: string;
   nickname: string | null;
   amount: number;
   dateCreated: string;
   address: string;
-  selected?: boolean;
   isFirst?: boolean;
 }
 
@@ -34,13 +34,13 @@ function transformMemberToRow(
   subsidiaryAddress: string,
 ): TableFeeApprovalRow {
   return {
+    id: member.id,
     name: member.name,
     email: member.email,
     nickname: member.nickname,
     amount: parseFloat(member.payment_amount) || 0,
     dateCreated: member.date_of_challenge_registration,
     address: subsidiaryAddress,
-    selected: false,
   };
 }
 

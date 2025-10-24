@@ -12,6 +12,7 @@ siteTitle = "Do práce na kole"
 
 [approvePayments]
 apiMessageError = "Potvrzení plateb se nezdařilo."
+apiMessageErrorPartial = "Některé platby nemohly být potvrzeny."
 apiMessageErrorWithMessage = "Potvrzení plateb se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Platby byly úspěšně potvrzeny."
 apiMessageSuccessWithCount = "Platby potvrzeny pro {count} účastnic*íků. | Platba potvrzena pro {count} účastnici*íka. | Platby potvrzeny pro {count} účastnice*íky. | Platby potvrzeny pro {count} účastnic*íků."

@@ -18,7 +18,14 @@
 
 // libraries
 import { QTable } from 'quasar';
-import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 
 // composables
 import {
@@ -27,6 +34,12 @@ import {
   useTableFeeApproval,
 } from '../../composables/useTable';
 import { useTableFeeApprovalData } from '../../composables/useTableFeeApprovalData';
+
+// stores
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+
+// types
+import type { TableFeeApprovalRow } from '../../composables/useTableFeeApprovalData';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -41,8 +54,13 @@ export default defineComponent({
   },
 
   setup(props) {
-    // holds an array of currently selected rows
-    const selected = ref([]);
+    const adminOrganisationStore = useAdminOrganisationStore();
+    const selected = computed<TableFeeApprovalRow[]>({
+      get: () => adminOrganisationStore.getSelectedPaymentsToApprove,
+      set: (value) => {
+        adminOrganisationStore.setSelectedPaymentsToApprove(value);
+      },
+    });
     const tableRef = ref<QTable | null>(null);
 
     const { columns, visibleColumns } = useTableFeeApproval();
@@ -66,15 +84,25 @@ export default defineComponent({
       },
     );
 
+    const approveSelectedPayments = async (): Promise<void> => {
+      await adminOrganisationStore.approveSelectedPayments();
+    };
+
+    const isLoadingApprovePayments = computed<boolean>(() => {
+      return adminOrganisationStore.getIsLoadingApprovePayments;
+    });
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
       columns,
       feeApprovalData,
+      isLoadingApprovePayments,
       selected,
       tableRef,
       visibleColumns,
+      approveSelectedPayments,
       paginationLabel,
       sortByAddress,
     };
@@ -183,8 +211,11 @@ export default defineComponent({
         rounded
         unelevated
         :label="$t('table.buttonFeeApproval')"
+        :loading="isLoadingApprovePayments"
+        :disable="selected.length === 0 || isLoadingApprovePayments"
         color="primary"
         data-cy="table-fee-approval-button"
+        @click.prevent="approveSelectedPayments"
       />
     </div>
   </div>

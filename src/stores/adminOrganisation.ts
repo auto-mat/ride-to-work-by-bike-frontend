@@ -1,14 +1,18 @@
 // libraries
+import { Notify } from 'quasar';
 import { defineStore } from 'pinia';
 
 // composables
-import { useApiGetAdminOrganisation } from 'src/composables/useApiGetAdminOrganisation';
-import { useApiGetCoordinatorInvoices } from 'src/composables/useApiGetCoordinatorInvoices';
+import { i18n } from '../boot/i18n';
+import { useApiGetAdminOrganisation } from '../composables/useApiGetAdminOrganisation';
+import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinatorInvoices';
+import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
 
 // types
 import type { Logger } from '../components/types/Logger';
 import type { AdminOrganisation } from '../components/types/AdminOrganisation';
 import type { InvoiceResult } from '../components/types/Invoice';
+import type { TableFeeApprovalRow } from '../composables/useTableFeeApprovalData';
 
 interface AdminOrganisationState {
   $log: Logger | null;
@@ -16,6 +20,8 @@ interface AdminOrganisationState {
   adminInvoices: InvoiceResult[];
   isLoadingOrganisations: boolean;
   isLoadingInvoices: boolean;
+  isLoadingApprovePayments: boolean;
+  selectedPaymentsToApprove: TableFeeApprovalRow[];
 }
 
 export const useAdminOrganisationStore = defineStore('adminOrganisation', {
@@ -25,6 +31,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     adminInvoices: [],
     isLoadingOrganisations: false,
     isLoadingInvoices: false,
+    isLoadingApprovePayments: false,
+    selectedPaymentsToApprove: [],
   }),
 
   getters: {
@@ -32,10 +40,14 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getAdminInvoices: (state) => state.adminInvoices,
     getIsLoadingOrganisations: (state) => state.isLoadingOrganisations,
     getIsLoadingInvoices: (state) => state.isLoadingInvoices,
+    getIsLoadingApprovePayments: (state) => state.isLoadingApprovePayments,
     getIsLoadingAny: (state) =>
-      state.isLoadingOrganisations || state.isLoadingInvoices,
+      state.isLoadingOrganisations ||
+      state.isLoadingInvoices ||
+      state.isLoadingApprovePayments,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
+    getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
   },
 
   actions: {
@@ -44,6 +56,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     },
     setAdminInvoices(adminInvoices: InvoiceResult[]): void {
       this.adminInvoices = adminInvoices;
+    },
+    setSelectedPaymentsToApprove(
+      selectedPaymentsToApprove: TableFeeApprovalRow[],
+    ): void {
+      this.selectedPaymentsToApprove = selectedPaymentsToApprove;
     },
     /**
      * Load admin organisations from API
@@ -76,6 +93,46 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingInvoices = false;
     },
     /**
+     * Approve selected payments
+     * @returns {Promise<void>}
+     */
+    async approveSelectedPayments(): Promise<void> {
+      const { approvePayments } = useApiPostCoordinatorApprovePayments(
+        this.$log,
+      );
+      // get ids of selected payments
+      const ids = this.selectedPaymentsToApprove.map((payment) => payment.id);
+      this.isLoadingApprovePayments = true;
+      // approve payments
+      const result = await approvePayments(ids);
+
+      // clear selected payments
+      this.setSelectedPaymentsToApprove([]);
+      // refetch organization structure
+      await this.loadAdminOrganisations();
+
+      // check that the approved ids are the same as the selected ids
+      const approvedIds = result?.approved_ids || [];
+      if (approvedIds.length > 0) {
+        Notify.create({
+          message: i18n.global.t(
+            'approvePayments.apiMessageSuccessWithCount',
+            { count: approvedIds.length },
+            approvedIds.length,
+          ),
+          color: 'positive',
+        });
+      }
+      // notify if some payment ids were not approved
+      if (approvedIds.length !== ids.length) {
+        Notify.create({
+          message: i18n.global.t('approvePayments.apiMessageErrorPartial'),
+          color: 'negative',
+        });
+      }
+      this.isLoadingApprovePayments = false;
+    },
+    /**
      * Clear all store data
      * @returns {void}
      */
@@ -84,10 +141,15 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.adminInvoices = [];
       this.isLoadingOrganisations = false;
       this.isLoadingInvoices = false;
+      this.isLoadingApprovePayments = false;
     },
   },
 
   persist: {
-    omit: ['isLoadingOrganisations', 'isLoadingInvoices'],
+    omit: [
+      'isLoadingOrganisations',
+      'isLoadingInvoices',
+      'isLoadingApprovePayments',
+    ],
   },
 });
