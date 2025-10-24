@@ -4092,14 +4092,15 @@ Cypress.Commands.add(
  * @param {Object} config - App configuration object
  */
 Cypress.Commands.add('setupCoordinatorFeeApprovalTest', (config, i18n) => {
-  // register challenge API
   cy.fixture('apiGetRegisterChallengeProfile.json').then(
     (registerChallengeResponse) => {
+      // register challenge API
       cy.interceptRegisterChallengeGetApi(
         config,
         i18n,
         registerChallengeResponse,
       );
+      // has organization admin API
       cy.fixture('apiGetHasOrganizationAdminResponseTrue.json').then(
         (response) => {
           cy.interceptHasOrganizationAdminGetApi(
@@ -4123,10 +4124,12 @@ Cypress.Commands.add('setupCoordinatorFeeApprovalTest', (config, i18n) => {
     config,
     'apiGetAdminOrganisationResponse.json',
   );
+  // invoices API
   cy.interceptCoordinatorInvoicesGetApi(
     config,
     'apiGetCoordinatorInvoicesResponse.json',
   );
+  // login and navigate to coordinator fees page
   cy.performAuthenticatedLogin(config, i18n);
   cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
   cy.dataCy('table-fee-approval-not-approved-title').should('be.visible');
