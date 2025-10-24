@@ -62,7 +62,7 @@
               "members_with_paid_entry_fee_by_org_coord": [],
               "other_members": [
                 {
-                  "id": 20005,
+                  "id": 20003,
                   "name": "Radek Pospíšil",
                   "nickname": "rpospisil",
                   "date_of_challenge_registration": "2024-12-10T12:00:00.000000",
@@ -87,7 +87,7 @@
               "members_without_paid_entry_fee_by_org_coord": [],
               "members_with_paid_entry_fee_by_org_coord": [
                 {
-                  "id": 20007,
+                  "id": 20004,
                   "name": "Jaroslav Beneš",
                   "nickname": "jbenes",
                   "date_of_challenge_registration": "2025-01-28T09:45:00.000000",

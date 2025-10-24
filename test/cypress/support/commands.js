@@ -4087,31 +4087,52 @@ Cypress.Commands.add(
 );
 
 /**
- * Setup authenticated company coordinator test environment
- * Sets up API intercepts, performs login, and navigates to company coordinator page
+ * Setup test environment for coordinator fee approval tests
+ * Sets up API intercepts, performs login, and navigates to coordinator fees page
  * @param {Object} config - App configuration object
- * @param {Object} i18n - Internationalization object
- * @param {string} registerChallengeFixture - Fixture file name for register challenge response
  */
-Cypress.Commands.add(
-  'setupCoordinatorTest',
-  (
+Cypress.Commands.add('setupCoordinatorFeeApprovalTest', (config, i18n) => {
+  // register challenge API
+  cy.fixture('apiGetRegisterChallengeProfile.json').then(
+    (registerChallengeResponse) => {
+      cy.interceptRegisterChallengeGetApi(
+        config,
+        i18n,
+        registerChallengeResponse,
+      );
+      cy.fixture('apiGetHasOrganizationAdminResponseTrue.json').then(
+        (response) => {
+          cy.interceptHasOrganizationAdminGetApi(
+            config,
+            i18n,
+            registerChallengeResponse.results[0].organization_id,
+            response,
+          );
+        },
+      );
+      // is user organization admin API
+      cy.fixture('apiGetIsUserOrganizationAdminResponseTrue.json').then(
+        (response) => {
+          cy.interceptIsUserOrganizationAdminGetApi(config, i18n, response);
+        },
+      );
+    },
+  );
+  // organization structure API
+  cy.interceptAdminOrganisationGetApi(
     config,
-    i18n,
-    registerChallengeFixture = 'apiGetRegisterChallengeProfile.json',
-  ) => {
-    cy.fixture(registerChallengeFixture).then((response) => {
-      cy.interceptRegisterChallengeGetApi(config, defLocale, response);
-    });
-    cy.fixture('apiGetIsUserOrganizationAdminResponseTrue.json').then(
-      (response) => {
-        cy.interceptIsUserOrganizationAdminGetApi(config, defLocale, response);
-      },
-    );
-    cy.visit('#' + routesConf['coordinator_fees']['path']);
-    cy.dataCy('company-coordinator-title').should('be.visible');
-  },
-);
+    'apiGetAdminOrganisationResponse.json',
+  );
+  cy.interceptCoordinatorInvoicesGetApi(
+    config,
+    'apiGetCoordinatorInvoicesResponse.json',
+  );
+  cy.performAuthenticatedLogin(config, i18n);
+  cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
+  cy.dataCy('table-fee-approval-not-approved-title').should('be.visible');
+  cy.dataCy('table-fee-approval-approved-title').should('be.visible');
+});
+
 /**
  * Test that all routes in the given route groups are accessible
  * @param {Array<Array<string>>} routeGroups - Array of route group arrays
