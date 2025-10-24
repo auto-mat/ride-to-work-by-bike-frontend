@@ -88,7 +88,7 @@ describe('Company coordinator fee approval page', () => {
                 'have.length',
                 test.displayAfterApproval.countApproved,
               );
-              test.approvePayment.members.forEach((member) => {
+              test.approvePayment.membersApproved.forEach((member) => {
                 cy.contains(member.name).should('be.visible');
               });
             });
@@ -96,9 +96,14 @@ describe('Company coordinator fee approval page', () => {
               cy.contains(
                 i18n.global.t(
                   'approvePayments.apiMessageSuccessWithCount',
-                  { count: test.approvePayment.members.length },
-                  test.approvePayment.members.length,
+                  { count: test.approvePayment.membersApproved.length },
+                  test.approvePayment.membersApproved.length,
                 ),
+              ).should('be.visible');
+            }
+            if (test.approvePayment.error) {
+              cy.contains(
+                i18n.global.t('approvePayments.apiMessageErrorPartial'),
               ).should('be.visible');
             }
           });
