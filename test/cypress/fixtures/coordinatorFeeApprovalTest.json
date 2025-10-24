@@ -1,0 +1,28 @@
+{
+  "description": "approve single member payment",
+  "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+  "displayInitial": {
+    "idsWaitingForApproval": [60001, 60002],
+    "countWaitingForApproval": 2,
+    "idsApproved": [60003, 60004],
+    "countApproved": 2
+  },
+  "approvePayment": {
+    "name": "Jana Novotná",
+    "id": 60001,
+    "requestPayload": {
+      "ids": [60001]
+    },
+    "responseBody": {
+      "message": "Approved 1 payment successfully",
+      "approved_ids": [60001]
+    }
+  },
+  "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
+  "displayAfterApproval": {
+    "idsWaitingForApproval": [60002],
+    "countWaitingForApproval": 1,
+    "idsApproved": [60001, 60003, 60004],
+    "countApproved": 3
+  }
+}

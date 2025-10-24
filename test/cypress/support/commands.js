@@ -29,6 +29,9 @@
 import { registerCommands } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 registerCommands();
 
+// Import modular command files
+import './commands/coordinator_commands';
+
 import { computed } from 'vue';
 import {
   failOnStatusCode,
@@ -4083,6 +4086,32 @@ Cypress.Commands.add(
   },
 );
 
+/**
+ * Setup authenticated company coordinator test environment
+ * Sets up API intercepts, performs login, and navigates to company coordinator page
+ * @param {Object} config - App configuration object
+ * @param {Object} i18n - Internationalization object
+ * @param {string} registerChallengeFixture - Fixture file name for register challenge response
+ */
+Cypress.Commands.add(
+  'setupCoordinatorTest',
+  (
+    config,
+    i18n,
+    registerChallengeFixture = 'apiGetRegisterChallengeProfile.json',
+  ) => {
+    cy.fixture(registerChallengeFixture).then((response) => {
+      cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+    });
+    cy.fixture('apiGetIsUserOrganizationAdminResponseTrue.json').then(
+      (response) => {
+        cy.interceptIsUserOrganizationAdminGetApi(config, defLocale, response);
+      },
+    );
+    cy.visit('#' + routesConf['coordinator_fees']['path']);
+    cy.dataCy('company-coordinator-title').should('be.visible');
+  },
+);
 /**
  * Test that all routes in the given route groups are accessible
  * @param {Array<Array<string>>} routeGroups - Array of route group arrays
