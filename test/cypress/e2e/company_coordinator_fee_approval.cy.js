@@ -1,5 +1,6 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { systemTimeChallengeActive } from '../support/commonTests';
+import testSet from '../fixtures/coordinatorFeeApprovalTest.json';
 
 describe('Company coordinator fee approval page', () => {
   context('previewing members and approving payments', () => {
@@ -20,68 +21,77 @@ describe('Company coordinator fee approval page', () => {
       });
     });
 
-    it('allows to approve single member payment', () => {
-      cy.get('@config').then((config) => {
-        cy.fixture('coordinatorFeeApprovalTest.json').then((test) => {
-          cy.dataCy('table-fee-approval-not-approved').within(() => {
-            cy.dataCy('table-fee-approval-row').should(
-              'have.length',
-              test.displayInitial.countWaitingForApproval,
+    testSet.forEach((test) => {
+      it(`${test.description}`, () => {
+        cy.get('@config').then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            cy.dataCy('table-fee-approval-not-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayInitial.countWaitingForApproval,
+              );
+            });
+            cy.dataCy('table-fee-approval-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayInitial.countApproved,
+              );
+            });
+            cy.waitForAdminOrganisationGetApi(
+              test.fixtureAdminOrganisationInitial,
             );
-          });
-          cy.dataCy('table-fee-approval-approved').within(() => {
-            cy.dataCy('table-fee-approval-row').should(
-              'have.length',
-              test.displayInitial.countApproved,
+            // check that initial admin organisation response is loaded
+            cy.get('@getAdminOrganisation.all').should('have.length', 1);
+            // intercept endpoints for approve payment responses
+            cy.interceptCoordinatorApprovePaymentsPostApi(
+              config,
+              test.approvePayment.responseBody,
             );
-          });
-          cy.waitForAdminOrganisationGetApi(
-            test.fixtureAdminOrganisationInitial,
-          );
-          // check that initial admin organisation response is loaded
-          cy.get('@getAdminOrganisation.all').should('have.length', 1);
-          // intercept endpoints for approve payment responses
-          cy.interceptCoordinatorApprovePaymentsPostApi(
-            config,
-            test.approvePayment.responseBody,
-          );
-          cy.interceptAdminOrganisationGetApi(
-            config,
-            test.fixtureAdminOrganisationAfterApproval,
-          );
-          // find row with selected member name
-          cy.contains(test.approvePayment.name)
-            .parent('tr')
-            .should('be.visible')
-            .find('[data-cy="table-fee-approval-checkbox"]')
-            .click();
-          // click approve button
-          cy.dataCy('table-fee-approval-button')
-            .should('be.visible')
-            .and('not.be.disabled')
-            .click();
-          // wait for API call to finish
-          cy.waitForCoordinatorApprovePaymentsPostApi(
-            test.approvePayment.requestPayload,
-            test.approvePayment.responseBody,
-          );
-          cy.waitForAdminOrganisationGetApi(
-            test.fixtureAdminOrganisationAfterApproval,
-          );
-          cy.get('@getAdminOrganisation.all').should('have.length', 2);
-          // check that the member is approved
-          cy.dataCy('table-fee-approval-not-approved').within(() => {
-            cy.dataCy('table-fee-approval-row').should(
-              'have.length',
-              test.displayAfterApproval.countWaitingForApproval,
+            cy.interceptAdminOrganisationGetApi(
+              config,
+              test.fixtureAdminOrganisationAfterApproval,
             );
-          });
-          cy.dataCy('table-fee-approval-approved').within(() => {
-            cy.dataCy('table-fee-approval-row').should(
-              'have.length',
-              test.displayAfterApproval.countApproved,
+            // find row with selected member name
+            cy.contains(test.approvePayment.name)
+              .parent('tr')
+              .should('be.visible')
+              .find('[data-cy="table-fee-approval-checkbox"]')
+              .click();
+            // click approve button
+            cy.dataCy('table-fee-approval-button')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // wait for API call to finish
+            cy.waitForCoordinatorApprovePaymentsPostApi(
+              test.approvePayment.requestPayload,
+              test.approvePayment.responseBody,
             );
-            cy.contains(test.approvePayment.name).should('be.visible');
+            cy.waitForAdminOrganisationGetApi(
+              test.fixtureAdminOrganisationAfterApproval,
+            );
+            cy.get('@getAdminOrganisation.all').should('have.length', 2);
+            // check that the member is approved
+            cy.dataCy('table-fee-approval-not-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayAfterApproval.countWaitingForApproval,
+              );
+            });
+            cy.dataCy('table-fee-approval-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayAfterApproval.countApproved,
+              );
+              cy.contains(test.approvePayment.name).should('be.visible');
+            });
+            cy.contains(
+              i18n.global.t(
+                'approvePayments.apiMessageSuccessWithCount',
+                { count: test.approvePayment.memberCount },
+                test.approvePayment.memberCount,
+              ),
+            ).should('be.visible');
           });
         });
       });

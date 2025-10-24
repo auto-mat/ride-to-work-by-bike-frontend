@@ -1,28 +1,31 @@
-{
-  "description": "allows to approve a single member payment",
-  "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
-  "displayInitial": {
-    "idsWaitingForApproval": [20001, 20002],
-    "countWaitingForApproval": 2,
-    "idsApproved": [20004],
-    "countApproved": 1
-  },
-  "approvePayment": {
-    "name": "Jana Novotná",
-    "id": 20001,
-    "requestPayload": {
-      "ids": [20001]
+[
+  {
+    "description": "allows to approve a single member payment",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "idsWaitingForApproval": [20001, 20002],
+      "countWaitingForApproval": 2,
+      "idsApproved": [20004],
+      "countApproved": 1
     },
-    "responseBody": {
-      "message": "Approved 1 payment successfully",
-      "approved_ids": [20001]
+    "approvePayment": {
+      "memberCount": 1,
+      "name": "Jana Novotná",
+      "id": 20001,
+      "requestPayload": {
+        "ids": [20001]
+      },
+      "responseBody": {
+        "message": "Approved 1 payment successfully",
+        "approved_ids": [20001]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
+    "displayAfterApproval": {
+      "idsWaitingForApproval": [20002],
+      "countWaitingForApproval": 1,
+      "idsApproved": [20001, 20004],
+      "countApproved": 2
     }
-  },
-  "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
-  "displayAfterApproval": {
-    "idsWaitingForApproval": [20002],
-    "countWaitingForApproval": 1,
-    "idsApproved": [20001, 20004],
-    "countApproved": 2
   }
-}
+]

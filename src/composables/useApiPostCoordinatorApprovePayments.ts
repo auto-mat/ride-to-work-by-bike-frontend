@@ -68,6 +68,7 @@ export const useApiPostCoordinatorApprovePayments = (
       method: 'post',
       translationKey: 'approvePayments',
       headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
+      showSuccessMessage: false,
       payload,
       logger,
     });
