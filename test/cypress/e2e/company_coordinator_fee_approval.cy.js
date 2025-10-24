@@ -25,6 +25,12 @@ describe('Company coordinator fee approval page', () => {
       it(`${test.description}`, () => {
         cy.get('@config').then((config) => {
           cy.get('@i18n').then((i18n) => {
+            // check that initial admin organisation response is loaded
+            cy.waitForAdminOrganisationGetApi(
+              test.fixtureAdminOrganisationInitial,
+            );
+            cy.get('@getAdminOrganisation.all').should('have.length', 1);
+            // test initial member distribution between tables
             cy.dataCy('table-fee-approval-not-approved').within(() => {
               cy.dataCy('table-fee-approval-row').should(
                 'have.length',
@@ -37,11 +43,6 @@ describe('Company coordinator fee approval page', () => {
                 test.displayInitial.countApproved,
               );
             });
-            cy.waitForAdminOrganisationGetApi(
-              test.fixtureAdminOrganisationInitial,
-            );
-            // check that initial admin organisation response is loaded
-            cy.get('@getAdminOrganisation.all').should('have.length', 1);
             // intercept endpoints for approve payment responses
             cy.interceptCoordinatorApprovePaymentsPostApi(
               config,
@@ -51,12 +52,16 @@ describe('Company coordinator fee approval page', () => {
               config,
               test.fixtureAdminOrganisationAfterApproval,
             );
-            // find row with selected member name
-            cy.contains(test.approvePayment.name)
-              .parent('tr')
-              .should('be.visible')
-              .find('[data-cy="table-fee-approval-checkbox"]')
-              .click();
+            // select members to approve
+            test.approvePayment.members.forEach((member) => {
+              console.log('member.name:', member.name);
+              // find row with selected member name
+              cy.contains(member.name)
+                .parent('tr')
+                .should('be.visible')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+            });
             // click approve button
             cy.dataCy('table-fee-approval-button')
               .should('be.visible')
@@ -83,15 +88,19 @@ describe('Company coordinator fee approval page', () => {
                 'have.length',
                 test.displayAfterApproval.countApproved,
               );
-              cy.contains(test.approvePayment.name).should('be.visible');
+              test.approvePayment.members.forEach((member) => {
+                cy.contains(member.name).should('be.visible');
+              });
             });
-            cy.contains(
-              i18n.global.t(
-                'approvePayments.apiMessageSuccessWithCount',
-                { count: test.approvePayment.memberCount },
-                test.approvePayment.memberCount,
-              ),
-            ).should('be.visible');
+            if (test.approvePayment.success) {
+              cy.contains(
+                i18n.global.t(
+                  'approvePayments.apiMessageSuccessWithCount',
+                  { count: test.approvePayment.members.length },
+                  test.approvePayment.members.length,
+                ),
+              ).should('be.visible');
+            }
           });
         });
       });
