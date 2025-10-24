@@ -30,8 +30,8 @@ Cypress.Commands.add(
       defLocale,
     );
     const urlApiAdminOrganisationLocalized = `${apiBaseUrl}${urlApiOrganizationAdminOrganizationStructure}`;
+
     cy.fixture(responseFixture).then((adminOrganisationResponse) => {
-      // intercept initial admin organisation API call
       cy.intercept('GET', urlApiAdminOrganisationLocalized, {
         statusCode: httpSuccessfullStatus,
         body: adminOrganisationResponse,
@@ -49,11 +49,11 @@ Cypress.Commands.add(
 Cypress.Commands.add('waitForAdminOrganisationGetApi', (responseFixture) => {
   cy.fixture(responseFixture).then((adminOrganisationResponse) => {
     cy.wait('@getAdminOrganisation').then((getAdminOrganisation) => {
-      // Verify authorization header for initial request
+      // Verify authorization header
       expect(getAdminOrganisation.request.headers.authorization).to.include(
         bearerTokeAuth,
       );
-      // Verify initial response
+      // Verify response
       if (getAdminOrganisation.response) {
         expect(getAdminOrganisation.response.statusCode).to.equal(
           httpSuccessfullStatus,
@@ -104,10 +104,8 @@ Cypress.Commands.add(
     cy.wait('@postCoordinatorApprovePayments').then(({ request, response }) => {
       // Verify authorization header
       expect(request.headers.authorization).to.include(bearerTokeAuth);
-
       // Verify request body
       expect(request.body).to.deep.equal(requestData);
-
       // Verify response
       if (response) {
         expect(response.statusCode).to.equal(httpSuccessfullStatus);
@@ -120,7 +118,6 @@ Cypress.Commands.add(
 /**
  * Intercept coordinator invoices GET API call
  * Provides `@getCoordinatorInvoices` alias
- * Note: This command is never used with next page intercepts
  * @param {Object} config - App global config
  * @param {string} responseFixture - Fixture name for response data
  */
@@ -137,7 +134,6 @@ Cypress.Commands.add(
     const urlApiCoordinatorInvoicesLocalized = `${apiBaseUrl}${urlApiCoordinatorInvoices}`;
 
     cy.fixture(responseFixture).then((coordinatorInvoicesResponse) => {
-      // intercept coordinator invoices API call
       cy.intercept('GET', urlApiCoordinatorInvoicesLocalized, {
         statusCode: httpSuccessfullStatus,
         body: coordinatorInvoicesResponse,
@@ -149,7 +145,6 @@ Cypress.Commands.add(
 /**
  * Wait for intercept coordinator invoices GET API calls and compare request/response object
  * Wait for `@getCoordinatorInvoices` intercept
- * Note: This command is never used with next page intercepts
  * @param {string} responseFixture - Fixture name for response data
  */
 Cypress.Commands.add('waitForCoordinatorInvoicesGetApi', (responseFixture) => {
@@ -159,7 +154,6 @@ Cypress.Commands.add('waitForCoordinatorInvoicesGetApi', (responseFixture) => {
       expect(getCoordinatorInvoices.request.headers.authorization).to.include(
         bearerTokeAuth,
       );
-
       // Verify response
       if (getCoordinatorInvoices.response) {
         expect(getCoordinatorInvoices.response.statusCode).to.equal(
