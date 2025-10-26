@@ -281,6 +281,7 @@ textBannerReminder = "Have you notified the company that you are a coordinator?"
 textClickToCopy = "Copy to clipboard"
 textCompanyCoordinatorDisabled = "The management options for company coordinators are available in the old system <a href='{url}' target='_blank'>Ride to Work by Bike</a>."
 titleCompanyCoordinator = "Company coordinator"
+titleCreateInvoice = "Create new invoice"
 
 [createOrganization]
 apiMessageError = "Organization creation failed."

@@ -78,7 +78,7 @@ export default defineComponent({
     <!-- Dialog: Create invoice -->
     <dialog-default v-model="isDialogOpen" data-cy="dialog-create-invoice">
       <template #title>
-        {{ $t('coordinator.buttonCreateInvoice') }}
+        {{ $t('coordinator.titleCreateInvoice') }}
       </template>
       <template #content>
         <form-create-invoice data-cy="form-create-invoice" />

@@ -7,7 +7,12 @@ const iconSize = 18;
 
 describe('<TabCoordinatorInvoices>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'index.component', i18n);
+    cy.testLanguageStringsInContext(['titleInvoices'], 'table', i18n);
+    cy.testLanguageStringsInContext(
+      ['buttonCreateInvoice', 'titleCreateInvoice'],
+      'coordinator',
+      i18n,
+    );
   });
 
   context('desktop', () => {
@@ -74,8 +79,15 @@ function coreTests() {
     cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
       cy.setAdminOrganisationStoreState({ invoices: invoicesData.storeData });
       cy.dataCy('button-create-invoice').click();
-      cy.dataCy('dialog-create-invoice').should('be.visible');
-      cy.dataCy('form-create-invoice').should('be.visible');
+      cy.dataCy('dialog-create-invoice')
+        .should('be.visible')
+        .within(() => {
+          cy.dataCy('dialog-header')
+            .find('h3')
+            .should('be.visible')
+            .and('contain', i18n.global.t('coordinator.titleCreateInvoice'));
+          cy.dataCy('form-create-invoice').should('be.visible');
+        });
     });
   });
 }

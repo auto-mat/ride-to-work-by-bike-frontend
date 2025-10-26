@@ -281,6 +281,7 @@ textBannerReminder = "Oznámil jste již firmě, že jste kooridnátorem?"
 textClickToCopy = "Zkopírovat do schránky"
 textCompanyCoordinatorDisabled = "Portál pro firemní koordinátory najdete po příhlášení ve starém systému <a href='{url}' target='_blank'>Do práce na kole</a>."
 titleCompanyCoordinator = "Firemní koordinátor"
+titleCreateInvoice = "Vystavit novou fakturu"
 
 [createOrganization]
 apiMessageError = "Vytvoření organizace selhalo."
