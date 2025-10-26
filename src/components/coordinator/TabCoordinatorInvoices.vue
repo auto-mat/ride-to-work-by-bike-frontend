@@ -7,6 +7,7 @@
  * @components
  * - `DialogDefault`: Component to display a dialog.
  * - `FormCreateInvoice`: Component to display a form for creating an invoice.
+ * - `TableInvoices`: Component to display a table with invoices.
  *
  * @example
  * <tab-coordinator-invoices />
@@ -20,17 +21,24 @@ import { defineComponent, ref } from 'vue';
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormCreateInvoice from '../form/FormCreateInvoice.vue';
+import TableInvoices from './TableInvoices.vue';
 
 export default defineComponent({
   name: 'TabCoordinatorInvoices',
   components: {
     DialogDefault,
     FormCreateInvoice,
+    TableInvoices,
   },
   setup() {
-    const isDialogOpen = ref(true);
+    const isDialogOpen = ref(false);
+
+    const openDialog = () => {
+      isDialogOpen.value = true;
+    };
     return {
       isDialogOpen,
+      openDialog,
     };
   },
 });
@@ -38,13 +46,37 @@ export default defineComponent({
 
 <template>
   <div data-cy="tab-coordinator-invoices">
+    <div class="row justify-between items-center">
+      <!-- Title -->
+      <h3
+        class="col-auto text-h6 text-black q-my-none"
+        data-cy="table-invoices-title"
+      >
+        {{ $t('table.titleInvoices') }}
+      </h3>
+      <!-- Button: Create invoice -->
+      <q-btn
+        class="col-auto"
+        color="primary"
+        unelevated
+        rounded
+        @click.prevent="openDialog"
+        data-cy="button-create-invoice"
+      >
+        <q-icon name="add" size="18px" color="white" class="q-mr-xs" />
+        {{ $t('coordinator.buttonCreateInvoice') }}
+      </q-btn>
+    </div>
+    <!-- Table: Invoices -->
+    <table-invoices class="q-mt-lg" data-cy="table-invoices" />
+
     <!-- Dialog: Create invoice -->
     <dialog-default v-model="isDialogOpen" data-cy="dialog-create-invoice">
       <template #title>
         {{ $t('coordinator.buttonCreateInvoice') }}
       </template>
       <template #content>
-        <form-create-invoice />
+        <form-create-invoice data-cy="form-create-invoice" />
       </template>
     </dialog-default>
   </div>

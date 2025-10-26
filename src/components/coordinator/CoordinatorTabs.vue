@@ -8,6 +8,7 @@
  * @components
  * - `TabCoordinatorAttendance`: Component to render attendance data.
  * - `TabCoordinatorFeeApproval`: Component to render fee approval data.
+ * - `TabCoordinatorInvoices`: Component to render invoices data.
  * - `TaskListCoordinator`: Component to render a list of tasks.
  *
  * @example
@@ -20,6 +21,7 @@ import { defineComponent, ref } from 'vue';
 // components
 import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
 import TabCoordinatorFeeApproval from './TabCoordinatorFeeApproval.vue';
+import TabCoordinatorInvoices from './TabCoordinatorInvoices.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
@@ -41,6 +43,7 @@ export default defineComponent({
   components: {
     TabCoordinatorAttendance,
     TabCoordinatorFeeApproval,
+    TabCoordinatorInvoices,
     TaskListCoordinator,
   },
   setup() {
@@ -134,7 +137,7 @@ export default defineComponent({
         :name="tabsCoordinator.invoices"
         data-cy="coordinator-tabs-panel-invoices"
       >
-        <!-- TODO: add content -->
+        <tab-coordinator-invoices data-cy="tab-coordinator-invoices" />
       </q-tab-panel>
       <!-- Panel: Packages -->
       <q-tab-panel

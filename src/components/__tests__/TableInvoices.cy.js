@@ -14,7 +14,6 @@ const primary = getPaletteColor('primary');
 
 // selectors
 const selectorTableInvoices = 'table-invoices';
-const selectorTableTitle = 'table-invoices-title';
 const selectorTable = 'table-invoices-table';
 const selectorTableRow = 'table-invoices-row';
 const selectorTableExposureDate = 'table-invoices-exposure-date';
@@ -38,11 +37,14 @@ describe('<TableInvoices>', () => {
         'labelIssueDate',
         'labelOrderNumber',
         'labelFiles',
-        // 'labelVariableSymbol', // string is identical in all languages
         'labelPaymentCount',
         'labelAmountIncludingVat',
         'labelConfirmationDate',
         'labelNotConfirmed',
+        'textNoData',
+        'textNoResults',
+        'textLoading',
+        'textRowsPerPage',
       ],
       'table',
       i18n,
@@ -86,10 +88,6 @@ function coreTests() {
     });
     // test DOM component
     cy.dataCy(selectorTableInvoices).should('exist').and('be.visible');
-    // title
-    cy.dataCy(selectorTableTitle)
-      .should('be.visible')
-      .and('contain', i18n.global.t('table.titleInvoices'));
     // table
     cy.dataCy(selectorTable)
       .should('be.visible')
