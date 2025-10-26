@@ -71,8 +71,11 @@ function coreTests() {
   });
 
   it('opens dialog when button create invoice is clicked', () => {
-    cy.dataCy('button-create-invoice').click();
-    cy.dataCy('dialog-create-invoice').should('be.visible');
-    cy.dataCy('form-create-invoice').should('be.visible');
+    cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
+      cy.setAdminOrganisationStoreState({ invoices: invoicesData.storeData });
+      cy.dataCy('button-create-invoice').click();
+      cy.dataCy('dialog-create-invoice').should('be.visible');
+      cy.dataCy('form-create-invoice').should('be.visible');
+    });
   });
 }
