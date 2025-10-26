@@ -25,11 +25,7 @@ describe('<FormCreateInvoice>', () => {
     beforeEach(() => {
       cy.fixture('formCreateInvoice').then((organization) => {
         cy.wrap(organization).as('organization');
-        cy.mount(FormCreateInvoice, {
-          props: {
-            organization,
-          },
-        });
+        cy.mount(FormCreateInvoice, {});
         cy.viewport('macbook-16');
       });
     });
@@ -41,11 +37,7 @@ describe('<FormCreateInvoice>', () => {
     beforeEach(() => {
       cy.fixture('formCreateInvoice').then((organization) => {
         cy.wrap(organization).as('organization');
-        cy.mount(FormCreateInvoice, {
-          props: {
-            organization,
-          },
-        });
+        cy.mount(FormCreateInvoice, {});
         cy.viewport('iphone-6');
       });
     });

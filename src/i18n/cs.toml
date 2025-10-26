@@ -258,6 +258,7 @@ titleBecomeCoordinator = "Stát se firemní*m koordinátorem*kou"
 [coordinator]
 buttonBannerReminderConfirm = "Oznámil"
 buttonBannerReminderDismiss = "Zatím neoznámil"
+buttonCreateInvoice = "Vystavit novou fakturu"
 buttonExportMembers = "Exportovat členy"
 labelBranches = "poboček | pobočka | pobočky | poboček"
 labelCityChallenge = "Soutěžní město"

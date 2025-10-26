@@ -258,6 +258,7 @@ titleBecomeCoordinator = "Become a company coordinator"
 [coordinator]
 buttonBannerReminderConfirm = "Yes"
 buttonBannerReminderDismiss = "Not yet"
+buttonCreateInvoice = "Create new invoice"
 buttonExportMembers = "Export members"
 labelBranches = "subsidiary | subsidiaries"
 labelCityChallenge = "Competition city"

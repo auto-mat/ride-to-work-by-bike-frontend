@@ -4,23 +4,18 @@
  *
  * @description * Use this component to render form for creating an invoice.
  *
- * Note: This component is used  on `CompanyCoordinatorPage`.
+ * Note: This component is used in `TabCoordinatorInvoices` on `CompanyCoordinatorPage`.
  *
  * TODO: To trigger submission of the form from the wrapping dialog
  * you can use submit method passed via `slot` or an event bus:
  * see: https://quasar.dev/quasar-utils/event-bus-util#introduction
- *
- * @props
- * - `organization` (Organization, required): The object with organization
- * details.
- *   It should be of type `Organization`.
  *
  * @components
  * - `FormFieldCheckboxTeam`: Use this component to render a widget for
  *   selecting members from a team.
  *
  * @example
- * <form-create-invoice :organization="organization" />
+ * <form-create-invoice />
  *
  * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-106291&t=rChuMkmuOQjQof29-1)
  */
@@ -32,24 +27,19 @@ import { defineComponent, reactive, ref } from 'vue';
 // components
 import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
 
-// types
-import type { Organization } from '../types/Organization';
-
 // fixtures
 import invoiceFixture from '../../../test/cypress/fixtures/formCreateInvoice.json';
+
+// types
+import type { Organization } from '../types/Organization';
 
 export default defineComponent({
   name: 'FormCreateInvoice',
   components: {
     FormFieldCheckboxTeam,
   },
-  props: {
-    organization: {
-      type: Object as () => Organization,
-      required: true,
-    },
-  },
   setup() {
+    const organization = ref<Organization>(invoiceFixture);
     const formCreateInvoiceRef = ref<typeof QForm | null>(null);
     const isBillingDetailsCorrect = ref<boolean>(false);
     const isDonorEntryFee = ref<boolean>(false);
@@ -67,6 +57,7 @@ export default defineComponent({
       isDonorEntryFee,
       orderNote,
       orderNumber,
+      organization,
       selectedMembers,
       teams: invoiceFixture.teams,
     };
