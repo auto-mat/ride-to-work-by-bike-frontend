@@ -7,10 +7,7 @@ import { i18n } from 'src/boot/i18n';
 // TODO: import format price
 
 // enums
-import {
-  AttendanceTablePayColumnIcons,
-  InvoiceTableFileId,
-} from '../components/types/Table';
+import { AttendanceTablePayColumnIcons } from '../components/types/Table';
 import { PaymentState, PaymentType } from '../components/enums/Payment';
 
 // types
@@ -556,11 +553,11 @@ export const useTableInvoices = () => {
   const tableInvoicesColumns: QTableProps['columns'] = [
     {
       align: 'left',
-      field: InvoicesTableColumns.issueDate,
+      field: InvoicesTableColumns.exposureDate,
       format: (val: number | string | null): string =>
         val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
       label: i18n.global.t('table.labelIssueDate'),
-      name: InvoicesTableColumns.issueDate,
+      name: InvoicesTableColumns.exposureDate,
       required: true,
       sortable: true,
     },
@@ -575,20 +572,11 @@ export const useTableInvoices = () => {
     },
     {
       align: 'left',
-      field: InvoicesTableColumns.files,
+      field: InvoicesTableColumns.invoiceUrl,
       label: i18n.global.t('table.labelFiles'),
-      name: InvoicesTableColumns.files,
+      name: InvoicesTableColumns.invoiceUrl,
       required: true,
       sortable: false,
-    },
-    {
-      align: 'left',
-      field: InvoicesTableColumns.variableSymbol,
-      format: (val: number | string | null): string => (val ? `${val}` : ''),
-      label: i18n.global.t('table.labelVariableSymbol'),
-      name: InvoicesTableColumns.variableSymbol,
-      required: true,
-      sortable: true,
     },
     {
       align: 'left',
@@ -601,63 +589,38 @@ export const useTableInvoices = () => {
     },
     {
       align: 'left',
-      field: InvoicesTableColumns.amount,
+      field: InvoicesTableColumns.totalAmount,
       format: (val: number | string | null): string => formatPrice(val),
       label: i18n.global.t('table.labelAmountIncludingVat'),
-      name: InvoicesTableColumns.amount,
+      name: InvoicesTableColumns.totalAmount,
       required: true,
       sortable: true,
     },
     {
       align: 'left',
-      field: InvoicesTableColumns.confirmationDate,
+      field: InvoicesTableColumns.paidDate,
       format: (val: number | string | null): string =>
         val
           ? i18n.global.d(new Date(String(val)), 'numeric')
           : i18n.global.t('table.labelNotConfirmed'),
       label: i18n.global.t('table.labelConfirmationDate'),
-      name: InvoicesTableColumns.confirmationDate,
+      name: InvoicesTableColumns.paidDate,
       required: true,
       sortable: true,
     },
   ];
 
   const tableInvoicesVisibleColumns: string[] = [
-    InvoicesTableColumns.issueDate,
+    InvoicesTableColumns.exposureDate,
     InvoicesTableColumns.orderNumber,
-    InvoicesTableColumns.files,
-    InvoicesTableColumns.variableSymbol,
+    InvoicesTableColumns.invoiceUrl,
     InvoicesTableColumns.paymentCount,
-    InvoicesTableColumns.amount,
-    InvoicesTableColumns.confirmationDate,
+    InvoicesTableColumns.totalAmount,
+    InvoicesTableColumns.paidDate,
   ];
-
-  const getFileIcon = (id: InvoiceTableFileId): string => {
-    switch (id) {
-      case InvoiceTableFileId.fakturoid:
-        return 'svguse:icons/table_invoices/icons.svg#tabler:file-type-pdf';
-      case InvoiceTableFileId.pohoda:
-        return 'svguse:icons/table_invoices/icons.svg#tabler:file-type-xml';
-      default:
-        return '';
-    }
-  };
-
-  const getFileLabel = (id: InvoiceTableFileId): string => {
-    switch (id) {
-      case InvoiceTableFileId.fakturoid:
-        return i18n.global.t('table.labelFakturoid');
-      case InvoiceTableFileId.pohoda:
-        return i18n.global.t('table.labelPohoda');
-      default:
-        return '';
-    }
-  };
 
   return {
     columns: tableInvoicesColumns,
     visibleColumns: tableInvoicesVisibleColumns,
-    getFileIcon,
-    getFileLabel,
   };
 };

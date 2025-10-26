@@ -17,41 +17,36 @@ import { defineComponent, onMounted, ref } from 'vue';
 
 // composables
 import { useTableInvoices } from '../../composables/useTable';
+import { useTableInvoicesData } from '../../composables/useTableInvoicesData';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 import { InvoicesTableColumns } from '../../components/types/Table';
 
-// fixtures
-// TODO: Create and import tableInvoices fixture
-import tableInvoices from '../../../test/cypress/fixtures/tableInvoices.json';
-
 export default defineComponent({
   name: 'TableInvoices',
 
   setup() {
     const tableRef = ref<QTable | null>(null);
-    // sort by issueDate initially
+    // sort by exposureDate initially
     onMounted(() => {
       if (tableRef.value) {
-        tableRef.value.sort('issueDate');
+        tableRef.value.sort('exposureDate');
       }
     });
 
-    const { columns, visibleColumns, getFileIcon, getFileLabel } =
-      useTableInvoices();
+    const { columns, visibleColumns } = useTableInvoices();
+    const { invoicesData } = useTableInvoicesData();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
       columns,
       InvoicesTableColumns,
-      tableInvoices,
+      invoicesData,
       tableRef,
       visibleColumns,
-      getFileIcon,
-      getFileLabel,
     };
   },
 });
@@ -75,7 +70,7 @@ export default defineComponent({
         flat
         bordered
         binary-state-sort
-        :rows="tableInvoices"
+        :rows="invoicesData"
         :columns="columns"
         :visible-columns="visibleColumns"
         :row-key="InvoicesTableColumns.orderNumber"
@@ -88,15 +83,15 @@ export default defineComponent({
             class="text-grey-10"
             data-cy="table-invoices-row"
           >
-            <!-- Issue Date -->
+            <!-- Exposure Date -->
             <q-td
-              :key="InvoicesTableColumns.issueDate"
+              :key="InvoicesTableColumns.exposureDate"
               :props="props"
-              data-cy="table-invoices-issue-date"
+              data-cy="table-invoices-exposure-date"
             >
               <!-- Loop over data to get formatted content -->
               <template v-for="col in props.cols" :key="col.field">
-                <span v-if="col.field === InvoicesTableColumns.issueDate">
+                <span v-if="col.field === InvoicesTableColumns.exposureDate">
                   {{ col.value }}
                 </span>
               </template>
@@ -109,27 +104,25 @@ export default defineComponent({
             >
               {{ props.row.orderNumber }}
             </q-td>
-            <!-- Files -->
+            <!-- Invoice URL -->
             <q-td
-              :key="InvoicesTableColumns.files"
+              :key="InvoicesTableColumns.invoiceUrl"
               :props="props"
-              data-cy="table-invoices-files"
+              data-cy="table-invoices-url"
             >
-              <!-- TODO: Implement file download/preview functionality -->
               <div class="flex flex-wrap gap-4">
-                <!-- Button: Invoice preview -->
+                <!-- Button: Fakturoid invoice -->
                 <q-btn
                   dense
                   flat
                   no-caps
                   rounded
-                  v-for="file in props.row.files"
-                  :key="file.id"
-                  :href="file.url"
+                  :href="props.row.invoiceUrl"
+                  v-if="props.row.invoiceUrl"
                 >
                   <!-- Icon -->
                   <q-icon
-                    :name="getFileIcon(file.id)"
+                    :name="'svguse:icons/table_invoices/icons.svg#tabler:file-type-pdf'"
                     size="18px"
                     color="primary"
                     class="q-mr-xs"
@@ -137,18 +130,10 @@ export default defineComponent({
                   />
                   <!-- Label -->
                   <span data-cy="table-invoices-file-label">
-                    {{ getFileLabel(file.id) }}
+                    {{ $t('table.labelFakturoid') }}
                   </span>
                 </q-btn>
               </div>
-            </q-td>
-            <!-- Variable Symbol -->
-            <q-td
-              :key="InvoicesTableColumns.variableSymbol"
-              :props="props"
-              data-cy="table-invoices-variable-symbol"
-            >
-              {{ props.row.variableSymbol }}
             </q-td>
             <!-- Payment Count -->
             <q-td
@@ -158,26 +143,25 @@ export default defineComponent({
             >
               {{ props.row.paymentCount }}
             </q-td>
-            <!-- Amount -->
+            <!-- Total Amount -->
             <q-td
-              :key="InvoicesTableColumns.amount"
+              :key="InvoicesTableColumns.totalAmount"
               :props="props"
-              data-cy="table-invoices-amount"
+              data-cy="table-invoices-total-amount"
             >
-              {{ props.row.amount }}
+              {{ props.row.totalAmount }}
             </q-td>
-            <!-- Confirmation Date -->
+            <!-- Paid Date -->
             <q-td
-              :key="InvoicesTableColumns.confirmationDate"
+              :key="InvoicesTableColumns.paidDate"
               :props="props"
-              data-cy="table-invoices-confirmation-date"
+              data-cy="table-invoices-paid-date"
             >
               <!-- Loop over data to get formatted content -->
               <template v-for="col in props.cols" :key="col.field">
                 <span
                   v-if="
-                    col.field === InvoicesTableColumns.confirmationDate &&
-                    col.value
+                    col.field === InvoicesTableColumns.paidDate && col.value
                   "
                 >
                   {{ col.value }}

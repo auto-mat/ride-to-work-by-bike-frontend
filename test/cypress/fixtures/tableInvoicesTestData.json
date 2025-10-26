@@ -1,0 +1,75 @@
+{
+  "storeData": [
+    {
+      "payments_to_invoice": [],
+      "invoices": [
+        {
+          "id": 80,
+          "order_number": "1234567890",
+          "total_amount": 144,
+          "fakturoid_invoice_url": "https://www.fakturoid.cz/invoices/80",
+          "exposure_date": "2025-10-19",
+          "paid_date": "",
+          "company_pais_benefitial_fee": false,
+          "client_note": "",
+          "payments": [
+            {
+              "id": 178,
+              "amount": 119,
+              "userprofile_id": 36,
+              "payment_status": 1006,
+              "pay_type": "fc",
+              "pay_category": "entry_fee"
+            }
+          ]
+        },
+        {
+          "id": 81,
+          "order_number": "1234567891",
+          "total_amount": 390,
+          "fakturoid_invoice_url": "https://www.fakturoid.cz/invoices/81",
+          "exposure_date": "2025-10-20",
+          "paid_date": "2025-10-28",
+          "company_pais_benefitial_fee": false,
+          "client_note": "",
+          "payments": [
+            {
+              "id": 179,
+              "amount": 271,
+              "userprofile_id": 37,
+              "payment_status": 1007,
+              "pay_type": "fc",
+              "pay_category": "entry_fee"
+            },
+            {
+              "id": 180,
+              "amount": 119,
+              "userprofile_id": 38,
+              "payment_status": 1007,
+              "pay_type": "fc",
+              "pay_category": "entry_fee"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "displayData": [
+    {
+      "exposureDate": "2025-10-19",
+      "orderNumber": "1234567890",
+      "invoiceUrl": "https://www.fakturoid.cz/invoices/80",
+      "paymentCount": 1,
+      "totalAmount": 144,
+      "paidDate": ""
+    },
+    {
+      "exposureDate": "2025-10-20",
+      "orderNumber": "1234567891",
+      "invoiceUrl": "https://www.fakturoid.cz/invoices/81",
+      "paymentCount": 2,
+      "totalAmount": 390,
+      "paidDate": "2025-10-28"
+    }
+  ]
+}

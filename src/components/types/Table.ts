@@ -75,13 +75,12 @@ export enum AttendanceTablePayColumnIconsColors {
 }
 
 export enum InvoicesTableColumns {
-  issueDate = 'issueDate',
+  exposureDate = 'exposureDate',
   orderNumber = 'orderNumber',
-  files = 'files',
-  variableSymbol = 'variableSymbol',
+  invoiceUrl = 'invoiceUrl',
   paymentCount = 'paymentCount',
-  amount = 'amount',
-  confirmationDate = 'confirmationDate',
+  totalAmount = 'totalAmount',
+  paidDate = 'paidDate',
 }
 
 export enum InvoiceTableFileId {
