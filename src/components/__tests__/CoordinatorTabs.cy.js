@@ -36,7 +36,7 @@ describe('<CoordinatorTabs>', () => {
     );
   });
 
-  context.only('desktop', () => {
+  context('desktop', () => {
     beforeEach(() => {
       cy.mount(CoordinatorTabs, {
         props: {},
