@@ -21,6 +21,10 @@ apiMessageSuccessWithCount = "Platby potvrdené pre {count} účastníc*kov. | P
 period = "Obdobie výzvy"
 transportType = "Spôsoby dopravy"
 
+[bannerInfo]
+title = "Spôsob platby"
+text = "<p>Pri platení štartovného postupujte nasledovne:</p><ol><li>Pre každú faktúru vytvorte samostatný prevod.</li><li>Starostlivo z faktúry opíšte <b>číslo účtu</b>.</li><li>Zadajte <b>variabilný symbol</b> z tabuľky nižšie. V opačnom prípade neručíme za úspešné prijatie.</li></ol>"
+
 [bannerTeamMemberApprove]
 buttonApproveMembers = "Schváliť členov"
 buttonDialogApprove = "Schváliť"

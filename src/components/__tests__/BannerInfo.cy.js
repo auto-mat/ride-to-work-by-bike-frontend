@@ -1,21 +1,14 @@
 import BannerInfo from 'components/global/BannerInfo.vue';
+import { i18n } from '../../boot/i18n';
+
+// variables
+const iconSize = 96;
 
 describe('<BannerInfo>', () => {
   context('desktop', () => {
     beforeEach(() => {
-      cy.fixture('bannerInfo').then((bannerInfo) => {
-        cy.wrap(bannerInfo).as('bannerInfo');
-        cy.mount(BannerInfo, {
-          props: {
-            title: bannerInfo.title,
-            icon: bannerInfo.icon,
-          },
-          slots: {
-            default: bannerInfo.content,
-          },
-        });
-        cy.viewport('macbook-16');
-      });
+      cy.mount(BannerInfo, {});
+      cy.viewport('macbook-16');
     });
 
     coreTests();
@@ -23,19 +16,8 @@ describe('<BannerInfo>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.fixture('bannerInfo').then((bannerInfo) => {
-        cy.wrap(bannerInfo).as('bannerInfo');
-        cy.mount(BannerInfo, {
-          props: {
-            title: bannerInfo.title,
-            icon: bannerInfo.icon,
-          },
-          slots: {
-            default: bannerInfo.content,
-          },
-        });
-        cy.viewport('iphone-6');
-      });
+      cy.mount(BannerInfo, {});
+      cy.viewport('iphone-6');
     });
 
     coreTests();
@@ -44,27 +26,25 @@ describe('<BannerInfo>', () => {
 
 function coreTests() {
   it('renders component', () => {
-    cy.get('@bannerInfo').then((bannerInfo) => {
-      // component
-      cy.dataCy('banner-info').should('be.visible');
-      // icon
-      cy.dataCy('banner-info-icon').should('be.visible');
-      cy.dataCy('banner-info-icon').invoke('height').should('be.equal', 96);
-      cy.dataCy('banner-info-icon').invoke('width').should('be.equal', 96);
-      // title
-      cy.dataCy('banner-info-title')
-        .should('be.visible')
-        .and('have.css', 'font-size', '20px')
-        .and('contain', bannerInfo.title);
-      // content
-      cy.dataCy('banner-info-content')
-        .should('be.visible')
-        .then(($el) => {
-          const content = $el.text();
-          cy.stripHtmlTags(bannerInfo.content).then((text) => {
-            expect(content).to.equal(text);
-          });
+    // component
+    cy.dataCy('banner-info').should('be.visible');
+    // icon
+    cy.dataCy('banner-info-icon').should('be.visible');
+    cy.dataCy('banner-info-icon').invoke('height').should('be.equal', iconSize);
+    cy.dataCy('banner-info-icon').invoke('width').should('be.equal', iconSize);
+    // title
+    cy.dataCy('banner-info-title')
+      .should('be.visible')
+      .and('have.css', 'font-size', '20px')
+      .and('contain', i18n.global.t('bannerInfo.title'));
+    // content
+    cy.dataCy('banner-info-content')
+      .should('be.visible')
+      .then(($el) => {
+        const content = $el.text();
+        cy.stripHtmlTags(i18n.global.t('bannerInfo.text')).then((text) => {
+          expect(content).to.equal(text);
         });
-    });
+      });
   });
 }

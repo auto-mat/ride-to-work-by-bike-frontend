@@ -5,6 +5,7 @@
  * @description * Use this component to display a tab with invoices.
  *
  * @components
+ * - `BannerInfo`: Component to display a banner with info.
  * - `DialogDefault`: Component to display a dialog.
  * - `FormCreateInvoice`: Component to display a form for creating an invoice.
  * - `TableInvoices`: Component to display a table with invoices.
@@ -19,6 +20,7 @@
 import { defineComponent, ref } from 'vue';
 
 // components
+import BannerInfo from '../global/BannerInfo.vue';
 import DialogDefault from '../global/DialogDefault.vue';
 import FormCreateInvoice from '../form/FormCreateInvoice.vue';
 import TableInvoices from './TableInvoices.vue';
@@ -26,6 +28,7 @@ import TableInvoices from './TableInvoices.vue';
 export default defineComponent({
   name: 'TabCoordinatorInvoices',
   components: {
+    BannerInfo,
     DialogDefault,
     FormCreateInvoice,
     TableInvoices,
@@ -46,7 +49,9 @@ export default defineComponent({
 
 <template>
   <div data-cy="tab-coordinator-invoices">
-    <div class="row justify-between items-center">
+    <!-- Banner: Info -->
+    <banner-info class="q-mt-lg" data-cy="banner-info" />
+    <div class="row justify-between items-center q-mt-lg">
       <!-- Title -->
       <h3
         class="col-auto text-h6 text-black q-my-none"

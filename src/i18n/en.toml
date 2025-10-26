@@ -21,6 +21,10 @@ apiMessageSuccessWithCount = "Payment confirmed for {count} participant. | Payme
 period = "Challenge period"
 transportType = "Means of transport"
 
+[bannerInfo]
+title = "Payment Method"
+text = "<p>When paying the entry fee, proceed as follows:</p><ol><li>Create a separate transfer for each invoice.</li><li>Carefully copy the <b>account number</b> from the invoice.</li><li>Enter the <b>variable symbol</b> from the table below. Otherwise, we cannot guarantee successful receipt.</li></ol>"
+
 [bannerTeamMemberApprove]
 buttonApproveMembers = "Approve members"
 buttonDialogApprove = "Approve"

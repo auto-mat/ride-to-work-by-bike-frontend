@@ -6,13 +6,6 @@
  *
  * Note: This component is commonly used on `CompanyCoordinatorPage`.
  *
- * @props
- * - `title` (string, required): banner title.
- * - `icon` (string, required): banner icon.
- *
- * @slots
- * - `content`: For displaying the content of the banner.
- *
  * @example
  * <banner-info />
  *
@@ -27,16 +20,6 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 export default defineComponent({
   name: 'BannerInfo',
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-    icon: {
-      type: String,
-      required: true,
-    },
-  },
   setup() {
     const { borderRadiusCard: borderRadius } = rideToWorkByBikeConfig;
 
@@ -52,10 +35,10 @@ export default defineComponent({
     data-cy="banner-info"
   >
     <div class="row q-col-gutter-lg">
-      <div v-if="icon" class="col-12 col-sm-auto">
+      <div class="col-12 col-sm-auto">
         <!-- Icon -->
         <q-icon
-          :name="icon"
+          name="mdi-credit-card"
           size="96px"
           color="primary"
           data-cy="banner-info-icon"
@@ -67,12 +50,14 @@ export default defineComponent({
           class="text-h6 text-weight-bold q-my-none"
           data-cy="banner-info-title"
         >
-          {{ title }}
+          {{ $t('bannerInfo.title') }}
         </div>
         <!-- Content -->
-        <div class="q-mt-md" data-cy="banner-info-content">
-          <slot />
-        </div>
+        <div
+          class="q-mt-md"
+          v-html="$t('bannerInfo.text')"
+          data-cy="banner-info-content"
+        />
       </div>
     </div>
   </div>
