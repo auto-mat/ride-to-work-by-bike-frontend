@@ -88,7 +88,7 @@ export default defineComponent({
       <template #content>
         <form-create-invoice data-cy="form-create-invoice" />
         <!-- Action buttons -->
-        <div class="flex justify-end q-mt-sm">
+        <div class="flex justify-end q-mt-lg">
           <div class="flex gap-8">
             <q-btn
               rounded
