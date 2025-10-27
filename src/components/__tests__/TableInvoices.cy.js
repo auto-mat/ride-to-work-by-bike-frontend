@@ -1,5 +1,4 @@
 import { colors } from 'quasar';
-import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import TableInvoices from 'components/coordinator/TableInvoices.vue';
 import { i18n } from '../../boot/i18n';
@@ -78,13 +77,10 @@ function coreTests() {
   it('loads data from store and displays the table', () => {
     // initiate store state
     cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
-      const adminInvoices = computed(
-        () => adminOrganisationStore.getAdminInvoices,
-      );
-      adminOrganisationStore.setAdminInvoices(testData.storeData);
-      cy.wrap(adminInvoices)
-        .its('value')
-        .should('deep.equal', testData.storeData);
+      cy.setAdminOrganisationStoreState({
+        store: adminOrganisationStore,
+        invoices: testData.storeData,
+      });
     });
     // test DOM component
     cy.dataCy(selectorTableInvoices).should('exist').and('be.visible');

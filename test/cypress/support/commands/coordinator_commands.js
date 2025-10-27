@@ -3,10 +3,39 @@
  * Contains commands for intercepting and waiting for admin-related API calls
  */
 
+import { computed } from 'vue';
 import { httpSuccessfullStatus } from '../commonTests';
 import { getApiBaseUrlWithLang } from '../../../../src/utils/get_api_base_url_with_lang';
 import { bearerTokeAuth } from '../../../../src/utils';
 import { defLocale } from '../../../../src/i18n/def_locale';
+
+/**
+ * Set admin organisation store state with invoices and organization data
+ * @param {Object} data - Object with `store`, `invoices` and `organizations` properties
+ */
+Cypress.Commands.add(
+  'setAdminOrganisationStoreState',
+  ({ store, invoices = null, organizations = null }) => {
+    cy.wrap(store).then((adminOrganisationStore) => {
+      if (invoices) {
+        const adminInvoices = computed(
+          () => adminOrganisationStore.getAdminInvoices,
+        );
+        adminOrganisationStore.setAdminInvoices(invoices);
+        cy.wrap(adminInvoices).its('value').should('deep.equal', invoices);
+      }
+      if (organizations) {
+        const adminOrganizations = computed(
+          () => adminOrganisationStore.getOrganizations,
+        );
+        adminOrganisationStore.setOrganizations(organizations);
+        cy.wrap(adminOrganizations)
+          .its('value')
+          .should('deep.equal', organizations);
+      }
+    });
+  },
+);
 
 /**
  * Intercept admin organisation GET API call

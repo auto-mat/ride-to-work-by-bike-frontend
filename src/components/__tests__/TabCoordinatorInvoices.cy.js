@@ -1,4 +1,3 @@
-import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import TabCoordinatorInvoices from 'components/coordinator/TabCoordinatorInvoices.vue';
 import { i18n } from '../../boot/i18n';
@@ -52,13 +51,10 @@ function coreTests() {
     cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
       // initiate store state
       cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
-        const adminInvoices = computed(
-          () => adminOrganisationStore.getAdminInvoices,
-        );
-        adminOrganisationStore.setAdminInvoices(invoicesData.storeData);
-        cy.wrap(adminInvoices)
-          .its('value')
-          .should('deep.equal', invoicesData.storeData);
+        cy.setAdminOrganisationStoreState({
+          store: adminOrganisationStore,
+          invoices: invoicesData.storeData,
+        });
       });
       cy.dataCy('tab-coordinator-invoices').should('exist');
       // table title
@@ -95,13 +91,10 @@ function coreTests() {
     cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
       // initiate store state
       cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
-        const adminInvoices = computed(
-          () => adminOrganisationStore.getAdminInvoices,
-        );
-        adminOrganisationStore.setAdminInvoices(invoicesData.storeData);
-        cy.wrap(adminInvoices)
-          .its('value')
-          .should('deep.equal', invoicesData.storeData);
+        cy.setAdminOrganisationStoreState({
+          store: adminOrganisationStore,
+          invoices: invoicesData.storeData,
+        });
       });
       cy.dataCy('button-create-invoice').click();
       cy.dataCy('dialog-create-invoice')
