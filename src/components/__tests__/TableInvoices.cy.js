@@ -1,9 +1,11 @@
 import { colors } from 'quasar';
+import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import TableInvoices from 'components/coordinator/TableInvoices.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/tableInvoicesTestData.json';
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // colors
 const { getPaletteColor } = colors;
@@ -75,7 +77,15 @@ describe('<TableInvoices>', () => {
 function coreTests() {
   it('loads data from store and displays the table', () => {
     // initiate store state
-    cy.setAdminOrganisationStoreState({ invoices: testData.storeData });
+    cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+      const adminInvoices = computed(
+        () => adminOrganisationStore.getAdminInvoices,
+      );
+      adminOrganisationStore.setAdminInvoices(testData.storeData);
+      cy.wrap(adminInvoices)
+        .its('value')
+        .should('deep.equal', testData.storeData);
+    });
     // test DOM component
     cy.dataCy(selectorTableInvoices).should('exist').and('be.visible');
     // table

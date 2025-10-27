@@ -1,6 +1,8 @@
+import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import TabCoordinatorInvoices from 'components/coordinator/TabCoordinatorInvoices.vue';
 import { i18n } from '../../boot/i18n';
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // variables
 const iconSize = 18;
@@ -48,7 +50,16 @@ describe('<TabCoordinatorInvoices>', () => {
 function coreTests() {
   it('renders component', () => {
     cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
-      cy.setAdminOrganisationStoreState({ invoices: invoicesData.storeData });
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        const adminInvoices = computed(
+          () => adminOrganisationStore.getAdminInvoices,
+        );
+        adminOrganisationStore.setAdminInvoices(invoicesData.storeData);
+        cy.wrap(adminInvoices)
+          .its('value')
+          .should('deep.equal', invoicesData.storeData);
+      });
       cy.dataCy('tab-coordinator-invoices').should('exist');
       // table title
       cy.dataCy('table-invoices-title')
@@ -82,7 +93,16 @@ function coreTests() {
 
   it('opens dialog when button create invoice is clicked', () => {
     cy.fixture('tableInvoicesTestData.json').then((invoicesData) => {
-      cy.setAdminOrganisationStoreState({ invoices: invoicesData.storeData });
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        const adminInvoices = computed(
+          () => adminOrganisationStore.getAdminInvoices,
+        );
+        adminOrganisationStore.setAdminInvoices(invoicesData.storeData);
+        cy.wrap(adminInvoices)
+          .its('value')
+          .should('deep.equal', invoicesData.storeData);
+      });
       cy.dataCy('button-create-invoice').click();
       cy.dataCy('dialog-create-invoice')
         .should('be.visible')
