@@ -36,11 +36,16 @@ export default defineComponent({
   setup() {
     const isDialogOpen = ref(false);
 
+    const closeDialog = () => {
+      isDialogOpen.value = false;
+    };
     const openDialog = () => {
       isDialogOpen.value = true;
     };
+
     return {
       isDialogOpen,
+      closeDialog,
       openDialog,
     };
   },
@@ -82,6 +87,29 @@ export default defineComponent({
       </template>
       <template #content>
         <form-create-invoice data-cy="form-create-invoice" />
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-sm">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              data-cy="dialog-button-cancel"
+              @click.prevent="closeDialog"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              data-cy="dialog-button-submit"
+            >
+              {{ $t('coordinator.buttonDialogCreateInvoice') }}
+            </q-btn>
+          </div>
+        </div>
       </template>
     </dialog-default>
   </div>

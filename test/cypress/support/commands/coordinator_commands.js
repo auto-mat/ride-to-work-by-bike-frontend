@@ -12,6 +12,7 @@ import { defLocale } from '../../../../src/i18n/def_locale';
 
 /**
  * Set admin organisation store state with invoices and organization data
+ * @param {Object} data - Object with `invoices` and `organizations` properties
  */
 Cypress.Commands.add(
   'setAdminOrganisationStoreState',

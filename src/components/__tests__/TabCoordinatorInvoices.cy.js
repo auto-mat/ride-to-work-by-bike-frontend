@@ -8,8 +8,13 @@ const iconSize = 18;
 describe('<TabCoordinatorInvoices>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['titleInvoices'], 'table', i18n);
+    cy.testLanguageStringsInContext(['discard'], 'navigation', i18n);
     cy.testLanguageStringsInContext(
-      ['buttonCreateInvoice', 'titleCreateInvoice'],
+      [
+        'buttonCreateInvoice',
+        'buttonDialogCreateInvoice',
+        'titleCreateInvoice',
+      ],
       'coordinator',
       i18n,
     );
@@ -21,7 +26,7 @@ describe('<TabCoordinatorInvoices>', () => {
       cy.mount(TabCoordinatorInvoices, {
         props: {},
       });
-      cy.viewport('macbook-16');
+      cy.viewport(1920, 2000);
     });
 
     coreTests();
@@ -33,7 +38,7 @@ describe('<TabCoordinatorInvoices>', () => {
       cy.mount(TabCoordinatorInvoices, {
         props: {},
       });
-      cy.viewport(375, 1500);
+      cy.viewport(375, 2000);
     });
 
     coreTests();
@@ -82,11 +87,23 @@ function coreTests() {
       cy.dataCy('dialog-create-invoice')
         .should('be.visible')
         .within(() => {
+          // dialog header
           cy.dataCy('dialog-header')
             .find('h3')
             .should('be.visible')
             .and('contain', i18n.global.t('coordinator.titleCreateInvoice'));
+          // dialog form
           cy.dataCy('form-create-invoice').should('be.visible');
+          // dialog action buttons
+          cy.dataCy('dialog-button-cancel')
+            .should('be.visible')
+            .and('contain', i18n.global.t('navigation.discard'));
+          cy.dataCy('dialog-button-submit')
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('coordinator.buttonDialogCreateInvoice'),
+            );
         });
     });
   });

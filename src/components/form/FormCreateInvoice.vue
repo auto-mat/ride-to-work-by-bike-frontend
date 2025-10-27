@@ -224,5 +224,7 @@ export default defineComponent({
         />
       </div>
     </div>
+    <!-- Hidden submit button enables Enter key to submit -->
+    <q-btn type="submit" class="hidden" />
   </q-form>
 </template>
