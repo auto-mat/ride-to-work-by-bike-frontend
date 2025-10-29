@@ -1,0 +1,55 @@
+[
+  {
+    "description": "shows invoices list",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "fixtureCoordinatorInvoicesInitial": "apiGetCoordinatorInvoicesResponse.json",
+    "displayInitial": {
+      "countInvoices": 2,
+      "tableRows": [
+        {
+          "exposureDate": "19. 10. 2025",
+          "orderNumber": "1234567890",
+          "invoiceUrl": "https://www.fakturoid.cz/invoices/80",
+          "paymentCount": 1,
+          "totalAmount": 144,
+          "paidDate": ""
+        },
+        {
+          "exposureDate": "20. 10. 2025",
+          "orderNumber": "1234567891",
+          "invoiceUrl": "https://www.fakturoid.cz/invoices/81",
+          "paymentCount": 2,
+          "totalAmount": 390,
+          "paidDate": "28. 10. 2025"
+        }
+      ],
+      "dialogCreateInvoice": {
+        "billingDetails": {
+          "name": "Moravské pivovary a.s.",
+          "street": "Pivovarská",
+          "streetNumber": "456",
+          "zip": "15000",
+          "city": "Brno",
+          "ico": "87654321",
+          "dic": "CZ87654321"
+        },
+        "teams": [
+          {
+            "name": "Výroba",
+            "members": [
+              {
+                "name": "Jaroslav Beneš",
+                "amount": 390
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
+    "displayAfterApproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 2
+    }
+  }
+]

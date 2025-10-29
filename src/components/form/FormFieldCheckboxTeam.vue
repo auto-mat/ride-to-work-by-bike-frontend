@@ -43,7 +43,7 @@ export default defineComponent({
       default: invoiceFixture.teams[0],
     },
     modelValue: {
-      type: Array as () => string[],
+      type: Array as () => number[],
       required: true,
     },
   },
@@ -51,10 +51,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const isSelectedTeam = ref<boolean>(false);
     const selectedMembers = computed({
-      get: (): string[] => {
+      get: (): number[] => {
         return props.modelValue;
       },
-      set: (value: string[]): void => {
+      set: (value: number[]): void => {
         emit('update:modelValue', value);
       },
     });

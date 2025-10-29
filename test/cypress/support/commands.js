@@ -4091,7 +4091,7 @@ Cypress.Commands.add(
  * Sets up API intercepts, performs login, and navigates to coordinator fees page
  * @param {Object} config - App configuration object
  */
-Cypress.Commands.add('setupCoordinatorFeeApprovalTest', (config, i18n) => {
+Cypress.Commands.add('setupCompanyCoordinatorTest', (config, i18n) => {
   cy.fixture('apiGetRegisterChallengeProfile.json').then(
     (registerChallengeResponse) => {
       // register challenge API
@@ -4131,9 +4131,6 @@ Cypress.Commands.add('setupCoordinatorFeeApprovalTest', (config, i18n) => {
   );
   // login and navigate to coordinator fees page
   cy.performAuthenticatedLogin(config, i18n);
-  cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
-  cy.dataCy('table-fee-approval-not-approved-title').should('be.visible');
-  cy.dataCy('table-fee-approval-approved-title').should('be.visible');
 });
 
 /**

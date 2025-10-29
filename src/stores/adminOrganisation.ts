@@ -7,6 +7,7 @@ import { i18n } from '../boot/i18n';
 import { useApiGetAdminOrganisation } from '../composables/useApiGetAdminOrganisation';
 import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinatorInvoices';
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
+import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -216,6 +217,31 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         });
       }
       this.isLoadingApprovePayments = false;
+    },
+    /**
+     * Create invoice from internal form state
+     * @returns {Promise<boolean>} - Success status
+     */
+    async createInvoice(): Promise<boolean> {
+      const { makeInvoice } = useApiPostCoordinatorMakeInvoice(this.$log);
+
+      // send all selected member ids
+      const paymentIds: number[] = [];
+      Object.values(this.invoiceForm.selectedMembers).forEach((memberIds) => {
+        paymentIds.push(...memberIds);
+      });
+      const result = await makeInvoice({
+        order_number: this.invoiceForm.orderNumber || undefined,
+        client_note: this.invoiceForm.orderNote || undefined,
+        company_pais_benefitial_fee: this.invoiceForm.isDonorEntryFee,
+        payment_ids: paymentIds,
+      });
+      // if successful, refetch invoices list
+      if (result) {
+        await this.loadAdminInvoices();
+        return true;
+      }
+      return false;
     },
     /**
      * Reset invoice form to initial state

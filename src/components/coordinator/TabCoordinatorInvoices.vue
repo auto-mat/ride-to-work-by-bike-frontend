@@ -55,7 +55,10 @@ export default defineComponent({
     };
 
     const onSubmit = async (): Promise<void> => {
-      // TODO: Implement submit logic
+      const success = await adminOrganisationStore.createInvoice();
+      if (success) {
+        closeDialog();
+      }
     };
     const onReset = (): void => {
       closeDialog();

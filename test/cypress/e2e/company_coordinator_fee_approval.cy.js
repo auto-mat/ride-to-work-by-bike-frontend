@@ -15,7 +15,14 @@ describe('Company coordinator fee approval page', () => {
           cy.window().then((win) => {
             cy.wrap(win.i18n).as('i18n');
             // setup coordinator test environment
-            cy.setupCoordinatorFeeApprovalTest(config, win.i18n);
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+            cy.visit(
+              '#' + routesConf['coordinator_fees']['children']['fullPath'],
+            );
+            cy.dataCy('table-fee-approval-not-approved-title').should(
+              'be.visible',
+            );
+            cy.dataCy('table-fee-approval-approved-title').should('be.visible');
           });
         });
       });
