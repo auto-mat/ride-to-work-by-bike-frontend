@@ -38,7 +38,7 @@ describe('Company coordinator invoices page', () => {
             // test initial table data
             cy.dataCy('table-invoices-row').should(
               'have.length',
-              test.displayInitial.countInvoices,
+              test.displayInitial.tableRows.length,
             );
             cy.dataCy('table-invoices-row').each((row, index) => {
               cy.verifyCoordinatorInvoicesTableRow(
@@ -112,6 +112,26 @@ describe('Company coordinator invoices page', () => {
             );
             cy.dataCy('dialog-button-submit').click();
             // submit does not work without checking confirm billing details toggle
+            cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+            // if additional information is provided, fill in the form
+            if (test.postMakeInvoice.orderNumber) {
+              cy.dataCy('form-create-invoice-order-number-input').type(
+                test.postMakeInvoice.orderNumber,
+              );
+            }
+            if (test.postMakeInvoice.clientNote) {
+              cy.dataCy('form-create-invoice-note-input').type(
+                test.postMakeInvoice.clientNote,
+              );
+            }
+            if (test.postMakeInvoice.isDonorEntryFee) {
+              cy.dataCy('form-create-invoice-donor-entry-fee-toggle')
+                .find('.q-toggle__inner')
+                .click();
+              cy.dataCy('form-create-invoice-donor-entry-fee-toggle')
+                .find('.q-toggle__inner')
+                .should('have.class', 'q-toggle__inner--truthy');
+            }
             cy.dataCy('form-create-invoice-confirm-billing-details')
               .find('.q-toggle__inner')
               .click();

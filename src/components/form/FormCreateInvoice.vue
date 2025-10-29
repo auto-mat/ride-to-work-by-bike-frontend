@@ -203,7 +203,7 @@ export default defineComponent({
             class="q-mt-sm"
             id="form-create-invoice-order-number"
             name="create-invoice-order-number"
-            :data-cy="`form-create-invoice-order-number-input`"
+            data-cy="form-create-invoice-order-number-input"
           />
         </div>
         <!-- Input: Note -->
@@ -224,7 +224,7 @@ export default defineComponent({
             class="q-mt-sm"
             id="form-create-invoice-note"
             name="create-invoice-note"
-            :data-cy="`form-create-invoice-note-input`"
+            data-cy="form-create-invoice-note-input"
           />
         </div>
       </div>
