@@ -196,3 +196,98 @@ Cypress.Commands.add('waitForCoordinatorInvoicesGetApi', (responseFixture) => {
     });
   });
 });
+
+/**
+ * Intercept coordinator make invoice POST API call
+ * Provides `@postCoordinatorMakeInvoice` alias
+ * @param {Object} config - App global config
+ * @param {Object} responseData - Response data object
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorMakeInvoicePostApi',
+  (config, responseData) => {
+    const { apiBase, apiDefaultLang, urlApiCoordinatorMakeInvoice } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiCoordinatorMakeInvoiceLocalized = `${apiBaseUrl}${urlApiCoordinatorMakeInvoice}`;
+
+    cy.intercept('POST', urlApiCoordinatorMakeInvoiceLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: responseData,
+    }).as('postCoordinatorMakeInvoice');
+  },
+);
+
+/**
+ * Wait for intercept coordinator make invoice POST API call and compare request/response object
+ * Wait for `@postCoordinatorMakeInvoice` intercept
+ * @param {Object} requestData - Expected request data object
+ * @param {Object} responseData - Expected response data object
+ */
+Cypress.Commands.add(
+  'waitForCoordinatorMakeInvoicePostApi',
+  (requestData, responseData) => {
+    cy.wait('@postCoordinatorMakeInvoice').then(({ request, response }) => {
+      // Verify authorization header
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      // Verify request body
+      expect(request.body).to.deep.equal(requestData);
+      // Verify response
+      if (response) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(responseData);
+      }
+    });
+  },
+);
+
+/**
+ * Verify coordinator invoices table row data
+ * @param {number} index - Row index
+ * @param {Object} tableRowData - Expected table row data object
+ * @param {Object} i18n - Vue i18n instance for translations
+ */
+Cypress.Commands.add(
+  'verifyCoordinatorInvoicesTableRow',
+  (index, tableRowData, i18n) => {
+    cy.dataCy('table-invoices-row')
+      .eq(index)
+      .within(() => {
+        cy.dataCy('table-invoices-exposure-date').should(
+          'contain',
+          tableRowData.exposureDate,
+        );
+        cy.dataCy('table-invoices-order-number').should(
+          'contain',
+          tableRowData.orderNumber,
+        );
+        cy.dataCy('table-invoices-url')
+          .find('.q-btn')
+          .invoke('attr', 'href')
+          .should('contain', tableRowData.invoiceUrl);
+        cy.dataCy('table-invoices-payment-count').should(
+          'contain',
+          tableRowData.paymentCount,
+        );
+        cy.dataCy('table-invoices-total-amount').should(
+          'contain',
+          tableRowData.totalAmount,
+        );
+        if (tableRowData.paidDate) {
+          cy.dataCy('table-invoices-paid-date').should(
+            'contain',
+            tableRowData.paidDate,
+          );
+        } else {
+          cy.dataCy('table-invoices-paid-date').should(
+            'contain',
+            i18n.global.t('table.labelNotConfirmed'),
+          );
+        }
+      });
+  },
+);

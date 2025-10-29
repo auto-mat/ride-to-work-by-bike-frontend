@@ -62,6 +62,26 @@
               "pay_category": "entry_fee"
             }
           ]
+        },
+        {
+          "id": 82,
+          "order_number": "1234567892",
+          "total_amount": 390,
+          "fakturoid_invoice_url": "https://www.fakturoid.cz/invoices/82",
+          "exposure_date": "2025-10-30",
+          "paid_date": "",
+          "company_pais_benefitial_fee": false,
+          "client_note": "",
+          "payments": [
+            {
+              "id": 181,
+              "amount": 390,
+              "userprofile_id": 39,
+              "payment_status": 1007,
+              "pay_type": "fc",
+              "pay_category": "entry_fee"
+            }
+          ]
         }
       ]
     }

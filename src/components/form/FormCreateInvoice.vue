@@ -143,15 +143,24 @@ export default defineComponent({
       </p>
     </address>
     <!-- Toggle: Confirm billing details -->
-    <!-- TODO: wrap in a field to ensure form validation -->
-    <q-toggle
-      dense
-      v-model="isBillingDetailsCorrect"
-      :label="$t('form.labelConfirmBillingDetails')"
-      name="confirm-billing-details"
-      color="primary"
-      data-cy="form-create-invoice-confirm-billing-details"
-    />
+    <q-field
+      :model-value="isBillingDetailsCorrect"
+      :rules="[
+        (val) => val === true || $t('form.messageConfirmBillingDetails'),
+      ]"
+      bottom-slots
+      borderless
+      hide-bottom-space
+    >
+      <q-toggle
+        dense
+        v-model="isBillingDetailsCorrect"
+        :label="$t('form.labelConfirmBillingDetails')"
+        name="confirm-billing-details"
+        color="primary"
+        data-cy="form-create-invoice-confirm-billing-details"
+      />
+    </q-field>
     <!-- Link: Edit billing details -->
     <p class="q-mt-lg" data-cy="form-create-invoice-edit-billing-details">
       {{ $t('form.textEditBillingDetails') }}
@@ -194,7 +203,7 @@ export default defineComponent({
             class="q-mt-sm"
             id="form-create-invoice-order-number"
             name="create-invoice-order-number"
-            :data-cy="`form-create-invoice-order-number-input`"
+            data-cy="form-create-invoice-order-number-input"
           />
         </div>
         <!-- Input: Note -->
@@ -215,7 +224,7 @@ export default defineComponent({
             class="q-mt-sm"
             id="form-create-invoice-note"
             name="create-invoice-note"
-            :data-cy="`form-create-invoice-note-input`"
+            data-cy="form-create-invoice-note-input"
           />
         </div>
       </div>
