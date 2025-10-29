@@ -41,42 +41,11 @@ describe('Company coordinator invoices page', () => {
               test.displayInitial.countInvoices,
             );
             cy.dataCy('table-invoices-row').each((row, index) => {
-              cy.wrap(row).within(() => {
-                cy.dataCy('table-invoices-exposure-date').should(
-                  'contain',
-                  test.displayInitial.tableRows[index].exposureDate,
-                );
-                cy.dataCy('table-invoices-order-number').should(
-                  'contain',
-                  test.displayInitial.tableRows[index].orderNumber,
-                );
-                cy.dataCy('table-invoices-url')
-                  .find('.q-btn')
-                  .invoke('attr', 'href')
-                  .should(
-                    'contain',
-                    test.displayInitial.tableRows[index].invoiceUrl,
-                  );
-                cy.dataCy('table-invoices-payment-count').should(
-                  'contain',
-                  test.displayInitial.tableRows[index].paymentCount,
-                );
-                cy.dataCy('table-invoices-total-amount').should(
-                  'contain',
-                  test.displayInitial.tableRows[index].totalAmount,
-                );
-                if (test.displayInitial.tableRows[index].paidDate) {
-                  cy.dataCy('table-invoices-paid-date').should(
-                    'contain',
-                    test.displayInitial.tableRows[index].paidDate,
-                  );
-                } else {
-                  cy.dataCy('table-invoices-paid-date').should(
-                    'contain',
-                    i18n.global.t('table.labelNotConfirmed'),
-                  );
-                }
-              });
+              cy.verifyCoordinatorInvoicesTableRow(
+                index,
+                test.displayInitial.tableRows[index],
+                i18n,
+              );
             });
             // test creating an invoice
             cy.dataCy('button-create-invoice').click();
@@ -150,6 +119,24 @@ describe('Company coordinator invoices page', () => {
             // wait for API call to finish
             cy.get('@postCoordinatorMakeInvoice.all').should('have.length', 1);
             cy.get('@getCoordinatorInvoices.all').should('have.length', 2);
+            cy.waitForCoordinatorMakeInvoicePostApi(
+              test.postMakeInvoice.postPayload,
+              test.postMakeInvoice.postResponse,
+            );
+            if (test.postMakeInvoice.success) {
+              // check that the table has the correct number of rows
+              cy.contains(
+                i18n.global.t('makeInvoice.apiMessageSuccess'),
+              ).should('be.visible');
+            }
+            // test the updated invoices table
+            cy.dataCy('table-invoices-row').each((row, index) => {
+              cy.verifyCoordinatorInvoicesTableRow(
+                index,
+                test.displayAfterMakeInvoice.tableRows[index],
+                i18n,
+              );
+            });
           });
         });
       });

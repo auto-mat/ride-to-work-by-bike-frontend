@@ -47,6 +47,7 @@
       }
     },
     "postMakeInvoice": {
+      "success": true,
       "postResponse": {
         "invoice_id": 82
       },

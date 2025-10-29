@@ -231,9 +231,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         paymentIds.push(...memberIds);
       });
       const result = await makeInvoice({
+        // when set to undefined, field is not sent in the request
         order_number: this.invoiceForm.orderNumber || undefined,
         client_note: this.invoiceForm.orderNote || undefined,
-        company_pais_benefitial_fee: this.invoiceForm.isDonorEntryFee,
+        company_pais_benefitial_fee:
+          this.invoiceForm.isDonorEntryFee || undefined,
         payment_ids: paymentIds,
       });
       // if successful, refetch invoices list

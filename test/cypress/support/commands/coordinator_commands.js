@@ -244,3 +244,50 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Verify coordinator invoices table row data
+ * @param {number} index - Row index
+ * @param {Object} tableRowData - Expected table row data object
+ * @param {Object} i18n - Vue i18n instance for translations
+ */
+Cypress.Commands.add(
+  'verifyCoordinatorInvoicesTableRow',
+  (index, tableRowData, i18n) => {
+    cy.dataCy('table-invoices-row')
+      .eq(index)
+      .within(() => {
+        cy.dataCy('table-invoices-exposure-date').should(
+          'contain',
+          tableRowData.exposureDate,
+        );
+        cy.dataCy('table-invoices-order-number').should(
+          'contain',
+          tableRowData.orderNumber,
+        );
+        cy.dataCy('table-invoices-url')
+          .find('.q-btn')
+          .invoke('attr', 'href')
+          .should('contain', tableRowData.invoiceUrl);
+        cy.dataCy('table-invoices-payment-count').should(
+          'contain',
+          tableRowData.paymentCount,
+        );
+        cy.dataCy('table-invoices-total-amount').should(
+          'contain',
+          tableRowData.totalAmount,
+        );
+        if (tableRowData.paidDate) {
+          cy.dataCy('table-invoices-paid-date').should(
+            'contain',
+            tableRowData.paidDate,
+          );
+        } else {
+          cy.dataCy('table-invoices-paid-date').should(
+            'contain',
+            i18n.global.t('table.labelNotConfirmed'),
+          );
+        }
+      });
+  },
+);
