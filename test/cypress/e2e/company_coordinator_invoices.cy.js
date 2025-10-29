@@ -148,15 +148,17 @@ describe('Company coordinator invoices page', () => {
               cy.contains(
                 i18n.global.t('makeInvoice.apiMessageSuccess'),
               ).should('be.visible');
+              // check that dialog is closed
+              cy.dataCy('dialog-create-invoice').should('not.exist');
+              // test the updated invoices table
+              cy.dataCy('table-invoices-row').each((row, index) => {
+                cy.verifyCoordinatorInvoicesTableRow(
+                  index,
+                  test.displayAfterMakeInvoice.tableRows[index],
+                  i18n,
+                );
+              });
             }
-            // test the updated invoices table
-            cy.dataCy('table-invoices-row').each((row, index) => {
-              cy.verifyCoordinatorInvoicesTableRow(
-                index,
-                test.displayAfterMakeInvoice.tableRows[index],
-                i18n,
-              );
-            });
           });
         });
       });
