@@ -28,13 +28,13 @@
           "id": "member-1",
           "name": "Petr",
           "team": "001",
-          "payment": { "amount": 399 }
+          "payment": { "id": 1, "amount": 399 }
         },
         {
           "id": "member-2",
           "name": "Marta",
           "team": "001",
-          "payment": { "amount": 399 }
+          "payment": { "id": 2, "amount": 399 }
         }
       ]
     },
@@ -46,7 +46,7 @@
           "id": "member-3",
           "name": "Jan",
           "team": "002",
-          "payment": { "amount": 399 }
+          "payment": { "id": 3, "amount": 399 }
         }
       ]
     }

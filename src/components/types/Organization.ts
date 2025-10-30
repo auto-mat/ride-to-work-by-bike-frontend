@@ -47,6 +47,7 @@ export interface OrganizationMember {
   name: string;
   team: number;
   payment: {
+    id: number;
     amount: number;
   };
 }

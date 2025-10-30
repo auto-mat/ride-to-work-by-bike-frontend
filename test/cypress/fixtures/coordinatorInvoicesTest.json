@@ -51,7 +51,7 @@
         "invoice_id": 82
       },
       "postPayload": {
-        "payment_ids": [60004]
+        "payment_ids": [178]
       }
     },
     "fixtureAdminInvoicesAfterMakeInvoice": "apiGetCoordinatorInvoicesResponseAddedInvoice.json",
@@ -142,7 +142,7 @@
         "client_note": "Test client note",
         "company_pais_benefitial_fee": true,
         "order_number": "1234567892",
-        "payment_ids": [60004]
+        "payment_ids": [178]
       }
     },
     "fixtureAdminInvoicesAfterMakeInvoice": "apiGetCoordinatorInvoicesResponseAddedInvoice.json",

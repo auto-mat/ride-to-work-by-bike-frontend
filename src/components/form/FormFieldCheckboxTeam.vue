@@ -28,6 +28,9 @@ import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useFormatPrice } from 'src/composables/useFormatPrice';
 import { nextTick } from 'process';
 
+// enums
+import { Currency } from '../../composables/useFormatPrice';
+
 // types
 import type { OrganizationMember } from '../types/Organization';
 
@@ -97,12 +100,13 @@ export default defineComponent({
         selectedMembers.value = [];
       } else {
         selectedMembers.value = props.team.members.map(
-          (member: OrganizationMember) => member.id,
+          (member: OrganizationMember) => member.payment.id,
         );
       }
     };
 
     return {
+      Currency,
       isSelectedTeam,
       selectedMembers,
       formatPriceCurrency,
@@ -144,7 +148,7 @@ export default defineComponent({
           <!-- Checkbox: Member -->
           <q-checkbox
             v-model="selectedMembers"
-            :val="member.id"
+            :val="member.payment.id"
             color="primary"
             @update:model-value="onChangeMember"
           />
@@ -155,7 +159,7 @@ export default defineComponent({
             <div class="flex justify-between">
               <span>{{ member.name }}</span>
               <span class="text-weight-bold">{{
-                formatPriceCurrency(member.payment.amount, 'CZK')
+                formatPriceCurrency(member.payment.amount, Currency.CZK)
               }}</span>
             </div>
           </q-item-label>

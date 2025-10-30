@@ -42,6 +42,7 @@ export interface InvoiceTeamMember {
   name: string;
   teamId: number;
   payment: {
+    id: number;
     amount: number;
   };
 }

@@ -122,10 +122,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           }
           const invoiceTeam = teamsMap.get(team.id)!;
           invoiceTeam.members.push({
-            id: member.user_profile_id,
+            id: member.id,
             name: member.name,
             teamId: team.id,
             payment: {
+              id: payment.id,
               amount: payment.amount,
             },
           });
@@ -267,7 +268,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const teams = this.getInvoiceTeams;
       teams.forEach((team) => {
         // set selected value for each member in the team
-        newSelectedMembers[team.id] = team.members.map((member) => member.id);
+        newSelectedMembers[team.id] = team.members.map(
+          (member) => member.payment.id,
+        );
       });
       this.invoiceForm.selectedMembers = newSelectedMembers;
     },
