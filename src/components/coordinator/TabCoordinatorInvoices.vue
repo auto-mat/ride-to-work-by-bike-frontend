@@ -18,7 +18,7 @@
 
 // libraries
 import { QForm } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import BannerInfo from '../global/BannerInfo.vue';
@@ -64,8 +64,13 @@ export default defineComponent({
       closeDialog();
     };
 
+    const hasMembersAvailable = computed(() => {
+      return adminOrganisationStore.getInvoiceTeams.length > 0;
+    });
+
     return {
       formCreateInvoiceRef,
+      hasMembersAvailable,
       isDialogOpen,
       onReset,
       onSubmit,
@@ -93,6 +98,7 @@ export default defineComponent({
         color="primary"
         unelevated
         rounded
+        :disabled="!hasMembersAvailable"
         @click.prevent="openDialog"
         data-cy="button-create-invoice"
       >

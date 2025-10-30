@@ -164,4 +164,45 @@ describe('Company coordinator invoices page', () => {
       });
     });
   });
+
+  context('empty invoices', () => {
+    beforeEach(() => {
+      cy.viewport(1920, 2500);
+      // set system time to be in the correct active token window
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+            // override coordinator invoices API response
+            cy.interceptCoordinatorInvoicesGetApi(
+              config,
+              'apiGetCoordinatorInvoicesResponseEmpty.json',
+            );
+            cy.visit(
+              '#' + routesConf['coordinator_invoices']['children']['fullPath'],
+            );
+            cy.dataCy('table-invoices-title').should('be.visible');
+          });
+        });
+      });
+    });
+
+    it('does not allow to open create invoice dialog when no members are available', () => {
+      // check that initial admin organisation response is loaded
+      cy.waitForCoordinatorInvoicesGetApi(
+        'apiGetCoordinatorInvoicesResponseEmpty.json',
+      );
+      cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+      // button should be disabled
+      cy.dataCy('button-create-invoice')
+        .should('be.visible')
+        .and('have.attr', 'disabled');
+    });
+  });
 });
