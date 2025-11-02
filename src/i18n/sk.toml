@@ -309,6 +309,8 @@ titleOrganizers = "Výzvu organizuje"
 
 [makeInvoice]
 apiMessageError = "Vytvorenie faktúry zlyhalo."
+apiMessageErrorNoPaymentsToInvoice = "Neevidujeme žiadne platby k preplateniu."
+apiMessageErrorNotInInvoicesPhase = "Neplatná akcia. V tejto chvíli nie je povolené vytvárať faktúry."
 apiMessageErrorWithMessage = "Vytvorenie faktúry zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Faktúra bola úspešne vytvorená."
 

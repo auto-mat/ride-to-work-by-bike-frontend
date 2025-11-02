@@ -205,4 +205,93 @@ describe('Company coordinator invoices page', () => {
         .and('have.attr', 'disabled');
     });
   });
+
+  context('invoices phase changes to inactive', () => {
+    beforeEach(() => {
+      cy.viewport(1920, 2500);
+      // set system time to be in the correct active token window
+      cy.clock(new Date('2024-10-08T00:01:00.000Z'), ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+            cy.visit(
+              '#' + routesConf['coordinator_invoices']['children']['fullPath'],
+            );
+            cy.dataCy('table-invoices-title').should('be.visible');
+          });
+        });
+      });
+    });
+
+    it('does not allow to open dialog when invoices phase is inactive', () => {
+      // check that initial admin organisation response is loaded
+      cy.waitForCoordinatorInvoicesGetApi(
+        'apiGetCoordinatorInvoicesResponse.json',
+      );
+      cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+      // button should be disabled
+      cy.dataCy('button-create-invoice')
+        .should('be.visible')
+        .and('have.attr', 'disabled');
+    });
+  });
+
+  context('invoices phase changes to inactive', () => {
+    beforeEach(() => {
+      cy.viewport(1920, 2500);
+      // set system time to be in the correct active token window
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+            cy.visit(
+              '#' + routesConf['coordinator_invoices']['children']['fullPath'],
+            );
+            cy.dataCy('table-invoices-title').should('be.visible');
+          });
+        });
+      });
+    });
+
+    it('does not allow to send invoice request when invoices phase is inactive', () => {
+      cy.get('@i18n').then((i18n) => {
+        // check that initial admin organisation response is loaded
+        cy.waitForCoordinatorInvoicesGetApi(
+          'apiGetCoordinatorInvoicesResponse.json',
+        );
+        cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+        // move clock from '2024-09-16T00:01:00.000Z' to '2024-10-08T00:01:00.000Z' (outside of invoices phase)
+        cy.tick(22 * 24 * 60 * 60 * 1000);
+        // test creating an invoice
+        cy.dataCy('button-create-invoice').click();
+        cy.dataCy('dialog-create-invoice').should('be.visible');
+        cy.dataCy('dialog-header').should(
+          'contain',
+          i18n.global.t('coordinator.titleCreateInvoice'),
+        );
+        cy.dataCy('form-create-invoice').should('be.visible');
+        cy.dataCy('form-create-invoice-confirm-billing-details')
+          .find('.q-toggle__inner')
+          .click();
+        cy.dataCy('dialog-button-submit').click();
+        // check that error message is displayed
+        cy.contains(
+          i18n.global.t('makeInvoice.apiMessageErrorNotInInvoicesPhase'),
+        ).should('be.visible');
+        cy.dataCy('dialog-create-invoice').should('be.visible');
+      });
+    });
+  });
 });

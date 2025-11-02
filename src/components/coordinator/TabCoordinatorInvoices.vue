@@ -26,8 +26,12 @@ import DialogDefault from '../global/DialogDefault.vue';
 import FormCreateInvoice from '../form/FormCreateInvoice.vue';
 import TableInvoices from './TableInvoices.vue';
 
+// enums
+import { PhaseType } from '../types/Challenge';
+
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useChallengeStore } from 'src/stores/challenge';
 
 export default defineComponent({
   name: 'TabCoordinatorInvoices',
@@ -68,10 +72,16 @@ export default defineComponent({
       return adminOrganisationStore.getHasPaymentsToInvoice;
     });
 
+    const isInvoicesPhaseActive = computed(() => {
+      const challengeStore = useChallengeStore();
+      return challengeStore.getIsChallengeInPhase(PhaseType.invoices);
+    });
+
     return {
       formCreateInvoiceRef,
       hasPaymentsToInvoice,
       isDialogOpen,
+      isInvoicesPhaseActive,
       onReset,
       onSubmit,
       openDialog,
@@ -98,7 +108,7 @@ export default defineComponent({
         color="primary"
         unelevated
         rounded
-        :disabled="!hasPaymentsToInvoice"
+        :disabled="!hasPaymentsToInvoice || !isInvoicesPhaseActive"
         @click.prevent="openDialog"
         data-cy="button-create-invoice"
       >

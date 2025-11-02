@@ -2,6 +2,8 @@ import { createPinia, setActivePinia } from 'pinia';
 import TabCoordinatorInvoices from 'components/coordinator/TabCoordinatorInvoices.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+import { useChallengeStore } from '../../stores/challenge';
+import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
 
 // variables
 const iconSize = 18;
@@ -9,6 +11,15 @@ const iconSize = 18;
 describe('<TabCoordinatorInvoices>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['titleInvoices'], 'table', i18n);
+    cy.testLanguageStringsInContext(
+      [
+        'apiMessageErrorNoPaymentsToInvoice',
+        'apiMessageErrorNotInInvoicesPhase',
+        'apiMessageSuccess',
+      ],
+      'makeInvoice',
+      i18n,
+    );
     cy.testLanguageStringsInContext(['discard'], 'navigation', i18n);
     cy.testLanguageStringsInContext(
       [
@@ -24,10 +35,12 @@ describe('<TabCoordinatorInvoices>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(TabCoordinatorInvoices, {
-        props: {},
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.mount(TabCoordinatorInvoices, {
+          props: {},
+        });
+        cy.viewport(1920, 2000);
       });
-      cy.viewport(1920, 2000);
     });
 
     coreTests();
@@ -36,10 +49,12 @@ describe('<TabCoordinatorInvoices>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(TabCoordinatorInvoices, {
-        props: {},
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.mount(TabCoordinatorInvoices, {
+          props: {},
+        });
+        cy.viewport(375, 2000);
       });
-      cy.viewport(375, 2000);
     });
 
     coreTests();
@@ -54,6 +69,11 @@ function coreTests() {
         cy.setAdminOrganisationStoreState({
           store: adminOrganisationStore,
           invoices: invoicesData.storeData,
+        });
+      });
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       cy.dataCy('tab-coordinator-invoices').should('exist');
@@ -94,6 +114,11 @@ function coreTests() {
         cy.setAdminOrganisationStoreState({
           store: adminOrganisationStore,
           invoices: invoicesData.storeData,
+        });
+      });
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPhaseSet(response.results[0].phase_set);
         });
       });
       cy.dataCy('button-create-invoice').click();

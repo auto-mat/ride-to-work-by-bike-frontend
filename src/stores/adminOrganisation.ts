@@ -9,6 +9,12 @@ import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinato
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
 import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
 
+// enums
+import { PhaseType } from '../components/types/Challenge';
+
+// stores
+import { useChallengeStore } from './challenge';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type {
@@ -232,8 +238,26 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      * @returns {Promise<boolean>} - Success status
      */
     async createInvoice(): Promise<boolean> {
+      if (!this.getHasPaymentsToInvoice) {
+        Notify.create({
+          message: i18n.global.t(
+            'makeInvoice.apiMessageErrorNoPaymentsToInvoice',
+          ),
+          color: 'negative',
+        });
+        return false;
+      }
+      const challengeStore = useChallengeStore();
+      if (!challengeStore.getIsChallengeInPhase(PhaseType.invoices)) {
+        Notify.create({
+          message: i18n.global.t(
+            'makeInvoice.apiMessageErrorNotInInvoicesPhase',
+          ),
+          color: 'negative',
+        });
+        return false;
+      }
       const { makeInvoice } = useApiPostCoordinatorMakeInvoice(this.$log);
-
       // send all selected member ids
       const paymentIds: number[] = [];
       Object.values(this.invoiceForm.selectedMembers).forEach((memberIds) => {
