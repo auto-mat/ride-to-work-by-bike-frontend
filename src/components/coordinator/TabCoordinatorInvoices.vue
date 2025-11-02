@@ -64,13 +64,13 @@ export default defineComponent({
       closeDialog();
     };
 
-    const hasMembersAvailable = computed(() => {
-      return adminOrganisationStore.getInvoiceTeams.length > 0;
+    const hasPaymentsToInvoice = computed(() => {
+      return adminOrganisationStore.getHasPaymentsToInvoice;
     });
 
     return {
       formCreateInvoiceRef,
-      hasMembersAvailable,
+      hasPaymentsToInvoice,
       isDialogOpen,
       onReset,
       onSubmit,
@@ -98,7 +98,7 @@ export default defineComponent({
         color="primary"
         unelevated
         rounded
-        :disabled="!hasMembersAvailable"
+        :disabled="!hasPaymentsToInvoice"
         @click.prevent="openDialog"
         data-cy="button-create-invoice"
       >

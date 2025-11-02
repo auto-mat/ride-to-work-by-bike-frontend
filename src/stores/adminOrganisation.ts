@@ -135,6 +135,14 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
 
       return Array.from(teamsMap.values());
     },
+    // check if there are payments to invoice
+    getHasPaymentsToInvoice: (state): boolean => {
+      const invoiceResult = state.adminInvoices[0];
+      if (!invoiceResult || !invoiceResult.payments_to_invoice) {
+        return false;
+      }
+      return invoiceResult.payments_to_invoice.length > 0;
+    },
   },
 
   actions: {
