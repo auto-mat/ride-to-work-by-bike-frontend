@@ -1,5 +1,8 @@
 import { routesConf } from '../../../src/router/routes_conf';
-import { systemTimeChallengeActive } from '../support/commonTests';
+import {
+  systemTimeChallengeActive,
+  systemTimeInvoicesPhaseInactive,
+} from '../support/commonTests';
 import testSet from '../fixtures/coordinatorInvoicesTest.json';
 
 describe('Company coordinator invoices page', () => {
@@ -210,7 +213,7 @@ describe('Company coordinator invoices page', () => {
     beforeEach(() => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
-      cy.clock(new Date('2024-10-08T00:01:00.000Z'), ['Date']).then(() => {
+      cy.clock(systemTimeInvoicesPhaseInactive, ['Date']).then(() => {
         cy.task('getAppConfig', process).then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
