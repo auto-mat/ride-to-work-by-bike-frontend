@@ -309,7 +309,7 @@ titleOrganizers = "Challenge organized by"
 
 [makeInvoice]
 apiMessageError = "Invoice creation failed."
-apiMessageErrorNoPaymentsToInvoice = "No payments to invoice."
+apiMessageErrorNoPaymentsToInvoice = "Invalid action. No payments selected for invoice creation."
 apiMessageErrorNotInInvoicesPhase = "Invalid action. Creating invoices is not allowed at this time."
 apiMessageErrorWithMessage = "Invoice creation failed. Error: {error}"
 apiMessageSuccess = "Invoice was successfully created."

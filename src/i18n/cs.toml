@@ -309,7 +309,7 @@ titleOrganizers = "Výzvu pořádá"
 
 [makeInvoice]
 apiMessageError = "Vytvoření faktury selhalo."
-apiMessageErrorNoPaymentsToInvoice = "Neevidujeme žádné platby k proplacení."
+apiMessageErrorNoPaymentsToInvoice = "Neplatná akce. Nejsou vybrány žádné platby pro vytvoření faktury."
 apiMessageErrorNotInInvoicesPhase = "Neplatná akce. V tuto chvíli není povoleno vytvářet faktury."
 apiMessageErrorWithMessage = "Vytvoření faktury selhalo. Chyba: {error}"
 apiMessageSuccess = "Faktura byla úspěšně vytvořena."

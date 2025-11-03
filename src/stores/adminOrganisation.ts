@@ -238,7 +238,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      * @returns {Promise<boolean>} - Success status
      */
     async createInvoice(): Promise<boolean> {
-      if (!this.getHasPaymentsToInvoice) {
+      // get payment ids from selected members
+      const paymentIds: number[] = [];
+      Object.values(this.invoiceForm.selectedMembers).forEach((memberIds) => {
+        paymentIds.push(...memberIds);
+      });
+      // if no payments available or no payments selected, return
+      if (!this.getHasPaymentsToInvoice || !paymentIds.length) {
         Notify.create({
           message: i18n.global.t(
             'makeInvoice.apiMessageErrorNoPaymentsToInvoice',
@@ -258,11 +264,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return false;
       }
       const { makeInvoice } = useApiPostCoordinatorMakeInvoice(this.$log);
-      // send all selected member ids
-      const paymentIds: number[] = [];
-      Object.values(this.invoiceForm.selectedMembers).forEach((memberIds) => {
-        paymentIds.push(...memberIds);
-      });
       const result = await makeInvoice({
         // when set to undefined, field is not sent in the request
         order_number: this.invoiceForm.orderNumber || undefined,
