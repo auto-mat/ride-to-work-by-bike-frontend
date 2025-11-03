@@ -356,7 +356,7 @@ sundayShort = "ne"
 [navigation]
 continue = "Pokračovať"
 back = "Späť"
-discard = "Vyhodiť"
+discard = "Zahodiť"
 discardChanges = "Zahoďte zmeny"
 done = "Hotovo"
 edit = "Upraviť"
