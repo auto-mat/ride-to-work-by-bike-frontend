@@ -166,6 +166,32 @@ describe('Company coordinator invoices page', () => {
         });
       });
     });
+
+    it('does not allow to submit form when no payments are selected', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.dataCy('button-create-invoice').click();
+        cy.dataCy('dialog-create-invoice').should('be.visible');
+        cy.dataCy('dialog-header').should(
+          'contain',
+          i18n.global.t('coordinator.titleCreateInvoice'),
+        );
+      });
+      cy.dataCy('form-create-invoice-confirm-billing-details')
+        .find('.q-toggle__inner')
+        .click();
+      // deselect all payments
+      cy.dataCy('form-field-checkbox-team-item').each((item) => {
+        cy.wrap(item).find('.q-checkbox__inner').click();
+      });
+      // submit button is disabled
+      cy.dataCy('dialog-button-submit').should('be.disabled');
+      // select at least one payment
+      cy.dataCy('form-field-checkbox-team-item')
+        .first()
+        .find('.q-checkbox__inner')
+        .click();
+      cy.dataCy('dialog-button-submit').should('be.enabled');
+    });
   });
 
   context('empty invoices', () => {

@@ -68,11 +68,22 @@ export default defineComponent({
       closeDialog();
     };
 
-    const hasPaymentsToInvoice = computed(() => {
+    const hasPaymentsToInvoice = computed<boolean>(() => {
       return adminOrganisationStore.getHasPaymentsToInvoice;
     });
 
-    const isInvoicesPhaseActive = computed(() => {
+    const hasSelectedPaymentsToInvoice = computed<boolean>(() => {
+      return (
+        Object.values(
+          adminOrganisationStore.invoiceForm.selectedMembers,
+        ).reduce((acc, memberIds) => {
+          acc.push(...memberIds);
+          return acc;
+        }, []).length > 0
+      );
+    });
+
+    const isInvoicesPhaseActive = computed<boolean>(() => {
       const challengeStore = useChallengeStore();
       return challengeStore.getIsChallengeInPhase(PhaseType.invoices);
     });
@@ -80,6 +91,7 @@ export default defineComponent({
     return {
       formCreateInvoiceRef,
       hasPaymentsToInvoice,
+      hasSelectedPaymentsToInvoice,
       isDialogOpen,
       isInvoicesPhaseActive,
       onReset,
@@ -145,6 +157,7 @@ export default defineComponent({
                 rounded
                 unelevated
                 color="primary"
+                :disable="!hasSelectedPaymentsToInvoice"
                 data-cy="dialog-button-submit"
               >
                 {{ $t('coordinator.buttonDialogCreateInvoice') }}
