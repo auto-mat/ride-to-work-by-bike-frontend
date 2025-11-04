@@ -137,7 +137,7 @@ describe('<BannerAppButtons>', () => {
       });
       cy.request({
         url: urlAppStore,
-        failOnStatusCode: failOnStatusCodem,
+        failOnStatusCode: failOnStatusCode,
         headers: { ...userAgentHeader },
       }).then((resp) => {
         if (resp.status === httpTooManyRequestsStatus) {

@@ -16,6 +16,7 @@ import {
   failOnStatusCode,
   httpSuccessfullStatus,
   httpTooManyRequestsStatus,
+  httpTooManyRequestsStatusMessage,
   httpInternalServerErrorStatus,
   systemTimeChallengeActive,
   systemTimeRegistrationPhaseActive,

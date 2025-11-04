@@ -1,4 +1,4 @@
-import { getCurrentPriceLevelsUtil } from 'src/utils/price_levels';
+import { getCurrentPriceLevelsUtil } from '../../../src/utils/price_levels';
 
 describe('Test utils functions', function () {
   context('Test getCurrentPriceLevelsUtil() function', () => {

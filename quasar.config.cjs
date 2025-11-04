@@ -88,6 +88,9 @@ module.exports = configure(function (ctx) {
         // Fix dynamic module import error during Cypress component tests on the OS MS Windows
         viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
         viteConf.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
+        // Fix dynamic import for SVG files which breaks tests
+        viteConf.build = viteConf.build || {}
+        viteConf.build.assetsInlineLimit = 0
       },
 
       viteVuePluginOptions: {
@@ -110,7 +113,18 @@ module.exports = configure(function (ctx) {
             promiseImportName: (i) => `__tla_${i}`,
           },
         ],
+        ['vite-plugin-checker', {
+          vueTsc: false,
+          eslint: {
+            lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
+            useFlatConfig: true
+          }
+        }, { server: false }]
       ],
+
+      typescript: {
+        vueShim: true,
+      }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

@@ -1,11 +1,11 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { hexToRgb } from 'app/test/cypress/utils';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import RouteItemEdit from 'components/routes/RouteItemEdit.vue';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import RouteItemEdit from '../../components/routes/RouteItemEdit.vue';
 import { i18n } from '../../boot/i18n';
-import { useTripsStore } from 'src/stores/trips';
-import { TransportType } from 'src/components/types/Route';
+import { useTripsStore } from '../../stores/trips';
+import { TransportType } from '../../components/types/Route';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');

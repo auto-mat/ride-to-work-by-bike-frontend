@@ -17,7 +17,7 @@ import { useLoginStore } from '../stores/login';
 import type { Ref } from 'vue';
 import type { Trip, GetTripsResponse } from '../components/types/Trip';
 import type { Logger } from '../components/types/Logger';
-import type { RouteItem } from 'src/components/types/Route';
+import type { RouteItem } from '../components/types/Route';
 type UseApiGetTripsReturn = {
   trips: Ref<Trip[]>;
   isLoading: Ref<boolean>;
@@ -60,8 +60,7 @@ export const useApiGetTrips = (logger: Logger | null): UseApiGetTripsReturn => {
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization +=
-      await loginStore.getAccessTokenWithRefresh();
+    requestTokenHeader_.Authorization = `${(requestTokenHeader_.Authorization as string) || ''} ${await loginStore.getAccessTokenWithRefresh()}`;
 
     // fetch trips
     const { data } = await apiFetch<GetTripsResponse>({
@@ -99,8 +98,7 @@ export const useApiGetTrips = (logger: Logger | null): UseApiGetTripsReturn => {
     logger?.debug(`Fetching next page of trips from <${url}>.`);
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization +=
-      await loginStore.getAccessTokenWithRefresh();
+    requestTokenHeader_.Authorization = `${(requestTokenHeader_.Authorization as string) || ''} ${await loginStore.getAccessTokenWithRefresh()}`;
 
     // fetch next page
     const { data } = await apiFetch<GetTripsResponse>({

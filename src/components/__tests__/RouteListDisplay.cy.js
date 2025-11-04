@@ -107,7 +107,7 @@ function coreTests() {
         });
         if (loggedRoute.date > startDate && loggedRoute.date <= endDate) {
           // has transport label
-          cy.dataCy(selectorRouteListItemWrapper)
+          cy.dataCy('route-list-item-wrapper')
             .find(`[data-id="${loggedRoute.id}"]`)
             .should('contain', getTransportLabel(loggedRoute.transport));
           // has transport distance (value)
@@ -116,13 +116,13 @@ function coreTests() {
             loggedRoute.distance &&
             parseFloat(loggedRoute.distance) > 0
           ) {
-            cy.dataCy(selectorRouteListItemWrapper)
+            cy.dataCy('route-list-item-wrapper')
               .find(`[data-id="${loggedRoute.id}"]`)
               .find('[data-cy="label-distance"]')
               .should('be.visible')
               .and('have.value', loggedRoute.distance);
           } else {
-            cy.dataCy(selectorRouteListItemWrapper)
+            cy.dataCy('route-list-item-wrapper')
               .find(`[data-id="${loggedRoute.id}"]`)
               .find('[data-cy="label-distance"]')
               .should('not.exist');

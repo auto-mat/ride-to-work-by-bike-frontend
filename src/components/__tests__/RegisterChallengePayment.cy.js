@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { computed, nextTick } from 'vue';

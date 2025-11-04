@@ -3,7 +3,7 @@ import { date } from 'quasar';
 import { computed } from 'vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '../boot/i18n';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -16,11 +16,11 @@ import {
   RouteInputType,
   TransportDirection,
   TransportType,
-} from 'src/components/types/Route';
+} from '../components/types/Route';
 import { PhaseType } from '../components/types/Challenge';
 
 // types
-import type { RouteItem, RouteDay } from 'src/components/types/Route';
+import type { RouteItem, RouteDay } from '../components/types/Route';
 
 export const useRoutes = () => {
   const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
