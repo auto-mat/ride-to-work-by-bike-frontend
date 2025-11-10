@@ -20,6 +20,7 @@ export interface AdminTeamMember {
   payment_amount: string;
   discount_coupon: string;
   user_profile_id: number;
+  is_payment_with_reward: boolean | null;
 }
 
 export interface AdminTeam {
