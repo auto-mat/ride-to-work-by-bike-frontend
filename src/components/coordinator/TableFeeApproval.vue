@@ -67,6 +67,34 @@ export default defineComponent({
     const { sortByAddress } = useTable();
     const { feeApprovalData } = useTableFeeApprovalData(props.approved);
 
+    // local reactive state for `is_payment_with_reward` value
+    const paymentRewards = ref<Map<number, boolean | null>>(new Map());
+    // init paymentRewards from API data when it changes
+    watch(
+      () => feeApprovalData.value,
+      (newData) => {
+        newData.forEach((row) => {
+          // preserve user edits
+          if (!paymentRewards.value.has(row.id)) {
+            paymentRewards.value.set(row.id, row.reward);
+          }
+        });
+      },
+      { immediate: true },
+    );
+    // get reward value for a member
+    const getRewardValue = (memberId: number): boolean | null => {
+      return paymentRewards.value.get(memberId) ?? null;
+    };
+    const updateRewardStatus = (
+      memberId: number,
+      value: boolean | null,
+    ): void => {
+      paymentRewards.value.set(memberId, value);
+      // TODO: call API to update the reward status on the backend
+      // await adminOrganisationStore.updatePaymentRewardStatus(memberId, value);
+    };
+
     // sort by dateCreated initially
     onMounted(() => {
       if (tableRef.value) {
@@ -105,6 +133,8 @@ export default defineComponent({
       approveSelectedPayments,
       paginationLabel,
       sortByAddress,
+      getRewardValue,
+      updateRewardStatus,
     };
   },
 });
@@ -178,10 +208,13 @@ export default defineComponent({
               data-cy="table-fee-approval-reward"
             >
               <q-checkbox
-                :model-value="props.row.reward"
+                :model-value="getRewardValue(props.row.id)"
                 color="primary"
                 :disable="approved"
                 data-cy="table-fee-approval-reward-checkbox"
+                @update:model-value="
+                  (value) => updateRewardStatus(props.row.id, value)
+                "
               />
             </q-td>
             <!-- Email -->

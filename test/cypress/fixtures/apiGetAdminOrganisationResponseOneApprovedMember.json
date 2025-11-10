@@ -39,7 +39,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60002
+                  "user_profile_id": 60002,
+                  "is_payment_with_reward": null
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [
@@ -58,7 +59,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60001
+                  "user_profile_id": 60001,
+                  "is_payment_with_reward": true
                 }
               ],
               "other_members": [
@@ -77,7 +79,8 @@
                   "payment_category": "None",
                   "payment_amount": "None",
                   "discount_coupon": "PIVOVAR-DISC",
-                  "user_profile_id": 60003
+                  "user_profile_id": 60003,
+                  "is_payment_with_reward": true
                 }
               ]
             },
@@ -102,7 +105,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60004
+                  "user_profile_id": 60004,
+                  "is_payment_with_reward": true
                 }
               ],
               "other_members": []
