@@ -15,6 +15,7 @@ import type {
 export interface TableFeeApprovalRow {
   id: number;
   name: string;
+  reward: boolean | null;
   email: string;
   nickname: string | null;
   amount: number;
@@ -36,6 +37,7 @@ function transformMemberToRow(
   return {
     id: member.id,
     name: member.name,
+    reward: member.is_payment_with_reward,
     email: member.email,
     nickname: member.nickname,
     amount: parseFloat(member.payment_amount) || 0,

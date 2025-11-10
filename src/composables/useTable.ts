@@ -350,6 +350,15 @@ export const useTableFeeApproval = () => {
       sortable: true,
     },
     {
+      align: 'center',
+      field: FeeApprovalTableColumns.reward,
+      format: (val: boolean | null): boolean | null => val,
+      label: i18n.global.t('table.labelReward'),
+      name: FeeApprovalTableColumns.reward,
+      required: true,
+      sortable: true,
+    },
+    {
       align: 'left',
       field: FeeApprovalTableColumns.email,
       format: (val: number | string | null): string => (val ? `${val}` : ''),
@@ -392,6 +401,7 @@ export const useTableFeeApproval = () => {
   const tableFeeApprovalVisibleColumns: string[] = [
     FeeApprovalTableColumns.amount,
     FeeApprovalTableColumns.name,
+    FeeApprovalTableColumns.reward,
     FeeApprovalTableColumns.email,
     FeeApprovalTableColumns.nickname,
     FeeApprovalTableColumns.dateCreated,

@@ -141,7 +141,7 @@ export default defineComponent({
             class="bg-primary text-weight-bold text-white"
             data-cy="table-fee-approval-address-header"
           >
-            <q-td :colspan="approved ? 6 : 7">
+            <q-td :colspan="approved ? 7 : 8">
               {{ props.row.address }}
             </q-td>
           </q-tr>
@@ -170,6 +170,19 @@ export default defineComponent({
             <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
               {{ props.row.name }}
+            </q-td>
+            <!-- Reward -->
+            <q-td
+              key="reward"
+              :props="props"
+              data-cy="table-fee-approval-reward"
+            >
+              <q-checkbox
+                :model-value="props.row.reward"
+                color="primary"
+                :disable="approved"
+                data-cy="table-fee-approval-reward-checkbox"
+              />
             </q-td>
             <!-- Email -->
             <q-td key="email" :props="props" data-cy="table-fee-approval-email">

@@ -24,6 +24,8 @@ const selectorTableRow = 'table-fee-approval-row';
 const selectorTableCheckbox = 'table-fee-approval-checkbox';
 const selectorTableAmount = 'table-fee-approval-amount';
 const selectorTableName = 'table-fee-approval-name';
+const selectorTableReward = 'table-fee-approval-reward';
+const selectorTableRewardCheckbox = 'table-fee-approval-reward-checkbox';
 const selectorTableEmail = 'table-fee-approval-email';
 const selectorTableNickname = 'table-fee-approval-nickname';
 const selectorTableDate = 'table-fee-approval-date';
@@ -41,6 +43,7 @@ describe('<TableFeeApproval>', () => {
         'labelEmail',
         'labelName',
         'labelNickname',
+        'labelReward',
         'labelTeam',
         'textNoData',
       ],
@@ -198,6 +201,24 @@ describe('<TableFeeApproval>', () => {
                     .should('be.visible')
                     .and('be.empty');
                 }
+                // reward
+                cy.dataCy(selectorTableReward).should('be.visible');
+                cy.dataCy(selectorTableRewardCheckbox)
+                  .should('be.visible')
+                  .and('not.have.class', 'disabled');
+                if (display[index].reward === true) {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--truthy');
+                } else if (display[index].reward === false) {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--falsy');
+                } else {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--indet');
+                }
               });
             }
           });
@@ -352,6 +373,24 @@ describe('<TableFeeApproval>', () => {
                   cy.dataCy(selectorTableDate)
                     .should('be.visible')
                     .and('be.empty');
+                }
+                // reward
+                cy.dataCy(selectorTableReward).should('be.visible');
+                cy.dataCy(selectorTableRewardCheckbox)
+                  .should('be.visible')
+                  .and('have.class', 'disabled');
+                if (display[index].reward === true) {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--truthy');
+                } else if (display[index].reward === false) {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--falsy');
+                } else {
+                  cy.dataCy(selectorTableRewardCheckbox)
+                    .find('.q-checkbox__inner')
+                    .should('have.class', 'q-checkbox__inner--indet');
                 }
               });
             }

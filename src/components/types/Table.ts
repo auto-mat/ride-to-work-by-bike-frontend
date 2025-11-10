@@ -36,6 +36,7 @@ export enum ResultsTableColumns {
 export enum FeeApprovalTableColumns {
   amount = 'amount',
   name = 'name',
+  reward = 'reward',
   email = 'email',
   nickname = 'nickname',
   address = 'address',
