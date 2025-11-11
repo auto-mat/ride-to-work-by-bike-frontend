@@ -82,6 +82,23 @@ export default defineComponent({
     const { validateCoupon, isLoading } = useApiGetDiscountCoupon(null);
 
     /**
+     * Handles automatic price level switch for vouchers with special prefix
+     * @returns {void}
+     */
+    const handleVoucherPriceLevelSwitch = (): void => {
+      const voucherPrefix = rideToWorkByBikeConfig.voucherWithoutReward;
+      const shouldSwitchToWithoutReward =
+        codeFormatted.value.startsWith(voucherPrefix);
+      // if voucher has prefix, switch to no reward
+      if (
+        shouldSwitchToWithoutReward &&
+        registerChallengeStore.getIsPaymentWithReward
+      ) {
+        registerChallengeStore.switchPriceSet(false);
+      }
+    };
+
+    /**
      * Submits voucher data to API
      * If voucher is valid it emits the data
      * @returns {void}
@@ -94,6 +111,8 @@ export default defineComponent({
 
         // when applying voucher, we need to check both validity and availability
         if (validatedCoupon.valid && validatedCoupon.available) {
+          // Handle automatic price level switching for vouchers with special prefixes
+          handleVoucherPriceLevelSwitch();
           Notify.create({
             type: 'positive',
             message: i18n.global.t('notify.voucherApplySuccess'),

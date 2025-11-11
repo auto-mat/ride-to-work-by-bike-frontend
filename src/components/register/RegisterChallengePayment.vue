@@ -198,6 +198,12 @@ export default defineComponent({
         registerChallengeStore.switchPriceSet(value);
       },
     });
+
+    const isPriceLevelSwitchDisabled = computed((): boolean => {
+      if (!activeVoucher.value?.name) return false;
+      const voucherPrefix = rideToWorkByBikeConfig.voucherWithoutReward;
+      return activeVoucher.value.name.startsWith(voucherPrefix);
+    });
     // init organization admin status
     const hasOrganizationAdmin = computed<boolean | null>(() => {
       return registerChallengeStore.getHasOrganizationAdmin;
@@ -644,6 +650,7 @@ export default defineComponent({
       donationAmount,
       formRegisterCoordinator,
       hasOrganizationAdmin,
+      isPriceLevelSwitchDisabled,
       isPaymentWithReward,
       isRegistrationCoordinator,
       optionsPaymentAmountComputed,
@@ -701,6 +708,7 @@ export default defineComponent({
         color="primary"
         :true-value="true"
         :false-value="false"
+        :disable="isPriceLevelSwitchDisabled"
         class="text-grey-10"
         data-cy="checkbox-payment-with-reward"
       >

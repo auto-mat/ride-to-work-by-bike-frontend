@@ -134,6 +134,7 @@ export interface ConfigGlobal {
   mapGeocodingApiUrl: string;
   mapSourceRtwbb: string;
   mapSourceOsm: string;
+  voucherWithoutReward: string;
 }
 
 export interface ConfigAppVersion {
