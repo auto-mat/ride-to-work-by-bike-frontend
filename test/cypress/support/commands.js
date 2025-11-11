@@ -32,6 +32,7 @@ registerCommands();
 // Import modular command files
 import './commands/coordinator_commands';
 import './commands/register_challenge_commands';
+import './commands/store_commands';
 
 import { computed } from 'vue';
 import {

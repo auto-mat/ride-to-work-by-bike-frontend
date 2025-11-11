@@ -601,7 +601,7 @@ export default defineComponent({
       return show;
     };
 
-    const showOrganizationAdminElement = () => {
+    const showOrganizationAdminElement = computed<boolean>(() => {
       const isCorrectPaymentSubject = [
         PaymentSubject.company,
         PaymentSubject.school,
@@ -617,10 +617,11 @@ export default defineComponent({
       logger?.debug(
         `Show organization admin element <${show}>,` +
           ` for payment subject <${selectedPaymentSubject.value}>,` +
-          ` and organization has admin <${hasOrganizationCoordinator}>.`,
+          ` and organization has admin <${hasOrganizationCoordinator}>.` +
+          ` and user is coordinator <${isUserCoordinator}>`,
       );
       return show;
-    };
+    });
 
     // TODO: Update `FormFieldCompany` to use data from `registerChallenge` store.
     const selectedOrganizationName = computed<string>(
@@ -786,7 +787,7 @@ export default defineComponent({
       />
     </div>
     <!-- Section: Register coordinator -->
-    <div v-if="showOrganizationAdminElement()" class="q-mt-md">
+    <div v-if="showOrganizationAdminElement" class="q-mt-md">
       <!-- Checkbox: Register coordinator -->
       <q-checkbox
         dense

@@ -257,21 +257,14 @@ describe('<RegisterChallengePayment>', () => {
       });
       cy.viewport('macbook-16');
     });
+
     it('shows checkbox become coordinator if organization has no coordinator and user no coordinator - en lang (localized URL link)', () => {
       const enLangCode = 'en';
 
       cy.dataCy(getRadioOption(PaymentSubject.company))
         .should('be.visible')
         .click();
-      // open organization select
-      cy.dataCy(selectorCompany)
-        .should('be.visible')
-        .find('.q-field__append')
-        .click();
-      // from menu select first organization
-      cy.get('.q-menu').within(() => {
-        cy.get('.q-item').first().click();
-      });
+      cy.selectDropdownMenu(selectorCompany, 0);
       // wait for API coordinator status check
       cy.fixture('apiGetHasOrganizationAdminResponseTrue').then((response) => {
         cy.waitForHasOrganizationAdminApi(response);
@@ -279,27 +272,21 @@ describe('<RegisterChallengePayment>', () => {
 
       // checkbox become coordinator should not be visible
       cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
-      // open organization select
-      cy.dataCy(selectorCompany)
-        .should('be.visible')
-        .find('.q-field__append')
-        .click();
       // select second organization
-      cy.get('.q-menu').within(() => {
-        cy.get('.q-item').eq(1).click();
-      });
+      cy.selectDropdownMenu(selectorCompany, 1);
       // wait for API coordinator status check
       cy.fixture('apiGetHasOrganizationAdminResponseFalse').then((response) => {
         cy.waitForHasOrganizationAdminApi(response);
       });
-      // checkbox become coordinator should be visible
+      // test checkbox visibility based on isUserOrganizationAdmin variable
+      cy.setIsUserOrganizationAdminStoreValue(useRegisterChallengeStore, true);
+      cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
+      cy.setIsUserOrganizationAdminStoreValue(useRegisterChallengeStore, false);
       cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
-
       // enable checkbox
       cy.dataCy(selectorCoordinatorCheckbox).click();
       // test coordinator form
       cy.dataCy(selectorCoordinatorText).should('be.visible');
-
       // checkbox terms
       cy.dataCy(selectorCoordinatorTerms).should('be.visible');
       // checkbox is unchecked by default
@@ -1319,31 +1306,14 @@ function coreTests() {
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
       .click();
-    // open organization select
-    cy.dataCy(selectorCompany)
-      .should('be.visible')
-      .find('.q-field__append')
-      .click();
-    // from menu select first organization
-    cy.get('.q-menu').within(() => {
-      cy.get('.q-item').first().click();
-    });
+    cy.selectDropdownMenu(selectorCompany, 0);
     // wait for API coordinator status check
     cy.fixture('apiGetHasOrganizationAdminResponseTrue').then((response) => {
       cy.waitForHasOrganizationAdminApi(response);
     });
-
     // checkbox become coordinator should not be visible
     cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
-    // open organization select
-    cy.dataCy(selectorCompany)
-      .should('be.visible')
-      .find('.q-field__append')
-      .click();
-    // select second organization
-    cy.get('.q-menu').within(() => {
-      cy.get('.q-item').eq(1).click();
-    });
+    cy.selectDropdownMenu(selectorCompany, 1);
     // wait for API coordinator status check
     cy.fixture('apiGetHasOrganizationAdminResponseFalse').then((response) => {
       cy.waitForHasOrganizationAdminApi(response);
@@ -1358,30 +1328,11 @@ function coreTests() {
         'contain',
         i18n.global.t('companyCoordinator.labelRegisterCoordinator'),
       );
-
-    // get store
-    cy.wrap(useRegisterChallengeStore()).then((store) => {
-      // access store via computed property to correctly track changes
-      const computedPaymentSubject = computed(
-        () => store.getIsUserOrganizationAdmin,
-      );
-      // set isUserOrganizationAdmin to true
-      cy.wrap(store.setIsUserOrganizationAdmin(true));
-      // start in default state (individual)
-      cy.wrap(computedPaymentSubject).its('value').should('be.true');
-      // checkbox coordinator should not be visible
-      cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
-      // without next tick, the UI updates too fast to be checked
-      nextTick(() => {
-        // set isUserOrganizationAdmin back to false
-        cy.wrap(store.setIsUserOrganizationAdmin(false));
-        // start in default state (individual)
-        cy.wrap(computedPaymentSubject).its('value').should('be.false');
-        // checkbox coordinator should be visible
-        cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
-      });
-    });
-
+    // test checkbox visibility based on isUserOrganizationAdmin variable
+    cy.setIsUserOrganizationAdminStoreValue(useRegisterChallengeStore, true);
+    cy.dataCy(selectorCoordinatorCheckbox).should('not.exist');
+    cy.setIsUserOrganizationAdminStoreValue(useRegisterChallengeStore, false);
+    cy.dataCy(selectorCoordinatorCheckbox).should('be.visible');
     // enable checkbox
     cy.dataCy(selectorCoordinatorCheckbox).click();
     // test coordinator form
@@ -1395,7 +1346,6 @@ function coreTests() {
           expect($el.text()).to.eq(translation);
         });
       });
-
     // input phone label
     cy.dataCy(selectorCoordinatorPhone);
     // input job title label
