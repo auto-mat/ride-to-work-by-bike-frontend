@@ -142,11 +142,11 @@ Cypress.Commands.add('applyInvalidVoucher', (config, i18n) => {
 });
 
 /**
- * Apply voucher with "without reward" prefix
+ * Apply full voucher with "without reward" prefix
  * @param {Config} config - App global config
  * @param {I18n} i18n - i18n instance
  */
-Cypress.Commands.add('applyVoucherWithoutReward', (config, i18n) => {
+Cypress.Commands.add('applyVoucherFullWithoutReward', (config, i18n) => {
   cy.fixture('apiGetDiscountCouponResponseWithoutReward').then(
     (apiResponse) => {
       // intercept coupon endpoint
@@ -178,3 +178,50 @@ Cypress.Commands.add('applyVoucherWithoutReward', (config, i18n) => {
     },
   );
 });
+
+/**
+ * Apply half voucher with "without reward" prefix
+ * @param {Config} config - App global config
+ * @param {I18n} i18n - i18n instance
+ * @param {number} defaultPaymentAmountMin - Default minimum payment amount
+ */
+Cypress.Commands.add(
+  'applyVoucherHalfWithoutReward',
+  (config, i18n, defaultPaymentAmountMin) => {
+    cy.fixture('apiGetDiscountCouponResponseHalfWithoutReward').then(
+      (apiResponse) => {
+        // intercept coupon endpoint
+        cy.interceptDiscountCouponGetApi(
+          config,
+          i18n,
+          apiResponse.results[0].name,
+          apiResponse,
+        );
+        // submit voucher
+        cy.dataCy('form-field-voucher-input').type(apiResponse.results[0].name);
+        cy.dataCy('form-field-voucher-submit').click();
+        // wait for API response
+        cy.waitForDiscountCouponApi(apiResponse);
+        // check success message
+        cy.contains(i18n.global.t('notify.voucherApplySuccess')).should(
+          'be.visible',
+        );
+        // calculate discount amount
+        const discountAmountInt = Math.round(
+          (defaultPaymentAmountMin * apiResponse.results[0].discount) / 100,
+        );
+        // verify banner content
+        cy.dataCy('voucher-banner-code')
+          .should('be.visible')
+          .and('contain', apiResponse.results[0].name);
+        cy.dataCy('voucher-banner-name')
+          .should('be.visible')
+          .and('contain', i18n.global.t('global.discount'))
+          .and('contain', apiResponse.results[0].discount)
+          .and('contain', discountAmountInt);
+        // return discount amount as a chainable value
+        return cy.wrap(discountAmountInt);
+      },
+    );
+  },
+);

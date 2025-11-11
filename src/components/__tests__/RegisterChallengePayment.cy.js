@@ -783,7 +783,7 @@ function coreTests() {
     testDonation();
   });
 
-  it('if selected voucher - allows to apply voucher (without-reward) + donate option', () => {
+  it('if selected voucher - allows to apply voucher FULL (without-reward) + donate option', () => {
     // option default amount is active
     cy.dataCy(getRadioOption(defaultPaymentAmountMinWithReward))
       .should('be.visible')
@@ -798,7 +798,7 @@ function coreTests() {
       .should('be.visible')
       .click();
     // apply voucher without-reward
-    cy.applyVoucherWithoutReward(rideToWorkByBikeConfig, i18n);
+    cy.applyVoucherFullWithoutReward(rideToWorkByBikeConfig, i18n);
     // option amount hidden
     cy.dataCy(selectorPaymentAmount).should('not.exist');
     // total price is hidden
@@ -837,6 +837,57 @@ function coreTests() {
       .and('not.have.class', 'disabled')
       .find('.q-checkbox__inner')
       .should('have.class', 'q-checkbox__inner--falsy');
+  });
+
+  it('if selected voucher - allows to apply voucher HALF (without-reward)', () => {
+    // option default amount is active
+    cy.dataCy(getRadioOption(defaultPaymentAmountMinWithReward))
+      .should('be.visible')
+      .click();
+    // option voucher payment is active
+    cy.dataCy(getRadioOption(PaymentSubject.voucher))
+      .should('be.visible')
+      .click();
+    // price checkbox is checked and enabled
+    cy.dataCy(selectorCheckboxPaymentWithReward)
+      .should('be.visible')
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--truthy');
+    // input amount is hidden
+    cy.dataCy(selectorPaymentAmount).should('not.exist');
+    // apply voucher HALF (price without reward)
+    cy.applyVoucherHalfWithoutReward(
+      rideToWorkByBikeConfig,
+      i18n,
+      defaultPaymentAmountMin,
+    ).then((discountAmount) => {
+      // price checkbox is unchecked and disabled
+      cy.dataCy(selectorCheckboxPaymentWithReward)
+        .should('be.visible')
+        .and('have.class', 'disabled')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--falsy');
+      cy.dataCy(selectorTotalPriceValue).should('contain', discountAmount);
+      // custom amount is set to discount value
+      cy.dataCy(getRadioOption(PaymentAmount.custom)).click();
+      cy.dataCy(getRadioOption(discountAmount)).should('be.visible');
+      // total price shows discounted amount
+      cy.dataCy(selectorTotalPriceValue).should('contain', discountAmount);
+      // clear voucher
+      cy.dataCy(selectorVoucherButtonRemove).click();
+      // input voucher is shown
+      cy.dataCy(selectorVoucherInput).should('be.visible');
+      // input amount is hidden
+      cy.dataCy(selectorPaymentAmount).should('not.exist');
+      // input custom amount is hidden
+      cy.dataCy(selectorPaymentAmountCustom).should('not.exist');
+      // price checkbox is unchecked but NOT disabled
+      cy.dataCy(selectorCheckboxPaymentWithReward)
+        .should('be.visible')
+        .and('not.have.class', 'disabled')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--falsy');
+    });
   });
 
   it('if selected voucher - retains shown voucher after switching between payment subjects', () => {
