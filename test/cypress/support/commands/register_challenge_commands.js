@@ -1,4 +1,37 @@
 /**
+ * Setup common API intercepts for voucher testing and visit challenge page
+ * @param {Object} params - Parameters object with config and fixtures
+ */
+Cypress.Commands.add(
+  'setupVoucherTestEnvironment',
+  ({
+    config,
+    routesConf,
+    defLocale,
+    registerChallengeFixture,
+    discountCouponFixture,
+  }) => {
+    cy.interceptThisCampaignGetApi(config, defLocale);
+    cy.visit('#' + routesConf['challenge_inactive']['path']);
+    cy.waitForThisCampaignApi();
+    cy.fixture(registerChallengeFixture).then((response) => {
+      cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+    });
+    cy.fixture(discountCouponFixture).then((response) => {
+      cy.interceptDiscountCouponGetApi(
+        config,
+        defLocale,
+        response.results[0].name,
+        response,
+      );
+    });
+    // intercept common response (not currently used)
+    cy.interceptRegisterChallengePostApi(config, defLocale);
+    cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+  },
+);
+
+/**
  * Switch to payment without reward
  */
 Cypress.Commands.add('switchToPaymentWithoutReward', () => {

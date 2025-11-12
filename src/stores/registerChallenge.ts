@@ -369,6 +369,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       return currentUser.approved_for_team === TeamMemberStatus.approved;
     },
     getIsPaymentWithReward: (state): boolean => state.isPaymentWithReward,
+    getIsVoucherWithoutReward: (state): boolean => {
+      return Boolean(
+        state.voucher?.name.startsWith(
+          rideToWorkByBikeConfig.voucherWithoutReward,
+        ),
+      );
+    },
   },
 
   actions: {
@@ -471,11 +478,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      */
     switchPriceSet(isWithReward: boolean): void {
       this.$log?.debug(
-        `Switching to <${isWithReward ? 'with-reward' : 'regular'}> price set.`,
+        `Switching to <${isWithReward ? 'with-reward' : 'without-reward'}> price set.`,
       );
       this.setIsPaymentWithReward(isWithReward);
       // clear voucher (it may not apply)
-      if (this.voucher) {
+      if (isWithReward && !this.getIsVoucherWithoutReward && this.voucher) {
         this.$log?.debug(
           'Clearing voucher when switching to different price level.',
         );

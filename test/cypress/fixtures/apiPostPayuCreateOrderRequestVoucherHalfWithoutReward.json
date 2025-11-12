@@ -1,0 +1,13 @@
+{
+  "amount": 170,
+  "client_ip": "185.250.215.37",
+  "payment_subject": "voucher",
+  "payment_category": "entry_fee",
+  "products": [
+    {
+      "name": "RTWBB challenge entry fee",
+      "unitPrice": 170,
+      "quantity": 1
+    }
+  ]
+}
