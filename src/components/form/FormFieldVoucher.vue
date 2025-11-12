@@ -82,7 +82,7 @@ export default defineComponent({
     const { validateCoupon, isLoading } = useApiGetDiscountCoupon(null);
 
     /**
-     * Handles automatic price level switch for vouchers with special prefix
+     * Handles automatic price level switch when vouchers are applied
      * @returns {void}
      */
     const handleVoucherPriceLevelSwitch = (): void => {
