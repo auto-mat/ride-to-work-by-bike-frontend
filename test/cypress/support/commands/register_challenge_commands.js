@@ -217,6 +217,7 @@ Cypress.Commands.add('applyVoucherFullWithoutReward', (config, i18n) => {
  * @param {Config} config - App global config
  * @param {I18n} i18n - i18n instance
  * @param {number} defaultPaymentAmountMin - Default minimum payment amount
+ * @returns {Cypress.Chainable<number>} - Calculated discount amount
  */
 Cypress.Commands.add(
   'applyVoucherHalfWithoutReward',
