@@ -3338,22 +3338,14 @@ describe('Register Challenge page', () => {
           cy.fixture(
             'apiGetRegisterChallengeVoucherHalfWithoutReward.json',
           ).then((response) => {
-            // showing payment form (not the "locked" paid message)
-            cy.dataCy('register-challenge-payment').should('be.visible');
-            // show enabled voucher with voucher name
-            cy.dataCy('voucher-banner').should('be.visible');
-            cy.dataCy('voucher-banner-code')
-              .should('be.visible')
-              .and(
-                'contain',
-                response.results[0].personal_details.discount_coupon,
-              );
+            // displays message "paid"
+            cy.testRegisterChallengePaymentMessage(
+              response,
+              'step-2-paid-message',
+            );
+            cy.dataCy('register-challenge-payment').should('not.exist');
             // price checkbox is unchecked and disabled
-            cy.dataCy('checkbox-payment-with-reward')
-              .should('be.visible')
-              .and('have.class', 'disabled')
-              .find('.q-checkbox__inner')
-              .should('have.class', 'q-checkbox__inner--falsy');
+            cy.dataCy('checkbox-payment-with-reward').should('not.exist');
             // next step button should be visible and enabled
             cy.dataCy('step-2-continue')
               .should('be.visible')
