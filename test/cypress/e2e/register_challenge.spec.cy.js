@@ -1613,8 +1613,16 @@ describe('Register Challenge page', () => {
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
             .click();
+          // uncheck with-reward checkbox (without-reward)
+          cy.switchToPaymentWithoutReward();
           // apply voucher FULL
           cy.applyFullVoucher(config, i18n);
+          // with-reward is checked because of coupon type
+          cy.dataCy('checkbox-payment-with-reward')
+            .should('be.visible')
+            .and('have.class', 'disabled')
+            .find('.q-checkbox__inner')
+            .should('have.class', 'q-checkbox__inner--truthy');
           // enable donation checkbox
           cy.dataCy('form-field-donation-checkbox')
             .should('be.visible')
@@ -1655,12 +1663,17 @@ describe('Register Challenge page', () => {
             cy.waitForRegisterChallengePostApi(request);
           });
           // uncheck with-reward checkbox (without-reward)
-          cy.switchToPaymentWithoutReward();
           cy.dataCy(getRadioOption(PaymentSubject.voucher))
             .should('be.visible')
             .click();
           // apply voucher FULL
-          cy.applyFullVoucher(config, i18n);
+          cy.applyVoucherFullWithoutReward(config, i18n);
+          // with-reward is unchecked because of coupon type
+          cy.dataCy('checkbox-payment-with-reward')
+            .should('be.visible')
+            .and('have.class', 'disabled')
+            .find('.q-checkbox__inner')
+            .should('have.class', 'q-checkbox__inner--falsy');
           // enable donation checkbox
           cy.dataCy('form-field-donation-checkbox')
             .should('be.visible')
@@ -1673,11 +1686,11 @@ describe('Register Challenge page', () => {
             .should('be.visible')
             .and('not.be.disabled')
             .click();
-          cy.fixture('apiPostRegisterChallengeVoucherFullRequest.json').then(
-            (request) => {
-              cy.waitForRegisterChallengePostApi(request);
-            },
-          );
+          cy.fixture(
+            'apiPostRegisterChallengeVoucherFullRequestWithoutReward.json',
+          ).then((request) => {
+            cy.waitForRegisterChallengePostApi(request);
+          });
           // create PayU order
           cy.fixture(
             'apiPostPayuCreateOrderRequestVoucherFullWithDonationWithoutReward.json',
@@ -1708,24 +1721,31 @@ describe('Register Challenge page', () => {
             config,
             i18n,
             defaultPaymentAmountMin,
-          ).then(() => {
-            // submit payment
-            cy.dataCy('step-2-submit-payment')
-              .should('be.visible')
-              .and('not.be.disabled')
-              .click();
-            cy.waitForRegisterChallengePostApi({
-              discount_coupon: 'NOREWARD-HALF',
-            });
-            // create PayU order
-            cy.fixture(
-              'apiPostPayuCreateOrderRequestVoucherHalfWithoutReward.json',
-            ).then((request) => {
-              cy.waitForPayuCreateOrderPostApi(request);
-            });
-            // config is defined without hash in the URL
-            cy.visit('#' + routesConf['register_challenge']['path']);
+          );
+          // with-reward is unchecked because of coupon type
+          cy.dataCy('checkbox-payment-with-reward')
+            .should('be.visible')
+            .and('have.class', 'disabled')
+            .find('.q-checkbox__inner')
+            .should('have.class', 'q-checkbox__inner--falsy');
+          // submit payment
+          cy.dataCy('step-2-submit-payment')
+            .should('be.visible')
+            .and('not.be.disabled')
+            .click();
+          cy.fixture(
+            'apiPostRegisterChallengeVoucherHalfRequestWithoutReward',
+          ).then((request) => {
+            cy.waitForRegisterChallengePostApi(request);
           });
+          // create PayU order
+          cy.fixture(
+            'apiPostPayuCreateOrderRequestVoucherHalfWithoutReward.json',
+          ).then((request) => {
+            cy.waitForPayuCreateOrderPostApi(request);
+          });
+          // config is defined without hash in the URL
+          cy.visit('#' + routesConf['register_challenge']['path']);
         });
       });
     });
