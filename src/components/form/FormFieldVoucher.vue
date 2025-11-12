@@ -90,7 +90,7 @@ export default defineComponent({
         rideToWorkByBikeConfig.voucherWithoutReward,
       );
       const isPaymentWithReward = registerChallengeStore.getIsPaymentWithReward;
-      // if voucher is with reward, switch to no reward
+      // if voucher does not fit price level, switch
       if (isVoucherWithReward !== isPaymentWithReward) {
         registerChallengeStore.switchPriceSet(isVoucherWithReward);
       }
