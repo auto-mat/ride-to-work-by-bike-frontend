@@ -1715,7 +1715,7 @@ describe('Register Challenge page', () => {
               .and('not.be.disabled')
               .click();
             cy.waitForRegisterChallengePostApi({
-              discount_coupon: 'WITHOUTREWARD-HALF',
+              discount_coupon: 'NOREWARD-HALF',
             });
             // create PayU order
             cy.fixture(

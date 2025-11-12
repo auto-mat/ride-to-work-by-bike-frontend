@@ -16,7 +16,7 @@
         "age_group": null,
         "newsletter": "challenge",
         "personal_data_opt_in": true,
-        "discount_coupon": "WITHOUTREWARD-FULL",
+        "discount_coupon": "NOREWARD-FULL",
         "payment_subject": "voucher",
         "payment_type": "",
         "payment_status": "done",

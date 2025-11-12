@@ -94,7 +94,7 @@ rtwbbDonationOrderedProductName = "RTWBB donation"
 checkRegisterChallengeStatusIntervalSeconds = 20
 checkRegisterChallengeStatusMaxRepetitions = 5
 tripMaxFileUploadSizeMegabytes = 1
-voucherWithoutReward = "WITHOUTREWARD"
+voucherWithoutReward = "NOREWARD"
 
 
 # Merchandise
