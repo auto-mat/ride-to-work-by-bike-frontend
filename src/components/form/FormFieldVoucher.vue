@@ -109,7 +109,6 @@ export default defineComponent({
 
         // when applying voucher, we need to check both validity and availability
         if (validatedCoupon.valid && validatedCoupon.available) {
-          // Handle automatic price level switching for vouchers with special prefixes
           handleVoucherPriceLevelSwitch();
           Notify.create({
             type: 'positive',
