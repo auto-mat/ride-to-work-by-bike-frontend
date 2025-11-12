@@ -86,15 +86,13 @@ export default defineComponent({
      * @returns {void}
      */
     const handleVoucherPriceLevelSwitch = (): void => {
-      const voucherPrefix = rideToWorkByBikeConfig.voucherWithoutReward;
-      const shouldSwitchToWithoutReward =
-        codeFormatted.value.startsWith(voucherPrefix);
-      // if voucher has prefix, switch to no reward
-      if (
-        shouldSwitchToWithoutReward &&
-        registerChallengeStore.getIsPaymentWithReward
-      ) {
-        registerChallengeStore.switchPriceSet(false);
+      const isVoucherWithReward = !codeFormatted.value.startsWith(
+        rideToWorkByBikeConfig.voucherWithoutReward,
+      );
+      const isPaymentWithReward = registerChallengeStore.getIsPaymentWithReward;
+      // if voucher is with reward, switch to no reward
+      if (isVoucherWithReward !== isPaymentWithReward) {
+        registerChallengeStore.switchPriceSet(isVoucherWithReward);
       }
     };
 

@@ -200,9 +200,7 @@ export default defineComponent({
     });
 
     const isPriceLevelSwitchDisabled = computed((): boolean => {
-      if (!activeVoucher.value?.name) return false;
-      const voucherPrefix = rideToWorkByBikeConfig.voucherWithoutReward;
-      return activeVoucher.value.name.startsWith(voucherPrefix);
+      return activeVoucher.value !== null;
     });
     // init organization admin status
     const hasOrganizationAdmin = computed<boolean | null>(() => {

@@ -481,13 +481,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         `Switching to <${isWithReward ? 'with-reward' : 'without-reward'}> price set.`,
       );
       this.setIsPaymentWithReward(isWithReward);
-      // clear voucher (it may not apply)
-      if (isWithReward && !this.getIsVoucherWithoutReward && this.voucher) {
-        this.$log?.debug(
-          'Clearing voucher when switching to different price level.',
-        );
-        this.setVoucher(null);
-      }
       // if no reward and merch ID is set, clear it
       if (!isWithReward && this.getMerchId !== null) {
         this.$log?.debug(
