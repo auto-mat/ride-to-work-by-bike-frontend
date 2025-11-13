@@ -478,7 +478,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      */
     switchPriceSet(isWithReward: boolean): void {
       this.$log?.debug(
-        `Switching to <${isWithReward ? 'with-reward' : 'without-reward'}> price set.`,
+        `Switch to <${isWithReward ? 'with reward' : 'without reward'}> price set.`,
       );
       this.setIsPaymentWithReward(isWithReward);
       // if no reward and merch ID is set, clear it
