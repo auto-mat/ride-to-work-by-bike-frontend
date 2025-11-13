@@ -494,7 +494,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         });
       }
       // reset payment amount (triggers recalculation)
-      this.$log?.debug('Resetting payment amount to trigger recalculation.');
+      this.$log?.info('Resetting payment amount to trigger recalculation.');
       this.setPaymentAmount(null);
     },
     /**
