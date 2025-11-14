@@ -67,19 +67,23 @@ export default defineComponent({
     const { sortByAddress } = useTable();
     const { feeApprovalData } = useTableFeeApprovalData(props.approved);
 
-    // initialize paymentRewards in store when data changes
+    // initialize paymentRewards and amounts in store when data changes
     watch(
       () => feeApprovalData.value,
       (newData) => {
         adminOrganisationStore.initializePaymentRewards(newData);
+        adminOrganisationStore.initializePaymentAmounts(newData);
       },
       { immediate: true },
     );
 
-    // get reward value for a member from store
-    const getRewardValue = (memberId: number): boolean | null => {
-      return adminOrganisationStore.getPaymentReward(memberId);
-    };
+    // Computed properties for reactive access to Maps
+    const paymentRewards = computed(
+      () => adminOrganisationStore.paymentRewards,
+    );
+    const paymentAmounts = computed(
+      () => adminOrganisationStore.paymentAmounts,
+    );
 
     // Update reward status in store
     const updateRewardStatus = (
@@ -127,8 +131,9 @@ export default defineComponent({
       approveSelectedPayments,
       paginationLabel,
       sortByAddress,
-      getRewardValue,
       updateRewardStatus,
+      paymentRewards,
+      paymentAmounts,
     };
   },
 });
@@ -189,7 +194,7 @@ export default defineComponent({
               :props="props"
               data-cy="table-fee-approval-amount"
             >
-              {{ props.row.amount }}
+              {{ paymentAmounts.get(props.row.id) ?? props.row.amount }}
             </q-td>
             <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
@@ -202,7 +207,7 @@ export default defineComponent({
               data-cy="table-fee-approval-reward"
             >
               <q-checkbox
-                :model-value="getRewardValue(props.row.id)"
+                :model-value="paymentRewards.get(props.row.id)"
                 color="primary"
                 :disable="approved"
                 data-cy="table-fee-approval-reward-checkbox"

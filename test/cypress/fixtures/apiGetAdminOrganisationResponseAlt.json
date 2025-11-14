@@ -37,7 +37,7 @@
                   "payment_status": "waiting",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "430",
+                  "payment_amount": "390",
                   "discount_coupon": "",
                   "user_profile_id": 60001,
                   "is_payment_with_reward": true
@@ -55,7 +55,7 @@
                   "payment_status": "waiting",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "250",
+                  "payment_amount": "234",
                   "discount_coupon": "",
                   "user_profile_id": 60002,
                   "is_payment_with_reward": true
@@ -73,7 +73,7 @@
                   "payment_status": "waiting",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "200",
+                  "payment_amount": "184",
                   "discount_coupon": "",
                   "user_profile_id": 60005,
                   "is_payment_with_reward": false

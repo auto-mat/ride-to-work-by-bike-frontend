@@ -37,7 +37,7 @@
                   "payment_status": "waiting",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "390",
+                  "payment_amount": "430",
                   "discount_coupon": "",
                   "user_profile_id": 50001,
                   "is_payment_with_reward": true
@@ -57,7 +57,7 @@
                   "payment_status": "done",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "500",
+                  "payment_amount": "430",
                   "discount_coupon": "",
                   "user_profile_id": 50002,
                   "is_payment_with_reward": null
@@ -93,7 +93,7 @@
                   "payment_status": "waiting",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "340",
+                  "payment_amount": "380",
                   "discount_coupon": "",
                   "user_profile_id": 50003,
                   "is_payment_with_reward": false
@@ -131,7 +131,7 @@
                   "payment_status": "done",
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
-                  "payment_amount": "350",
+                  "payment_amount": "380",
                   "discount_coupon": "",
                   "user_profile_id": 50005,
                   "is_payment_with_reward": false
@@ -150,7 +150,7 @@
         "name": "Karel Dvořák",
         "email": "karel.dvorak@cerny.cz",
         "nickname": "kdvorak",
-        "amount": 340,
+        "amount": 380,
         "dateCreated": "2025-01-17T14:20:00.000000",
         "address": "Vedlejší 456, Brno",
         "reward": false
@@ -159,7 +159,7 @@
         "name": "Jan Novák",
         "email": "jan.novak@cerny.cz",
         "nickname": "jnovak",
-        "amount": 390,
+        "amount": 430,
         "dateCreated": "",
         "address": "Hlavní 123, Praha",
         "reward": true
@@ -170,7 +170,7 @@
         "name": "Jan Šťastný",
         "email": "jan.stastny@cerny.cz",
         "nickname": "jstastny",
-        "amount": 350,
+        "amount": 380,
         "dateCreated": "2025-01-20T11:50:00.000000",
         "address": "Vedlejší 456, Brno",
         "reward": false
@@ -188,7 +188,7 @@
         "name": "Petra Svobodová",
         "email": "petra.svobodova@cerny.cz",
         "nickname": null,
-        "amount": 500,
+        "amount": 430,
         "dateCreated": "2025-01-16T09:15:00.000000",
         "address": "Hlavní 123, Praha",
         "reward": null

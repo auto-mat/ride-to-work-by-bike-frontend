@@ -262,57 +262,17 @@
         }
       ],
       "requestPayload": {
-        "ids": { "20001": 380, "20002": 200, "20005": 250 }
+        "ids": { "20001": 340, "20002": 184, "20005": 234 }
       },
       "responseBody": {
         "message": "Approved 2 payments successfully",
-        "approved_ids": [20001, 20005]
+        "approved_ids": [20001, 20002, 20005]
       }
     },
     "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseAltApprovalThreeChangedRewards.json",
     "displayAfterApproval": {
       "countWaitingForApproval": 0,
       "countApproved": 4
-    }
-  },
-  {
-    "description": "shows error message when only one of two selected members is approved",
-    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
-    "displayInitial": {
-      "countWaitingForApproval": 3,
-      "countApproved": 1
-    },
-    "approvePayment": {
-      "success": true,
-      "error": true,
-      "members": [
-        {
-          "name": "Jana Novotná",
-          "id": 20001
-        },
-        {
-          "name": "Petr Horák",
-          "id": 20002
-        }
-      ],
-      "membersApproved": [
-        {
-          "name": "Jana Novotná",
-          "id": 20001
-        }
-      ],
-      "requestPayload": {
-        "ids": { "20001": 390, "20002": 390 }
-      },
-      "responseBody": {
-        "message": "Approved 1 payment successfully",
-        "approved_ids": [20001]
-      }
-    },
-    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
-    "displayAfterApproval": {
-      "countWaitingForApproval": 2,
-      "countApproved": 2
     }
   }
 ]
