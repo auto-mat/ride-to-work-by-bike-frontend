@@ -80,6 +80,202 @@
     }
   },
   {
+    "description": "allows to approve multiple member payments, some without reward",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "approvePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "membersApproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 390, "20005": 340 }
+      },
+      "responseBody": {
+        "message": "Approved 2 payments successfully",
+        "approved_ids": [20001, 20005]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseApprovalNoReward.json",
+    "displayAfterApproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 3
+    }
+  },
+  {
+    "description": "allows to approve members and switch reward status for one",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "approvePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001,
+          "changeReward": true,
+          "changeRewardValue": false
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "membersApproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 340, "20005": 340 }
+      },
+      "responseBody": {
+        "message": "Approved 2 payments successfully",
+        "approved_ids": [20001, 20005]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseApprovalOneChangedReward.json",
+    "displayAfterApproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 3
+    }
+  },
+  {
+    "description": "allows to approve members and switch reward status for both",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "approvePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001,
+          "changeReward": true,
+          "changeRewardValue": false
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005,
+          "changeReward": true,
+          "changeRewardValue": true
+        }
+      ],
+      "membersApproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 340, "20005": 390 }
+      },
+      "responseBody": {
+        "message": "Approved 2 payments successfully",
+        "approved_ids": [20001, 20005]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseApprovalTwoChangedRewards.json",
+    "displayAfterApproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 3
+    }
+  },
+  {
+    "description": "allows to approve members and switch reward status for 3 (school price levels)",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponseAlt.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "approvePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001,
+          "changeReward": true,
+          "changeRewardValue": false
+        },
+        {
+          "name": "Petr Horák",
+          "id": 20002,
+          "changeReward": true,
+          "changeRewardValue": false
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005,
+          "changeReward": true,
+          "changeRewardValue": true
+        }
+      ],
+      "membersApproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Petr Horák",
+          "id": 20002
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 380, "20002": 200, "20005": 250 }
+      },
+      "responseBody": {
+        "message": "Approved 2 payments successfully",
+        "approved_ids": [20001, 20005]
+      }
+    },
+    "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseAltApprovalThreeChangedRewards.json",
+    "displayAfterApproval": {
+      "countWaitingForApproval": 0,
+      "countApproved": 4
+    }
+  },
+  {
     "description": "shows error message when only one of two selected members is approved",
     "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
     "displayInitial": {

@@ -269,6 +269,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const ids: Record<number, number> = {};
 
       this.selectedPaymentsToApprove.forEach((payment) => {
+        console.log('payment object', payment);
         // original values from API
         const originalRewardStatus = payment.reward;
         const originalAmount = payment.amount;
