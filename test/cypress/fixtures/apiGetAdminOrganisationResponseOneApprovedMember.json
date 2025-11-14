@@ -41,6 +41,24 @@
                   "discount_coupon": "",
                   "user_profile_id": 60002,
                   "is_payment_with_reward": null
+                },
+                {
+                  "id": 20005,
+                  "name": "Lucie Dvořáková",
+                  "nickname": "ldvorakova",
+                  "date_of_challenge_registration": "2025-02-03T14:20:00.000000",
+                  "email": "lucie.dvorakova@moravske-pivovary.cz",
+                  "telephone": "555001006",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "340",
+                  "discount_coupon": "",
+                  "user_profile_id": 60005,
+                  "is_payment_with_reward": false
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [

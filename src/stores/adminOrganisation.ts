@@ -15,6 +15,9 @@ import { PhaseType } from '../components/types/Challenge';
 // stores
 import { useChallengeStore } from './challenge';
 
+// utils
+import { pairedCategories, priceLevelPairs } from '../utils/price_level_pairs';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type {
@@ -54,6 +57,7 @@ interface AdminOrganisationState {
   isLoadingInvoices: boolean;
   isLoadingApprovePayments: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
+  paymentRewards: Map<number, boolean | null>;
   invoiceForm: InvoiceFormState;
 }
 
@@ -66,6 +70,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingInvoices: false,
     isLoadingApprovePayments: false,
     selectedPaymentsToApprove: [],
+    paymentRewards: new Map(),
     invoiceForm: {
       orderNumber: '',
       orderNote: '',
@@ -170,6 +175,16 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       state.invoiceForm.customBillingAddress?.city || '',
     getBillingPsc: (state): string =>
       state.invoiceForm.customBillingAddress?.psc || '',
+    /**
+     * Get reward status for a specific member
+     * @param {number} memberId - Member ID
+     * @returns {boolean | null} - Reward status
+     */
+    getPaymentReward:
+      (state) =>
+      (memberId: number): boolean | null => {
+        return state.paymentRewards.get(memberId) ?? null;
+      },
   },
 
   actions: {
@@ -186,6 +201,28 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     },
     setBillingFormExpanded(value: boolean): void {
       this.invoiceForm.isBillingFormExpanded = value;
+    },
+    /**
+     * Set reward status for a specific member
+     * @param {number} memberId - Member ID
+     * @param {boolean | null} value - Reward status
+     * @returns {void}
+     */
+    setPaymentReward(memberId: number, value: boolean | null): void {
+      this.paymentRewards.set(memberId, value);
+    },
+    /**
+     * Initialize paymentRewards map from table rows
+     * @param {TableFeeApprovalRow[]} rows - Table rows with member data
+     * @returns {void}
+     */
+    initializePaymentRewards(rows: TableFeeApprovalRow[]): void {
+      rows.forEach((row) => {
+        // Only initialize if not already set (preserve user edits)
+        if (!this.paymentRewards.has(row.id)) {
+          this.paymentRewards.set(row.id, row.reward);
+        }
+      });
     },
     /**
      * Load admin organisations from API
@@ -226,14 +263,68 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const { approvePayments } = useApiPostCoordinatorApprovePayments(
         this.$log,
       );
-      // get ids of selected payments
-      const ids = this.selectedPaymentsToApprove.map((payment) => payment.id);
+      const challengeStore = useChallengeStore();
+
+      // Build ids object with payment amounts
+      const ids: Record<number, number> = {};
+
+      this.selectedPaymentsToApprove.forEach((payment) => {
+        // original values from API
+        const originalRewardStatus = payment.reward;
+        const originalAmount = payment.amount;
+        // current value (may be edited by user)
+        const currentRewardStatus = this.paymentRewards.get(payment.id);
+        if (currentRewardStatus === originalRewardStatus) {
+          // no change - use original amount
+          ids[payment.id] = originalAmount;
+        } else {
+          // search price levels for category matching original amount
+          const priceLevels = originalRewardStatus
+            ? challengeStore.getCurrentPriceLevelsWithReward
+            : challengeStore.getCurrentPriceLevels;
+          const matchedPriceLevel = Object.values(priceLevels).find((level) => {
+            return (
+              level.price === originalAmount &&
+              pairedCategories.includes(level.category)
+            );
+          });
+
+          if (matchedPriceLevel) {
+            // get price corresponding to the paired PriceLevelCategory
+            const pairedCategory = priceLevelPairs[matchedPriceLevel.category];
+            const priceLevels = currentRewardStatus
+              ? challengeStore.getCurrentPriceLevelsWithReward
+              : challengeStore.getCurrentPriceLevels;
+            const newPrice = priceLevels[pairedCategory]?.price;
+
+            if (newPrice !== undefined) {
+              ids[payment.id] = newPrice;
+            } else {
+              this.$log?.error(
+                `Paired price not found for member ${payment.id}, ` +
+                  `category ${pairedCategory}. Using original amount.`,
+              );
+              // Fallback to original amount
+              ids[payment.id] = originalAmount;
+            }
+          } else {
+            this.$log?.warn(
+              `No matching price level found for amount ${originalAmount}. ` +
+                `Using original amount for member ${payment.id}.`,
+            );
+            // Fallback to original amount
+            ids[payment.id] = originalAmount;
+          }
+        }
+      });
+
       this.isLoadingApprovePayments = true;
       // approve payments
       const result = await approvePayments(ids);
 
-      // clear selected payments
+      // clear selected payments and rewards
       this.setSelectedPaymentsToApprove([]);
+      this.paymentRewards.clear();
       // refetch organization structure
       await this.loadAdminOrganisations();
 
@@ -250,7 +341,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         });
       }
       // notify if some payment ids were not approved
-      if (approvedIds.length !== ids.length) {
+      if (approvedIds.length !== Object.keys(ids).length) {
         Notify.create({
           message: i18n.global.t('approvePayments.apiMessageErrorPartial'),
           color: 'negative',
@@ -397,6 +488,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.adminOrganisations = [];
       this.adminInvoices = [];
       this.selectedPaymentsToApprove = [];
+      this.paymentRewards.clear();
       this.resetInvoiceForm();
       this.isLoadingOrganisations = false;
       this.isLoadingInvoices = false;

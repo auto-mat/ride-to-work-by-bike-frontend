@@ -23,7 +23,26 @@
               "id": 4001,
               "name": "Obchodní tým",
               "icon_url": null,
-              "members_without_paid_entry_fee_by_org_coord": [],
+              "members_without_paid_entry_fee_by_org_coord": [
+                {
+                  "id": 20005,
+                  "name": "Lucie Dvořáková",
+                  "nickname": "ldvorakova",
+                  "date_of_challenge_registration": "2025-02-03T14:20:00.000000",
+                  "email": "lucie.dvorakova@moravske-pivovary.cz",
+                  "telephone": "555001006",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "340",
+                  "discount_coupon": "",
+                  "user_profile_id": 60005,
+                  "is_payment_with_reward": false
+                }
+              ],
               "members_with_paid_entry_fee_by_org_coord": [
                 {
                   "id": 20001,
@@ -40,7 +59,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60001
+                  "user_profile_id": 60001,
+                  "is_payment_with_reward": true
                 },
                 {
                   "id": 20002,
@@ -57,7 +77,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60002
+                  "user_profile_id": 60002,
+                  "is_payment_with_reward": null
                 }
               ],
               "other_members": [
@@ -76,7 +97,8 @@
                   "payment_category": "None",
                   "payment_amount": "None",
                   "discount_coupon": "PIVOVAR-DISC",
-                  "user_profile_id": 60003
+                  "user_profile_id": 60003,
+                  "is_payment_with_reward": true
                 }
               ]
             },
@@ -101,7 +123,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 60004
+                  "user_profile_id": 60004,
+                  "is_payment_with_reward": true
                 }
               ],
               "other_members": []

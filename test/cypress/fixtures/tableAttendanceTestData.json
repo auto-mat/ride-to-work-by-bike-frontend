@@ -39,7 +39,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 50001
+                  "user_profile_id": 50001,
+                  "is_payment_with_reward": true
                 },
                 {
                   "id": 10002,
@@ -56,7 +57,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 50002
+                  "user_profile_id": 50002,
+                  "is_payment_with_reward": null
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [
@@ -75,7 +77,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 50003
+                  "user_profile_id": 50003,
+                  "is_payment_with_reward": true
                 }
               ],
               "other_members": [
@@ -94,7 +97,8 @@
                   "payment_category": "None",
                   "payment_amount": "0",
                   "discount_coupon": "DISC-001",
-                  "user_profile_id": 50004
+                  "user_profile_id": 50004,
+                  "is_payment_with_reward": true
                 },
                 {
                   "id": 10005,
@@ -111,7 +115,8 @@
                   "payment_category": "None",
                   "payment_amount": "None",
                   "discount_coupon": "",
-                  "user_profile_id": 50005
+                  "user_profile_id": 50005,
+                  "is_payment_with_reward": true
                 }
               ]
             },
@@ -136,7 +141,8 @@
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
                   "discount_coupon": "",
-                  "user_profile_id": 50006
+                  "user_profile_id": 50006,
+                  "is_payment_with_reward": true
                 }
               ],
               "other_members": [
@@ -155,7 +161,8 @@
                   "payment_category": "None",
                   "payment_amount": "None",
                   "discount_coupon": "DISC-002",
-                  "user_profile_id": 50007
+                  "user_profile_id": 50007,
+                  "is_payment_with_reward": true
                 }
               ]
             }

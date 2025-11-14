@@ -67,32 +67,26 @@ export default defineComponent({
     const { sortByAddress } = useTable();
     const { feeApprovalData } = useTableFeeApprovalData(props.approved);
 
-    // local reactive state for `is_payment_with_reward` value
-    const paymentRewards = ref<Map<number, boolean | null>>(new Map());
-    // init paymentRewards from API data when it changes
+    // initialize paymentRewards in store when data changes
     watch(
       () => feeApprovalData.value,
       (newData) => {
-        newData.forEach((row) => {
-          // preserve user edits
-          if (!paymentRewards.value.has(row.id)) {
-            paymentRewards.value.set(row.id, row.reward);
-          }
-        });
+        adminOrganisationStore.initializePaymentRewards(newData);
       },
       { immediate: true },
     );
-    // get reward value for a member
+
+    // get reward value for a member from store
     const getRewardValue = (memberId: number): boolean | null => {
-      return paymentRewards.value.get(memberId) ?? null;
+      return adminOrganisationStore.getPaymentReward(memberId);
     };
+
+    // Update reward status in store
     const updateRewardStatus = (
       memberId: number,
       value: boolean | null,
     ): void => {
-      paymentRewards.value.set(memberId, value);
-      // TODO: call API to update the reward status on the backend
-      // await adminOrganisationStore.updatePaymentRewardStatus(memberId, value);
+      adminOrganisationStore.setPaymentReward(memberId, value);
     };
 
     // sort by dateCreated initially

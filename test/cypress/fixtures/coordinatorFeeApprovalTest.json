@@ -3,7 +3,7 @@
     "description": "allows to approve a single member payment",
     "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
     "displayInitial": {
-      "countWaitingForApproval": 2,
+      "countWaitingForApproval": 3,
       "countApproved": 1
     },
     "approvePayment": {
@@ -22,7 +22,7 @@
         }
       ],
       "requestPayload": {
-        "ids": [20001]
+        "ids": { "20001": 390 }
       },
       "responseBody": {
         "message": "Approved 1 payment successfully",
@@ -31,7 +31,7 @@
     },
     "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
     "displayAfterApproval": {
-      "countWaitingForApproval": 1,
+      "countWaitingForApproval": 2,
       "countApproved": 2
     }
   },
@@ -39,7 +39,7 @@
     "description": "allows to approve multiple member payments",
     "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
     "displayInitial": {
-      "countWaitingForApproval": 2,
+      "countWaitingForApproval": 3,
       "countApproved": 1
     },
     "approvePayment": {
@@ -66,7 +66,7 @@
         }
       ],
       "requestPayload": {
-        "ids": [20001, 20002]
+        "ids": { "20001": 390, "20002": 390 }
       },
       "responseBody": {
         "message": "Approved 2 payments successfully",
@@ -75,7 +75,7 @@
     },
     "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseTwoApprovedMembers.json",
     "displayAfterApproval": {
-      "countWaitingForApproval": 0,
+      "countWaitingForApproval": 1,
       "countApproved": 3
     }
   },
@@ -83,7 +83,7 @@
     "description": "shows error message when only one of two selected members is approved",
     "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
     "displayInitial": {
-      "countWaitingForApproval": 2,
+      "countWaitingForApproval": 3,
       "countApproved": 1
     },
     "approvePayment": {
@@ -106,7 +106,7 @@
         }
       ],
       "requestPayload": {
-        "ids": [20001, 20002]
+        "ids": { "20001": 390, "20002": 390 }
       },
       "responseBody": {
         "message": "Approved 1 payment successfully",
@@ -115,7 +115,7 @@
     },
     "fixtureAdminOrganisationAfterApproval": "apiGetAdminOrganisationResponseOneApprovedMember.json",
     "displayAfterApproval": {
-      "countWaitingForApproval": 1,
+      "countWaitingForApproval": 2,
       "countApproved": 2
     }
   }

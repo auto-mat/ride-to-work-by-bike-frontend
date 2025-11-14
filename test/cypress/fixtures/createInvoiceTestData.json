@@ -41,7 +41,8 @@
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
                     "discount_coupon": "",
-                    "user_profile_id": 50001
+                    "user_profile_id": 50001,
+                    "is_payment_with_reward": true
                   }
                 ],
                 "other_members": []
@@ -67,7 +68,8 @@
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
                     "discount_coupon": "",
-                    "user_profile_id": 50002
+                    "user_profile_id": 50002,
+                    "is_payment_with_reward": null
                   },
                   {
                     "id": 10003,
@@ -84,7 +86,8 @@
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
                     "discount_coupon": "",
-                    "user_profile_id": 50003
+                    "user_profile_id": 50003,
+                    "is_payment_with_reward": true
                   }
                 ],
                 "other_members": []
