@@ -198,7 +198,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return state.paymentAmounts.get(memberId) ?? null;
       },
     /**
-     * Get fee approval data for a specific approval status
+     * Get rows data for fee approval table
      * Transforms organization data into table rows
      * @param {boolean} approved - Whether to show approved or non-approved members
      * @returns {TableFeeApprovalRow[]} - Array of table rows
@@ -207,14 +207,12 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       (state) =>
       (approved: boolean): TableFeeApprovalRow[] => {
         const organisation = state.adminOrganisations[0];
-
         if (!organisation || !organisation.subsidiaries) {
           return [];
         }
-
         const allMembers: TableFeeApprovalRow[] = [];
 
-        // Helper function to transform member to row
+        // helper function - transform member to row
         const transformMemberToRow = (
           member: AdminTeamMember,
           subsidiaryAddress: string,
@@ -231,16 +229,16 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           };
         };
 
-        // Loop over subsidiaries
+        // loop over subsidiaries
         organisation.subsidiaries.forEach((subsidiary: AdminSubsidiary) => {
           const subsidiaryAddress = `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
-          // Loop over teams
+          // loop over teams
           subsidiary.teams.forEach((team: AdminTeam) => {
-            // Get members based on approval status
+            // get members based on approval status
             const memberArray = approved
               ? team.members_with_paid_entry_fee_by_org_coord
               : team.members_without_paid_entry_fee_by_org_coord;
-            // Transform members to rows
+            // transform members to rows
             memberArray.forEach((member: AdminTeamMember) => {
               allMembers.push(transformMemberToRow(member, subsidiaryAddress));
             });
