@@ -65,10 +65,15 @@ export default defineComponent({
     const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByAddress } = useTable();
 
-    // Get fee approval data directly from store
     const feeApprovalData = computed<TableFeeApprovalRow[]>(() => {
       return adminOrganisationStore.getFeeApprovalData(props.approved);
     });
+    const paymentRewards = computed(
+      () => adminOrganisationStore.paymentRewards,
+    );
+    const paymentAmounts = computed(
+      () => adminOrganisationStore.paymentAmounts,
+    );
 
     // initialize paymentRewards and amounts in store when data changes
     watch(
@@ -78,14 +83,6 @@ export default defineComponent({
         adminOrganisationStore.initializePaymentAmounts(newData);
       },
       { immediate: true },
-    );
-
-    // computed properties for reactive access to Maps
-    const paymentRewards = computed(
-      () => adminOrganisationStore.paymentRewards,
-    );
-    const paymentAmounts = computed(
-      () => adminOrganisationStore.paymentAmounts,
     );
 
     // update reward status in store
