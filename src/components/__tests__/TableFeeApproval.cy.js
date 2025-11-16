@@ -4,7 +4,6 @@ import { createPinia, setActivePinia } from 'pinia';
 import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
-import { useChallengeStore } from 'src/stores/challenge';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useTable } from 'src/composables/useTable';
@@ -58,11 +57,6 @@ describe('<TableFeeApproval>', () => {
       setActivePinia(createPinia());
       cy.mount(TableFeeApproval, {
         props: { approved: false },
-      });
-      cy.fixture('apiGetThisCampaign.json').then((response) => {
-        cy.wrap(useChallengeStore()).then((storeChallenge) => {
-          storeChallenge.setPriceLevel(response.results[0].price_level);
-        });
       });
       cy.viewport('macbook-16');
     });
