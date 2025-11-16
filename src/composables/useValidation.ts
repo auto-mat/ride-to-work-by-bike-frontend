@@ -95,6 +95,16 @@ export const useValidation = () => {
   };
 
   /**
+   * Validate Czech VAT ID format: CZ + 8-10 digits
+   * @param value - The value to check
+   * @returns - True if valid Czech Business VAT ID, false otherwise
+   */
+  const isBusinessVatId = (value: string): boolean => {
+    const regex = /^CZ[0-9]{8,10}$/;
+    return regex.test(value);
+  };
+
+  /**
    * Check if the value is a valid ZIP code
    * @param {string} value - The value to check
    * @returns {boolean} - True if the value is a valid ZIP code, false otherwise
@@ -114,6 +124,7 @@ export const useValidation = () => {
     isPhone,
     isStrongPassword,
     isBusinessId,
+    isBusinessVatId,
     isZip,
   };
 };
