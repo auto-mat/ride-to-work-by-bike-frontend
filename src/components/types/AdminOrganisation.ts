@@ -61,3 +61,15 @@ export interface GetAdminOrganisationResponse {
   previous: string | null;
   results: AdminOrganisation[];
 }
+
+export interface TableFeeApprovalRow {
+  id: number;
+  name: string;
+  reward: boolean | null;
+  email: string;
+  nickname: string | null;
+  amount: number;
+  dateCreated: string;
+  address: string;
+  isFirst?: boolean;
+}

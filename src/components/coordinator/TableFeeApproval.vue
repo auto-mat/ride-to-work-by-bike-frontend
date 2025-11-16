@@ -33,13 +33,12 @@ import {
   useTable,
   useTableFeeApproval,
 } from '../../composables/useTable';
-import { useTableFeeApprovalData } from '../../composables/useTableFeeApprovalData';
 
 // stores
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // types
-import type { TableFeeApprovalRow } from '../../composables/useTableFeeApprovalData';
+import type { TableFeeApprovalRow } from '../../components/types/AdminOrganisation';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -65,11 +64,15 @@ export default defineComponent({
 
     const { columns, visibleColumns } = useTableFeeApproval();
     const { sortByAddress } = useTable();
-    const { feeApprovalData } = useTableFeeApprovalData(props.approved);
+
+    // Get fee approval data directly from store
+    const feeApprovalData = computed<TableFeeApprovalRow[]>(() => {
+      return adminOrganisationStore.getFeeApprovalData(props.approved);
+    });
 
     // initialize paymentRewards and amounts in store when data changes
     watch(
-      () => feeApprovalData.value,
+      feeApprovalData,
       (newData) => {
         adminOrganisationStore.initializePaymentRewards(newData);
         adminOrganisationStore.initializePaymentAmounts(newData);
@@ -99,16 +102,13 @@ export default defineComponent({
         tableRef.value.sort('dateCreated');
       }
     });
-    watch(
-      () => feeApprovalData.value,
-      () => {
-        nextTick(() => {
-          if (tableRef.value) {
-            tableRef.value.sort('dateCreated');
-          }
-        });
-      },
-    );
+    watch(feeApprovalData, () => {
+      nextTick(() => {
+        if (tableRef.value) {
+          tableRef.value.sort('dateCreated');
+        }
+      });
+    });
 
     const approveSelectedPayments = async (): Promise<void> => {
       await adminOrganisationStore.approveSelectedPayments();

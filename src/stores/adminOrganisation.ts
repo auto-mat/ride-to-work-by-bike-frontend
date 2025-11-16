@@ -25,13 +25,13 @@ import type {
   AdminSubsidiary,
   AdminTeam,
   AdminTeamMember,
+  TableFeeApprovalRow,
 } from '../components/types/AdminOrganisation';
 import type {
   InvoiceResult,
   InvoicePayment,
   InvoiceTeam,
 } from '../components/types/Invoice';
-import type { TableFeeApprovalRow } from '../composables/useTableFeeApprovalData';
 import type { CoordinatorMakeInvoicePayload } from '../composables/useApiPostCoordinatorMakeInvoice';
 
 interface InvoiceFormState {
@@ -268,57 +268,55 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     },
     /**
      * Set reward status for a specific member
-     * Also calculates and updates the payment amount based on the new reward status
+     * Also calculate and update payment amount based on reward status
      * @param {number} memberId - Member ID
      * @param {boolean | null} value - Reward status
      * @returns {void}
      */
     setPaymentReward(memberId: number, value: boolean | null): void {
       this.paymentRewards.set(memberId, value);
-
-      // Find payment in both approved and non-approved data
+      // find payment as a table row (API data)
       const nonApprovedData = this.getFeeApprovalData(false);
       const payment = nonApprovedData.find((p) => p.id === memberId);
-
-      if (payment) {
-        const challengeStore = useChallengeStore();
-        const originalRewardStatus = payment.reward;
-        const originalAmount = payment.amount;
-
-        // If unchanged, use original amount
-        if (value === originalRewardStatus) {
-          this.paymentAmounts.set(memberId, originalAmount);
-          return;
-        }
-
-        // Find matching price level and calculate new amount
-        const priceLevels = originalRewardStatus
-          ? challengeStore.getCurrentPriceLevelsWithReward
-          : challengeStore.getCurrentPriceLevels;
-        const matchedPriceLevel = Object.values(priceLevels).find((level) => {
-          return (
-            level.price === originalAmount &&
-            pairedCategories.includes(level.category)
-          );
-        });
-        if (matchedPriceLevel) {
-          const pairedCategory = priceLevelPairs[matchedPriceLevel.category];
-          const newPriceLevels = value
-            ? challengeStore.getCurrentPriceLevelsWithReward
-            : challengeStore.getCurrentPriceLevels;
-          const newPrice = newPriceLevels[pairedCategory]?.price;
-
-          if (newPrice !== undefined) {
-            this.paymentAmounts.set(memberId, newPrice);
-          } else {
-            // Fallback to original
-            this.paymentAmounts.set(memberId, originalAmount);
-          }
-        } else {
-          // Fallback to original
-          this.paymentAmounts.set(memberId, originalAmount);
-        }
+      if (!payment) {
+        this.$log?.info(`Payment with memberId <${memberId}> not found.`);
+        return;
       }
+      const challengeStore = useChallengeStore();
+      const originalRewardStatus = payment.reward;
+      const originalAmount = payment.amount;
+      // if reward value = original value, use original payment amount
+      if (value === originalRewardStatus) {
+        this.paymentAmounts.set(memberId, originalAmount);
+        return;
+      }
+      // if not, find matching price level and calculate new amount
+      const priceLevels = originalRewardStatus
+        ? challengeStore.getCurrentPriceLevelsWithReward
+        : challengeStore.getCurrentPriceLevels;
+      const matchedPriceLevel = Object.values(priceLevels).find((level) => {
+        return (
+          level.price === originalAmount &&
+          pairedCategories.includes(level.category)
+        );
+      });
+      // fallback
+      if (!matchedPriceLevel) {
+        this.paymentAmounts.set(memberId, originalAmount);
+        return;
+      }
+      const pairedCategory = priceLevelPairs[matchedPriceLevel.category];
+      const newPriceLevels = value
+        ? challengeStore.getCurrentPriceLevelsWithReward
+        : challengeStore.getCurrentPriceLevels;
+      const newPrice = newPriceLevels[pairedCategory]?.price;
+      // fallback
+      if (newPrice === undefined) {
+        this.paymentAmounts.set(memberId, originalAmount);
+        return;
+      }
+      // set new price
+      this.paymentAmounts.set(memberId, newPrice);
     },
     /**
      * Initialize paymentRewards map from table rows
