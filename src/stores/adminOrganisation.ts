@@ -396,11 +396,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       );
 
       // Build ids object from pre-calculated amounts in the Map
-      const ids: Record<number, number> = {};
+      const ids: Record<string, number> = {};
 
       this.selectedPaymentsToApprove.forEach((payment) => {
         const displayAmount = this.paymentAmounts.get(payment.id);
-        ids[payment.id] =
+        ids[payment.id.toString()] =
           displayAmount !== undefined ? displayAmount : payment.amount;
       });
 

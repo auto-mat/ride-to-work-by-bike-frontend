@@ -18,7 +18,7 @@ import type { Logger } from '../components/types/Logger';
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 interface ApprovePaymentsRequest {
-  ids: Record<number, number>;
+  ids: Record<string, number>;
 }
 
 interface ApprovePaymentsResponse {
@@ -29,7 +29,7 @@ interface ApprovePaymentsResponse {
 interface UseApiPostCoordinatorApprovePaymentsReturn {
   isLoading: Ref<boolean>;
   approvePayments: (
-    ids: Record<number, number>,
+    ids: Record<string, number>,
   ) => Promise<ApprovePaymentsResponse | null>;
 }
 
@@ -47,11 +47,11 @@ export const useApiPostCoordinatorApprovePayments = (
 
   /**
    * Approve a set of payments by IDs with amounts
-   * @param {Record<number, number>} ids - Object mapping member IDs to payment amounts
+   * @param {Record<string, number>} ids - Object mapping member IDs to payment amounts
    * @returns {Promise<ApprovePaymentsResponse | null>} - response data or null if request failed
    */
   const approvePayments = async (
-    ids: Record<number, number>,
+    ids: Record<string, number>,
   ): Promise<ApprovePaymentsResponse | null> => {
     logger?.debug(`Approve payments with IDs <${JSON.stringify(ids)}>.`);
     isLoading.value = true;

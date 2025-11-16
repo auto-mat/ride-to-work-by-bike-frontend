@@ -77,7 +77,7 @@ export default defineComponent({
       { immediate: true },
     );
 
-    // Computed properties for reactive access to Maps
+    // computed properties for reactive access to Maps
     const paymentRewards = computed(
       () => adminOrganisationStore.paymentRewards,
     );
@@ -85,7 +85,7 @@ export default defineComponent({
       () => adminOrganisationStore.paymentAmounts,
     );
 
-    // Update reward status in store
+    // update reward status in store
     const updateRewardStatus = (
       memberId: number,
       value: boolean | null,
