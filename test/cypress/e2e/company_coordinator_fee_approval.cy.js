@@ -5,9 +5,10 @@ import testSet from '../fixtures/coordinatorFeeApprovalTest.json';
 describe('Company coordinator fee approval page', () => {
   context('previewing members and approving payments', () => {
     /**
-     * Reference for default intercepts
-     * this_challenge: apiGetThisCampaign.json
-     * admin_organization_structure: apiGetAdminOrganisationResponse.json
+     * Key intercepts within setupCompanyCoordinatorTest:
+     * this_campaign: apiGetThisCampaign.json
+     * coordinator/organization-structure: apiGetAdminOrganisationResponse.json
+     * register-challenge: apiGetRegisterChallengeProfile.json
      */
     beforeEach(() => {
       // set system time to be in the correct active token window

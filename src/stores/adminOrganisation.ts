@@ -244,7 +244,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
             });
           });
         });
-
         return allMembers;
       },
   },
@@ -390,26 +389,23 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const { approvePayments } = useApiPostCoordinatorApprovePayments(
         this.$log,
       );
-
-      // Build ids object from pre-calculated amounts in the Map
       const ids: Record<string, number> = {};
-
+      // get ids and amounts
       this.selectedPaymentsToApprove.forEach((payment) => {
-        const displayAmount = this.paymentAmounts.get(payment.id);
+        const currentAmount = this.paymentAmounts.get(payment.id);
         ids[payment.id.toString()] =
-          displayAmount !== undefined ? displayAmount : payment.amount;
+          currentAmount !== undefined ? currentAmount : payment.amount;
       });
-
       this.isLoadingApprovePayments = true;
+      // approve payments
       const result = await approvePayments(ids);
-
-      // Clear and refetch
+      // clear local state
       this.setSelectedPaymentsToApprove([]);
       this.paymentRewards.clear();
       this.paymentAmounts.clear();
+      // refetch organization structure
       await this.loadAdminOrganisations();
-
-      // Notifications
+      // check that the approved ids are the same as the selected ids
       const approvedIds = result?.approved_ids || [];
       if (approvedIds.length > 0) {
         Notify.create({
@@ -421,6 +417,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           color: 'positive',
         });
       }
+      // notify if some payment ids were not approved
       if (approvedIds.length !== Object.keys(ids).length) {
         Notify.create({
           message: i18n.global.t('approvePayments.apiMessageErrorPartial'),
