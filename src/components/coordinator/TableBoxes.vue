@@ -10,7 +10,7 @@
  * @example
  * <table-boxes />
  *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=6858-203946&t=KHmhL6s0UoVy0123-1)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-106474&t=ToXiwpZEeyNIGsXv-1)
  */
 
 // libraries
