@@ -33,7 +33,6 @@ import { BoxesTableColumns } from '../../components/types/Table';
 
 export default defineComponent({
   name: 'TableBoxes',
-
   setup() {
     const tableRef = ref<QTable | null>(null);
     const { columns, visibleColumns } = useTableBoxes();

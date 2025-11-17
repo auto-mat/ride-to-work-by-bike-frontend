@@ -26,7 +26,7 @@ export interface TableBoxRow {
 
 /**
  * Calculate recipients display text
- * If only one recipient, show their name; otherwise show count
+ * If one recipient, show their name, otherwise show count
  * @param {Box} box - Box from API
  * @returns {Object} - Recipients info
  */
@@ -35,21 +35,18 @@ function getRecipientsInfo(box: Box): {
   recipientCount: number;
 } {
   const allTransactions: PackageTransaction[] = [];
-
-  // Flatten all package_transactions from all team_packages
+  // get array of all team packages
   box.team_packages.forEach((teamPackage) => {
     allTransactions.push(...teamPackage.package_transactions);
   });
-
   const recipientCount = allTransactions.length;
-
   if (recipientCount === 1) {
     return {
       recipients: allTransactions[0].name,
       recipientCount,
     };
   } else {
-    // Use i18n pluralization for Czech: 0|1|2-4|5+
+    // pluralized label
     const recipientsWord = i18n.global.t(
       'table.textRecipients',
       recipientCount,
@@ -62,14 +59,13 @@ function getRecipientsInfo(box: Box): {
 }
 
 /**
- * Transforms Box to TableBoxRow
+ * Transform Box to TableBoxRow
  * @param {Box} box - Box from API
- * @param {string} address - Address of subsidiary
- * @returns {TableBoxRow} - Flattened row for table
+ * @param {string} address - Subsidiary address
+ * @returns {TableBoxRow} - Table row data
  */
 function transformBoxToRow(box: Box, address: string): TableBoxRow {
   const { recipients, recipientCount } = getRecipientsInfo(box);
-
   return {
     trackingNumber: box.carrier_identification,
     trackingLink: box.tracking_link,
@@ -97,9 +93,7 @@ export const useTableBoxesData = (): {
     if (!organisation) {
       return [];
     }
-
     const allBoxes: TableBoxRow[] = [];
-
     // loop through subsidiaries to extract boxes
     organisation.subsidiaries.forEach((subsidiary) => {
       if (subsidiary.boxes && subsidiary.boxes.length > 0) {
