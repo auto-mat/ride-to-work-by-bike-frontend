@@ -142,10 +142,17 @@ export default defineComponent({
               target="_blank"
               rel="noopener noreferrer"
               color="primary"
-              class="text-decoration-underline q-pa-none"
+              class="rounded-borders q-pa-xs"
               data-cy="table-boxes-tracking-link"
             >
-              {{ props.row.trackingNumber }}
+              <q-icon
+                name="svguse:icons/table_boxes/icons.svg#tabler:external-link"
+                size="18px"
+                color="primary"
+                class="q-mr-sm"
+                data-cy="table-boxes-tracking-icon"
+              />
+              <span>{{ props.row.trackingNumber }}</span>
             </q-btn>
           </q-td>
           <!-- Package Status -->
@@ -158,7 +165,7 @@ export default defineComponent({
               <q-icon
                 :name="getStatusIcon(props.row.packageStatus)"
                 size="18px"
-                color="grey-10"
+                :color="props.row.packageStatus ? 'positive' : 'primary'"
                 data-cy="table-boxes-status-icon"
               />
               <span data-cy="table-boxes-status-label">
