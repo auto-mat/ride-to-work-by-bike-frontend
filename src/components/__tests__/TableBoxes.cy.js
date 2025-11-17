@@ -21,6 +21,7 @@ describe('<TableBoxes>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
+        'labelCellEmpty',
         'labelTrackingNumber',
         'labelPackageStatus',
         'labelRecipients',

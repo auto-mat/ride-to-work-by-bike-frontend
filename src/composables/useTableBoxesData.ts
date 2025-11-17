@@ -100,11 +100,17 @@ export const useTableBoxesData = (): {
 
     const allBoxes: TableBoxRow[] = [];
 
-    // Loop through subsidiaries to extract boxes
+    // loop through subsidiaries to extract boxes
     organisation.subsidiaries.forEach((subsidiary) => {
       if (subsidiary.boxes && subsidiary.boxes.length > 0) {
-        const address = `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
-
+        // construct subsidiary address with fallback
+        let address = '';
+        if (subsidiary.street && subsidiary.street_number && subsidiary.city) {
+          address = `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
+        } else {
+          address = `${i18n.global.t('table.labelAddress')}: ${i18n.global.t('table.labelCellEmpty')}`;
+        }
+        // transfrom boxes to table rows
         subsidiary.boxes.forEach((box: Box) => {
           allBoxes.push(transformBoxToRow(box, address));
         });

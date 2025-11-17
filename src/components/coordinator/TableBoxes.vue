@@ -135,6 +135,7 @@ export default defineComponent({
             data-cy="table-boxes-tracking-number"
           >
             <q-btn
+              v-if="props.row.trackingNumber"
               flat
               dense
               no-caps
@@ -154,6 +155,9 @@ export default defineComponent({
               />
               <span>{{ props.row.trackingNumber }}</span>
             </q-btn>
+            <span v-else>
+              {{ $t('table.labelCellEmpty') }}
+            </span>
           </q-td>
           <!-- Package Status -->
           <q-td

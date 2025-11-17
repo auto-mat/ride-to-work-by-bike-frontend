@@ -23,6 +23,7 @@ import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
 import TabCoordinatorFeeApproval from './TabCoordinatorFeeApproval.vue';
 import TabCoordinatorInvoices from './TabCoordinatorInvoices.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
+import TableBoxes from './TableBoxes.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -45,6 +46,7 @@ export default defineComponent({
     TabCoordinatorFeeApproval,
     TabCoordinatorInvoices,
     TaskListCoordinator,
+    TableBoxes,
   },
   setup() {
     const activeTab = ref(tabsCoordinator.none);
@@ -144,7 +146,7 @@ export default defineComponent({
         :name="tabsCoordinator.packages"
         data-cy="coordinator-tabs-panel-packages"
       >
-        <!-- TODO: add content -->
+        <table-boxes data-cy="table-boxes-component" />
       </q-tab-panel>
       <!-- Panel: Attendance -->
       <q-tab-panel
