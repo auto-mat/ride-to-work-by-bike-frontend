@@ -1,0 +1,213 @@
+[
+  {
+    "description": "organisation with multiple boxes - mixed statuses and recipient counts",
+    "storeData": [
+      {
+        "name": "Moravské pivovary a.s.",
+        "psc": 15000,
+        "street": "Pivovarská",
+        "street_number": 456,
+        "recipient": "Moravské pivovary a.s.",
+        "city": "Brno",
+        "ico": 87654321,
+        "dic": "CZ87654321",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 3001,
+            "psc": 15000,
+            "street": "Pivovarská",
+            "street_number": 456,
+            "city": "Brno",
+            "icon_url": null,
+            "teams": [],
+            "boxes": [
+              {
+                "dispatched": false,
+                "carrier_identification": "A 123 456 789",
+                "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+                "modified": "2022-09-31T00:00:00Z",
+                "team_packages": [
+                  {
+                    "dispatched": false,
+                    "package_transactions": [
+                      {
+                        "t_shirt_size": "2025-dámské S (dpnk2019)",
+                        "name": "Vy"
+                      },
+                      {
+                        "t_shirt_size": "2025-dámské M (dpnk2019)",
+                        "name": "Vy"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "dispatched": true,
+                "carrier_identification": "A 123 456 788",
+                "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456788",
+                "modified": "2022-09-28T00:00:00Z",
+                "team_packages": [
+                  {
+                    "dispatched": true,
+                    "package_transactions": [
+                      {
+                        "t_shirt_size": "2025-pánské L (dpnk2019)",
+                        "name": "Vy"
+                      },
+                      {
+                        "t_shirt_size": "2025-dámské S (dpnk2019)",
+                        "name": "Vy"
+                      },
+                      {
+                        "t_shirt_size": "2025-pánské M (dpnk2019)",
+                        "name": "Vy"
+                      },
+                      {
+                        "t_shirt_size": "2025-dámské L (dpnk2019)",
+                        "name": "Vy"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "dispatched": false,
+                "carrier_identification": "A 123 456 789",
+                "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+                "modified": "2022-09-27T00:00:00Z",
+                "team_packages": [
+                  {
+                    "dispatched": false,
+                    "package_transactions": [
+                      {
+                        "t_shirt_size": "2025-dámské S (dpnk2019)",
+                        "name": "Ludmila Anonymní"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "displayData": [
+      {
+        "trackingNumber": "A 123 456 789",
+        "trackingLink": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+        "packageStatus": false,
+        "recipients": "2 účastníci*e",
+        "recipientCount": 2,
+        "lastModified": "2022-09-31T00:00:00Z",
+        "address": "Pivovarská 456, Brno"
+      },
+      {
+        "trackingNumber": "A 123 456 788",
+        "trackingLink": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456788",
+        "packageStatus": true,
+        "recipients": "4 účastníci*e",
+        "recipientCount": 4,
+        "lastModified": "2022-09-28T00:00:00Z",
+        "address": "Pivovarská 456, Brno"
+      },
+      {
+        "trackingNumber": "A 123 456 789",
+        "trackingLink": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+        "packageStatus": false,
+        "recipients": "Ludmila Anonymní",
+        "recipientCount": 1,
+        "lastModified": "2022-09-27T00:00:00Z",
+        "address": "Pivovarská 456, Brno"
+      }
+    ]
+  },
+  {
+    "description": "organisation with no boxes",
+    "storeData": [
+      {
+        "name": "Moravské pivovary a.s.",
+        "psc": 15000,
+        "street": "Pivovarská",
+        "street_number": 456,
+        "recipient": "Moravské pivovary a.s.",
+        "city": "Brno",
+        "ico": 87654321,
+        "dic": "CZ87654321",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 3001,
+            "psc": 15000,
+            "street": "Pivovarská",
+            "street_number": 456,
+            "city": "Brno",
+            "icon_url": null,
+            "teams": [],
+            "boxes": []
+          }
+        ]
+      }
+    ],
+    "displayData": []
+  },
+  {
+    "description": "organisation with single box and single recipient",
+    "storeData": [
+      {
+        "name": "Moravské pivovary a.s.",
+        "psc": 15000,
+        "street": "Pivovarská",
+        "street_number": 456,
+        "recipient": "Moravské pivovary a.s.",
+        "city": "Brno",
+        "ico": 87654321,
+        "dic": "CZ87654321",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 3001,
+            "psc": 15000,
+            "street": "Pivovarská",
+            "street_number": 456,
+            "city": "Brno",
+            "icon_url": null,
+            "teams": [],
+            "boxes": [
+              {
+                "dispatched": true,
+                "carrier_identification": "B 987 654 321",
+                "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=B987654321",
+                "modified": "2022-10-15T00:00:00Z",
+                "team_packages": [
+                  {
+                    "dispatched": true,
+                    "package_transactions": [
+                      {
+                        "t_shirt_size": "2025-pánské M (dpnk2019)",
+                        "name": "Jan Novák"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "displayData": [
+      {
+        "trackingNumber": "B 987 654 321",
+        "trackingLink": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=B987654321",
+        "packageStatus": true,
+        "recipients": "Jan Novák",
+        "recipientCount": 1,
+        "lastModified": "2022-10-15T00:00:00Z",
+        "address": "Pivovarská 456, Brno"
+      }
+    ]
+  }
+]

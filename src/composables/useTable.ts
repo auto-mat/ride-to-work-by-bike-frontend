@@ -19,6 +19,7 @@ import {
   FeeApprovalTableColumns,
   AttendanceTableColumns,
   InvoicesTableColumns,
+  BoxesTableColumns,
 } from '../components/types/Table';
 
 type FilterMethodInput = { search: string; filter: string };
@@ -622,5 +623,69 @@ export const useTableInvoices = () => {
   return {
     columns: tableInvoicesColumns,
     visibleColumns: tableInvoicesVisibleColumns,
+  };
+};
+
+export const useTableBoxes = () => {
+  const tableBoxesColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: BoxesTableColumns.trackingNumber,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelTrackingNumber'),
+      name: BoxesTableColumns.trackingNumber,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: BoxesTableColumns.packageStatus,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelPackageStatus'),
+      name: BoxesTableColumns.packageStatus,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: BoxesTableColumns.recipients,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelRecipients'),
+      name: BoxesTableColumns.recipients,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: BoxesTableColumns.lastModified,
+      format: (val: number | string | null): string =>
+        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+      label: i18n.global.t('table.labelLastModified'),
+      name: BoxesTableColumns.lastModified,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: BoxesTableColumns.address,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelAddress'),
+      name: BoxesTableColumns.address,
+      required: false,
+      sortable: true,
+    },
+  ];
+
+  // hide address column as the table is grouped by the key 'address'
+  const tableBoxesVisibleColumns: string[] = [
+    BoxesTableColumns.trackingNumber,
+    BoxesTableColumns.packageStatus,
+    BoxesTableColumns.recipients,
+    BoxesTableColumns.lastModified,
+  ];
+
+  return {
+    columns: tableBoxesColumns,
+    visibleColumns: tableBoxesVisibleColumns,
   };
 };
