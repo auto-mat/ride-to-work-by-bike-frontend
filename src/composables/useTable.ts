@@ -659,7 +659,7 @@ export const useTableBoxes = () => {
       align: 'left',
       field: BoxesTableColumns.lastModified,
       format: (val: number | string | null): string =>
-        val ? date.formatDate(new Date(String(val)), 'D. MMM. YYYY') : '',
+        val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
       label: i18n.global.t('table.labelLastModified'),
       name: BoxesTableColumns.lastModified,
       required: true,
