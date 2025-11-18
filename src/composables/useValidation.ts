@@ -100,7 +100,7 @@ export const useValidation = () => {
    * @returns - True if valid Czech Business VAT ID, false otherwise
    */
   const isBusinessVatId = (value: string): boolean => {
-    const regex = /^CZ[0-9]{8,10}$/;
+    const regex = /^[a-zA-Z]{2}[0-9]*$/;
     return regex.test(value);
   };
 

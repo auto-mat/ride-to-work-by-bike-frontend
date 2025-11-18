@@ -41,22 +41,6 @@ describe('<FormFieldBusinessVatId>', () => {
         .should('be.visible')
         .and('contain', i18n.global.t('form.messageBusinessVatIdInvalid'));
       cy.dataCy('form-business-vat-id-input').clear();
-      // invalid - too short
-      cy.dataCy('form-business-vat-id-input').type('CZ1234567');
-      cy.dataCy('form-business-vat-id-input').blur();
-      cy.dataCy('form-business-vat-id')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.messageBusinessVatIdInvalid'));
-      cy.dataCy('form-business-vat-id-input').clear();
-      // invalid - too long
-      cy.dataCy('form-business-vat-id-input').type('CZ12345678901');
-      cy.dataCy('form-business-vat-id-input').blur();
-      cy.dataCy('form-business-vat-id')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.messageBusinessVatIdInvalid'));
-      cy.dataCy('form-business-vat-id-input').clear();
       // invalid - contains letters in number part
       cy.dataCy('form-business-vat-id-input').type('CZ1234567a');
       cy.dataCy('form-business-vat-id-input').blur();
@@ -67,14 +51,6 @@ describe('<FormFieldBusinessVatId>', () => {
       cy.dataCy('form-business-vat-id-input').clear();
       // invalid - contains special characters
       cy.dataCy('form-business-vat-id-input').type('CZ12345678$');
-      cy.dataCy('form-business-vat-id-input').blur();
-      cy.dataCy('form-business-vat-id')
-        .find('.q-field__messages')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.messageBusinessVatIdInvalid'));
-      cy.dataCy('form-business-vat-id-input').clear();
-      // invalid - lowercase prefix
-      cy.dataCy('form-business-vat-id-input').type('cz12345678');
       cy.dataCy('form-business-vat-id-input').blur();
       cy.dataCy('form-business-vat-id')
         .find('.q-field__messages')
@@ -94,6 +70,13 @@ describe('<FormFieldBusinessVatId>', () => {
       cy.dataCy('form-business-vat-id-input').clear();
       // valid - 10 digits (individual)
       cy.dataCy('form-business-vat-id-input').type('CZ1234567890');
+      cy.dataCy('form-business-vat-id-input').blur();
+      cy.get('.q-field__messages').should('be.empty');
+      // valid - any length with SK prefix
+      cy.dataCy('form-business-vat-id-input').clear();
+      cy.dataCy('form-business-vat-id-input').type(
+        'SK1122334455667788991122334455',
+      );
       cy.dataCy('form-business-vat-id-input').blur();
       cy.get('.q-field__messages').should('be.empty');
     });
