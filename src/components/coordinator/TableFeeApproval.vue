@@ -191,7 +191,7 @@ export default defineComponent({
               :props="props"
               data-cy="table-fee-approval-amount"
             >
-              {{ paymentAmounts.get(props.row.id) ?? props.row.amount }}
+              {{ paymentAmounts[props.row.id] ?? props.row.amount }}
             </q-td>
             <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
@@ -204,7 +204,7 @@ export default defineComponent({
               data-cy="table-fee-approval-reward"
             >
               <q-checkbox
-                :model-value="paymentRewards.get(props.row.id)"
+                :model-value="paymentRewards[props.row.id]"
                 color="primary"
                 :disable="approved"
                 data-cy="table-fee-approval-reward-checkbox"

@@ -57,8 +57,8 @@ interface AdminOrganisationState {
   isLoadingInvoices: boolean;
   isLoadingApprovePayments: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
-  paymentRewards: Map<number, boolean | null>;
-  paymentAmounts: Map<number, number>;
+  paymentRewards: Record<number, boolean | null>;
+  paymentAmounts: Record<number, number>;
   invoiceForm: InvoiceFormState;
 }
 
@@ -71,8 +71,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingInvoices: false,
     isLoadingApprovePayments: false,
     selectedPaymentsToApprove: [],
-    paymentRewards: new Map(),
-    paymentAmounts: new Map(),
+    paymentRewards: {},
+    paymentAmounts: {},
     invoiceForm: {
       orderNumber: '',
       orderNote: '',
@@ -185,7 +185,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getPaymentReward:
       (state) =>
       (memberId: number): boolean | null => {
-        return state.paymentRewards.get(memberId) ?? null;
+        return state.paymentRewards[memberId] ?? null;
       },
     /**
      * Get payment amount for a specific member
@@ -195,7 +195,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getPaymentAmount:
       (state) =>
       (memberId: number): number | null => {
-        return state.paymentAmounts.get(memberId) ?? null;
+        return state.paymentAmounts[memberId] ?? null;
       },
     /**
      * Get rows data for fee approval table
@@ -271,7 +271,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      * @returns {void}
      */
     setPaymentReward(memberId: number, value: boolean | null): void {
-      this.paymentRewards.set(memberId, value);
+      this.paymentRewards[memberId] = value;
       // find payment as a table row (API data)
       const nonApprovedData = this.getFeeApprovalData(false);
       const payment = nonApprovedData.find((p) => p.id === memberId);
@@ -284,7 +284,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const originalAmount = payment.amount;
       // if reward value = original value, use original payment amount
       if (value === originalRewardStatus) {
-        this.paymentAmounts.set(memberId, originalAmount);
+        this.paymentAmounts[memberId] = originalAmount;
         return;
       }
       // if not, find matching price level and calculate new amount
@@ -299,7 +299,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       });
       // fallback
       if (!matchedPriceLevel) {
-        this.paymentAmounts.set(memberId, originalAmount);
+        this.paymentAmounts[memberId] = originalAmount;
         return;
       }
       const pairedCategory = priceLevelPairs[matchedPriceLevel.category];
@@ -309,11 +309,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const newPrice = newPriceLevels[pairedCategory]?.price;
       // fallback
       if (newPrice === undefined) {
-        this.paymentAmounts.set(memberId, originalAmount);
+        this.paymentAmounts[memberId] = originalAmount;
         return;
       }
       // set new price
-      this.paymentAmounts.set(memberId, newPrice);
+      this.paymentAmounts[memberId] = newPrice;
     },
     /**
      * Initialize paymentRewards map from table rows
@@ -323,8 +323,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     initializePaymentRewards(rows: TableFeeApprovalRow[]): void {
       rows.forEach((row) => {
         // Only initialize if not already set (preserve user edits)
-        if (!this.paymentRewards.has(row.id)) {
-          this.paymentRewards.set(row.id, row.reward);
+        if (!(row.id in this.paymentRewards)) {
+          this.paymentRewards[row.id] = row.reward;
         }
       });
     },
@@ -335,7 +335,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      * @returns {void}
      */
     setPaymentAmount(memberId: number, amount: number): void {
-      this.paymentAmounts.set(memberId, amount);
+      this.paymentAmounts[memberId] = amount;
     },
     /**
      * Initialize paymentAmounts map from table rows
@@ -345,8 +345,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     initializePaymentAmounts(rows: TableFeeApprovalRow[]): void {
       rows.forEach((row) => {
         // Only initialize if not already set (preserve user edits)
-        if (!this.paymentAmounts.has(row.id)) {
-          this.paymentAmounts.set(row.id, row.amount);
+        if (!(row.id in this.paymentAmounts)) {
+          this.paymentAmounts[row.id] = row.amount;
         }
       });
     },
@@ -392,7 +392,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const ids: Record<string, number> = {};
       // get ids and amounts
       this.selectedPaymentsToApprove.forEach((payment) => {
-        const currentAmount = this.paymentAmounts.get(payment.id);
+        const currentAmount = this.paymentAmounts[payment.id];
         ids[payment.id.toString()] =
           currentAmount !== undefined ? currentAmount : payment.amount;
       });
@@ -401,8 +401,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const result = await approvePayments(ids);
       // clear local state
       this.setSelectedPaymentsToApprove([]);
-      this.paymentRewards.clear();
-      this.paymentAmounts.clear();
+      this.paymentRewards = {};
+      this.paymentAmounts = {};
       // refetch organization structure
       await this.loadAdminOrganisations();
       // check that the approved ids are the same as the selected ids
@@ -565,8 +565,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.adminOrganisations = [];
       this.adminInvoices = [];
       this.selectedPaymentsToApprove = [];
-      this.paymentRewards.clear();
-      this.paymentAmounts.clear();
+      this.paymentRewards = {};
+      this.paymentAmounts = {};
       this.resetInvoiceForm();
       this.isLoadingOrganisations = false;
       this.isLoadingInvoices = false;
