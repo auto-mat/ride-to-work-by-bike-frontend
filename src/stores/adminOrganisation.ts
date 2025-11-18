@@ -276,7 +276,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const nonApprovedData = this.getFeeApprovalData(false);
       const payment = nonApprovedData.find((p) => p.id === memberId);
       if (!payment) {
-        this.$log?.info(`Payment with memberId <${memberId}> not found.`);
+        this.$log?.debug(`Payment with memberId <${memberId}> not found.`);
         return;
       }
       const challengeStore = useChallengeStore();
