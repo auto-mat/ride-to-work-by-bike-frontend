@@ -246,6 +246,33 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         });
         return allMembers;
       },
+    /**
+     * Get total number of boxes across all subsidiaries
+     * @returns {number} - Total number of boxes
+     */
+    getTotalBoxes: (state): number => {
+      const organisation = state.adminOrganisations[0];
+      if (!organisation || !organisation.subsidiaries) {
+        return 0;
+      }
+      return organisation.subsidiaries.reduce((total, subsidiary) => {
+        return total + (subsidiary.boxes?.length || 0);
+      }, 0);
+    },
+    /**
+     * Get number of delivered boxes across all subsidiaries
+     * @returns {number} - Number of delivered boxes
+     */
+    getDeliveredBoxes: (state): number => {
+      const organisation = state.adminOrganisations[0];
+      if (!organisation || !organisation.subsidiaries) {
+        return 0;
+      }
+      return organisation.subsidiaries.reduce((total, subsidiary) => {
+        if (!subsidiary.boxes) return total;
+        return total + subsidiary.boxes.filter((box) => box.dispatched).length;
+      }, 0);
+    },
   },
 
   actions: {

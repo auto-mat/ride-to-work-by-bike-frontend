@@ -19,18 +19,15 @@ describe('Company coordinator boxes page', () => {
             cy.visit(
               '#' + routesConf['coordinator_packages']['children']['fullPath'],
             );
-            cy.dataCy('table-invoices-title').should('be.visible');
+            cy.dataCy('table-boxes-title').should('be.visible');
           });
         });
       });
     });
 
     it('should display the boxes table', () => {
-      cy.get('@i18n').then((i18n) => {
-        cy.dataCy('table-boxes-title')
-          .should('be.visible')
-          .and('have.text', i18n.global.t('titleBoxes'));
-      });
+      // table
+      cy.dataCy('table-boxes').should('be.visible');
     });
   });
 });

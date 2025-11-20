@@ -284,6 +284,7 @@ textCompanyCoordinatorDisabled = "Portál pre firemných koordinátorov nájdete
 titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateInvoice = "Vystaviť novú faktúru"
 titleBoxes = "Štartové balíčky"
+boxesDeliveryStatus = "doručených|doručený|doručené|doručených"
 
 [createOrganization]
 apiMessageError = "Vytvorenie organizácie zlyhalo."
