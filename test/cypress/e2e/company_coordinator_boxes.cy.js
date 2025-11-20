@@ -28,6 +28,36 @@ describe('Company coordinator boxes page', () => {
     it('should display the boxes table', () => {
       // table
       cy.dataCy('table-boxes').should('be.visible');
+      // table headers
+      cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
+        const organization = response.results[0];
+        // get address from store data
+        const uniqueAddresses = [
+          ...new Set(
+            organization.subsidiaries.map(
+              (box) => `${box.street} ${box.street_number}, ${box.city}`,
+            ),
+          ),
+        ];
+        if (uniqueAddresses.length > 0) {
+          cy.dataCy('table-boxes-address-header')
+            .should('be.visible')
+            .and('have.length', uniqueAddresses.length);
+          uniqueAddresses.forEach((address) => {
+            cy.dataCy('table-boxes-address-header').contains(address);
+          });
+        }
+        // table row count
+        const boxes = [];
+        organization.subsidiaries.forEach((sub) => {
+          sub.boxes.forEach((box) => {
+            boxes.push(box);
+          });
+        });
+        cy.dataCy('table-boxes-row')
+          .should('be.visible')
+          .and('have.length', boxes.length);
+      });
     });
   });
 });

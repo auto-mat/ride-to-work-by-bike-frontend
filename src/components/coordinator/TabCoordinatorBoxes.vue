@@ -53,7 +53,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div data-cy="tab-coordinator-boxes">
+  <div class="q-mt-xl" data-cy="tab-coordinator-boxes">
     <div class="row justify-between items-end gap-24 q-mb-md">
       <!-- Title -->
       <h3
