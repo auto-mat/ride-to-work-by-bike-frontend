@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout app repository code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
