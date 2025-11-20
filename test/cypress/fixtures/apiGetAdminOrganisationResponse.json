@@ -128,6 +128,75 @@
               ],
               "other_members": []
             }
+          ],
+          "boxes": [
+            {
+              "dispatched": false,
+              "carrier_identification": "A 123 456 789",
+              "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+              "modified": "2022-09-31T00:00:00Z",
+              "team_packages": [
+                {
+                  "dispatched": false,
+                  "package_transactions": [
+                    {
+                      "t_shirt_size": "2025-dámské S (dpnk2019)",
+                      "name": "Vy"
+                    },
+                    {
+                      "t_shirt_size": "2025-dámské M (dpnk2019)",
+                      "name": "Vy"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "dispatched": true,
+              "carrier_identification": "A 123 456 788",
+              "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456788",
+              "modified": "2022-09-28T00:00:00Z",
+              "team_packages": [
+                {
+                  "dispatched": true,
+                  "package_transactions": [
+                    {
+                      "t_shirt_size": "2025-pánské L (dpnk2019)",
+                      "name": "Vy"
+                    },
+                    {
+                      "t_shirt_size": "2025-dámské S (dpnk2019)",
+                      "name": "Vy"
+                    },
+                    {
+                      "t_shirt_size": "2025-pánské M (dpnk2019)",
+                      "name": "Vy"
+                    },
+                    {
+                      "t_shirt_size": "2025-dámské L (dpnk2019)",
+                      "name": "Vy"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "dispatched": false,
+              "carrier_identification": "A 123 456 789",
+              "tracking_link": "https://gls-group.eu/CZ/cs/sledovani-zasilek?match=A123456789",
+              "modified": "2022-09-27T00:00:00Z",
+              "team_packages": [
+                {
+                  "dispatched": false,
+                  "package_transactions": [
+                    {
+                      "t_shirt_size": "2025-dámské S (dpnk2019)",
+                      "name": "Ludmila Anonymní"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         }
       ]

@@ -20,6 +20,7 @@ import { defineComponent, ref } from 'vue';
 
 // components
 import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
+import TabCoordinatorBoxes from './TabCoordinatorBoxes.vue';
 import TabCoordinatorFeeApproval from './TabCoordinatorFeeApproval.vue';
 import TabCoordinatorInvoices from './TabCoordinatorInvoices.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
@@ -42,6 +43,7 @@ export default defineComponent({
   name: 'CoordinatorTabs',
   components: {
     TabCoordinatorAttendance,
+    TabCoordinatorBoxes,
     TabCoordinatorFeeApproval,
     TabCoordinatorInvoices,
     TaskListCoordinator,
@@ -144,7 +146,7 @@ export default defineComponent({
         :name="tabsCoordinator.packages"
         data-cy="coordinator-tabs-panel-packages"
       >
-        <!-- TODO: add content -->
+        <tab-coordinator-boxes data-cy="tab-coordinator-boxes" />
       </q-tab-panel>
       <!-- Panel: Attendance -->
       <q-tab-panel

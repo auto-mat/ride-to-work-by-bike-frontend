@@ -283,6 +283,8 @@ textClickToCopy = "Skopírovať do schránky"
 textCompanyCoordinatorDisabled = "Portál pre firemných koordinátorov nájdete po prihlásení v starom systéme <a href='{url}' target='_blank'>Do práce na bicykli</a>."
 titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateInvoice = "Vystaviť novú faktúru"
+titleBoxes = "Štartové balíčky"
+boxesDeliveryStatus = "doručených|doručený|doručené|doručených"
 
 [createOrganization]
 apiMessageError = "Vytvorenie organizácie zlyhalo."
