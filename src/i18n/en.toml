@@ -459,6 +459,8 @@ textVoucher = "One-time code"
 titleAdditionalInformation = "Additional information"
 titleDonorEntryFee = "Donor entry fee"
 titleOrganizationBillingDetails = "Billing data of the organization"
+titleOrganizationDetails = "Organization Details"
+titleAddressDetails = "Organization Address"
 
 [form.merch]
 hintNoMerch = "This will leave the full amount for AutoMat's non-profit activities."

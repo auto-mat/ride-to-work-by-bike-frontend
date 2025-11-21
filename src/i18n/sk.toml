@@ -461,6 +461,8 @@ textVoucher = "Jednorazový kód"
 titleAdditionalInformation = "Dodatočné informácie"
 titleDonorEntryFee = "Benefiční štartovné"
 titleOrganizationBillingDetails = "Fakturačné údaje organizácie"
+titleOrganizationDetails = "Údaje organizácie"
+titleAddressDetails = "Adresa organizácie"
 
 [form.merch]
 hintNoMerch = "Celá suma tak zostane na neziskové aktivity spoločnosti AutoMat."

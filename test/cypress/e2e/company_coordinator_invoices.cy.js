@@ -12,6 +12,12 @@ const customBillingDetails = {
   zip: '12345',
 };
 
+const customOrganizationDetails = {
+  companyName: 'Custom Company Name',
+  businessId: '12345678',
+  businessVatId: 'CZ12345678',
+};
+
 describe('Company coordinator invoices page', () => {
   context('previewing invoices', () => {
     beforeEach(() => {
@@ -233,6 +239,33 @@ describe('Company coordinator invoices page', () => {
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
             (response) => {
               const organization = response.results[0];
+              // test existing company name
+              cy.dataCy('form-invoice-billing-company-name-input')
+                .should('be.visible')
+                .and('have.value', organization.name);
+              cy.dataCy('form-invoice-billing-company-name-input').clear();
+              // enter custom company name
+              cy.dataCy('form-invoice-billing-company-name-input').type(
+                customOrganizationDetails.companyName,
+              );
+              // test existing business ID
+              cy.dataCy('form-business-id-input')
+                .should('be.visible')
+                .and('have.value', organization.ico);
+              cy.dataCy('form-business-id-input').clear();
+              // enter custom business VAT ID
+              cy.dataCy('form-business-id-input').type(
+                customOrganizationDetails.businessId,
+              );
+              // test existing business VAT ID
+              cy.dataCy('form-business-vat-id-input')
+                .should('be.visible')
+                .and('have.value', organization.dic);
+              cy.dataCy('form-business-vat-id-input').clear();
+              // enter custom business ID
+              cy.dataCy('form-business-vat-id-input').type(
+                customOrganizationDetails.businessVatId,
+              );
               // test existing street
               cy.dataCy('form-invoice-billing-street-input')
                 .should('be.visible')
@@ -281,37 +314,34 @@ describe('Company coordinator invoices page', () => {
 
       it('allows to edit billing details', () => {
         cy.get('@config').then((config) => {
-          cy.fixture('apiGetAdminOrganisationResponse.json').then(
-            (response) => {
-              const organization = response.results[0];
-              // intercept API calls
-              cy.interceptCoordinatorMakeInvoicePostApi(config, {
-                invoice_id: 82,
-              });
-              cy.interceptCoordinatorInvoicesGetApi(
-                config,
-                'apiGetCoordinatorInvoicesResponseAddedInvoice.json',
-              );
-              // submit the form
-              cy.dataCy('dialog-button-submit').click();
-              cy.waitForCoordinatorMakeInvoicePostApi(
-                {
-                  payment_ids: [178],
-                  company_name: organization.name,
-                  company_address: {
-                    psc: customBillingDetails.zip,
-                    street: customBillingDetails.street,
-                    street_number: customBillingDetails.streetNumber,
-                    city: customBillingDetails.city,
-                  },
-                },
-                {
-                  invoice_id: 82,
-                },
-              );
-              cy.dataCy('form-create-invoice').should('not.exist');
+          // intercept API calls
+          cy.interceptCoordinatorMakeInvoicePostApi(config, {
+            invoice_id: 82,
+          });
+          cy.interceptCoordinatorInvoicesGetApi(
+            config,
+            'apiGetCoordinatorInvoicesResponseAddedInvoice.json',
+          );
+          // submit the form
+          cy.dataCy('dialog-button-submit').click();
+          cy.waitForCoordinatorMakeInvoicePostApi(
+            {
+              payment_ids: [178],
+              company_name: customOrganizationDetails.companyName,
+              company_ico: customOrganizationDetails.businessId,
+              company_dic: customOrganizationDetails.businessVatId,
+              company_address: {
+                psc: customBillingDetails.zip,
+                street: customBillingDetails.street,
+                street_number: customBillingDetails.streetNumber,
+                city: customBillingDetails.city,
+              },
+            },
+            {
+              invoice_id: 82,
             },
           );
+          cy.dataCy('form-create-invoice').should('not.exist');
         });
       });
 
@@ -360,6 +390,18 @@ describe('Company coordinator invoices page', () => {
           cy.dataCy('form-create-invoice-billing-expansion-content').should(
             'be.visible',
           );
+          // test existing company name
+          cy.dataCy('form-invoice-billing-company-name-input')
+            .should('be.visible')
+            .and('have.value', organization.name);
+          // test existing business ID
+          cy.dataCy('form-business-id-input')
+            .should('be.visible')
+            .and('have.value', organization.ico);
+          // test existing business VAT ID
+          cy.dataCy('form-business-vat-id-input')
+            .should('be.visible')
+            .and('have.value', organization.dic);
           // test existing street name
           cy.dataCy('form-invoice-billing-street-input')
             .should('be.visible')
@@ -391,6 +433,15 @@ describe('Company coordinator invoices page', () => {
             'not.be.visible',
           );
           cy.contains(i18n.global.t('form.textEditBillingDetails')).click();
+          cy.dataCy('form-invoice-billing-company-name-input')
+            .should('be.visible')
+            .and('have.value', customOrganizationDetails.companyName);
+          cy.dataCy('form-business-id-input')
+            .should('be.visible')
+            .and('have.value', customOrganizationDetails.businessId);
+          cy.dataCy('form-business-vat-id-input')
+            .should('be.visible')
+            .and('have.value', customOrganizationDetails.businessVatId);
           cy.dataCy('form-invoice-billing-street-input')
             .should('be.visible')
             .and('have.value', customBillingDetails.street);
@@ -417,11 +468,29 @@ describe('Company coordinator invoices page', () => {
             cy.interceptCoordinatorMakeInvoicePostApi(config, {
               invoice_id: 82,
             });
+            cy.dataCy('form-invoice-billing-company-name-input').clear();
+            cy.dataCy('form-business-id-input').clear();
+            cy.dataCy('form-business-vat-id-input').clear();
             cy.dataCy('form-invoice-billing-street-input').clear();
             cy.dataCy('form-invoice-billing-houseNumber-input').clear();
             cy.dataCy('form-invoice-billing-city-input').clear();
             cy.dataCy('form-invoice-billing-zip-input').clear();
             cy.dataCy('dialog-button-submit').click();
+            cy.contains(
+              i18n.global.t('form.messageFieldRequired', {
+                fieldName: i18n.global.t('form.labelCompany'),
+              }),
+            ).should('be.visible');
+            cy.contains(
+              i18n.global.t('form.messageFieldRequired', {
+                fieldName: i18n.global.t('form.labelBusinessId'),
+              }),
+            ).should('be.visible');
+            cy.contains(
+              i18n.global.t('form.messageFieldRequired', {
+                fieldName: i18n.global.t('form.labelBusinessVatId'),
+              }),
+            ).should('be.visible');
             cy.contains(
               i18n.global.t('form.messageFieldRequired', {
                 fieldName: i18n.global.t('form.labelStreet'),

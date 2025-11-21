@@ -23,11 +23,18 @@ export interface CoordinatorMakeInvoicePayload {
   company_pais_benefitial_fee?: boolean;
   payment_ids?: number[];
   company_name?: string;
+  company_ico?: string;
+  company_dic?: string;
+  telephone?: string;
+  email?: string;
+  country?: string;
+  anonymize?: boolean;
   company_address?: {
     psc?: string;
     street?: string;
     street_number?: string;
     city?: string;
+    recipient?: string;
   };
 }
 

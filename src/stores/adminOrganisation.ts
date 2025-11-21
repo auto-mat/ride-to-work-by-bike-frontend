@@ -46,6 +46,11 @@ interface InvoiceFormState {
     city: string;
     psc: string;
   } | null;
+  customBillingOrganization: {
+    companyName: string;
+    businessId: string;
+    businessVatId: string;
+  } | null;
   isBillingFormExpanded: boolean;
 }
 
@@ -80,6 +85,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       isBillingDetailsCorrect: false,
       selectedMembers: {},
       customBillingAddress: null,
+      customBillingOrganization: null,
       isBillingFormExpanded: false,
     },
   }),
@@ -177,6 +183,12 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       state.invoiceForm.customBillingAddress?.city || '',
     getBillingPsc: (state): string =>
       state.invoiceForm.customBillingAddress?.psc || '',
+    getBillingCompanyName: (state): string =>
+      state.invoiceForm.customBillingOrganization?.companyName || '',
+    getBillingBusinessId: (state): string =>
+      state.invoiceForm.customBillingOrganization?.businessId || '',
+    getBillingBusinessVatId: (state): string =>
+      state.invoiceForm.customBillingOrganization?.businessVatId || '',
     /**
      * Get reward status for a specific member
      * @param {number} memberId - Member ID
@@ -465,18 +477,28 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           this.invoiceForm.isDonorEntryFee || undefined,
         payment_ids: paymentIds,
       };
-      if (
-        this.invoiceForm.isBillingFormExpanded &&
-        this.invoiceForm.customBillingAddress
-      ) {
-        // name must be present in the payload
-        payload.company_name = this.getCurrentAdminOrganisation?.name;
-        payload.company_address = {
-          psc: this.invoiceForm.customBillingAddress.psc,
-          street: this.invoiceForm.customBillingAddress.street,
-          street_number: this.invoiceForm.customBillingAddress.streetNumber,
-          city: this.invoiceForm.customBillingAddress.city,
-        };
+      if (this.invoiceForm.isBillingFormExpanded) {
+        // if custom organization details, company_name is required
+        if (this.invoiceForm.customBillingOrganization) {
+          payload.company_name =
+            this.invoiceForm.customBillingOrganization.companyName;
+          payload.company_ico =
+            this.invoiceForm.customBillingOrganization.businessId;
+          payload.company_dic =
+            this.invoiceForm.customBillingOrganization.businessVatId;
+        } else {
+          // company_name fallback
+          payload.company_name = this.getCurrentAdminOrganisation?.name;
+        }
+        // include billing address if present
+        if (this.invoiceForm.customBillingAddress) {
+          payload.company_address = {
+            psc: this.invoiceForm.customBillingAddress.psc,
+            street: this.invoiceForm.customBillingAddress.street,
+            street_number: this.invoiceForm.customBillingAddress.streetNumber,
+            city: this.invoiceForm.customBillingAddress.city,
+          };
+        }
       }
       const result = await makeInvoice(payload);
       // if successful, refetch invoices list
@@ -498,6 +520,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         isBillingDetailsCorrect: false,
         selectedMembers: {},
         customBillingAddress: null,
+        customBillingOrganization: null,
         isBillingFormExpanded: false,
       };
     },
@@ -529,6 +552,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           city: organization.city || '',
           psc: String(organization.psc || ''),
         };
+        this.invoiceForm.customBillingOrganization = {
+          companyName: organization.name || '',
+          businessId: String(organization.ico) || '',
+          businessVatId: organization.dic || '',
+        };
       }
     },
     /**
@@ -537,6 +565,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      */
     resetBillingForm(): void {
       this.invoiceForm.customBillingAddress = null;
+      this.invoiceForm.customBillingOrganization = null;
       this.invoiceForm.isBillingFormExpanded = false;
     },
     /**
@@ -554,6 +583,24 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           this.initializeBillingAddress();
         } else {
           state.invoiceForm.customBillingAddress[field] = value;
+        }
+      });
+    },
+    /**
+     * Update a specific field in the billing organization using $patch
+     * @param {string} field - Field name to update
+     * @param {string} value - New field value
+     * @returns {void}
+     */
+    updateBillingOrganizationField(
+      field: keyof NonNullable<InvoiceFormState['customBillingOrganization']>,
+      value: string,
+    ): void {
+      this.$patch((state) => {
+        if (!state.invoiceForm.customBillingOrganization) {
+          this.initializeBillingAddress();
+        } else {
+          state.invoiceForm.customBillingOrganization[field] = value;
         }
       });
     },
