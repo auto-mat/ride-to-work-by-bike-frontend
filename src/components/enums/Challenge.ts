@@ -12,3 +12,13 @@ export enum PriceLevelCategory {
   companyWithReward = 'company-with-reward',
   schoolWithReward = 'school-with-reward',
 }
+
+export enum CompetitorType {
+  team = 'team',
+  singleUser = 'single_user',
+}
+
+export enum CompetitionType {
+  frequency = 'frequency',
+  length = 'length',
+}

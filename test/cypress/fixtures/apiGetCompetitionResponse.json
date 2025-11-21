@@ -1,0 +1,37 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "results": "#",
+      "id": 1899,
+      "name": "Cyklozaměstnavatel roku 2024",
+      "slug": "cyklozamestnavatel-roku-2024",
+      "competitor_type": "single_user",
+      "competition_type": "questionnaire",
+      "url": "https://www.dopracenakole.cz/podrobna_pravidla_2017#cyklozamestnavatel",
+      "priority": 0
+    },
+    {
+      "results": "#",
+      "id": 1751,
+      "name": "Pravidelnost",
+      "slug": "pravidelnost123",
+      "competitor_type": "team",
+      "competition_type": "frequency",
+      "url": null,
+      "priority": 0
+    },
+    {
+      "results": "#",
+      "id": 1752,
+      "name": "Výkonnost",
+      "slug": "vykonnost123",
+      "competitor_type": "single_user",
+      "competition_type": "length",
+      "url": null,
+      "priority": 0
+    }
+  ]
+}
