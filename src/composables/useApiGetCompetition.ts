@@ -29,7 +29,7 @@ type UseApiGetCompetitionReturn = {
 /**
  * Get competition composable
  * Used to enable calling the API to get competition details
- * @param logger - Logger
+ * @param {Logger | null} logger - Logger
  * @returns {UseApiGetCompetitionReturn}
  */
 export const useApiGetCompetition = (
