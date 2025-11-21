@@ -17,6 +17,7 @@ import { routesConf } from '../router/routes_conf';
 
 // stores
 import { useAdminOrganisationStore } from './adminOrganisation';
+import { useAdminCompetitionStore } from './adminCompetition';
 import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
 import { useFeedStore } from './feed';
@@ -385,6 +386,9 @@ export const useLoginStore = defineStore('login', {
       // clear admin organisation store
       const adminOrganisationStore = useAdminOrganisationStore();
       adminOrganisationStore.clearStore();
+      // clear admin challenge store
+      const adminCompetitionStore = useAdminCompetitionStore();
+      adminCompetitionStore.clearStore();
       // redirect to login page
       if (this.$router) {
         this.$log?.debug(
