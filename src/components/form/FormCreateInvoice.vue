@@ -26,6 +26,9 @@ import { computed, defineComponent } from 'vue';
 // components
 import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
 import FormFieldAddress from './FormFieldAddress.vue';
+import FormFieldBusinessId from './FormFieldBusinessId.vue';
+import FormFieldBusinessVatId from './FormFieldBusinessVatId.vue';
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
@@ -38,6 +41,9 @@ export default defineComponent({
   components: {
     FormFieldCheckboxTeam,
     FormFieldAddress,
+    FormFieldBusinessId,
+    FormFieldBusinessVatId,
+    FormFieldTextRequired,
   },
   setup() {
     const adminOrganisationStore = useAdminOrganisationStore();
@@ -105,6 +111,30 @@ export default defineComponent({
       set: (value: string) =>
         adminOrganisationStore.updateBillingAddressField('psc', value),
     });
+    const billingCompanyName = computed<string>({
+      get: () => adminOrganisationStore.getBillingCompanyName,
+      set: (value: string) =>
+        adminOrganisationStore.updateBillingOrganizationField(
+          'companyName',
+          value,
+        ),
+    });
+    const billingBusinessId = computed<string>({
+      get: () => adminOrganisationStore.getBillingBusinessId,
+      set: (value: string) =>
+        adminOrganisationStore.updateBillingOrganizationField(
+          'businessId',
+          value,
+        ),
+    });
+    const billingBusinessVatId = computed<string>({
+      get: () => adminOrganisationStore.getBillingBusinessVatId,
+      set: (value: string) =>
+        adminOrganisationStore.updateBillingOrganizationField(
+          'businessVatId',
+          value,
+        ),
+    });
 
     /**
      * Reset billing form
@@ -127,6 +157,9 @@ export default defineComponent({
       billingStreetNumber,
       billingCity,
       billingPsc,
+      billingCompanyName,
+      billingBusinessId,
+      billingBusinessVatId,
       onCancelBillingEdit,
     };
   },
@@ -201,15 +234,42 @@ export default defineComponent({
         class="q-py-md"
         data-cy="form-create-invoice-billing-expansion-content"
       >
+        <!-- Organization fields -->
+        <div v-if="isBillingFormExpanded" class="q-mb-lg">
+          <h4 class="text-body2 text-bold q-mb-md">
+            {{ $t('form.titleOrganizationDetails') }}
+          </h4>
+          <div class="row q-col-gutter-md">
+            <form-field-text-required
+              v-model="billingCompanyName"
+              name="invoice-billing-company-name"
+              :label="$t('form.labelCompany')"
+              class="col-12"
+              data-cy="form-invoice-billing-company-name"
+            />
+            <form-field-business-id
+              v-model="billingBusinessId"
+              data-cy="form-invoice-billing-business-id"
+            />
+            <form-field-business-vat-id
+              v-model="billingBusinessVatId"
+              data-cy="form-invoice-billing-business-vat-id"
+            />
+          </div>
+        </div>
         <!-- Address fields -->
-        <form-field-address
-          v-if="isBillingFormExpanded"
-          v-model:street="billingStreet"
-          v-model:houseNumber="billingStreetNumber"
-          v-model:city="billingCity"
-          v-model:zip="billingPsc"
-          field-prefix="invoice-billing"
-        />
+        <div v-if="isBillingFormExpanded" class="q-mb-lg">
+          <h4 class="text-body2 text-bold q-mb-md">
+            {{ $t('form.titleAddressDetails') }}
+          </h4>
+          <form-field-address
+            v-model:street="billingStreet"
+            v-model:houseNumber="billingStreetNumber"
+            v-model:city="billingCity"
+            v-model:zip="billingPsc"
+            field-prefix="invoice-billing"
+          />
+        </div>
         <!-- Button: Discard changes -->
         <div class="row justify-end q-mt-lg">
           <q-btn

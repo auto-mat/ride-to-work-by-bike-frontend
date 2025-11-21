@@ -92,7 +92,7 @@ export default defineComponent({
       class="q-mt-sm"
       id="form-vat-id"
       name="vat-id"
-      data-cy="form-vat-id-input"
+      data-cy="form-business-id-input"
     />
   </div>
 </template>
