@@ -4024,6 +4024,8 @@ Cypress.Commands.add('setupCompanyCoordinatorTest', (config, i18n) => {
     config,
     'apiGetCoordinatorInvoicesResponse.json',
   );
+  // competition API
+  cy.interceptCompetitionGetApi(config, 'apiGetCompetitionResponse.json');
   // login and navigate to coordinator fees page
   cy.performAuthenticatedLogin(config, i18n);
 });
