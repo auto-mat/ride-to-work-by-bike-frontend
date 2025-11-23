@@ -78,9 +78,6 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
-    const dateFormat = 'DD. MM. YYYY';
-    const qDateFormat = 'YYYY/MM/DD';
-
     /**
      * Cached boundary dates as Date objects
      * Computed once and reused for all validations
@@ -115,14 +112,26 @@ export default defineComponent({
     };
 
     /**
+     * Parse date string from QInput to Date object
+     * The QDate component uses the same mask as QInput, so both use the same format
+     * @param dateStr - Date string from v-model
+     * @returns Date object or null
+     */
+    const parseDateString = (dateStr: string): Date | null => {
+      if (!dateStr) return null;
+      // QDate handles parsing based on its mask prop, we get the formatted string back
+      // Since both QInput and QDate use the same mask, we can parse consistently
+      // The mask is 'DD. MM. YYYY' so we extract with that format
+      return date.extractDate(dateStr, 'DD. MM. YYYY');
+    };
+
+    /**
      * Check if date string is within allowed range (for QInput validation)
-     * @param dateStr - Date string in DD. MM. YYYY format
+     * @param dateStr - Date string from QInput/QDate v-model
      * @returns true if date is within range or no range is set
      */
     const isDateInRange = (dateStr: string): boolean => {
-      if (!dateStr) return false;
-      // Don't use date.isValid() on the string - it uses Date.parse() which doesn't recognize our format
-      const dateObj = date.extractDate(dateStr, dateFormat);
+      const dateObj = parseDateString(dateStr);
       if (!dateObj) return false;
       return checkDateInRange(dateObj);
     };
@@ -130,12 +139,13 @@ export default defineComponent({
     /**
      * Options function for QDate component
      * Limits selectable dates to the specified range
-     * @param dateStr - Date string in YYYY/MM/DD format (QDate format)
+     * @param dateStr - Date string in YYYY/MM/DD format (internal QDate format)
      * @returns true if date is selectable
      */
     const dateOptions = (dateStr: string): boolean => {
       if (!props.minDate && !props.maxDate) return true;
-      const dateObj = date.extractDate(dateStr, qDateFormat);
+      // QDate passes dates in YYYY/MM/DD format to the options function
+      const dateObj = date.extractDate(dateStr, 'YYYY/MM/DD');
       if (!dateObj) return true;
       return checkDateInRange(dateObj);
     };

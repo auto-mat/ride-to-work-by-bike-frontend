@@ -60,6 +60,9 @@ export default defineComponent({
     const challengeStart = ref<string>('');
     const challengeStop = ref<string>('');
 
+    const minDate = ''; // TODO: Add source of date
+    const maxDate = ''; // TODO: Add source of date
+
     const iconSize = '18px';
 
     // load commute modes when component mounts and set default eco modes
@@ -88,6 +91,8 @@ export default defineComponent({
       challengeStop,
       commuteModes,
       iconSize,
+      minDate,
+      maxDate,
       getRouteIcon,
       getTransportLabel,
       CompetitionType,
