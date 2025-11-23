@@ -164,6 +164,8 @@ apiTripsThirdPartyAppIdNaKolePrahou = "3"
 
 # DATE TIME FORMATS
 
+dateFormatCentralEuropean = 'DD. MM. YYYY'
+dateFormatInternalQuasar = 'YYYY/MM/DD'
 dateTimeFormatsAllLocales = '''
 {
   "numeric": {

@@ -77,33 +77,24 @@ export default defineComponent({
     });
 
     const { isFilled } = useValidation();
+    const dateFormatInputMask = 'DD. MM. YYYY';
 
-    /**
-     * Cached boundary dates as Date objects
-     * Computed once and reused for all validations
-     */
     const minDateObj = computed(() =>
       props.minDate ? new Date(props.minDate) : null,
     );
-
-    const maxDateObj = computed(() => {
-      if (!props.maxDate) return null;
-      const dateObj = new Date(props.maxDate);
-      // Set to end of day (23:59:59.999) to make boundary truly inclusive
-      return date.endOfDate(dateObj, 'day');
-    });
+    const maxDateObj = computed(() =>
+      props.maxDate ? date.endOfDate(new Date(props.maxDate), 'day') : null,
+    );
 
     /**
      * Check if a date object is within the allowed range
      * @param dateObj - Date object to check
      * @returns true if date is within range or no range is set
+     *          false if no dateObj is provided
      */
     const checkDateInRange = (dateObj: Date | null): boolean => {
       if (!dateObj) return false;
-      if (!minDateObj.value && !maxDateObj.value) return true;
       if (!minDateObj.value || !maxDateObj.value) return true;
-
-      // Use Quasar's isBetweenDates like challenge.ts does
       return date.isBetweenDates(dateObj, minDateObj.value, maxDateObj.value, {
         inclusiveFrom: true,
         inclusiveTo: true,
@@ -112,41 +103,25 @@ export default defineComponent({
     };
 
     /**
-     * Parse date string from QInput to Date object
-     * The QDate component uses the same mask as QInput, so both use the same format
-     * @param dateStr - Date string from v-model
-     * @returns Date object or null
-     */
-    const parseDateString = (dateStr: string): Date | null => {
-      if (!dateStr) return null;
-      // QDate handles parsing based on its mask prop, we get the formatted string back
-      // Since both QInput and QDate use the same mask, we can parse consistently
-      // The mask is 'DD. MM. YYYY' so we extract with that format
-      return date.extractDate(dateStr, 'DD. MM. YYYY');
-    };
-
-    /**
-     * Check if date string is within allowed range (for QInput validation)
-     * @param dateStr - Date string from QInput/QDate v-model
+     * Validation function for QInput connected to QDate
+     * @param dateStr - Date string as DD. MM. YYYY (input mask format)
      * @returns true if date is within range or no range is set
+     *          false if date is out of range or invalid
      */
     const isDateInRange = (dateStr: string): boolean => {
-      const dateObj = parseDateString(dateStr);
-      if (!dateObj) return false;
+      const dateObj = date.extractDate(dateStr, dateFormatInputMask);
       return checkDateInRange(dateObj);
     };
 
     /**
      * Options function for QDate component
-     * Limits selectable dates to the specified range
-     * @param dateStr - Date string in YYYY/MM/DD format (internal QDate format)
+     * Limits selectable dates to given range
+     * @param dateStr - Date string as YYYY/MM/DD (internal QDate format)
      * @returns true if date is selectable
+     *          false if date is out of range
      */
     const dateOptions = (dateStr: string): boolean => {
-      if (!props.minDate && !props.maxDate) return true;
-      // QDate passes dates in YYYY/MM/DD format to the options function
       const dateObj = date.extractDate(dateStr, 'YYYY/MM/DD');
-      if (!dateObj) return true;
       return checkDateInRange(dateObj);
     };
 
@@ -159,7 +134,7 @@ export default defineComponent({
     );
 
     const maxDateFormatted = computed(() =>
-      props.maxDate ? i18n.global.d(new Date(props.maxDate), 'numeric') : '',
+      maxDateObj.value ? i18n.global.d(maxDateObj.value, 'numeric') : '',
     );
 
     return {
@@ -167,6 +142,7 @@ export default defineComponent({
       isFilled,
       isDateInRange,
       dateOptions,
+      dateFormatInputMask,
       minDateFormatted,
       maxDateFormatted,
     };
@@ -226,7 +202,7 @@ export default defineComponent({
               dense
               minimal
               outlined
-              mask="DD. MM. YYYY"
+              :mask="dateFormatInputMask"
               v-model="inputValue"
               color="primary"
               :options="dateOptions"

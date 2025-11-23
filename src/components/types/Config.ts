@@ -18,6 +18,8 @@ export interface ConfigGlobal {
   title: string;
   subtitle: string;
   dataReportIframeHeight: string;
+  dateFormatCentralEuropean: string;
+  dateFormatInternalQuasar: string;
   borderRadiusCard: string;
   borderRadiusCardSmall: string;
   borderRadiusButtonSmall: string;
