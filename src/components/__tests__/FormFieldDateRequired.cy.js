@@ -63,13 +63,19 @@ function coreTests() {
         }),
       );
   });
+
+  it('allows any date input when no range is set', () => {
+    cy.dataCy('form-field-date').find('input').clear();
+    cy.dataCy('form-field-date').find('input').type('15. 08. 2024');
+    cy.dataCy('form-field-date').find('input').blur();
+    cy.dataCy('form-field-date').find('.q-field__messages').should('not.exist');
+  });
 }
 
-describe('<FormFieldDateRequired> with date range', () => {
-  const minDate = '2024-05-01'; // ISO format from API
-  const maxDate = '2024-05-31'; // ISO format from API
-
-  // Format dates for display using i18n numeric format
+describe('<FormFieldDateRequired> with limited date range', () => {
+  const minDate = '2024-05-01';
+  const maxDate = '2024-05-31';
+  // formatted dates for display in error message
   const minDateFormatted = i18n.global.d(new Date(minDate), 'numeric');
   const maxDateFormatted = i18n.global.d(new Date(maxDate), 'numeric');
 
@@ -111,7 +117,7 @@ describe('<FormFieldDateRequired> with date range', () => {
 
   function dateRangeTests() {
     it('shows validation error for date outside range', () => {
-      // Type a date before minDate
+      // date before minDate
       cy.dataCy('form-field-date').find('input').clear();
       cy.dataCy('form-field-date').find('input').type('30. 04. 2024');
       cy.dataCy('form-field-date').find('input').blur();
@@ -124,8 +130,7 @@ describe('<FormFieldDateRequired> with date range', () => {
             maxDate: maxDateFormatted,
           }),
         );
-
-      // Type a date after maxDate
+      // date after maxDate
       cy.dataCy('form-field-date').find('input').clear();
       cy.dataCy('form-field-date').find('input').type('01. 06. 2024');
       cy.dataCy('form-field-date').find('input').blur();
@@ -141,7 +146,7 @@ describe('<FormFieldDateRequired> with date range', () => {
     });
 
     it('accepts date within range', () => {
-      // Type a date within range
+      // date within range
       cy.dataCy('form-field-date').find('input').clear();
       cy.dataCy('form-field-date').find('input').type('15. 05. 2024');
       cy.dataCy('form-field-date').find('input').blur();
@@ -151,15 +156,14 @@ describe('<FormFieldDateRequired> with date range', () => {
     });
 
     it('accepts min and max boundary dates', () => {
-      // Test minDate boundary
+      // minDate boundary
       cy.dataCy('form-field-date').find('input').clear();
       cy.dataCy('form-field-date').find('input').type('01. 05. 2024');
       cy.dataCy('form-field-date').find('input').blur();
       cy.dataCy('form-field-date')
         .find('.q-field__messages')
         .should('not.exist');
-
-      // Test maxDate boundary
+      // maxDate boundary
       cy.dataCy('form-field-date').find('input').clear();
       cy.dataCy('form-field-date').find('input').type('31. 05. 2024');
       cy.dataCy('form-field-date').find('input').blur();

@@ -173,16 +173,12 @@ export default defineComponent({
           $t('form.messageFieldRequired', {
             fieldName: labelShort ? $t(labelShort) : $t(label),
           }),
-        ...(minDate || maxDate
-          ? [
-              (val) =>
-                isDateInRange(val) ||
-                $t('form.messageFieldDateOutOfRange', {
-                  minDate: minDateFormatted,
-                  maxDate: maxDateFormatted,
-                }),
-            ]
-          : []),
+        (val) =>
+          isDateInRange(val) ||
+          $t('form.messageFieldDateOutOfRange', {
+            minDate: minDateFormatted,
+            maxDate: maxDateFormatted,
+          }),
       ]"
       :bg-color="bgColor"
       class="q-mt-sm"
