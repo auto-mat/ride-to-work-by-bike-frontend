@@ -28,8 +28,10 @@
 
 // libraries
 import { computed, defineComponent } from 'vue';
+import { date } from 'quasar';
 
 // composables
+import { i18n } from 'src/boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
 export default defineComponent({
@@ -54,6 +56,14 @@ export default defineComponent({
     labelShort: {
       type: String,
     },
+    minDate: {
+      type: String,
+      default: '',
+    },
+    maxDate: {
+      type: String,
+      default: '',
+    },
   },
   emits: ['update:modelValue'],
   setup: (props, { emit }) => {
@@ -68,9 +78,87 @@ export default defineComponent({
 
     const { isFilled } = useValidation();
 
+    const dateFormat = 'DD. MM. YYYY';
+    const qDateFormat = 'YYYY/MM/DD';
+
+    /**
+     * Cached boundary dates as Date objects
+     * Computed once and reused for all validations
+     */
+    const minDateObj = computed(() =>
+      props.minDate ? new Date(props.minDate) : null,
+    );
+
+    const maxDateObj = computed(() => {
+      if (!props.maxDate) return null;
+      const dateObj = new Date(props.maxDate);
+      // Set to end of day (23:59:59.999) to make boundary truly inclusive
+      return date.endOfDate(dateObj, 'day');
+    });
+
+    /**
+     * Check if a date object is within the allowed range
+     * @param dateObj - Date object to check
+     * @returns true if date is within range or no range is set
+     */
+    const checkDateInRange = (dateObj: Date | null): boolean => {
+      if (!dateObj) return false;
+      if (!minDateObj.value && !maxDateObj.value) return true;
+      if (!minDateObj.value || !maxDateObj.value) return true;
+
+      // Use Quasar's isBetweenDates like challenge.ts does
+      return date.isBetweenDates(dateObj, minDateObj.value, maxDateObj.value, {
+        inclusiveFrom: true,
+        inclusiveTo: true,
+        onlyDate: true,
+      });
+    };
+
+    /**
+     * Check if date string is within allowed range (for QInput validation)
+     * @param dateStr - Date string in DD. MM. YYYY format
+     * @returns true if date is within range or no range is set
+     */
+    const isDateInRange = (dateStr: string): boolean => {
+      if (!dateStr) return false;
+      // Don't use date.isValid() on the string - it uses Date.parse() which doesn't recognize our format
+      const dateObj = date.extractDate(dateStr, dateFormat);
+      if (!dateObj) return false;
+      return checkDateInRange(dateObj);
+    };
+
+    /**
+     * Options function for QDate component
+     * Limits selectable dates to the specified range
+     * @param dateStr - Date string in YYYY/MM/DD format (QDate format)
+     * @returns true if date is selectable
+     */
+    const dateOptions = (dateStr: string): boolean => {
+      if (!props.minDate && !props.maxDate) return true;
+      const dateObj = date.extractDate(dateStr, qDateFormat);
+      if (!dateObj) return true;
+      return checkDateInRange(dateObj);
+    };
+
+    /**
+     * Formatted dates for display in error messages
+     * Uses i18n 'numeric' format from dateTimeFormatsAllLocales config
+     */
+    const minDateFormatted = computed(() =>
+      minDateObj.value ? i18n.global.d(minDateObj.value, 'numeric') : '',
+    );
+
+    const maxDateFormatted = computed(() =>
+      props.maxDate ? i18n.global.d(new Date(props.maxDate), 'numeric') : '',
+    );
+
     return {
       inputValue,
       isFilled,
+      isDateInRange,
+      dateOptions,
+      minDateFormatted,
+      maxDateFormatted,
     };
   },
 });
@@ -99,6 +187,16 @@ export default defineComponent({
           $t('form.messageFieldRequired', {
             fieldName: labelShort ? $t(labelShort) : $t(label),
           }),
+        ...(minDate || maxDate
+          ? [
+              (val) =>
+                isDateInRange(val) ||
+                $t('form.messageFieldDateOutOfRange', {
+                  minDate: minDateFormatted,
+                  maxDate: maxDateFormatted,
+                }),
+            ]
+          : []),
       ]"
       :bg-color="bgColor"
       class="q-mt-sm"
@@ -121,6 +219,7 @@ export default defineComponent({
               mask="DD. MM. YYYY"
               v-model="inputValue"
               color="primary"
+              :options="dateOptions"
               data-cy="form-date-picker"
             />
           </q-popup-proxy>

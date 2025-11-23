@@ -35,10 +35,7 @@ import { useTripsStore } from '../../stores/trips';
 
 // enums
 import { TransportType } from '../types/Route';
-
-// types
-type ChallengeType = 'regularity' | 'performance';
-type ChallengeParticipants = 'individuals' | 'teams' | 'subsidiaries';
+import { CompetitorType, CompetitionType } from '../enums/Challenge';
 
 export default defineComponent({
   name: 'FormCompanyChallenge',
@@ -49,8 +46,10 @@ export default defineComponent({
   setup() {
     const tripsStore = useTripsStore();
     const { getRouteIcon, getTransportLabel } = useRoutes();
-    const challengeType = ref<ChallengeType>('regularity');
-    const challengeParticipants = ref<ChallengeParticipants>('individuals');
+    const challengeType = ref<CompetitionType>(CompetitionType.frequency);
+    const challengeParticipants = ref<CompetitorType>(
+      CompetitorType.singleUser,
+    );
     const challengeTransportType = ref<TransportType[]>([
       TransportType.bike,
       TransportType.walk,
@@ -91,6 +90,8 @@ export default defineComponent({
       iconSize,
       getRouteIcon,
       getTransportLabel,
+      CompetitionType,
+      CompetitorType,
     };
   },
 });
@@ -104,17 +105,17 @@ export default defineComponent({
         {{ $t('form.labelChallengeType') }}
       </legend>
       <div class="q-gutter-sm">
-        <!-- Regularity -->
+        <!-- Frequency -->
         <q-radio
           v-model="challengeType"
-          val="regularity"
+          :val="CompetitionType.frequency"
           :label="$t('form.labelChallengeTypeRegularity')"
           data-cy="form-challenge-type-regularity"
         />
-        <!-- Performance -->
+        <!-- Length -->
         <q-radio
           v-model="challengeType"
-          val="performance"
+          :val="CompetitionType.length"
           :label="$t('form.labelChallengeTypePerformance')"
           data-cy="form-challenge-type-performance"
         />
@@ -132,7 +133,7 @@ export default defineComponent({
         <!-- Individuals -->
         <q-radio
           v-model="challengeParticipants"
-          val="individuals"
+          :val="CompetitorType.singleUser"
           data-cy="form-participants-individuals"
         >
           <q-icon name="person" class="q-mr-xs text-grey-6" :size="iconSize" />
@@ -141,7 +142,7 @@ export default defineComponent({
         <!-- Teams -->
         <q-radio
           v-model="challengeParticipants"
-          val="teams"
+          :val="CompetitorType.team"
           data-cy="form-participants-teams"
         >
           <q-icon name="people" class="q-mr-xs text-grey-6" :size="iconSize" />
@@ -150,7 +151,7 @@ export default defineComponent({
         <!-- Subsidiaries -->
         <q-radio
           v-model="challengeParticipants"
-          val="subsidiaries"
+          :val="CompetitorType.subsidiary"
           data-cy="form-participants-subsidiaries"
         >
           <q-icon
@@ -243,6 +244,8 @@ export default defineComponent({
             v-model="challengeStart"
             name="date-start"
             label="form.labelChallengeStart"
+            :min-date="minDate"
+            :max-date="maxDate"
             data-cy="form-challenge-start"
           />
         </div>
@@ -252,6 +255,8 @@ export default defineComponent({
             v-model="challengeStop"
             name="date-stop"
             label="form.labelChallengeStop"
+            :min-date="minDate"
+            :max-date="maxDate"
             data-cy="form-challenge-stop"
           />
         </div>

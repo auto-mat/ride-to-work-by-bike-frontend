@@ -16,6 +16,7 @@ export enum PriceLevelCategory {
 export enum CompetitorType {
   team = 'team',
   singleUser = 'single_user',
+  subsidiary = 'subsidiary',
 }
 
 export enum CompetitionType {
