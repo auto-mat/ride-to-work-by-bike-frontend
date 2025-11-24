@@ -20,7 +20,9 @@ import {
   AttendanceTableColumns,
   InvoicesTableColumns,
   BoxesTableColumns,
+  CompanyChallengeTableColumns,
 } from '../components/types/Table';
+import { CompetitionType, CompetitorType } from '../components/enums/Challenge';
 
 type FilterMethodInput = { search: string; filter: string };
 
@@ -697,5 +699,111 @@ export const useTableBoxes = () => {
   return {
     columns: tableBoxesColumns,
     visibleColumns: tableBoxesVisibleColumns,
+  };
+};
+
+/**
+ * Get translated label for CompetitionType
+ */
+const getCompetitionTypeLabel = (type: CompetitionType | null): string => {
+  if (!type) return '';
+  switch (type) {
+    case CompetitionType.frequency:
+      return i18n.global.t('table.labelCompetitionTypeFrequency');
+    case CompetitionType.length:
+      return i18n.global.t('table.labelCompetitionTypeLength');
+    default:
+      return '';
+  }
+};
+
+/**
+ * Get translated label for CompetitorType
+ */
+const getCompetitorTypeLabel = (type: CompetitorType | null): string => {
+  if (!type) return '';
+  switch (type) {
+    case CompetitorType.team:
+      return i18n.global.t('table.labelCompetitorTypeTeam');
+    case CompetitorType.singleUser:
+      return i18n.global.t('table.labelCompetitorTypeSingleUser');
+    default:
+      return '';
+  }
+};
+
+export const useTableCompanyChallenge = () => {
+  const tableCompanyChallengeColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.name,
+      format: (val: number | string | null): string => (val ? `${val}` : ''),
+      label: i18n.global.t('table.labelChallengeName'),
+      name: CompanyChallengeTableColumns.name,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.startDate,
+      format: (val: number | string | null): string =>
+        val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
+      label: i18n.global.t('table.labelStartDate'),
+      name: CompanyChallengeTableColumns.startDate,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.endDate,
+      format: (val: number | string | null): string =>
+        val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
+      label: i18n.global.t('table.labelEndDate'),
+      name: CompanyChallengeTableColumns.endDate,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.competitionType,
+      format: (val: CompetitionType | null): string =>
+        getCompetitionTypeLabel(val),
+      label: i18n.global.t('table.labelCompetitionType'),
+      name: CompanyChallengeTableColumns.competitionType,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.competitorType,
+      format: (val: CompetitorType | null): string =>
+        getCompetitorTypeLabel(val),
+      label: i18n.global.t('table.labelCompetitorType'),
+      name: CompanyChallengeTableColumns.competitorType,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: CompanyChallengeTableColumns.transportTypes,
+      label: i18n.global.t('table.labelTransportTypes'),
+      name: CompanyChallengeTableColumns.transportTypes,
+      required: true,
+      sortable: false,
+    },
+  ];
+
+  const tableCompanyChallengeVisibleColumns: string[] = [
+    CompanyChallengeTableColumns.name,
+    CompanyChallengeTableColumns.startDate,
+    CompanyChallengeTableColumns.endDate,
+    CompanyChallengeTableColumns.competitionType,
+    CompanyChallengeTableColumns.competitorType,
+    CompanyChallengeTableColumns.transportTypes,
+  ];
+
+  return {
+    columns: tableCompanyChallengeColumns,
+    visibleColumns: tableCompanyChallengeVisibleColumns,
   };
 };

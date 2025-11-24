@@ -96,3 +96,12 @@ export enum BoxesTableColumns {
   lastModified = 'lastModified',
   address = 'address',
 }
+
+export enum CompanyChallengeTableColumns {
+  name = 'name',
+  startDate = 'startDate',
+  endDate = 'endDate',
+  competitionType = 'competitionType',
+  competitorType = 'competitorType',
+  transportTypes = 'transportTypes',
+}

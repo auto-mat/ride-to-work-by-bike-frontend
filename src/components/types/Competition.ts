@@ -1,5 +1,6 @@
 // enums
 import { CompetitorType, CompetitionType } from '../enums/Challenge';
+import { TransportType } from './Route';
 
 export interface Competition {
   results: string;
@@ -10,6 +11,9 @@ export interface Competition {
   competition_type: CompetitionType;
   url: string | null;
   priority: number;
+  start_date: string;
+  end_date: string;
+  allowed_transport_types: TransportType[];
 }
 
 export interface CompetitionResponse {
