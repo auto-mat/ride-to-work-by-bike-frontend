@@ -296,6 +296,11 @@ apiMessageError = "Vytvorenie organizácie zlyhalo."
 apiMessageErrorWithMessage = "Vytvorenie organizácie zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Organizácia bola úspešně vytvorená."
 
+[createCompetition]
+apiMessageError = "Vytvorenie firemnej výzvy zlyhalo."
+apiMessageErrorWithMessage = "Vytvorenie firemnej výzvy zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Firemná výzva bola úspešne vytvorená."
+
 [getOrganizations]
 apiMessageError = "Načítanie organizácií zlyhalo."
 apiMessageErrorWithMessage = "Načítanie organizácií zlyhalo. Chyba: {error}"

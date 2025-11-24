@@ -296,6 +296,11 @@ apiMessageError = "Organization creation failed."
 apiMessageErrorWithMessage = "Organization creation failed. Error: {error}"
 apiMessageSuccess = "Organization was successfully created."
 
+[createCompetition]
+apiMessageError = "Company challenge creation failed."
+apiMessageErrorWithMessage = "Company challenge creation failed. Error: {error}"
+apiMessageSuccess = "Company challenge was successfully created."
+
 [getOrganizations]
 apiMessageError = "Organizations fetching failed."
 apiMessageErrorWithMessage = "Organizations fetching failed. Error: {error}"

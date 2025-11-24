@@ -296,6 +296,11 @@ apiMessageError = "Vytvoření organizace selhalo."
 apiMessageErrorWithMessage = "Vytvoření organizace selhalo. Chyba: {error}"
 apiMessageSuccess = "Organizace byla úspěšně vytvořena."
 
+[createCompetition]
+apiMessageError = "Vytvoření firemní výzvy selhalo."
+apiMessageErrorWithMessage = "Vytvoření firemní výzvy selhalo. Chyba: {error}"
+apiMessageSuccess = "Firemní výzva byla úspěšně vytvořena."
+
 [getOrganizations]
 apiMessageError = "Načítání organizací selhalo."
 apiMessageErrorWithMessage = "Načítání organizací selhalo. Chyba: {error}"
