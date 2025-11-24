@@ -35,7 +35,9 @@ function transformCompetitionToRow(
     endDate: competition.date_to,
     competitionType: competition.competition_type,
     competitorType: competition.competitor_type,
-    transportTypes: competition.commute_modes.map((mode) => mode.slug),
+    transportTypes: competition.commute_modes
+      ? competition.commute_modes.map((mode) => mode.slug)
+      : [],
   };
 }
 
