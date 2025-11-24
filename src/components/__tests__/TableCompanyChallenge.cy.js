@@ -44,7 +44,7 @@ describe('<TableCompanyChallenge>', () => {
       cy.viewport('macbook-16');
     });
 
-    it.only('loads data from store and displays the table', () => {
+    it('loads data from store and displays the table', () => {
       cy.wrap(useAdminCompetitionStore()).then((adminCompetitionStore) => {
         adminCompetitionStore.setCompetitions(testData.storeData);
       });
