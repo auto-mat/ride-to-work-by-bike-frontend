@@ -120,11 +120,11 @@ describe('<TableCompanyChallenge>', () => {
                 () => {
                   cy.get('.q-icon').should(
                     'have.length',
-                    competition.allowed_transport_types.length,
+                    competition.commute_modes.length,
                   );
                   // loop through icons
-                  competition.allowed_transport_types.forEach(
-                    (transportType, iconIndex) => {
+                  competition.commute_modes.forEach(
+                    (commuteMode, iconIndex) => {
                       cy.get('.q-icon')
                         .eq(iconIndex)
                         .should('be.visible')

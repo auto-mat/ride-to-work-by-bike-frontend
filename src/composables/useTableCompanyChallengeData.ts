@@ -11,7 +11,6 @@ import {
   CompetitionType,
   CompetitorType,
 } from 'src/components/enums/Challenge';
-import { TransportType } from 'src/components/types/Route';
 
 export interface TableCompanyChallengeRow {
   name: string;
@@ -19,7 +18,7 @@ export interface TableCompanyChallengeRow {
   endDate: string;
   competitionType: CompetitionType;
   competitorType: CompetitorType;
-  transportTypes: TransportType[];
+  transportTypes: string[];
 }
 
 /**
@@ -36,7 +35,7 @@ function transformCompetitionToRow(
     endDate: competition.date_to,
     competitionType: competition.competition_type,
     competitorType: competition.competitor_type,
-    transportTypes: competition.allowed_transport_types,
+    transportTypes: competition.commute_modes.map((mode) => mode.slug),
   };
 }
 

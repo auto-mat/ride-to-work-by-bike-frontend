@@ -11,7 +11,20 @@
       "priority": 1,
       "date_from": "2025-09-01",
       "date_to": "2025-09-30",
-      "allowed_transport_types": ["bicycle", "by_foot"]
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        }
+      ]
     },
     {
       "results": "http://example.com/results/2",
@@ -24,7 +37,26 @@
       "priority": 2,
       "date_from": "2025-10-01",
       "date_to": "2025-10-31",
-      "allowed_transport_types": ["bicycle", "by_foot", "hromadna"]
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        },
+        {
+          "id": 4,
+          "name_cs": "Hromadná doprava",
+          "name_en": "Public transport",
+          "slug": "hromadna"
+        }
+      ]
     },
     {
       "results": "http://example.com/results/3",
@@ -37,7 +69,14 @@
       "priority": 3,
       "date_from": "2025-11-01",
       "date_to": "2025-11-30",
-      "allowed_transport_types": ["bicycle"]
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        }
+      ]
     }
   ]
 }
