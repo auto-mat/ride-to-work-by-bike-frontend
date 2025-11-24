@@ -11,8 +11,8 @@ export interface Competition {
   competition_type: CompetitionType;
   url: string | null;
   priority: number;
-  start_date: string;
-  end_date: string;
+  date_from: string;
+  date_to: string;
   allowed_transport_types: TransportType[];
 }
 

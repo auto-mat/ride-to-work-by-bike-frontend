@@ -9,8 +9,8 @@
       "competition_type": "frequency",
       "url": "http://example.com/competition/1",
       "priority": 1,
-      "start_date": "2025-09-01",
-      "end_date": "2025-09-30",
+      "date_from": "2025-09-01",
+      "date_to": "2025-09-30",
       "allowed_transport_types": ["bicycle", "by_foot"]
     },
     {
@@ -22,8 +22,8 @@
       "competition_type": "length",
       "url": null,
       "priority": 2,
-      "start_date": "2025-10-01",
-      "end_date": "2025-10-31",
+      "date_from": "2025-10-01",
+      "date_to": "2025-10-31",
       "allowed_transport_types": ["bicycle", "by_foot", "hromadna"]
     },
     {
@@ -35,8 +35,8 @@
       "competition_type": "length",
       "url": "http://example.com/competition/3",
       "priority": 3,
-      "start_date": "2025-11-01",
-      "end_date": "2025-11-30",
+      "date_from": "2025-11-01",
+      "date_to": "2025-11-30",
       "allowed_transport_types": ["bicycle"]
     }
   ]

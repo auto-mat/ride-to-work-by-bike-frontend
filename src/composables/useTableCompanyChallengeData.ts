@@ -32,8 +32,8 @@ function transformCompetitionToRow(
 ): TableCompanyChallengeRow {
   return {
     name: competition.name,
-    startDate: competition.start_date,
-    endDate: competition.end_date,
+    startDate: competition.date_from,
+    endDate: competition.date_to,
     competitionType: competition.competition_type,
     competitorType: competition.competitor_type,
     transportTypes: competition.allowed_transport_types,

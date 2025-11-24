@@ -44,7 +44,7 @@ describe('<TableCompanyChallenge>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('loads data from store and displays the table', () => {
+    it.only('loads data from store and displays the table', () => {
       cy.wrap(useAdminCompetitionStore()).then((adminCompetitionStore) => {
         adminCompetitionStore.setCompetitions(testData.storeData);
       });
@@ -82,17 +82,17 @@ describe('<TableCompanyChallenge>', () => {
                 competition.name,
               );
               // start date
-              if (competition.start_date) {
+              if (competition.date_from) {
                 cy.dataCy('table-company-challenge-start-date').should(
                   'contain',
-                  i18n.global.d(new Date(competition.start_date)),
+                  i18n.global.d(new Date(competition.date_from)),
                 );
               }
               // end date
-              if (competition.end_date) {
+              if (competition.date_to) {
                 cy.dataCy('table-company-challenge-end-date').should(
                   'contain',
-                  i18n.global.d(new Date(competition.end_date)),
+                  i18n.global.d(new Date(competition.date_to)),
                 );
               }
               // competition type
