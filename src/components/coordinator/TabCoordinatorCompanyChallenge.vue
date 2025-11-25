@@ -12,7 +12,7 @@
  * @example
  * <tab-coordinator-company-challenge />
  *
- * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-105324&t=y4MHmNsiRHIiDmVe-1)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-105355&t=S3zaCcFdhkmkXEey-1)
  */
 
 // libraries
