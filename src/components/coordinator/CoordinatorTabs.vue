@@ -21,6 +21,7 @@ import { defineComponent, ref } from 'vue';
 // components
 import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
 import TabCoordinatorBoxes from './TabCoordinatorBoxes.vue';
+import TabCoordinatorCompanyChallenge from './TabCoordinatorCompanyChallenge.vue';
 import TabCoordinatorFeeApproval from './TabCoordinatorFeeApproval.vue';
 import TabCoordinatorInvoices from './TabCoordinatorInvoices.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
@@ -44,6 +45,7 @@ export default defineComponent({
   components: {
     TabCoordinatorAttendance,
     TabCoordinatorBoxes,
+    TabCoordinatorCompanyChallenge,
     TabCoordinatorFeeApproval,
     TabCoordinatorInvoices,
     TaskListCoordinator,
@@ -160,7 +162,9 @@ export default defineComponent({
         :name="tabsCoordinator.challenges"
         data-cy="coordinator-tabs-panel-challenges"
       >
-        <!-- TODO: add content -->
+        <tab-coordinator-company-challenge
+          data-cy="tab-coordinator-company-challenge"
+        />
       </q-tab-panel>
       <!-- Panel: Results -->
       <q-tab-panel
