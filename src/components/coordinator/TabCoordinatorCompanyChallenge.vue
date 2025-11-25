@@ -67,7 +67,7 @@ export default defineComponent({
 
     const isCompanyChallengePhaseActive = computed<boolean>(() => {
       const challengeStore = useChallengeStore();
-      return challengeStore.getIsChallengeInPhase(PhaseType.competition);
+      return challengeStore.getIsChallengeInPhase(PhaseType.registration);
     });
 
     return {

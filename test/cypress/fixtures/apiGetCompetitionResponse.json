@@ -4,34 +4,82 @@
   "previous": null,
   "results": [
     {
-      "results": "#",
-      "id": 1899,
-      "name": "Cyklozaměstnavatel roku 2024",
-      "slug": "cyklozamestnavatel-roku-2024",
+      "results": "http://example.com/results/1",
+      "id": 1,
+      "name": "Vaše pravidelnost uvnitř firmy",
+      "slug": "vase-pravidelnost-uvnitr-firmy",
       "competitor_type": "single_user",
-      "competition_type": "questionnaire",
-      "url": "https://www.dopracenakole.cz/podrobna_pravidla_2017#cyklozamestnavatel",
-      "priority": 0
-    },
-    {
-      "results": "#",
-      "id": 1751,
-      "name": "Pravidelnost",
-      "slug": "pravidelnost123",
-      "competitor_type": "team",
       "competition_type": "frequency",
-      "url": null,
-      "priority": 0
+      "url": "http://example.com/competition/1",
+      "priority": 1,
+      "date_from": "2025-09-01",
+      "date_to": "2025-09-30",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        }
+      ]
     },
     {
-      "results": "#",
-      "id": 1752,
-      "name": "Výkonnost",
-      "slug": "vykonnost123",
-      "competitor_type": "single_user",
+      "results": "http://example.com/results/2",
+      "id": 2,
+      "name": "Týmová výzva",
+      "slug": "tymova-vyzva",
+      "competitor_type": "team",
       "competition_type": "length",
       "url": null,
-      "priority": 0
+      "priority": 2,
+      "date_from": "2025-10-01",
+      "date_to": "2025-10-31",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        },
+        {
+          "id": 4,
+          "name_cs": "Hromadná doprava",
+          "name_en": "Public transport",
+          "slug": "hromadna"
+        }
+      ]
+    },
+    {
+      "results": "http://example.com/results/3",
+      "id": 3,
+      "name": "Individuální vzdálenostní výzva",
+      "slug": "individualni-vzdalenostni-vyzva",
+      "competitor_type": "single_user",
+      "competition_type": "length",
+      "url": "http://example.com/competition/3",
+      "priority": 3,
+      "date_from": "2025-11-01",
+      "date_to": "2025-11-30",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        }
+      ]
     }
   ]
 }
