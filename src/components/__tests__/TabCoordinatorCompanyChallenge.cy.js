@@ -2,7 +2,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import TabCoordinatorCompanyChallenge from 'components/coordinator/TabCoordinatorCompanyChallenge.vue';
 import { i18n } from '../../boot/i18n';
 import { useChallengeStore } from '../../stores/challenge';
-import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
+import { systemTimeRegistrationPhaseActive } from '../../../test/cypress/support/commonTests';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // variables
@@ -27,7 +27,7 @@ describe('<TabCoordinatorCompanyChallenge>', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       cy.interceptCommuteModeGetApi(rideToWorkByBikeConfig, i18n);
-      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
         cy.mount(TabCoordinatorCompanyChallenge, {
           props: {},
         });
@@ -42,7 +42,7 @@ describe('<TabCoordinatorCompanyChallenge>', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
       cy.interceptCommuteModeGetApi(rideToWorkByBikeConfig, i18n);
-      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+      cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
         cy.mount(TabCoordinatorCompanyChallenge, {
           props: {},
         });
@@ -103,7 +103,6 @@ function coreTests() {
       .within(() => {
         // dialog header
         cy.dataCy('dialog-header')
-          .find('h3')
           .should('be.visible')
           .and(
             'contain',
