@@ -4802,9 +4802,9 @@ ol-contextmenu@^5.4.0, ol-contextmenu@^5.5.0:
     tiny-emitter "^2.1.0"
 
 ol-ext@^4.0.21, ol-ext@^4.0.24:
-  version "4.0.36"
-  resolved "https://registry.yarnpkg.com/ol-ext/-/ol-ext-4.0.36.tgz#04a8fffddfc4ba0d395ed9852c7b659f854e0c31"
-  integrity sha512-CyOk2PmCpY4xjKNeFahEmYCeWugs1LYiU/msXwGN8mYN/uT9TP//ZxyuBUskUzzfI3S0nw6/ONG3a34ZTWCi1w==
+  version "4.0.37"
+  resolved "https://registry.yarnpkg.com/ol-ext/-/ol-ext-4.0.37.tgz#8da5c4097322e56f99b45537ca353c242d1c9b88"
+  integrity sha512-RxzdgMWnNBDP9VZCza3oS3rl1+OCl+1SJLMjt7ATyDDLZl/zzrsQELfJ25WAL6HIWgjkQ2vYDh3nnHFupxOH4w==
 
 ol@^10.0.0, ol@^10.2.1:
   version "10.7.0"
