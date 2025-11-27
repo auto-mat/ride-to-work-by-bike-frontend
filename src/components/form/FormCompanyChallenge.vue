@@ -21,7 +21,7 @@
  */
 
 // libraries
-import { computed, defineComponent, ref, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // components
 import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
@@ -31,10 +31,10 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import { useRoutes } from '../../composables/useRoutes';
 
 // stores
+import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
 import { useTripsStore } from '../../stores/trips';
 
 // enums
-import { TransportType } from '../types/Route';
 import { CompetitorType, CompetitionType } from '../enums/Challenge';
 
 export default defineComponent({
@@ -44,36 +44,82 @@ export default defineComponent({
     FormFieldTextRequired,
   },
   setup() {
+    const adminCompetitionStore = useAdminCompetitionStore();
     const tripsStore = useTripsStore();
     const { getRouteIcon, getTransportLabel } = useRoutes();
-    const challengeType = ref<CompetitionType>(CompetitionType.frequency);
-    const challengeParticipants = ref<CompetitorType>(
-      CompetitorType.singleUser,
-    );
-    const challengeTransportType = ref<TransportType[]>([
-      TransportType.bike,
-      TransportType.walk,
-    ]);
-    const challengeTitle = ref<string>('');
-    const challengeDescription = ref<string>('');
-    const challengeInfoUrl = ref<string>('');
-    const challengeStart = ref<string>('');
-    const challengeStop = ref<string>('');
 
     const minDate = ''; // TODO: Add source of date
     const maxDate = ''; // TODO: Add source of date
 
     const iconSize = '18px';
 
-    // load commute modes when component mounts and set default eco modes
+    // load commute modes when component mounts
     onMounted(async () => {
       if (!tripsStore.getCommuteModes.length) {
         await tripsStore.loadCommuteModes();
       }
-      // set default eco-friendly transport types
-      challengeTransportType.value = tripsStore.getEcoCommuteModes.map(
-        (mode) => mode.slug,
-      );
+    });
+
+    // Create computed properties bound to store
+    const challengeType = computed({
+      get: () => adminCompetitionStore.companyChallengeForm.challengeType,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeType = value;
+      },
+    });
+
+    const challengeParticipants = computed({
+      get: () =>
+        adminCompetitionStore.companyChallengeForm.challengeParticipants,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeParticipants =
+          value;
+      },
+    });
+
+    const challengeTransportType = computed({
+      get: () =>
+        adminCompetitionStore.companyChallengeForm.challengeTransportType,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeTransportType =
+          value;
+      },
+    });
+
+    const challengeTitle = computed({
+      get: () => adminCompetitionStore.companyChallengeForm.challengeTitle,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeTitle = value;
+      },
+    });
+
+    const challengeDescription = computed({
+      get: () =>
+        adminCompetitionStore.companyChallengeForm.challengeDescription,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeDescription = value;
+      },
+    });
+
+    const challengeInfoUrl = computed({
+      get: () => adminCompetitionStore.companyChallengeForm.challengeInfoUrl,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeInfoUrl = value;
+      },
+    });
+
+    const challengeStart = computed({
+      get: () => adminCompetitionStore.companyChallengeForm.challengeStart,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeStart = value;
+      },
+    });
+
+    const challengeStop = computed({
+      get: () => adminCompetitionStore.companyChallengeForm.challengeStop,
+      set: (value) => {
+        adminCompetitionStore.companyChallengeForm.challengeStop = value;
+      },
     });
 
     const commuteModes = computed(() => {

@@ -17,19 +17,15 @@
 
 // libraries
 import { QForm } from 'quasar';
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormCompanyChallenge from '../form/FormCompanyChallenge.vue';
 import TableCompanyChallenge from './TableCompanyChallenge.vue';
 
-// enums
-import { PhaseType } from '../types/Challenge';
-
 // stores
-// import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
 
 export default defineComponent({
   name: 'TabCoordinatorCompanyChallenge',
@@ -43,37 +39,32 @@ export default defineComponent({
     const formCompanyChallengeRef = ref<typeof QForm | null>(null);
 
     // Stores
-    // const adminCompetitionStore = useAdminCompetitionStore();
+    const adminCompetitionStore = useAdminCompetitionStore();
 
     const closeDialog = (): void => {
-      // adminCompetitionStore.resetCompanyChallengeForm();
       isDialogOpen.value = false;
     };
-    const openDialog = (): void => {
-      // Reset and initialize form when opening dialog
-      // adminCompetitionStore.initializeCompanyChallengeForm();
+    const openDialog = async (): Promise<void> => {
+      // Reset form when opening dialog
+      await adminCompetitionStore.resetCompanyChallengeForm();
       isDialogOpen.value = true;
     };
 
     const onSubmit = async (): Promise<void> => {
-      // const success = await adminCompetitionStore.createCompanyChallenge();
-      // if (success) {
-      //   closeDialog();
-      // }
+      const success = await adminCompetitionStore.createCompanyChallenge();
+      if (success) {
+        adminCompetitionStore.resetCompanyChallengeForm();
+        closeDialog();
+      }
     };
     const onReset = (): void => {
+      adminCompetitionStore.resetCompanyChallengeForm();
       closeDialog();
     };
-
-    const isCompanyChallengePhaseActive = computed<boolean>(() => {
-      const challengeStore = useChallengeStore();
-      return challengeStore.getIsChallengeInPhase(PhaseType.registration);
-    });
 
     return {
       formCompanyChallengeRef,
       isDialogOpen,
-      isCompanyChallengePhaseActive,
       onReset,
       onSubmit,
       openDialog,
@@ -98,7 +89,6 @@ export default defineComponent({
         color="primary"
         unelevated
         rounded
-        :disabled="!isCompanyChallengePhaseActive"
         @click.prevent="openDialog"
         data-cy="button-create-company-challenge"
       >
