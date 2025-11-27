@@ -60,66 +60,77 @@ export default defineComponent({
       }
     });
 
-    // Create computed properties bound to store
+    // Create computed properties bound to store using getters and setters
     const challengeType = computed({
-      get: () => adminCompetitionStore.companyChallengeForm.challengeType,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeType = value;
-      },
+      get: () => adminCompetitionStore.getChallengeType,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeType',
+          value,
+        ),
     });
 
     const challengeParticipants = computed({
-      get: () =>
-        adminCompetitionStore.companyChallengeForm.challengeParticipants,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeParticipants =
-          value;
-      },
+      get: () => adminCompetitionStore.getChallengeParticipants,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeParticipants',
+          value,
+        ),
     });
 
     const challengeTransportType = computed({
-      get: () =>
-        adminCompetitionStore.companyChallengeForm.challengeTransportType,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeTransportType =
-          value;
-      },
+      get: () => adminCompetitionStore.getChallengeTransportType,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeTransportType',
+          value,
+        ),
     });
 
     const challengeTitle = computed({
-      get: () => adminCompetitionStore.companyChallengeForm.challengeTitle,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeTitle = value;
-      },
+      get: () => adminCompetitionStore.getChallengeTitle,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeTitle',
+          value,
+        ),
     });
 
     const challengeDescription = computed({
-      get: () =>
-        adminCompetitionStore.companyChallengeForm.challengeDescription,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeDescription = value;
-      },
+      get: () => adminCompetitionStore.getChallengeDescription,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeDescription',
+          value,
+        ),
     });
 
     const challengeInfoUrl = computed({
-      get: () => adminCompetitionStore.companyChallengeForm.challengeInfoUrl,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeInfoUrl = value;
-      },
+      get: () => adminCompetitionStore.getChallengeInfoUrl,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeInfoUrl',
+          value,
+        ),
     });
 
     const challengeStart = computed({
-      get: () => adminCompetitionStore.companyChallengeForm.challengeStart,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeStart = value;
-      },
+      get: () => adminCompetitionStore.getChallengeStart,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeStart',
+          value,
+        ),
     });
 
     const challengeStop = computed({
-      get: () => adminCompetitionStore.companyChallengeForm.challengeStop,
-      set: (value) => {
-        adminCompetitionStore.companyChallengeForm.challengeStop = value;
-      },
+      get: () => adminCompetitionStore.getChallengeStop,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeStop',
+          value,
+        ),
     });
 
     const commuteModes = computed(() => {

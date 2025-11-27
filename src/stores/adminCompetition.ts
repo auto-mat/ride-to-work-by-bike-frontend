@@ -65,11 +65,34 @@ export const useAdminCompetitionStore = defineStore('adminCompetition', {
     getCompetitions: (state) => state.competitions,
     getIsLoadingCompetition: (state) => state.isLoadingCompetition,
     getCompanyChallengeForm: (state) => state.companyChallengeForm,
+    getChallengeType: (state) => state.companyChallengeForm.challengeType,
+    getChallengeParticipants: (state) =>
+      state.companyChallengeForm.challengeParticipants,
+    getChallengeTransportType: (state) =>
+      state.companyChallengeForm.challengeTransportType,
+    getChallengeTitle: (state) => state.companyChallengeForm.challengeTitle,
+    getChallengeDescription: (state) =>
+      state.companyChallengeForm.challengeDescription,
+    getChallengeInfoUrl: (state) => state.companyChallengeForm.challengeInfoUrl,
+    getChallengeStart: (state) => state.companyChallengeForm.challengeStart,
+    getChallengeStop: (state) => state.companyChallengeForm.challengeStop,
   },
 
   actions: {
     setCompetitions(competitions: Competition[]): void {
       this.competitions = competitions;
+    },
+    /**
+     * Setter for company challenge form fields
+     * @param {K} field - Field name to update
+     * @param {CompanyChallengeFormState[K]} value - New value for the field
+     * @returns {void}
+     */
+    setCompanyChallengeFormField<K extends keyof CompanyChallengeFormState>(
+      field: K,
+      value: CompanyChallengeFormState[K],
+    ): void {
+      this.companyChallengeForm[field] = value;
     },
     /**
      * Load competitions from API
