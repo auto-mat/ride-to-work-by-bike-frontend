@@ -80,6 +80,12 @@ export const useChallengeStore = defineStore('challenge', {
       );
       return competitionPhase?.date_from || '';
     },
+    getCompetitionEnd: (state) => {
+      const competitionPhase = state.phaseSet.find(
+        (phase) => phase.phase_type === PhaseType.competition,
+      );
+      return competitionPhase?.date_to || '';
+    },
     getEntryPhaseEnd: (state) => {
       const entryPhase = state.phaseSet.find(
         (phase) => phase.phase_type === PhaseType.entryEnabled,

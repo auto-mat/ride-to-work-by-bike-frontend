@@ -32,6 +32,7 @@ import { useRoutes } from '../../composables/useRoutes';
 
 // stores
 import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
+import { useChallengeStore } from 'src/stores/challenge';
 import { useTripsStore } from '../../stores/trips';
 
 // enums
@@ -45,11 +46,12 @@ export default defineComponent({
   },
   setup() {
     const adminCompetitionStore = useAdminCompetitionStore();
+    const challengeStore = useChallengeStore();
     const tripsStore = useTripsStore();
     const { getRouteIcon, getTransportLabel } = useRoutes();
 
-    const minDate = ''; // TODO: Add source of date
-    const maxDate = ''; // TODO: Add source of date
+    const minDate = computed(() => challengeStore.getCompetitionStart);
+    const maxDate = computed(() => challengeStore.getCompetitionEnd);
 
     const iconSize = '18px';
 
