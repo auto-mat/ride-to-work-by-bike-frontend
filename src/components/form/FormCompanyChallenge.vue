@@ -276,6 +276,7 @@ export default defineComponent({
         id="form-challenge-description"
         v-model="challengeDescription"
         type="textarea"
+        data-cy="form-challenge-description-input"
       />
     </div>
     <!-- Section: Info URL -->
@@ -296,7 +297,7 @@ export default defineComponent({
         class="q-mt-sm"
         id="form-challenge-url"
         name="challenge-url"
-        :data-cy="`form-challenge-url-input`"
+        data-cy="form-challenge-url-input"
       />
     </div>
     <!-- Section: Dates -->

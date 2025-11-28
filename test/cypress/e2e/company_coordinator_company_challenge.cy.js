@@ -1,8 +1,6 @@
 import { routesConf } from '../../../src/router/routes_conf';
-import {
-  systemTimeRegistrationPhaseActive,
-  systemTimeRegistrationPhaseInactive,
-} from '../support/commonTests';
+import { systemTimeRegistrationPhaseActive } from '../support/commonTests';
+import testSet from '../fixtures/formCompanyChallenge.json';
 
 describe('Company coordinator company challenge page', () => {
   context('previewing company challenges', () => {
@@ -86,40 +84,83 @@ describe('Company coordinator company challenge page', () => {
       cy.dataCy('dialog-button-cancel').click();
       cy.dataCy('dialog-create-company-challenge').should('not.exist');
     });
-  });
 
-  context('registration phase is inactive', () => {
-    beforeEach(() => {
-      cy.viewport(1920, 2500);
-      // set system time to be outside registration phase
-      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
-          cy.wrap(config).as('config');
-          // visit the login page to initialize i18n
-          cy.visit('#' + routesConf['login']['path']);
-          cy.window().should('have.property', 'i18n');
-          cy.window().then((win) => {
-            cy.wrap(win.i18n).as('i18n');
-            // setup coordinator test environment
-            cy.setupCompanyCoordinatorTest(config, win.i18n);
-            cy.visit(
-              '#' +
-                routesConf['coordinator_challenges']['children']['fullPath'],
+    testSet.forEach((test) => {
+      it(`${test.description}`, () => {
+        cy.get('@config').then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            // check that initial competition response is loaded
+            cy.waitForCompetitionGetApi('apiGetCompetitionResponse');
+            cy.get('@getCompetition.all').should('have.length', 1);
+            cy.interceptCompetitionPostApi(config, test.apiResponse);
+            // click button
+            cy.dataCy('button-create-company-challenge')
+              .should('be.visible')
+              .click();
+            // check dialog
+            cy.dataCy('dialog-create-company-challenge').should('be.visible');
+            cy.dataCy('dialog-header').should(
+              'contain',
+              i18n.global.t('coordinator.titleCreateCompanyChallenge'),
             );
-            cy.dataCy('table-company-challenge-title').should('be.visible');
+            cy.dataCy('form-company-challenge').should('be.visible');
+            // fill in form
+            if (test.formInputs.challengeType) {
+              cy.contains(i18n.global.t(test.formInputs.challengeType)).click({
+                force: true,
+              });
+            }
+            if (test.formInputs.challengeParticipants) {
+              cy.contains(
+                i18n.global.t(test.formInputs.challengeParticipants),
+              ).click({ force: true });
+            }
+            // deselect all transport modes
+            cy.dataCy('form-challenge-transport').within(() => {
+              cy.get('.q-checkbox').each((checkbox) => {
+                cy.wrap(checkbox).find('.q-checkbox__inner').click();
+              });
+              cy.dataCy('form-acceptable-transport-by_other_vehicle')
+                .find('.q-checkbox__inner')
+                .click();
+            });
+            // select only the required transport modes
+            cy.dataCy('form-challenge-transport').within(() => {
+              test.formInputs.challengeTransportType.forEach((mode) => {
+                cy.dataCy(`form-acceptable-transport-${mode}`)
+                  .find('.q-checkbox__inner')
+                  .click();
+              });
+            });
+            cy.dataCy('form-challenge-title')
+              .find('input')
+              .type(test.formInputs.challengeTitle);
+            if (test.formInputs.challengeDescription) {
+              cy.dataCy('form-challenge-description-input').type(
+                test.formInputs.challengeDescription,
+              );
+            }
+            if (test.formInputs.challengeInfoUrl) {
+              cy.dataCy('form-challenge-url-input').type(
+                test.formInputs.challengeInfoUrl,
+              );
+            }
+            cy.dataCy('form-date-start-input').type(
+              test.formInputs.challengeStart,
+            );
+            cy.dataCy('form-date-stop-input').type(
+              test.formInputs.challengeStop,
+            );
+            // submit
+            cy.dataCy('dialog-button-submit').click();
+            // check intercept
+            cy.waitForCompetitionPostApi(test.apiRequest, test.apiResponse);
+            cy.get('@postCompetition.all').should('have.length', 1);
+            // re-fetch competition
+            cy.get('@getCompetition.all').should('have.length', 2);
           });
         });
       });
-    });
-
-    it('does not allow to open dialog when registration phase is inactive', () => {
-      // check that initial competition response is loaded
-      cy.waitForCompetitionGetApi('apiGetCompetitionResponse');
-      cy.get('@getCompetition.all').should('have.length', 1);
-      // button should be disabled
-      cy.dataCy('button-create-company-challenge')
-        .should('be.visible')
-        .and('have.attr', 'disabled');
     });
   });
 });
