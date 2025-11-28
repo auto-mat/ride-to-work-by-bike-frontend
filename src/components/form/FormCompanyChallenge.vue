@@ -62,7 +62,6 @@ export default defineComponent({
       }
     });
 
-    // Create computed properties bound to store using getters and setters
     const challengeType = computed({
       get: () => adminCompetitionStore.getChallengeType,
       set: (value) =>

@@ -104,19 +104,15 @@ export const useAdminCompetitionStore = defineStore('adminCompetition', {
      * @returns {Promise<void>}
      */
     async resetCompanyChallengeForm(): Promise<void> {
-      const tripsStore = useTripsStore();
-
-      // Ensure commute modes are loaded
-      if (!tripsStore.getCommuteModes.length) {
-        await tripsStore.loadCommuteModes();
-      }
-
-      // Reset form with deep copy
+      // reset company challenge form state
       this.companyChallengeForm = deepObjectWithSimplePropsCopy(
         emptyCompanyChallengeForm,
       );
-
-      // Set eco-friendly transport types as default
+      // set eco-friendly transport types as default
+      const tripsStore = useTripsStore();
+      if (!tripsStore.getCommuteModes.length) {
+        await tripsStore.loadCommuteModes();
+      }
       this.companyChallengeForm.challengeTransportType =
         tripsStore.getEcoCommuteModes.map((mode) => mode.slug);
     },
@@ -126,20 +122,16 @@ export const useAdminCompetitionStore = defineStore('adminCompetition', {
      */
     async createCompanyChallenge(): Promise<boolean> {
       const { createCompetition } = useApiPostCompetition(this.$log);
-
-      // Convert form state to API payload using adapter
+      // prepare payload
       const payload = companyChallengeAdapter.toApiPayload(
         this.companyChallengeForm,
       );
-
       const result = await createCompetition(payload);
-
       if (result) {
         // Refresh competitions list
         await this.loadCompetitions();
         return true;
       }
-
       return false;
     },
     /**
