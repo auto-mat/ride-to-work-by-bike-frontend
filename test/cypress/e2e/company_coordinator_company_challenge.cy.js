@@ -162,5 +162,97 @@ describe('Company coordinator company challenge page', () => {
         });
       });
     });
+
+    it('does not allow to enter start and stop dates outside the challenge phase', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.fixture('apiGetThisCampaign.json').then((response) => {
+          // check that initial competition response is loaded
+          cy.waitForCompetitionGetApi('apiGetCompetitionResponse');
+          cy.get('@getCompetition.all').should('have.length', 1);
+          // test creating a company challenge
+          cy.dataCy('button-create-company-challenge').click();
+          cy.dataCy('dialog-create-company-challenge').should('be.visible');
+          cy.dataCy('dialog-header').should(
+            'contain',
+            i18n.global.t('coordinator.titleCreateCompanyChallenge'),
+          );
+          cy.dataCy('form-company-challenge').should('be.visible');
+          // fill in dates outside the challenge phase (apiGetThisCampaign.json)
+          cy.dataCy('form-date-start-input').type('15. 09. 2024');
+          cy.dataCy('form-date-stop-input').type('01. 10. 2024');
+          // submit
+          cy.dataCy('dialog-button-submit').click();
+          const competitionPhase = response.results[0].phase_set.find(
+            (phase) => phase.phase_type === 'competition',
+          );
+          cy.dataCy('form-challenge-start').within(() => {
+            // check error messages
+            cy.contains(
+              i18n.global.t('form.messageFieldDateOutOfRange', {
+                minDate: i18n.global.d(
+                  new Date(competitionPhase.date_from),
+                  'numeric',
+                ),
+                maxDate: i18n.global.d(
+                  new Date(competitionPhase.date_to),
+                  'numeric',
+                ),
+              }),
+            ).should('be.visible');
+          });
+          cy.dataCy('form-challenge-stop').within(() => {
+            // check error messages
+            cy.contains(
+              i18n.global.t('form.messageFieldDateOutOfRange', {
+                minDate: i18n.global.d(
+                  new Date(competitionPhase.date_from),
+                  'numeric',
+                ),
+                maxDate: i18n.global.d(
+                  new Date(competitionPhase.date_to),
+                  'numeric',
+                ),
+              }),
+            ).should('be.visible');
+          });
+          // fix one date
+          cy.dataCy('form-date-start-input').clear();
+          cy.dataCy('form-date-start-input').type('16. 09. 2024');
+          cy.dataCy('form-challenge-start').within(() => {
+            // check error messages
+            cy.contains(
+              i18n.global.t('form.messageFieldDateOutOfRange', {
+                minDate: i18n.global.d(
+                  new Date(competitionPhase.date_from),
+                  'numeric',
+                ),
+                maxDate: i18n.global.d(
+                  new Date(competitionPhase.date_to),
+                  'numeric',
+                ),
+              }),
+            ).should('not.exist');
+          });
+          // fix the other date
+          cy.dataCy('form-date-stop-input').clear();
+          cy.dataCy('form-date-stop-input').type('29. 09. 2024');
+          cy.dataCy('form-challenge-stop').within(() => {
+            // check error messages
+            cy.contains(
+              i18n.global.t('form.messageFieldDateOutOfRange', {
+                minDate: i18n.global.d(
+                  new Date(competitionPhase.date_from),
+                  'numeric',
+                ),
+                maxDate: i18n.global.d(
+                  new Date(competitionPhase.date_to),
+                  'numeric',
+                ),
+              }),
+            ).should('not.exist');
+          });
+        });
+      });
+    });
   });
 });
