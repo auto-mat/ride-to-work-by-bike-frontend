@@ -1,0 +1,149 @@
+[
+  {
+    "description": "create basic company challenge with required fields only",
+    "formInputs": {
+      "challengeType": "form.labelChallengeTypeRegularity",
+      "challengeParticipants": "form.labelParticipantsIndividuals",
+      "challengeTransportType": ["bicycle", "by_foot"],
+      "challengeTitle": "Test Company Challenge",
+      "challengeDescription": "",
+      "challengeInfoUrl": "",
+      "challengeStart": "16. 09. 2024",
+      "challengeStop": "29. 09. 2024"
+    },
+    "apiRequest": {
+      "name": "Test Company Challenge",
+      "competition_type": "frequency",
+      "competitor_type": "single_user",
+      "commute_modes": [1, 2],
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29"
+    },
+    "apiResponse": {
+      "results": "http://example.com/results/4",
+      "id": 4,
+      "name": "Test Company Challenge",
+      "slug": "test-company-challenge",
+      "competitor_type": "single_user",
+      "competition_type": "frequency",
+      "url": null,
+      "description": null,
+      "priority": 4,
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        }
+      ]
+    }
+  },
+  {
+    "description": "create company challenge with all fields filled",
+    "formInputs": {
+      "challengeType": "form.labelChallengeTypePerformance",
+      "challengeParticipants": "form.labelParticipantsTeams",
+      "challengeTransportType": ["bicycle", "by_foot", "hromadna"],
+      "challengeTitle": "Team Distance Challenge",
+      "challengeDescription": "This is a team distance challenge with all transport modes",
+      "challengeInfoUrl": "https://example.com/challenge-info",
+      "challengeStart": "20. 09. 2024",
+      "challengeStop": "29. 09. 2024"
+    },
+    "apiRequest": {
+      "name": "Team Distance Challenge",
+      "url": "https://example.com/challenge-info",
+      "description": "This is a team distance challenge with all transport modes",
+      "competition_type": "length",
+      "competitor_type": "team",
+      "commute_modes": [1, 2, 5],
+      "date_from": "2024-09-20",
+      "date_to": "2024-09-29"
+    },
+    "apiResponse": {
+      "results": "http://example.com/results/5",
+      "id": 5,
+      "name": "Team Distance Challenge",
+      "slug": "team-distance-challenge",
+      "competitor_type": "team",
+      "competition_type": "length",
+      "url": "https://example.com/challenge-info",
+      "description": "This is a team distance challenge with all transport modes",
+      "priority": 5,
+      "date_from": "2024-09-20",
+      "date_to": "2024-09-29",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        },
+        {
+          "id": 4,
+          "name_cs": "Hromadná doprava",
+          "name_en": "Public transport",
+          "slug": "hromadna"
+        }
+      ]
+    }
+  },
+  {
+    "description": "create subsidiary-level frequency challenge",
+    "formInputs": {
+      "challengeType": "form.labelChallengeTypeRegularity",
+      "challengeParticipants": "form.labelParticipantsSubsidiaries",
+      "challengeTransportType": ["bicycle"],
+      "challengeTitle": "Subsidiary Regularity Challenge",
+      "challengeDescription": "Challenge between company subsidiaries",
+      "challengeInfoUrl": "",
+      "challengeStart": "16. 09. 2024",
+      "challengeStop": "25. 09. 2024"
+    },
+    "apiRequest": {
+      "name": "Subsidiary Regularity Challenge",
+      "description": "Challenge between company subsidiaries",
+      "competition_type": "frequency",
+      "competitor_type": "subsidiary",
+      "commute_modes": [1],
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-25"
+    },
+    "apiResponse": {
+      "results": "http://example.com/results/6",
+      "id": 6,
+      "name": "Subsidiary Regularity Challenge",
+      "slug": "subsidiary-regularity-challenge",
+      "competitor_type": "subsidiary",
+      "competition_type": "frequency",
+      "url": null,
+      "description": "Challenge between company subsidiaries",
+      "priority": 6,
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-25",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        }
+      ]
+    }
+  }
+]

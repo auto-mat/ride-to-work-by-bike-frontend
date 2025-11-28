@@ -21,7 +21,7 @@
  */
 
 // libraries
-import { computed, defineComponent, ref, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 
 // components
 import FormFieldDateRequired from '../form/FormFieldDateRequired.vue';
@@ -31,10 +31,11 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import { useRoutes } from '../../composables/useRoutes';
 
 // stores
+import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
+import { useChallengeStore } from 'src/stores/challenge';
 import { useTripsStore } from '../../stores/trips';
 
 // enums
-import { TransportType } from '../types/Route';
 import { CompetitorType, CompetitionType } from '../enums/Challenge';
 
 export default defineComponent({
@@ -44,36 +45,93 @@ export default defineComponent({
     FormFieldTextRequired,
   },
   setup() {
+    const adminCompetitionStore = useAdminCompetitionStore();
+    const challengeStore = useChallengeStore();
     const tripsStore = useTripsStore();
     const { getRouteIcon, getTransportLabel } = useRoutes();
-    const challengeType = ref<CompetitionType>(CompetitionType.frequency);
-    const challengeParticipants = ref<CompetitorType>(
-      CompetitorType.singleUser,
-    );
-    const challengeTransportType = ref<TransportType[]>([
-      TransportType.bike,
-      TransportType.walk,
-    ]);
-    const challengeTitle = ref<string>('');
-    const challengeDescription = ref<string>('');
-    const challengeInfoUrl = ref<string>('');
-    const challengeStart = ref<string>('');
-    const challengeStop = ref<string>('');
 
-    const minDate = ''; // TODO: Add source of date
-    const maxDate = ''; // TODO: Add source of date
+    const minDate = computed(() => challengeStore.getCompetitionStart);
+    const maxDate = computed(() => challengeStore.getCompetitionEnd);
 
     const iconSize = '18px';
 
-    // load commute modes when component mounts and set default eco modes
+    // load commute modes when component mounts
     onMounted(async () => {
       if (!tripsStore.getCommuteModes.length) {
         await tripsStore.loadCommuteModes();
       }
-      // set default eco-friendly transport types
-      challengeTransportType.value = tripsStore.getEcoCommuteModes.map(
-        (mode) => mode.slug,
-      );
+    });
+
+    const challengeType = computed({
+      get: () => adminCompetitionStore.getChallengeType,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeType',
+          value,
+        ),
+    });
+
+    const challengeParticipants = computed({
+      get: () => adminCompetitionStore.getChallengeParticipants,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeParticipants',
+          value,
+        ),
+    });
+
+    const challengeTransportType = computed({
+      get: () => adminCompetitionStore.getChallengeTransportType,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeTransportType',
+          value,
+        ),
+    });
+
+    const challengeTitle = computed({
+      get: () => adminCompetitionStore.getChallengeTitle,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeTitle',
+          value,
+        ),
+    });
+
+    const challengeDescription = computed({
+      get: () => adminCompetitionStore.getChallengeDescription,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeDescription',
+          value,
+        ),
+    });
+
+    const challengeInfoUrl = computed({
+      get: () => adminCompetitionStore.getChallengeInfoUrl,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeInfoUrl',
+          value,
+        ),
+    });
+
+    const challengeStart = computed({
+      get: () => adminCompetitionStore.getChallengeStart,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeStart',
+          value,
+        ),
+    });
+
+    const challengeStop = computed({
+      get: () => adminCompetitionStore.getChallengeStop,
+      set: (value) =>
+        adminCompetitionStore.setCompanyChallengeFormField(
+          'challengeStop',
+          value,
+        ),
     });
 
     const commuteModes = computed(() => {
@@ -217,6 +275,7 @@ export default defineComponent({
         id="form-challenge-description"
         v-model="challengeDescription"
         type="textarea"
+        data-cy="form-challenge-description-input"
       />
     </div>
     <!-- Section: Info URL -->
@@ -237,7 +296,7 @@ export default defineComponent({
         class="q-mt-sm"
         id="form-challenge-url"
         name="challenge-url"
-        :data-cy="`form-challenge-url-input`"
+        data-cy="form-challenge-url-input"
       />
     </div>
     <!-- Section: Dates -->
