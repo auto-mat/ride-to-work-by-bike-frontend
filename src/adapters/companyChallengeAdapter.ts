@@ -23,12 +23,10 @@ export const companyChallengeAdapter = {
    */
   convertDateToApiFormat(dateStr: string): string {
     if (!dateStr) return '';
-
     const { dateFormatInputMask } = rideToWorkByBikeConfig;
-    // Parse the date string using Quasar date utils
+    // parse date
     const dateObj = date.extractDate(dateStr, dateFormatInputMask);
-
-    // Format to API format
+    // format date
     return date.formatDate(dateObj, 'YYYY-MM-DD');
   },
 
@@ -39,7 +37,6 @@ export const companyChallengeAdapter = {
    */
   convertTransportTypesToIds(transportTypes: TransportType[]): number[] {
     const tripsStore = useTripsStore();
-
     return transportTypes
       .map((slug) => {
         const mode = tripsStore.getCommuteModeBySlug(slug);
@@ -51,7 +48,7 @@ export const companyChallengeAdapter = {
   /**
    * Convert form state to API payload format
    * @param {CompanyChallengeFormState} formState - Form state from store
-   * @returns {PostCompetitionPayload} - API-compatible payload
+   * @returns {PostCompetitionPayload} - API payload
    */
   toApiPayload(formState: CompanyChallengeFormState): PostCompetitionPayload {
     const payload: PostCompetitionPayload = {
@@ -64,16 +61,13 @@ export const companyChallengeAdapter = {
       date_from: this.convertDateToApiFormat(formState.challengeStart),
       date_to: this.convertDateToApiFormat(formState.challengeStop),
     };
-
-    // Add optional fields only if filled
+    // optional fields
     if (formState.challengeInfoUrl) {
       payload.url = formState.challengeInfoUrl;
     }
-
     if (formState.challengeDescription) {
       payload.description = formState.challengeDescription;
     }
-
     return payload;
   },
 };
