@@ -34,6 +34,9 @@ import { date } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
 export default defineComponent({
   name: 'FormFieldDateRequired',
   props: {
@@ -77,7 +80,7 @@ export default defineComponent({
     });
 
     const { isFilled } = useValidation();
-    const dateFormatInputMask = 'DD. MM. YYYY';
+    const { dateFormatInputMask } = rideToWorkByBikeConfig;
 
     const minDateObj = computed(() =>
       props.minDate ? new Date(props.minDate) : null,

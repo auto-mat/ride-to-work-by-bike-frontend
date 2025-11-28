@@ -16,22 +16,13 @@ import { useTripsStore } from './trips';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { Competition } from '../components/types/Competition';
-import type { TransportType } from '../components/types/Route';
+import type {
+  Competition,
+  CompanyChallengeFormState,
+} from '../components/types/Competition';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../utils';
-
-interface CompanyChallengeFormState {
-  challengeType: CompetitionType;
-  challengeParticipants: CompetitorType;
-  challengeTransportType: TransportType[];
-  challengeTitle: string;
-  challengeDescription: string;
-  challengeInfoUrl: string;
-  challengeStart: string;
-  challengeStop: string;
-}
 
 const emptyCompanyChallengeForm: CompanyChallengeFormState = {
   challengeType: CompetitionType.frequency,

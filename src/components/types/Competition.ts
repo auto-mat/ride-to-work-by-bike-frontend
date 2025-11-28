@@ -29,3 +29,14 @@ export interface CompetitionResponse {
   previous: string | null;
   results: Competition[];
 }
+
+export interface CompanyChallengeFormState {
+  challengeType: CompetitionType;
+  challengeParticipants: CompetitorType;
+  challengeTransportType: TransportType[];
+  challengeTitle: string;
+  challengeDescription: string;
+  challengeInfoUrl: string;
+  challengeStart: string;
+  challengeStop: string;
+}

@@ -1,42 +1,32 @@
 // libraries
 import { date } from 'quasar';
 
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
 // stores
 import { useTripsStore } from '../stores/trips';
 
 // types
 import type { PostCompetitionPayload } from '../components/types/ApiCompetition';
-import type {
-  CompetitionType,
-  CompetitorType,
-} from '../components/enums/Challenge';
+import type { CompanyChallengeFormState } from '../components/types/Competition';
 import type { TransportType } from '../components/types/Route';
-
-interface CompanyChallengeFormState {
-  challengeType: CompetitionType;
-  challengeParticipants: CompetitorType;
-  challengeTransportType: TransportType[];
-  challengeTitle: string;
-  challengeDescription: string;
-  challengeInfoUrl: string;
-  challengeStart: string;
-  challengeStop: string;
-}
 
 /**
  * Adapter for converting between form state and API payload for company challenge
  */
 export const companyChallengeAdapter = {
   /**
-   * Convert date from DD. MM. YYYY format to YYYY-MM-DD format
-   * @param {string} dateStr - Date in DD. MM. YYYY format (from QDate mask)
+   * Convert date from masked format to YYYY-MM-DD format
+   * @param {string} dateStr - Date in masked format
    * @returns {string} - Date in YYYY-MM-DD format for API
    */
   convertDateToApiFormat(dateStr: string): string {
     if (!dateStr) return '';
 
+    const { dateFormatInputMask } = rideToWorkByBikeConfig;
     // Parse the date string using Quasar date utils
-    const dateObj = date.extractDate(dateStr, 'DD. MM. YYYY');
+    const dateObj = date.extractDate(dateStr, dateFormatInputMask);
 
     // Format to API format
     return date.formatDate(dateObj, 'YYYY-MM-DD');

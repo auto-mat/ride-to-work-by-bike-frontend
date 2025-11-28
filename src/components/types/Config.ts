@@ -120,6 +120,7 @@ export interface ConfigGlobal {
   urlBaseBackend: string;
   apiTripsThirdPartyAppIdNaKolePrahou: string;
   apiTripsThirdPartyAppIdCyclers: string;
+  dateFormatInputMask: string;
   checkIsEmailVerifiedInterval: number;
   checkIsThisCampaignCompetitionPhaseTypeInterval: string;
   googleLoginAppId: string;
