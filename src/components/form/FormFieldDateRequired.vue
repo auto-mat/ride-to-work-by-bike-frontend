@@ -34,9 +34,6 @@ import { date } from 'quasar';
 import { i18n } from 'src/boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
-// config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-
 export default defineComponent({
   name: 'FormFieldDateRequired',
   props: {
@@ -78,9 +75,23 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
-
+    const localizedDateFormatMaskQInput = computed({
+      get() {
+        return i18n.global
+          .d(new Date(2025, 11, 29), 'numeric')
+          .replace(/[0-9]/g, '#');
+      },
+    });
+    const localizedDateFormatMaskQDate = computed({
+      get() {
+        return i18n.global
+          .d(new Date(2025, 11, 29), 'numeric')
+          .replace('2025', 'YYYY')
+          .replace('12', 'MM')
+          .replace('29', 'DD');
+      },
+    });
     const { isFilled } = useValidation();
-    const { dateFormatInputMask } = rideToWorkByBikeConfig;
 
     const minDateObj = computed(() =>
       props.minDate ? new Date(props.minDate) : null,
@@ -107,12 +118,15 @@ export default defineComponent({
 
     /**
      * Validation function for QInput connected to QDate
-     * @param dateStr - Date string as DD. MM. YYYY (input mask format)
+     * @param dateStr - Date string as localized QDate mask format
      * @returns true if date is within range or no range is set
      *          false if date is out of range or invalid
      */
     const isDateInRange = (dateStr: string): boolean => {
-      const dateObj = date.extractDate(dateStr, dateFormatInputMask);
+      const dateObj = date.extractDate(
+        dateStr,
+        localizedDateFormatMaskQDate.value,
+      );
       return checkDateInRange(dateObj);
     };
 
@@ -145,9 +159,10 @@ export default defineComponent({
       isFilled,
       isDateInRange,
       dateOptions,
-      dateFormatInputMask,
       minDateFormatted,
       maxDateFormatted,
+      localizedDateFormatMaskQInput,
+      localizedDateFormatMaskQDate,
     };
   },
 });
@@ -187,7 +202,7 @@ export default defineComponent({
       class="q-mt-sm"
       :id="`form-${name}`"
       :name="name"
-      mask="##. ##. ####"
+      :mask="localizedDateFormatMaskQInput"
       :data-cy="`form-${name}-input`"
     >
       <template v-slot:prepend>
@@ -201,7 +216,7 @@ export default defineComponent({
               dense
               minimal
               outlined
-              :mask="dateFormatInputMask"
+              :mask="localizedDateFormatMaskQDate"
               v-model="inputValue"
               color="primary"
               :options="dateOptions"

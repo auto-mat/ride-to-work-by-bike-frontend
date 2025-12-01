@@ -164,7 +164,6 @@ apiTripsThirdPartyAppIdNaKolePrahou = "3"
 
 # DATE TIME FORMATS
 
-dateFormatInputMask = "DD. MM. YYYY"
 dateTimeFormatsAllLocales = '''
 {
   "numeric": {
