@@ -221,6 +221,15 @@ export default defineComponent({
               color="primary"
               :options="dateOptions"
               data-cy="form-date-picker"
+              :default-year-month="
+                new Date(minDate).toISOString().slice(0, 7).replace(/-/g, '/')
+              "
+              :navigation-min-year-month="
+                new Date(minDate).toISOString().slice(0, 7).replace(/-/g, '/')
+              "
+              :navigation-max-year-month="
+                new Date(maxDate).toISOString().slice(0, 7).replace(/-/g, '/')
+              "
             />
           </q-popup-proxy>
         </q-icon>
