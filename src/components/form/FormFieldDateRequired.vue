@@ -75,21 +75,17 @@ export default defineComponent({
         emit('update:modelValue', value);
       },
     });
-    const localizedDateFormatMaskQInput = computed({
-      get() {
-        return i18n.global
-          .d(new Date(2025, 11, 29), 'numeric')
-          .replace(/[0-9]/g, '#');
-      },
+    const localizedDateFormatMaskQInput = computed<string>(() => {
+      return i18n.global
+        .d(new Date(2025, 11, 29), 'numeric')
+        .replace(/[0-9]/g, '#');
     });
-    const localizedDateFormatMaskQDate = computed({
-      get() {
-        return i18n.global
-          .d(new Date(2025, 11, 29), 'numeric')
-          .replace('2025', 'YYYY')
-          .replace('12', 'MM')
-          .replace('29', 'DD');
-      },
+    const localizedDateFormatMaskQDate = computed<string>(() => {
+      return i18n.global
+        .d(new Date(2025, 11, 29), 'numeric')
+        .replace('2025', 'YYYY')
+        .replace('12', 'MM')
+        .replace('29', 'DD');
     });
     const { isFilled } = useValidation();
 
