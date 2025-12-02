@@ -16,8 +16,8 @@
       "competition_type": "frequency",
       "competitor_type": "single_user",
       "commute_modes": [1, 2],
-      "date_from": "2024-09-16",
-      "date_to": "2024-09-29"
+      "date_from": "09/16/2024",
+      "date_to": "09/29/2024"
     },
     "apiResponse": {
       "results": "http://example.com/results/4",
@@ -29,8 +29,8 @@
       "url": null,
       "description": null,
       "priority": 4,
-      "date_from": "2024-09-16",
-      "date_to": "2024-09-29",
+      "date_from": "09/16/2024",
+      "date_to": "09/26/2024",
       "commute_modes": [
         {
           "id": 1,
@@ -66,8 +66,8 @@
       "competition_type": "length",
       "competitor_type": "team",
       "commute_modes": [1, 2, 5],
-      "date_from": "2024-09-20",
-      "date_to": "2024-09-29"
+      "date_from": "09/20/2024",
+      "date_to": "09/29/2024"
     },
     "apiResponse": {
       "results": "http://example.com/results/5",
@@ -79,8 +79,8 @@
       "url": "https://example.com/challenge-info",
       "description": "This is a team distance challenge with all transport modes",
       "priority": 5,
-      "date_from": "2024-09-20",
-      "date_to": "2024-09-29",
+      "date_from": "09/20/2024",
+      "date_to": "09/29/2024",
       "commute_modes": [
         {
           "id": 1,
@@ -121,8 +121,8 @@
       "competition_type": "frequency",
       "competitor_type": "subsidiary",
       "commute_modes": [1],
-      "date_from": "2024-09-16",
-      "date_to": "2024-09-25"
+      "date_from": "09/16/2024",
+      "date_to": "09/25/2024"
     },
     "apiResponse": {
       "results": "http://example.com/results/6",
@@ -134,8 +134,8 @@
       "url": null,
       "description": "Challenge between company subsidiaries",
       "priority": 6,
-      "date_from": "2024-09-16",
-      "date_to": "2024-09-25",
+      "date_from": "09/16/2024",
+      "date_to": "09/25/2024",
       "commute_modes": [
         {
           "id": 1,

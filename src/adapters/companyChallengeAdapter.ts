@@ -1,8 +1,8 @@
 // libraries
 import { date } from 'quasar';
 
-// config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+// composables
+import { i18n } from 'boot/i18n';
 
 // stores
 import { useTripsStore } from '../stores/trips';
@@ -23,11 +23,15 @@ export const companyChallengeAdapter = {
    */
   convertDateToApiFormat(dateStr: string): string {
     if (!dateStr) return '';
-    const { dateFormatInputMask } = rideToWorkByBikeConfig;
     // parse date
-    const dateObj = date.extractDate(dateStr, dateFormatInputMask);
+    const localizedDateFormatMaskQDate = i18n.global
+      .d(new Date(2025, 11, 29), 'numeric')
+      .replace('2025', 'YYYY')
+      .replace('12', 'MM')
+      .replace('29', 'DD');
+    const dateObj = date.extractDate(dateStr, localizedDateFormatMaskQDate);
     // format date
-    return date.formatDate(dateObj, 'YYYY-MM-DD');
+    return date.formatDate(dateObj, 'MM/DD/YYYY');
   },
 
   /**
