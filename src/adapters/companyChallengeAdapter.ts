@@ -18,12 +18,12 @@ import type { TransportType } from '../components/types/Route';
 export const companyChallengeAdapter = {
   /**
    * Convert date from masked format to YYYY-MM-DD format
-   * @param {string} dateStr - Date in masked format
+   * @param {string} dateStr - Date in localized masked format
    * @returns {string} - Date in YYYY-MM-DD format for API
    */
   convertDateToApiFormat(dateStr: string): string {
     if (!dateStr) return '';
-    // parse date
+    // parse localized date
     const localizedDateFormatMaskQDate = i18n.global
       .d(new Date(2025, 11, 29), 'numeric')
       .replace('2025', 'YYYY')
@@ -31,7 +31,7 @@ export const companyChallengeAdapter = {
       .replace('29', 'DD');
     const dateObj = date.extractDate(dateStr, localizedDateFormatMaskQDate);
     // format date
-    return date.formatDate(dateObj, 'MM/DD/YYYY');
+    return date.formatDate(dateObj, 'YYYY-MM-DD');
   },
 
   /**
