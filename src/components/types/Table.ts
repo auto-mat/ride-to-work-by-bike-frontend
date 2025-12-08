@@ -104,4 +104,5 @@ export enum CompanyChallengeTableColumns {
   competitionType = 'competitionType',
   competitorType = 'competitorType',
   transportTypes = 'transportTypes',
+  actions = 'actions',
 }

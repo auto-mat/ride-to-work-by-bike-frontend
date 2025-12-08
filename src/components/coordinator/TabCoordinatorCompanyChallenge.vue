@@ -17,7 +17,7 @@
 
 // libraries
 import { QForm } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import DialogDefault from '../global/DialogDefault.vue';
@@ -26,6 +26,9 @@ import TableCompanyChallenge from './TableCompanyChallenge.vue';
 
 // stores
 import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
+
+// types
+import type { TableCompanyChallengeRow } from '../../composables/useTableCompanyChallengeData';
 
 export default defineComponent({
   name: 'TabCoordinatorCompanyChallenge',
@@ -37,37 +40,56 @@ export default defineComponent({
   setup() {
     const isDialogOpen = ref(false);
     const formCompanyChallengeRef = ref<typeof QForm | null>(null);
-
-    // Stores
     const adminCompetitionStore = useAdminCompetitionStore();
+
+    const dialogTitle = computed(() => {
+      return adminCompetitionStore.getIsEditMode
+        ? 'coordinator.titleEditCompanyChallenge'
+        : 'coordinator.titleCreateCompanyChallenge';
+    });
+    const submitButtonText = computed(() => {
+      return adminCompetitionStore.getIsEditMode
+        ? 'coordinator.buttonDialogEditCompanyChallenge'
+        : 'coordinator.buttonDialogCreateCompanyChallenge';
+    });
 
     const closeDialog = (): void => {
       isDialogOpen.value = false;
     };
+
     const openDialog = async (): Promise<void> => {
-      // Reset form when opening dialog
+      // Reset form when opening dialog for create
       await adminCompetitionStore.resetCompanyChallengeForm();
       isDialogOpen.value = true;
     };
 
+    const openEditDialog = (row: TableCompanyChallengeRow): void => {
+      adminCompetitionStore.loadCompetitionForEdit(row.id);
+      isDialogOpen.value = true;
+    };
+
     const onSubmit = async (): Promise<void> => {
-      const success = await adminCompetitionStore.createCompanyChallenge();
+      const success = await adminCompetitionStore.submitCompanyChallenge();
       if (success) {
-        adminCompetitionStore.resetCompanyChallengeForm();
+        await adminCompetitionStore.resetCompanyChallengeForm();
         closeDialog();
       }
     };
+
     const onReset = (): void => {
       adminCompetitionStore.resetCompanyChallengeForm();
       closeDialog();
     };
 
     return {
+      dialogTitle,
       formCompanyChallengeRef,
       isDialogOpen,
       onReset,
       onSubmit,
       openDialog,
+      openEditDialog,
+      submitButtonText,
     };
   },
 });
@@ -99,16 +121,14 @@ export default defineComponent({
     <!-- Table: Company challenges -->
     <table-company-challenge
       class="q-mt-lg"
+      @edit-challenge="openEditDialog"
       data-cy="table-company-challenge"
     />
 
-    <!-- Dialog: Create company challenge -->
-    <dialog-default
-      v-model="isDialogOpen"
-      data-cy="dialog-create-company-challenge"
-    >
+    <!-- Dialog: Create/Edit company challenge -->
+    <dialog-default v-model="isDialogOpen" data-cy="dialog-company-challenge">
       <template #title>
-        {{ $t('coordinator.titleCreateCompanyChallenge') }}
+        {{ $t(dialogTitle) }}
       </template>
       <template #content>
         <q-form
@@ -137,7 +157,7 @@ export default defineComponent({
                 color="primary"
                 data-cy="dialog-button-submit"
               >
-                {{ $t('coordinator.buttonDialogCreateCompanyChallenge') }}
+                {{ $t(submitButtonText) }}
               </q-btn>
             </div>
           </div>

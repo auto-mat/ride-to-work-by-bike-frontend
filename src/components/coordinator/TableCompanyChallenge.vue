@@ -28,15 +28,21 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // types
 import { CompanyChallengeTableColumns } from '../../components/types/Table';
+import type { TableCompanyChallengeRow } from '../../composables/useTableCompanyChallengeData';
 
 export default defineComponent({
   name: 'TableCompanyChallenge',
-  setup() {
+  emits: ['edit-challenge'],
+  setup(_, { emit }) {
     const tableRef = ref<QTable | null>(null);
     const { columns, visibleColumns } = useTableCompanyChallenge();
     const { tableData } = useTableCompanyChallengeData();
     const { getRouteIcon } = useRoutes();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
+    const onEditChallenge = (row: TableCompanyChallengeRow): void => {
+      emit('edit-challenge', row);
+    };
 
     // sort by challenge name
     onMounted(() => {
@@ -50,6 +56,7 @@ export default defineComponent({
       columns,
       CompanyChallengeTableColumns,
       getRouteIcon,
+      onEditChallenge,
       paginationLabel,
       tableData,
       tableRef,
@@ -168,6 +175,28 @@ export default defineComponent({
                 :data-cy="`table-company-challenge-transport-icon-${transportType}`"
               />
             </div>
+          </q-td>
+
+          <!-- Actions -->
+          <q-td
+            :key="CompanyChallengeTableColumns.actions"
+            :props="props"
+            data-cy="table-company-challenge-actions"
+          >
+            <q-btn
+              flat
+              round
+              dense
+              icon="edit"
+              color="primary"
+              size="sm"
+              @click="onEditChallenge(props.row)"
+              data-cy="button-edit-company-challenge"
+            >
+              <q-tooltip>{{
+                $t('coordinator.buttonEditCompanyChallenge')
+              }}</q-tooltip>
+            </q-btn>
           </q-td>
         </q-tr>
       </template>

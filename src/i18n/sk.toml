@@ -271,6 +271,8 @@ buttonCreateCompanyChallenge = "Vytvoriť firemnú výzvu"
 buttonCreateInvoice = "Vystaviť novú faktúru"
 buttonDialogCreateCompanyChallenge = "Vytvoriť výzvu"
 buttonDialogCreateInvoice = "Vystaviť faktúru"
+buttonDialogEditCompanyChallenge = "Aktualizovať výzvu"
+buttonEditCompanyChallenge = "Upraviť výzvu"
 buttonExportMembers = "Exportovať členy"
 labelBranches = "pobočiek | pobočka | pobočky | pobočiek"
 labelCityChallenge = "Súťažné mesto"
@@ -291,6 +293,7 @@ textCompanyCoordinatorDisabled = "Portál pre firemných koordinátorov nájdete
 titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateCompanyChallenge = "Vytvoriť firemnú výzvu"
 titleCreateInvoice = "Vystaviť novú faktúru"
+titleEditCompanyChallenge = "Upraviť firemnú výzvu"
 titleBoxes = "Štartové balíčky"
 boxesDeliveryStatus = "doručených|doručený|doručené|doručených"
 
@@ -303,6 +306,11 @@ apiMessageSuccess = "Organizácia bola úspešně vytvorená."
 apiMessageError = "Vytvorenie firemnej výzvy zlyhalo."
 apiMessageErrorWithMessage = "Vytvorenie firemnej výzvy zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Firemná výzva bola úspešne vytvorená."
+
+[updateCompetition]
+apiMessageError = "Aktualizácia firemnej výzvy zlyhala."
+apiMessageErrorWithMessage = "Aktualizácia firemnej výzvy zlyhala. Chyba: {error}"
+apiMessageSuccess = "Firemná výzva bola úspešne aktualizovaná."
 
 [getOrganizations]
 apiMessageError = "Načítanie organizácií zlyhalo."

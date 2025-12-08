@@ -388,3 +388,52 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Intercept competition PUT API call
+ * Provides `@putCompetition` alias
+ * @param {Object} config - App global config
+ * @param {number} competitionId - Competition ID being updated
+ * @param {Object} responseData - Response data object
+ */
+Cypress.Commands.add(
+  'interceptCompetitionPutApi',
+  (config, competitionId, responseData) => {
+    const { apiBase, apiDefaultLang, urlApiCompetition } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiCompetitionLocalized = `${apiBaseUrl}${urlApiCompetition}${competitionId}/`;
+
+    cy.intercept('PUT', urlApiCompetitionLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: responseData,
+    }).as('putCompetition');
+  },
+);
+
+/**
+ * Wait for intercept competition PUT API call and compare request/response object
+ * Wait for `@putCompetition` intercept
+ * @param {Object} requestData - Expected request data object
+ * @param {Object} responseData - Expected response data object
+ */
+Cypress.Commands.add(
+  'waitForCompetitionPutApi',
+  (requestData, responseData) => {
+    cy.wait('@putCompetition').then(({ request, response }) => {
+      // Verify authorization header
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      // Verify request body
+      expect(request.body).to.deep.equal(requestData);
+      // Verify response
+      if (response) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(responseData);
+      }
+    });
+  },
+);

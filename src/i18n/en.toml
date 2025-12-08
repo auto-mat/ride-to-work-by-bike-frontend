@@ -271,6 +271,8 @@ buttonCreateCompanyChallenge = "Create Company Challenge"
 buttonCreateInvoice = "Create new invoice"
 buttonDialogCreateCompanyChallenge = "Create Challenge"
 buttonDialogCreateInvoice = "Create invoice"
+buttonDialogEditCompanyChallenge = "Update Challenge"
+buttonEditCompanyChallenge = "Edit Challenge"
 buttonExportMembers = "Export members"
 labelBranches = "subsidiary | subsidiaries"
 labelCityChallenge = "Competition city"
@@ -291,6 +293,7 @@ textCompanyCoordinatorDisabled = "The management options for company coordinator
 titleCompanyCoordinator = "Company coordinator"
 titleCreateCompanyChallenge = "Create Company Challenge"
 titleCreateInvoice = "Create new invoice"
+titleEditCompanyChallenge = "Edit Company Challenge"
 titleBoxes = "Starter Packages"
 boxesDeliveryStatus = "delivered"
 
@@ -303,6 +306,11 @@ apiMessageSuccess = "Organization was successfully created."
 apiMessageError = "Company challenge creation failed."
 apiMessageErrorWithMessage = "Company challenge creation failed. Error: {error}"
 apiMessageSuccess = "Company challenge was successfully created."
+
+[updateCompetition]
+apiMessageError = "Company challenge update failed."
+apiMessageErrorWithMessage = "Company challenge update failed. Error: {error}"
+apiMessageSuccess = "Company challenge was successfully updated."
 
 [getOrganizations]
 apiMessageError = "Organizations fetching failed."

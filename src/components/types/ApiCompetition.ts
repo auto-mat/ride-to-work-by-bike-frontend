@@ -22,3 +22,7 @@ export interface PostCompetitionResponse {
   date_from: string;
   date_to: string;
 }
+
+export type PutCompetitionPayload = PostCompetitionPayload;
+
+export type PutCompetitionResponse = PostCompetitionResponse;

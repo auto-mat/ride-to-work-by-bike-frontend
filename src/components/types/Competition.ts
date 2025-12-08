@@ -17,6 +17,7 @@ export interface Competition {
   competitor_type: CompetitorType;
   competition_type: CompetitionType;
   url: string | null;
+  description: string | null;
   priority: number;
   date_from: string;
   date_to: string;

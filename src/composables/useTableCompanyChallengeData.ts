@@ -13,6 +13,7 @@ import {
 } from 'src/components/enums/Challenge';
 
 export interface TableCompanyChallengeRow {
+  id: number;
   name: string;
   startDate: string;
   endDate: string;
@@ -30,6 +31,7 @@ function transformCompetitionToRow(
   competition: Competition,
 ): TableCompanyChallengeRow {
   return {
+    id: competition.id,
     name: competition.name,
     startDate: competition.date_from,
     endDate: competition.date_to,

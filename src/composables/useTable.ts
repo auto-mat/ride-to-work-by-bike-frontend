@@ -791,6 +791,14 @@ export const useTableCompanyChallenge = () => {
       required: true,
       sortable: false,
     },
+    {
+      align: 'center',
+      field: CompanyChallengeTableColumns.actions,
+      label: '',
+      name: CompanyChallengeTableColumns.actions,
+      required: true,
+      sortable: false,
+    },
   ];
 
   const tableCompanyChallengeVisibleColumns: string[] = [
@@ -800,6 +808,7 @@ export const useTableCompanyChallenge = () => {
     CompanyChallengeTableColumns.competitionType,
     CompanyChallengeTableColumns.competitorType,
     CompanyChallengeTableColumns.transportTypes,
+    CompanyChallengeTableColumns.actions,
   ];
 
   return {
