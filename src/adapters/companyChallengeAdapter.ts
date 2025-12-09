@@ -45,15 +45,15 @@ export const companyChallengeAdapter = {
    */
   convertDateFromApiFormat(dateStr: string): string {
     if (!dateStr) return '';
-    // Parse API date format (YYYY-MM-DD)
+    // parse API date format (YYYY-MM-DD)
     const dateObj = date.extractDate(dateStr, 'YYYY-MM-DD');
-    // Get localized date format mask
+    // get localized date format
     const localizedDateFormatMaskQDate = i18n.global
       .d(new Date(2025, 11, 29), 'numeric')
       .replace('2025', 'YYYY')
       .replace('12', 'MM')
       .replace('29', 'DD');
-    // Format date to localized format
+    // format date
     return date.formatDate(dateObj, localizedDateFormatMaskQDate);
   },
 
