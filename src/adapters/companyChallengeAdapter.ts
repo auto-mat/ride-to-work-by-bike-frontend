@@ -4,6 +4,9 @@ import { date } from 'quasar';
 // composables
 import { i18n } from 'boot/i18n';
 
+// config
+import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
 // stores
 import { useTripsStore } from '../stores/trips';
 
@@ -15,6 +18,8 @@ import type {
   CommuteMode,
 } from '../components/types/Competition';
 import type { TransportType } from '../components/types/Route';
+
+const { apiDateFormat } = rideToWorkByBikeConfig;
 
 /**
  * Adapter for converting between form state and API payload for company challenge
@@ -35,7 +40,7 @@ export const companyChallengeAdapter = {
       .replace('29', 'DD');
     const dateObj = date.extractDate(dateStr, localizedDateFormatMaskQDate);
     // format date
-    return date.formatDate(dateObj, 'YYYY-MM-DD');
+    return date.formatDate(dateObj, apiDateFormat);
   },
 
   /**
@@ -46,7 +51,7 @@ export const companyChallengeAdapter = {
   convertDateFromApiFormat(dateStr: string): string {
     if (!dateStr) return '';
     // parse API date format (YYYY-MM-DD)
-    const dateObj = date.extractDate(dateStr, 'YYYY-MM-DD');
+    const dateObj = date.extractDate(dateStr, apiDateFormat);
     // get localized date format
     const localizedDateFormatMaskQDate = i18n.global
       .d(new Date(2025, 11, 29), 'numeric')

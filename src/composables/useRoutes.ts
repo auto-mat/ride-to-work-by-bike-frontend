@@ -24,7 +24,7 @@ import type { RouteItem, RouteDay } from 'src/components/types/Route';
 
 export const useRoutes = () => {
   const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
-  const { defaultDistanceZero } = rideToWorkByBikeConfig;
+  const { defaultDistanceZero, apiDateFormat } = rideToWorkByBikeConfig;
 
   /**
    * Returns the icon name corresponding to the given route.
@@ -262,7 +262,6 @@ export const useRoutes = () => {
   ): RouteDay[] => {
     const numberOfDays = date.getDateDiff(endDate, startDate, 'days');
     const days = [] as RouteDay[];
-    const routeDateFormat = 'YYYY-MM-DD';
 
     if (routes) {
       for (let i = 0; i < numberOfDays; i++) {
@@ -280,13 +279,13 @@ export const useRoutes = () => {
           TransportDirection.toWork,
         );
         days.push({
-          id: date.formatDate(currentDate, routeDateFormat),
-          date: date.formatDate(currentDate, routeDateFormat),
+          id: date.formatDate(currentDate, apiDateFormat),
+          date: date.formatDate(currentDate, apiDateFormat),
           fromWork: fromWork
             ? fromWork
             : ({
-                id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.fromWork}`,
-                date: date.formatDate(currentDate, routeDateFormat),
+                id: `${date.formatDate(currentDate, apiDateFormat)}-${TransportDirection.fromWork}`,
+                date: date.formatDate(currentDate, apiDateFormat),
                 transport: null,
                 distance: defaultDistanceZero,
                 direction: TransportDirection.fromWork,
@@ -296,8 +295,8 @@ export const useRoutes = () => {
           toWork: toWork
             ? toWork
             : ({
-                id: `${date.formatDate(currentDate, routeDateFormat)}-${TransportDirection.toWork}`,
-                date: date.formatDate(currentDate, routeDateFormat),
+                id: `${date.formatDate(currentDate, apiDateFormat)}-${TransportDirection.toWork}`,
+                date: date.formatDate(currentDate, apiDateFormat),
                 transport: null,
                 distance: defaultDistanceZero,
                 direction: TransportDirection.toWork,

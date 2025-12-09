@@ -139,6 +139,7 @@ export interface ConfigGlobal {
   mapSourceRtwbb: string;
   mapSourceOsm: string;
   voucherWithoutReward: string;
+  apiDateFormat: string;
 }
 
 export interface ConfigAppVersion {

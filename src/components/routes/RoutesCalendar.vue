@@ -36,6 +36,9 @@ import RouteCalendarPanel from './RouteCalendarPanel.vue';
 import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 import { useRoutes } from '../../composables/useRoutes';
 
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
 // enums
 import { TransportDirection } from '../types/Route';
 
@@ -60,6 +63,7 @@ export default defineComponent({
       return i18n.global.locale;
     });
 
+    const { apiDateFormat } = rideToWorkByBikeConfig;
     const {
       dateCompetitionPhaseFrom,
       dateCompetitionPhaseTo,
@@ -74,7 +78,7 @@ export default defineComponent({
           })
         : null;
       return dateMinusOneDay
-        ? date.formatDate(dateMinusOneDay, 'YYYY-MM-DD')
+        ? date.formatDate(dateMinusOneDay, apiDateFormat)
         : null;
     });
     const disabledAfter = computed((): string | null => {
@@ -82,7 +86,7 @@ export default defineComponent({
         ? date.addToDate(dateLoggingEnd.value, { days: 1 })
         : null;
       return datePlusOneDay
-        ? date.formatDate(datePlusOneDay, 'YYYY-MM-DD')
+        ? date.formatDate(datePlusOneDay, apiDateFormat)
         : null;
     });
 

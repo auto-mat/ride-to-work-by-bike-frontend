@@ -110,6 +110,7 @@ apiBaseIpAddress = "https://ipapi.co/json/"
 apiDefaultVersion = "v1"
 apiVersion2 = "v2"
 apiDefaultLang = "cs"
+apiDateFormat = "YYYY-MM-DD"
 
 urlApiCities = "cities/"
 urlApiCommuteMode = "commute_mode/"
