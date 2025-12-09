@@ -164,7 +164,8 @@ export const useAdminCompetitionStore = defineStore('adminCompetition', {
       this.companyChallengeForm =
         companyChallengeAdapter.fromApiResponse(editedCompetition);
       this.$log?.debug(
-        `Competition <${competitionId}> loaded for editing. Form state: <${JSON.stringify(this.companyChallengeForm, null, 2)}>.`,
+        'Competition <${competitionId}> loaded for editing.' +
+          ` Form state <${JSON.stringify(this.companyChallengeForm, null, 2)}>.`,
       );
     },
     /**
