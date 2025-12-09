@@ -11,9 +11,10 @@
       "competitor_type": "single_user",
       "competition_type": "frequency",
       "url": "http://example.com/competition/1",
+      "description": "Test competition description",
       "priority": 1,
-      "date_from": "2025-09-01",
-      "date_to": "2025-09-30",
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
       "commute_modes": [
         {
           "id": 1,
@@ -37,9 +38,10 @@
       "competitor_type": "team",
       "competition_type": "length",
       "url": null,
+      "description": null,
       "priority": 2,
-      "date_from": "2025-10-01",
-      "date_to": "2025-10-31",
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
       "commute_modes": [
         {
           "id": 1,
@@ -54,7 +56,7 @@
           "slug": "by_foot"
         },
         {
-          "id": 4,
+          "id": 5,
           "name_cs": "Hromadná doprava",
           "name_en": "Public transport",
           "slug": "hromadna"
@@ -69,9 +71,10 @@
       "competitor_type": "single_user",
       "competition_type": "length",
       "url": "http://example.com/competition/3",
+      "description": null,
       "priority": 3,
-      "date_from": "2025-11-01",
-      "date_to": "2025-11-30",
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
       "commute_modes": [
         {
           "id": 1,

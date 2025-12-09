@@ -98,7 +98,7 @@ function coreTests() {
       });
     });
     cy.dataCy('button-create-company-challenge').click();
-    cy.dataCy('dialog-create-company-challenge')
+    cy.dataCy('dialog-company-challenge')
       .should('be.visible')
       .within(() => {
         // dialog header
