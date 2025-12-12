@@ -63,7 +63,7 @@ export const emptyUser: UserLogin = {
 
 export const defaultLoginOptions: Required<LoginOptions> = {
   showSuccessMessage: true,
-  showErrorMessage: false,
+  showErrorMessage: true,
   redirectAfterLogin: true,
 };
 

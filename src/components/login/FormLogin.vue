@@ -88,6 +88,7 @@ export default defineComponent({
     const onSubmitLogin = async () => {
       loginLoading.value = true;
 
+      // uses default login options from store
       await loginStore.login(formLogin);
 
       loginLoading.value = false;

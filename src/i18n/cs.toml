@@ -716,8 +716,8 @@ titleListPrizes = "Možné výhry"
 
 [login]
 apiMessageSuccess = "Přihlášení bylo úspěšné"
-apiMessageError = "Přihlášení se nezdařilo. Prosím, zkuste to znovu později. {error}"
-apiMessageErrorWithMessage = "Přihlášení se nezdařilo. Prosím, zkuste to znovu později. Chyba: {error}"
+apiMessageError = "Přihlášení se nezdařilo. Prosím, zkuste to znovu později."
+apiMessageErrorWithMessage = "Přihlášení se nezdařilo. Chyba: {error}"
 messagePopupFailedToOpen = "Nepodařilo se otevřít okno pro přihlášení přes Google."
 messagePopupClosed = "Okno pro přihlášení přes Google bylo zavřeno před dokončením přihlášení."
 
