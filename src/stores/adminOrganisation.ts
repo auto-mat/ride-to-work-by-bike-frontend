@@ -476,8 +476,11 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.setSelectedPaymentsToApprove([]);
       this.paymentRewards = {};
       this.paymentAmounts = {};
-      // refetch organization structure
-      await this.loadAdminOrganisations();
+      // refetch organization structure and invoices in parallel
+      await Promise.all([
+        this.loadAdminOrganisations(),
+        this.loadAdminInvoices(),
+      ]);
       // check that the approved ids are the same as the selected ids
       const approvedIds = result?.approved_ids || [];
       if (approvedIds.length > 0) {

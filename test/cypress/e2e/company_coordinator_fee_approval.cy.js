@@ -47,6 +47,10 @@ describe('Company coordinator fee approval page', () => {
               test.fixtureAdminOrganisationInitial,
             );
             cy.get('@getAdminOrganisation.all').should('have.length', 1);
+            cy.waitForCoordinatorInvoicesGetApi(
+              'apiGetCoordinatorInvoicesResponse.json',
+            );
+            cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
             // test initial member distribution between tables
             cy.dataCy('table-fee-approval-not-approved').within(() => {
               cy.dataCy('table-fee-approval-row').should(
@@ -110,6 +114,12 @@ describe('Company coordinator fee approval page', () => {
               test.fixtureAdminOrganisationAfterApproval,
             );
             cy.get('@getAdminOrganisation.all').should('have.length', 2);
+            // check that invoices are re-fetched after approval
+            cy.waitForCoordinatorInvoicesGetApi(
+              'apiGetCoordinatorInvoicesResponse.json',
+            );
+            cy.get('@getCoordinatorInvoices.all').should('have.length', 2);
+            // after approval, check that members are in correct tables
             // check that the member is approved
             cy.dataCy('table-fee-approval-not-approved').within(() => {
               cy.dataCy('table-fee-approval-row').should(
