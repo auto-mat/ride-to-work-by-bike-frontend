@@ -1,4 +1,5 @@
 import { colors } from 'quasar';
+import { HttpStatusCode } from 'axios';
 
 import { rgbaColorObjectToString } from 'src/utils';
 import {
@@ -320,6 +321,53 @@ describe('Login page', () => {
           cy.reload();
           // check that we are on homepage
           cy.testRoute(routesConf['home']['path']);
+        });
+      });
+    });
+  });
+
+  context('incorrect login details', () => {
+    beforeEach(() => {
+      /**
+       * In this test, we need to extend the scope of the clock effect to
+       * the `setTimeout` function since we use it in
+       * the `scheduleTokenRefresh` in login store.
+       */
+      cy.clock(systemTimeLoggedIn, ['Date', 'setTimeout']).then((clock) => {
+        cy.wrap(clock).as('clock');
+      });
+      // load config an i18n objects as aliases
+      cy.task('getAppConfig', process).then((config) => {
+        // alias config
+        cy.wrap(config).as('config');
+        cy.visit('#' + routesConf['login']['path']);
+        cy.viewport('macbook-16');
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          // alias i18n
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
+    });
+
+    it('shows error message on incorrect login details', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture('loginResponseIncorrect.json').then((responseLogin) => {
+            cy.interceptLoginApi(
+              config,
+              defLocale,
+              responseLogin,
+              HttpStatusCode.BadRequest,
+            );
+          });
+          // fill in and submit form with incorrect details
+          cy.fillAndSubmitLoginForm();
+          // wait for login API call
+          cy.wait(['@loginRequest']);
+          cy.contains(i18n.global.t('login.apiMessageErrorWithMessage'))
+            .should('exist')
+            .and('be.visible');
         });
       });
     });
