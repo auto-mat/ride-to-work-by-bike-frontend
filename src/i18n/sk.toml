@@ -137,9 +137,9 @@ apiMessageErrorWithMessage = "Načítanie statusu používateľa zlyhalo. Chyba:
 apiMessageSuccess = "Status používateľa bol načítaný."
 
 [getMerchandise]
-apiMessageError = "Načítanie startovních balíčkov zlyhalo."
-apiMessageErrorWithMessage = "Načítanie startovních balíčkov zlyhalo. Chyba: {error}"
-apiMessageSuccess = "Startovní balíčky boli úspešne načítané."
+apiMessageError = "Načítanie štartovacích balíčkov zlyhalo."
+apiMessageErrorWithMessage = "Načítanie štartovacích balíčkov zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Štartovacie balíčky boli úspešne načítané."
 
 [getMyOrganizationAdmin]
 apiMessageError = "Načítanie koordinátora organizácie zlyhalo."
@@ -152,9 +152,9 @@ apiMessageErrorWithMessage = "Načítanie tímu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Tím bol úspešne načítaný."
 
 [getFilteredMerchandise]
-apiMessageError = "Načítanie startovních balíčkov filtrovaných na základe kódu zlyhalo."
-apiMessageErrorWithMessage = "Načítanie startovních balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"
-apiMessageSuccess = "Startovní balíčky filtrované na základe kódu boli úspešne načítané."
+apiMessageError = "Načítanie štartovacích balíčkov filtrovaných na základe kódu zlyhalo."
+apiMessageErrorWithMessage = "Načítanie štartovacích balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Štartovacie balíčky filtrované na základe kódu boli úspešne načítané."
 
 [getHasOrganizationAdmin]
 apiMessageError = "Nepodarilo sa overiť existenciu koordinátora organizácie"
@@ -294,7 +294,7 @@ titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateCompanyChallenge = "Vytvoriť firemnú výzvu"
 titleCreateInvoice = "Vystaviť novú faktúru"
 titleEditCompanyChallenge = "Upraviť firemnú výzvu"
-titleBoxes = "Štartové balíčky"
+titleBoxes = "Štartovacie balíčky"
 boxesDeliveryStatus = "doručených|doručený|doručené|doručených"
 
 [createOrganization]
@@ -466,7 +466,7 @@ messageEmailInvalid = "Vyplňte prosím platný e-mail"
 messageFieldAboveZero = "Prosím, vyplňte kladnú nenulovú hodnotu"
 messageFieldDateOutOfRange = "Dátum musí byť medzi {minDate} a {maxDate}."
 messageFieldRequired = "Pole {fieldName} je povinné"
-messageMerchIdRemoved = "Vybrali ste variantu bez štartovacího balíčku. Prosím prejdite do kroku Zhrnutie, aby sa vaša registrácia uložila."
+messageMerchIdRemoved = "Vybrali ste variantu bez štartovacieho balíčku. Prosím prejdite do kroku Zhrnutie, aby sa vaša registrácia uložila."
 messageNoCompany = "Nenašli sme žiadnu spoločnosť. Skúste hľadať znova alebo vytvorte novú spoločnosť."
 messageNoFamily = "Nenašli sme žiadnu rodinu. Skúste hľadať znova alebo vytvorte novú rodinu."
 messageNoSchool = "Nenašli sme žiadnu školu. Skúste hľadať znova alebo vytvorte novú školu."
@@ -958,7 +958,7 @@ buttonSubmitPayment = "Pokračovať k platbe"
 labelCompanyOrSchool = "Názov spoločnosti alebo školy"
 labelGender = "Výkonnostná kategória"
 labelPaymentSubject = "Platba vstupného poplatku"
-labelPaymentWithReward = "Platba se štartovacím balíčkem"
+labelPaymentWithReward = "Platba so štartovacím balíčkom"
 labelPaymentAmount = "Výška vstupného poplatku"
 labelPaymentSubjectCompany = "Spoločnosť platí za mňa"
 labelPaymentSubjectIndividual = "Začiatočný poplatok zaplatím ja"
