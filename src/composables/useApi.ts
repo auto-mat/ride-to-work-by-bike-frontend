@@ -210,7 +210,8 @@ export const useApi = (
         if (error.response?.data)
           errorMessage += `. ${Object.values(error.response?.data).join('. ')}`;
         const apiErrorMessage = getResponseDataErrorMessage(error);
-        if (apiErrorMessage) errorMessage += `. ${apiErrorMessage}`;
+        if (apiErrorMessage && !errorMessage.includes(apiErrorMessage))
+          errorMessage += `. ${apiErrorMessage}`;
         Notify.create({
           message: i18n.global.t(
             `${translationKey}.apiMessageErrorWithMessage`,
