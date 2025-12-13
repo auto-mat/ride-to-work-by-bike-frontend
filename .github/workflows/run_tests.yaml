@@ -132,7 +132,7 @@ jobs:
         run: npx quasar build
 
       - name: Archive runned cypress tests snapshots result
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: cypress-tests-snapshots-${{ matrix.os }}
@@ -141,7 +141,7 @@ jobs:
           retention-days: 3
 
       - name: Archive runned cypress tests videos result
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: cypress-tests-videos-${{ matrix.os }}
@@ -150,7 +150,7 @@ jobs:
           retention-days: 3
 
       - name: Archive runned cypress tests log files
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() }}
         with:
           name: cypress-tests-log-files-${{ matrix.os }}
