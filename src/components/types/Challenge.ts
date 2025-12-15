@@ -46,6 +46,7 @@ export interface Campaign {
   year: string;
   campaign_type: string;
   max_team_members: number;
+  description: string;
 }
 
 export interface ThisCampaignResponse {

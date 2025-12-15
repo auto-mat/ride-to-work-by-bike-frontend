@@ -22,6 +22,7 @@ import { useRouter } from 'vue-router';
 import ShowCurrentDatetime from 'components/debug/ShowCurrentDatetime.vue';
 import { routesConf } from '../../router/routes_conf';
 import { useChallengeStore } from '../../stores/challenge';
+import { i18n } from '../../boot/i18n';
 
 import { PhaseType } from '../types/Challenge';
 import { Logger } from '../types/Logger';
@@ -43,9 +44,25 @@ export default defineComponent({
     );
     const router = useRouter();
     const challengeStore = useChallengeStore();
+    //const registerChallengeStore = useRegisterChallengeStore();
     const isThisCampaignPhaseTypeCompetition = computed(() =>
       challengeStore.getIsChallengeInPhase(PhaseType.competition),
     );
+    const campaignDescription = computed(() => {
+      const description = challengeStore.getDescription;
+      if (description) {
+        const titleRegex = /<h1>(.*)<\/h1>/g;
+        const title = titleRegex.exec(description);
+        return {
+          title: title[1],
+          text: description.substring(title[0].length, description.length),
+        };
+      }
+      return {
+        title: i18n.global.t('challengeInactive.title'),
+        text: i18n.global.t('challengeInactive.text'),
+      };
+    });
     const checkIsThisCampaignPhaseTypeCompetition = async (): Promise<void> => {
       logger?.debug(
         `Check if this campaign phase type is <${PhaseType.competition}>.`,
@@ -80,7 +97,6 @@ export default defineComponent({
     onMounted(() => {
       checkIsThisCampaignPhaseTypeCompetition();
     });
-
     // once this campaign phase type is competition, redirect to home page
     watch(isThisCampaignPhaseTypeCompetition, (newValue) => {
       if (newValue) {
@@ -91,8 +107,19 @@ export default defineComponent({
         router.push(routesConf['home']['path']);
       }
     });
-
+    // If locale lang is changed, we need reload this campaign description field value,
+    // beacuse description field value is localized on the bakend DB side
+    watch(
+      () => i18n.global.locale,
+      () => {
+        logger?.info(
+          'Locale lang is changed, reload this campaign description field value.',
+        );
+        challengeStore.loadPhaseSet();
+      },
+    );
     return {
+      campaignDescription,
       white,
       whiteOpacity20,
     };
@@ -129,14 +156,14 @@ export default defineComponent({
         class="text-h5 text-bold q-my-none"
         data-cy="challenge-inactive-title"
       >
-        {{ $t('challengeInactive.title') }}
+        {{ campaignDescription.title }}
       </h1>
     </div>
     <!-- Text -->
     <div
       data-cy="challenge-inactive-text"
       class="q-mb-xl"
-      v-html="$t('challengeInactive.text')"
+      v-html="campaignDescription.text"
     />
   </div>
 </template>

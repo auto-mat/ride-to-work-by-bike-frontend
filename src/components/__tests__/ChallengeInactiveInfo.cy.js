@@ -65,26 +65,32 @@ function coreTests() {
   it('renders component', () => {
     cy.wait('@thisCampaignRequest');
     cy.dataCy(selectorChallengeInactiveInfo).should('be.visible');
-    // title
-    cy.dataCy(selectorChallengeInactiveTitle)
-      .should('be.visible')
-      .and('have.css', 'font-size', `${fontSizeTitle}px`)
-      .and('have.css', 'font-weight', `${fontWeightTitle}`)
-      .and('have.color', white)
-      .and('contain', i18n.global.t('challengeInactive.title'));
-    // text
-    cy.dataCy(selectorChallengeInactiveText)
-      .should('be.visible')
-      .and('have.css', 'font-size', `${fontSizeText}px`)
-      .and('have.css', 'font-weight', `${fontWeightText}`)
-      .then(($el) => {
-        const content = $el.text();
-        cy.stripHtmlTags(i18n.global.t('challengeInactive.text')).then(
-          (text) => {
+    cy.fixture('apiGetThisCampaign').then((campaign) => {
+      const description = campaign['results'][0]['description'];
+      const titleRegex = /<h1>(.*)<\/h1>/g;
+      const title = titleRegex.exec(description);
+      // title
+      cy.dataCy(selectorChallengeInactiveTitle)
+        .should('be.visible')
+        .and('have.css', 'font-size', `${fontSizeTitle}px`)
+        .and('have.css', 'font-weight', `${fontWeightTitle}`)
+        .and('have.color', white)
+        .and('contain', title[1]);
+      // text
+      cy.dataCy(selectorChallengeInactiveText)
+        .should('be.visible')
+        .and('have.css', 'font-size', `${fontSizeText}px`)
+        .and('have.css', 'font-weight', `${fontWeightText}`)
+        .then(($el) => {
+          const content = $el.text();
+          cy.stripHtmlTags(
+            description.substring(title[0].length, description.length),
+          ).then((text) => {
             expect(content).to.equal(text);
-          },
-        );
-      });
+          });
+        });
+    });
+
     // graphics
     cy.dataCy(selectorChallengeInactiveGraphics).should('be.visible');
     // avatar
