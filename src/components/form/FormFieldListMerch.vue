@@ -334,10 +334,10 @@ export default defineComponent({
       registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
     };
 
-    /**
-     * Load "I don't want merchandise" ID from API or cache
-     */
     let iDontWantMerchandiseCachedId: number | null = null;
+    /**
+     * Load "no merch" merch ID and set it into the store.
+     */
     const loadNoMerchId = async function (): Promise<void> {
       if (!iDontWantMerchandiseCachedId) {
         logger?.info("Get 'I don't want any merchandise' ID from the API.");
@@ -363,7 +363,7 @@ export default defineComponent({
      */
     const onCheckboxUpdate = function (val: boolean): void {
       if (optionsEmpty.value) {
-        logger?.debug('Checkbox update blocked: checkbox is disabled.');
+        logger?.debug('Checkbox update aborted: checkbox is disabled.');
         return;
       }
       if (val) {
