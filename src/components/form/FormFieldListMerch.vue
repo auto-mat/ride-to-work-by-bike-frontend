@@ -205,7 +205,6 @@ export default defineComponent({
           ` optionsEmpty <${optionsEmpty.value}>,` +
           ` isPriceLevelEmpty <${isPriceLevelEmpty}>.`,
       );
-      // Hide banner if priceLevel is empty, regardless of merch availability
       return optionsEmpty.value && !isPriceLevelEmpty;
     });
 
