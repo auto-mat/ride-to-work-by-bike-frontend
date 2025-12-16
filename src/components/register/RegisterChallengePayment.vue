@@ -105,6 +105,23 @@ export default defineComponent({
     const primaryLightColor = lighten(primaryColor, 90);
 
     const optionsPaymentSubject = computed((): FormOption[] => {
+      const isPriceLevelEmpty = challengeStore.getPriceLevel.length === 0;
+      logger?.debug(`Price level empty: <${isPriceLevelEmpty}>.`);
+
+      if (isPriceLevelEmpty) {
+        logger?.debug('Returning only individual payment subject option.');
+        return [
+          {
+            label: i18n.global.t(
+              'register.challenge.labelPaymentSubjectIndividual',
+            ),
+            value: PaymentSubject.individual,
+          },
+        ];
+      }
+
+      // Existing behavior - return all 4 options
+      logger?.debug('Returning all payment subject options.');
       return [
         {
           label: i18n.global.t(

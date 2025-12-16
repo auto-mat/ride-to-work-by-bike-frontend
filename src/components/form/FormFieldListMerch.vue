@@ -56,6 +56,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from 'src/stores/challenge';
 
 // enums
 import { Gender } from '../types/Profile';
@@ -106,6 +107,7 @@ export default defineComponent({
 
     // get merchandise data
     const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
 
     // load merchandise on mount
     onMounted(async () => {
@@ -183,6 +185,17 @@ export default defineComponent({
         optionsMale.value.length === 0 &&
         optionsUnisex.value.length === 0
       );
+    });
+
+    const showMerchUnavailableBanner = computed((): boolean => {
+      const isPriceLevelEmpty = challengeStore.getPriceLevel.length === 0;
+      logger?.debug(
+        'Show merch unavailable banner check:' +
+          ` optionsEmpty <${optionsEmpty.value}>,` +
+          ` isPriceLevelEmpty <${isPriceLevelEmpty}>.`,
+      );
+      // Hide banner if priceLevel is empty, regardless of merch availability
+      return optionsEmpty.value && !isPriceLevelEmpty;
     });
 
     // get current item's options
@@ -386,6 +399,7 @@ export default defineComponent({
       optionsMale,
       optionsUnisex,
       optionsEmpty,
+      showMerchUnavailableBanner,
       phone,
       selectedOption,
       selectedSize,
@@ -408,7 +422,7 @@ export default defineComponent({
 <template>
   <!-- Message: Merch unavailable -->
   <q-banner
-    v-if="optionsEmpty"
+    v-if="showMerchUnavailableBanner"
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-merch-unavailable"
   >

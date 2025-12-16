@@ -285,6 +285,16 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
     },
     getIsPaymentComplete(): boolean {
+      const challengeStore = useChallengeStore();
+
+      // complete - no price levels configured (free registration)
+      if (challengeStore.getPriceLevel.length === 0) {
+        this.$log?.debug(
+          'Payment complete: priceLevel array is empty (free registration).',
+        );
+        return true;
+      }
+
       const isPaymentStateSuccess = [
         PaymentState.noAdmission,
         PaymentState.done,
