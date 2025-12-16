@@ -4389,10 +4389,12 @@ describe('Register Challenge page', () => {
         cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
         cy.dataCy('form-merch-phone-input').should('be.visible');
         cy.dataCy('phone-opt-in').should('be.visible');
-        // go to next step is disabled (validation)
-        cy.dataCy('step-6-continue').should('be.disabled');
-        // check the "no merch" checkbox
-        cy.dataCy('form-merch-no-merch-checkbox').click();
+        // "no merch" checkbox auto-selected
+        cy.dataCy('form-merch-no-merch-checkbox')
+          .should('exist')
+          .and('be.visible')
+          .get('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--truthy');
         // go to next step is enabled
         cy.dataCy('step-6-continue').should('be.enabled');
       });
