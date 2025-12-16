@@ -6,6 +6,7 @@ import { i18n } from '../../boot/i18n';
 import { Gender } from 'components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { useChallengeStore } from '../../stores/challenge';
 import { defaultLocale } from 'src/i18n/def_locale';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import {
@@ -422,6 +423,12 @@ describe('<FormFieldListMerch>', () => {
     });
 
     it('does not show merch options', () => {
+      // banner merch unavailable show only when price_level array is not empty
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPriceLevel(response.results[0].price_level);
+        });
+      });
       cy.dataCy('text-merch-unavailable')
         .should('be.visible')
         .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));

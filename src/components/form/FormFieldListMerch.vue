@@ -112,6 +112,17 @@ export default defineComponent({
     // load merchandise on mount
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
+
+      // auto-select "no merch" when merchandise options are empty
+      if (optionsEmpty.value) {
+        logger?.debug(
+          'Merchandise options empty, auto-select "no merch" option.',
+        );
+        isNotMerch.value = true;
+        await loadNoMerchId();
+        return;
+      }
+
       // if merch ID is set, select the corresponding item
       if (registerChallengeStore.getMerchId) {
         logger?.debug(
@@ -325,31 +336,39 @@ export default defineComponent({
     };
 
     /**
+     * Load "I don't want merchandise" ID from API or cache
+     */
+    let iDontWantMerchandiseCachedId: number | null = null;
+    const loadNoMerchId = async function (): Promise<void> {
+      if (!iDontWantMerchandiseCachedId) {
+        logger?.info("Get 'I don't want any merchandise' ID from the API.");
+        await registerChallengeStore.loadFilteredMerchandiseToStore(
+          logger,
+          rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
+        );
+        iDontWantMerchandiseCachedId = registerChallengeStore.getMerchId;
+        logger?.debug(
+          `Save 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> into cache.`,
+        );
+      } else {
+        logger?.debug(
+          `Use 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> from the cache.`,
+        );
+        registerChallengeStore.setMerchId(iDontWantMerchandiseCachedId);
+      }
+    };
+
+    /**
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
-    let iDontWantMerchandiseCachedId: number | null = null;
     const onCheckboxUpdate = function (val: boolean): void {
+      if (optionsEmpty.value) {
+        logger?.debug('Checkbox update blocked: checkbox is disabled.');
+        return;
+      }
       if (val) {
-        if (!iDontWantMerchandiseCachedId) {
-          logger?.info("Get 'I don't want any merchandise' ID from the API.");
-          registerChallengeStore
-            .loadFilteredMerchandiseToStore(
-              logger,
-              rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
-            )
-            .then(() => {
-              iDontWantMerchandiseCachedId = registerChallengeStore.getMerchId;
-              logger?.debug(
-                `Save 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> into cache.`,
-              );
-            });
-        } else {
-          logger?.debug(
-            `Use 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> from the cache.`,
-          );
-          registerChallengeStore.setMerchId(iDontWantMerchandiseCachedId);
-        }
+        loadNoMerchId();
       } else {
         nextTick(() => {
           // if no merch is selected, reset selected size
@@ -436,6 +455,7 @@ export default defineComponent({
         v-model="isNotMerch"
         :val="true"
         color="primary"
+        :disable="optionsEmpty"
         @update:model-value="onCheckboxUpdate"
         data-cy="form-merch-no-merch-checkbox"
       />
