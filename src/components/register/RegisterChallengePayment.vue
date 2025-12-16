@@ -104,13 +104,6 @@ export default defineComponent({
     const primaryColor = getPaletteColor('primary');
     const primaryLightColor = lighten(primaryColor, 90);
 
-    // Check if price level is empty (free registration)
-    const isPriceLevelEmpty = computed((): boolean => {
-      const isEmpty = challengeStore.getPriceLevel.length === 0;
-      logger?.debug(`Price level empty check: <${isEmpty}>.`);
-      return isEmpty;
-    });
-
     const optionsPaymentSubject = computed((): FormOption[] => {
       return [
         {
@@ -636,7 +629,6 @@ export default defineComponent({
       donationAmount,
       formRegisterCoordinator,
       hasOrganizationAdmin,
-      isPriceLevelEmpty,
       isRegistrationCoordinator,
       optionsPaymentAmountComputed,
       optionsPaymentSubject,
@@ -666,248 +658,230 @@ export default defineComponent({
 
 <template>
   <div data-cy="register-challenge-payment">
-    <!-- Banner: Free registration (shown when priceLevel is empty) -->
+    <!-- Text: Challenge organizer -->
+    <div
+      v-html="$t('register.challenge.textPaymentOrganizer')"
+      data-cy="text-payment-organizer"
+    />
+    <!-- Banner: Payment minimum -->
     <q-banner
-      v-if="isPriceLevelEmpty"
-      class="q-pa-md text-primary"
+      class="q-my-lg q-pa-md text-primary"
       :style="{ backgroundColor: primaryLightColor, borderRadius }"
-      data-cy="banner-free-registration"
+      data-cy="banner-payment-minimum"
     >
       <div
-        v-html="$t('register.challenge.textFreeRegistration')"
-        data-cy="text-free-registration"
+        v-html="
+          $t('register.challenge.textPaymentMinimum', {
+            amount: formatPriceCurrency(defaultPaymentAmountMin, Currency.CZK),
+          })
+        "
       />
     </q-banner>
-    <!-- Payment form (hidden when priceLevel is empty) -->
-    <div v-if="!isPriceLevelEmpty">
-      <!-- Text: Challenge organizer -->
-      <div
-        v-html="$t('register.challenge.textPaymentOrganizer')"
-        data-cy="text-payment-organizer"
-      />
-      <!-- Banner: Payment minimum -->
-      <q-banner
-        class="q-my-lg q-pa-md text-primary"
-        :style="{ backgroundColor: primaryLightColor, borderRadius }"
-        data-cy="banner-payment-minimum"
+    <!-- Input: Payment subject -->
+    <div class="q-my-lg">
+      <!-- Label -->
+      <label
+        for="paymentType"
+        class="text-caption text-weight-bold text-grey-10"
+        data-cy="form-field-payment-subject-label"
       >
+        {{ $t('register.challenge.labelPaymentSubject') }}
+      </label>
+      <!-- Radio group: Subject -->
+      <form-field-radio-required
+        inline
+        id="paymentType"
+        v-model="selectedPaymentSubject"
+        :options="optionsPaymentSubject"
+        class="q-mt-sm text-grey-10"
+        data-cy="form-field-payment-subject"
+      />
+    </div>
+    <!-- Input: Voucher -->
+    <div v-if="showVoucherElement()">
+      <form-field-voucher />
+    </div>
+    <!-- Input: Payment amount -->
+    <div v-if="showPaymentAmountOptionsElement()" class="q-my-md">
+      <!-- Label -->
+      <label
+        for="paymentAmount"
+        class="text-caption text-weight-bold text-grey-10"
+        data-cy="form-field-payment-amount-label"
+      >
+        {{ $t('register.challenge.labelPaymentAmount') }}
+      </label>
+      <!-- Radio group: Amount -->
+      <form-field-radio-required
+        inline
+        id="paymentAmount"
+        v-model="selectedPaymentAmount"
+        :options="optionsPaymentAmountComputed"
+        class="q-mt-sm"
+        data-cy="form-field-payment-amount"
+      />
+    </div>
+    <!-- Input: Company -->
+    <div v-if="showCompanySchoolElement()">
+      <q-separator class="q-my-lg" />
+      <!-- Input: Company -->
+      <form-field-company
+        v-model="selectedCompany"
+        :organization-type="organizationType"
+        class="text-grey-10"
+        data-cy="form-field-company"
+      />
+      <!-- Text: Company approval -->
+      <p
+        class="q-mt-lg text-grey-10"
+        data-cy="payment-company-text"
+        v-html="$t('register.challenge.textOrganization')"
+      />
+    </div>
+    <!-- Input: Custom amount -->
+    <div v-if="showCustomPaymentAmountElement()">
+      <form-field-slider-number
+        v-model="selectedPaymentAmountCustom"
+        :min="paymentAmountMin"
+        :max="paymentAmountMax"
+        class="text-grey-10"
+        data-cy="form-field-payment-amount-custom"
+      />
+    </div>
+    <!-- Input: Donation -->
+    <div v-if="showDonationElement()">
+      <form-field-donation
+        class="q-mt-md"
+        @update:donation="onUpdateDonation"
+        data-cy="form-field-donation"
+      />
+    </div>
+    <!-- Section: Register coordinator -->
+    <div v-if="showOrganizationAdminElement()" class="q-mt-md">
+      <!-- Checkbox: Register coordinator -->
+      <q-checkbox
+        dense
+        v-model="isRegistrationCoordinator"
+        color="primary"
+        :true-value="true"
+        :false-value="false"
+        class="text-primary text-weight-bold"
+        data-cy="register-coordinator-checkbox"
+      >
+        {{ $t('companyCoordinator.labelRegisterCoordinator') }}
+      </q-checkbox>
+      <div v-if="isRegistrationCoordinator">
         <div
+          class="q-mt-lg"
           v-html="
-            $t('register.challenge.textPaymentMinimum', {
-              amount: formatPriceCurrency(
-                defaultPaymentAmountMin,
-                Currency.CZK,
-              ),
+            $t('companyCoordinator.textBecomeCoordinator', {
+              organizationName: selectedOrganizationName,
             })
           "
+          data-cy="register-coordinator-text"
         />
-      </q-banner>
-      <!-- Input: Payment subject -->
-      <div class="q-my-lg">
-        <!-- Label -->
-        <label
-          for="paymentType"
-          class="text-caption text-weight-bold text-grey-10"
-          data-cy="form-field-payment-subject-label"
-        >
-          {{ $t('register.challenge.labelPaymentSubject') }}
-        </label>
-        <!-- Radio group: Subject -->
-        <form-field-radio-required
-          inline
-          id="paymentType"
-          v-model="selectedPaymentSubject"
-          :options="optionsPaymentSubject"
-          class="q-mt-sm text-grey-10"
-          data-cy="form-field-payment-subject"
-        />
-      </div>
-      <!-- Input: Voucher -->
-      <div v-if="showVoucherElement()">
-        <form-field-voucher />
-      </div>
-      <!-- Input: Payment amount -->
-      <div v-if="showPaymentAmountOptionsElement()" class="q-my-md">
-        <!-- Label -->
-        <label
-          for="paymentAmount"
-          class="text-caption text-weight-bold text-grey-10"
-          data-cy="form-field-payment-amount-label"
-        >
-          {{ $t('register.challenge.labelPaymentAmount') }}
-        </label>
-        <!-- Radio group: Amount -->
-        <form-field-radio-required
-          inline
-          id="paymentAmount"
-          v-model="selectedPaymentAmount"
-          :options="optionsPaymentAmountComputed"
-          class="q-mt-sm"
-          data-cy="form-field-payment-amount"
-        />
-      </div>
-      <!-- Input: Company -->
-      <div v-if="showCompanySchoolElement()">
-        <q-separator class="q-my-lg" />
-        <!-- Input: Company -->
-        <form-field-company
-          v-model="selectedCompany"
-          :organization-type="organizationType"
-          class="text-grey-10"
-          data-cy="form-field-company"
-        />
-        <!-- Text: Company approval -->
-        <p
-          class="q-mt-lg text-grey-10"
-          data-cy="payment-company-text"
-          v-html="$t('register.challenge.textOrganization')"
-        />
-      </div>
-      <!-- Input: Custom amount -->
-      <div v-if="showCustomPaymentAmountElement()">
-        <form-field-slider-number
-          v-model="selectedPaymentAmountCustom"
-          :min="paymentAmountMin"
-          :max="paymentAmountMax"
-          class="text-grey-10"
-          data-cy="form-field-payment-amount-custom"
-        />
-      </div>
-      <!-- Input: Donation -->
-      <div v-if="showDonationElement()">
-        <form-field-donation
-          class="q-mt-md"
-          @update:donation="onUpdateDonation"
-          data-cy="form-field-donation"
-        />
-      </div>
-      <!-- Section: Register coordinator -->
-      <div v-if="showOrganizationAdminElement()" class="q-mt-md">
-        <!-- Checkbox: Register coordinator -->
-        <q-checkbox
-          dense
-          v-model="isRegistrationCoordinator"
-          color="primary"
-          :true-value="true"
-          :false-value="false"
-          class="text-primary text-weight-bold"
-          data-cy="register-coordinator-checkbox"
-        >
-          {{ $t('companyCoordinator.labelRegisterCoordinator') }}
-        </q-checkbox>
-        <div v-if="isRegistrationCoordinator">
-          <div
-            class="q-mt-lg"
-            v-html="
-              $t('companyCoordinator.textBecomeCoordinator', {
-                organizationName: selectedOrganizationName,
-              })
-            "
-            data-cy="register-coordinator-text"
+        <!-- Section: Inputs -->
+        <div class="row q-col-gutter-md q-mt-none">
+          <!-- Input: job title -->
+          <form-field-text-required
+            v-model="formRegisterCoordinator.jobTitle"
+            name="form-job-title"
+            label="form.labelJobTitle"
+            label-short="form.labelJobTitleShort"
+            class="col-12 col-sm-6"
+            data-cy="register-coordinator-job-title"
           />
-          <!-- Section: Inputs -->
-          <div class="row q-col-gutter-md q-mt-none">
-            <!-- Input: job title -->
-            <form-field-text-required
-              v-model="formRegisterCoordinator.jobTitle"
-              name="form-job-title"
-              label="form.labelJobTitle"
-              label-short="form.labelJobTitleShort"
-              class="col-12 col-sm-6"
-              data-cy="register-coordinator-job-title"
-            />
-            <!-- Input: phone -->
-            <form-field-phone
-              v-model="formRegisterCoordinator.phone"
-              class="col-12 col-sm-6"
-              data-cy="register-coordinator-phone"
-            />
-          </div>
-          <!-- Input: confirm responsibility -->
-          <div data-cy="register-coordinator-responsibility">
-            <q-field
+          <!-- Input: phone -->
+          <form-field-phone
+            v-model="formRegisterCoordinator.phone"
+            class="col-12 col-sm-6"
+            data-cy="register-coordinator-phone"
+          />
+        </div>
+        <!-- Input: confirm responsibility -->
+        <div data-cy="register-coordinator-responsibility">
+          <q-field
+            dense
+            borderless
+            hide-bottom-space
+            :model-value="formRegisterCoordinator.responsibility"
+            :rules="[
+              (val) =>
+                !!val ||
+                $t('register.coordinator.form.messageResponsibilityRequired'),
+            ]"
+          >
+            <!-- Checkbox: responsibility -->
+            <q-checkbox
               dense
-              borderless
-              hide-bottom-space
-              :model-value="formRegisterCoordinator.responsibility"
-              :rules="[
-                (val) =>
-                  !!val ||
-                  $t('register.coordinator.form.messageResponsibilityRequired'),
-              ]"
+              v-model="formRegisterCoordinator.responsibility"
+              color="primary"
+              :true-value="true"
+              :false-value="false"
+              class="text-grey-10"
             >
-              <!-- Checkbox: responsibility -->
-              <q-checkbox
-                dense
-                v-model="formRegisterCoordinator.responsibility"
-                color="primary"
-                :true-value="true"
-                :false-value="false"
-                class="text-grey-10"
-              >
-                <span>{{
-                  $t('register.coordinator.form.labelResponsibility')
-                }}</span>
-              </q-checkbox>
-            </q-field>
-          </div>
-          <!-- Input: confirm consent -->
-          <div class="q-mt-sm" data-cy="register-coordinator-terms">
-            <q-field
+              <span>{{
+                $t('register.coordinator.form.labelResponsibility')
+              }}</span>
+            </q-checkbox>
+          </q-field>
+        </div>
+        <!-- Input: confirm consent -->
+        <div class="q-mt-sm" data-cy="register-coordinator-terms">
+          <q-field
+            dense
+            borderless
+            hide-bottom-space
+            :model-value="formRegisterCoordinator.terms"
+            :rules="[
+              (val) =>
+                !!val || $t('register.coordinator.form.messageTermsRequired'),
+            ]"
+          >
+            <!-- Checkbox: terms -->
+            <q-checkbox
               dense
-              borderless
-              hide-bottom-space
-              :model-value="formRegisterCoordinator.terms"
-              :rules="[
-                (val) =>
-                  !!val || $t('register.coordinator.form.messageTermsRequired'),
-              ]"
+              id="form-register-coordinator-terms"
+              v-model="formRegisterCoordinator.terms"
+              color="primary"
+              :true-value="true"
+              :false-value="false"
+              rules="required"
+              class="text-grey-10"
             >
-              <!-- Checkbox: terms -->
-              <q-checkbox
-                dense
-                id="form-register-coordinator-terms"
-                v-model="formRegisterCoordinator.terms"
-                color="primary"
-                :true-value="true"
-                :false-value="false"
-                rules="required"
-                class="text-grey-10"
-              >
-                <!-- Default slot: label -->
-                <span>
-                  {{ $t('register.coordinator.form.labelPrivacyConsent') }}
-                  <!-- Link: terms -->
-                  <a
-                    :href="urlAppDataPrivacyPolicy"
-                    target="_blank"
-                    class="text-primary"
-                    @click.stop
-                    data-cy="form-terms-link"
-                  >
-                    {{ $t('register.coordinator.form.linkPrivacyConsent') }} </a
-                  >.
-                </span>
-              </q-checkbox>
-            </q-field>
-          </div>
+              <!-- Default slot: label -->
+              <span>
+                {{ $t('register.coordinator.form.labelPrivacyConsent') }}
+                <!-- Link: terms -->
+                <a
+                  :href="urlAppDataPrivacyPolicy"
+                  target="_blank"
+                  class="text-primary"
+                  @click.stop
+                  data-cy="form-terms-link"
+                >
+                  {{ $t('register.coordinator.form.linkPrivacyConsent') }} </a
+                >.
+              </span>
+            </q-checkbox>
+          </q-field>
         </div>
       </div>
-      <!-- Section: Total price -->
-      <template v-if="computedCurrentValue">
-        <q-separator class="q-my-lg" />
-        <div class="flex gap-8 items-baseline" data-cy="total-price">
-          <span class="text-grey-8" data-cy="total-price-label">
-            {{ $t('global.total') }}:
-          </span>
-          <span
-            class="text-h5 text-grey-10 text-weight-bold"
-            data-cy="total-price-value"
-          >
-            {{ formatPriceCurrency(computedCurrentValue, Currency.CZK) }}
-          </span>
-        </div>
-      </template>
     </div>
+    <!-- Section: Total price -->
+    <template v-if="computedCurrentValue">
+      <q-separator class="q-my-lg" />
+      <div class="flex gap-8 items-baseline" data-cy="total-price">
+        <span class="text-grey-8" data-cy="total-price-label">
+          {{ $t('global.total') }}:
+        </span>
+        <span
+          class="text-h5 text-grey-10 text-weight-bold"
+          data-cy="total-price-value"
+        >
+          {{ formatPriceCurrency(computedCurrentValue, Currency.CZK) }}
+        </span>
+      </div>
+    </template>
   </div>
 </template>
