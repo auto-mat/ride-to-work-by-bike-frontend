@@ -98,9 +98,11 @@ export default defineComponent({
       );
     });
 
+    const { challengeAllowsCoordinators } = rideToWorkByBikeConfig;
     const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
     return {
+      challengeAllowsCoordinators,
       genderOptions,
       isUserOrganizationAdmin,
       personalDetails,
@@ -174,7 +176,7 @@ export default defineComponent({
       </div>
       <!-- Link: Register as coordinator -->
       <div
-        v-if="!isUserOrganizationAdmin"
+        v-if="!isUserOrganizationAdmin && challengeAllowsCoordinators"
         class="col-12"
         data-cy="form-personal-details-register-as-coordinator"
       >
