@@ -18,7 +18,7 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
-const { challengeAllowsCoordinators } = rideToWorkByBikeConfig;
+const { challengeAllowRegisterOrganizationAdmin } = rideToWorkByBikeConfig;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
@@ -91,7 +91,7 @@ describe('<FormPersonalDetails>', () => {
       );
     });
 
-    if (challengeAllowsCoordinators) {
+    if (challengeAllowRegisterOrganizationAdmin === 'enable') {
       it('renders link to register as coordinator', () => {
         cy.dataCy('form-personal-details-register-as-coordinator').should(
           'be.visible',
