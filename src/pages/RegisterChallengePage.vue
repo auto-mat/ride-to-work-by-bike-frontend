@@ -366,6 +366,10 @@ export default defineComponent({
 
     const { isBeforeCompetitionStart } = useCompetitionPhase();
 
+    const hostnameUrlDonateJanuaryChallenge = new URL(
+      urlDonateJanuaryChallenge,
+    );
+
     return {
       borderRadius,
       contactEmail,
@@ -423,6 +427,7 @@ export default defineComponent({
       competitionStart,
       secondsToWait,
       urlDonateJanuaryChallenge,
+      hostnameUrlDonateJanuaryChallenge,
     };
   },
 });
@@ -523,6 +528,7 @@ export default defineComponent({
                   v-html="
                     $t('register.challenge.textFreeRegistration', {
                       url: urlDonateJanuaryChallenge,
+                      linkText: hostnameUrlDonateJanuaryChallenge.hostname,
                     })
                   "
                   data-cy="text-free-registration"
