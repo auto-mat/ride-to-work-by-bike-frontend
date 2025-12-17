@@ -113,10 +113,10 @@ export default defineComponent({
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
 
-      // auto-select "no merch" when merchandise options are empty
+      // Automatic selection "no merch" when merchandise options are empty
       if (optionsEmpty.value) {
-        logger?.debug(
-          'Merchandise options empty, auto-select "no merch" option.',
+        logger?.info(
+          'Merchandise options empty, automatic selection "no merch" option.',
         );
         isNotMerch.value = true;
         await loadNoMerchId();
@@ -201,7 +201,7 @@ export default defineComponent({
     const showMerchUnavailableBanner = computed((): boolean => {
       const isPriceLevelEmpty = challengeStore.getPriceLevel.length === 0;
       logger?.debug(
-        'Show merch unavailable banner check:' +
+        'Show merch unavailable banner check' +
           ` optionsEmpty <${optionsEmpty.value}>,` +
           ` isPriceLevelEmpty <${isPriceLevelEmpty}>.`,
       );
@@ -363,7 +363,7 @@ export default defineComponent({
      */
     const onCheckboxUpdate = function (val: boolean): void {
       if (optionsEmpty.value) {
-        logger?.debug('Checkbox update aborted: checkbox is disabled.');
+        logger?.info('Update checkbox state aborted, checkbox is disabled.');
         return;
       }
       if (val) {
