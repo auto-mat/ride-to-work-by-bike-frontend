@@ -105,6 +105,7 @@ describe('Register Challenge - Merch Options No Price', () => {
               cy.stripHtmlTags(
                 i18n.global.t('register.challenge.textFreeRegistration', {
                   url: config.urlDonateJanuaryChallenge,
+                  linkText: new URL(config.urlDonateJanuaryChallenge).hostname,
                 }),
               ).then((text) => {
                 expect(content).to.equal(text);
@@ -137,6 +138,7 @@ describe('Register Challenge - Merch Options No Price', () => {
               cy.stripHtmlTags(
                 i18n.global.t('register.challenge.textFreeRegistration', {
                   url: config.urlDonateJanuaryChallenge,
+                  linkText: new URL(config.urlDonateJanuaryChallenge).hostname,
                 }),
               ).then((text) => {
                 expect(content).to.equal(text);
