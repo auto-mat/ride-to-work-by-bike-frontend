@@ -46,6 +46,7 @@ export interface ConfigGlobal {
   urlYoutube: string;
   urlSizeConversionChart: string;
   urlStravaPrivacyZones: string;
+  challengeAllowRegisterOrganizationAdmin: 'enable' | 'disable';
   challengeMonth: 'may' | 'october' | 'september';
   containerFormWidth: string;
   containerContentWidth: string;
