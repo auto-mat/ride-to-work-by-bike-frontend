@@ -338,13 +338,12 @@ export default defineComponent({
       return isEntryFeePaid || isNoAdmission;
     });
 
-    const isPriceLevelEmpty = computed((): boolean => {
-      const isEmpty = challengeStore.getPriceLevel.length === 0;
-      return isEmpty;
-    });
+    const isPriceLevelEmpty = computed(
+      (): boolean => challengeStore.getPriceLevel.length === 0,
+    );
 
     const isRegistrationComplete = computed(
-      () => registerChallengeStore.getIsRegistrationComplete,
+      (): boolean => registerChallengeStore.getIsRegistrationComplete,
     );
 
     const secondsToWaitDef = ref(
