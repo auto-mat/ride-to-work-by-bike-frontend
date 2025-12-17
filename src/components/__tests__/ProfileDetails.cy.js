@@ -90,6 +90,7 @@ describe('<ProfileDetails>', () => {
         'labelPackage',
         'labelPaymentState',
         'labelPaymentStateNotPaid',
+        'labelPaymentStateFreeAdmission',
         'labelPaymentStatePaid',
         'labelPaymentStatePaidByCompany',
         'labelSize',

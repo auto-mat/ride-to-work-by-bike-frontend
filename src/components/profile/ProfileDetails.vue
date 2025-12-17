@@ -231,7 +231,7 @@ export default defineComponent({
           case PaymentSubject.voucher:
             return i18n.global.t('profile.labelPaymentStatePaid');
           default:
-            return i18n.global.t('profile.labelPaymentStateNotPaid');
+            return i18n.global.t('profile.labelPaymentStateFreeAdmission');
         }
       } else {
         return i18n.global.t('profile.labelPaymentStateNotPaid');
