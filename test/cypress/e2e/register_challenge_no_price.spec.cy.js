@@ -92,23 +92,25 @@ describe('Register Challenge - Merch Options No Price', () => {
         // visit register challenge page
         cy.visit('#' + routesConf['register_challenge']['path']);
         cy.viewport('macbook-16');
-      });
-      cy.get('@i18n').then((i18n) => {
-        // we are on step 2
-        cy.dataCy('step-2')
-          .find('.q-stepper__step-content')
-          .should('be.visible');
-        cy.dataCy('banner-free-registration')
-          .should('exist')
-          .and('be.visible')
-          .then(($el) => {
-            const content = $el.text();
-            cy.stripHtmlTags(
-              i18n.global.t('register.challenge.textFreeRegistration'),
-            ).then((text) => {
-              expect(content).to.equal(text);
+        cy.get('@i18n').then((i18n) => {
+          // we are on step 2
+          cy.dataCy('step-2')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+          cy.dataCy('banner-free-registration')
+            .should('exist')
+            .and('be.visible')
+            .then(($el) => {
+              const content = $el.text();
+              cy.stripHtmlTags(
+                i18n.global.t('register.challenge.textFreeRegistration', {
+                  url: config.urlDonateJanuaryChallenge,
+                }),
+              ).then((text) => {
+                expect(content).to.equal(text);
+              });
             });
-          });
+        });
       });
     });
 
@@ -122,23 +124,25 @@ describe('Register Challenge - Merch Options No Price', () => {
         // visit register challenge page
         cy.visit('#' + routesConf['register_challenge']['path']);
         cy.viewport('macbook-16');
-      });
-      cy.get('@i18n').then((i18n) => {
-        // we are on step 2
-        cy.dataCy('step-2')
-          .find('.q-stepper__step-content')
-          .should('be.visible');
-        cy.dataCy('banner-free-registration')
-          .should('exist')
-          .and('be.visible')
-          .then(($el) => {
-            const content = $el.text();
-            cy.stripHtmlTags(
-              i18n.global.t('register.challenge.textFreeRegistration'),
-            ).then((text) => {
-              expect(content).to.equal(text);
+        cy.get('@i18n').then((i18n) => {
+          // we are on step 2
+          cy.dataCy('step-2')
+            .find('.q-stepper__step-content')
+            .should('be.visible');
+          cy.dataCy('banner-free-registration')
+            .should('exist')
+            .and('be.visible')
+            .then(($el) => {
+              const content = $el.text();
+              cy.stripHtmlTags(
+                i18n.global.t('register.challenge.textFreeRegistration', {
+                  url: config.urlDonateJanuaryChallenge,
+                }),
+              ).then((text) => {
+                expect(content).to.equal(text);
+              });
             });
-          });
+        });
       });
     });
   });

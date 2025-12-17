@@ -76,6 +76,8 @@ export default defineComponent({
   setup() {
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerFormWidth = rideToWorkByBikeConfig.containerFormWidth;
+    const urlDonateJanuaryChallenge =
+      rideToWorkByBikeConfig.urlDonateJanuaryChallenge;
     const doneIcon = `img:${
       new URL('../assets/svg/check.svg', import.meta.url).href
     }`;
@@ -420,6 +422,7 @@ export default defineComponent({
       registerChallengeStore,
       competitionStart,
       secondsToWait,
+      urlDonateJanuaryChallenge,
     };
   },
 });
@@ -517,7 +520,11 @@ export default defineComponent({
                 data-cy="banner-free-registration"
               >
                 <div
-                  v-html="$t('register.challenge.textFreeRegistration')"
+                  v-html="
+                    $t('register.challenge.textFreeRegistration', {
+                      url: urlDonateJanuaryChallenge,
+                    })
+                  "
                   data-cy="text-free-registration"
                 />
               </q-banner>

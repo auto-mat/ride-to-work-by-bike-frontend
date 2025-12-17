@@ -28,6 +28,7 @@ export interface ConfigGlobal {
   urlBlog: string;
   urlContact: string;
   urlDonate: string;
+  urlDonateJanuaryChallenge: string;
   urlFacebook: string;
   urlFacebookRideToWorkByBike: string;
   urlFaq: string;
