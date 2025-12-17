@@ -308,6 +308,12 @@ describe('<ProfileDetails>', () => {
       });
       cy.viewport('macbook-16');
 
+      // init price level (so that payment is not 'free admission')
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // registration payment state
       cy.dataCy(selectorPaymentState)
         .find(dataSelectorLabel)
@@ -407,6 +413,12 @@ describe('<ProfileDetails>', () => {
       });
       cy.viewport('macbook-16');
 
+      // init price level (so that payment is not 'free admission')
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // registration payment state
       cy.dataCy(selectorPaymentState)
         .find(dataSelectorLabel)
