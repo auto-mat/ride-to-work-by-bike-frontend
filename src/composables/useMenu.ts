@@ -21,6 +21,8 @@ export const useMenu = () => {
    *   isEntryEnabled - Whether the entry is enabled
    * @param {ComputedRef<boolean | null> | boolean | null}
    *   isResultsEnabled - Whether the results are enabled
+   * @param {ComputedRef<boolean | null> | boolean | null}
+   *   getHasOrganizationAdmin - Whether the organization has an admin
    * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
@@ -29,12 +31,14 @@ export const useMenu = () => {
     urlAdmin,
     isEntryEnabled,
     isResultsEnabled,
+    getHasOrganizationAdmin,
   }: {
     isUserOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
     isUserStaff: ComputedRef<boolean | null> | boolean | null;
     urlAdmin: ComputedRef<string> | string;
     isEntryEnabled: ComputedRef<boolean | null> | boolean | null;
     isResultsEnabled: ComputedRef<boolean | null> | boolean | null;
+    getHasOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
   }): Link[] => {
     let menuTop: Link[] = [
       {
@@ -65,11 +69,19 @@ export const useMenu = () => {
       },
     ];
 
-    if (unref(isUserOrganizationAdmin)) {
+    const showCoordinatorMenu =
+      unref(isUserOrganizationAdmin) ||
+      unref(getHasOrganizationAdmin) === false;
+
+    if (showCoordinatorMenu) {
+      const coordinatorUrl = unref(isUserOrganizationAdmin)
+        ? routesConf['coordinator']['children']['fullPath']
+        : routesConf['become_coordinator']['children']['fullPath'];
+
       menuTop = [
         ...menuTop,
         {
-          url: routesConf['coordinator']['children']['fullPath'],
+          url: coordinatorUrl,
           icon: 'svguse:icons/drawer_menu/icons.svg#lucide-building',
           name: 'coordinator',
           title: 'coordinator',

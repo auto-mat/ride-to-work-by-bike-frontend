@@ -48,6 +48,9 @@ export default defineComponent({
       () => registerChallengeStore.isUserOrganizationAdmin,
     );
     const isUserStaff = computed(() => registerChallengeStore.getIsUserStaff);
+    const getHasOrganizationAdmin = computed(
+      () => registerChallengeStore.getHasOrganizationAdmin,
+    );
     const { isEntryEnabled, isResultsEnabled } = useRoutes();
     const { getMenuTop, getMenuBottom } = useMenu();
 
@@ -75,6 +78,7 @@ export default defineComponent({
         urlAdmin,
         isEntryEnabled,
         isResultsEnabled,
+        getHasOrganizationAdmin,
       });
     });
     const menuPanel = computed((): Link[] => {

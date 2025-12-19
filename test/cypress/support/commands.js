@@ -2818,6 +2818,7 @@ Cypress.Commands.add(
         urlAdmin,
         isEntryEnabled: true,
         isResultsEnabled: true,
+        getHasOrganizationAdmin: true,
       }),
     ).then((menuTop) => {
       cy.wrap(getMenuBottom(urlDonate, urlContact)).then((menuBottom) => {

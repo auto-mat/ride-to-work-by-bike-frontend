@@ -13,6 +13,7 @@ import {
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
+import { routesConf } from 'src/router/routes_conf';
 
 // colors
 const { getPaletteColor } = colors;
@@ -45,6 +46,7 @@ describe('DrawerMenu', () => {
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
           isEntryEnabled: true,
           isResultsEnabled: true,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -84,6 +86,7 @@ describe('DrawerMenu', () => {
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
           isEntryEnabled: true,
           isResultsEnabled: true,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -107,10 +110,61 @@ describe('DrawerMenu', () => {
       });
     });
 
-    it('renders coordinator item', () => {
+    it('renders coordinator item (links to coordinator page)', () => {
       cy.dataCy(selectorDrawerMenuItem)
         .contains(i18n.global.t('drawerMenu.coordinator'))
         .should('be.visible');
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.coordinator'))
+        .invoke('attr', 'href')
+        .should('contain', routesConf['coordinator']['children']['fullPath']);
+    });
+  });
+
+  context('menu top - organization has no coordinator', () => {
+    beforeEach(() => {
+      cy.wrap(
+        getMenuTop({
+          isUserOrganizationAdmin: false,
+          isUserStaff: false,
+          urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
+          isEntryEnabled: true,
+          isResultsEnabled: true,
+          getHasOrganizationAdmin: false,
+        }),
+      ).then((menuTop) => {
+        cy.mount(DrawerMenu, {
+          props: {
+            items: menuTop,
+          },
+        });
+        cy.wrap(menuTop).as('menu');
+      });
+    });
+
+    coreTests();
+
+    it('has translation for all strings', () => {
+      cy.get('@menu').then((menuTop) => {
+        cy.testLanguageStringsInContext(
+          menuTop.map((item) => item.title),
+          'drawerMenu',
+          i18n,
+        );
+      });
+    });
+
+    it('renders coordinator item (links to become_coordinator page)', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.coordinator'))
+        .should('be.visible');
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.coordinator'))
+        .invoke('attr', 'href')
+        .should(
+          'contain',
+          routesConf['become_coordinator']['children']['fullPath'],
+        );
     });
   });
 
@@ -129,6 +183,7 @@ describe('DrawerMenu', () => {
           urlAdmin,
           isEntryEnabled: true,
           isResultsEnabled: true,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -199,6 +254,7 @@ describe('DrawerMenu', () => {
           urlAdmin,
           isEntryEnabled: false,
           isResultsEnabled: true,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -232,6 +288,7 @@ describe('DrawerMenu', () => {
           urlAdmin,
           isEntryEnabled: true,
           isResultsEnabled: true,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -265,6 +322,7 @@ describe('DrawerMenu', () => {
           urlAdmin: rtwbbOldFrontendDjangoAdminUrl,
           isEntryEnabled: true,
           isResultsEnabled: false,
+          getHasOrganizationAdmin: true,
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
