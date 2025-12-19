@@ -18,6 +18,7 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
+const { challengeAllowRegisterOrganizationAdmin } = rideToWorkByBikeConfig;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
@@ -90,25 +91,27 @@ describe('<FormPersonalDetails>', () => {
       );
     });
 
-    it('renders link to register as coordinator', () => {
-      cy.dataCy('form-personal-details-register-as-coordinator').should(
-        'be.visible',
-      );
-      cy.dataCy('form-personal-details-register-as-coordinator-text')
-        .should('be.visible')
-        .and(
-          'contain',
-          i18n.global.t('register.form.hintRegisterAsCoordinator'),
+    if (challengeAllowRegisterOrganizationAdmin === 'enable') {
+      it('renders link to register as coordinator', () => {
+        cy.dataCy('form-personal-details-register-as-coordinator').should(
+          'be.visible',
         );
-      cy.dataCy('form-personal-details-register-as-coordinator-link')
-        .should('be.visible')
-        .and(
-          'contain',
-          i18n.global.t('register.form.linkRegisterAsCoordinator'),
-        )
-        .invoke('attr', 'href')
-        .should('include', urlRegisterAsCoordinator);
-    });
+        cy.dataCy('form-personal-details-register-as-coordinator-text')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t('register.form.hintRegisterAsCoordinator'),
+          );
+        cy.dataCy('form-personal-details-register-as-coordinator-link')
+          .should('be.visible')
+          .and(
+            'contain',
+            i18n.global.t('register.form.linkRegisterAsCoordinator'),
+          )
+          .invoke('attr', 'href')
+          .should('include', urlRegisterAsCoordinator);
+      });
+    }
 
     it('does not render link to register as coordinator if user is organization admin', () => {
       cy.wrap(useRegisterChallengeStore()).then((store) => {
