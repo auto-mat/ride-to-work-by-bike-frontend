@@ -56,6 +56,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from 'src/stores/challenge';
 
 // enums
 import { Gender } from '../types/Profile';
@@ -106,10 +107,22 @@ export default defineComponent({
 
     // get merchandise data
     const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
 
     // load merchandise on mount
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
+
+      // Automatic selection "no merch" when merchandise options are empty
+      if (optionsEmpty.value) {
+        logger?.info(
+          'Merchandise options empty, automatic selection "no merch" option.',
+        );
+        isNotMerch.value = true;
+        await loadNoMerchId();
+        return;
+      }
+
       // if merch ID is set, select the corresponding item
       if (registerChallengeStore.getMerchId) {
         logger?.debug(
@@ -203,6 +216,16 @@ export default defineComponent({
         optionsMale.value.length === 0 &&
         optionsUnisex.value.length === 0
       );
+    });
+
+    const showMerchUnavailableBanner = computed((): boolean => {
+      const isPriceLevelEmpty = challengeStore.getPriceLevel.length === 0;
+      logger?.debug(
+        'Show merch unavailable banner check' +
+          ` optionsEmpty <${optionsEmpty.value}>,` +
+          ` isPriceLevelEmpty <${isPriceLevelEmpty}>.`,
+      );
+      return optionsEmpty.value && !isPriceLevelEmpty;
     });
 
     // get current item's options
@@ -331,32 +354,40 @@ export default defineComponent({
       registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
     };
 
+    let iDontWantMerchandiseCachedId: number | null = null;
+    /**
+     * Load "no merch" merch ID and set it into the store.
+     */
+    const loadNoMerchId = async function (): Promise<void> {
+      if (!iDontWantMerchandiseCachedId) {
+        logger?.info("Get 'I don't want any merchandise' ID from the API.");
+        await registerChallengeStore.loadFilteredMerchandiseToStore(
+          logger,
+          rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
+        );
+        iDontWantMerchandiseCachedId = registerChallengeStore.getMerchId;
+        logger?.debug(
+          `Save 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> into cache.`,
+        );
+      } else {
+        logger?.debug(
+          `Use 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> from the cache.`,
+        );
+        registerChallengeStore.setMerchId(iDontWantMerchandiseCachedId);
+      }
+    };
+
     /**
      * Scroll to merch tabs if you uncheck
      * "I don't want merch" checkbox widget
      */
-    let iDontWantMerchandiseCachedId: number | null = null;
     const onCheckboxUpdate = function (val: boolean): void {
+      if (optionsEmpty.value) {
+        logger?.info('Update checkbox state aborted, checkbox is disabled.');
+        return;
+      }
       if (val) {
-        if (!iDontWantMerchandiseCachedId) {
-          logger?.info("Get 'I don't want any merchandise' ID from the API.");
-          registerChallengeStore
-            .loadFilteredMerchandiseToStore(
-              logger,
-              rideToWorkByBikeConfig.iDontWantMerchandiseItemCode,
-            )
-            .then(() => {
-              iDontWantMerchandiseCachedId = registerChallengeStore.getMerchId;
-              logger?.debug(
-                `Save 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> into cache.`,
-              );
-            });
-        } else {
-          logger?.debug(
-            `Use 'I don't want any merchandise' ID <${iDontWantMerchandiseCachedId}> from the cache.`,
-          );
-          registerChallengeStore.setMerchId(iDontWantMerchandiseCachedId);
-        }
+        loadNoMerchId();
       } else {
         nextTick(() => {
           // if no merch is selected, reset selected size
@@ -406,6 +437,7 @@ export default defineComponent({
       optionsMale,
       optionsUnisex,
       optionsEmpty,
+      showMerchUnavailableBanner,
       phone,
       selectedOption,
       selectedSize,
@@ -429,7 +461,7 @@ export default defineComponent({
 <template>
   <!-- Message: Merch unavailable -->
   <q-banner
-    v-if="optionsEmpty"
+    v-if="showMerchUnavailableBanner"
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-merch-unavailable"
   >
@@ -443,7 +475,7 @@ export default defineComponent({
         v-model="isNotMerch"
         :val="true"
         color="primary"
-        :disable="!isPaymentWithReward"
+        :disable="!isPaymentWithReward || optionsEmpty"
         @update:model-value="onCheckboxUpdate"
         data-cy="form-merch-no-merch-checkbox"
       />

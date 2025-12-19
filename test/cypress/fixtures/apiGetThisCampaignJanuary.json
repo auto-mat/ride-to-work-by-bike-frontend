@@ -1,0 +1,39 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "phase_set": [
+        {
+          "phase_type": "registration",
+          "date_from": "2024-07-15",
+          "date_to": "2024-09-29"
+        },
+        {
+          "phase_type": "competition",
+          "date_from": "2024-09-16",
+          "date_to": "2024-09-29"
+        },
+        {
+          "phase_type": "entry_enabled",
+          "date_from": "2024-09-16",
+          "date_to": "2024-10-02"
+        },
+        {
+          "phase_type": "results",
+          "date_from": "2024-09-16",
+          "date_to": "2024-10-07"
+        }
+      ],
+      "price_level": [],
+      "id": 263,
+      "slug": "dpnk",
+      "days_active": 8,
+      "max_team_members": 1,
+      "year": "2024",
+      "campaign_type": "https://dpnk.dopracenakole.cz/rest/campaign_type/4/",
+      "description": "<h1>Chystáme pro vás Lednovou výzvu Do práce na kole, pěšky či poklusem 2026.</h1><p>Výzva jednotlivců se uskuteční v termínu 12.-18. 1. 2026.</p><p>Účast je zdarma, registraci otevíráme 29. 12. 2025 zde.</p><p>Držíme palce!</p>"
+    }
+  ]
+}

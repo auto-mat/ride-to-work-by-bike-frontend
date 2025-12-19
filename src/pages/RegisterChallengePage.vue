@@ -24,7 +24,7 @@
 
 // libraries
 import { computed, defineComponent, onMounted, ref } from 'vue';
-import { QForm, QStepper } from 'quasar';
+import { QForm, QStepper, colors } from 'quasar';
 import { useRouter } from 'vue-router';
 
 // config
@@ -76,6 +76,8 @@ export default defineComponent({
   setup() {
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerFormWidth = rideToWorkByBikeConfig.containerFormWidth;
+    const urlDonateJanuaryChallenge =
+      rideToWorkByBikeConfig.urlDonateJanuaryChallenge;
     const doneIcon = `img:${
       new URL('../assets/svg/check.svg', import.meta.url).href
     }`;
@@ -325,6 +327,9 @@ export default defineComponent({
 
     const contactEmail = rideToWorkByBikeConfig.contactEmail;
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+    const { getPaletteColor, lighten } = colors;
+    const primaryColor = getPaletteColor('primary');
+    const primaryLightColor = lighten(primaryColor, 90);
 
     const isRegistrationEntryFeePaidViaPayu = computed((): boolean => {
       const isEntryFeePaid =
@@ -335,8 +340,12 @@ export default defineComponent({
       return isEntryFeePaid || isNoAdmission;
     });
 
+    const isPriceLevelEmpty = computed(
+      (): boolean => challengeStore.getPriceLevel.length === 0,
+    );
+
     const isRegistrationComplete = computed(
-      () => registerChallengeStore.getIsRegistrationComplete,
+      (): boolean => registerChallengeStore.getIsRegistrationComplete,
     );
 
     const secondsToWaitDef = ref(
@@ -356,6 +365,10 @@ export default defineComponent({
     }, 1000);
 
     const { isBeforeCompetitionStart } = useCompetitionPhase();
+
+    const hostnameUrlDonateJanuaryChallenge = new URL(
+      urlDonateJanuaryChallenge,
+    );
 
     return {
       borderRadius,
@@ -395,6 +408,7 @@ export default defineComponent({
       isBeforeCompetitionStart,
       isPaymentAmount,
       isPeriodicCheckInProgress,
+      isPriceLevelEmpty,
       isRegistrationComplete,
       isRegistrationEntryFeePaidViaPayu,
       isShownCreateOrderButton,
@@ -408,9 +422,12 @@ export default defineComponent({
       onBack,
       onContinue,
       onCompleteRegistration,
+      primaryLightColor,
       registerChallengeStore,
       competitionStart,
       secondsToWait,
+      urlDonateJanuaryChallenge,
+      hostnameUrlDonateJanuaryChallenge,
     };
   },
 });
@@ -500,20 +517,39 @@ export default defineComponent({
                 :is-payment-step="true"
                 data-cy="payment-messages"
               />
-              <!-- Text entry fee paid (displayed after PayU payment has been made) -->
-              <div
-                v-if="isRegistrationEntryFeePaidViaPayu"
-                v-html="
-                  $t('register.challenge.textRegistrationPaid', {
-                    contactEmail,
-                  })
-                "
-                data-cy="step-2-paid-message"
-              />
-              <!-- Payment form -->
-              <register-challenge-payment
-                v-if="!isRegistrationEntryFeePaidViaPayu"
-              />
+              <!-- Banner: Free registration (shown ONLY when priceLevel is empty) -->
+              <q-banner
+                v-if="isPriceLevelEmpty"
+                class="q-pa-md text-primary"
+                :style="{ backgroundColor: primaryLightColor, borderRadius }"
+                data-cy="banner-free-registration"
+              >
+                <div
+                  v-html="
+                    $t('register.challenge.textFreeRegistration', {
+                      url: urlDonateJanuaryChallenge,
+                      linkText: hostnameUrlDonateJanuaryChallenge.hostname,
+                    })
+                  "
+                  data-cy="text-free-registration"
+                />
+              </q-banner>
+              <template v-if="!isPriceLevelEmpty">
+                <!-- Text entry fee paid (displayed after PayU payment has been made) -->
+                <div
+                  v-if="isRegistrationEntryFeePaidViaPayu"
+                  v-html="
+                    $t('register.challenge.textRegistrationPaid', {
+                      contactEmail,
+                    })
+                  "
+                  data-cy="step-2-paid-message"
+                />
+                <!-- Payment form -->
+                <register-challenge-payment
+                  v-if="!isRegistrationEntryFeePaidViaPayu"
+                />
+              </template>
             </q-form>
             <!-- Navigation -->
             <q-stepper-navigation class="flex justify-end">
