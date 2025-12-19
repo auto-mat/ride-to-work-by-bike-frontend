@@ -90,6 +90,7 @@ describe('<ProfileDetails>', () => {
         'labelPackage',
         'labelPaymentState',
         'labelPaymentStateNotPaid',
+        'labelPaymentStateFreeAdmission',
         'labelPaymentStatePaid',
         'labelPaymentStatePaidByCompany',
         'labelSize',
@@ -113,6 +114,81 @@ describe('<ProfileDetails>', () => {
       ['apiMessageError', 'apiMessageErrorWithMessage', 'apiMessageSuccess'],
       'putRegisterChallenge',
       i18n,
+    );
+  });
+
+  beforeEach(() => {
+    cy.fixture('refreshTokensResponseChallengeActive').then(
+      (refreshTokensResponseChallengeActive) => {
+        cy.fixture('loginRegisterResponseChallengeActive').then(
+          (loginRegisterResponseChallengeActive) => {
+            cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+              rideToWorkByBikeConfig,
+              i18n,
+              loginRegisterResponseChallengeActive,
+              null,
+              refreshTokensResponseChallengeActive,
+              null,
+              { has_user_verified_email_address: true },
+            );
+          },
+        );
+      },
+    );
+    // intercept register challenge API
+    cy.fixture('apiGetRegisterChallengeProfile').then(
+      (responseRegisterChallenge) => {
+        cy.interceptRegisterChallengeGetApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          responseRegisterChallenge,
+        );
+
+        // intercept has organization admin API
+        cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+          (responseHasOrganizationAdmin) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              rideToWorkByBikeConfig,
+              i18n,
+              responseRegisterChallenge.results[0].organization_id,
+              responseHasOrganizationAdmin,
+            );
+          },
+        );
+        // intercept organizations API
+        interceptOrganizationsApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          OrganizationType.company,
+        );
+        // intercept subsidiaries API
+        cy.interceptSubsidiariesGetApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          responseRegisterChallenge.results[0].organization_id,
+        );
+        // intercept teams API
+        cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+          cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+            (teamsResponseNextFullTeam) => {
+              cy.interceptTeamsGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                responseRegisterChallenge.results[0].subsidiary_id,
+                teamsResponse,
+                teamsResponseNextFullTeam,
+              );
+            },
+          );
+        });
+        cy.interceptMyTeamGetApi(rideToWorkByBikeConfig, i18n);
+        // intercept my team PUT API
+        cy.interceptMyTeamPutApi(
+          rideToWorkByBikeConfig,
+          i18n,
+          responseRegisterChallenge.results[0].team_id,
+        );
+      },
     );
   });
 
@@ -307,6 +383,12 @@ describe('<ProfileDetails>', () => {
       });
       cy.viewport('macbook-16');
 
+      // init price level (so that payment is not 'free admission')
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // registration payment state
       cy.dataCy(selectorPaymentState)
         .find(dataSelectorLabel)
@@ -406,6 +488,12 @@ describe('<ProfileDetails>', () => {
       });
       cy.viewport('macbook-16');
 
+      // init price level (so that payment is not 'free admission')
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((store) => {
+          store.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // registration payment state
       cy.dataCy(selectorPaymentState)
         .find(dataSelectorLabel)
