@@ -18,7 +18,6 @@ import {
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
-const { challengeAllowRegisterOrganizationAdmin } = rideToWorkByBikeConfig;
 
 describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
@@ -91,7 +90,10 @@ describe('<FormPersonalDetails>', () => {
       );
     });
 
-    if (challengeAllowRegisterOrganizationAdmin === 'enable') {
+    if (
+      rideToWorkByBikeConfig.challengeAllowRegisterOrganizationAdmin ===
+      'enable'
+    ) {
       it('renders link to register as coordinator', () => {
         cy.dataCy('form-personal-details-register-as-coordinator').should(
           'be.visible',
@@ -293,6 +295,31 @@ describe('<FormPersonalDetails>', () => {
           });
           i18n.global.locale = defLocale;
         });
+    });
+  });
+  context('desktop - register organization admin is disabled', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      rideToWorkByBikeConfig.challengeAllowRegisterOrganizationAdmin =
+        'disable';
+      cy.mount(FormPersonalDetails, {
+        props: {
+          formValues: {
+            firstName: 'John',
+            lastName: 'Doe',
+            nickname: 'John Doe',
+            gender: 'male',
+            newsletter: ['all'],
+            terms: true,
+          },
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+    it('link to register as coordinator is hidden', () => {
+      cy.dataCy('form-personal-details-register-as-coordinator').should(
+        'not.exist',
+      );
     });
   });
 });
