@@ -69,6 +69,10 @@ export default defineComponent({
       () => store.getIsUserOrganizationAdmin,
     );
 
+    const getHasOrganizationAdmin = computed(
+      () => store.getHasOrganizationAdmin,
+    );
+
     const genderOptions: FormOption[] = [
       {
         label: i18n.global.t('global.man'),
@@ -103,6 +107,7 @@ export default defineComponent({
 
     return {
       challengeAllowRegisterOrganizationAdmin,
+      getHasOrganizationAdmin,
       genderOptions,
       isUserOrganizationAdmin,
       personalDetails,
@@ -178,6 +183,7 @@ export default defineComponent({
       <div
         v-if="
           !isUserOrganizationAdmin &&
+          !getHasOrganizationAdmin &&
           challengeAllowRegisterOrganizationAdmin === 'enable'
         "
         class="col-12"
