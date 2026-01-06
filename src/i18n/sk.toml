@@ -500,7 +500,7 @@ buttonAddTeam = "Pridať tím"
 labelMembers = "člen | členov"
 labelTeam = "Názov tímu"
 labelTeamName = "Názov vášho tímu"
-textTeam = "<p>V jednom tíme môže byť maximálne 5 členov, pričom členky môžete pozvať kedykoľvek do konca registračného obdobia. Spoločnosť môže mať ľubovoľný počet tímov.</p><p>Výziev medzi tímami sa zúčastňujú len tímy s viac ako 1 členom.</p"
+textTeam = "<p>V jednom tíme môže byť maximálne {count} členov, pričom členky môžete pozvať kedykoľvek do konca registračného obdobia. Spoločnosť môže mať ľubovoľný počet tímov.</p><p>Výziev medzi tímami sa zúčastňujú len tímy s viac ako 1 členom.</p> | <p>V jednom tíme môže byť maximálne {count} člen, pričom členky môžete pozvať kedykoľvek do konca registračného obdobia. Spoločnosť môže mať ľubovoľný počet tímov.</p><p>Výziev medzi tímami sa zúčastňujú len tímy s viac ako 1 členom.</p> | <p>V jednom tíme môže byť maximálne {count} členovia, pričom členky môžete pozvať kedykoľvek do konca registračného obdobia. Spoločnosť môže mať ľubovoľný počet tímov.</p><p>Výziev medzi tímami sa zúčastňujú len tímy s viac ako 1 členom.</p> | <p>V jednom tíme môže byť maximálne {count} členov, pričom členky môžete pozvať kedykoľvek do konca registračného obdobia. Spoločnosť môže mať ľubovoľný počet tímov.</p><p>Výziev medzi tímami sa zúčastňujú len tímy s viac ako 1 členom.</p>"
 titleAddTeam = "Pridať tím"
 
 [forumPostList]
@@ -910,7 +910,8 @@ textRegistrationWaitingForConfirmationNoCoordinator = "Vaša organizácia ešte 
 textRegistrationWaitingForCoordinator = "Platbu ešte musí schváliť koordinátor vašej organizácie."
 textRegistrationWaitingForCoordinatorWithNameAndEmail = "Registrácia sa dokončí automaticky po schválení vašej platby koordinátorom*kou spoločnosti ({name}, <a href='mailto:{email}'>{email}</a>). O schválení vás budeme informovať e-mailom."
 textPayuWaitingForPayment = "Vašu platbu stále spracovávame. Prosím skontrolujte stav registrácie o niekoľko minút."
-textTeamInfo = "V jednom tíme může být max. 5 členů."
+textTeamInfo = "V jednom tíme môže byť max. {count} členov. | V jednom tíme môže byť max. {count} člen. | V jednom tíme môžu byť max. {count} členovia. | V jednom tíme môže byť max. {count} členov."
+textTeamInfoJanuary = "V Januárovej výzve sa každý zúčastňuje v jednočlennom tíme, kliknite na 'PRIDAŤ TÍM' a pomenujte svoj."
 textWaitingForPaymentLoader = "Čakáme na spracovanie vašej platby. V prípade, že ste platbu zrušili zámerne, prosím počkajte {seconds} sekúnd, než budete môcť pokračovať v registrácii."
 titleDeliveryAddress = "Doručovacia adresa"
 titleRegisterToChallenge.may = "Registrácia na Májovú výzvu"

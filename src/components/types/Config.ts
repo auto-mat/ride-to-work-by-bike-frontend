@@ -47,7 +47,7 @@ export interface ConfigGlobal {
   urlSizeConversionChart: string;
   urlStravaPrivacyZones: string;
   challengeAllowRegisterOrganizationAdmin: 'enable' | 'disable';
-  challengeMonth: 'may' | 'october' | 'september';
+  challengeMonth: 'may' | 'october' | 'september' | 'january';
   containerFormWidth: string;
   containerContentWidth: string;
   challengeStartDate: string;

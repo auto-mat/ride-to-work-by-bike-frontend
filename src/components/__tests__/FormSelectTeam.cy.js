@@ -3,6 +3,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import FormSelectTeam from 'components/form/FormSelectTeam.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 const subsidiaryIdDefault = 1972;
@@ -16,7 +17,7 @@ const selectorTableOptionGroup = 'form-select-table-option';
 describe('<FormSelectTeam>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['textTeamInfo'],
+      ['textTeamInfo', 'textTeamInfoJanuary'],
       'register.challenge',
       i18n,
     );
@@ -68,18 +69,42 @@ describe('<FormSelectTeam>', () => {
 });
 
 function coreTests() {
-  it('renders component', () => {
-    // component
-    cy.dataCy(selectorFormSelectTeam).should('be.visible');
-    // info text
+  it('does not show text when maxTeamMembers is falsy', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 0);
+    cy.dataCy(selectorFormSelectTeamInfo)
+      .should('exist')
+      .invoke('text')
+      .should('be.empty');
+  });
+
+  it('displays dynamic team info text based on maxTeamMembers with count 3', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 3);
     cy.dataCy(selectorFormSelectTeamInfo)
       .should('be.visible')
-      .should('have.text', i18n.global.t('register.challenge.textTeamInfo'));
+      .invoke('text')
+      .should('include', '3');
+  });
+
+  it('displays dynamic team info text based on maxTeamMembers with count 10', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 10);
+    cy.dataCy(selectorFormSelectTeamInfo)
+      .should('be.visible')
+      .invoke('text')
+      .should('include', '10');
+  });
+
+  it('renders component', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 5);
+    // component
+    cy.dataCy(selectorFormSelectTeam).should('be.visible');
+    // info text (dynamic based on maxTeamMembers)
+    cy.dataCy(selectorFormSelectTeamInfo).should('be.visible');
     // select table
     cy.dataCy(selectorFormSelectTableTeam).should('be.visible');
   });
 
   it('loads teams', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 5);
     cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
       cy.fixture('apiGetTeamsResponseNext').then((teamsResponseNext) => {
         cy.wrap(useRegisterChallengeStore()).then((store) => {
@@ -103,6 +128,7 @@ function coreTests() {
   });
 
   it('allows to create a new team', () => {
+    cy.setupChallengeMaxTeamMembers(useChallengeStore, 5);
     cy.fixture('apiPostTeamRequest').then((teamRequest) => {
       cy.fixture('apiPostTeamResponse').then(() => {
         // set subsidiary id in store
