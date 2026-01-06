@@ -4,6 +4,7 @@ import { defLocale } from '../../../src/i18n/def_locale';
 import { getGenderLabel } from '../../../src/utils/get_gender_label';
 import { interceptOrganizationsApi } from '../support/commonTests';
 import { OrganizationType } from 'src/components/types/Organization';
+import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
@@ -142,19 +143,21 @@ describe('Profile page', () => {
 
   context('change email', () => {
     beforeEach(() => {
-      // go to login page
-      cy.visit('#' + routesConf['login']['children']['fullPath']);
-      // login
-      cy.fillAndSubmitLoginForm();
-      // wait for homepage to load
-      cy.dataCy('index-title').should('be.visible');
-      // go to profile page
-      cy.visit('#' + routesConf['profile']['children']['fullPath']);
-      cy.viewport('macbook-16');
-      // alias i18n
-      cy.window().should('have.property', 'i18n');
-      cy.window().then((win) => {
-        cy.wrap(win.i18n).as('i18n');
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        // go to login page
+        cy.visit('#' + routesConf['login']['children']['fullPath']);
+        // login
+        cy.fillAndSubmitLoginForm();
+        // wait for homepage to load
+        cy.dataCy('index-title').should('be.visible');
+        // go to profile page
+        cy.visit('#' + routesConf['profile']['children']['fullPath']);
+        cy.viewport('macbook-16');
+        // alias i18n
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.wrap(win.i18n).as('i18n');
+        });
       });
     });
 

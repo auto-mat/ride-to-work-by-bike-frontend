@@ -132,6 +132,9 @@ export default defineComponent({
       }
     });
 
+    // max team
+    const maxTeamMembers = computed(() => challengeStore.getMaxTeamMembers);
+
     // profile details
     const profile = computed(() => {
       return registerChallengeStore.getPersonalDetails;
@@ -336,6 +339,7 @@ export default defineComponent({
       iconSize,
       isLoading,
       labelPaymentState,
+      maxTeamMembers,
       merchandiseItemLabel,
       merchandiseItemSize,
       organization,
@@ -510,7 +514,10 @@ export default defineComponent({
           </template>
         </details-item>
         <!-- Team members list -->
-        <team-members-list class="col-12 q-mt-lg" />
+        <team-members-list
+          v-if="maxTeamMembers && maxTeamMembers > 1"
+          class="col-12 q-mt-lg"
+        />
       </div>
     </div>
 
