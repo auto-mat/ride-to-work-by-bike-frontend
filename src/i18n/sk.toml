@@ -549,6 +549,7 @@ hintPhoneWithMerch = "Vyžaduje sa pre informácie o stave doručenia vášho ba
 labelSizes = "Veľkosti"
 labelAuthor = "Autor"
 labelMaterial = "Materiál"
+labelPhoneOptIn = "Chcem vedieť viac o udržateľnej mobilite a súhlasím, aby ma kontaktovali v súvislosti s podporou aktívnej dopravy a verejného priestoru."
 labelPhoneOptInNoMerch = "Účastnícky balíček nechcem, ale rád by som sa dozvedel viac informácií o udržateľnej mobilite a o tom, čo pre ňu môžem urobiť (môžete mi telefonovať)."
 labelPhoneOptInWithMerch = "Okrem informácií o doručení balíčka sa mi môžete ozvať aj ohľadom rozvoja udržateľnej mobility a verejného priestoru."
 labelNoMerch = "Bez balíčka"

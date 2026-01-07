@@ -2075,6 +2075,23 @@ Cypress.Commands.add(
       'have.value',
       registerChallengeResponse.results[0].personal_details.nickname,
     );
+    // phone number is preselected
+    cy.dataCy('form-phone-input').should(
+      'have.value',
+      registerChallengeResponse.results[0].personal_details.telephone,
+    );
+    // phone opt-in is preselected
+    if (
+      registerChallengeResponse.results[0].personal_details.telephone_opt_in
+    ) {
+      cy.dataCy('form-personal-details-phone-opt-in-input')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--truthy');
+    } else {
+      cy.dataCy('form-personal-details-phone-opt-in-input')
+        .find('.q-checkbox__inner')
+        .should('have.class', 'q-checkbox__inner--falsy');
+    }
     // male sex is selected
     cy.dataCy('form-personal-details-gender')
       .find('.q-radio__inner')
@@ -2182,23 +2199,6 @@ Cypress.Commands.add(
           .should('contain', item.size);
       });
     });
-    // phone number is preselected
-    cy.dataCy('form-phone-input').should(
-      'have.value',
-      registerChallengeResponse.results[0].personal_details.telephone,
-    );
-    // phone opt-in is preselected
-    if (
-      registerChallengeResponse.results[0].personal_details.telephone_opt_in
-    ) {
-      cy.dataCy('form-merch-phone-opt-in-input')
-        .find('.q-checkbox__inner')
-        .should('have.class', 'q-checkbox__inner--truthy');
-    } else {
-      cy.dataCy('form-merch-phone-opt-in-input')
-        .find('.q-checkbox__inner')
-        .should('have.class', 'q-checkbox__inner--falsy');
-    }
     // go to next step
     cy.dataCy('step-6-continue').should('be.visible').click();
     // verify step 7 is active
@@ -2457,6 +2457,15 @@ Cypress.Commands.add('passToStep2', () => {
         .find('.q-radio__label')
         .first()
         .click();
+      // fill phone number
+      cy.dataCy('form-personal-details-phone-input')
+        .should('be.visible')
+        .find('input')
+        .type(personalDetailsRequest.telephone);
+      // opt in to info phone calls
+      cy.dataCy('form-personal-details-phone-opt-in-input')
+        .should('be.visible')
+        .click();
       cy.dataCy('form-personal-details-terms')
         .find('.q-checkbox__inner')
         .first()
@@ -2551,29 +2560,20 @@ Cypress.Commands.add('passToStep6', () => {
 
 Cypress.Commands.add('passToStep7', () => {
   cy.passToStep6();
-  cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then((request) => {
-    // select merch
-    cy.dataCy('form-card-merch-female')
-      .first()
-      .find('[data-cy="form-card-merch-link"]')
-      .click();
-    // close dialog
-    cy.dataCy('dialog-close').click();
-    // verify dialog is closed
-    cy.dataCy('dialog-merch').should('not.exist');
-    // fill phone number
-    cy.dataCy('form-merch-phone-input')
-      .should('be.visible')
-      .find('input')
-      .type(request.telephone);
-    // opt in to info phone calls
-    cy.dataCy('form-merch-phone-opt-in-input').should('be.visible').click();
-    // go to next step
-    cy.dataCy('step-6-continue').should('be.visible').click();
-    cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
-    // on step 7
-    cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
-  });
+  // select merch
+  cy.dataCy('form-card-merch-female')
+    .first()
+    .find('[data-cy="form-card-merch-link"]')
+    .click();
+  // close dialog
+  cy.dataCy('dialog-close').click();
+  // verify dialog is closed
+  cy.dataCy('dialog-merch').should('not.exist');
+  // go to next step
+  cy.dataCy('step-6-continue').should('be.visible').click();
+  cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
+  // on step 7
+  cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
 });
 
 /**

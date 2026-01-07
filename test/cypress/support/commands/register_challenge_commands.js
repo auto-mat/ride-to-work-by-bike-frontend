@@ -62,7 +62,7 @@ Cypress.Commands.add('switchToPaymentWithReward', () => {
  * "I don't want merch" checkbox should be selected and disabled
  * Next step button should be visible and enabled
  */
-Cypress.Commands.add('validateStepMerchWithoutReward', (phone) => {
+Cypress.Commands.add('validateStepMerchWithoutReward', () => {
   cy.dataCy('form-merch-no-merch-checkbox')
     .should('be.visible')
     .and('have.class', 'disabled')
@@ -70,10 +70,6 @@ Cypress.Commands.add('validateStepMerchWithoutReward', (phone) => {
     .should('have.class', 'q-checkbox__inner--truthy');
   // merch cards should not be visible
   cy.dataCy('list-merch').should('not.be.visible');
-  // fill phone if needed
-  if (phone) {
-    cy.dataCy('form-merch-phone-input').find('input').type(phone);
-  }
   // go to next step
   cy.dataCy('step-6-continue').should('be.visible').click();
   // on step 7

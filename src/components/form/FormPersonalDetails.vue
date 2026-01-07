@@ -9,9 +9,10 @@
  * Note: This component is commonly used in `RegisterChallengePage`.
  *
  * @components
- * - `FormFieldTextRequired`: Component to render name, surname, nickname...
- * - `FormFieldRadioRequired`: Component to render gender radio buttons.
  * - `FormFieldNewsletter`: Component to render newsletter subscription form with options.
+ * - `FormFieldPhone`: Component to render phone input.
+ * - `FormFieldRadioRequired`: Component to render gender radio buttons.
+ * - `FormFieldTextRequired`: Component to render name, surname, nickname...
  *
  * @example
  * <form-personal-details />
@@ -23,9 +24,10 @@
 import { computed, defineComponent, inject } from 'vue';
 
 // components
-import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
-import FormFieldRadioRequired from './FormFieldRadioRequired.vue';
 import FormFieldNewsletter from './FormFieldNewsletter.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
+import FormFieldRadioRequired from './FormFieldRadioRequired.vue';
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
@@ -51,9 +53,10 @@ import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 export default defineComponent({
   name: 'FormPersonalDetails',
   components: {
-    FormFieldTextRequired,
-    FormFieldRadioRequired,
     FormFieldNewsletter,
+    FormFieldPhone,
+    FormFieldRadioRequired,
+    FormFieldTextRequired,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
@@ -84,6 +87,16 @@ export default defineComponent({
       },
     ];
 
+    const phone = computed<string>({
+      get: () => store.getTelephone,
+      set: (value: string) => store.setTelephone(value),
+    });
+
+    const telephoneOptIn = computed<boolean>({
+      get: () => store.getTelephoneOptIn,
+      set: (value: boolean) => store.setTelephoneOptIn(value),
+    });
+
     const urlAppDataPrivacyPolicy = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
@@ -111,6 +124,8 @@ export default defineComponent({
       genderOptions,
       isUserOrganizationAdmin,
       personalDetails,
+      phone,
+      telephoneOptIn,
       urlAppDataPrivacyPolicy,
       urlAppDataTermsOfService,
       urlRegisterAsCoordinator,
@@ -205,10 +220,34 @@ export default defineComponent({
           </router-link>
         </div>
       </div>
+
+      <!-- Input: Phone number -->
+      <form-field-phone
+        v-model="phone"
+        :hint="$t('form.merch.hintPhoneNoMerch')"
+        :required="true"
+        class="col-12"
+        data-cy="form-personal-details-phone-input"
+      />
+      <!-- Input: News checkbox -->
+      <div v-ripple class="col-12 q-my-md" data-cy="phone-opt-in">
+        <q-checkbox
+          dense
+          v-model="telephoneOptIn"
+          :false-value="false"
+          :true-value="true"
+          :label="$t('form.merch.labelPhoneOptIn')"
+          color="primary"
+          style="align-items: flex-start"
+          data-cy="form-personal-details-phone-opt-in-input"
+        />
+      </div>
+
       <!-- Input: Newsletter -->
       <div class="col-12">
         <form-field-newsletter v-model="personalDetails.newsletter" />
       </div>
+
       <!-- Input: confirm consent -->
       <div class="col-12" data-cy="form-personal-details-terms">
         <q-field
@@ -227,6 +266,7 @@ export default defineComponent({
             :false-value="false"
             rules="required"
             class="text-grey-10"
+            style="align-items: flex-start"
             data-cy="form-terms-input"
           >
             <!-- Default slot: label -->

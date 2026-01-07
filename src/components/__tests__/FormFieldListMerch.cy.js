@@ -1,11 +1,9 @@
-import { computed } from 'vue';
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
 import { Gender } from 'components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useChallengeStore } from '../../stores/challenge';
 import { defaultLocale } from 'src/i18n/def_locale';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
@@ -94,30 +92,10 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('no-merch').click();
       // merch options are hidden
       cy.dataCy('list-merch').should('not.be.visible');
-      // phone number input is still visible
-      cy.dataCy('form-merch-phone-input')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.merch.hintPhoneNoMerch'));
-      // phone opt-in input is still visible
-      cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
-      cy.dataCy('phone-opt-in').should(
-        'contain',
-        i18n.global.t('form.merch.labelPhoneOptInNoMerch'),
-      );
       // unselect no merch
       cy.dataCy('no-merch').click();
       // merch options are visible
       cy.dataCy('list-merch').should('be.visible');
-      // phone number input is still visible
-      cy.dataCy('form-merch-phone-input')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.merch.hintPhoneWithMerch'));
-      // phone opt-in input is still visible
-      cy.dataCy('form-merch-phone-opt-in-input').should('be.visible');
-      cy.dataCy('phone-opt-in').should(
-        'contain',
-        i18n.global.t('form.merch.labelPhoneOptInWithMerch'),
-      );
     });
 
     it('renders link to size converion chart image - default lang', () => {
@@ -392,30 +370,6 @@ describe('<FormFieldListMerch>', () => {
           .should('have.class', 'q-radio__inner--truthy');
       });
     });
-
-    it('updates phone number and phone opt-in in store when user enters values', () => {
-      cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
-        (request) => {
-          cy.wrap(useRegisterChallengeStore()).then((store) => {
-            const telephone = computed(() => store.getTelephone);
-            const telephoneOptIn = computed(() => store.getTelephoneOptIn);
-            // default values
-            cy.wrap(telephone).its('value').should('be.empty');
-            cy.wrap(telephoneOptIn).its('value').should('be.false');
-            // enter values
-            cy.dataCy('form-merch-phone-input')
-              .find('input')
-              .type(request.telephone);
-            cy.dataCy('form-merch-phone-opt-in-input')
-              .should('be.visible')
-              .click();
-            // values are updated
-            cy.wrap(telephone).its('value').should('eq', request.telephone);
-            cy.wrap(telephoneOptIn).its('value').should('be.true');
-          });
-        },
-      );
-    });
   });
 
   context('desktop - merch is unavailable', () => {
@@ -456,8 +410,6 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('list-merch-tabs').should('not.be.visible');
       cy.dataCy('form-field-merch-size').should('not.exist');
       cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
-      cy.dataCy('form-merch-phone-input').should('be.visible');
-      cy.dataCy('phone-opt-in').should('be.visible');
     });
   });
 

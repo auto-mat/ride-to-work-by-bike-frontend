@@ -422,6 +422,24 @@ describe('Register Challenge page', () => {
         .find('.q-checkbox__inner')
         .first()
         .click();
+      cy.dataCy('form-personal-details-phone-input').should('be.visible');
+      cy.dataCy('phone-opt-in').should('be.visible');
+      // next step button is enabled
+      cy.dataCy('step-1-continue').should('be.visible').click();
+      // validation does not pass (phone is required)
+      cy.dataCy('step-1').find('.q-stepper__step-content').should('be.visible');
+      // phone error message is shown
+      cy.get('@i18n').then((i18n) => {
+        cy.contains(
+          i18n.global.t('form.messageFieldRequired', {
+            fieldName: i18n.global.t('form.labelPhone'),
+          }),
+        ).should('be.visible');
+      });
+      // fill in phone number
+      cy.dataCy('form-personal-details-phone-input')
+        .find('input')
+        .type('736123456');
       // click
       cy.dataCy('step-1-continue').should('be.visible').click();
       // on step 2
@@ -442,6 +460,13 @@ describe('Register Challenge page', () => {
         .first()
         .click();
       // skip newsletter
+      // fill in phone number
+      cy.dataCy('form-personal-details-phone-input')
+        .find('input')
+        .type('736123456');
+      cy.dataCy('form-personal-details-phone-opt-in-input')
+        .should('be.visible')
+        .click();
       // agree with terms
       cy.dataCy('form-personal-details-terms')
         .find('.q-checkbox__inner')
@@ -948,29 +973,6 @@ describe('Register Challenge page', () => {
               .find('[data-cy="button-more-info"]')
               .should('not.exist');
           });
-          // next step button is enabled
-          cy.dataCy('step-6-continue')
-            .should('be.visible')
-            .and('not.be.disabled')
-            .click();
-          // validation does not pass (phone is required)
-          cy.dataCy('step-6')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-          // phone error message is shown
-          cy.contains(
-            i18n.global.t('form.messageFieldRequired', {
-              fieldName: i18n.global.t('form.labelPhone'),
-            }),
-          ).should('be.visible');
-          // fill in phone number
-          cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
-            (request) => {
-              cy.dataCy('form-merch-phone-input')
-                .find('input')
-                .type(request.telephone);
-            },
-          );
           // next step button is enabled
           cy.dataCy('step-6-continue')
             .should('be.visible')
@@ -1827,16 +1829,6 @@ describe('Register Challenge page', () => {
           cy.dataCy('dialog-close').click();
           // verify dialog is closed
           cy.dataCy('dialog-merch').should('not.exist');
-          // fill in phone number
-          cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
-            (request) => {
-              cy.dataCy('form-merch-phone-input')
-                .find('input')
-                .type(request.telephone);
-            },
-          );
-          // enable telephone opt-in
-          cy.dataCy('form-merch-phone-opt-in-input').click();
           // go to next step
           cy.dataCy('step-6-continue').should('be.visible').click();
           // test API post request (merchandise)
@@ -1919,16 +1911,6 @@ describe('Register Challenge page', () => {
       cy.dataCy('dialog-close').click();
       // verify dialog is closed
       cy.dataCy('dialog-merch').should('not.exist');
-      // fill in phone number
-      cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
-        (request) => {
-          cy.dataCy('form-merch-phone-input')
-            .find('input')
-            .type(request.telephone);
-        },
-      );
-      // enable telephone opt-in
-      cy.dataCy('form-merch-phone-opt-in-input').click();
       // go to next step
       cy.dataCy('step-6-continue').should('be.visible').click();
       // test API post request (merchandise)
@@ -2002,14 +1984,8 @@ describe('Register Challenge page', () => {
       ).then((request) => {
         cy.waitForRegisterChallengePostApi(request);
       });
-      cy.fixture(
-        'apiGetRegisterChallengeIndividualPaidWithoutReward.json',
-      ).then((response) => {
-        // validate step Merch without reward
-        cy.validateStepMerchWithoutReward(
-          response.results[0].personal_details.telephone,
-        );
-      });
+      // validate step Merch without reward
+      cy.validateStepMerchWithoutReward();
     });
 
     it('submits form state on 1st, 5th and 6th step (school payment)', () => {
@@ -2082,16 +2058,6 @@ describe('Register Challenge page', () => {
       cy.dataCy('dialog-close').click();
       // verify dialog is closed
       cy.dataCy('dialog-merch').should('not.exist');
-      // fill in phone number
-      cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
-        (request) => {
-          cy.dataCy('form-merch-phone-input')
-            .find('input')
-            .type(request.telephone);
-        },
-      );
-      // enable telephone opt-in
-      cy.dataCy('form-merch-phone-opt-in-input').click();
       // go to next step
       cy.dataCy('step-6-continue').should('be.visible').click();
       // test API post request (merchandise)
@@ -2165,14 +2131,7 @@ describe('Register Challenge page', () => {
       ).then((request) => {
         cy.waitForRegisterChallengePostApi(request);
       });
-      cy.fixture(
-        'apiGetRegisterChallengeIndividualPaidWithoutReward.json',
-      ).then((response) => {
-        // validate step Merch without reward
-        cy.validateStepMerchWithoutReward(
-          response.results[0].personal_details.telephone,
-        );
-      });
+      cy.validateStepMerchWithoutReward();
     });
 
     it('submits personal details with empty newsletter', () => {
@@ -2194,6 +2153,14 @@ describe('Register Challenge page', () => {
           cy.dataCy('form-personal-details-gender')
             .find('.q-radio__label')
             .first()
+            .click();
+          // fill in phone number
+          cy.dataCy('form-personal-details-phone-input')
+            .find('input')
+            .type(personalDetailsRequest.telephone);
+          // opt-in phone
+          cy.dataCy('form-personal-details-phone-opt-in-input')
+            .should('be.visible')
             .click();
           // agree with terms
           cy.dataCy('form-personal-details-terms')
@@ -2402,16 +2369,6 @@ describe('Register Challenge page', () => {
           cy.dataCy('dialog-close').click();
           // verify dialog is closed
           cy.dataCy('dialog-merch').should('not.exist');
-          // fill in phone number
-          cy.fixture('apiPostRegisterChallengeMerchandiseRequest.json').then(
-            (request) => {
-              cy.dataCy('form-merch-phone-input')
-                .find('input')
-                .type(request.telephone);
-            },
-          );
-          // enable telephone opt-in
-          cy.dataCy('form-merch-phone-opt-in-input').click();
           // go to next step
           cy.dataCy('step-6-continue').should('be.visible').click();
           // complete registration
@@ -2450,6 +2407,13 @@ describe('Register Challenge page', () => {
               cy.dataCy('form-personal-details-gender')
                 .find('.q-radio__label')
                 .first()
+                .click();
+              // fill in phone number
+              cy.dataCy('form-personal-details-phone-input')
+                .find('input')
+                .type(personalDetailsRequest.telephone);
+              cy.dataCy('form-personal-details-phone-opt-in-input')
+                .should('be.visible')
                 .click();
               // agree with terms
               cy.dataCy('form-personal-details-terms')
@@ -2532,37 +2496,21 @@ describe('Register Challenge page', () => {
             null,
             HttpStatusCode.BadRequest,
           );
-          // try to submit merchandise step
-          cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
-            (request) => {
-              // select merch
-              cy.dataCy('form-card-merch-female')
-                .first()
-                .find('[data-cy="form-card-merch-link"]')
-                .click();
-              // close dialog
-              cy.dataCy('dialog-close').click();
-              // verify dialog is closed
-              cy.dataCy('dialog-merch').should('not.exist');
-              // fill phone number
-              cy.dataCy('form-merch-phone-input')
-                .should('be.visible')
-                .find('input')
-                .type(request.telephone);
-              // opt in to info phone calls
-              cy.dataCy('form-merch-phone-opt-in-input')
-                .should('be.visible')
-                .click();
-              // go to next step
-              cy.dataCy('step-6-continue').should('be.visible').click();
-              cy.dataCy('step-6-continue')
-                .find('.q-spinner')
-                .should('be.visible');
-              // still on step 6
-              cy.dataCy('step-7-continue').should('not.exist');
-              cy.dataCy('step-6-continue').should('be.visible');
-            },
-          );
+          // select merch
+          cy.dataCy('form-card-merch-female')
+            .first()
+            .find('[data-cy="form-card-merch-link"]')
+            .click();
+          // close dialog
+          cy.dataCy('dialog-close').click();
+          // verify dialog is closed
+          cy.dataCy('dialog-merch').should('not.exist');
+          // go to next step
+          cy.dataCy('step-6-continue').should('be.visible').click();
+          cy.dataCy('step-6-continue').find('.q-spinner').should('be.visible');
+          // still on step 6
+          cy.dataCy('step-7-continue').should('not.exist');
+          cy.dataCy('step-6-continue').should('be.visible');
         });
       });
     });
@@ -2895,14 +2843,6 @@ describe('Register Challenge page', () => {
               .find('[data-cy="button-more-info"]')
               .click();
             cy.dataCy('dialog-close').click();
-            // fill in phone number
-            cy.fixture('apiPostRegisterChallengeMerchandiseRequest').then(
-              (request) => {
-                cy.dataCy('form-merch-phone-input')
-                  .find('input')
-                  .type(request.telephone);
-              },
-            );
             // next step button is enabled
             cy.dataCy('step-6-continue')
               .should('be.visible')
@@ -4425,8 +4365,6 @@ describe('Register Challenge page', () => {
         cy.dataCy('no-merch').should('be.visible');
         cy.dataCy('list-merch-tabs').should('be.visible');
         cy.dataCy('form-merch-size-conversion-chart-link').should('be.visible');
-        cy.dataCy('form-merch-phone-input').should('be.visible');
-        cy.dataCy('phone-opt-in').should('be.visible');
       });
     });
 
@@ -4800,8 +4738,6 @@ describe('Register Challenge page', () => {
         cy.dataCy('list-merch-tabs').should('not.be.visible');
         cy.dataCy('form-field-merch-size').should('not.exist');
         cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
-        cy.dataCy('form-merch-phone-input').should('be.visible');
-        cy.dataCy('phone-opt-in').should('be.visible');
         // "no merch" checkbox auto-selected
         cy.dataCy('form-merch-no-merch-checkbox')
           .should('exist')

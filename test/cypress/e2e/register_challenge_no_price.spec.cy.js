@@ -70,8 +70,6 @@ describe('Register Challenge - Merch Options No Price', () => {
       cy.dataCy('list-merch-tabs').should('not.be.visible');
       cy.dataCy('form-field-merch-size').should('not.exist');
       cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
-      cy.dataCy('form-merch-phone-input').should('be.visible');
-      cy.dataCy('phone-opt-in').should('be.visible');
       // "no merch" checkbox auto-selected
       cy.dataCy('form-merch-no-merch-checkbox')
         .should('exist')

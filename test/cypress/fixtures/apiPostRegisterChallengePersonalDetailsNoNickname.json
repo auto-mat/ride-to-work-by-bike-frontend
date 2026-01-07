@@ -6,5 +6,7 @@
   "sex": "male",
   "newsletter": "",
   "personal_data_opt_in": true,
-  "language": "cs"
+  "language": "cs",
+  "telephone": "736123456",
+  "telephone_opt_in": true
 }

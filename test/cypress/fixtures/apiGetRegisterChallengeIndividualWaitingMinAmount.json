@@ -10,7 +10,7 @@
         "email": "foo@bar.com",
         "nickname": "FB",
         "sex": "male",
-        "telephone": "",
+        "telephone": "736123456",
         "telephone_opt_in": false,
         "language": "cs",
         "occupation": "",

@@ -18,7 +18,6 @@
  * @components
  * - `DialogDefault`: Component to display dialog.
  * - `FormCardMerch`: Component to render a merch card (option).
- * - `FormFieldPhone`: Component to render phone input.
  * - `FormFieldRadioRequired`: Component to render radio buttons.
  * - `SliderMerch`: Component to render images in a slider.
  *
@@ -43,7 +42,6 @@ import { QCard, QForm } from 'quasar';
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormCardMerch from '../form/FormCardMerch.vue';
-import FormFieldPhone from '../global/FormFieldPhone.vue';
 import FormFieldRadioRequired from '../form/FormFieldRadioRequired.vue';
 import SliderMerch from './SliderMerch.vue';
 
@@ -73,7 +71,6 @@ export default defineComponent({
   components: {
     DialogDefault,
     FormCardMerch,
-    FormFieldPhone,
     FormFieldRadioRequired,
     SliderMerch,
   },
@@ -91,14 +88,7 @@ export default defineComponent({
       get: () => registerChallengeStore.getMerchId,
       set: (value: number | null) => registerChallengeStore.setMerchId(value),
     });
-    const phone = computed<string>({
-      get: () => registerChallengeStore.getTelephone,
-      set: (value: string) => registerChallengeStore.setTelephone(value),
-    });
-    const telephoneOptIn = computed<boolean>({
-      get: () => registerChallengeStore.getTelephoneOptIn,
-      set: (value: boolean) => registerChallengeStore.setTelephoneOptIn(value),
-    });
+
     // dialog
     const isOpen = ref<boolean>(false);
 
@@ -444,13 +434,11 @@ export default defineComponent({
       isOpen,
       isShowingBottomSizeInput,
       labelPhoneOptIn,
-      telephoneOptIn,
       optionsFemale,
       optionsMale,
       optionsUnisex,
       optionsEmpty,
       showMerchUnavailableBanner,
-      phone,
       selectedOption,
       selectedSize,
       selectedGender,
@@ -615,33 +603,6 @@ export default defineComponent({
         >{{ $t('form.merch.labelUrlSizeConversionChartLink') }}</a
       >
     </div>
-
-    <!-- Input: Phone number -->
-    <form-field-phone
-      v-model="phone"
-      :hint="hintInputPhone"
-      :required="true"
-      data-cy="form-merch-phone-input"
-    />
-    <!-- Input: News checkbox -->
-    <q-item tag="label" v-ripple class="q-mt-md" data-cy="phone-opt-in">
-      <q-item-section avatar top>
-        <q-checkbox
-          dense
-          v-model="telephoneOptIn"
-          :false-value="false"
-          :true-value="true"
-          color="primary"
-          data-cy="form-merch-phone-opt-in-input"
-        />
-      </q-item-section>
-      <q-item-section>
-        <!-- Checkbox title -->
-        <q-item-label class="text-grey-10" data-cy="phone-opt-in-label">
-          {{ labelPhoneOptIn }}
-        </q-item-label>
-      </q-item-section>
-    </q-item>
 
     <!-- Dialog -->
     <dialog-default v-model="isOpen" data-cy="dialog-merch">
