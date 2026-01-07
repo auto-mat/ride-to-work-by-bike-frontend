@@ -27,7 +27,14 @@ import { useApiGetTeams } from '../../composables/useApiGetTeams';
 // enums
 import { OrganizationLevel } from 'src/components/types/Organization';
 
+// config
+import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+
+// i18n
+import { i18n } from 'src/boot/i18n';
+
 // stores
+import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
@@ -44,7 +51,9 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
+    const challengeStore = useChallengeStore();
     const { mapTeamToOption } = useApiGetTeams(logger);
+    const { challengeMonth } = rideToWorkByBikeConfig;
 
     const team = computed({
       get: () => {
@@ -60,6 +69,22 @@ export default defineComponent({
     const options = computed<FormSelectTableOption[]>(() =>
       teams.value.map(mapTeamToOption),
     );
+
+    const maxTeamMembers = computed(() => challengeStore.getMaxTeamMembers);
+
+    const teamInfoText = computed(() => {
+      if (!maxTeamMembers.value) {
+        return '';
+      }
+      if (maxTeamMembers.value === 1 && challengeMonth === 'january') {
+        return i18n.global.t('register.challenge.textTeamInfoJanuary');
+      }
+      return i18n.global.t(
+        'register.challenge.textTeamInfo',
+        { count: maxTeamMembers.value },
+        maxTeamMembers.value,
+      );
+    });
 
     // load teams when subsidiary ID changes
     watch(
@@ -98,6 +123,7 @@ export default defineComponent({
       isLoading,
       options,
       team,
+      teamInfoText,
       OrganizationLevel,
       onOptionCreated,
     };
@@ -109,7 +135,7 @@ export default defineComponent({
   <div data-cy="form-select-team">
     <!-- Text: Info -->
     <div class="q-mb-lg" data-cy="form-select-team-info">
-      {{ $t('register.challenge.textTeamInfo') }}
+      {{ teamInfoText }}
     </div>
     <!-- Select table -->
     <form-field-select-table

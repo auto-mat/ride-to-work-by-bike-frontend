@@ -3547,6 +3547,23 @@ Cypress.Commands.add(
 );
 
 /**
+ * Set up challenge store with max team member count
+ * @param {Object} useChallengeStore - Challenge store composable function
+ * @param {Object} memberCount - Max number of team members
+ */
+Cypress.Commands.add(
+  'setupChallengeMaxTeamMembers',
+  (useChallengeStore, memberCount) => {
+    cy.wrap(useChallengeStore()).then((challengeStore) => {
+      const maxTeamMembers = computed(() => challengeStore.getMaxTeamMembers);
+      challengeStore.setMaxTeamMembers(memberCount);
+      // test max team members number in store
+      cy.wrap(maxTeamMembers).its('value').should('be.equal', memberCount);
+    });
+  },
+);
+
+/**
  * Intercept post trips API
  * Provides `@postTrips` alias
  * @param {Config} config - App global config

@@ -22,10 +22,16 @@
  * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=6691%3A28263&mode=dev)
  */
 
-import { defineComponent, nextTick, ref } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+
+// i18n
+import { i18n } from 'src/boot/i18n';
+
+// stores
+import { useChallengeStore } from 'src/stores/challenge';
 
 // types
 import type { FormTeamFields } from '../types/Form';
@@ -44,6 +50,7 @@ export default defineComponent({
   emits: ['update:formValues'],
   setup(props, { emit }) {
     const team = ref(props.formValues);
+    const challengeStore = useChallengeStore();
 
     const onUpdate = (): void => {
       // wait for next tick to emit the value after update
@@ -52,8 +59,26 @@ export default defineComponent({
       });
     };
 
+    const maxTeamMembers = computed<number | null>(
+      () => challengeStore.getMaxTeamMembers,
+    );
+
+    const teamText = computed(() => {
+      // text is relevant/shown only if maxTeamMembers > 1
+      if (!maxTeamMembers.value || maxTeamMembers.value === 1) {
+        return '';
+      } else {
+        return i18n.global.t(
+          'form.team.textTeam',
+          { count: maxTeamMembers.value },
+          maxTeamMembers.value,
+        );
+      }
+    });
+
     return {
       team,
+      teamText,
       onUpdate,
     };
   },
@@ -70,6 +95,6 @@ export default defineComponent({
       @update:model-value="onUpdate"
       data-cy="form-add-team-name"
     />
-    <div v-html="$t('form.team.textTeam')" class="q-mt-sm" />
+    <div v-html="teamText" class="q-mt-sm" data-cy="form-add-team-text" />
   </div>
 </template>
