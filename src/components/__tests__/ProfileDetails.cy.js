@@ -582,6 +582,81 @@ describe('<ProfileDetails>', () => {
         .and('contain', i18n.global.t('profile.labelNoValue'));
     });
   });
+
+  context('challenge with 1 member teams', () => {
+    beforeEach(() => {
+      // intercept campaign API
+      cy.fixture('apiGetThisCampaignJanuary.json').then((campaign) => {
+        cy.interceptThisCampaignGetApi(rideToWorkByBikeConfig, i18n, campaign);
+      });
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseRegisterChallenge) => {
+          cy.fixture('apiGetHasOrganizationAdminResponseFalse').then(
+            (responseHasOrganizationAdmin) => {
+              cy.interceptRegisterChallengeGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                responseRegisterChallenge,
+              );
+              cy.interceptHasOrganizationAdminGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                responseRegisterChallenge.results[0].organization_id,
+                responseHasOrganizationAdmin,
+              );
+              interceptOrganizationsApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                OrganizationType.company,
+              );
+              cy.interceptSubsidiariesGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                responseRegisterChallenge.results[0].organization_id,
+              );
+              cy.fixture('apiGetTeamsResponse').then((teamsResponse) => {
+                cy.fixture('apiGetTeamsResponseNextFullTeam').then(
+                  (teamsResponseNextFullTeam) => {
+                    // intercept teams for first subsidiary
+                    cy.interceptTeamsGetApi(
+                      rideToWorkByBikeConfig,
+                      i18n,
+                      responseRegisterChallenge.results[0].subsidiary_id,
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                  },
+                );
+              });
+              cy.interceptMyTeamGetApi(rideToWorkByBikeConfig, i18n);
+              // we test with merchandise unavailable to make sure the merch is always shown
+              cy.fixture('apiGetMerchandiseResponseUnavailable').then(
+                (response) => {
+                  cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+                    (responseNext) => {
+                      cy.interceptMerchandiseGetApi(
+                        rideToWorkByBikeConfig,
+                        i18n,
+                        response,
+                        responseNext,
+                      );
+                    },
+                  );
+                },
+              );
+            },
+          );
+        },
+      );
+      cy.mount(ProfileDetails, {
+        props: {},
+      });
+    });
+
+    it('does not render team approval section', () => {
+      cy.dataCy('team-members-list').should('not.exist');
+    });
+  });
 });
 
 function coreTests() {
