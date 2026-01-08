@@ -1330,13 +1330,14 @@ Cypress.Commands.add('interceptTeamPostApi', (config, i18n, subsidiaryId) => {
 /**
  * Wait for intercept team POST API call and compare request/response object
  * Wait for `@postTeam` intercept
+ * @param {object|null} requestBody - Optional custom request body to compare against. If not provided, uses fixture.
  */
-Cypress.Commands.add('waitForTeamPostApi', () => {
+Cypress.Commands.add('waitForTeamPostApi', (requestBody = null) => {
   cy.fixture('apiPostTeamRequest').then((teamRequest) => {
     cy.fixture('apiPostTeamResponse').then((teamResponse) => {
       cy.wait('@postTeam').then(({ request, response }) => {
         expect(request.headers.authorization).to.include(bearerTokeAuth);
-        expect(request.body).to.deep.equal(teamRequest);
+        expect(request.body).to.deep.equal(requestBody || teamRequest);
         if (response) {
           expect(response.statusCode).to.equal(httpSuccessfullStatus);
           expect(response.body).to.deep.equal(teamResponse);
