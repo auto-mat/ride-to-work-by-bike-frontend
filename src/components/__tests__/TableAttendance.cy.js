@@ -34,6 +34,9 @@ const selectorSubsidiaryHeader = 'table-attendance-subsidiary-header';
 const selectorCityChallenge = 'table-attendance-city-challenge';
 const selectorTeams = 'table-attendance-teams';
 const selectorMembers = 'table-attendance-members';
+const selectorAddTeamButton = 'table-attendance-button-add-team';
+const selectorDialog = 'dialog-add-team';
+const selectorDialogForm = 'form-add-team-name';
 
 // variables
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
@@ -69,7 +72,13 @@ describe('<TableAttendance>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['labelCityChallenge', 'labelTeams', 'labelMembers', 'textClickToCopy'],
+      [
+        'labelCityChallenge',
+        'labelTeams',
+        'labelMembers',
+        'textClickToCopy',
+        'addTeam',
+      ],
       'coordinator',
       i18n,
     );
@@ -518,6 +527,26 @@ function dataDisplayTests() {
             }
           }
         });
+    });
+  });
+
+  it('displays add team button for each subsidiary table', () => {
+    cy.fixture('tableAttendanceTestData').then((tableAttendanceTestData) => {
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        adminOrganisationStore.setAdminOrganisations(
+          tableAttendanceTestData.storeData,
+        );
+      });
+      // button
+      cy.dataCy(selectorAddTeamButton)
+        .should('be.visible')
+        .and('not.be.disabled')
+        .and('contain', i18n.global.t('coordinator.addTeam'));
+      // dialog
+      cy.dataCy(selectorAddTeamButton).click();
+      cy.dataCy(selectorDialog).should('be.visible');
+      cy.dataCy(selectorDialogForm).should('be.visible');
     });
   });
 }

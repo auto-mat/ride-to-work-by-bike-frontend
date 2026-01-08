@@ -11,8 +11,19 @@
  */
 
 // libraries
-import { QTable } from 'quasar';
-import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
+import { QForm, QTable } from 'quasar';
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
+
+// components
+import DialogDefault from '../global/DialogDefault.vue';
+import FormAddTeam from '../form/FormAddTeam.vue';
 
 // composables
 import {
@@ -37,8 +48,18 @@ import {
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// stores
+import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+
+// types
+import type { FormTeamFields } from '../types/Form';
+
 export default defineComponent({
   name: 'TableAttendance',
+  components: {
+    DialogDefault,
+    FormAddTeam,
+  },
   setup() {
     const tableRefs = ref<QTable[]>([]);
     const { subsidiariesData } = useTableAttendanceData();
@@ -79,6 +100,48 @@ export default defineComponent({
     const { sortByTeam } = useTable();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
+    // dialog state for create team
+    const adminOrganisationStore = useAdminOrganisationStore();
+    const formRef = ref<QForm | null>(null);
+    const isDialogOpen = ref<boolean>(false);
+    const currentSubsidiaryId = ref<number | null>(null);
+    const teamNew = ref<FormTeamFields>({ name: '' });
+
+    const isLoading = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingCreateTeam,
+    );
+
+    const onOpenDialog = (subsidiaryId: number): void => {
+      currentSubsidiaryId.value = subsidiaryId;
+      isDialogOpen.value = true;
+    };
+
+    const onCloseDialog = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
+      teamNew.value = { name: '' };
+      isDialogOpen.value = false;
+      currentSubsidiaryId.value = null;
+    };
+
+    const onSubmitTeam = async (): Promise<void> => {
+      if (formRef.value && currentSubsidiaryId.value !== null) {
+        const isFormValid: boolean = await formRef.value.validate();
+
+        if (isFormValid) {
+          await adminOrganisationStore.createTeamForSubsidiary(
+            currentSubsidiaryId.value,
+            teamNew.value.name,
+          );
+          onCloseDialog();
+        } else {
+          // scroll to form
+          formRef.value.$el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -99,9 +162,17 @@ export default defineComponent({
       borderRadius,
       columns,
       copyToClipboard,
+      currentSubsidiaryId,
+      formRef,
       iconSize,
+      isDialogOpen,
+      isLoading,
+      onCloseDialog,
+      onOpenDialog,
+      onSubmitTeam,
       subsidiariesData,
       tableRefs,
+      teamNew,
       teams,
       visibleColumns,
       getPaymentStateIcon,
@@ -332,7 +403,80 @@ export default defineComponent({
             </q-td>
           </q-tr>
         </template>
+        <!-- Bottom slot: add team button + pagination -->
+        <template v-slot:bottom="scope">
+          <div
+            class="full-width row items-center gap-8 justify-between q-py-sm"
+          >
+            <!-- Button: add team -->
+            <q-btn
+              unelevated
+              rounded
+              color="primary"
+              :disable="isLoading"
+              :loading="isLoading"
+              @click="onOpenDialog(subsidiaryData.subsidiary.id)"
+              data-cy="table-attendance-button-add-team"
+            >
+              <q-icon size="18px" name="add" class="q-mr-xs" />
+              {{ $t('coordinator.addTeam') }}
+            </q-btn>
+            <!-- Pagination -->
+            <q-pagination
+              v-model="scope.pagination.page"
+              :max="scope.pagesNumber"
+              :max-pages="7"
+              boundary-numbers
+              direction-links
+              data-cy="table-attendance-pagination"
+            />
+          </div>
+        </template>
       </q-table>
     </div>
+
+    <!-- Dialog: Add Team -->
+    <dialog-default v-model="isDialogOpen" data-cy="dialog-add-team">
+      <template #title>
+        {{ $t('coordinator.addTeam') }}
+      </template>
+      <template #content>
+        <q-form ref="formRef" @submit.prevent="onSubmitTeam">
+          <form-add-team
+            class="q-mb-lg"
+            :form-values="teamNew"
+            @update:form-values="teamNew = $event"
+          />
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
+        </q-form>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-sm">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="onCloseDialog"
+              data-cy="dialog-button-cancel"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              :loading="isLoading"
+              :disable="isLoading"
+              @click="onSubmitTeam"
+              data-cy="dialog-button-submit"
+            >
+              {{ $t('coordinator.addTeam') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
   </div>
 </template>
