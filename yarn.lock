@@ -4796,10 +4796,17 @@ object-inspect@^1.13.3:
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.13.3.tgz#f14c183de51130243d6d18ae149375ff50ea488a"
   integrity sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==
 
-ol-contextmenu@^5.4.0, ol-contextmenu@^5.5.0:
+ol-contextmenu@^5.4.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/ol-contextmenu/-/ol-contextmenu-5.5.0.tgz#277b097b79ce78e52ef9332b62f3cf7c4971da42"
   integrity sha512-IglB0OfzSmcP++dykqrQU62lJAn/4O61hxyD0s5V03HE70Efm6EgSaNq8YOlgEbnqfUL+7F3fS7VI3UV+0+NZg==
+  dependencies:
+    tiny-emitter "^2.1.0"
+
+ol-contextmenu@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ol-contextmenu/-/ol-contextmenu-6.0.0.tgz#3a38b6f2bc51d8b307acc1be4cc8ca1741ea24be"
+  integrity sha512-6A2rFb/OM5LlxB8RXCVfnihZIT9dWLdOB2Z0ibBYsRGsnTwb5l+X5XA4GWiFk7ry8t0qqDR2hDhVDMcr9GkX8A==
   dependencies:
     tiny-emitter "^2.1.0"
 
