@@ -1330,7 +1330,7 @@ Cypress.Commands.add('interceptTeamPostApi', (config, i18n, subsidiaryId) => {
 /**
  * Wait for intercept team POST API call and compare request/response object
  * Wait for `@postTeam` intercept
- * @param {object|null} requestBody - Optional custom request body to compare against. If not provided, uses fixture.
+ * @param {object|null} requestBody - Optional custom request body
  */
 Cypress.Commands.add('waitForTeamPostApi', (requestBody = null) => {
   cy.fixture('apiPostTeamRequest').then((teamRequest) => {
