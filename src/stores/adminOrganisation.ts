@@ -519,13 +519,10 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const { createTeam } = useApiPostCoordinatorTeam(this.$log);
       const challengeStore = useChallengeStore();
       const campaignId = challengeStore.getCampaignId;
-
-      // validate campaign ID exists
       if (!campaignId) {
         this.$log?.error('Cannot create team: Campaign ID not available.');
         return;
       }
-
       this.$log?.info(
         `Creating team <${teamName}> for subsidiary <${subsidiaryId}> in campaign <${campaignId}>.`,
       );
