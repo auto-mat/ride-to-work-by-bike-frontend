@@ -483,20 +483,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.isPaymentWithReward = value;
     },
     /**
-     * Initialize user email from login store
-     * Used at the start of challenge registration
-     */
-    initUserEmail(): void {
-      this.$log?.debug('Initializing user email.');
-      const loginStore = useLoginStore();
-      const userEmail = loginStore.getUserEmail;
-      if (userEmail) {
-        const personalDetails = this.getPersonalDetails;
-        personalDetails.email = userEmail;
-        this.setPersonalDetails(personalDetails);
-      }
-    },
-    /**
      * Switch between regular and with-reward price sets
      * Handle side effects (clear voucher, reset payment amount)
      * @param {boolean} isWithReward - with/without reward setting value
@@ -686,6 +672,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     async submitStep(
       step: RegisterChallengeStep,
     ): Promise<RegisterChallengePostResponse | null | true> {
+      // fallback email from login store
+      if (!this.personalDetails.email) {
+        this.initUserEmail();
+      }
       // clear voucher on step change if payment subject is not voucher
       if (this.voucher && this.paymentSubject !== PaymentSubject.voucher) {
         this.setVoucher(null);
@@ -778,6 +768,19 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
       // post payload to API
       return this.postRegisterChallenge(payload);
+    },
+    /**
+     * Get user email from login store if not available
+     */
+    initUserEmail(): void {
+      this.$log?.debug('Initializing user email.');
+      const loginStore = useLoginStore();
+      const userEmail = loginStore.getUserEmail;
+      if (userEmail) {
+        const personalDetails = this.getPersonalDetails;
+        personalDetails.email = userEmail;
+        this.setPersonalDetails(personalDetails);
+      }
     },
     /**
      * Post registration data to API
