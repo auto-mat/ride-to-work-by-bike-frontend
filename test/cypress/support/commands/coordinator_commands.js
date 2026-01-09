@@ -437,3 +437,57 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Intercept coordinator team POST API call
+ * Provides `@postCoordinatorTeam` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {number} subsidiaryId - Subsidiary ID
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorTeamPostApi',
+  (config, i18n, subsidiaryId) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      urlApiCoordinatorSubsidiary,
+      urlApiCoordinatorTeam,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiCoordinatorTeamLocalized = `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/${urlApiCoordinatorTeam}`;
+
+    cy.fixture('apiPostCoordinatorTeamResponse').then((teamResponse) => {
+      cy.intercept('POST', urlApiCoordinatorTeamLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: teamResponse,
+      }).as('postCoordinatorTeam');
+    });
+  },
+);
+
+/**
+ * Wait for intercept coordinator team POST API call and compare request/response object
+ * Wait for `@postCoordinatorTeam` intercept
+ * @param {Object} requestData - Expected request data object
+ */
+Cypress.Commands.add('waitForCoordinatorTeamPostApi', (requestData) => {
+  cy.fixture('apiPostCoordinatorTeamResponse').then((teamResponse) => {
+    cy.wait('@postCoordinatorTeam').then(({ request, response }) => {
+      // Verify authorization header
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      // Verify request body
+      expect(request.body).to.deep.equal(requestData);
+      // Verify response
+      if (response) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(teamResponse);
+      }
+    });
+  });
+});

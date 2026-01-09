@@ -79,34 +79,36 @@ describe('Company coordinator user attendance page', () => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
             (response) => {
-              // confirm initial GET request
-              cy.waitForAdminOrganisationGetApi(
-                'apiGetAdminOrganisationResponse.json',
-              );
-              cy.get('@getAdminOrganisation.all').should('have.length', 1);
-              // intercept team POST API
-              cy.interceptTeamPostApi(
-                config,
-                i18n,
-                response.results[0].subsidiaries[0].id,
-              );
-              // create team
-              cy.dataCy('table-attendance-button-add-team').should(
-                'be.visible',
-              );
-              cy.dataCy('table-attendance-button-add-team').click();
-              cy.dataCy('dialog-add-team').should('be.visible');
-              cy.dataCy('form-add-team-name').find('input').type(teamName);
-              cy.dataCy('form-add-team-name').find('input').type('{enter}');
-              cy.dataCy('dialog-add-team').should('not.exist');
-              // await POST request and subsequent GET
-              cy.waitForTeamPostApi({
-                name: teamName,
+              cy.fixture('apiGetThisCampaign.json').then((campaignResponse) => {
+                const subsidiaryId = response.results[0].subsidiaries[0].id;
+                const campaignId = campaignResponse.results[0].id;
+                // confirm initial GET request
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponse.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 1);
+                // intercept coordinator team POST API
+                cy.interceptCoordinatorTeamPostApi(config, i18n, subsidiaryId);
+                // create team
+                cy.dataCy('table-attendance-button-add-team').should(
+                  'be.visible',
+                );
+                cy.dataCy('table-attendance-button-add-team').click();
+                cy.dataCy('dialog-add-team').should('be.visible');
+                cy.dataCy('form-add-team-name').find('input').type(teamName);
+                cy.dataCy('form-add-team-name').find('input').type('{enter}');
+                cy.dataCy('dialog-add-team').should('not.exist');
+                // await POST request and subsequent GET
+                cy.waitForCoordinatorTeamPostApi({
+                  name: teamName,
+                  campaign_id: campaignId,
+                  subsidiary_id: subsidiaryId,
+                });
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponse.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 2);
               });
-              cy.waitForAdminOrganisationGetApi(
-                'apiGetAdminOrganisationResponse.json',
-              );
-              cy.get('@getAdminOrganisation.all').should('have.length', 2);
             },
           );
         });
