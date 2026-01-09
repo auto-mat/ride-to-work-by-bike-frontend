@@ -76,6 +76,9 @@ export interface ConfigGlobal {
   apiDefaultLang: string;
   urlApiCommuteMode: string;
   urlApiCoordinatorMakeInvoice: string;
+  urlApiCoordinatorMember: string;
+  urlApiCoordinatorSubsidiary: string;
+  urlApiCoordinatorTeam: string;
   urlApiCompetition: string;
   urlApiDiscountCoupon: string;
   urlApiHasOrganizationAdmin: string;

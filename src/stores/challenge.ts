@@ -39,6 +39,7 @@ export const useChallengeStore = defineStore('challenge', {
     maxTeamMembers: null as number | null,
     priceLevel: [] as PriceLevel[],
     description: '',
+    campaignId: null as number | null,
   }),
 
   getters: {
@@ -96,6 +97,9 @@ export const useChallengeStore = defineStore('challenge', {
     getDescription(): string {
       return this.description;
     },
+    getCampaignId(): number | null {
+      return this.campaignId;
+    },
   },
 
   actions: {
@@ -113,6 +117,9 @@ export const useChallengeStore = defineStore('challenge', {
     },
     setDescription(description: string): void {
       this.description = description;
+    },
+    setCampaignId(campaignId: number | null): void {
+      this.campaignId = campaignId;
     },
     async loadPhaseSet(): Promise<void> {
       const { campaigns, loadCampaign } = useApiGetCampaign(this.$log);
@@ -170,6 +177,14 @@ export const useChallengeStore = defineStore('challenge', {
         this.setDescription(campaigns.value[0].description);
       } else {
         this.$log?.info('No this campaign description found.');
+      }
+
+      if (campaigns.value.length && campaigns.value[0]?.id) {
+        this.$log?.debug(`Set store campaign ID <${campaigns.value[0].id}>.`);
+        this.setCampaignId(campaigns.value[0].id);
+        this.$log?.debug(`New campaign ID value <${this.campaignId}>.`);
+      } else {
+        this.$log?.info('No campaign ID found.');
       }
     },
     /**
@@ -238,6 +253,7 @@ export const useChallengeStore = defineStore('challenge', {
       this.maxTeamMembers = null;
       this.priceLevel = [];
       this.description = '';
+      this.campaignId = null;
     },
   },
 

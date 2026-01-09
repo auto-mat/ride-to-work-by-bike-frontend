@@ -8,7 +8,7 @@ import { useApiGetAdminOrganisation } from '../composables/useApiGetAdminOrganis
 import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinatorInvoices';
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
 import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
-import { useApiPostTeam } from '../composables/useApiPostTeam';
+import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -516,12 +516,21 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       subsidiaryId: number,
       teamName: string,
     ): Promise<void> {
-      const { createTeam } = useApiPostTeam(this.$log);
+      const { createTeam } = useApiPostCoordinatorTeam(this.$log);
+      const challengeStore = useChallengeStore();
+      const campaignId = challengeStore.getCampaignId;
+
+      // validate campaign ID exists
+      if (!campaignId) {
+        this.$log?.error('Cannot create team: Campaign ID not available.');
+        return;
+      }
+
       this.$log?.info(
-        `Creating team <${teamName}> for subsidiary <${subsidiaryId}>.`,
+        `Creating team <${teamName}> for subsidiary <${subsidiaryId}> in campaign <${campaignId}>.`,
       );
       this.isLoadingCreateTeam = true;
-      const result = await createTeam(subsidiaryId, teamName);
+      const result = await createTeam(subsidiaryId, teamName, campaignId);
       if (result?.id) {
         this.$log?.debug(`Team created successfully with ID <${result.id}>.`);
         await this.loadAdminOrganisations();
