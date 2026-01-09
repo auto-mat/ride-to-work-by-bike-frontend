@@ -7,7 +7,6 @@ import {
   systemTimeChallengeActive,
 } from '../support/commonTests';
 import { OrganizationType } from 'src/components/types/Organization';
-import { systemTimeChallengeActive } from '../../../test/cypress/support/commonTests';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
