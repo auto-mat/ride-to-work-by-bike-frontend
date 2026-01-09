@@ -43,6 +43,7 @@ import { TeamMemberStatus } from 'src/components/enums/TeamMember';
 // stores
 import { useChallengeStore } from './challenge';
 import { useRegisterStore } from './register';
+import { useLoginStore } from './login';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -480,6 +481,20 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setIsPaymentWithReward(value: boolean): void {
       this.isPaymentWithReward = value;
+    },
+    /**
+     * Initialize user email from login store
+     * Used at the start of challenge registration
+     */
+    initUserEmail(): void {
+      this.$log?.debug('Initializing user email.');
+      const loginStore = useLoginStore();
+      const userEmail = loginStore.getUserEmail;
+      if (userEmail) {
+        const personalDetails = this.getPersonalDetails;
+        personalDetails.email = userEmail;
+        this.setPersonalDetails(personalDetails);
+      }
     },
     /**
      * Switch between regular and with-reward price sets

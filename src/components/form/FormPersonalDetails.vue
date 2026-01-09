@@ -20,7 +20,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
@@ -58,6 +58,11 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const store = useRegisterChallengeStore();
+
+    onMounted(() => {
+      // load user email from login store at the start of registration
+      store.initUserEmail();
+    });
 
     const personalDetails = computed<RegisterChallengePersonalDetailsForm>({
       get: (): RegisterChallengePersonalDetailsForm => store.getPersonalDetails,
