@@ -39,7 +39,7 @@ interface UseApiPostCoordinatorTeamReturn {
 /**
  * Post coordinator team composable
  * Used to create subsidiary team via coordinator endpoint
- * @param logger - Logger
+ * @param {Logger | null} logger - Logger
  * @returns {UseApiPostCoordinatorTeamReturn}
  */
 export const useApiPostCoordinatorTeam = (
