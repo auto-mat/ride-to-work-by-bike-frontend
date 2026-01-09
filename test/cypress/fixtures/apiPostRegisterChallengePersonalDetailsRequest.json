@@ -1,6 +1,7 @@
 {
   "first_name": "John",
   "last_name": "Doe",
+  "email": "",
   "nickname": "JD",
   "sex": "male",
   "newsletter": "challenge-events-mobility",
