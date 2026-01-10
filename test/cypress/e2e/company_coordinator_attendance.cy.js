@@ -89,6 +89,10 @@ describe('Company coordinator user attendance page', () => {
                 cy.get('@getAdminOrganisation.all').should('have.length', 1);
                 // intercept coordinator team POST API
                 cy.interceptCoordinatorTeamPostApi(config, i18n, subsidiaryId);
+                cy.interceptAdminOrganisationGetApi(
+                  config,
+                  'apiGetAdminOrganisationResponseNewTeam.json',
+                );
                 // create team
                 cy.dataCy('table-attendance-button-add-team').should(
                   'be.visible',
@@ -105,9 +109,13 @@ describe('Company coordinator user attendance page', () => {
                   subsidiary_id: subsidiaryId,
                 });
                 cy.waitForAdminOrganisationGetApi(
-                  'apiGetAdminOrganisationResponse.json',
+                  'apiGetAdminOrganisationResponseNewTeam.json',
                 );
                 cy.get('@getAdminOrganisation.all').should('have.length', 2);
+                cy.dataCy('table-attendance-team-header')
+                  .should('exist')
+                  .and('be.visible')
+                  .and('contain', teamName);
               });
             },
           );

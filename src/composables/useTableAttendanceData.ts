@@ -27,6 +27,7 @@ export interface TableAttendanceRow {
   paymentState: PaymentState;
   team: string;
   isFirst?: boolean;
+  isEmpty?: boolean;
 }
 
 export interface TableAttendanceSubsidiaryData {
@@ -84,6 +85,25 @@ export const useTableAttendanceData = (): {
       // collect all members from all teams in this subsidiary
       const allMembers: TableAttendanceRow[] = [];
       subsidiary.teams.forEach((team: AdminTeam) => {
+        const teamHasMembers =
+          team.members_with_paid_entry_fee_by_org_coord.length > 0 ||
+          team.members_without_paid_entry_fee_by_org_coord.length > 0 ||
+          team.other_members.length > 0;
+        // empty team - add hidden placeholder row
+        if (!teamHasMembers) {
+          allMembers.push({
+            name: '',
+            nickname: null,
+            email: '',
+            telephone: '',
+            approvedForTeam: TeamMemberStatus.approved,
+            isFeeApproved: false,
+            paymentType: PaymentType.registration,
+            paymentState: PaymentState.none,
+            team: team.name,
+            isEmpty: true,
+          });
+        }
         // process members with entry fee paid by org coordinator
         team.members_with_paid_entry_fee_by_org_coord.forEach(
           (member: AdminTeamMember) => {

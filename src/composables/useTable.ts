@@ -238,12 +238,19 @@ export const useTable = () => {
   ): readonly TableRow[] => {
     const data = [...rows];
     if (!sortBy) return data;
+    // separate empty rows (to show then at the end)
+    const nonEmptyRows = data.filter((row) => !row.isEmpty);
+    const emptyRows = data.filter((row) => row.isEmpty);
+    // sort non-empty rows
+    sortDataByValue(nonEmptyRows, sortBy, descending);
+    sortDataByKey(nonEmptyRows, AttendanceTableColumns.team, descending);
+    // sort empty rows
+    sortDataByKey(emptyRows, AttendanceTableColumns.team, descending);
+    // combine rows
+    const sortedData = [...nonEmptyRows, ...emptyRows];
+    markFirstInGroup(sortedData, AttendanceTableColumns.team);
 
-    sortDataByValue(data, sortBy, descending);
-    sortDataByKey(data, AttendanceTableColumns.team, descending);
-    markFirstInGroup(data, AttendanceTableColumns.team);
-
-    return data;
+    return sortedData;
   };
 
   /**

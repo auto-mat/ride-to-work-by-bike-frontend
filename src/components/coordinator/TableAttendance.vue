@@ -100,6 +100,11 @@ export default defineComponent({
     const { sortByTeam } = useTable();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
+    // table pagination settings
+    const pagination = ref({
+      rowsPerPage: 0,
+    });
+
     // dialog state for create team
     const adminOrganisationStore = useAdminOrganisationStore();
     const formRef = ref<QForm | null>(null);
@@ -181,6 +186,7 @@ export default defineComponent({
       getStatusLabel,
       getStatusColor,
       getStatusIcon,
+      pagination,
       paginationLabel,
       sortByTeam,
       PaymentState,
@@ -218,8 +224,15 @@ export default defineComponent({
           }}
         </div>
         <div data-cy="table-attendance-members">
-          {{ subsidiaryData.members?.length }}
-          {{ $t('coordinator.labelMembers', subsidiaryData.members?.length) }}
+          {{
+            subsidiaryData.members.filter((member) => !member.isEmpty).length
+          }}
+          {{
+            $t(
+              'coordinator.labelMembers',
+              subsidiaryData.members.filter((member) => !member.isEmpty).length,
+            )
+          }}
         </div>
       </div>
 
@@ -234,6 +247,7 @@ export default defineComponent({
         :visible-columns="visibleColumns"
         row-key="name"
         :sort-method="sortByTeam"
+        :pagination="pagination"
         :style="{ borderRadius }"
         :no-data-label="$t('table.textNoData')"
         :no-results-label="$t('table.textNoResults')"
@@ -255,6 +269,7 @@ export default defineComponent({
           </q-tr>
           <!-- Row -->
           <q-tr
+            v-if="!props.row.isEmpty"
             :props="props"
             class="text-grey-10"
             data-cy="table-attendance-row"
@@ -404,7 +419,7 @@ export default defineComponent({
           </q-tr>
         </template>
         <!-- Bottom slot: add team button + pagination -->
-        <template v-slot:bottom="scope">
+        <template v-slot:bottom>
           <div
             class="full-width row items-center gap-8 justify-between q-py-sm"
           >
@@ -421,15 +436,6 @@ export default defineComponent({
               <q-icon size="18px" name="add" class="q-mr-xs" />
               {{ $t('coordinator.addTeam') }}
             </q-btn>
-            <!-- Pagination -->
-            <q-pagination
-              v-model="scope.pagination.page"
-              :max="scope.pagesNumber"
-              :max-pages="7"
-              boundary-numbers
-              direction-links
-              data-cy="table-attendance-pagination"
-            />
           </div>
         </template>
       </q-table>
