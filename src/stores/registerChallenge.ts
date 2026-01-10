@@ -672,7 +672,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     async submitStep(
       step: RegisterChallengeStep,
     ): Promise<RegisterChallengePostResponse | null | true> {
-      // fallback email from login store
+      // Fallback email from login store, because user attendance
+      // DB model doesn't exist yet, and register-challenge/ REST API
+      // GET URL endpoint return empty array data
       if (!this.personalDetails.email) {
         this.initUserEmail();
       }
@@ -771,9 +773,16 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     /**
      * Get user email from login store if not available
+     *
+     * Fallback email from login store, becuase user attendance
+     * DB model doesn't exist yet, and register-challenge/ REST API
+     * GET URL endpoint return empty array data
      */
     initUserEmail(): void {
-      this.$log?.debug('Initializing user email.');
+      this.$log?.debug(
+        'Initializing user email from the login store,' +
+          " because user attendance DB model doesn't exist yet.",
+      );
       const loginStore = useLoginStore();
       const userEmail = loginStore.getUserEmail;
       if (userEmail) {
