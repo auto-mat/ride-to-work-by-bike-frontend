@@ -18,17 +18,16 @@ describe('Company coordinator user attendance page', () => {
             cy.wrap(win.i18n).as('i18n');
             // setup coordinator test environment
             cy.setupCompanyCoordinatorTest(config, win.i18n);
-            cy.visit(
-              '#' +
-                routesConf['coordinator_attendance']['children']['fullPath'],
-            );
-            cy.dataCy('header-organization').should('be.visible');
           });
         });
       });
     });
 
     it('should display the user attendance table', () => {
+      cy.visit(
+        '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+      );
+      cy.dataCy('header-organization').should('be.visible');
       // table
       cy.dataCy('table-attendance').should('be.visible');
       // table headers
@@ -77,6 +76,10 @@ describe('Company coordinator user attendance page', () => {
     it('allows to create new team', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
             (response) => {
               cy.fixture('apiGetThisCampaign.json').then((campaignResponse) => {
@@ -117,6 +120,112 @@ describe('Company coordinator user attendance page', () => {
                   .and('be.visible')
                   .and('contain', teamName);
               });
+            },
+          );
+        });
+      });
+    });
+
+    it('allows to delete empty team', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          // override organisation GET to show an empty team
+          cy.interceptAdminOrganisationGetApi(
+            config,
+            'apiGetAdminOrganisationResponseNewTeam.json',
+          );
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          // confirm initial GET request
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponseNewTeam.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          cy.fixture('apiGetAdminOrganisationResponseNewTeam.json').then(
+            (response) => {
+              // get empty team details
+              const subsidiaryId = response.results[0].subsidiaries[0].id;
+              const emptyTeam = response.results[0].subsidiaries[0].teams.find(
+                (team) =>
+                  team.members_with_paid_entry_fee_by_org_coord.length === 0 &&
+                  team.members_without_paid_entry_fee_by_org_coord.length ===
+                    0 &&
+                  team.other_members.length === 0,
+              );
+              const teamId = emptyTeam.id;
+              const teamName = emptyTeam.name;
+              // verify empty team header
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .should('be.visible');
+              // verify delete button
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .parents('tr')
+                .find('[data-cy="table-attendance-button-delete-team"]')
+                .should('be.visible');
+              // intercept DELETE team API
+              cy.interceptCoordinatorTeamDeleteApi(
+                config,
+                i18n,
+                subsidiaryId,
+                teamId,
+              );
+              cy.interceptAdminOrganisationGetApi(
+                config,
+                'apiGetAdminOrganisationResponse.json',
+              );
+              // click delete button (first time - will cancel)
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .parents('tr')
+                .find('[data-cy="table-attendance-button-delete-team"]')
+                .click();
+              // verify delete dialog
+              cy.dataCy('dialog-delete-team').should('be.visible');
+              cy.dataCy('dialog-delete-team').should(
+                'contain',
+                i18n.global.t('coordinator.deleteTeamConfirmMessage', {
+                  teamName,
+                }),
+              );
+              // click dialog cancel button
+              cy.dataCy('dialog-button-cancel').click();
+              cy.dataCy('dialog-delete-team').should('not.exist');
+              // no DELETE sent
+              cy.get('@deleteCoordinatorTeam.all').should('have.length', 0);
+              // verify team exists
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .should('be.visible');
+              // click delete button (second time - will confirm)
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .parents('tr')
+                .find('[data-cy="table-attendance-button-delete-team"]')
+                .click();
+              // confirm delete in dialog
+              cy.dataCy('dialog-delete-team').should('be.visible');
+              cy.dataCy('dialog-delete-team').should(
+                'contain',
+                i18n.global.t('coordinator.deleteTeamConfirmMessage', {
+                  teamName,
+                }),
+              );
+              cy.dataCy('dialog-button-confirm-delete').click();
+              // await delete
+              cy.waitForCoordinatorTeamDeleteApi();
+              // confirm data refetch
+              cy.waitForAdminOrganisationGetApi(
+                'apiGetAdminOrganisationResponse.json',
+              );
+              cy.get('@getAdminOrganisation.all').should('have.length', 2);
+              // verify team is deleted
+              cy.dataCy('table-attendance-team-header')
+                .contains(teamName)
+                .should('not.exist');
             },
           );
         });

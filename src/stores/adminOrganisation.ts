@@ -9,6 +9,7 @@ import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinato
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
 import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
 import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
+import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -68,6 +69,7 @@ interface AdminOrganisationState {
   isLoadingInvoices: boolean;
   isLoadingApprovePayments: boolean;
   isLoadingCreateTeam: boolean;
+  isLoadingDeleteTeam: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -86,6 +88,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingInvoices: false,
     isLoadingApprovePayments: false,
     isLoadingCreateTeam: false,
+    isLoadingDeleteTeam: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
@@ -112,11 +115,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingInvoices: (state) => state.isLoadingInvoices,
     getIsLoadingApprovePayments: (state) => state.isLoadingApprovePayments,
     getIsLoadingCreateTeam: (state) => state.isLoadingCreateTeam,
+    getIsLoadingDeleteTeam: (state) => state.isLoadingDeleteTeam,
     getIsLoadingAny: (state) =>
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
       state.isLoadingApprovePayments ||
-      state.isLoadingCreateTeam,
+      state.isLoadingCreateTeam ||
+      state.isLoadingDeleteTeam,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
@@ -535,6 +540,26 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         await this.loadAdminOrganisations();
       }
       this.isLoadingCreateTeam = false;
+    },
+    /**
+     * Delete a team for a specific subsidiary
+     * Team must have no active members
+     * @param {number} subsidiaryId - The ID of the team subsidiary
+     * @param {number} teamId - The ID of the team to delete
+     */
+    async deleteTeam(subsidiaryId: number, teamId: number): Promise<void> {
+      const { deleteTeam } = useApiDeleteCoordinatorTeam(this.$log);
+      this.$log?.info(
+        `Delete team with ID <${teamId}>` +
+          ` for subsidiary ID <${subsidiaryId}>.`,
+      );
+      this.isLoadingDeleteTeam = true;
+      const success = await deleteTeam(subsidiaryId, teamId);
+      if (success) {
+        this.$log?.debug(`Team deleted successfully with ID <${teamId}>.`);
+        await this.loadAdminOrganisations();
+      }
+      this.isLoadingDeleteTeam = false;
     },
     /**
      * Create invoice from internal form state

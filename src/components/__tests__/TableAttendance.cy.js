@@ -37,6 +37,7 @@ const selectorMembers = 'table-attendance-members';
 const selectorAddTeamButton = 'table-attendance-button-add-team';
 const selectorDialog = 'dialog-add-team';
 const selectorDialogForm = 'form-add-team-name';
+const selectorTeamDeleteButton = 'table-attendance-button-delete-team';
 
 // variables
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
@@ -287,6 +288,22 @@ function coreTests() {
                     team.name,
                   );
                 });
+              });
+            // count visible delete buttons
+            const emptyTeams = subsidiary.teams.filter((team) => {
+              const teamHasMembers =
+                team.members_with_paid_entry_fee_by_org_coord.length > 0 ||
+                team.members_without_paid_entry_fee_by_org_coord.length > 0 ||
+                team.other_members.length > 0;
+              return !teamHasMembers;
+            });
+            cy.dataCy(selectorTable)
+              .eq(subsidiaryIndex)
+              .within(() => {
+                cy.dataCy(selectorTeamDeleteButton).should(
+                  'have.length',
+                  emptyTeams.length,
+                );
               });
           }
         }

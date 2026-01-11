@@ -147,6 +147,42 @@ export default defineComponent({
       }
     };
 
+    // delete team state and methods
+    const teamToDelete = ref<{
+      id: number;
+      name: string;
+      subsidiaryId: number;
+    } | null>(null);
+    const isDeleteDialogOpen = ref<boolean>(false);
+
+    const isLoadingDelete = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingDeleteTeam,
+    );
+
+    const onOpenDeleteDialog = (
+      teamId: number,
+      teamName: string,
+      subsidiaryId: number,
+    ): void => {
+      teamToDelete.value = { id: teamId, name: teamName, subsidiaryId };
+      isDeleteDialogOpen.value = true;
+    };
+
+    const onCloseDeleteDialog = (): void => {
+      teamToDelete.value = null;
+      isDeleteDialogOpen.value = false;
+    };
+
+    const onConfirmDelete = async (): Promise<void> => {
+      if (teamToDelete.value) {
+        await adminOrganisationStore.deleteTeam(
+          teamToDelete.value.subsidiaryId,
+          teamToDelete.value.id,
+        );
+        onCloseDeleteDialog();
+      }
+    };
+
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -190,6 +226,12 @@ export default defineComponent({
       paginationLabel,
       sortByTeam,
       PaymentState,
+      isDeleteDialogOpen,
+      isLoadingDelete,
+      onOpenDeleteDialog,
+      onCloseDeleteDialog,
+      onConfirmDelete,
+      teamToDelete,
     };
   },
 });
@@ -264,7 +306,31 @@ export default defineComponent({
             data-cy="table-attendance-team-header"
           >
             <q-td colspan="8">
-              {{ props.row.team }}
+              <div class="flex items-center justify-between">
+                <span>{{ props.row.team }}</span>
+                <!-- Delete button - only show for empty teams -->
+                <q-btn
+                  v-if="props.row.isEmpty"
+                  flat
+                  dense
+                  round
+                  size="sm"
+                  icon="delete"
+                  color="white"
+                  :disable="isLoadingDelete"
+                  :loading="isLoadingDelete"
+                  @click="
+                    onOpenDeleteDialog(
+                      props.row.teamId,
+                      props.row.team,
+                      subsidiaryData.subsidiary.id,
+                    )
+                  "
+                  data-cy="table-attendance-button-delete-team"
+                >
+                  <q-tooltip>{{ $t('coordinator.deleteTeam') }}</q-tooltip>
+                </q-btn>
+              </div>
             </q-td>
           </q-tr>
           <!-- Row -->
@@ -479,6 +545,49 @@ export default defineComponent({
               data-cy="dialog-button-submit"
             >
               {{ $t('coordinator.addTeam') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
+
+    <!-- Dialog: Delete Team -->
+    <dialog-default v-model="isDeleteDialogOpen" data-cy="dialog-delete-team">
+      <template #title>
+        {{ $t('coordinator.deleteTeamConfirmTitle') }}
+      </template>
+      <template #content>
+        <div>
+          {{
+            $t('coordinator.deleteTeamConfirmMessage', {
+              teamName: teamToDelete?.name || '',
+            })
+          }}
+        </div>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-lg">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="onCloseDeleteDialog"
+              :disable="isLoadingDelete"
+              data-cy="dialog-button-cancel"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="negative"
+              :loading="isLoadingDelete"
+              :disable="isLoadingDelete"
+              @click="onConfirmDelete"
+              data-cy="dialog-button-confirm-delete"
+            >
+              {{ $t('coordinator.deleteTeam') }}
             </q-btn>
           </div>
         </div>

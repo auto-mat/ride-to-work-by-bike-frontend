@@ -26,6 +26,7 @@ export interface TableAttendanceRow {
   paymentType: PaymentType;
   paymentState: PaymentState;
   team: string;
+  teamId: number;
   isFirst?: boolean;
   isEmpty?: boolean;
 }
@@ -38,6 +39,7 @@ export interface TableAttendanceSubsidiaryData {
 interface TransformMemberParams {
   member: AdminTeamMember;
   teamName: string;
+  teamId: number;
   paymentType: PaymentType;
   isFeeApproved: boolean;
 }
@@ -50,6 +52,7 @@ interface TransformMemberParams {
 function transformMemberToRow({
   member,
   teamName,
+  teamId,
   paymentType,
   isFeeApproved,
 }: TransformMemberParams): TableAttendanceRow {
@@ -63,6 +66,7 @@ function transformMemberToRow({
     paymentType,
     paymentState: member.payment_status,
     team: teamName,
+    teamId,
   };
 }
 
@@ -101,6 +105,7 @@ export const useTableAttendanceData = (): {
             paymentType: PaymentType.registration,
             paymentState: PaymentState.none,
             team: team.name,
+            teamId: team.id,
             isEmpty: true,
           });
         }
@@ -111,6 +116,7 @@ export const useTableAttendanceData = (): {
               transformMemberToRow({
                 member,
                 teamName: team.name,
+                teamId: team.id,
                 paymentType: PaymentType.organization,
                 isFeeApproved: true,
               }),
@@ -124,6 +130,7 @@ export const useTableAttendanceData = (): {
               transformMemberToRow({
                 member,
                 teamName: team.name,
+                teamId: team.id,
                 paymentType: PaymentType.organization,
                 isFeeApproved: false,
               }),
@@ -136,6 +143,7 @@ export const useTableAttendanceData = (): {
             transformMemberToRow({
               member,
               teamName: team.name,
+              teamId: team.id,
               paymentType: PaymentType.registration,
               isFeeApproved: true,
             }),

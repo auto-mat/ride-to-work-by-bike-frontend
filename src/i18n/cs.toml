@@ -70,6 +70,11 @@ apiMessageError = "Vytvoření týmu selhalo."
 apiMessageErrorWithMessage = "Vytvoření týmu selhalo. Chyba: {error}"
 apiMessageSuccess = "Tým byl úspěšně vytvořen."
 
+[deleteCoordinatorTeam]
+apiMessageError = "Smazání týmu selhalo."
+apiMessageErrorWithMessage = "Smazání týmu selhalo. Chyba: {error}"
+apiMessageSuccess = "Tým byl úspěšně smazán."
+
 [createSubsidiary]
 apiMessageError = "Vytvoření pobočky selhalo."
 apiMessageErrorWithMessage = "Vytvoření pobočky selhalo. Chyba: {error}"
@@ -286,6 +291,9 @@ labelOrganizationId = "IČO"
 labelShowPastTasks = "Zobrazit uplynulé úkoly"
 labelTeams = "týmů | tým | týmy | týmů"
 addTeam = "Přidat tým"
+deleteTeam = "Smazat tým"
+deleteTeamConfirmTitle = "Smazat tým?"
+deleteTeamConfirmMessage = "Opravdu chcete smazat tým \"{teamName}\"? Tuto akci nelze vrátit zpět."
 tabTasks = "Úkoly"
 tabFees = "Startovné"
 tabInvoices = "Faktury"

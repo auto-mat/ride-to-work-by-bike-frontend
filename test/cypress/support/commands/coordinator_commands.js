@@ -3,6 +3,7 @@
  * Contains commands for intercepting and waiting for admin-related API calls
  */
 
+import { HttpStatusCode } from 'axios';
 import { computed } from 'vue';
 import { httpSuccessfullStatus } from '../commonTests';
 import { getApiBaseUrlWithLang } from '../../../../src/utils/get_api_base_url_with_lang';
@@ -489,5 +490,52 @@ Cypress.Commands.add('waitForCoordinatorTeamPostApi', (requestData) => {
         expect(response.body).to.deep.equal(teamResponse);
       }
     });
+  });
+});
+
+/**
+ * Intercept coordinator team DELETE API call
+ * Provides `@deleteCoordinatorTeam` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {number} subsidiaryId - Subsidiary ID
+ * @param {number} teamId - Team ID to delete
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorTeamDeleteApi',
+  (config, i18n, subsidiaryId, teamId) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      urlApiCoordinatorSubsidiary,
+      urlApiCoordinatorTeam,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiCoordinatorTeamDeleteLocalized = `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/${urlApiCoordinatorTeam}${teamId}/`;
+
+    cy.intercept('DELETE', urlApiCoordinatorTeamDeleteLocalized, {
+      statusCode: HttpStatusCode.NoContent,
+      body: {},
+    }).as('deleteCoordinatorTeam');
+  },
+);
+
+/**
+ * Wait for intercept coordinator team DELETE API call and verify request
+ * Wait for `@deleteCoordinatorTeam` intercept
+ */
+Cypress.Commands.add('waitForCoordinatorTeamDeleteApi', () => {
+  cy.wait('@deleteCoordinatorTeam').then(({ request, response }) => {
+    // verify authorization header
+    expect(request.headers.authorization).to.include(bearerTokeAuth);
+    // verify response
+    if (response) {
+      expect(response.statusCode).to.equal(HttpStatusCode.NoContent);
+    }
   });
 });
