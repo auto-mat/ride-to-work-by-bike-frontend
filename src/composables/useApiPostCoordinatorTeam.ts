@@ -64,7 +64,7 @@ export const useApiPostCoordinatorTeam = (
     logger?.debug(
       `Create new team with name <${teamName}>` +
         ` under subsidiary with ID <${subsidiaryId}>` +
-        ` for campaign <${campaignId}>.`,
+        ` for campaign ID <${campaignId}>.`,
     );
     isLoading.value = true;
 

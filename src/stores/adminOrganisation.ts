@@ -520,11 +520,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const challengeStore = useChallengeStore();
       const campaignId = challengeStore.getCampaignId;
       if (!campaignId) {
-        this.$log?.error('Cannot create team: Campaign ID not available.');
+        this.$log?.error('Cannot create team, campaign ID is not available.');
         return;
       }
       this.$log?.info(
-        `Creating team <${teamName}> for subsidiary <${subsidiaryId}> in campaign <${campaignId}>.`,
+        'Create new team <${teamName}>' +
+          ` for subsidiary ID <${subsidiaryId}>` +
+          ` in campaign ID <${campaignId}>.`,
       );
       this.isLoadingCreateTeam = true;
       const result = await createTeam(subsidiaryId, teamName, campaignId);
