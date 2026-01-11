@@ -74,7 +74,9 @@ export const useApiPostCoordinatorTeam = (
       await loginStore.getAccessTokenWithRefresh();
 
     // construct endpoint URL
-    const endpoint = `${rideToWorkByBikeConfig.urlApiCoordinatorSubsidiary}${subsidiaryId}/${rideToWorkByBikeConfig.urlApiCoordinatorTeam}`;
+    const endpoint =
+      `${rideToWorkByBikeConfig.urlApiCoordinatorSubsidiary}` +
+      `${subsidiaryId}/${rideToWorkByBikeConfig.urlApiCoordinatorTeam}`;
 
     // construct request payload
     const payload: CoordinatorTeamPostRequest = {
