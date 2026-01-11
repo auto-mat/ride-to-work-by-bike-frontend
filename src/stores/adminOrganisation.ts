@@ -509,8 +509,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     },
     /**
      * Create a new team for a specific subsidiary
-     * @param subsidiaryId - The ID of the subsidiary to add the team to
-     * @param teamName - The name of the new team
+     * @param {number} subsidiaryId - The ID of the subsidiary to add the team to
+     * @param {string} teamName - The name of the new team
      */
     async createTeamForSubsidiary(
       subsidiaryId: number,
