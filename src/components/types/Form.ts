@@ -56,3 +56,8 @@ export type FormSelectTableLabels = {
   buttonDialog: string;
   titleDialog: string;
 };
+
+export type FormMoveMemberFields = {
+  subsidiaryId: number | null;
+  teamId: number | null;
+};

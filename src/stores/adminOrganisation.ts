@@ -8,6 +8,7 @@ import { useApiGetAdminOrganisation } from '../composables/useApiGetAdminOrganis
 import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinatorInvoices';
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
 import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
+import { useApiPostCoordinatorMoveMember } from '../composables/useApiPostCoordinatorMoveMember';
 import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
 import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
 
@@ -16,6 +17,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // enums
 import { PhaseType } from '../components/types/Challenge';
+import { TeamMemberStatus } from '../components/enums/TeamMember';
 
 // stores
 import { useChallengeStore } from './challenge';
@@ -70,6 +72,7 @@ interface AdminOrganisationState {
   isLoadingApprovePayments: boolean;
   isLoadingCreateTeam: boolean;
   isLoadingDeleteTeam: boolean;
+  isLoadingMoveMember: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -89,6 +92,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingApprovePayments: false,
     isLoadingCreateTeam: false,
     isLoadingDeleteTeam: false,
+    isLoadingMoveMember: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
@@ -116,12 +120,14 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingApprovePayments: (state) => state.isLoadingApprovePayments,
     getIsLoadingCreateTeam: (state) => state.isLoadingCreateTeam,
     getIsLoadingDeleteTeam: (state) => state.isLoadingDeleteTeam,
+    getIsLoadingMoveMember: (state) => state.isLoadingMoveMember,
     getIsLoadingAny: (state) =>
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
       state.isLoadingApprovePayments ||
       state.isLoadingCreateTeam ||
-      state.isLoadingDeleteTeam,
+      state.isLoadingDeleteTeam ||
+      state.isLoadingMoveMember,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
@@ -560,6 +566,55 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         await this.loadAdminOrganisations();
       }
       this.isLoadingDeleteTeam = false;
+    },
+    /**
+     * Move team member to another team
+     * Preserves the member's approval status
+     * @param {number} currentSubsidiaryId - Member's current subsidiary ID
+     * @param {number} currentTeamId - Member's current team ID
+     * @param {number} memberId - ID of the member to move
+     * @param {number} targetTeamId - Target team ID to move member to
+     * @param {TeamMemberStatus} approvedForTeam - Current approval status to preserve
+     */
+    async moveTeamMember(
+      currentSubsidiaryId: number,
+      currentTeamId: number,
+      memberId: number,
+      targetTeamId: number,
+      approvedForTeam: TeamMemberStatus,
+    ): Promise<void> {
+      const { moveMember } = useApiPostCoordinatorMoveMember(this.$log);
+      const challengeStore = useChallengeStore();
+      const campaignId = challengeStore.getCampaignId;
+      if (!campaignId) {
+        this.$log?.error('Cannot move member, campaign ID is not available.');
+        return;
+      }
+      this.$log?.info(
+        `Move member with ID <${memberId}> from team <${currentTeamId}>` +
+          ` to team <${targetTeamId}> in subsidiary <${currentSubsidiaryId}>.`,
+      );
+      this.isLoadingMoveMember = true;
+      // prepare payload
+      const payload = {
+        team_id: targetTeamId,
+        campaign_id: campaignId,
+        approved_for_team: approvedForTeam,
+      };
+      const data = await moveMember(
+        currentSubsidiaryId,
+        currentTeamId,
+        memberId,
+        payload,
+      );
+      if (data) {
+        this.$log?.debug(
+          `Member moved successfully. New team ID: <${data.team_id}>.`,
+        );
+        // Refetch organization structure to update UI
+        await this.loadAdminOrganisations();
+      }
+      this.isLoadingMoveMember = false;
     },
     /**
      * Create invoice from internal form state
