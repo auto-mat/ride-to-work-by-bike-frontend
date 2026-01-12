@@ -2,26 +2,14 @@
 /**
  * ListChallenges Component
  *
- * @description * Use this component to ... .
- * You can adjust its appearance by ... .
- *
- * @props
- * - `NAME` (TYPE, required): The object representing ... .
- *   It should be of type `TYPE`.
- *
- * @events
- * - `update:modelValue`: Emitted as a part of v-model structure.
- *
- * @slots
- * - `content`: For ... .
- *   exposed props and methods:
- *     - `state`
+ * @description * Use this component to display a list of company challenges.
  *
  * @components
- * - `CHILD`: Component to ... .
+ * - `SectionHeading`: Component to display a section heading.
+ * - `SectionColumns`: Component to layout content in columns.
  *
  * @example
- * <ListChallenges></ListChallenges>
+ * <list-challenges />
  */
 
 // libraries
