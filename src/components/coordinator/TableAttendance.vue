@@ -259,14 +259,6 @@ export default defineComponent({
       }
     };
 
-    // submit is disabled if target team is same as current team
-    const isMoveSubmitDisabled = computed<boolean>(() => {
-      if (!memberToMove.value || !moveMemberForm.value.teamId) {
-        return false;
-      }
-      return moveMemberForm.value.teamId === memberToMove.value.teamId;
-    });
-
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -294,7 +286,6 @@ export default defineComponent({
       isLoading,
       isLoadingMove,
       isMoveDialogOpen,
-      isMoveSubmitDisabled,
       memberToMove,
       moveMemberForm,
       moveFormRef,
@@ -711,6 +702,7 @@ export default defineComponent({
             class="q-mb-lg"
             :member-name="memberToMove.name"
             :current-team-name="memberToMove.teamName"
+            :current-team-id="memberToMove.teamId"
             :form-values="moveMemberForm"
             @update:form-values="moveMemberForm = $event"
           />
@@ -735,7 +727,7 @@ export default defineComponent({
               unelevated
               color="primary"
               :loading="isLoadingMove"
-              :disable="isLoadingMove || isMoveSubmitDisabled"
+              :disable="isLoadingMove"
               @click="onSubmitMoveMember"
               data-cy="dialog-button-submit"
             >

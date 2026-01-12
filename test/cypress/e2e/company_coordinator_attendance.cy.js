@@ -303,12 +303,8 @@ describe('Company coordinator user attendance page', () => {
                 );
                 // select target subsidiary
                 cy.selectDropdownMenu('form-select-subsidiary-wrapper', 0);
-                // select current team (first)
+                // select target team (first - current team filtered out)
                 cy.selectDropdownMenu('form-select-team-wrapper', 0);
-                // verify that submit button is disabled
-                cy.dataCy('dialog-button-submit').should('be.disabled');
-                // select target team (second)
-                cy.selectDropdownMenu('form-select-team-wrapper', 1);
                 // submit
                 cy.dataCy('dialog-button-submit').click();
                 // wait for PUT request

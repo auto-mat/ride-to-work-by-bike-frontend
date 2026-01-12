@@ -9,6 +9,7 @@
  * @props
  *   - memberName: string - Name of member being moved (for display)
  *   - currentTeamName: string - Current team name (for display)
+ *   - currentTeamId: number - Current team ID (filtered out from options)
  *   - formValues: FormMoveMemberFields - Current form state
  *
  * @emits
@@ -17,7 +18,8 @@
  * @example
  * <form-move-member
  *   :member-name="memberToMove.name"
- *   :current-team-name="memberToMove.team"
+ *   :current-team-name="memberToMove.teamName"
+ *   :current-team-id="memberToMove.teamId"
  *   :form-values="moveMemberForm"
  *   @update:form-values="moveMemberForm = $event"
  * />
@@ -51,6 +53,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    currentTeamId: {
+      type: Number,
+      required: true,
+    },
     formValues: {
       type: Object as PropType<FormMoveMemberFields>,
       required: true,
@@ -82,14 +88,16 @@ export default defineComponent({
       if (!props.formValues.subsidiaryId || !organisation.value) {
         return [];
       }
-      const subsidiary = organisation.value.subsidiaries.find(
-        (s) => s.id === props.formValues.subsidiaryId,
+      const currentSubsidiary = organisation.value.subsidiaries.find(
+        (subsidiary) => subsidiary.id === props.formValues.subsidiaryId,
       );
       return (
-        subsidiary?.teams.map((team) => ({
-          label: team.name,
-          value: team.id,
-        })) || []
+        currentSubsidiary?.teams
+          .filter((team) => team.id !== props.currentTeamId)
+          .map((team) => ({
+            label: team.name,
+            value: team.id,
+          })) || []
       );
     });
 
