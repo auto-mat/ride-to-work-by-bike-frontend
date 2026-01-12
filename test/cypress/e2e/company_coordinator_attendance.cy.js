@@ -332,5 +332,98 @@ describe('Company coordinator user attendance page', () => {
         });
       });
     });
+
+    it('allows to edit team name', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              cy.fixture('apiGetThisCampaign.json').then((campaignResponse) => {
+                const subsidiaryId = response.results[0].subsidiaries[0].id;
+                const team = response.results[0].subsidiaries[0].teams[0];
+                const teamId = team.id;
+                const teamName = team.name;
+                const campaignId = campaignResponse.results[0].id;
+                const newTeamName = 'Updated Team Name';
+
+                // verify team header and edit button exist
+                cy.dataCy('table-attendance-team-header')
+                  .contains(teamName)
+                  .should('be.visible');
+                cy.dataCy('table-attendance-team-header')
+                  .contains(teamName)
+                  .parents('tr')
+                  .find('[data-cy="table-attendance-button-edit-team"]')
+                  .should('be.visible');
+                // intercept APIs
+                cy.interceptCoordinatorTeamPutApi(
+                  config,
+                  i18n,
+                  subsidiaryId,
+                  teamId,
+                );
+                cy.interceptAdminOrganisationGetApi(
+                  config,
+                  'apiGetAdminOrganisationResponseEditedTeam.json',
+                );
+                // click edit button (first time - will cancel)
+                cy.dataCy('table-attendance-team-header')
+                  .contains(teamName)
+                  .parents('tr')
+                  .find('[data-cy="table-attendance-button-edit-team"]')
+                  .click();
+                // verify edit dialog
+                cy.dataCy('dialog-edit-team').should('be.visible');
+                cy.dataCy('form-edit-team-name')
+                  .find('input')
+                  .should('have.value', teamName);
+                // cancel
+                cy.dataCy('dialog-button-cancel').click();
+                cy.dataCy('dialog-edit-team').should('not.exist');
+                cy.get('@putCoordinatorTeam.all').should('have.length', 0);
+                // click edit button (second time - will submit)
+                cy.dataCy('table-attendance-team-header')
+                  .contains(teamName)
+                  .parents('tr')
+                  .find('[data-cy="table-attendance-button-edit-team"]')
+                  .click();
+                cy.dataCy('dialog-edit-team').should('be.visible');
+                cy.dataCy('form-edit-team-name').find('input').clear();
+                cy.dataCy('form-edit-team-name')
+                  .find('input')
+                  .type(newTeamName);
+                cy.dataCy('form-edit-team-name').find('input').type('{enter}');
+                // await PUT and GET
+                cy.waitForCoordinatorTeamPutApi({
+                  name: newTeamName,
+                  campaign_id: campaignId,
+                  subsidiary_id: subsidiaryId,
+                });
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponseEditedTeam.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 2);
+                // verify team name updated
+                cy.dataCy('table-attendance-team-header')
+                  .contains(newTeamName)
+                  .should('be.visible');
+                cy.dataCy('table-attendance-team-header')
+                  .contains(teamName)
+                  .should('not.exist');
+              });
+            },
+          );
+        });
+      });
+    });
   });
 });
