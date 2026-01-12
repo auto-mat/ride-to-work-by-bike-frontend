@@ -238,19 +238,28 @@ describe('Company coordinator user attendance page', () => {
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
             (response) => {
               cy.fixture('apiGetThisCampaign.json').then((campaignResponse) => {
+                // setup test variables
                 const subsidiaryId = response.results[0].subsidiaries[0].id;
                 const campaignId = campaignResponse.results[0].id;
-                // Find member to move (first member in first team)
+                // member to move (first member in first team)
                 const sourceTeam = response.results[0].subsidiaries[0].teams[0];
                 const member =
                   sourceTeam.members_without_paid_entry_fee_by_org_coord[0];
                 const memberId = member.id;
                 const memberName = member.name;
                 const memberApprovalStatus = member.approved_for_team;
-                // Find target team (second team)
+                // target team (second team)
                 const targetTeam = response.results[0].subsidiaries[0].teams[1];
                 const targetTeamId = targetTeam.id;
                 const targetTeamName = targetTeam.name;
+
+                cy.visit(
+                  '#' +
+                    routesConf['coordinator_attendance']['children'][
+                      'fullPath'
+                    ],
+                );
+                cy.dataCy('header-organization').should('be.visible');
                 cy.waitForAdminOrganisationGetApi(
                   'apiGetAdminOrganisationResponse.json',
                 );
