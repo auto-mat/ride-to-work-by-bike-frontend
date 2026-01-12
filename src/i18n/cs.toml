@@ -75,6 +75,11 @@ apiMessageError = "Smazání týmu selhalo."
 apiMessageErrorWithMessage = "Smazání týmu selhalo. Chyba: {error}"
 apiMessageSuccess = "Tým byl úspěšně smazán."
 
+[updateCoordinatorTeam]
+apiMessageError = "Aktualizace týmu selhala."
+apiMessageErrorWithMessage = "Aktualizace týmu selhala. Chyba: {error}"
+apiMessageSuccess = "Tým byl úspěšně aktualizován."
+
 [createSubsidiary]
 apiMessageError = "Vytvoření pobočky selhalo."
 apiMessageErrorWithMessage = "Vytvoření pobočky selhalo. Chyba: {error}"
@@ -291,6 +296,7 @@ labelOrganizationId = "IČO"
 labelShowPastTasks = "Zobrazit uplynulé úkoly"
 labelTeams = "týmů | tým | týmy | týmů"
 addTeam = "Přidat tým"
+editTeam = "Upravit tým"
 deleteTeam = "Smazat tým"
 deleteTeamConfirmTitle = "Smazat tým?"
 deleteTeamConfirmMessage = "Opravdu chcete smazat tým \"{teamName}\"? Tuto akci nelze vrátit zpět."

@@ -75,6 +75,11 @@ apiMessageError = "Team deletion failed."
 apiMessageErrorWithMessage = "Team deletion failed. Error: {error}"
 apiMessageSuccess = "Team was successfully deleted."
 
+[updateCoordinatorTeam]
+apiMessageError = "Team update failed."
+apiMessageErrorWithMessage = "Team update failed. Error: {error}"
+apiMessageSuccess = "Team was successfully updated."
+
 [createSubsidiary]
 apiMessageError = "Subsidiary creation failed."
 apiMessageErrorWithMessage = "Subsidiary creation failed. Error: {error}"
@@ -291,6 +296,7 @@ labelOrganizationId = "ID"
 labelShowPastTasks = "Show past tasks"
 labelTeams = "team | teams"
 addTeam = "Add team"
+editTeam = "Edit team"
 deleteTeam = "Delete team"
 deleteTeamConfirmTitle = "Delete team?"
 deleteTeamConfirmMessage = "Are you sure you want to delete team \"{teamName}\"? This action cannot be undone."

@@ -7,9 +7,10 @@
  * with members grouped by team within each table.
  *
  * @components
- * - DialogDefault.vue - default dialog wrapper
- * - FormMoveMember.vue - used to move a member to another team
- * - FormAddTeam.vue - used to add a new team to a subsidiary
+ * - `DialogDefault.vue` - default dialog wrapper
+ * - `FormAddTeam.vue` - used to add a new team to a subsidiary
+ * - `FormFieldTextRequired`: used to render required text field
+ * - `FormMoveMember.vue` - used to move a member to another team
  *
  * @example
  * <table-attendance />
@@ -29,6 +30,7 @@ import {
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormAddTeam from '../form/FormAddTeam.vue';
+import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormMoveMember from '../form/FormMoveMember.vue';
 
 // composables
@@ -67,6 +69,7 @@ export default defineComponent({
   components: {
     DialogDefault,
     FormAddTeam,
+    FormFieldTextRequired,
     FormMoveMember,
   },
   setup() {
@@ -259,6 +262,55 @@ export default defineComponent({
       }
     };
 
+    // edit team state and methods
+    const teamToEdit = ref<{
+      id: number;
+      name: string;
+      subsidiaryId: number;
+    } | null>(null);
+    const isEditDialogOpen = ref<boolean>(false);
+    const teamEditName = ref<string>('');
+
+    const isLoadingUpdate = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingUpdateTeam,
+    );
+
+    const onOpenEditDialog = (
+      teamId: number,
+      teamName: string,
+      subsidiaryId: number,
+    ): void => {
+      teamToEdit.value = { id: teamId, name: teamName, subsidiaryId };
+      teamEditName.value = teamName;
+      isEditDialogOpen.value = true;
+    };
+
+    const onCloseEditDialog = (): void => {
+      if (formRef.value) {
+        formRef.value.reset();
+      }
+      teamToEdit.value = null;
+      teamEditName.value = '';
+      isEditDialogOpen.value = false;
+    };
+
+    const onSubmitEditTeam = async (): Promise<void> => {
+      if (formRef.value && teamToEdit.value !== null) {
+        const isFormValid: boolean = await formRef.value.validate();
+
+        if (isFormValid) {
+          await adminOrganisationStore.updateTeam(
+            teamToEdit.value.subsidiaryId,
+            teamToEdit.value.id,
+            teamEditName.value,
+          );
+          onCloseEditDialog();
+        } else {
+          formRef.value.$el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -316,6 +368,13 @@ export default defineComponent({
       onCloseDeleteDialog,
       onConfirmDelete,
       teamToDelete,
+      isEditDialogOpen,
+      isLoadingUpdate,
+      onOpenEditDialog,
+      onCloseEditDialog,
+      onSubmitEditTeam,
+      teamToEdit,
+      teamEditName,
     };
   },
 });
@@ -390,28 +449,53 @@ export default defineComponent({
             <q-td colspan="8">
               <div class="flex items-center justify-between">
                 <span>{{ props.row.team }}</span>
-                <!-- Delete button - only show for empty teams -->
-                <q-btn
-                  v-if="props.row.isEmpty"
-                  flat
-                  dense
-                  round
-                  size="sm"
-                  icon="delete"
-                  color="white"
-                  :disable="isLoadingDelete"
-                  :loading="isLoadingDelete"
-                  @click="
-                    onOpenDeleteDialog(
-                      props.row.teamId,
-                      props.row.team,
-                      subsidiaryData.subsidiary.id,
-                    )
-                  "
-                  data-cy="table-attendance-button-delete-team"
-                >
-                  <q-tooltip>{{ $t('coordinator.deleteTeam') }}</q-tooltip>
-                </q-btn>
+                <div class="flex gap-4">
+                  <!-- Button: Edit team name -->
+                  <q-btn
+                    flat
+                    dense
+                    round
+                    size="sm"
+                    icon="edit"
+                    color="white"
+                    :disable="isLoadingUpdate || isLoadingDelete"
+                    :loading="
+                      isLoadingUpdate && teamToEdit?.id === props.row.teamId
+                    "
+                    @click="
+                      onOpenEditDialog(
+                        props.row.teamId,
+                        props.row.team,
+                        subsidiaryData.subsidiary.id,
+                      )
+                    "
+                    data-cy="table-attendance-button-edit-team"
+                  >
+                    <q-tooltip>{{ $t('coordinator.editTeam') }}</q-tooltip>
+                  </q-btn>
+                  <!-- Delete button - only show for empty teams -->
+                  <q-btn
+                    v-if="props.row.isEmpty"
+                    flat
+                    dense
+                    round
+                    size="sm"
+                    icon="delete"
+                    color="white"
+                    :disable="isLoadingDelete || isLoadingUpdate"
+                    :loading="isLoadingDelete"
+                    @click="
+                      onOpenDeleteDialog(
+                        props.row.teamId,
+                        props.row.team,
+                        subsidiaryData.subsidiary.id,
+                      )
+                    "
+                    data-cy="table-attendance-button-delete-team"
+                  >
+                    <q-tooltip>{{ $t('coordinator.deleteTeam') }}</q-tooltip>
+                  </q-btn>
+                </div>
               </div>
             </q-td>
           </q-tr>
@@ -707,7 +791,6 @@ export default defineComponent({
           <!-- Hidden submit button enables Enter key to submit -->
           <q-btn type="submit" class="hidden" />
         </q-form>
-        <!-- Action buttons -->
         <div class="flex justify-end q-mt-sm">
           <div class="flex gap-8">
             <q-btn
@@ -730,6 +813,52 @@ export default defineComponent({
               data-cy="dialog-button-submit"
             >
               {{ $t('coordinator.moveMember') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
+
+    <!-- Dialog: Edit Team -->
+    <dialog-default v-model="isEditDialogOpen" data-cy="dialog-edit-team">
+      <template #title>
+        {{ $t('coordinator.editTeam') }}
+      </template>
+      <template #content>
+        <q-form ref="formRef" @submit.prevent="onSubmitEditTeam">
+          <form-field-text-required
+            v-model="teamEditName"
+            name="name"
+            :label="$t('form.team.labelTeam')"
+            data-cy="form-edit-team-name"
+          />
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
+        </q-form>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-lg">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="onCloseEditDialog"
+              :disable="isLoadingUpdate"
+              data-cy="dialog-button-cancel"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              :loading="isLoadingUpdate"
+              :disable="isLoadingUpdate"
+              @click="onSubmitEditTeam"
+              data-cy="dialog-button-submit"
+            >
+              {{ $t('coordinator.editTeam') }}
             </q-btn>
           </div>
         </div>

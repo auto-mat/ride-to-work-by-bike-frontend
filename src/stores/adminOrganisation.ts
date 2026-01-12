@@ -11,6 +11,7 @@ import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoord
 import { useApiPostCoordinatorMoveMember } from '../composables/useApiPostCoordinatorMoveMember';
 import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
 import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
+import { useApiPutCoordinatorTeam } from '../composables/useApiPutCoordinatorTeam';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -73,6 +74,7 @@ interface AdminOrganisationState {
   isLoadingCreateTeam: boolean;
   isLoadingDeleteTeam: boolean;
   isLoadingMoveMember: boolean;
+  isLoadingUpdateTeam: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -93,6 +95,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingCreateTeam: false,
     isLoadingDeleteTeam: false,
     isLoadingMoveMember: false,
+    isLoadingUpdateTeam: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
@@ -121,13 +124,15 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingCreateTeam: (state) => state.isLoadingCreateTeam,
     getIsLoadingDeleteTeam: (state) => state.isLoadingDeleteTeam,
     getIsLoadingMoveMember: (state) => state.isLoadingMoveMember,
+    getIsLoadingUpdateTeam: (state) => state.isLoadingUpdateTeam,
     getIsLoadingAny: (state) =>
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
       state.isLoadingApprovePayments ||
       state.isLoadingCreateTeam ||
       state.isLoadingDeleteTeam ||
-      state.isLoadingMoveMember,
+      state.isLoadingMoveMember ||
+      state.isLoadingUpdateTeam,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
@@ -617,6 +622,40 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingMoveMember = false;
     },
     /**
+     * Update a team name
+     * @param {number} subsidiaryId - The ID of the team subsidiary
+     * @param {number} teamId - The ID of the team to update
+     * @param {string} teamName - The new team name
+     */
+    async updateTeam(
+      subsidiaryId: number,
+      teamId: number,
+      teamName: string,
+    ): Promise<void> {
+      const { updateTeam } = useApiPutCoordinatorTeam(this.$log);
+      const challengeStore = useChallengeStore();
+      const campaignId = challengeStore.getCampaignId;
+      if (!campaignId) {
+        this.$log?.error('Cannot update team, campaign ID is not available.');
+        return;
+      }
+      this.$log?.info(
+        `Update team with ID <${teamId}> to name <${teamName}> for subsidiary ID <${subsidiaryId}>.`,
+      );
+      this.isLoadingUpdateTeam = true;
+      const result = await updateTeam(
+        subsidiaryId,
+        teamId,
+        teamName,
+        campaignId,
+      );
+      if (result?.id) {
+        this.$log?.debug(`Team updated successfully with ID <${result.id}>.`);
+        await this.loadAdminOrganisations();
+      }
+      this.isLoadingUpdateTeam = false;
+    },
+    /**
      * Create invoice from internal form state
      * @returns {Promise<boolean>} - Success status
      */
@@ -877,6 +916,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingOrganisations = false;
       this.isLoadingInvoices = false;
       this.isLoadingApprovePayments = false;
+      this.isLoadingCreateTeam = false;
+      this.isLoadingDeleteTeam = false;
+      this.isLoadingUpdateTeam = false;
     },
   },
 
@@ -885,6 +927,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       'isLoadingOrganisations',
       'isLoadingInvoices',
       'isLoadingApprovePayments',
+      'isLoadingCreateTeam',
+      'isLoadingDeleteTeam',
+      'isLoadingUpdateTeam',
       'invoicePollingIntervalId',
       'invoicePollingTimeoutId',
     ],
