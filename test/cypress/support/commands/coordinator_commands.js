@@ -539,3 +539,58 @@ Cypress.Commands.add('waitForCoordinatorTeamDeleteApi', () => {
     }
   });
 });
+
+/**
+ * Intercept coordinator move member PUT API
+ * Provides `@putCoordinatorMoveMember` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {number} subsidiaryId - Subsidiary ID
+ * @param {number} teamId - Team ID
+ * @param {number} memberId - Member ID
+ * @param {string} responseFixture - Fixture name for response data
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorMoveMemberPutApi',
+  (config, i18n, subsidiaryId, teamId, memberId, responseFixture) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      urlApiCoordinatorSubsidiary,
+      urlApiCoordinatorTeam,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+
+    const urlApiCoordinatorMoveMemberLocalized =
+      `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/` +
+      `${urlApiCoordinatorTeam}${teamId}/member/${memberId}/`;
+
+    cy.fixture(responseFixture).then((response) => {
+      cy.intercept('PUT', urlApiCoordinatorMoveMemberLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: response,
+      }).as('putCoordinatorMoveMember');
+    });
+  },
+);
+/**
+ * Wait for coordinator move member PUT API
+ * Wait for `@putCoordinatorMoveMember` intercept
+ * @param {Object} requestData - Expected request data object
+ */
+Cypress.Commands.add('waitForCoordinatorMoveMemberPutApi', (requestData) => {
+  cy.wait('@putCoordinatorMoveMember').then(({ request, response }) => {
+    expect(request.headers.authorization).to.include(bearerTokeAuth);
+    if (requestData) {
+      expect(request.body).to.deep.equal(requestData);
+    }
+    if (response) {
+      expect(response.statusCode).to.equal(httpSuccessfullStatus);
+    }
+  });
+});
