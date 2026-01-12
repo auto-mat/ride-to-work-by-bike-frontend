@@ -231,5 +231,100 @@ describe('Company coordinator user attendance page', () => {
         });
       });
     });
+
+    it('allows to move member to another team', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              cy.fixture('apiGetThisCampaign.json').then((campaignResponse) => {
+                const subsidiaryId = response.results[0].subsidiaries[0].id;
+                const campaignId = campaignResponse.results[0].id;
+                // Find member to move (first member in first team)
+                const sourceTeam = response.results[0].subsidiaries[0].teams[0];
+                const member =
+                  sourceTeam.members_without_paid_entry_fee_by_org_coord[0];
+                const memberId = member.id;
+                const memberName = member.name;
+                const memberApprovalStatus = member.approved_for_team;
+                // Find target team (second team)
+                const targetTeam = response.results[0].subsidiaries[0].teams[1];
+                const targetTeamId = targetTeam.id;
+                const targetTeamName = targetTeam.name;
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponse.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 1);
+                // Verify member is in source team
+                cy.dataCy('table-attendance-team-header')
+                  .contains(sourceTeam.name)
+                  .should('be.visible');
+                cy.dataCy('table-attendance-name')
+                  .contains(memberName)
+                  .should('be.visible');
+                // Intercept APIs
+                cy.interceptCoordinatorMoveMemberPutApi(
+                  config,
+                  i18n,
+                  subsidiaryId,
+                  sourceTeam.id,
+                  memberId,
+                  'apiPostCoordinatorMoveMemberResponse.json',
+                );
+                cy.interceptAdminOrganisationGetApi(
+                  config,
+                  'apiGetAdminOrganisationResponseMovedMember.json',
+                );
+                // open context menu
+                cy.dataCy('table-attendance-name')
+                  .contains(memberName)
+                  .parents('tr')
+                  .find('[data-cy="table-attendance-actions-button"]')
+                  .click();
+                // click move action
+                cy.dataCy('table-attendance-action-move')
+                  .should('be.visible')
+                  .click();
+                // verify modal dialog
+                cy.dataCy('dialog-move-member').should('be.visible');
+                cy.dataCy('dialog-move-member').should('contain', memberName);
+                cy.dataCy('dialog-move-member').should(
+                  'contain',
+                  sourceTeam.name,
+                );
+                // select target subsidiary
+                cy.selectDropdownMenu('form-select-subsidiary-wrapper', 0);
+                // select target team
+                cy.selectDropdownMenu('form-select-team-wrapper', 1);
+                // submit
+                cy.dataCy('dialog-button-submit').click();
+                // wait for PUT request
+                cy.waitForCoordinatorMoveMemberPutApi({
+                  team_id: targetTeamId,
+                  campaign_id: campaignId,
+                  approved_for_team: memberApprovalStatus,
+                });
+                // wait for updated organisation GET
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponseMovedMember.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 2);
+                // verify member is in target team
+                cy.dataCy('table-attendance-team-header')
+                  .contains(targetTeamName)
+                  .should('be.visible');
+                cy.dataCy('table-attendance-team-header')
+                  .contains(targetTeamName)
+                  .parents('tr')
+                  .nextUntil('[data-cy="table-attendance-team-header"]')
+                  .find('[data-cy="table-attendance-name"]')
+                  .contains(memberName)
+                  .should('be.visible');
+              });
+            },
+          );
+        });
+      });
+    });
   });
 });
