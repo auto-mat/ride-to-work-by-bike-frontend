@@ -6,6 +6,11 @@
  * Shown on `CoordinatorAttendance` page. Displays one table per subsidiary,
  * with members grouped by team within each table.
  *
+ * @components
+ * - DialogDefault.vue - default dialog wrapper
+ * - FormMoveMember.vue - used to move a member to another team
+ * - FormAddTeam.vue - used to add a new team to a subsidiary
+ *
  * @example
  * <table-attendance />
  */
@@ -24,6 +29,7 @@ import {
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormAddTeam from '../form/FormAddTeam.vue';
+import FormMoveMember from '../form/FormMoveMember.vue';
 
 // composables
 import {
@@ -37,6 +43,7 @@ import { useTeamMemberApprovalStatus } from '../../composables/useTeamMemberAppr
 
 // enums
 import { PaymentState } from '../enums/Payment';
+import { TeamMemberStatus } from '../enums/TeamMember';
 
 // enum
 import {
@@ -52,13 +59,15 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // types
-import type { FormTeamFields } from '../types/Form';
+import type { FormTeamFields, FormMoveMemberFields } from '../types/Form';
+import type { TableAttendanceRow } from '../../composables/useTableAttendanceData';
 
 export default defineComponent({
   name: 'TableAttendance',
   components: {
     DialogDefault,
     FormAddTeam,
+    FormMoveMember,
   },
   setup() {
     const tableRefs = ref<QTable[]>([]);
@@ -183,6 +192,81 @@ export default defineComponent({
       }
     };
 
+    // move member state
+    const memberToMove = ref<{
+      id: number;
+      name: string;
+      teamId: number;
+      teamName: string;
+      subsidiaryId: number;
+      approvedForTeam: TeamMemberStatus;
+    } | null>(null);
+    const isMoveDialogOpen = ref<boolean>(false);
+    const moveFormRef = ref<QForm | null>(null);
+    const moveMemberForm = ref<FormMoveMemberFields>({
+      subsidiaryId: null,
+      teamId: null,
+    });
+    const isLoadingMove = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingMoveMember,
+    );
+
+    const onOpenMoveDialog = (row: TableAttendanceRow): void => {
+      memberToMove.value = {
+        id: row.memberId,
+        name: row.name,
+        teamId: row.teamId,
+        teamName: row.team,
+        subsidiaryId: row.subsidiaryId,
+        approvedForTeam: row.approvedForTeam,
+      };
+      isMoveDialogOpen.value = true;
+    };
+
+    const onCloseMoveDialog = (): void => {
+      if (moveFormRef.value) {
+        moveFormRef.value.reset();
+      }
+      moveMemberForm.value = {
+        subsidiaryId: null,
+        teamId: null,
+      };
+      memberToMove.value = null;
+      isMoveDialogOpen.value = false;
+    };
+
+    const onSubmitMoveMember = async (): Promise<void> => {
+      if (
+        moveFormRef.value &&
+        memberToMove.value &&
+        moveMemberForm.value.teamId !== null
+      ) {
+        const isFormValid: boolean = await moveFormRef.value.validate();
+
+        if (isFormValid) {
+          await adminOrganisationStore.moveTeamMember(
+            memberToMove.value.subsidiaryId,
+            memberToMove.value.teamId,
+            memberToMove.value.id,
+            moveMemberForm.value.teamId,
+            memberToMove.value.approvedForTeam,
+          );
+          onCloseMoveDialog();
+        } else {
+          // scroll to form
+          moveFormRef.value.$el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    // submit is disabled if target team is same as current team
+    const isMoveSubmitDisabled = computed<boolean>(() => {
+      if (!memberToMove.value || !moveMemberForm.value.teamId) {
+        return false;
+      }
+      return moveMemberForm.value.teamId === memberToMove.value.teamId;
+    });
+
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -208,8 +292,17 @@ export default defineComponent({
       iconSize,
       isDialogOpen,
       isLoading,
+      isLoadingMove,
+      isMoveDialogOpen,
+      isMoveSubmitDisabled,
+      memberToMove,
+      moveMemberForm,
+      moveFormRef,
       onCloseDialog,
+      onCloseMoveDialog,
       onOpenDialog,
+      onOpenMoveDialog,
+      onSubmitMoveMember,
       onSubmitTeam,
       subsidiariesData,
       tableRefs,
@@ -474,11 +567,23 @@ export default defineComponent({
               data-cy="table-attendance-actions"
             >
               <!-- Button: More actions -->
-              <q-btn dense flat round>
+              <q-btn dense flat round data-cy="table-attendance-actions-button">
                 <q-icon name="more_vert" />
                 <!-- Dropdown menu -->
                 <q-menu auto-close>
-                  <!-- TODO: Add actions -->
+                  <q-list>
+                    <!-- Move member action -->
+                    <q-item
+                      clickable
+                      v-close-popup
+                      @click="onOpenMoveDialog(props.row)"
+                      data-cy="table-attendance-action-move"
+                    >
+                      <q-item-section>
+                        {{ $t('coordinator.moveMember') }}
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
                 </q-menu>
               </q-btn>
             </q-td>
@@ -588,6 +693,53 @@ export default defineComponent({
               data-cy="dialog-button-confirm-delete"
             >
               {{ $t('coordinator.deleteTeam') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
+
+    <!-- Dialog: Move Member -->
+    <dialog-default v-model="isMoveDialogOpen" data-cy="dialog-move-member">
+      <template #title>
+        {{ $t('coordinator.moveMemberTitle') }}
+      </template>
+      <template #content>
+        <q-form ref="moveFormRef" @submit.prevent="onSubmitMoveMember">
+          <form-move-member
+            v-if="memberToMove"
+            class="q-mb-lg"
+            :member-name="memberToMove.name"
+            :current-team-name="memberToMove.teamName"
+            :form-values="moveMemberForm"
+            @update:form-values="moveMemberForm = $event"
+          />
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
+        </q-form>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-sm">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="onCloseMoveDialog"
+              data-cy="dialog-button-cancel"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              :loading="isLoadingMove"
+              :disable="isLoadingMove || isMoveSubmitDisabled"
+              @click="onSubmitMoveMember"
+              data-cy="dialog-button-submit"
+            >
+              {{ $t('coordinator.moveMember') }}
             </q-btn>
           </div>
         </div>

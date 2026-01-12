@@ -27,6 +27,8 @@ export interface TableAttendanceRow {
   paymentState: PaymentState;
   team: string;
   teamId: number;
+  memberId: number;
+  subsidiaryId: number;
   isFirst?: boolean;
   isEmpty?: boolean;
 }
@@ -40,6 +42,7 @@ interface TransformMemberParams {
   member: AdminTeamMember;
   teamName: string;
   teamId: number;
+  subsidiaryId: number;
   paymentType: PaymentType;
   isFeeApproved: boolean;
 }
@@ -53,6 +56,7 @@ function transformMemberToRow({
   member,
   teamName,
   teamId,
+  subsidiaryId,
   paymentType,
   isFeeApproved,
 }: TransformMemberParams): TableAttendanceRow {
@@ -67,6 +71,8 @@ function transformMemberToRow({
     paymentState: member.payment_status,
     team: teamName,
     teamId,
+    memberId: member.id,
+    subsidiaryId,
   };
 }
 
@@ -106,6 +112,8 @@ export const useTableAttendanceData = (): {
             paymentState: PaymentState.none,
             team: team.name,
             teamId: team.id,
+            memberId: 0, // Empty team has no member
+            subsidiaryId: subsidiary.id,
             isEmpty: true,
           });
         }
@@ -117,6 +125,7 @@ export const useTableAttendanceData = (): {
                 member,
                 teamName: team.name,
                 teamId: team.id,
+                subsidiaryId: subsidiary.id,
                 paymentType: PaymentType.organization,
                 isFeeApproved: true,
               }),
@@ -131,6 +140,7 @@ export const useTableAttendanceData = (): {
                 member,
                 teamName: team.name,
                 teamId: team.id,
+                subsidiaryId: subsidiary.id,
                 paymentType: PaymentType.organization,
                 isFeeApproved: false,
               }),
@@ -144,6 +154,7 @@ export const useTableAttendanceData = (): {
               member,
               teamName: team.name,
               teamId: team.id,
+              subsidiaryId: subsidiary.id,
               paymentType: PaymentType.registration,
               isFeeApproved: true,
             }),
