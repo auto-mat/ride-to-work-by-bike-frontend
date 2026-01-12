@@ -565,7 +565,6 @@ Cypress.Commands.add(
       apiDefaultLang,
       i18n,
     );
-
     const urlApiCoordinatorMoveMemberLocalized =
       `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/` +
       `${urlApiCoordinatorTeam}${teamId}/member/${memberId}/`;
@@ -578,6 +577,7 @@ Cypress.Commands.add(
     });
   },
 );
+
 /**
  * Wait for coordinator move member PUT API
  * Wait for `@putCoordinatorMoveMember` intercept
@@ -592,5 +592,62 @@ Cypress.Commands.add('waitForCoordinatorMoveMemberPutApi', (requestData) => {
     if (response) {
       expect(response.statusCode).to.equal(httpSuccessfullStatus);
     }
+  });
+});
+
+/**
+ * Intercept coordinator team PUT API call
+ * Provides `@putCoordinatorTeam` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {number} subsidiaryId - Subsidiary ID
+ * @param {number} teamId - Team ID to update
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorTeamPutApi',
+  (config, i18n, subsidiaryId, teamId) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      urlApiCoordinatorSubsidiary,
+      urlApiCoordinatorTeam,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiCoordinatorTeamPutLocalized =
+      `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/` +
+      `${urlApiCoordinatorTeam}${teamId}/`;
+
+    cy.fixture('apiPutCoordinatorTeamResponse').then((teamResponse) => {
+      cy.intercept('PUT', urlApiCoordinatorTeamPutLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: teamResponse,
+      }).as('putCoordinatorTeam');
+    });
+  },
+);
+
+/**
+ * Wait for coordinator team PUT API call
+ * Wait for `@putCoordinatorTeam` intercept
+ * @param {Object} requestData - Expected request data object
+ */
+Cypress.Commands.add('waitForCoordinatorTeamPutApi', (requestData) => {
+  cy.fixture('apiPutCoordinatorTeamResponse').then((teamResponse) => {
+    cy.wait('@putCoordinatorTeam').then(({ request, response }) => {
+      // Verify authorization header
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      // Verify request body
+      expect(request.body).to.deep.equal(requestData);
+      // Verify response
+      if (response) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(teamResponse);
+      }
+    });
   });
 });
