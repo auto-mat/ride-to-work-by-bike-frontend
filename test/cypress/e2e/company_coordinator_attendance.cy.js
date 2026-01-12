@@ -232,7 +232,7 @@ describe('Company coordinator user attendance page', () => {
       });
     });
 
-    it.only('allows to move member to another team', () => {
+    it('allows to move member to another team', () => {
       cy.get('@config').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
@@ -301,10 +301,10 @@ describe('Company coordinator user attendance page', () => {
                   'contain',
                   sourceTeam.name,
                 );
-                // select target subsidiary
-                cy.selectDropdownMenu('form-select-subsidiary-wrapper', 0);
-                // select target team (first - current team filtered out)
-                cy.selectDropdownMenu('form-select-team-wrapper', 0);
+                // select subsidiary (1 option available)
+                cy.selectDropdownMenu('form-select-subsidiary-wrapper', 0, 1);
+                // select team (1 option available - current filtered out)
+                cy.selectDropdownMenu('form-select-team-wrapper', 0, 1);
                 // submit
                 cy.dataCy('dialog-button-submit').click();
                 // wait for PUT request
