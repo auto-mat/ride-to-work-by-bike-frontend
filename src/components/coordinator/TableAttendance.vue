@@ -791,6 +791,7 @@ export default defineComponent({
           <!-- Hidden submit button enables Enter key to submit -->
           <q-btn type="submit" class="hidden" />
         </q-form>
+        <!-- Action buttons -->
         <div class="flex justify-end q-mt-sm">
           <div class="flex gap-8">
             <q-btn
