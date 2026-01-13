@@ -144,9 +144,7 @@ function coreTests() {
         cy.dataCy(selectorSubsidiaryHeader)
           .eq(subsidiaryIndex)
           .should('be.visible')
-          .and('contain', subsidiary.street)
-          .and('contain', subsidiary.street_number)
-          .and('contain', subsidiary.city);
+          .and('contain', subsidiary.name);
         // test subsidiary info
         cy.dataCy(selectorCityChallenge)
           .eq(subsidiaryIndex)

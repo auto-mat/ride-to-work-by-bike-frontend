@@ -71,9 +71,8 @@ export default defineComponent({
       return org ? org : null;
     });
 
-    const subsidiaryLabel = (subsidiary: AdminSubsidiary): string => {
-      return `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
-    };
+    const subsidiaryLabel = (subsidiary: AdminSubsidiary): string =>
+      subsidiary.name;
 
     const subsidiaryOptions = computed<FormSelectOption[]>(() => {
       return (

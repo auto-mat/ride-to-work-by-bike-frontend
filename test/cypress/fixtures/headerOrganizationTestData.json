@@ -15,6 +15,7 @@
         "subsidiaries": [
           {
             "id": 1001,
+            "name": "Hlavní 123, 11000 Praha",
             "psc": 11000,
             "street": "Hlavní",
             "street_number": 123,
@@ -196,6 +197,7 @@
         "subsidiaries": [
           {
             "id": 3001,
+            "name": "Pivovarská 456, 15000 Brno",
             "psc": 15000,
             "street": "Pivovarská",
             "street_number": 456,
@@ -353,6 +355,7 @@
           },
           {
             "id": 3002,
+            "name": "Nádražní 789, 16000 Ostrava",
             "psc": 16000,
             "street": "Nádražní",
             "street_number": 789,
@@ -379,6 +382,7 @@
           },
           {
             "id": 3003,
+            "name": "Tylova 12, 17000 Plzeň",
             "psc": 17000,
             "street": "Tylova",
             "street_number": 12,
@@ -435,6 +439,7 @@
         "subsidiaries": [
           {
             "id": 5001,
+            "name": "Papírenská 25, 70000 Olomouc",
             "psc": 70000,
             "street": "Papírenská",
             "street_number": 25,

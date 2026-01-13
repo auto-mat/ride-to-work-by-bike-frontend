@@ -13,6 +13,7 @@
       "subsidiaries": [
         {
           "id": 1001,
+          "name": "Hlavní 123, 11000 Praha",
           "psc": 11000,
           "street": "Hlavní",
           "street_number": 123,
@@ -172,7 +173,7 @@
     }
   ],
   "displayData": {
-    "subsidiaryAddress": "Hlavní 123, Praha",
+    "subsidiaryAddress": "Hlavní 123, 11000 Praha",
     "subsidiaryCityChallenge": "Praha",
     "teamCount": 2,
     "membersCount": 7,

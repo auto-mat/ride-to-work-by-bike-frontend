@@ -34,20 +34,17 @@ describe('Company coordinator user attendance page', () => {
       cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
         const organization = response.results[0];
         // get address from store data
-        const uniqueAddresses = [
+        const uniqueNames = [
           ...new Set(
-            organization.subsidiaries.map(
-              (address) =>
-                `${address.street} ${address.street_number}, ${address.city}`,
-            ),
+            organization.subsidiaries.map((subsidiary) => subsidiary.name),
           ),
         ];
-        if (uniqueAddresses.length > 0) {
+        if (uniqueNames.length > 0) {
           cy.dataCy('table-attendance-subsidiary-header')
             .should('be.visible')
-            .and('have.length', uniqueAddresses.length);
-          uniqueAddresses.forEach((address) => {
-            cy.dataCy('table-attendance-subsidiary-header').contains(address);
+            .and('have.length', uniqueNames.length);
+          uniqueNames.forEach((name) => {
+            cy.dataCy('table-attendance-subsidiary-header').contains(name);
           });
         }
         // table row count

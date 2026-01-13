@@ -13,6 +13,7 @@
       "subsidiaries": [
         {
           "id": 3001,
+          "name": "Pivovarská 456, 15000 Brno",
           "psc": 15000,
           "street": "Pivovarská",
           "street_number": 456,

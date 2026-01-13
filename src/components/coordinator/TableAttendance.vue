@@ -331,9 +331,7 @@ export default defineComponent({
     >
       <!-- Subsidiary header -->
       <h3 class="text-h6 q-mb-xs" data-cy="table-attendance-subsidiary-header">
-        {{ subsidiaryData.subsidiary?.street }}
-        {{ subsidiaryData.subsidiary?.street_number }},
-        {{ subsidiaryData.subsidiary?.city }}
+        {{ subsidiaryData.subsidiary?.name }}
       </h3>
       <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
         <div data-cy="table-attendance-city-challenge">
