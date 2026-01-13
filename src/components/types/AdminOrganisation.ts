@@ -52,6 +52,7 @@ export interface Box {
 
 export interface AdminSubsidiary {
   id: number;
+  name: string;
   psc: number;
   street: string;
   street_number: number;

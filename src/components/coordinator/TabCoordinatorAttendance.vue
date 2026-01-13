@@ -21,6 +21,10 @@ import { defineComponent } from 'vue';
 import HeaderOrganization from './HeaderOrganization.vue';
 import TableAttendance from './TableAttendance.vue';
 
+// composables
+import { useTableAttendanceData } from '../../composables/useTableAttendanceData';
+import { useExportTableAttendance } from '../../composables/useExportTableAttendance';
+
 export default defineComponent({
   name: 'TabCoordinatorAttendance',
   components: {
@@ -28,14 +32,23 @@ export default defineComponent({
     TableAttendance,
   },
   setup() {
-    return {};
+    const { subsidiariesData } = useTableAttendanceData();
+    const { exportTableAttendance } = useExportTableAttendance();
+
+    const handleExport = (): void => {
+      exportTableAttendance(subsidiariesData.value);
+    };
+
+    return {
+      handleExport,
+    };
   },
 });
 </script>
 
 <template>
   <div>
-    <header-organization class="q-mt-sm" />
+    <header-organization class="q-mt-sm" @export="handleExport" />
     <table-attendance class="q-mt-xl" />
   </div>
 </template>
