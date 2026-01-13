@@ -71,8 +71,8 @@ export const useApiPostCoordinatorMoveMember = (
     payload: CoordinatorMoveMemberRequest,
   ): Promise<CoordinatorMoveMemberResponse | null> => {
     logger?.debug(
-      `Move member with ID <${memberId}> to team <${payload.team_id}>` +
-        ` from team <${teamId}> in subsidiary <${subsidiaryId}>.`,
+      `Move member with ID <${memberId}> to team ID <${payload.team_id}>` +
+        ` from team ID <${teamId}> in subsidiary ID <${subsidiaryId}>.`,
     );
     isLoading.value = true;
 

@@ -591,8 +591,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return;
       }
       this.$log?.info(
-        `Move member with ID <${memberId}> from team <${currentTeamId}>` +
-          ` to team <${targetTeamId}> in subsidiary <${currentSubsidiaryId}>.`,
+        `Move member with ID <${memberId}> from team ID <${currentTeamId}>` +
+          ` to team ID <${targetTeamId}> in subsidiary ID <${currentSubsidiaryId}>.`,
       );
       this.isLoadingMoveMember = true;
       // prepare payload
@@ -609,7 +609,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       );
       if (data) {
         this.$log?.debug(
-          `Member moved successfully. New team ID: <${data.team_id}>.`,
+          `Member moved successfully, new team ID <${data.team_id}>.`,
         );
         // Refetch organization structure to update UI
         await this.loadAdminOrganisations();
