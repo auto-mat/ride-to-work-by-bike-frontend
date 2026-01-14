@@ -64,7 +64,7 @@ export const useApiPutCoordinatorTeam = (
     teamName: string,
     campaignId: number,
   ): Promise<CoordinatorTeamPutResponse | null> => {
-    logger?.debug(`Update team with ID <${teamId}> to name <${teamName}>...`);
+    logger?.debug(`Update team with ID <${teamId}> to name <${teamName}>.`);
     isLoading.value = true;
 
     const requestTokenHeader_ = { ...requestTokenHeader };

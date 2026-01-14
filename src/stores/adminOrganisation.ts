@@ -640,7 +640,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return;
       }
       this.$log?.info(
-        `Update team with ID <${teamId}> to name <${teamName}> for subsidiary ID <${subsidiaryId}>.`,
+        `Update team with ID <${teamId}> to name <${teamName}>` +
+          ` for subsidiary ID <${subsidiaryId}>.`,
       );
       this.isLoadingUpdateTeam = true;
       const result = await updateTeam(
