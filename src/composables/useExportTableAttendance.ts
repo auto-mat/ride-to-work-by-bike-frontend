@@ -17,13 +17,8 @@ import type {
  * @param {string | number | boolean | null} val - Value to wrap
  * @returns {string} - Wrapped and escaped value
  */
-function wrapCsvValue(val: string | number | boolean | null): string {
-  let formatted =
-    val === undefined || val === null || val === '' ? '' : String(val);
-  formatted = formatted.split('"').join('""');
-
-  return `"${formatted}"`;
-}
+const wrapCsvValue = (val: string | number | boolean | null): string =>
+  `"${val ? String(val) : ''}"`;
 
 /**
  * Composable for exporting table attendance data to CSV
