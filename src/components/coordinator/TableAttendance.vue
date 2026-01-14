@@ -9,7 +9,7 @@
  * @components
  * - `DialogDefault.vue` - default dialog wrapper
  * - `FormAddTeam.vue` - used to add a new team to a subsidiary
- * - `FormFieldTextRequired`: used to render required text field
+ * - `FormFieldTextRequired` - used to render required text field
  * - `FormMoveMember.vue` - used to move a member to another team
  *
  * @example
