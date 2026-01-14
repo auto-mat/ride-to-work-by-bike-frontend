@@ -176,7 +176,11 @@ export default defineComponent({
       teamName: string,
       subsidiaryId: number,
     ): void => {
-      teamToDelete.value = { id: teamId, name: teamName, subsidiaryId };
+      teamToDelete.value = {
+        id: teamId,
+        name: teamName,
+        subsidiaryId: subsidiaryId,
+      };
       isDeleteDialogOpen.value = true;
     };
 
@@ -280,7 +284,11 @@ export default defineComponent({
       teamName: string,
       subsidiaryId: number,
     ): void => {
-      teamToEdit.value = { id: teamId, name: teamName, subsidiaryId };
+      teamToEdit.value = {
+        id: teamId,
+        name: teamName,
+        subsidiaryId: subsidiaryId,
+      };
       teamEditName.value = teamName;
       isEditDialogOpen.value = true;
     };
