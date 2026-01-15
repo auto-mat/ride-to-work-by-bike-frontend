@@ -24,16 +24,16 @@ import { i18n } from '../../boot/i18n';
 // types
 import type { TaskCoordinator } from '../types/Task';
 
-// fixtures
-import taskListFixture from '../../../test/cypress/fixtures/taskListCoordinator.json';
+// data
+import coordinatorTasks from '../../data/coordinatorTasks.json';
 
 export default defineComponent({
   name: 'TaskListCoordinator',
   props: {
     tasks: {
       type: Object as () => TaskCoordinator[],
-      required: true,
-      default: taskListFixture,
+      required: false,
+      default: () => coordinatorTasks,
     },
   },
   setup(props) {
