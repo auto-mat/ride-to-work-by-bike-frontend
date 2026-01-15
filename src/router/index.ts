@@ -104,19 +104,30 @@ function logRouteCheck(
   );
 }
 
+interface Query {
+  [redirect: string]: string;
+}
+
 /**
  * Redirects to the given path.
  * @param {Logger | null} logger - logger instance
  * @param {string} path - path to redirect to
  * @param {NavigationGuardNext} next - next function
  */
-function redirect(
-  logger: Logger | null,
-  path: string,
-  next: NavigationGuardNext,
-): void {
+function redirect({
+  logger,
+  path,
+  next,
+  query = null,
+}: {
+  logger: Logger | null;
+  path: string;
+  next: NavigationGuardNext;
+  query?: Query | null;
+}): void {
   logger?.debug(`Router path redirect to page URL <${path}>.`);
-  next({ path });
+  if (query) next({ path: path, query: query });
+  else next({ path: path });
 }
 
 /*
@@ -152,6 +163,14 @@ export default route(function (/* { store, ssrContext } */) {
     window.Cypress.spec.name === 'register.spec.cy.js' ||
     window.Cypress.spec.name === 'router_rules.cy.js'
   ) {
+    Router.afterEach(async (from, to) => {
+      const logger = inject('vuejs3-logger') as Logger | null;
+      const redirect = to.query && to.query.redirect;
+      if (redirect) {
+        logger?.debug(`Follow URL path redirection to the <${redirect}> path.`);
+        Router.push({ path: String(redirect) });
+      }
+    });
     Router.beforeEach(async (to, from, next) => {
       const logger = inject('vuejs3-logger') as Logger | null;
       const challengeStore = useChallengeStore();
@@ -184,7 +203,12 @@ export default route(function (/* { store, ssrContext } */) {
         !isAccessingRoutes(to, ROUTE_GROUPS.LOGIN, routesConf)
       ) {
         logRouteCheck(logger, ROUTE_GROUPS.LOGIN, routesConf, false);
-        redirect(logger, routesConf['login']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['login']['path'],
+          next: next,
+          query: to.fullPath !== '/' ? { redirect: to.fullPath } : null,
+        });
         return;
       }
       // Verify email access: ONLY access VERIFY_EMAIL path group
@@ -194,7 +218,11 @@ export default route(function (/* { store, ssrContext } */) {
         !isAccessingRoutes(to, ROUTE_GROUPS.VERIFY_EMAIL, routesConf)
       ) {
         logRouteCheck(logger, ROUTE_GROUPS.VERIFY_EMAIL, routesConf, false);
-        redirect(logger, routesConf['verify_email']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['verify_email']['path'],
+          next: next,
+        });
         return;
       }
       // Challenge inactive access: ONLY access CHALLENGE_INACTIVE path group
@@ -210,7 +238,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           false,
         );
-        redirect(logger, routesConf['challenge_inactive']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['challenge_inactive']['path'],
+          next: next,
+        });
         return;
       }
       // Full app + Routes + Coordinator access:
@@ -241,7 +273,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           true,
         );
-        redirect(logger, routesConf['home']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['home']['path'],
+          next: next,
+        });
         return;
       }
       // Full app + Routes + Become Coordinator access:
@@ -273,7 +309,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           true,
         );
-        redirect(logger, routesConf['home']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['home']['path'],
+          next: next,
+        });
         return;
       }
       // Full app + Routes access: ONLY access FULL_APP and ROUTES path groups
@@ -296,7 +336,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           true,
         );
-        redirect(logger, routesConf['home']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['home']['path'],
+          next: next,
+        });
         return;
       }
       // Register challenge + Coordinator application access:
@@ -327,7 +371,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           false,
         );
-        redirect(logger, routesConf['register_challenge']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['register_challenge']['path'],
+          next: next,
+        });
         return;
       }
       // Register challenge access: ONLY access REGISTER_CHALLENGE path group
@@ -347,7 +395,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           false,
         );
-        redirect(logger, routesConf['register_challenge']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['register_challenge']['path'],
+          next: next,
+        });
         return;
       }
       // Challenge inactive access: ONLY access CHALLENGE_INACTIVE path group
@@ -366,7 +418,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           false,
         );
-        redirect(logger, routesConf['challenge_inactive']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['challenge_inactive']['path'],
+          next: next,
+        });
         return;
       }
       // Full app + Coordinator + Register challenge access:
@@ -398,7 +454,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           true,
         );
-        redirect(logger, routesConf['home']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['home']['path'],
+          next: next,
+        });
         return;
       }
       // Full app + Coordinator access: ONLY access FULL_APP and COORDINATOR path groups
@@ -421,7 +481,11 @@ export default route(function (/* { store, ssrContext } */) {
           routesConf,
           true,
         );
-        redirect(logger, routesConf['home']['path'], next);
+        redirect({
+          logger: logger,
+          path: routesConf['home']['path'],
+          next: next,
+        });
         return;
       }
 
