@@ -680,7 +680,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           ` to <${addressData.street} ${addressData.houseNumber}, ${addressData.city}>.`,
       );
       this.isLoadingUpdateSubsidiary = true;
-      // Convert form data to API payload for update
+      // Convert form data to API payload
       const payload =
         subsidiaryAdapter.fromFormDataToApiPayloadUpdate(addressData);
       const result = await updateSubsidiary(subsidiaryId, payload);
