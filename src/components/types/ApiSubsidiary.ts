@@ -32,14 +32,21 @@ export interface SubsidiaryAddressApi {
   psc: number;
 }
 
+export interface SubsidiaryPutApiResponse {
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
+  address: SubsidiaryPostApiAddress;
+}
+
 export interface SubsidiaryPostApiPayload {
   address: SubsidiaryPostApiAddress;
   city_id: number | null;
 }
 
 export interface SubsidiaryPostApiResponse {
-  box_addressee_name: string | null;
-  box_addressee_telephone: string | null;
-  box_addressee_email: string | null;
+  id: number;
+  city_id: number | null;
+  active: boolean;
   address: SubsidiaryPostApiAddress;
 }

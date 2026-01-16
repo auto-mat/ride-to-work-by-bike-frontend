@@ -18,7 +18,7 @@ import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
 import type {
   SubsidiaryPostApiPayload,
-  SubsidiaryPostApiResponse,
+  SubsidiaryPutApiResponse,
 } from '../components/types/ApiSubsidiary';
 
 export interface UseApiPutCoordinatorSubsidiaryReturn {
@@ -26,7 +26,7 @@ export interface UseApiPutCoordinatorSubsidiaryReturn {
   updateSubsidiary: (
     subsidiaryId: number,
     payload: Pick<SubsidiaryPostApiPayload, 'address'>,
-  ) => Promise<SubsidiaryPostApiResponse | null>;
+  ) => Promise<SubsidiaryPutApiResponse | null>;
 }
 
 /**
@@ -45,12 +45,12 @@ export const useApiPutCoordinatorSubsidiary = (
    * Updates a subsidiary address.
    * @param {number} subsidiaryId - Subsidiary ID
    * @param {Pick<SubsidiaryPostApiPayload, 'address'>} payload - Address data
-   * @returns {Promise<SubsidiaryPostApiResponse | null>}
+   * @returns {Promise<SubsidiaryPutApiResponse | null>}
    */
   const updateSubsidiary = async (
     subsidiaryId: number,
     payload: Pick<SubsidiaryPostApiPayload, 'address'>,
-  ): Promise<SubsidiaryPostApiResponse | null> => {
+  ): Promise<SubsidiaryPutApiResponse | null> => {
     logger?.debug(`Update subsidiary address with ID <${subsidiaryId}>.`);
     isLoading.value = true;
 
@@ -61,7 +61,7 @@ export const useApiPutCoordinatorSubsidiary = (
 
     const endpoint = `${rideToWorkByBikeConfig.urlApiCoordinatorSubsidiary}${subsidiaryId}/`;
 
-    const { data } = await apiFetch<SubsidiaryPostApiResponse>({
+    const { data } = await apiFetch<SubsidiaryPutApiResponse>({
       endpoint,
       method: 'put',
       translationKey: 'updateCoordinatorSubsidiary',
