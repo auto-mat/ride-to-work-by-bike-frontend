@@ -25,10 +25,6 @@ export interface SubsidiaryPostApiAddress {
   psc: string | number;
 }
 
-/**
- * Subsidiary address structure from coordinator admin organization API
- * Used for editing subsidiary address via coordinator interface
- */
 export interface SubsidiaryAddressPutApi {
   street: string;
   street_number: number;
