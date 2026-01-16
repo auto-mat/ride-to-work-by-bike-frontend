@@ -86,20 +86,20 @@ export const subsidiaryAdapter = {
   },
 
   /**
-   * Convert API subsidiary address to form data
-   * @param {SubsidiaryAddressPutApi} apiAddress - Subsidiary address from API
+   * Convert API PUT subsidiary structure to form data
+   * @param {SubsidiaryAddressPutApi} apiSubsidiary - Subsidiary from API
    * @returns {FormCompanyAddressFields} - Form data format
    */
   fromApiAddressToFormData(
-    apiAddress: SubsidiaryAddressPutApi,
+    apiSubsidiary: SubsidiaryAddressPutApi,
   ): FormCompanyAddressFields {
     return {
-      street: apiAddress.street,
-      houseNumber: apiAddress.street_number
-        ? String(apiAddress.street_number)
+      street: apiSubsidiary.street,
+      houseNumber: apiSubsidiary.street_number
+        ? String(apiSubsidiary.street_number)
         : '',
-      city: apiAddress.city,
-      zip: apiAddress.psc ? String(apiAddress.psc) : '',
+      city: apiSubsidiary.city,
+      zip: apiSubsidiary.psc ? String(apiSubsidiary.psc) : '',
       cityChallenge: null,
       department: '',
     };

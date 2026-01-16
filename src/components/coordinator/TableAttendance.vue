@@ -350,7 +350,7 @@ export default defineComponent({
     const onOpenEditSubsidiaryDialog = (subsidiary: AdminSubsidiary): void => {
       subsidiaryToEdit.value = subsidiary;
       subsidiaryEditAddress.value = deepObjectWithSimplePropsCopy(
-        subsidiaryAdapter.fromApiAddressToFormData(subsidiary.address),
+        subsidiaryAdapter.fromApiAddressToFormData(subsidiary),
       ) as FormCompanyAddressFields;
       isEditSubsidiaryDialogOpen.value = true;
     };
@@ -471,54 +471,60 @@ export default defineComponent({
       :class="{ 'q-mt-xl': index > 0 }"
     >
       <!-- Subsidiary header -->
-      <h3
-        class="text-h6 q-mb-xs flex items-center gap-8"
-        data-cy="table-attendance-subsidiary-header"
-      >
-        <span>{{ subsidiaryData.subsidiary?.name }}</span>
-        <!-- Button: Edit subsidiary address -->
-        <q-btn
-          flat
-          dense
-          round
-          size="sm"
-          icon="edit"
-          color="primary"
-          :disable="isLoadingUpdateSubsidiary"
-          :loading="
-            isLoadingUpdateSubsidiary &&
-            subsidiaryToEdit?.id === subsidiaryData.subsidiary.id
-          "
-          @click="onOpenEditSubsidiaryDialog(subsidiaryData.subsidiary)"
-          data-cy="table-attendance-button-edit-subsidiary"
-        >
-          <q-tooltip>{{ $t('coordinator.editSubsidiary') }}</q-tooltip>
-        </q-btn>
-      </h3>
-      <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
-        <div data-cy="table-attendance-city-challenge">
-          {{ $t('coordinator.labelCityChallenge') }}:
-          {{ subsidiaryData.subsidiary?.city }}
+      <div class="row">
+        <div class="col">
+          <h3
+            class="text-h6 q-mb-xs flex items-center gap-8"
+            data-cy="table-attendance-subsidiary-header"
+          >
+            <span>{{ subsidiaryData.subsidiary?.name }}</span>
+          </h3>
+          <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
+            <div data-cy="table-attendance-city-challenge">
+              {{ $t('coordinator.labelCityChallenge') }}:
+              {{ subsidiaryData.subsidiary?.city }}
+            </div>
+            <div data-cy="table-attendance-teams">
+              {{ subsidiaryData.subsidiary?.teams?.length }}
+              {{
+                $t(
+                  'coordinator.labelTeams',
+                  subsidiaryData.subsidiary?.teams?.length,
+                )
+              }}
+            </div>
+            <div data-cy="table-attendance-members">
+              {{
+                subsidiaryData.members.filter((member) => !member.isEmpty)
+                  .length
+              }}
+              {{
+                $t(
+                  'coordinator.labelMembers',
+                  subsidiaryData.members.filter((member) => !member.isEmpty)
+                    .length,
+                )
+              }}
+            </div>
+          </div>
         </div>
-        <div data-cy="table-attendance-teams">
-          {{ subsidiaryData.subsidiary?.teams?.length }}
-          {{
-            $t(
-              'coordinator.labelTeams',
-              subsidiaryData.subsidiary?.teams?.length,
-            )
-          }}
-        </div>
-        <div data-cy="table-attendance-members">
-          {{
-            subsidiaryData.members.filter((member) => !member.isEmpty).length
-          }}
-          {{
-            $t(
-              'coordinator.labelMembers',
-              subsidiaryData.members.filter((member) => !member.isEmpty).length,
-            )
-          }}
+        <div class="col-auto">
+          <!-- Button: Edit subsidiary address -->
+          <q-btn
+            outline
+            unelevated
+            rounded
+            color="primary"
+            :disable="isLoadingUpdateSubsidiary"
+            :loading="
+              isLoadingUpdateSubsidiary &&
+              subsidiaryToEdit?.id === subsidiaryData.subsidiary.id
+            "
+            @click="onOpenEditSubsidiaryDialog(subsidiaryData.subsidiary)"
+            data-cy="table-attendance-button-edit-subsidiary"
+          >
+            {{ $t('navigation.edit') }}
+          </q-btn>
         </div>
       </div>
 
@@ -983,7 +989,9 @@ export default defineComponent({
           <label class="text-grey-10 text-caption text-bold">
             {{ $t('form.labelSubsidiaryName') }}
           </label>
-          <p class="q-mt-sm">{{ subsidiaryToEdit?.name }}</p>
+          <p class="q-mt-sm" data-cy="form-edit-subsidiary-name">
+            {{ subsidiaryToEdit?.name }}
+          </p>
         </div>
 
         <!-- Address form -->

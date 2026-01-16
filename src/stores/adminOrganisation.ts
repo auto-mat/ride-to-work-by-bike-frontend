@@ -690,7 +690,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const payload =
         subsidiaryAdapter.fromFormDataToApiPayloadUpdate(addressData);
       const result = await updateSubsidiary(subsidiaryId, payload);
-      if (result && result.address) {
+      if (result) {
         this.$log?.debug(
           `Subsidiary address updated successfully with ID <${result.id}>.`,
         );
