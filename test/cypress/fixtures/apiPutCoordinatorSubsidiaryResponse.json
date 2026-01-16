@@ -1,9 +1,12 @@
 {
-  "id": 3001,
-  "name": "Nová ulice 123, 16000 Praha",
-  "psc": 16000,
-  "street": "Nová ulice",
-  "street_number": 123,
-  "city": "Praha",
-  "icon_url": null
+  "box_addressee_name": null,
+  "box_addressee_telephone": null,
+  "box_addressee_email": null,
+  "address": {
+    "street": "Nová ulice",
+    "street_number": "123",
+    "recipient": "",
+    "psc": 16000,
+    "city": "Praha"
+  }
 }

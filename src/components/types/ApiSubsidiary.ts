@@ -42,8 +42,8 @@ export interface SubsidiaryPostApiPayload {
 }
 
 export interface SubsidiaryPostApiResponse {
-  id: number;
-  city_id: number | null;
-  active: boolean;
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
   address: SubsidiaryPostApiAddress;
 }

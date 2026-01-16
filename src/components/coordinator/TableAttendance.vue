@@ -471,15 +471,15 @@ export default defineComponent({
       :class="{ 'q-mt-xl': index > 0 }"
     >
       <!-- Subsidiary header -->
-      <div class="row">
-        <div class="col">
+      <div class="row q-col-gutter-md q-mb-lg">
+        <div class="col-sm">
           <h3
-            class="text-h6 q-mb-xs flex items-center gap-8"
+            class="text-h6 q-my-none flex items-center gap-8"
             data-cy="table-attendance-subsidiary-header"
           >
             <span>{{ subsidiaryData.subsidiary?.name }}</span>
           </h3>
-          <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
+          <div class="flex flex-wrap gap-y-8 gap-x-32">
             <div data-cy="table-attendance-city-challenge">
               {{ $t('coordinator.labelCityChallenge') }}:
               {{ subsidiaryData.subsidiary?.city }}
@@ -508,7 +508,7 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div class="col-auto">
+        <div class="col-sm-auto">
           <!-- Button: Edit subsidiary address -->
           <q-btn
             outline
@@ -523,6 +523,7 @@ export default defineComponent({
             @click="onOpenEditSubsidiaryDialog(subsidiaryData.subsidiary)"
             data-cy="table-attendance-button-edit-subsidiary"
           >
+            <q-icon size="18px" name="edit" class="q-mr-xs" />
             {{ $t('navigation.edit') }}
           </q-btn>
         </div>

@@ -16,15 +16,17 @@ import { useLoginStore } from '../stores/login';
 // types
 import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
-import type { SubsidiaryPostApiPayload } from '../components/types/ApiSubsidiary';
-import type { AdminSubsidiary } from '../components/types/AdminOrganisation';
+import type {
+  SubsidiaryPostApiPayload,
+  SubsidiaryPostApiResponse,
+} from '../components/types/ApiSubsidiary';
 
 export interface UseApiPutCoordinatorSubsidiaryReturn {
   isLoading: Ref<boolean>;
   updateSubsidiary: (
     subsidiaryId: number,
     payload: Pick<SubsidiaryPostApiPayload, 'address'>,
-  ) => Promise<AdminSubsidiary | null>;
+  ) => Promise<SubsidiaryPostApiResponse | null>;
 }
 
 /**
@@ -43,12 +45,12 @@ export const useApiPutCoordinatorSubsidiary = (
    * Updates a subsidiary address.
    * @param {number} subsidiaryId - Subsidiary ID
    * @param {Pick<SubsidiaryPostApiPayload, 'address'>} payload - Address data
-   * @returns {Promise<AdminSubsidiary | null>}
+   * @returns {Promise<SubsidiaryPostApiResponse | null>}
    */
   const updateSubsidiary = async (
     subsidiaryId: number,
     payload: Pick<SubsidiaryPostApiPayload, 'address'>,
-  ): Promise<AdminSubsidiary | null> => {
+  ): Promise<SubsidiaryPostApiResponse | null> => {
     logger?.debug(`Update subsidiary address with ID <${subsidiaryId}>.`);
     isLoading.value = true;
 
@@ -59,7 +61,7 @@ export const useApiPutCoordinatorSubsidiary = (
 
     const endpoint = `${rideToWorkByBikeConfig.urlApiCoordinatorSubsidiary}${subsidiaryId}/`;
 
-    const { data } = await apiFetch<AdminSubsidiary>({
+    const { data } = await apiFetch<SubsidiaryPostApiResponse>({
       endpoint,
       method: 'put',
       translationKey: 'updateCoordinatorSubsidiary',
