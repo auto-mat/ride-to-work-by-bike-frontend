@@ -86,7 +86,7 @@ export const subsidiaryAdapter = {
   },
 
   /**
-   * Convert API PUT subsidiary structure to form data
+   * Convert subsidiary from organization structure API to form data
    * @param {SubsidiaryAddressPutApi} apiSubsidiary - Subsidiary from API
    * @returns {FormCompanyAddressFields} - Form data format
    */
