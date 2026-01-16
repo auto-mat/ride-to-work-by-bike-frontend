@@ -355,12 +355,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     setAdminOrganisations(adminOrganisations: AdminOrganisation[]): void {
       this.adminOrganisations = adminOrganisations;
     },
-    /*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Set the admin invoices array in the store.
-     * @param {InvoiceResult[]} adminInvoices - Array of admin invoices
-     */
-    /*******  6bbc2875-2312-45ee-9ec6-65989f52ff35  *******/
     setAdminInvoices(adminInvoices: InvoiceResult[]): void {
       this.adminInvoices = adminInvoices;
     },
