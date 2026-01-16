@@ -4,7 +4,7 @@ import type {
   SubsidiaryPostApiPayload,
   SubsidiaryPostApiResponse,
   SubsidiaryApi,
-  SubsidiaryAddressPutApi,
+  SubsidiaryAddressApi,
 } from '../components/types/ApiSubsidiary';
 import type { OrganizationSubsidiary } from '../components/types/Organization';
 
@@ -87,11 +87,11 @@ export const subsidiaryAdapter = {
 
   /**
    * Convert subsidiary from organization structure API to form data
-   * @param {SubsidiaryAddressPutApi} apiSubsidiary - Subsidiary from API
+   * @param {SubsidiaryAddressApi} apiSubsidiary - Subsidiary from API
    * @returns {FormCompanyAddressFields} - Form data format
    */
   fromApiAddressToFormData(
-    apiSubsidiary: SubsidiaryAddressPutApi,
+    apiSubsidiary: SubsidiaryAddressApi,
   ): FormCompanyAddressFields {
     return {
       street: apiSubsidiary.street,

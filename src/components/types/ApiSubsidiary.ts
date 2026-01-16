@@ -25,7 +25,7 @@ export interface SubsidiaryPostApiAddress {
   psc: string | number;
 }
 
-export interface SubsidiaryAddressPutApi {
+export interface SubsidiaryAddressApi {
   street: string;
   street_number: number;
   city: string;
