@@ -4,6 +4,7 @@ import type {
   SubsidiaryPostApiPayload,
   SubsidiaryPostApiResponse,
   SubsidiaryApi,
+  SubsidiaryAddressPutApi,
 } from '../components/types/ApiSubsidiary';
 import type { OrganizationSubsidiary } from '../components/types/Organization';
 
@@ -82,5 +83,45 @@ export const subsidiaryAdapter = {
     ].filter(Boolean);
 
     return parts.join(', ');
+  },
+
+  /**
+   * Convert API subsidiary address to form data
+   * @param {SubsidiaryAddressPutApi} apiAddress - Subsidiary address from API
+   * @returns {FormCompanyAddressFields} - Form data format
+   */
+  fromApiAddressToFormData(
+    apiAddress: SubsidiaryAddressPutApi,
+  ): FormCompanyAddressFields {
+    return {
+      street: apiAddress.street,
+      houseNumber: apiAddress.street_number
+        ? String(apiAddress.street_number)
+        : '',
+      city: apiAddress.city,
+      zip: apiAddress.psc ? String(apiAddress.psc) : '',
+      cityChallenge: null,
+      department: '',
+    };
+  },
+
+  /**
+   * Convert form data to API PUT payload for subsidiary update
+   * Used for updating subsidiary address by coordinator (admin)
+   * @param {FormCompanyAddressFields} formData - Form data
+   * @returns {Pick<SubsidiaryPostApiPayload, 'address'>} - API payload format
+   */
+  fromFormDataToApiPayloadUpdate(
+    formData: FormCompanyAddressFields,
+  ): Pick<SubsidiaryPostApiPayload, 'address'> {
+    return {
+      address: {
+        street: formData.street,
+        street_number: formData.houseNumber,
+        recipient: formData.department || '',
+        city: formData.city,
+        psc: formData.zip,
+      },
+    };
   },
 };

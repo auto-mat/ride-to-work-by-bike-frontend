@@ -55,15 +55,7 @@ import type { OrganizationSubsidiary } from 'src/components/types/Organization';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';
-
-const addressNewEmpty = {
-  street: '',
-  houseNumber: '',
-  city: '',
-  zip: '',
-  cityChallenge: null,
-  department: '',
-};
+import { getEmptyFormAddress } from '../../utils/get_empty_form_address';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
@@ -94,7 +86,7 @@ export default defineComponent({
 
     const addressNew = ref<FormCompanyAddressFields>(
       deepObjectWithSimplePropsCopy(
-        addressNewEmpty,
+        getEmptyFormAddress(),
       ) as FormCompanyAddressFields,
     );
 
@@ -247,7 +239,7 @@ export default defineComponent({
           formRef.value.reset();
         }
         addressNew.value = deepObjectWithSimplePropsCopy(
-          addressNewEmpty,
+          getEmptyFormAddress(),
         ) as FormCompanyAddressFields;
         logger?.debug(
           `New address form reset to <${JSON.stringify(addressNew.value, null, 2)}>.`,

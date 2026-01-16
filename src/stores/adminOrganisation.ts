@@ -12,6 +12,10 @@ import { useApiPostCoordinatorMoveMember } from '../composables/useApiPostCoordi
 import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
 import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
 import { useApiPutCoordinatorTeam } from '../composables/useApiPutCoordinatorTeam';
+import { useApiPutCoordinatorSubsidiary } from '../composables/useApiPutCoordinatorSubsidiary';
+
+// adapters
+import { subsidiaryAdapter } from '../adapters/subsidiaryAdapter';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
@@ -42,6 +46,7 @@ import type {
   InvoiceTeam,
 } from '../components/types/Invoice';
 import type { CoordinatorMakeInvoicePayload } from '../composables/useApiPostCoordinatorMakeInvoice';
+import type { FormCompanyAddressFields } from '../components/types/Form';
 
 interface InvoiceFormState {
   orderNumber: string;
@@ -75,6 +80,7 @@ interface AdminOrganisationState {
   isLoadingDeleteTeam: boolean;
   isLoadingMoveMember: boolean;
   isLoadingUpdateTeam: boolean;
+  isLoadingUpdateSubsidiary: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -96,6 +102,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingDeleteTeam: false,
     isLoadingMoveMember: false,
     isLoadingUpdateTeam: false,
+    isLoadingUpdateSubsidiary: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
@@ -125,6 +132,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingDeleteTeam: (state) => state.isLoadingDeleteTeam,
     getIsLoadingMoveMember: (state) => state.isLoadingMoveMember,
     getIsLoadingUpdateTeam: (state) => state.isLoadingUpdateTeam,
+    getIsLoadingUpdateSubsidiary: (state) => state.isLoadingUpdateSubsidiary,
     getIsLoadingAny: (state) =>
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
@@ -132,7 +140,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       state.isLoadingCreateTeam ||
       state.isLoadingDeleteTeam ||
       state.isLoadingMoveMember ||
-      state.isLoadingUpdateTeam,
+      state.isLoadingUpdateTeam ||
+      state.isLoadingUpdateSubsidiary,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
@@ -657,6 +666,33 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingUpdateTeam = false;
     },
     /**
+     * Update subsidiary address
+     * @param {number} subsidiaryId - The ID of the subsidiary to update
+     * @param {FormCompanyAddressFields} addressData - The address data to update
+     */
+    async updateSubsidiary(
+      subsidiaryId: number,
+      addressData: FormCompanyAddressFields,
+    ): Promise<void> {
+      const { updateSubsidiary } = useApiPutCoordinatorSubsidiary(this.$log);
+      this.$log?.info(
+        `Update subsidiary address with ID <${subsidiaryId}>` +
+          ` to <${addressData.street} ${addressData.houseNumber}, ${addressData.city}>.`,
+      );
+      this.isLoadingUpdateSubsidiary = true;
+      // Convert form data to API payload for update
+      const payload =
+        subsidiaryAdapter.fromFormDataToApiPayloadUpdate(addressData);
+      const result = await updateSubsidiary(subsidiaryId, payload);
+      if (result?.id) {
+        this.$log?.debug(
+          `Subsidiary address updated successfully with ID <${result.id}>.`,
+        );
+        await this.loadAdminOrganisations();
+      }
+      this.isLoadingUpdateSubsidiary = false;
+    },
+    /**
      * Create invoice from internal form state
      * @returns {Promise<boolean>} - Success status
      */
@@ -920,6 +956,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingCreateTeam = false;
       this.isLoadingDeleteTeam = false;
       this.isLoadingUpdateTeam = false;
+      this.isLoadingMoveMember = false;
+      this.isLoadingUpdateSubsidiary = false;
     },
   },
 
@@ -930,7 +968,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       'isLoadingApprovePayments',
       'isLoadingCreateTeam',
       'isLoadingDeleteTeam',
+      'isLoadingMoveMember',
       'isLoadingUpdateTeam',
+      'isLoadingUpdateSubsidiary',
       'invoicePollingIntervalId',
       'invoicePollingTimeoutId',
     ],
