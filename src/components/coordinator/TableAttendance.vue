@@ -985,7 +985,7 @@ export default defineComponent({
         {{ $t('coordinator.editSubsidiary') }}
       </template>
       <template #content>
-        <!-- Subsidiary name (read-only) -->
+        <!-- Current subsidiary info -->
         <div class="q-mb-md">
           <label class="text-grey-10 text-caption text-bold">
             {{ $t('form.labelSubsidiaryName') }}
@@ -994,8 +994,7 @@ export default defineComponent({
             {{ subsidiaryToEdit?.name }}
           </p>
         </div>
-
-        <!-- Address form -->
+        <!-- Form: Address -->
         <q-form
           ref="subsidiaryEditFormRef"
           @submit.prevent="onSubmitEditSubsidiary"
@@ -1010,7 +1009,6 @@ export default defineComponent({
           <!-- Hidden submit button enables Enter key to submit -->
           <q-btn type="submit" class="hidden" />
         </q-form>
-
         <!-- Action buttons -->
         <div class="flex justify-end q-mt-lg">
           <div class="flex gap-8">
