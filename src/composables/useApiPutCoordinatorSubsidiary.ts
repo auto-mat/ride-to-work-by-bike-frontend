@@ -17,7 +17,7 @@ import { useLoginStore } from '../stores/login';
 import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
 import type {
-  SubsidiaryPostApiPayload,
+  SubsidiaryPostApiAddress,
   SubsidiaryPutApiResponse,
 } from '../components/types/ApiSubsidiary';
 
@@ -25,7 +25,7 @@ export interface UseApiPutCoordinatorSubsidiaryReturn {
   isLoading: Ref<boolean>;
   updateSubsidiary: (
     subsidiaryId: number,
-    payload: Pick<SubsidiaryPostApiPayload, 'address'>,
+    payload: { address: SubsidiaryPostApiAddress },
   ) => Promise<SubsidiaryPutApiResponse | null>;
 }
 
@@ -44,12 +44,12 @@ export const useApiPutCoordinatorSubsidiary = (
   /**
    * Updates a subsidiary address.
    * @param {number} subsidiaryId - Subsidiary ID
-   * @param {Pick<SubsidiaryPostApiPayload, 'address'>} payload - Address data
+   * @param {{ address: SubsidiaryPostApiAddress }} payload - Address data
    * @returns {Promise<SubsidiaryPutApiResponse | null>}
    */
   const updateSubsidiary = async (
     subsidiaryId: number,
-    payload: Pick<SubsidiaryPostApiPayload, 'address'>,
+    payload: { address: SubsidiaryPostApiAddress },
   ): Promise<SubsidiaryPutApiResponse | null> => {
     logger?.debug(`Update subsidiary address with ID <${subsidiaryId}>.`);
     isLoading.value = true;
