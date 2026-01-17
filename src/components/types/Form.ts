@@ -36,6 +36,9 @@ export type FormCompanyAddressFields = {
   zip: string;
   cityChallenge: number | null;
   department: string;
+  boxAddresseeName?: string;
+  boxAddresseeTelephone?: string;
+  boxAddresseeEmail?: string;
 };
 
 export type FormTeamFields = {

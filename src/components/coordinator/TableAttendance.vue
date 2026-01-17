@@ -32,6 +32,8 @@ import DialogDefault from '../global/DialogDefault.vue';
 import FormAddTeam from '../form/FormAddTeam.vue';
 import FormFieldAddress from '../form/FormFieldAddress.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
+import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormMoveMember from '../form/FormMoveMember.vue';
 
 // adapters
@@ -84,6 +86,8 @@ export default defineComponent({
     FormAddTeam,
     FormFieldAddress,
     FormFieldTextRequired,
+    FormFieldPhone,
+    FormFieldEmail,
     FormMoveMember,
   },
   setup() {
@@ -479,6 +483,7 @@ export default defineComponent({
           >
             <span>{{ subsidiaryData.subsidiary?.name }}</span>
           </h3>
+          <!-- Info: Subsidiary -->
           <div class="flex flex-wrap gap-y-8 gap-x-32">
             <div data-cy="table-attendance-city-challenge">
               {{ $t('coordinator.labelCityChallenge') }}:
@@ -505,6 +510,49 @@ export default defineComponent({
                     .length,
                 )
               }}
+            </div>
+          </div>
+          <!-- Info: Subsidiary contact -->
+          <div
+            v-if="
+              subsidiaryData.subsidiary?.box_addressee_name ||
+              subsidiaryData.subsidiary?.box_addressee_telephone ||
+              subsidiaryData.subsidiary?.box_addressee_email
+            "
+            class="flex flex-wrap gap-y-8 gap-x-32 q-mt-xs"
+            data-cy="table-attendance-box-addressee"
+          >
+            <div>
+              {{ $t('coordinator.labelBoxAddressee') }}:
+              {{ subsidiaryData.subsidiary.box_addressee_name }}
+            </div>
+            <div v-if="subsidiaryData.subsidiary.box_addressee_telephone">
+              <a
+                class="text-grey-10"
+                :href="`tel:${subsidiaryData.subsidiary.box_addressee_telephone.replace(/\s/g, '')}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#phone"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ subsidiaryData.subsidiary.box_addressee_telephone }}
+              </a>
+            </div>
+            <div v-if="subsidiaryData.subsidiary.box_addressee_email">
+              <a
+                class="text-grey-10"
+                :href="`mailto:${subsidiaryData.subsidiary.box_addressee_email}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#email"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ subsidiaryData.subsidiary.box_addressee_email }}
+              </a>
             </div>
           </div>
         </div>
@@ -1006,6 +1054,33 @@ export default defineComponent({
             v-model:zip="subsidiaryEditAddress.zip"
             field-prefix="subsidiary"
           />
+          <!-- Box Addressee Fields -->
+          <div class="q-mt-lg">
+            <h4 class="text-subtitle2 q-mb-md">
+              {{ $t('form.labelBoxAddressee') }}
+            </h4>
+            <div class="row q-col-gutter-lg">
+              <div class="col-12">
+                <form-field-text-required
+                  v-model="subsidiaryEditAddress.boxAddresseeName"
+                  :label="$t('form.labelBoxAddresseeName')"
+                  name="box-addressee-name"
+                  data-cy="form-subsidiary-box-addressee-name"
+                />
+              </div>
+              <!-- FormFieldPhone and FormFieldEmail already have col-12 col-sm-6 wrapper -->
+              <form-field-phone
+                v-model="subsidiaryEditAddress.boxAddresseeTelephone"
+                :label="'form.labelBoxAddresseeTelephone'"
+                data-cy="form-subsidiary-box-addressee-telephone"
+              />
+              <form-field-email
+                v-model="subsidiaryEditAddress.boxAddresseeEmail"
+                :label="'form.labelBoxAddresseeEmail'"
+                data-cy="form-subsidiary-box-addressee-email"
+              />
+            </div>
+          </div>
           <!-- Hidden submit button enables Enter key to submit -->
           <q-btn type="submit" class="hidden" />
         </q-form>

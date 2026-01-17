@@ -39,6 +39,13 @@ export interface SubsidiaryPutApiResponse {
   address: SubsidiaryPostApiAddress;
 }
 
+export interface SubsidiaryPutApiPayload {
+  address: SubsidiaryPostApiAddress;
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
+}
+
 export interface SubsidiaryPostApiPayload {
   address: SubsidiaryPostApiAddress;
   city_id: number | null;

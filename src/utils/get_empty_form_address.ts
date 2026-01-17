@@ -11,4 +11,7 @@ export const getEmptyFormAddress = (): FormCompanyAddressFields => ({
   zip: '',
   cityChallenge: null,
   department: '',
+  boxAddresseeName: '',
+  boxAddresseeTelephone: '',
+  boxAddresseeEmail: '',
 });
