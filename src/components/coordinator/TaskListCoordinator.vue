@@ -25,7 +25,14 @@ import { i18n } from '../../boot/i18n';
 import type { TaskCoordinator } from '../types/Task';
 import type { Logger } from '../types/Logger';
 
-const getTasksData = async () => {
+interface TasksData {
+  [id: string]: string;
+  [date: string]: string;
+  [title: string]: string;
+  [body: string]: string;
+}
+
+const getTasksData = async (): TasksData => {
   const localesFiles = await import.meta.glob(
     './../../data/coordinator_tasks/[A-Za-z0-9-_,s]+.toml',
     {
