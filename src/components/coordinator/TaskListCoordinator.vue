@@ -16,16 +16,38 @@
  */
 
 // libraries
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, inject, ref, watch } from 'vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
 
 // types
 import type { TaskCoordinator } from '../types/Task';
+import type { Logger } from '../types/Logger';
 
-// data
-import coordinatorTasks from '../../data/coordinatorTasks.json';
+const getTasksData = async () => {
+  const localesFiles = await import.meta.glob(
+    './../../data/coordinator_tasks/[A-Za-z0-9-_,s]+.toml',
+    {
+      eager: true,
+    },
+  );
+  let tasks = {};
+  for (const localeFile of Object.keys(localesFiles)) {
+    const matched = localeFile.match(/([a-z0-9-_]+)\./i);
+    if (matched && matched.length > 1) {
+      const locale = matched[1];
+      // Dynamic import TOML translation file content
+      if (locale === i18n.global.locale) {
+        await localesFiles[localeFile]().then((content) => {
+          tasks[locale] = content.default;
+        });
+        break;
+      }
+    }
+  }
+  return tasks[i18n.global.locale]['tasks'];
+};
 
 export default defineComponent({
   name: 'TaskListCoordinator',
@@ -33,13 +55,26 @@ export default defineComponent({
     tasks: {
       type: Object as () => TaskCoordinator[],
       required: false,
-      default: () => coordinatorTasks,
+      default: await getTasksData(),
     },
   },
   setup(props) {
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const actualTasks = ref(props.tasks);
     const { chevronIcon, isShownPast, taskListFuture, taskListPast } =
       useTaskList();
 
+    // If locale lang is changed, we need reload tasks data
+    watch(
+      () => i18n.global.locale,
+      async (newVal) => {
+        logger?.info(
+          `Locale lang is changed to <${newVal}>, reload organization` +
+            ' coordinator tasks data.',
+        );
+        actualTasks.value = await getTasksData();
+      },
+    );
     return {
       chevronIcon,
       isShownPast,
@@ -63,13 +98,13 @@ export default defineComponent({
        * task of each month.
        */
       const taskList = computed((): TaskCoordinator[] => {
-        if (!props.tasks) {
+        if (!actualTasks.value) {
           return [];
         }
 
         const tasks: TaskCoordinator[] = [];
         let month = '';
-        props.tasks.forEach((task: TaskCoordinator) => {
+        actualTasks.value.forEach((task: TaskCoordinator) => {
           const taskMonth = i18n.global.d(new Date(task.date), 'monthYear');
           // if a new month, push month into the task
           if (taskMonth !== month) {

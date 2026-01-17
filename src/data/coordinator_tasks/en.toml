@@ -1,0 +1,83 @@
+[[tasks]]
+id = "0001"
+date = "2026-02-01T20:00"
+title = "start of registrations - check the  correctness of the subsidiaries data"
+body = ""
+
+[[tasks]]
+id = "0002"
+date = "2026-02-28T20:00"
+title = "end of the wave - approve payments and rewards to colleagues"
+body = "they will receive the package among the first"
+
+[[tasks]]
+id = "0003"
+date = "2026-03-31T20:00"
+title = "end of the wave - approve payments and rewards to colleagues"
+body = ""
+
+[[tasks]]
+id = "0004"
+date = "2026-04-15T20:00"
+title = "end of the wave - approve payments and rewards to colleagues"
+body = ""
+
+[[tasks]]
+id = "0005"
+date = "2026-04-30T20:00"
+title = "end of regular registrations"
+body = ""
+
+[[tasks]]
+id = "0006"
+date = "2026-05-01T20:00"
+title = "May Challenge begins!"
+body = "ride, run, walk and record your journeys"
+
+[[tasks]]
+id = "0007"
+date = "2026-05-01T20:00"
+title = "additional registration (/1-5/7)"
+body = "rewards collection option limited according to stock"
+
+[[tasks]]
+id = "0008"
+date = "2026-05-31T20:00"
+title = "fill in the Cyklozametnavale questionnaire"
+body = "invite colleagues to fill it out and strive for the Cyklozametnavale award in your city"
+
+[[tasks]]
+id = "0009"
+date = "2026-05-31T20:00"
+title = "last day of the May challenge"
+body = ""
+
+[[tasks]]
+id = "0010"
+date = "2026-06-03T20:00"
+title = "end of journey registration"
+body = "after this date it will not be possible to record or edit rides"
+
+[[tasks]]
+id = "0011"
+date = "2026-06-03T20:00"
+title = "announcement of results, final parties"
+body = "nationwide and for your city and company"
+
+[[tasks]]
+id = "0012"
+date = "2026-06-15T20:00"
+title = "fill in the final questionnaire"
+body = "thank you for your feedback"
+
+[[tasks]]
+id = "0013"
+date = "2026-06-30T20:00"
+title = "fill in the Cykloměsto questionnaire and nominate your city"
+body = ""
+
+[[tasks]]
+id = "0014"
+date = "2026-06-30T20:00"
+title = "generating and paying invoices for the May Challenge"
+point = ""

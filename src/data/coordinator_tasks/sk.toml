@@ -1,0 +1,83 @@
+[[tasks]]
+id = "0001"
+date = "2026-02-01T20:00"
+title = "začiatok registrácií - skontrolujte správnosť údajov pri pobočkách"
+body = ""
+
+[[tasks]]
+id = "0002"
+date = "2026-02-28T20:00"
+title = "koniec vlny - schváľte platby a odmeny kolegom"
+body = "balíček dostanú medzi prvými"
+
+[[tasks]]
+id = "0003"
+date = "2026-03-31T20:00"
+title = "koniec vlny - schváľte platby a odmeny kolegom"
+body = ""
+
+[[tasks]]
+id = "0004"
+date = "2026-04-15T20:00"
+title = "koniec vlny - schváľte platby a odmeny kolegom"
+body = ""
+
+[[tasks]]
+id = "0005"
+date = "2026-04-30T20:00"
+title = "koniec riadnych registrácií"
+body = ""
+
+[[tasks]]
+id = "0006"
+date = "2026-05-01T20:00"
+title = "začína Májová výzva!"
+body = "jazdite, behajte choďte a zapisujte cesty"
+
+[[tasks]]
+id = "0007"
+date = "2026-05-01T20:00"
+title = "dodatočná registrácia (1.-7.5.)"
+body = "možnosť výberu odmien obmedzená podľa skladových zásob"
+
+[[tasks]]
+id = "0008"
+date = "2026-05-31T20:00"
+title = "vyplňte dotazník Cyklozamestnávateľa"
+body = "vyzvite kolegov na vyplnenie a usilujte sa o ocenenie Cyklozamestnávateľa vo vašom meste"
+
+[[tasks]]
+id = "0009"
+date = "2026-05-31T20:00"
+title = "posledný deň Májové výzvy"
+body = ""
+
+[[tasks]]
+id = "0010"
+date = "2026-06-03T20:00"
+title = "koniec zápisu ciest"
+body = "po tomto dátume nebude možné listovať jazdy ani ich upravovať"
+
+[[tasks]]
+id = "0011"
+date = "2026-06-03T20:00"
+title = "vyhlásenie výsledkov, záverečné večierky"
+body = "celorepublikové aj za vaše mesto a spoločnosť"
+
+[[tasks]]
+id = "0012"
+date = "2026-06-15T20:00"
+title = "vyplňte záverečný dotazník"
+body = "ďakujeme za vašu spätnú väzbu"
+
+[[tasks]]
+id = "0013"
+date = "2026-06-30T20:00"
+title = "vyplňte dotazník Cyklomesto a nominujte vaše mesto"
+body = ""
+
+[[tasks]]
+id = "0014"
+date = "2026-06-30T20:00"
+title = "generovanie a úhrada faktúr za Májovú výzvu"
+body = ""
