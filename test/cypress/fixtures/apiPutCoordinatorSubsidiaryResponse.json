@@ -1,0 +1,12 @@
+{
+  "box_addressee_name": null,
+  "box_addressee_telephone": null,
+  "box_addressee_email": null,
+  "address": {
+    "street": "Nová ulice",
+    "street_number": "123",
+    "recipient": "",
+    "psc": 16000,
+    "city": "Praha"
+  }
+}

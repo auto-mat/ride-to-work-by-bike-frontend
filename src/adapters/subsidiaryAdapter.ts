@@ -4,8 +4,10 @@ import type {
   SubsidiaryPostApiPayload,
   SubsidiaryPostApiResponse,
   SubsidiaryApi,
+  SubsidiaryPutApiPayload,
 } from '../components/types/ApiSubsidiary';
 import type { OrganizationSubsidiary } from '../components/types/Organization';
+import type { AdminSubsidiary } from '../components/types/AdminOrganisation';
 
 /**
  * Adapter for converting between API and form subsidiary data formats
@@ -39,6 +41,9 @@ export const subsidiaryAdapter = {
       zip: String(apiData.address.psc),
       cityChallenge: apiData.city_id,
       department: apiData.address.recipient,
+      boxAddresseeName: '',
+      boxAddresseeTelephone: '',
+      boxAddresseeEmail: '',
     };
   },
 
@@ -57,6 +62,9 @@ export const subsidiaryAdapter = {
         zip: String(apiData.address.psc),
         cityChallenge: null,
         department: apiData.address.recipient,
+        boxAddresseeName: '',
+        boxAddresseeTelephone: '',
+        boxAddresseeEmail: '',
       },
     };
   },
@@ -82,5 +90,51 @@ export const subsidiaryAdapter = {
     ].filter(Boolean);
 
     return parts.join(', ');
+  },
+
+  /**
+   * Convert subsidiary from organization structure API to form data
+   * @param {AdminSubsidiary} apiSubsidiary - Subsidiary from API
+   * @returns {FormCompanyAddressFields} - Form data format
+   */
+  fromApiAddressToFormData(
+    apiSubsidiary: AdminSubsidiary,
+  ): FormCompanyAddressFields {
+    return {
+      street: apiSubsidiary.street,
+      houseNumber: apiSubsidiary.street_number
+        ? String(apiSubsidiary.street_number)
+        : '',
+      city: apiSubsidiary.city,
+      zip: apiSubsidiary.psc ? String(apiSubsidiary.psc) : '',
+      cityChallenge: null,
+      department: '',
+      boxAddresseeName: apiSubsidiary.box_addressee_name || '',
+      boxAddresseeTelephone: apiSubsidiary.box_addressee_telephone || '',
+      boxAddresseeEmail: apiSubsidiary.box_addressee_email || '',
+    };
+  },
+
+  /**
+   * Convert form data to API PUT payload for subsidiary update
+   * Used for updating subsidiary address by coordinator (admin)
+   * @param {FormCompanyAddressFields} formData - Form data
+   * @returns {SubsidiaryPutApiPayload} - API payload format
+   */
+  fromFormDataToApiPayloadUpdate(
+    formData: FormCompanyAddressFields,
+  ): SubsidiaryPutApiPayload {
+    return {
+      address: {
+        street: formData.street,
+        street_number: formData.houseNumber,
+        recipient: formData.department || '',
+        city: formData.city,
+        psc: formData.zip,
+      },
+      box_addressee_name: formData.boxAddresseeName || null,
+      box_addressee_telephone: formData.boxAddresseeTelephone || null,
+      box_addressee_email: formData.boxAddresseeEmail || null,
+    };
   },
 };

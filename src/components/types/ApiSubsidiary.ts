@@ -25,6 +25,27 @@ export interface SubsidiaryPostApiAddress {
   psc: string | number;
 }
 
+export interface SubsidiaryAddressApi {
+  street: string;
+  street_number: number;
+  city: string;
+  psc: number;
+}
+
+export interface SubsidiaryPutApiResponse {
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
+  address: SubsidiaryPostApiAddress;
+}
+
+export interface SubsidiaryPutApiPayload {
+  address: SubsidiaryPostApiAddress;
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
+}
+
 export interface SubsidiaryPostApiPayload {
   address: SubsidiaryPostApiAddress;
   city_id: number | null;

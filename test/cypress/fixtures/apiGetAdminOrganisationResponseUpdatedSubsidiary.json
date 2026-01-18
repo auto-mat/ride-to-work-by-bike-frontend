@@ -13,11 +13,11 @@
       "subsidiaries": [
         {
           "id": 3001,
-          "name": "Pivovarská 456, 15000 Brno",
-          "psc": 15000,
-          "street": "Pivovarská",
-          "street_number": 456,
-          "city": "Brno",
+          "name": "Nová ulice 123, 16000 Praha",
+          "psc": 16000,
+          "street": "Nová ulice",
+          "street_number": 123,
+          "city": "Praha",
           "icon_url": null,
           "teams": [
             {

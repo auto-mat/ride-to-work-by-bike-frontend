@@ -60,6 +60,9 @@ export interface AdminSubsidiary {
   icon_url: string | null;
   teams: AdminTeam[];
   boxes?: Box[];
+  box_addressee_name: string | null;
+  box_addressee_telephone: string | null;
+  box_addressee_email: string | null;
 }
 
 export interface AdminOrganisation {

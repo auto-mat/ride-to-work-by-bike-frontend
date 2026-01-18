@@ -130,9 +130,9 @@
               "other_members": []
             }
           ],
-          "box_addressee_name": "Jan Novák",
-          "box_addressee_telephone": "420123456789",
-          "box_addressee_email": "jan.novak@moravske-pivovary.cz",
+          "box_addressee_name": "Marie Svobodová",
+          "box_addressee_telephone": "420987654321",
+          "box_addressee_email": "marie@example.com",
           "boxes": [
             {
               "dispatched": false,

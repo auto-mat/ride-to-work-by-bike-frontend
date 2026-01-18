@@ -30,8 +30,18 @@ import {
 // components
 import DialogDefault from '../global/DialogDefault.vue';
 import FormAddTeam from '../form/FormAddTeam.vue';
+import FormFieldAddress from '../form/FormFieldAddress.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
+import FormFieldPhone from '../global/FormFieldPhone.vue';
+import FormFieldEmail from '../global/FormFieldEmail.vue';
 import FormMoveMember from '../form/FormMoveMember.vue';
+
+// adapters
+import { subsidiaryAdapter } from '../../adapters/subsidiaryAdapter';
+
+// utils
+import { deepObjectWithSimplePropsCopy } from '../../utils';
+import { getEmptyFormAddress } from '../../utils/get_empty_form_address';
 
 // composables
 import {
@@ -61,15 +71,23 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
 // types
-import type { FormTeamFields, FormMoveMemberFields } from '../types/Form';
+import type {
+  FormTeamFields,
+  FormMoveMemberFields,
+  FormCompanyAddressFields,
+} from '../types/Form';
 import type { TableAttendanceRow } from '../../composables/useTableAttendanceData';
+import type { AdminSubsidiary } from '../types/AdminOrganisation';
 
 export default defineComponent({
   name: 'TableAttendance',
   components: {
     DialogDefault,
     FormAddTeam,
+    FormFieldAddress,
     FormFieldTextRequired,
+    FormFieldPhone,
+    FormFieldEmail,
     FormMoveMember,
   },
   setup() {
@@ -319,6 +337,58 @@ export default defineComponent({
       }
     };
 
+    // edit subsidiary state and methods
+    const subsidiaryToEdit = ref<AdminSubsidiary | null>(null);
+    const isEditSubsidiaryDialogOpen = ref<boolean>(false);
+    const subsidiaryEditFormRef = ref<QForm | null>(null);
+    const subsidiaryEditAddress = ref<FormCompanyAddressFields>(
+      deepObjectWithSimplePropsCopy(
+        getEmptyFormAddress(),
+      ) as FormCompanyAddressFields,
+    );
+
+    const isLoadingUpdateSubsidiary = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingUpdateSubsidiary,
+    );
+
+    const onOpenEditSubsidiaryDialog = (subsidiary: AdminSubsidiary): void => {
+      subsidiaryToEdit.value = subsidiary;
+      subsidiaryEditAddress.value = deepObjectWithSimplePropsCopy(
+        subsidiaryAdapter.fromApiAddressToFormData(subsidiary),
+      ) as FormCompanyAddressFields;
+      isEditSubsidiaryDialogOpen.value = true;
+    };
+
+    const onCloseEditSubsidiaryDialog = (): void => {
+      if (subsidiaryEditFormRef.value) {
+        subsidiaryEditFormRef.value.reset();
+      }
+      subsidiaryToEdit.value = null;
+      subsidiaryEditAddress.value = deepObjectWithSimplePropsCopy(
+        getEmptyFormAddress(),
+      ) as FormCompanyAddressFields;
+      isEditSubsidiaryDialogOpen.value = false;
+    };
+
+    const onSubmitEditSubsidiary = async (): Promise<void> => {
+      if (subsidiaryEditFormRef.value && subsidiaryToEdit.value !== null) {
+        const isFormValid: boolean =
+          await subsidiaryEditFormRef.value.validate();
+
+        if (isFormValid) {
+          await adminOrganisationStore.updateSubsidiary(
+            subsidiaryToEdit.value.id,
+            subsidiaryEditAddress.value,
+          );
+          onCloseEditSubsidiaryDialog();
+        } else {
+          subsidiaryEditFormRef.value.$el.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }
+      }
+    };
+
     /**
      * Teams list is used to display empty team rows in the table.
      * If team does not have data (members), it will be displayed
@@ -383,6 +453,14 @@ export default defineComponent({
       onSubmitEditTeam,
       teamToEdit,
       teamEditName,
+      isEditSubsidiaryDialogOpen,
+      isLoadingUpdateSubsidiary,
+      onOpenEditSubsidiaryDialog,
+      onCloseEditSubsidiaryDialog,
+      onSubmitEditSubsidiary,
+      subsidiaryToEdit,
+      subsidiaryEditAddress,
+      subsidiaryEditFormRef,
     };
   },
 });
@@ -397,33 +475,105 @@ export default defineComponent({
       :class="{ 'q-mt-xl': index > 0 }"
     >
       <!-- Subsidiary header -->
-      <h3 class="text-h6 q-mb-xs" data-cy="table-attendance-subsidiary-header">
-        {{ subsidiaryData.subsidiary?.name }}
-      </h3>
-      <div class="flex flex-wrap gap-y-8 gap-x-32 q-mb-lg">
-        <div data-cy="table-attendance-city-challenge">
-          {{ $t('coordinator.labelCityChallenge') }}:
-          {{ subsidiaryData.subsidiary?.city }}
+      <div class="row q-col-gutter-md q-mb-lg">
+        <div class="col-sm">
+          <h3
+            class="text-h6 q-my-none flex items-center gap-8"
+            data-cy="table-attendance-subsidiary-header"
+          >
+            <span>{{ subsidiaryData.subsidiary?.name }}</span>
+          </h3>
+          <!-- Info: Subsidiary -->
+          <div class="flex flex-wrap gap-y-8 gap-x-32">
+            <div data-cy="table-attendance-city-challenge">
+              {{ $t('coordinator.labelCityChallenge') }}:
+              {{ subsidiaryData.subsidiary?.city }}
+            </div>
+            <div data-cy="table-attendance-teams">
+              {{ subsidiaryData.subsidiary?.teams?.length }}
+              {{
+                $t(
+                  'coordinator.labelTeams',
+                  subsidiaryData.subsidiary?.teams?.length,
+                )
+              }}
+            </div>
+            <div data-cy="table-attendance-members">
+              {{
+                subsidiaryData.members.filter((member) => !member.isEmpty)
+                  .length
+              }}
+              {{
+                $t(
+                  'coordinator.labelMembers',
+                  subsidiaryData.members.filter((member) => !member.isEmpty)
+                    .length,
+                )
+              }}
+            </div>
+          </div>
+          <!-- Info: Subsidiary contact -->
+          <div
+            v-if="
+              subsidiaryData.subsidiary?.box_addressee_name ||
+              subsidiaryData.subsidiary?.box_addressee_telephone ||
+              subsidiaryData.subsidiary?.box_addressee_email
+            "
+            class="flex flex-wrap gap-y-8 gap-x-32 q-mt-xs"
+            data-cy="table-attendance-box-addressee"
+          >
+            <div>
+              {{ $t('coordinator.labelBoxAddressee') }}:
+              {{ subsidiaryData.subsidiary.box_addressee_name }}
+            </div>
+            <div v-if="subsidiaryData.subsidiary.box_addressee_telephone">
+              <a
+                class="text-grey-10"
+                :href="`tel:${subsidiaryData.subsidiary.box_addressee_telephone.replace(/\s/g, '')}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#phone"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ subsidiaryData.subsidiary.box_addressee_telephone }}
+              </a>
+            </div>
+            <div v-if="subsidiaryData.subsidiary.box_addressee_email">
+              <a
+                class="text-grey-10"
+                :href="`mailto:${subsidiaryData.subsidiary.box_addressee_email}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#email"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ subsidiaryData.subsidiary.box_addressee_email }}
+              </a>
+            </div>
+          </div>
         </div>
-        <div data-cy="table-attendance-teams">
-          {{ subsidiaryData.subsidiary?.teams?.length }}
-          {{
-            $t(
-              'coordinator.labelTeams',
-              subsidiaryData.subsidiary?.teams?.length,
-            )
-          }}
-        </div>
-        <div data-cy="table-attendance-members">
-          {{
-            subsidiaryData.members.filter((member) => !member.isEmpty).length
-          }}
-          {{
-            $t(
-              'coordinator.labelMembers',
-              subsidiaryData.members.filter((member) => !member.isEmpty).length,
-            )
-          }}
+        <div class="col-sm-auto">
+          <!-- Button: Edit subsidiary address -->
+          <q-btn
+            outline
+            unelevated
+            rounded
+            color="primary"
+            :disable="isLoadingUpdateSubsidiary"
+            :loading="
+              isLoadingUpdateSubsidiary &&
+              subsidiaryToEdit?.id === subsidiaryData.subsidiary.id
+            "
+            @click="onOpenEditSubsidiaryDialog(subsidiaryData.subsidiary)"
+            data-cy="table-attendance-button-edit-subsidiary"
+          >
+            <q-icon size="18px" name="edit" class="q-mr-xs" />
+            {{ $t('navigation.edit') }}
+          </q-btn>
         </div>
       </div>
 
@@ -868,6 +1018,96 @@ export default defineComponent({
               data-cy="dialog-button-submit"
             >
               {{ $t('coordinator.editTeam') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
+
+    <!-- Dialog: Edit Subsidiary Address -->
+    <dialog-default
+      v-model="isEditSubsidiaryDialogOpen"
+      data-cy="dialog-edit-subsidiary"
+    >
+      <template #title>
+        {{ $t('coordinator.editSubsidiary') }}
+      </template>
+      <template #content>
+        <!-- Current subsidiary info -->
+        <div class="q-mb-md">
+          <label class="text-grey-10 text-caption text-bold">
+            {{ $t('form.labelSubsidiaryName') }}
+          </label>
+          <p class="q-mt-sm" data-cy="form-edit-subsidiary-name">
+            {{ subsidiaryToEdit?.name }}
+          </p>
+        </div>
+        <!-- Form: Address -->
+        <q-form
+          ref="subsidiaryEditFormRef"
+          @submit.prevent="onSubmitEditSubsidiary"
+        >
+          <form-field-address
+            v-model:street="subsidiaryEditAddress.street"
+            v-model:house-number="subsidiaryEditAddress.houseNumber"
+            v-model:city="subsidiaryEditAddress.city"
+            v-model:zip="subsidiaryEditAddress.zip"
+            field-prefix="subsidiary"
+          />
+          <!-- Box Addressee Fields -->
+          <div class="q-mt-lg">
+            <h4 class="text-subtitle2 q-mb-md">
+              {{ $t('form.labelBoxAddressee') }}
+            </h4>
+            <div class="row q-col-gutter-lg">
+              <div class="col-12">
+                <form-field-text-required
+                  v-model="subsidiaryEditAddress.boxAddresseeName"
+                  :label="$t('form.labelBoxAddresseeName')"
+                  name="box-addressee-name"
+                  data-cy="form-subsidiary-box-addressee-name"
+                />
+              </div>
+              <!-- FormFieldPhone and FormFieldEmail already have col-12 col-sm-6 wrapper -->
+              <form-field-phone
+                v-model="subsidiaryEditAddress.boxAddresseeTelephone"
+                :label="'form.labelBoxAddresseeTelephone'"
+                data-cy="form-subsidiary-box-addressee-telephone"
+              />
+              <form-field-email
+                v-model="subsidiaryEditAddress.boxAddresseeEmail"
+                :label="'form.labelBoxAddresseeEmail'"
+                data-cy="form-subsidiary-box-addressee-email"
+              />
+            </div>
+          </div>
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
+        </q-form>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-lg">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              @click="onCloseEditSubsidiaryDialog"
+              :disable="isLoadingUpdateSubsidiary"
+              data-cy="dialog-button-cancel"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              :loading="isLoadingUpdateSubsidiary"
+              :disable="isLoadingUpdateSubsidiary"
+              @click="onSubmitEditSubsidiary"
+              data-cy="dialog-button-submit"
+            >
+              {{ $t('coordinator.editSubsidiary') }}
             </q-btn>
           </div>
         </div>

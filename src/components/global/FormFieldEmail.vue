@@ -78,6 +78,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    label: {
+      type: String,
+      default: 'form.labelEmail',
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -110,7 +114,7 @@ export default defineComponent({
   <div class="col-12 col-sm-6" data-cy="form-email">
     <!-- Label -->
     <label v-if="!hideLabel" for="form-email" class="text-caption text-bold">
-      {{ $t('form.labelEmail') }}
+      {{ $t(label) }}
     </label>
     <!-- Input -->
     <q-input
@@ -126,7 +130,7 @@ export default defineComponent({
           !required ||
           isFilled(val) ||
           $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelEmail'),
+            fieldName: $t(label),
           }),
         (val) => !val || isEmail(val) || $t('form.messageEmailInvalid'),
       ]"

@@ -2,6 +2,11 @@ import { routesConf } from '../../../src/router/routes_conf';
 import { systemTimeChallengeActive } from '../support/commonTests';
 
 const teamName = 'Team 1';
+const newSubsidiaryAddressee = {
+  box_addressee_name: 'Marie Svobodová',
+  box_addressee_telephone: '420987654321',
+  box_addressee_email: 'marie@example.com',
+};
 
 describe('Company coordinator user attendance page', () => {
   context('previewing user attendance', () => {
@@ -423,6 +428,431 @@ describe('Company coordinator user attendance page', () => {
             },
           );
         });
+      });
+    });
+
+    it('allows to edit subsidiary address', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              const subsidiary = response.results[0].subsidiaries[0];
+              const subsidiaryId = subsidiary.id;
+              const subsidiaryName = subsidiary.name;
+              // verify subsidiary header and edit button exist
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .should('be.visible');
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .should('be.visible')
+                .and('contain', i18n.global.t('navigation.edit'));
+              // intercept APIs
+              cy.interceptCoordinatorSubsidiaryPutApi(
+                config,
+                i18n,
+                subsidiaryId,
+              );
+              cy.interceptAdminOrganisationGetApi(
+                config,
+                'apiGetAdminOrganisationResponseUpdatedSubsidiary.json',
+              );
+              // click edit button
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .click();
+              // verify edit dialog
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+              cy.dataCy('form-edit-subsidiary-name').should(
+                'contain',
+                subsidiaryName,
+              );
+              // verify fields are prefilled with existing data
+              cy.dataCy('form-subsidiary-street')
+                .find('input')
+                .should('have.value', subsidiary.street);
+              cy.dataCy('form-subsidiary-house-number')
+                .find('input')
+                .should('have.value', String(subsidiary.street_number));
+              cy.dataCy('form-subsidiary-city')
+                .find('input')
+                .should('have.value', subsidiary.city);
+              cy.dataCy('form-subsidiary-zip')
+                .find('input')
+                .invoke('val')
+                .then((zip) => {
+                  expect(zip.replace(/\s+/g, '')).to.equal(
+                    String(subsidiary.psc),
+                  );
+                });
+              // verify box addressee fields are prefilled
+              cy.dataCy('form-subsidiary-box-addressee-name')
+                .find('input')
+                .should('have.value', subsidiary.box_addressee_name);
+              cy.dataCy('form-subsidiary-box-addressee-telephone')
+                .find('input')
+                .should('have.value', subsidiary.box_addressee_telephone);
+              cy.dataCy('form-subsidiary-box-addressee-email')
+                .find('input')
+                .should('have.value', subsidiary.box_addressee_email);
+              // edit address fields
+              cy.dataCy('form-subsidiary-street').find('input').clear();
+              cy.dataCy('form-subsidiary-street')
+                .find('input')
+                .type('Nová ulice');
+              cy.dataCy('form-subsidiary-house-number').find('input').clear();
+              cy.dataCy('form-subsidiary-house-number')
+                .find('input')
+                .type('123');
+              cy.dataCy('form-subsidiary-city').find('input').clear();
+              cy.dataCy('form-subsidiary-city').find('input').type('Praha');
+              cy.dataCy('form-subsidiary-zip').find('input').clear();
+              cy.dataCy('form-subsidiary-zip').find('input').type('16000');
+              // submit
+              cy.dataCy('dialog-button-submit').click();
+              // await PUT and GET
+              cy.waitForCoordinatorSubsidiaryPutApi({
+                address: {
+                  street: 'Nová ulice',
+                  street_number: '123',
+                  recipient: '',
+                  city: 'Praha',
+                  psc: '16000',
+                },
+                box_addressee_name: subsidiary.box_addressee_name,
+                box_addressee_telephone: subsidiary.box_addressee_telephone,
+                box_addressee_email: subsidiary.box_addressee_email,
+              });
+              cy.waitForAdminOrganisationGetApi(
+                'apiGetAdminOrganisationResponseUpdatedSubsidiary.json',
+              );
+              cy.get('@getAdminOrganisation.all').should('have.length', 2);
+              // verify dialog is closed
+              cy.dataCy('dialog-edit-subsidiary').should('not.exist');
+            },
+          );
+        });
+      });
+    });
+
+    it('validates required fields when editing subsidiary address', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              const subsidiary = response.results[0].subsidiaries[0];
+              const subsidiaryId = subsidiary.id;
+              const subsidiaryName = subsidiary.name;
+              // intercept API (should not be called)
+              cy.interceptCoordinatorSubsidiaryPutApi(
+                config,
+                i18n,
+                subsidiaryId,
+              );
+              // click edit button
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .click();
+              // verify edit dialog
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+              // clear all required fields
+              cy.dataCy('form-subsidiary-street').find('input').clear();
+              cy.dataCy('form-subsidiary-house-number').find('input').clear();
+              cy.dataCy('form-subsidiary-city').find('input').clear();
+              cy.dataCy('form-subsidiary-zip').find('input').clear();
+              cy.dataCy('form-subsidiary-box-addressee-name')
+                .find('input')
+                .clear();
+              cy.dataCy('form-subsidiary-box-addressee-telephone')
+                .find('input')
+                .clear();
+              cy.dataCy('form-subsidiary-box-addressee-email')
+                .find('input')
+                .clear();
+              // try to submit
+              cy.dataCy('dialog-button-submit').click();
+              // verify validation errors
+              cy.dataCy('form-subsidiary-street').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelStreet'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-house-number').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelHouseNumber'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-city').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelCity'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-zip').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelZip'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-box-addressee-name').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelBoxAddresseeName'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-box-addressee-telephone').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelPhone'),
+                }),
+              );
+              cy.dataCy('form-subsidiary-box-addressee-email').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelBoxAddresseeEmail'),
+                }),
+              );
+              // verify no API call was made
+              cy.get('@putCoordinatorSubsidiary.all').should('have.length', 0);
+              // verify dialog is still open
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+              // test invalid ZIP format
+              cy.dataCy('form-subsidiary-street')
+                .find('input')
+                .type('Test Street');
+              cy.dataCy('form-subsidiary-house-number')
+                .find('input')
+                .type('123');
+              cy.dataCy('form-subsidiary-city').find('input').type('Test City');
+              cy.dataCy('form-subsidiary-zip').find('input').type('123'); // invalid ZIP
+              cy.dataCy('form-subsidiary-box-addressee-name')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_name);
+              cy.dataCy('form-subsidiary-box-addressee-telephone')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_telephone);
+              cy.dataCy('form-subsidiary-box-addressee-email')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_email);
+              // try to submit
+              cy.dataCy('dialog-button-submit').click();
+              // verify ZIP validation error
+              cy.dataCy('form-subsidiary-zip').should(
+                'contain',
+                i18n.global.t('form.messageZipInvalid'),
+              );
+              // verify no API call was made
+              cy.get('@putCoordinatorSubsidiary.all').should('have.length', 0);
+              // verify dialog is still open
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+            },
+          );
+        });
+      });
+    });
+
+    it('allows to cancel editing subsidiary address', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              const subsidiary = response.results[0].subsidiaries[0];
+              const subsidiaryId = subsidiary.id;
+              const subsidiaryName = subsidiary.name;
+              // intercept API (should not be called)
+              cy.interceptCoordinatorSubsidiaryPutApi(
+                config,
+                i18n,
+                subsidiaryId,
+              );
+              // click edit button
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .click();
+              // verify edit dialog
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+              // edit some fields
+              cy.dataCy('form-subsidiary-street').find('input').clear();
+              cy.dataCy('form-subsidiary-street')
+                .find('input')
+                .type('Changed Street');
+              cy.dataCy('form-subsidiary-city').find('input').clear();
+              cy.dataCy('form-subsidiary-city')
+                .find('input')
+                .type('Changed City');
+              // cancel
+              cy.dataCy('dialog-button-cancel').click();
+              // verify dialog is closed
+              cy.dataCy('dialog-edit-subsidiary').should('not.exist');
+              // verify no API call was made
+              cy.get('@putCoordinatorSubsidiary.all').should('have.length', 0);
+              // open dialog again to verify fields were reset
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .click();
+              // verify fields are back to original values
+              cy.dataCy('form-subsidiary-street')
+                .find('input')
+                .should('have.value', subsidiary.street);
+              cy.dataCy('form-subsidiary-city')
+                .find('input')
+                .should('have.value', subsidiary.city);
+            },
+          );
+        });
+      });
+    });
+
+    it('should update box addressee fields', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              const subsidiary = response.results[0].subsidiaries[0];
+              const subsidiaryId = subsidiary.id;
+              const subsidiaryName = subsidiary.name;
+              // intercept API
+              cy.interceptCoordinatorSubsidiaryPutApi(
+                config,
+                i18n,
+                subsidiaryId,
+              );
+              cy.interceptAdminOrganisationGetApi(
+                config,
+                'apiGetAdminOrganisationResponseUpdatedBoxAddressee.json',
+              );
+              // click edit button
+              cy.dataCy('table-attendance-subsidiary-header')
+                .contains(subsidiaryName)
+                .parents('.row')
+                .find('[data-cy="table-attendance-button-edit-subsidiary"]')
+                .click();
+              // verify edit dialog
+              cy.dataCy('dialog-edit-subsidiary').should('be.visible');
+              // edit box addressee fields
+              cy.dataCy('form-subsidiary-box-addressee-name')
+                .find('input')
+                .clear();
+              cy.dataCy('form-subsidiary-box-addressee-name')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_name);
+              cy.dataCy('form-subsidiary-box-addressee-telephone')
+                .find('input')
+                .clear();
+              cy.dataCy('form-subsidiary-box-addressee-telephone')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_telephone);
+              cy.dataCy('form-subsidiary-box-addressee-email')
+                .find('input')
+                .clear();
+              cy.dataCy('form-subsidiary-box-addressee-email')
+                .find('input')
+                .type(newSubsidiaryAddressee.box_addressee_email);
+              // submit
+              cy.dataCy('dialog-button-submit').click();
+              // await PUT and GET
+              cy.waitForCoordinatorSubsidiaryPutApi({
+                address: {
+                  street: subsidiary.street,
+                  street_number: String(subsidiary.street_number),
+                  recipient: '',
+                  city: subsidiary.city,
+                  psc: String(subsidiary.psc),
+                },
+                box_addressee_name: newSubsidiaryAddressee.box_addressee_name,
+                box_addressee_telephone:
+                  newSubsidiaryAddressee.box_addressee_telephone,
+                box_addressee_email: newSubsidiaryAddressee.box_addressee_email,
+              });
+              cy.waitForAdminOrganisationGetApi(
+                'apiGetAdminOrganisationResponseUpdatedBoxAddressee.json',
+              );
+              cy.get('@getAdminOrganisation.all').should('have.length', 2);
+              // verify dialog is closed
+              cy.dataCy('dialog-edit-subsidiary').should('not.exist');
+            },
+          );
+        });
+      });
+    });
+
+    it('should display box addressee info under subsidiary name', () => {
+      cy.visit(
+        '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+      );
+      cy.dataCy('header-organization').should('be.visible');
+      cy.waitForAdminOrganisationGetApi('apiGetAdminOrganisationResponse.json');
+      cy.get('@getAdminOrganisation.all').should('have.length', 1);
+      // verify box addressee display
+      cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
+        const subsidiary = response.results[0].subsidiaries[0];
+        cy.dataCy('table-attendance-box-addressee')
+          .should('be.visible')
+          .and('contain', subsidiary.box_addressee_name)
+          .and('contain', subsidiary.box_addressee_telephone)
+          .and('contain', subsidiary.box_addressee_email);
+        // verify phone link
+        cy.dataCy('table-attendance-box-addressee')
+          .find('a[href^="tel:"]')
+          .should(
+            'have.attr',
+            'href',
+            `tel:${subsidiary.box_addressee_telephone}`,
+          )
+          .and('contain', subsidiary.box_addressee_telephone);
+        // verify email link
+        cy.dataCy('table-attendance-box-addressee')
+          .find('a[href^="mailto:"]')
+          .should(
+            'have.attr',
+            'href',
+            `mailto:${subsidiary.box_addressee_email}`,
+          )
+          .and('contain', subsidiary.box_addressee_email);
       });
     });
   });

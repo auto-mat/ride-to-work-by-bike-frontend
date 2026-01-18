@@ -651,3 +651,56 @@ Cypress.Commands.add('waitForCoordinatorTeamPutApi', (requestData) => {
     });
   });
 });
+
+/**
+ * Intercept coordinator subsidiary PUT API call
+ * Provides `@putCoordinatorSubsidiary` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {number} subsidiaryId - Subsidiary ID to update
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorSubsidiaryPutApi',
+  (config, i18n, subsidiaryId) => {
+    const { apiBase, apiDefaultLang, urlApiCoordinatorSubsidiary } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiCoordinatorSubsidiaryPutLocalized = `${apiBaseUrl}${urlApiCoordinatorSubsidiary}${subsidiaryId}/`;
+
+    cy.fixture('apiPutCoordinatorSubsidiaryResponse').then(
+      (subsidiaryResponse) => {
+        cy.intercept('PUT', urlApiCoordinatorSubsidiaryPutLocalized, {
+          statusCode: httpSuccessfullStatus,
+          body: subsidiaryResponse,
+        }).as('putCoordinatorSubsidiary');
+      },
+    );
+  },
+);
+
+/**
+ * Wait for coordinator subsidiary PUT API call
+ * Wait for `@putCoordinatorSubsidiary` intercept
+ * @param {Object} requestData - Expected request data object
+ */
+Cypress.Commands.add('waitForCoordinatorSubsidiaryPutApi', (requestData) => {
+  cy.fixture('apiPutCoordinatorSubsidiaryResponse').then(
+    (subsidiaryResponse) => {
+      cy.wait('@putCoordinatorSubsidiary').then(({ request, response }) => {
+        // Verify authorization header
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        // Verify request body
+        expect(request.body).to.deep.equal(requestData);
+        // Verify response
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(subsidiaryResponse);
+        }
+      });
+    },
+  );
+});
