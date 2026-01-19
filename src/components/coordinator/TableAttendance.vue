@@ -368,15 +368,6 @@ export default defineComponent({
         value: city.id,
       })),
     );
-    // city ID directly bound to form field
-    const selectedCityId = computed<number | null>({
-      get() {
-        return subsidiaryEditAddress.value.cityChallenge;
-      },
-      set(id: number | null) {
-        subsidiaryEditAddress.value.cityChallenge = id;
-      },
-    });
 
     const onOpenEditSubsidiaryDialog = (subsidiary: AdminSubsidiary): void => {
       subsidiaryToEdit.value = subsidiary;
@@ -491,7 +482,6 @@ export default defineComponent({
       cities,
       isLoadingCities,
       cityOptions,
-      selectedCityId,
       isFilled,
     };
   },
@@ -1096,7 +1086,7 @@ export default defineComponent({
             </label>
             <q-select
               id="form-subsidiary-city-challenge"
-              v-model="selectedCityId"
+              v-model="subsidiaryEditAddress.cityChallenge"
               :options="cityOptions"
               :loading="isLoadingCities"
               dense
