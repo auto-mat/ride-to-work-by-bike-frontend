@@ -1108,7 +1108,7 @@ export default defineComponent({
                 (val) => isFilled(val) || $t('form.messageOptionRequired'),
               ]"
               lazy-rules
-              :hint="$t('form.hintCityChallengeRequired')"
+              :hint="$t('form.hintCityChallenge')"
               class="q-mt-sm"
               data-cy="form-subsidiary-city-challenge"
             />
