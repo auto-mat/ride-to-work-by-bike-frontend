@@ -4006,6 +4006,7 @@ Cypress.Commands.add(
  * @param {Object} config - App configuration object
  */
 Cypress.Commands.add('setupCompanyCoordinatorTest', (config, i18n) => {
+  cy.interceptCitiesGetApi(config, i18n);
   cy.fixture('apiGetRegisterChallengeProfile.json').then(
     (registerChallengeResponse) => {
       // register challenge API

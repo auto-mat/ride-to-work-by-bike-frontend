@@ -44,6 +44,7 @@ export interface SubsidiaryPutApiPayload {
   box_addressee_name: string | null;
   box_addressee_telephone: string | null;
   box_addressee_email: string | null;
+  challenge_city_id?: number | null;
 }
 
 export interface SubsidiaryPostApiPayload {

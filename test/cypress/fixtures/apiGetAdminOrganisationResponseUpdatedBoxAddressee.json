@@ -133,6 +133,7 @@
           "box_addressee_name": "Marie Svobodová",
           "box_addressee_telephone": "420987654321",
           "box_addressee_email": "marie@example.com",
+          "challenge_city": "Brno",
           "boxes": [
             {
               "dispatched": false,

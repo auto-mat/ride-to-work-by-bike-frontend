@@ -520,27 +520,38 @@ describe('Company coordinator user attendance page', () => {
               cy.dataCy('form-subsidiary-city').find('input').type('Praha');
               cy.dataCy('form-subsidiary-zip').find('input').clear();
               cy.dataCy('form-subsidiary-zip').find('input').type('16000');
+              // select challenge city
+              cy.selectDropdownMenu('form-edit-subsidiary-city-challenge', 0);
               // submit
               cy.dataCy('dialog-button-submit').click();
               // await PUT and GET
-              cy.waitForCoordinatorSubsidiaryPutApi({
-                address: {
-                  street: 'Nová ulice',
-                  street_number: '123',
-                  recipient: '',
-                  city: 'Praha',
-                  psc: '16000',
-                },
-                box_addressee_name: subsidiary.box_addressee_name,
-                box_addressee_telephone: subsidiary.box_addressee_telephone,
-                box_addressee_email: subsidiary.box_addressee_email,
+              cy.fixture('apiGetCitiesResponse.json').then((citiesResponse) => {
+                const cityId = citiesResponse.results[0].id;
+                cy.waitForCoordinatorSubsidiaryPutApi({
+                  address: {
+                    street: 'Nová ulice',
+                    street_number: '123',
+                    recipient: '',
+                    city: 'Praha',
+                    psc: '16000',
+                  },
+                  box_addressee_name: subsidiary.box_addressee_name,
+                  box_addressee_telephone: subsidiary.box_addressee_telephone,
+                  box_addressee_email: subsidiary.box_addressee_email,
+                  challenge_city_id: cityId,
+                });
+                cy.waitForAdminOrganisationGetApi(
+                  'apiGetAdminOrganisationResponseUpdatedSubsidiary.json',
+                );
+                cy.get('@getAdminOrganisation.all').should('have.length', 2);
+                // verify dialog is closed
+                cy.dataCy('dialog-edit-subsidiary').should('not.exist');
+                // confirm updated challenge city
+                cy.dataCy('table-attendance-city-challenge').should(
+                  'contain',
+                  citiesResponse.results[0].name,
+                );
               });
-              cy.waitForAdminOrganisationGetApi(
-                'apiGetAdminOrganisationResponseUpdatedSubsidiary.json',
-              );
-              cy.get('@getAdminOrganisation.all').should('have.length', 2);
-              // verify dialog is closed
-              cy.dataCy('dialog-edit-subsidiary').should('not.exist');
             },
           );
         });
@@ -795,18 +806,25 @@ describe('Company coordinator user attendance page', () => {
               // submit
               cy.dataCy('dialog-button-submit').click();
               // await PUT and GET
-              cy.waitForCoordinatorSubsidiaryPutApi({
-                address: {
-                  street: subsidiary.street,
-                  street_number: String(subsidiary.street_number),
-                  recipient: '',
-                  city: subsidiary.city,
-                  psc: String(subsidiary.psc),
-                },
-                box_addressee_name: newSubsidiaryAddressee.box_addressee_name,
-                box_addressee_telephone:
-                  newSubsidiaryAddressee.box_addressee_telephone,
-                box_addressee_email: newSubsidiaryAddressee.box_addressee_email,
+              cy.fixture('apiGetCitiesResponse.json').then((citiesResponse) => {
+                const cityId = citiesResponse.results.find(
+                  (city) => city.name === subsidiary.challenge_city,
+                ).id;
+                cy.waitForCoordinatorSubsidiaryPutApi({
+                  address: {
+                    street: subsidiary.street,
+                    street_number: String(subsidiary.street_number),
+                    recipient: '',
+                    city: subsidiary.city,
+                    psc: String(subsidiary.psc),
+                  },
+                  challenge_city_id: cityId,
+                  box_addressee_name: newSubsidiaryAddressee.box_addressee_name,
+                  box_addressee_telephone:
+                    newSubsidiaryAddressee.box_addressee_telephone,
+                  box_addressee_email:
+                    newSubsidiaryAddressee.box_addressee_email,
+                });
               });
               cy.waitForAdminOrganisationGetApi(
                 'apiGetAdminOrganisationResponseUpdatedBoxAddressee.json',

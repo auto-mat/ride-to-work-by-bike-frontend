@@ -25,6 +25,7 @@ import { computed, defineComponent, ref, watch } from 'vue';
 
 // types
 import type { FormOption } from '../../components/types/Form';
+import type { City } from '../types/City';
 
 export default defineComponent({
   name: 'FormFieldSelectCity',

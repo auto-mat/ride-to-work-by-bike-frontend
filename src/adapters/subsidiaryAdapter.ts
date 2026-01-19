@@ -1,4 +1,5 @@
 // types
+import type { City } from '../components/types/City';
 import type { FormCompanyAddressFields } from '../components/types/Form';
 import type {
   SubsidiaryPostApiPayload,
@@ -95,11 +96,20 @@ export const subsidiaryAdapter = {
   /**
    * Convert subsidiary from organization structure API to form data
    * @param {AdminSubsidiary} apiSubsidiary - Subsidiary from API
+   * @param {City[]} cities - Cities array for converting name to ID
    * @returns {FormCompanyAddressFields} - Form data format
    */
   fromApiAddressToFormData(
     apiSubsidiary: AdminSubsidiary,
+    cities: City[] = [],
   ): FormCompanyAddressFields {
+    // in edit subsidiary form, we keep cityChallenge as ID
+    const cityId =
+      apiSubsidiary.challenge_city && cities.length
+        ? (cities.find((c) => c.name === apiSubsidiary.challenge_city)?.id ??
+          null)
+        : null;
+
     return {
       street: apiSubsidiary.street,
       houseNumber: apiSubsidiary.street_number
@@ -107,7 +117,7 @@ export const subsidiaryAdapter = {
         : '',
       city: apiSubsidiary.city,
       zip: apiSubsidiary.psc ? String(apiSubsidiary.psc) : '',
-      cityChallenge: null,
+      cityChallenge: cityId,
       department: '',
       boxAddresseeName: apiSubsidiary.box_addressee_name || '',
       boxAddresseeTelephone: apiSubsidiary.box_addressee_telephone || '',
@@ -135,6 +145,7 @@ export const subsidiaryAdapter = {
       box_addressee_name: formData.boxAddresseeName || null,
       box_addressee_telephone: formData.boxAddresseeTelephone || null,
       box_addressee_email: formData.boxAddresseeEmail || null,
+      challenge_city_id: formData.cityChallenge,
     };
   },
 };
