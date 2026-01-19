@@ -52,6 +52,7 @@ import {
 import { useTableAttendanceData } from '../../composables/useTableAttendanceData';
 import { useCopyToClipboard } from '../../composables/useCopyToClipboard';
 import { useTeamMemberApprovalStatus } from '../../composables/useTeamMemberApprovalStatus';
+import { useValidation } from '../../composables/useValidation';
 
 // enums
 import { PaymentState } from '../enums/Payment';
@@ -130,6 +131,7 @@ export default defineComponent({
     const { getStatusLabel, getStatusColor, getStatusIcon } =
       useTeamMemberApprovalStatus();
     const { sortByTeam } = useTable();
+    const { isFilled } = useValidation();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     // table pagination settings
@@ -490,6 +492,7 @@ export default defineComponent({
       isLoadingCities,
       cityOptions,
       selectedCityId,
+      isFilled,
     };
   },
 });
@@ -516,7 +519,7 @@ export default defineComponent({
           <div class="flex flex-wrap gap-y-8 gap-x-32">
             <div data-cy="table-attendance-city-challenge">
               {{ $t('coordinator.labelCityChallenge') }}:
-              {{ subsidiaryData.subsidiary?.city }}
+              {{ subsidiaryData.subsidiary?.challenge_city }}
             </div>
             <div data-cy="table-attendance-teams">
               {{ subsidiaryData.subsidiary?.teams?.length }}
@@ -1098,11 +1101,14 @@ export default defineComponent({
               :loading="isLoadingCities"
               dense
               outlined
-              clearable
               option-value="value"
               emit-value
               map-options
-              :hint="$t('form.hintCityChallengeOptional')"
+              :rules="[
+                (val) => isFilled(val) || $t('form.messageOptionRequired'),
+              ]"
+              lazy-rules
+              :hint="$t('form.hintCityChallengeRequired')"
               class="q-mt-sm"
               data-cy="form-subsidiary-city-challenge"
             />
