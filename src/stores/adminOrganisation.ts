@@ -675,9 +675,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       addressData: FormCompanyAddressFields,
     ): Promise<void> {
       const { updateSubsidiary } = useApiPutCoordinatorSubsidiary(this.$log);
-      this.$log?.info(
+      this.$log?.debug(
         `Update subsidiary address with ID <${subsidiaryId}>` +
-          ` to <${addressData.street} ${addressData.houseNumber}, ${addressData.city}>.`,
+          ` to <${JSON.stringify(addressData, null, 2)}>.`,
       );
       this.isLoadingUpdateSubsidiary = true;
       // Convert form data to API payload
@@ -686,7 +686,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const result = await updateSubsidiary(subsidiaryId, payload);
       if (result && result.address) {
         this.$log?.debug(
-          `Subsidiary address updated successfully: ${result.address.street} ${result.address.street_number}, ${result.address.city}.`,
+          'Subsidiary address updated successfully' +
+            ` ${JSON.stringify(result, null, 2)}>.`,
         );
         await this.loadAdminOrganisations();
       }
