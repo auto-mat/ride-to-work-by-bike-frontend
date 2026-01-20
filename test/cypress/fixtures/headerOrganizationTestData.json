@@ -26,6 +26,7 @@
                 "id": 2001,
                 "name": "Projektanti",
                 "icon_url": null,
+                "diploma": "https://example.com/team-diploma.pdf",
                 "members_without_paid_entry_fee_by_org_coord": [
                   {
                     "id": 10001,
@@ -41,6 +42,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 50001,
                     "is_payment_with_reward": true
@@ -59,6 +61,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 50002,
                     "is_payment_with_reward": null
@@ -79,6 +82,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50003,
                     "is_payment_with_reward": true
@@ -99,6 +103,7 @@
                     "payment_type": "None",
                     "payment_category": "None",
                     "payment_amount": "0",
+                    "diploma": "",
                     "discount_coupon": "DISC-001",
                     "user_profile_id": 50004,
                     "is_payment_with_reward": true
@@ -117,6 +122,7 @@
                     "payment_type": "None",
                     "payment_category": "None",
                     "payment_amount": "None",
+                    "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50005,
                     "is_payment_with_reward": true
@@ -127,6 +133,7 @@
                 "id": 2002,
                 "name": "Administrativa",
                 "icon_url": null,
+                "diploma": "https://example.com/team-diploma.pdf",
                 "members_without_paid_entry_fee_by_org_coord": [],
                 "members_with_paid_entry_fee_by_org_coord": [
                   {
@@ -143,6 +150,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50006,
                     "is_payment_with_reward": true
@@ -163,6 +171,7 @@
                     "payment_type": "None",
                     "payment_category": "None",
                     "payment_amount": "None",
+                    "diploma": "",
                     "discount_coupon": "DISC-002",
                     "user_profile_id": 50007,
                     "is_payment_with_reward": true
@@ -178,7 +187,9 @@
       "organizationTitle": "Stavební firma Černý a synové s.r.o.",
       "organizationId": 12345678,
       "subsidiariesCount": 1,
-      "membersCount": 7
+      "membersCount": 7,
+      "disabledDiplomas": 5,
+      "enabledDiplomas": 2
     }
   },
   {
@@ -223,6 +234,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60001,
                     "is_payment_with_reward": true
@@ -241,6 +253,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60002,
                     "is_payment_with_reward": null
@@ -261,6 +274,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60003,
                     "is_payment_with_reward": true
@@ -279,6 +293,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 60004,
                     "is_payment_with_reward": true
@@ -299,6 +314,7 @@
                     "payment_type": "None",
                     "payment_category": "None",
                     "payment_amount": "None",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "PIVOVAR-DISC",
                     "user_profile_id": 60005,
                     "is_payment_with_reward": true
@@ -324,6 +340,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60006,
                     "is_payment_with_reward": true
@@ -344,6 +361,7 @@
                     "payment_type": "fc",
                     "payment_category": "entry_fee",
                     "payment_amount": "390",
+                    "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60007,
                     "is_payment_with_reward": true
@@ -397,7 +415,9 @@
       "organizationTitle": "Moravské pivovary a.s.",
       "organizationId": 87654321,
       "subsidiariesCount": 3,
-      "membersCount": 7
+      "membersCount": 7,
+      "disabledDiplomas": 1,
+      "enabledDiplomas": 6
     }
   },
   {
@@ -420,7 +440,9 @@
       "organizationTitle": "Zahradnické centrum Kytička s.r.o.",
       "organizationId": 11223344,
       "subsidiariesCount": 0,
-      "membersCount": 0
+      "membersCount": 0,
+      "disabledDiplomas": 0,
+      "enabledDiplomas": 0
     }
   },
   {
@@ -471,7 +493,9 @@
       "organizationTitle": "Tiskárna Rychlotisk v.o.s.",
       "organizationId": 99887766,
       "subsidiariesCount": 1,
-      "membersCount": 0
+      "membersCount": 0,
+      "disabledDiplomas": 0,
+      "enabledDiplomas": 0
     }
   }
 ]

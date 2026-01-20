@@ -569,6 +569,72 @@ export const useTableAttendance = () => {
   };
 };
 
+export const useTableResults = () => {
+  const tableResultsColumns: QTableProps['columns'] = [
+    {
+      align: 'left',
+      field: 'name',
+      label: i18n.global.t('table.labelName'),
+      name: 'name',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'nickname',
+      label: i18n.global.t('table.labelNickname'),
+      name: 'nickname',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'email',
+      label: i18n.global.t('table.labelEmail'),
+      name: 'email',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
+      field: 'telephone',
+      label: i18n.global.t('table.labelPhone'),
+      name: 'telephone',
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'center',
+      field: 'diploma',
+      label: i18n.global.t('table.labelDiploma'),
+      name: 'diploma',
+      required: true,
+      sortable: false,
+    },
+    {
+      align: 'left',
+      field: 'team',
+      label: i18n.global.t('table.labelTeam'),
+      name: 'team',
+      required: false, // hidden, used for sorting
+      sortable: true,
+    },
+  ];
+
+  const tableResultsVisibleColumns: string[] = [
+    'name',
+    'nickname',
+    'email',
+    'telephone',
+    'diploma',
+  ];
+
+  return {
+    columns: tableResultsColumns,
+    visibleColumns: tableResultsVisibleColumns,
+  };
+};
+
 export const useTableInvoices = () => {
   const tableInvoicesColumns: QTableProps['columns'] = [
     {

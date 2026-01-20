@@ -24,6 +24,7 @@
               "id": 2001,
               "name": "Projektanti",
               "icon_url": null,
+              "diploma": "https://example.com/team-diploma.pdf",
               "members_without_paid_entry_fee_by_org_coord": [
                 {
                   "id": 10001,
@@ -39,6 +40,7 @@
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "",
                   "user_profile_id": 50001,
                   "is_payment_with_reward": true
@@ -57,6 +59,7 @@
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "",
                   "user_profile_id": 50002,
                   "is_payment_with_reward": null
@@ -77,6 +80,7 @@
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "",
                   "user_profile_id": 50003,
                   "is_payment_with_reward": true
@@ -115,6 +119,7 @@
                   "payment_type": "None",
                   "payment_category": "None",
                   "payment_amount": "None",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "",
                   "user_profile_id": 50005,
                   "is_payment_with_reward": true
@@ -125,6 +130,7 @@
               "id": 2002,
               "name": "Administrativa",
               "icon_url": null,
+              "diploma": "https://example.com/team-diploma.pdf",
               "members_without_paid_entry_fee_by_org_coord": [],
               "members_with_paid_entry_fee_by_org_coord": [
                 {
@@ -141,6 +147,7 @@
                   "payment_type": "fc",
                   "payment_category": "entry_fee",
                   "payment_amount": "390",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "",
                   "user_profile_id": 50006,
                   "is_payment_with_reward": true
@@ -161,6 +168,7 @@
                   "payment_type": "None",
                   "payment_category": "None",
                   "payment_amount": "None",
+                  "diploma": "https://example.com/diploma.pdf",
                   "discount_coupon": "DISC-002",
                   "user_profile_id": 50007,
                   "is_payment_with_reward": true

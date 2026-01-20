@@ -24,6 +24,7 @@ import TabCoordinatorBoxes from './TabCoordinatorBoxes.vue';
 import TabCoordinatorCompanyChallenge from './TabCoordinatorCompanyChallenge.vue';
 import TabCoordinatorFeeApproval from './TabCoordinatorFeeApproval.vue';
 import TabCoordinatorInvoices from './TabCoordinatorInvoices.vue';
+import TabCoordinatorResults from './TabCoordinatorResults.vue';
 import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
@@ -48,6 +49,7 @@ export default defineComponent({
     TabCoordinatorCompanyChallenge,
     TabCoordinatorFeeApproval,
     TabCoordinatorInvoices,
+    TabCoordinatorResults,
     TaskListCoordinator,
   },
   setup() {
@@ -171,7 +173,7 @@ export default defineComponent({
         :name="tabsCoordinator.results"
         data-cy="coordinator-tabs-panel-results"
       >
-        <!-- TODO: add content -->
+        <tab-coordinator-results data-cy="tab-coordinator-results" />
       </q-tab-panel>
     </q-tab-panels>
   </div>

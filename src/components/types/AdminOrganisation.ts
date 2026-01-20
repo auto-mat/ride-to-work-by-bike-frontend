@@ -18,6 +18,7 @@ export interface AdminTeamMember {
   payment_type: string;
   payment_category: PaymentCategory;
   payment_amount: string;
+  diploma: string | null;
   discount_coupon: string;
   user_profile_id: number;
   is_payment_with_reward: boolean | null;
@@ -27,6 +28,7 @@ export interface AdminTeam {
   id: number;
   name: string;
   icon_url: string | null;
+  diploma: string | null;
   members_without_paid_entry_fee_by_org_coord: AdminTeamMember[];
   members_with_paid_entry_fee_by_org_coord: AdminTeamMember[];
   other_members: AdminTeamMember[];

@@ -21,6 +21,7 @@ export interface TableAttendanceRow {
   nickname: string | null;
   email: string;
   telephone: string;
+  diploma?: string | null;
   approvedForTeam: TeamMemberStatus;
   isFeeApproved: boolean;
   paymentType: PaymentType;
@@ -65,6 +66,7 @@ function transformMemberToRow({
     nickname: member.nickname,
     email: member.email,
     telephone: member.telephone,
+    diploma: member.diploma,
     approvedForTeam: member.approved_for_team,
     isFeeApproved,
     paymentType,
@@ -106,6 +108,7 @@ export const useTableAttendanceData = (): {
             nickname: null,
             email: '',
             telephone: '',
+            diploma: '',
             approvedForTeam: TeamMemberStatus.approved,
             isFeeApproved: false,
             paymentType: PaymentType.registration,
