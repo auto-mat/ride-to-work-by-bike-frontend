@@ -1,12 +1,12 @@
 {
-  "amount": 390,
+  "amount": 150,
   "client_ip": "185.250.215.37",
   "payment_subject": "school",
   "payment_category": "donation",
   "products": [
     {
       "name": "RTWBB donation",
-      "unitPrice": 390,
+      "unitPrice": 150,
       "quantity": 1
     }
   ]

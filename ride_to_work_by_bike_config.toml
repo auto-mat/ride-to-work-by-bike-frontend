@@ -89,6 +89,7 @@ challengeLoggingWindowDays = 8
 defaultDistanceZero = "0.00"
 
 # Challenge registration
+entryFeeDonationMin = "150"
 entryFeePaymentMax = "2000"
 entryFeePaymentOptions = "850,1500"
 rtwbbChallengeEntryFeeOrderedProductName = "RTWBB challenge entry fee"

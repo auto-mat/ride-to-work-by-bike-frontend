@@ -53,6 +53,7 @@ export interface ConfigGlobal {
   challengeStartDate: string;
   challengeLoggingWindowDays: number;
   defaultDistanceZero: string;
+  entryFeeDonationMin: string;
   entryFeePaymentMax: string;
   entryFeePaymentOptions: string;
   rtwbbChallengeEntryFeeOrderedProductName: string;
