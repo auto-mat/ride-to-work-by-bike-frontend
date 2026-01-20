@@ -267,7 +267,19 @@ export default defineComponent({
             </q-td>
             <!-- Email -->
             <q-td key="email" :props="props" data-cy="table-results-email">
-              {{ props.row.email }}
+              <a
+                v-if="props.row.email"
+                class="text-grey-10"
+                :href="`mailto:${props.row.email}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#email"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ props.row.email }}
+              </a>
             </q-td>
             <!-- Telephone -->
             <q-td
@@ -275,7 +287,19 @@ export default defineComponent({
               :props="props"
               data-cy="table-results-telephone"
             >
-              {{ props.row.telephone }}
+              <a
+                v-if="props.row.telephone"
+                class="text-grey-10"
+                :href="`tel:${props.row.telephone.replace(/\s/g, '')}`"
+              >
+                <q-icon
+                  size="16px"
+                  name="svguse:icons/profile_coordinator_contact/icons.svg#phone"
+                  color="primary"
+                  class="q-mr-xs"
+                  style="text-decoration: none"
+                />{{ props.row.telephone }}
+              </a>
             </q-td>
             <!-- Diploma -->
             <q-td
