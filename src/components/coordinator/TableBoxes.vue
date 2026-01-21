@@ -64,8 +64,8 @@ export default defineComponent({
      */
     const getStatusIcon = (dispatched: boolean): string => {
       return dispatched
-        ? 'check'
-        : 'svguse:icons/table_boxes/icons.svg#tabler:truck';
+        ? 'svguse:icons/table_boxes/icons.svg#tabler:truck'
+        : 'svguse:icons/table_boxes/icons.svg#tabler:package';
     };
 
     /**
@@ -74,7 +74,9 @@ export default defineComponent({
      * @returns {string} - Status label
      */
     const getStatusLabel = (dispatched: boolean): string => {
-      return dispatched ? 'table.labelDelivered' : 'table.labelInTransit';
+      return dispatched
+        ? 'table.labelPackageDispatched'
+        : 'table.labelPackageProcessing';
     };
 
     return {

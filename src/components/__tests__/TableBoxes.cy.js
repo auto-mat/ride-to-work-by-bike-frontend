@@ -26,8 +26,8 @@ describe('<TableBoxes>', () => {
         'labelPackageStatus',
         'labelRecipients',
         'labelLastModified',
-        'labelInTransit',
-        'labelDelivered',
+        'labelPackageProcessing',
+        'labelPackageDispatched',
         'textNoData',
         'textNoResults',
         'textLoading',
@@ -134,8 +134,8 @@ describe('<TableBoxes>', () => {
                       .and('have.color', primary);
                   }
                   const expectedStatusLabel = box.packageStatus
-                    ? i18n.global.t('table.labelDelivered')
-                    : i18n.global.t('table.labelInTransit');
+                    ? i18n.global.t('table.labelPackageDispatched')
+                    : i18n.global.t('table.labelPackageProcessing');
                   cy.dataCy('table-boxes-status-label').should(
                     'contain',
                     expectedStatusLabel,
