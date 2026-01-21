@@ -157,9 +157,9 @@ apiMessageErrorWithMessage = "Načítanie statusu používateľa zlyhalo. Chyba:
 apiMessageSuccess = "Status používateľa bol načítaný."
 
 [getMerchandise]
-apiMessageError = "Načítanie štartovacích balíčkov zlyhalo."
-apiMessageErrorWithMessage = "Načítanie štartovacích balíčkov zlyhalo. Chyba: {error}"
-apiMessageSuccess = "Štartovacie balíčky boli úspešne načítané."
+apiMessageError = "Načítanie účastníckých balíčkov zlyhalo."
+apiMessageErrorWithMessage = "Načítanie účastníckých balíčkov zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Účastnícke balíčky boli úspešne načítané."
 
 [getMyOrganizationAdmin]
 apiMessageError = "Načítanie koordinátora organizácie zlyhalo."
@@ -172,9 +172,9 @@ apiMessageErrorWithMessage = "Načítanie tímu zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Tím bol úspešne načítaný."
 
 [getFilteredMerchandise]
-apiMessageError = "Načítanie štartovacích balíčkov filtrovaných na základe kódu zlyhalo."
-apiMessageErrorWithMessage = "Načítanie štartovacích balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"
-apiMessageSuccess = "Štartovacie balíčky filtrované na základe kódu boli úspešne načítané."
+apiMessageError = "Načítanie účastníckých balíčkov filtrovaných na základe kódu zlyhalo."
+apiMessageErrorWithMessage = "Načítanie účastníckých balíčkov filtrovaných na základe kódu zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Účastnícke balíčky filtrované na základe kódu boli úspešne načítané."
 
 [getHasOrganizationAdmin]
 apiMessageError = "Nepodarilo sa overiť existenciu koordinátora organizácie"
@@ -332,7 +332,7 @@ titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateCompanyChallenge = "Vytvoriť firemnú výzvu"
 titleCreateInvoice = "Vystaviť novú faktúru"
 titleEditCompanyChallenge = "Upraviť firemnú výzvu"
-titleBoxes = "Štartovacie balíčky"
+titleBoxes = "Účastnícke balíčky"
 boxesDeliveryStatus = "doručených|doručený|doručené|doručených"
 buttonDownloadDiploma = "Stiahnuť"
 downloadTeamDiploma = "Stiahnuť tímový diplom"

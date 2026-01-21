@@ -157,9 +157,9 @@ apiMessageErrorWithMessage = "Načítání statusu uživatele selhalo. Chyba: {e
 apiMessageSuccess = "Status uživatele byl načten."
 
 [getMerchandise]
-apiMessageError = "Načítání startovních balíčků selhalo."
-apiMessageErrorWithMessage = "Načítání startovních balíčků selhalo. Chyba: {error}"
-apiMessageSuccess = "Startovní balíčky byly úspěšně načteny."
+apiMessageError = "Načítání účastnických balíčků selhalo."
+apiMessageErrorWithMessage = "Načítání účastnických balíčků selhalo. Chyba: {error}"
+apiMessageSuccess = "Účastnické balíčky byly úspěšně načteny."
 
 [getMyOrganizationAdmin]
 apiMessageError = "Načítání koordinátora organizace selhalo."
@@ -172,9 +172,9 @@ apiMessageErrorWithMessage = "Načítání týmu selhalo. Chyba: {error}"
 apiMessageSuccess = "Tým byl úspěšně načten."
 
 [getFilteredMerchandise]
-apiMessageError = "Načítání startovních balíčků filtrováno na základě kódu selhalo."
-apiMessageErrorWithMessage = "Načítání startovních balíčků filtrováno na základě kódu selhalo. Chyba: {error}"
-apiMessageSuccess = "Startovní balíčky filtrované na základě kódu byly úspěšně načteny."
+apiMessageError = "Načítání účastnických balíčků filtrováno na základě kódu selhalo."
+apiMessageErrorWithMessage = "Načítání účastnických balíčků filtrováno na základě kódu selhalo. Chyba: {error}"
+apiMessageSuccess = "Účastnické balíčky filtrované na základě kódu byly úspěšně načteny."
 
 [getHasOrganizationAdmin]
 apiMessageError = "Nepodařilo se ověřit existenci koordinátora organizace"
@@ -332,7 +332,7 @@ titleCompanyCoordinator = "Firemní koordinátor"
 titleCreateCompanyChallenge = "Vytvořit firemní výzvu"
 titleCreateInvoice = "Vystavit novou fakturu"
 titleEditCompanyChallenge = "Upravit firemní výzvu"
-titleBoxes = "Startovní balíčky"
+titleBoxes = "Účastnické balíčky"
 boxesDeliveryStatus = "doručených|doručen|doručeny|doručených"
 buttonDownloadDiploma = "Stáhnout"
 downloadTeamDiploma = "Stáhnout týmový diplom"
