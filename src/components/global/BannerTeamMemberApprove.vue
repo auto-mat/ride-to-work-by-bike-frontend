@@ -100,12 +100,10 @@ export default defineComponent({
 
     const isTeamFull = computed<boolean>((): boolean => {
       const myTeam = registerChallengeStore.getMyTeam;
-      // Use is_full from API or calculate from member_count
       return myTeam?.is_full ?? false;
     });
 
-    const showRefreshUI = computed<boolean>((): boolean => {
-      // Show refresh UI when: user is approved AND no pending members AND team not full
+    const showRefreshData = computed<boolean>((): boolean => {
       return (
         isCurrentUserApproved.value &&
         pendingMembersCount.value === 0 &&
@@ -114,9 +112,9 @@ export default defineComponent({
     });
 
     const isBannerVisible = computed<boolean>((): boolean => {
-      // Show if user not approved
+      // if user is not approved, show the banner
       if (!isCurrentUserApproved.value) return true;
-      // Show if user is approved AND (there are pending members OR team not full)
+      // show if pending members or team is not full
       return (
         isCurrentUserApproved.value &&
         (pendingMembersCount.value > 0 || !isTeamFull.value)
@@ -306,7 +304,7 @@ export default defineComponent({
       isLoading,
       isShownDenyReason,
       isTeamFull,
-      showRefreshUI,
+      showRefreshData,
       isRefreshing,
       refreshPendingMembers,
     };
@@ -346,12 +344,12 @@ export default defineComponent({
           style="text-wrap: balance"
           data-cy="banner-team-member-approve-title"
         >
-          <!-- Approved members with pending approvals -->
+          <!-- Approved members -->
           <span v-if="isCurrentUserApproved && pendingMembersCount > 0">
             {{ $t('bannerTeamMemberApprove.textMembersToApprove') }}
           </span>
           <!-- No pending members, show refresh message -->
-          <span v-else-if="showRefreshUI">
+          <span v-else-if="showRefreshData">
             {{ $t('bannerTeamMemberApprove.textNoMembersPending') }}
           </span>
           <!-- Waiting for approval -->
@@ -359,7 +357,7 @@ export default defineComponent({
             {{ $t('bannerTeamMemberApprove.textWaitingForApproval') }}
           </span>
         </h3>
-        <!-- Button section: Approve Members (when pending members exist) -->
+        <!-- Button section: Approve -->
         <div
           v-if="isCurrentUserApproved && pendingMembersCount > 0"
           class="col-12 col-md-auto flex items-center justify-end q-py-sm"
@@ -378,13 +376,13 @@ export default defineComponent({
             {{ $t('bannerTeamMemberApprove.buttonApproveMembers') }}
           </q-btn>
         </div>
-        <!-- Button section: Refresh (when no pending members but team not full) -->
+        <!-- Button section: Refresh data -->
         <div
-          v-else-if="showRefreshUI"
+          v-else-if="showRefreshData"
           class="col-12 col-md-auto flex items-center justify-end gap-8"
           data-cy="banner-team-member-approve-section-refresh"
         >
-          <!-- Refresh button -->
+          <!-- Button: Refresh -->
           <q-btn
             flat
             rounded
