@@ -45,6 +45,19 @@ Cypress.Commands.add('switchToPaymentWithoutReward', () => {
 });
 
 /**
+ * Switch to payment with reward
+ */
+Cypress.Commands.add('switchToPaymentWithReward', () => {
+  cy.dataCy('checkbox-payment-with-reward')
+    .should('be.visible')
+    .find('.q-checkbox__inner')
+    .click();
+  cy.dataCy('checkbox-payment-with-reward')
+    .find('.q-checkbox__inner')
+    .should('have.class', 'q-checkbox__inner--truthy');
+});
+
+/**
  * Validate step Merch without reward
  * "I don't want merch" checkbox should be selected and disabled
  * Next step button should be visible and enabled

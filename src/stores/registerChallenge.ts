@@ -504,9 +504,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           color: 'warning',
         });
       }
-      // reset payment amount (triggers recalculation)
-      this.$log?.info('Resetting payment amount to trigger recalculation.');
-      this.setPaymentAmount(null);
     },
     /**
      * Load registration data from API and set store state
