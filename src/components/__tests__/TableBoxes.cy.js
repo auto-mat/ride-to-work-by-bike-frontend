@@ -25,7 +25,7 @@ describe('<TableBoxes>', () => {
         'labelTrackingNumber',
         'labelPackageStatus',
         'labelRecipients',
-        'labelLastModified',
+        'labelAddressee',
         'labelPackageProcessing',
         'labelPackageDispatched',
         'textNoData',
@@ -144,15 +144,10 @@ describe('<TableBoxes>', () => {
                   cy.dataCy('table-boxes-recipients')
                     .should('be.visible')
                     .and('contain', box.recipients);
-                  // last modified date
-                  if (box.lastModified) {
-                    cy.dataCy('table-boxes-last-modified')
-                      .should('be.visible')
-                      .and(
-                        'contain',
-                        i18n.global.d(new Date(box.lastModified), 'numeric'),
-                      );
-                  }
+                  // addressee
+                  cy.dataCy('table-boxes-addressee')
+                    .should('be.visible')
+                    .and('contain', box.addressee);
                 });
             });
           }

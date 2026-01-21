@@ -95,6 +95,7 @@ export enum BoxesTableColumns {
   recipients = 'recipients',
   lastModified = 'lastModified',
   address = 'address',
+  addressee = 'addressee',
 }
 
 export enum CompanyChallengeTableColumns {

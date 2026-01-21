@@ -21,6 +21,7 @@
             "city": "Brno",
             "icon_url": null,
             "teams": [],
+            "box_addressee_name": "Jan Pivovár",
             "boxes": [
               {
                 "dispatched": false,
@@ -102,7 +103,8 @@
         "recipients": "2 účastníci*e",
         "recipientCount": 2,
         "lastModified": "2022-09-31T00:00:00Z",
-        "address": "Pivovarská 456, Brno"
+        "address": "Pivovarská 456, Brno",
+        "addressee": "Jan Pivovár"
       },
       {
         "trackingNumber": "A 123 456 788",
@@ -111,7 +113,8 @@
         "recipients": "4 účastníci*e",
         "recipientCount": 4,
         "lastModified": "2022-09-28T00:00:00Z",
-        "address": "Pivovarská 456, Brno"
+        "address": "Pivovarská 456, Brno",
+        "addressee": "Jan Pivovár"
       },
       {
         "trackingNumber": "A 123 456 789",
@@ -120,7 +123,8 @@
         "recipients": "Ludmila Anonymní",
         "recipientCount": 1,
         "lastModified": "2022-09-27T00:00:00Z",
-        "address": "Pivovarská 456, Brno"
+        "address": "Pivovarská 456, Brno",
+        "addressee": "Jan Pivovár"
       }
     ],
     "displayDataTab": {
@@ -150,6 +154,7 @@
             "city": "Brno",
             "icon_url": null,
             "teams": [],
+            "box_addressee_name": "Jan Pivovár",
             "boxes": []
           }
         ]
@@ -183,6 +188,7 @@
             "city": "Brno",
             "icon_url": null,
             "teams": [],
+            "box_addressee_name": "Jan Pivovár",
             "boxes": [
               {
                 "dispatched": true,
@@ -214,7 +220,8 @@
         "recipients": "Jan Novák",
         "recipientCount": 1,
         "lastModified": "2022-10-15T00:00:00Z",
-        "address": "Pivovarská 456, Brno"
+        "address": "Pivovarská 456, Brno",
+        "addressee": "Jan Pivovár"
       }
     ],
     "displayDataTab": {

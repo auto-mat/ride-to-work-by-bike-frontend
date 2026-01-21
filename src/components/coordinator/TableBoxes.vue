@@ -186,6 +186,14 @@ export default defineComponent({
           >
             {{ props.row.recipients }}
           </q-td>
+          <!-- Addressee -->
+          <q-td
+            :key="BoxesTableColumns.addressee"
+            :props="props"
+            data-cy="table-boxes-addressee"
+          >
+            {{ props.row.addressee }}
+          </q-td>
         </q-tr>
       </template>
     </q-table>

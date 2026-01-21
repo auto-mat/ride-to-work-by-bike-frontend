@@ -22,6 +22,7 @@ export interface TableBoxRow {
   recipientCount: number;
   lastModified: string;
   address: string;
+  addressee: string;
 }
 
 /**
@@ -62,9 +63,14 @@ function getRecipientsInfo(box: Box): {
  * Transform Box to TableBoxRow
  * @param {Box} box - Box from API
  * @param {string} address - Subsidiary address
+ * @param {string} addressee - Box addressee name
  * @returns {TableBoxRow} - Table row data
  */
-function transformBoxToRow(box: Box, address: string): TableBoxRow {
+function transformBoxToRow(
+  box: Box,
+  address: string,
+  addressee: string,
+): TableBoxRow {
   const { recipients, recipientCount } = getRecipientsInfo(box);
   return {
     trackingNumber: box.carrier_identification,
@@ -74,6 +80,7 @@ function transformBoxToRow(box: Box, address: string): TableBoxRow {
     recipientCount,
     lastModified: box.modified,
     address,
+    addressee,
   };
 }
 
@@ -104,9 +111,11 @@ export const useTableBoxesData = (): {
         } else {
           address = `${i18n.global.t('table.labelAddress')}: ${i18n.global.t('table.labelCellEmpty')}`;
         }
+        // get addressee name with fallback
+        const addressee = subsidiary.box_addressee_name || '';
         // transfrom boxes to table rows
         subsidiary.boxes.forEach((box: Box) => {
-          allBoxes.push(transformBoxToRow(box, address));
+          allBoxes.push(transformBoxToRow(box, address, addressee));
         });
       }
     });
