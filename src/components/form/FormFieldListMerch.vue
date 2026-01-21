@@ -237,6 +237,17 @@ export default defineComponent({
       return selectedOption.value?.sizeOptions || [];
     });
 
+    const isShowingBottomSizeInput = computed((): boolean => {
+      // hide - user selected "no merch" or no options available
+      if (isNotMerch.value || optionsEmpty.value) return false;
+      // hide - current item has only one size
+      if (currentSizeOptions.value.length <= 1) return false;
+      // hide - no item selected
+      if (!selectedOption.value) return false;
+      // show if selected item is in current tab
+      return selectedOption.value.gender === selectedGender.value;
+    });
+
     const currentItemLabelSize = computed((): string => {
       switch (selectedOption.value?.gender) {
         case Gender.female:
@@ -431,6 +442,7 @@ export default defineComponent({
       hintInputPhone,
       isNotMerch,
       isOpen,
+      isShowingBottomSizeInput,
       labelPhoneOptIn,
       telephoneOptIn,
       optionsFemale,
@@ -493,7 +505,11 @@ export default defineComponent({
   </q-item>
   <!-- Tabs: Merch -->
   <q-card ref="tabsMerchRef" flat class="q-mt-lg" style="max-width: 1024px">
-    <div v-show="!isNotMerch && !optionsEmpty" data-cy="list-merch">
+    <div
+      v-show="!isNotMerch && !optionsEmpty"
+      data-cy="list-merch"
+      class="q-mb-sm"
+    >
       <!-- Tab buttons -->
       <q-tabs
         v-model="selectedGender"
@@ -575,10 +591,7 @@ export default defineComponent({
     </div>
 
     <!-- Input: Merch size (card) - duplicated in dialog -->
-    <div
-      v-if="!isNotMerch && !optionsEmpty && currentSizeOptions.length > 1"
-      class="q-pt-sm"
-    >
+    <div v-if="isShowingBottomSizeInput" class="q-mt-sm">
       <span
         class="text-caption text-weight-medium text-grey-10"
         v-if="currentItemLabelSize"

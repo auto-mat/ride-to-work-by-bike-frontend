@@ -297,6 +297,26 @@ describe('<FormFieldListMerch>', () => {
       });
     });
 
+    it('when option with sizes is selected, hides size selection when switching to different tab', () => {
+      cy.fixture('apiGetMerchandiseResponse').then((response) => {
+        // select our test item (Triko 2024, female, size M)
+        const item = response.results.find(
+          (item) => item.id === tshirt2024FemaleMId,
+        );
+        cy.listMerchSelectItem(item);
+        // size selection visible on female tab
+        cy.dataCy('form-field-merch-size').should('be.visible');
+        // switch to unisex tab
+        cy.dataCy('list-merch-tab-unisex').click();
+        // size selection not visible
+        cy.dataCy('form-field-merch-size').should('not.exist');
+        // switch back to female tab
+        cy.dataCy('list-merch-tab-female').click();
+        // size selection visible
+        cy.dataCy('form-field-merch-size').should('be.visible');
+      });
+    });
+
     it('when option is selected, disables the merch card interaction', () => {
       cy.fixture('apiGetMerchandiseResponse').then((response) => {
         // select our test item (Triko 2024, female, size M)
