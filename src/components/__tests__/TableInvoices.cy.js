@@ -44,6 +44,7 @@ describe('<TableInvoices>', () => {
         'textNoResults',
         'textLoading',
         'textRowsPerPage',
+        'tooltipTotalAmount',
       ],
       'table',
       i18n,

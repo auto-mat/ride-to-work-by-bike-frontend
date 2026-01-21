@@ -1274,6 +1274,7 @@ titleFeeApprovalApproved = "Již schváleno"
 titleFeeApprovalNotApproved = "Platby startovného ke schválení"
 titleInvoices = "Faktury"
 titleCompanyChallenge = "Firemní výzvy"
+tooltipTotalAmount = "účastnický poplatek je osvobozen od DPH"
 
 [teamMembersList]
 approved = "Schválen*a"

@@ -83,6 +83,15 @@ export default defineComponent({
       :pagination-label="paginationLabel"
       data-cy="table-invoices-table"
     >
+      <template v-slot:header-cell-totalAmount="props">
+        <q-th>
+          {{ props.col.label }}
+          <q-icon name="info" size="14px" color="grey-6" class="q-ml-xs" />
+          <q-tooltip class="text-body2">
+            {{ $t('table.tooltipTotalAmount') }}
+          </q-tooltip>
+        </q-th>
+      </template>
       <template v-slot:body="props">
         <q-tr :props="props" class="text-grey-10" data-cy="table-invoices-row">
           <!-- Exposure Date -->

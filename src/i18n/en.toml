@@ -1273,6 +1273,7 @@ titleFeeApprovalApproved = "Already approved"
 titleFeeApprovalNotApproved = "Entry fee payments for approval"
 titleInvoices = "Invoices"
 titleCompanyChallenge = "Company Challenges"
+tooltipTotalAmount = "entry fee is exempt from VAT"
 
 [teamMembersList]
 approved = "Approved"
