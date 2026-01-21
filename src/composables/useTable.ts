@@ -747,7 +747,7 @@ export const useTableBoxes = () => {
         val ? i18n.global.d(new Date(String(val)), 'numeric') : '',
       label: i18n.global.t('table.labelLastModified'),
       name: BoxesTableColumns.lastModified,
-      required: true,
+      required: false,
       sortable: true,
     },
     {
@@ -766,7 +766,6 @@ export const useTableBoxes = () => {
     BoxesTableColumns.trackingNumber,
     BoxesTableColumns.packageStatus,
     BoxesTableColumns.recipients,
-    BoxesTableColumns.lastModified,
   ];
 
   return {

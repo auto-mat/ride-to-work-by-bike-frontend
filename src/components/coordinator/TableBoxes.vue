@@ -184,16 +184,6 @@ export default defineComponent({
           >
             {{ props.row.recipients }}
           </q-td>
-          <!-- Last Modified -->
-          <q-td
-            :key="BoxesTableColumns.lastModified"
-            :props="props"
-            data-cy="table-boxes-last-modified"
-          >
-            <template v-if="props.row.lastModified">
-              {{ $d(new Date(props.row.lastModified), 'numeric') }}
-            </template>
-          </q-td>
         </q-tr>
       </template>
     </q-table>
