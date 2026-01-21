@@ -57,6 +57,7 @@ export default defineComponent({
     const memberDenialReasons = ref<Map<number, string>>(
       new Map<number, string>(),
     );
+    const isRefreshing = ref<boolean>(false);
 
     const registerChallengeStore = useRegisterChallengeStore();
     const challengeStore = useChallengeStore();
@@ -97,11 +98,29 @@ export default defineComponent({
       },
     );
 
+    const isTeamFull = computed<boolean>((): boolean => {
+      const myTeam = registerChallengeStore.getMyTeam;
+      // Use is_full from API or calculate from member_count
+      return myTeam?.is_full ?? false;
+    });
+
+    const showRefreshUI = computed<boolean>((): boolean => {
+      // Show refresh UI when: user is approved AND no pending members AND team not full
+      return (
+        isCurrentUserApproved.value &&
+        pendingMembersCount.value === 0 &&
+        !isTeamFull.value
+      );
+    });
+
     const isBannerVisible = computed<boolean>((): boolean => {
-      // if user is not approved, show the banner
+      // Show if user not approved
       if (!isCurrentUserApproved.value) return true;
-      // if user is approved, show the banner if there are pending members
-      return isCurrentUserApproved.value && pendingMembersCount.value > 0;
+      // Show if user is approved AND (there are pending members OR team not full)
+      return (
+        isCurrentUserApproved.value &&
+        (pendingMembersCount.value > 0 || !isTeamFull.value)
+      );
     });
 
     /**
@@ -250,6 +269,12 @@ export default defineComponent({
       );
     };
 
+    const refreshPendingMembers = async (): Promise<void> => {
+      isRefreshing.value = true;
+      await registerChallengeStore.loadMyTeamToStore(logger);
+      isRefreshing.value = false;
+    };
+
     // colors
     const { getPaletteColor, changeAlpha } = colors;
     const secondary = getPaletteColor('secondary');
@@ -280,6 +305,10 @@ export default defineComponent({
       handleMemberDecision,
       isLoading,
       isShownDenyReason,
+      isTeamFull,
+      showRefreshUI,
+      isRefreshing,
+      refreshPendingMembers,
     };
   },
 });
@@ -317,16 +346,20 @@ export default defineComponent({
           style="text-wrap: balance"
           data-cy="banner-team-member-approve-title"
         >
-          <!-- Approved members -->
-          <span v-if="isCurrentUserApproved">
+          <!-- Approved members with pending approvals -->
+          <span v-if="isCurrentUserApproved && pendingMembersCount > 0">
             {{ $t('bannerTeamMemberApprove.textMembersToApprove') }}
+          </span>
+          <!-- No pending members, show refresh message -->
+          <span v-else-if="showRefreshUI">
+            {{ $t('bannerTeamMemberApprove.textNoMembersPending') }}
           </span>
           <!-- Waiting for approval -->
           <span v-else>
             {{ $t('bannerTeamMemberApprove.textWaitingForApproval') }}
           </span>
         </h3>
-        <!-- Button section -->
+        <!-- Button section: Approve Members (when pending members exist) -->
         <div
           v-if="isCurrentUserApproved && pendingMembersCount > 0"
           class="col-12 col-md-auto flex items-center justify-end q-py-sm"
@@ -343,6 +376,29 @@ export default defineComponent({
             data-cy="banner-team-member-approve-button"
           >
             {{ $t('bannerTeamMemberApprove.buttonApproveMembers') }}
+          </q-btn>
+        </div>
+        <!-- Button section: Refresh (when no pending members but team not full) -->
+        <div
+          v-else-if="showRefreshUI"
+          class="col-12 col-md-auto flex items-center justify-end gap-8"
+          data-cy="banner-team-member-approve-section-refresh"
+        >
+          <!-- Refresh button -->
+          <q-btn
+            flat
+            rounded
+            color="grey-7"
+            class="text-caption"
+            :loading="isRefreshing"
+            @click="refreshPendingMembers"
+            data-cy="banner-team-member-approve-button-refresh"
+          >
+            {{ $t('bannerTeamMemberApprove.textRefreshHelper') }}
+            <q-icon name="refresh" size="18px" color="grey-7" class="q-ml-sm" />
+            <q-tooltip>
+              {{ $t('bannerTeamMemberApprove.tooltipRefresh') }}
+            </q-tooltip>
           </q-btn>
         </div>
       </div>
