@@ -61,7 +61,7 @@ export default defineComponent({
 
     const registerChallengeStore = useRegisterChallengeStore();
     const challengeStore = useChallengeStore();
-    const { updateTeamMemberStatus, isLoading } = useApiPutMyTeam(null);
+    const { updateTeamMemberStatus, isLoading } = useApiPutMyTeam(logger);
 
     const remainingApprovalSlots = computed<number>((): number => {
       const myTeam = registerChallengeStore.getMyTeam;
@@ -256,10 +256,14 @@ export default defineComponent({
         return;
       }
       // submit the changes
-      // TODO: DEBUG ASYNC BEHAVIOUR
-      await updateTeamMemberStatus(registerChallengeStore.getTeamId, payload);
-      // reload team data after successful update
-      await registerChallengeStore.loadMyTeamToStore(logger);
+      const response = await updateTeamMemberStatus(
+        registerChallengeStore.getTeamId,
+        payload,
+      );
+      if (response && response.members) {
+        // update team store
+        await registerChallengeStore.loadMyTeamToStore(logger);
+      }
       isDialogOpen.value = false;
     };
 

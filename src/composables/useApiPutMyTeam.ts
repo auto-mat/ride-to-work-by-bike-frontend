@@ -13,7 +13,7 @@ import { useLoginStore } from '../stores/login';
 // types
 import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
-import type { GetMyTeamResponse } from '../components/types/Organization';
+import type { PutMyTeamResponse } from '../components/types/Organization';
 import type { TeamMemberStatus } from '../components/enums/TeamMember';
 
 // utils
@@ -29,7 +29,7 @@ interface UseApiPutMyTeamReturn {
   updateTeamMemberStatus: (
     teamId: number | string,
     members: MemberStatusUpdate[],
-  ) => Promise<void>;
+  ) => Promise<PutMyTeamResponse | null>;
 }
 
 /**
@@ -53,7 +53,7 @@ export const useApiPutMyTeam = (
   const updateTeamMemberStatus = async (
     teamId: number | string,
     members: MemberStatusUpdate[],
-  ): Promise<void> => {
+  ): Promise<PutMyTeamResponse | null> => {
     logger?.debug(
       `Updating team member status for members <${JSON.stringify(members)}>.`,
     );
@@ -71,7 +71,7 @@ export const useApiPutMyTeam = (
     );
 
     // update team members
-    await apiFetch<GetMyTeamResponse>({
+    const { data } = await apiFetch<PutMyTeamResponse>({
       endpoint: `${rideToWorkByBikeConfig.urlApiMyTeam}${teamId}/`,
       method: 'put',
       translationKey: 'putMyTeam',
@@ -81,6 +81,7 @@ export const useApiPutMyTeam = (
     });
 
     isLoading.value = false;
+    return data;
   };
 
   return {

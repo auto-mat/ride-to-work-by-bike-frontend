@@ -104,3 +104,12 @@ export type useApiGetMyTeamReturn = {
   isLoading: Ref<boolean>;
   loadTeam: () => Promise<void>;
 };
+
+export type PutMyTeamResponse = {
+  members: {
+    id: number;
+    approved_for_team: string;
+    team: number | null;
+    reason?: string;
+  }[];
+};
