@@ -188,7 +188,9 @@ export default defineComponent({
       }
     };
 
-    const openDialog = (): void => {
+    const openDialog = async (): Promise<void> => {
+      // first refresh team data
+      await refreshPendingMembers();
       isDialogOpen.value = true;
       // reset member decisions when opening dialog
       memberDecisions.value = new Map();
@@ -254,9 +256,10 @@ export default defineComponent({
         return;
       }
       // submit the changes
+      // TODO: DEBUG ASYNC BEHAVIOUR
       await updateTeamMemberStatus(registerChallengeStore.getTeamId, payload);
       // reload team data after successful update
-      await registerChallengeStore.loadMyTeamToStore(null);
+      await registerChallengeStore.loadMyTeamToStore(logger);
       isDialogOpen.value = false;
     };
 
@@ -378,7 +381,7 @@ export default defineComponent({
         </div>
         <!-- Button section: Refresh data -->
         <div
-          v-else-if="showRefreshData"
+          v-else-if="showRefreshData || !isCurrentUserApproved"
           class="col-12 col-md-auto flex items-center justify-end gap-8"
           data-cy="banner-team-member-approve-section-refresh"
         >
@@ -392,11 +395,13 @@ export default defineComponent({
             @click="refreshPendingMembers"
             data-cy="banner-team-member-approve-button-refresh"
           >
-            {{ $t('bannerTeamMemberApprove.textRefreshHelper') }}
+            <template v-if="showRefreshData">{{
+              $t('bannerTeamMemberApprove.buttonRefreshPendingApprovals')
+            }}</template>
+            <template v-else-if="!isCurrentUserApproved">{{
+              $t('bannerTeamMemberApprove.buttonRefreshApprovalStatus')
+            }}</template>
             <q-icon name="refresh" size="18px" color="grey-7" class="q-ml-sm" />
-            <q-tooltip>
-              {{ $t('bannerTeamMemberApprove.tooltipRefresh') }}
-            </q-tooltip>
           </q-btn>
         </div>
       </div>
