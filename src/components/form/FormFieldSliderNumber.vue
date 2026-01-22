@@ -28,8 +28,15 @@ import { computed, defineComponent } from 'vue';
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
+// stores
+import { useChallengeStore } from '../../stores/challenge';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+
+// utils
+import { defaultPaymentAmountMinComputed } from '../../utils/price_levels';
+import { defaultPaymentAmountMinComputedWithReward } from '../../utils/price_levels_with_reward';
+
 // variables
-const defaultMin = parseInt(rideToWorkByBikeConfig.entryFeeDonationMin);
 const defaultMax = parseInt(rideToWorkByBikeConfig.entryFeePaymentMax);
 
 export default defineComponent({
@@ -51,9 +58,29 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    // compute default min from store
+    const challengeStore = useChallengeStore();
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const defaultMin = computed((): number => {
+      const configAmount = parseInt(rideToWorkByBikeConfig.entryFeeDonationMin);
+      if (configAmount && configAmount > 0) {
+        return configAmount;
+      }
+      if (registerChallengeStore.getIsPaymentWithReward) {
+        return defaultPaymentAmountMinComputedWithReward(
+          challengeStore.getCurrentPriceLevelsWithReward,
+        );
+      } else {
+        return defaultPaymentAmountMinComputed(
+          challengeStore.getCurrentPriceLevels,
+        );
+      }
+    });
+
     // compute final min value from props or default min from config
-    const computedMin = computed(() => {
-      return props.min ?? defaultMin;
+    const computedMin = computed((): number => {
+      return props.min ?? defaultMin.value;
     });
 
     const model = computed({

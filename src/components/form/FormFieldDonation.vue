@@ -19,13 +19,21 @@
  */
 
 // libraries
-import { defineComponent, onUnmounted, ref, watch } from 'vue';
+import { computed, defineComponent, onUnmounted, ref, watch } from 'vue';
 
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // components
 import FormFieldSliderNumber from './FormFieldSliderNumber.vue';
+
+// stores
+import { useChallengeStore } from '../../stores/challenge';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+
+// utils
+import { defaultPaymentAmountMinComputed } from '../../utils/price_levels';
+import { defaultPaymentAmountMinComputedWithReward } from '../../utils/price_levels_with_reward';
 
 export default defineComponent({
   name: 'FormFieldDonation',
@@ -34,10 +42,28 @@ export default defineComponent({
   },
   emits: ['update:donation'],
   setup(props, { emit }) {
-    const defaultPaymentAmountMin = parseInt(
-      rideToWorkByBikeConfig.entryFeeDonationMin,
-    );
-    const amount = ref<number>(defaultPaymentAmountMin);
+    const challengeStore = useChallengeStore();
+    const registerChallengeStore = useRegisterChallengeStore();
+
+    const defaultPaymentAmountMin = computed((): number => {
+      const configAmount = parseInt(rideToWorkByBikeConfig.entryFeeDonationMin);
+      if (configAmount && configAmount > 0) {
+        return configAmount;
+      }
+      if (registerChallengeStore.getIsPaymentWithReward) {
+        return defaultPaymentAmountMinComputedWithReward(
+          challengeStore.getCurrentPriceLevelsWithReward,
+        );
+      } else {
+        return defaultPaymentAmountMinComputed(
+          challengeStore.getCurrentPriceLevels,
+        );
+      }
+    });
+    watch(defaultPaymentAmountMin, () => {
+      amount.value = defaultPaymentAmountMin.value;
+    });
+    const amount = ref<number>(0);
     const isDonation = ref<boolean>(false);
 
     /**
@@ -50,7 +76,7 @@ export default defineComponent({
           emit('update:donation', amount.value);
         } else {
           // deselecting donation resets donation amount to default
-          amount.value = defaultPaymentAmountMin;
+          amount.value = defaultPaymentAmountMin.value;
           emit('update:donation', 0);
         }
       },
