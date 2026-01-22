@@ -229,7 +229,7 @@ export default defineComponent({
         class="col-12"
         data-cy="form-personal-details-phone-input"
       />
-      <!-- Input: News checkbox -->
+      <!-- Input: Contact permission -->
       <div v-ripple class="col-12 q-my-md" data-cy="phone-opt-in">
         <q-checkbox
           dense
