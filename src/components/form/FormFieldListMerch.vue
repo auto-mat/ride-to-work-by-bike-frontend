@@ -93,7 +93,7 @@ export default defineComponent({
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
 
-      // If payment is without reward OR options are empty, load no-merch ID
+      // if payment is without reward OR options are empty, load no-merch ID
       if (!isPaymentWithReward.value || optionsEmpty.value) {
         logger?.info(
           `Payment without reward <${!isPaymentWithReward.value}> or options empty <${optionsEmpty.value}>, loading no-merch ID.`,
@@ -102,15 +102,17 @@ export default defineComponent({
         return;
       }
 
-      // If merch ID is set, restore the selection
+      // if merch ID is set, select the corresponding item
       if (registerChallengeStore.getMerchId) {
         logger?.debug(
           `Merch ID <${registerChallengeStore.getMerchId}> is set.`,
         );
+        // find card that contains the merch ID
         const item = merchandiseItems.value.find(
           (item: MerchandiseItem) =>
             item.id === registerChallengeStore.getMerchId,
         );
+        // select gender and size
         if (item) {
           logger?.debug(`Found item <${JSON.stringify(item, null, 2)}>.`);
           selectedGender.value = item.gender;
@@ -368,20 +370,6 @@ export default defineComponent({
       }
     };
 
-    const hintInputPhone = computed((): string => {
-      if (!isPaymentWithReward.value) {
-        return i18n.global.t('form.merch.hintPhoneNoMerch');
-      }
-      return i18n.global.t('form.merch.hintPhoneWithMerch');
-    });
-
-    const labelPhoneOptIn = computed((): string => {
-      if (!isPaymentWithReward.value) {
-        return i18n.global.t('form.merch.labelPhoneOptInNoMerch');
-      }
-      return i18n.global.t('form.merch.labelPhoneOptInWithMerch');
-    });
-
     const urlSizeConversionChart = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
@@ -390,14 +378,13 @@ export default defineComponent({
         i18n,
       );
     });
+
     return {
       currentItemLabelSize,
       formMerchRef,
       Gender,
-      hintInputPhone,
       isOpen,
       isShowingBottomSizeInput,
-      labelPhoneOptIn,
       optionsFemale,
       optionsMale,
       optionsUnisex,
