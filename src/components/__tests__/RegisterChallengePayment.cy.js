@@ -1374,6 +1374,43 @@ function coreTests() {
       .should('contain', defaultPaymentAmountMinWithReward);
   });
 
+  it('updates donation default when toggling with-reward checkbox', () => {
+    const defaultPaymentOrganizationDonationAmountMin = parseInt(
+      rideToWorkByBikeConfig.entryFeeDonationMin,
+    );
+    // select company payment
+    cy.dataCy(getRadioOption(PaymentSubject.company))
+      .should('be.visible')
+      .click();
+    // enable donation checkbox
+    cy.dataCy(selectorDonationCheckbox).click();
+    // slider defaults to with-reward minimum
+    cy.dataCy(selectorSliderNumberInput)
+      .should('be.visible')
+      .and(
+        'have.value',
+        defaultPaymentOrganizationDonationAmountMin.toString(),
+      );
+    // switch to regular pricing
+    cy.dataCy(selectorCheckboxPaymentWithReward).click();
+    // slider defaults to regular minimum
+    cy.dataCy(selectorSliderNumberInput)
+      .should('be.visible')
+      .and(
+        'have.value',
+        defaultPaymentOrganizationDonationAmountMin.toString(),
+      );
+    // switch back to with-reward pricing
+    cy.dataCy(selectorCheckboxPaymentWithReward).click();
+    // slider defaults back to with-reward minimum
+    cy.dataCy(selectorSliderNumberInput)
+      .should('be.visible')
+      .and(
+        'have.value',
+        defaultPaymentOrganizationDonationAmountMin.toString(),
+      );
+  });
+
   it('shows checkbox become coordinator if organization has no coordinator and user no coordinator - default lang', () => {
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
