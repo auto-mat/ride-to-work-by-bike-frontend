@@ -21,7 +21,8 @@
         "payment_type": "CARD_TOKEN",
         "payment_status": "done",
         "payment_amount": 390,
-        "payment_category": "entry_fee"
+        "payment_category": "entry_fee",
+        "is_payment_with_reward": true
       },
       "organization_type": "company",
       "team_id": 2451,

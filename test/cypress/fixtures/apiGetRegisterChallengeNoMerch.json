@@ -21,7 +21,8 @@
         "payment_type": "fc",
         "payment_status": "waiting",
         "payment_amount": 390,
-        "payment_category": ""
+        "payment_category": "",
+        "is_payment_with_reward": false
       },
       "team_id": 2452,
       "organization_id": 987,

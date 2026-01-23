@@ -1,4 +1,3 @@
-import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
@@ -14,10 +13,6 @@ import {
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
-
-const { getPaletteColor } = colors;
-const grey8 = getPaletteColor('grey-8');
-const grey10 = getPaletteColor('grey-10');
 
 const tshirt2024FemaleMId = 135;
 const tshirt2024FemaleXsId = 133;
@@ -61,16 +56,6 @@ describe('<FormFieldListMerch>', () => {
     });
 
     it('renders component', () => {
-      cy.dataCy('no-merch-label')
-        .should('be.visible')
-        .and('have.css', 'font-size', '14px')
-        .and('have.css', 'font-weight', '400')
-        .and('have.color', grey10);
-      cy.dataCy('no-merch-hint')
-        .should('be.visible')
-        .and('have.css', 'font-size', '12px')
-        .and('have.css', 'font-weight', '400')
-        .and('have.color', grey8);
       // component is visible
       cy.dataCy('list-merch').should('be.visible');
       // female cards are visible
@@ -85,17 +70,6 @@ describe('<FormFieldListMerch>', () => {
         cy.dataCy('list-merch-option-group').children(),
         33,
       );
-    });
-
-    it('allows to select "I do not want merch" option and displays correct hints', () => {
-      // select no merch
-      cy.dataCy('no-merch').click();
-      // merch options are hidden
-      cy.dataCy('list-merch').should('not.be.visible');
-      // unselect no merch
-      cy.dataCy('no-merch').click();
-      // merch options are visible
-      cy.dataCy('list-merch').should('be.visible');
     });
 
     it('renders link to size converion chart image - default lang', () => {
@@ -406,7 +380,6 @@ describe('<FormFieldListMerch>', () => {
       cy.dataCy('text-merch-unavailable')
         .should('be.visible')
         .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));
-      cy.dataCy('no-merch').should('be.visible');
       cy.dataCy('list-merch-tabs').should('not.be.visible');
       cy.dataCy('form-field-merch-size').should('not.exist');
       cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');

@@ -26,7 +26,7 @@ describe('Register Challenge - Merch Options No Price', () => {
   });
 
   context('registration without enabled merch', () => {
-    it('shows empty merch options when not available', () => {
+    it('shows banner "challenge does not feature merch"', () => {
       cy.get('@config').then((config) => {
         cy.fixture('apiGetRegisterChallengeFullTeam.json').then((response) => {
           cy.interceptRegisterChallengeGetApi(config, defLocale, response);
@@ -65,17 +65,13 @@ describe('Register Challenge - Merch Options No Price', () => {
       // check that we can pass to step 6
       cy.dataCy('step-6').find('.q-stepper__step-content').should('be.visible');
       // check that merch options are not visible
-      cy.dataCy('text-merch-unavailable').should('not.exist');
-      cy.dataCy('no-merch').should('be.visible');
       cy.dataCy('list-merch-tabs').should('not.be.visible');
       cy.dataCy('form-field-merch-size').should('not.exist');
       cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
-      // "no merch" checkbox auto-selected
-      cy.dataCy('form-merch-no-merch-checkbox')
-        .should('exist')
-        .and('be.visible')
-        .get('.q-checkbox__inner')
-        .should('have.class', 'q-checkbox__inner--truthy');
+      // verify banner "no merch"
+      cy.dataCy('text-merch-disabled').should('be.visible');
+      cy.dataCy('text-no-merch-selected').should('not.exist');
+      cy.dataCy('text-merch-unavailable').should('not.exist');
       // go to next step is enabled
       cy.dataCy('step-6-continue').should('be.enabled');
     });
