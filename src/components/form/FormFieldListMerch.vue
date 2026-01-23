@@ -435,7 +435,7 @@ export default defineComponent({
     {{ $t('form.merch.textMerchUnavailable') }}
   </q-banner>
   <!-- Tabs: Merch -->
-  <q-card ref="tabsMerchRef" flat class="q-mt-lg" style="max-width: 1024px">
+  <q-card ref="tabsMerchRef" flat style="max-width: 1024px">
     <div
       v-show="isPaymentWithReward && !optionsEmpty"
       data-cy="list-merch"
@@ -537,7 +537,7 @@ export default defineComponent({
       />
     </div>
 
-    <div v-if="!optionsEmpty" class="q-mb-md">
+    <div v-if="isPaymentWithReward && !optionsEmpty" class="q-mb-md">
       <a
         class="text-primary"
         :href="urlSizeConversionChart"

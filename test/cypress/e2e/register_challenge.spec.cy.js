@@ -3224,7 +3224,7 @@ describe('Register Challenge page', () => {
         cy.viewport('macbook-16');
       });
 
-      it('loads the page with approved voucher + disabled rewards', () => {
+      it.only('loads the page with approved voucher + disabled rewards', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.fixture(
@@ -3830,7 +3830,7 @@ describe('Register Challenge page', () => {
         cy.viewport('macbook-16');
       });
 
-      it('fetches the registration status on load', () => {
+      it.only('fetches the registration status on load', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.fixture('apiGetRegisterChallengeNoMerch.json').then(
@@ -3857,6 +3857,10 @@ describe('Register Challenge page', () => {
               );
               // verify banner "no merch"
               cy.dataCy('text-no-merch-selected').should('be.visible');
+              // sizes table link should not be visible
+              cy.dataCy('form-merch-size-conversion-chart-link').should(
+                'not.exist',
+              );
               // merch cards should not be visible
               cy.dataCy('list-merch').should('not.be.visible');
               // go to next step

@@ -67,6 +67,8 @@ Cypress.Commands.add('validateStepMerchWithoutReward', () => {
   cy.dataCy('text-no-merch-selected').should('be.visible');
   // merch cards should not be visible
   cy.dataCy('list-merch').should('not.be.visible');
+  // sizes table link should not be visible
+  cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');
   // go to next step
   cy.dataCy('step-6-continue').should('be.visible').click();
   // on step 7
