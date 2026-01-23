@@ -1375,9 +1375,6 @@ function coreTests() {
   });
 
   it('updates donation default when toggling with-reward checkbox', () => {
-    const defaultPaymentOrganizationDonationAmountMin = parseInt(
-      rideToWorkByBikeConfig.entryFeeDonationMin,
-    );
     // select company payment
     cy.dataCy(getRadioOption(PaymentSubject.company))
       .should('be.visible')
@@ -1387,28 +1384,19 @@ function coreTests() {
     // slider defaults to with-reward minimum
     cy.dataCy(selectorSliderNumberInput)
       .should('be.visible')
-      .and(
-        'have.value',
-        defaultPaymentOrganizationDonationAmountMin.toString(),
-      );
+      .and('have.value', rideToWorkByBikeConfig.entryFeeDonationMin.toString());
     // switch to regular pricing
     cy.dataCy(selectorCheckboxPaymentWithReward).click();
     // slider defaults to regular minimum
     cy.dataCy(selectorSliderNumberInput)
       .should('be.visible')
-      .and(
-        'have.value',
-        defaultPaymentOrganizationDonationAmountMin.toString(),
-      );
+      .and('have.value', rideToWorkByBikeConfig.entryFeeDonationMin.toString());
     // switch back to with-reward pricing
     cy.dataCy(selectorCheckboxPaymentWithReward).click();
     // slider defaults back to with-reward minimum
     cy.dataCy(selectorSliderNumberInput)
       .should('be.visible')
-      .and(
-        'have.value',
-        defaultPaymentOrganizationDonationAmountMin.toString(),
-      );
+      .and('have.value', rideToWorkByBikeConfig.entryFeeDonationMin.toString());
   });
 
   it('shows checkbox become coordinator if organization has no coordinator and user no coordinator - default lang', () => {
