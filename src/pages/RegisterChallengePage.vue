@@ -687,15 +687,6 @@ export default defineComponent({
                   data-cy="step-4-continue"
                 />
               </div>
-              <div
-                class="flex items-center gap-8 q-mt-md"
-                data-cy="step-4-info"
-              >
-                <q-icon name="info" size="18px" color="primary" />
-                <p class="q-mt-none q-mb-none text-caption text-grey-7">
-                  {{ $t('form.company.textCoordinator') }}
-                </p>
-              </div>
             </q-stepper-navigation>
           </q-step>
           <!-- Step: Team -->

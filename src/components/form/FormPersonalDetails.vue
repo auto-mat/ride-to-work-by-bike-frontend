@@ -180,7 +180,7 @@ export default defineComponent({
         </div>
       </div>
       <!-- Input: Gender -->
-      <div class="col-12" data-cy="form-personal-details-gender">
+      <div class="col-12 q-mt-md" data-cy="form-personal-details-gender">
         <!-- Label -->
         <label for="form-gender" class="text-grey-10 text-caption text-bold">
           {{ $t('form.personalDetails.titleGender') }}
@@ -195,38 +195,50 @@ export default defineComponent({
         />
       </div>
       <!-- Link: Register as coordinator -->
-      <div
+      <template
         v-if="
           !isUserOrganizationAdmin &&
           !getHasOrganizationAdmin &&
           challengeAllowRegisterOrganizationAdmin === 'enable'
         "
-        class="col-12"
-        data-cy="form-personal-details-register-as-coordinator"
       >
-        <p
-          class="q-my-none q-mt-sm"
-          data-cy="form-personal-details-register-as-coordinator-text"
+        <div
+          class="col-12 q-mt-md"
+          data-cy="form-personal-details-register-as-coordinator"
         >
-          {{ $t('register.form.hintRegisterAsCoordinator') }}
-        </p>
-        <div class="q-mt-xs q-mb-md">
-          <router-link
-            :to="urlRegisterAsCoordinator"
-            class="text-grey-10"
-            data-cy="form-personal-details-register-as-coordinator-link"
+          <p
+            class="q-my-none"
+            data-cy="form-personal-details-register-as-coordinator-text"
           >
-            {{ $t('register.form.linkRegisterAsCoordinator') }}
-          </router-link>
+            {{ $t('register.form.hintRegisterAsCoordinator') }}
+          </p>
+          <div class="q-mt-xs">
+            <router-link
+              :to="urlRegisterAsCoordinator"
+              class="text-grey-10"
+              data-cy="form-personal-details-register-as-coordinator-link"
+            >
+              {{ $t('register.form.linkRegisterAsCoordinator') }}
+            </router-link>
+          </div>
         </div>
-      </div>
+        <div
+          class="col-12 flex items-center gap-8"
+          data-cy="text-register-as-competing-coordinator"
+        >
+          <q-icon name="info" size="18px" color="primary" />
+          <p class="q-mt-none q-mb-none text-caption text-grey-7">
+            {{ $t('form.company.textCoordinator') }}
+          </p>
+        </div>
+      </template>
 
       <!-- Input: Phone number -->
       <form-field-phone
         v-model="phone"
         :hint="$t('form.merch.hintPhoneNoMerch')"
         :required="true"
-        class="col-12"
+        class="col-12 q-mt-md"
         data-cy="form-personal-details-phone-input"
       />
       <!-- Input: Contact permission -->

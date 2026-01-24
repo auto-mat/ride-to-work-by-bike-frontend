@@ -27,6 +27,7 @@ describe('<FormPersonalDetails>', () => {
       'form',
       i18n,
     );
+    cy.testLanguageStringsInContext(['textCoordinator'], 'form.company', i18n);
     cy.testLanguageStringsInContext(
       [
         'hintGender',
@@ -112,6 +113,12 @@ describe('<FormPersonalDetails>', () => {
           )
           .invoke('attr', 'href')
           .should('include', urlRegisterAsCoordinator);
+        // info about coordinator registration in app
+        cy.dataCy('text-register-as-competing-coordinator').should(
+          'be.visible',
+          'contain',
+          i18n.global.t('form.company.textCoordinator'),
+        );
       });
     }
 
