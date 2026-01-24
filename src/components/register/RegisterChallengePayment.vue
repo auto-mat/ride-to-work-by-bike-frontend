@@ -698,21 +698,6 @@ export default defineComponent({
         "
       />
     </q-banner>
-    <!-- Checkbox: With reward toggle -->
-    <div class="q-my-lg">
-      <q-checkbox
-        dense
-        v-model="isPaymentWithReward"
-        color="primary"
-        :true-value="true"
-        :false-value="false"
-        :disable="isPriceLevelSwitchDisabled"
-        class="text-grey-10"
-        data-cy="checkbox-payment-with-reward"
-      >
-        {{ $t('register.challenge.labelPaymentWithReward') }}
-      </q-checkbox>
-    </div>
     <!-- Input: Payment subject -->
     <div class="q-my-lg">
       <!-- Label -->
@@ -903,6 +888,21 @@ export default defineComponent({
           </q-field>
         </div>
       </div>
+    </div>
+    <!-- Checkbox: With reward toggle -->
+    <div class="q-my-lg">
+      <q-checkbox
+        dense
+        v-model="isPaymentWithReward"
+        color="primary"
+        :true-value="true"
+        :false-value="false"
+        :disable="isPriceLevelSwitchDisabled"
+        class="text-grey-10"
+        data-cy="checkbox-payment-with-reward"
+      >
+        {{ $t('register.challenge.labelPaymentWithReward') }}
+      </q-checkbox>
     </div>
     <!-- Section: Total price -->
     <template v-if="computedCurrentValue">
