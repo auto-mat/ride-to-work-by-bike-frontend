@@ -69,7 +69,13 @@ import { deepObjectWithSimplePropsCopy } from 'src/utils';
 export const emptyFormCompanyFields: FormCompanyFields = {
   name: '',
   vatId: '',
-  address: {
+  orgAddress: {
+    street: '',
+    houseNumber: '',
+    city: '',
+    zip: '',
+  },
+  subsidiaryAddress: {
     street: '',
     houseNumber: '',
     city: '',
@@ -149,9 +155,11 @@ export default defineComponent({
     // form ref
     const formRef = ref<typeof QForm | null>(null);
     // default form state (make a deep copy of empty state)
-    const companyNew: FormCompanyFields = deepObjectWithSimplePropsCopy(
-      emptyFormCompanyFields,
-    ) as FormCompanyFields;
+    const companyNew = ref<FormCompanyFields>(
+      deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields,
+    );
     /**
      * Close dialog
      * Resets form and closes dialog
@@ -162,6 +170,11 @@ export default defineComponent({
         formRef.value.reset();
         logger?.info('Close add company modal dialog and reset form.');
       }
+      // reset companyNew
+      companyNew.value = deepObjectWithSimplePropsCopy(
+        emptyFormCompanyFields,
+      ) as FormCompanyFields;
+      logger?.debug('Reset new company model value.');
       isDialogOpen.value = false;
     };
     /**
@@ -178,16 +191,23 @@ export default defineComponent({
         if (isFormValid) {
           logger?.info('Create organization.');
           const data = await createOrganization(
-            companyNew.name,
-            companyNew.vatId,
+            companyNew.value.name,
+            companyNew.value.vatId,
             props.organizationType,
+            companyNew.value.orgAddress,
           );
           if (data?.id) {
             logger?.debug(`Organization created with ID <${data.id}>.`);
             logger?.debug(`Organization created with name <${data.name}>.`);
-            // close dialog
+            // close dialog and reset form
             isDialogOpen.value = false;
-            logger?.info('Close add company modal dialog.');
+            if (formRef.value) {
+              formRef.value.reset();
+            }
+            companyNew.value = deepObjectWithSimplePropsCopy(
+              emptyFormCompanyFields,
+            ) as FormCompanyFields;
+            logger?.info('Close add company modal dialog and reset form.');
             // Set organizations option to created organization
             logger?.debug(`Setting organizations options to ID <${data.id}>.`);
             const newCompanyOption: { label: string; value: number } = {

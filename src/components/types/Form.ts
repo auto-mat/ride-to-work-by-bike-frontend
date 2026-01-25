@@ -25,7 +25,15 @@ export type FormSelectOption = {
 export type FormCompanyFields = {
   name: string;
   vatId: string;
-  address: FormCompanyAddressFields;
+  orgAddress: FormOrganizationAddressFields;
+  subsidiaryAddress?: FormCompanyAddressFields;
+};
+
+export type FormOrganizationAddressFields = {
+  street: string;
+  houseNumber: string;
+  city: string;
+  zip: string;
 };
 
 export type FormCompanyAddressFields = {

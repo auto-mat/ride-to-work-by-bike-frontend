@@ -90,7 +90,13 @@ import { deepObjectWithSimplePropsCopy } from '../../utils';
 const emptyFormCompanyFields: FormCompanyFields = {
   name: '',
   vatId: '',
-  address: {
+  orgAddress: {
+    street: '',
+    houseNumber: '',
+    city: '',
+    zip: '',
+  },
+  subsidiaryAddress: {
     street: '',
     houseNumber: '',
     city: '',
@@ -273,6 +279,7 @@ export default defineComponent({
           organizationNew.value.name,
           organizationNew.value.vatId,
           props.organizationType,
+          organizationNew.value.orgAddress,
         );
 
         if (!organizationData?.id) {
@@ -295,7 +302,7 @@ export default defineComponent({
         logger?.info('Create new subsidiary.');
         const subsidiaryData = await createSubsidiary(
           organizationData.id,
-          organizationNew.value.address,
+          organizationNew.value.subsidiaryAddress,
         );
         if (subsidiaryData?.id) {
           logger?.debug(

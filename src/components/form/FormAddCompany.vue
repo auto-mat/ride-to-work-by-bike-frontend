@@ -35,6 +35,7 @@ import { computed, defineComponent, nextTick, ref } from 'vue';
 
 // components
 import FormAddSubsidiary from './FormAddSubsidiary.vue';
+import FormFieldAddress from './FormFieldAddress.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 
@@ -53,6 +54,7 @@ export default defineComponent({
   name: 'FormAddCompany',
   components: {
     FormAddSubsidiary,
+    FormFieldAddress,
     FormFieldTextRequired,
     FormFieldBusinessId,
   },
@@ -150,6 +152,37 @@ export default defineComponent({
         />
       </div>
     </div>
+    <!-- Organization billing address -->
+    <div class="q-mt-lg">
+      <div class="q-mb-md">
+        <h3
+          class="text-body1 text-bold text-black q-my-none"
+          data-cy="form-add-company-section-org-address-title"
+        >
+          {{ $t('form.company.titleOrganizationAddress') }}
+        </h3>
+        <p
+          class="text-caption q-mt-sm"
+          data-cy="form-add-company-org-address-description"
+        >
+          {{ $t('form.company.textOrganizationAddress') }}
+        </p>
+      </div>
+      <!-- Billing address fields -->
+      <form-field-address
+        v-model:street="company.orgAddress.street"
+        v-model:house-number="company.orgAddress.houseNumber"
+        v-model:city="company.orgAddress.city"
+        v-model:zip="company.orgAddress.zip"
+        field-prefix="orgAddress"
+        @update:street="onUpdate"
+        @update:house-number="onUpdate"
+        @update:city="onUpdate"
+        @update:zip="onUpdate"
+        data-cy="form-add-company-org-address"
+      />
+    </div>
+    <!-- Subsidiary location address (default variant only) -->
     <div v-if="variant === FormAddCompanyVariantProp.default" class="q-mt-lg">
       <div class="q-mb-md">
         <h3
@@ -158,13 +191,13 @@ export default defineComponent({
         >
           {{ sectionTitleSubsidiaryAddress }}
         </h3>
-        <p class="q-mt-sm">
+        <p class="text-caption q-mt-sm">
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>
       <!-- Subsidiary address fields -->
       <form-add-subsidiary
-        v-model="company.address"
+        v-model="company.subsidiaryAddress"
         @update:model-value="onUpdate"
         data-cy="form-add-company-subsidiary"
       />

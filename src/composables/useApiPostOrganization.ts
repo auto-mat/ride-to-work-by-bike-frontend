@@ -1,6 +1,9 @@
 // libraries
 import { ref, Ref } from 'vue';
 
+// adapters
+import { organizationAdapter } from '../adapters/organizationAdapter';
+
 // composables
 import { useApi } from './useApi';
 
@@ -16,6 +19,7 @@ import type {
   PostOrganizationPayload,
   PostOrganizationResponse,
 } from '../components/types/apiOrganization';
+import type { FormOrganizationAddressFields } from '../components/types/Form';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
@@ -26,6 +30,7 @@ interface UseApiPostOrganizationReturn {
     name: string,
     vatId: string,
     organizationType: string,
+    address?: FormOrganizationAddressFields,
   ) => Promise<PostOrganizationResponse | null>;
 }
 
@@ -48,12 +53,14 @@ export const useApiPostOrganization = (
    * @param {string} name - Organization name
    * @param {string} vatId - Organization VAT ID
    * @param {string} organizationType - Organization type
+   * @param {FormOrganizationAddressFields} address - Organization billing address (optional)
    * @returns {Promise<PostOrganizationResponse | null>} - Promise
    */
   const createOrganization = async (
     name: string,
     vatId: string,
     organizationType: string,
+    address?: FormOrganizationAddressFields,
   ): Promise<PostOrganizationResponse | null> => {
     logger?.debug(
       `Create new organization with name <${name}> and VAT ID <${vatId}>.`,
@@ -68,9 +75,14 @@ export const useApiPostOrganization = (
     // data
     const payload: PostOrganizationPayload = {
       name,
-      vatId,
+      ico: vatId,
       organization_type: organizationType,
     };
+
+    // add address if provided
+    if (address) {
+      payload.address = organizationAdapter.toApiAddressPayload(address);
+    }
 
     // post organization
     const { data } = await apiFetch<PostOrganizationResponse>({
