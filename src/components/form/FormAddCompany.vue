@@ -191,7 +191,7 @@ export default defineComponent({
         >
           {{ sectionTitleSubsidiaryAddress }}
         </h3>
-        <p class="text-caption q-mt-sm">
+        <p class="q-mt-sm">
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>

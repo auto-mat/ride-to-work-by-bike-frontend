@@ -158,7 +158,7 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormTitle)
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelCompanyShort'));
-      // permission text visible in default variant
+      // permission text
       cy.dataCy(selectorFormPermission)
         .should('be.visible')
         .and('contain', i18n.global.t('form.company.textCompanyPermission'));
