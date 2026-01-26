@@ -565,7 +565,7 @@ labelVariant = "Varianta"
 labelUrlSizeConversionChartLink = "Tabulka velikosti"
 textMerchUnavailable = "V rámci dodatečné registrace do Květnové výzvy Do práce na kole už hromadně nerozesíláme účastnická trika ani ponožky. Máte ovšem nárok na slevu 200 Kč do našeho benefičního e-shopu, kde si můžete triko či ponožky pořídit (sleva platí do 30. 6. 2025 na každý nákup nad 500 Kč). Kód voucheru je 57539805."
 textNoMerchSelected = "Zvolili jste možnost 'bez balíčku', takže tento krok můžete přeskočit."
-textMerchDisabled = "Tato výzva nenabízí merch."
+textMerchDisabled = "Tato výzva nenabízí účastnický balíček."
 
 [form.personalDetails]
 hintGender = "Slouží pro rozřazení do výkonnostních kategorií"
