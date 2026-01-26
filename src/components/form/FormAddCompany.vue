@@ -161,10 +161,7 @@ export default defineComponent({
         >
           {{ $t('form.company.titleOrganizationAddress') }}
         </h3>
-        <p
-          class="text-caption q-mt-sm"
-          data-cy="form-add-company-org-address-description"
-        >
+        <p class="q-mt-sm" data-cy="form-add-company-org-address-description">
           {{ $t('form.company.textOrganizationAddress') }}
         </p>
       </div>
