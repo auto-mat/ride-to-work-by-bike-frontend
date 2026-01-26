@@ -93,10 +93,11 @@ export default defineComponent({
     onMounted(async () => {
       await registerChallengeStore.loadMerchandiseToStore(logger);
 
-      // if payment is without reward OR options are empty, load no-merch ID
+      // if payment is without reward or options are empty, load no-merch ID
       if (!isPaymentWithReward.value || optionsEmpty.value) {
-        logger?.info(
-          `Payment without reward <${!isPaymentWithReward.value}> or options empty <${optionsEmpty.value}>, loading no-merch ID.`,
+        logger?.debug(
+          `Payment without reward <${!isPaymentWithReward.value}> or ` +
+            ` options empty <${optionsEmpty.value}>, loading no-merch ID.`,
         );
         await loadNoMerchId();
         return;
