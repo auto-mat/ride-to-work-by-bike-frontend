@@ -18,6 +18,7 @@
           "street": "Hlavní",
           "street_number": 123,
           "city": "Praha",
+          "challenge_city": "Praha",
           "icon_url": null,
           "teams": [
             {

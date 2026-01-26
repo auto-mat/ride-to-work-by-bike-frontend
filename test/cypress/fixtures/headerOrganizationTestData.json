@@ -20,6 +20,7 @@
             "street": "Hlavní",
             "street_number": 123,
             "city": "Praha",
+            "challenge_city": "Praha",
             "icon_url": null,
             "teams": [
               {
@@ -213,6 +214,7 @@
             "street": "Pivovarská",
             "street_number": 456,
             "city": "Brno",
+            "challenge_city": "Brno",
             "icon_url": null,
             "teams": [
               {
@@ -378,6 +380,7 @@
             "street": "Nádražní",
             "street_number": 789,
             "city": "Ostrava",
+            "challenge_city": "Ostrava",
             "icon_url": null,
             "teams": [
               {
@@ -405,6 +408,7 @@
             "street": "Tylova",
             "street_number": 12,
             "city": "Plzeň",
+            "challenge_city": "Plzeň",
             "icon_url": null,
             "teams": []
           }
@@ -466,6 +470,7 @@
             "street": "Papírenská",
             "street_number": 25,
             "city": "Olomouc",
+            "challenge_city": "Olomouc",
             "icon_url": null,
             "teams": [
               {
