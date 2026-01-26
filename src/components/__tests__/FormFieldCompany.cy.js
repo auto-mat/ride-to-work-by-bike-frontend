@@ -4,7 +4,6 @@ import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
-  httpSuccessfullStatus,
   interceptOrganizationsApi,
   waitForOrganizationsApi,
 } from '../../../test/cypress/support/commonTests';
@@ -197,27 +196,23 @@ describe('<FormFieldCompany>', () => {
                 .type(formFieldCompanyCreateRequest.name);
               cy.dataCy('form-add-company-vat-id')
                 .find('input')
-                .type(formFieldCompanyCreateRequest.vatId);
+                .type(formFieldCompanyCreateRequest.ico);
+              cy.dataCy('form-orgAddress-street')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.address.street);
+              cy.dataCy('form-orgAddress-house-number')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.address.houseNumber);
+              cy.dataCy('form-orgAddress-city')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.address.city);
+              cy.dataCy('form-orgAddress-zip')
+                .find('input')
+                .type(formFieldCompanyCreateRequest.address.zip);
               // submit form
               cy.dataCy('dialog-button-submit').click();
               // test response
-              cy.wait('@createOrganization').then((interception) => {
-                expect(interception.request.headers.authorization).to.include(
-                  'Bearer',
-                );
-                expect(interception.response.statusCode).to.equal(
-                  httpSuccessfullStatus,
-                );
-                expect(interception.request.body).to.deep.equal({
-                  name: formFieldCompanyCreateRequest.name,
-                  vatId: formFieldCompanyCreateRequest.vatId,
-                  organization_type:
-                    formFieldCompanyCreateRequest.organization_type,
-                });
-                expect(interception.response.body).to.deep.equal(
-                  formFieldCompanyCreateResponse,
-                );
-              });
+              cy.waitForOrganizationPostApi();
               // test selected option
               cy.dataCy('form-company')
                 .find('input')

@@ -267,19 +267,45 @@ describe('<FormFieldSelectTable>', () => {
       // scroll to top
       cy.dataCy('dialog-body').scrollTo('top', { ensureScrollable: false });
       // fill in form
-      cy.dataCy('form-add-company-name').find('input').type('AutoMat');
-      cy.dataCy('form-add-company-vat-id').find('input').type('87654321');
-      cy.dataCy('form-add-subsidiary-street').find('input').type('Slezská');
-      cy.dataCy('form-add-subsidiary-house-number')
-        .find('input')
-        .type('2033/11');
-      cy.dataCy('form-add-subsidiary-city').find('input').type('Praha');
-      cy.dataCy('form-add-subsidiary-zip').find('input').type('120 00');
-      cy.dataCy('form-add-subsidiary-city-challenge').click();
-      cy.get('.q-menu').should('be.visible').find('.q-item').first().click();
-      // submit
-      cy.dataCy('dialog-button-submit').click();
-      cy.dataCy('dialog-add-option').should('not.exist');
+      cy.fixture('formFieldCompanyCreateRequest.json').then(
+        (formFieldCompanyCreateRequest) => {
+          // company details
+          cy.dataCy('form-add-company-name')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.name);
+          cy.dataCy('form-add-company-vat-id')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.ico);
+          cy.dataCy('form-orgAddress-street')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.address.street);
+          cy.dataCy('form-orgAddress-house-number')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.address.houseNumber);
+          cy.dataCy('form-orgAddress-city')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.address.city);
+          cy.dataCy('form-orgAddress-zip')
+            .find('input')
+            .type(formFieldCompanyCreateRequest.address.zip);
+          // subsidiary details
+          cy.dataCy('form-add-subsidiary-street').find('input').type('Slezská');
+          cy.dataCy('form-add-subsidiary-house-number')
+            .find('input')
+            .type('2033/11');
+          cy.dataCy('form-add-subsidiary-city').find('input').type('Praha');
+          cy.dataCy('form-add-subsidiary-zip').find('input').type('120 00');
+          cy.dataCy('form-add-subsidiary-city-challenge').click();
+          cy.get('.q-menu')
+            .should('be.visible')
+            .find('.q-item')
+            .first()
+            .click();
+          // submit
+          cy.dataCy('dialog-button-submit').click();
+          cy.dataCy('dialog-add-option').should('not.exist');
+        },
+      );
     });
 
     it('allows to add a new organization', () => {

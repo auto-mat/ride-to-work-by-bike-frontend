@@ -1,11 +1,17 @@
 {
   "name": "Test Company",
   "vatId": "12345678",
-  "address": {
-    "street": "Test Street",
+  "orgAddress": {
+    "street": "Test Organization Street",
     "houseNumber": "123",
-    "city": "Test City",
-    "zip": "12345",
+    "city": "Test Organization City",
+    "zip": "12345"
+  },
+  "subsidiaryAddress": {
+    "street": "Test Subsidiary Street",
+    "houseNumber": "456",
+    "city": "Test Subsidiary City",
+    "zip": "54321",
     "cityChallenge": 123123,
     "department": "Test Department"
   }

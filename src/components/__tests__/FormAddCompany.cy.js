@@ -15,6 +15,12 @@ const selectorFormTitle = 'form-add-company-title';
 const selectorFormPermission = 'form-add-company-permission';
 const selectorFormName = 'form-add-company-name';
 const selectorFormVatId = 'form-add-company-vat-id';
+const selectorFormSectionOrgAddressTitle =
+  'form-add-company-section-org-address-title';
+const selectorFormOrgAddressStreet = 'form-orgAddress-street';
+const selectorFormOrgAddressHouseNumber = 'form-orgAddress-house-number';
+const selectorFormOrgAddressCity = 'form-orgAddress-city';
+const selectorFormOrgAddressZip = 'form-orgAddress-zip';
 const selectorFormStreet = 'form-add-subsidiary-street';
 const selectorFormHouseNumber = 'form-add-subsidiary-house-number';
 const selectorFormCity = 'form-add-subsidiary-city';
@@ -35,6 +41,8 @@ describe('<FormAddCompany>', () => {
         'company.textCompanyPermission',
         'labelTitle',
         'labelBusinessId',
+        'company.titleOrganizationAddress',
+        'company.textOrganizationAddress',
         'company.titleSubsidiaryAddress',
         'company.textSubsidiaryAddress',
         'labelStreet',
@@ -71,12 +79,21 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormTitle)
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelCompanyShort'));
-      // permission text not visible
+      // permission text not visible in simple variant
       cy.dataCy(selectorFormPermission).should('not.exist');
       // basic fields
       cy.dataCy(selectorFormName).should('be.visible');
       cy.dataCy(selectorFormVatId).should('be.visible');
-      // address fields not visible
+      // org address section title
+      cy.dataCy(selectorFormSectionOrgAddressTitle)
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.titleOrganizationAddress'));
+      // org address fields visible
+      cy.dataCy(selectorFormOrgAddressStreet).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressHouseNumber).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressCity).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressZip).should('be.visible');
+      // subsidiary fields not visible in simple variant
       cy.dataCy(selectorFormStreet).should('not.exist');
       cy.dataCy(selectorFormHouseNumber).should('not.exist');
       cy.dataCy(selectorFormCity).should('not.exist');
@@ -91,9 +108,34 @@ describe('<FormAddCompany>', () => {
         // fill in basic fields
         cy.dataCy(selectorFormName).find('input').type(companyAddress.name);
         cy.dataCy(selectorFormVatId).find('input').type(companyAddress.vatId);
+        // fill in org address fields
+        cy.dataCy(selectorFormOrgAddressStreet)
+          .find('input')
+          .type(companyAddress.orgAddress.street);
+        cy.dataCy(selectorFormOrgAddressHouseNumber)
+          .find('input')
+          .type(companyAddress.orgAddress.houseNumber);
+        cy.dataCy(selectorFormOrgAddressCity)
+          .find('input')
+          .type(companyAddress.orgAddress.city);
+        cy.dataCy(selectorFormOrgAddressZip)
+          .find('input')
+          .type(companyAddress.orgAddress.zip);
         // verify model updates
         cy.wrap(model).its('value.name').should('eq', companyAddress.name);
         cy.wrap(model).its('value.vatId').should('eq', companyAddress.vatId);
+        cy.wrap(model)
+          .its('value.orgAddress.street')
+          .should('eq', companyAddress.orgAddress.street);
+        cy.wrap(model)
+          .its('value.orgAddress.houseNumber')
+          .should('eq', companyAddress.orgAddress.houseNumber);
+        cy.wrap(model)
+          .its('value.orgAddress.city')
+          .should('eq', companyAddress.orgAddress.city);
+        cy.wrap(model)
+          .its('value.orgAddress.zip')
+          .should('eq', companyAddress.orgAddress.zip);
       });
     });
   });
@@ -116,14 +158,25 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormTitle)
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelCompanyShort'));
-      // permission text
+      // permission text visible in default variant
       cy.dataCy(selectorFormPermission)
         .should('be.visible')
         .and('contain', i18n.global.t('form.company.textCompanyPermission'));
       // basic fields
       cy.dataCy(selectorFormName).should('be.visible');
       cy.dataCy(selectorFormVatId).should('be.visible');
-      // address fields
+      // org address section
+      cy.dataCy(selectorFormSectionOrgAddressTitle)
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.company.titleOrganizationAddress'));
+      // org address fields
+      cy.dataCy(selectorFormOrgAddressStreet).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressHouseNumber).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressCity).should('be.visible');
+      cy.dataCy(selectorFormOrgAddressZip).should('be.visible');
+      // subsidiary section
+      cy.dataCy(selectorFormSectionSubsidiaryTitle).should('be.visible');
+      // subsidiary address fields
       cy.dataCy(selectorFormStreet).should('be.visible');
       cy.dataCy(selectorFormHouseNumber).should('be.visible');
       cy.dataCy(selectorFormCity).should('be.visible');
@@ -138,19 +191,32 @@ describe('<FormAddCompany>', () => {
         // fill in basic fields
         cy.dataCy(selectorFormName).find('input').type(companyAddress.name);
         cy.dataCy(selectorFormVatId).find('input').type(companyAddress.vatId);
-        // fill in address fields
+        // fill in org address fields
+        cy.dataCy(selectorFormOrgAddressStreet)
+          .find('input')
+          .type(companyAddress.orgAddress.street);
+        cy.dataCy(selectorFormOrgAddressHouseNumber)
+          .find('input')
+          .type(companyAddress.orgAddress.houseNumber);
+        cy.dataCy(selectorFormOrgAddressCity)
+          .find('input')
+          .type(companyAddress.orgAddress.city);
+        cy.dataCy(selectorFormOrgAddressZip)
+          .find('input')
+          .type(companyAddress.orgAddress.zip);
+        // fill in subsidiary address fields
         cy.dataCy(selectorFormStreet)
           .find('input')
-          .type(companyAddress.address.street);
+          .type(companyAddress.subsidiaryAddress.street);
         cy.dataCy(selectorFormHouseNumber)
           .find('input')
-          .type(companyAddress.address.houseNumber);
+          .type(companyAddress.subsidiaryAddress.houseNumber);
         cy.dataCy(selectorFormCity)
           .find('input')
-          .type(companyAddress.address.city);
+          .type(companyAddress.subsidiaryAddress.city);
         cy.dataCy(selectorFormZip)
           .find('input')
-          .type(companyAddress.address.zip);
+          .type(companyAddress.subsidiaryAddress.zip);
         cy.dataCy(selectorFormCityChallenge).click();
         cy.get(classSelectorDropdownMenu)
           .should('be.visible')
@@ -158,12 +224,13 @@ describe('<FormAddCompany>', () => {
             cy.get(classSelectorDropdownItem).first().click();
           });
         cy.dataCy(selectorFormDepartment).type(
-          companyAddress.address.department,
+          companyAddress.subsidiaryAddress.department,
         );
         cy.dataCy(selectorFormDepartment).blur();
         // override cityChallenge with fixture data to get correct ID
         cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
-          companyAddress.address.cityChallenge = citiesResponse.results[0].id;
+          companyAddress.subsidiaryAddress.cityChallenge =
+            citiesResponse.results[0].id;
         });
         // verify model updates
         cy.wrap(model).its('value').should('deep.equal', companyAddress);

@@ -1,11 +1,10 @@
 {
   "name": "Test Company",
   "ico": "12345678",
-  "organization_type": "company",
   "address": {
     "street": "Test Organization Street",
-    "houseNumber": "321",
+    "street_number": "123",
     "city": "Test Organization City",
-    "zip": "12345"
+    "psc": "12345"
   }
 }

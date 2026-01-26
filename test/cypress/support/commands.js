@@ -1606,9 +1606,17 @@ Cypress.Commands.add('waitForOrganizationPostApi', () => {
             expect(request.headers.authorization).to.include(bearerTokeAuth);
             expect(request.body).to.deep.equal({
               name: formFieldCompanyCreateRequest.name,
-              vatId: formFieldCompanyCreateRequest.vatId,
+              ico: formFieldCompanyCreateRequest.ico,
               organization_type:
                 formFieldCompanyCreateRequest.organization_type,
+              address: {
+                city: formFieldCompanyCreateRequest.address.city,
+                psc: formFieldCompanyCreateRequest.address.zip,
+                street: formFieldCompanyCreateRequest.address.street,
+                street_number:
+                  formFieldCompanyCreateRequest.address.houseNumber,
+                recipient: '',
+              },
             });
             if (response) {
               expect(response.statusCode).to.equal(httpSuccessfullStatus);
@@ -1637,7 +1645,19 @@ Cypress.Commands.add(
       .type(formFieldCompanyCreateRequest.name);
     cy.dataCy('form-add-company-vat-id')
       .find('input')
-      .type(formFieldCompanyCreateRequest.vatId);
+      .type(formFieldCompanyCreateRequest.ico);
+    cy.dataCy('form-orgAddress-street')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.address.street);
+    cy.dataCy('form-orgAddress-house-number')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.address.houseNumber);
+    cy.dataCy('form-orgAddress-city')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.address.city);
+    cy.dataCy('form-orgAddress-zip')
+      .find('input')
+      .type(formFieldCompanyCreateRequest.address.zip);
     // fill subsidiary address data
     cy.dataCy('form-add-subsidiary-street')
       .find('input')
