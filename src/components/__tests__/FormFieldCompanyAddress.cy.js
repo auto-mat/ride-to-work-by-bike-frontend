@@ -311,7 +311,7 @@ describe('<FormFieldCompanyAddress>', () => {
             // submit form
             cy.dataCy('dialog-button-submit').click();
             // wait for API response
-            cy.waitForSubsidiaryPostApi(subsidiaryResponse);
+            cy.waitForSubsidiaryPostApi();
             // verify model was updated
             cy.wrap(model).its('value').should('eq', subsidiaryResponse.id);
             // verify dialog was closed

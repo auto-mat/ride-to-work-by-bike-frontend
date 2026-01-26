@@ -1378,21 +1378,28 @@ Cypress.Commands.add(
 /*
  * Wait for intercept subsidiary POST API call and compare request/response object
  * Wait for `@postSubsidiary` intercept
+ * @param {object|null} requestBody - Optional custom request body to validate
+ * @param {object|null} responseBody - Optional custom response body to validate
  */
-Cypress.Commands.add('waitForSubsidiaryPostApi', () => {
-  cy.fixture('apiPostSubsidiaryRequest').then((subsidiaryRequest) => {
-    cy.fixture('apiPostSubsidiaryResponse').then((subsidiaryResponse) => {
-      cy.wait('@postSubsidiary').then(({ request, response }) => {
-        expect(request.headers.authorization).to.include(bearerTokeAuth);
-        expect(request.body).to.deep.equal(subsidiaryRequest);
-        if (response) {
-          expect(response.statusCode).to.equal(httpSuccessfullStatus);
-          expect(response.body).to.deep.equal(subsidiaryResponse);
-        }
+Cypress.Commands.add(
+  'waitForSubsidiaryPostApi',
+  (requestBody = null, responseBody = null) => {
+    cy.fixture('apiPostSubsidiaryRequest').then((defaultRequest) => {
+      cy.fixture('apiPostSubsidiaryResponse').then((defaultResponse) => {
+        cy.wait('@postSubsidiary').then(({ request, response }) => {
+          expect(request.headers.authorization).to.include(bearerTokeAuth);
+          expect(request.body).to.deep.equal(requestBody || defaultRequest);
+          if (response) {
+            expect(response.statusCode).to.equal(httpSuccessfullStatus);
+            expect(response.body).to.deep.equal(
+              responseBody || defaultResponse,
+            );
+          }
+        });
       });
     });
-  });
-});
+  },
+);
 
 /**
  * Intercept merchandise GET API call
