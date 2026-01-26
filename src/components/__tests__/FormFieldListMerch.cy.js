@@ -50,7 +50,12 @@ describe('<FormFieldListMerch>', () => {
         props: {},
       });
       cy.viewport('macbook-16');
-
+      // set price level
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((storeChallenge) => {
+          storeChallenge.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // wait for API responses
       cy.waitForMerchandiseApi();
     });
@@ -58,6 +63,9 @@ describe('<FormFieldListMerch>', () => {
     it('renders component', () => {
       // component is visible
       cy.dataCy('list-merch').should('be.visible');
+      cy.dataCy('text-merch-disabled').should('not.exist');
+      cy.dataCy('text-no-merch-selected').should('not.exist');
+      cy.dataCy('text-merch-unavailable').should('not.exist');
       // female cards are visible
       cy.dataCy('form-card-merch-female').should('be.visible');
       // tabs are visible
@@ -362,7 +370,12 @@ describe('<FormFieldListMerch>', () => {
               props: {},
             });
             cy.viewport('macbook-16');
-
+            // set price level
+            cy.fixture('apiGetThisCampaign.json').then((response) => {
+              cy.wrap(useChallengeStore()).then((storeChallenge) => {
+                storeChallenge.setPriceLevel(response.results[0].price_level);
+              });
+            });
             // wait for API responses
             cy.waitForMerchandiseApi(response, responseNext);
           },
@@ -396,7 +409,12 @@ describe('<FormFieldListMerch>', () => {
         props: {},
       });
       cy.viewport('iphone-6');
-
+      // set price level
+      cy.fixture('apiGetThisCampaign.json').then((response) => {
+        cy.wrap(useChallengeStore()).then((storeChallenge) => {
+          storeChallenge.setPriceLevel(response.results[0].price_level);
+        });
+      });
       // wait for API responses
       cy.waitForMerchandiseApi();
     });
