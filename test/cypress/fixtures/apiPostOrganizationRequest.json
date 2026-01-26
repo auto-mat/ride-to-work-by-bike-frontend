@@ -4,8 +4,9 @@
   "organization_type": "company",
   "address": {
     "street": "Test Organization Street",
-    "houseNumber": "123",
+    "street_number": "123",
     "city": "Test Organization City",
-    "zip": "12345"
+    "psc": "12345",
+    "recipient": ""
   }
 }

@@ -1,10 +1,4 @@
 {
-  "name": "Test Company",
-  "ico": "12345678",
-  "address": {
-    "street": "Test Organization Street",
-    "street_number": "123",
-    "city": "Test Organization City",
-    "psc": "12345"
-  }
+  "id": 54321,
+  "name": "Test Company"
 }

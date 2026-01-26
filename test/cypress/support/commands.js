@@ -1594,30 +1594,46 @@ Cypress.Commands.add('waitForDiscountCouponApi', (responseBody) => {
 });
 
 /**
+ * Intercept organization POST API call
+ * Provides `@postOrganization` alias
+ * @param {Object} config - App global config
+ * @param {Object|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object|null} responseFixture - Optional custom response fixture
+ */
+Cypress.Commands.add(
+  'interceptOrganizationPostApi',
+  (config, i18n, responseFixture = null) => {
+    const { apiBase, apiDefaultLang, urlApiOrganizations } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiOrganizationLocalized = `${apiBaseUrl}${urlApiOrganizations}`;
+
+    const fixtureToUse = responseFixture || 'apiPostOrganization';
+    cy.fixture(fixtureToUse).then((organizationResponse) => {
+      cy.intercept('POST', urlApiOrganizationLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: organizationResponse,
+      }).as('createOrganization');
+    });
+  },
+);
+
+/**
  * Wait for intercept organization creation API call and compare request/response object
  * Wait for `@createOrganization` intercept
  */
 Cypress.Commands.add('waitForOrganizationPostApi', () => {
-  cy.fixture('formFieldCompanyCreateRequest').then(
-    (formFieldCompanyCreateRequest) => {
+  cy.fixture('apiPostOrganizationRequest').then(
+    (apiPostOrganizationRequest) => {
       cy.fixture('formFieldCompanyCreate').then(
         (formFieldCompanyCreateResponse) => {
           cy.wait('@createOrganization').then(({ request, response }) => {
             expect(request.headers.authorization).to.include(bearerTokeAuth);
-            expect(request.body).to.deep.equal({
-              name: formFieldCompanyCreateRequest.name,
-              ico: formFieldCompanyCreateRequest.ico,
-              organization_type:
-                formFieldCompanyCreateRequest.organization_type,
-              address: {
-                city: formFieldCompanyCreateRequest.address.city,
-                psc: formFieldCompanyCreateRequest.address.zip,
-                street: formFieldCompanyCreateRequest.address.street,
-                street_number:
-                  formFieldCompanyCreateRequest.address.houseNumber,
-                recipient: '',
-              },
-            });
+            expect(request.body).to.deep.equal(apiPostOrganizationRequest);
             if (response) {
               expect(response.statusCode).to.equal(httpSuccessfullStatus);
               expect(response.body).to.deep.equal(
