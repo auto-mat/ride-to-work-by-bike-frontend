@@ -3172,7 +3172,7 @@ describe('Register Challenge page', () => {
         cy.viewport('macbook-16');
       });
 
-      it.only('loads the page with approved voucher + disabled rewards', () => {
+      it('loads the page with approved voucher + disabled rewards', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.fixture(
@@ -3754,6 +3754,7 @@ describe('Register Challenge page', () => {
     () => {
       beforeEach(() => {
         cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
           cy.visit('#' + routesConf['challenge_inactive']['path']);
@@ -3778,7 +3779,7 @@ describe('Register Challenge page', () => {
         cy.viewport('macbook-16');
       });
 
-      it.only('fetches the registration status on load', () => {
+      it('fetches the registration status on load', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.fixture('apiGetRegisterChallengeNoMerch.json').then(
@@ -3817,7 +3818,85 @@ describe('Register Challenge page', () => {
               cy.dataCy('step-7')
                 .find('.q-stepper__step-content')
                 .should('be.visible');
+              // shows log out button (user not cooridnator)
               cy.dataCy('step-7-continue').should('not.exist');
+              cy.dataCy('step-7-logout')
+                .should('exist')
+                .and('be.visible')
+                .and('contain', win.i18n.global.t('userSelect.logout'));
+              // logout
+              cy.dataCy('step-7-logout').click();
+              cy.dataCy('login-register-header')
+                .should('exist')
+                .and('be.visible');
+              cy.dataCy('form-login').should('exist').and('be.visible');
+            },
+          );
+        });
+      });
+
+      it('allows to pass into app if user is coordinator', () => {
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.fixture('apiGetRegisterChallengeNoMerch.json').then(
+            (registerChallengeResponse) => {
+              cy.get('@config').then((config) => {
+                cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+                  (response) => {
+                    cy.interceptIsUserOrganizationAdminGetApi(
+                      config,
+                      win.i18n,
+                      response,
+                    );
+                  },
+                );
+              });
+              cy.testRegisterChallengeLoadedStepOne(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // go to next step
+              cy.dataCy('step-1-continue').should('be.visible').click();
+              // check that the company options is selected
+              cy.dataCy(getRadioOption(PaymentSubject.company))
+                .parents('.q-radio__label')
+                .siblings('.q-radio__inner')
+                .should('have.class', 'q-radio__inner--truthy');
+              // go to next step
+              cy.dataCy('step-2-continue')
+                .should('be.visible')
+                .and('not.be.disabled')
+                .click();
+              cy.testRegisterChallengeLoadedStepsThreeToFive(
+                win.i18n,
+                registerChallengeResponse,
+              );
+              // verify banner "no merch"
+              cy.dataCy('text-no-merch-selected').should('be.visible');
+              // sizes table link should not be visible
+              cy.dataCy('form-merch-size-conversion-chart-link').should(
+                'not.exist',
+              );
+              // merch cards should not be visible
+              cy.dataCy('list-merch').should('not.be.visible');
+              // go to next step
+              cy.dataCy('step-6-continue').should('be.visible').click();
+              // on step 7
+              cy.dataCy('step-7')
+                .find('.q-stepper__step-content')
+                .should('be.visible');
+              // shows log out button (user not cooridnator)
+              cy.dataCy('step-7-continue').should('not.exist');
+              cy.dataCy('step-7-coordinator-access')
+                .should('exist')
+                .and('be.visible')
+                .and(
+                  'contain',
+                  win.i18n.global.t('form.buttonCoordinatorAccess'),
+                );
+              // logout
+              cy.dataCy('step-7-coordinator-access').click();
+              cy.dataCy('index-title').should('exist').and('be.visible');
             },
           );
         });
@@ -4622,7 +4701,7 @@ describe('Register Challenge page', () => {
         });
       });
 
-      it.only('shows empty merch options when not available', () => {
+      it('shows empty merch options when not available', () => {
         cy.fixture('apiGetTeamsResponse.json').then((responseTeams) => {
           // we are on step 2
           cy.dataCy('step-2')

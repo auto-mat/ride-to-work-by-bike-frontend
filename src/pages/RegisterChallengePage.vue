@@ -53,9 +53,11 @@ import { useCompetitionPhase } from 'src/composables/useCompetitionPhase';
 import { OrganizationType } from 'src/components/types/Organization';
 import { PaymentState, PaymentSubject } from 'src/components/enums/Payment';
 import { RegisterChallengeStep } from 'src/components/enums/RegisterChallenge';
+import { PaymentCategory } from 'src/components/types/ApiPayu';
 
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
+import { useLoginStore } from 'src/stores/login';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 export default defineComponent({
@@ -202,6 +204,10 @@ export default defineComponent({
       }
     });
 
+    const isUserOrganizationAdmin = computed<boolean>(
+      (): boolean => registerChallengeStore.getIsUserOrganizationAdmin || false,
+    );
+
     const organizationType = computed({
       get: (): OrganizationType => registerChallengeStore.getOrganizationType,
       set: (value: OrganizationType) => {
@@ -325,6 +331,24 @@ export default defineComponent({
       await registerChallengeStore.createPayuOrder();
     };
 
+    const isWaitingForCoordinatorConfirmation = computed<boolean>(
+      (): boolean => {
+        const isStateWaiting =
+          registerChallengeStore.getIsPaymentSubjectOrganization &&
+          registerChallengeStore.getPaymentState === PaymentState.waiting;
+        const isPaymentDonationWithSubjectOrganization =
+          registerChallengeStore.getIsPaymentSubjectOrganization &&
+          registerChallengeStore.getPaymentCategory ===
+            PaymentCategory.donation;
+        return isStateWaiting || isPaymentDonationWithSubjectOrganization;
+      },
+    );
+
+    const onLogout = () => {
+      const loginStore = useLoginStore();
+      loginStore.logout();
+    };
+
     const contactEmail = rideToWorkByBikeConfig.contactEmail;
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
     const { getPaletteColor, lighten } = colors;
@@ -416,12 +440,15 @@ export default defineComponent({
       isEnabledPaymentNextStepButton,
       isLoadingPayuOrder,
       isLoadingRegisterChallenge,
+      isUserOrganizationAdmin,
+      isWaitingForCoordinatorConfirmation,
       onSubmitPayment,
       organizationType,
       organizationStepTitle,
       onBack,
       onContinue,
       onCompleteRegistration,
+      onLogout,
       primaryLightColor,
       registerChallengeStore,
       competitionStart,
@@ -803,6 +830,30 @@ export default defineComponent({
                 @click="onCompleteRegistration"
                 class="q-ml-sm"
                 data-cy="step-7-continue"
+              />
+              <!-- Button: Coordinator access -->
+              <q-btn
+                v-else-if="!isRegistrationComplete && isUserOrganizationAdmin"
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('form.buttonCoordinatorAccess')"
+                @click="onCompleteRegistration"
+                class="q-ml-sm"
+                data-cy="step-7-coordinator-access"
+              />
+              <!-- Button: Logout -->
+              <q-btn
+                v-else-if="
+                  !isRegistrationComplete && isWaitingForCoordinatorConfirmation
+                "
+                unelevated
+                rounded
+                color="primary"
+                :label="$t('form.buttonRegistrationLogout')"
+                @click="onLogout"
+                class="q-ml-sm"
+                data-cy="step-7-logout"
               />
             </q-stepper-navigation>
           </q-step>
