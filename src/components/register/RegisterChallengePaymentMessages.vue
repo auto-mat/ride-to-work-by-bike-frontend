@@ -86,7 +86,7 @@ export default defineComponent({
     const isUserOrganizationAdmin = computed<boolean>((): boolean => {
       const isAdmin =
         registerChallengeStore.getIsUserOrganizationAdmin || false;
-      return !props.isPaymentStep && isAdmin;
+      return !props.isPaymentStep && isAdmin && isWaitingForConfirmation.value;
     });
 
     // displays message on summary step - payment waiting for coordinator approval
