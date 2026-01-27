@@ -3885,7 +3885,7 @@ describe('Register Challenge page', () => {
               cy.dataCy('step-7')
                 .find('.q-stepper__step-content')
                 .should('be.visible');
-              // shows log out button (user not cooridnator)
+              // shows coordinator access button (user is cooridnator)
               cy.dataCy('step-7-continue').should('not.exist');
               cy.dataCy('step-7-coordinator-access')
                 .should('exist')
@@ -3894,7 +3894,7 @@ describe('Register Challenge page', () => {
                   'contain',
                   win.i18n.global.t('form.buttonCoordinatorAccess'),
                 );
-              // logout
+              // verify app access
               cy.dataCy('step-7-coordinator-access').click();
               cy.dataCy('index-title').should('exist').and('be.visible');
             },
