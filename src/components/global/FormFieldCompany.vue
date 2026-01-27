@@ -174,7 +174,7 @@ export default defineComponent({
       companyNew.value = deepObjectWithSimplePropsCopy(
         emptyFormCompanyFields,
       ) as FormCompanyFields;
-      logger?.debug('Reset new company model value.');
+      logger?.info('Reset new company model value.');
       isDialogOpen.value = false;
     };
     /**
