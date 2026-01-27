@@ -348,7 +348,7 @@ describe('<RegisterChallengePaymentMessages>', () => {
       cy.dataCy('registration-coordinator-details').should('not.exist');
     });
 
-    it('renders message for coordinator waiting for coordinator approval', () => {
+    it('renders message about approval when user is company coordinator', () => {
       cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then((data) => {
         cy.wrap(useRegisterChallengeStore()).then((store) => {
           store.setRegisterChallengeFromApi(data.results[0]);
