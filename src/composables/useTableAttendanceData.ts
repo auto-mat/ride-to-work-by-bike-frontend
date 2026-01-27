@@ -62,7 +62,7 @@ function transformMemberToRow({
   isFeeApproved,
 }: TransformMemberParams): TableAttendanceRow {
   return {
-    name: member.name,
+    name: member.name_for_trusted,
     nickname: member.nickname,
     email: member.email,
     telephone: member.telephone,

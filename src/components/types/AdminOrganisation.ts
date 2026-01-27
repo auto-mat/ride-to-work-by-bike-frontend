@@ -7,6 +7,7 @@ import { PaymentCategory } from './ApiPayu';
 export interface AdminTeamMember {
   id: number;
   name: string;
+  name_for_trusted: string;
   nickname: string | null;
   date_of_challenge_registration: string;
   email: string;

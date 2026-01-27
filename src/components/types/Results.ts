@@ -38,6 +38,7 @@ export interface MemberResults {
 
 export interface ExtendedMemberResults extends MemberResults {
   approved_for_team: TeamMemberStatus;
+  name_for_trusted: string;
   email?: string;
   sex?: Gender;
 }

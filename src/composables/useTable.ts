@@ -440,7 +440,7 @@ export const useTableAttendance = () => {
       format: (val: number | string | null): string => (val ? `${val}` : ''),
       label: i18n.global.t('table.labelNickname'),
       name: AttendanceTableColumns.nickname,
-      required: true,
+      required: false,
       sortable: true,
     },
     {
@@ -509,7 +509,6 @@ export const useTableAttendance = () => {
 
   const tableAttendanceVisibleColumns: string[] = [
     AttendanceTableColumns.name,
-    AttendanceTableColumns.nickname,
     AttendanceTableColumns.contact,
     AttendanceTableColumns.approvedForTeam,
     AttendanceTableColumns.isFeeApproved,

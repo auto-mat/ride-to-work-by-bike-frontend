@@ -435,7 +435,7 @@ export default defineComponent({
                     class="text-subtitle1 text-weight-medium"
                     data-cy="dialog-approve-members-member-name"
                   >
-                    {{ member.name }}
+                    {{ member.name_for_trusted }}
                   </div>
                 </div>
                 <div class="col-12 col-sm-auto">
