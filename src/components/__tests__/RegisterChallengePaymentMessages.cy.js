@@ -1,6 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
 import RegisterChallengePaymentMessages from 'components/register/RegisterChallengePaymentMessages.vue';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useLoginStore } from 'src/stores/login';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { i18n } from '../../boot/i18n';
 
@@ -11,6 +12,7 @@ describe('<RegisterChallengePaymentMessages>', () => {
         'textDonationPaymentSuccessful',
         'textPayuPaymentFailed',
         'textPayuWaitingForPayment',
+        'textRegistrationUserCoordinator',
         'textRegistrationWaitingForConfirmation',
         'textRegistrationWaitingForConfirmationNoCoordinator',
         'textRegistrationWaitingForCoordinator',
@@ -55,6 +57,7 @@ describe('<RegisterChallengePaymentMessages>', () => {
         },
       });
       cy.viewport('macbook-16');
+      cy.setupLoginAccessToken(useLoginStore);
     });
 
     it('renders no messages for company no_admission', () => {
@@ -261,6 +264,7 @@ describe('<RegisterChallengePaymentMessages>', () => {
           isPaymentStep: false,
         },
       });
+      cy.setupLoginAccessToken(useLoginStore);
     });
 
     it('renders message waiting for company coordinator approval with name and email', () => {
@@ -342,6 +346,23 @@ describe('<RegisterChallengePaymentMessages>', () => {
         );
       // message with details does not exist
       cy.dataCy('registration-coordinator-details').should('not.exist');
+    });
+
+    it('renders message for coordinator waiting for coordinator approval', () => {
+      cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then((data) => {
+        cy.wrap(useRegisterChallengeStore()).then((store) => {
+          store.setRegisterChallengeFromApi(data.results[0]);
+          store.setIsUserOrganizationAdmin(true);
+        });
+      });
+      cy.dataCy('registration-waiting-for-confirmation').should('not.exist');
+      cy.dataCy('registration-user-coordinator')
+        .should('exist')
+        .and('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('register.challenge.textRegistrationUserCoordinator'),
+        );
     });
 
     it('renders message company has no coordinator', () => {

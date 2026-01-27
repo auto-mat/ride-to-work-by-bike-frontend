@@ -1049,6 +1049,7 @@ textRegistrationWaitingForConfirmation = "The payment of your entry fee must be 
 textRegistrationWaitingForConfirmationNoCoordinator = "Your organization does not yet have a company coordinator to approve your payment. Try to speed up the process, or you can become a coordinator yourself."
 textRegistrationWaitingForCoordinator = "Your payment still needs to be approved by your organization's coordinator. You can log out for now. You will receive an email notification of approval."
 textRegistrationWaitingForCoordinatorWithNameAndEmail = "Registration will be completed automatically when your payment is approved by the company coordinator ({name}, <a href='mailto:{email}'>{email}</a>). You can log out for now. You will receive an email notification of approval."
+textRegistrationUserCoordinator = "Your registration is awaiting approval. Since you are also the coordinator for your organization, you can go to the application and approve the payment of your participation fee in the section Coordinator → Entry Fees."
 textPayuWaitingForPayment = "We are still processing your payment. Please check your registration status in a few minutes."
 textTeamInfo = "In one team, there can be a maximum of {count} member. | In one team, there can be a maximum of {count} members."
 textTeamInfoJanuary = "In the January Challenge, everyone participates in a single-member team, click 'ADD TEAM' and name yours."

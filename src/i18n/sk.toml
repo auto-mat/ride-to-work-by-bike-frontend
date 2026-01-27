@@ -1045,6 +1045,7 @@ textFreeRegistration = "Januárová výzva je zdarma. Ak si želáte podporiť �
 textPayuPaymentFailed = "Vaša platba bola zrušená alebo zamietnutá. Môžete sa pokúsiť zaplatiť znovu, alebo zvoliť inú formu platby."
 textDonationPaymentSuccessful = "Vaša platba bola zpracovaná a benefíčny príspevok bol uhradený. Ďakujeme."
 textRegistrationPaid = "Štartovné máte uhradené a po dokončení registrácie môžete začať s výzvou. Ak máte otázky k platbe alebo iným bodom registrácie, môžete nás kontaktovať na <a href='mailto:{contactEmail}'>{contactEmail}</a>."
+textRegistrationUserCoordinator = "Vaša registrácia čaká na schválenie. Keďže ste zároveň koordinátorom vašej organizácie, môžete prejsť do aplikácie a schváliť platbu vášho účastníckeho poplatku v sekcii Firemný koordinátor → Štartovné."
 textRegistrationWaitingForConfirmation = "Platbu vášho štartovného musí schváliť koordinátor vybranej organizácie. Prosím, zadejte adresu a tím, aby sme mohli identifikovať vášho koordinátora."
 textRegistrationWaitingForConfirmationNoCoordinator = "Vaša organizácia ešte nemá firemného koordinátora, ktorý by schválil vašu platbu. Skúste proces popohnať, alebo sa môžete stať koordinátorom sami."
 textRegistrationWaitingForCoordinator = "Platbu ešte musí schváliť koordinátor vašej organizácie. Zatiaľ sa môžete odhlásiť. O schválení vás budeme informovať e-mailom."

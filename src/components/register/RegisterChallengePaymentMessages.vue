@@ -83,6 +83,12 @@ export default defineComponent({
       return props.isPaymentStep && isWaitingForConfirmation.value;
     });
 
+    const isUserOrganizationAdmin = computed<boolean>((): boolean => {
+      const isAdmin =
+        registerChallengeStore.getIsUserOrganizationAdmin || false;
+      return !props.isPaymentStep && isAdmin;
+    });
+
     // displays message on summary step - payment waiting for coordinator approval
     const isWaitingForCoordinator = computed<boolean>((): boolean => {
       return (
@@ -131,6 +137,7 @@ export default defineComponent({
       organizationAdmin,
       isDonationPaidViaPayu,
       isPayuPaymentFailed,
+      isUserOrganizationAdmin,
       isWaitingForConfirmationAndNoCoordinator,
       isWaitingForCoordinator,
       isWaitingForPaymentConfirmation,
@@ -183,9 +190,20 @@ export default defineComponent({
       {{ $t('register.challenge.textRegistrationWaitingForConfirmation') }}
     </q-banner>
 
+    <!-- Summary step message: User is coordinator -->
+    <q-banner
+      v-if="isUserOrganizationAdmin"
+      class="bg-green-4 text-grey-10 q-mb-md"
+      :style="{ borderRadius }"
+      data-cy="registration-user-coordinator"
+    >
+      <div>
+        {{ $t('register.challenge.textRegistrationUserCoordinator') }}
+      </div>
+    </q-banner>
     <!-- Summary step message: Waiting for coordinator confirmation -->
     <q-banner
-      v-if="isWaitingForCoordinator"
+      v-else-if="isWaitingForCoordinator"
       class="bg-warning text-grey-10 q-mb-md"
       :style="{ borderRadius }"
       data-cy="registration-waiting-for-coordinator"
