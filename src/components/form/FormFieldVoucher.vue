@@ -19,7 +19,7 @@
 
 // libraries
 import { Notify } from 'quasar';
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, inject, ref } from 'vue';
 
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
@@ -31,6 +31,7 @@ import { useApiGetDiscountCoupon } from '../../composables/useApiGetDiscountCoup
 
 import { defaultPaymentAmountMinComputed } from '../../utils/price_levels';
 import { defaultPaymentAmountMinComputedWithReward } from '../../utils/price_levels_with_reward';
+import { isVoucherWithReward } from '../../utils/voucher_validation';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -43,6 +44,7 @@ import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
+import type { Logger } from '../types/Logger';
 import type { ValidatedCoupon } from '../types/Coupon';
 
 export default defineComponent({
@@ -52,6 +54,7 @@ export default defineComponent({
   },
   props: {},
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const formFieldTextRequiredRef = ref<InstanceType<
       typeof FormFieldTextRequired
     > | null>(null);
@@ -86,13 +89,14 @@ export default defineComponent({
      * @returns {void}
      */
     const handleVoucherPriceLevelSwitch = (): void => {
-      const isVoucherWithReward = !codeFormatted.value.startsWith(
-        rideToWorkByBikeConfig.voucherWithoutReward,
+      const voucherWithReward = isVoucherWithReward(
+        codeFormatted.value,
+        logger,
       );
       const isPaymentWithReward = registerChallengeStore.getIsPaymentWithReward;
       // if voucher does not fit price level, switch
-      if (isVoucherWithReward !== isPaymentWithReward) {
-        registerChallengeStore.switchPriceSet(isVoucherWithReward);
+      if (voucherWithReward !== isPaymentWithReward) {
+        registerChallengeStore.switchPriceSet(voucherWithReward);
       }
     };
 

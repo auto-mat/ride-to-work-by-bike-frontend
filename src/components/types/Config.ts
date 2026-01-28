@@ -145,7 +145,7 @@ export interface ConfigGlobal {
   mapGeocodingApiUrl: string;
   mapSourceRtwbb: string;
   mapSourceOsm: string;
-  voucherWithoutReward: string;
+  voucherWithoutRewardPattern: string;
   apiDateFormat: string;
 }
 

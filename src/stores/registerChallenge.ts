@@ -73,6 +73,7 @@ import type {
 // utils
 import { defaultLocale } from 'src/i18n/def_locale';
 import { deepObjectWithSimplePropsCopy } from 'src/utils';
+import { isVoucherWithoutReward } from 'src/utils/voucher_validation';
 import {
   emptyFormPersonalDetails,
   emptyFormRegisterCoordinator,
@@ -381,11 +382,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     getIsPaymentWithReward: (state): boolean => state.isPaymentWithReward,
     getIsVoucherWithoutReward: (state): boolean => {
-      return Boolean(
-        state.voucher?.name.startsWith(
-          rideToWorkByBikeConfig.voucherWithoutReward,
-        ),
-      );
+      if (!state.voucher?.name) return false;
+      return isVoucherWithoutReward(state.voucher.name, state.$log);
     },
   },
 
