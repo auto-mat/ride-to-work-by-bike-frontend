@@ -21,7 +21,6 @@ const selectorTable = 'table-attendance-table';
 const selectorTableTeamHeader = 'table-attendance-team-header';
 const selectorTableRow = 'table-attendance-row';
 const selectorTableName = 'table-attendance-name';
-const selectorTableNickname = 'table-attendance-nickname';
 const selectorTableContact = 'table-attendance-contact';
 const selectorTablePhoneIcon = 'table-attendance-contact-phone-icon';
 const selectorTableEmailIcon = 'table-attendance-contact-email-icon';
@@ -200,7 +199,6 @@ function coreTests() {
                 // tests that all cells are visible (first row)
                 [
                   selectorTableName,
-                  selectorTableNickname,
                   selectorTableContact,
                   selectorTableApprovedForTeam,
                   selectorTableFeeApproved,
@@ -353,20 +351,10 @@ function dataDisplayTests() {
         if (display.orderedMembers[index]) {
           cy.wrap(table).within(() => {
             // name
-            if (display.orderedMembers[index].name) {
+            if (display.orderedMembers[index].nameForTrusted) {
               cy.dataCy(selectorTableName)
                 .should('be.visible')
-                .and('contain', display.orderedMembers[index].name);
-            }
-            // nickname
-            if (display.orderedMembers[index].nickname) {
-              cy.dataCy(selectorTableNickname)
-                .should('be.visible')
-                .and('contain', display.orderedMembers[index].nickname);
-            } else {
-              cy.dataCy(selectorTableNickname)
-                .should('be.visible')
-                .and('be.empty');
+                .and('contain', display.orderedMembers[index].nameForTrusted);
             }
             // contact icons
             cy.dataCy(selectorTableContact).within(() => {

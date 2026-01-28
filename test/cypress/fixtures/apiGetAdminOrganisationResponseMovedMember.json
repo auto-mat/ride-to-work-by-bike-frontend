@@ -28,6 +28,7 @@
                 {
                   "id": 20002,
                   "name": "Petr Horák",
+                  "name_for_trusted": "Petr Horák",
                   "nickname": null,
                   "date_of_challenge_registration": "2025-02-02T11:30:00.000000",
                   "email": "petr.horak@moravske-pivovary.cz",
@@ -46,6 +47,7 @@
                 {
                   "id": 20005,
                   "name": "Lucie Dvořáková",
+                  "name_for_trusted": "Lucie Dvořáková (ldvorakova)",
                   "nickname": "ldvorakova",
                   "date_of_challenge_registration": "2025-02-03T14:20:00.000000",
                   "email": "lucie.dvorakova@moravske-pivovary.cz",
@@ -67,6 +69,7 @@
                 {
                   "id": 20003,
                   "name": "Radek Pospíšil",
+                  "name_for_trusted": "Radek Pospíšil (rpospisil)",
                   "nickname": "rpospisil",
                   "date_of_challenge_registration": "2024-12-10T12:00:00.000000",
                   "email": "radek.pospisil@moravske-pivovary.cz",
@@ -92,6 +95,7 @@
                 {
                   "id": 20001,
                   "name": "Jana Novotná",
+                  "name_for_trusted": "Jana Novotná (jnovotna)",
                   "nickname": "jnovotna",
                   "date_of_challenge_registration": "2025-02-01T10:00:00.000000",
                   "email": "jana.novotna@moravske-pivovary.cz",
@@ -112,6 +116,7 @@
                 {
                   "id": 20004,
                   "name": "Jaroslav Beneš",
+                  "name_for_trusted": "Jaroslav Beneš (jbenes)",
                   "nickname": "jbenes",
                   "date_of_challenge_registration": "2025-01-28T09:45:00.000000",
                   "email": "jaroslav.benes@moravske-pivovary.cz",

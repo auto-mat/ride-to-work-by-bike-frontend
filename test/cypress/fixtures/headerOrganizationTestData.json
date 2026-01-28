@@ -32,6 +32,7 @@
                   {
                     "id": 10001,
                     "name": "Jan Novák",
+                    "name_for_trusted": "Jan Novák (jnovak)",
                     "nickname": "jnovak",
                     "date_of_challenge_registration": "2025-01-15T10:30:00.000000",
                     "email": "jan.novak@cerny.cz",
@@ -51,6 +52,7 @@
                   {
                     "id": 10002,
                     "name": "Petra Svobodová",
+                    "name_for_trusted": "Petra Svobodová",
                     "nickname": null,
                     "date_of_challenge_registration": "2025-01-16T09:15:00.000000",
                     "email": "petra.svobodova@cerny.cz",
@@ -72,6 +74,7 @@
                   {
                     "id": 10003,
                     "name": "Martin Dvořák",
+                    "name_for_trusted": "Martin Dvořák (mdvorak)",
                     "nickname": "mdvorak",
                     "date_of_challenge_registration": "2025-01-10T14:20:00.000000",
                     "email": "martin.dvorak@cerny.cz",
@@ -93,6 +96,7 @@
                   {
                     "id": 10004,
                     "name": "Alena Procházková",
+                    "name_for_trusted": "Alena Procházková (aprochazka)",
                     "nickname": "aprochazka",
                     "date_of_challenge_registration": "2024-12-20T11:00:00.000000",
                     "email": "alena.prochazkova@cerny.cz",
@@ -112,6 +116,7 @@
                   {
                     "id": 10005,
                     "name": "Tomáš Kučera",
+                    "name_for_trusted": "Tomáš Kučera",
                     "nickname": null,
                     "date_of_challenge_registration": "2024-12-22T13:45:00.000000",
                     "email": "tomas.kucera@cerny.cz",
@@ -140,6 +145,7 @@
                   {
                     "id": 10006,
                     "name": "Eva Marková",
+                    "name_for_trusted": "Eva Marková (emarkova)",
                     "nickname": "emarkova",
                     "date_of_challenge_registration": "2025-01-12T08:30:00.000000",
                     "email": "eva.markova@cerny.cz",
@@ -161,6 +167,7 @@
                   {
                     "id": 10007,
                     "name": "František Veselý",
+                    "name_for_trusted": "František Veselý",
                     "nickname": null,
                     "date_of_challenge_registration": "2024-12-18T16:20:00.000000",
                     "email": "frantisek.vesely@cerny.cz",
@@ -225,6 +232,7 @@
                   {
                     "id": 20001,
                     "name": "Jana Novotná",
+                    "name_for_trusted": "Jana Novotná (jnovotna)",
                     "nickname": "jnovotna",
                     "date_of_challenge_registration": "2025-02-01T10:00:00.000000",
                     "email": "jana.novotna@moravske-pivovary.cz",
@@ -244,6 +252,7 @@
                   {
                     "id": 20002,
                     "name": "Petr Horák",
+                    "name_for_trusted": "Petr Horák",
                     "nickname": null,
                     "date_of_challenge_registration": "2025-02-02T11:30:00.000000",
                     "email": "petr.horak@moravske-pivovary.cz",
@@ -265,6 +274,7 @@
                   {
                     "id": 20003,
                     "name": "Lucie Němcová",
+                    "name_for_trusted": "Lucie Němcová (lnemcova)",
                     "nickname": "lnemcova",
                     "date_of_challenge_registration": "2025-01-20T14:15:00.000000",
                     "email": "lucie.nemcova@moravske-pivovary.cz",
@@ -284,6 +294,7 @@
                   {
                     "id": 20004,
                     "name": "Michal Pokorný",
+                    "name_for_trusted": "Michal Pokorný (mpokorny)",
                     "nickname": "mpokorny",
                     "date_of_challenge_registration": "2025-01-21T15:30:00.000000",
                     "email": "michal.pokorny@moravske-pivovary.cz",
@@ -305,6 +316,7 @@
                   {
                     "id": 20005,
                     "name": "Radek Pospíšil",
+                    "name_for_trusted": "Radek Pospíšil (rpospisil)",
                     "nickname": "rpospisil",
                     "date_of_challenge_registration": "2024-12-10T12:00:00.000000",
                     "email": "radek.pospisil@moravske-pivovary.cz",
@@ -331,6 +343,7 @@
                   {
                     "id": 20006,
                     "name": "Kristýna Málková",
+                    "name_for_trusted": "Kristýna Málková",
                     "nickname": null,
                     "date_of_challenge_registration": "2025-02-05T13:20:00.000000",
                     "email": "kristyna.malkova@moravske-pivovary.cz",
@@ -352,6 +365,7 @@
                   {
                     "id": 20007,
                     "name": "Jaroslav Beneš",
+                    "name_for_trusted": "Jaroslav Beneš (jbenes)",
                     "nickname": "jbenes",
                     "date_of_challenge_registration": "2025-01-28T09:45:00.000000",
                     "email": "jaroslav.benes@moravske-pivovary.cz",

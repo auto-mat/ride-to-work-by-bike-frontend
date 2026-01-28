@@ -27,6 +27,7 @@
                 {
                   "id": 10001,
                   "name": "Jan Novák",
+                  "name_for_trusted": "Jan Novák (jnovak)",
                   "nickname": "jnovak",
                   "date_of_challenge_registration": "",
                   "email": "jan.novak@cerny.cz",
@@ -47,6 +48,7 @@
                 {
                   "id": 10002,
                   "name": "Petra Svobodová",
+                  "name_for_trusted": "Petra Svobodová",
                   "nickname": null,
                   "date_of_challenge_registration": "2025-01-16T09:15:00.000000",
                   "email": "petra.svobodova@cerny.cz",
@@ -83,6 +85,7 @@
                 {
                   "id": 10003,
                   "name": "Karel Dvořák",
+                  "name_for_trusted": "Karel Dvořák (kdvorak)",
                   "nickname": "kdvorak",
                   "date_of_challenge_registration": "2025-01-17T14:20:00.000000",
                   "email": "karel.dvorak@cerny.cz",
@@ -103,6 +106,7 @@
                 {
                   "id": 10004,
                   "name": "Anna Nováková",
+                  "name_for_trusted": "Anna Nováková (anovakova)",
                   "nickname": "anovakova",
                   "date_of_challenge_registration": "2025-01-18T11:45:00.000000",
                   "email": "anna.novakova@cerny.cz",
@@ -121,6 +125,7 @@
                 {
                   "id": 10005,
                   "name": "Jan Šťastný",
+                  "name_for_trusted": "Jan Šťastný (jstastny)",
                   "nickname": "jstastny",
                   "date_of_challenge_registration": "2025-01-20T11:50:00.000000",
                   "email": "jan.stastny@cerny.cz",
