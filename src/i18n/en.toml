@@ -17,6 +17,13 @@ apiMessageErrorWithMessage = "Payment confirmation failed. Error: {error}"
 apiMessageSuccess = "Payments were successfully confirmed."
 apiMessageSuccessWithCount = "Payment confirmed for {count} participant. | Payments confirmed for {count} participants."
 
+[disapprovePayments]
+apiMessageError = "Payment disapproval failed."
+apiMessageErrorPartial = "Some payments could not be disapproved."
+apiMessageErrorWithMessage = "Payment disapproval failed. Error: {error}"
+apiMessageSuccess = "Payments were successfully disapproved."
+apiMessageSuccessWithCount = "Payment disapproved for {count} participant. | Payments disapproved for {count} participants."
+
 [bannerChallengeDescription]
 period = "Challenge period"
 transportType = "Means of transport"
@@ -1239,6 +1246,10 @@ labelSaved = "saved"
 
 [table]
 buttonFeeApproval = "Approve entry fee payments"
+buttonFeeDisapproval = "Disapprove selected"
+buttonConfirmDisapprove = "Disapprove"
+titleDialogDisapprovePayments = "Confirm Disapproval"
+labelDisapprovePaymentsDescription = "Are you sure you want to disapprove {count} payment? | Are you sure you want to disapprove {count} payments?"
 labelAddress = "Address"
 labelAddressee = "Addressee"
 labelAmount = "Amount"

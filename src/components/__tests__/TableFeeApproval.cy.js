@@ -29,6 +29,11 @@ const selectorTableRewardCheckbox = 'table-fee-approval-reward-checkbox';
 const selectorTableEmail = 'table-fee-approval-email';
 const selectorTableNickname = 'table-fee-approval-nickname';
 const selectorTableDate = 'table-fee-approval-date';
+const selectorApproveButton = 'table-fee-approval-button';
+const selectorDisapproveButton = 'table-fee-disapproval-button';
+const selectorDisapproveDialog = 'dialog-disapprove-payments';
+const selectorDisapproveCancel = 'dialog-disapprove-cancel';
+const selectorDisapproveConfirm = 'dialog-disapprove-confirm';
 
 // variables
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
@@ -38,6 +43,10 @@ describe('<TableFeeApproval>', () => {
     cy.testLanguageStringsInContext(
       [
         'buttonFeeApproval',
+        'buttonFeeDisapproval',
+        'buttonConfirmDisapprove',
+        'titleDialogDisapprovePayments',
+        'labelDisapprovePaymentsDescription',
         'labelAmount',
         'labelDateRegistered',
         'labelEmail',
@@ -225,6 +234,66 @@ describe('<TableFeeApproval>', () => {
         },
       );
     });
+
+    it('should show disapprove and approve buttons with correct state', () => {
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          // initiate store state
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          // buttons visible
+          cy.dataCy(selectorDisapproveButton).should('be.visible');
+          cy.dataCy(selectorApproveButton).should('be.visible');
+          // buttons disabled (no members selected)
+          cy.dataCy(selectorDisapproveButton).should('be.disabled');
+          cy.dataCy(selectorApproveButton).should('be.disabled');
+          // select a payment
+          cy.dataCy(selectorTableCheckbox).first().click();
+          // buttons enabled
+          cy.dataCy(selectorDisapproveButton).should('not.be.disabled');
+          cy.dataCy(selectorApproveButton).should('not.be.disabled');
+        },
+      );
+    });
+
+    it('should open disapprove confirmation dialog when disapprove button is clicked', () => {
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          // initiate store state
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          // dialog not visible initially
+          cy.dataCy(selectorDisapproveDialog).should('not.exist');
+          // select a payment
+          cy.dataCy(selectorTableCheckbox).first().click();
+          // click disapprove button
+          cy.dataCy(selectorDisapproveButton).click();
+          // dialog visible
+          cy.dataCy(selectorDisapproveDialog).should('be.visible');
+          // verify title
+          cy.dataCy(selectorDisapproveDialog)
+            .contains(i18n.global.t('table.titleDialogDisapprovePayments'))
+            .should('be.visible');
+          // verify cancel and confirm buttons
+          cy.dataCy(selectorDisapproveCancel).should('be.visible');
+          cy.dataCy(selectorDisapproveConfirm).should('be.visible');
+          // click cancel
+          cy.dataCy(selectorDisapproveCancel).click();
+          // dialog should close
+          cy.dataCy(selectorDisapproveDialog).should('not.exist');
+        },
+      );
+    });
   });
 
   context('desktop approved variant', () => {
@@ -395,6 +464,24 @@ describe('<TableFeeApproval>', () => {
               });
             }
           });
+        },
+      );
+    });
+
+    it('should not show action buttons for approved variant', () => {
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          // initiate store state
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          // approve and disapprove buttons should not exist
+          cy.dataCy(selectorDisapproveButton).should('not.exist');
+          cy.dataCy(selectorApproveButton).should('not.exist');
         },
       );
     });

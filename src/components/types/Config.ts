@@ -111,6 +111,7 @@ export interface ConfigGlobal {
   urlApiCoordinatorInvoices: string;
   urlApiOrganizationAdminOrganizationStructure: string;
   urlApiCoordinatorApprovePayments: string;
+  urlApiCoordinatorDisapprovePayments: string;
   urlApiSendRegistrationConfirmationEmail: string;
   urlApiSendTeamMembershipInvitationEmail: string;
   urlApiStravaAuthAccount: string;

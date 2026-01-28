@@ -7,6 +7,7 @@ import { i18n } from '../boot/i18n';
 import { useApiGetAdminOrganisation } from '../composables/useApiGetAdminOrganisation';
 import { useApiGetCoordinatorInvoices } from '../composables/useApiGetCoordinatorInvoices';
 import { useApiPostCoordinatorApprovePayments } from '../composables/useApiPostCoordinatorApprovePayments';
+import { useApiPostCoordinatorDisapprovePayments } from '../composables/useApiPostCoordinatorDisapprovePayments';
 import { useApiPostCoordinatorMakeInvoice } from '../composables/useApiPostCoordinatorMakeInvoice';
 import { useApiPostCoordinatorMoveMember } from '../composables/useApiPostCoordinatorMoveMember';
 import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorTeam';
@@ -77,6 +78,7 @@ interface AdminOrganisationState {
   isLoadingOrganisations: boolean;
   isLoadingInvoices: boolean;
   isLoadingApprovePayments: boolean;
+  isLoadingDisapprovePayments: boolean;
   isLoadingCreateTeam: boolean;
   isLoadingDeleteTeam: boolean;
   isLoadingMoveMember: boolean;
@@ -99,6 +101,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingOrganisations: false,
     isLoadingInvoices: false,
     isLoadingApprovePayments: false,
+    isLoadingDisapprovePayments: false,
     isLoadingCreateTeam: false,
     isLoadingDeleteTeam: false,
     isLoadingMoveMember: false,
@@ -129,6 +132,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingOrganisations: (state) => state.isLoadingOrganisations,
     getIsLoadingInvoices: (state) => state.isLoadingInvoices,
     getIsLoadingApprovePayments: (state) => state.isLoadingApprovePayments,
+    getIsLoadingDisapprovePayments: (state) =>
+      state.isLoadingDisapprovePayments,
     getIsLoadingCreateTeam: (state) => state.isLoadingCreateTeam,
     getIsLoadingDeleteTeam: (state) => state.isLoadingDeleteTeam,
     getIsLoadingMoveMember: (state) => state.isLoadingMoveMember,
@@ -138,6 +143,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
       state.isLoadingApprovePayments ||
+      state.isLoadingDisapprovePayments ||
       state.isLoadingCreateTeam ||
       state.isLoadingDeleteTeam ||
       state.isLoadingMoveMember ||
@@ -554,6 +560,54 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         });
       }
       this.isLoadingApprovePayments = false;
+    },
+    /**
+     * Disapprove selected payments
+     * @returns {Promise<void>}
+     */
+    async disapproveSelectedPayments(): Promise<void> {
+      const { disapprovePayments } = useApiPostCoordinatorDisapprovePayments(
+        this.$log,
+      );
+      const ids: Record<string, number> = {};
+      // get ids and amounts
+      this.selectedPaymentsToApprove.forEach((payment) => {
+        const currentAmount = this.paymentAmounts[payment.id];
+        ids[payment.id.toString()] =
+          currentAmount !== undefined ? currentAmount : payment.amount;
+      });
+      this.isLoadingDisapprovePayments = true;
+      // disapprove payments
+      const result = await disapprovePayments(ids);
+      // clear local state
+      this.setSelectedPaymentsToApprove([]);
+      this.paymentRewards = {};
+      this.paymentAmounts = {};
+      // refetch organization structure and invoices in parallel
+      await Promise.all([
+        this.loadAdminOrganisations(),
+        this.loadAdminInvoices(),
+      ]);
+      // check that the disapproved ids are the same as the selected ids
+      const disapprovedIds = result?.disapproved_ids || [];
+      if (disapprovedIds.length > 0) {
+        Notify.create({
+          message: i18n.global.t(
+            'disapprovePayments.apiMessageSuccessWithCount',
+            { count: disapprovedIds.length },
+            disapprovedIds.length,
+          ),
+          color: 'positive',
+        });
+      }
+      // notify if some payment ids were not disapproved
+      if (disapprovedIds.length !== Object.keys(ids).length) {
+        Notify.create({
+          message: i18n.global.t('disapprovePayments.apiMessageErrorPartial'),
+          color: 'negative',
+        });
+      }
+      this.isLoadingDisapprovePayments = false;
     },
     /**
      * Create a new team for a specific subsidiary
@@ -977,6 +1031,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingOrganisations = false;
       this.isLoadingInvoices = false;
       this.isLoadingApprovePayments = false;
+      this.isLoadingDisapprovePayments = false;
       this.isLoadingCreateTeam = false;
       this.isLoadingDeleteTeam = false;
       this.isLoadingUpdateTeam = false;
@@ -990,6 +1045,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       'isLoadingOrganisations',
       'isLoadingInvoices',
       'isLoadingApprovePayments',
+      'isLoadingDisapprovePayments',
       'isLoadingCreateTeam',
       'isLoadingDeleteTeam',
       'isLoadingMoveMember',

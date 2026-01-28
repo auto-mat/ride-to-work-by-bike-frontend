@@ -17,6 +17,13 @@ apiMessageErrorWithMessage = "Potvrzení plateb se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Platby byly úspěšně potvrzeny."
 apiMessageSuccessWithCount = "Platby potvrzeny pro {count} účastnic*íků. | Platba potvrzena pro {count} účastnici*íka. | Platby potvrzeny pro {count} účastnice*íky. | Platby potvrzeny pro {count} účastnic*íků."
 
+[disapprovePayments]
+apiMessageError = "Zamítnutí plateb se nezdařilo."
+apiMessageErrorPartial = "Některé platby nemohly být zamítnuty."
+apiMessageErrorWithMessage = "Zamítnutí plateb se nezdařilo. Chyba: {error}"
+apiMessageSuccess = "Platby byly úspěšně zamítnuty."
+apiMessageSuccessWithCount = "Platby zamítnuty pro {count} účastnic*íků. | Platba zamítnuta pro {count} účastnici*íka. | Platby zamítnuty pro {count} účastnice*íky. | Platby zamítnuty pro {count} účastnic*íků."
+
 [bannerChallengeDescription]
 period = "Období výzvy"
 transportType = "Způsoby dopravy"
@@ -1240,6 +1247,10 @@ labelSaved = "ušetřeno"
 
 [table]
 buttonFeeApproval = "Schválit platby startovného"
+buttonFeeDisapproval = "Zamítnout vybrané"
+buttonConfirmDisapprove = "Zamítnout"
+titleDialogDisapprovePayments = "Potvrdit zamítnutí"
+labelDisapprovePaymentsDescription = "Opravdu chcete zamítnout {count} plateb? | Opravdu chcete zamítnout {count} platbu? | Opravdu chcete zamítnout {count} platby? | Opravdu chcete zamítnout {count} plateb?"
 labelAddress = "Adresa"
 labelAddressee = "Adresát"
 labelAmount = "Částka"

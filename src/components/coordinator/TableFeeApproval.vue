@@ -27,6 +27,9 @@ import {
   watch,
 } from 'vue';
 
+// components
+import DialogDefault from '../global/DialogDefault.vue';
+
 // composables
 import {
   paginationLabel,
@@ -45,6 +48,9 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 export default defineComponent({
   name: 'TableFeeApproval',
+  components: {
+    DialogDefault,
+  },
   props: {
     approved: {
       type: Boolean,
@@ -125,6 +131,23 @@ export default defineComponent({
       return adminOrganisationStore.isLoadingOrganisations;
     });
 
+    const isDialogDisapproveOpen = ref(false);
+
+    const openDisapproveDialog = (): void => {
+      if (selected.value.length > 0) {
+        isDialogDisapproveOpen.value = true;
+      }
+    };
+
+    const disapproveSelectedPayments = async (): Promise<void> => {
+      await adminOrganisationStore.disapproveSelectedPayments();
+      isDialogDisapproveOpen.value = false;
+    };
+
+    const isLoadingDisapprovePayments = computed<boolean>(() => {
+      return adminOrganisationStore.getIsLoadingDisapprovePayments;
+    });
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
@@ -133,10 +156,14 @@ export default defineComponent({
       feeApprovalData,
       isLoading,
       isLoadingApprovePayments,
+      isLoadingDisapprovePayments,
       selected,
       tableRef,
       visibleColumns,
       approveSelectedPayments,
+      disapproveSelectedPayments,
+      isDialogDisapproveOpen,
+      openDisapproveDialog,
       paginationLabel,
       sortByAddress,
       updateRewardStatus,
@@ -260,17 +287,83 @@ export default defineComponent({
       </q-table>
     </div>
     <div v-if="!approved" class="q-mt-lg text-right">
-      <!-- Button: Approve selected -->
-      <q-btn
-        rounded
-        unelevated
-        :label="$t('table.buttonFeeApproval')"
-        :loading="isLoadingApprovePayments"
-        :disable="selected.length === 0 || isLoadingApprovePayments"
-        color="primary"
-        data-cy="table-fee-approval-button"
-        @click.prevent="approveSelectedPayments"
-      />
+      <div class="flex justify-end gap-8">
+        <!-- Button: Disapprove selected -->
+        <q-btn
+          rounded
+          unelevated
+          :label="$t('table.buttonFeeDisapproval')"
+          :disable="
+            selected.length === 0 ||
+            isLoadingDisapprovePayments ||
+            isLoadingApprovePayments
+          "
+          color="negative"
+          data-cy="table-fee-disapproval-button"
+          @click.prevent="openDisapproveDialog"
+        />
+        <!-- Button: Approve selected -->
+        <q-btn
+          rounded
+          unelevated
+          :label="$t('table.buttonFeeApproval')"
+          :loading="isLoadingApprovePayments"
+          :disable="
+            selected.length === 0 ||
+            isLoadingApprovePayments ||
+            isLoadingDisapprovePayments
+          "
+          color="primary"
+          data-cy="table-fee-approval-button"
+          @click.prevent="approveSelectedPayments"
+        />
+      </div>
+
+      <!-- Dialog: Confirm disapproval -->
+      <dialog-default
+        v-model="isDialogDisapproveOpen"
+        data-cy="dialog-disapprove-payments"
+      >
+        <!-- Title -->
+        <template #title>
+          {{ $t('table.titleDialogDisapprovePayments') }}
+        </template>
+        <!-- Content -->
+        <template #content>
+          <div data-cy="dialog-disapprove-description">
+            {{
+              $t('table.labelDisapprovePaymentsDescription', {
+                count: selected.length,
+              })
+            }}
+          </div>
+          <!-- Buttons -->
+          <div class="flex justify-end gap-8 q-mt-md">
+            <!-- Button: Cancel -->
+            <q-btn
+              unelevated
+              rounded
+              outline
+              color="primary"
+              @click="isDialogDisapproveOpen = false"
+              data-cy="dialog-disapprove-cancel"
+            >
+              {{ $t('global.cancel') }}
+            </q-btn>
+            <!-- Button: Disapprove -->
+            <q-btn
+              unelevated
+              rounded
+              color="negative"
+              :loading="isLoadingDisapprovePayments"
+              @click="disapproveSelectedPayments"
+              data-cy="dialog-disapprove-confirm"
+            >
+              {{ $t('table.buttonConfirmDisapprove') }}
+            </q-btn>
+          </div>
+        </template>
+      </dialog-default>
     </div>
   </div>
 </template>

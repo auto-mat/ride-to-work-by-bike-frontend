@@ -147,6 +147,57 @@ Cypress.Commands.add(
 );
 
 /**
+ * Intercept Coordinator Disapprove Payments POST API call
+ * Create intercept `@postCoordinatorDisapprovePayments`
+ * @param {Object} config - Ride to Work by Bike config object
+ * @param {Object} responseData - Mock response data object
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorDisapprovePaymentsPostApi',
+  (config, responseData) => {
+    const { apiBase, apiDefaultLang, urlApiCoordinatorDisapprovePayments } =
+      config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiCoordinatorDisapprovePaymentsLocalized = `${apiBaseUrl}${urlApiCoordinatorDisapprovePayments}`;
+
+    cy.intercept('POST', urlApiCoordinatorDisapprovePaymentsLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: responseData,
+    }).as('postCoordinatorDisapprovePayments');
+  },
+);
+
+/**
+ * Wait for intercept coordinator disapprove payments POST API call and compare request/response object
+ * Wait for `@postCoordinatorDisapprovePayments` intercept
+ * @param {Object} requestData - Expected request data object
+ * @param {Object} responseData - Expected response data object
+ */
+Cypress.Commands.add(
+  'waitForCoordinatorDisapprovePaymentsPostApi',
+  (requestData, responseData) => {
+    cy.wait('@postCoordinatorDisapprovePayments').then(
+      ({ request, response }) => {
+        // Verify authorization header
+        expect(request.headers.authorization).to.include(bearerTokeAuth);
+        // Verify request body
+        expect(request.body).to.deep.equal(requestData);
+        // Verify response
+        if (response) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(responseData);
+        }
+      },
+    );
+  },
+);
+
+/**
  * Intercept coordinator invoices GET API call
  * Provides `@getCoordinatorInvoices` alias
  * @param {Object} config - App global config
