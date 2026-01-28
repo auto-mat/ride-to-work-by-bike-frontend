@@ -285,7 +285,7 @@ describe('<BannerTeamMemberApprove>', () => {
                 // name
                 cy.dataCy('dialog-approve-members-member-name').should(
                   'contain',
-                  unapprovedMembers[index].name,
+                  unapprovedMembers[index].name_for_trusted,
                 );
                 // deny button
                 cy.dataCy('dialog-approve-members-button-deny').should(
@@ -459,7 +459,7 @@ function coreTests() {
             // member name
             cy.dataCy('dialog-approve-members-member-name')
               .should('be.visible')
-              .and('contain', unapprovedMembers[index].name);
+              .and('contain', unapprovedMembers[index].name_for_trusted);
             // approve member button
             cy.dataCy('dialog-approve-members-button-approve')
               .should('be.visible')
