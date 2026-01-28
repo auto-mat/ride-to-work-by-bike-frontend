@@ -6,7 +6,7 @@ import type { Logger } from '../components/types/Logger';
 
 /**
  * Check if a voucher code indicates a "without reward" voucher
- * based on configured pattern matching.
+ * based on configured regex pattern.
  *
  * @param {string} voucherCode - The voucher code to validate
  * @param {Logger | null} logger - Optional logger instance
