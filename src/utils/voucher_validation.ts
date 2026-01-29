@@ -10,7 +10,7 @@ import type { Logger } from '../components/types/Logger';
  *
  * @param {string} voucherCode - The voucher code to validate
  * @param {Logger | null} logger - Optional logger instance
- * @returns {boolean} - True if voucher is WITHOUT reward, false otherwise
+ * @returns {boolean} - True if voucher is without reward, false otherwise
  */
 export const isVoucherWithoutReward = (
   voucherCode: string,
@@ -28,7 +28,9 @@ export const isVoucherWithoutReward = (
     return regex.test(voucherCode);
   } catch (error) {
     // If regex is invalid, log error and return false
-    logger?.error(`Invalid voucher pattern regex <${regexPattern}>: ${error}`);
+    logger?.error(
+      `Invalid voucher pattern regex <${regexPattern}>,` + ` <${error}>`,
+    );
     return false;
   }
 };
