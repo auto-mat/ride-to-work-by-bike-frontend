@@ -29,7 +29,7 @@ export const isVoucherWithoutReward = (
   } catch (error) {
     // If regex is invalid, log error and return false
     logger?.error(
-      `Invalid voucher pattern regex <${regexPattern}>,` + ` <${error}>`,
+      `Invalid voucher pattern regex <${regexPattern}>, <${error}>`,
     );
     return false;
   }
