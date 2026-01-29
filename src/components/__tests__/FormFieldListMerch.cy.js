@@ -15,7 +15,6 @@ import {
 } from '../../../test/cypress/support/commonTests';
 
 const tshirt2024FemaleMId = 135;
-const tshirt2024FemaleXsId = 133;
 
 describe('<FormFieldListMerch>', () => {
   it('has translation for all strings', () => {
@@ -173,11 +172,14 @@ describe('<FormFieldListMerch>', () => {
           .should('be.visible')
           .within(() => {
             cy.contains(item.name).should('be.visible');
-            cy.contains(item.description).should('be.visible');
           });
         cy.dataCy('slider-merch').should('be.visible');
-        // close dialog
-        cy.dataCy('dialog-close').click();
+        // select size
+        cy.dataCy('form-field-merch-size').within(() => {
+          cy.get('.q-radio').should('exist').and('be.visible').first().click();
+        });
+        // submit dialog
+        cy.dataCy('button-submit-merch').click();
         // first option is selected
         cy.dataCy('form-card-merch-female')
           .first()
@@ -187,6 +189,16 @@ describe('<FormFieldListMerch>', () => {
           .first()
           .find('[data-cy="button-more-info"]')
           .should('not.exist');
+        // sizes input is visible
+        cy.dataCy('form-field-merch-size').should('be.visible');
+        // fist size is selected
+        cy.dataCy('form-field-merch-size')
+          .first()
+          .within(() => {
+            cy.get('.q-radio__inner')
+              .first()
+              .should('have.class', 'q-radio__inner--truthy');
+          });
       });
     });
 
@@ -202,11 +214,14 @@ describe('<FormFieldListMerch>', () => {
           .should('be.visible')
           .within(() => {
             cy.contains(item.name).should('be.visible');
-            cy.contains(item.description).should('be.visible');
           });
         cy.dataCy('slider-merch').should('be.visible');
-        // close dialog
-        cy.dataCy('dialog-close').click();
+        // select seocond size
+        cy.dataCy('form-field-merch-size').within(() => {
+          cy.get('.q-radio').should('exist').and('be.visible').eq(1).click();
+        });
+        // submit dialog
+        cy.dataCy('button-submit-merch').click();
         // first option is selected
         cy.dataCy('form-card-merch-female')
           .first()
@@ -216,30 +231,51 @@ describe('<FormFieldListMerch>', () => {
           .first()
           .find('[data-cy="button-more-info"]')
           .should('not.exist');
+        // sizes input is visible
+        cy.dataCy('form-field-merch-size').should('be.visible');
+        // fist size is selected
+        cy.dataCy('form-field-merch-size')
+          .first()
+          .within(() => {
+            cy.get('.q-radio__inner')
+              .eq(1)
+              .should('have.class', 'q-radio__inner--truthy');
+          });
       });
     });
 
-    it('changes tabs when changing gender radio (in dialog)', () => {
+    it('discards the selection when user closes the dialog', () => {
       cy.fixture('apiGetMerchandiseResponse').then((response) => {
-        // select our test item (Triko 2024, female, size M)
-        const item = response.results.find(
-          (item) => item.id === tshirt2024FemaleMId,
-        );
-        cy.listMerchSelectItem(item, { closeDialog: false });
-        // change gender setting
-        cy.dataCy('dialog-merch').within(() => {
-          cy.dataCy('form-field-merch-gender')
-            .contains(i18n.global.t('global.male'))
-            .should('be.visible')
-            .click();
+        const item = response.results[0];
+        // open dialog
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .click();
+        cy.dataCy('dialog-merch')
+          .should('be.visible')
+          .within(() => {
+            cy.contains(item.name).should('be.visible');
+          });
+        cy.dataCy('slider-merch').should('be.visible');
+        // select size
+        cy.dataCy('form-field-merch-size').within(() => {
+          cy.get('.q-radio').should('exist').and('be.visible').first().click();
         });
         // close dialog
         cy.dataCy('dialog-close').click();
-        // we should see male options
-        cy.dataCy('form-card-merch-male').should('be.visible');
-        cy.dataCy('form-card-merch-female').should('not.exist');
-        // same merch type selected
-        cy.get('[data-selected="true"]').should('contain', item.name);
+        // no option is selected
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-selected"]')
+          .should('not.exist');
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .find('[data-cy="button-more-info"]')
+          .should('exist')
+          .and('be.visible');
+        // sizes input is not visible
+        cy.dataCy('form-field-merch-size').should('not.exist');
       });
     });
 
@@ -294,28 +330,6 @@ describe('<FormFieldListMerch>', () => {
       });
     });
 
-    it('when gender is changed and new product contains the same size, it is selected', () => {
-      cy.fixture('apiGetMerchandiseResponse').then((response) => {
-        // select our test item (Triko 2024, female, size M)
-        const item = response.results.find(
-          (item) => item.id === tshirt2024FemaleMId,
-        );
-        cy.listMerchSelectItem(item, { closeDialog: false });
-        cy.dataCy('dialog-merch').within(() => {
-          // change gender
-          cy.dataCy('form-field-merch-gender')
-            .contains(i18n.global.t('global.male'))
-            .should('be.visible')
-            .click();
-          // same size is selected
-          cy.dataCy('form-field-merch-size')
-            .find('.q-radio__inner.q-radio__inner--truthy')
-            .siblings('.q-radio__label')
-            .should('contain', item.size);
-        });
-      });
-    });
-
     it('when gender is changed via tabs, it does not open dialog', () => {
       cy.fixture('apiGetMerchandiseResponse').then((response) => {
         // select our test item (Triko 2024, female, size M)
@@ -323,33 +337,28 @@ describe('<FormFieldListMerch>', () => {
           (item) => item.id === tshirt2024FemaleMId,
         );
         cy.listMerchSelectItem(item);
+        // sizes input is visible
+        cy.dataCy('form-field-merch-size').should('exist').and('be.visible');
         // change merch via tabs
         cy.dataCy('list-merch-tab-male').click();
         // male options are visible
         cy.dataCy('form-card-merch-male').should('be.visible');
         cy.dataCy('form-card-merch-female').should('not.exist');
+        // no option is selected
+        cy.dataCy('button-selected').should('not.exist');
+        // sizes input is not visible
+        cy.dataCy('form-field-merch-size').should('not.exist');
         // dialog is not open
         cy.dataCy('dialog-merch').should('not.exist');
-      });
-    });
-
-    it('when gender is changed to via tabs and size is not available, it selects first available size', () => {
-      cy.fixture('apiGetMerchandiseResponse').then((response) => {
-        // select our test item (Triko 2024, female, size XS)
-        const item = response.results.find(
-          (item) => item.id === tshirt2024FemaleXsId,
-        );
-        cy.listMerchSelectItem(item);
-        // change merch via tabs
-        cy.dataCy('list-merch-tab-male').click();
-        // male options are visible
-        cy.dataCy('form-card-merch-male').should('be.visible');
-        cy.dataCy('form-card-merch-female').should('not.exist');
-        // XS is not available in male options - first option is selected
-        cy.dataCy('form-field-merch-size')
-          .find('.q-radio__inner')
+        // go back to female tab
+        cy.dataCy('list-merch-tab-female').click();
+        // first option is selected
+        cy.dataCy('form-card-merch-female')
           .first()
-          .should('have.class', 'q-radio__inner--truthy');
+          .find('[data-cy="button-selected"]')
+          .should('be.visible');
+        // sizes input is visible
+        cy.dataCy('form-field-merch-size').should('exist').and('be.visible');
       });
     });
   });

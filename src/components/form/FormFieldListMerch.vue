@@ -317,48 +317,6 @@ export default defineComponent({
     };
 
     /**
-     * When gender changes, try matching current item with the same item
-     * in the new gender group.
-     * This happens based on shared labels (IDs are never shared).
-     */
-    const onGenderChange = (newGender: string) => {
-      logger?.debug(`Gender was changed to <${newGender}>.`);
-      if (!currentDialogCard.value) {
-        logger?.debug('No current dialog card, cannot set new item.');
-        return;
-      }
-      // find card with same label in the new gender category
-      const cardOption = merchandiseCards.value[newGender as Gender].find(
-        (card) => card.label === currentDialogCard.value?.label,
-      );
-      if (cardOption) {
-        logger?.debug(
-          `Card option for gender <${newGender}> has been` +
-            ` found <${JSON.stringify(cardOption, null, 2)}>.`,
-        );
-        // get items for this card and gender
-        const cardItems = merchandiseItems.value.filter((item) =>
-          cardOption.itemIds?.includes(item.id),
-        );
-        // try to find matching size by label
-        const matchingSize = cardItems.find(
-          (item) => item.size === selectedOptionLocal.value?.size,
-        );
-        if (matchingSize) {
-          selectedSizeLocal.value = matchingSize.id;
-        } else {
-          selectedSizeLocal.value = null;
-        }
-      } else {
-        logger?.debug(`No card option found for gender <${newGender}>.`);
-        selectedSizeLocal.value = null;
-      }
-    };
-
-    // watch for gender changes
-    watch(selectedGender, onGenderChange);
-
-    /**
      * Handles the card "select" button click.
      * Opens the dialog with more details.
      * @param option MerchandiseCard
@@ -635,19 +593,6 @@ export default defineComponent({
           <!-- Merch Image Slider -->
           <slider-merch :items="currentDialogItem.images" />
           <q-form ref="formMerchRef">
-            <!-- Input: Merch gender -->
-            <div v-if="currentGenderOptions.length > 1" class="q-pt-sm">
-              <span class="text-caption text-weight-medium text-grey-10">{{
-                $t('form.merch.labelVariant')
-              }}</span>
-              <form-field-radio-required
-                inline
-                v-model="selectedGender"
-                :options="currentGenderOptions"
-                class="q-mt-sm"
-                data-cy="form-field-merch-gender"
-              />
-            </div>
             <!-- Input: Merch size (dialog) - duplicated in card -->
             <div class="q-pt-sm" v-if="currentSizeOptions.length > 1">
               <span
