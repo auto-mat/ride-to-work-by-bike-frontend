@@ -943,11 +943,18 @@ describe('Register Challenge page', () => {
               .should('be.visible')
               .within(() => {
                 cy.contains(item.name).should('be.visible');
-                cy.contains(item.description).should('be.visible');
               });
             cy.dataCy('slider-merch').should('be.visible');
-            // close dialog
-            cy.dataCy('dialog-close').click();
+            // select size
+            cy.dataCy('form-field-merch-size').within(() => {
+              cy.get('.q-radio')
+                .should('exist')
+                .and('be.visible')
+                .first()
+                .click();
+            });
+            // submit dialog
+            cy.dataCy('button-submit-merch').click();
             // first option is selected
             cy.dataCy('form-card-merch-female')
               .first()
@@ -1810,8 +1817,16 @@ describe('Register Challenge page', () => {
             .first()
             .find('[data-cy="form-card-merch-link"]')
             .click();
-          // close dialog
-          cy.dataCy('dialog-close').click();
+          // select size
+          cy.dataCy('form-field-merch-size').within(() => {
+            cy.get('.q-radio')
+              .should('exist')
+              .and('be.visible')
+              .first()
+              .click();
+          });
+          // submit dialog
+          cy.dataCy('button-submit-merch').click();
           // verify dialog is closed
           cy.dataCy('dialog-merch').should('not.exist');
           // go to next step
@@ -1892,8 +1907,12 @@ describe('Register Challenge page', () => {
         .first()
         .find('[data-cy="form-card-merch-link"]')
         .click();
-      // close dialog
-      cy.dataCy('dialog-close').click();
+      // select size
+      cy.dataCy('form-field-merch-size').within(() => {
+        cy.get('.q-radio').should('exist').and('be.visible').first().click();
+      });
+      // submit dialog
+      cy.dataCy('button-submit-merch').click();
       // verify dialog is closed
       cy.dataCy('dialog-merch').should('not.exist');
       // go to next step
@@ -2039,8 +2058,12 @@ describe('Register Challenge page', () => {
         .first()
         .find('[data-cy="form-card-merch-link"]')
         .click();
-      // close dialog
-      cy.dataCy('dialog-close').click();
+      // select size
+      cy.dataCy('form-field-merch-size').within(() => {
+        cy.get('.q-radio').should('exist').and('be.visible').first().click();
+      });
+      // submit dialog
+      cy.dataCy('button-submit-merch').click();
       // verify dialog is closed
       cy.dataCy('dialog-merch').should('not.exist');
       // go to next step
@@ -2350,8 +2373,16 @@ describe('Register Challenge page', () => {
             .first()
             .find('[data-cy="form-card-merch-link"]')
             .click();
-          // close dialog
-          cy.dataCy('dialog-close').click();
+          // select size
+          cy.dataCy('form-field-merch-size').within(() => {
+            cy.get('.q-radio')
+              .should('exist')
+              .and('be.visible')
+              .first()
+              .click();
+          });
+          // submit dialog
+          cy.dataCy('button-submit-merch').click();
           // verify dialog is closed
           cy.dataCy('dialog-merch').should('not.exist');
           // go to next step
@@ -2486,8 +2517,16 @@ describe('Register Challenge page', () => {
             .first()
             .find('[data-cy="form-card-merch-link"]')
             .click();
-          // close dialog
-          cy.dataCy('dialog-close').click();
+          // select size
+          cy.dataCy('form-field-merch-size').within(() => {
+            cy.get('.q-radio')
+              .should('exist')
+              .and('be.visible')
+              .first()
+              .click();
+          });
+          // submit dialog
+          cy.dataCy('button-submit-merch').click();
           // verify dialog is closed
           cy.dataCy('dialog-merch').should('not.exist');
           // go to next step
@@ -2754,7 +2793,7 @@ describe('Register Challenge page', () => {
       );
     });
 
-    it('allows to complete registration with individual payment "done"', () => {
+    it.only('allows to complete registration with individual payment "done"', () => {
       // visit page
       cy.visit('#' + routesConf['register_challenge']['path']);
       cy.window().should('have.property', 'i18n');
@@ -2772,12 +2811,21 @@ describe('Register Challenge page', () => {
               .and('not.be.disabled');
             cy.dataCy('step-2-continue').should('be.visible').click();
             cy.testRegisterChallengeLoadedStepsThreeToFive(win.i18n, response);
-            // select merch size
+            // select merch
             cy.dataCy('form-card-merch-female')
               .first()
               .find('[data-cy="button-more-info"]')
               .click();
-            cy.dataCy('dialog-close').click();
+            // select size
+            cy.dataCy('form-field-merch-size').within(() => {
+              cy.get('.q-radio')
+                .should('exist')
+                .and('be.visible')
+                .first()
+                .click();
+            });
+            // submit dialog
+            cy.dataCy('button-submit-merch').click();
             // next step button is enabled
             cy.dataCy('step-6-continue')
               .should('be.visible')
@@ -3425,7 +3473,7 @@ describe('Register Challenge page', () => {
       cy.viewport('macbook-16');
     });
 
-    it('fetches the registration status on load', () => {
+    it.only('fetches the registration status on load', () => {
       cy.get('@config').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {

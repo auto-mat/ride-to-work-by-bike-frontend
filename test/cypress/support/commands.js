@@ -2601,8 +2601,14 @@ Cypress.Commands.add('passToStep7', () => {
     .first()
     .find('[data-cy="form-card-merch-link"]')
     .click();
-  // close dialog
-  cy.dataCy('dialog-close').click();
+  // select size
+  cy.dataCy('form-field-merch-size')
+    .last()
+    .within(() => {
+      cy.get('.q-radio').should('exist').and('be.visible').first().click();
+    });
+  // submit dialog
+  cy.dataCy('button-submit-merch').click();
   // verify dialog is closed
   cy.dataCy('dialog-merch').should('not.exist');
   // go to next step

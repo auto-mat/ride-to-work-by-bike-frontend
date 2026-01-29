@@ -269,7 +269,10 @@ export default defineComponent({
       return cardItems[0]?.genderOptions || [];
     });
 
-    const currentSizeOptions = computed((): FormOption[] => {
+    /**
+     * Size options for dialog input - based on current dialog card.
+     */
+    const dialogSizeOptions = computed((): FormOption[] => {
       if (!currentDialogCard.value) return [];
       // Get an item from the current card that matches selected gender
       const cardItems = merchandiseItems.value.filter(
@@ -278,6 +281,14 @@ export default defineComponent({
           item.gender === selectedGender.value,
       );
       return cardItems[0]?.sizeOptions || [];
+    });
+
+    /**
+     * Size options for bottom input (under cards) - based on committed selection.
+     */
+    const bottomSizeOptions = computed((): FormOption[] => {
+      if (!selectedOption.value) return [];
+      return selectedOption.value.sizeOptions || [];
     });
 
     const isShowingBottomSizeInput = computed((): boolean => {
@@ -410,6 +421,13 @@ export default defineComponent({
       );
     });
 
+    // clear dialog card when dialog closes to prevent state leakage
+    watch(isOpen, (newVal) => {
+      if (!newVal) {
+        currentDialogCard.value = null;
+      }
+    });
+
     return {
       currentItemLabelSize,
       currentDialogCard,
@@ -430,7 +448,8 @@ export default defineComponent({
       selectedSize,
       selectedGender,
       currentGenderOptions,
-      currentSizeOptions,
+      dialogSizeOptions,
+      bottomSizeOptions,
       onSelectCardOption,
       onSubmit,
       isSelected,
@@ -566,7 +585,7 @@ export default defineComponent({
       <form-field-radio-required
         inline
         v-model="selectedSize"
-        :options="currentSizeOptions"
+        :options="bottomSizeOptions"
         class="q-mt-sm"
         data-cy="form-field-merch-size"
       />
@@ -594,7 +613,7 @@ export default defineComponent({
           <slider-merch :items="currentDialogItem.images" />
           <q-form ref="formMerchRef">
             <!-- Input: Merch size (dialog) - duplicated in card -->
-            <div class="q-pt-sm" v-if="currentSizeOptions.length > 1">
+            <div class="q-pt-sm" v-if="dialogSizeOptions.length > 1">
               <span
                 class="text-caption text-weight-medium text-grey-10"
                 v-if="currentItemLabelSize"
@@ -603,7 +622,7 @@ export default defineComponent({
               <form-field-radio-required
                 inline
                 v-model="selectedSizeLocal"
-                :options="currentSizeOptions"
+                :options="dialogSizeOptions"
                 class="q-mt-sm"
                 data-cy="form-field-merch-size"
               />
