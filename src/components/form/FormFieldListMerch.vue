@@ -257,11 +257,12 @@ export default defineComponent({
     });
 
     /**
-     * Size options for dialog input - based on current dialog card.
+     * Size options for dialog input.
+     * Based on current dialog card.
      */
     const dialogSizeOptions = computed((): FormOption[] => {
       if (!currentDialogCard.value) return [];
-      // Get an item from the current card that matches selected gender
+      // get first item from current card
       const cardItems = merchandiseItems.value.filter(
         (item) =>
           currentDialogCard.value?.itemIds?.includes(item.id) &&
@@ -271,7 +272,8 @@ export default defineComponent({
     });
 
     /**
-     * Size options for bottom input (under cards) - based on committed selection.
+     * Size options for bottom input (under cards).
+     * Based on currently selected item.
      */
     const bottomSizeOptions = computed((): FormOption[] => {
       if (!selectedOption.value) return [];
@@ -380,7 +382,7 @@ export default defineComponent({
         registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
         isOpen.value = false;
       } else {
-        // Show validation error
+        // validation error
         logger?.debug('Form validation failed, keeping dialog open.');
         formMerchRef.value.$el.scrollIntoView({ behavior: 'smooth' });
       }
