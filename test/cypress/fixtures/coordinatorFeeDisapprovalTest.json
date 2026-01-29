@@ -1,0 +1,126 @@
+[
+  {
+    "description": "allows to disapprove a single member payment",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "disapprovePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        }
+      ],
+      "membersDisapproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 390 }
+      },
+      "responseBody": {
+        "message": "Disapproved 1 payment successfully",
+        "disapproved_ids": [20001]
+      }
+    },
+    "fixtureAdminOrganisationAfterDisapproval": "apiGetAdminOrganisationResponseOneDisapprovedMember.json",
+    "displayAfterDisapproval": {
+      "countWaitingForApproval": 2,
+      "countApproved": 1
+    }
+  },
+  {
+    "description": "allows to disapprove multiple member payments",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "disapprovePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Petr Horák",
+          "id": 20002
+        }
+      ],
+      "membersDisapproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Petr Horák",
+          "id": 20002
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 390, "20002": 390 }
+      },
+      "responseBody": {
+        "message": "Disapproved 2 payments successfully",
+        "disapproved_ids": [20001, 20002]
+      }
+    },
+    "fixtureAdminOrganisationAfterDisapproval": "apiGetAdminOrganisationResponseTwoDisapprovedMembers.json",
+    "displayAfterDisapproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 1
+    }
+  },
+  {
+    "description": "allows to disapprove multiple member payments, some without reward",
+    "fixtureAdminOrganisationInitial": "apiGetAdminOrganisationResponse.json",
+    "displayInitial": {
+      "countWaitingForApproval": 3,
+      "countApproved": 1
+    },
+    "disapprovePayment": {
+      "success": true,
+      "error": false,
+      "members": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "membersDisapproved": [
+        {
+          "name": "Jana Novotná",
+          "id": 20001
+        },
+        {
+          "name": "Lucie Dvořáková",
+          "id": 20005
+        }
+      ],
+      "requestPayload": {
+        "ids": { "20001": 390, "20005": 340 }
+      },
+      "responseBody": {
+        "message": "Disapproved 2 payments successfully",
+        "disapproved_ids": [20001, 20005]
+      }
+    },
+    "fixtureAdminOrganisationAfterDisapproval": "apiGetAdminOrganisationResponseDisapprovalNoReward.json",
+    "displayAfterDisapproval": {
+      "countWaitingForApproval": 1,
+      "countApproved": 1
+    }
+  }
+]

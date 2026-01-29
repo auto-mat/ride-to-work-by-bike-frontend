@@ -1,6 +1,7 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { systemTimeChallengeActive } from '../support/commonTests';
 import testSet from '../fixtures/coordinatorFeeApprovalTest.json';
+import disapprovalTestSet from '../fixtures/coordinatorFeeDisapprovalTest.json';
 
 describe('Company coordinator fee approval page', () => {
   context('previewing members and approving payments', () => {
@@ -157,7 +158,7 @@ describe('Company coordinator fee approval page', () => {
   });
 
   context('reward status toggling', () => {
-    beforeEach(() => {
+        beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
         cy.task('getAppConfig', process).then((config) => {
@@ -319,6 +320,160 @@ describe('Company coordinator fee approval page', () => {
       // wait for API call to complete
       cy.waitForAdminOrganisationGetApi('apiGetAdminOrganisationResponse.json');
       cy.get('@getAdminOrganisation.all').should('have.length', 2);
+    });
+  });
+
+  context('previewing members and disapproving payments', () => {
+    /**
+     * Key intercepts within setupCompanyCoordinatorTest:
+     * this_campaign: apiGetThisCampaign.json
+     * coordinator/organization-structure: apiGetAdminOrganisationResponse.json
+     * register-challenge: apiGetRegisterChallengeProfile.json
+     */
+    beforeEach(() => {
+      // set system time to be in the correct active token window
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+          });
+        });
+      });
+    });
+
+    disapprovalTestSet.forEach((test) => {
+      it(`${test.description}`, () => {
+        cy.get('@config').then((config) => {
+          cy.interceptAdminOrganisationGetApi(
+            config,
+            test.fixtureAdminOrganisationInitial,
+          );
+          cy.visit(
+            '#' + routesConf['coordinator_fees']['children']['fullPath'],
+          );
+          cy.dataCy('table-fee-approval-not-approved-title').should(
+            'be.visible',
+          );
+          cy.dataCy('table-fee-approval-approved-title').should('be.visible');
+          cy.get('@i18n').then((i18n) => {
+            // check that initial admin organisation response is loaded
+            cy.waitForAdminOrganisationGetApi(
+              test.fixtureAdminOrganisationInitial,
+            );
+            cy.get('@getAdminOrganisation.all').should('have.length', 1);
+            cy.waitForCoordinatorInvoicesGetApi(
+              'apiGetCoordinatorInvoicesResponse.json',
+            );
+            cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+            // test initial member distribution between tables
+            cy.dataCy('table-fee-approval-not-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayInitial.countWaitingForApproval,
+              );
+            });
+            cy.dataCy('table-fee-approval-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayInitial.countApproved,
+              );
+            });
+            // intercept endpoints for disapprove payment responses
+            cy.interceptCoordinatorDisapprovePaymentsPostApi(
+              config,
+              test.disapprovePayment.responseBody,
+            );
+            cy.interceptAdminOrganisationGetApi(
+              config,
+              test.fixtureAdminOrganisationAfterDisapproval,
+            );
+            // select members to disapprove in not-approved table
+            cy.dataCy('table-fee-approval-not-approved').within(() => {
+              test.disapprovePayment.members.forEach((member) => {
+                // find row with selected member name
+                cy.contains(member.name)
+                  .parent('tr')
+                  .should('be.visible')
+                  .find('[data-cy="table-fee-approval-checkbox"]')
+                  .click();
+              });
+            });
+            // click disapprove button
+            cy.dataCy('table-fee-disapproval-button')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // verify dialog appears
+            cy.dataCy('dialog-disapprove-payments').should('be.visible');
+            cy.dataCy('dialog-disapprove-description')
+              .should('be.visible')
+              .and(
+                'contain',
+                i18n.global.t('table.labelDisapprovePaymentsDescription', {
+                  count: test.disapprovePayment.members.length,
+                }),
+              );
+            // click confirm button
+            cy.dataCy('dialog-disapprove-confirm')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // wait for API call to finish
+            cy.waitForCoordinatorDisapprovePaymentsPostApi(
+              test.disapprovePayment.requestPayload,
+              test.disapprovePayment.responseBody,
+            );
+            cy.waitForAdminOrganisationGetApi(
+              test.fixtureAdminOrganisationAfterDisapproval,
+            );
+            cy.get('@getAdminOrganisation.all').should('have.length', 2);
+            // check that invoices are re-fetched after disapproval
+            cy.waitForCoordinatorInvoicesGetApi(
+              'apiGetCoordinatorInvoicesResponse.json',
+            );
+            cy.get('@getCoordinatorInvoices.all').should('have.length', 2);
+            // after disapproval, check that members are removed from tables
+            cy.dataCy('table-fee-approval-not-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayAfterDisapproval.countWaitingForApproval,
+              );
+              // verify disapproved members are no longer visible
+              test.disapprovePayment.membersDisapproved.forEach((member) => {
+                cy.contains(member.name).should('not.exist');
+              });
+            });
+            cy.dataCy('table-fee-approval-approved').within(() => {
+              cy.dataCy('table-fee-approval-row').should(
+                'have.length',
+                test.displayAfterDisapproval.countApproved,
+              );
+            });
+            // verify success message
+            if (test.disapprovePayment.success) {
+              cy.contains(
+                i18n.global.t(
+                  'disapprovePayments.apiMessageSuccessWithCount',
+                  { count: test.disapprovePayment.membersDisapproved.length },
+                  test.disapprovePayment.membersDisapproved.length,
+                ),
+              ).should('be.visible');
+            }
+            // verify error message
+            if (test.disapprovePayment.error) {
+              cy.contains(
+                i18n.global.t('disapprovePayments.apiMessageErrorPartial'),
+              ).should('be.visible');
+            }
+          });
+        });
+      });
     });
   });
 });
