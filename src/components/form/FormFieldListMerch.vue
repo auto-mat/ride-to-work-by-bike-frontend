@@ -360,6 +360,16 @@ export default defineComponent({
         logger?.debug('No valid stored item, starting with null selection.');
         selectedSizeLocal.value = null;
         selectedGender.value = cardItems[0]?.gender || Gender.female;
+        // auto-select size if there is only one option
+        const itemsForGender = cardItems.filter(
+          (item) => item.gender === selectedGender.value,
+        );
+        if (itemsForGender.length === 1) {
+          logger?.debug(
+            `Only one size option available, auto-selecting: ${itemsForGender[0].id}`,
+          );
+          selectedSizeLocal.value = itemsForGender[0].id;
+        }
       }
       if (openDialog) {
         isOpen.value = true;
@@ -633,6 +643,7 @@ export default defineComponent({
                 rounded
                 unelevated
                 color="primary"
+                :disable="!selectedSizeLocal"
                 :label="$t('navigation.select')"
                 text-color="white"
                 @click="onSubmit"
