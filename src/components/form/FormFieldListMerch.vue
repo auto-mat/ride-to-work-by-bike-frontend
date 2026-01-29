@@ -257,19 +257,6 @@ export default defineComponent({
     });
 
     /**
-     * Get current item's alternative gender options.
-     * This allows to switch gender from within the dialog.
-     */
-    const currentGenderOptions = computed((): FormOption[] => {
-      if (!currentDialogCard.value) return [];
-      // Get any item from the current card to access gender options
-      const cardItems = merchandiseItems.value.filter((item) =>
-        currentDialogCard.value?.itemIds?.includes(item.id),
-      );
-      return cardItems[0]?.genderOptions || [];
-    });
-
-    /**
      * Size options for dialog input - based on current dialog card.
      */
     const dialogSizeOptions = computed((): FormOption[] => {
@@ -457,7 +444,6 @@ export default defineComponent({
       selectedSizeLocal,
       selectedSize,
       selectedGender,
-      currentGenderOptions,
       dialogSizeOptions,
       bottomSizeOptions,
       onSelectCardOption,
