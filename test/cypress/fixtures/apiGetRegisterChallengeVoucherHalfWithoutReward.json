@@ -18,7 +18,7 @@
         "age_group": null,
         "newsletter": "challenge",
         "personal_data_opt_in": true,
-        "discount_coupon": "XXNRW-HALF",
+        "discount_coupon": "XXNRWD-HALF",
         "payment_subject": "voucher",
         "payment_type": "CARD_TOKEN",
         "payment_status": "done",
