@@ -1,0 +1,61 @@
+{
+  "results": [
+    {
+      "name": "Moravské pivovary a.s.",
+      "psc": 15000,
+      "street": "Pivovarská",
+      "street_number": 456,
+      "recipient": "Moravské pivovary a.s.",
+      "city": "Brno",
+      "ico": 87654321,
+      "dic": "CZ87654321",
+      "active": true,
+      "subsidiaries": [
+        {
+          "id": 3001,
+          "name": "Pivovarská 456, 15000 Brno",
+          "psc": 15000,
+          "street": "Pivovarská",
+          "street_number": 456,
+          "city": "Brno",
+          "icon_url": null,
+          "teams": [
+            {
+              "id": 4001,
+              "name": "Obchodní tým",
+              "icon_url": null,
+              "members_without_paid_entry_fee_by_org_coord": [
+                {
+                  "id": 20001,
+                  "name": "Jana Novotná",
+                  "name_for_trusted": "Jana Novotná (jnovotna)",
+                  "nickname": "jnovotna",
+                  "date_of_challenge_registration": "2025-02-01T10:00:00.000000",
+                  "email": "jana.novotna@moravske-pivovary.cz",
+                  "telephone": "555001001",
+                  "sex": "female",
+                  "avatar_url": "",
+                  "approved_for_team": "approved",
+                  "payment_status": "waiting",
+                  "payment_type": "fc",
+                  "payment_category": "entry_fee",
+                  "payment_amount": "400",
+                  "discount_coupon": "",
+                  "user_profile_id": 60001,
+                  "is_payment_with_reward": true
+                }
+              ],
+              "members_with_paid_entry_fee_by_org_coord": [],
+              "other_members": []
+            }
+          ],
+          "box_addressee_name": "Jan Novák",
+          "box_addressee_telephone": "420123456789",
+          "box_addressee_email": "jan.novak@moravske-pivovary.cz",
+          "challenge_city": "Brno",
+          "boxes": []
+        }
+      ]
+    }
+  ]
+}

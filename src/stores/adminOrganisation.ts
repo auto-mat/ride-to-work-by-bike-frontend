@@ -23,6 +23,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 // enums
 import { PhaseType } from '../components/types/Challenge';
 import { TeamMemberStatus } from '../components/enums/TeamMember';
+import { PriceLevelCategory } from '../components/enums/Challenge';
 
 // stores
 import { useChallengeStore } from './challenge';
@@ -391,9 +392,25 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return;
       }
       // if not, find matching price level and calculate new amount
+      const priceLevelsWithReward = challengeStore.getPriceLevel.filter(
+        (level) => {
+          return (
+            level.category === PriceLevelCategory.companyWithReward ||
+            level.category === PriceLevelCategory.schoolWithReward
+          );
+        },
+      );
+      const priceLevelsWithoutReward = challengeStore.getPriceLevel.filter(
+        (level) => {
+          return (
+            level.category === PriceLevelCategory.company ||
+            level.category === PriceLevelCategory.school
+          );
+        },
+      );
       const priceLevels = originalRewardStatus
-        ? challengeStore.getCurrentPriceLevelsWithReward
-        : challengeStore.getCurrentPriceLevels;
+        ? priceLevelsWithReward
+        : priceLevelsWithoutReward;
       const matchedPriceLevel = Object.values(priceLevels).find((level) => {
         return (
           level.price === originalAmount &&
@@ -407,9 +424,15 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       }
       const pairedCategory = priceLevelPairs[matchedPriceLevel.category];
       const newPriceLevels = value
-        ? challengeStore.getCurrentPriceLevelsWithReward
-        : challengeStore.getCurrentPriceLevels;
-      const newPrice = newPriceLevels[pairedCategory]?.price;
+        ? priceLevelsWithReward
+        : priceLevelsWithoutReward;
+      const newPriceLevel = Object.values(newPriceLevels).find((level) => {
+        return (
+          level.category === pairedCategory &&
+          level.name === matchedPriceLevel.name
+        );
+      });
+      const newPrice = newPriceLevel?.price;
       // fallback
       if (newPrice === undefined) {
         this.paymentAmounts[memberId] = originalAmount;

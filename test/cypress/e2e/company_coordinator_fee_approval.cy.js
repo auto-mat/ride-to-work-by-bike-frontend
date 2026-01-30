@@ -155,4 +155,138 @@ describe('Company coordinator fee approval page', () => {
       });
     });
   });
+
+  context('reward status toggling', () => {
+    beforeEach(() => {
+      // set system time to be in the correct active token window
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+            // override organisation structure
+            cy.interceptAdminOrganisationGetApi(
+              config,
+              'apiGetAdminOrganisationResponseOlderPrice.json',
+            );
+          });
+        });
+      });
+    });
+
+    it('should update payment amount when toggling reward status multiple times', () => {
+      cy.get('@config').then((config) => {
+        // visit the fee approval page
+        cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
+        cy.dataCy('table-fee-approval-not-approved-title').should('be.visible');
+        // wait for initial data load
+        cy.waitForAdminOrganisationGetApi(
+          'apiGetAdminOrganisationResponseOlderPrice.json',
+        );
+        // variables
+        const memberName = 'Jana Novotná';
+        const memberId = 20001;
+        const originalAmount = 400;
+        const amountWithoutReward = 350;
+        cy.dataCy('table-fee-approval-not-approved').within(() => {
+          // verify initial state
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              // amount
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                originalAmount,
+              );
+              // reward checkbox
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy');
+              // toggle reward OFF
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .click();
+            });
+          // verify amount changed
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                amountWithoutReward,
+              );
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy');
+            });
+          // toggle reward NO
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .click();
+            });
+          // verify original amount
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                originalAmount,
+              );
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy');
+            });
+          // toggle reward OFF
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .click();
+            });
+          // verify amount
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                amountWithoutReward,
+              );
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy');
+              // select member for approval
+              cy.dataCy('table-fee-approval-checkbox').click();
+            });
+        });
+        // intercept approval API call
+        const expectedResponse = {
+          message: 'Approved 1 payment successfully',
+          approved_ids: [memberId],
+        };
+        cy.interceptCoordinatorApprovePaymentsPostApi(config, expectedResponse);
+        // click approve
+        cy.dataCy('table-fee-approval-button')
+          .should('be.visible')
+          .and('not.be.disabled')
+          .click();
+        // verify API request
+        const expectedRequest = {
+          ids: { [memberId]: amountWithoutReward },
+        };
+        cy.waitForCoordinatorApprovePaymentsPostApi(
+          expectedRequest,
+          expectedResponse,
+        );
+      });
+    });
+  });
 });
