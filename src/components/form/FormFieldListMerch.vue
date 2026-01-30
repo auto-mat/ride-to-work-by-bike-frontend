@@ -383,7 +383,7 @@ export default defineComponent({
         isOpen.value = false;
       } else {
         // validation error
-        logger?.debug('Form validation failed, keeping dialog open.');
+        logger?.info('Form validation failed, keeping dialog open.');
         formMerchRef.value.$el.scrollIntoView({ behavior: 'smooth' });
       }
     };
