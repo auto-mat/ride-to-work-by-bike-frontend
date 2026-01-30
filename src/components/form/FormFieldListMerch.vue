@@ -335,7 +335,6 @@ export default defineComponent({
       const validItem = cardItems.find((item) => {
         return item.id === registerChallengeStore.getMerchId;
       });
-      logger?.debug(`Valid item <${JSON.stringify(validItem, null, 2)}>`);
       if (validItem) {
         // restore saved selection to local state
         logger?.debug(
@@ -355,7 +354,7 @@ export default defineComponent({
         );
         if (itemsForGender.length === 1) {
           logger?.debug(
-            `Only one size option available, auto-selecting: ${itemsForGender[0].id}`,
+            `Only one size option available, auto-selecting <${itemsForGender[0].id}>.`,
           );
           selectedSizeLocal.value = itemsForGender[0].id;
         }
