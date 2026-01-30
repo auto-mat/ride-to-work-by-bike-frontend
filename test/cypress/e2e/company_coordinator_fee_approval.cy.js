@@ -289,4 +289,36 @@ describe('Company coordinator fee approval page', () => {
       });
     });
   });
+
+  context('refreshing fee approval data', () => {
+    beforeEach(() => {
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+          });
+        });
+      });
+    });
+
+    it('should refresh fee approval data when refresh button is clicked', () => {
+      cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
+      // wait for initial data load
+      cy.waitForAdminOrganisationGetApi('apiGetAdminOrganisationResponse.json');
+      cy.get('@getAdminOrganisation.all').should('have.length', 1);
+      // click refresh button
+      cy.dataCy('tab-coordinator-fee-approval-button-refresh')
+        .should('be.visible')
+        .and('not.be.disabled')
+        .click();
+      // wait for API call to complete
+      cy.waitForAdminOrganisationGetApi('apiGetAdminOrganisationResponse.json');
+      cy.get('@getAdminOrganisation.all').should('have.length', 2);
+    });
+  });
 });

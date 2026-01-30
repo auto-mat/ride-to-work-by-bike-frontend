@@ -340,6 +340,7 @@ boxesDeliveryStatus = "doručených|doručen|doručeny|doručených"
 buttonDownloadDiploma = "Stáhnout"
 downloadTeamDiploma = "Stáhnout týmový diplom"
 downloadMemberDiploma = "Stáhnout členský diplom"
+buttonRefreshFeeData = "Aktualizovat data"
 
 [createOrganization]
 apiMessageError = "Vytvoření organizace selhalo."

@@ -340,6 +340,7 @@ boxesDeliveryStatus = "delivered"
 buttonDownloadDiploma = "Download"
 downloadTeamDiploma = "Download team diploma"
 downloadMemberDiploma = "Download member diploma"
+buttonRefreshFeeData = "Refresh data"
 
 [createOrganization]
 apiMessageError = "Organization creation failed."

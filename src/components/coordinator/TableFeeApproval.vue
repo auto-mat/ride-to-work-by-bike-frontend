@@ -93,17 +93,23 @@ export default defineComponent({
       adminOrganisationStore.setPaymentReward(memberId, value);
     };
 
-    // sort by dateCreated initially
-    onMounted(() => {
+    // sort by dateCreated descending
+    const sortByDateCreated = (): void => {
       if (tableRef.value) {
-        tableRef.value.sort('dateCreated');
+        tableRef.value.setPagination({
+          sortBy: 'dateCreated',
+          descending: true,
+        });
       }
+    };
+
+    onMounted(() => {
+      sortByDateCreated();
     });
+
     watch(feeApprovalData, () => {
       nextTick(() => {
-        if (tableRef.value) {
-          tableRef.value.sort('dateCreated');
-        }
+        sortByDateCreated();
       });
     });
 
@@ -115,12 +121,17 @@ export default defineComponent({
       return adminOrganisationStore.getIsLoadingApprovePayments;
     });
 
+    const isLoading = computed<boolean>(() => {
+      return adminOrganisationStore.isLoadingOrganisations;
+    });
+
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     return {
       borderRadius,
       columns,
       feeApprovalData,
+      isLoading,
       isLoadingApprovePayments,
       selected,
       tableRef,
@@ -152,6 +163,7 @@ export default defineComponent({
         :sort-method="sortByAddress"
         :selection="approved ? 'none' : 'multiple'"
         v-model:selected="selected"
+        :loading="isLoading"
         :style="{ borderRadius }"
         :no-data-label="$t('table.textNoData')"
         :no-results-label="$t('table.textNoResults')"
