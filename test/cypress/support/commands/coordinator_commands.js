@@ -149,7 +149,7 @@ Cypress.Commands.add(
 /**
  * Intercept Coordinator Disapprove Payments POST API call
  * Create intercept `@postCoordinatorDisapprovePayments`
- * @param {Object} config - Ride to Work by Bike config object
+ * @param {Object} config - RTWBB config object
  * @param {Object} responseData - Mock response data object
  */
 Cypress.Commands.add(
