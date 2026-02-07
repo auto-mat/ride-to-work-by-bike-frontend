@@ -24,9 +24,8 @@ import { defaultLocale } from '../i18n/def_locale';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // components
-import CoordinatorRegistrationLink from '../components/coordinator/CoordinatorRegistrationLink.vue';
-import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
 import PageHeading from '../components/global/PageHeading.vue';
+import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
 
 // stores
 import { useAdminOrganisationStore } from '../stores/adminOrganisation';
@@ -42,9 +41,8 @@ import type { Logger } from '../components/types/Logger';
 export default defineComponent({
   name: 'CompanyCoordinatorPage',
   components: {
-    CoordinatorRegistrationLink,
-    CoordinatorTabs,
     PageHeading,
+    CoordinatorTabs,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
@@ -95,8 +93,6 @@ export default defineComponent({
       <page-heading data-cy="company-coordinator-page-title">
         {{ $t('coordinator.titleCompanyCoordinator') }}
       </page-heading>
-      <!-- Registration incomplete banner -->
-      <coordinator-registration-link class="q-mb-md" />
     </div>
     <!-- Tabs -->
     <coordinator-tabs
