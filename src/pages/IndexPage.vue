@@ -35,6 +35,7 @@
           class="q-my-xl"
           data-cy="banner-app"
         />
+        <list-challenges />
         <!-- Section: Future challenges -->
         <template
           v-if="
@@ -157,6 +158,7 @@ import ListCardFollow from 'components/homepage/ListCardFollow.vue';
 import ListCardOffer from 'components/homepage/ListCardOffer.vue';
 import ListCardPost from 'components/homepage/ListCardPost.vue';
 import ListCardProgress from 'components/homepage/ListCardProgress.vue';
+import ListChallenges from '../components/global/ListChallenges.vue';
 import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
 import PageHeading from 'src/components/global/PageHeading.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
@@ -185,6 +187,7 @@ import * as homepage from '../mocks/homepage';
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import { useFeedStore } from '../stores/feed';
+import { useAdminCompetitionStore } from '../stores/adminCompetition';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -204,6 +207,7 @@ export default defineComponent({
     ListCardOffer,
     ListCardPost,
     ListCardProgress,
+    ListChallenges,
     NewsletterFeature,
     PageHeading,
     SectionColumns,
@@ -239,6 +243,8 @@ export default defineComponent({
       feedAdapter.toCardOffer(feedStore.getPostsOffer),
     );
 
+    const adminCompetitionStore = useAdminCompetitionStore();
+
     onMounted(async () => {
       // make sure phase set is loaded
       if (!challengeStore.getPhaseSet.length) {
@@ -263,6 +269,10 @@ export default defineComponent({
         await feedStore.attemptFeedRefresh(
           registerChallengeStore.getCityWpSlug,
         );
+      }
+      // load competitions if not available
+      if (!adminCompetitionStore.getCompetitions?.length) {
+        await adminCompetitionStore.loadCompetitions();
       }
     });
 

@@ -702,6 +702,7 @@ title = "Challenge ends in | Challenge ends in"
 
 [index.cardListChallenge]
 title = "Future challenges"
+emptyState = "There is no company challenge announced at this moment"
 
 [index.cardChallenge]
 company = "Company challenge"

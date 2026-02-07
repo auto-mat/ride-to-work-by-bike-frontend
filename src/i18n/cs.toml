@@ -705,6 +705,7 @@ title = "Do konce výzvy zbývá jen | Do konce výzvy zbývají jen"
 
 [index.cardListChallenge]
 title = "Budoucí výzvy"
+emptyState = "V tuto chvíli není vypsaná žádná firemní výzva"
 
 [index.cardChallenge]
 company = "Firemní výzva"

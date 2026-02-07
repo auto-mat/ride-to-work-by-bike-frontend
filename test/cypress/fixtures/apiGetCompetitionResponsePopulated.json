@@ -1,0 +1,121 @@
+{
+  "count": 4,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "results": "http://example.com/results/1",
+      "id": 1,
+      "name": "Vaše pravidelnost uvnitř firmy",
+      "slug": "vase-pravidelnost-uvnitr-firmy",
+      "competitor_type": "single_user",
+      "competition_type": "frequency",
+      "url": "http://example.com/competition/1",
+      "description": "Test your consistency with daily commuting by bicycle.",
+      "priority": 1,
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        }
+      ]
+    },
+    {
+      "results": "http://example.com/results/2",
+      "id": 2,
+      "name": "Týmová výzva",
+      "slug": "tymova-vyzva",
+      "competitor_type": "team",
+      "competition_type": "length",
+      "url": "http://example.com/competition/2",
+      "description": "",
+      "priority": 2,
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        },
+        {
+          "id": 5,
+          "name_cs": "Hromadná doprava",
+          "name_en": "Public transport",
+          "slug": "hromadna"
+        }
+      ]
+    },
+    {
+      "results": "http://example.com/results/3",
+      "id": 3,
+      "name": "Individuální vzdálenostní výzva",
+      "slug": "individualni-vzdalenostni-vyzva",
+      "competitor_type": "single_user",
+      "competition_type": "length",
+      "url": "http://example.com/competition/3",
+      "description": "Individual distance challenge.",
+      "priority": 3,
+      "date_from": "2024-09-16",
+      "date_to": "2024-09-29",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        }
+      ]
+    },
+    {
+      "results": "http://example.com/results/4",
+      "id": 4,
+      "name": "Pobočková soutěž",
+      "slug": "pobockova-soutez",
+      "competitor_type": "subsidiary",
+      "competition_type": "frequency",
+      "url": "http://example.com/competition/4",
+      "description": "Competition between company subsidiaries.",
+      "priority": 4,
+      "date_from": "2024-10-01",
+      "date_to": "2024-10-31",
+      "commute_modes": [
+        {
+          "id": 1,
+          "name_cs": "Kolo",
+          "name_en": "Bicycle",
+          "slug": "bicycle"
+        },
+        {
+          "id": 2,
+          "name_cs": "Pěšky",
+          "name_en": "Walk/run",
+          "slug": "by_foot"
+        },
+        {
+          "id": 5,
+          "name_cs": "Hromadná doprava",
+          "name_en": "Public transport",
+          "slug": "hromadna"
+        }
+      ]
+    }
+  ]
+}
