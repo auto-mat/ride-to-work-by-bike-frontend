@@ -6,7 +6,7 @@
  * is a company coordinator/admin but has not completed their registration
  * into the challenge.
  *
- * Note: This component is used on `CompanyCoordinatorPage` and `ProfilePage`.
+ * Note: This component is used on `ProfilePage`.
  *
  * @example
  * <coordinator-registration-link />
