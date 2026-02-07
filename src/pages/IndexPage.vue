@@ -271,7 +271,7 @@ export default defineComponent({
         );
       }
       // load competitions if not available
-      if (!adminCompetitionStore.getCompetitions) {
+      if (!adminCompetitionStore.getCompetitions?.length) {
         await adminCompetitionStore.loadCompetitions();
       }
     });

@@ -52,7 +52,9 @@ function coreTests() {
       useAdminCompetitionStore,
       'apiGetCompetitionResponsePopulated',
     );
-    cy.dataCy('list-challenges-title').should('be.visible');
+    cy.dataCy('list-challenges-title')
+      .should('be.visible')
+      .and('contain', i18n.global.t('index.cardListChallenge.title'));
     cy.dataCy('list-challenges-list').should('be.visible');
     // card count
     cy.fixture('apiGetCompetitionResponsePopulated').then((response) => {

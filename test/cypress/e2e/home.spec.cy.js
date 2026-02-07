@@ -80,6 +80,10 @@ describe('Home page', () => {
             cy.wrap(offers).as('offers');
           });
         });
+        cy.interceptCompetitionGetApi(
+          config,
+          'apiGetCompetitionResponsePopulated.json',
+        );
       });
       cy.visit(Cypress.config('baseUrl'));
       // alias i18n
@@ -360,6 +364,28 @@ describe('Home page', () => {
       });
     });
 
+    it('shows company challenges', () => {
+      cy.dataCy('list-challenges-title').should('be.visible');
+      cy.dataCy('list-challenges-list').should('be.visible');
+      // card count
+      cy.fixture('apiGetCompetitionResponsePopulated').then((response) => {
+        cy.dataCy('list-challenges-card').should(
+          'have.length',
+          response.results.length,
+        );
+        response.results.forEach((competition, index) => {
+          cy.dataCy('list-challenges-card')
+            .eq(index)
+            .within(() => {
+              cy.dataCy('list-challenges-name').should(
+                'contain',
+                competition.name,
+              );
+            });
+        });
+      });
+    });
+
     it(failTestTitle, () => {
       cy.dataCy('footer-top-button').should('be.visible').click();
       cy.window().its('scrollY').should('equal', 0);
@@ -399,6 +425,12 @@ describe('Home page', () => {
 
     it('shows banner team member "undecided" state', () => {
       cy.testBannerTeamMemberUndecidedState();
+    });
+
+    it('shows empty company challenges', () => {
+      cy.dataCy('list-challenges-title').should('be.visible');
+      cy.dataCy('list-challenges-list').should('not.exist');
+      cy.dataCy('list-challenges-empty-state').should('be.visible');
     });
   });
 
