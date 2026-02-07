@@ -68,12 +68,10 @@ export default defineComponent({
     <!-- Empty state -->
     <div
       v-if="competitions.length === 0"
-      class="text-center q-py-md"
+      class="q-mt-lg q-mb-xl text-grey-7"
       data-cy="list-challenges-empty-state"
     >
-      <div class="text-body1 text-grey-10">
-        {{ $t('index.cardListChallenge.emptyState') }}
-      </div>
+      {{ $t('index.cardListChallenge.emptyState') }}
     </div>
     <!-- Cards -->
     <section-columns
