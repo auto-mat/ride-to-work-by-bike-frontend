@@ -65,8 +65,19 @@ export default defineComponent({
     <section-heading class="q-mt-xl q-mb-md" data-cy="list-challenges-title">
       {{ $t('index.cardListChallenge.title') }}
     </section-heading>
+    <!-- Empty state -->
+    <div
+      v-if="competitions.length === 0"
+      class="text-center q-py-md"
+      data-cy="list-challenges-empty-state"
+    >
+      <div class="text-body1 text-grey-10">
+        {{ $t('index.cardListChallenge.emptyState') }}
+      </div>
+    </div>
     <!-- Cards -->
     <section-columns
+      v-else
       :columns="3"
       class="q-col-gutter-lg"
       data-cy="list-challenges-list"
@@ -78,15 +89,21 @@ export default defineComponent({
         :style="{ 'border-radius': borderRadius }"
         flat
         bordered
+        data-cy="list-challenges-card"
       >
         <q-card-section horizontal class="bg-primary text-white">
           <q-card-section class="q-pt-xs">
-            <div v-if="competition.name" class="text-h6 q-mt-sm">
+            <div
+              v-if="competition.name"
+              class="text-h6 q-mt-sm"
+              data-cy="list-challenges-name"
+            >
               {{ competition.name }}
             </div>
             <div
               v-if="competition.description"
               class="q-mt-xs text-caption text-grey-4"
+              data-cy="list-challenges-description"
             >
               {{ competition.description }}
             </div>
@@ -94,7 +111,20 @@ export default defineComponent({
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <div class="text-caption text-weight-medium">
+          <div class="flex gap-8">
+            <q-icon
+              v-for="transportType in competition.commute_modes"
+              :key="transportType.slug"
+              :name="getRouteIcon(transportType.slug)"
+              size="18px"
+              color="grey-10"
+              :data-cy="`list-challenges-transport-icon-${transportType.slug}`"
+            />
+          </div>
+          <div
+            class="text-caption text-weight-medium q-mt-md"
+            data-cy="list-challenges-dates"
+          >
             <span v-if="competition.date_from && competition.date_to"
               >{{ $t('index.cardChallenge.dates') }}&nbsp;</span
             >
@@ -105,16 +135,6 @@ export default defineComponent({
             <span v-if="competition.date_to">
               {{ $d(new Date(competition.date_to), 'numeric') }}
             </span>
-          </div>
-          <div class="flex gap-8 q-mt-md">
-            <q-icon
-              v-for="transportType in competition.commute_modes"
-              :key="transportType.slug"
-              :name="getRouteIcon(transportType.slug)"
-              size="18px"
-              color="grey-10"
-              :data-cy="`list-challenges-transport-icon-${transportType}`"
-            />
           </div>
         </q-card-section>
       </q-card>

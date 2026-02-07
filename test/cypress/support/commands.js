@@ -4172,6 +4172,29 @@ Cypress.Commands.add(
 );
 
 /**
+ * Set up admin competition store with competitions from fixture
+ * @param {Object} useAdminCompetitionStore - Admin competition store composable function
+ * @param {string} fixtureName - Name of fixture file to load (default: 'apiGetCompetitionResponse')
+ */
+Cypress.Commands.add(
+  'setupAdminCompetitionStoreWithCompetitions',
+  (useAdminCompetitionStore, fixtureName = 'apiGetCompetitionResponse') => {
+    cy.fixture(fixtureName).then((fixtureData) => {
+      cy.wrap(useAdminCompetitionStore()).then((adminCompetitionStore) => {
+        const competitions = computed(
+          () => adminCompetitionStore.getCompetitions,
+        );
+        adminCompetitionStore.setCompetitions(fixtureData.results);
+        // verify store state
+        cy.wrap(competitions)
+          .its('value')
+          .should('deep.equal', fixtureData.results);
+      });
+    });
+  },
+);
+
+/**
  * Test that all routes in the given route groups are inaccessible/redirected
  * @param {Array<Array<string>>} routeGroups - Array of route group arrays
  * @param {string} redirectTo - Route that access should redirect to (default: 'home')
