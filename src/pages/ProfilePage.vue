@@ -38,7 +38,7 @@ export default defineComponent({
       <page-heading data-cy="profile-page-title">
         {{ $t('profile.titleProfile') }}
       </page-heading>
-      <!-- Registration incomplete banner -->
+      <!-- Banner: Registration incomplete -->
       <coordinator-registration-link class="q-mb-md" />
     </div>
     <profile-tabs class="bg-white q-pb-xl" data-cy="profile-tabs" />
