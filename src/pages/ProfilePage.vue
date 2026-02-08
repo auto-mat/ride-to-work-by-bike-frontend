@@ -17,12 +17,14 @@
 import { defineComponent } from 'vue';
 
 // components
+import CoordinatorRegistrationLink from '../components/coordinator/CoordinatorRegistrationLink.vue';
 import PageHeading from 'components/global/PageHeading.vue';
 import ProfileTabs from '../components/profile/ProfileTabs.vue';
 
 export default defineComponent({
   name: 'ProfilePage',
   components: {
+    CoordinatorRegistrationLink,
     PageHeading,
     ProfileTabs,
   },
@@ -36,6 +38,8 @@ export default defineComponent({
       <page-heading data-cy="profile-page-title">
         {{ $t('profile.titleProfile') }}
       </page-heading>
+      <!-- Banner: Registration incomplete -->
+      <coordinator-registration-link class="q-mb-md" />
     </div>
     <profile-tabs class="bg-white q-pb-xl" data-cy="profile-tabs" />
   </q-page>

@@ -51,7 +51,11 @@ import { OrganizationType } from '../../../src/components/types/Organization';
 import { routesConf } from '../../../src/router/routes_conf';
 import { defLocale } from '../../../src/i18n/def_locale';
 import { getRadioOption, negativeColor, positiveColor } from '../utils';
-import { PaymentSubject } from '../../../src/components/enums/Payment';
+import {
+  PaymentState,
+  PaymentSubject,
+} from '../../../src/components/enums/Payment';
+import { Gender } from '../../../src/components/types/Profile';
 import { useMenu } from '../../../src/composables/useMenu';
 import {
   getOffersFeedParamSet,
@@ -3623,6 +3627,62 @@ Cypress.Commands.add(
       cy.wrap(subsidiaryIdComputed)
         .its('value')
         .should('be.equal', subsidiaryId);
+    });
+  },
+);
+
+/**
+ * Set up register challenge store with isUserOrganizationAdmin
+ * @param {Object} useRegisterChallengeStore - Register challenge store composable function
+ * @param {boolean} isUserOrganizationAdmin - Whether user is organization admin
+ */
+Cypress.Commands.add(
+  'setupRegisterChallengeIsUserOrganizationAdmin',
+  (useRegisterChallengeStore, isUserOrganizationAdmin) => {
+    cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+      const isUserOrganizationAdminComputed = computed(
+        () => registerChallengeStore.getIsUserOrganizationAdmin,
+      );
+      registerChallengeStore.setIsUserOrganizationAdmin(
+        isUserOrganizationAdmin,
+      );
+      // test isUserOrganizationAdmin in store
+      cy.wrap(isUserOrganizationAdminComputed)
+        .its('value')
+        .should('be.equal', isUserOrganizationAdmin);
+    });
+  },
+);
+
+/**
+ * Set up register challenge store with complete registration state
+ * @param {Object} useRegisterChallengeStore - Register challenge store composable function
+ */
+Cypress.Commands.add(
+  'setupRegisterChallengeCompleteRegistration',
+  (useRegisterChallengeStore) => {
+    cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+      registerChallengeStore.setPersonalDetails({
+        firstName: 'Test',
+        lastName: 'User',
+        gender: Gender.male,
+        terms: true,
+        email: 'test@example.com',
+        nickname: '',
+        newsletter: [],
+      });
+      registerChallengeStore.setPaymentState(PaymentState.done);
+      registerChallengeStore.setOrganizationType(OrganizationType.company);
+      registerChallengeStore.setOrganizationId(1);
+      registerChallengeStore.setSubsidiaryId(1);
+      registerChallengeStore.setTeamId(1);
+      registerChallengeStore.setMerchId(1);
+      registerChallengeStore.setIsMerchandiseSavedIntoDb(true);
+      // verify registration complete
+      const isComplete = computed(
+        () => registerChallengeStore.getIsRegistrationComplete,
+      );
+      cy.wrap(isComplete).its('value').should('be.true');
     });
   },
 );
