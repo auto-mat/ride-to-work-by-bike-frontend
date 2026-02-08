@@ -47,7 +47,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 50001,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   },
                   {
                     "id": 10002,
@@ -67,7 +68,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 50002,
-                    "is_payment_with_reward": null
+                    "is_payment_with_reward": null,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "members_with_paid_entry_fee_by_org_coord": [
@@ -89,7 +91,8 @@
                     "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50003,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "other_members": [
@@ -111,7 +114,8 @@
                     "diploma": "",
                     "discount_coupon": "DISC-001",
                     "user_profile_id": 50004,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   },
                   {
                     "id": 10005,
@@ -131,7 +135,8 @@
                     "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50005,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ]
               },
@@ -160,7 +165,8 @@
                     "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 50006,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "other_members": [
@@ -182,7 +188,8 @@
                     "diploma": "",
                     "discount_coupon": "DISC-002",
                     "user_profile_id": 50007,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ]
               }
@@ -247,7 +254,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60001,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   },
                   {
                     "id": 20002,
@@ -267,7 +275,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60002,
-                    "is_payment_with_reward": null
+                    "is_payment_with_reward": null,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "members_with_paid_entry_fee_by_org_coord": [
@@ -289,7 +298,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60003,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   },
                   {
                     "id": 20004,
@@ -309,7 +319,8 @@
                     "diploma": "",
                     "discount_coupon": "",
                     "user_profile_id": 60004,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "other_members": [
@@ -331,7 +342,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "PIVOVAR-DISC",
                     "user_profile_id": 60005,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ]
               },
@@ -358,7 +370,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60006,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "members_with_paid_entry_fee_by_org_coord": [
@@ -380,7 +393,8 @@
                     "diploma": "https://example.com/diploma.pdf",
                     "discount_coupon": "",
                     "user_profile_id": 60007,
-                    "is_payment_with_reward": true
+                    "is_payment_with_reward": true,
+                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
                   }
                 ],
                 "other_members": []

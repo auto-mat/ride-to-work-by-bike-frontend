@@ -42,7 +42,8 @@
                   "payment_amount": "400",
                   "discount_coupon": "",
                   "user_profile_id": 60001,
-                  "is_payment_with_reward": true
+                  "is_payment_with_reward": true,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [],

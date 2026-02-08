@@ -42,7 +42,8 @@
                   "payment_amount": "390",
                   "discount_coupon": "",
                   "user_profile_id": 60002,
-                  "is_payment_with_reward": null
+                  "is_payment_with_reward": null,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 },
                 {
                   "id": 20005,
@@ -61,7 +62,8 @@
                   "payment_amount": "340",
                   "discount_coupon": "",
                   "user_profile_id": 60005,
-                  "is_payment_with_reward": false
+                  "is_payment_with_reward": false,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [
@@ -82,7 +84,8 @@
                   "payment_amount": "390",
                   "discount_coupon": "",
                   "user_profile_id": 60001,
-                  "is_payment_with_reward": true
+                  "is_payment_with_reward": true,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 }
               ],
               "other_members": [
@@ -103,7 +106,8 @@
                   "payment_amount": "None",
                   "discount_coupon": "PIVOVAR-DISC",
                   "user_profile_id": 60003,
-                  "is_payment_with_reward": true
+                  "is_payment_with_reward": true,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 }
               ]
             },
@@ -130,7 +134,8 @@
                   "payment_amount": "390",
                   "discount_coupon": "",
                   "user_profile_id": 60004,
-                  "is_payment_with_reward": true
+                  "is_payment_with_reward": true,
+                  "t_shirt_size_updated": "2025-01-15T10:00:00.000000+01:00"
                 }
               ],
               "other_members": []

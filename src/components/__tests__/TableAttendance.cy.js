@@ -28,6 +28,7 @@ const selectorTableApprovedForTeam = 'table-attendance-approved-for-team';
 const selectorTableFeeApproved = 'table-attendance-fee-approved';
 const selectorTablePaymentType = 'table-attendance-payment-type';
 const selectorTablePaymentState = 'table-attendance-payment-state';
+const selectorTableTShirtSizeUpdated = 'table-attendance-tshirt-size-updated';
 const selectorTableActions = 'table-attendance-actions';
 const selectorSubsidiaryHeader = 'table-attendance-subsidiary-header';
 const selectorCityChallenge = 'table-attendance-city-challenge';
@@ -53,6 +54,7 @@ describe('<TableAttendance>', () => {
         'labelFeeApproved',
         'labelPaymentType',
         'labelPaymentState',
+        'labelTShirtSizeUpdated',
         'labelTeam',
       ],
       'table',
@@ -204,6 +206,7 @@ function coreTests() {
                   selectorTableFeeApproved,
                   selectorTablePaymentType,
                   selectorTablePaymentState,
+                  selectorTableTShirtSizeUpdated,
                   selectorTableActions,
                 ].forEach((selector) => {
                   cy.dataCy(selector).first().should('be.visible');
@@ -440,6 +443,17 @@ function dataDisplayTests() {
               cy.dataCy(selectorTablePaymentState)
                 .should('be.visible')
                 .and('be.empty');
+            }
+            // t-shirt size updated
+            if (display.orderedMembers[index].tShirtSizeUpdated) {
+              cy.dataCy(selectorTableTShirtSizeUpdated)
+                .should('be.visible')
+                .and(
+                  'contain',
+                  display.orderedMembers[index].tShirtSizeUpdated,
+                );
+            } else {
+              cy.dataCy(selectorTableTShirtSizeUpdated).should('be.visible');
             }
             // button actions
             cy.dataCy(selectorTableActions).within(() => {
