@@ -626,7 +626,7 @@ export default defineComponent({
             class="bg-primary text-weight-bold text-white"
             data-cy="table-attendance-team-header"
           >
-            <q-td colspan="8">
+            <q-td colspan="9">
               <div class="flex items-center justify-between">
                 <span>{{ props.row.team }}</span>
                 <div class="flex gap-4">
@@ -811,6 +811,21 @@ export default defineComponent({
                 class="q-mr-xs"
               />
               {{ getPaymentStateLabel(props.row.paymentState) }}
+            </q-td>
+            <!-- T-Shirt Size Updated -->
+            <q-td
+              key="tShirtSizeUpdated"
+              :props="props"
+              data-cy="table-attendance-tshirt-size-updated"
+            >
+              <template v-if="props.row.tShirtSizeUpdated">
+                {{
+                  $d(
+                    new Date(props.row.tShirtSizeUpdated),
+                    'monthDayHourMinute',
+                  )
+                }}
+              </template>
             </q-td>
             <!-- Action buttons -->
             <q-td

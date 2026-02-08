@@ -490,6 +490,16 @@ export const useTableAttendance = () => {
     },
     {
       align: 'left',
+      field: AttendanceTableColumns.tShirtSizeUpdated,
+      format: (val: string | null): string =>
+        val ? i18n.global.d(new Date(String(val)), 'monthDayHourMinute') : '',
+      label: i18n.global.t('table.labelTShirtSizeUpdated'),
+      name: AttendanceTableColumns.tShirtSizeUpdated,
+      required: true,
+      sortable: true,
+    },
+    {
+      align: 'left',
       field: AttendanceTableColumns.team,
       label: i18n.global.t('table.labelTeam'),
       name: AttendanceTableColumns.team,
@@ -514,6 +524,7 @@ export const useTableAttendance = () => {
     AttendanceTableColumns.isFeeApproved,
     AttendanceTableColumns.paymentType,
     AttendanceTableColumns.paymentState,
+    AttendanceTableColumns.tShirtSizeUpdated,
     AttendanceTableColumns.actions,
   ];
 

@@ -51,6 +51,7 @@ export enum AttendanceTableColumns {
   isFeeApproved = 'isFeeApproved',
   paymentType = 'paymentType',
   paymentState = 'paymentState',
+  tShirtSizeUpdated = 'tShirtSizeUpdated',
   team = 'team',
   actions = 'actions',
 }

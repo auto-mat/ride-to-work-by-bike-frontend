@@ -70,6 +70,7 @@ export const useExportTableAttendance = () => {
       i18n.global.t('table.labelFeeApproved'),
       i18n.global.t('table.labelPaymentType'),
       i18n.global.t('table.labelPaymentState'),
+      i18n.global.t('table.labelTShirtSizeUpdated'),
       i18n.global.t('table.labelTeam'),
       i18n.global.t('table.labelSubsidiary'),
     ];
@@ -90,6 +91,12 @@ export const useExportTableAttendance = () => {
           : i18n.global.t('global.no'),
         getPaymentTypeLabel(member.paymentType),
         getPaymentStateLabel(member.paymentState),
+        member.tShirtSizeUpdated
+          ? i18n.global.d(
+              new Date(member.tShirtSizeUpdated),
+              'monthDayHourMinute',
+            )
+          : '',
         member.team,
         member.subsidiaryName,
       ];

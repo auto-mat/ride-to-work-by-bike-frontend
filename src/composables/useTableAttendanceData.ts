@@ -26,6 +26,7 @@ export interface TableAttendanceRow {
   isFeeApproved: boolean;
   paymentType: PaymentType;
   paymentState: PaymentState;
+  tShirtSizeUpdated: string | null;
   team: string;
   teamId: number;
   memberId: number;
@@ -71,6 +72,7 @@ function transformMemberToRow({
     isFeeApproved,
     paymentType,
     paymentState: member.payment_status,
+    tShirtSizeUpdated: member.t_shirt_size_updated,
     team: teamName,
     teamId,
     memberId: member.id,
@@ -113,6 +115,7 @@ export const useTableAttendanceData = (): {
             isFeeApproved: false,
             paymentType: PaymentType.registration,
             paymentState: PaymentState.none,
+            tShirtSizeUpdated: null,
             team: team.name,
             teamId: team.id,
             memberId: 0, // Empty team has no member

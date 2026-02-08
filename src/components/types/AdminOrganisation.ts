@@ -23,6 +23,7 @@ export interface AdminTeamMember {
   discount_coupon: string;
   user_profile_id: number;
   is_payment_with_reward: boolean | null;
+  t_shirt_size_updated: string | null;
 }
 
 export interface AdminTeam {
