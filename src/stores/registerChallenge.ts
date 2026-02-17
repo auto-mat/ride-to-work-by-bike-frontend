@@ -548,10 +548,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Personal details updated to <${JSON.stringify(this.getPersonalDetails, null, 2)}>.`,
       );
-      this.setIsPaymentWithReward(parsedResponse.isPaymentWithReward);
-      this.$log?.debug(
-        `Is payment with reward store updated to <${this.getIsPaymentWithReward}>.`,
-      );
+      if (parsedResponse.isPaymentWithReward !== undefined) {
+        this.setIsPaymentWithReward(parsedResponse.isPaymentWithReward);
+        this.$log?.debug(
+          `Is payment with reward store updated to <${this.getIsPaymentWithReward}>.`,
+        );
+      }
       /**
        * The paymentAmount value is sent for subject = 'company' or 'school'.
        * !It is sent to the API after the TEAM step is completed.
@@ -571,6 +573,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         const validatedCoupon = await validateCoupon(parsedResponse.voucher);
         if (validatedCoupon.valid) {
           this.setVoucher(validatedCoupon);
+          // if voucher is without reward, set isPaymentWithReward to false
+          if (this.getIsVoucherWithoutReward) {
+            this.setIsPaymentWithReward(false);
+            this.$log?.debug(
+              `Setting isPaymentWithReward to <false> - voucher name <${this.voucher?.name}>.`,
+            );
+          }
         } else {
           Notify.create({
             type: 'negative',
@@ -658,12 +667,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       if (parsedResponse.language) {
         this.setLanguage(parsedResponse.language);
         this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);
-      }
-      if (parsedResponse.isPaymentWithReward !== undefined) {
-        this.setIsPaymentWithReward(parsedResponse.isPaymentWithReward);
-        this.$log?.debug(
-          `Is payment with reward store updated to <${this.getIsPaymentWithReward}>.`,
-        );
       }
     },
     /**
