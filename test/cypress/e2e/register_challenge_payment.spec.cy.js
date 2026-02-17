@@ -157,5 +157,77 @@ describe('Register Challenge - Payment step', () => {
         cy.dataCy('step-2-continue').should('be.visible').and('be.disabled');
       });
     });
+
+    it('on refresh, updates reward state based on saved voucher', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetRegisterChallengeVoucherFullWithoutReward.json').then(
+          (response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          },
+        );
+        cy.fixture('apiGetDiscountCouponResponseFullWithoutReward.json').then(
+          (response) => {
+            cy.interceptDiscountCouponGetApi(
+              config,
+              defLocale,
+              response.results[0].name,
+              response,
+            );
+          },
+        );
+        // intercept common response (not currently used)
+        cy.interceptRegisterChallengePostApi(config, defLocale);
+        cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        // visit register challenge page
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+        cy.fixture('apiGetDiscountCouponResponseFullWithoutReward.json').then(
+          (response) => {
+            cy.dataCy('voucher-banner-code')
+              .should('exist')
+              .and('be.visible')
+              .and('contain', response.results[0].name);
+          },
+        );
+        // verify reward state
+        cy.dataCy('checkbox-payment-with-reward')
+          .should('be.visible')
+          .and('have.class', 'disabled')
+          .find('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--falsy');
+        // remove voucher
+        cy.dataCy('voucher-button-remove').should('be.visible').click();
+        // verify reward state
+        cy.dataCy('checkbox-payment-with-reward')
+          .should('be.visible')
+          .and('not.have.class', 'disabled')
+          .find('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--falsy');
+        // enable reward
+        cy.dataCy('checkbox-payment-with-reward').click();
+        // verify reward updated state
+        cy.dataCy('checkbox-payment-with-reward')
+          .should('be.visible')
+          .and('not.have.class', 'disabled')
+          .find('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--truthy');
+        // refresh page
+        cy.reload();
+        cy.fixture('apiGetDiscountCouponResponseFullWithoutReward.json').then(
+          (response) => {
+            cy.dataCy('voucher-banner-code')
+              .should('exist')
+              .and('be.visible')
+              .and('contain', response.results[0].name);
+          },
+        );
+        // verify reward state
+        cy.dataCy('checkbox-payment-with-reward')
+          .should('be.visible')
+          .and('have.class', 'disabled')
+          .find('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--falsy');
+      });
+    });
   });
 });

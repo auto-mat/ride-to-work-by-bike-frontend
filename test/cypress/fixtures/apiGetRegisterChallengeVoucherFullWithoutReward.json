@@ -22,7 +22,7 @@
         "payment_status": "done",
         "payment_amount": null,
         "payment_category": "",
-        "is_payment_with_reward": false
+        "is_payment_with_reward": null
       },
       "organization_type": "company",
       "team_id": 2452,

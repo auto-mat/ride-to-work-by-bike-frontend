@@ -548,12 +548,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Personal details updated to <${JSON.stringify(this.getPersonalDetails, null, 2)}>.`,
       );
-      if (parsedResponse.isPaymentWithReward !== undefined) {
-        this.setIsPaymentWithReward(parsedResponse.isPaymentWithReward);
-        this.$log?.debug(
-          `Is payment with reward store updated to <${this.getIsPaymentWithReward}>.`,
-        );
-      }
+      // adapter coerces value to boolean
+      this.setIsPaymentWithReward(parsedResponse.isPaymentWithReward);
+      this.$log?.debug(
+        `Is payment with reward store updated to <${this.getIsPaymentWithReward}>.`,
+      );
       /**
        * The paymentAmount value is sent for subject = 'company' or 'school'.
        * !It is sent to the API after the TEAM step is completed.
