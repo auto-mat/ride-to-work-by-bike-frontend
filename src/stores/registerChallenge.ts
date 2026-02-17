@@ -429,6 +429,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setVoucher(voucher: ValidatedCoupon | null) {
       this.voucher = voucher;
+      // on manual voucher remove, reset payment state
+      if (!voucher && this.paymentSubject === PaymentSubject.voucher) {
+        this.setPaymentState(PaymentState.none);
+        this.$log?.debug(
+          `Voucher removed, reseting payment state to <${PaymentState.none}>.`,
+        );
+      }
     },
     setSubsidiaries(subsidiaries: OrganizationSubsidiary[]) {
       this.subsidiaries = subsidiaries;
