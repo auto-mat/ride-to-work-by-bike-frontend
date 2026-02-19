@@ -454,10 +454,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      */
     initializePaymentRewards(rows: TableFeeApprovalRow[]): void {
       rows.forEach((row) => {
-        // Only initialize if not already set (preserve user edits)
-        if (!(row.id in this.paymentRewards)) {
-          this.paymentRewards[row.id] = row.reward;
-        }
+        this.paymentRewards[row.id] = row.reward;
       });
     },
     /**
@@ -476,10 +473,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      */
     initializePaymentAmounts(rows: TableFeeApprovalRow[]): void {
       rows.forEach((row) => {
-        // Only initialize if not already set (preserve user edits)
-        if (!(row.id in this.paymentAmounts)) {
-          this.paymentAmounts[row.id] = row.amount;
-        }
+        this.paymentAmounts[row.id] = row.amount;
       });
     },
     /**
@@ -531,10 +525,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingApprovePayments = true;
       // approve payments
       const result = await approvePayments(ids);
-      // clear local state
-      this.setSelectedPaymentsToApprove([]);
-      this.paymentRewards = {};
-      this.paymentAmounts = {};
       // refetch organization structure and invoices in parallel
       await Promise.all([
         this.loadAdminOrganisations(),
@@ -559,6 +549,10 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           color: 'negative',
         });
       }
+      // clear local state
+      this.setSelectedPaymentsToApprove([]);
+      this.paymentRewards = {};
+      this.paymentAmounts = {};
       this.isLoadingApprovePayments = false;
     },
     /**
@@ -1053,6 +1047,9 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       'isLoadingUpdateSubsidiary',
       'invoicePollingIntervalId',
       'invoicePollingTimeoutId',
+      'selectedPaymentsToApprove',
+      'paymentRewards',
+      'paymentAmounts',
     ],
   },
 });
