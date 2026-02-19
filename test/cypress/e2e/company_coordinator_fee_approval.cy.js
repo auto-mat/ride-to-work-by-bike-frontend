@@ -158,7 +158,7 @@ describe('Company coordinator fee approval page', () => {
   });
 
   context('reward status toggling', () => {
-        beforeEach(() => {
+    beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
         cy.task('getAppConfig', process).then((config) => {
@@ -320,6 +320,72 @@ describe('Company coordinator fee approval page', () => {
       // wait for API call to complete
       cy.waitForAdminOrganisationGetApi('apiGetAdminOrganisationResponse.json');
       cy.get('@getAdminOrganisation.all').should('have.length', 2);
+    });
+
+    it('should update local state based on refresh response', () => {
+      cy.get('@config').then((config) => {
+        cy.interceptAdminOrganisationGetApi(
+          config,
+          'apiGetAdminOrganisationResponseAlt.json',
+        );
+        cy.visit('#' + routesConf['coordinator_fees']['children']['fullPath']);
+        // wait for initial data load
+        cy.waitForAdminOrganisationGetApi(
+          'apiGetAdminOrganisationResponseAlt.json',
+        );
+        cy.get('@getAdminOrganisation.all').should('have.length', 1);
+        // verify state
+        cy.dataCy('table-fee-approval-not-approved').within(() => {
+          cy.dataCy('table-fee-approval-amount')
+            .contains('390')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-amount')
+            .contains('234')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-amount')
+            .contains('184')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-reward-checkbox')
+            .find('.q-checkbox__inner.q-checkbox__inner--truthy')
+            .should('have.length', 2);
+          cy.dataCy('table-fee-approval-reward-checkbox')
+            .find('.q-checkbox__inner.q-checkbox__inner--falsy')
+            .should('have.length', 1);
+        });
+        // intercept API response with alternative data
+        cy.interceptAdminOrganisationGetApi(
+          config,
+          'apiGetAdminOrganisationResponseAlt2.json',
+        );
+        // click refresh button
+        cy.dataCy('tab-coordinator-fee-approval-button-refresh')
+          .should('be.visible')
+          .and('not.be.disabled')
+          .click();
+        // wait for API call to complete
+        cy.waitForAdminOrganisationGetApi(
+          'apiGetAdminOrganisationResponseAlt2.json',
+        );
+        cy.get('@getAdminOrganisation.all').should('have.length', 2);
+        // verify state
+        cy.dataCy('table-fee-approval-not-approved').within(() => {
+          cy.dataCy('table-fee-approval-amount')
+            .contains('579')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-amount')
+            .contains('234')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-amount')
+            .contains('184')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-reward-checkbox')
+            .find('.q-checkbox__inner.q-checkbox__inner--truthy')
+            .should('have.length', 1);
+          cy.dataCy('table-fee-approval-reward-checkbox')
+            .find('.q-checkbox__inner.q-checkbox__inner--falsy')
+            .should('have.length', 2);
+        });
+      });
     });
   });
 
