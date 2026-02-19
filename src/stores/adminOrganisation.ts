@@ -573,10 +573,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingDisapprovePayments = true;
       // disapprove payments
       const result = await disapprovePayments(ids);
-      // clear local state
-      this.setSelectedPaymentsToApprove([]);
-      this.paymentRewards = {};
-      this.paymentAmounts = {};
       // refetch organization structure and invoices in parallel
       await Promise.all([
         this.loadAdminOrganisations(),
@@ -601,6 +597,10 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           color: 'negative',
         });
       }
+      // clear local state
+      this.setSelectedPaymentsToApprove([]);
+      this.paymentRewards = {};
+      this.paymentAmounts = {};
       this.isLoadingDisapprovePayments = false;
     },
     /**
