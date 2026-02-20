@@ -236,10 +236,10 @@ export default defineComponent({
               data-cy="table-fee-approval-amount"
             >
               <!-- Only non-approved payments show user-edited value -->
-              <template v-if="!approved">{{
-                paymentAmounts[props.row.id] ?? props.row.amount
-              }}</template>
-              <template v-else>{{ props.row.amount }}</template>
+              <template v-if="approved">{{ props.row.amount }}</template>
+              <template v-else>
+                {{ paymentAmounts[props.row.id] ?? props.row.amount }}
+              </template>
             </q-td>
             <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
@@ -253,20 +253,20 @@ export default defineComponent({
             >
               <!-- Only non-approved payments show user-edited value -->
               <q-checkbox
-                v-if="!approved"
+                v-if="approved"
+                disable
+                :model-value="props.row.reward"
+                color="primary"
+                data-cy="table-fee-approval-reward-checkbox"
+              />
+              <q-checkbox
+                v-else
                 :model-value="paymentRewards[props.row.id] ?? props.row.reward"
                 color="primary"
                 data-cy="table-fee-approval-reward-checkbox"
                 @update:model-value="
                   (value) => updateRewardStatus(props.row.id, value)
                 "
-              />
-              <q-checkbox
-                v-else
-                disable
-                :model-value="props.row.reward"
-                color="primary"
-                data-cy="table-fee-approval-reward-checkbox"
               />
             </q-td>
             <!-- Email -->
