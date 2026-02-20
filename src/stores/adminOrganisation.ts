@@ -549,10 +549,16 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           color: 'negative',
         });
       }
-      // clear local state
-      this.setSelectedPaymentsToApprove([]);
-      this.paymentRewards = {};
-      this.paymentAmounts = {};
+      // clear local state only for successfully approved ids
+      this.setSelectedPaymentsToApprove(
+        this.selectedPaymentsToApprove.filter(
+          (payment) => !approvedIds.includes(payment.id),
+        ),
+      );
+      approvedIds.forEach((id: number) => {
+        delete this.paymentRewards[id];
+        delete this.paymentAmounts[id];
+      });
       this.isLoadingApprovePayments = false;
     },
     /**
@@ -597,10 +603,16 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
           color: 'negative',
         });
       }
-      // clear local state
-      this.setSelectedPaymentsToApprove([]);
-      this.paymentRewards = {};
-      this.paymentAmounts = {};
+      // clear local state only for successfully disapproved ids
+      this.setSelectedPaymentsToApprove(
+        this.selectedPaymentsToApprove.filter(
+          (payment) => !disapprovedIds.includes(payment.id),
+        ),
+      );
+      disapprovedIds.forEach((id: number) => {
+        delete this.paymentRewards[id];
+        delete this.paymentAmounts[id];
+      });
       this.isLoadingDisapprovePayments = false;
     },
     /**

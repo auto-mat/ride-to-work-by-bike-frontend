@@ -294,6 +294,428 @@ describe('<TableFeeApproval>', () => {
         },
       );
     });
+
+    it('only clears local state for successfully approved payments', () => {
+      cy.fixture('apiGetAdminOrganisationResponse').then((initialOrgData) => {
+        cy.fixture('apiGetCoordinatorInvoicesResponse').then((invoicesData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              // set initial store state
+              adminOrganisationStore.setAdminOrganisations(
+                initialOrgData.results,
+              );
+              adminOrganisationStore.setAdminInvoices([invoicesData]);
+              // get payment IDs from API data
+              const payments =
+                initialOrgData.results[0].subsidiaries[0].teams[0]
+                  .members_without_paid_entry_fee_by_org_coord;
+              const payment1 = payments[0];
+              const payment2 = payments[1];
+              const payment3 = payments[2];
+              // select all three payments using UI
+              cy.contains(payment1.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment2.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment3.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              // verify local state
+              const paymentRewards = computed(
+                () => adminOrganisationStore.paymentRewards,
+              );
+              const paymentAmounts = computed(
+                () => adminOrganisationStore.paymentAmounts,
+              );
+              const selectedPayments = computed(
+                () => adminOrganisationStore.selectedPaymentsToApprove,
+              );
+              // verify all three payments are selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 3);
+              // verify local state has all three payments
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment1.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment2.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment3.id);
+              // setup API intercepts - only 2 of 3 succeed
+              const approveResponse = {
+                message: 'Approved 2 payments successfully',
+                approved_ids: [payment1.id, payment3.id],
+              };
+              cy.interceptCoordinatorApprovePaymentsPostApi(
+                rideToWorkByBikeConfig,
+                approveResponse,
+              );
+              // intercept organization structure GET
+              cy.interceptAdminOrganisationGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetAdminOrganisationResponsePartialApproval',
+              );
+              // intercept invoices GET
+              cy.interceptCoordinatorInvoicesGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetCoordinatorInvoicesResponse',
+              );
+              // click approve button
+              cy.dataCy(selectorApproveButton).click();
+              // wait for API calls
+              cy.waitForCoordinatorApprovePaymentsPostApi(
+                {
+                  ids: {
+                    [payment1.id]: parseFloat(payment1.payment_amount),
+                    [payment2.id]: parseFloat(payment2.payment_amount),
+                    [payment3.id]: parseFloat(payment3.payment_amount),
+                  },
+                },
+                approveResponse,
+              );
+              cy.wait('@getAdminOrganisation');
+              cy.wait('@getCoordinatorInvoices');
+              // verify store state: only successful IDs cleared
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('deep.equal', {
+                  [payment2.id]: payment2.is_payment_with_reward,
+                });
+              cy.wrap(paymentAmounts)
+                .its('value')
+                .should('deep.equal', {
+                  [payment2.id]: parseFloat(payment2.payment_amount),
+                });
+              // verify only failed payment remains selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 1);
+              cy.wrap(selectedPayments)
+                .its('value.0.id')
+                .should('equal', payment2.id);
+            },
+          );
+        });
+      });
+    });
+
+    it('only clears local state for successfully approved payments when subset selected', () => {
+      cy.fixture('apiGetAdminOrganisationResponse').then((initialOrgData) => {
+        cy.fixture('apiGetCoordinatorInvoicesResponse').then((invoicesData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              // set initial store state
+              adminOrganisationStore.setAdminOrganisations(
+                initialOrgData.results,
+              );
+              adminOrganisationStore.setAdminInvoices([invoicesData]);
+              // get payment IDs from API data
+              const payments =
+                initialOrgData.results[0].subsidiaries[0].teams[0]
+                  .members_without_paid_entry_fee_by_org_coord;
+              const payment1 = payments[0];
+              const payment2 = payments[1];
+              const payment3 = payments[2];
+              // select only two payments using UI
+              cy.contains(payment1.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment2.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              // verify local state
+              const paymentRewards = computed(
+                () => adminOrganisationStore.paymentRewards,
+              );
+              const paymentAmounts = computed(
+                () => adminOrganisationStore.paymentAmounts,
+              );
+              const selectedPayments = computed(
+                () => adminOrganisationStore.selectedPaymentsToApprove,
+              );
+              // verify only two payments are selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 2);
+              // verify local state has all three payments initialized
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment1.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment2.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment3.id);
+              // setup API intercepts - both selected payments succeed
+              const approveResponse = {
+                message: 'Approved 2 payments successfully',
+                approved_ids: [payment1.id, payment2.id],
+              };
+              cy.interceptCoordinatorApprovePaymentsPostApi(
+                rideToWorkByBikeConfig,
+                approveResponse,
+              );
+              // intercept organization structure GET
+              cy.interceptAdminOrganisationGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetAdminOrganisationResponseTwoApprovedMembers',
+              );
+              // intercept invoices GET
+              cy.interceptCoordinatorInvoicesGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetCoordinatorInvoicesResponse',
+              );
+              // click approve button
+              cy.dataCy(selectorApproveButton).click();
+              // wait for API calls
+              cy.waitForCoordinatorApprovePaymentsPostApi(
+                {
+                  ids: {
+                    [payment1.id]: parseFloat(payment1.payment_amount),
+                    [payment2.id]: parseFloat(payment2.payment_amount),
+                  },
+                },
+                approveResponse,
+              );
+              cy.wait('@getAdminOrganisation');
+              cy.wait('@getCoordinatorInvoices');
+              // verify store state: only successful IDs cleared
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('deep.equal', {
+                  [payment3.id]: payment3.is_payment_with_reward,
+                });
+              cy.wrap(paymentAmounts)
+                .its('value')
+                .should('deep.equal', {
+                  [payment3.id]: parseFloat(payment3.payment_amount),
+                });
+              // verify no payments remain selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 0);
+            },
+          );
+        });
+      });
+    });
+
+    it('only clears local state for successfully disapproved payments', () => {
+      cy.fixture('apiGetAdminOrganisationResponse').then((initialOrgData) => {
+        cy.fixture('apiGetCoordinatorInvoicesResponse').then((invoicesData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              // set initial store state
+              adminOrganisationStore.setAdminOrganisations(
+                initialOrgData.results,
+              );
+              adminOrganisationStore.setAdminInvoices([invoicesData]);
+              // get payment IDs from API data
+              const payments =
+                initialOrgData.results[0].subsidiaries[0].teams[0]
+                  .members_without_paid_entry_fee_by_org_coord;
+              const payment1 = payments[0];
+              const payment2 = payments[1];
+              const payment3 = payments[2];
+              // select all three payments using UI
+              cy.contains(payment1.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment2.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment3.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              // verify local state
+              const paymentRewards = computed(
+                () => adminOrganisationStore.paymentRewards,
+              );
+              const paymentAmounts = computed(
+                () => adminOrganisationStore.paymentAmounts,
+              );
+              const selectedPayments = computed(
+                () => adminOrganisationStore.selectedPaymentsToApprove,
+              );
+              // verify all three payments are selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 3);
+              // verify local state has all three payments
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment1.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment2.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment3.id);
+              // setup API intercepts - only 2 of 3 succeed
+              const disapproveResponse = {
+                message: 'Disapproved 2 payments successfully',
+                disapproved_ids: [payment1.id, payment3.id],
+              };
+              cy.interceptCoordinatorDisapprovePaymentsPostApi(
+                rideToWorkByBikeConfig,
+                disapproveResponse,
+              );
+              // intercept organization structure GET
+              cy.interceptAdminOrganisationGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetAdminOrganisationResponsePartialDisapproval',
+              );
+              // intercept invoices GET
+              cy.interceptCoordinatorInvoicesGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetCoordinatorInvoicesResponse',
+              );
+              // click disapprove button
+              cy.dataCy(selectorDisapproveButton).click();
+              // confirm in dialog
+              cy.dataCy(selectorDisapproveDialog).should('be.visible');
+              cy.dataCy(selectorDisapproveConfirm).click();
+              // wait for API call
+              cy.waitForCoordinatorDisapprovePaymentsPostApi(
+                {
+                  ids: {
+                    [payment1.id]: parseFloat(payment1.payment_amount),
+                    [payment2.id]: parseFloat(payment2.payment_amount),
+                    [payment3.id]: parseFloat(payment3.payment_amount),
+                  },
+                },
+                disapproveResponse,
+              );
+              cy.wait('@getAdminOrganisation');
+              cy.wait('@getCoordinatorInvoices');
+              // verify store state: only successful IDs cleared
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('deep.equal', {
+                  [payment2.id]: payment2.is_payment_with_reward,
+                });
+              cy.wrap(paymentAmounts)
+                .its('value')
+                .should('deep.equal', {
+                  [payment2.id]: parseFloat(payment2.payment_amount),
+                });
+              // verify only failed payment remains selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 1);
+              cy.wrap(selectedPayments)
+                .its('value.0.id')
+                .should('equal', payment2.id);
+            },
+          );
+        });
+      });
+    });
+
+    it('only clears local state for successfully disapproved payments when subset selected', () => {
+      cy.fixture('apiGetAdminOrganisationResponse').then((initialOrgData) => {
+        cy.fixture('apiGetCoordinatorInvoicesResponse').then((invoicesData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              // set initial store state
+              adminOrganisationStore.setAdminOrganisations(
+                initialOrgData.results,
+              );
+              adminOrganisationStore.setAdminInvoices([invoicesData]);
+              // get payment IDs from API data
+              const payments =
+                initialOrgData.results[0].subsidiaries[0].teams[0]
+                  .members_without_paid_entry_fee_by_org_coord;
+              const payment1 = payments[0];
+              const payment2 = payments[1];
+              const payment3 = payments[2];
+              // select only two payments using UI
+              cy.contains(payment1.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              cy.contains(payment2.name)
+                .parent('tr')
+                .find('[data-cy="table-fee-approval-checkbox"]')
+                .click();
+              // verify local state
+              const paymentRewards = computed(
+                () => adminOrganisationStore.paymentRewards,
+              );
+              const paymentAmounts = computed(
+                () => adminOrganisationStore.paymentAmounts,
+              );
+              const selectedPayments = computed(
+                () => adminOrganisationStore.selectedPaymentsToApprove,
+              );
+              // verify only two payments are selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 2);
+              // verify local state has all three payments initialized
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment1.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment2.id);
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('have.property', payment3.id);
+              // setup API intercepts - both selected payments succeed
+              const disapproveResponse = {
+                message: 'Disapproved 2 payments successfully',
+                disapproved_ids: [payment1.id, payment2.id],
+              };
+              cy.interceptCoordinatorDisapprovePaymentsPostApi(
+                rideToWorkByBikeConfig,
+                disapproveResponse,
+              );
+              // intercept organization structure GET
+              cy.interceptAdminOrganisationGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetAdminOrganisationResponseTwoDisapprovedMembers',
+              );
+              // intercept invoices GET
+              cy.interceptCoordinatorInvoicesGetApi(
+                rideToWorkByBikeConfig,
+                'apiGetCoordinatorInvoicesResponse',
+              );
+              // click disapprove button
+              cy.dataCy(selectorDisapproveButton).click();
+              // confirm in dialog
+              cy.dataCy(selectorDisapproveDialog).should('be.visible');
+              cy.dataCy(selectorDisapproveConfirm).click();
+              // wait for API call
+              cy.waitForCoordinatorDisapprovePaymentsPostApi(
+                {
+                  ids: {
+                    [payment1.id]: parseFloat(payment1.payment_amount),
+                    [payment2.id]: parseFloat(payment2.payment_amount),
+                  },
+                },
+                disapproveResponse,
+              );
+              cy.wait('@getAdminOrganisation');
+              cy.wait('@getCoordinatorInvoices');
+              // verify store state: only successful IDs cleared
+              cy.wrap(paymentRewards)
+                .its('value')
+                .should('deep.equal', {
+                  [payment3.id]: payment3.is_payment_with_reward,
+                });
+              cy.wrap(paymentAmounts)
+                .its('value')
+                .should('deep.equal', {
+                  [payment3.id]: parseFloat(payment3.payment_amount),
+                });
+              // verify no payments remain selected
+              cy.wrap(selectedPayments).its('value').should('have.length', 0);
+            },
+          );
+        });
+      });
+    });
   });
 
   context('desktop approved variant', () => {
@@ -482,6 +904,29 @@ describe('<TableFeeApproval>', () => {
           // approve and disapprove buttons should not exist
           cy.dataCy(selectorDisapproveButton).should('not.exist');
           cy.dataCy(selectorApproveButton).should('not.exist');
+        },
+      );
+    });
+
+    it('does not initialize local state for approved table', () => {
+      cy.fixture('apiGetAdminOrganisationResponseAlt2').then(
+        (tableFeeApprovalTestData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.results,
+              );
+              const paymentRewards = computed(
+                () => adminOrganisationStore.paymentRewards,
+              );
+              const paymentAmounts = computed(
+                () => adminOrganisationStore.paymentAmounts,
+              );
+              // approved table does not initialize local state
+              cy.wrap(paymentRewards).its('value').should('deep.equal', {});
+              cy.wrap(paymentAmounts).its('value').should('deep.equal', {});
+            },
+          );
         },
       );
     });

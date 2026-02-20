@@ -81,15 +81,20 @@ export default defineComponent({
       () => adminOrganisationStore.paymentAmounts,
     );
 
-    // initialize paymentRewards and amounts in store when data changes
-    watch(
-      feeApprovalData,
-      (newData) => {
-        adminOrganisationStore.initializePaymentRewards(newData);
-        adminOrganisationStore.initializePaymentAmounts(newData);
-      },
-      { immediate: true },
-    );
+    /**
+     * initialize paymentRewards and amounts in store when data changes
+     * only for non-approved table (where editing is allowed)
+     */
+    if (!props.approved) {
+      watch(
+        feeApprovalData,
+        (newData) => {
+          adminOrganisationStore.initializePaymentRewards(newData);
+          adminOrganisationStore.initializePaymentAmounts(newData);
+        },
+        { immediate: true },
+      );
+    }
 
     // update reward status in store
     const updateRewardStatus = (
@@ -230,7 +235,11 @@ export default defineComponent({
               :props="props"
               data-cy="table-fee-approval-amount"
             >
-              {{ paymentAmounts[props.row.id] ?? props.row.amount }}
+              <!-- Only non-approved payments show user-edited value -->
+              <template v-if="approved">{{ props.row.amount }}</template>
+              <template v-else>
+                {{ paymentAmounts[props.row.id] ?? props.row.amount }}
+              </template>
             </q-td>
             <!-- Name -->
             <q-td key="name" :props="props" data-cy="table-fee-approval-name">
@@ -242,10 +251,18 @@ export default defineComponent({
               :props="props"
               data-cy="table-fee-approval-reward"
             >
+              <!-- Only non-approved payments show user-edited value -->
               <q-checkbox
-                :model-value="paymentRewards[props.row.id]"
+                v-if="approved"
+                disable
+                :model-value="props.row.reward"
                 color="primary"
-                :disable="approved"
+                data-cy="table-fee-approval-reward-checkbox"
+              />
+              <q-checkbox
+                v-else
+                :model-value="paymentRewards[props.row.id] ?? props.row.reward"
+                color="primary"
                 data-cy="table-fee-approval-reward-checkbox"
                 @update:model-value="
                   (value) => updateRewardStatus(props.row.id, value)
