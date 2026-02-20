@@ -325,12 +325,6 @@ describe('<TableFeeApproval>', () => {
                 .parent('tr')
                 .find('[data-cy="table-fee-approval-checkbox"]')
                 .click();
-              // change reward for payment1 using UI
-              cy.contains(payment1.name)
-                .parent('tr')
-                .find('[data-cy="table-fee-approval-reward-checkbox"]')
-                .find('.q-checkbox__inner')
-                .click();
               // verify local state
               const paymentRewards = computed(
                 () => adminOrganisationStore.paymentRewards,
@@ -435,12 +429,6 @@ describe('<TableFeeApproval>', () => {
                 .parent('tr')
                 .find('[data-cy="table-fee-approval-checkbox"]')
                 .click();
-              // change reward for payment1 using UI
-              cy.contains(payment1.name)
-                .parent('tr')
-                .find('[data-cy="table-fee-approval-reward-checkbox"]')
-                .find('.q-checkbox__inner')
-                .click();
               // verify local state
               const paymentRewards = computed(
                 () => adminOrganisationStore.paymentRewards,
@@ -544,12 +532,6 @@ describe('<TableFeeApproval>', () => {
               cy.contains(payment3.name)
                 .parent('tr')
                 .find('[data-cy="table-fee-approval-checkbox"]')
-                .click();
-              // change reward for payment1 using UI
-              cy.contains(payment1.name)
-                .parent('tr')
-                .find('[data-cy="table-fee-approval-reward-checkbox"]')
-                .find('.q-checkbox__inner')
                 .click();
               // verify local state
               const paymentRewards = computed(
@@ -657,12 +639,6 @@ describe('<TableFeeApproval>', () => {
               cy.contains(payment2.name)
                 .parent('tr')
                 .find('[data-cy="table-fee-approval-checkbox"]')
-                .click();
-              // change reward for payment1 using UI
-              cy.contains(payment1.name)
-                .parent('tr')
-                .find('[data-cy="table-fee-approval-reward-checkbox"]')
-                .find('.q-checkbox__inner')
                 .click();
               // verify local state
               const paymentRewards = computed(
