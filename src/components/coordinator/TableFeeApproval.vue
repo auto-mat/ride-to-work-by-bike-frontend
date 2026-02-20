@@ -81,15 +81,20 @@ export default defineComponent({
       () => adminOrganisationStore.paymentAmounts,
     );
 
-    // initialize paymentRewards and amounts in store when data changes
-    watch(
-      feeApprovalData,
-      (newData) => {
-        adminOrganisationStore.initializePaymentRewards(newData);
-        adminOrganisationStore.initializePaymentAmounts(newData);
-      },
-      { immediate: true },
-    );
+    /**
+     * initialize paymentRewards and amounts in store when data changes
+     * only for non-approved table (where editing is allowed)
+     */
+    if (!props.approved) {
+      watch(
+        feeApprovalData,
+        (newData) => {
+          adminOrganisationStore.initializePaymentRewards(newData);
+          adminOrganisationStore.initializePaymentAmounts(newData);
+        },
+        { immediate: true },
+      );
+    }
 
     // update reward status in store
     const updateRewardStatus = (
@@ -243,7 +248,7 @@ export default defineComponent({
               data-cy="table-fee-approval-reward"
             >
               <q-checkbox
-                :model-value="paymentRewards[props.row.id]"
+                :model-value="paymentRewards[props.row.id] ?? props.row.reward"
                 color="primary"
                 :disable="approved"
                 data-cy="table-fee-approval-reward-checkbox"
