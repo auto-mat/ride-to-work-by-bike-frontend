@@ -4,6 +4,7 @@ export enum ResultsReportType {
   performanceCity = 'performance-city',
   performanceOrganization = 'performance-organization',
   organizationsReview = 'organizations-review',
+  organizationCoordinator = 'organization-coordinator',
 }
 
 export enum ResultsReportTypeByChallenge {

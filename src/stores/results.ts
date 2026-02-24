@@ -64,6 +64,9 @@ export const useResultsStore = defineStore('results', {
         [ResultsReportType.organizationsReview]: i18n.global.t(
           'results.reportType.organizationsReview',
         ),
+        [ResultsReportType.organizationCoordinator]: i18n.global.t(
+          'results.reportType.organizationCoordinator',
+        ),
         [ResultsReportTypeByChallenge.may]: i18n.global.t(
           'results.reportType.may',
         ),
@@ -134,6 +137,7 @@ export const useResultsStore = defineStore('results', {
           [
             ResultsReportType.performanceOrganization,
             ResultsReportType.organizationsReview,
+            ResultsReportType.organizationCoordinator,
           ].forEach((type) => reportTypesPerRole.add(type));
         }
         // add staff report types
@@ -194,6 +198,51 @@ export const useResultsStore = defineStore('results', {
       reportType: ResultsReportType | ResultsReportTypeByChallenge,
     ): ResultsResponse | undefined {
       return this.resultsUrls[reportType];
+    },
+
+    /**
+     * Load organization coordinator results URL
+     * Used by coordinator results tab to load only specific URLs needed
+     * @returns {Promise<void>}
+     */
+    async loadOrganizationCoordinatorUrl(): Promise<void> {
+      // skip if loaded
+      if (this.resultsUrls[ResultsReportType.organizationCoordinator]) {
+        return;
+      }
+      this.isLoading = true;
+
+      try {
+        const { load: loadResults } = useApiGetResults(this.$log);
+        const response = await loadResults(
+          ResultsReportType.organizationCoordinator,
+        );
+        this.resultsUrls[ResultsReportType.organizationCoordinator] = response;
+      } catch (error: unknown) {
+        const errorMessage: string =
+          error instanceof Error ? error.message : '';
+        this.$log?.error(
+          `Failed to load organization coordinator results URL <${errorMessage}>.`,
+        );
+        if (errorMessage) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t(
+              'results.messageFailedToLoadResultsUrlsWithMessage',
+              {
+                error: errorMessage,
+              },
+            ),
+          });
+        } else {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t('results.messageFailedToLoadResultsUrls'),
+          });
+        }
+      } finally {
+        this.isLoading = false;
+      }
     },
 
     /**
