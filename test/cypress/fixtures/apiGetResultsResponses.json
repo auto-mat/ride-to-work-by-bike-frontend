@@ -28,5 +28,11 @@
     "response": {
       "data_report_url": "https://metabase.dopracenakole.net/public/question/4db3c6ac-6e88-4db4-aaca-7b7fa3e1da65"
     }
+  },
+  {
+    "key": "organization-coordinator",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/b7c3b421-ecd0-482b-8901-df71b0b26cfa"
+    }
   }
 ]
