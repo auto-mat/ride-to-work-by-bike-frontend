@@ -3153,6 +3153,13 @@ describe('Register Challenge page', () => {
         cy.dataCy('step-2-continue')
           .should('be.visible')
           .and('not.be.disabled');
+        // user is allowed to add donation
+        cy.dataCy('form-field-donation-checkbox').click();
+        cy.dataCy('form-field-slider-number-input').should('be.visible');
+        // submit payment button is visible and enabled
+        cy.dataCy('step-2-submit-payment')
+          .should('be.visible')
+          .and('not.be.disabled');
       });
     });
   });
