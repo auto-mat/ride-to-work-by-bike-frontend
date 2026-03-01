@@ -4,6 +4,7 @@ import {
   systemTimeInvoicesPhaseInactive,
 } from '../support/commonTests';
 import testSet from '../fixtures/coordinatorInvoicesTest.json';
+import missingFieldsTestSet from '../fixtures/missingOrganizationFieldsTest.json';
 
 const customBillingDetails = {
   street: 'New Street',
@@ -496,11 +497,6 @@ describe('Company coordinator invoices page', () => {
             ).should('be.visible');
             cy.contains(
               i18n.global.t('form.messageFieldRequired', {
-                fieldName: i18n.global.t('form.labelBusinessVatId'),
-              }),
-            ).should('be.visible');
-            cy.contains(
-              i18n.global.t('form.messageFieldRequired', {
                 fieldName: i18n.global.t('form.labelStreet'),
               }),
             ).should('be.visible');
@@ -520,6 +516,183 @@ describe('Company coordinator invoices page', () => {
               }),
             ).should('be.visible');
             cy.get('@postCoordinatorMakeInvoice.all').should('have.length', 0);
+          });
+        });
+      });
+    });
+  });
+
+  context('organization with missing company details', () => {
+    missingFieldsTestSet.forEach((test) => {
+      it(`${test.description}`, () => {
+        cy.viewport(1920, 2500);
+        // set system time to be in the correct active token window
+        cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+          cy.task('getAppConfig', process).then((config) => {
+            cy.wrap(config).as('config');
+            // visit the login page to initialize i18n
+            cy.visit('#' + routesConf['login']['path']);
+            cy.window().should('have.property', 'i18n');
+            cy.window().then((win) => {
+              cy.wrap(win.i18n).as('i18n');
+              // setup coordinator test environment
+              cy.setupCompanyCoordinatorTest(config, win.i18n);
+              // organization structure API override with missing field
+              cy.interceptAdminOrganisationGetApi(config, test.fixture);
+              cy.visit(
+                '#' +
+                  routesConf['coordinator_invoices']['children']['fullPath'],
+              );
+              // check that initial admin organisation response is loaded
+              cy.waitForCoordinatorInvoicesGetApi(
+                'apiGetCoordinatorInvoicesResponse.json',
+              );
+              cy.get('@getCoordinatorInvoices.all').should('have.length', 1);
+              cy.dataCy('table-invoices-title').should('be.visible');
+              // open dialog
+              cy.dataCy('button-create-invoice').click();
+              cy.dataCy('dialog-create-invoice').should('be.visible');
+              cy.dataCy('dialog-header').should(
+                'contain',
+                win.i18n.global.t('coordinator.titleCreateInvoice'),
+              );
+              // confirm billing details toggle
+              cy.dataCy('form-create-invoice-confirm-billing-details')
+                .find('.q-toggle__inner')
+                .click();
+              // try submitting
+              cy.dataCy('dialog-button-submit')
+                .should('not.be.disabled')
+                .click();
+              // verify that validation error message is shown
+              cy.contains(
+                win.i18n.global.t('form.messageIncompleteOrganizationDetails'),
+              ).should('be.visible');
+              // verify that billing form is auto-expanded
+              cy.dataCy('form-create-invoice-billing-expansion-content').should(
+                'be.visible',
+              );
+              // verify that dialog remains open (submission was blocked)
+              cy.dataCy('dialog-create-invoice').should('be.visible');
+              // verify form field initialization
+              cy.fixture(test.fixture).then((response) => {
+                const org = response.results[0];
+                // field selectors mapping
+                const fields = {
+                  name: {
+                    selector: 'form-invoice-billing-company-name-input',
+                    testValue: customOrganizationDetails.companyName,
+                  },
+                  ico: {
+                    selector: 'form-business-id-input',
+                    testValue: customOrganizationDetails.businessId,
+                  },
+                  street: {
+                    selector: 'form-invoice-billing-street-input',
+                    testValue: customBillingDetails.street,
+                  },
+                  street_number: {
+                    selector: 'form-invoice-billing-houseNumber-input',
+                    testValue: customBillingDetails.streetNumber,
+                  },
+                  city: {
+                    selector: 'form-invoice-billing-city-input',
+                    testValue: customBillingDetails.city,
+                  },
+                  psc: {
+                    selector: 'form-invoice-billing-zip-input',
+                    testValue: customBillingDetails.zip,
+                  },
+                };
+                // verify each field is either pre-filled or empty based on missing field
+                Object.keys(fields).forEach((fieldKey) => {
+                  const field = fields[fieldKey];
+                  if (fieldKey === test.missingField) {
+                    // missing field should be empty (replace `_` for masked fields)
+                    cy.dataCy(field.selector)
+                      .invoke('val')
+                      .then((value) => {
+                        expect(value.replace(/[_\s]/g, '')).to.equal('');
+                      });
+                  } else {
+                    // non-missing fields should be pre-filled
+                    if (fieldKey === 'psc') {
+                      // process masked values
+                      cy.dataCy(field.selector)
+                        .invoke('val')
+                        .then((value) => {
+                          expect(value.replace(/[_\s]/g, '')).to.equal(
+                            org[fieldKey].toString(),
+                          );
+                        });
+                    } else {
+                      cy.dataCy(field.selector).should(
+                        'have.value',
+                        org[fieldKey].toString(),
+                      );
+                    }
+                  }
+                });
+                // fill in the missing field
+                const missingFieldData = fields[test.missingField];
+                cy.dataCy(missingFieldData.selector).type(
+                  missingFieldData.testValue,
+                );
+              });
+              // intercept API and submit successfully
+              cy.interceptCoordinatorMakeInvoicePostApi(config, {
+                invoice_id: 82,
+              });
+              cy.interceptCoordinatorInvoicesGetApi(
+                config,
+                'apiGetCoordinatorInvoicesResponseAddedInvoice.json',
+              );
+              cy.dataCy('dialog-button-submit').click();
+              // verify API payload
+              cy.fixture(test.fixture).then((response) => {
+                const org = response.results[0];
+                // build expected payload with org data + filled field
+                const expectedPayload = {
+                  payment_ids: [178],
+                  company_name:
+                    test.missingField === 'name'
+                      ? customOrganizationDetails.companyName
+                      : org.name,
+                  company_ico:
+                    test.missingField === 'ico'
+                      ? customOrganizationDetails.businessId
+                      : org.ico.toString(),
+                  company_dic: org.dic || undefined,
+                  company_address: {
+                    street:
+                      test.missingField === 'street'
+                        ? customBillingDetails.street
+                        : org.street,
+                    street_number:
+                      test.missingField === 'street_number'
+                        ? customBillingDetails.streetNumber
+                        : org.street_number.toString(),
+                    city:
+                      test.missingField === 'city'
+                        ? customBillingDetails.city
+                        : org.city,
+                    psc:
+                      test.missingField === 'psc'
+                        ? customBillingDetails.zip
+                        : org.psc.toString(),
+                  },
+                };
+                // verify API payload
+                cy.waitForCoordinatorMakeInvoicePostApi(expectedPayload, {
+                  invoice_id: 82,
+                });
+              });
+              // success message
+              cy.contains(
+                win.i18n.global.t('makeInvoice.apiMessageSuccess'),
+              ).should('be.visible');
+              cy.dataCy('dialog-create-invoice').should('not.exist');
+            });
           });
         });
       });

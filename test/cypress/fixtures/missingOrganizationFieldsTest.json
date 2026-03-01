@@ -1,0 +1,32 @@
+[
+  {
+    "description": "validates when organization name is missing",
+    "missingField": "name",
+    "fixture": "apiGetAdminOrganisationResponseMissingName.json"
+  },
+  {
+    "description": "validates when organization ICO (business ID) is missing",
+    "missingField": "ico",
+    "fixture": "apiGetAdminOrganisationResponseMissingIco.json"
+  },
+  {
+    "description": "validates when organization street is missing",
+    "missingField": "street",
+    "fixture": "apiGetAdminOrganisationResponseMissingStreet.json"
+  },
+  {
+    "description": "validates when organization street number is missing",
+    "missingField": "street_number",
+    "fixture": "apiGetAdminOrganisationResponseMissingStreetNumber.json"
+  },
+  {
+    "description": "validates when organization city is missing",
+    "missingField": "city",
+    "fixture": "apiGetAdminOrganisationResponseMissingCity.json"
+  },
+  {
+    "description": "validates when organization PSC (postal code) is missing",
+    "missingField": "psc",
+    "fixture": "apiGetAdminOrganisationResponseMissingPsc.json"
+  }
+]

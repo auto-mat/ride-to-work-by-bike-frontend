@@ -17,14 +17,17 @@
  */
 
 // libraries
-import { QForm } from 'quasar';
-import { computed, defineComponent, ref } from 'vue';
+import { Notify, QForm } from 'quasar';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 
 // components
 import BannerInfo from '../global/BannerInfo.vue';
 import DialogDefault from '../global/DialogDefault.vue';
 import FormCreateInvoice from '../form/FormCreateInvoice.vue';
 import TableInvoices from './TableInvoices.vue';
+
+// composables
+import { i18n } from 'src/boot/i18n';
 
 // enums
 import { PhaseType } from '../types/Challenge';
@@ -56,7 +59,30 @@ export default defineComponent({
       isDialogOpen.value = true;
     };
 
+    const scrollToForm = async (): Promise<void> => {
+      await nextTick();
+      const formElement = formCreateInvoiceRef.value?.$el;
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+    // handles invalid form state (organization details confirmation toggle)
+    const onValidationError = async (): Promise<void> => {
+      await scrollToForm();
+    };
     const onSubmit = async (): Promise<void> => {
+      // validate organization details via store
+      const validation =
+        adminOrganisationStore.getOrganizationDetailsValidation;
+      if (!validation.isValid) {
+        Notify.create({
+          message: i18n.global.t('form.messageIncompleteOrganizationDetails'),
+          color: 'negative',
+        });
+        adminOrganisationStore.setBillingFormExpanded(true);
+        await scrollToForm();
+        return;
+      }
       const success = await adminOrganisationStore.createInvoice();
       if (success) {
         closeDialog();
@@ -96,6 +122,7 @@ export default defineComponent({
       isInvoicesPhaseActive,
       onReset,
       onSubmit,
+      onValidationError,
       openDialog,
     };
   },
@@ -137,7 +164,12 @@ export default defineComponent({
         {{ $t('coordinator.titleCreateInvoice') }}
       </template>
       <template #content>
-        <q-form ref="formCreateInvoiceRef" @submit="onSubmit" @reset="onReset">
+        <q-form
+          ref="formCreateInvoiceRef"
+          @submit="onSubmit"
+          @reset="onReset"
+          @validation-error="onValidationError"
+        >
           <form-create-invoice />
           <!-- Action buttons -->
           <div class="flex justify-end q-mt-lg">

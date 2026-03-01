@@ -49,11 +49,10 @@ export default defineComponent({
       },
     });
 
-    const { isBusinessVatId, isFilled } = useValidation();
+    const { isBusinessVatId } = useValidation();
 
     return {
       businessVatId,
-      isFilled,
       isBusinessVatId,
     };
   },
@@ -73,11 +72,9 @@ export default defineComponent({
       v-model="businessVatId"
       :rules="[
         (val) =>
-          isFilled(val) ||
-          $t('form.messageFieldRequired', {
-            fieldName: $t('form.labelBusinessVatId'),
-          }),
-        (val) => isBusinessVatId(val) || $t('form.messageBusinessVatIdInvalid'),
+          !val ||
+          isBusinessVatId(val) ||
+          $t('form.messageBusinessVatIdInvalid'),
       ]"
       :bg-color="bgColor"
       class="q-mt-sm"

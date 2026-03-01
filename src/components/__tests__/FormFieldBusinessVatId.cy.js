@@ -11,11 +11,7 @@ const setModelValue = (value) => {
 describe('<FormFieldBusinessVatId>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      [
-        'messageFieldRequired',
-        'messageBusinessVatIdInvalid',
-        'labelBusinessVatId',
-      ],
+      ['messageBusinessVatIdInvalid', 'labelBusinessVatId'],
       'form',
       i18n,
     );
@@ -58,6 +54,11 @@ describe('<FormFieldBusinessVatId>', () => {
         .and('contain', i18n.global.t('form.messageBusinessVatIdInvalid'));
       cy.dataCy('form-business-vat-id-input').clear();
 
+      // valid - empty field
+      cy.dataCy('form-business-vat-id-input').focus();
+      cy.dataCy('form-business-vat-id-input').blur();
+      cy.get('.q-field__messages').should('be.empty');
+      cy.dataCy('form-business-vat-id-input').clear();
       // valid - 8 digits (legal entity)
       cy.dataCy('form-business-vat-id-input').type('CZ12345678');
       cy.dataCy('form-business-vat-id-input').blur();

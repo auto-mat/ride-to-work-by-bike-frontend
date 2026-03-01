@@ -14,6 +14,7 @@ import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorT
 import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
 import { useApiPutCoordinatorTeam } from '../composables/useApiPutCoordinatorTeam';
 import { useApiPutCoordinatorSubsidiary } from '../composables/useApiPutCoordinatorSubsidiary';
+import { useValidation } from '../composables/useValidation';
 
 // adapters
 import { subsidiaryAdapter } from '../adapters/subsidiaryAdapter';
@@ -71,6 +72,15 @@ interface InvoiceFormState {
   anonymize: boolean;
 }
 
+interface RequiredOrganizationFields {
+  name: boolean;
+  ico: boolean;
+  street: boolean;
+  street_number: boolean;
+  city: boolean;
+  psc: boolean;
+}
+
 interface AdminOrganisationState {
   $log: Logger | null;
   adminOrganisations: AdminOrganisation[];
@@ -88,6 +98,7 @@ interface AdminOrganisationState {
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
   invoiceForm: InvoiceFormState;
+  requiredOrganizationFields: RequiredOrganizationFields;
   // Invoice polling state
   invoicePollingIntervalId: number | null;
   invoicePollingTimeoutId: number | null;
@@ -120,6 +131,14 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       customBillingOrganization: null,
       isBillingFormExpanded: false,
       anonymize: false,
+    },
+    requiredOrganizationFields: {
+      name: true,
+      ico: true,
+      street: true,
+      street_number: true,
+      city: true,
+      psc: true,
     },
     // Invoice polling state
     invoicePollingIntervalId: null,
@@ -355,6 +374,63 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      */
     getIsInvoicePollingActive: (state): boolean => {
       return state.invoicePollingIntervalId !== null;
+    },
+    /**
+     * Validate organization details against required fields
+     * Merges store organization data with form data (if billing form is expanded)
+     * @returns {object} - result with isValid boolean and missingFields array
+     */
+    getOrganizationDetailsValidation: (
+      state,
+    ): { isValid: boolean; missingFields: string[] } => {
+      const { isFilled } = useValidation();
+      const organization = state.adminOrganisations[0];
+      const missingFields: string[] = [];
+      // check if organization exists
+      if (!organization) {
+        return { isValid: false, missingFields: ['organization'] };
+      }
+      // create merged data object - start with organization data from store
+      const dataToValidate = {
+        name: organization.name,
+        ico: organization.ico,
+        street: organization.street,
+        street_number: organization.street_number,
+        city: organization.city,
+        psc: organization.psc,
+      };
+      // if billing form is expanded, override with form data
+      if (state.invoiceForm.isBillingFormExpanded) {
+        const formOrg = state.invoiceForm.customBillingOrganization;
+        const formAddress = state.invoiceForm.customBillingAddress;
+        // merge required fields (from native form validation)
+        if (formOrg) {
+          dataToValidate.name = formOrg.companyName;
+          dataToValidate.ico = Number(formOrg.businessId);
+        }
+        if (formAddress) {
+          dataToValidate.street = formAddress.street;
+          dataToValidate.street_number = Number(formAddress.streetNumber);
+          dataToValidate.city = formAddress.city;
+          dataToValidate.psc = Number(formAddress.psc);
+        }
+      }
+      // validate the merged data
+      const requiredFields: RequiredOrganizationFields =
+        state.requiredOrganizationFields;
+      Object.keys(requiredFields).forEach((key) => {
+        if (requiredFields[key as keyof RequiredOrganizationFields]) {
+          const value = dataToValidate[key as keyof typeof dataToValidate];
+          // validate value (we skip boolean fields to prevent type errors)
+          if (typeof value !== 'boolean' && !isFilled(value)) {
+            missingFields.push(key);
+          }
+        }
+      });
+      return {
+        isValid: missingFields.length === 0,
+        missingFields,
+      };
     },
   },
 
@@ -888,13 +964,15 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       if (organization) {
         this.invoiceForm.customBillingAddress = {
           street: organization.street || '',
-          streetNumber: String(organization.street_number || ''),
+          streetNumber: organization.street_number
+            ? String(organization.street_number)
+            : '',
           city: organization.city || '',
-          psc: String(organization.psc || ''),
+          psc: organization.psc ? String(organization.psc) : '',
         };
         this.invoiceForm.customBillingOrganization = {
           companyName: organization.name || '',
-          businessId: String(organization.ico) || '',
+          businessId: organization.ico ? String(organization.ico) : '',
           businessVatId: organization.dic || '',
         };
       }
