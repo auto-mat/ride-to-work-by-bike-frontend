@@ -38,6 +38,7 @@ export interface TableAttendanceRow {
 export interface TableAttendanceSubsidiaryData {
   subsidiary: AdminSubsidiary;
   members: TableAttendanceRow[];
+  memberCount: number;
 }
 
 interface TransformMemberParams {
@@ -88,91 +89,103 @@ export const useTableAttendanceData = (): {
   subsidiariesData: Ref<TableAttendanceSubsidiaryData[]>;
 } => {
   const adminOrganisationStore = useAdminOrganisationStore();
-  const subsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() => {
-    const organisation = adminOrganisationStore.getCurrentAdminOrganisation;
 
-    if (!organisation || !organisation.subsidiaries) {
-      return [];
-    }
+  const subsidiariesDataUnsorted = computed<TableAttendanceSubsidiaryData[]>(
+    () => {
+      const organisation = adminOrganisationStore.getCurrentAdminOrganisation;
 
-    return organisation.subsidiaries.map((subsidiary: AdminSubsidiary) => {
-      // collect all members from all teams in this subsidiary
-      const allMembers: TableAttendanceRow[] = [];
-      subsidiary.teams.forEach((team: AdminTeam) => {
-        const teamHasMembers =
-          team.members_with_paid_entry_fee_by_org_coord.length > 0 ||
-          team.members_without_paid_entry_fee_by_org_coord.length > 0 ||
-          team.other_members.length > 0;
-        // empty team - add hidden placeholder row
-        if (!teamHasMembers) {
-          allMembers.push({
-            name: '',
-            nickname: null,
-            email: '',
-            telephone: '',
-            diploma: '',
-            approvedForTeam: TeamMemberStatus.approved,
-            isFeeApproved: false,
-            paymentType: PaymentType.registration,
-            paymentState: PaymentState.none,
-            tShirtSizeUpdated: null,
-            team: team.name,
-            teamId: team.id,
-            memberId: 0, // Empty team has no member
-            subsidiaryId: subsidiary.id,
-            isEmpty: true,
-          });
-        }
-        // process members with entry fee paid by org coordinator
-        team.members_with_paid_entry_fee_by_org_coord.forEach(
-          (member: AdminTeamMember) => {
+      if (!organisation || !organisation.subsidiaries) {
+        return [];
+      }
+
+      return organisation.subsidiaries.map((subsidiary: AdminSubsidiary) => {
+        // collect all members from all teams in this subsidiary
+        const allMembers: TableAttendanceRow[] = [];
+        subsidiary.teams.forEach((team: AdminTeam) => {
+          const teamHasMembers =
+            team.members_with_paid_entry_fee_by_org_coord.length > 0 ||
+            team.members_without_paid_entry_fee_by_org_coord.length > 0 ||
+            team.other_members.length > 0;
+          // empty team - add hidden placeholder row
+          if (!teamHasMembers) {
+            allMembers.push({
+              name: '',
+              nickname: null,
+              email: '',
+              telephone: '',
+              diploma: '',
+              approvedForTeam: TeamMemberStatus.approved,
+              isFeeApproved: false,
+              paymentType: PaymentType.registration,
+              paymentState: PaymentState.none,
+              tShirtSizeUpdated: null,
+              team: team.name,
+              teamId: team.id,
+              memberId: 0, // Empty team has no member
+              subsidiaryId: subsidiary.id,
+              isEmpty: true,
+            });
+          }
+          // process members with entry fee paid by org coordinator
+          team.members_with_paid_entry_fee_by_org_coord.forEach(
+            (member: AdminTeamMember) => {
+              allMembers.push(
+                transformMemberToRow({
+                  member,
+                  teamName: team.name,
+                  teamId: team.id,
+                  subsidiaryId: subsidiary.id,
+                  paymentType: PaymentType.organization,
+                  isFeeApproved: true,
+                }),
+              );
+            },
+          );
+          // process members without entry fee paid by org coordinator
+          team.members_without_paid_entry_fee_by_org_coord.forEach(
+            (member: AdminTeamMember) => {
+              allMembers.push(
+                transformMemberToRow({
+                  member,
+                  teamName: team.name,
+                  teamId: team.id,
+                  subsidiaryId: subsidiary.id,
+                  paymentType: PaymentType.organization,
+                  isFeeApproved: false,
+                }),
+              );
+            },
+          );
+          // process other_members who pay their entry fee themselves
+          team.other_members.forEach((member: AdminTeamMember) => {
             allMembers.push(
               transformMemberToRow({
                 member,
                 teamName: team.name,
                 teamId: team.id,
                 subsidiaryId: subsidiary.id,
-                paymentType: PaymentType.organization,
+                paymentType: PaymentType.registration,
                 isFeeApproved: true,
               }),
             );
-          },
-        );
-        // process members without entry fee paid by org coordinator
-        team.members_without_paid_entry_fee_by_org_coord.forEach(
-          (member: AdminTeamMember) => {
-            allMembers.push(
-              transformMemberToRow({
-                member,
-                teamName: team.name,
-                teamId: team.id,
-                subsidiaryId: subsidiary.id,
-                paymentType: PaymentType.organization,
-                isFeeApproved: false,
-              }),
-            );
-          },
-        );
-        // process other_members who pay their entry fee themselves
-        team.other_members.forEach((member: AdminTeamMember) => {
-          allMembers.push(
-            transformMemberToRow({
-              member,
-              teamName: team.name,
-              teamId: team.id,
-              subsidiaryId: subsidiary.id,
-              paymentType: PaymentType.registration,
-              isFeeApproved: true,
-            }),
-          );
+          });
         });
-      });
 
-      return {
-        subsidiary,
-        members: allMembers,
-      };
-    });
+        return {
+          subsidiary,
+          members: allMembers,
+          memberCount: allMembers.filter((member) => !member.isEmpty).length,
+        };
+      });
+    },
+  );
+
+  const subsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() => {
+    return subsidiariesDataUnsorted.value.sort(
+      (a: TableAttendanceSubsidiaryData, b: TableAttendanceSubsidiaryData) => {
+        return b.memberCount - a.memberCount;
+      },
+    );
   });
 
   return {

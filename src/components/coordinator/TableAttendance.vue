@@ -521,17 +521,8 @@ export default defineComponent({
               }}
             </div>
             <div data-cy="table-attendance-members">
-              {{
-                subsidiaryData.members.filter((member) => !member.isEmpty)
-                  .length
-              }}
-              {{
-                $t(
-                  'coordinator.labelMembers',
-                  subsidiaryData.members.filter((member) => !member.isEmpty)
-                    .length,
-                )
-              }}
+              {{ subsidiaryData.memberCount }}
+              {{ $t('coordinator.labelMembers', subsidiaryData.memberCount) }}
             </div>
           </div>
           <!-- Info: Subsidiary contact -->

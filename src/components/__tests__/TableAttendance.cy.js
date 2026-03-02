@@ -108,6 +108,39 @@ describe('<TableAttendance>', () => {
   });
 });
 
+/**
+ * Helper function to calculate member count for a subsidiary
+ * @param {object} subsidiary
+ * @returns {number} - member count
+ */
+function calculateSubsidiaryMemberCount(subsidiary) {
+  let count = 0;
+  subsidiary.teams.forEach((team) => {
+    count += team.members_without_paid_entry_fee_by_org_coord.length;
+    count += team.members_with_paid_entry_fee_by_org_coord.length;
+    count += team.other_members.length;
+  });
+  return count;
+}
+
+/**
+ * Helper function to get the index of a subsidiary in a sorted array
+ * @param {array} subsidiaries
+ * @param {object} targetSubsidiary
+ * @returns {number} index
+ */
+function getSortedSubsidiaryIndex(subsidiaries, targetSubsidiary) {
+  // map subsidiaries to member count
+  const withCounts = subsidiaries.map((sub) => ({
+    subsidiary: sub,
+    memberCount: calculateSubsidiaryMemberCount(sub),
+  }));
+  // sort by member count
+  const sorted = [...withCounts].sort((a, b) => b.memberCount - a.memberCount);
+  // find index in sorted array
+  return sorted.findIndex((item) => item.subsidiary.id === targetSubsidiary.id);
+}
+
 function coreTests() {
   testData.forEach((test) => {
     it(test.description, () => {
@@ -131,29 +164,24 @@ function coreTests() {
         return;
       }
       // test each subsidiary
-      subsidiaries.forEach((subsidiary, subsidiaryIndex) => {
-        // count all members in this subsidiary
-        const allMembers = [];
-        subsidiary.teams.forEach((team) => {
-          allMembers.push(
-            ...team.members_without_paid_entry_fee_by_org_coord,
-            ...team.members_with_paid_entry_fee_by_org_coord,
-            ...team.other_members,
-          );
-        });
+      subsidiaries.forEach((subsidiary) => {
+        // use sorted index (component sorts subsidiaries by member count)
+        const sortedIndex = getSortedSubsidiaryIndex(subsidiaries, subsidiary);
+        // get member count
+        const memberCount = calculateSubsidiaryMemberCount(subsidiary);
         // test subsidiary header
         cy.dataCy(selectorSubsidiaryHeader)
-          .eq(subsidiaryIndex)
+          .eq(sortedIndex)
           .should('be.visible')
           .and('contain', subsidiary.name);
         // test subsidiary info
         cy.dataCy(selectorCityChallenge)
-          .eq(subsidiaryIndex)
+          .eq(sortedIndex)
           .should('be.visible')
           .and('contain', i18n.global.t('coordinator.labelCityChallenge'))
           .and('contain', subsidiary.city);
         cy.dataCy(selectorTeams)
-          .eq(subsidiaryIndex)
+          .eq(sortedIndex)
           .should('be.visible')
           .and('contain', subsidiary.teams.length)
           .and(
@@ -161,22 +189,22 @@ function coreTests() {
             i18n.global.t('coordinator.labelTeams', subsidiary.teams.length),
           );
         cy.dataCy(selectorMembers)
-          .eq(subsidiaryIndex)
+          .eq(sortedIndex)
           .should('be.visible')
-          .and('contain', allMembers.length)
+          .and('contain', memberCount)
           .and(
             'contain',
-            i18n.global.t('coordinator.labelMembers', allMembers.length),
+            i18n.global.t('coordinator.labelMembers', memberCount),
           );
         // test table
         cy.dataCy(selectorTable)
-          .eq(subsidiaryIndex)
+          .eq(sortedIndex)
           .should('be.visible')
           .and('have.css', 'border-radius', borderRadius);
         if (subsidiary.teams.length === 0) {
           // no members - no member rows
           cy.dataCy(selectorTable)
-            .eq(subsidiaryIndex)
+            .eq(sortedIndex)
             .within(() => {
               cy.dataCy(selectorTableRow).should('not.exist');
             });
@@ -187,9 +215,9 @@ function coreTests() {
         } else {
           // test table rows
           cy.dataCy(selectorTable)
-            .eq(subsidiaryIndex)
+            .eq(sortedIndex)
             .within(() => {
-              if (allMembers.length === 0) {
+              if (memberCount === 0) {
                 // no members - no member rows (only empty teams)
                 cy.dataCy(selectorTableRow).should('have.length', 0);
               } else {
@@ -274,7 +302,7 @@ function coreTests() {
           // team headers (show all teams including empty teams)
           if (subsidiary.teams.length > 0) {
             cy.dataCy(selectorTable)
-              .eq(subsidiaryIndex)
+              .eq(sortedIndex)
               .within(() => {
                 cy.dataCy(selectorTableTeamHeader)
                   .should('be.visible')
@@ -297,7 +325,7 @@ function coreTests() {
               return !teamHasMembers;
             });
             cy.dataCy(selectorTable)
-              .eq(subsidiaryIndex)
+              .eq(sortedIndex)
               .within(() => {
                 cy.dataCy(selectorTeamDeleteButton).should(
                   'have.length',

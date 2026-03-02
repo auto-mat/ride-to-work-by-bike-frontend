@@ -222,6 +222,45 @@
         "active": true,
         "subsidiaries": [
           {
+            "id": 3002,
+            "name": "Nádražní 789, 16000 Ostrava",
+            "psc": 16000,
+            "street": "Nádražní",
+            "street_number": 789,
+            "city": "Ostrava",
+            "challenge_city": "Ostrava",
+            "icon_url": null,
+            "teams": [
+              {
+                "id": 4003,
+                "name": "IT oddělení",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              },
+              {
+                "id": 4004,
+                "name": "Prázdný tým",
+                "icon_url": null,
+                "members_without_paid_entry_fee_by_org_coord": [],
+                "members_with_paid_entry_fee_by_org_coord": [],
+                "other_members": []
+              }
+            ]
+          },
+          {
+            "id": 3003,
+            "name": "Tylova 12, 17000 Plzeň",
+            "psc": 17000,
+            "street": "Tylova",
+            "street_number": 12,
+            "city": "Plzeň",
+            "challenge_city": "Plzeň",
+            "icon_url": null,
+            "teams": []
+          },
+          {
             "id": 3001,
             "name": "Pivovarská 456, 15000 Brno",
             "psc": 15000,
@@ -400,45 +439,6 @@
                 "other_members": []
               }
             ]
-          },
-          {
-            "id": 3002,
-            "name": "Nádražní 789, 16000 Ostrava",
-            "psc": 16000,
-            "street": "Nádražní",
-            "street_number": 789,
-            "city": "Ostrava",
-            "challenge_city": "Ostrava",
-            "icon_url": null,
-            "teams": [
-              {
-                "id": 4003,
-                "name": "IT oddělení",
-                "icon_url": null,
-                "members_without_paid_entry_fee_by_org_coord": [],
-                "members_with_paid_entry_fee_by_org_coord": [],
-                "other_members": []
-              },
-              {
-                "id": 4004,
-                "name": "Prázdný tým",
-                "icon_url": null,
-                "members_without_paid_entry_fee_by_org_coord": [],
-                "members_with_paid_entry_fee_by_org_coord": [],
-                "other_members": []
-              }
-            ]
-          },
-          {
-            "id": 3003,
-            "name": "Tylova 12, 17000 Plzeň",
-            "psc": 17000,
-            "street": "Tylova",
-            "street_number": 12,
-            "city": "Plzeň",
-            "challenge_city": "Plzeň",
-            "icon_url": null,
-            "teams": []
           }
         ]
       }
