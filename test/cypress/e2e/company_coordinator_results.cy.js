@@ -16,6 +16,17 @@ describe('Company coordinator user results page', () => {
             cy.wrap(win.i18n).as('i18n');
             // setup coordinator test environment
             cy.setupCompanyCoordinatorTest(config, win.i18n);
+            // intercept results api endpoint
+            cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+              resultsResponses.forEach((resultsResponse) => {
+                cy.interceptGetResultsApi(
+                  config,
+                  win.i18n,
+                  resultsResponse.key,
+                  resultsResponse.response,
+                );
+              });
+            });
           });
         });
       });
@@ -23,6 +34,17 @@ describe('Company coordinator user results page', () => {
 
     it('should display the user results table', () => {
       cy.visit('#' + routesConf['coordinator_results']['children']['fullPath']);
+      // tabs
+      cy.dataCy('coordinator-results-sub-tabs').should('be.visible');
+      cy.dataCy('coordinator-results-sub-tab-summary').should('be.visible');
+      cy.dataCy('coordinator-results-sub-tab-diplomas').should('be.visible');
+      // panel
+      cy.dataCy('coordinator-results-panel-diplomas').should('not.exist');
+      cy.dataCy('coordinator-results-panel-summary').should('exist');
+      // iframe
+      cy.dataCy('coordinator-results-report').should('be.visible');
+      // switch to diplomas tab
+      cy.dataCy('coordinator-results-sub-tab-diplomas').click();
       // table
       cy.dataCy('table-results').should('be.visible');
       // table headers
