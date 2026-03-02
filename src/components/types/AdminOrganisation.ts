@@ -72,12 +72,12 @@ export interface AdminSubsidiary {
 
 export interface AdminOrganisation {
   name: string;
-  psc: number;
+  psc: string;
   street: string;
-  street_number: number;
+  street_number: string;
   recipient: string;
   city: string;
-  ico: number;
+  ico: string;
   dic: string;
   active: boolean;
   subsidiaries: AdminSubsidiary[];

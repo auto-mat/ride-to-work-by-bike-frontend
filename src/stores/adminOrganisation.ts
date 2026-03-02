@@ -406,13 +406,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         // merge required fields (from native form validation)
         if (formOrg) {
           dataToValidate.name = formOrg.companyName;
-          dataToValidate.ico = Number(formOrg.businessId);
+          dataToValidate.ico = formOrg.businessId;
         }
         if (formAddress) {
           dataToValidate.street = formAddress.street;
-          dataToValidate.street_number = Number(formAddress.streetNumber);
+          dataToValidate.street_number = formAddress.streetNumber;
           dataToValidate.city = formAddress.city;
-          dataToValidate.psc = Number(formAddress.psc);
+          dataToValidate.psc = formAddress.psc;
         }
       }
       // validate the merged data

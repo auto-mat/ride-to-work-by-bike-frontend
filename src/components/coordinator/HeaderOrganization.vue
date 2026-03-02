@@ -42,8 +42,8 @@ export default defineComponent({
       return currentAdminOrganisation.value.name ?? '';
     });
 
-    const organizationId = computed((): number => {
-      return currentAdminOrganisation.value.ico ?? 0;
+    const organizationId = computed((): string => {
+      return currentAdminOrganisation.value.ico ?? '';
     });
 
     const subsidiaries = computed((): AdminSubsidiary[] => {
