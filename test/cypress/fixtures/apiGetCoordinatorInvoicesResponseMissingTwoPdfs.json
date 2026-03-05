@@ -23,7 +23,6 @@
           "exposure_date": "2025-10-19",
           "paid_date": "",
           "company_pais_benefitial_fee": false,
-          "client_note": "",
           "payments": [
             {
               "id": 179,
@@ -43,7 +42,6 @@
           "exposure_date": "2025-10-20",
           "paid_date": "2025-10-28",
           "company_pais_benefitial_fee": false,
-          "client_note": "",
           "payments": [
             {
               "id": 180,

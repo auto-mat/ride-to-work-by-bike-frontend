@@ -136,11 +136,6 @@ describe('Company coordinator invoices page', () => {
                 test.postMakeInvoice.orderNumber,
               );
             }
-            if (test.postMakeInvoice.clientNote) {
-              cy.dataCy('form-create-invoice-note-input').type(
-                test.postMakeInvoice.clientNote,
-              );
-            }
             if (test.postMakeInvoice.isDonorEntryFee) {
               cy.dataCy('form-create-invoice-donor-entry-fee-toggle')
                 .find('.q-toggle__inner')

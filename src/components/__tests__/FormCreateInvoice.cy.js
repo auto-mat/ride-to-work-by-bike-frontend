@@ -11,7 +11,6 @@ describe('<FormCreateInvoice>', () => {
         'labelTaxId',
         'labelConfirmBillingDetails',
         'labelDonorEntryFee',
-        'labelOrderNote',
         'labelOrderNumber',
         'linkEditBillingDetails',
         'textDonorEntryFee',
@@ -136,10 +135,6 @@ function coreTests() {
       cy.dataCy('form-create-invoice-order-number')
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelOrderNumber'));
-      // order note
-      cy.dataCy('form-create-invoice-note')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.labelOrderNote'));
       // entry fee title
       cy.dataCy('form-create-invoice-donor-entry-fee')
         .should('be.visible')

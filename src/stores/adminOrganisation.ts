@@ -53,7 +53,6 @@ import type { FormCompanyAddressFields } from '../components/types/Form';
 
 interface InvoiceFormState {
   orderNumber: string;
-  orderNote: string;
   isDonorEntryFee: boolean;
   isBillingDetailsCorrect: boolean;
   selectedMembers: { [key: number]: number[] };
@@ -123,7 +122,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     paymentAmounts: {},
     invoiceForm: {
       orderNumber: '',
-      orderNote: '',
       isDonorEntryFee: false,
       isBillingDetailsCorrect: false,
       selectedMembers: {},
@@ -886,7 +884,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       const payload: CoordinatorMakeInvoicePayload = {
         // when set to undefined, field is not sent in the request
         order_number: this.invoiceForm.orderNumber || undefined,
-        client_note: this.invoiceForm.orderNote || undefined,
         company_pais_benefitial_fee:
           this.invoiceForm.isDonorEntryFee || undefined,
         payment_ids: paymentIds,
@@ -930,7 +927,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     resetInvoiceForm(): void {
       this.invoiceForm = {
         orderNumber: '',
-        orderNote: '',
         isDonorEntryFee: false,
         isBillingDetailsCorrect: false,
         selectedMembers: {},
