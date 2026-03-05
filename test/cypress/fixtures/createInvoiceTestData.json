@@ -17,6 +17,7 @@
             "psc": 11000,
             "street": "Hlavní",
             "street_number": 123,
+            "name": "Hlavní 123, 11000 Praha",
             "city": "Praha",
             "icon_url": null,
             "teams": [

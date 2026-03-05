@@ -22,17 +22,16 @@
  */
 
 // libraries
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 // composables
 import { useFormatPrice } from 'src/composables/useFormatPrice';
-import { nextTick } from 'process';
 
 // enums
 import { Currency } from '../../composables/useFormatPrice';
 
 // types
-import type { OrganizationMember } from '../types/Organization';
+import type { InvoiceTeam, InvoiceTeamMember } from '../types/Invoice';
 
 // fixtures
 import invoiceFixture from '../../../test/cypress/fixtures/formCreateInvoice.json';
@@ -41,9 +40,9 @@ export default defineComponent({
   name: 'FormFieldCheckboxTeam',
   props: {
     team: {
-      type: Object,
+      type: Object as () => InvoiceTeam,
       required: true,
-      default: invoiceFixture.teams[0],
+      default: invoiceFixture.subsidiaries[0].teams[0],
     },
     modelValue: {
       type: Array as () => number[],
@@ -78,16 +77,14 @@ export default defineComponent({
       }
     };
 
-    onMounted(() => {
-      setIsSelectedTeam();
-    });
-
-    const onChangeMember = (): void => {
-      // wait for next tick to get the updated value after emitting
-      nextTick(() => {
+    // watch for changes from parent and set initial state on mount
+    watch(
+      () => props.modelValue,
+      () => {
         setIsSelectedTeam();
-      });
-    };
+      },
+      { immediate: true },
+    );
 
     /**
      * Handles team selection.
@@ -100,7 +97,7 @@ export default defineComponent({
         selectedMembers.value = [];
       } else {
         selectedMembers.value = props.team.members.map(
-          (member: OrganizationMember) => member.payment.id,
+          (member: InvoiceTeamMember) => member.payment.id,
         );
       }
     };
@@ -110,7 +107,6 @@ export default defineComponent({
       isSelectedTeam,
       selectedMembers,
       formatPriceCurrency,
-      onChangeMember,
       onChangeTeam,
     };
   },
@@ -150,7 +146,6 @@ export default defineComponent({
             v-model="selectedMembers"
             :val="member.payment.id"
             color="primary"
-            @update:model-value="onChangeMember"
           />
         </q-item-section>
         <q-item-section>

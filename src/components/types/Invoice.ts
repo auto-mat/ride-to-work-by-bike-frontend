@@ -40,7 +40,6 @@ export interface GetCoordinatorInvoicesResponse {
 export interface InvoiceTeamMember {
   id: number;
   name: string;
-  teamId: number;
   payment: {
     id: number;
     amount: number;
@@ -51,4 +50,10 @@ export interface InvoiceTeam {
   id: number;
   name: string;
   members: InvoiceTeamMember[];
+}
+
+export interface InvoiceSubsidiary {
+  id: number;
+  name: string;
+  teams: InvoiceTeam[];
 }

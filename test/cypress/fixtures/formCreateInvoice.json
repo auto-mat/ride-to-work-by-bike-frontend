@@ -9,44 +9,58 @@
     "zip": "12000",
     "city": "Praha"
   },
-  "subsidiaries": [
-    {
-      "id": "001",
-      "title": "Pobočka 1"
-    }
-  ],
   "image": {
     "src": "https://picsum.photos/id/70/96/96",
     "alt": "road lined with trees"
   },
-  "teams": [
+  "subsidiaries": [
     {
-      "id": "team-1",
-      "name": "Team 1",
-      "members": [
+      "id": 1,
+      "name": "Subsidiary 1",
+      "teams": [
         {
-          "id": "member-1",
-          "name": "Petr",
-          "team": "001",
-          "payment": { "id": 1, "amount": 399 }
+          "id": 1,
+          "name": "Team 1",
+          "members": [
+            {
+              "id": 1,
+              "name": "Petr",
+              "payment": { "id": 1, "amount": 399 }
+            },
+            {
+              "id": 2,
+              "name": "Marta",
+              "payment": { "id": 2, "amount": 399 }
+            }
+          ]
         },
         {
-          "id": "member-2",
-          "name": "Marta",
-          "team": "001",
-          "payment": { "id": 2, "amount": 399 }
+          "id": 2,
+          "name": "Team 2",
+          "members": [
+            {
+              "id": 3,
+              "name": "Jan",
+              "payment": { "id": 3, "amount": 399 }
+            }
+          ]
         }
       ]
     },
     {
-      "id": "team-2",
-      "name": "Team 2",
-      "members": [
+      "id": 2,
+      "name": "Subsidiary 2",
+      "teams": [
         {
-          "id": "member-3",
-          "name": "Jan",
-          "team": "002",
-          "payment": { "id": 3, "amount": 399 }
+          "id": 3,
+          "name": "Team 3",
+          "members": [
+            {
+              "id": 4,
+              "name": "Eva",
+              "payment": { "id": 4, "amount": 399 }
+            }
+          ]
         }
       ]
     }

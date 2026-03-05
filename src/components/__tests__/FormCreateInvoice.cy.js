@@ -126,7 +126,7 @@ function coreTests() {
           );
         });
       // participants
-      cy.dataCy('form-create-invoice-team').should('be.visible');
+      cy.dataCy('form-field-checkbox-subsidiary').should('be.visible');
       // additional information
       cy.dataCy('form-create-invoice-additional-information')
         .find('h3')

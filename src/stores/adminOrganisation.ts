@@ -46,7 +46,7 @@ import type {
   Invoice,
   InvoiceResult,
   InvoicePayment,
-  InvoiceTeam,
+  InvoiceSubsidiary,
 } from '../components/types/Invoice';
 import type { CoordinatorMakeInvoicePayload } from '../composables/useApiPostCoordinatorMakeInvoice';
 import type { FormCompanyAddressFields } from '../components/types/Form';
@@ -173,10 +173,18 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
     getInvoiceForm: (state) => state.invoiceForm,
     /**
-     * Get teams data for invoice creation
-     * Matches payments_to_invoice with team members by userprofile_id
+     * Provide a flat data structure listing each payment to invoice,
+     * matching the payments with member, team, and subsidiary information.
+     * @returns {Array} - Array of compiled data objects
      */
-    getInvoiceTeams: (state): InvoiceTeam[] => {
+    getInvoicePaymentsWithMembers: (
+      state,
+    ): Array<{
+      payment: InvoicePayment;
+      member: AdminTeamMember;
+      team: AdminTeam;
+      subsidiary: AdminSubsidiary;
+    }> => {
       const organisation = state.adminOrganisations[0];
       const invoiceResult = state.adminInvoices[0];
       // check existence
@@ -184,12 +192,14 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         return [];
       }
       const paymentsToInvoice = invoiceResult.payments_to_invoice;
-      // teams map to store result structure
-      const teamsMap = new Map<number, InvoiceTeam>();
       // member map to lookup member by user_profile_id
       const memberMap = new Map<
         number,
-        { member: AdminTeamMember; team: AdminTeam }
+        {
+          member: AdminTeamMember;
+          team: AdminTeam;
+          subsidiary: AdminSubsidiary;
+        }
       >();
       // build member map from all subsidiaries and teams
       organisation.subsidiaries.forEach((subsidiary: AdminSubsidiary) => {
@@ -200,37 +210,70 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
             ...team.other_members,
           ];
           allMembers.forEach((member: AdminTeamMember) => {
-            memberMap.set(member.user_profile_id, { member, team });
+            memberMap.set(member.user_profile_id, { member, team, subsidiary });
           });
         });
       });
-      // match payments with members and group by team
+      // match payments with members
+      const result: Array<{
+        payment: InvoicePayment;
+        member: AdminTeamMember;
+        team: AdminTeam;
+        subsidiary: AdminSubsidiary;
+      }> = [];
       paymentsToInvoice.forEach((payment: InvoicePayment) => {
         const memberData = memberMap.get(payment.userprofile_id);
         if (memberData) {
-          const { member, team } = memberData;
-          // create or get existing team
-          if (!teamsMap.has(team.id)) {
-            teamsMap.set(team.id, {
-              id: team.id,
-              name: team.name,
-              members: [],
-            });
-          }
-          const invoiceTeam = teamsMap.get(team.id)!;
-          invoiceTeam.members.push({
-            id: member.id,
-            name: member.name,
-            teamId: team.id,
-            payment: {
-              id: payment.id,
-              amount: payment.amount,
-            },
+          result.push({
+            payment,
+            ...memberData,
           });
         }
       });
+      return result;
+    },
+    /**
+     * Provide hierarchical data structure of payments to invoice,
+     * representing member payments nested in teams, nested in subsidiaries.
+     * @returns {Array} - Array of object representing subsidiaries
+     */
+    getInvoiceSubsidiaries(): InvoiceSubsidiary[] {
+      // get flat data
+      const paymentsWithMembers = this.getInvoicePaymentsWithMembers;
+      // lookup map for subsidiaries
+      const subsidiariesMap = new Map<number, InvoiceSubsidiary>();
+      paymentsWithMembers.forEach(({ payment, member, team, subsidiary }) => {
+        // get or create subsidiary
+        if (!subsidiariesMap.has(subsidiary.id)) {
+          subsidiariesMap.set(subsidiary.id, {
+            id: subsidiary.id,
+            name: subsidiary.name,
+            teams: [],
+          });
+        }
+        const invoiceSubsidiary = subsidiariesMap.get(subsidiary.id)!;
+        // lookup or create team in subsidiary
+        let invoiceTeam = invoiceSubsidiary.teams.find((t) => t.id === team.id);
+        if (!invoiceTeam) {
+          invoiceTeam = {
+            id: team.id,
+            name: team.name,
+            members: [],
+          };
+          invoiceSubsidiary.teams.push(invoiceTeam);
+        }
+        // add member to team
+        invoiceTeam.members.push({
+          id: member.id,
+          name: member.name,
+          payment: {
+            id: payment.id,
+            amount: payment.amount,
+          },
+        });
+      });
 
-      return Array.from(teamsMap.values());
+      return Array.from(subsidiariesMap.values());
     },
     // check if there are payments to invoice
     getHasPaymentsToInvoice: (state): boolean => {
@@ -946,12 +989,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
      */
     initializeSelectedMembers(): void {
       const newSelectedMembers: { [key: number]: number[] } = {};
-      const teams = this.getInvoiceTeams;
-      teams.forEach((team) => {
-        // set selected value for each member in the team
-        newSelectedMembers[team.id] = team.members.map(
-          (member) => member.payment.id,
-        );
+      const paymentsWithMembers = this.getInvoicePaymentsWithMembers;
+      // group payment IDs by team
+      paymentsWithMembers.forEach(({ payment, team }) => {
+        if (!newSelectedMembers[team.id]) {
+          newSelectedMembers[team.id] = [];
+        }
+        newSelectedMembers[team.id].push(payment.id);
       });
       this.invoiceForm.selectedMembers = newSelectedMembers;
     },

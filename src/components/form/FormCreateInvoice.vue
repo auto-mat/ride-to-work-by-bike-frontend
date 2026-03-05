@@ -11,8 +11,8 @@
  * see: https://quasar.dev/quasar-utils/event-bus-util#introduction
  *
  * @components
- * - `FormFieldCheckboxTeam`: Use this component to render a widget for
- *   selecting members from a team.
+ * - `FormFieldCheckboxSubsidiary`: Use this component to render a widget for
+ *   selecting all teams and members from a subsidiary.
  *
  * @example
  * <form-create-invoice />
@@ -24,7 +24,7 @@
 import { computed, defineComponent } from 'vue';
 
 // components
-import FormFieldCheckboxTeam from '../form/FormFieldCheckboxTeam.vue';
+import FormFieldCheckboxSubsidiary from '../form/FormFieldCheckboxSubsidiary.vue';
 import FormFieldAddress from './FormFieldAddress.vue';
 import FormFieldBusinessId from './FormFieldBusinessId.vue';
 import FormFieldBusinessVatId from './FormFieldBusinessVatId.vue';
@@ -39,7 +39,7 @@ import type { AdminOrganisation } from '../types/AdminOrganisation';
 export default defineComponent({
   name: 'FormCreateInvoice',
   components: {
-    FormFieldCheckboxTeam,
+    FormFieldCheckboxSubsidiary,
     FormFieldAddress,
     FormFieldBusinessId,
     FormFieldBusinessVatId,
@@ -51,7 +51,9 @@ export default defineComponent({
       return adminOrganisationStore.getCurrentAdminOrganisation;
     });
 
-    const teams = computed(() => adminOrganisationStore.getInvoiceTeams);
+    const subsidiaries = computed(
+      () => adminOrganisationStore.getInvoiceSubsidiaries,
+    );
     const selectedMembers = computed({
       get: () => adminOrganisationStore.invoiceForm.selectedMembers,
       set: (value) => {
@@ -157,7 +159,7 @@ export default defineComponent({
       orderNote,
       orderNumber,
       organization,
-      teams,
+      subsidiaries,
       selectedMembers,
       isBillingFormExpanded,
       billingStreet,
@@ -321,13 +323,13 @@ export default defineComponent({
       data-cy="form-create-invoice-anonymize"
     />
     <!-- Section: Participants -->
-    <form-field-checkbox-team
-      v-for="team in teams"
-      :key="team.id"
-      class="q-gutter-col-sm q-my-lg"
-      :team="team"
-      v-model="selectedMembers[team.id]"
-      data-cy="form-create-invoice-team"
+    <form-field-checkbox-subsidiary
+      v-for="subsidiary in subsidiaries"
+      :key="subsidiary.id"
+      class="q-my-lg"
+      :subsidiary="subsidiary"
+      v-model="selectedMembers"
+      data-cy="form-field-checkbox-subsidiary"
     />
     <!-- Section: Additional information -->
     <div class="q-mt-lg" data-cy="form-create-invoice-additional-information">

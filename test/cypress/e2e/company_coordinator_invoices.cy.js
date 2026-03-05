@@ -95,13 +95,13 @@ describe('Company coordinator invoices page', () => {
               .should('have.class', 'q-toggle__inner--falsy');
             // test teams
             const teams = test.displayInitial.dialogCreateInvoice.teams;
-            cy.dataCy('form-create-invoice-team').should('be.visible');
-            cy.dataCy('form-create-invoice-team').should(
+            cy.dataCy('form-field-checkbox-subsidiary').should('be.visible');
+            cy.dataCy('form-field-checkbox-subsidiary').should(
               'have.length',
               teams.length,
             );
             teams.forEach((team, index) => {
-              cy.dataCy('form-create-invoice-team')
+              cy.dataCy('form-field-checkbox-subsidiary')
                 .eq(index)
                 .should('contain', team.name)
                 .within(() => {
