@@ -594,6 +594,7 @@ export default defineComponent({
       <q-table
         ref="tableRefs"
         flat
+        dense
         bordered
         binary-state-sort
         :rows="subsidiaryData.members"
