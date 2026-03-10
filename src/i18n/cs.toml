@@ -578,7 +578,7 @@ labelTrackDelivery = "Chci dostat zprávu o stavu doručování mého účastnic
 labelVariant = "Varianta"
 labelUrlSizeConversionChartLink = "Tabulka velikosti"
 textMerchUnavailable = "V rámci dodatečné registrace do Květnové výzvy Do práce na kole už hromadně nerozesíláme účastnická trika ani ponožky. Máte ovšem nárok na slevu 200 Kč do našeho benefičního e-shopu, kde si můžete triko či ponožky pořídit (sleva platí do 30. 6. 2025 na každý nákup nad 500 Kč). Kód voucheru je 57539805."
-textNoMerchSelected = "Zvolili jste možnost 'bez balíčku', takže tento krok můžete přeskočit."
+textNoMerchSelected = "Zvolili jste možnost 'bez balíčku', takže tento krok není potřeba vyplňovat. Registraci dokončíte kliknutím na tlačítko 'Pokračovat'."
 textMerchDisabled = "Tato výzva nenabízí účastnický balíček."
 
 [form.personalDetails]

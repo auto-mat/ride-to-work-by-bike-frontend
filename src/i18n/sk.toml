@@ -577,7 +577,7 @@ labelTrackDelivery = "Rád by som dostal správu o stave doručenia môjho úča
 labelVariant = "Variant"
 labelUrlSizeConversionChartLink = "Tabuľka veľkostí"
 textMerchUnavailable = "V rámci dodatočnej registrácie do Májovej výzvy Do práce na bicykli už hromadne nerozposielame účastnícke tričká ani ponožky. Máte však nárok na zľavu 200 Kč do nášho benefičného e-shopu, kde si môžete tričko či ponožky zakúpiť (zľava platí do 30. 6. 2025 na každý nákup nad 500 Kč). Kód voucheru je 57539805."
-textNoMerchSelected = "Zvolili ste možnosť 'bez balíčka', takže tento krok môžete preskočiť."
+textNoMerchSelected = "Zvolili ste možnosť 'bez balíčka', takže tento krok nie je potrebné vypĺňať. Registráciu dokončíte kliknutím na tlačidlo 'Pokračovať'."
 textMerchDisabled = "Táto výzva neponúka účastnícky balíček."
 
 [form.personalDetails]
