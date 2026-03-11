@@ -180,6 +180,11 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
+"@certible/use-matomo@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@certible/use-matomo/-/use-matomo-1.1.0.tgz#4942276deba0355905d000544eee6c7780676af6"
+  integrity sha512-9kOTj0ldP+RX2Rhlosxm/+1uQ2deDefMb4p2DQGFi3Gqi3TuTSrOtx+beUNKGN7D8up/8SsBPJS+ipY1ZHMfrA==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"

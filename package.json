@@ -79,6 +79,7 @@
     "create:component": "npx tsc ./src/utils/create_component_file/index.ts && node ./src/utils/create_component_file/index.js"
   },
   "dependencies": {
+    "@certible/use-matomo": "^1.1.0",
     "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/extras": "^1.0.0",
     "axios": "^1.7.7",
