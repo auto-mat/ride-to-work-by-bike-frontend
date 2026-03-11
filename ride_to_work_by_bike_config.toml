@@ -81,7 +81,6 @@ urlVideoLoggingRoutes = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 urlVideoOnboarding = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
 urlSizeConversionChart = "https://dopracenakole.cz/o-vyzve/trika#velikostni_tabulky"
-urlMatomoAnalytics = "https://matomo.dopracenakole.net"
 
 # CHALLENGE DETAILS
 
@@ -236,8 +235,9 @@ facebookLoginSdkOptions = '''
   "scope": "email,public_profile"
 }
 '''
-matomoAnalyticsRtwbbAppSiteId = "1"
 
+urlMatomoAnalytics = "https://matomo.dopracenakole.net"
+matomoAnalyticsRtwbbAppSiteId = "1"
 
 # MAP SETTINGS
 
