@@ -236,6 +236,8 @@ facebookLoginSdkOptions = '''
   "scope": "email,public_profile"
 }
 '''
+matomoAnalyticsRtwbbAppSiteId = "1"
+
 
 # MAP SETTINGS
 

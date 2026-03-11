@@ -12,7 +12,7 @@ import { rideToWorkByBikeConfig } from './global_vars';
 export default boot(({ app }) => {
   const matomo = initMatomo({
     host: rideToWorkByBikeConfig.urlMatomoAnalytics,
-    siteId: 1,
+    siteId: rideToWorkByBikeConfig.matomoAnalyticsRtwbbAppSiteId,
     enableLinkTracking: true,
     requireConsent: true, // GDPR compliance
     trackRouter: true, // Automatic SPA page changes via history tracking
