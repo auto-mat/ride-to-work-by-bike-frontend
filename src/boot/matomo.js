@@ -10,12 +10,14 @@ import { rideToWorkByBikeConfig } from './global_vars';
  * @see https://matomo.org/
  */
 export default boot(({ app }) => {
-  const matomo = initMatomo({
-    host: rideToWorkByBikeConfig.urlMatomoAnalytics,
-    siteId: rideToWorkByBikeConfig.matomoAnalyticsRtwbbAppSiteId,
-    enableLinkTracking: true,
-    requireConsent: true, // GDPR compliance
-    trackRouter: true, // Automatic SPA page changes via history tracking
-  });
-  app.provide('matomo', matomo);
+  if (rideToWorkByBikeConfig.urlMatomoAnalytics.length > 0) {
+    const matomo = initMatomo({
+      host: rideToWorkByBikeConfig.urlMatomoAnalytics,
+      siteId: rideToWorkByBikeConfig.matomoAnalyticsRtwbbAppSiteId,
+      enableLinkTracking: true,
+      requireConsent: true, // GDPR compliance
+      trackRouter: true, // Automatic SPA page changes via history tracking
+    });
+    app.provide('matomo', matomo);
+  }
 });
