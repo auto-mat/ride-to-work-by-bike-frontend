@@ -34,7 +34,15 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['global_vars', 'google_login', 'i18n', 'logger', 'pinia', 'swiper'],
+    boot: [
+      'global_vars',
+      'google_login',
+      'i18n',
+      'logger',
+      'pinia',
+      'swiper',
+      'matomo',
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
