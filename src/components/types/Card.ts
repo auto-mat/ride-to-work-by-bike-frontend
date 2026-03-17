@@ -1,6 +1,7 @@
 import { Image } from './Image';
 import { ItemPrize } from './Item';
 import { Link } from './Link';
+import type { OfferEventType } from '../enums/Offers';
 
 export interface CardMetadata {
   id: string;
@@ -44,6 +45,7 @@ export interface CardOffer {
   image: Image;
   icon?: string;
   metadata?: CardMetadata[];
+  type?: OfferEventType;
 }
 export interface CardPrizeType {
   content: string;

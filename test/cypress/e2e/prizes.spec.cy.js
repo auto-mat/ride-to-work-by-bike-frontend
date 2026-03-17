@@ -182,6 +182,9 @@ function coreTests() {
             // check that each item has correct data
             cy.dataCy('discount-offers-item').each((item, index) => {
               cy.wrap(item).should('contain', displayedOffers[index].title);
+              cy.wrap(item).within(() => {
+                cy.dataCy('card-date-chip').should('not.exist');
+              });
               cy.wrap(item).click();
               cy.dataCy('dialog-offer').should('be.visible');
               if (displayedOffers[index].content) {
@@ -401,6 +404,9 @@ function coreTests() {
           // check that each item has correct data
           cy.dataCy('events-item').each((item, index) => {
             cy.wrap(item).should('contain', displayedOffers[index].title);
+            cy.wrap(item).within(() => {
+              cy.dataCy('card-date-chip').should('be.visible');
+            });
           });
         });
       });

@@ -92,6 +92,7 @@ export const feedAdapter = {
         alt: post.title,
       },
       metadata,
+      type,
     };
   },
 

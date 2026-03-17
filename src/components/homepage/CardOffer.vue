@@ -32,7 +32,7 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 // components
 import DialogDefault from '../global/DialogDefault.vue';
@@ -41,8 +41,14 @@ import OfferValidation from '../offer/OfferValidation.vue';
 // types
 import { CardOffer as CardOfferType } from '../types';
 
+// enums
+import { OfferEventType } from '../enums/Offers';
+
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+// composables
+import { i18n } from '../../boot/i18n';
 
 // utils
 import { isOfferPast } from '../../utils/get_offer_valid';
@@ -59,12 +65,26 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const modalOpened = ref(false);
 
+    const eventDate = computed(() => {
+      // show for one-day events
+      if (
+        props.card.type !== OfferEventType.oneDayEvent ||
+        !props.card.startDate
+      ) {
+        return null;
+      }
+      // remove timezone
+      const localDate = props.card.startDate.replace('Z', '');
+      return i18n.global.d(new Date(localDate), 'monthDayHourMinute');
+    });
+
     return {
       borderRadius,
+      eventDate,
       modalOpened,
       isOfferPast,
     };
@@ -102,6 +122,17 @@ export default defineComponent({
           class="text-grey-10"
           data-cy="card-title"
         ></div>
+        <!-- Date chip -->
+        <q-chip
+          v-if="eventDate"
+          dense
+          color="transparent"
+          icon="svguse:icons/card_offer/icons.svg#calendar"
+          class="q-mt-xs q-ml-none text-caption"
+          data-cy="card-date-chip"
+        >
+          {{ eventDate }}
+        </q-chip>
       </q-card-section>
     </q-card-section>
 
