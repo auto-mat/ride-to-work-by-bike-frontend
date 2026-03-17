@@ -176,7 +176,8 @@
       "author": "Auto*Mat",
       "material": "Bavlna",
       "description": "Dámske triko 2023, velikost XL.",
-      "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751"
+      "t_shirt_preview": "https://dpnk-test.s3.amazonaws.com/t_shirt_preview/triko_vizualizace_dpnk_2023.jpg?AWSAccessKeyId=AKIAJ3R77G7P3TJECZ7Q&Signature=v%2BuNQYuB6hBoT%2F1K0fGMhNGbX1Y%3D&Expires=2049394751",
+      "available": false
     },
     {
       "id": 163,

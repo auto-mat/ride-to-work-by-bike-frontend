@@ -408,6 +408,64 @@ describe('<FormFieldListMerch>', () => {
     });
   });
 
+  context('desktop - some sizes are unavailable', () => {
+    beforeEach(() => {
+      cy.fixture('apiGetMerchandiseResponseDisabledSizes').then((response) => {
+        cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n, response);
+        cy.mount(FormFieldListMerch, {
+          props: {},
+        });
+        cy.viewport('macbook-16');
+        cy.wait(['@getMerchandise']);
+      });
+    });
+
+    it('does not show sizes which are not available', () => {
+      cy.fixture('apiGetMerchandiseResponseDisabledSizes').then((response) => {
+        // tabs are visible
+        cy.dataCy('list-merch-tab-female').should('be.visible');
+        cy.dataCy('list-merch-tab-male').should('be.visible');
+        // female cards are visible
+        cy.dataCy('form-card-merch-female')
+          .should('be.visible')
+          .and('have.length', 1);
+        // get all available sizes
+        const availableSizes = response.results
+          .filter((item) => item.sex === 'female' && item.available)
+          .map((item) => item.size);
+        const unavailableSizes = response.results
+          .filter((item) => item.sex === 'female' && !item.available)
+          .map((item) => item.size);
+        // verify that card only shows available sizes
+        cy.dataCy('form-card-merch-female').within(() => {
+          availableSizes.forEach((size) => {
+            cy.dataCy('form-card-merch-sizes').should('contain', size);
+          });
+          unavailableSizes.forEach((size) => {
+            cy.dataCy('form-card-merch-sizes').should('not.contain', size);
+          });
+        });
+        // verify that dialog options only include available sizes
+        // open dialog and verify content
+        cy.dataCy('form-card-merch-female')
+          .first()
+          .within(() => {
+            cy.dataCy('form-card-merch-link').click();
+          });
+        cy.dataCy('dialog-merch')
+          .should('be.visible')
+          .within(() => {
+            availableSizes.forEach((size) => {
+              cy.dataCy('form-field-merch-size').should('contain', size);
+            });
+            unavailableSizes.forEach((size) => {
+              cy.dataCy('form-field-merch-size').should('not.contain', size);
+            });
+          });
+      });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());

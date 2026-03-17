@@ -107,7 +107,11 @@ export default defineComponent({
       <dl class="q-my-sm" data-cy="form-card-merch-parameters">
         <div class="flex q-gutter-x-xs">
           <dt>{{ $t('form.merch.labelSizes') }}:</dt>
-          <dd v-if="option.sizeOptions" class="text-weight-bold">
+          <dd
+            v-if="option.sizeOptions"
+            class="text-weight-bold"
+            data-cy="form-card-merch-sizes"
+          >
             <span v-for="(size, index) in option.sizeOptions" :key="size.label">
               {{ size.label }}
               <span v-if="index < option.sizeOptions.length - 1">, </span>
