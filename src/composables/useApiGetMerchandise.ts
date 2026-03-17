@@ -189,7 +189,9 @@ export const useApiGetMerchandise = (
        * These will determine the option values for the size select.
        */
       const sizeOptions: FormOption[] = variants
-        .filter((variant) => variant.sex === item.sex)
+        .filter(
+          (variant) => variant.sex === item.sex && variant.available === true,
+        )
         .map((variant) => ({
           label: variant.size,
           value: variant.id,
@@ -280,10 +282,12 @@ export const useApiGetMerchandise = (
           const firstItem = items[0];
 
           // get all sizes available for this item name and gender
-          const sizeOptions: FormOption[] = items.map((item) => ({
-            label: item.size,
-            value: item.id,
-          }));
+          const sizeOptions: FormOption[] = items
+            .filter((item) => item.available === true)
+            .map((item) => ({
+              label: item.size,
+              value: item.id,
+            }));
 
           // return MerchandiseCard
           const card = {
@@ -293,9 +297,11 @@ export const useApiGetMerchandise = (
             author: firstItem.author,
             gender: firstItem.sex,
             material: firstItem.material,
-            itemIds: items.map((item) => item.id),
+            itemIds: items
+              .filter((item) => item.available)
+              .map((item) => item.id),
             sizeOptions,
-            available: firstItem.available,
+            available: items.some((item) => item.available),
           };
           logger?.debug(`Card data format <${JSON.stringify(card, null, 2)}>.`);
           return card;
