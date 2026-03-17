@@ -627,6 +627,7 @@ Cypress.Commands.add(
       citySlug,
       config.apiFeedMaxOffersNumber,
     );
+    getOffersParams._year = '*';
     const objectToParams = (obj) => {
       return Object.keys(obj)
         .map((key) => `${key}=${obj[key]}`)
@@ -679,6 +680,7 @@ Cypress.Commands.add(
       citySlug,
       config.apiFeedMaxPrizesNumber,
     );
+    getPrizesParams._year = '*';
     const objectToParams = (obj) => {
       return Object.keys(obj)
         .map((key) => `${key}=${obj[key]}`)
