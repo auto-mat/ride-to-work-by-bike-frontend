@@ -34,9 +34,7 @@ describe('Company coordinator boxes page', () => {
         // get address from store data
         const uniqueAddresses = [
           ...new Set(
-            organization.subsidiaries.map(
-              (box) => `${box.street} ${box.street_number}, ${box.city}`,
-            ),
+            organization.subsidiaries.map((subsidiary) => subsidiary.name),
           ),
         ];
         if (uniqueAddresses.length > 0) {

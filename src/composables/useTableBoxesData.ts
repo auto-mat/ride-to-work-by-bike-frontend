@@ -104,10 +104,9 @@ export const useTableBoxesData = (): {
     // loop through subsidiaries to extract boxes
     organisation.subsidiaries.forEach((subsidiary) => {
       if (subsidiary.boxes && subsidiary.boxes.length > 0) {
-        // construct subsidiary address with fallback
         let address = '';
-        if (subsidiary.street && subsidiary.street_number && subsidiary.city) {
-          address = `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
+        if (subsidiary.name) {
+          address = subsidiary.name;
         } else {
           address = `${i18n.global.t('table.labelAddress')}: ${i18n.global.t('table.labelCellEmpty')}`;
         }

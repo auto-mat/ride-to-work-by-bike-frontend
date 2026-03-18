@@ -19,6 +19,7 @@
             "street": "Pivovarská",
             "street_number": 456,
             "city": "Brno",
+            "name": "Pivovarská 456, 15000 Brno",
             "icon_url": null,
             "teams": [],
             "box_addressee_name": "Jan Pivovár",
@@ -103,7 +104,7 @@
         "recipients": "2 účastníci*e",
         "recipientCount": 2,
         "lastModified": "2022-09-31T00:00:00Z",
-        "address": "Pivovarská 456, Brno",
+        "address": "Pivovarská 456, 15000 Brno",
         "addressee": "Jan Pivovár"
       },
       {
@@ -113,7 +114,7 @@
         "recipients": "4 účastníci*e",
         "recipientCount": 4,
         "lastModified": "2022-09-28T00:00:00Z",
-        "address": "Pivovarská 456, Brno",
+        "address": "Pivovarská 456, 15000 Brno",
         "addressee": "Jan Pivovár"
       },
       {
@@ -123,7 +124,7 @@
         "recipients": "Ludmila Anonymní",
         "recipientCount": 1,
         "lastModified": "2022-09-27T00:00:00Z",
-        "address": "Pivovarská 456, Brno",
+        "address": "Pivovarská 456, 15000 Brno",
         "addressee": "Jan Pivovár"
       }
     ],
@@ -152,6 +153,7 @@
             "street": "Pivovarská",
             "street_number": 456,
             "city": "Brno",
+            "name": "Pivovarská 456, 15000 Brno",
             "icon_url": null,
             "teams": [],
             "box_addressee_name": "Jan Pivovár",
@@ -186,6 +188,7 @@
             "street": "Pivovarská",
             "street_number": 456,
             "city": "Brno",
+            "name": "Pivovarská 456, 15000 Brno",
             "icon_url": null,
             "teams": [],
             "box_addressee_name": "Jan Pivovár",
@@ -220,7 +223,7 @@
         "recipients": "Jan Novák",
         "recipientCount": 1,
         "lastModified": "2022-10-15T00:00:00Z",
-        "address": "Pivovarská 456, Brno",
+        "address": "Pivovarská 456, 15000 Brno",
         "addressee": "Jan Pivovár"
       }
     ],

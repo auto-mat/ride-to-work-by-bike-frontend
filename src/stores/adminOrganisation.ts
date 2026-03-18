@@ -352,7 +352,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
 
         // loop over subsidiaries
         organisation.subsidiaries.forEach((subsidiary: AdminSubsidiary) => {
-          const subsidiaryAddress = `${subsidiary.street} ${subsidiary.street_number}, ${subsidiary.city}`;
+          const subsidiaryAddress = subsidiary.name;
           // loop over teams
           subsidiary.teams.forEach((team: AdminTeam) => {
             // get members based on approval status

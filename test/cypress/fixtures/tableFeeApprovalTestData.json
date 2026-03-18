@@ -17,6 +17,7 @@
           "street": "Hlavní",
           "street_number": 123,
           "city": "Praha",
+          "name": "Hlavní 123, 11000 Praha",
           "icon_url": null,
           "teams": [
             {
@@ -75,6 +76,7 @@
           "street": "Vedlejší",
           "street_number": 456,
           "city": "Brno",
+          "name": "Vedlejší 456, 15000 Brno",
           "icon_url": null,
           "teams": [
             {
