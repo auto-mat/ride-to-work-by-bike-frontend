@@ -77,7 +77,7 @@ export default defineComponent({
       ) {
         return null;
       }
-      // remove timezone
+      // display date with removed timezone
       const localDate = props.card.startDate.replace('Z', '');
       return i18n.global.d(new Date(localDate), 'monthDayHourMinute');
     });
