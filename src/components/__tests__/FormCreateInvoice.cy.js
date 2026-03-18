@@ -17,6 +17,7 @@ describe('<FormCreateInvoice>', () => {
         'textEditBillingDetails',
         'titleAdditionalInformation',
         'titleDonorEntryFee',
+        'titleOrganizationDetails',
         'titleOrganizationBillingDetails',
       ],
       'form',
@@ -62,7 +63,7 @@ function coreTests() {
       // title
       cy.dataCy('form-create-invoice-title')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.titleOrganizationBillingDetails'));
+        .and('contain', i18n.global.t('form.titleOrganizationDetails'));
       // organization details
       const organization = testData.storeDataInitial.organizations[0];
       cy.dataCy('form-create-invoice-organization-details')

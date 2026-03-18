@@ -175,7 +175,7 @@ export default defineComponent({
       class="text-body1 text-bold text-black q-my-none"
       data-cy="form-create-invoice-title"
     >
-      {{ $t('form.titleOrganizationBillingDetails') }}
+      {{ $t('form.titleOrganizationDetails') }}
     </h3>
     <!-- Section: Billing details -->
     <address
@@ -239,7 +239,7 @@ export default defineComponent({
         <!-- Organization fields -->
         <div v-if="isBillingFormExpanded" class="q-mb-lg">
           <h4 class="text-body2 text-bold q-mb-md">
-            {{ $t('form.titleOrganizationDetails') }}
+            {{ $t('form.titleOrganizationBillingDetails') }}
           </h4>
           <div class="row q-col-gutter-md">
             <form-field-text-required
