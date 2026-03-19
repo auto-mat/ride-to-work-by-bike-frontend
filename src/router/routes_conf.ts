@@ -254,6 +254,20 @@ const routesConf: RoutesConf = {
       name: 'coordinator-results',
     },
   },
+  privacy: {
+    path: '/privacy',
+    children: {
+      fullPath: '/privacy',
+      name: 'privacy',
+    },
+  },
+  privacy_rules: {
+    path: '/privacy-rules',
+    children: {
+      fullPath: '/privacy-rules',
+      name: 'privacy-rules',
+    },
+  },
 };
 
 export { routesConf };

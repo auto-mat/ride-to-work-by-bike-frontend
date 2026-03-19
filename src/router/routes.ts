@@ -321,6 +321,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // Privacy
+  {
+    path: routesConf['privacy']['path'],
+    component: () => import('layouts/LoginRegisterLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['privacy']['children']['name'],
+        component: () => import('pages/PrivacyPage.vue'),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -1348,3 +1348,30 @@ logout = "Odhlásiť sa"
 newsletter = "Odeberať newsletter"
 notifications = "História oznámení"
 profileDetails = "Váš profil"
+
+# https://raw.githubusercontent.com/OSGeo/grass-website/refs/heads/master/content/about/privacy.md
+[privacy]
+header = "Zásady ochrany osobných údajov"
+subheader = "Analytika"
+subsubheaderMatomo = "Matomo"
+matomoRules = """<p>Tieto webové stránky používajú slobodnú softwarovú službu pre webovú analytiku
+<a href={ url } target="_blank" class="text-white">Matomo</a>. Matomo používa technológie, ktoré
+které umožňujú rozpoznávanie užívateľa naprieč stránkami pre analýzu chovania používateľov. V našom prípade
+nezhromažďujeme žiadne súbory cookie. Informácie zhromaždené spoločnosťou Matomo o používaní týchto webových
+stránok sú uložené na našom serveri. IP adresa je pred uložením anonymizovaná. S pomocou Matomo sme
+schopní shromažďovať a analyzovať údaje o používaní našich webových stránok návštevníkov webových stránok.
+To nám umožňuje mimo iné zistiť, kedy boli aké zobrazenia stránok realizované a z ktorých regiónov pochádzajú.
+Zhromažďujeme tiež rôzne súbory protokolov (napr. IP adresu, sprostredkovateľ, použité prehliadače a operačné systémy)
+a môžeme merať, či navštevujete naše webové stránky prevádzajú určité akcie (napr. kliknutie, sťahovanie atď.).
+</p><p>
+Používanie tohto analytického nástroja je založené na článku 6 ods. 1 písm. f GDPR. Prevádzkovateľ webovej
+stránky má oprávnený záujem na anonymizovanej analýze správania používateľov s cieľom optimalizovať
+svoju webovú stránku aj svoju reklamu. Ak bol vyžiadaný zodpovedajúci súhlas, spracovanie sa
+vykonáva výlučne na základe článku 6 ods. 1 písm. a GDPR a § 25 ods. 1 TTDSG, pokiaľ
+súhlas zahŕňa ukladanie súborov cookie alebo prístup k informáciám v koncovom zariadení používateľa
+(napr. odtlačky prstov zariadenia) v zmysle TTDSG. Súhlas je možné kedykoľvek odvolať.</p>
+"""
+subsubheaderIpAnonymisation = "Anonymizácia IP adries"
+ipAnonymisationRules = """Na analýzu pomocou Matomo používame anonymizáciu IP adresy. To znamená, že vaša IP adresa
+sa pred analýzou skráti, aby ju už nebolo možné jednoznačne priradiť k vám.
+"""

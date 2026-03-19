@@ -149,6 +149,8 @@ export interface ConfigGlobal {
   mapSourceOsm: string;
   voucherWithoutRewardPattern: string;
   apiDateFormat: string;
+  urlMatomoAnalytics: string;
+  urlMatomoAnalyticsHomePage: string;
 }
 
 export interface ConfigAppVersion {

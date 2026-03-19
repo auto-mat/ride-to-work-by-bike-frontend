@@ -1,5 +1,6 @@
 // Route group definitions for use across the application
 export const ROUTE_GROUPS = {
+  PRIVACY: ['privacy'],
   LOGIN: ['login', 'register', 'confirm_email', 'reset_password'],
   VERIFY_EMAIL: ['verify_email', 'confirm_email'],
   CHALLENGE_INACTIVE: ['challenge_inactive'],

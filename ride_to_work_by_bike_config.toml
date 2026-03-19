@@ -81,6 +81,7 @@ urlVideoLoggingRoutes = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 urlVideoOnboarding = "https://www.youtube.com/embed/ItfTtrEutgo?rel=0"
 urlYoutube = "https://www.youtube.com/@spolekautomat"
 urlSizeConversionChart = "https://dopracenakole.cz/o-vyzve/trika#velikostni_tabulky"
+urlMatomoAnalyticsHomePage = "https://matomo.org/"
 
 # CHALLENGE DETAILS
 

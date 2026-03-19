@@ -1349,3 +1349,33 @@ logout = "Odhlásit se"
 newsletter = "Odebírat newsletter"
 notifications = "Historie notifikací"
 profileDetails = "Váš profil"
+
+# https://raw.githubusercontent.com/OSGeo/grass-website/refs/heads/master/content/about/privacy.md
+[privacy]
+header = "Zásady ochrany osobních údajů"
+subheader = "Analytika"
+subsubheaderMatomo = "Matomo"
+matomoRules = """<p>Tyto webové stránky používají svobodnou softwarovou službu pro
+webovou analytiku <a href={ url } target="_blank" class="text-white">Matomo</a>.
+Matomo používá technologie, které umožňují rozpoznání uživatele napříč stránkami
+pro analýzu chování uživatelů. V našem případě se neshromažďují žádné soubory cookie.
+Informace shromážděné společností Matomo o používání těchto webových stránek jsou uloženy
+na našem serveru. IP adresa je před uložením anonymizována. S pomocí Matomo jsme schopni
+shromažďovat a analyzovat data o používání našich webových stránek návštěvníky webových stránek.
+To nám umožňuje mimo jiné zjistit, kdy byly které zobrazení stránek uskutečněny a z kterého regionu
+pocházejí. Shromažďujeme také různé soubory protokolů (např. IP adresu, zprostředkovatel, použité prohlížeče a
+operační systémy) a můžeme měřit, zda návštěvníci našich webových stránek provádějí určité akce (např.
+kliknutí, stahování atd.).
+</p><p>
+Používání tohoto analytického nástroje je založeno na čl. 6 odst. 1 písm. f GDPR. Provozovatel webových
+stránek má oprávněný zájem na anonymizované analýze chování uživatelů za účelem optimalizace jak svých
+webových stránek, tak i reklamy. Pokud byl vyžádán odpovídající souhlas, zpracování se
+provádí výhradně na základě čl. 6 odst. 1 písm. a GDPR a § 25 odst. 1 TTDSG, pokud
+souhlas zahrnuje ukládání souborů cookie nebo přístup k informacím v koncovém zařízení uživatele
+(např. otisky prstů zařízení) ve smyslu TTDSG. Souhlas lze kdykoli odvolat.
+</p>
+"""
+subsubheaderIpAnonymisation = "Anonymizace IP adres"
+ipAnonymisationRules = """Pro analýzu s Matomo používáme anonymizaci IP adres. To znamená, že vaše IP
+adresa je před analýzou zkrácena, aby ji již nebylo možné jednoznačně přiřadit k vám.
+"""

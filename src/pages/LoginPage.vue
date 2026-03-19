@@ -25,12 +25,14 @@ import { defineComponent } from 'vue';
 // components
 import FormLogin from 'components/login/FormLogin.vue';
 import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import PrivacyLink from 'components/global/PrivacyLink.vue';
 
 export default defineComponent({
   name: 'LoginPage',
   components: {
     FormLogin,
     LoginRegisterHeader,
+    PrivacyLink,
   },
   setup() {
     return {};
@@ -47,6 +49,8 @@ export default defineComponent({
       <div class="row">
         <div class="col-12 col-md-4">
           <form-login useFormFieldValidationErrorCssClass />
+          <!-- Privacy link -->
+          <privacy-link></privacy-link>
         </div>
       </div>
     </div>

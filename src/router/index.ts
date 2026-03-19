@@ -197,10 +197,23 @@ export default route(function (/* { store, ssrContext } */) {
       };
 
       logRouterState(logger, to, from, state);
+      if (
+        to.path.includes(routesConf['privacy_rules']['path']) &&
+        !isAccessingRoutes(to, ROUTE_GROUPS.PRIVACY, routesConf)
+      ) {
+        redirect({
+          logger: logger,
+          path: routesConf['privacy']['path'],
+          next: next,
+        });
+        return;
+      }
       // Login access: ONLY access LOGIN path group
       if (
         !state.isAuthenticated &&
-        !isAccessingRoutes(to, ROUTE_GROUPS.LOGIN, routesConf)
+        !to.path.includes(routesConf['privacy_rules']['path']) &&
+        !isAccessingRoutes(to, ROUTE_GROUPS.LOGIN, routesConf) &&
+        !isAccessingRoutes(to, ROUTE_GROUPS.PRIVACY, routesConf)
       ) {
         logRouteCheck(logger, ROUTE_GROUPS.LOGIN, routesConf, false);
         redirect({
@@ -211,6 +224,7 @@ export default route(function (/* { store, ssrContext } */) {
         });
         return;
       }
+
       // Verify email access: ONLY access VERIFY_EMAIL path group
       if (
         state.isAuthenticated &&

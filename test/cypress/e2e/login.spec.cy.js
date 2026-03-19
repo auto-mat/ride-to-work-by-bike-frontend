@@ -42,6 +42,59 @@ describe('Login page', () => {
       cy.dataCy('login-register-header').should('be.visible');
     });
 
+    it('renders privacy link', () => {
+      cy.dataCy('privacy-link').should('be.visible').click();
+      cy.dataCy('privacy-link')
+        .find('a')
+        .should('be.visible')
+        .and('have.attr', 'href')
+        .and('include', routesConf['privacy_rules']['path'])
+        .then(() => {
+          cy.visit(`/#${routesConf['privacy']['path']}`).then(() => {
+            cy.dataCy('header').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                expect($el.text()).to.equal(i18n.global.t('privacy.header'));
+              });
+            });
+            cy.dataCy('subheader').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                expect($el.text()).to.equal(i18n.global.t('privacy.subheader'));
+              });
+            });
+            cy.dataCy('subsubheader-matomo').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                expect($el.text()).to.equal(
+                  i18n.global.t('privacy.subsubheaderMatomo'),
+                );
+              });
+            });
+            cy.dataCy('matomo-rules').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                cy.stripHtmlTags(i18n.global.t('privacy.matomoRules')).then(
+                  (text) => {
+                    expect($el.text()).to.contains(text);
+                  },
+                );
+              });
+            });
+            cy.dataCy('subsubheader-ip-anonymisation').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                expect($el.text()).to.equal(
+                  i18n.global.t('privacy.subsubheaderIpAnonymisation'),
+                );
+              });
+            });
+            cy.dataCy('ip-anonymisation-rules').then(($el) => {
+              cy.get('@i18n').then((i18n) => {
+                expect($el.text()).to.equal(
+                  i18n.global.t('privacy.ipAnonymisationRules'),
+                );
+              });
+            });
+          });
+        });
+    });
+
     it('check custom form field validation error color', () => {
       cy.task('getAppConfig', process).then((config) => {
         const customFormFieldValidationErrColor = rgbaColorObjectToString(
