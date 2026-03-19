@@ -15,7 +15,7 @@ export default boot(({ app }) => {
       host: rideToWorkByBikeConfig.urlMatomoAnalytics,
       siteId: rideToWorkByBikeConfig.matomoAnalyticsRtwbbAppSiteId,
       enableLinkTracking: true,
-      requireConsent: true, // GDPR compliance
+      requireConsent: false, // GDPR compliance
       trackRouter: true, // Automatic SPA page changes via history tracking
     });
     app.provide('matomo', matomo);
