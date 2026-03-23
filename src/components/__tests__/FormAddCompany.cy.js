@@ -29,6 +29,11 @@ const selectorFormCityChallenge = 'form-add-subsidiary-city-challenge';
 const selectorFormDepartment = 'form-add-subsidiary-department';
 const selectorFormSectionSubsidiaryTitle =
   'form-add-company-section-subsidiary-title';
+const selectorFormCheckboxDifferentAddress =
+  'form-add-company-checkbox-different-address';
+const selectorFormCityChallengeMinimal =
+  'form-widget-subsidiary-city-challenge-minimal';
+const selectorFormDepartmentMinimal = 'form-add-company-department-minimal';
 
 describe('<FormAddCompany>', () => {
   // default form state (make a deep copy of empty state)
@@ -45,6 +50,7 @@ describe('<FormAddCompany>', () => {
         'company.textOrganizationAddress',
         'company.titleSubsidiaryAddress',
         'company.textSubsidiaryAddress',
+        'company.labelSubsidiaryAddressDifferent',
         'labelStreet',
         'labelHouseNumber',
         'messageFieldRequired',
@@ -176,13 +182,16 @@ describe('<FormAddCompany>', () => {
       cy.dataCy(selectorFormOrgAddressZip).should('be.visible');
       // subsidiary section
       cy.dataCy(selectorFormSectionSubsidiaryTitle).should('be.visible');
-      // subsidiary address fields
-      cy.dataCy(selectorFormStreet).should('be.visible');
-      cy.dataCy(selectorFormHouseNumber).should('be.visible');
-      cy.dataCy(selectorFormCity).should('be.visible');
-      cy.dataCy(selectorFormZip).should('be.visible');
-      cy.dataCy(selectorFormCityChallenge).should('be.visible');
-      cy.dataCy(selectorFormDepartment).should('be.visible');
+      // checkbox for different address
+      cy.dataCy(selectorFormCheckboxDifferentAddress).should('be.visible');
+      // minimal subsidiary fields visible by default (checkbox unchecked)
+      cy.dataCy(selectorFormCityChallengeMinimal).should('be.visible');
+      cy.dataCy(selectorFormDepartmentMinimal).should('be.visible');
+      // full subsidiary address fields not visible by default
+      cy.dataCy(selectorFormStreet).should('not.exist');
+      cy.dataCy(selectorFormHouseNumber).should('not.exist');
+      cy.dataCy(selectorFormCity).should('not.exist');
+      cy.dataCy(selectorFormZip).should('not.exist');
     });
 
     it('updates model value when all fields change', () => {
@@ -204,16 +213,22 @@ describe('<FormAddCompany>', () => {
         cy.dataCy(selectorFormOrgAddressZip)
           .find('input')
           .type(companyAddress.orgAddress.zip);
-        // fill in subsidiary address fields
+        // check the checkbox to show full subsidiary address fields
+        cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+        // clear and fill in subsidiary address fields (fields are prepopulated with org address)
+        cy.dataCy(selectorFormStreet).find('input').clear();
         cy.dataCy(selectorFormStreet)
           .find('input')
           .type(companyAddress.subsidiaryAddress.street);
+        cy.dataCy(selectorFormHouseNumber).find('input').clear();
         cy.dataCy(selectorFormHouseNumber)
           .find('input')
           .type(companyAddress.subsidiaryAddress.houseNumber);
+        cy.dataCy(selectorFormCity).find('input').clear();
         cy.dataCy(selectorFormCity)
           .find('input')
           .type(companyAddress.subsidiaryAddress.city);
+        cy.dataCy(selectorFormZip).find('input').clear();
         cy.dataCy(selectorFormZip)
           .find('input')
           .type(companyAddress.subsidiaryAddress.zip);
@@ -234,6 +249,136 @@ describe('<FormAddCompany>', () => {
         });
         // verify model updates
         cy.wrap(model).its('value').should('deep.equal', companyAddress);
+      });
+    });
+  });
+
+  context('subsidiary address checkbox (default variant)', () => {
+    beforeEach(() => {
+      model.value = deepObjectWithSimplePropsCopy(emptyFormCompanyFields);
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+      cy.mount(FormAddCompany, {
+        props: {
+          ...vModelAdapter(model),
+          organizationType: OrganizationType.company,
+          variant: FormAddCompanyVariantProp.default,
+        },
+      });
+    });
+
+    it('renders checkbox for different subsidiary address', () => {
+      cy.dataCy(selectorFormCheckboxDifferentAddress)
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('form.company.labelSubsidiaryAddressDifferent'),
+        );
+    });
+
+    it('shows minimal fields by default (checkbox unchecked)', () => {
+      // minimal fields visible
+      cy.dataCy(selectorFormCityChallengeMinimal).should('be.visible');
+      cy.dataCy(selectorFormDepartmentMinimal).should('be.visible');
+      // full address fields not visible
+      cy.dataCy(selectorFormStreet).should('not.exist');
+      cy.dataCy(selectorFormHouseNumber).should('not.exist');
+      cy.dataCy(selectorFormCity).should('not.exist');
+      cy.dataCy(selectorFormZip).should('not.exist');
+    });
+
+    it('shows full subsidiary form when checkbox is checked', () => {
+      // check the checkbox
+      cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+      // full address fields visible
+      cy.dataCy(selectorFormStreet).should('be.visible');
+      cy.dataCy(selectorFormHouseNumber).should('be.visible');
+      cy.dataCy(selectorFormCity).should('be.visible');
+      cy.dataCy(selectorFormZip).should('be.visible');
+      cy.dataCy(selectorFormCityChallenge).should('be.visible');
+      cy.dataCy(selectorFormDepartment).should('be.visible');
+      // minimal fields not visible
+      cy.dataCy(selectorFormCityChallengeMinimal).should('not.exist');
+      cy.dataCy(selectorFormDepartmentMinimal).should('not.exist');
+    });
+
+    it('syncs company address to subsidiary when checkbox is unchecked', () => {
+      cy.fixture('companyAddress').then((companyAddress) => {
+        // fill in org address fields
+        fillOrgAddress(companyAddress.orgAddress);
+        // verify subsidiary address is synced
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.street')
+          .should('eq', companyAddress.orgAddress.street);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.houseNumber')
+          .should('eq', companyAddress.orgAddress.houseNumber);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.city')
+          .should('eq', companyAddress.orgAddress.city);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.zip')
+          .should('eq', companyAddress.orgAddress.zip);
+        // check checkbox different subsidiary address
+        cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+        // fill in different subsidiary address
+        cy.dataCy(selectorFormStreet).find('input').clear();
+        cy.dataCy(selectorFormStreet).find('input').type('Different Street');
+        cy.dataCy(selectorFormHouseNumber).find('input').clear();
+        cy.dataCy(selectorFormHouseNumber).find('input').type('999');
+        cy.dataCy(selectorFormCity).find('input').clear();
+        cy.dataCy(selectorFormCity).find('input').type('Different City');
+        cy.dataCy(selectorFormZip).find('input').clear();
+        cy.dataCy(selectorFormZip).find('input').type('99999');
+        // verify subsidiary address is different from org address
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.street')
+          .should('eq', 'Different Street');
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.houseNumber')
+          .should('eq', '999');
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.city')
+          .should('eq', 'Different City');
+        cy.wrap(model).its('value.subsidiaryAddress.zip').should('eq', '99999');
+        // uncheck checkbox different subsidiary address
+        cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+        // verify subsidiary address is synced
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.street')
+          .should('eq', companyAddress.orgAddress.street);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.houseNumber')
+          .should('eq', companyAddress.orgAddress.houseNumber);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.city')
+          .should('eq', companyAddress.orgAddress.city);
+        cy.wrap(model)
+          .its('value.subsidiaryAddress.zip')
+          .should('eq', companyAddress.orgAddress.zip);
+      });
+    });
+
+    it('fills minimal fields and syncs address correctly', () => {
+      cy.fixture('companyAddress').then((companyAddress) => {
+        // fill org address
+        fillOrgAddress(companyAddress.orgAddress);
+        // fill minimal subsidiary fields
+        cy.selectDropdownMenu(selectorFormCityChallengeMinimal, 0);
+        cy.dataCy(selectorFormDepartmentMinimal).type(
+          companyAddress.subsidiaryAddress.department,
+        );
+        // verify model
+        cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+          cy.wrap(model)
+            .its('value.subsidiaryAddress.street')
+            .should('eq', companyAddress.orgAddress.street);
+          cy.wrap(model)
+            .its('value.subsidiaryAddress.cityChallenge')
+            .should('eq', citiesResponse.results[0].id);
+          cy.wrap(model)
+            .its('value.subsidiaryAddress.department')
+            .should('eq', companyAddress.subsidiaryAddress.department);
+        });
       });
     });
   });
@@ -475,3 +620,17 @@ describe('<FormAddCompany>', () => {
     });
   });
 });
+
+// helper function to fill organization address fields
+const fillOrgAddress = (address) => {
+  cy.dataCy(selectorFormOrgAddressStreet).find('input').clear();
+  cy.dataCy(selectorFormOrgAddressStreet).find('input').type(address.street);
+  cy.dataCy(selectorFormOrgAddressHouseNumber).find('input').clear();
+  cy.dataCy(selectorFormOrgAddressHouseNumber)
+    .find('input')
+    .type(address.houseNumber);
+  cy.dataCy(selectorFormOrgAddressCity).find('input').clear();
+  cy.dataCy(selectorFormOrgAddressCity).find('input').type(address.city);
+  cy.dataCy(selectorFormOrgAddressZip).find('input').clear();
+  cy.dataCy(selectorFormOrgAddressZip).find('input').type(address.zip);
+};

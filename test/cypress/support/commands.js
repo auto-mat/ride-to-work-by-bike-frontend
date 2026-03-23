@@ -1680,16 +1680,22 @@ Cypress.Commands.add(
     cy.dataCy('form-orgAddress-zip')
       .find('input')
       .type(formFieldCompanyCreateRequest.address.zip);
+    // check checkbox different subsidiary address
+    cy.dataCy('form-add-company-checkbox-different-address').click();
     // fill subsidiary address data
+    cy.dataCy('form-add-subsidiary-street').find('input').clear();
     cy.dataCy('form-add-subsidiary-street')
       .find('input')
       .type(apiPostSubsidiaryRequest.address.street);
+    cy.dataCy('form-add-subsidiary-house-number').find('input').clear();
     cy.dataCy('form-add-subsidiary-house-number')
       .find('input')
       .type(apiPostSubsidiaryRequest.address.street_number);
+    cy.dataCy('form-add-subsidiary-city').find('input').clear();
     cy.dataCy('form-add-subsidiary-city')
       .find('input')
       .type(apiPostSubsidiaryRequest.address.city);
+    cy.dataCy('form-add-subsidiary-zip').find('input').clear();
     cy.dataCy('form-add-subsidiary-zip')
       .find('input')
       .type(apiPostSubsidiaryRequest.address.psc);

@@ -6,6 +6,10 @@
  * company.
  * You can adjust its appearance by changing the `variant` prop.
  *
+ * Form includes simplifieed subsidiary address fields. Optionally users can choose
+ * to input a different address from the organization address. Otherwise, only
+ * cityChallenge and department fields need to be filled.
+ *
  * Note: This component is commonly used in `FormFieldCompany`,
  * `FormFieldSelectTable`.
  *
@@ -31,7 +35,15 @@
  */
 
 // libraries
-import { computed, defineComponent, nextTick, ref } from 'vue';
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 
 // components
 import FormAddSubsidiary from './FormAddSubsidiary.vue';
@@ -40,15 +52,17 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 
 // composables
+import { useApiGetCities } from '../../composables/useApiGetCities';
 import { useOrganizations } from '../../composables/useOrganizations';
 import { useValidation } from '../../composables/useValidation';
 
 // enums
 import { OrganizationType } from '../types/Organization';
-import { FormAddCompanyVariantProp } from '../enums/Form';
+import { FormAddCompanyVariantProp, FormSubsidiaryFields } from '../enums/Form';
 
 // types
-import type { FormCompanyFields } from '../types/Form';
+import type { FormCompanyFields, FormOption } from '../types/Form';
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'FormAddCompany',
@@ -75,6 +89,8 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const company = ref(props.modelValue);
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const isDifferentSubsidiaryAddress = ref<boolean>(false);
 
     const onUpdate = (): void => {
       // wait for next tick to emit the value after update
@@ -98,6 +114,61 @@ export default defineComponent({
         .sectionTitleSubsidiaryAddress;
     });
 
+    // cities API integration for minimal subsidiary fields
+    const {
+      isLoading: isCityLoading,
+      cities,
+      loadCities,
+    } = useApiGetCities(logger);
+
+    const cityOptions = computed<FormOption[]>(() =>
+      cities.value.map((city) => ({
+        label: city.name,
+        value: city.id,
+      })),
+    );
+
+    const labelCityChallenge = computed<string>((): string => {
+      return getOrganizationLabels(props.organizationType).labelCityChallenge;
+    });
+    const hintCityChallenge = computed<string>((): string => {
+      return getOrganizationLabels(props.organizationType).hintCityChallenge;
+    });
+    const showMinimalSubsidiaryFields = computed((): boolean => {
+      return (
+        props.variant === FormAddCompanyVariantProp.default &&
+        !isDifferentSubsidiaryAddress.value
+      );
+    });
+    const showFullSubsidiaryFields = computed((): boolean => {
+      return (
+        props.variant === FormAddCompanyVariantProp.default &&
+        isDifferentSubsidiaryAddress.value
+      );
+    });
+
+    // sync company address to subsidiary when addresses should be same
+    watch(
+      [isDifferentSubsidiaryAddress, () => company.value.orgAddress],
+      ([isDifferent, orgAddress]) => {
+        if (!isDifferent && company.value.subsidiaryAddress && orgAddress) {
+          // copy orgAddress fields to subsidiaryAddress, preserving cityChallenge and department
+          company.value.subsidiaryAddress.street = orgAddress.street;
+          company.value.subsidiaryAddress.houseNumber = orgAddress.houseNumber;
+          company.value.subsidiaryAddress.city = orgAddress.city;
+          company.value.subsidiaryAddress.zip = orgAddress.zip;
+          onUpdate();
+        }
+      },
+      { deep: true, immediate: true },
+    );
+
+    onMounted(() => {
+      if (props.variant === FormAddCompanyVariantProp.default) {
+        loadCities();
+      }
+    });
+
     return {
       company,
       titleDialog,
@@ -107,6 +178,14 @@ export default defineComponent({
       sectionTitleSubsidiaryAddress,
       onUpdate,
       FormAddCompanyVariantProp,
+      isDifferentSubsidiaryAddress,
+      cityOptions,
+      isCityLoading,
+      labelCityChallenge,
+      hintCityChallenge,
+      showMinimalSubsidiaryFields,
+      showFullSubsidiaryFields,
+      FormSubsidiaryFields,
     };
   },
 });
@@ -192,12 +271,84 @@ export default defineComponent({
           {{ $t('form.company.textSubsidiaryAddress') }}
         </p>
       </div>
-      <!-- Subsidiary address fields -->
+      <!-- Checkbox: Different subsidiary address -->
+      <div class="q-mb-md">
+        <q-checkbox
+          dense
+          v-model="isDifferentSubsidiaryAddress"
+          color="primary"
+          :label="$t('form.company.labelSubsidiaryAddressDifferent')"
+          data-cy="form-add-company-checkbox-different-address"
+        />
+      </div>
+      <!-- Full subsidiary form (when checkbox is checked) -->
       <form-add-subsidiary
+        v-if="showFullSubsidiaryFields && company.subsidiaryAddress"
         v-model="company.subsidiaryAddress"
         @update:model-value="onUpdate"
-        data-cy="form-add-company-subsidiary"
+        data-cy="form-add-company-subsidiary-full"
       />
+      <!-- Minimal subsidiary fields -->
+      <div
+        v-if="showMinimalSubsidiaryFields && company.subsidiaryAddress"
+        class="row q-col-gutter-lg"
+      >
+        <div
+          class="col-12"
+          data-cy="form-widget-subsidiary-city-challenge-minimal"
+        >
+          <!-- City challenge -->
+          <label
+            for="form-city-challenge-minimal"
+            class="text-caption text-bold text-gray-10"
+            >{{ labelCityChallenge }}</label
+          >
+          <q-select
+            dense
+            outlined
+            emit-value
+            map-options
+            v-model="company.subsidiaryAddress.cityChallenge"
+            :rules="[
+              (val) =>
+                isFilled(val) ||
+                $t('form.messageFieldRequired', {
+                  fieldName: $t('form.labelCity'),
+                }),
+            ]"
+            id="form-city-challenge-minimal"
+            :hint="hintCityChallenge"
+            :options="cityOptions"
+            :loading="isCityLoading"
+            class="q-mt-sm"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-city-challenge-minimal"
+            :name="FormSubsidiaryFields.cityChallenge"
+          ></q-select>
+        </div>
+        <div class="col-12">
+          <!-- Department (note) -->
+          <label
+            for="form-department-minimal"
+            class="text-caption text-bold text-gray-10"
+          >
+            {{ $t('form.company.labelDepartment') }}
+          </label>
+          <q-input
+            dense
+            outlined
+            lazy-rules
+            hide-bottom-space
+            v-model="company.subsidiaryAddress.department"
+            id="form-department-minimal"
+            :name="FormSubsidiaryFields.department"
+            :hint="$t('form.company.hintDepartment')"
+            class="q-mt-sm"
+            @update:model-value="onUpdate"
+            data-cy="form-add-company-department-minimal"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
