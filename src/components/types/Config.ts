@@ -80,6 +80,7 @@ export interface ConfigGlobal {
   urlApiCommuteMode: string;
   urlApiCoordinatorMakeInvoice: string;
   urlApiCoordinatorMember: string;
+  urlApiCoordinatorOrganization: string;
   urlApiCoordinatorSubsidiary: string;
   urlApiCoordinatorTeam: string;
   urlApiCompetition: string;

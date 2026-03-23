@@ -90,6 +90,11 @@ apiMessageError = "Aktualizácia tímu zlyhala."
 apiMessageErrorWithMessage = "Aktualizácia tímu zlyhala. Chyba: {error}"
 apiMessageSuccess = "Tím bol úspešne aktualizovaný."
 
+[updateCoordinatorOrganization]
+apiMessageError = "Aktualizácia organizácie zlyhala."
+apiMessageErrorWithMessage = "Aktualizácia organizácie zlyhala. Chyba: {error}"
+apiMessageSuccess = "Organizácia bola úspešne aktualizovaná."
+
 [updateCoordinatorSubsidiary]
 apiMessageError = "Aktualizácia adresy pobočky zlyhala."
 apiMessageErrorWithMessage = "Aktualizácia adresy pobočky zlyhala. Chyba: {error}"

@@ -90,6 +90,11 @@ apiMessageError = "Team update failed."
 apiMessageErrorWithMessage = "Team update failed. Error: {error}"
 apiMessageSuccess = "Team was successfully updated."
 
+[updateCoordinatorOrganization]
+apiMessageError = "Organization update failed."
+apiMessageErrorWithMessage = "Organization update failed. Error: {error}"
+apiMessageSuccess = "Organization was successfully updated."
+
 [updateCoordinatorSubsidiary]
 apiMessageError = "Subsidiary address update failed."
 apiMessageErrorWithMessage = "Subsidiary address update failed. Error: {error}"
