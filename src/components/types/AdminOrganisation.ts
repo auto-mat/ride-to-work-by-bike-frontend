@@ -72,6 +72,7 @@ export interface AdminSubsidiary {
 }
 
 export interface AdminOrganisation {
+  id: number;
   name: string;
   psc: string;
   street: string;

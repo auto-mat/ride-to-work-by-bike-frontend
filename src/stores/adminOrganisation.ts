@@ -14,6 +14,7 @@ import { useApiPostCoordinatorTeam } from '../composables/useApiPostCoordinatorT
 import { useApiDeleteCoordinatorTeam } from '../composables/useApiDeleteCoordinatorTeam';
 import { useApiPutCoordinatorTeam } from '../composables/useApiPutCoordinatorTeam';
 import { useApiPutCoordinatorSubsidiary } from '../composables/useApiPutCoordinatorSubsidiary';
+import { useApiPutCoordinatorOrganization } from '../composables/useApiPutCoordinatorOrganization';
 import { useValidation } from '../composables/useValidation';
 
 // adapters
@@ -50,6 +51,7 @@ import type {
 } from '../components/types/Invoice';
 import type { CoordinatorMakeInvoicePayload } from '../composables/useApiPostCoordinatorMakeInvoice';
 import type { FormCompanyAddressFields } from '../components/types/Form';
+import type { PutOrganizationPayload } from '../components/types/apiOrganization';
 
 interface InvoiceFormState {
   orderNumber: string;
@@ -93,6 +95,7 @@ interface AdminOrganisationState {
   isLoadingMoveMember: boolean;
   isLoadingUpdateTeam: boolean;
   isLoadingUpdateSubsidiary: boolean;
+  isLoadingUpdateOrganization: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -117,6 +120,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingMoveMember: false,
     isLoadingUpdateTeam: false,
     isLoadingUpdateSubsidiary: false,
+    isLoadingUpdateOrganization: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
@@ -156,6 +160,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     getIsLoadingMoveMember: (state) => state.isLoadingMoveMember,
     getIsLoadingUpdateTeam: (state) => state.isLoadingUpdateTeam,
     getIsLoadingUpdateSubsidiary: (state) => state.isLoadingUpdateSubsidiary,
+    getIsLoadingUpdateOrganization: (state) =>
+      state.isLoadingUpdateOrganization,
     getIsLoadingAny: (state) =>
       state.isLoadingOrganisations ||
       state.isLoadingInvoices ||
@@ -165,7 +171,8 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       state.isLoadingDeleteTeam ||
       state.isLoadingMoveMember ||
       state.isLoadingUpdateTeam ||
-      state.isLoadingUpdateSubsidiary,
+      state.isLoadingUpdateSubsidiary ||
+      state.isLoadingUpdateOrganization,
     getCurrentAdminOrganisation: (state) => state.adminOrganisations[0],
     getCurrentAdminInvoice: (state) => state.adminInvoices[0],
     getSelectedPaymentsToApprove: (state) => state.selectedPaymentsToApprove,
@@ -894,6 +901,45 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingUpdateSubsidiary = false;
     },
     /**
+     * Update organization details
+     * @param {number} organizationId - The ID of the organization to update
+     * @param {object} formData - The organization data to update
+     */
+    async updateOrganization(
+      organizationId: number,
+      formData: {
+        ico: string;
+        dic: string;
+        address: FormCompanyAddressFields;
+      },
+    ): Promise<void> {
+      const { updateOrganization } = useApiPutCoordinatorOrganization(
+        this.$log,
+      );
+      this.$log?.debug(
+        `Update organization with ID <${organizationId}>` +
+          ` to <${JSON.stringify(formData, null, 2)}>.`,
+      );
+      this.isLoadingUpdateOrganization = true;
+      const payload: PutOrganizationPayload = {
+        ico: formData.ico,
+        dic: formData.dic,
+        address: {
+          street: formData.address.street,
+          street_number: formData.address.houseNumber,
+          city: formData.address.city,
+          psc: formData.address.zip,
+          recipient: this.getCurrentAdminOrganisation?.recipient || '',
+        },
+      };
+      const result = await updateOrganization(organizationId, payload);
+      if (result?.address) {
+        this.$log?.debug('Organization updated successfully.');
+        await this.loadAdminOrganisations();
+      }
+      this.isLoadingUpdateOrganization = false;
+    },
+    /**
      * Create invoice from internal form state
      * @returns {Promise<boolean>} - Success status
      */
@@ -1161,6 +1207,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingUpdateTeam = false;
       this.isLoadingMoveMember = false;
       this.isLoadingUpdateSubsidiary = false;
+      this.isLoadingUpdateOrganization = false;
     },
   },
 
@@ -1175,6 +1222,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       'isLoadingMoveMember',
       'isLoadingUpdateTeam',
       'isLoadingUpdateSubsidiary',
+      'isLoadingUpdateOrganization',
       'invoicePollingIntervalId',
       'invoicePollingTimeoutId',
       'selectedPaymentsToApprove',

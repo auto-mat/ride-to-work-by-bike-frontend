@@ -357,6 +357,8 @@ buttonDownloadDiploma = "Download"
 downloadTeamDiploma = "Download team diploma"
 downloadMemberDiploma = "Download member diploma"
 buttonRefreshFeeData = "Refresh data"
+editOrganization = "Edit organization"
+buttonEditOrganization = "Edit"
 
 [createOrganization]
 apiMessageError = "Organization creation failed."

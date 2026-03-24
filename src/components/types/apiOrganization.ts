@@ -51,9 +51,18 @@ export interface PutOrganizationPayload {
   address: PostOrganizationAddress;
 }
 
+export interface PutOrganizationAddress {
+  street: string;
+  street_number: string;
+  recipient: string;
+  psc: number;
+  city: string;
+}
+
 export interface PutOrganizationResponse {
-  id: number;
-  name: string;
+  ico: string;
+  dic: string;
+  address: PutOrganizationAddress;
 }
 
 export interface UseApiPutCoordinatorOrganizationReturn {

@@ -498,7 +498,7 @@ export default defineComponent({
     >
       <!-- Subsidiary header -->
       <div class="row q-col-gutter-md q-mb-lg">
-        <div class="col-sm">
+        <div class="col-12 col-sm">
           <h3
             class="text-h6 q-my-none flex items-center gap-8"
             data-cy="table-attendance-subsidiary-header"
@@ -569,7 +569,7 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div class="col-sm-auto">
+        <div class="col-12 col-sm-auto">
           <!-- Button: Edit subsidiary address -->
           <q-btn
             outline
@@ -581,6 +581,7 @@ export default defineComponent({
               isLoadingUpdateSubsidiary &&
               subsidiaryToEdit?.id === subsidiaryData.subsidiary.id
             "
+            class="q-ml-auto flex"
             @click="onOpenEditSubsidiaryDialog(subsidiaryData.subsidiary)"
             data-cy="table-attendance-button-edit-subsidiary"
           >

@@ -357,6 +357,8 @@ buttonDownloadDiploma = "Stiahnuť"
 downloadTeamDiploma = "Stiahnuť tímový diplom"
 downloadMemberDiploma = "Stiahnuť členský diplom"
 buttonRefreshFeeData = "Obnoviť údaje"
+editOrganization = "Upraviť organizáciu"
+buttonEditOrganization = "Upraviť"
 
 [createOrganization]
 apiMessageError = "Vytvorenie organizácie zlyhalo."

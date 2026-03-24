@@ -17,19 +17,36 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import type { QForm } from 'quasar';
 
+// components
+import DialogDefault from '../global/DialogDefault.vue';
+import FormFieldAddress from '../form/FormFieldAddress.vue';
+import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
+import FormFieldBusinessVatId from '../form/FormFieldBusinessVatId.vue';
 // stores
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+
+// utils
+import { deepObjectWithSimplePropsCopy } from '../../utils';
+import { getEmptyFormAddress } from '../../utils/get_empty_form_address';
 
 // types
 import type {
   AdminOrganisation,
   AdminSubsidiary,
 } from '../types/AdminOrganisation';
+import type { FormCompanyAddressFields } from '../types/Form';
 
 export default defineComponent({
   name: 'HeaderOrganization',
+  components: {
+    DialogDefault,
+    FormFieldAddress,
+    FormFieldBusinessId,
+    FormFieldBusinessVatId,
+  },
   emits: ['export'],
   setup() {
     const adminOrganisationStore = useAdminOrganisationStore();
@@ -74,11 +91,82 @@ export default defineComponent({
       }, 0);
     });
 
+    // dialog state
+    const isEditOrganizationDialogOpen = ref<boolean>(false);
+    const organizationEditFormRef = ref<QForm | null>(null);
+    const organizationEditIco = ref<string>('');
+    const organizationEditDic = ref<string>('');
+    const organizationEditAddress = ref<FormCompanyAddressFields>(
+      deepObjectWithSimplePropsCopy(
+        getEmptyFormAddress(),
+      ) as FormCompanyAddressFields,
+    );
+
+    const isLoadingUpdateOrganization = computed<boolean>(
+      () => adminOrganisationStore.getIsLoadingUpdateOrganization,
+    );
+
+    const onOpenEditOrganizationDialog = (): void => {
+      const org = currentAdminOrganisation.value;
+      organizationEditIco.value = org.ico ?? '';
+      organizationEditDic.value = org.dic ?? '';
+      organizationEditAddress.value = deepObjectWithSimplePropsCopy({
+        ...getEmptyFormAddress(),
+        street: org.street ?? '',
+        houseNumber: org.street_number ?? '',
+        city: org.city ?? '',
+        zip: org.psc ?? '',
+      }) as FormCompanyAddressFields;
+      isEditOrganizationDialogOpen.value = true;
+    };
+
+    const onCloseEditOrganizationDialog = (): void => {
+      if (organizationEditFormRef.value) {
+        organizationEditFormRef.value.reset();
+      }
+      organizationEditIco.value = '';
+      organizationEditDic.value = '';
+      organizationEditAddress.value = deepObjectWithSimplePropsCopy(
+        getEmptyFormAddress(),
+      ) as FormCompanyAddressFields;
+      isEditOrganizationDialogOpen.value = false;
+    };
+
+    const onSubmitEditOrganization = async (): Promise<void> => {
+      if (organizationEditFormRef.value && currentAdminOrganisation.value.id) {
+        const isFormValid = await organizationEditFormRef.value.validate();
+        if (isFormValid) {
+          await adminOrganisationStore.updateOrganization(
+            currentAdminOrganisation.value.id,
+            {
+              ico: organizationEditIco.value,
+              dic: organizationEditDic.value,
+              address: organizationEditAddress.value,
+            },
+          );
+          onCloseEditOrganizationDialog();
+        } else {
+          organizationEditFormRef.value.$el.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }
+      }
+    };
+
     return {
       organizationId,
       organizationTitle,
       subsidiariesCount,
       membersCount,
+      isEditOrganizationDialogOpen,
+      organizationEditFormRef,
+      organizationEditIco,
+      organizationEditDic,
+      organizationEditAddress,
+      isLoadingUpdateOrganization,
+      onOpenEditOrganizationDialog,
+      onCloseEditOrganizationDialog,
+      onSubmitEditOrganization,
     };
   },
 });
@@ -87,69 +175,145 @@ export default defineComponent({
 <template>
   <div class="row q-col-gutter-y-md items-center" data-cy="header-organization">
     <!-- Organization data -->
-    <div class="col-12 col-sm row q-col-gutter-x-md">
-      <div class="col-auto q-mr-md">
-        <q-avatar square size="96px" data-cy="header-organization-image">
-          <q-icon
-            color="secondary"
-            name="svguse:icons/drawer_menu/icons.svg#lucide-building"
-            size="96px"
-            data-cy="header-organization-image-icon"
-          />
-        </q-avatar>
-      </div>
-      <div class="col">
-        <div class="q-pt-sm" data-cy="header-organization-data">
-          <!-- Title -->
-          <h3
-            class="text-h5 text-weight-bold q-my-none"
-            data-cy="header-organization-title"
-          >
-            {{ organizationTitle }}
-          </h3>
-          <!-- Metadata -->
-          <div class="row text-subtitle2 q-col-gutter-x-lg q-mt-xs">
-            <!-- Organization ID -->
-            <div v-if="organizationId" class="col-auto q-py-sm">
-              {{ $t('coordinator.labelOrganizationId') }}:
-              {{ organizationId }}
+    <div class="col-12 col-sm">
+      <div class="row q-col-gutter-x-md">
+        <div class="col-auto q-mr-md">
+          <q-avatar square size="96px" data-cy="header-organization-image">
+            <q-icon
+              color="secondary"
+              name="svguse:icons/drawer_menu/icons.svg#lucide-building"
+              size="96px"
+              data-cy="header-organization-image-icon"
+            />
+          </q-avatar>
+        </div>
+        <div class="col">
+          <div class="q-pt-sm" data-cy="header-organization-data">
+            <!-- Title -->
+            <h3
+              class="text-h5 text-weight-bold q-my-none"
+              data-cy="header-organization-title"
+            >
+              {{ organizationTitle }}
+            </h3>
+            <!-- Metadata -->
+            <div class="row text-subtitle2 q-col-gutter-x-lg q-mt-xs">
+              <!-- Organization ID -->
+              <div v-if="organizationId" class="col-auto q-py-sm">
+                {{ $t('coordinator.labelOrganizationId') }}:
+                {{ organizationId }}
+              </div>
+              <!-- Branch -->
+              <q-chip
+                color="transparent"
+                icon="mdi-office-building"
+                data-cy="header-organization-branch-count"
+              >
+                {{ subsidiariesCount }}
+                {{ $t('coordinator.labelBranches', subsidiariesCount) }}
+              </q-chip>
+              <!-- Members -->
+              <q-chip
+                color="transparent"
+                icon="mdi-account"
+                data-cy="header-organization-member-count"
+              >
+                {{ membersCount }}
+                {{ $t('coordinator.labelMembers', membersCount) }}
+              </q-chip>
             </div>
-            <!-- Branch -->
-            <q-chip
-              color="transparent"
-              icon="mdi-office-building"
-              data-cy="header-organization-branch-count"
-            >
-              {{ subsidiariesCount }}
-              {{ $t('coordinator.labelBranches', subsidiariesCount) }}
-            </q-chip>
-            <!-- Members -->
-            <q-chip
-              color="transparent"
-              icon="mdi-account"
-              data-cy="header-organization-member-count"
-            >
-              {{ membersCount }}
-              {{ $t('coordinator.labelMembers', membersCount) }}
-            </q-chip>
           </div>
         </div>
       </div>
     </div>
     <!-- Button: Export -->
     <div class="col-12 col-sm-auto">
-      <q-btn
-        unelevated
-        rounded
-        outline
-        color="primary"
-        class="flex items-center"
-        data-cy="header-organization-button-export"
-        @click.prevent="$emit('export')"
-      >
-        <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
-        {{ $t('coordinator.buttonExportMembers') }}
-      </q-btn>
+      <div class="column q-gutter-x-md q-gutter-y-sm">
+        <!-- Button: Edit Organization -->
+        <q-btn
+          unelevated
+          rounded
+          outline
+          color="primary"
+          class="q-ml-auto flex items-center"
+          data-cy="header-organization-button-edit"
+          @click.prevent="onOpenEditOrganizationDialog"
+        >
+          <q-icon name="mdi-pencil" size="18px" class="q-mr-sm" />
+          {{ $t('coordinator.buttonEditOrganization') }}
+        </q-btn>
+        <!-- Button: Export -->
+        <q-btn
+          unelevated
+          rounded
+          outline
+          color="primary"
+          class="q-ml-auto flex items-center"
+          data-cy="header-organization-button-export"
+          @click.prevent="$emit('export')"
+        >
+          <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
+          {{ $t('coordinator.buttonExportMembers') }}
+        </q-btn>
+      </div>
     </div>
+    <!-- Dialog: Edit Organization -->
+    <dialog-default
+      v-model="isEditOrganizationDialogOpen"
+      data-cy="dialog-edit-organization"
+    >
+      <template #title>{{ $t('coordinator.editOrganization') }}</template>
+      <template #content>
+        <q-form
+          ref="organizationEditFormRef"
+          @submit.prevent="onSubmitEditOrganization"
+        >
+          <form-field-business-id
+            v-model="organizationEditIco"
+            data-cy="form-edit-organization-ico"
+          />
+          <form-field-business-vat-id
+            v-model="organizationEditDic"
+            data-cy="form-edit-organization-dic"
+          />
+          <form-field-address
+            v-model:street="organizationEditAddress.street"
+            v-model:house-number="organizationEditAddress.houseNumber"
+            v-model:city="organizationEditAddress.city"
+            v-model:zip="organizationEditAddress.zip"
+            field-prefix="edit-organization"
+          />
+          <!-- Hidden submit button enables Enter key to submit -->
+          <q-btn type="submit" class="hidden" />
+        </q-form>
+        <!-- Action buttons -->
+        <div class="flex justify-end q-mt-lg">
+          <div class="flex gap-8">
+            <q-btn
+              rounded
+              unelevated
+              outline
+              color="primary"
+              :disable="isLoadingUpdateOrganization"
+              data-cy="dialog-button-cancel"
+              @click="onCloseEditOrganizationDialog"
+            >
+              {{ $t('navigation.discard') }}
+            </q-btn>
+            <q-btn
+              rounded
+              unelevated
+              color="primary"
+              :loading="isLoadingUpdateOrganization"
+              :disable="isLoadingUpdateOrganization"
+              data-cy="dialog-button-submit"
+              @click="onSubmitEditOrganization"
+            >
+              {{ $t('coordinator.editOrganization') }}
+            </q-btn>
+          </div>
+        </div>
+      </template>
+    </dialog-default>
   </div>
 </template>
