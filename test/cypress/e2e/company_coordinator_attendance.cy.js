@@ -1018,6 +1018,62 @@ describe('Company coordinator user attendance page', () => {
       });
     });
 
+    it('validates form before submitting organization details', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture('apiGetAdminOrganisationResponse.json').then(
+            (response) => {
+              const organizationId = response.results[0].id;
+              cy.visit(
+                '#' +
+                  routesConf['coordinator_attendance']['children']['fullPath'],
+              );
+              cy.dataCy('header-organization').should('be.visible');
+              cy.waitForAdminOrganisationGetApi(
+                'apiGetAdminOrganisationResponse.json',
+              );
+              cy.get('@getAdminOrganisation.all').should('have.length', 1);
+              // intercept PUT (should not be called)
+              cy.interceptCoordinatorOrganizationPutApi(
+                config,
+                organizationId,
+                {},
+              );
+              // open dialog
+              cy.dataCy('header-organization-button-edit').click();
+              cy.dataCy('dialog-edit-organization').should('be.visible');
+              // empty business ID
+              cy.dataCy('form-edit-organization-ico').find('input').clear();
+              cy.dataCy('dialog-button-submit').click();
+              cy.dataCy('form-edit-organization-ico').should(
+                'contain',
+                i18n.global.t('form.messageFieldRequired', {
+                  fieldName: i18n.global.t('form.labelBusinessId'),
+                }),
+              );
+              cy.get('@putCoordinatorOrganization.all').should(
+                'have.length',
+                0,
+              );
+              cy.dataCy('dialog-edit-organization').should('be.visible');
+              // invalid business ID
+              cy.dataCy('form-edit-organization-ico').find('input').type('123');
+              cy.dataCy('dialog-button-submit').click();
+              cy.dataCy('form-edit-organization-ico').should(
+                'contain',
+                i18n.global.t('form.messageBusinessIdInvalid'),
+              );
+              cy.get('@putCoordinatorOrganization.all').should(
+                'have.length',
+                0,
+              );
+              cy.dataCy('dialog-edit-organization').should('be.visible');
+            },
+          );
+        });
+      });
+    });
+
     it('allows to cancel editing organization details', () => {
       cy.get('@config').then((config) => {
         cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
