@@ -880,4 +880,203 @@ describe('Company coordinator user attendance page', () => {
       });
     });
   });
+
+  context('editing organization details', () => {
+    beforeEach(() => {
+      cy.viewport('macbook-16');
+      // set system time to be in the correct active token window
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(config, win.i18n);
+          });
+        });
+      });
+    });
+
+    it('allows to edit organization details', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
+          const organization = response.results[0];
+          const organizationId = organization.id;
+          const putResponseData = {
+            ico: '12345678',
+            dic: 'CZ12345678',
+            address: {
+              street: 'Nová ulice',
+              street_number: '10',
+              city: 'Praha',
+              psc: 11000,
+              recipient: 'Moravské pivovary a.s.',
+            },
+          };
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          // verify edit button is visible
+          cy.dataCy('header-organization-button-edit').should('be.visible');
+          // intercept PUT and subsequent GET
+          cy.interceptCoordinatorOrganizationPutApi(
+            config,
+            organizationId,
+            putResponseData,
+          );
+          cy.interceptAdminOrganisationGetApi(
+            config,
+            'apiGetAdminOrganisationResponseUpdatedOrganization.json',
+          );
+          // open edit dialog
+          cy.dataCy('header-organization-button-edit').click();
+          cy.dataCy('dialog-edit-organization').should('be.visible');
+          // verify fields are pre-filled with existing organization data
+          cy.dataCy('form-edit-organization-ico')
+            .find('input')
+            .should('have.value', String(organization.ico));
+          cy.dataCy('form-edit-organization-dic')
+            .find('input')
+            .should('have.value', organization.dic);
+          cy.dataCy('form-edit-organization-street')
+            .find('input')
+            .should('have.value', organization.street);
+          cy.dataCy('form-edit-organization-house-number')
+            .find('input')
+            .should('have.value', String(organization.street_number));
+          cy.dataCy('form-edit-organization-city')
+            .find('input')
+            .should('have.value', organization.city);
+          cy.dataCy('form-edit-organization-zip')
+            .find('input')
+            .invoke('val')
+            .then((zip) => {
+              expect(zip.replace(/\s+/g, '')).to.equal(
+                String(organization.psc),
+              );
+            });
+          // edit organization data
+          cy.dataCy('form-edit-organization-ico').find('input').clear();
+          cy.dataCy('form-edit-organization-ico')
+            .find('input')
+            .type(putResponseData.ico);
+          cy.dataCy('form-edit-organization-dic').find('input').clear();
+          cy.dataCy('form-edit-organization-dic')
+            .find('input')
+            .type(putResponseData.dic);
+          cy.dataCy('form-edit-organization-street').find('input').clear();
+          cy.dataCy('form-edit-organization-street')
+            .find('input')
+            .type(putResponseData.address.street);
+          cy.dataCy('form-edit-organization-house-number')
+            .find('input')
+            .clear();
+          cy.dataCy('form-edit-organization-house-number')
+            .find('input')
+            .type(putResponseData.address.street_number);
+          cy.dataCy('form-edit-organization-city').find('input').clear();
+          cy.dataCy('form-edit-organization-city')
+            .find('input')
+            .type(putResponseData.address.city);
+          cy.dataCy('form-edit-organization-zip').find('input').clear();
+          cy.dataCy('form-edit-organization-zip')
+            .find('input')
+            .type(String(putResponseData.address.psc));
+          // submit form
+          cy.dataCy('dialog-button-submit').click();
+          // verify PUT request body and response
+          cy.waitForCoordinatorOrganizationPutApi(
+            {
+              ico: putResponseData.ico,
+              dic: putResponseData.dic,
+              address: {
+                street: putResponseData.address.street,
+                street_number: putResponseData.address.street_number,
+                city: putResponseData.address.city,
+                psc: String(putResponseData.address.psc),
+                recipient: putResponseData.address.recipient,
+              },
+            },
+            putResponseData,
+          );
+          // verify GET updated data after PUT
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponseUpdatedOrganization.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 2);
+          // verify dialog is closed
+          cy.dataCy('dialog-edit-organization').should('not.exist');
+        });
+      });
+    });
+
+    it('allows to cancel editing organization details', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetAdminOrganisationResponse.json').then((response) => {
+          const organization = response.results[0];
+          const organizationId = organization.id;
+          cy.visit(
+            '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+          );
+          cy.dataCy('header-organization').should('be.visible');
+          cy.waitForAdminOrganisationGetApi(
+            'apiGetAdminOrganisationResponse.json',
+          );
+          cy.get('@getAdminOrganisation.all').should('have.length', 1);
+          // intercept PUT (should not be called)
+          cy.interceptCoordinatorOrganizationPutApi(config, organizationId, {
+            address: {},
+          });
+          // open edit dialog
+          cy.dataCy('header-organization-button-edit').click();
+          cy.dataCy('dialog-edit-organization').should('be.visible');
+          // verify fields are pre-filled with existing organization data
+          cy.dataCy('form-edit-organization-ico')
+            .find('input')
+            .should('have.value', String(organization.ico));
+          cy.dataCy('form-edit-organization-dic')
+            .find('input')
+            .should('have.value', organization.dic);
+          cy.dataCy('form-edit-organization-street')
+            .find('input')
+            .should('have.value', organization.street);
+          cy.dataCy('form-edit-organization-city')
+            .find('input')
+            .should('have.value', organization.city);
+          // edit some fields
+          cy.dataCy('form-edit-organization-street').find('input').clear();
+          cy.dataCy('form-edit-organization-street')
+            .find('input')
+            .type('Jiná ulice');
+          cy.dataCy('form-edit-organization-city').find('input').clear();
+          cy.dataCy('form-edit-organization-city')
+            .find('input')
+            .type('Jiné město');
+          // cancel the dialog
+          cy.dataCy('dialog-button-cancel').click();
+          cy.dataCy('dialog-edit-organization').should('not.exist');
+          // verify no PUT was triggered
+          cy.get('@putCoordinatorOrganization.all').should('have.length', 0);
+          // re-open the dialog
+          cy.dataCy('header-organization-button-edit').click();
+          cy.dataCy('dialog-edit-organization').should('be.visible');
+          // verify fields reset to original values
+          cy.dataCy('form-edit-organization-street')
+            .find('input')
+            .should('have.value', organization.street);
+          cy.dataCy('form-edit-organization-city')
+            .find('input')
+            .should('have.value', organization.city);
+        });
+      });
+    });
+  });
 });

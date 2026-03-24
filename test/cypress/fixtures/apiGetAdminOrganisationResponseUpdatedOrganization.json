@@ -3,13 +3,13 @@
     {
       "id": 1001,
       "name": "Moravské pivovary a.s.",
-      "psc": 15000,
-      "street": "Pivovarská",
-      "street_number": 456,
+      "psc": 11000,
+      "street": "Nová ulice",
+      "street_number": 10,
       "recipient": "Moravské pivovary a.s.",
-      "city": "Brno",
-      "ico": 87654321,
-      "dic": "CZ87654321",
+      "city": "Praha",
+      "ico": 12345678,
+      "dic": "CZ12345678",
       "active": true,
       "subsidiaries": [
         {

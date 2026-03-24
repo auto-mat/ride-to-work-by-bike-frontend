@@ -704,6 +704,55 @@ Cypress.Commands.add('waitForCoordinatorTeamPutApi', (requestData) => {
 });
 
 /**
+ * Intercept coordinator organization PUT API call
+ * Provides `@putCoordinatorOrganization` alias
+ * @param {Object} config - App global config
+ * @param {number} organizationId - Organization ID to update
+ * @param {Object} responseData - Response data object
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorOrganizationPutApi',
+  (config, organizationId, responseData) => {
+    const { apiBase, apiDefaultLang, urlApiCoordinatorOrganization } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiCoordinatorOrganizationLocalized = `${apiBaseUrl}${urlApiCoordinatorOrganization}${organizationId}/`;
+
+    cy.intercept('PUT', urlApiCoordinatorOrganizationLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: responseData,
+    }).as('putCoordinatorOrganization');
+  },
+);
+
+/**
+ * Wait for intercept coordinator organization PUT API call and compare request/response object
+ * Wait for `@putCoordinatorOrganization` intercept
+ * @param {Object} requestData - Expected request data object
+ * @param {Object} responseData - Expected response data object
+ */
+Cypress.Commands.add(
+  'waitForCoordinatorOrganizationPutApi',
+  (requestData, responseData) => {
+    cy.wait('@putCoordinatorOrganization').then(({ request, response }) => {
+      // Verify authorization header
+      expect(request.headers.authorization).to.include(bearerTokeAuth);
+      // Verify request body
+      expect(request.body).to.deep.equal(requestData);
+      // Verify response
+      if (response) {
+        expect(response.statusCode).to.equal(httpSuccessfullStatus);
+        expect(response.body).to.deep.equal(responseData);
+      }
+    });
+  },
+);
+
+/**
  * Intercept coordinator subsidiary PUT API call
  * Provides `@putCoordinatorSubsidiary` alias
  * @param {Object} config - App global config
