@@ -127,6 +127,102 @@ describe('Prizes page', () => {
     });
   });
 
+  context('desktop - with third-party vouchers', () => {
+    beforeEach(() => {
+      cy.fixture('apiGetRegisterChallengeWithVouchers.json').then(
+        (response) => {
+          cy.get('@config').then((config) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+        },
+      );
+      cy.viewport('macbook-16');
+      cy.visit('#' + routesConf['prizes']['path']);
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+    });
+
+    it('renders third-party voucher cards in the offers list', () => {
+      cy.waitForOffersApi();
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        cy.fixture('apiGetRegisterChallengeWithVouchers.json').then(
+          (response) => {
+            const vouchers =
+              response.results[0].personal_details.thirdparty_voucher;
+            const feedCount = offers.filter(isOfferValidMoreThanOneDay).length;
+            // verify offers count
+            cy.dataCy('discount-offers-item')
+              .should('be.visible')
+              .and('have.length', feedCount + vouchers.length);
+          },
+        );
+      });
+    });
+
+    it('shows voucher code and link in dialog for voucher with amount and url', () => {
+      cy.waitForOffersApi();
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        cy.fixture('apiGetRegisterChallengeWithVouchers.json').then(
+          (response) => {
+            const vouchers =
+              response.results[0].personal_details.thirdparty_voucher;
+            const feedCount = offers.filter(isOfferValidMoreThanOneDay).length;
+            // select first third-party-voucher - appended after feed
+            cy.dataCy('discount-offers-item').eq(feedCount).click();
+            cy.dataCy('dialog-offer').should('be.visible');
+            cy.dataCy('dialog-header')
+              .find('h3')
+              .should(
+                'contain',
+                `${vouchers[0].voucher_type_name} ${vouchers[0].amount}`,
+              );
+            cy.dataCy('dialog-voucher').should('be.visible');
+            cy.dataCy('dialog-voucher-code').should(
+              'contain',
+              vouchers[0].token,
+            );
+            cy.dataCy('dialog-offer-link')
+              .should('be.visible')
+              .and('have.attr', 'href', vouchers[0].voucher_type_url);
+            cy.dataCy('dialog-close').click();
+          },
+        );
+      });
+    });
+
+    it('shows voucher name only and no link in dialog for voucher without amount or url', () => {
+      cy.waitForOffersApi();
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        cy.fixture('apiGetRegisterChallengeWithVouchers.json').then(
+          (response) => {
+            const vouchers =
+              response.results[0].personal_details.thirdparty_voucher;
+            const feedCount = offers.filter(isOfferValidMoreThanOneDay).length;
+            // select second third-party-voucher - appended after feed
+            cy.dataCy('discount-offers-item')
+              .eq(feedCount + 1)
+              .click();
+            cy.dataCy('dialog-offer').should('be.visible');
+            // verify no amount in title
+            cy.dataCy('dialog-header')
+              .find('h3')
+              .should('contain', vouchers[1].voucher_type_name);
+            cy.dataCy('dialog-voucher').should('be.visible');
+            cy.dataCy('dialog-voucher-code').should(
+              'contain',
+              vouchers[1].token,
+            );
+            // verify no link to offer
+            cy.dataCy('dialog-offer-link').should('not.exist');
+            cy.dataCy('dialog-close').click();
+          },
+        );
+      });
+    });
+  });
+
   context('mobile', () => {
     beforeEach(() => {
       cy.viewport(320, 2000);

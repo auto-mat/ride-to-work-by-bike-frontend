@@ -173,7 +173,12 @@ export default defineComponent({
         <div
           class="col-12 col-md-6 q-px-md q-py-md"
           data-cy="dialog-col-left"
-          v-if="card?.content || card?.description || card?.voucherUrl"
+          v-if="
+            card?.content ||
+            card?.description ||
+            card?.voucher ||
+            card?.voucherUrl
+          "
         >
           <!-- Content: Edited by Auto*Mat administrators -->
           <div
