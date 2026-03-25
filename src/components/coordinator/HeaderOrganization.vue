@@ -25,6 +25,7 @@ import DialogDefault from '../global/DialogDefault.vue';
 import FormFieldAddress from '../form/FormFieldAddress.vue';
 import FormFieldBusinessId from '../form/FormFieldBusinessId.vue';
 import FormFieldBusinessVatId from '../form/FormFieldBusinessVatId.vue';
+
 // stores
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
@@ -91,7 +92,7 @@ export default defineComponent({
       }, 0);
     });
 
-    // dialog state
+    // organization dialog
     const isEditOrganizationDialogOpen = ref<boolean>(false);
     const organizationEditFormRef = ref<QForm | null>(null);
     const organizationEditIco = ref<string>('');
@@ -108,8 +109,10 @@ export default defineComponent({
 
     const onOpenEditOrganizationDialog = (): void => {
       const org = currentAdminOrganisation.value;
+      // init values
       organizationEditIco.value = org.ico ?? '';
       organizationEditDic.value = org.dic ?? '';
+      // build address with existing values if available
       organizationEditAddress.value = deepObjectWithSimplePropsCopy({
         ...getEmptyFormAddress(),
         street: org.street ?? '',
@@ -117,6 +120,7 @@ export default defineComponent({
         city: org.city ?? '',
         zip: org.psc ?? '',
       }) as FormCompanyAddressFields;
+      // open dialog
       isEditOrganizationDialogOpen.value = true;
     };
 
@@ -124,11 +128,13 @@ export default defineComponent({
       if (organizationEditFormRef.value) {
         organizationEditFormRef.value.reset();
       }
+      // reset values
       organizationEditIco.value = '';
       organizationEditDic.value = '';
       organizationEditAddress.value = deepObjectWithSimplePropsCopy(
         getEmptyFormAddress(),
       ) as FormCompanyAddressFields;
+      // close dialog
       isEditOrganizationDialogOpen.value = false;
     };
 
