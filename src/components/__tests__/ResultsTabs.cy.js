@@ -9,9 +9,6 @@ describe('<ResultsTabs>', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
     cy.viewport(1920, 1080);
-    cy.mount(ResultsTabs, {
-      props: {},
-    });
     cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
       resultsResponses.forEach((resultsResponse) => {
         cy.interceptGetResultsApi(
@@ -34,6 +31,9 @@ describe('<ResultsTabs>', () => {
         });
       },
     );
+    cy.mount(ResultsTabs, {
+      props: {},
+    });
   });
 
   it('has translation for all strings', () => {
@@ -226,7 +226,7 @@ describe('<ResultsTabs>', () => {
       });
     });
 
-    it.only('should load report URLs relevant to organization admin and staff + allows to switch tabs', () => {
+    it('should load report URLs relevant to organization admin and staff + allows to switch tabs', () => {
       cy.fixture('apiGetResultsByChallengeResponses').then(
         (resultsByChallengeResponses) => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
