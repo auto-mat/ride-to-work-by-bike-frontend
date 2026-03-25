@@ -35,6 +35,16 @@ export type PersonalDetails = CorePersonalDetails & {
   payment_category: PaymentCategory;
   approved_for_team: TeamMemberStatus;
   is_payment_with_reward: boolean | null;
+  thirdparty_voucher?: ThirdPartyVoucher[];
+};
+
+export type ThirdPartyVoucher = {
+  token: string;
+  good_till: string;
+  amount: string;
+  voucher_type_name: string;
+  voucher_type_url: string;
+  voucher_type_image: string;
 };
 
 export type RegisterChallengeResult = {

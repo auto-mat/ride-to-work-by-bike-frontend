@@ -63,6 +63,7 @@ export const registerChallengeAdapter = {
         typeof apiData.personal_details.is_payment_with_reward === 'boolean'
           ? apiData.personal_details.is_payment_with_reward
           : true,
+      thirdPartyVouchers: apiData.personal_details.thirdparty_voucher ?? [],
     };
   },
 

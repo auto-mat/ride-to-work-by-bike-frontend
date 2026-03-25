@@ -67,9 +67,20 @@ export default defineComponent({
     const enabledPartners = false;
     const city = ref<string | null>(null);
 
-    const cardsOffer = computed(() =>
-      feedAdapter.toCardOffer(feedStore.getPostsOffer),
-    );
+    const cardsOffer = computed(() => {
+      const feedOffers = feedAdapter.toCardOffer(feedStore.getPostsOffer);
+      // get highest ID number from feed items
+      const maxFeedId = feedOffers.reduce(
+        (max, card) => Math.max(max, card.id),
+        0,
+      );
+      // add third party vouchers from Django admin to feed
+      const voucherCards = feedAdapter.thirdPartyVouchersToCardOffers(
+        registerChallengeStore.getThirdPartyVouchers,
+        maxFeedId + 1,
+      );
+      return [...feedOffers, ...voucherCards];
+    });
     const cardsEvent = computed(() =>
       feedAdapter.toCardEvent(feedStore.getPostsOffer),
     );

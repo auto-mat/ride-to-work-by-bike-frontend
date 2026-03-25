@@ -65,4 +65,5 @@ export const getRegisterChallengeEmptyPersistentState = () => ({
   hasOrganizationAdmin: null,
   paymentCategory: PaymentCategory.none,
   isPaymentWithReward: true,
+  thirdPartyVouchers: [],
 });

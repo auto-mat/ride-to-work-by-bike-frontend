@@ -11,6 +11,7 @@ import type { CardOffer } from '../components/types/Card';
 import type { Offer } from '../components/types/Offer';
 import type { CardMetadata } from '../components/types/Card';
 import type { CardPrizeType } from '../components/types/Card';
+import type { ThirdPartyVoucher } from '../components/types/ApiRegistration';
 
 // utils
 import { getNormalizedAbsoluteUrl } from '../utils/get_normalized_absolute_url';
@@ -94,6 +95,53 @@ export const feedAdapter = {
       metadata,
       type,
     };
+  },
+
+  /**
+   * Convert third-party vouchers to CardOffer format
+   * @param {ThirdPartyVoucher[]} vouchers - Vouchers from registration API
+   * @param {number} baseId - Base ID to calculate custom card IDs
+   * @returns {CardOffer[]} - Vouchers in card format
+   */
+  thirdPartyVouchersToCardOffers(
+    vouchers: ThirdPartyVoucher[],
+    baseId: number,
+  ): CardOffer[] {
+    return vouchers.map((voucher, index) => {
+      const title = voucher.amount
+        ? `${voucher.voucher_type_name} ${voucher.amount}`
+        : voucher.voucher_type_name;
+      const iconId = `card-offer-${OfferCategorySlug.discount}`;
+      const icon = `svguse:icons/card_offer/icons.svg#${iconId}`;
+      const metadata: CardMetadata[] = [];
+      if (voucher.good_till) {
+        metadata.push({
+          id: CardOfferMetadataKey.validity,
+          text: i18n.global.t('index.cardOffer.offerValidTo', {
+            endDate: i18n.global.d(new Date(voucher.good_till), 'monthDay'),
+          }),
+          icon: 'mdi-calendar',
+        });
+      }
+      return {
+        id: baseId + index,
+        title,
+        voucher: voucher.token,
+        voucherUrl: voucher.voucher_type_url,
+        tShirtEvent: false,
+        icon,
+        startDate: '',
+        endDate: voucher.good_till,
+        content: '',
+        description: '',
+        image: {
+          src: voucher.voucher_type_image,
+          alt: title,
+        },
+        metadata,
+        type: OfferEventType.multiDayOffer,
+      };
+    });
   },
 
   /**

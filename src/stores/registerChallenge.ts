@@ -67,6 +67,7 @@ import type {
   RegisterChallengePostPayload,
   RegisterChallengePostResponse,
   RegisterChallengeResult,
+  ThirdPartyVoucher,
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
 
@@ -132,6 +133,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
      */
     isMerchandiseSavedIntoDb: true,
     isPaymentWithReward: true,
+    thirdPartyVouchers: [] as ThirdPartyVoucher[],
   }),
 
   getters: {
@@ -385,6 +387,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       if (!state.voucher?.name) return false;
       return isVoucherWithoutReward(state.voucher.name, state.$log);
     },
+    getThirdPartyVouchers: (state): ThirdPartyVoucher[] =>
+      state.thirdPartyVouchers,
   },
 
   actions: {
@@ -486,6 +490,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setIsPaymentWithReward(value: boolean): void {
       this.isPaymentWithReward = value;
+    },
+    setThirdPartyVouchers(vouchers: ThirdPartyVoucher[]) {
+      this.thirdPartyVouchers = vouchers;
     },
     /**
      * Switch between regular and with-reward price sets
@@ -667,6 +674,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.setLanguage(parsedResponse.language);
         this.$log?.debug(`Language store updated to <${this.getLanguage}>.`);
       }
+      this.setThirdPartyVouchers(parsedResponse.thirdPartyVouchers);
+      this.$log?.debug(
+        `Third-party vouchers store updated to <${JSON.stringify(this.getThirdPartyVouchers)}>.`,
+      );
     },
     /**
      * Submit a registration step
