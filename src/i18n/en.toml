@@ -1148,6 +1148,7 @@ tabReport = "Data report"
 
 [results.reportType]
 may = "May Challenge"
+cityCoordinator = "City Coordinator Report"
 organizationCoordinator = "Coordinator Data Report"
 organizationsReview = "Organizations Overview"
 performanceCity = "Performance in City"

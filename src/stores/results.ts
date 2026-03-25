@@ -67,6 +67,9 @@ export const useResultsStore = defineStore('results', {
         [ResultsReportType.organizationCoordinator]: i18n.global.t(
           'results.reportType.organizationCoordinator',
         ),
+        [ResultsReportType.cityCoordinator]: i18n.global.t(
+          'results.reportType.cityCoordinator',
+        ),
         [ResultsReportTypeByChallenge.may]: i18n.global.t(
           'results.reportType.may',
         ),
@@ -121,6 +124,14 @@ export const useResultsStore = defineStore('results', {
           }
         }
 
+        // city coordinator - loaded for all users, only stored if URL is non-null
+        if (!this.resultsUrls[ResultsReportType.cityCoordinator]) {
+          requests.push({
+            type: ResultsReportType.cityCoordinator,
+            promise: loadResults(ResultsReportType.cityCoordinator),
+          });
+        }
+
         /**
          * Role-specific results requests can overlap,
          * so we use Set to avoid duplicates.
@@ -161,6 +172,12 @@ export const useResultsStore = defineStore('results', {
           const responses = await Promise.all(requests.map((r) => r.promise));
           // store all responses keyed by their report types
           requests.forEach((request, index) => {
+            if (
+              request.type === ResultsReportType.cityCoordinator &&
+              !responses[index].data_report_url
+            ) {
+              return;
+            }
             this.resultsUrls[request.type] = responses[index];
           });
         }

@@ -34,5 +34,11 @@
     "response": {
       "data_report_url": "https://metabase.dopracenakole.net/public/dashboard/b7c3b421-ecd0-482b-8901-df71b0b26cfa"
     }
+  },
+  {
+    "key": "city-coordinator",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/d1a816b1-7c9c-4097-a5cb-6ed809622b1d"
+    }
   }
 ]

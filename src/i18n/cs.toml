@@ -1149,6 +1149,7 @@ tabReport = "Data report"
 
 [results.reportType]
 may = "Květnová výzva"
+cityCoordinator = "Report městského koordinátora"
 organizationCoordinator = "Datový report koordinátora"
 organizationsReview = "Přehled organizací"
 performanceCity = "Výkonnost ve měste"

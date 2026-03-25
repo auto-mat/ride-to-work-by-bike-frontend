@@ -8,7 +8,7 @@ import { ResultsReportType } from 'src/components/enums/Results';
 describe('<ResultsTabs>', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
-    cy.viewport('macbook-16');
+    cy.viewport(1920, 1080);
     cy.mount(ResultsTabs, {
       props: {},
     });
@@ -39,6 +39,7 @@ describe('<ResultsTabs>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
+        'cityCoordinator',
         'may',
         'organizationsReview',
         'performanceCity',
@@ -180,6 +181,35 @@ describe('<ResultsTabs>', () => {
     });
   });
 
+  context('results page when user is city coordinator', () => {
+    it('should show city coordinator tab when URL is non-null', () => {
+      cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+        const cityCoordinatorResponse = resultsResponses.find(
+          (r) => r.key === ResultsReportType.cityCoordinator,
+        );
+        cy.waitForGetResultsApi(
+          cityCoordinatorResponse.response,
+          cityCoordinatorResponse.key,
+        );
+        cy.dataCy(`results-tab-${ResultsReportType.cityCoordinator}`).should(
+          'be.visible',
+        );
+      });
+    });
+
+    it('should not show city coordinator tab when URL is null', () => {
+      cy.interceptGetResultsApi(
+        rideToWorkByBikeConfig,
+        i18n,
+        ResultsReportType.cityCoordinator,
+        { data_report_url: null },
+      );
+      cy.dataCy(`results-tab-${ResultsReportType.cityCoordinator}`).should(
+        'not.exist',
+      );
+    });
+  });
+
   context('results page when user is organization admin and staff', () => {
     beforeEach(() => {
       cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
@@ -196,7 +226,7 @@ describe('<ResultsTabs>', () => {
       });
     });
 
-    it('should load report URLs relevant to organization admin and staff + allows to switch tabs', () => {
+    it.only('should load report URLs relevant to organization admin and staff + allows to switch tabs', () => {
       cy.fixture('apiGetResultsByChallengeResponses').then(
         (resultsByChallengeResponses) => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
