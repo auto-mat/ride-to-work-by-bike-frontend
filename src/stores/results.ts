@@ -172,6 +172,7 @@ export const useResultsStore = defineStore('results', {
           const responses = await Promise.all(requests.map((r) => r.promise));
           // store all responses keyed by their report types
           requests.forEach((request, index) => {
+            // city coordinator tab is only shown if URL exists
             if (
               request.type === ResultsReportType.cityCoordinator &&
               !responses[index].data_report_url
