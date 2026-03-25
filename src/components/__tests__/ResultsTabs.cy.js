@@ -182,7 +182,7 @@ describe('<ResultsTabs>', () => {
   });
 
   context('results page when user is city coordinator', () => {
-    it('should show city coordinator tab when URL is non-null', () => {
+    it('should show city coordinator tab when URL is not null', () => {
       cy.fixture('apiGetResultsByChallengeResponses').then(
         (resultsByChallengeResponses) => {
           resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
@@ -205,6 +205,7 @@ describe('<ResultsTabs>', () => {
           cityCoordinatorResponse.response,
           cityCoordinatorResponse.key,
         );
+        // tab visible
         cy.dataCy(`results-tab-${ResultsReportType.cityCoordinator}`).should(
           'be.visible',
         );
@@ -212,6 +213,7 @@ describe('<ResultsTabs>', () => {
     });
 
     it('should not show city coordinator tab when URL is null', () => {
+      // override intercept
       cy.interceptGetResultsApi(
         rideToWorkByBikeConfig,
         i18n,
@@ -231,6 +233,7 @@ describe('<ResultsTabs>', () => {
           });
         },
       );
+      // tab not visible
       cy.dataCy(`results-tab-${ResultsReportType.cityCoordinator}`).should(
         'not.exist',
       );
