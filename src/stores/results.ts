@@ -124,14 +124,6 @@ export const useResultsStore = defineStore('results', {
           }
         }
 
-        // city coordinator - loaded for all users, only stored if URL is non-null
-        if (!this.resultsUrls[ResultsReportType.cityCoordinator]) {
-          requests.push({
-            type: ResultsReportType.cityCoordinator,
-            promise: loadResults(ResultsReportType.cityCoordinator),
-          });
-        }
-
         /**
          * Role-specific results requests can overlap,
          * so we use Set to avoid duplicates.
@@ -165,6 +157,14 @@ export const useResultsStore = defineStore('results', {
               promise: loadResults(type),
             });
           }
+        }
+
+        // city coordinator - loaded always, but can return null
+        if (!this.resultsUrls[ResultsReportType.cityCoordinator]) {
+          requests.push({
+            type: ResultsReportType.cityCoordinator,
+            promise: loadResults(ResultsReportType.cityCoordinator),
+          });
         }
 
         // if we have requests to fetch, execute them in parallel
