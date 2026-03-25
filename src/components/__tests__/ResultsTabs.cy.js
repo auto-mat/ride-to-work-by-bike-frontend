@@ -183,9 +183,23 @@ describe('<ResultsTabs>', () => {
 
   context('results page when user is city coordinator', () => {
     it('should show city coordinator tab when URL is non-null', () => {
+      cy.fixture('apiGetResultsByChallengeResponses').then(
+        (resultsByChallengeResponses) => {
+          resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+            cy.waitForGetResultsByChallengeApi(
+              resultsByChallengeResponse.response,
+              resultsByChallengeResponse.key,
+            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+              'be.visible',
+            );
+          });
+        },
+      );
       cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
         const cityCoordinatorResponse = resultsResponses.find(
-          (r) => r.key === ResultsReportType.cityCoordinator,
+          (resultsResponse) =>
+            resultsResponse.key === ResultsReportType.cityCoordinator,
         );
         cy.waitForGetResultsApi(
           cityCoordinatorResponse.response,
@@ -203,6 +217,19 @@ describe('<ResultsTabs>', () => {
         i18n,
         ResultsReportType.cityCoordinator,
         { data_report_url: null },
+      );
+      cy.fixture('apiGetResultsByChallengeResponses').then(
+        (resultsByChallengeResponses) => {
+          resultsByChallengeResponses.forEach((resultsByChallengeResponse) => {
+            cy.waitForGetResultsByChallengeApi(
+              resultsByChallengeResponse.response,
+              resultsByChallengeResponse.key,
+            );
+            cy.dataCy(`results-tab-${resultsByChallengeResponse.key}`).should(
+              'be.visible',
+            );
+          });
+        },
       );
       cy.dataCy(`results-tab-${ResultsReportType.cityCoordinator}`).should(
         'not.exist',
