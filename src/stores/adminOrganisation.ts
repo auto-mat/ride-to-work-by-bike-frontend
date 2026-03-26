@@ -934,7 +934,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       };
       const result = await updateOrganization(organizationId, payload);
       if (result?.address) {
-        this.$log?.debug('Organization updated successfully.');
+        this.$log?.info('Organization updated successfully.');
         await this.loadAdminOrganisations();
       }
       this.isLoadingUpdateOrganization = false;
