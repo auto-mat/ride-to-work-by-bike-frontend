@@ -209,7 +209,7 @@ export default defineComponent({
                 {{ $t('coordinator.labelOrganizationId') }}:
                 {{ organizationId }}
               </div>
-              <!-- Branch -->
+              <!-- Subsidiaries -->
               <q-chip
                 color="transparent"
                 icon="mdi-office-building"
