@@ -56,7 +56,6 @@ import type { PutOrganizationPayload } from '../components/types/apiOrganization
 interface InvoiceFormState {
   orderNumber: string;
   isDonorEntryFee: boolean;
-  isBillingDetailsCorrect: boolean;
   selectedMembers: { [key: number]: number[] };
   customBillingAddress: {
     street: string;
@@ -96,6 +95,7 @@ interface AdminOrganisationState {
   isLoadingUpdateTeam: boolean;
   isLoadingUpdateSubsidiary: boolean;
   isLoadingUpdateOrganization: boolean;
+  isEditOrganizationDialogRequested: boolean;
   selectedPaymentsToApprove: TableFeeApprovalRow[];
   paymentRewards: Record<number, boolean | null>;
   paymentAmounts: Record<number, number>;
@@ -121,13 +121,13 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     isLoadingUpdateTeam: false,
     isLoadingUpdateSubsidiary: false,
     isLoadingUpdateOrganization: false,
+    isEditOrganizationDialogRequested: false,
     selectedPaymentsToApprove: [],
     paymentRewards: {},
     paymentAmounts: {},
     invoiceForm: {
       orderNumber: '',
       isDonorEntryFee: false,
-      isBillingDetailsCorrect: false,
       selectedMembers: {},
       customBillingAddress: null,
       customBillingOrganization: null,
@@ -480,6 +480,25 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         missingFields,
       };
     },
+    /**
+     * Check if the organization details are complete.
+     * Used in `FormCreateInvoice` to allow invoice creation.
+     * @returns {boolean}
+     */
+    getIsBaseOrganizationComplete(state): boolean {
+      const { isFilled } = useValidation();
+      const organization = state.adminOrganisations[0];
+      if (!organization) return false;
+      const requiredFields: RequiredOrganizationFields =
+        state.requiredOrganizationFields;
+      // for each required organization field, check value
+      return Object.keys(requiredFields).every((key) => {
+        if (!requiredFields[key as keyof RequiredOrganizationFields])
+          return true;
+        const value = organization[key as keyof typeof organization];
+        return typeof value !== 'boolean' && isFilled(value);
+      });
+    },
   },
 
   actions: {
@@ -496,6 +515,12 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
     },
     setBillingFormExpanded(value: boolean): void {
       this.invoiceForm.isBillingFormExpanded = value;
+    },
+    requestEditOrganizationDialog(): void {
+      this.isEditOrganizationDialogRequested = true;
+    },
+    clearEditOrganizationDialogRequest(): void {
+      this.isEditOrganizationDialogRequested = false;
     },
     /**
      * Set reward status for a specific member
@@ -1017,7 +1042,6 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.invoiceForm = {
         orderNumber: '',
         isDonorEntryFee: false,
-        isBillingDetailsCorrect: false,
         selectedMembers: {},
         customBillingAddress: null,
         customBillingOrganization: null,
@@ -1208,6 +1232,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingMoveMember = false;
       this.isLoadingUpdateSubsidiary = false;
       this.isLoadingUpdateOrganization = false;
+      this.isEditOrganizationDialogRequested = false;
     },
   },
 
