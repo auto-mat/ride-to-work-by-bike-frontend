@@ -17,7 +17,7 @@
  */
 
 // libraries
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref } from 'vue';
 import type { QForm } from 'quasar';
 
 // components
@@ -158,6 +158,14 @@ export default defineComponent({
         }
       }
     };
+
+    // check for edit organization dialog request on mount (from invoice form)
+    onMounted(() => {
+      if (adminOrganisationStore.isEditOrganizationDialogRequested) {
+        onOpenEditOrganizationDialog();
+        adminOrganisationStore.clearEditOrganizationDialogRequest();
+      }
+    });
 
     return {
       organizationId,

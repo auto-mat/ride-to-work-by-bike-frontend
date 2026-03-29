@@ -33,6 +33,9 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
 
+// utils
+import { coordinatorEventBus } from '../../utils/eventBus';
+
 // types
 import type { AdminOrganisation } from '../types/AdminOrganisation';
 
@@ -70,12 +73,6 @@ export default defineComponent({
       get: () => adminOrganisationStore.invoiceForm.isDonorEntryFee,
       set: (value) => {
         adminOrganisationStore.invoiceForm.isDonorEntryFee = value;
-      },
-    });
-    const isBillingDetailsCorrect = computed({
-      get: () => adminOrganisationStore.invoiceForm.isBillingDetailsCorrect,
-      set: (value) => {
-        adminOrganisationStore.invoiceForm.isBillingDetailsCorrect = value;
       },
     });
     const anonymize = computed({
@@ -138,6 +135,9 @@ export default defineComponent({
         ),
     });
 
+    const isBaseOrganizationComplete = computed<boolean>(
+      () => adminOrganisationStore.getIsBaseOrganizationComplete,
+    );
     /**
      * Reset billing form
      * @returns {void}
@@ -145,9 +145,14 @@ export default defineComponent({
     const onCancelBillingEdit = (): void => {
       adminOrganisationStore.resetBillingForm();
     };
+    const onRequestEditOrganization = (): void => {
+      adminOrganisationStore.requestEditOrganizationDialog();
+      // switches coordinator tab to `attendance` to edit organization details
+      coordinatorEventBus.emit('request-edit-organization');
+    };
 
     return {
-      isBillingDetailsCorrect,
+      isBaseOrganizationComplete,
       isDonorEntryFee,
       anonymize,
       orderNumber,
@@ -163,6 +168,7 @@ export default defineComponent({
       billingBusinessId,
       billingBusinessVatId,
       onCancelBillingEdit,
+      onRequestEditOrganization,
     };
   },
 });
@@ -222,89 +228,79 @@ export default defineComponent({
         {{ organization.dic }}
       </p>
     </address>
-    <!-- Collapsible: Edit billing details -->
-    <q-expansion-item
-      dense
-      v-model="isBillingFormExpanded"
-      :label="$t('form.linkEditBillingDetails')"
-      :caption="$t('form.textEditBillingDetails')"
-      class="q-mt-lg"
-      header-class="q-px-none"
-      data-cy="form-create-invoice-billing-expansion"
+    <!-- Banner: Incomplete organization -->
+    <q-banner
+      v-if="!isBaseOrganizationComplete"
+      rounded
+      class="bg-warning text-black q-mt-md"
+      data-cy="form-create-invoice-incomplete-org-banner"
     >
-      <div
-        class="q-py-md"
-        data-cy="form-create-invoice-billing-expansion-content"
-      >
-        <!-- Organization fields -->
-        <div v-if="isBillingFormExpanded" class="q-mb-lg">
-          <h4 class="text-body2 text-bold q-mb-md">
-            {{ $t('form.titleOrganizationBillingDetails') }}
-          </h4>
-          <div class="row q-col-gutter-md">
-            <form-field-text-required
-              v-model="billingCompanyName"
-              name="invoice-billing-company-name"
-              :label="$t('form.labelCompany')"
-              class="col-12"
-              data-cy="form-invoice-billing-company-name"
-            />
-            <form-field-business-id
-              v-model="billingBusinessId"
-              data-cy="form-invoice-billing-business-id"
-            />
-            <form-field-business-vat-id
-              v-model="billingBusinessVatId"
-              data-cy="form-invoice-billing-business-vat-id"
-            />
-          </div>
-        </div>
-        <!-- Address fields -->
-        <div v-if="isBillingFormExpanded" class="q-mb-lg">
-          <h4 class="text-body2 text-bold q-mb-md">
-            {{ $t('form.titleAddressDetails') }}
-          </h4>
-          <form-field-address
-            v-model:street="billingStreet"
-            v-model:houseNumber="billingStreetNumber"
-            v-model:city="billingCity"
-            v-model:zip="billingPsc"
-            field-prefix="invoice-billing"
+      {{ $t('form.messageIncompleteOrganizationBanner') }}
+      <template #action>
+        <q-btn
+          flat
+          :label="$t('form.buttonEditOrganization')"
+          @click="onRequestEditOrganization"
+          data-cy="form-create-invoice-edit-org-button"
+        />
+      </template>
+    </q-banner>
+    <!-- Checkbox: Custom billing details -->
+    <div class="q-mt-lg">
+      <q-toggle
+        dense
+        v-model="isBillingFormExpanded"
+        :label="$t('form.labelCustomBillingDetails')"
+        data-cy="form-create-invoice-custom-billing-toggle"
+      />
+    </div>
+    <div v-if="isBillingFormExpanded" class="q-py-md">
+      <!-- Organization fields -->
+      <div class="q-mb-md">
+        <h4 class="text-body2 text-bold q-mb-md">
+          {{ $t('form.titleOrganizationBillingDetails') }}
+        </h4>
+        <div class="row q-col-gutter-md">
+          <form-field-text-required
+            v-model="billingCompanyName"
+            name="invoice-billing-company-name"
+            :label="$t('form.labelCompany')"
+            class="col-12"
+            data-cy="form-invoice-billing-company-name"
           />
-        </div>
-        <!-- Button: Discard changes -->
-        <div class="row justify-end q-mt-lg">
-          <q-btn
-            rounded
-            unelevated
-            outline
-            color="negative"
-            :label="$t('navigation.discardChanges')"
-            @click="onCancelBillingEdit"
-            data-cy="form-create-invoice-billing-discard"
+          <form-field-business-id
+            v-model="billingBusinessId"
+            data-cy="form-invoice-billing-business-id"
+          />
+          <form-field-business-vat-id
+            v-model="billingBusinessVatId"
+            data-cy="form-invoice-billing-business-vat-id"
           />
         </div>
       </div>
-    </q-expansion-item>
-    <!-- Toggle: Confirm billing details -->
-    <q-field
-      :model-value="isBillingDetailsCorrect"
-      :rules="[
-        (val) => val === true || $t('form.messageConfirmBillingDetails'),
-      ]"
-      bottom-slots
-      borderless
-      hide-bottom-space
-    >
-      <q-toggle
-        dense
-        v-model="isBillingDetailsCorrect"
-        :label="$t('form.labelConfirmBillingDetails')"
-        name="confirm-billing-details"
-        color="primary"
-        data-cy="form-create-invoice-confirm-billing-details"
-      />
-    </q-field>
+      <!-- Address fields -->
+      <div>
+        <form-field-address
+          v-model:street="billingStreet"
+          v-model:houseNumber="billingStreetNumber"
+          v-model:city="billingCity"
+          v-model:zip="billingPsc"
+          field-prefix="invoice-billing"
+        />
+      </div>
+      <!-- Button: Discard changes -->
+      <div class="row justify-end">
+        <q-btn
+          flat
+          rounded
+          unelevated
+          color="negative"
+          :label="$t('navigation.discardChanges')"
+          @click="onCancelBillingEdit"
+          data-cy="form-create-invoice-billing-discard"
+        />
+      </div>
+    </div>
     <!-- Toggle: Anonymize billing data -->
     <q-toggle
       dense

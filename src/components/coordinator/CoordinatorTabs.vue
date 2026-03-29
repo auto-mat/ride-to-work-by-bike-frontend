@@ -16,7 +16,8 @@
  */
 
 // libraries
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onBeforeUnmount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // components
 import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
@@ -29,6 +30,9 @@ import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
+
+// utils
+import { coordinatorEventBus } from '../../utils/eventBus';
 
 enum tabsCoordinator {
   tasks = 'tasks',
@@ -54,6 +58,26 @@ export default defineComponent({
   },
   setup() {
     const activeTab = ref(tabsCoordinator.none);
+    const router = useRouter();
+    /**
+     * Handles event from `FormCreateInvoice` - edit organization details.
+     * We switch to `attendance` tab to show edit dialog.
+     */
+    const onEditOrganizationRequested = (): void => {
+      router.push(routesConf['coordinator_attendance'].path);
+    };
+    // listen to event from `FormCreateInvoice`
+    coordinatorEventBus.on(
+      'request-edit-organization',
+      onEditOrganizationRequested,
+    );
+
+    onBeforeUnmount(() => {
+      coordinatorEventBus.off(
+        'request-edit-organization',
+        onEditOrganizationRequested,
+      );
+    });
 
     return {
       activeTab,

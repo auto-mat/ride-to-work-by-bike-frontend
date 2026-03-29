@@ -9,12 +9,11 @@ describe('<FormCreateInvoice>', () => {
       [
         'labelBusinessId',
         'labelTaxId',
-        'labelConfirmBillingDetails',
+        'labelCustomBillingDetails',
         'labelDonorEntryFee',
         'labelOrderNumber',
-        'linkEditBillingDetails',
-        'textDonorEntryFee',
-        'textEditBillingDetails',
+        'buttonEditOrganization',
+        'messageIncompleteOrganizationBanner',
         'titleAdditionalInformation',
         'titleDonorEntryFee',
         'titleOrganizationDetails',
@@ -81,26 +80,21 @@ function coreTests() {
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelTaxId'))
         .and('contain', organization.dic);
-
-      // confirm billing details
-      cy.dataCy('form-create-invoice-confirm-billing-details')
+      // organization details are complete - banner is hidden
+      cy.dataCy('form-create-invoice-incomplete-org-banner').should(
+        'not.exist',
+      );
+      // custom billing checkbox
+      cy.dataCy('form-create-invoice-custom-billing-toggle')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.labelConfirmBillingDetails'));
-      // edit billing details
-      cy.dataCy('form-create-invoice-billing-expansion')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.textEditBillingDetails'))
-        .and('contain', i18n.global.t('form.linkEditBillingDetails'));
+        .and('contain', i18n.global.t('form.labelCustomBillingDetails'));
       // billing details edit form should not exist
       cy.dataCy('form-invoice-billing-street-input').should('not.exist');
       cy.dataCy('form-invoice-billing-houseNumber-input').should('not.exist');
       cy.dataCy('form-invoice-billing-city-input').should('not.exist');
       cy.dataCy('form-invoice-billing-zip-input').should('not.exist');
-      // open collapsible item
-      cy.dataCy('form-create-invoice-billing-expansion').click();
-      cy.dataCy('form-create-invoice-billing-expansion-content').should(
-        'be.visible',
-      );
+      // check the custom billing checkbox
+      cy.dataCy('form-create-invoice-custom-billing-toggle').click();
       // form fields exist
       cy.dataCy('form-invoice-billing-street-input').should('be.visible');
       cy.dataCy('form-invoice-billing-street-input').should(
@@ -155,6 +149,34 @@ function coreTests() {
       cy.dataCy('form-create-invoice-donor-entry-fee-toggle')
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelDonorEntryFee'));
+    });
+  });
+
+  it('shows incomplete org banner when organization is missing required fields', () => {
+    cy.fixture('createInvoiceTestData.json').then((testData) => {
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        // create incomplete organization data (missing street)
+        const incompleteOrg = {
+          ...testData.storeDataInitial.organizations[0],
+          street: '',
+        };
+        cy.setAdminOrganisationStoreState({
+          store: adminOrganisationStore,
+          organizations: [incompleteOrg],
+          invoices: testData.storeDataInitial.invoices,
+        });
+      });
+      // banner should be visible
+      cy.dataCy('form-create-invoice-incomplete-org-banner')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t('form.messageIncompleteOrganizationBanner'),
+        );
+      // edit organization button should be visible
+      cy.dataCy('form-create-invoice-edit-org-button')
+        .should('be.visible')
+        .and('contain', i18n.global.t('form.buttonEditOrganization'));
     });
   });
 }

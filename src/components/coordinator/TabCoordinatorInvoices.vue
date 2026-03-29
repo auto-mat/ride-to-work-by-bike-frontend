@@ -17,8 +17,8 @@
  */
 
 // libraries
-import { Notify, QForm } from 'quasar';
-import { computed, defineComponent, nextTick, ref } from 'vue';
+import { QForm } from 'quasar';
+import { computed, defineComponent, nextTick, onBeforeUnmount, ref } from 'vue';
 
 // components
 import BannerInfo from '../global/BannerInfo.vue';
@@ -26,15 +26,15 @@ import DialogDefault from '../global/DialogDefault.vue';
 import FormCreateInvoice from '../form/FormCreateInvoice.vue';
 import TableInvoices from './TableInvoices.vue';
 
-// composables
-import { i18n } from 'src/boot/i18n';
-
 // enums
 import { PhaseType } from '../types/Challenge';
 
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
 import { useChallengeStore } from 'src/stores/challenge';
+
+// utils
+import { coordinatorEventBus } from '../../utils/eventBus';
 
 export default defineComponent({
   name: 'TabCoordinatorInvoices',
@@ -71,18 +71,6 @@ export default defineComponent({
       await scrollToForm();
     };
     const onSubmit = async (): Promise<void> => {
-      // validate organization details via store
-      const validation =
-        adminOrganisationStore.getOrganizationDetailsValidation;
-      if (!validation.isValid) {
-        Notify.create({
-          message: i18n.global.t('form.messageIncompleteOrganizationDetails'),
-          color: 'negative',
-        });
-        adminOrganisationStore.setBillingFormExpanded(true);
-        await scrollToForm();
-        return;
-      }
       const success = await adminOrganisationStore.createInvoice();
       if (success) {
         closeDialog();
@@ -109,15 +97,38 @@ export default defineComponent({
       );
     });
 
+    const isBaseOrganizationComplete = computed<boolean>(
+      () => adminOrganisationStore.getIsBaseOrganizationComplete,
+    );
     const isInvoicesPhaseActive = computed<boolean>(() => {
       const challengeStore = useChallengeStore();
       return challengeStore.getIsChallengeInPhase(PhaseType.invoices);
+    });
+
+    /**
+     * Listen to event from `FormCreateInvoice` - edit organization details.
+     * We close current dialog and move to the `attendance` tab instead.
+     */
+    const onEditOrganizationRequested = (): void => {
+      closeDialog();
+    };
+    coordinatorEventBus.on(
+      'request-edit-organization',
+      onEditOrganizationRequested,
+    );
+
+    onBeforeUnmount(() => {
+      coordinatorEventBus.off(
+        'request-edit-organization',
+        onEditOrganizationRequested,
+      );
     });
 
     return {
       formCreateInvoiceRef,
       hasPaymentsToInvoice,
       hasSelectedPaymentsToInvoice,
+      isBaseOrganizationComplete,
       isDialogOpen,
       isInvoicesPhaseActive,
       onReset,
@@ -184,16 +195,34 @@ export default defineComponent({
               >
                 {{ $t('navigation.discard') }}
               </q-btn>
-              <q-btn
-                type="submit"
-                rounded
-                unelevated
-                color="primary"
-                :disable="!hasSelectedPaymentsToInvoice"
-                data-cy="dialog-button-submit"
-              >
-                {{ $t('coordinator.buttonDialogCreateInvoice') }}
-              </q-btn>
+              <span>
+                <q-btn
+                  type="submit"
+                  rounded
+                  unelevated
+                  color="primary"
+                  :disable="
+                    !hasSelectedPaymentsToInvoice || !isBaseOrganizationComplete
+                  "
+                  data-cy="dialog-button-submit"
+                >
+                  {{ $t('coordinator.buttonDialogCreateInvoice') }}
+                </q-btn>
+                <!-- Tooltip: Incomplete organization details -->
+                <q-tooltip
+                  v-if="!isBaseOrganizationComplete"
+                  data-cy="dialog-button-submit-tooltip"
+                >
+                  {{ $t('form.tooltipIncompleteOrganization') }}
+                </q-tooltip>
+                <!-- Tooltip: No selected members to invoice -->
+                <q-tooltip
+                  v-else-if="!hasSelectedPaymentsToInvoice"
+                  data-cy="dialog-button-submit-tooltip"
+                >
+                  {{ $t('form.tooltipNoSelectedMembers') }}
+                </q-tooltip>
+              </span>
             </div>
           </div>
         </q-form>
