@@ -251,7 +251,7 @@ export default defineComponent({
         dense
         v-model="isBillingFormExpanded"
         :label="$t('form.labelCustomBillingDetails')"
-        data-cy="form-create-invoice-custom-billing-checkbox"
+        data-cy="form-create-invoice-custom-billing-toggle"
       />
     </div>
     <div v-if="isBillingFormExpanded" class="q-py-md">

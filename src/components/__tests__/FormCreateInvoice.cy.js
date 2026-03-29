@@ -85,7 +85,7 @@ function coreTests() {
         'not.exist',
       );
       // custom billing checkbox
-      cy.dataCy('form-create-invoice-custom-billing-checkbox')
+      cy.dataCy('form-create-invoice-custom-billing-toggle')
         .should('be.visible')
         .and('contain', i18n.global.t('form.labelCustomBillingDetails'));
       // billing details edit form should not exist
@@ -94,7 +94,7 @@ function coreTests() {
       cy.dataCy('form-invoice-billing-city-input').should('not.exist');
       cy.dataCy('form-invoice-billing-zip-input').should('not.exist');
       // check the custom billing checkbox
-      cy.dataCy('form-create-invoice-custom-billing-checkbox').click();
+      cy.dataCy('form-create-invoice-custom-billing-toggle').click();
       // form fields exist
       cy.dataCy('form-invoice-billing-street-input').should('be.visible');
       cy.dataCy('form-invoice-billing-street-input').should(

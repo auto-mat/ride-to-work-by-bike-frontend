@@ -205,7 +205,7 @@ describe('Company coordinator invoices page', () => {
             i18n.global.t('coordinator.titleCreateInvoice'),
           );
           // expand custom billing form
-          cy.dataCy('form-create-invoice-custom-billing-checkbox')
+          cy.dataCy('form-create-invoice-custom-billing-toggle')
             .find('.q-toggle__inner')
             .click();
           cy.fixture('apiGetAdminOrganisationResponse.json').then(
@@ -353,7 +353,7 @@ describe('Company coordinator invoices page', () => {
           // wait for section to be collapsed
           cy.dataCy('form-invoice-billing-street-input').should('not.exist');
           // reopen the section
-          cy.dataCy('form-create-invoice-custom-billing-checkbox')
+          cy.dataCy('form-create-invoice-custom-billing-toggle')
             .find('.q-toggle__inner')
             .click();
           // test existing company name
@@ -394,12 +394,12 @@ describe('Company coordinator invoices page', () => {
 
       it('does not reset form when section collapse is toggled', () => {
         // collapse the section via toggle
-        cy.dataCy('form-create-invoice-custom-billing-checkbox')
+        cy.dataCy('form-create-invoice-custom-billing-toggle')
           .find('.q-toggle__inner')
           .click();
         cy.dataCy('form-invoice-billing-street-input').should('not.exist');
         // reopen the section via toggle
-        cy.dataCy('form-create-invoice-custom-billing-checkbox')
+        cy.dataCy('form-create-invoice-custom-billing-toggle')
           .find('.q-toggle__inner')
           .click();
         cy.dataCy('form-invoice-billing-company-name-input')
