@@ -30,6 +30,11 @@ describe('<TabCoordinatorInvoices>', () => {
       'coordinator',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['tooltipIncompleteOrganization', 'tooltipNoSelectedMembers'],
+      'form',
+      i18n,
+    );
   });
 
   context('desktop', () => {
