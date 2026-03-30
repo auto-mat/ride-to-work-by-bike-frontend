@@ -21,7 +21,8 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { EventBus } from 'quasar';
+import { computed, defineComponent, inject } from 'vue';
 
 // components
 import FormFieldCheckboxSubsidiary from '../form/FormFieldCheckboxSubsidiary.vue';
@@ -32,9 +33,6 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
-
-// utils
-import { coordinatorEventBus } from '../../utils/eventBus';
 
 // types
 import type { AdminOrganisation } from '../types/AdminOrganisation';
@@ -49,6 +47,7 @@ export default defineComponent({
     FormFieldTextRequired,
   },
   setup() {
+    const bus = inject<EventBus>('bus')!;
     const adminOrganisationStore = useAdminOrganisationStore();
     const organization = computed<AdminOrganisation | null>(() => {
       return adminOrganisationStore.getCurrentAdminOrganisation;
@@ -148,7 +147,7 @@ export default defineComponent({
     const onRequestEditOrganization = (): void => {
       adminOrganisationStore.requestEditOrganizationDialog();
       // switches coordinator tab to `attendance` to edit organization details
-      coordinatorEventBus.emit('request-edit-organization');
+      bus.emit('request-edit-organization');
     };
 
     return {

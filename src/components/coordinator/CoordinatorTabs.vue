@@ -16,7 +16,8 @@
  */
 
 // libraries
-import { defineComponent, onBeforeUnmount, ref } from 'vue';
+import { EventBus } from 'quasar';
+import { defineComponent, inject, onBeforeUnmount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 // components
@@ -30,9 +31,6 @@ import TaskListCoordinator from './TaskListCoordinator.vue';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
-
-// utils
-import { coordinatorEventBus } from '../../utils/eventBus';
 
 enum tabsCoordinator {
   tasks = 'tasks',
@@ -57,6 +55,7 @@ export default defineComponent({
     TaskListCoordinator,
   },
   setup() {
+    const bus = inject<EventBus>('bus')!;
     const activeTab = ref(tabsCoordinator.none);
     const router = useRouter();
     /**
@@ -67,16 +66,10 @@ export default defineComponent({
       router.push(routesConf['coordinator_attendance'].path);
     };
     // listen to event from `FormCreateInvoice`
-    coordinatorEventBus.on(
-      'request-edit-organization',
-      onEditOrganizationRequested,
-    );
+    bus.on('request-edit-organization', onEditOrganizationRequested);
 
     onBeforeUnmount(() => {
-      coordinatorEventBus.off(
-        'request-edit-organization',
-        onEditOrganizationRequested,
-      );
+      bus.off('request-edit-organization', onEditOrganizationRequested);
     });
 
     return {

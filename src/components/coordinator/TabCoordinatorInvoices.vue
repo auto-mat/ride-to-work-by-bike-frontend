@@ -17,8 +17,15 @@
  */
 
 // libraries
-import { QForm } from 'quasar';
-import { computed, defineComponent, nextTick, onBeforeUnmount, ref } from 'vue';
+import { EventBus, QForm } from 'quasar';
+import {
+  computed,
+  defineComponent,
+  inject,
+  nextTick,
+  onBeforeUnmount,
+  ref,
+} from 'vue';
 
 // components
 import BannerInfo from '../global/BannerInfo.vue';
@@ -33,9 +40,6 @@ import { PhaseType } from '../types/Challenge';
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
 import { useChallengeStore } from 'src/stores/challenge';
 
-// utils
-import { coordinatorEventBus } from '../../utils/eventBus';
-
 export default defineComponent({
   name: 'TabCoordinatorInvoices',
   components: {
@@ -45,6 +49,7 @@ export default defineComponent({
     TableInvoices,
   },
   setup() {
+    const bus = inject<EventBus>('bus')!;
     const isDialogOpen = ref(false);
     const formCreateInvoiceRef = ref<typeof QForm | null>(null);
     const adminOrganisationStore = useAdminOrganisationStore();
@@ -112,16 +117,10 @@ export default defineComponent({
     const onEditOrganizationRequested = (): void => {
       closeDialog();
     };
-    coordinatorEventBus.on(
-      'request-edit-organization',
-      onEditOrganizationRequested,
-    );
+    bus.on('request-edit-organization', onEditOrganizationRequested);
 
     onBeforeUnmount(() => {
-      coordinatorEventBus.off(
-        'request-edit-organization',
-        onEditOrganizationRequested,
-      );
+      bus.off('request-edit-organization', onEditOrganizationRequested);
     });
 
     return {
