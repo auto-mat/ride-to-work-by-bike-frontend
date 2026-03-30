@@ -6,9 +6,9 @@
  * company.
  * You can adjust its appearance by changing the `variant` prop.
  *
- * Form includes simplifieed subsidiary address fields. Optionally users can choose
- * to input a different address from the organization address. Otherwise, only
- * cityChallenge and department fields need to be filled.
+ * Form uses organization address fields for subsidiary addresses.
+ * Optionally users can choose to input a different address.
+ * By default cityChallenge and department fields are shown for subsidiary.
  *
  * Note: This component is commonly used in `FormFieldCompany`,
  * `FormFieldSelectTable`.
@@ -147,12 +147,12 @@ export default defineComponent({
       );
     });
 
-    // sync company address to subsidiary when addresses should be same
+    // sync company address to subsidiary when addresses should be the same
     watch(
       [isDifferentSubsidiaryAddress, () => company.value.orgAddress],
       ([isDifferent, orgAddress]) => {
         if (!isDifferent && company.value.subsidiaryAddress && orgAddress) {
-          // copy orgAddress fields to subsidiaryAddress, preserving cityChallenge and department
+          // copy orgAddress fields to subsidiaryAddress
           company.value.subsidiaryAddress.street = orgAddress.street;
           company.value.subsidiaryAddress.houseNumber = orgAddress.houseNumber;
           company.value.subsidiaryAddress.city = orgAddress.city;
@@ -281,7 +281,7 @@ export default defineComponent({
           data-cy="form-add-company-checkbox-different-address"
         />
       </div>
-      <!-- Full subsidiary form (when checkbox is checked) -->
+      <!-- Full subsidiary form (when different subsidiary address) -->
       <form-add-subsidiary
         v-if="showFullSubsidiaryFields && company.subsidiaryAddress"
         v-model="company.subsidiaryAddress"
