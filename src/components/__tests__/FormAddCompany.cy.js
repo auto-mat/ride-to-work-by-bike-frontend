@@ -275,6 +275,10 @@ describe('<FormAddCompany>', () => {
         );
     });
 
+    it('calls cities API on mount', () => {
+      cy.waitForCitiesApi();
+    });
+
     it('shows minimal fields by default (checkbox unchecked)', () => {
       // minimal fields visible
       cy.dataCy(selectorFormCityChallengeMinimal).should('be.visible');
