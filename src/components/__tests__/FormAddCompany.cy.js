@@ -384,6 +384,10 @@ describe('<FormAddCompany>', () => {
   });
 
   context('organizationType prop', () => {
+    beforeEach(() => {
+      cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+    });
+
     it('shows VAT field for company type (simple)', () => {
       cy.mount(FormAddCompany, {
         props: {

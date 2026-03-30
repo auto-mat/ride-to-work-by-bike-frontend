@@ -164,7 +164,10 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      if (props.variant === FormAddCompanyVariantProp.default) {
+      if (
+        props.variant === FormAddCompanyVariantProp.default &&
+        !cities.value.length
+      ) {
         loadCities();
       }
     });
