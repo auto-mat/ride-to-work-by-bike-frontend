@@ -153,22 +153,33 @@ describe('<TableBoxes>', () => {
                 .within(() => {
                   // tracking number
                   cy.dataCy('table-boxes-tracking-number').should('be.visible');
-                  cy.dataCy('table-boxes-tracking-link')
-                    .should('be.visible')
-                    .and('have.attr', 'href', box.trackingLink)
-                    .and('have.attr', 'target', '_blank')
-                    .and('contain', box.trackingNumber)
-                    .and('have.color', primary);
-                  // icon
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .should('be.visible')
-                    .and('have.color', primary);
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .invoke('width')
-                    .should('eq', iconSize);
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .invoke('height')
-                    .should('eq', iconSize);
+                  if (box.trackingLink) {
+                    // has tracking link - show button
+                    cy.dataCy('table-boxes-tracking-link')
+                      .should('be.visible')
+                      .and('have.attr', 'href', box.trackingLink)
+                      .and('have.attr', 'target', '_blank')
+                      .and('contain', box.trackingNumber)
+                      .and('have.color', primary);
+                    // icon
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .should('be.visible')
+                      .and('have.color', primary);
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .invoke('width')
+                      .should('eq', iconSize);
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .invoke('height')
+                      .should('eq', iconSize);
+                  } else {
+                    // no tracking link - show text
+                    cy.dataCy('table-boxes-tracking-link').should('not.exist');
+                    cy.dataCy('table-boxes-tracking-icon').should('not.exist');
+                    cy.dataCy('table-boxes-tracking-number').should(
+                      'contain',
+                      box.trackingNumber,
+                    );
+                  }
                   // package status
                   cy.dataCy('table-boxes-status').should('be.visible');
                   cy.dataCy('table-boxes-status-icon')

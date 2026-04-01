@@ -240,5 +240,70 @@
       "deliveryStatus": "1/1",
       "progressBarValue": 1
     }
+  },
+  {
+    "description": "organisation with tracking number and no tracking link",
+    "storeData": [
+      {
+        "name": "Moravské pivovary a.s.",
+        "psc": 15000,
+        "street": "Pivovarská",
+        "street_number": 456,
+        "recipient": "Moravské pivovary a.s.",
+        "city": "Brno",
+        "ico": 87654321,
+        "dic": "CZ87654321",
+        "active": true,
+        "subsidiaries": [
+          {
+            "id": 3001,
+            "psc": 15000,
+            "street": "Pivovarská",
+            "street_number": 456,
+            "city": "Brno",
+            "name": "Pivovarská 456, 15000 Brno",
+            "icon_url": null,
+            "teams": [],
+            "box_addressee_name": "Jan Pivovár",
+            "boxes": [
+              {
+                "dispatched": false,
+                "carrier_identification": "C 111 222 333",
+                "tracking_link": "",
+                "modified": "2022-11-01T00:00:00Z",
+                "team_packages": [
+                  {
+                    "dispatched": false,
+                    "package_transactions": [
+                      {
+                        "t_shirt_size": "2025-pánské L (dpnk2019)",
+                        "name": "Karel Březina"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "displayData": [
+      {
+        "trackingNumber": "C 111 222 333",
+        "trackingLink": "",
+        "packageStatus": false,
+        "recipients": "Karel Březina",
+        "recipientCount": 1,
+        "recipientNames": ["Karel Březina"],
+        "lastModified": "2022-11-01T00:00:00Z",
+        "address": "Pivovarská 456, 15000 Brno",
+        "addressee": "Jan Pivovár"
+      }
+    ],
+    "displayDataTab": {
+      "deliveryStatus": "0/1",
+      "progressBarValue": 0
+    }
   }
 ]
