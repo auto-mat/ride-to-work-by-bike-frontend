@@ -844,6 +844,47 @@ describe('Company coordinator user attendance page', () => {
       });
     });
 
+    it('allows exporting attendance in different formats', () => {
+      cy.get('@config').then((config) => {
+        // intercept all export formats
+        ['xls', 'ods', 'csv'].forEach((format) => {
+          cy.interceptCoordinatorExportAttendanceGetApi(config, format);
+        });
+        cy.visit(
+          '#' + routesConf['coordinator_attendance']['children']['fullPath'],
+        );
+        // stub createObjectURL method to prevent downloads
+        cy.window().then((win) => {
+          // string starts with `blob:` to fake correct URI sheme
+          cy.stub(win.URL, 'createObjectURL').returns('blob:fake');
+        });
+        cy.waitForAdminOrganisationGetApi(
+          'apiGetAdminOrganisationResponse.json',
+        );
+        cy.get('@getAdminOrganisation.all').should('have.length', 1);
+        // verify component
+        cy.dataCy('header-organization').should('be.visible');
+        // click each export format and verify correct API call
+        ['xls', 'ods', 'csv'].forEach((format) => {
+          cy.dataCy('header-organization-button-export').click();
+          cy.dataCy(`header-organization-button-export-${format}`).click();
+          cy.waitForCoordinatorExportAttendanceGetApi(format);
+        });
+        cy.get('@getCoordinatorExportAttendance_csv.all').should(
+          'have.length',
+          1,
+        );
+        cy.get('@getCoordinatorExportAttendance_ods.all').should(
+          'have.length',
+          1,
+        );
+        cy.get('@getCoordinatorExportAttendance_xls.all').should(
+          'have.length',
+          1,
+        );
+      });
+    });
+
     it('should display box addressee info under subsidiary name', () => {
       cy.visit(
         '#' + routesConf['coordinator_attendance']['children']['fullPath'],

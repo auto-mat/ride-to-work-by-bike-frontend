@@ -753,6 +753,52 @@ Cypress.Commands.add(
 );
 
 /**
+ * Intercept coordinator export attendance GET API call
+ * Provides dynamically named alias based on fileType
+ * @param {Object} config - App global config
+ * @param {string} fileType - Export file type ('xls', 'ods', or 'csv')
+ */
+Cypress.Commands.add(
+  'interceptCoordinatorExportAttendanceGetApi',
+  (config, fileType) => {
+    const { apiBase, apiDefaultLang, urlApiCoordinatorOrganizationExport } =
+      config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiExportLocalized = `${apiBaseUrl}${urlApiCoordinatorOrganizationExport}${fileType}/`;
+    const aliasName = `getCoordinatorExportAttendance_${fileType}`;
+
+    cy.intercept('GET', urlApiExportLocalized, {
+      statusCode: httpSuccessfullStatus,
+      body: new Blob(),
+    }).as(aliasName);
+  },
+);
+
+/**
+ * Wait for intercept coordinator export attendance GET API call
+ * @param {string} fileType - Export file type ('xls', 'ods', or 'csv')
+ */
+Cypress.Commands.add('waitForCoordinatorExportAttendanceGetApi', (fileType) => {
+  const aliasName = `getCoordinatorExportAttendance_${fileType}`;
+
+  cy.wait(`@${aliasName}`).then(({ request, response }) => {
+    // verify authorization header
+    expect(request.headers.authorization).to.include(bearerTokeAuth);
+    // verify response
+    if (response) {
+      expect(response.statusCode).to.equal(httpSuccessfullStatus);
+    }
+    // verify request URL includes the correct file type
+    expect(request.url).to.include(`${fileType}/`);
+  });
+});
+
+/**
  * Intercept coordinator subsidiary PUT API call
  * Provides `@putCoordinatorSubsidiary` alias
  * @param {Object} config - App global config
