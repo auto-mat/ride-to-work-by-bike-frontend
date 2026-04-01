@@ -211,6 +211,10 @@ apiMessageError = "Fetching registrations failed."
 apiMessageErrorWithMessage = "Fetching registrations failed. Error: {error}"
 apiMessageSuccess = "Registrations fetched successfully."
 
+[getExportAttendance]
+apiMessageError = "Failed to download attendance export."
+apiMessageErrorWithMessage = "Failed to download attendance export. Error: {error}"
+
 [getResults]
 apiMessageError = "Failed to load results source."
 apiMessageErrorWithMessage = "Failed to load results source. Error: {error}"

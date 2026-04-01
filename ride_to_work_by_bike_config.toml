@@ -143,6 +143,7 @@ urlApiOrganizationAdminOrganizationStructure = "coordinator/organization-structu
 urlApiCoordinatorApprovePayments = "coordinator/approve-payments/"
 urlApiCoordinatorDisapprovePayments = "coordinator/disapprove-payments/"
 urlApiCoordinatorOrganization = "coordinator/organization/"
+urlApiCoordinatorOrganizationExport = "coordinator/organization/export/"
 urlApiPayuCreateOrder = "payu-create-order/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"

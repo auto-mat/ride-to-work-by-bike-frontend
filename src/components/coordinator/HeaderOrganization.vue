@@ -29,6 +29,9 @@ import FormFieldBusinessVatId from '../form/FormFieldBusinessVatId.vue';
 // stores
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 
+// enums
+import { ExportFileType } from '../enums/Coordinator';
+
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';
 import { getEmptyFormAddress } from '../../utils/get_empty_form_address';
@@ -48,7 +51,9 @@ export default defineComponent({
     FormFieldBusinessId,
     FormFieldBusinessVatId,
   },
-  emits: ['export'],
+  emits: {
+    export: (fileType: ExportFileType) => !!fileType,
+  },
   setup() {
     const adminOrganisationStore = useAdminOrganisationStore();
 
@@ -168,6 +173,7 @@ export default defineComponent({
     });
 
     return {
+      ExportFileType,
       organizationId,
       organizationTitle,
       subsidiariesCount,
@@ -256,19 +262,52 @@ export default defineComponent({
           <q-icon name="mdi-pencil" size="18px" class="q-mr-sm" />
           {{ $t('coordinator.buttonEditOrganization') }}
         </q-btn>
-        <!-- Button: Export -->
-        <q-btn
+        <!-- Button: Export dropdown -->
+        <q-btn-dropdown
           unelevated
           rounded
           outline
           color="primary"
-          class="q-ml-auto flex items-center"
+          class="q-ml-auto"
           data-cy="header-organization-button-export"
-          @click.prevent="$emit('export')"
         >
-          <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
-          {{ $t('coordinator.buttonExportMembers') }}
-        </q-btn>
+          <template #label>
+            <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
+            {{ $t('coordinator.buttonExportMembers') }}
+          </template>
+          <q-list>
+            <q-item
+              v-close-popup
+              clickable
+              data-cy="header-organization-button-export-xls"
+              @click="$emit('export', ExportFileType.xls)"
+            >
+              <q-item-section class="text-uppercase">{{
+                ExportFileType.xls
+              }}</q-item-section>
+            </q-item>
+            <q-item
+              v-close-popup
+              clickable
+              data-cy="header-organization-button-export-ods"
+              @click="$emit('export', ExportFileType.ods)"
+            >
+              <q-item-section class="text-uppercase">{{
+                ExportFileType.ods
+              }}</q-item-section>
+            </q-item>
+            <q-item
+              v-close-popup
+              clickable
+              data-cy="header-organization-button-export-csv"
+              @click="$emit('export', ExportFileType.csv)"
+            >
+              <q-item-section class="text-uppercase">{{
+                ExportFileType.csv
+              }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </div>
     </div>
     <!-- Dialog: Edit Organization -->

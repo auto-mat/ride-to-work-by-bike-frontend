@@ -15,7 +15,7 @@ const { apiDefaultLang, apiBase, apiBaseRtwbbFeed, apiBaseIpAddress } =
   rideToWorkByBikeConfig;
 
 // types
-import type { AxiosRequestHeaders, Method } from 'axios';
+import type { AxiosRequestHeaders, Method, ResponseType } from 'axios';
 import type { Logger } from '../components/types/Logger';
 
 export interface ApiResponse<T> {
@@ -29,6 +29,7 @@ interface apiData {
   headers: AxiosRequestHeaders;
   data?: object;
   params?: Record<string, string>;
+  responseType?: ResponseType;
 }
 
 interface errorResponseData {
@@ -125,6 +126,7 @@ export const useApi = (
     showSuccessMessage = true,
     showErrorMessage = true,
     params,
+    responseType,
   }: {
     endpoint: string;
     payload?: object;
@@ -135,6 +137,7 @@ export const useApi = (
     showSuccessMessage?: boolean;
     showErrorMessage?: boolean;
     params?: Record<string, string>;
+    responseType?: ResponseType;
   }): Promise<ApiResponse<T>> => {
     try {
       logger?.info('Call <api()> function with parameters arguments.');
@@ -163,6 +166,7 @@ export const useApi = (
         method,
         headers,
         params,
+        responseType,
       };
       if (payload) {
         data.data = payload;

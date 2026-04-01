@@ -15,15 +15,20 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, inject } from 'vue';
 
 // components
 import HeaderOrganization from './HeaderOrganization.vue';
 import TableAttendance from './TableAttendance.vue';
 
 // composables
-import { useTableAttendanceData } from '../../composables/useTableAttendanceData';
-import { useExportTableAttendance } from '../../composables/useExportTableAttendance';
+import { useApiGetExportAttendance } from '../../composables/useApiGetExportAttendance';
+
+// enums
+import { ExportFileType } from '../enums/Coordinator';
+
+// types
+import type { Logger } from '../types/Logger';
 
 export default defineComponent({
   name: 'TabCoordinatorAttendance',
@@ -32,11 +37,11 @@ export default defineComponent({
     TableAttendance,
   },
   setup() {
-    const { subsidiariesData } = useTableAttendanceData();
-    const { exportTableAttendance } = useExportTableAttendance();
+    const logger = inject('vuejs3-logger') as Logger | null;
+    const { load } = useApiGetExportAttendance(logger);
 
-    const handleExport = (): void => {
-      exportTableAttendance(subsidiariesData.value);
+    const handleExport = (fileType: ExportFileType): void => {
+      load(fileType);
     };
 
     return {

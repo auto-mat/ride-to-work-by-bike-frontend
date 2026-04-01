@@ -211,6 +211,10 @@ apiMessageError = "Načítanie registrácií zlyhalo."
 apiMessageErrorWithMessage = "Načítanie registrácií zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Registrácie boli úspešne načítané."
 
+[getExportAttendance]
+apiMessageError = "Nepodarilo sa stiahnuť export dochádzky."
+apiMessageErrorWithMessage = "Nepodarilo sa stiahnuť export dochádzky. Chyba: {error}"
+
 [getResults]
 apiMessageError = "Nepodarilo sa načítať zdroj výsledkov."
 apiMessageErrorWithMessage = "Nepodarilo sa načítať zdroj výsledkov. Chyba: {error}"

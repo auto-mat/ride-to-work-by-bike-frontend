@@ -211,6 +211,10 @@ apiMessageError = "Načítání registrací selhalo."
 apiMessageErrorWithMessage = "Načítání registrací selhalo. Chyba: {error}"
 apiMessageSuccess = "Registrace byly úspěšně načteny."
 
+[getExportAttendance]
+apiMessageError = "Nepodařilo se stáhnout export docházky."
+apiMessageErrorWithMessage = "Nepodařilo se stáhnout export docházky. Chyba: {error}"
+
 [getResults]
 apiMessageError = "Nepodařilo se načíst zdroj výsledků."
 apiMessageErrorWithMessage = "Nepodařilo se načíst zdroj výsledků. Chyba: {error}"

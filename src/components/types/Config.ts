@@ -81,6 +81,7 @@ export interface ConfigGlobal {
   urlApiCoordinatorMakeInvoice: string;
   urlApiCoordinatorMember: string;
   urlApiCoordinatorOrganization: string;
+  urlApiCoordinatorOrganizationExport: string;
   urlApiCoordinatorSubsidiary: string;
   urlApiCoordinatorTeam: string;
   urlApiCompetition: string;
