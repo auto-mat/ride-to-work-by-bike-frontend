@@ -20,6 +20,7 @@ export interface TableBoxRow {
   packageStatus: boolean;
   recipients: string;
   recipientCount: number;
+  recipientNames: string[];
   lastModified: string;
   address: string;
   addressee: string;
@@ -34,6 +35,7 @@ export interface TableBoxRow {
 function getRecipientsInfo(box: Box): {
   recipients: string;
   recipientCount: number;
+  recipientNames: string[];
 } {
   const allTransactions: PackageTransaction[] = [];
   // get array of all team packages
@@ -41,10 +43,12 @@ function getRecipientsInfo(box: Box): {
     allTransactions.push(...teamPackage.package_transactions);
   });
   const recipientCount = allTransactions.length;
+  const recipientNames = allTransactions.map((transaction) => transaction.name);
   if (recipientCount === 1) {
     return {
       recipients: allTransactions[0].name,
       recipientCount,
+      recipientNames,
     };
   } else {
     // pluralized label
@@ -55,6 +59,7 @@ function getRecipientsInfo(box: Box): {
     return {
       recipients: `${recipientCount} ${recipientsWord}`,
       recipientCount,
+      recipientNames,
     };
   }
 }
@@ -71,13 +76,14 @@ function transformBoxToRow(
   address: string,
   addressee: string,
 ): TableBoxRow {
-  const { recipients, recipientCount } = getRecipientsInfo(box);
+  const { recipients, recipientCount, recipientNames } = getRecipientsInfo(box);
   return {
     trackingNumber: box.carrier_identification,
     trackingLink: box.tracking_link,
     packageStatus: box.dispatched,
     recipients,
     recipientCount,
+    recipientNames,
     lastModified: box.modified,
     address,
     addressee,

@@ -32,6 +32,7 @@ describe('<TableBoxes>', () => {
         'textNoResults',
         'textLoading',
         'textRowsPerPage',
+        'titleDialogRecipients',
       ],
       'table',
       i18n,
@@ -45,6 +46,58 @@ describe('<TableBoxes>', () => {
         props: {},
       });
       cy.viewport('macbook-16');
+    });
+
+    it('opens dialog with recipient names when clicking recipients button', () => {
+      const testCase = testData[0];
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        adminOrganisationStore.setAdminOrganisations(testCase.storeData);
+      });
+      // find first row with multiple recipients
+      const multiRecipientBox = testCase.displayData.find(
+        (box) => box.recipientCount > 1,
+      );
+      // find second row with multiple recipients
+      const secondMultiRecipientBox = testCase.displayData.find(
+        (box) => box.recipientCount > 1 && box !== multiRecipientBox,
+      );
+      // click recipients button (only displays for multiple recipients)
+      cy.dataCy('table-boxes-recipients-button').first().click();
+      // verify dialog opens
+      cy.dataCy('dialog-recipients').should('be.visible');
+      cy.dataCy('dialog-header').should(
+        'contain',
+        i18n.global.t('table.titleDialogRecipients'),
+      );
+      // verify number of items
+      cy.dataCy('dialog-recipients-item').should(
+        'have.length',
+        multiRecipientBox.recipientNames.length,
+      );
+      // verify each name
+      multiRecipientBox.recipientNames.forEach((name, index) => {
+        cy.dataCy('dialog-recipients-item').eq(index).should('contain', name);
+      });
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      cy.dataCy('dialog-recipients').should('not.exist');
+      // click recipients button for second box
+      cy.dataCy('table-boxes-recipients-button').eq(1).click();
+      // verify dialog opens
+      cy.dataCy('dialog-recipients').should('be.visible');
+      // verify number of items
+      cy.dataCy('dialog-recipients-item').should(
+        'have.length',
+        secondMultiRecipientBox.recipientNames.length,
+      );
+      // verify each name
+      secondMultiRecipientBox.recipientNames.forEach((name, index) => {
+        cy.dataCy('dialog-recipients-item').eq(index).should('contain', name);
+      });
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      cy.dataCy('dialog-recipients').should('not.exist');
     });
 
     testData.forEach((testCase) => {
@@ -144,6 +197,18 @@ describe('<TableBoxes>', () => {
                   cy.dataCy('table-boxes-recipients')
                     .should('be.visible')
                     .and('contain', box.recipients);
+                  if (box.recipientCount > 1) {
+                    // button for multiple recipients
+                    cy.dataCy('table-boxes-recipients-button')
+                      .should('be.visible')
+                      .and('have.color', primary)
+                      .and('contain', box.recipients);
+                  } else {
+                    // text for single recipient
+                    cy.dataCy('table-boxes-recipients-button').should(
+                      'not.exist',
+                    );
+                  }
                   // addressee
                   cy.dataCy('table-boxes-addressee')
                     .should('be.visible')
