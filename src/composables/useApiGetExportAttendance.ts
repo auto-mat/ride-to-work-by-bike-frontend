@@ -18,7 +18,11 @@ import type { Logger } from '../components/types/Logger';
 import type { UseApiGetExportAttendanceReturn } from '../components/types/ApiExportAttendance';
 
 // utils
-import { requestDefaultHeader, requestTokenHeader } from '../utils';
+import {
+  requestDefaultHeader,
+  requestTokenHeader,
+  triggerFileDownload,
+} from '../utils';
 
 /**
  * Get export attendance composable
@@ -60,16 +64,7 @@ export const useApiGetExportAttendance = (
     });
 
     if (data) {
-      // trigger file download
-      const filename = `organization-attendance.${fileType}`;
-      const url = URL.createObjectURL(data);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      triggerFileDownload('organization-attendance', fileType, data);
     }
     isLoading.value = false;
   };

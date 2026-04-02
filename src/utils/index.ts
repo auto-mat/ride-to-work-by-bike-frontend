@@ -178,6 +178,32 @@ const localizedFloatNumStrToFloatNumber = (numberStr: string): number => {
   return parseFloat(numberStr.replace(',', '.'));
 };
 
+/**
+ * Trigger file donwload
+ *
+ * @param {string} fileName - File name
+ * @param {string} fileFormat - File format
+ * @param {Blob} file - File blob
+ *
+ * @returns {void} - Void
+ */
+
+const triggerFileDownload = (
+  fileName: string,
+  fileFormat: string,
+  file: Blob,
+): void => {
+  const filename = `${fileName}.${fileFormat}`;
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
@@ -190,4 +216,5 @@ export {
   requestTokenHeader,
   rgbaColorObjectToString,
   timestampToDatetimeString,
+  triggerFileDownload,
 };
