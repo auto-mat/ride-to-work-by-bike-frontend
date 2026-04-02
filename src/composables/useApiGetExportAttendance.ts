@@ -39,8 +39,8 @@ export const useApiGetExportAttendance = (
    * @returns {Promise<void>}
    */
   const load = async (fileType: ExportFileType): Promise<void> => {
-    logger?.info(
-      `Get export attendance for file type <${fileType}> from the API.`,
+    logger?.debug(
+      `Get export organization user attendance file type <${fileType}>.`,
     );
     isLoading.value = true;
 
