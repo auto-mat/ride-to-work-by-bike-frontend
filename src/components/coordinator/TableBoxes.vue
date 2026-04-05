@@ -17,6 +17,9 @@
 import { QTable } from 'quasar';
 import { defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 
+// components
+import DialogDefault from '../global/DialogDefault.vue';
+
 // composables
 import {
   paginationLabel,
@@ -33,12 +36,17 @@ import { BoxesTableColumns } from '../../components/types/Table';
 
 export default defineComponent({
   name: 'TableBoxes',
+  components: {
+    DialogDefault,
+  },
   setup() {
     const tableRef = ref<QTable | null>(null);
     const { columns, visibleColumns } = useTableBoxes();
     const { sortByAddress } = useTable();
     const { boxesData } = useTableBoxesData();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+    const isDialogRecipientsOpen = ref(false);
+    const selectedRecipientNames = ref<string[]>([]);
 
     // sort by lastModified initially
     onMounted(() => {
@@ -79,6 +87,15 @@ export default defineComponent({
         : 'table.labelPackageProcessing';
     };
 
+    /**
+     * Open dialog with recipient names list
+     * @param {string[]} names - Array of recipient names
+     */
+    const onShowRecipients = (names: string[]): void => {
+      selectedRecipientNames.value = names;
+      isDialogRecipientsOpen.value = true;
+    };
+
     return {
       borderRadius,
       BoxesTableColumns,
@@ -86,7 +103,10 @@ export default defineComponent({
       columns,
       getStatusIcon,
       getStatusLabel,
+      isDialogRecipientsOpen,
+      onShowRecipients,
       paginationLabel,
+      selectedRecipientNames,
       sortByAddress,
       tableRef,
       visibleColumns,
@@ -135,8 +155,9 @@ export default defineComponent({
             :props="props"
             data-cy="table-boxes-tracking-number"
           >
+            <!-- has tracking number AND tracking link -->
             <q-btn
-              v-if="props.row.trackingNumber"
+              v-if="props.row.trackingNumber && props.row.trackingLink"
               flat
               dense
               no-caps
@@ -156,6 +177,11 @@ export default defineComponent({
               />
               <span>{{ props.row.trackingNumber }}</span>
             </q-btn>
+            <!-- has tracking number but no tracking link -->
+            <span v-else-if="props.row.trackingNumber">
+              {{ props.row.trackingNumber }}
+            </span>
+            <!-- no tracking number -->
             <span v-else>
               {{ $t('table.labelCellEmpty') }}
             </span>
@@ -184,7 +210,22 @@ export default defineComponent({
             :props="props"
             data-cy="table-boxes-recipients"
           >
-            {{ props.row.recipients }}
+            <q-btn
+              v-if="props.row.recipientCount > 1"
+              flat
+              dense
+              no-caps
+              size="13px"
+              color="primary"
+              class="rounded-borders q-px-sm q-py-xs"
+              data-cy="table-boxes-recipients-button"
+              @click="onShowRecipients(props.row.recipientNames)"
+            >
+              {{ props.row.recipients }}
+            </q-btn>
+            <span v-else>
+              {{ props.row.recipients }}
+            </span>
           </q-td>
           <!-- Addressee -->
           <q-td
@@ -197,5 +238,30 @@ export default defineComponent({
         </q-tr>
       </template>
     </q-table>
+    <!-- Dialog: Recipients list -->
+    <dialog-default
+      v-model="isDialogRecipientsOpen"
+      min-width="250px"
+      data-cy="dialog-recipients"
+    >
+      <template #title>
+        {{ $t('table.titleDialogRecipients') }}
+      </template>
+      <template #content>
+        <q-list
+          separator
+          data-cy="dialog-recipients-list"
+          style="margin: -1rem"
+        >
+          <q-item
+            v-for="(name, index) in selectedRecipientNames"
+            :key="index"
+            data-cy="dialog-recipients-item"
+          >
+            <q-item-section>{{ name }}</q-item-section>
+          </q-item>
+        </q-list>
+      </template>
+    </dialog-default>
   </div>
 </template>

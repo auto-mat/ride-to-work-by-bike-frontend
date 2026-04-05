@@ -32,6 +32,7 @@ describe('<TableBoxes>', () => {
         'textNoResults',
         'textLoading',
         'textRowsPerPage',
+        'titleDialogRecipients',
       ],
       'table',
       i18n,
@@ -45,6 +46,58 @@ describe('<TableBoxes>', () => {
         props: {},
       });
       cy.viewport('macbook-16');
+    });
+
+    it('opens dialog with recipient names when clicking recipients button', () => {
+      const testCase = testData[0];
+      // initiate store state
+      cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
+        adminOrganisationStore.setAdminOrganisations(testCase.storeData);
+      });
+      // find first row with multiple recipients
+      const multiRecipientBox = testCase.displayData.find(
+        (box) => box.recipientCount > 1,
+      );
+      // find second row with multiple recipients
+      const secondMultiRecipientBox = testCase.displayData.find(
+        (box) => box.recipientCount > 1 && box !== multiRecipientBox,
+      );
+      // click recipients button (only displays for multiple recipients)
+      cy.dataCy('table-boxes-recipients-button').first().click();
+      // verify dialog opens
+      cy.dataCy('dialog-recipients').should('be.visible');
+      cy.dataCy('dialog-header').should(
+        'contain',
+        i18n.global.t('table.titleDialogRecipients'),
+      );
+      // verify number of items
+      cy.dataCy('dialog-recipients-item').should(
+        'have.length',
+        multiRecipientBox.recipientNames.length,
+      );
+      // verify each name
+      multiRecipientBox.recipientNames.forEach((name, index) => {
+        cy.dataCy('dialog-recipients-item').eq(index).should('contain', name);
+      });
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      cy.dataCy('dialog-recipients').should('not.exist');
+      // click recipients button for second box
+      cy.dataCy('table-boxes-recipients-button').eq(1).click();
+      // verify dialog opens
+      cy.dataCy('dialog-recipients').should('be.visible');
+      // verify number of items
+      cy.dataCy('dialog-recipients-item').should(
+        'have.length',
+        secondMultiRecipientBox.recipientNames.length,
+      );
+      // verify each name
+      secondMultiRecipientBox.recipientNames.forEach((name, index) => {
+        cy.dataCy('dialog-recipients-item').eq(index).should('contain', name);
+      });
+      // close dialog
+      cy.dataCy('dialog-close').click();
+      cy.dataCy('dialog-recipients').should('not.exist');
     });
 
     testData.forEach((testCase) => {
@@ -100,22 +153,33 @@ describe('<TableBoxes>', () => {
                 .within(() => {
                   // tracking number
                   cy.dataCy('table-boxes-tracking-number').should('be.visible');
-                  cy.dataCy('table-boxes-tracking-link')
-                    .should('be.visible')
-                    .and('have.attr', 'href', box.trackingLink)
-                    .and('have.attr', 'target', '_blank')
-                    .and('contain', box.trackingNumber)
-                    .and('have.color', primary);
-                  // icon
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .should('be.visible')
-                    .and('have.color', primary);
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .invoke('width')
-                    .should('eq', iconSize);
-                  cy.dataCy('table-boxes-tracking-icon')
-                    .invoke('height')
-                    .should('eq', iconSize);
+                  if (box.trackingLink) {
+                    // has tracking link - show button
+                    cy.dataCy('table-boxes-tracking-link')
+                      .should('be.visible')
+                      .and('have.attr', 'href', box.trackingLink)
+                      .and('have.attr', 'target', '_blank')
+                      .and('contain', box.trackingNumber)
+                      .and('have.color', primary);
+                    // icon
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .should('be.visible')
+                      .and('have.color', primary);
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .invoke('width')
+                      .should('eq', iconSize);
+                    cy.dataCy('table-boxes-tracking-icon')
+                      .invoke('height')
+                      .should('eq', iconSize);
+                  } else {
+                    // no tracking link - show text
+                    cy.dataCy('table-boxes-tracking-link').should('not.exist');
+                    cy.dataCy('table-boxes-tracking-icon').should('not.exist');
+                    cy.dataCy('table-boxes-tracking-number').should(
+                      'contain',
+                      box.trackingNumber,
+                    );
+                  }
                   // package status
                   cy.dataCy('table-boxes-status').should('be.visible');
                   cy.dataCy('table-boxes-status-icon')
@@ -144,6 +208,18 @@ describe('<TableBoxes>', () => {
                   cy.dataCy('table-boxes-recipients')
                     .should('be.visible')
                     .and('contain', box.recipients);
+                  if (box.recipientCount > 1) {
+                    // button for multiple recipients
+                    cy.dataCy('table-boxes-recipients-button')
+                      .should('be.visible')
+                      .and('have.color', primary)
+                      .and('contain', box.recipients);
+                  } else {
+                    // text for single recipient
+                    cy.dataCy('table-boxes-recipients-button').should(
+                      'not.exist',
+                    );
+                  }
                   // addressee
                   cy.dataCy('table-boxes-addressee')
                     .should('be.visible')
