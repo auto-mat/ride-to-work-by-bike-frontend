@@ -279,7 +279,7 @@ function coreTests() {
             cy.dataCy('discount-offers-item').each((item, index) => {
               cy.wrap(item).should('contain', displayedOffers[index].title);
               cy.wrap(item).within(() => {
-                cy.dataCy('card-date-chip').should('not.exist');
+                cy.dataCy('card-date-chip').should('be.visible');
               });
               cy.wrap(item).click();
               cy.dataCy('dialog-offer').should('be.visible');
@@ -345,6 +345,35 @@ function coreTests() {
         cy.dataCy('dialog-offer-link')
           .should('be.visible')
           .and('have.attr', 'href', offers[1].voucher_url);
+      });
+    });
+  });
+
+  it('displays correct date format on offer cards (date range)', () => {
+    cy.get('@i18n').then((i18n) => {
+      cy.waitForOffersApi();
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        // filter multi-day offers
+        cy.wrap(offers.filter(isOfferValidMoreThanOneDay)).then(
+          (displayedOffers) => {
+            // test first offer
+            const firstOffer = displayedOffers[0];
+            // format expected dates
+            const startDate = new Date(firstOffer.start_date.replace(' ', 'T'));
+            const endDate = new Date(firstOffer.end_date);
+            const expectedStart = i18n.global.d(startDate, 'monthDay');
+            const expectedEnd = i18n.global.d(endDate, 'monthDay');
+            const expectedDateRange = `${expectedStart} - ${expectedEnd}`;
+            // verify the date chip
+            cy.dataCy('discount-offers-item')
+              .first()
+              .within(() => {
+                cy.dataCy('card-date-chip')
+                  .should('be.visible')
+                  .and('contain', expectedDateRange);
+              });
+          },
+        );
       });
     });
   });
@@ -504,6 +533,35 @@ function coreTests() {
               cy.dataCy('card-date-chip').should('be.visible');
             });
           });
+        });
+      });
+    });
+  });
+
+  it('displays correct date format on event cards (date with time)', () => {
+    cy.get('@i18n').then((i18n) => {
+      cy.waitForOffersApi();
+      cy.fixture('apiGetOffersResponse.json').then((offers) => {
+        // filter one-day events
+        cy.wrap(
+          offers.filter((offer) => !isOfferValidMoreThanOneDay(offer)),
+        ).then((displayedEvents) => {
+          // test first event
+          const firstEvent = displayedEvents[0];
+          // format expected date-time
+          const startDate = new Date(firstEvent.start_date.replace(' ', 'T'));
+          const expectedDateTime = i18n.global.d(
+            startDate,
+            'monthDayHourMinute',
+          );
+          // verify the date chip
+          cy.dataCy('events-item')
+            .first()
+            .within(() => {
+              cy.dataCy('card-date-chip')
+                .should('be.visible')
+                .and('contain', expectedDateTime);
+            });
         });
       });
     });

@@ -69,22 +69,33 @@ export default defineComponent({
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCard;
     const modalOpened = ref(false);
 
-    const eventDate = computed(() => {
-      // show for one-day events
-      if (
-        props.card.type !== OfferEventType.oneDayEvent ||
-        !props.card.startDate
-      ) {
+    const displayDate = computed(() => {
+      if (!props.card.startDate) {
         return null;
       }
-      // display date with removed timezone
-      const localDate = props.card.startDate.replace('Z', '');
-      return i18n.global.d(new Date(localDate), 'monthDayHourMinute');
+      // remove timezone marker
+      const localStartDate = props.card.startDate.replace('Z', '');
+      // one-day event - show date-time
+      if (props.card.type === OfferEventType.oneDayEvent) {
+        return i18n.global.d(new Date(localStartDate), 'monthDayHourMinute');
+      }
+      // multi-day offer - show date range no time
+      const startFormatted = i18n.global.d(
+        new Date(localStartDate),
+        'monthDay',
+      );
+      if (props.card.endDate) {
+        const localEndDate = props.card.endDate.replace('Z', '');
+        const endFormatted = i18n.global.d(new Date(localEndDate), 'monthDay');
+        return `${startFormatted} - ${endFormatted}`;
+      }
+      // fallback - only start date available
+      return startFormatted;
     });
 
     return {
       borderRadius,
-      eventDate,
+      displayDate,
       modalOpened,
       isOfferPast,
     };
@@ -124,14 +135,14 @@ export default defineComponent({
         ></div>
         <!-- Date chip -->
         <q-chip
-          v-if="eventDate"
+          v-if="displayDate"
           dense
           color="transparent"
           icon="svguse:icons/card_offer/icons.svg#calendar"
           class="q-mt-xs q-ml-none text-caption"
           data-cy="card-date-chip"
         >
-          {{ eventDate }}
+          {{ displayDate }}
         </q-chip>
       </q-card-section>
     </q-card-section>
