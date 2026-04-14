@@ -72,6 +72,7 @@ import type { ValidatedCoupon } from '../types/Coupon';
 import { tShirtSizeOrder } from '../types/Merchandise';
 
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+import { onTrack } from '../../utils/track';
 
 export default defineComponent({
   name: 'RegisterChallengePayment',
@@ -244,6 +245,13 @@ export default defineComponent({
           registerChallengeStore.loadSubsidiariesToStore(logger);
           // check if organization has coordinator
           registerChallengeStore.checkOrganizationHasCoordinator();
+          onTrack({
+            detail: {
+              targetName: 'selectedCompany',
+              timestamp: Date.now(),
+              value: value,
+            },
+          });
         }
       },
     });
@@ -285,6 +293,13 @@ export default defineComponent({
       logger?.debug(
         `Selected payment subject changed from <${oldVal}> to <${newVal}>.`,
       );
+      onTrack({
+        detail: {
+          targetName: 'selectedPaymentSubject',
+          timestamp: Date.now(),
+          value: newVal,
+        },
+      });
       switch (newVal) {
         case PaymentSubject.company:
           registerChallengeStore.setOrganizationType(OrganizationType.company);
@@ -488,6 +503,19 @@ export default defineComponent({
     const setSelectedPaymentAmountCustomVal = (val: string): void => {
       selectedPaymentAmountCustom.value = parseInt(val);
     };
+    watch(isPaymentWithReward, () => {
+      onTrack({
+        detail: { targetName: 'paymentWithReward', timestamp: Date.now() },
+      });
+    });
+    watch(isRegistrationCoordinator, () => {
+      onTrack({
+        detail: {
+          targetName: 'isRegistrationCoordinator',
+          timestamp: Date.now(),
+        },
+      });
+    });
 
     /**
      * After selecting a payment amount from the given options,
@@ -501,6 +529,13 @@ export default defineComponent({
             ` to <${newVal}> for <${i18n.global.t('register.challenge.labelPaymentAmount')}>` +
             ' radio button element.',
         );
+        onTrack({
+          detail: {
+            targetName: 'selectedPaymentAmount',
+            timestamp: Date.now(),
+            value: newVal,
+          },
+        });
         if (newVal !== PaymentAmount.custom) {
           setSelectedPaymentAmountCustomVal(selectedPaymentAmount.value);
           logger?.debug(
@@ -721,6 +756,7 @@ export default defineComponent({
       showPaymentAmountOptionsElement,
       showVoucherElement,
       tShirtSizesText,
+      onTrack,
     };
   },
 });
@@ -860,12 +896,16 @@ export default defineComponent({
             label-short="form.labelJobTitleShort"
             class="col-12 col-sm-6"
             data-cy="register-coordinator-job-title"
+            v-click-track-evt
+            @click-track="onTrack"
           />
           <!-- Input: phone -->
           <form-field-phone
             v-model="formRegisterCoordinator.phone"
             class="col-12 col-sm-6"
             data-cy="register-coordinator-phone"
+            v-click-track-evt
+            @click-track="onTrack"
           />
         </div>
         <!-- Input: confirm responsibility -->
@@ -889,6 +929,16 @@ export default defineComponent({
               :true-value="true"
               :false-value="false"
               class="text-grey-10"
+              @update:model-value="
+                () => {
+                  onTrack({
+                    detail: {
+                      targetName: 'orgCoordinatorResponsibility',
+                      timestamp: Date.now(),
+                    },
+                  });
+                }
+              "
             >
               <span>{{
                 $t('register.coordinator.form.labelResponsibility')
@@ -918,6 +968,16 @@ export default defineComponent({
               :false-value="false"
               rules="required"
               class="text-grey-10"
+              @update:model-value="
+                () => {
+                  onTrack({
+                    detail: {
+                      targetName: 'orgCoordinatorTerms',
+                      timestamp: Date.now(),
+                    },
+                  });
+                }
+              "
             >
               <!-- Default slot: label -->
               <span>
@@ -929,6 +989,9 @@ export default defineComponent({
                   class="text-primary"
                   @click.stop
                   data-cy="form-terms-link"
+                  v-click-track-evt
+                  @click-track="onTrack"
+                  name="orgCoordinatorPrivacyConsentLink"
                 >
                   {{ $t('register.coordinator.form.linkPrivacyConsent') }} </a
                 >.

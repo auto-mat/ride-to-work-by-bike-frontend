@@ -21,7 +21,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, watch } from 'vue';
 
 // components
 import FormFieldNewsletter from './FormFieldNewsletter.vue';
@@ -49,6 +49,7 @@ import type { RegisterChallengePersonalDetailsForm } from 'src/components/types/
 import type { Logger } from '../types/Logger';
 
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+import { onTrack } from '../../utils/track';
 
 export default defineComponent({
   name: 'FormPersonalDetails',
@@ -118,6 +119,24 @@ export default defineComponent({
     const { challengeAllowRegisterOrganizationAdmin } = rideToWorkByBikeConfig;
     const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
+    const personalDetailsGenderTrack = computed({
+      get: () => personalDetails.value.gender,
+    });
+
+    const personalDetailsNewsletterTrack = computed({
+      get: () => personalDetails.value.newsletter,
+    });
+
+    watch(personalDetailsGenderTrack, () => {
+      onTrack({ detail: { targetName: 'gender', timestamp: Date.now() } });
+    });
+
+    watch(personalDetailsNewsletterTrack, () => {
+      onTrack({
+        detail: { targetName: 'newsletter', timestamp: Date.now() },
+      });
+    });
+
     return {
       challengeAllowRegisterOrganizationAdmin,
       getHasOrganizationAdmin,
@@ -129,6 +148,7 @@ export default defineComponent({
       urlAppDataPrivacyPolicy,
       urlAppDataTermsOfService,
       urlRegisterAsCoordinator,
+      onTrack,
     };
   },
 });
@@ -145,6 +165,8 @@ export default defineComponent({
           label="form.labelFirstName"
           autocomplete="given-name"
           data-cy="form-personal-details-first-name"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
       <!-- Input: Last name -->
@@ -155,6 +177,8 @@ export default defineComponent({
           label="form.labelLastName"
           autocomplete="family-name"
           data-cy="form-personal-details-last-name"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
       <!-- Input: Nickname -->
@@ -166,17 +190,19 @@ export default defineComponent({
           >
             {{ $t('form.labelNicknameOptional') }}
           </label>
-          <q-input
-            dense
-            outlined
-            type="text"
-            v-model="personalDetails.nickname"
-            name="nickname"
-            :hint="$t('form.hintNickname')"
-            id="form-nickname"
-            class="q-mt-sm hint-no-padding"
-            data-cy="form-nickname-input"
-          />
+          <div v-click-track-evt @click-track="onTrack">
+            <q-input
+              dense
+              outlined
+              type="text"
+              v-model="personalDetails.nickname"
+              name="nickname"
+              :hint="$t('form.hintNickname')"
+              id="form-nickname"
+              class="q-mt-sm hint-no-padding"
+              data-cy="form-nickname-input"
+            />
+          </div>
         </div>
       </div>
       <!-- Input: Gender -->
@@ -217,6 +243,9 @@ export default defineComponent({
               :to="urlRegisterAsCoordinator"
               class="text-grey-10"
               data-cy="form-personal-details-register-as-coordinator-link"
+              v-click-track-evt
+              @click-track="onTrack"
+              name="registerAsCoordinatorLink"
             >
               {{ $t('register.form.linkRegisterAsCoordinator') }}
             </router-link>
@@ -240,6 +269,9 @@ export default defineComponent({
         :required="true"
         class="col-12 q-mt-md"
         data-cy="form-personal-details-phone-input"
+        v-click-track-evt
+        @click-track="onTrack"
+        name="phoneNumber"
       />
       <!-- Input: Contact permission -->
       <div v-ripple class="col-12 q-my-md" data-cy="phone-opt-in">
@@ -252,6 +284,9 @@ export default defineComponent({
           color="primary"
           style="align-items: flex-start"
           data-cy="form-personal-details-phone-opt-in-input"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="contactPermission"
         />
       </div>
 
@@ -280,6 +315,9 @@ export default defineComponent({
             class="text-grey-10"
             style="align-items: flex-start"
             data-cy="form-terms-input"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="terms"
           >
             <!-- Default slot: label -->
             <span>
@@ -291,6 +329,9 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-terms-link"
+                v-click-track-evt
+                @click-track="onTrack"
+                name="privacyConsentLink"
               >
                 {{ $t('form.linkPrivacyConsent') }}
               </a>
@@ -301,6 +342,9 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-service-link"
+                v-click-track-evt
+                @click-track="onTrack"
+                name="termsOfServiceLink"
               >
                 {{ $t('form.linkTermsOfService') }} </a
               >.

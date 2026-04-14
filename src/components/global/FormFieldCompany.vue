@@ -65,6 +65,7 @@ import type { Logger } from 'src/components/types/Logger';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from 'src/utils';
+import { onTrack } from '../../utils/track';
 
 export const emptyFormCompanyFields: FormCompanyFields = {
   name: '',
@@ -294,6 +295,7 @@ export default defineComponent({
       FormAddCompanyVariantProp,
       OrganizationType,
       selectedOrganization,
+      onTrack,
     };
   },
 });
@@ -360,6 +362,9 @@ export default defineComponent({
           style="margin-top: 2px"
           @click.prevent="isDialogOpen = true"
           data-cy="button-add-company"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="companyAddBtn"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
@@ -381,7 +386,13 @@ export default defineComponent({
             :organization-type="organizationType"
           ></form-add-company>
           <!-- Hidden submit button enables Enter key to submit -->
-          <q-btn type="submit" class="hidden" />
+          <q-btn
+            type="submit"
+            class="hidden"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="companySubmitEnterKeyBtn"
+          />
         </q-form>
         <!-- Action buttons -->
         <div class="flex justify-end q-mt-sm">
@@ -393,6 +404,9 @@ export default defineComponent({
               color="primary"
               data-cy="dialog-button-cancel"
               @click="onClose"
+              v-click-track-evt
+              @click-track="onTrack"
+              name="companyCloseBtn"
             >
               {{ $t('navigation.discard') }}
             </q-btn>
@@ -402,6 +416,9 @@ export default defineComponent({
               color="primary"
               data-cy="dialog-button-submit"
               @click="onSubmit"
+              v-click-track-evt
+              @click-track="onTrack"
+              name="companySubmitBtn"
             >
               {{ addNewOrganizationDialogBtn }}
             </q-btn>

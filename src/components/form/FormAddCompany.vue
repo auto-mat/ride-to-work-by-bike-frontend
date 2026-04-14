@@ -56,6 +56,8 @@ import { useApiGetCities } from '../../composables/useApiGetCities';
 import { useOrganizations } from '../../composables/useOrganizations';
 import { useValidation } from '../../composables/useValidation';
 
+import { onTrack } from '../../utils/track';
+
 // enums
 import { OrganizationType } from '../types/Organization';
 import { FormAddCompanyVariantProp, FormSubsidiaryFields } from '../enums/Form';
@@ -189,6 +191,7 @@ export default defineComponent({
       showMinimalSubsidiaryFields,
       showFullSubsidiaryFields,
       FormSubsidiaryFields,
+      onTrack,
     };
   },
 });
@@ -220,6 +223,8 @@ export default defineComponent({
           label="form.labelTitle"
           @update:model-value="onUpdate"
           data-cy="form-add-company-name"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
       <div class="col-12" :class="{ 'col-sm-6': isCompany }">
@@ -231,6 +236,8 @@ export default defineComponent({
           :label="$t('form.labelBusinessId')"
           @update:model-value="onUpdate"
           data-cy="form-add-company-vat-id"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
     </div>
@@ -327,6 +334,8 @@ export default defineComponent({
             @update:model-value="onUpdate"
             data-cy="form-add-company-city-challenge-minimal"
             :name="FormSubsidiaryFields.cityChallenge"
+            v-click-track-evt
+            @click-track="onTrack"
           ></q-select>
         </div>
         <div class="col-12">
@@ -349,6 +358,8 @@ export default defineComponent({
             class="q-mt-sm"
             @update:model-value="onUpdate"
             data-cy="form-add-company-department-minimal"
+            v-click-track-evt
+            @click-track="onTrack"
           />
         </div>
       </div>

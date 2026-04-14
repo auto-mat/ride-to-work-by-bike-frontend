@@ -36,6 +36,8 @@ import { isVoucherWithReward } from '../../utils/voucher_validation';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import { onTrack } from '../../utils/track';
+
 // enums
 import { Currency } from '../../composables/useFormatPrice';
 
@@ -187,6 +189,7 @@ export default defineComponent({
       onRemoveVoucher,
       onSubmitVoucher,
       formFieldTextRequiredRef,
+      onTrack,
     };
   },
 });
@@ -222,6 +225,9 @@ export default defineComponent({
           size="18px"
           data-cy="voucher-button-remove"
           @click.prevent="onRemoveVoucher"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="voucherRemoveBtn"
         />
       </template>
     </q-banner>
@@ -235,6 +241,8 @@ export default defineComponent({
             label="form.labelVoucher"
             data-cy="form-field-voucher-input"
             ref="formFieldTextRequiredRef"
+            v-click-track-evt
+            @click-track="onTrack"
           />
         </div>
         <div class="col-auto">
@@ -248,6 +256,9 @@ export default defineComponent({
             :label="$t('form.buttonVoucherSubmit')"
             :loading="isLoading"
             data-cy="form-field-voucher-submit"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="voucherSubmitBtn"
           />
         </div>
       </div>

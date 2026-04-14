@@ -38,6 +38,8 @@ import { computed, defineComponent } from 'vue';
 // components
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
+import { onTrack } from '../../utils/track';
+
 // composables
 import { useValidation } from 'src/composables/useValidation';
 
@@ -103,6 +105,7 @@ export default defineComponent({
       FormAddressFields,
       isFilled,
       isZip,
+      onTrack,
     };
   },
 });
@@ -117,6 +120,8 @@ export default defineComponent({
         :name="`${fieldPrefix}-${FormAddressFields.street}`"
         label="form.labelStreet"
         :data-cy="`form-${fieldPrefix}-street`"
+        v-click-track-evt
+        @click-track="onTrack"
       />
     </div>
     <div class="col-12 col-sm-6">
@@ -126,6 +131,8 @@ export default defineComponent({
         :name="`${fieldPrefix}-${FormAddressFields.houseNumber}`"
         label="form.labelHouseNumber"
         :data-cy="`form-${fieldPrefix}-house-number`"
+        v-click-track-evt
+        @click-track="onTrack"
       />
     </div>
     <div class="col-12 col-sm-6">
@@ -135,6 +142,8 @@ export default defineComponent({
         :name="`${fieldPrefix}-${FormAddressFields.city}`"
         label="form.labelCity"
         :data-cy="`form-${fieldPrefix}-city`"
+        v-click-track-evt
+        @click-track="onTrack"
       />
     </div>
     <div class="col-12 col-sm-6">
@@ -148,28 +157,30 @@ export default defineComponent({
           {{ $t('form.labelZip') }}
         </label>
         <!-- Input -->
-        <q-input
-          dense
-          outlined
-          v-model="zipField"
-          lazy-rules
-          :rules="[
-            (val) =>
-              isFilled(val) ||
-              $t('form.messageFieldRequired', {
-                fieldName: $t('form.labelZip'),
-              }),
-            (val) => isZip(val) || $t('form.messageZipInvalid'),
-          ]"
-          class="q-mt-sm"
-          :id="`form-${fieldPrefix}-${FormAddressFields.zip}`"
-          :name="`${fieldPrefix}-${FormAddressFields.zip}`"
-          :data-cy="`form-${fieldPrefix}-${FormAddressFields.zip}-input`"
-          ref="inputRef"
-          mask="### ##"
-          fill-mask="_"
-          unmasked-value
-        />
+        <div v-click-track-evt @click-track="onTrack">
+          <q-input
+            dense
+            outlined
+            v-model="zipField"
+            lazy-rules
+            :rules="[
+              (val) =>
+                isFilled(val) ||
+                $t('form.messageFieldRequired', {
+                  fieldName: $t('form.labelZip'),
+                }),
+              (val) => isZip(val) || $t('form.messageZipInvalid'),
+            ]"
+            class="q-mt-sm"
+            :id="`form-${fieldPrefix}-${FormAddressFields.zip}`"
+            :name="`${fieldPrefix}-${FormAddressFields.zip}`"
+            :data-cy="`form-${fieldPrefix}-${FormAddressFields.zip}-input`"
+            ref="inputRef"
+            mask="### ##"
+            fill-mask="_"
+            unmasked-value
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -34,6 +34,7 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 // utils
 import { defaultPaymentAmountMinComputed } from '../../utils/price_levels';
 import { defaultPaymentAmountMinComputedWithReward } from '../../utils/price_levels_with_reward';
+import { onTrack } from '../../utils/track';
 
 export default defineComponent({
   name: 'FormFieldDonation',
@@ -87,6 +88,14 @@ export default defineComponent({
       emit('update:donation', 0);
     });
 
+    watch(isDonation, () => {
+      onTrack({
+        detail: {
+          targetName: 'isDonation',
+          timestamp: Date.now(),
+        },
+      });
+    });
     return {
       amount,
       isDonation,

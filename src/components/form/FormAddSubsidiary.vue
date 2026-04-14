@@ -34,11 +34,10 @@ import { useValidation } from 'src/composables/useValidation';
 import { useApiGetCities } from '../../composables/useApiGetCities';
 import { useOrganizations } from '../../composables/useOrganizations';
 
-// enums
-import { OrganizationType } from 'src/components/types/Organization';
-
 // stores
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+
+import { onTrack } from '../../utils/track';
 
 // types
 import type { FormCompanyAddressFields } from '../types/Form';
@@ -47,6 +46,7 @@ import type { Logger } from '../types/Logger';
 
 // enums
 import { FormSubsidiaryFields } from '../enums/Form';
+import { OrganizationType } from 'src/components/types/Organization';
 
 export default defineComponent({
   name: 'FormAddSubsidiary',
@@ -113,6 +113,7 @@ export default defineComponent({
       labelCityChallenge,
       options,
       FormSubsidiaryFields,
+      onTrack,
     };
   },
 });
@@ -177,6 +178,8 @@ export default defineComponent({
           :hint="$t('form.company.hintDepartment')"
           class="q-mt-sm"
           data-cy="form-add-subsidiary-department"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
     </div>
