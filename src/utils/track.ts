@@ -20,7 +20,7 @@ const onTrack = (evt: EventTrack): void => {
   if (rideToWorkByBikeConfig.urlMatomoAnalytics !== 'disable') {
     let value;
     if (evt.detail.value) {
-      value = `${dateTime}, <${evt.detail.value}>`;
+      value = `${dateTime}, ${evt.detail.value}`;
     } else {
       value = `${dateTime}`;
     }
