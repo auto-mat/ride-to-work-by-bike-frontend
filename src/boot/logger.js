@@ -15,6 +15,10 @@ export const options = {
   showConsoleColors: true,
 };
 
+let logger;
 export default boot(({ app }) => {
   app.use(VueLogger, options);
+  logger = app.config.globalProperties.$log;
 });
+
+export { logger };
