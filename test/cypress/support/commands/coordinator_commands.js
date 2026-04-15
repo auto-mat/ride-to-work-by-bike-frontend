@@ -303,11 +303,10 @@ Cypress.Commands.add(
  * Verify coordinator invoices table row data
  * @param {number} index - Row index
  * @param {Object} tableRowData - Expected table row data object
- * @param {Object} i18n - Vue i18n instance for translations
  */
 Cypress.Commands.add(
   'verifyCoordinatorInvoicesTableRow',
-  (index, tableRowData, i18n) => {
+  (index, tableRowData) => {
     cy.dataCy('table-invoices-row')
       .eq(index)
       .within(() => {
@@ -331,17 +330,6 @@ Cypress.Commands.add(
           'contain',
           tableRowData.totalAmount,
         );
-        if (tableRowData.paidDate) {
-          cy.dataCy('table-invoices-paid-date').should(
-            'contain',
-            tableRowData.paidDate,
-          );
-        } else {
-          cy.dataCy('table-invoices-paid-date').should(
-            'contain',
-            i18n.global.t('table.labelNotConfirmed'),
-          );
-        }
       });
   },
 );

@@ -60,7 +60,6 @@ describe('Company coordinator invoices page', () => {
               cy.verifyCoordinatorInvoicesTableRow(
                 index,
                 test.displayInitial.tableRows[index],
-                i18n,
               );
             });
             // test creating an invoice
@@ -163,7 +162,6 @@ describe('Company coordinator invoices page', () => {
                 cy.verifyCoordinatorInvoicesTableRow(
                   index,
                   test.displayAfterMakeInvoice.tableRows[index],
-                  i18n,
                 );
               });
             }

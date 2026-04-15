@@ -177,21 +177,6 @@ export default defineComponent({
           >
             {{ props.row.totalAmount }}
           </q-td>
-          <!-- Paid Date -->
-          <q-td
-            :key="InvoicesTableColumns.paidDate"
-            :props="props"
-            data-cy="table-invoices-paid-date"
-          >
-            <!-- Loop over data to get formatted content -->
-            <template v-for="col in props.cols" :key="col.field">
-              <span
-                v-if="col.field === InvoicesTableColumns.paidDate && col.value"
-              >
-                {{ col.value }}
-              </span>
-            </template>
-          </q-td>
         </q-tr>
       </template>
     </q-table>

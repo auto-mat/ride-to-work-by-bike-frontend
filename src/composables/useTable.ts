@@ -698,18 +698,6 @@ export const useTableInvoices = () => {
       required: true,
       sortable: true,
     },
-    {
-      align: 'left',
-      field: InvoicesTableColumns.paidDate,
-      format: (val: number | string | null): string =>
-        val
-          ? i18n.global.d(new Date(String(val)), 'numeric')
-          : i18n.global.t('table.labelNotConfirmed'),
-      label: i18n.global.t('table.labelConfirmationDate'),
-      name: InvoicesTableColumns.paidDate,
-      required: true,
-      sortable: true,
-    },
   ];
 
   const tableInvoicesVisibleColumns: string[] = [
