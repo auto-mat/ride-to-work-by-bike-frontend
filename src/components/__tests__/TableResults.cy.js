@@ -5,6 +5,10 @@ import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import {
+  calculateSubsidiaryMemberCount,
+  getSortedSubsidiaryIndex,
+} from './helpers/subsidiaryTestHelpers';
 
 // colors
 const { getPaletteColor } = colors;
@@ -73,13 +77,20 @@ function coreTests() {
         });
       });
       const subsidiaries = test.storeData[0].subsidiaries;
-      if (subsidiaries.length === 0) {
-        // no subsidiaries - no tables should be rendered
+      const activeSubsidiaries = subsidiaries.filter(
+        (subsidiary) => calculateSubsidiaryMemberCount(subsidiary) > 0,
+      );
+      if (activeSubsidiaries.length === 0) {
+        // no active subsidiaries - no tables should be rendered
         cy.dataCy('table-results').should('not.exist');
         return;
       }
-      // test each subsidiary
-      subsidiaries.forEach((subsidiary, subsidiaryIndex) => {
+      // test each active subsidiary
+      activeSubsidiaries.forEach((subsidiary) => {
+        const subsidiaryIndex = getSortedSubsidiaryIndex(
+          activeSubsidiaries,
+          subsidiary,
+        );
         // count all members in this subsidiary
         const allMembers = [];
         subsidiary.teams.forEach((team) => {

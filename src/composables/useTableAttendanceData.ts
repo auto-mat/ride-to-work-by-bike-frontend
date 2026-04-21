@@ -181,11 +181,16 @@ export const useTableAttendanceData = (): {
   );
 
   const subsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() => {
-    return subsidiariesDataUnsorted.value.sort(
-      (a: TableAttendanceSubsidiaryData, b: TableAttendanceSubsidiaryData) => {
-        return b.memberCount - a.memberCount;
-      },
-    );
+    return subsidiariesDataUnsorted.value
+      .filter((subsidiaryData) => subsidiaryData.memberCount > 0)
+      .sort(
+        (
+          a: TableAttendanceSubsidiaryData,
+          b: TableAttendanceSubsidiaryData,
+        ) => {
+          return b.memberCount - a.memberCount;
+        },
+      );
   });
 
   return {
