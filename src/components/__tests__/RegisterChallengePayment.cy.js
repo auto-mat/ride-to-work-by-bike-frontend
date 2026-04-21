@@ -27,6 +27,7 @@ import {
 } from '../../../test/cypress/support/commonTests';
 
 // selectors
+const selectorBannerMerchSizes = 'banner-merch-sizes';
 const selectorBannerPaymentMinimum = 'banner-payment-minimum';
 const selectorCheckboxPaymentWithReward = 'checkbox-payment-with-reward';
 const selectorCompany = 'form-field-company';
@@ -104,6 +105,7 @@ describe('<RegisterChallengePayment>', () => {
         'labelCompanyOrSchool',
         'labelPaymentAmount',
         'labelPaymentSubject',
+        'textAvailableTShirtSizes',
         'textOrganization',
         'textPaymentMinimum',
         'textPaymentOrganizer',
@@ -138,6 +140,7 @@ describe('<RegisterChallengePayment>', () => {
         i18n,
         OrganizationType.school,
       );
+      cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
 
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
         // for first organization, intercept API call with response true
@@ -166,6 +169,7 @@ describe('<RegisterChallengePayment>', () => {
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
+      cy.waitForMerchandiseApi();
       cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
         cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
           cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
@@ -207,6 +211,7 @@ describe('<RegisterChallengePayment>', () => {
         i18n,
         OrganizationType.school,
       );
+      cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
 
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
         // for first organization, intercept API call with response true
@@ -235,6 +240,7 @@ describe('<RegisterChallengePayment>', () => {
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
+      cy.waitForMerchandiseApi();
       cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
         cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
           cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
@@ -341,6 +347,7 @@ describe('<RegisterChallengePayment>', () => {
         i18n,
         OrganizationType.school,
       );
+      cy.interceptMerchandiseGetApi(rideToWorkByBikeConfig, i18n);
       cy.fixture('formFieldCompany').then((formFieldCompanyResponse) => {
         // for first organization, intercept API call with response true
         cy.fixture('apiGetHasOrganizationAdminResponseTrue').then(
@@ -368,6 +375,7 @@ describe('<RegisterChallengePayment>', () => {
       cy.mount(RegisterChallengePayment, {
         props: {},
       });
+      cy.waitForMerchandiseApi();
       cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
         cy.fixture('apiGetThisCampaign.json').then((thisCampaignReponse) => {
           cy.fixture('apiGetIsUserOrganizationAdminResponseFalse.json').then(
@@ -1372,6 +1380,39 @@ function coreTests() {
       .find('.q-radio__inner.q-radio__inner--truthy')
       .siblings('.q-radio__label')
       .should('contain', defaultPaymentAmountMinWithReward);
+  });
+
+  it('shows merch sizes banner when payment with reward is enabled', () => {
+    // with-reward enabled by default
+    cy.dataCy(selectorCheckboxPaymentWithReward)
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--truthy');
+    // banner visible
+    cy.dataCy(selectorBannerMerchSizes)
+      .should('be.visible')
+      .and('have.color', primary)
+      .and('have.backgroundColor', primaryLight)
+      .and('have.css', 'padding', '16px')
+      .and('have.css', 'border-radius', borderRadiusCardSmall)
+      .and(
+        'contain',
+        i18n.global.t('register.challenge.textAvailableTShirtSizes', {
+          sizes: '',
+        }),
+      );
+  });
+
+  it('hides merch sizes banner when payment with reward is disabled', () => {
+    // uncheck with-reward checkbox
+    cy.dataCy(selectorCheckboxPaymentWithReward)
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--truthy')
+      .click();
+    cy.dataCy(selectorCheckboxPaymentWithReward)
+      .find('.q-checkbox__inner')
+      .should('have.class', 'q-checkbox__inner--falsy');
+    // banner hidden
+    cy.dataCy(selectorBannerMerchSizes).should('not.exist');
   });
 
   it('updates donation default when toggling with-reward checkbox', () => {

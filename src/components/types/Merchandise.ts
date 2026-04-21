@@ -10,6 +10,17 @@ import type { Ref } from 'vue';
 import type { FormOption } from './Form';
 import type { Image } from './Image';
 
+export const tShirtSizeOrder: string[] = [
+  'XXS',
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  'XXL',
+  'XXXL',
+];
+
 export interface Merchandise {
   id: number;
   name: string;

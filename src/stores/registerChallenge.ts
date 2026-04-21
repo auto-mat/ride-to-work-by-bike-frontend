@@ -1253,6 +1253,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         )}>.`,
       );
       this.$patch(deepObjectWithSimplePropsCopy(emptyPersistentState));
+      this.merchandiseItems = [];
+      this.merchandiseCards = {} as Record<Gender, MerchandiseCard[]>;
     },
   },
 

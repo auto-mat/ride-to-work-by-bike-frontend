@@ -57,6 +57,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
 import { Currency } from '../../composables/useFormatPrice';
+import { Gender } from '../types/Profile';
 import { PaymentAmount, PaymentSubject } from '../enums/Payment';
 import { OrganizationType } from '../types/Organization';
 
@@ -68,6 +69,7 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
 import type { ValidatedCoupon } from '../types/Coupon';
+import { tShirtSizeOrder } from '../types/Merchandise';
 
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
@@ -236,8 +238,12 @@ export default defineComponent({
         }
       },
     });
-    onMounted(() => {
+    onMounted(async () => {
       registerChallengeStore.checkOrganizationHasCoordinator();
+      // load merchandise if data not available
+      if (registerChallengeStore.getMerchandiseItems.length === 0) {
+        await registerChallengeStore.loadMerchandiseToStore(logger);
+      }
     });
     const isRegistrationCoordinator = computed<boolean>({
       get: (): boolean =>
@@ -627,6 +633,50 @@ export default defineComponent({
       return show;
     });
 
+    const tShirtSizesText = computed((): string => {
+      const cards = registerChallengeStore.getMerchandiseCards;
+      const sizesList: string[] = [];
+      const maleCards = cards[Gender.male];
+      const femaleCards = cards[Gender.female];
+      // get unique sizes for male and female + sort by size
+      if (maleCards?.length) {
+        const sizes = [
+          // Set filters unique sizes
+          ...new Set(
+            // flatMap prevents nested arrays
+            maleCards.flatMap((card) =>
+              card.sizeOptions.map((option) => String(option.label)),
+            ),
+          ),
+        ].sort(
+          (sizeA, sizeB) =>
+            tShirtSizeOrder.indexOf(sizeA) - tShirtSizeOrder.indexOf(sizeB),
+        );
+        sizesList.push(`${i18n.global.t('global.male')} (${sizes.join(', ')})`);
+      }
+      if (femaleCards?.length) {
+        const sizes = [
+          // Set filters unique sizes
+          ...new Set(
+            // flatMap prevents nested arrays
+            femaleCards.flatMap((card) =>
+              card.sizeOptions.map((option) => String(option.label)),
+            ),
+          ),
+        ].sort(
+          (sizeA, sizeB) =>
+            tShirtSizeOrder.indexOf(sizeA) - tShirtSizeOrder.indexOf(sizeB),
+        );
+        sizesList.push(
+          `${i18n.global.t('global.female')} (${sizes.join(', ')})`,
+        );
+      }
+      return sizesList.join(', ');
+    });
+    const showMerchSizesBanner = computed((): boolean => {
+      return isPaymentWithReward.value && tShirtSizesText.value.length > 0;
+    });
+
     // TODO: Update `FormFieldCompany` to use data from `registerChallenge` store.
     const selectedOrganizationName = computed<string>(
       () => registerChallengeStore.getSelectedOrganizationLabel,
@@ -669,9 +719,11 @@ export default defineComponent({
       showCompanySchoolElement,
       showCustomPaymentAmountElement,
       showDonationElement,
+      showMerchSizesBanner,
       showOrganizationAdminElement,
       showPaymentAmountOptionsElement,
       showVoucherElement,
+      tShirtSizesText,
     };
   },
 });
@@ -904,6 +956,19 @@ export default defineComponent({
         {{ $t('register.challenge.labelPaymentWithReward') }}
       </q-checkbox>
     </div>
+    <!-- Banner: Available t-shirt sizes -->
+    <q-banner
+      v-if="showMerchSizesBanner"
+      class="q-mt-sm q-pa-md text-primary"
+      :style="{ backgroundColor: primaryLightColor, borderRadius }"
+      data-cy="banner-merch-sizes"
+    >
+      {{
+        $t('register.challenge.textAvailableTShirtSizes', {
+          sizes: tShirtSizesText,
+        })
+      }}
+    </q-banner>
     <!-- Section: Total price -->
     <template v-if="computedCurrentValue">
       <q-separator class="q-my-lg" />
