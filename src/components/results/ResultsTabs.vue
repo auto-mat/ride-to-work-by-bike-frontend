@@ -11,6 +11,9 @@
 // libraries
 import { computed, defineComponent, onMounted, ref } from 'vue';
 
+// components
+import ResultsTachometersReport from 'src/components/results/ResultsTachometersReport.vue';
+
 // config
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
@@ -25,6 +28,9 @@ import { useResultsStore } from 'src/stores/results';
 
 export default defineComponent({
   name: 'ResultsTabs',
+  components: {
+    ResultsTachometersReport,
+  },
   setup() {
     const resultsStore = useResultsStore();
     const { challengeMonth, dataReportIframeHeight } = rideToWorkByBikeConfig;
@@ -79,29 +85,10 @@ export default defineComponent({
 <template>
   <div data-cy="results-tabs">
     <!-- Section: Tachometers report (above tabs) -->
-    <div
-      v-if="getResultsUrl(ResultsReportType.tachometers)"
-      class="q-pa-md"
-      data-cy="results-tachometers-section"
-    >
-      <div class="text-right q-mt-sm q-mb-md">
-        <a
-          :href="getResultsUrl(ResultsReportType.tachometers)"
-          target="_blank"
-          class="text-primary"
-          data-cy="results-tachometers-link-open-in-new-tab"
-        >
-          {{ $t('results.linkOpenResultsInNewTab') }}
-        </a>
-      </div>
-      <iframe
-        class="full-width"
-        style="height: 560px"
-        :src="getResultsUrl(ResultsReportType.tachometers)"
-        frameBorder="0"
-        data-cy="results-tachometers-iframe"
-      />
-    </div>
+    <results-tachometers-report
+      :src="getResultsUrl(ResultsReportType.tachometers)"
+      class="q-px-md q-mb-xl"
+    />
     <!-- Tabs: Report types -->
     <q-tabs
       inline-label

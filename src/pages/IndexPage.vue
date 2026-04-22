@@ -35,6 +35,12 @@
           class="q-my-xl"
           data-cy="banner-app"
         />
+        <!-- Section: Tachometers report -->
+        <results-tachometers-report
+          :src="tachometersUrl"
+          class="q-my-xl"
+          data-cy="index-tachometers-report"
+        />
         <list-challenges />
         <!-- Section: Future challenges -->
         <template
@@ -147,6 +153,7 @@ import { feedAdapter } from '../adapters/feedAdapter';
 
 // components
 import BannerApp from 'components/homepage/BannerApp.vue';
+import ResultsTachometersReport from 'src/components/results/ResultsTachometersReport.vue';
 import BannerImage from 'components/homepage/BannerImage.vue';
 import BannerRoutes from 'components/homepage/BannerRoutes.vue';
 import BannerTeamMemberApprove from 'components/global/BannerTeamMemberApprove.vue';
@@ -174,6 +181,7 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 
 // enums
 import { ChallengeStatus as ChallengeStatusEnum } from 'src/components/enums/Challenge';
+import { ResultsReportType } from 'src/components/enums/Results';
 
 // fixtures
 import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
@@ -186,6 +194,7 @@ import * as homepage from '../mocks/homepage';
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useResultsStore } from 'src/stores/results';
 import { useFeedStore } from '../stores/feed';
 import { useAdminCompetitionStore } from '../stores/adminCompetition';
 
@@ -196,6 +205,7 @@ export default defineComponent({
   name: 'IndexPage',
   components: {
     BannerApp,
+    ResultsTachometersReport,
     BannerImage,
     BannerRoutes,
     BannerTeamMemberApprove,
@@ -217,6 +227,7 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
+    const resultsStore = useResultsStore();
     const feedStore = useFeedStore();
     const isLoadingPosts = computed(() => feedStore.getIsLoading);
 
@@ -238,6 +249,11 @@ export default defineComponent({
 
     const urlCommunity = routesConf['community']['path'];
     const urlResults = routesConf['results']['path'];
+    const tachometersUrl = computed(
+      () =>
+        resultsStore.getResultsUrl(ResultsReportType.tachometers)
+          ?.data_report_url ?? '',
+    );
 
     const cardsOffer = computed(() =>
       feedAdapter.toCardOffer(feedStore.getPostsOffer),
@@ -274,6 +290,7 @@ export default defineComponent({
       if (!adminCompetitionStore.getCompetitions?.length) {
         await adminCompetitionStore.loadCompetitions();
       }
+      resultsStore.loadTachometersUrl();
     });
 
     const {
@@ -324,6 +341,7 @@ export default defineComponent({
       isSectionEventsEnabled,
       isSectionOffersEnabled,
       isSectionPostsEnabled,
+      tachometersUrl,
     };
   },
 });

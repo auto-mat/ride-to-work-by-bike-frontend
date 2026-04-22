@@ -223,6 +223,23 @@ export const useResultsStore = defineStore('results', {
     },
 
     /**
+     * Load tachometers results URL
+     * Used by homepage to only load tachometers
+     * @returns {Promise<void>}
+     */
+    async loadTachometersUrl(): Promise<void> {
+      // skip if loaded
+      if (this.resultsUrls[ResultsReportType.tachometers]) {
+        return;
+      }
+      this.isLoading = true;
+      const { load: loadResults } = useApiGetResults(this.$log);
+      const response = await loadResults(ResultsReportType.tachometers);
+      this.resultsUrls[ResultsReportType.tachometers] = response;
+      this.isLoading = false;
+    },
+
+    /**
      * Load organization coordinator results URL
      * Used by coordinator results tab to load only specific URLs needed
      * @returns {Promise<void>}
