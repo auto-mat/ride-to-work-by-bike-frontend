@@ -446,165 +446,10 @@
     "displayData": {
       "organizationTitle": "Moravské pivovary a.s.",
       "organizationId": 87654321,
-      "subsidiariesCount": 1,
+      "subsidiariesCount": 3,
       "membersCount": 7,
       "disabledDiplomas": 1,
       "enabledDiplomas": 6
-    }
-  },
-  {
-    "description": "display data for organization with 2 active subsidiaries",
-    "storeData": [
-      {
-        "name": "Dopravní podnik Praha a.s.",
-        "psc": 11000,
-        "street": "Sokolovská",
-        "street_number": 217,
-        "recipient": "Dopravní podnik Praha a.s.",
-        "city": "Praha",
-        "ico": 55667788,
-        "dic": "CZ55667788",
-        "active": true,
-        "subsidiaries": [
-          {
-            "id": 7001,
-            "name": "Sokolovská 217, 11000 Praha",
-            "psc": 11000,
-            "street": "Sokolovská",
-            "street_number": 217,
-            "city": "Praha",
-            "challenge_city": "Praha",
-            "icon_url": null,
-            "teams": [
-              {
-                "id": 8001,
-                "name": "Řidiči",
-                "icon_url": null,
-                "diploma": null,
-                "members_without_paid_entry_fee_by_org_coord": [
-                  {
-                    "id": 30001,
-                    "name": "Karel Novák",
-                    "name_for_trusted": "Karel Novák (knovak)",
-                    "nickname": "knovak",
-                    "date_of_challenge_registration": "2025-03-01T08:00:00.000000",
-                    "email": "karel.novak@dp-praha.cz",
-                    "telephone": "777001001",
-                    "sex": "male",
-                    "avatar_url": "",
-                    "approved_for_team": "approved",
-                    "payment_status": "waiting",
-                    "payment_type": "fc",
-                    "payment_category": "entry_fee",
-                    "payment_amount": "390",
-                    "diploma": "",
-                    "discount_coupon": "",
-                    "user_profile_id": 70001,
-                    "is_payment_with_reward": true,
-                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
-                  }
-                ],
-                "members_with_paid_entry_fee_by_org_coord": [],
-                "other_members": [
-                  {
-                    "id": 30002,
-                    "name": "Luboš Kratochvíl",
-                    "name_for_trusted": "Luboš Kratochvíl",
-                    "nickname": null,
-                    "date_of_challenge_registration": "2025-03-02T09:00:00.000000",
-                    "email": "lubos.kratochvil@dp-praha.cz",
-                    "telephone": "777001002",
-                    "sex": "male",
-                    "avatar_url": "",
-                    "approved_for_team": "approved",
-                    "payment_status": "done",
-                    "payment_type": "None",
-                    "payment_category": "None",
-                    "payment_amount": "0",
-                    "diploma": "",
-                    "discount_coupon": "",
-                    "user_profile_id": 70002,
-                    "is_payment_with_reward": false,
-                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": 7002,
-            "name": "Smíchovská 888, 16300 Praha",
-            "psc": 16300,
-            "street": "Smíchovská",
-            "street_number": 888,
-            "city": "Praha",
-            "challenge_city": "Praha",
-            "icon_url": null,
-            "teams": [
-              {
-                "id": 8002,
-                "name": "Technici",
-                "icon_url": null,
-                "diploma": null,
-                "members_without_paid_entry_fee_by_org_coord": [],
-                "members_with_paid_entry_fee_by_org_coord": [
-                  {
-                    "id": 30003,
-                    "name": "Věra Horáčková",
-                    "name_for_trusted": "Věra Horáčková (vhorackova)",
-                    "nickname": "vhorackova",
-                    "date_of_challenge_registration": "2025-03-05T10:30:00.000000",
-                    "email": "vera.horackova@dp-praha.cz",
-                    "telephone": "777001003",
-                    "sex": "female",
-                    "avatar_url": "",
-                    "approved_for_team": "approved",
-                    "payment_status": "done",
-                    "payment_type": "fc",
-                    "payment_category": "entry_fee",
-                    "payment_amount": "390",
-                    "diploma": "https://example.com/diploma.pdf",
-                    "discount_coupon": "",
-                    "user_profile_id": 70003,
-                    "is_payment_with_reward": true,
-                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
-                  },
-                  {
-                    "id": 30004,
-                    "name": "Ondřej Malý",
-                    "name_for_trusted": "Ondřej Malý (omaly)",
-                    "nickname": "omaly",
-                    "date_of_challenge_registration": "2025-03-06T11:00:00.000000",
-                    "email": "ondrej.maly@dp-praha.cz",
-                    "telephone": "777001004",
-                    "sex": "male",
-                    "avatar_url": "",
-                    "approved_for_team": "approved",
-                    "payment_status": "done",
-                    "payment_type": "fc",
-                    "payment_category": "entry_fee",
-                    "payment_amount": "390",
-                    "diploma": "",
-                    "discount_coupon": "",
-                    "user_profile_id": 70004,
-                    "is_payment_with_reward": true,
-                    "t_shirt_size_updated": "2026-02-03 10:11:50.000000+00:00"
-                  }
-                ],
-                "other_members": []
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "displayData": {
-      "organizationTitle": "Dopravní podnik Praha a.s.",
-      "organizationId": 55667788,
-      "subsidiariesCount": 2,
-      "membersCount": 4,
-      "disabledDiplomas": 0,
-      "enabledDiplomas": 0
     }
   },
   {
@@ -680,7 +525,7 @@
     "displayData": {
       "organizationTitle": "Tiskárna Rychlotisk v.o.s.",
       "organizationId": 99887766,
-      "subsidiariesCount": 0,
+      "subsidiariesCount": 1,
       "membersCount": 0,
       "disabledDiplomas": 0,
       "enabledDiplomas": 0

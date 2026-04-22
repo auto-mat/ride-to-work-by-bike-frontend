@@ -6,10 +6,6 @@ import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import {
-  calculateSubsidiaryMemberCount,
-  getSortedSubsidiaryIndex,
-} from './helpers/subsidiaryTestHelpers';
 
 // colors
 const { getPaletteColor } = colors;
@@ -112,6 +108,39 @@ describe('<TableAttendance>', () => {
   });
 });
 
+/**
+ * Helper function to calculate member count for a subsidiary
+ * @param {object} subsidiary
+ * @returns {number} - member count
+ */
+function calculateSubsidiaryMemberCount(subsidiary) {
+  let count = 0;
+  subsidiary.teams.forEach((team) => {
+    count += team.members_without_paid_entry_fee_by_org_coord.length;
+    count += team.members_with_paid_entry_fee_by_org_coord.length;
+    count += team.other_members.length;
+  });
+  return count;
+}
+
+/**
+ * Helper function to get the index of a subsidiary in a sorted array
+ * @param {array} subsidiaries
+ * @param {object} targetSubsidiary
+ * @returns {number} index
+ */
+function getSortedSubsidiaryIndex(subsidiaries, targetSubsidiary) {
+  // map subsidiaries to member count
+  const withCounts = subsidiaries.map((sub) => ({
+    subsidiary: sub,
+    memberCount: calculateSubsidiaryMemberCount(sub),
+  }));
+  // sort by member count
+  const sorted = [...withCounts].sort((a, b) => b.memberCount - a.memberCount);
+  // find index in sorted array
+  return sorted.findIndex((item) => item.subsidiary.id === targetSubsidiary.id);
+}
+
 function coreTests() {
   testData.forEach((test) => {
     it(test.description, () => {
@@ -129,21 +158,15 @@ function coreTests() {
       cy.dataCy(selectorTableAttendance).should('exist');
 
       const subsidiaries = test.storeData[0].subsidiaries;
-      const activeSubsidiaries = subsidiaries.filter(
-        (subsidiary) => calculateSubsidiaryMemberCount(subsidiary) > 0,
-      );
-      if (activeSubsidiaries.length === 0) {
-        // no active subsidiaries - no tables should be rendered
+      if (subsidiaries.length === 0) {
+        // no subsidiaries - no tables should be rendered
         cy.dataCy(selectorTable).should('not.exist');
         return;
       }
-      // test each active subsidiary
-      activeSubsidiaries.forEach((subsidiary) => {
+      // test each subsidiary
+      subsidiaries.forEach((subsidiary) => {
         // use sorted index (component sorts subsidiaries by member count)
-        const sortedIndex = getSortedSubsidiaryIndex(
-          activeSubsidiaries,
-          subsidiary,
-        );
+        const sortedIndex = getSortedSubsidiaryIndex(subsidiaries, subsidiary);
         // get member count
         const memberCount = calculateSubsidiaryMemberCount(subsidiary);
         // test subsidiary header
