@@ -1,5 +1,6 @@
 import {
   systemTimeRegistrationPhaseInactive,
+  systemTimeChallengeActive,
   systemTimeBeforeCompetitionStart,
   systemTimeBeforeEntryPhaseEnd,
   failOnStatusCode,
@@ -948,6 +949,95 @@ describe('Home page', () => {
         // verify redirect to #/routes URL
         cy.url().should('include', routesConf['routes'].children.fullPath);
       });
+    });
+  });
+
+  context('tachometers report during results phase', () => {
+    beforeEach(() => {
+      cy.clock(systemTimeChallengeActive, ['Date']);
+      cy.get('@config').then((config) => {
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+        cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+          const tachometersResponse = resultsResponses.find(
+            (resultsResponse) => resultsResponse.key === 'tachometers',
+          );
+          cy.interceptGetResultsApi(
+            config,
+            defLocale,
+            tachometersResponse.key,
+            tachometersResponse.response,
+          );
+        });
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      cy.waitForThisCampaignApi();
+    });
+
+    it('shows tachometers report on homepage', () => {
+      cy.waitForGetResultsApi(
+        {
+          data_report_url:
+            'https://metabase.dopracenakole.net/public/question/tachometers-placeholder',
+        },
+        'tachometers',
+      );
+      cy.dataCy('index-tachometers-report').should('be.visible');
+      cy.dataCy('results-tachometers-iframe').should(
+        'have.attr',
+        'src',
+        'https://metabase.dopracenakole.net/public/question/tachometers-placeholder',
+      );
+    });
+  });
+
+  context('tachometers report outside results phase', () => {
+    beforeEach(() => {
+      cy.clock(systemTimeRegistrationPhaseInactive, ['Date']);
+      cy.get('@config').then((config) => {
+        cy.interceptThisCampaignGetApi(config, defLocale);
+        cy.fixture('apiGetRegisterChallengeIndividualPaidCompleteStaff').then(
+          (responseRegisterChallenge) => {
+            cy.interceptRegisterChallengeGetApi(
+              config,
+              defLocale,
+              responseRegisterChallenge,
+            );
+          },
+        );
+        cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(
+              config,
+              defLocale,
+              response,
+            );
+          },
+        );
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      cy.waitForThisCampaignApi();
+    });
+
+    it('does not show tachometers report on homepage', () => {
+      cy.dataCy('index-tachometers-report').should('not.exist');
     });
   });
 

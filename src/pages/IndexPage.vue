@@ -37,6 +37,7 @@
         />
         <!-- Section: Tachometers report -->
         <results-tachometers-report
+          v-if="isResultsPhase"
           :src="tachometersUrl"
           class="q-my-xl"
           data-cy="index-tachometers-report"
@@ -200,6 +201,7 @@ import { useAdminCompetitionStore } from '../stores/adminCompetition';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import { PhaseType } from '../components/types/Challenge';
 
 export default defineComponent({
   name: 'IndexPage',
@@ -243,6 +245,9 @@ export default defineComponent({
 
     const challengeStore = useChallengeStore();
     const challengeStatus = challengeStore.getChallengeStatus;
+    const isResultsPhase = computed(() =>
+      challengeStore.getIsChallengeInPhase(PhaseType.results),
+    );
 
     const cardsFollow = listCardsFollow;
     const cardsPost = listCardsPost;
@@ -341,6 +346,7 @@ export default defineComponent({
       isSectionEventsEnabled,
       isSectionOffersEnabled,
       isSectionPostsEnabled,
+      isResultsPhase,
       tachometersUrl,
     };
   },

@@ -29,6 +29,11 @@
           "phase_type": "invoices",
           "date_from": "2024-07-15",
           "date_to": "2024-10-07"
+        },
+        {
+          "phase_type": "results",
+          "date_from": "2024-09-16",
+          "date_to": "2024-10-07"
         }
       ],
       "price_level": [
