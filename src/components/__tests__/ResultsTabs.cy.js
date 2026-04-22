@@ -46,6 +46,7 @@ describe('<ResultsTabs>', () => {
         'performanceOrganization',
         'regularity',
         'septemberJanuary',
+        'tachometers',
         'teamRegularityCity',
       ],
       'results.reportType',
@@ -240,6 +241,33 @@ describe('<ResultsTabs>', () => {
     });
   });
 
+  it('should show tachometers iframe above tabs', () => {
+    cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+      const tachometersResponse = resultsResponses.find(
+        (resultsResponse) =>
+          resultsResponse.key === ResultsReportType.tachometers,
+      );
+      cy.waitForGetResultsApi(
+        tachometersResponse.response,
+        tachometersResponse.key,
+      );
+      cy.dataCy('results-tachometers-section').should('be.visible');
+      // verify link
+      cy.dataCy('results-tachometers-link-open-in-new-tab')
+        .should('be.visible')
+        .and('have.class', 'text-primary')
+        .and('have.attr', 'target', '_blank')
+        .and('have.attr', 'href', tachometersResponse.response.data_report_url)
+        .and('contain', i18n.global.t('results.linkOpenResultsInNewTab'));
+      // verify iframe
+      cy.dataCy('results-tachometers-iframe').should(
+        'have.attr',
+        'src',
+        tachometersResponse.response.data_report_url,
+      );
+    });
+  });
+
   context('results page when user is organization admin and staff', () => {
     beforeEach(() => {
       cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
@@ -279,6 +307,10 @@ describe('<ResultsTabs>', () => {
             resultsResponse.response,
             resultsResponse.key,
           );
+          // tachometers are shown above tabs, skip
+          if (resultsResponse.key === ResultsReportType.tachometers) {
+            return;
+          }
           cy.dataCy(`results-tab-${resultsResponse.key}`)
             .should('be.visible')
             .click({ force: true });

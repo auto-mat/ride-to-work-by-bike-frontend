@@ -1160,6 +1160,7 @@ tabPerformance = "Performance"
 tabReport = "Data report"
 
 [results.reportType]
+tachometers = "Tachometers"
 may = "May Challenge"
 cityCoordinator = "City Coordinator Report"
 organizationCoordinator = "Coordinator Data Report"

@@ -1161,6 +1161,7 @@ tabPerformance = "Výkonnost"
 tabReport = "Data report"
 
 [results.reportType]
+tachometers = "Tachometry"
 may = "Květnová výzva"
 cityCoordinator = "Report městského koordinátora"
 organizationCoordinator = "Datový report koordinátora"

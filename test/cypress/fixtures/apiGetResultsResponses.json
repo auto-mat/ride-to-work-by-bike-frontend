@@ -1,5 +1,11 @@
 [
   {
+    "key": "tachometers",
+    "response": {
+      "data_report_url": "https://metabase.dopracenakole.net/public/question/tachometers-placeholder"
+    }
+  },
+  {
     "key": "regularity",
     "response": {
       "data_report_url": "https://metabase.dopracenakole.net/public/question/11d87a37-c391-45fd-8f97-dd2c52b869bc"

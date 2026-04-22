@@ -1,4 +1,5 @@
 export enum ResultsReportType {
+  tachometers = 'tachometers',
   regularity = 'regularity',
   teamRegularityCity = 'team-regularity-city',
   performanceCity = 'performance-city',

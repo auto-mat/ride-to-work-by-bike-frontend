@@ -39,6 +39,11 @@ export default defineComponent({
     });
 
     const resultsUrls = computed(() => resultsStore.getAvailableReportTypes);
+    const reportTypeTabs = computed(() =>
+      resultsUrls.value.filter(
+        (reportType) => reportType !== ResultsReportType.tachometers,
+      ),
+    );
 
     const activeTab = ref<ResultsReportType | ResultsReportTypeByChallenge>(
       challengeMonth === 'may'
@@ -62,6 +67,8 @@ export default defineComponent({
       activeTab,
       dataReportIframeHeight,
       resultsUrls,
+      reportTypeTabs,
+      ResultsReportType,
       getReportTypeLabel,
       getResultsUrl,
     };
@@ -71,6 +78,30 @@ export default defineComponent({
 
 <template>
   <div data-cy="results-tabs">
+    <!-- Section: Tachometers report (above tabs) -->
+    <div
+      v-if="getResultsUrl(ResultsReportType.tachometers)"
+      class="q-pa-md"
+      data-cy="results-tachometers-section"
+    >
+      <div class="text-right q-mt-sm q-mb-md">
+        <a
+          :href="getResultsUrl(ResultsReportType.tachometers)"
+          target="_blank"
+          class="text-primary"
+          data-cy="results-tachometers-link-open-in-new-tab"
+        >
+          {{ $t('results.linkOpenResultsInNewTab') }}
+        </a>
+      </div>
+      <iframe
+        class="full-width"
+        style="height: 560px"
+        :src="getResultsUrl(ResultsReportType.tachometers)"
+        frameBorder="0"
+        data-cy="results-tachometers-iframe"
+      />
+    </div>
     <!-- Tabs: Report types -->
     <q-tabs
       inline-label
@@ -82,7 +113,7 @@ export default defineComponent({
       data-cy="results-tabs-buttons"
     >
       <q-tab
-        v-for="reportType in resultsUrls"
+        v-for="reportType in reportTypeTabs"
         :key="reportType"
         :name="reportType"
         :label="getReportTypeLabel(reportType)"
@@ -94,7 +125,7 @@ export default defineComponent({
     <!-- Tab panels: Report types -->
     <q-tab-panels v-model="activeTab" animated>
       <q-tab-panel
-        v-for="reportType in resultsUrls"
+        v-for="reportType in reportTypeTabs"
         :key="reportType"
         :name="reportType"
         :data-cy="`results-tab-panel-${reportType}`"

@@ -49,6 +49,9 @@ export const useResultsStore = defineStore('results', {
         ResultsReportType | ResultsReportTypeByChallenge,
         string
       > = {
+        [ResultsReportType.tachometers]: i18n.global.t(
+          'results.reportType.tachometers',
+        ),
         [ResultsReportType.regularity]: i18n.global.t(
           'results.reportType.regularity',
         ),
@@ -131,6 +134,7 @@ export const useResultsStore = defineStore('results', {
         const reportTypesPerRole = new Set<ResultsReportType>();
         // Basic challenge member (default)
         [
+          ResultsReportType.tachometers,
           ResultsReportType.regularity,
           ResultsReportType.teamRegularityCity,
           ResultsReportType.performanceCity,
