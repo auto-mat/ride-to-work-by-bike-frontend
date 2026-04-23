@@ -264,9 +264,17 @@ export default defineComponent({
      * - payment state is not not yet successful and paymentAmount > 0
      */
     const isShownCreateOrderButton = computed<boolean>((): boolean => {
+      const isPaymentSuccessful = registerChallengeStore.getIsPaymentSuccessful;
+      const isPaymentAmountZero = !isPaymentAmount.value;
+      const isVoucherFreeEntry = registerChallengeStore.getIsVoucherFreeEntry;
+      const isPaymentCategoryEntryFee =
+        registerChallengeStore.getIsPaymentCategoryEntryFee;
+      // do not show if payment amount is zero
+      if (isPaymentAmountZero) {
+        return false;
+      }
       return (
-        !registerChallengeStore.getIsPaymentSuccessful &&
-        !!isPaymentAmount.value
+        !isPaymentSuccessful || !isPaymentCategoryEntryFee || isVoucherFreeEntry
       );
     });
 
