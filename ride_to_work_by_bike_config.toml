@@ -105,6 +105,7 @@ voucherWithoutRewardPattern = "^[A-Z]{2}NRWD"
 
 # Merchandise
 iDontWantMerchandiseItemCode = "nic"
+currentTShirtName = "2026 unisex"
 
 
 # API CONFIGURATION

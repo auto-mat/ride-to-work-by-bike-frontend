@@ -1397,7 +1397,8 @@ function coreTests() {
       .and(
         'contain',
         i18n.global.t('register.challenge.textAvailableTShirtSizes', {
-          sizes: '',
+          name: rideToWorkByBikeConfig.currentTShirtName,
+          sizes: 'XXS, XS, S',
         }),
       );
   });

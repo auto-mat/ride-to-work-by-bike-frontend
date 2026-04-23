@@ -68,6 +68,7 @@ export interface ConfigGlobal {
   apiFeedMaxPrizesNumber: number;
   apiTripsSourceApplicationId: string;
   iDontWantMerchandiseItemCode: string;
+  currentTShirtName: string;
   notifyMessagePosition: string;
   mobileBottomPanelVisibleItems: number;
   indexPageVisibleOfferCount: number;

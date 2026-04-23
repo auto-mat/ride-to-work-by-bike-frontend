@@ -635,43 +635,23 @@ export default defineComponent({
 
     const tShirtSizesText = computed((): string => {
       const cards = registerChallengeStore.getMerchandiseCards;
-      const sizesList: string[] = [];
-      const maleCards = cards[Gender.male];
-      const femaleCards = cards[Gender.female];
-      // get unique sizes for male and female + sort by size
-      if (maleCards?.length) {
-        const sizes = [
-          // Set filters unique sizes
-          ...new Set(
-            // flatMap prevents nested arrays
-            maleCards.flatMap((card) =>
-              card.sizeOptions.map((option) => String(option.label)),
-            ),
-          ),
-        ].sort(
-          (sizeA, sizeB) =>
-            tShirtSizeOrder.indexOf(sizeA) - tShirtSizeOrder.indexOf(sizeB),
-        );
-        sizesList.push(`${i18n.global.t('global.male')} (${sizes.join(', ')})`);
-      }
-      if (femaleCards?.length) {
-        const sizes = [
-          // Set filters unique sizes
-          ...new Set(
-            // flatMap prevents nested arrays
-            femaleCards.flatMap((card) =>
-              card.sizeOptions.map((option) => String(option.label)),
-            ),
-          ),
-        ].sort(
-          (sizeA, sizeB) =>
-            tShirtSizeOrder.indexOf(sizeA) - tShirtSizeOrder.indexOf(sizeB),
-        );
-        sizesList.push(
-          `${i18n.global.t('global.female')} (${sizes.join(', ')})`,
-        );
-      }
-      return sizesList.join(', ');
+      const currentTShirtName = rideToWorkByBikeConfig.currentTShirtName;
+      const maleCards = (cards[Gender.male] ?? []).filter(
+        (card) => card.label === currentTShirtName,
+      );
+      const femaleCards = (cards[Gender.female] ?? []).filter(
+        (card) => card.label === currentTShirtName,
+      );
+      const allSizeOptions = [...maleCards, ...femaleCards].flatMap(
+        (card) => card.sizeOptions,
+      );
+      const uniqueSizes = [
+        ...new Set(allSizeOptions.map((option) => String(option.label))),
+      ].sort(
+        (sizeA, sizeB) =>
+          tShirtSizeOrder.indexOf(sizeA) - tShirtSizeOrder.indexOf(sizeB),
+      );
+      return uniqueSizes.join(', ');
     });
     const showMerchSizesBanner = computed((): boolean => {
       return isPaymentWithReward.value && tShirtSizesText.value.length > 0;
@@ -694,6 +674,7 @@ export default defineComponent({
     return {
       borderRadius,
       computedCurrentValue,
+      rideToWorkByBikeConfig,
       defaultPaymentAmountMin,
       donationAmount,
       formRegisterCoordinator,
@@ -965,6 +946,7 @@ export default defineComponent({
     >
       {{
         $t('register.challenge.textAvailableTShirtSizes', {
+          name: rideToWorkByBikeConfig.currentTShirtName,
           sizes: tShirtSizesText,
         })
       }}
