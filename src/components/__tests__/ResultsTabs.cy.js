@@ -307,7 +307,7 @@ describe('<ResultsTabs>', () => {
             resultsResponse.response,
             resultsResponse.key,
           );
-          // tachometers are shown above tabs, skip
+          // skip tachometers for tabs test loop
           if (resultsResponse.key === ResultsReportType.tachometers) {
             return;
           }
