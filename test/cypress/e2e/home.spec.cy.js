@@ -992,19 +992,24 @@ describe('Home page', () => {
     });
 
     it('shows tachometers report on homepage', () => {
-      cy.waitForGetResultsApi(
-        {
-          data_report_url:
-            'https://metabase.dopracenakole.net/public/question/tachometers-placeholder',
-        },
-        'tachometers',
-      );
-      cy.dataCy('index-tachometers-report').should('be.visible');
-      cy.dataCy('results-tachometers-iframe').should(
-        'have.attr',
-        'src',
-        'https://metabase.dopracenakole.net/public/question/tachometers-placeholder',
-      );
+      cy.fixture('apiGetResultsResponses').then((resultsResponses) => {
+        const tachometersResponse = resultsResponses.find(
+          (resultsResponse) => resultsResponse.key === 'tachometers',
+        );
+
+        cy.waitForGetResultsApi(
+          {
+            data_report_url: tachometersResponse.response.data_report_url,
+          },
+          tachometersResponse.key,
+        );
+        cy.dataCy('index-tachometers-report').should('be.visible');
+        cy.dataCy('results-tachometers-iframe').should(
+          'have.attr',
+          'src',
+          tachometersResponse.response.data_report_url,
+        );
+      });
     });
   });
 
