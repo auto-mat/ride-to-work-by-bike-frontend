@@ -5,6 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { getSortedSubsidiaryIndex } from './helpers/tableAttendance';
 
 // colors
 const { getPaletteColor } = colors;
@@ -79,7 +80,11 @@ function coreTests() {
         return;
       }
       // test each subsidiary
-      subsidiaries.forEach((subsidiary, subsidiaryIndex) => {
+      subsidiaries.forEach((subsidiary) => {
+        const subsidiaryIndex = getSortedSubsidiaryIndex(
+          subsidiaries,
+          subsidiary,
+        );
         // count all members in this subsidiary
         const allMembers = [];
         subsidiary.teams.forEach((team) => {
