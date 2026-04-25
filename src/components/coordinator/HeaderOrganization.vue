@@ -73,9 +73,17 @@ export default defineComponent({
       return currentAdminOrganisation.value.subsidiaries ?? [];
     });
 
-    const subsidiariesCount = computed((): number => {
-      return subsidiaries.value.length;
-    });
+    const subsidiariesCount = computed(
+      (): number =>
+        subsidiaries.value.filter((subsidiary) =>
+          subsidiary.teams.some(
+            (team) =>
+              team.members_with_paid_entry_fee_by_org_coord.length > 0 ||
+              team.members_without_paid_entry_fee_by_org_coord.length > 0 ||
+              team.other_members.length > 0,
+          ),
+        ).length,
+    );
 
     // provides total count of members of all teams in all subsidiaries
     const membersCount = computed((): number => {

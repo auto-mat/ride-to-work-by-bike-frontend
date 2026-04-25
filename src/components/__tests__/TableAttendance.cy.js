@@ -103,7 +103,7 @@ describe('<TableAttendance>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.mount(TableAttendance);
+      cy.mount(TableAttendance, { props: { variant: 'active' } });
       cy.viewport('macbook-16');
     });
 
@@ -129,15 +129,25 @@ function coreTests() {
       cy.dataCy(selectorTableAttendance).should('exist');
 
       const subsidiaries = test.storeData[0].subsidiaries;
+      const activeSubsidiaries = subsidiaries.filter(
+        (subsidiary) => calculateSubsidiaryMemberCount(subsidiary) > 0,
+      );
       if (subsidiaries.length === 0) {
         // no subsidiaries - no tables should be rendered
         cy.dataCy(selectorTable).should('not.exist');
         return;
       }
-      // test each subsidiary
-      subsidiaries.forEach((subsidiary) => {
-        // use sorted index (component sorts subsidiaries by member count)
-        const sortedIndex = getSortedSubsidiaryIndex(subsidiaries, subsidiary);
+      // skip test if no active subsidiaries
+      if (activeSubsidiaries.length === 0) {
+        return;
+      }
+      // test each active subsidiary (active panel is shown by default)
+      activeSubsidiaries.forEach((subsidiary) => {
+        // use sorted index within active subsidiaries only
+        const sortedIndex = getSortedSubsidiaryIndex(
+          activeSubsidiaries,
+          subsidiary,
+        );
         // get member count
         const memberCount = calculateSubsidiaryMemberCount(subsidiary);
         // test subsidiary header

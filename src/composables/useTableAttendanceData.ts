@@ -87,6 +87,8 @@ function transformMemberToRow({
  */
 export const useTableAttendanceData = (): {
   subsidiariesData: Ref<TableAttendanceSubsidiaryData[]>;
+  activeSubsidiariesData: Ref<TableAttendanceSubsidiaryData[]>;
+  emptySubsidiariesData: Ref<TableAttendanceSubsidiaryData[]>;
 } => {
   const adminOrganisationStore = useAdminOrganisationStore();
 
@@ -188,7 +190,21 @@ export const useTableAttendanceData = (): {
     );
   });
 
+  const activeSubsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() =>
+    subsidiariesData.value.filter(
+      (subsidiaryData) => subsidiaryData.memberCount > 0,
+    ),
+  );
+
+  const emptySubsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() =>
+    subsidiariesData.value.filter(
+      (subsidiaryData) => subsidiaryData.memberCount === 0,
+    ),
+  );
+
   return {
     subsidiariesData,
+    activeSubsidiariesData,
+    emptySubsidiariesData,
   };
 };

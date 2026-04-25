@@ -3,8 +3,8 @@
  * TableAttendance Component
  *
  * @description * Use this component to display tables with attendance information.
- * Shown on `CoordinatorAttendance` page. Displays one table per subsidiary,
- * with members grouped by team within each table.
+ * Shown on `CoordinatorAttendance` page. Displays empty or non-empty subsidiaries
+ * based on `variant` prop.
  *
  * @components
  * - `DialogDefault.vue` - default dialog wrapper
@@ -12,8 +12,11 @@
  * - `FormFieldTextRequired` - used to render required text field
  * - `FormMoveMember.vue` - used to move a member to another team
  *
+ * @props
+ * - `variant` (String, required): 'active' | 'empty' - determines which set of subsidiaries to display.
+ *
  * @example
- * <table-attendance />
+ * <table-attendance variant="active" />
  */
 
 // libraries
@@ -78,8 +81,12 @@ import type {
   FormMoveMemberFields,
   FormCompanyAddressFields,
 } from '../types/Form';
-import type { TableAttendanceRow } from '../../composables/useTableAttendanceData';
+import type {
+  TableAttendanceRow,
+  TableAttendanceSubsidiaryData,
+} from '../../composables/useTableAttendanceData';
 import type { AdminSubsidiary } from '../types/AdminOrganisation';
+import type { PropType } from 'vue';
 import type { City } from '../types/City';
 
 export default defineComponent({
@@ -93,9 +100,21 @@ export default defineComponent({
     FormFieldEmail,
     FormMoveMember,
   },
-  setup() {
+  props: {
+    variant: {
+      type: String as PropType<'active' | 'empty'>,
+      required: true,
+    },
+  },
+  setup(props) {
     const tableRefs = ref<QTable[]>([]);
-    const { subsidiariesData } = useTableAttendanceData();
+    const { activeSubsidiariesData, emptySubsidiariesData } =
+      useTableAttendanceData();
+    const subsidiariesData = computed<TableAttendanceSubsidiaryData[]>(() =>
+      props.variant === 'active'
+        ? activeSubsidiariesData.value
+        : emptySubsidiariesData.value,
+    );
 
     // sort by name initially
     onMounted(() => {

@@ -446,7 +446,7 @@
     "displayData": {
       "organizationTitle": "Moravské pivovary a.s.",
       "organizationId": 87654321,
-      "subsidiariesCount": 3,
+      "subsidiariesCount": 1,
       "membersCount": 7,
       "disabledDiplomas": 1,
       "enabledDiplomas": 6
@@ -525,7 +525,7 @@
     "displayData": {
       "organizationTitle": "Tiskárna Rychlotisk v.o.s.",
       "organizationId": 99887766,
-      "subsidiariesCount": 1,
+      "subsidiariesCount": 0,
       "membersCount": 0,
       "disabledDiplomas": 0,
       "enabledDiplomas": 0
