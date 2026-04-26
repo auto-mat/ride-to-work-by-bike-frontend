@@ -83,6 +83,7 @@ import { register } from 'swiper/element/bundle';
 
 import { options as loggerOptions } from '../../../src/boot/logger';
 import { i18n as i18nApp } from '../../../src/boot/i18n';
+import { bus } from '../../../src/boot/bus';
 // Import Vue router
 import route from '../../../src/router';
 import { initVars } from 'src/boot/global_vars';
@@ -112,6 +113,7 @@ Cypress.Commands.add('mount', (component, options = {}) => {
       app.use(VuePlugin);
       app.use(createPinia());
       app.use(OpenLayersMap);
+      app.provide('bus', bus);
     },
   });
 
