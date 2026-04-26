@@ -6733,9 +6733,9 @@ vue-router@^5.0.0:
     yaml "^2.8.2"
 
 vue3-google-login@^2.0.33:
-  version "2.0.37"
-  resolved "https://registry.yarnpkg.com/vue3-google-login/-/vue3-google-login-2.0.37.tgz#33fca748b0361f63409af50dcb38eab1c5ad4c25"
-  integrity sha512-1seGaevhcMPi/dKO36KktpqYMkJdzt4s5U7XjLvHPd50e8sCBcC8/Pv3Mz+QrK12rSOmiduTtxCuPcH2ULYozw==
+  version "2.0.41"
+  resolved "https://registry.yarnpkg.com/vue3-google-login/-/vue3-google-login-2.0.41.tgz#ed784a1dd4804be1a4571a256609782fbaf8b074"
+  integrity sha512-94gksqNFd3PXR/LB7OaucEYO7kHOY4SAFPKktxPP4Z4BxMuj4DJlWzstw3P1wsPNd8F1Xs9kjTGYOHsxBoMJ2w==
 
 vue3-openlayers@^11.0.0:
   version "11.6.2"
