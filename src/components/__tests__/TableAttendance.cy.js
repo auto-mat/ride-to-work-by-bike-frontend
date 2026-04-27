@@ -9,7 +9,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import {
   calculateSubsidiaryMemberCount,
   getSortedSubsidiaryIndex,
-} from './helpers/tableAttendance';
+} from './utils/tableAttendance';
 
 // colors
 const { getPaletteColor } = colors;

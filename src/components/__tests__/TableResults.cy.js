@@ -5,7 +5,7 @@ import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { getSortedSubsidiaryIndex } from './helpers/tableAttendance';
+import { getSortedSubsidiaryIndex } from './utils/tableAttendance';
 
 // colors
 const { getPaletteColor } = colors;
