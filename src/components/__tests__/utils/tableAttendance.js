@@ -3,7 +3,7 @@
  * @param {object} subsidiary
  * @returns {number} - member count
  */
-export function calculateSubsidiaryMemberCount(subsidiary) {
+const calculateSubsidiaryMemberCount = (subsidiary) => {
   let count = 0;
   subsidiary.teams.forEach((team) => {
     count += team.members_without_paid_entry_fee_by_org_coord.length;
@@ -11,7 +11,7 @@ export function calculateSubsidiaryMemberCount(subsidiary) {
     count += team.other_members.length;
   });
   return count;
-}
+};
 
 /**
  * Helper function to get the index of a subsidiary in a sorted array
@@ -20,7 +20,7 @@ export function calculateSubsidiaryMemberCount(subsidiary) {
  * @param {object} targetSubsidiary
  * @returns {number} index
  */
-export function getSortedSubsidiaryIndex(subsidiaries, targetSubsidiary) {
+const getSortedSubsidiaryIndex = (subsidiaries, targetSubsidiary) => {
   // map subsidiaries to member count
   const withCounts = subsidiaries.map((subsidiary) => ({
     subsidiary,
@@ -33,4 +33,6 @@ export function getSortedSubsidiaryIndex(subsidiaries, targetSubsidiary) {
   );
   // find index in sorted array
   return sorted.findIndex((item) => item.subsidiary.id === targetSubsidiary.id);
-}
+};
+
+export { calculateSubsidiaryMemberCount, getSortedSubsidiaryIndex };
