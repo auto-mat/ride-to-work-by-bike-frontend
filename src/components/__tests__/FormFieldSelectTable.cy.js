@@ -289,6 +289,8 @@ describe('<FormFieldSelectTable>', () => {
             .find('input')
             .type(formFieldCompanyCreateRequest.address.zip);
           // subsidiary details
+          cy.dataCy('form-add-subsidiary-street').should('not.exist');
+          cy.dataCy('form-add-company-checkbox-different-address').click();
           cy.dataCy('form-add-subsidiary-street').find('input').type('Slezská');
           cy.dataCy('form-add-subsidiary-house-number')
             .find('input')
@@ -360,6 +362,8 @@ describe('<FormFieldSelectTable>', () => {
               cy.dataCy('form-add-company-vat-id')
                 .find('input')
                 .should('have.value', '');
+              cy.dataCy('form-add-subsidiary-street').should('not.exist');
+              cy.dataCy('form-add-company-checkbox-different-address').click();
               cy.dataCy('form-add-subsidiary-street')
                 .find('input')
                 .should('have.value', '');
