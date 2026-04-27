@@ -3,7 +3,7 @@ import TableAttendanceTabs from 'components/coordinator/TableAttendanceTabs.vue'
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
-import { calculateSubsidiaryMemberCount } from './helpers/tableAttendance';
+import { calculateSubsidiaryMemberCount } from './utils/tableAttendance';
 
 describe('<TableAttendanceTabs>', () => {
   it('has translation for all strings', () => {
