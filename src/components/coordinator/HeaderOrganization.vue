@@ -73,7 +73,7 @@ export default defineComponent({
       return currentAdminOrganisation.value.subsidiaries ?? [];
     });
 
-    const subsidiariesCount = computed(
+    const activeSubsidiariesCount = computed(
       (): number =>
         subsidiaries.value.filter((subsidiary) =>
           subsidiary.teams.some(
@@ -184,7 +184,7 @@ export default defineComponent({
       ExportFileType,
       organizationId,
       organizationTitle,
-      subsidiariesCount,
+      activeSubsidiariesCount,
       membersCount,
       isEditOrganizationDialogOpen,
       organizationEditFormRef,
@@ -237,8 +237,8 @@ export default defineComponent({
                 icon="mdi-office-building"
                 data-cy="header-organization-branch-count"
               >
-                {{ subsidiariesCount }}
-                {{ $t('coordinator.labelBranches', subsidiariesCount) }}
+                {{ activeSubsidiariesCount }}
+                {{ $t('coordinator.labelBranches', activeSubsidiariesCount) }}
               </q-chip>
               <!-- Members -->
               <q-chip
