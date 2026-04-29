@@ -9,6 +9,7 @@ import {
   OrganizationLevel,
   OrganizationType,
 } from 'src/components/types/Organization';
+import { PaymentState, PaymentSubject } from 'src/components/enums/Payment';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { vModelAdapter } from 'app/test/cypress/utils';
 import { useChallengeStore } from 'src/stores/challenge';
@@ -672,6 +673,68 @@ describe('<FormFieldSelectTable>', () => {
         });
     });
   });
+
+  context(
+    'organization - payment confirmed, team selected (org locked)',
+    () => {
+      beforeEach(() => {
+        cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+        cy.mount(FormFieldSelectTable, {
+          props: {
+            options: options,
+            organizationLevel: OrganizationLevel.organization,
+            organizationType: OrganizationType.company,
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+
+      it('disables org options when payment confirmed and team is set', () => {
+        const registerChallengeStore = useRegisterChallengeStore();
+        registerChallengeStore.setPaymentSubject(PaymentSubject.company);
+        registerChallengeStore.setPaymentState(PaymentState.done);
+        registerChallengeStore.setTeamId(1);
+        // all org options are disabled (organizationId is null in store, all values differ)
+        cy.dataCy('form-select-table-option').each((option) => {
+          cy.wrap(option).should('have.class', 'disabled');
+        });
+        // "Add new organization" button is disabled
+        cy.dataCy('button-add-option').should('be.disabled');
+      });
+    },
+  );
+
+  context(
+    'organization - payment confirmed, team cleared (rejection case)',
+    () => {
+      beforeEach(() => {
+        cy.interceptCitiesGetApi(rideToWorkByBikeConfig, i18n);
+        cy.mount(FormFieldSelectTable, {
+          props: {
+            options: options,
+            organizationLevel: OrganizationLevel.organization,
+            organizationType: OrganizationType.company,
+          },
+        });
+        cy.viewport('macbook-16');
+      });
+
+      it('allows org re-selection when payment confirmed and team is null', () => {
+        const registerChallengeStore = useRegisterChallengeStore();
+        registerChallengeStore.setPaymentSubject(PaymentSubject.company);
+        registerChallengeStore.setPaymentState(PaymentState.done);
+        registerChallengeStore.setTeamId(null);
+        // org options are not disabled
+        cy.dataCy('form-select-table-option')
+          .find('.q-radio__inner')
+          .each((option) => {
+            cy.wrap(option).should('not.have.class', 'disabled');
+          });
+        // "Add new organization" button is not disabled
+        cy.dataCy('button-add-option').should('not.be.disabled');
+      });
+    },
+  );
 
   context('subsidiary', () => {
     beforeEach(() => {

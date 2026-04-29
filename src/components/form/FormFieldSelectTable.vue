@@ -424,7 +424,15 @@ export default defineComponent({
           props.organizationLevel === OrganizationLevel.organization;
         const isOrganizationPaying: boolean =
           registerChallengeStore.getIsPaymentSubjectOrganization;
-        return isOrganizationSelect && isOrganizationPaying;
+        // allow change after payment if team is not selected (rejection case)
+        const isPaymentConfirmedWithoutTeam: boolean =
+          registerChallengeStore.getIsPaymentSuccessful &&
+          registerChallengeStore.getTeamId === null;
+        return (
+          isOrganizationSelect &&
+          isOrganizationPaying &&
+          !isPaymentConfirmedWithoutTeam
+        );
       },
     );
 
@@ -435,9 +443,10 @@ export default defineComponent({
           return option.members.length >= option.maxMembers;
         }
       }
+      // if we are selecting organization
       const organizationId: number | null =
         registerChallengeStore.getOrganizationId;
-      // if this is other than active option and paying company is selected
+      // disable other options than paying organization (if selected)
       return (
         isThisSelectOrganizationAndOrganizationPaying.value &&
         option.value !== organizationId
