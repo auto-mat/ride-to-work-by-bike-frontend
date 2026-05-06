@@ -29,6 +29,18 @@ const selectorVoucherWidget = 'voucher-widget';
 // variables
 let defaultPaymentAmountMinWithReward = 0;
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+// mock available merchandise to allow applying "with reward" vouchers
+const availableMerchandiseCard = {
+  label: 'T-Shirt',
+  image: '',
+  description: '',
+  author: '',
+  gender: 'female',
+  sizeOptions: [],
+  material: '',
+  itemIds: [1],
+  available: true,
+};
 const { formatPriceCurrency } = useFormatPrice();
 
 describe('<FormFieldVoucher>', () => {
@@ -107,6 +119,11 @@ describe('<FormFieldVoucher>', () => {
     });
 
     it('allows to use and then remove coupon FULL', () => {
+      cy.wrap(useRegisterChallengeStore()).then((storeRegisterChallenge) => {
+        storeRegisterChallenge.setMerchandiseCards({
+          female: [availableMerchandiseCard],
+        });
+      });
       // apply voucher FULL
       cy.applyFullVoucher(rideToWorkByBikeConfig, i18n);
       // check banner styling
@@ -140,6 +157,11 @@ describe('<FormFieldVoucher>', () => {
     });
 
     it('allows to use and then remove coupon HALF', () => {
+      cy.wrap(useRegisterChallengeStore()).then((storeRegisterChallenge) => {
+        storeRegisterChallenge.setMerchandiseCards({
+          female: [availableMerchandiseCard],
+        });
+      });
       // apply voucher HALF
       cy.applyHalfVoucher(
         rideToWorkByBikeConfig,
@@ -205,6 +227,7 @@ describe('<FormFieldVoucher>', () => {
       });
     });
   });
+
   context('desktop - active voucher FULL', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
@@ -258,6 +281,11 @@ function coreTests() {
   });
 
   it('does not allow to submit invalid voucher', () => {
+    cy.wrap(useRegisterChallengeStore()).then((storeRegisterChallenge) => {
+      storeRegisterChallenge.setMerchandiseCards({
+        female: [availableMerchandiseCard],
+      });
+    });
     cy.applyInvalidVoucher(rideToWorkByBikeConfig, i18n);
     cy.dataCy(selectorVoucherWidget).should('be.visible');
   });

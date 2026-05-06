@@ -3,6 +3,7 @@ import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
 import { Gender } from 'components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { useFormatPrice, Currency } from '../../composables/useFormatPrice';
 import { useChallengeStore } from '../../stores/challenge';
 import { defaultLocale } from 'src/i18n/def_locale';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
@@ -399,9 +400,31 @@ describe('<FormFieldListMerch>', () => {
           store.setPriceLevel(response.results[0].price_level);
         });
       });
-      cy.dataCy('text-merch-unavailable')
-        .should('be.visible')
-        .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));
+      const { formatPriceCurrency } = useFormatPrice();
+      const shopDiscountAmountFormatted = formatPriceCurrency(
+        rideToWorkByBikeConfig.shopDiscountAmount,
+        Currency.CZK,
+      );
+      const shopDiscountMinOrderFormatted = formatPriceCurrency(
+        rideToWorkByBikeConfig.shopDiscountMinOrder,
+        Currency.CZK,
+      );
+      const shopDiscountValidUntilFormatted = i18n.global.d(
+        new Date(rideToWorkByBikeConfig.shopDiscountValidUntil),
+        'numeric',
+      );
+      const bannerHtml = i18n.global.t('form.merch.textMerchUnavailable', {
+        url: rideToWorkByBikeConfig.urlAutoMatShop,
+        shopDiscountAmount: shopDiscountAmountFormatted,
+        shopDiscountMinOrder: shopDiscountMinOrderFormatted,
+        shopDiscountValidUntil: shopDiscountValidUntilFormatted,
+        shopVoucherCode: rideToWorkByBikeConfig.shopVoucherCode,
+      });
+      cy.stripHtmlTags(bannerHtml).then((bannerText) => {
+        cy.dataCy('text-merch-unavailable')
+          .should('be.visible')
+          .and('contain', bannerText);
+      });
       cy.dataCy('list-merch-tabs').should('not.be.visible');
       cy.dataCy('form-field-merch-size').should('not.exist');
       cy.dataCy('form-merch-size-conversion-chart-link').should('not.exist');

@@ -40,6 +40,7 @@ import SliderMerch from './SliderMerch.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
+import { useFormatPrice, Currency } from '../../composables/useFormatPrice';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -256,6 +257,14 @@ export default defineComponent({
       return isPriceLevelEmpty;
     });
 
+    const showNoMerchSelectedBanner = computed((): boolean => {
+      return (
+        !showMerchDisabledBanner.value &&
+        !showMerchUnavailableBanner.value &&
+        !isPaymentWithReward.value
+      );
+    });
+
     /**
      * Size options for dialog input.
      * Based on current dialog card.
@@ -410,6 +419,22 @@ export default defineComponent({
       }
     };
 
+    const { formatPriceCurrency } = useFormatPrice();
+    const shopDiscountAmountFormatted = formatPriceCurrency(
+      rideToWorkByBikeConfig.shopDiscountAmount,
+      Currency.CZK,
+    );
+    const shopDiscountMinOrderFormatted = formatPriceCurrency(
+      rideToWorkByBikeConfig.shopDiscountMinOrder,
+      Currency.CZK,
+    );
+    const shopDiscountValidUntilFormatted = computed(() =>
+      i18n.global.d(
+        new Date(rideToWorkByBikeConfig.shopDiscountValidUntil),
+        'numeric',
+      ),
+    );
+
     const urlSizeConversionChart = computed(() => {
       return getApiBaseUrlWithLang(
         logger,
@@ -440,6 +465,7 @@ export default defineComponent({
       optionsEmpty,
       showMerchDisabledBanner,
       showMerchUnavailableBanner,
+      showNoMerchSelectedBanner,
       selectedOption,
       selectedOptionLocal,
       selectedSizeLocal,
@@ -454,6 +480,10 @@ export default defineComponent({
       isLoading,
       isPaymentWithReward,
       merchandiseCards,
+      rideToWorkByBikeConfig,
+      shopDiscountAmountFormatted,
+      shopDiscountMinOrderFormatted,
+      shopDiscountValidUntilFormatted,
       urlSizeConversionChart,
     };
   },
@@ -471,7 +501,7 @@ export default defineComponent({
   </q-banner>
   <!-- Message: No merch selected (payment without reward) -->
   <q-banner
-    v-if="!showMerchDisabledBanner && !isPaymentWithReward"
+    v-if="showNoMerchSelectedBanner"
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-no-merch-selected"
   >
@@ -479,11 +509,21 @@ export default defineComponent({
   </q-banner>
   <!-- Message: Merch unavailable -->
   <q-banner
-    v-if="showMerchUnavailableBanner && isPaymentWithReward"
+    v-if="showMerchUnavailableBanner"
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-merch-unavailable"
   >
-    {{ $t('form.merch.textMerchUnavailable') }}
+    <div
+      v-html="
+        $t('form.merch.textMerchUnavailable', {
+          url: rideToWorkByBikeConfig.urlAutoMatShop,
+          shopDiscountAmount: shopDiscountAmountFormatted,
+          shopDiscountMinOrder: shopDiscountMinOrderFormatted,
+          shopDiscountValidUntil: shopDiscountValidUntilFormatted,
+          shopVoucherCode: rideToWorkByBikeConfig.shopVoucherCode,
+        })
+      "
+    />
   </q-banner>
   <!-- Tabs: Merch -->
   <q-card ref="tabsMerchRef" flat style="max-width: 1024px">

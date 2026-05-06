@@ -4952,10 +4952,10 @@ describe('Register Challenge page', () => {
             .find('.q-stepper__step-content')
             .should('be.visible');
           // check that merch options are not visible
-          cy.get('@i18n').then((i18n) => {
+          cy.get('@config').then((config) => {
             cy.dataCy('text-merch-unavailable')
               .should('be.visible')
-              .and('contain', i18n.global.t('form.merch.textMerchUnavailable'));
+              .and('contain', config.shopVoucherCode);
           });
           cy.dataCy('list-merch-tabs').should('not.be.visible');
           cy.dataCy('form-field-merch-size').should('not.exist');

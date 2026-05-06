@@ -156,6 +156,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
+    getIsMerchandiseAvailable: (state): boolean =>
+      Object.values(state.merchandiseCards).some((cards) =>
+        cards.some((card) => card.available),
+      ),
     getMyTeam: (state): MyTeamResults | null => state.myTeam,
     getCitySlug: (state): string | null => state.citySlug,
     getCityWpSlug: (state): string | null => state.cityWpSlug,
@@ -978,6 +982,13 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       logger?.debug(
         `Loaded merchandise items <${this.merchandiseItems.length}> and cards saved into store.`,
       );
+      // if merch is empty and payment not done, switch to no reward
+      if (!this.getIsMerchandiseAvailable && !this.getIsPaymentSuccessful) {
+        logger?.debug(
+          'Merchandise empty and payment not committed, forcing without-reward price level.',
+        );
+        this.setIsPaymentWithReward(false);
+      }
       this.isLoadingMerchandise = false;
     },
     async loadFilteredMerchandiseToStore(logger: Logger | null, code: string) {

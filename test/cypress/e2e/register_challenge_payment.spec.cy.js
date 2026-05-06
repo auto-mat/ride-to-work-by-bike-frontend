@@ -103,6 +103,85 @@ describe('Register Challenge - Payment step', () => {
     });
   });
 
+  context('merch unavailable', () => {
+    beforeEach(() => {
+      cy.get('@config').then((config) => {
+        // override merchandise intercept with empty response
+        cy.fixture('apiGetMerchandiseResponseEmpty.json').then((response) => {
+          cy.interceptMerchandiseGetApi(config, defLocale, response);
+        });
+      });
+    });
+
+    it('disables with-reward checkbox when merch is empty', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+          cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+        });
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.viewport('macbook-16');
+        cy.passToStep2();
+        // checkbox is disabled when merchandise items are empty
+        cy.dataCy('checkbox-payment-with-reward')
+          .should('be.visible')
+          .and('have.class', 'disabled')
+          .find('.q-checkbox__inner')
+          .should('have.class', 'q-checkbox__inner--falsy');
+      });
+    });
+
+    it('rejects with-reward voucher when merch is empty', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+          cy.visit('#' + routesConf['register_challenge']['path']);
+          cy.viewport('macbook-16');
+          cy.passToStep2();
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          cy.fixture('apiGetDiscountCouponResponseFull.json').then(
+            (apiResponse) => {
+              cy.dataCy('form-field-voucher-input').type(
+                apiResponse.results[0].name,
+              );
+              cy.dataCy('form-field-voucher-submit').click();
+              // voucher is rejected before API call when merch is unavailable
+              cy.contains(
+                i18n.global.t('notify.voucherWithRewardUnavailable'),
+              ).should('be.visible');
+              // voucher banner was not created
+              cy.dataCy('voucher-banner').should('not.exist');
+            },
+          );
+        });
+      });
+    });
+
+    it('accepts without-reward voucher when merch is empty', () => {
+      cy.get('@config').then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture('apiGetRegisterChallengeEmpty.json').then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+          cy.visit('#' + routesConf['register_challenge']['path']);
+          cy.viewport('macbook-16');
+          cy.passToStep2();
+          cy.dataCy(getRadioOption(PaymentSubject.voucher))
+            .should('be.visible')
+            .click();
+          cy.applyVoucherFullWithoutReward(config, i18n);
+          // continue button is enabled after applying without-reward voucher
+          cy.dataCy('step-2-continue')
+            .should('be.visible')
+            .and('not.be.disabled');
+        });
+      });
+    });
+  });
+
   context('voucher no reward registration', () => {
     it('resets payment state on voucher remove', () => {
       cy.get('@config').then((config) => {

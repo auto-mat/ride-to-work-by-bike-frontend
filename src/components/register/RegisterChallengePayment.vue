@@ -202,7 +202,10 @@ export default defineComponent({
     });
 
     const isPriceLevelSwitchDisabled = computed((): boolean => {
-      return activeVoucher.value !== null;
+      return (
+        activeVoucher.value !== null ||
+        !registerChallengeStore.getIsMerchandiseAvailable
+      );
     });
     // init organization admin status
     const hasOrganizationAdmin = computed<boolean | null>(() => {

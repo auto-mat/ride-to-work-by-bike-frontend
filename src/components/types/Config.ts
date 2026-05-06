@@ -26,6 +26,11 @@ export interface ConfigGlobal {
   maxWidthMerchDialogImage: string;
   contactEmail: string;
   urlAutoMat: string;
+  urlAutoMatShop: string;
+  shopDiscountAmount: number;
+  shopDiscountMinOrder: number;
+  shopDiscountValidUntil: string;
+  shopVoucherCode: string;
   urlAppStore: string;
   urlBlog: string;
   urlContact: string;

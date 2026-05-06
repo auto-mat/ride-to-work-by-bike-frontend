@@ -107,6 +107,17 @@ export default defineComponent({
      */
     const onSubmitVoucher = async (): Promise<void> => {
       if (formFieldTextRequiredRef.value?.inputRef?.validate()) {
+        // reject "with reward" voucher when merch is unavailable
+        if (
+          !registerChallengeStore.getIsMerchandiseAvailable &&
+          isVoucherWithReward(codeFormatted.value, logger)
+        ) {
+          Notify.create({
+            type: 'negative',
+            message: i18n.global.t('notify.voucherWithRewardUnavailable'),
+          });
+          return;
+        }
         const validatedCoupon: ValidatedCoupon = await validateCoupon(
           codeFormatted.value,
         );
