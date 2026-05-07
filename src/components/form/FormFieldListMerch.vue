@@ -258,11 +258,12 @@ export default defineComponent({
     });
 
     const showNoMerchSelectedBanner = computed((): boolean => {
-      return (
+      const show =
         !showMerchDisabledBanner.value &&
         !showMerchUnavailableBanner.value &&
-        !isPaymentWithReward.value
-      );
+        !isPaymentWithReward.value;
+      logger.debug(`Show no merch selected banner check <${show}>.`);
+      return show;
     });
 
     /**
