@@ -59,9 +59,6 @@ urlBaseBackend = "https://test.dopracenakole.cz/"
 urlAppStore = "https://apps.apple.com/cz/app/do-pr%C3%A1ce-na-kole/id1564442780"
 urlAutoMat = "https://auto-mat.cz"
 urlAutoMatShop = "https://obchod.auto-mat.cz/"
-shopDiscountAmount = 150
-shopDiscountMinOrder = 600
-shopDiscountValidUntil = "2026-06-30"
 shopVoucherCode = "KVDPNK2026"
 urlBlog = "https://dopracenakole.cz/novinky-do-prace-na-kole"
 urlContact = "https://dopracenakole.cz/kontakt-do-prace-na-kole"
@@ -259,3 +256,9 @@ mapZoom = "14"
 mapGeocodingApiUrl = "https://nominatim.openstreetmap.org/reverse"
 mapSourceRtwbb = "https://mnk-osm-tiles.dopracenakole.net/{z}/{x}/{y}.png"
 mapSourceOsm = "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+# AUTO*MAT E-SHOP DISCOUNT COUPON SETTINGS
+
+shopDiscountAmount = 150
+shopDiscountMinOrder = 600
+shopDiscountValidUntil = "2026-06-30"
