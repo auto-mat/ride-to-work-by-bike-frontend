@@ -154,7 +154,7 @@
   "displayData": {
     "nonApprovedMembers": [
       {
-        "name": "Karel Dvořák",
+        "name": "Karel Dvořák (kdvorak)",
         "email": "karel.dvorak@cerny.cz",
         "nickname": "kdvorak",
         "amount": 380,
@@ -163,7 +163,7 @@
         "reward": false
       },
       {
-        "name": "Jan Novák",
+        "name": "Jan Novák (jnovak)",
         "email": "jan.novak@cerny.cz",
         "nickname": "jnovak",
         "amount": 430,
@@ -174,7 +174,7 @@
     ],
     "approvedMembers": [
       {
-        "name": "Jan Šťastný",
+        "name": "Jan Šťastný (jstastny)",
         "email": "jan.stastny@cerny.cz",
         "nickname": "jstastny",
         "amount": 380,
@@ -183,7 +183,7 @@
         "reward": false
       },
       {
-        "name": "Anna Nováková",
+        "name": "Anna Nováková (anovakova)",
         "email": "anna.novakova@cerny.cz",
         "nickname": "anovakova",
         "amount": 1000,
