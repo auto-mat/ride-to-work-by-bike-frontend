@@ -347,7 +347,7 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
         ): TableFeeApprovalRow => {
           return {
             id: member.id,
-            name: member.name,
+            name: member.name_for_trusted,
             reward: member.is_payment_with_reward,
             email: member.email,
             nickname: member.nickname,
