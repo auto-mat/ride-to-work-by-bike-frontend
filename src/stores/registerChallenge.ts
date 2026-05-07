@@ -985,7 +985,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       // if merch is empty and payment not done, switch to no reward
       if (!this.getIsMerchandiseAvailable && !this.getIsPaymentSuccessful) {
         logger?.debug(
-          'Merchandise empty and payment not committed, forcing without-reward price level.',
+          `Merchandise is empty <${!this.getIsMerchandiseAvailable}> and payment` +
+            ` is not committed <${!this.getIsPaymentSuccessful}>,` +
+            ' forcing price level without reward.',
         );
         this.setIsPaymentWithReward(false);
       }
