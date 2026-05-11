@@ -55,6 +55,7 @@ describe('<RouteInputDistance>', () => {
         'hintUploadFile',
         'labelDistance',
         'labelUploadFile',
+        'labelValidationDistance',
         'messageFileInvalidFormat',
         'messageFileTooLarge',
       ],

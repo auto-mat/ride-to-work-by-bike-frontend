@@ -10,7 +10,16 @@ import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTes
 describe('<RouteTabs>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['tabCalendar', 'tabList', 'tabMap', 'tabApp'],
+      [
+        'hintAutomaticLoggingNotApproved',
+        'hintManualLoggingNotApproved',
+        'instructionRouteCombination',
+        'instructionRouteLogTimeframe',
+        'tabCalendar',
+        'tabList',
+        'tabMap',
+        'tabApp',
+      ],
       'routes',
       i18n,
     );

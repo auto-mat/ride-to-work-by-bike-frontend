@@ -18,6 +18,8 @@ describe('<RoutesApps>', () => {
         'hintManualLogging',
         'titleAutomaticLogging',
         'titleManualLogging',
+        'titleRoutes',
+        'titleRoutesConnectApps',
       ],
       'routes',
       i18n,

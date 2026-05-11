@@ -41,7 +41,7 @@ let selectorButtonSave;
 
 describe('<RouteListEdit>', () => {
   it('has translation for all strings', () => {
-    cy.testLanguageStringsInContext([], 'routes', i18n);
+    cy.testLanguageStringsInContext(['buttonSaveChangesCount'], 'routes', i18n);
   });
 
   beforeEach(() => {

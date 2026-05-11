@@ -16,6 +16,8 @@ describe('<RouteItemEdit>', () => {
       [
         'labelDirectionFromWork',
         'labelDirectionToWork',
+        'logRouterCalendarNumberText',
+        'logRouterPlayVideoBtnLabel',
         'messageCopyNoDistance',
         'messageCopyNoRoute',
       ],
