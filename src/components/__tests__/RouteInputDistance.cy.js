@@ -3,7 +3,7 @@ import RouteInputDistance from 'components/routes/RouteInputDistance.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { RouteInputType } from '../types/Route';
-import { routeFormFieldOptions } from '../routes/utils';
+import { getRouteFormFieldOptions } from '../routes/utils';
 
 // composables
 const { getPaletteColor } = colors;
@@ -32,7 +32,7 @@ const valueHalf = '0.50';
 const valueEmpty = '';
 const { defaultDistanceZero } = rideToWorkByBikeConfig;
 const optionsAction = [
-  ...routeFormFieldOptions,
+  ...getRouteFormFieldOptions(),
   {
     label: i18n.global.t('routes.actionCopyYesterday'),
     value: RouteInputType.copyYesterday,
@@ -243,7 +243,7 @@ describe('<RouteInputDistance>', () => {
         props: {
           modelAction: RouteInputType.inputNumber,
           modelValue: defaultDistanceZero,
-          optionsAction: routeFormFieldOptions,
+          optionsAction: getRouteFormFieldOptions(),
         },
       });
       cy.viewport('macbook-16');
@@ -252,7 +252,10 @@ describe('<RouteInputDistance>', () => {
     it('renders the number of action options passed in props', () => {
       cy.dataCy(selectorSelectAction).should('be.visible').click();
       cy.get('.q-menu').within(() => {
-        cy.get('.q-item').should('have.length', routeFormFieldOptions.length);
+        cy.get('.q-item').should(
+          'have.length',
+          getRouteFormFieldOptions().length,
+        );
         cy.get('.q-item').should(
           'contain',
           i18n.global.t('routes.actionInputDistance'),

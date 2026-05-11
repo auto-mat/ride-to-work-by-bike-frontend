@@ -61,7 +61,7 @@ import type { Logger } from '../types/Logger';
 import type { FormOption } from '../types/Form';
 
 // utils
-import { routeFormFieldOptions } from './utils/';
+import { getRouteFormFieldOptions } from './utils/';
 
 export default defineComponent({
   name: 'RouteCalendarPanel',
@@ -98,15 +98,15 @@ export default defineComponent({
       },
     });
 
-    const optionsAction: FormOption[] = [
-      ...routeFormFieldOptions,
+    const optionsAction = computed((): FormOption[] => [
+      ...getRouteFormFieldOptions(),
       /* Disable trace to map action option menu item
       {
         label: i18n.global.t('routes.actionTraceMap'),
         value: RouteInputType.inputMap,
       },
       */
-    ];
+    ]);
 
     // Make props into computed ref so it can be passed as a reactive value.
     const routes = computed(() => props.routes);

@@ -51,7 +51,7 @@ import {
 import { useTripsStore } from 'src/stores/trips';
 
 // utils
-import { routeFormFieldOptions } from './utils/';
+import { getRouteFormFieldOptions } from './utils/';
 import { localizedFloatNumStrToFloatNumber } from 'src/utils';
 
 // types
@@ -110,8 +110,8 @@ export default defineComponent({
       urlLogRouteListNumberVideo,
     } = rideToWorkByBikeConfig;
 
-    const optionsAction: FormOption[] = [
-      ...routeFormFieldOptions,
+    const optionsAction = computed((): FormOption[] => [
+      ...getRouteFormFieldOptions(),
       {
         label: i18n.global.t('routes.actionCopyYesterday'),
         value: RouteInputType.copyYesterday,
@@ -122,7 +122,7 @@ export default defineComponent({
         value: RouteInputType.inputMap,
       },
       */
-    ];
+    ]);
 
     const routes = computed<RouteItem[]>(() => [props.route]);
     // create refs from the route object
