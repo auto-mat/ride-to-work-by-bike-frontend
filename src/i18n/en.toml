@@ -1252,6 +1252,17 @@ tooltipRouteLength = "Length"
 tooltipSave = "Save path"
 tooltipUndo = "Undo"
 logRouterPlayVideoBtnLabel = "How to log route"
+logRouterCalendarNumberText = """
+<p>After clicking in the <b>Enter distance</b> input element, the cursor
+moves to the last place. Enter the number from right to left, please.
+</p>
+<ul>
+<li>Enter the distance { expectedFloatNum0 } km on the keyboard as number { typedIntNum0 }</li>
+<li>Enter the distance { expectedFloatNum1 } km on the keyboard as number { typedIntNum1 }</li>
+<li>Enter the distance { expectedFloatNum2 } km on the keyboard as number { typedIntNum2 }</li>
+<li>Enter the distance { expectedFloatNum3 } km on the keyboard as number { typedIntNum3 }</li>
+</ul>
+"""
 
 [sendRegistrationConfirmationEmail]
 apiMessageAlreadyConfirmed = "Email already confirmed."

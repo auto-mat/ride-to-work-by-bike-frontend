@@ -1253,6 +1253,17 @@ tooltipRouteLength = "Délka cesty"
 tooltipSave = "Uložit cestu"
 tooltipUndo = "Zpět"
 logRouterPlayVideoBtnLabel = "Jak zapsat jízdu"
+logRouterCalendarNumberText = """
+<p>Po kliknutí do políčka <b>Zadat vzdálenost</b>, je kurzor
+přesunut na poslední místo. Číslo zadávejte zprava doleva.
+</p>
+<ul>
+    <li>Vzdálenost { expectedFloatNum0 } km zadávejte na klávesnici jako číslo { typedIntNum0 }</li>
+    <li>Vzdálenost { expectedFloatNum1 } km zadávejte na klávesnici jako číslo { typedIntNum1 }</li>
+    <li>Vzdálenost { expectedFloatNum2 } km zadávejte na klávesnici jako číslo { typedIntNum2 }</li>
+    <li>Vzdálenost { expectedFloatNum3 } km zadávejte na klávesnici jako číslo { typedIntNum3 }</li>
+</ul>
+"""
 
 [sendRegistrationConfirmationEmail]
 apiMessageAlreadyConfirmed = "E-mail již byl potvrzen."

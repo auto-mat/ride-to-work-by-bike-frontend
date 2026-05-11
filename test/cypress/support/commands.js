@@ -4317,6 +4317,7 @@ Cypress.Commands.add(
         );
       });
     cy.dataCy(selectorPlayVideoBtn).click();
+    cy.dataCy('overlayed-text').should('be.visible');
     if (!closestElement) checkModalVideoDialog();
     else {
       cy.root()

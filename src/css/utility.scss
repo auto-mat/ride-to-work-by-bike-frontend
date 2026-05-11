@@ -49,3 +49,11 @@
 .no-underline {
   text-decoration: none;
 }
+
+.video-overlayed-text-linear-gradient {
+  background-image: linear-gradient(
+    180deg,
+    hsla(139, 14%, 98%, 0.6),
+    hsla(193, 0%, 100%, 1)
+  );
+}

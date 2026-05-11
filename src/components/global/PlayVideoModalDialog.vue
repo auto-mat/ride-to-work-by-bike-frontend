@@ -94,7 +94,9 @@ export default defineComponent({
             height: '100vh',
           }"
           data-cy="video"
-        />
+        >
+          <slot name="overlayedText"></slot>
+        </video-background>
       </q-card-section>
     </q-card>
   </q-dialog>

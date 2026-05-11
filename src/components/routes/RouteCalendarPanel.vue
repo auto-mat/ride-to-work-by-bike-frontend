@@ -295,7 +295,29 @@ export default defineComponent({
               :videoUrl="urlLogRouteCalendarNumberVideo"
               btnIconName="info"
               videoContainerWidth="100vw"
-            />
+            >
+              <template v-slot:overlayedText>
+                <div
+                  class="bg-grey-1w q-px-md video-overlayed-text-linear-gradient"
+                  v-html="
+                    $t('routes.logRouterCalendarNumberText', {
+                      expectedFloatNum0: $n(2.55, 'routeDistanceDecimalNumber'),
+                      typedIntNum0: '255',
+                      expectedFloatNum1: $n(
+                        14.56,
+                        'routeDistanceDecimalNumber',
+                      ),
+                      typedIntNum1: '1456',
+                      expectedFloatNum2: $n(0.34, 'routeDistanceDecimalNumber'),
+                      typedIntNum2: '034',
+                      expectedFloatNum3: $n(0.09, 'routeDistanceDecimalNumber'),
+                      typedIntNum3: '009',
+                    })
+                  "
+                  data-cy="overlayed-text"
+                ></div>
+              </template>
+            </play-video-modal-dialog>
           </div>
 
           <!-- Button: Save -->
