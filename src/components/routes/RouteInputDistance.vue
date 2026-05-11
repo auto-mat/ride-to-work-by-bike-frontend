@@ -228,7 +228,7 @@ export default defineComponent({
                 $t('form.messageFieldAboveZero'),
             ]"
             data-cy="input-distance"
-            @click.once="onClick"
+            @="{ click: onClick, touchstart: onClick }"
             maxlength="6"
           >
             <template v-slot:append>
