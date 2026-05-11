@@ -17,6 +17,9 @@
  * - `videoContainerWidth` (String, default: '50vw'): Vide container width
  * - `videoMaxHeight` (String, default: '450px'): Video max height
  *
+ * @slots
+ * - `overlayedText`: Slot for video overlayed text
+ *
  * @example
  * <play-video-modal-dialog
  *  :btnLabel="$t('routes.logRouterPlayVideoBtnLabel')"
