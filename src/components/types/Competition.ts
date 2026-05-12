@@ -2,6 +2,9 @@
 import { CompetitorType, CompetitionType } from '../enums/Challenge';
 import { TransportType } from './Route';
 
+// types
+import type { Emissions } from './Results';
+
 export interface CommuteMode {
   id: number;
   name_cs: string;
@@ -29,6 +32,22 @@ export interface CompetitionResponse {
   next: string | null;
   previous: string | null;
   results: Competition[];
+}
+
+export interface CompetitionResult {
+  place: number;
+  name: string;
+  result: number;
+  frequency: number;
+  distance: number;
+  emissions: Emissions;
+}
+
+export interface CompetitionResultResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: CompetitionResult[];
 }
 
 export interface CompanyChallengeFormState {

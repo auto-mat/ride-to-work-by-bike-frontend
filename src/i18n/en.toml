@@ -225,6 +225,11 @@ apiMessageError = "Failed to load challenge results source."
 apiMessageErrorWithMessage = "Failed to load challenge results source. Error: {error}"
 apiMessageSuccess = "Challenge results source was successfully loaded."
 
+[getCompetitionResults]
+apiMessageError = "Competition results fetching failed."
+apiMessageErrorWithMessage = "Competition results fetching failed. Error: {error}"
+apiMessageSuccess = "Competition results fetched successfully."
+
 [getStravaAccount]
 apiMessageError = "Failed to load Strava profile."
 apiMessageErrorWithMessage = "Failed to load Strava profile. Error: {error}"
@@ -721,6 +726,7 @@ title = "Challenge ends in | Challenge ends in"
 [index.cardListChallenge]
 title = "Future challenges"
 emptyState = "There is no company challenge announced at this moment"
+buttonShowResults = "Show results"
 
 [index.cardChallenge]
 company = "Company challenge"
@@ -1162,6 +1168,8 @@ titleYourResultsSince = "Your results since {date}"
 tabRegularity = "Regularity"
 tabPerformance = "Performance"
 tabReport = "Data report"
+emptyStateChallengeResults = "No results found for this challenge."
+labelColumnName = "Name"
 
 [results.reportType]
 tachometers = "Tachometers"

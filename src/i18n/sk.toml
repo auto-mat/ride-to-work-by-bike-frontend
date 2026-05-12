@@ -225,6 +225,11 @@ apiMessageError = "Nepodarilo sa načítať zdroj výsledkov výzvy."
 apiMessageErrorWithMessage = "Nepodarilo sa načítať zdroj výsledkov výzvy. Chyba: {error}"
 apiMessageSuccess = "Zdroj výsledkov výzvy bol úspešne načítaný."
 
+[getCompetitionResults]
+apiMessageError = "Načítanie výsledkov súťaže zlyhalo."
+apiMessageErrorWithMessage = "Načítanie výsledkov súťaže zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Výsledky súťaže boli úspešne načítané."
+
 [getStravaAccount]
 apiMessageError = "Nepodarilo sa načítať profil Strava."
 apiMessageErrorWithMessage = "Nepodarilo sa načítať profil Strava. Chyba: {error}"
@@ -723,6 +728,7 @@ title = "Do konca výzvy zostáva už len | Do konca výzvy zostávajú už len"
 [index.cardListChallenge]
 title = "Budúce výzvy"
 emptyState = "V tejto chvíli nie je vypísaná žiadna firemná výzva"
+buttonShowResults = "Zobraziť výsledky"
 
 [index.cardChallenge]
 company = "Výzva spoločnosti"
@@ -1162,6 +1168,8 @@ titleYourResultsSince = "Vaše výsledky od {date}"
 tabRegularity = "Pravidelnosť"
 tabPerformance = "Výkonnosť"
 tabReport = "Data report"
+emptyStateChallengeResults = "Pre túto výzvu neboli nájdené žiadne výsledky."
+labelColumnName = "Meno"
 
 [results.reportType]
 tachometers = "Tachometry"

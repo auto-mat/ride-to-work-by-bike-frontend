@@ -114,6 +114,7 @@ export interface ConfigGlobal {
   urlApiResetPasswordConfirm: string;
   urlApiResultsByChallenge: string;
   urlApiResults: string;
+  urlApiCompetitionResult: string;
   urlApiChallengeRegistrationUser: string;
   urlApiCities: string;
   urlApiOpenAppWithRestToken: string;

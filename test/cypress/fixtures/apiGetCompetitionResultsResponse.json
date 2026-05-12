@@ -1,0 +1,61 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "place": 1,
+      "name": "Alice Nováková",
+      "result": 95.5,
+      "frequency": 20,
+      "distance": 312.5,
+      "emissions": {
+        "co2": 52500.0,
+        "co": 0.0,
+        "nox": 0.0,
+        "n2o": 0.0,
+        "voc": 0.0,
+        "ch4": 0.0,
+        "so2": 0.0,
+        "solid": 0.0,
+        "pb": 0.0
+      }
+    },
+    {
+      "place": 2,
+      "name": "Petr Janeček",
+      "result": 88.0,
+      "frequency": 18,
+      "distance": 280.0,
+      "emissions": {
+        "co2": 47040.0,
+        "co": 0.0,
+        "nox": 0.0,
+        "n2o": 0.0,
+        "voc": 0.0,
+        "ch4": 0.0,
+        "so2": 0.0,
+        "solid": 0.0,
+        "pb": 0.0
+      }
+    },
+    {
+      "place": 3,
+      "name": "Karolína Krátká",
+      "result": 75.0,
+      "frequency": 15,
+      "distance": 240.0,
+      "emissions": {
+        "co2": 40320.0,
+        "co": 0.0,
+        "nox": 0.0,
+        "n2o": 0.0,
+        "voc": 0.0,
+        "ch4": 0.0,
+        "so2": 0.0,
+        "solid": 0.0,
+        "pb": 0.0
+      }
+    }
+  ]
+}

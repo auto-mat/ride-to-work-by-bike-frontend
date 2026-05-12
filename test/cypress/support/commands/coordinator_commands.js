@@ -852,3 +852,56 @@ Cypress.Commands.add('waitForCoordinatorSubsidiaryPutApi', (requestData) => {
     },
   );
 });
+
+/**
+ * Intercept competition results GET API call
+ * Provides `@getCompetitionResults` alias
+ * @param {Object} config - App global config
+ * @param {string} slug - Competition slug
+ * @param {string} responseFixture - Fixture name for response data
+ */
+Cypress.Commands.add(
+  'interceptCompetitionResultsGetApi',
+  (config, slug, responseFixture) => {
+    const { apiBase, apiDefaultLang, urlApiCompetitionResult } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      defLocale,
+    );
+    const urlApiCompetitionResultLocalized = `${apiBaseUrl}${urlApiCompetitionResult}${slug}/`;
+
+    cy.fixture(responseFixture).then((competitionResultsResponse) => {
+      cy.intercept('GET', urlApiCompetitionResultLocalized, {
+        statusCode: httpSuccessfullStatus,
+        body: competitionResultsResponse,
+      }).as('getCompetitionResults');
+    });
+  },
+);
+
+/**
+ * Wait for intercept competition results GET API call and compare request/response object
+ * Wait for `@getCompetitionResults` intercept
+ * @param {string} responseFixture - Fixture name for response data
+ */
+Cypress.Commands.add('waitForCompetitionResultsGetApi', (responseFixture) => {
+  cy.fixture(responseFixture).then((competitionResultsResponse) => {
+    cy.wait('@getCompetitionResults').then((getCompetitionResults) => {
+      // verify authorization header
+      expect(getCompetitionResults.request.headers.authorization).to.include(
+        bearerTokeAuth,
+      );
+      // verify response
+      if (getCompetitionResults.response) {
+        expect(getCompetitionResults.response.statusCode).to.equal(
+          httpSuccessfullStatus,
+        );
+        expect(getCompetitionResults.response.body).to.deep.equal(
+          competitionResultsResponse,
+        );
+      }
+    });
+  });
+});
