@@ -1,5 +1,5 @@
 {
-  "count": 4,
+  "count": 3,
   "next": null,
   "previous": null,
   "results": [
@@ -22,13 +22,13 @@
       }
     },
     {
-      "place": 2,
+      "place": 1,
       "name": "Petr Janeček",
-      "result": 88.0,
-      "frequency": 18,
-      "distance": 280.0,
+      "result": 95.5,
+      "frequency": 20,
+      "distance": 310.0,
       "emissions": {
-        "co2": 47040.0,
+        "co2": 52080.0,
         "co": 0.0,
         "nox": 0.0,
         "n2o": 0.0,
@@ -47,24 +47,6 @@
       "distance": 240.0,
       "emissions": {
         "co2": 40320.0,
-        "co": 0.0,
-        "nox": 0.0,
-        "n2o": 0.0,
-        "voc": 0.0,
-        "ch4": 0.0,
-        "so2": 0.0,
-        "solid": 0.0,
-        "pb": 0.0
-      }
-    },
-    {
-      "place": 4,
-      "name": "Martin Svoboda",
-      "result": 60.0,
-      "frequency": 12,
-      "distance": 195.0,
-      "emissions": {
-        "co2": 32760.0,
         "co": 0.0,
         "nox": 0.0,
         "n2o": 0.0,

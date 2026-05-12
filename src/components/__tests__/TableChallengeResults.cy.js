@@ -152,6 +152,98 @@ function coreTests() {
     });
   });
 
+  it('shows "gold" trophy icon for rank 1', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-place')
+        .eq(0)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('exist')
+        .and('be.visible')
+        .find('.q-icon')
+        .should('have.class', 'text-amber-4');
+    });
+  });
+
+  it('shows "silver" trophy icon for rank 2', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-place')
+        .eq(1)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('exist')
+        .and('be.visible')
+        .find('.q-icon')
+        .should('have.class', 'text-blue-grey-3');
+    });
+  });
+
+  it('shows "bronze" trophy icon for rank 3', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-place')
+        .eq(2)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('exist')
+        .and('be.visible')
+        .find('.q-icon')
+        .should('have.class', 'text-brown-3');
+    });
+  });
+
+  it('shows no avatar or icon for rank > 3', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-place')
+        .eq(3)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('not.exist');
+    });
+  });
+
+  it('shows the same icon when users are tied', () => {
+    cy.fixture('apiGetCompetitionResultsResponseTied').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-place')
+        .eq(0)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('exist')
+        .find('.q-icon')
+        .should('have.class', 'text-amber-4');
+      cy.dataCy('table-challenge-results-place')
+        .eq(1)
+        .find('[data-cy="table-challenge-results-place-icon"]')
+        .should('exist')
+        .find('.q-icon')
+        .should('have.class', 'text-amber-4');
+    });
+  });
+
   it('shows empty state when rows array is empty', () => {
     cy.mount(TableChallengeResults, {
       props: {

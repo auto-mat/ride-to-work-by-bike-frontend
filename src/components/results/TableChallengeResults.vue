@@ -89,7 +89,13 @@ export default defineComponent({
 
     const pagination = { rowsPerPage: 0 };
 
-    return { columns, pagination };
+    const placeIconColor = (place: number): string => {
+      if (place === 1) return 'amber-4';
+      if (place === 2) return 'blue-grey-3';
+      return 'brown-3';
+    };
+
+    return { columns, pagination, placeIconColor };
   },
 });
 </script>
@@ -124,7 +130,19 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-place"
           >
-            <!-- TODO: add medal icons -->
+            <q-avatar
+              v-if="props.row.place <= 3"
+              size="24px"
+              color="primary"
+              class="q-mr-sm"
+              data-cy="table-challenge-results-place-icon"
+            >
+              <q-icon
+                size="16px"
+                name="svguse:/icons/table_challenge_results/icons.svg#lucide:trophy"
+                :color="placeIconColor(props.row.place)"
+              />
+            </q-avatar>
             {{ props.row.place }}.
           </q-td>
           <!-- Name -->
