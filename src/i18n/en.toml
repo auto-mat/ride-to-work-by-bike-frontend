@@ -1170,6 +1170,11 @@ tabPerformance = "Performance"
 tabReport = "Data report"
 emptyStateChallengeResults = "No results found for this challenge."
 labelColumnName = "Name"
+labelColumnPlace = "Place"
+labelColumnResult = "Result"
+labelColumnFrequency = "Frequency"
+labelColumnDistance = "Distance"
+labelColumnCo2 = "Saved CO₂ emissions"
 
 [results.reportType]
 tachometers = "Tachometers"

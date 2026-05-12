@@ -1170,6 +1170,11 @@ tabPerformance = "Výkonnosť"
 tabReport = "Data report"
 emptyStateChallengeResults = "Pre túto výzvu neboli nájdené žiadne výsledky."
 labelColumnName = "Meno"
+labelColumnPlace = "Poradie"
+labelColumnResult = "Výsledok"
+labelColumnFrequency = "Frekvencia"
+labelColumnDistance = "Vzdialenosť"
+labelColumnCo2 = "Ušetrené emisie CO₂"
 
 [results.reportType]
 tachometers = "Tachometry"

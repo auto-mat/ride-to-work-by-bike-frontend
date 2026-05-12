@@ -5,7 +5,14 @@ import { CompetitionType } from '../enums/Challenge';
 describe('<TableChallengeResults>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['emptyStateChallengeResults', 'labelColumnName'],
+      [
+        'emptyStateChallengeResults',
+        'labelColumnName',
+        'labelColumnPlace',
+        'labelColumnResult',
+        'labelColumnFrequency',
+        'labelColumnDistance',
+      ],
       'results',
       i18n,
     );
@@ -29,6 +36,21 @@ describe('<TableChallengeResults>', () => {
 });
 
 function coreTests() {
+  it('renders the correct number of rows', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      cy.dataCy('table-challenge-results-row').should(
+        'have.length',
+        response.results.length,
+      );
+    });
+  });
+
   it('renders participant names from rows', () => {
     cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
       cy.mount(TableChallengeResults, {
@@ -46,6 +68,86 @@ function coreTests() {
         cy.dataCy('table-challenge-results-name')
           .eq(index)
           .should('contain', result.name);
+      });
+    });
+  });
+
+  it('renders place column with API rank (not row index)', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      response.results.forEach((result, index) => {
+        cy.dataCy('table-challenge-results-place')
+          .eq(index)
+          .should('contain', result.place + '.');
+      });
+    });
+  });
+
+  it('renders result column formatted to 2 decimal places', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      response.results.forEach((result, index) => {
+        cy.dataCy('table-challenge-results-result')
+          .eq(index)
+          .should('contain', result.result.toFixed(2));
+      });
+    });
+  });
+
+  it('renders frequency column values', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      response.results.forEach((result, index) => {
+        cy.dataCy('table-challenge-results-frequency')
+          .eq(index)
+          .should('contain', result.frequency);
+      });
+    });
+  });
+
+  it('renders distance column values', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      response.results.forEach((result, index) => {
+        cy.dataCy('table-challenge-results-distance')
+          .eq(index)
+          .should('contain', result.distance);
+      });
+    });
+  });
+
+  it('renders co2 column values from emissions.co2', () => {
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+        },
+      });
+      response.results.forEach((result, index) => {
+        cy.dataCy('table-challenge-results-co2')
+          .eq(index)
+          .should('contain', result.emissions.co2);
       });
     });
   });

@@ -3,7 +3,8 @@
  * TableChallengeResults Component
  *
  * @description * Use this component to display a table of competition results.
- * It shows participant names and is designed to be extended in future slices.
+ * It shows participant ranking with place, name, result, frequency, distance,
+ * and CO₂ emissions columns.
  *
  * @props
  * - `rows` (CompetitionResult[], required): Array of result rows.
@@ -14,13 +15,17 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
+
+// i18n
+import { i18n } from 'src/boot/i18n';
 
 // enums
 import { CompetitionType } from '../enums/Challenge';
 
 // types
 import type { PropType } from 'vue';
+import type { QTableProps } from 'quasar';
 import type { CompetitionResult } from '../types/Competition';
 
 export default defineComponent({
@@ -35,6 +40,57 @@ export default defineComponent({
       required: true,
     },
   },
+  setup() {
+    const columns = computed<QTableProps['columns']>(() => [
+      {
+        name: 'place',
+        label: i18n.global.t('results.labelColumnPlace'),
+        field: 'place',
+        align: 'center',
+        sortable: true,
+      },
+      {
+        name: 'name',
+        label: i18n.global.t('results.labelColumnName'),
+        field: 'name',
+        align: 'left',
+        sortable: true,
+      },
+      {
+        name: 'result',
+        label: i18n.global.t('results.labelColumnResult'),
+        field: 'result',
+        align: 'right',
+        sortable: true,
+        format: (value: number | string) => Number(value).toFixed(2),
+      },
+      {
+        name: 'frequency',
+        label: i18n.global.t('results.labelColumnFrequency'),
+        field: 'frequency',
+        align: 'right',
+        sortable: true,
+      },
+      {
+        name: 'distance',
+        label: i18n.global.t('results.labelColumnDistance'),
+        field: 'distance',
+        align: 'right',
+        sortable: true,
+      },
+      {
+        name: 'co2',
+        label: i18n.global.t('results.labelColumnCo2'),
+        field: (row: CompetitionResult) => row.emissions.co2,
+        align: 'right',
+        sortable: true,
+      },
+    ]);
+
+    const pagination = { rowsPerPage: 0 };
+
+    return { columns, pagination };
+  },
 });
 </script>
 
@@ -48,19 +104,67 @@ export default defineComponent({
     >
       {{ $t('results.emptyStateChallengeResults') }}
     </div>
-    <!-- Results list -->
-    <q-list v-else separator style="margin: -1rem">
-      <q-item
-        v-for="row in rows"
-        :key="row.place"
-        data-cy="table-challenge-results-row"
-      >
-        <q-item-section>
-          <q-item-label data-cy="table-challenge-results-name">
-            {{ row.name }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+    <!-- Results table -->
+    <q-table
+      v-else
+      flat
+      :rows="rows"
+      :columns="columns"
+      :pagination="pagination"
+      row-key="place"
+      hide-pagination
+      data-cy="table-challenge-results-table"
+      :style="{ margin: '-1rem' }"
+    >
+      <template v-slot:body="props">
+        <q-tr :props="props" data-cy="table-challenge-results-row">
+          <!-- Place -->
+          <q-td
+            key="place"
+            :props="props"
+            data-cy="table-challenge-results-place"
+          >
+            <!-- TODO: add medal icons -->
+            {{ props.row.place }}.
+          </q-td>
+          <!-- Name -->
+          <q-td
+            key="name"
+            :props="props"
+            data-cy="table-challenge-results-name"
+          >
+            {{ props.row.name }}
+          </q-td>
+          <!-- Result -->
+          <q-td
+            key="result"
+            :props="props"
+            data-cy="table-challenge-results-result"
+          >
+            {{ Number(props.row.result).toFixed(2) }}
+          </q-td>
+          <!-- Frequency -->
+          <q-td
+            key="frequency"
+            :props="props"
+            data-cy="table-challenge-results-frequency"
+          >
+            {{ props.row.frequency }}
+          </q-td>
+          <!-- Distance -->
+          <q-td
+            key="distance"
+            :props="props"
+            data-cy="table-challenge-results-distance"
+          >
+            {{ props.row.distance }}
+          </q-td>
+          <!-- CO₂ (supplementary info) -->
+          <q-td key="co2" :props="props" data-cy="table-challenge-results-co2">
+            {{ props.row.emissions.co2 }}
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
   </div>
 </template>
