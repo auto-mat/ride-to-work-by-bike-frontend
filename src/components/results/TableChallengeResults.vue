@@ -17,8 +17,11 @@
 // libraries
 import { defineComponent, computed } from 'vue';
 
-// i18n
+// composables
 import { i18n } from 'src/boot/i18n';
+
+// config
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
 import { CompetitionType } from '../enums/Challenge';
@@ -41,6 +44,8 @@ export default defineComponent({
     },
   },
   setup() {
+    const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
     const columns = computed<QTableProps['columns']>(() => [
       {
         name: 'place',
@@ -95,7 +100,7 @@ export default defineComponent({
       return 'brown-3';
     };
 
-    return { columns, pagination, placeIconColor };
+    return { borderRadius, columns, pagination, placeIconColor };
   },
 });
 </script>
@@ -114,13 +119,14 @@ export default defineComponent({
     <q-table
       v-else
       flat
+      bordered
       :rows="rows"
       :columns="columns"
       :pagination="pagination"
       row-key="place"
       hide-pagination
       data-cy="table-challenge-results-table"
-      :style="{ margin: '-1rem' }"
+      :style="{ borderRadius }"
     >
       <template v-slot:body="props">
         <q-tr :props="props" data-cy="table-challenge-results-row">
