@@ -23,7 +23,7 @@
 
 // libraries
 import { QForm, Notify } from 'quasar';
-import { defineComponent, ref, inject, reactive } from 'vue';
+import { computed, defineComponent, ref, inject, reactive, watch } from 'vue';
 
 // adapters
 import { registerCoordinatorAdapter } from '../../adapters/registerCoordinatorAdapter';
@@ -45,6 +45,8 @@ import { i18n } from '../../boot/i18n';
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useRegisterStore } from '../../stores/register';
+
+import { onTrack } from '../../utils/track';
 
 // types
 import type { Logger } from '../types/Logger';
@@ -129,7 +131,18 @@ export default defineComponent({
       formCoordinatorData.phone = '';
       formCoordinatorData.responsibility = false;
     };
+    const responsibilityTrack = computed({
+      get: () => formCoordinatorData.responsibility,
+    });
 
+    watch(responsibilityTrack, () => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorResponsibility',
+          timestamp: Date.now(),
+        },
+      });
+    });
     return {
       challengeMonth,
       formCoordinatorApplicationRef,
@@ -137,6 +150,7 @@ export default defineComponent({
       isPhone,
       onSubmit,
       onReset,
+      onTrack,
     };
   },
 });
@@ -155,19 +169,23 @@ export default defineComponent({
         <!-- Input: Company job position -->
         <form-field-text-required
           v-model="formCoordinatorData.jobTitle"
-          name="name"
+          name="orgCoordinatorJobTitle"
           label="form.labelYourPosition"
           data-cy="form-coordinator-position"
+          v-click-track-evt
+          @click-track="onTrack"
         />
       </div>
       <div class="col-12 col-sm-6">
         <!-- Input: Telephone number -->
         <form-field-phone
           v-model="formCoordinatorData.phone"
-          name="phone"
+          name="orgCoordinatorPhone"
           label="form.labelYourPhone"
           data-cy="form-coordinator-phone"
-        />
+          v-click-track-evt
+          @click-track="onTrack"
+        />DDDD
       </div>
       <div class="col-12">
         <!-- Input: Coordinator's responsibilities -->

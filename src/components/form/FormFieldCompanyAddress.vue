@@ -56,6 +56,7 @@ import type { OrganizationSubsidiary } from 'src/components/types/Organization';
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';
 import { getEmptyFormAddress } from '../../utils/get_empty_form_address';
+import { onTrack } from '../../utils/track';
 
 export default defineComponent({
   name: 'FormFieldCompanyAddress',
@@ -266,6 +267,17 @@ export default defineComponent({
       };
     }
 
+    const onUpdateSubsidiary = (): void => {
+      onTrack({
+        detail: {
+          targetName: 'selectSubsidiary',
+          timestamp: Date.now(),
+          value: selectedSubsidiary.value.value,
+        },
+      });
+      onUpdate();
+    };
+
     return {
       selectedSubsidiary,
       addressNew,
@@ -280,6 +292,8 @@ export default defineComponent({
       onClose,
       onFilter,
       onSubmit,
+      onUpdateSubsidiary,
+      onTrack,
     };
   },
 });
@@ -319,6 +333,7 @@ export default defineComponent({
           ]"
           @filter="onFilter"
           data-cy="form-company-address-input"
+          @update:model-value="onUpdateSubsidiary"
         >
           <!-- Item: No option -->
           <template v-slot:no-option>
@@ -343,6 +358,9 @@ export default defineComponent({
           color="primary"
           @click.prevent="isDialogOpen = true"
           data-cy="button-add-address"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="addNewSubsidiaryDialogBtn"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">

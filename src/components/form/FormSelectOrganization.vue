@@ -38,6 +38,8 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 // composables
 import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 
+import { onTrack } from '../../utils/track';
+
 export default defineComponent({
   name: 'FormSelectOrganization',
   components: {
@@ -111,6 +113,13 @@ export default defineComponent({
     );
 
     const onOrganizationIdChange = (): void => {
+      onTrack({
+        detail: {
+          targetName: 'chooseOrganizationId',
+          timestamp: Date.now(),
+          value: organizationId.value,
+        },
+      });
       // reset subsidiaryId on organizationId change
       registerChallengeStore.setSubsidiaryId(null);
       logger?.debug(

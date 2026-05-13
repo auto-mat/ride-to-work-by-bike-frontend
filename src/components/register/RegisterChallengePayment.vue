@@ -247,7 +247,7 @@ export default defineComponent({
           registerChallengeStore.checkOrganizationHasCoordinator();
           onTrack({
             detail: {
-              targetName: 'selectedCompany',
+              targetName: 'selectedOrganizationId',
               timestamp: Date.now(),
               value: value,
             },

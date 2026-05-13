@@ -86,6 +86,7 @@ import type { OrganizationSubsidiary } from '../types/Organization';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';
+import { onTrack } from '../../utils/track';
 
 const emptyFormCompanyFields: FormCompanyFields = {
   name: '',
@@ -465,6 +466,7 @@ export default defineComponent({
       virtualScrollRef,
       onClose,
       onSubmit,
+      onTrack,
       onChangeOption,
       OrganizationType,
       OrganizationLevel,
@@ -507,17 +509,20 @@ export default defineComponent({
         <!-- Search field -->
         <q-card-section class="q-pa-sm" data-cy="form-select-table-search">
           <!-- Input -->
-          <q-input
-            dense
-            outlined
-            v-model="query"
-            icon
-            id="form-select-table-query"
-          >
-            <template v-slot:prepend>
-              <q-icon name="search" class="q-pl-sm" />
-            </template>
-          </q-input>
+          <div v-click-track-evt @click-track="onTrack">
+            <q-input
+              dense
+              outlined
+              v-model="query"
+              icon
+              id="form-select-table-query"
+              :name="`${organizationLevel === OrganizationLevel.organization ? 'searchOrganization' : 'searchTeam'}`"
+            >
+              <template v-slot:prepend>
+                <q-icon name="search" class="q-pl-sm" />
+              </template>
+            </q-input>
+          </div>
         </q-card-section>
         <!-- Separator -->
         <q-separator />
@@ -599,6 +604,9 @@ export default defineComponent({
             data-cy="button-add-option"
             :disable="isThisSelectOrganizationAndOrganizationPaying"
             @click.prevent="isDialogOpen = true"
+            :name="`${organizationLevel === OrganizationLevel.organization ? 'addNewOrganizationDialogBtn' : 'addNewTeamDialogBtn'}`"
+            v-click-track-evt
+            @click-track="onTrack"
           >
             <!-- Label -->
             <span class="inline-block q-pl-xs">
@@ -626,7 +634,13 @@ export default defineComponent({
                 @update:form-values="teamNew = $event"
               ></form-add-team>
               <!-- Hidden submit button enables Enter key to submit -->
-              <q-btn type="submit" class="hidden" />
+              <q-btn
+                type="submit"
+                class="hidden"
+                :name="`${organizationLevel === OrganizationLevel.organization ? 'addNewOrganizationSubmitEnterKey' : 'addNewTeamSubmitEnterKey'}`"
+                v-click-track-evt
+                @click-track="onTrack"
+              />
             </q-form>
             <!-- Action buttons -->
             <div class="flex justify-end q-mt-sm">
@@ -638,6 +652,9 @@ export default defineComponent({
                   color="primary"
                   data-cy="dialog-button-cancel"
                   @click="onClose"
+                  :name="`${organizationLevel === OrganizationLevel.organization ? 'addNewOrganizationCloseBtn' : 'addNewTeamCloseBtn'}`"
+                  v-click-track-evt
+                  @click-track="onTrack"
                 >
                   {{ $t('navigation.discard') }}
                 </q-btn>
@@ -646,7 +663,10 @@ export default defineComponent({
                   unelevated
                   color="primary"
                   data-cy="dialog-button-submit"
+                  :name="`${organizationLevel === OrganizationLevel.organization ? 'addNewOrganizationSubmitBtn' : 'addNewTeamSubmitBtn'}`"
                   @click="onSubmit"
+                  v-click-track-evt
+                  @click-track="onTrack"
                 >
                   {{ buttonDialog }}
                 </q-btn>

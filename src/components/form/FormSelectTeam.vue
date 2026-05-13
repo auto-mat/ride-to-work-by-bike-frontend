@@ -37,6 +37,8 @@ import { i18n } from 'src/boot/i18n';
 import { useChallengeStore } from 'src/stores/challenge';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+import { onTrack } from '../../utils/track';
+
 // types
 import type { Logger } from '../types/Logger';
 import type { OrganizationTeam } from '../types/Organization';
@@ -119,6 +121,16 @@ export default defineComponent({
       registerChallengeStore.setTeams(updatedTeams);
     };
 
+    const onTeamIdChange = (): void => {
+      onTrack({
+        detail: {
+          targetName: 'chooseTeamId',
+          timestamp: Date.now(),
+          value: team.value,
+        },
+      });
+    };
+
     return {
       isLoading,
       options,
@@ -126,6 +138,7 @@ export default defineComponent({
       teamInfoText,
       OrganizationLevel,
       onOptionCreated,
+      onTeamIdChange,
     };
   },
 });
@@ -145,6 +158,7 @@ export default defineComponent({
       :loading="isLoading"
       @create:option="onOptionCreated"
       data-cy="form-select-table-team"
+      @update:model-value="onTeamIdChange"
     />
   </div>
 </template>

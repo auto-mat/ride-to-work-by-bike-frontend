@@ -49,6 +49,8 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import { useChallengeStore } from 'src/stores/challenge';
 
+import { onTrack } from '../../utils/track';
+
 // enums
 import { Gender } from '../types/Profile';
 
@@ -390,6 +392,18 @@ export default defineComponent({
         registerChallengeStore.setMerchId(selectedSizeLocal.value);
         registerChallengeStore.setIsMerchandiseSavedIntoDb(false);
         isOpen.value = false;
+        const merchSize = currentDialogCard.value.sizeOptions.filter(
+          (size) => size.value === selectedSizeLocal.value,
+        );
+        onTrack({
+          detail: {
+            targetName: 'selectMerch',
+            timestamp: Date.now(),
+            value:
+              `${currentDialogCard.value.label}, ${currentDialogCard.value.gender}, ` +
+              `${merchSize[0].label}`,
+          },
+        });
       } else {
         // validation error
         logger?.info('Form validation failed, keeping dialog open.');
@@ -452,6 +466,22 @@ export default defineComponent({
       }
     });
 
+    const selectedSizeTrack = computed({
+      get: () => selectedSize.value,
+    });
+
+    watch(selectedSizeTrack, (val) => {
+      const size =
+        merchandiseItems.value.find((item) => item.id === val) || null;
+      onTrack({
+        detail: {
+          targetName: 'selectedSize',
+          timestamp: Date.now(),
+          value: size.size,
+        },
+      });
+    });
+
     return {
       currentItemLabelSize,
       currentDialogCard,
@@ -486,6 +516,7 @@ export default defineComponent({
       shopDiscountMinOrderFormatted,
       shopDiscountValidUntilFormatted,
       urlSizeConversionChart,
+      onTrack,
     };
   },
 });
@@ -635,6 +666,9 @@ export default defineComponent({
         :href="urlSizeConversionChart"
         target="_blank"
         data-cy="form-merch-size-conversion-chart-link"
+        v-click-track-evt
+        @click-track="onTrack"
+        name="merchSizeLink"
         >{{ $t('form.merch.labelUrlSizeConversionChartLink') }}</a
       >
     </div>

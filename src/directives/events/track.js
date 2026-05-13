@@ -12,8 +12,14 @@ const clickTrackEvt = {
       if (cssClassLists.contains('q-checkbox')) {
         targetElementName =
           evt.currentTarget.getElementsByTagName('input')[0].name;
+      } else if (cssClassLists.contains('q-stepper__step')) {
+        // Get stepper widget name
+        targetElementName = evt.currentTarget.getAttribute('step-name');
+        // Prevent clicking on the active step panel
+        const stepDone = evt.target.closest('.q-stepper__tab--active');
+        if (!stepDone) return;
       }
-      if (!evt.target || !evt.target.name) {
+      if ((!evt.target || !evt.target.name) && !targetElementName) {
         targetElementName = evt.currentTarget.name;
       }
       el.dispatchEvent(
@@ -33,11 +39,13 @@ const clickTrackEvt = {
 
     // Add the event listener to the document
     el.addEventListener('click', onClickTrack);
+    el.addEventListener('touchstart', onClickTrack);
   },
 
   unmounted(el) {
     // Clean up remove the event listener when the element is unmounted
     document.removeEventListener('click', el._clickTrackHandler);
+    document.removeEventListener('touchstart', el._clickTrackHandler);
     delete el._clickTrackHandler; // Avoid memory leaks
   },
 };

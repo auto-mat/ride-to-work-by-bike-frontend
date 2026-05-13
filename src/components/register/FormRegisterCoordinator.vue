@@ -23,7 +23,7 @@
 
 // libraries
 import { Notify } from 'quasar';
-import { defineComponent, inject, reactive, computed } from 'vue';
+import { defineComponent, inject, reactive, computed, watch } from 'vue';
 
 // adapters
 import { registerCoordinatorAdapter } from 'src/adapters/registerCoordinatorAdapter';
@@ -55,6 +55,8 @@ import type { FormOption } from '../types/Form';
 import type { Logger } from '../types/Logger';
 
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+
+import { onTrack } from '../../utils/track';
 
 export default defineComponent({
   name: 'FormRegisterCoordinator',
@@ -139,6 +141,68 @@ export default defineComponent({
       );
     });
 
+    const newsletterTrack = computed({
+      get: () => formRegisterCoordinator.newsletter,
+    });
+
+    watch(newsletterTrack, () => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorNewsletter',
+          timestamp: Date.now(),
+        },
+      });
+    });
+
+    const responsibilityTrack = computed({
+      get: () => formRegisterCoordinator.responsibility,
+    });
+
+    watch(responsibilityTrack, () => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorResponsibility',
+          timestamp: Date.now(),
+        },
+      });
+    });
+    const termsTrack = computed({
+      get: () => formRegisterCoordinator.terms,
+    });
+    watch(termsTrack, () => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorTerms',
+          timestamp: Date.now(),
+        },
+      });
+    });
+
+    const organizationTypeTrack = computed({
+      get: () => formRegisterCoordinator.organizationType,
+    });
+    watch(organizationTypeTrack, () => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorOrganizationTypeTrack',
+          timestamp: Date.now(),
+        },
+      });
+    });
+
+    const organizationIdTrack = computed({
+      get: () => formRegisterCoordinator.organizationId,
+    });
+    watch(organizationIdTrack, (val) => {
+      onTrack({
+        detail: {
+          targetName: 'orgCoordinatorSelectedOrganizationId',
+          timestamp: Date.now(),
+          value: val,
+        },
+      });
+    });
+
     return {
       fieldOrganizationLabel,
       formRegisterCoordinator,
@@ -146,6 +210,7 @@ export default defineComponent({
       urlAppDataPrivacyPolicy,
       onReset,
       onSubmit,
+      onTrack,
     };
   },
 });
@@ -172,20 +237,24 @@ export default defineComponent({
           <!-- Input: first name -->
           <form-field-text-required
             v-model="formRegisterCoordinator.firstName"
-            name="form-first-name"
+            name="orgCoordinatorFirstName"
             label="form.labelFirstName"
             autocomplete="given-name"
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-first-name"
+            v-click-track-evt
+            @click-track="onTrack"
           />
           <!-- Input: last name -->
           <form-field-text-required
             v-model="formRegisterCoordinator.lastName"
-            name="form-last-name"
+            name="orgCoordinatorLastName"
             label="form.labelLastName"
             autocomplete="family-name"
             class="col-12 col-sm-6"
             data-cy="form-register-coordinator-last-name"
+            v-click-track-evt
+            @click-track="onTrack"
           />
           <!-- Input: organization type -->
           <div class="col-12 col-sm-6">
@@ -219,17 +288,22 @@ export default defineComponent({
           <!-- Input: job title -->
           <form-field-text-required
             v-model="formRegisterCoordinator.jobTitle"
-            name="form-job-title"
+            name="orgCoordinatorJobTitle"
             label="form.labelJobTitle"
             label-short="form.labelJobTitleShort"
             class="col-sm-6"
             data-cy="form-register-coordinator-job-title"
+            v-click-track-evt
+            @click-track="onTrack"
           />
           <!-- Input: phone-->
           <form-field-phone
+            name="orgCoordiantorPhone"
             v-model="formRegisterCoordinator.phone"
             class="col-sm-6"
             data-cy="form-register-coordinator-phone"
+            v-click-track-evt
+            @click-track="onTrack"
           />
           <!-- Input: Newsletter -->
           <div class="col-12" data-cy="form-personal-details-newsletter">
@@ -248,6 +322,7 @@ export default defineComponent({
                 $t('register.coordinator.form.messageResponsibilityRequired')
               "
               class="q-pt-sm"
+              name="contactPermission"
             >
               {{ $t('register.coordinator.form.labelResponsibility') }}
             </form-field-checkbox-required>
@@ -269,6 +344,9 @@ export default defineComponent({
                 class="text-primary"
                 @click.stop
                 data-cy="form-terms-link"
+                v-click-track-evt
+                @click-track="onTrack"
+                name="orgCoordinatorPrivacyConsentLink"
               >
                 {{ $t('register.coordinator.form.linkPrivacyConsent') }} </a
               >.

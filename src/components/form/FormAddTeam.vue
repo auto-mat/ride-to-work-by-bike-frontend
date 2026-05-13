@@ -30,6 +30,8 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // i18n
 import { i18n } from 'src/boot/i18n';
 
+import { onTrack } from '../../utils/track';
+
 // stores
 import { useChallengeStore } from 'src/stores/challenge';
 
@@ -80,6 +82,7 @@ export default defineComponent({
       team,
       teamText,
       onUpdate,
+      onTrack,
     };
   },
 });
@@ -89,11 +92,13 @@ export default defineComponent({
   <div>
     <form-field-text-required
       v-model="team.name"
-      name="name"
+      name="newTeamName"
       :label="$t('form.team.labelTeamName')"
       :label-short="$t('form.team.labelTeam')"
       @update:model-value="onUpdate"
       data-cy="form-add-team-name"
+      v-click-track-evt
+      @click-track="onTrack"
     />
     <div v-html="teamText" class="q-mt-sm" data-cy="form-add-team-text" />
   </div>

@@ -513,6 +513,9 @@ export default defineComponent({
             :header-nav="step > 1"
             class="bg-white"
             data-cy="step-1"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="personalDetailsStep"
           >
             <q-form ref="stepPersonalDetailsRef">
               <form-personal-details data-cy="form-personal-details" />
@@ -543,6 +546,9 @@ export default defineComponent({
             :header-nav="step > 2"
             class="relative-position bg-white q-mt-lg"
             data-cy="step-2"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="paymentStep"
           >
             <!-- Form: Payment -->
             <q-form ref="stepPaymentRef">
@@ -656,6 +662,9 @@ export default defineComponent({
             :header-nav="step > 3"
             class="bg-white q-mt-lg"
             data-cy="step-3"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="participationStep"
           >
             <q-form ref="stepParticipationRef">
               <p class="q-mb-md">
@@ -709,6 +718,9 @@ export default defineComponent({
             :header-nav="step > 4"
             class="bg-white q-mt-lg"
             data-cy="step-4"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="organizationStep"
           >
             <q-form ref="stepCompanyRef">
               <form-select-organization />
@@ -755,6 +767,9 @@ export default defineComponent({
             :header-nav="step > 5"
             class="bg-white q-mt-lg"
             data-cy="step-5"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="teamStep"
           >
             <q-form ref="stepTeamRef">
               <form-select-team data-cy="form-select-team" />
@@ -799,6 +814,9 @@ export default defineComponent({
             :header-nav="step > 6"
             class="bg-white q-mt-lg"
             data-cy="step-6"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="merchStep"
           >
             <q-form ref="stepMerchRef">
               <form-field-list-merch />
@@ -844,6 +862,9 @@ export default defineComponent({
             :header-nav="step > 7"
             class="bg-white q-mt-lg"
             data-cy="step-7"
+            v-click-track-evt
+            @click-track="onTrack"
+            step-name="summaryStep"
           >
             <register-challenge-payment-messages data-cy="summary-messages" />
             <!-- Content: Summary -->

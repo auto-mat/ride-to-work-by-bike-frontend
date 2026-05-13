@@ -31,6 +31,8 @@ import { routesConf } from 'src/router/routes_conf';
 // stores
 import { useRegisterChallengeStore } from 'stores/registerChallenge';
 
+import { onTrack } from '../utils/track';
+
 export default defineComponent({
   name: 'RegisterCoordinatorPage',
   components: {
@@ -65,6 +67,7 @@ export default defineComponent({
       challengeMonth,
       containerFormWidth,
       urlRegisterAsUser,
+      onTrack,
     };
   },
 });
@@ -107,6 +110,9 @@ export default defineComponent({
             :to="urlRegisterAsUser"
             class="text-grey-10"
             data-cy="info-link-register-as-participant"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="registerAsUserLink"
           >
             {{ $t('register.form.linkRegisterAsParticipant') }}
           </router-link>

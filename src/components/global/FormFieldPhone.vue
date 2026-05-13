@@ -95,7 +95,6 @@ export default defineComponent({
       :hint="hint"
       class="q-mt-sm"
       id="form-phone"
-      name="phone"
       data-cy="form-phone-input"
     />
   </div>

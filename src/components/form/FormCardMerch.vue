@@ -39,6 +39,8 @@ import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 // types
 import type { MerchandiseCard } from '../types/Merchandise';
 
+import { onTrack } from '../../utils/track';
+
 export default defineComponent({
   name: 'FormCardMerch',
   props: {
@@ -69,6 +71,7 @@ export default defineComponent({
       borderRadiusSmall,
       selectOption,
       props,
+      onTrack,
     };
   },
 });
@@ -146,6 +149,9 @@ export default defineComponent({
         class="full-width"
         @click.prevent="selectOption(option)"
         data-cy="button-more-info"
+        v-click-track-evt
+        @click-track="onTrack"
+        name="merchMoreInfoBtn"
       >
         {{ $t('navigation.select') }}
       </q-btn>
@@ -159,6 +165,9 @@ export default defineComponent({
         class="full-width"
         :disable="true"
         data-cy="button-selected"
+        v-click-track-evt
+        @click-track="onTrack"
+        name="selectMerchSizeOptBtn"
       >
         {{ $t('navigation.selected') }}
       </q-btn>

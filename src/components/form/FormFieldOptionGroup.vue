@@ -33,6 +33,8 @@ import { i18n } from 'src/boot/i18n';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+import { onTrack } from '../../utils/track';
+
 // enums
 import { OrganizationType } from 'src/components/types/Organization';
 import { PaymentSubject } from 'src/components/enums/Payment';
@@ -65,6 +67,13 @@ export default defineComponent({
     });
 
     const onOrganizationTypeChange = () => {
+      onTrack({
+        detail: {
+          targetName: 'organizationName',
+          timestamp: Date.now(),
+          value: organizationType.value,
+        },
+      });
       // reset organizationId on organizationType change
       registerChallengeStore.setOrganizationId(null);
       logger?.debug(

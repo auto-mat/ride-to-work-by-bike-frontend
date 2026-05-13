@@ -104,6 +104,17 @@ export default defineComponent({
       ).labelCityChallenge;
     });
 
+    const onUpdateCityChallenge = (): void => {
+      const name = FormSubsidiaryFields.cityChallenge;
+      onTrack({
+        detail: {
+          targetName: `subsidiary${name.charAt(0).toUpperCase()}${name.slice(1)}`,
+          timestamp: Date.now(),
+          value: subsidiary.value.cityChallenge,
+        },
+      });
+    };
+
     return {
       subsidiary,
       hintCityChallenge,
@@ -114,6 +125,7 @@ export default defineComponent({
       options,
       FormSubsidiaryFields,
       onTrack,
+      onUpdateCityChallenge,
     };
   },
 });
@@ -154,6 +166,7 @@ export default defineComponent({
           :hint="hintCityChallenge"
           :options="options"
           :loading="isLoading"
+          @update:model-value="onUpdateCityChallenge"
           class="q-mt-sm"
           data-cy="form-add-subsidiary-city-challenge"
           :name="FormSubsidiaryFields.cityChallenge"
@@ -167,20 +180,20 @@ export default defineComponent({
         >
           {{ $t('form.company.labelDepartment') }}
         </label>
-        <q-input
-          dense
-          outlined
-          lazy-rules
-          hide-bottom-space
-          v-model="subsidiary.department"
-          id="form-department"
-          :name="FormSubsidiaryFields.department"
-          :hint="$t('form.company.hintDepartment')"
-          class="q-mt-sm"
-          data-cy="form-add-subsidiary-department"
-          v-click-track-evt
-          @click-track="onTrack"
-        />
+        <div v-click-track-evt @click-track="onTrack">
+          <q-input
+            dense
+            outlined
+            lazy-rules
+            hide-bottom-space
+            v-model="subsidiary.department"
+            id="form-department"
+            :name="`subsidiary${FormSubsidiaryFields.department.charAt(0).toUpperCase()}${FormSubsidiaryFields.department.slice(1)}`"
+            :hint="$t('form.company.hintDepartment')"
+            class="q-mt-sm"
+            data-cy="form-add-subsidiary-department"
+          />
+        </div>
       </div>
     </div>
   </div>

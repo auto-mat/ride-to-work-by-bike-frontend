@@ -364,7 +364,7 @@ export default defineComponent({
           data-cy="button-add-company"
           v-click-track-evt
           @click-track="onTrack"
-          name="companyAddBtn"
+          name="organizationAddBtn"
         >
           <!-- Label -->
           <span class="inline-block q-pl-xs">
@@ -391,7 +391,7 @@ export default defineComponent({
             class="hidden"
             v-click-track-evt
             @click-track="onTrack"
-            name="companySubmitEnterKeyBtn"
+            name="organizationSubmitEnterKeyBtn"
           />
         </q-form>
         <!-- Action buttons -->
@@ -406,7 +406,7 @@ export default defineComponent({
               @click="onClose"
               v-click-track-evt
               @click-track="onTrack"
-              name="companyCloseBtn"
+              name="organizationCloseBtn"
             >
               {{ $t('navigation.discard') }}
             </q-btn>
@@ -418,7 +418,7 @@ export default defineComponent({
               @click="onSubmit"
               v-click-track-evt
               @click-track="onTrack"
-              name="companySubmitBtn"
+              name="organizationSubmitBtn"
             >
               {{ addNewOrganizationDialogBtn }}
             </q-btn>

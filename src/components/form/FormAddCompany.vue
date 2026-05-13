@@ -101,6 +101,18 @@ export default defineComponent({
       });
     };
 
+    const onUpdateCityChallenge = (): void => {
+      const name = FormSubsidiaryFields.cityChallenge;
+      onTrack({
+        detail: {
+          targetName: `selectOrganization${name.charAt(0).toUpperCase()}${name.slice(1)}`,
+          timestamp: Date.now(),
+          value: company.value.subsidiaryAddress.cityChallenge,
+        },
+      });
+      onUpdate();
+    };
+
     const { isFilled } = useValidation();
 
     const isCompany = computed((): boolean => {
@@ -151,7 +163,19 @@ export default defineComponent({
 
     // sync company address to subsidiary when addresses should be the same
     watch(
-      [isDifferentSubsidiaryAddress, () => company.value.orgAddress],
+      [
+        isDifferentSubsidiaryAddress,
+        () => {
+          onTrack({
+            detail: {
+              targetName: 'checkboxDiffAddress',
+              timestamp: Date.now(),
+              value: isDifferentSubsidiaryAddress.value,
+            },
+          });
+          return company.value.orgAddress;
+        },
+      ],
       ([isDifferent, orgAddress]) => {
         if (!isDifferent && company.value.subsidiaryAddress && orgAddress) {
           // copy orgAddress fields to subsidiaryAddress
@@ -191,6 +215,7 @@ export default defineComponent({
       showMinimalSubsidiaryFields,
       showFullSubsidiaryFields,
       FormSubsidiaryFields,
+      onUpdateCityChallenge,
       onTrack,
     };
   },
@@ -313,6 +338,7 @@ export default defineComponent({
             class="text-caption text-bold text-gray-10"
             >{{ labelCityChallenge }}</label
           >
+
           <q-select
             dense
             outlined
@@ -331,11 +357,9 @@ export default defineComponent({
             :options="cityOptions"
             :loading="isCityLoading"
             class="q-mt-sm"
-            @update:model-value="onUpdate"
+            @update:model-value="onUpdateCityChallenge"
             data-cy="form-add-company-city-challenge-minimal"
             :name="FormSubsidiaryFields.cityChallenge"
-            v-click-track-evt
-            @click-track="onTrack"
           ></q-select>
         </div>
         <div class="col-12">
@@ -346,21 +370,21 @@ export default defineComponent({
           >
             {{ $t('form.company.labelDepartment') }}
           </label>
-          <q-input
-            dense
-            outlined
-            lazy-rules
-            hide-bottom-space
-            v-model="company.subsidiaryAddress.department"
-            id="form-department-minimal"
-            :name="FormSubsidiaryFields.department"
-            :hint="$t('form.company.hintDepartment')"
-            class="q-mt-sm"
-            @update:model-value="onUpdate"
-            data-cy="form-add-company-department-minimal"
-            v-click-track-evt
-            @click-track="onTrack"
-          />
+          <div v-click-track-evt @click-track="onTrack">
+            <q-input
+              dense
+              outlined
+              lazy-rules
+              hide-bottom-space
+              v-model="company.subsidiaryAddress.department"
+              id="form-department-minimal"
+              :name="`organization${FormSubsidiaryFields.department.charAt(0).toUpperCase()}${FormSubsidiaryFields.department.slice(1)}`"
+              :hint="$t('form.company.hintDepartment')"
+              class="q-mt-sm"
+              @update:model-value="onUpdate"
+              data-cy="form-add-company-department-minimal"
+            />
+          </div>
         </div>
       </div>
     </div>
