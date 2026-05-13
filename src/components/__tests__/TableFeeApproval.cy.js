@@ -749,7 +749,7 @@ describe('<TableFeeApproval>', () => {
   });
 
   context('merchandise unavailable', () => {
-    it('shows banner and disables reward checkbox in non-approved table when merch is unavailable', () => {
+    it('shows banner and disables reward checkbox when merch not available', () => {
       setActivePinia(createPinia());
       cy.mount(TableFeeApproval, {
         props: { approved: false },
