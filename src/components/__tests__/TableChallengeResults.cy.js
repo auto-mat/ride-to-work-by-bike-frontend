@@ -184,7 +184,7 @@ function coreTests() {
         .should('exist')
         .and('be.visible')
         .find('.q-icon')
-        .should('have.class', 'text-blue-grey-3');
+        .should('have.class', 'text-blue-grey-2');
     });
   });
 

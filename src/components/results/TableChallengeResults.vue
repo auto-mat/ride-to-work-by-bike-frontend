@@ -96,7 +96,7 @@ export default defineComponent({
 
     const placeIconColor = (place: number): string => {
       if (place === 1) return 'amber-4';
-      if (place === 2) return 'blue-grey-3';
+      if (place === 2) return 'blue-grey-2';
       return 'brown-3';
     };
 
@@ -136,6 +136,7 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-place"
           >
+            <!-- Icon: 1st, 2nd, 3rd place -->
             <q-avatar
               v-if="props.row.place <= 3"
               size="24px"
@@ -183,7 +184,7 @@ export default defineComponent({
           >
             {{ props.row.distance }}
           </q-td>
-          <!-- CO₂ (supplementary info) -->
+          <!-- Saved emissions -->
           <q-td key="co2" :props="props" data-cy="table-challenge-results-co2">
             {{ props.row.emissions.co2 }}
           </q-td>
