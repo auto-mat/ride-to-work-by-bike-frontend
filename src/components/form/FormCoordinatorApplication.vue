@@ -179,13 +179,13 @@ export default defineComponent({
       <div class="col-12 col-sm-6">
         <!-- Input: Telephone number -->
         <form-field-phone
+          inputElementName="orgCoordinatorPhone"
           v-model="formCoordinatorData.phone"
-          name="orgCoordinatorPhone"
           label="form.labelYourPhone"
           data-cy="form-coordinator-phone"
           v-click-track-evt
           @click-track="onTrack"
-        />DDDD
+        />
       </div>
       <div class="col-12">
         <!-- Input: Coordinator's responsibilities -->

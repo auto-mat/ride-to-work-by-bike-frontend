@@ -264,6 +264,7 @@ export default defineComponent({
 
       <!-- Input: Phone number -->
       <form-field-phone
+        inputElementName="phoneNumber"
         v-model="phone"
         :hint="$t('form.merch.hintPhoneNoMerch')"
         :required="true"

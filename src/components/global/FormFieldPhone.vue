@@ -13,6 +13,7 @@
  *   It should be of type `string`.
  * - `hint` (string, default: ''): The hint text.
  * - `required` (boolean, default: true): Whether the input is required.
+ * - `inputElementName` (string, default: 'phone'): Phone input element name string
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -48,6 +49,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    inputElementName: {
+      type: String,
+      default: 'phone',
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -66,6 +71,7 @@ export default defineComponent({
       phone,
       isFilled,
       isPhone,
+      props,
     };
   },
 });
@@ -93,6 +99,7 @@ export default defineComponent({
         (val) => !val || isPhone(val) || $t('form.messagePhoneInvalid'),
       ]"
       :hint="hint"
+      :name="props.inputElementName"
       class="q-mt-sm"
       id="form-phone"
       data-cy="form-phone-input"

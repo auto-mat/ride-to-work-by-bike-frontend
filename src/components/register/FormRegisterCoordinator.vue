@@ -298,7 +298,7 @@ export default defineComponent({
           />
           <!-- Input: phone-->
           <form-field-phone
-            name="orgCoordiantorPhone"
+            inputElementName="orgCoordinatorPhone"
             v-model="formRegisterCoordinator.phone"
             class="col-sm-6"
             data-cy="form-register-coordinator-phone"
