@@ -254,6 +254,7 @@ facebookLoginSdkOptions = '''
 # enable it via global ENV
 urlMatomoAnalytics = "disable"
 matomoAnalyticsRtwbbAppSiteId = "1"
+matomoAnalyticsEnableRegisterChallengeTrackingEvent = "disable"
 
 # MAP SETTINGS
 

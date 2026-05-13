@@ -17,7 +17,11 @@ const onTrack = (evt: EventTrack): void => {
     `Tracking event detail <${dateTime}>,` +
       ` <${evt.detail.targetName}>, <${evt.detail.value}>`,
   );
-  if (rideToWorkByBikeConfig.urlMatomoAnalytics !== 'disable') {
+  if (
+    rideToWorkByBikeConfig.urlMatomoAnalytics !== 'disable' &&
+    rideToWorkByBikeConfig.matomoAnalyticsEnableRegisterChallengeTrackingEvent !==
+      'disable'
+  ) {
     let value;
     if (evt.detail.value) {
       value = `${dateTime}, ${evt.detail.value}`;
