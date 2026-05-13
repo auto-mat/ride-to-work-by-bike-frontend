@@ -31,6 +31,7 @@ import CoordinatorTabs from '../components/coordinator/CoordinatorTabs.vue';
 import { useAdminOrganisationStore } from '../stores/adminOrganisation';
 import { useAdminCompetitionStore } from '../stores/adminCompetition';
 import { useFeedStore } from '../stores/feed';
+import { useRegisterChallengeStore } from '../stores/registerChallenge';
 
 // utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
@@ -50,6 +51,7 @@ export default defineComponent({
     const adminOrganisationStore = useAdminOrganisationStore();
     const adminCompetitionStore = useAdminCompetitionStore();
     const feedStore = useFeedStore();
+    const registerChallengeStore = useRegisterChallengeStore();
 
     const urlRideToWorkByBikeOldFrontendDjangoApp = computed(() => {
       return getApiBaseUrlWithLang(
@@ -74,6 +76,9 @@ export default defineComponent({
       }
       if (feedStore.getCities.length === 0) {
         promises.push(feedStore.loadCities());
+      }
+      if (registerChallengeStore.getMerchandiseItems.length === 0) {
+        promises.push(registerChallengeStore.loadMerchandiseToStore(logger));
       }
       await Promise.all(promises);
     });

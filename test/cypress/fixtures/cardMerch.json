@@ -6,6 +6,7 @@
   "gender": "female",
   "material": "Bavlna",
   "itemIds": [133, 134, 135, 136, 137, 138],
+  "available": true,
   "sizeOptions": [
     {
       "label": "XS",

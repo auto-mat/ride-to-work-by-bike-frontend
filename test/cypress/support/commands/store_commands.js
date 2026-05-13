@@ -21,3 +21,25 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Set merchandise cards value in register challenge store
+ * @param {function} useRegisterChallengeStore - `useRegisterChallengeStore` function
+ *                                                to initialize register challenge store
+ */
+Cypress.Commands.add(
+  'setMerchandiseCardsStoreState',
+  (useRegisterChallengeStore) => {
+    cy.fixture('cardMerch.json').then((card) => {
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        const storedMerchandiseCards = computed(
+          () => registerChallengeStore.getMerchandiseCards,
+        );
+        registerChallengeStore.setMerchandiseCards({ [card.gender]: [card] });
+        cy.wrap(storedMerchandiseCards)
+          .its('value')
+          .should('deep.equal', { [card.gender]: [card] });
+      });
+    });
+  },
+);

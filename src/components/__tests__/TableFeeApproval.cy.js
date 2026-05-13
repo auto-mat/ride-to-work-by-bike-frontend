@@ -4,6 +4,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useTable } from 'src/composables/useTable';
@@ -34,6 +35,7 @@ const selectorDisapproveButton = 'table-fee-disapproval-button';
 const selectorDisapproveDialog = 'dialog-disapprove-payments';
 const selectorDisapproveCancel = 'dialog-disapprove-cancel';
 const selectorDisapproveConfirm = 'dialog-disapprove-confirm';
+const selectorMerchUnavailable = 'table-fee-approval-merch-unavailable';
 
 // variables
 const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
@@ -59,6 +61,11 @@ describe('<TableFeeApproval>', () => {
       'table',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['tooltipMerchNotAvailable'],
+      'register.challenge',
+      i18n,
+    );
   });
 
   context('desktop non-approved variant', () => {
@@ -68,6 +75,7 @@ describe('<TableFeeApproval>', () => {
         props: { approved: false },
       });
       cy.viewport('macbook-16');
+      cy.setMerchandiseCardsStoreState(useRegisterChallengeStore);
     });
 
     testData.forEach((test) => {
@@ -737,6 +745,85 @@ describe('<TableFeeApproval>', () => {
           );
         });
       });
+    });
+  });
+
+  context('merchandise unavailable', () => {
+    it('shows banner and disables reward checkbox in non-approved table when merch is unavailable', () => {
+      setActivePinia(createPinia());
+      cy.mount(TableFeeApproval, {
+        props: { approved: false },
+      });
+      cy.viewport('macbook-16');
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          // notification chip
+          cy.dataCy(selectorMerchUnavailable)
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('register.challenge.tooltipMerchNotAvailable'),
+            );
+          // reward checkboxes disabled
+          cy.dataCy(selectorTableRewardCheckbox)
+            .should('be.visible')
+            .and('have.class', 'disabled');
+        },
+      );
+    });
+
+    it('does not show merch unavailable banner in approved table', () => {
+      setActivePinia(createPinia());
+      cy.mount(TableFeeApproval, {
+        props: { approved: true },
+      });
+      cy.viewport('macbook-16');
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          // notification chip not shown
+          cy.dataCy(selectorMerchUnavailable).should('not.exist');
+        },
+      );
+    });
+
+    it('does not show merch unavailable banner when merch is available', () => {
+      setActivePinia(createPinia());
+      cy.mount(TableFeeApproval, {
+        props: { approved: false },
+      });
+      cy.viewport('macbook-16');
+      cy.fixture('tableFeeApprovalTestData').then(
+        (tableFeeApprovalTestData) => {
+          cy.wrap(useAdminOrganisationStore()).then(
+            (adminOrganisationStore) => {
+              adminOrganisationStore.setAdminOrganisations(
+                tableFeeApprovalTestData.storeData,
+              );
+            },
+          );
+          cy.setMerchandiseCardsStoreState(useRegisterChallengeStore);
+          // notification chip not shown
+          cy.dataCy(selectorMerchUnavailable).should('not.exist');
+          // reward checkboxes enabled
+          cy.dataCy(selectorTableRewardCheckbox)
+            .should('be.visible')
+            .and('not.have.class', 'disabled');
+        },
+      );
     });
   });
 

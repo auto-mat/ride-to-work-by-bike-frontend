@@ -40,6 +40,7 @@ import {
 
 // stores
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
 import type { TableFeeApprovalRow } from '../../components/types/AdminOrganisation';
@@ -61,6 +62,10 @@ export default defineComponent({
 
   setup(props) {
     const adminOrganisationStore = useAdminOrganisationStore();
+    const registerChallengeStore = useRegisterChallengeStore();
+    const isMerchandiseAvailable = computed<boolean>(
+      () => registerChallengeStore.getIsMerchandiseAvailable,
+    );
     const selected = computed<TableFeeApprovalRow[]>({
       get: () => adminOrganisationStore.getSelectedPaymentsToApprove,
       set: (value) => {
@@ -162,6 +167,7 @@ export default defineComponent({
       feeApprovalData,
       isLoading,
       isLoadingApprovePayments,
+      isMerchandiseAvailable,
       isLoadingDisapprovePayments,
       selected,
       tableRef,
@@ -183,6 +189,17 @@ export default defineComponent({
 
 <template>
   <div data-cy="table-fee-approval">
+    <!-- Chip: Merch unavailable -->
+    <q-chip
+      v-if="!approved && !isMerchandiseAvailable"
+      color="amber-2"
+      text-color="orange-10"
+      icon="svguse:icons/table_fee_approval/icons.svg#lucide:triangle-alert"
+      class="q-mb-md"
+      data-cy="table-fee-approval-merch-unavailable"
+    >
+      {{ $t('register.challenge.tooltipMerchNotAvailable') }}
+    </q-chip>
     <div>
       <!-- Table -->
       <q-table
@@ -265,6 +282,7 @@ export default defineComponent({
               <q-checkbox
                 v-else
                 :model-value="paymentRewards[props.row.id] ?? props.row.reward"
+                :disable="!isMerchandiseAvailable"
                 color="primary"
                 data-cy="table-fee-approval-reward-checkbox"
                 @update:model-value="
