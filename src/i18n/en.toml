@@ -727,6 +727,12 @@ title = "Challenge ends in | Challenge ends in"
 title = "Future challenges"
 emptyState = "There is no company challenge announced at this moment"
 buttonShowResults = "Show results"
+buttonMoreInfo = "More info"
+chipCompetitionTypeFrequency = "Regularity"
+chipCompetitionTypeLength = "Performance"
+chipCompetitorTypeSingleUser = "Individuals"
+chipCompetitorTypeTeam = "Teams"
+chipCompetitorTypeSubsidiary = "Subsidiaries"
 
 [index.cardChallenge]
 company = "Company challenge"

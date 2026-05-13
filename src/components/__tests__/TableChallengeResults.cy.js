@@ -104,7 +104,7 @@ function coreTests() {
     });
   });
 
-  it('renders frequency column values', () => {
+  it('renders frequency column formatted to 2 decimal places', () => {
     cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
       cy.mount(TableChallengeResults, {
         props: {
@@ -115,12 +115,12 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-frequency')
           .eq(index)
-          .should('contain', result.frequency);
+          .should('contain', result.frequency.toFixed(2));
       });
     });
   });
 
-  it('renders distance column values', () => {
+  it('renders distance column formatted to 2 decimal places', () => {
     cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
       cy.mount(TableChallengeResults, {
         props: {
@@ -131,7 +131,7 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-distance')
           .eq(index)
-          .should('contain', result.distance);
+          .should('contain', result.distance.toFixed(2));
       });
     });
   });

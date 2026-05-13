@@ -75,6 +75,7 @@ export default defineComponent({
         field: 'frequency',
         align: 'right',
         sortable: true,
+        format: (value: number | string) => Number(value).toFixed(2),
       },
       {
         name: 'distance',
@@ -82,6 +83,7 @@ export default defineComponent({
         field: 'distance',
         align: 'right',
         sortable: true,
+        format: (value: number | string) => Number(value).toFixed(2),
       },
       {
         name: 'co2',
@@ -174,7 +176,7 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-frequency"
           >
-            {{ props.row.frequency }}
+            {{ Number(props.row.frequency).toFixed(2) }}
           </q-td>
           <!-- Distance -->
           <q-td
@@ -182,7 +184,7 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-distance"
           >
-            {{ props.row.distance }}
+            {{ Number(props.row.distance).toFixed(2) }}
           </q-td>
           <!-- Saved emissions -->
           <q-td key="co2" :props="props" data-cy="table-challenge-results-co2">

@@ -729,6 +729,12 @@ title = "Do konca výzvy zostáva už len | Do konca výzvy zostávajú už len"
 title = "Budúce výzvy"
 emptyState = "V tejto chvíli nie je vypísaná žiadna firemná výzva"
 buttonShowResults = "Zobraziť výsledky"
+buttonMoreInfo = "Viac informácií"
+chipCompetitionTypeFrequency = "Pravidelnosť"
+chipCompetitionTypeLength = "Výkonnosť"
+chipCompetitorTypeSingleUser = "Jednotlivci"
+chipCompetitorTypeTeam = "Týmy"
+chipCompetitorTypeSubsidiary = "Pobočky"
 
 [index.cardChallenge]
 company = "Výzva spoločnosti"

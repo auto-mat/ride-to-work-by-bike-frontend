@@ -25,6 +25,7 @@ import SectionColumns from '../homepage/SectionColumns.vue';
 import TableChallengeResults from '../results/TableChallengeResults.vue';
 
 // composables
+import { i18n } from 'src/boot/i18n';
 import { useApiGetCompetitionResults } from '../../composables/useApiGetCompetitionResults';
 import { useRoutes } from '../../composables/useRoutes';
 
@@ -33,6 +34,9 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
 import { useAdminCompetitionStore } from '../..//stores/adminCompetition';
+
+// enums
+import { CompetitionType, CompetitorType } from '../enums/Challenge';
 
 // types
 import type { Competition } from '../types/Competition';
@@ -80,9 +84,32 @@ export default defineComponent({
       loadCompetitionResults(competition.slug);
     };
 
+    const getCompetitionTypeLabel = (competition: Competition): string => {
+      return competition.competition_type === CompetitionType.frequency
+        ? i18n.global.t('index.cardListChallenge.chipCompetitionTypeFrequency')
+        : i18n.global.t('index.cardListChallenge.chipCompetitionTypeLength');
+    };
+
+    const getCompetitorTypeLabel = (competition: Competition): string => {
+      const labelMap: Record<CompetitorType, string> = {
+        [CompetitorType.singleUser]: i18n.global.t(
+          'index.cardListChallenge.chipCompetitorTypeSingleUser',
+        ),
+        [CompetitorType.team]: i18n.global.t(
+          'index.cardListChallenge.chipCompetitorTypeTeam',
+        ),
+        [CompetitorType.subsidiary]: i18n.global.t(
+          'index.cardListChallenge.chipCompetitorTypeSubsidiary',
+        ),
+      };
+      return labelMap[competition.competitor_type];
+    };
+
     return {
       borderRadius,
       competitions,
+      getCompetitionTypeLabel,
+      getCompetitorTypeLabel,
       isDialogOpen,
       isLoading,
       openResultsDialog,
@@ -144,7 +171,28 @@ export default defineComponent({
         </q-card-section>
         <q-separator />
         <q-card-section>
+          <!-- Chips: competition type and competitor type -->
           <div class="flex gap-8">
+            <q-chip
+              outline
+              size="sm"
+              class="q-ma-none"
+              color="primary"
+              data-cy="list-challenges-chip-competition-type"
+            >
+              {{ getCompetitionTypeLabel(competition) }}
+            </q-chip>
+            <q-chip
+              outline
+              size="sm"
+              color="primary"
+              class="q-ma-none"
+              data-cy="list-challenges-chip-competitor-type"
+            >
+              {{ getCompetitorTypeLabel(competition) }}
+            </q-chip>
+          </div>
+          <div class="flex gap-8 q-mt-md">
             <q-icon
               v-for="transportType in competition.commute_modes"
               :key="transportType.slug"
@@ -169,8 +217,8 @@ export default defineComponent({
               {{ $d(new Date(competition.date_to), 'numeric') }}
             </span>
           </div>
-          <!-- Button: Show results -->
-          <div class="q-mt-md">
+          <!-- Buttons: Show results + More info -->
+          <div class="q-mt-md flex items-center gap-4">
             <q-btn
               flat
               dense
@@ -180,6 +228,18 @@ export default defineComponent({
               data-cy="list-challenges-button-show-results"
             >
               {{ $t('index.cardListChallenge.buttonShowResults') }}
+            </q-btn>
+            <q-btn
+              v-if="competition.url"
+              flat
+              dense
+              no-caps
+              color="grey-6"
+              :href="competition.url"
+              target="_blank"
+              data-cy="list-challenges-button-more-info"
+            >
+              {{ $t('index.cardListChallenge.buttonMoreInfo') }}
             </q-btn>
           </div>
         </q-card-section>
