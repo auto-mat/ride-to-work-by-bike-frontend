@@ -1046,6 +1046,71 @@ describe('Home page', () => {
     });
   });
 
+  context('challenge results dialog', () => {
+    beforeEach(() => {
+      cy.viewport('macbook-16');
+      cy.get('@config').then((config) => {
+        cy.interceptCompetitionGetApi(
+          config,
+          'apiGetCompetitionResponsePopulated.json',
+        );
+      });
+      cy.visit(Cypress.config('baseUrl'));
+      cy.waitForThisCampaignApi();
+      cy.window().should('have.property', 'i18n');
+      cy.window().then((win) => {
+        cy.wrap(win.i18n).as('i18n');
+      });
+    });
+
+    it('loads competition results when user clicks show results button', () => {
+      cy.fixture('apiGetCompetitionResponsePopulated').then(
+        (competitionResponse) => {
+          cy.get('@config').then((config) => {
+            const firstCompetition = competitionResponse.results[0];
+            // intercept results for first competition
+            cy.interceptCompetitionResultsGetApi(
+              config,
+              firstCompetition.slug,
+              'apiGetCompetitionResultsResponse',
+            );
+            // verify competition cards
+            cy.dataCy('list-challenges-card').should('be.visible');
+            // results API not called yet
+            cy.get('@getCompetitionResults.all').should('have.length', 0);
+            // display first competition results
+            cy.dataCy('list-challenges-button-show-results').first().click();
+            // wait for competition results API call
+            cy.waitForCompetitionResultsGetApi(
+              'apiGetCompetitionResultsResponse',
+            );
+            cy.get('@getCompetitionResults.all').should('have.length', 1);
+            // verify results dialog
+            cy.dataCy('dialog-challenge-results').should('be.visible');
+            cy.dataCy('dialog-challenge-results-title').should(
+              'contain',
+              firstCompetition.name,
+            );
+            // verify results table
+            cy.fixture('apiGetCompetitionResultsResponse').then(
+              (resultsResponse) => {
+                cy.dataCy('table-challenge-results-name').should(
+                  'have.length',
+                  resultsResponse.results.length,
+                );
+                resultsResponse.results.forEach((result, index) => {
+                  cy.dataCy('table-challenge-results-name')
+                    .eq(index)
+                    .should('contain', result.name);
+                });
+              },
+            );
+          });
+        },
+      );
+    });
+  });
+
   // TODO: test links
 
   // TODO: test rewatching application guide
