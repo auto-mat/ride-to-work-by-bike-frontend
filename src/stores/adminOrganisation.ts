@@ -674,6 +674,10 @@ export const useAdminOrganisationStore = defineStore('adminOrganisation', {
       this.isLoadingApprovePayments = true;
       // approve payments
       const result = await approvePayments(ids);
+      // We need 1.2 second wait, due DB model user attendance denorm
+      // field representative_payment, payment_status are not recalculated
+      // fast as possible
+      await new Promise((resolve) => setTimeout(resolve, 1200));
       // refetch organization structure and invoices in parallel
       await Promise.all([
         this.loadAdminOrganisations(),
