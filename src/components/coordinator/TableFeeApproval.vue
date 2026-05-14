@@ -189,7 +189,7 @@ export default defineComponent({
 
 <template>
   <div data-cy="table-fee-approval">
-    <!-- Chip: Merch unavailable -->
+    <!-- Chip: Merch is unavailable -->
     <q-chip
       v-if="!approved && !isMerchandiseAvailable"
       color="amber-2"
