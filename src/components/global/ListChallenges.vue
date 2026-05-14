@@ -177,7 +177,7 @@ export default defineComponent({
               outline
               size="sm"
               class="q-ma-none"
-              color="primary"
+              color="grey-8"
               data-cy="list-challenges-chip-competition-type"
             >
               {{ getCompetitionTypeLabel(competition) }}
@@ -185,7 +185,7 @@ export default defineComponent({
             <q-chip
               outline
               size="sm"
-              color="primary"
+              color="grey-8"
               class="q-ma-none"
               data-cy="list-challenges-chip-competitor-type"
             >
@@ -234,7 +234,7 @@ export default defineComponent({
               rounded
               outline
               no-caps
-              color="grey-8"
+              color="primary"
               :href="competition.url"
               target="_blank"
               data-cy="list-challenges-button-more-info"
