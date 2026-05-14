@@ -132,7 +132,7 @@ function coreTests() {
     });
   });
 
-  it('renders competition type chip with correct label on each card', () => {
+  it('renders competition type chip on each card', () => {
     cy.setupAdminCompetitionStoreWithCompetitions(
       useAdminCompetitionStore,
       'apiGetCompetitionResponsePopulated',
@@ -158,7 +158,7 @@ function coreTests() {
     });
   });
 
-  it('renders competitor type chip with correct label on each card', () => {
+  it('renders competitor type chip on each card', () => {
     cy.setupAdminCompetitionStoreWithCompetitions(
       useAdminCompetitionStore,
       'apiGetCompetitionResponsePopulated',
@@ -185,7 +185,7 @@ function coreTests() {
     });
   });
 
-  it('renders more info button with correct href when competition url is set', () => {
+  it('renders more info button if URL available', () => {
     cy.setupAdminCompetitionStoreWithCompetitions(
       useAdminCompetitionStore,
       'apiGetCompetitionResponsePopulated',
