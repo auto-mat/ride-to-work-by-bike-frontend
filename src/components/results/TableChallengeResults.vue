@@ -75,7 +75,6 @@ export default defineComponent({
         field: 'frequency',
         align: 'right',
         sortable: true,
-        format: (value: number | string) => Number(value).toFixed(2),
       },
       {
         name: 'distance',
@@ -83,7 +82,6 @@ export default defineComponent({
         field: 'distance',
         align: 'right',
         sortable: true,
-        format: (value: number | string) => Number(value).toFixed(2),
       },
       {
         name: 'co2',
