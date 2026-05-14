@@ -46,6 +46,8 @@ export default defineComponent({
   setup() {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
+    const competitionResultDecimalNumber = 'competitionResultDecimalNumber';
+
     const columns = computed<QTableProps['columns']>(() => [
       {
         name: 'place',
@@ -67,7 +69,8 @@ export default defineComponent({
         field: 'result',
         align: 'right',
         sortable: true,
-        format: (value: number | string) => Number(value).toFixed(2),
+        format: (value: number | string) =>
+          i18n.global.n(value, competitionResultDecimalNumber),
       },
       {
         name: 'frequency',
@@ -100,7 +103,13 @@ export default defineComponent({
       return 'brown-3';
     };
 
-    return { borderRadius, columns, pagination, placeIconColor };
+    return {
+      borderRadius,
+      columns,
+      competitionResultDecimalNumber,
+      pagination,
+      placeIconColor,
+    };
   },
 });
 </script>
@@ -166,7 +175,7 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-result"
           >
-            {{ Number(props.row.result).toFixed(2) }}
+            {{ $n(props.row.result, 'routeDistanceDecimalNumber') }}
           </q-td>
           <!-- Frequency -->
           <q-td
@@ -174,7 +183,7 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-frequency"
           >
-            {{ Number(props.row.frequency).toFixed(2) }}
+            {{ $n(props.row.frequency, competitionResultDecimalNumber) }}
           </q-td>
           <!-- Distance -->
           <q-td
@@ -182,11 +191,11 @@ export default defineComponent({
             :props="props"
             data-cy="table-challenge-results-distance"
           >
-            {{ Number(props.row.distance).toFixed(2) }}
+            {{ $n(props.row.distance, competitionResultDecimalNumber) }}
           </q-td>
           <!-- Saved emissions -->
           <q-td key="co2" :props="props" data-cy="table-challenge-results-co2">
-            {{ props.row.emissions.co2 }}
+            {{ $n(props.row.emissions.co2, competitionResultDecimalNumber) }}
           </q-td>
         </q-tr>
       </template>

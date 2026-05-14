@@ -2,6 +2,8 @@ import TableChallengeResults from 'components/results/TableChallengeResults.vue'
 import { i18n } from '../../boot/i18n';
 import { CompetitionType } from '../enums/Challenge';
 
+const competitionResultDecimalNumber = 'competitionResultDecimalNumber';
+
 describe('<TableChallengeResults>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
@@ -99,7 +101,10 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-result')
           .eq(index)
-          .should('contain', result.result.toFixed(2));
+          .should(
+            'contain',
+            i18n.global.n(result.result, competitionResultDecimalNumber),
+          );
       });
     });
   });
@@ -115,7 +120,10 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-frequency')
           .eq(index)
-          .should('contain', result.frequency.toFixed(2));
+          .should(
+            'contain',
+            i18n.global.n(result.frequency, competitionResultDecimalNumber),
+          );
       });
     });
   });
@@ -131,7 +139,10 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-distance')
           .eq(index)
-          .should('contain', result.distance.toFixed(2));
+          .should(
+            'contain',
+            i18n.global.n(result.distance, competitionResultDecimalNumber),
+          );
       });
     });
   });
@@ -147,7 +158,10 @@ function coreTests() {
       response.results.forEach((result, index) => {
         cy.dataCy('table-challenge-results-co2')
           .eq(index)
-          .should('contain', result.emissions.co2);
+          .should(
+            'contain',
+            i18n.global.n(result.emissions.co2, competitionResultDecimalNumber),
+          );
       });
     });
   });
