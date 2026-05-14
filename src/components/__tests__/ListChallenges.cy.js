@@ -139,20 +139,20 @@ function coreTests() {
     );
     cy.fixture('apiGetCompetitionResponsePopulated').then((response) => {
       response.results.forEach((competition, index) => {
-        const expectedLabel =
-          competition.competition_type === 'frequency'
-            ? i18n.global.t(
-                'index.cardListChallenge.chipCompetitionTypeFrequency',
-              )
-            : i18n.global.t(
-                'index.cardListChallenge.chipCompetitionTypeLength',
-              );
+        const labelMap = {
+          frequency: i18n.global.t(
+            'index.cardListChallenge.chipCompetitionTypeFrequency',
+          ),
+          length: i18n.global.t(
+            'index.cardListChallenge.chipCompetitionTypeLength',
+          ),
+        };
         cy.dataCy('list-challenges-card')
           .eq(index)
           .within(() => {
             cy.dataCy('list-challenges-chip-competition-type')
               .should('be.visible')
-              .and('contain', expectedLabel);
+              .and('contain', labelMap[competition.competition_type]);
           });
       });
     });

@@ -85,9 +85,15 @@ export default defineComponent({
     };
 
     const getCompetitionTypeLabel = (competition: Competition): string => {
-      return competition.competition_type === CompetitionType.frequency
-        ? i18n.global.t('index.cardListChallenge.chipCompetitionTypeFrequency')
-        : i18n.global.t('index.cardListChallenge.chipCompetitionTypeLength');
+      const labelMap: Record<CompetitionType, string> = {
+        [CompetitionType.frequency]: i18n.global.t(
+          'index.cardListChallenge.chipCompetitionTypeFrequency',
+        ),
+        [CompetitionType.length]: i18n.global.t(
+          'index.cardListChallenge.chipCompetitionTypeLength',
+        ),
+      };
+      return labelMap[competition.competition_type];
     };
 
     const getCompetitorTypeLabel = (competition: Competition): string => {
