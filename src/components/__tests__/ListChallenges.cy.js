@@ -209,7 +209,7 @@ function coreTests() {
     });
   });
 
-  it('does not render more info button when competition url is null', () => {
+  it('does not render more info button if URL is null', () => {
     cy.wrap(useAdminCompetitionStore()).then((store) => {
       store.setCompetitions([
         {
