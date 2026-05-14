@@ -218,10 +218,10 @@ export default defineComponent({
             </span>
           </div>
           <!-- Buttons: Show results + More info -->
-          <div class="q-mt-md flex items-center gap-4">
+          <div class="q-mt-md flex items-center gap-8">
             <q-btn
-              flat
-              dense
+              rounded
+              unelevated
               no-caps
               color="primary"
               @click="openResultsDialog(competition)"
@@ -231,10 +231,10 @@ export default defineComponent({
             </q-btn>
             <q-btn
               v-if="competition.url"
-              flat
-              dense
+              rounded
+              outline
               no-caps
-              color="grey-6"
+              color="grey-8"
               :href="competition.url"
               target="_blank"
               data-cy="list-challenges-button-more-info"
