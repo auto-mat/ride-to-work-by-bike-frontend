@@ -362,6 +362,9 @@ export default defineComponent({
             color="primary"
             :label="$t('register.coordinator.form.buttonSubmit')"
             data-cy="form-register-coordinator-submit"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="orgCoordinatorSubmitBtn"
           />
         </div>
       </div>
