@@ -13,9 +13,14 @@
 
 // libraries
 import { QTable } from 'quasar';
-import { defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref } from 'vue';
+
+// components
+import DialogDefault from '../global/DialogDefault.vue';
+import TableChallengeResults from '../results/TableChallengeResults.vue';
 
 // composables
+import { useApiGetCompetitionResults } from '../../composables/useApiGetCompetitionResults';
 import {
   paginationLabel,
   useTableCompanyChallenge,
@@ -26,6 +31,8 @@ import { useRoutes } from '../../composables/useRoutes';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+import { useAdminCompetitionStore } from '../../stores/adminCompetition';
+
 // types
 import { CompanyChallengeTableColumns } from '../../components/types/Table';
 import type { TableCompanyChallengeRow } from '../../composables/useTableCompanyChallengeData';
@@ -33,12 +40,22 @@ import type { TableCompanyChallengeRow } from '../../composables/useTableCompany
 export default defineComponent({
   name: 'TableCompanyChallenge',
   emits: ['edit-challenge'],
+  components: {
+    DialogDefault,
+    TableChallengeResults,
+  },
   setup(_, { emit }) {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const tableRef = ref<QTable | null>(null);
     const { columns, visibleColumns } = useTableCompanyChallenge();
     const { tableData } = useTableCompanyChallengeData();
     const { getRouteIcon } = useRoutes();
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
+
+    const isDialogOpen = ref(false);
+    const selectedCompetition = ref<Competition | null>(null);
+    const adminCompetitionStore = useAdminCompetitionStore();
+    const competitions = computed(() => adminCompetitionStore.getCompetitions);
 
     const onEditChallenge = (row: TableCompanyChallengeRow): void => {
       emit('edit-challenge', row);
@@ -51,13 +68,33 @@ export default defineComponent({
       }
     });
 
+    const { results, isLoading, loadCompetitionResults } =
+      useApiGetCompetitionResults(logger);
+
+    const onShowCompetitionResultDialog = (
+      row: TableCompanyChallengeRow,
+    ): void => {
+      const competition = competitions.value.filter(
+        (competition) => competition.name === row.name,
+      );
+      selectedCompetition.value = competition[0];
+      isDialogOpen.value = true;
+      loadCompetitionResults(competition[0].slug);
+    };
+
     return {
       borderRadius,
       columns,
       CompanyChallengeTableColumns,
       getRouteIcon,
+      isDialogOpen,
+      isLoading,
       onEditChallenge,
+      onShowCompetitionResultDialog,
+      loadCompetitionResults,
       paginationLabel,
+      results,
+      selectedCompetition,
       tableData,
       tableRef,
       visibleColumns,
@@ -197,9 +234,53 @@ export default defineComponent({
                 $t('coordinator.buttonEditCompanyChallenge')
               }}</q-tooltip>
             </q-btn>
+            <q-btn
+              flat
+              round
+              dense
+              icon="visibility"
+              color="primary"
+              size="sm"
+              @click="onShowCompetitionResultDialog(props.row)"
+              data-cy="button-show-organization-challenge-result"
+              class="q-ml-md"
+            >
+              <q-tooltip>{{
+                $t('index.cardListChallenge.buttonShowResults')
+              }}</q-tooltip>
+            </q-btn>
           </q-td>
         </q-tr>
       </template>
     </q-table>
+
+    <!-- Dialog: Challenge results -->
+    <dialog-default
+      v-if="selectedCompetition"
+      v-model="isDialogOpen"
+      data-cy="dialog-challenge-results"
+    >
+      <template #title>
+        <span data-cy="dialog-challenge-results-title">
+          {{ selectedCompetition.name }}
+        </span>
+      </template>
+      <template #content>
+        <!-- Loading spinner -->
+        <div
+          v-if="isLoading"
+          class="flex flex-center q-pa-lg"
+          data-cy="dialog-challenge-results-spinner"
+        >
+          <q-spinner color="primary" size="3em" />
+        </div>
+        <!-- Results table -->
+        <table-challenge-results
+          v-else
+          :rows="results"
+          :competition-type="selectedCompetition.competition_type"
+        />
+      </template>
+    </dialog-default>
   </div>
 </template>

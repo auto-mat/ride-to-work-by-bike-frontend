@@ -4169,55 +4169,67 @@ Cypress.Commands.add(
  * Setup test environment for coordinator fee approval tests
  * Sets up API intercepts, performs login, and navigates to coordinator fees page
  * @param {Object} config - App configuration object
+ * @param {Object} i18n - Internationalization object
+ * @param {string} competitionResponseFixture - Fixture file name for organization
+ *                                              competion response, deafult is
+ *                                              apiGetCompetitionResponse.json fixture
+ *                                              file
  */
-Cypress.Commands.add('setupCompanyCoordinatorTest', (config, i18n) => {
-  cy.interceptCitiesGetApi(config, i18n);
-  cy.fixture('apiGetRegisterChallengeProfile.json').then(
-    (registerChallengeResponse) => {
-      // register challenge API
-      cy.interceptRegisterChallengeGetApi(
-        config,
-        i18n,
-        registerChallengeResponse,
-      );
-      // has organization admin API
-      cy.fixture('apiGetHasOrganizationAdminResponseTrue.json').then(
-        (response) => {
-          cy.interceptHasOrganizationAdminGetApi(
-            config,
-            i18n,
-            registerChallengeResponse.results[0].organization_id,
-            response,
-          );
-        },
-      );
-      // is user organization admin API
-      cy.fixture('apiGetIsUserOrganizationAdminResponseTrue.json').then(
-        (response) => {
-          cy.interceptIsUserOrganizationAdminGetApi(config, i18n, response);
-        },
-      );
-    },
-  );
-  // organization structure API
-  cy.interceptAdminOrganisationGetApi(
+Cypress.Commands.add(
+  'setupCompanyCoordinatorTest',
+  (
     config,
-    'apiGetAdminOrganisationResponse.json',
-  );
-  // invoices API
-  cy.interceptCoordinatorInvoicesGetApi(
-    config,
-    'apiGetCoordinatorInvoicesResponse.json',
-  );
-  // competition API
-  cy.interceptCompetitionGetApi(config, 'apiGetCompetitionResponse.json');
-  // commute modes API
-  cy.interceptCommuteModeGetApi(config, i18n);
-  // merchandise API
-  cy.interceptMerchandiseGetApi(config, i18n);
-  // login and navigate to coordinator fees page
-  cy.performAuthenticatedLogin(config, i18n);
-});
+    i18n,
+    competitionResponseFixture = 'apiGetCompetitionResponse.json',
+  ) => {
+    cy.interceptCitiesGetApi(config, i18n);
+    cy.fixture('apiGetRegisterChallengeProfile.json').then(
+      (registerChallengeResponse) => {
+        // register challenge API
+        cy.interceptRegisterChallengeGetApi(
+          config,
+          i18n,
+          registerChallengeResponse,
+        );
+        // has organization admin API
+        cy.fixture('apiGetHasOrganizationAdminResponseTrue.json').then(
+          (response) => {
+            cy.interceptHasOrganizationAdminGetApi(
+              config,
+              i18n,
+              registerChallengeResponse.results[0].organization_id,
+              response,
+            );
+          },
+        );
+        // is user organization admin API
+        cy.fixture('apiGetIsUserOrganizationAdminResponseTrue.json').then(
+          (response) => {
+            cy.interceptIsUserOrganizationAdminGetApi(config, i18n, response);
+          },
+        );
+      },
+    );
+    // organization structure API
+    cy.interceptAdminOrganisationGetApi(
+      config,
+      'apiGetAdminOrganisationResponse.json',
+    );
+    // invoices API
+    cy.interceptCoordinatorInvoicesGetApi(
+      config,
+      'apiGetCoordinatorInvoicesResponse.json',
+    );
+    // competition API
+    cy.interceptCompetitionGetApi(config, competitionResponseFixture);
+    // commute modes API
+    cy.interceptCommuteModeGetApi(config, i18n);
+    // merchandise API
+    cy.interceptMerchandiseGetApi(config, i18n);
+    // login and navigate to coordinator fees page
+    cy.performAuthenticatedLogin(config, i18n);
+  },
+);
 
 /**
  * Test that all routes in the given route groups are accessible

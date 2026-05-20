@@ -284,7 +284,84 @@ describe('Company coordinator company challenge page', () => {
       });
     });
   });
+  context('show organization challenge result', () => {
+    beforeEach(() => {
+      cy.viewport(1920, 2500);
+      // set system time to be in registration phase
+      cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          // visit the login page to initialize i18n
+          cy.visit('#' + routesConf['login']['path']);
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.wrap(win.i18n).as('i18n');
+            // setup coordinator test environment
+            cy.setupCompanyCoordinatorTest(
+              config,
+              win.i18n,
+              'apiGetCompetitionResponsePopulated',
+            );
+            cy.visit(
+              '#' +
+                routesConf['coordinator_challenges']['children']['fullPath'],
+            );
+            cy.dataCy('table-company-challenge-title').should('be.visible');
+          });
+        });
+      });
+    });
 
+    it('renders show organization challenge button that opens result modal dialog after clicked', () => {
+      cy.fixture('apiGetCompetitionResponsePopulated').then(
+        (competitionResponse) => {
+          cy.get('@config').then((config) => {
+            const competition = competitionResponse.results.filter(
+              (result) => result.slug === 'pobockova-soutez',
+            )[0];
+            // Intercept results for choosed organization challenge
+            cy.interceptCompetitionResultsGetApi(
+              config,
+              competition.slug,
+              'apiGetCompetitionResultsResponse',
+            );
+            // Check show organization challenge result buttons exist for each row
+            cy.dataCy('table-company-challenge-row')
+              .should('have.length', competitionResponse.results.length)
+              .each(() => {
+                cy.dataCy('button-show-organization-challenge-result').should(
+                  'be.visible',
+                );
+              });
+            // Results API not called yet
+            cy.get('@getCompetitionResults.all').should('have.length', 0);
+            // Find specific table challenge row and click to show organization
+            // challenge result modal dialog
+            cy.contains('td', competition.name)
+              .parent()
+              .within(() => {
+                cy.dataCy('button-show-organization-challenge-result').click();
+                // Wait for competition results API call
+                cy.waitForCompetitionResultsGetApi(
+                  'apiGetCompetitionResultsResponse',
+                );
+              });
+            // Results API was called
+            cy.get('@getCompetitionResults.all').should('have.length', 1);
+            // Show organization challenge result modal dialog
+            cy.dataCy('dialog-challenge-results').should('be.visible');
+            cy.dataCy('dialog-challenge-results-title').should(
+              'contain',
+              competition.name,
+            );
+            // Close challenge result modal dialog
+            cy.dataCy('dialog-close').click();
+            cy.dataCy('dialog-challenge-results').should('not.exist');
+          });
+        },
+      );
+    });
+  });
   context('editing company challenges', () => {
     beforeEach(() => {
       cy.viewport(1920, 2500);

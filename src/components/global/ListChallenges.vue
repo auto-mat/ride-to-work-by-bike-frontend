@@ -33,7 +33,7 @@ import { useRoutes } from '../../composables/useRoutes';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
-import { useAdminCompetitionStore } from '../..//stores/adminCompetition';
+import { useAdminCompetitionStore } from '../../stores/adminCompetition';
 
 // enums
 import { CompetitionType, CompetitorType } from '../enums/Challenge';

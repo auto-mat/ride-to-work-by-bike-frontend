@@ -33,6 +33,16 @@ describe('<TableCompanyChallenge>', () => {
       'table',
       i18n,
     );
+    cy.testLanguageStringsInContext(
+      ['buttonShowResults'],
+      'index.cardListChallenge',
+      i18n,
+    );
+    cy.testLanguageStringsInContext(
+      ['buttonEditCompanyChallenge'],
+      'coordinator',
+      i18n,
+    );
   });
 
   context('desktop', () => {
