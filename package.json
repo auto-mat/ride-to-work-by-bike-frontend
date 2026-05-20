@@ -83,6 +83,7 @@
     "@originjs/vite-plugin-content": "^1.0.1",
     "@quasar/extras": "^1.0.0",
     "axios": "^1.7.7",
+    "exceljs": "^4.4.0",
     "fs-extra": "^11.2.0",
     "ol": "^10.2.1",
     "ol-contextmenu": "^5.5.0",
