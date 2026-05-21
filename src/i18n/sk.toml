@@ -1425,3 +1425,6 @@ subsubheaderIpAnonymisation = "Anonymizácia IP adries"
 ipAnonymisationRules = """Na analýzu pomocou Matomo používame anonymizáciu IP adresy. To znamená, že vaša IP adresa
 sa pred analýzou skráti, aby ju už nebolo možné jednoznačne priradiť k vám.
 """
+
+[tableOrganizationChallengeResult]
+buttonExportOrganizationChallengeResult = "Exportovať výsledky"

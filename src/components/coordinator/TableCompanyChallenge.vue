@@ -279,6 +279,7 @@ export default defineComponent({
           v-else
           :rows="results"
           :competition-type="selectedCompetition.competition_type"
+          :competition-name="selectedCompetition.name"
         />
       </template>
     </dialog-default>

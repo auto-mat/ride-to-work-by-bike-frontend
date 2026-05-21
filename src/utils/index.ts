@@ -204,6 +204,34 @@ const triggerFileDownload = (
   URL.revokeObjectURL(url);
 };
 
+/**
+ * Remove accents
+ *
+ * @param {string} str - String with accents
+ *
+ * @returns {string} - String without accents
+ */
+const removeAccents = (str: string): string => {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+/**
+ * Normalize file name
+ *
+ * Remove accents and space from the file name string.
+ *
+ * @param {string} str - File name
+ *
+ * @returns {string} - Normalized file name without accents and
+ *                     space
+ */
+const normalizeFileName = (
+  fileName: string,
+  replaceSpaceChar: string = '-',
+): string => {
+  return removeAccents(fileName).replace(/\s/g, replaceSpaceChar).toLowerCase();
+};
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
@@ -212,9 +240,11 @@ export {
   getCurrentDateTimeAccordingTimezone,
   formFieldCustomValidationErrCssClass,
   localizedFloatNumStrToFloatNumber,
+  normalizeFileName,
   requestDefaultHeader,
   requestTokenHeader,
   rgbaColorObjectToString,
+  removeAccents,
   timestampToDatetimeString,
   triggerFileDownload,
 };

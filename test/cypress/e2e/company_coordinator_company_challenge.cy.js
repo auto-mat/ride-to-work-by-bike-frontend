@@ -5,6 +5,7 @@ import {
   CompetitionType,
   CompetitorType,
 } from '../../../src/components/enums/Challenge';
+import { normalizeFileName } from '../../../src/utils';
 
 const competitionEdit = {
   name: 'Edited Challenge Name',
@@ -316,47 +317,74 @@ describe('Company coordinator company challenge page', () => {
       cy.fixture('apiGetCompetitionResponsePopulated').then(
         (competitionResponse) => {
           cy.get('@config').then((config) => {
-            const competition = competitionResponse.results.filter(
-              (result) => result.slug === 'pobockova-soutez',
-            )[0];
-            // Intercept results for choosed organization challenge
-            cy.interceptCompetitionResultsGetApi(
-              config,
-              competition.slug,
-              'apiGetCompetitionResultsResponse',
-            );
-            // Check show organization challenge result buttons exist for each row
-            cy.dataCy('table-company-challenge-row')
-              .should('have.length', competitionResponse.results.length)
-              .each(() => {
-                cy.dataCy('button-show-organization-challenge-result').should(
-                  'be.visible',
-                );
+            cy.get('@i18n').then((i18n) => {
+              const competition = competitionResponse.results.filter(
+                (result) => result.slug === 'pobockova-soutez',
+              )[0];
+              // Intercept results for choosed organization challenge
+              cy.interceptCompetitionResultsGetApi(
+                config,
+                competition.slug,
+                'apiGetCompetitionResultsResponse',
+              );
+              // Check show organization challenge result buttons exist for each row
+              cy.dataCy('table-company-challenge-row')
+                .should('have.length', competitionResponse.results.length)
+                .each(() => {
+                  cy.dataCy('button-show-organization-challenge-result').should(
+                    'be.visible',
+                  );
+                });
+              // Results API not called yet
+              cy.get('@getCompetitionResults.all').should('have.length', 0);
+              // Find specific table challenge row and click to show organization
+              // challenge result modal dialog
+              cy.contains('td', competition.name)
+                .parent()
+                .within(() => {
+                  cy.dataCy(
+                    'button-show-organization-challenge-result',
+                  ).click();
+                  // Wait for competition results API call
+                  cy.waitForCompetitionResultsGetApi(
+                    'apiGetCompetitionResultsResponse',
+                  );
+                });
+              // Results API was called
+              cy.get('@getCompetitionResults.all').should('have.length', 1);
+              // Show organization challenge result modal dialog
+              cy.dataCy('dialog-challenge-results').should('be.visible');
+              cy.dataCy('dialog-challenge-results-title').should(
+                'contain',
+                competition.name,
+              );
+              cy.dataCy('organization-challenge-results-button-export')
+                .should('be.visible')
+                .and(
+                  'contain',
+                  i18n.global.t(
+                    'tableOrganizationChallengeResult.buttonExportOrganizationChallengeResult',
+                  ),
+                )
+                .click();
+              const downloadsFolder = Cypress.config('downloadsFolder');
+              ['xls', 'ods', 'csv'].forEach((exportFileExt) => {
+                cy.dataCy(
+                  `organization-challenge-results-button-export-${exportFileExt}`,
+                )
+                  .should('be.visible')
+                  .click();
+                cy.readFile(
+                  `${downloadsFolder}/${normalizeFileName(competition.name)}.${exportFileExt}`,
+                ).should('exist');
+                cy.dataCy(
+                  'organization-challenge-results-button-export',
+                ).click();
               });
-            // Results API not called yet
-            cy.get('@getCompetitionResults.all').should('have.length', 0);
-            // Find specific table challenge row and click to show organization
-            // challenge result modal dialog
-            cy.contains('td', competition.name)
-              .parent()
-              .within(() => {
-                cy.dataCy('button-show-organization-challenge-result').click();
-                // Wait for competition results API call
-                cy.waitForCompetitionResultsGetApi(
-                  'apiGetCompetitionResultsResponse',
-                );
-              });
-            // Results API was called
-            cy.get('@getCompetitionResults.all').should('have.length', 1);
-            // Show organization challenge result modal dialog
-            cy.dataCy('dialog-challenge-results').should('be.visible');
-            cy.dataCy('dialog-challenge-results-title').should(
-              'contain',
-              competition.name,
-            );
-            // Close challenge result modal dialog
-            cy.dataCy('dialog-close').click();
-            cy.dataCy('dialog-challenge-results').should('not.exist');
+              // Close challenge result modal dialog
+              cy.dataCy('dialog-close').click();
+              cy.dataCy('dialog-challenge-results').should('not.exist');
+            });
           });
         },
       );

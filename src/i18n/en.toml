@@ -1427,3 +1427,6 @@ subsubheaderIpAnonymisation = "IP anonymisation"
 ipAnonymisationRules = """We use IP anonymisation for the analysis with Matomo. This means that your
 IP address is shortened before analysis so that it can no longer be clearly assigned to you.
 """
+
+[tableOrganizationChallengeResult]
+buttonExportOrganizationChallengeResult = "Export results"

@@ -9,16 +9,24 @@
  * @props
  * - `rows` (CompetitionResult[], required): Array of result rows.
  * - `competitionType` (CompetitionType, required): Type of competition.
+ * - `competitionName` (String, required): Competition name
  *
  * @example
- * <table-challenge-results :rows="results" :competition-type="competition.competition_type" />
+ * <table-challenge-results
+ *   :rows="results"
+ *   :competition-type="competition.competition_type"
+ *   :competition-name="competition.name"
+ *  />
  */
 
 // libraries
 import { defineComponent, computed } from 'vue';
+import { Notify } from 'quasar';
 
 // composables
 import { i18n } from 'src/boot/i18n';
+import { useExportOrganizationChallengeTable } from '../../composables/useExportOrganizationChallengeResultsTable';
+import { useExportTable } from '../../composables/useExportTable';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -30,6 +38,9 @@ import { CompetitionType } from '../enums/Challenge';
 import type { PropType } from 'vue';
 import type { QTableProps } from 'quasar';
 import type { CompetitionResult } from '../types/Competition';
+import { ExportFileType } from '../enums/Coordinator';
+
+import { normalizeFileName } from '../../utils/';
 
 export default defineComponent({
   name: 'TableChallengeResults',
@@ -42,8 +53,12 @@ export default defineComponent({
       type: String as PropType<CompetitionType>,
       required: true,
     },
+    competitionName: {
+      type: String,
+      required: true,
+    },
   },
-  setup() {
+  setup(props) {
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
     const competitionResultDecimalNumber = 'competitionResultDecimalNumber';
@@ -94,10 +109,78 @@ export default defineComponent({
       return 'brown-3';
     };
 
+    const onExportChallengeResult = (fileType: ExportFileType): void => {
+      if (props.rows.length === 0) {
+        Notify.create({
+          message: i18n.global.t('coordinator.messageExportNoData'),
+          color: 'warning',
+        });
+        return;
+      }
+
+      const { getChallengeResultData } = useExportOrganizationChallengeTable();
+      const {
+        downloadOdsFileFormat,
+        downloadXlsFileFormat,
+        downloadCsvFileFormat,
+      } = useExportTable();
+
+      const fileName = normalizeFileName(props.competitionName);
+
+      const dataRows: string[] = getChallengeResultData(
+        fileType,
+        columns.value,
+        props.rows,
+        competitionResultDecimalNumber,
+      );
+
+      // Download ODS, XLS, CSV file format
+      if (fileType === 'csv') {
+        downloadCsvFileFormat(`${fileName}.csv`, dataRows).then(
+          (status): void => {
+            if (status !== true) {
+              Notify.create({
+                message: i18n.global.t('coordinator.messageExportFailed'),
+                color: 'negative',
+              });
+            }
+          },
+        );
+      } else if (fileType === 'xls') {
+        downloadXlsFileFormat(
+          `${fileName}.xls`,
+          dataRows,
+          i18n.global.t('results.titleResults'),
+        ).then((status) => {
+          if (status !== true) {
+            Notify.create({
+              message: i18n.global.t('coordinator.messageExportFailed'),
+              color: 'negative',
+            });
+          }
+        });
+      } else if (fileType === 'ods') {
+        downloadOdsFileFormat(
+          `${fileName}.ods`,
+          dataRows,
+          i18n.global.t('results.titleResults'),
+        ).then((status) => {
+          if (status !== true) {
+            Notify.create({
+              message: i18n.global.t('coordinator.messageExportFailed'),
+              color: 'negative',
+            });
+          }
+        });
+      }
+    };
+
     return {
       borderRadius,
       columns,
       competitionResultDecimalNumber,
+      ExportFileType,
+      onExportChallengeResult,
       pagination,
       placeIconColor,
     };
@@ -183,5 +266,55 @@ export default defineComponent({
         </q-tr>
       </template>
     </q-table>
+    <!-- Button: Export dropdown -->
+    <q-btn-dropdown
+      unelevated
+      rounded
+      outline
+      color="primary"
+      class="q-ml-auto q-mt-md"
+      data-cy="organization-challenge-results-button-export"
+    >
+      <template #label>
+        <q-icon name="mdi-download" size="18px" class="q-mr-sm" />
+        {{
+          $t(
+            'tableOrganizationChallengeResult.buttonExportOrganizationChallengeResult',
+          )
+        }}
+      </template>
+      <q-list>
+        <q-item
+          v-close-popup
+          clickable
+          data-cy="organization-challenge-results-button-export-xls"
+          @click="onExportChallengeResult(ExportFileType.xls)"
+        >
+          <q-item-section class="text-uppercase">{{
+            ExportFileType.xls
+          }}</q-item-section>
+        </q-item>
+        <q-item
+          v-close-popup
+          clickable
+          data-cy="organization-challenge-results-button-export-ods"
+          @click="onExportChallengeResult(ExportFileType.ods)"
+        >
+          <q-item-section class="text-uppercase">{{
+            ExportFileType.ods
+          }}</q-item-section>
+        </q-item>
+        <q-item
+          v-close-popup
+          clickable
+          data-cy="organization-challenge-results-button-export-csv"
+          @click="onExportChallengeResult(ExportFileType.csv)"
+        >
+          <q-item-section class="text-uppercase">{{
+            ExportFileType.csv
+          }}</q-item-section>
+        </q-item>
+      </q-list>
+    </q-btn-dropdown>
   </div>
 </template>

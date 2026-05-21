@@ -2,6 +2,8 @@ import TableChallengeResults from 'components/results/TableChallengeResults.vue'
 import { i18n } from '../../boot/i18n';
 import { CompetitionType } from '../enums/Challenge';
 
+import { normalizeFileName } from '../../utils';
+
 const competitionResultDecimalNumber = 'competitionResultDecimalNumber';
 
 describe('<TableChallengeResults>', () => {
@@ -249,5 +251,39 @@ function coreTests() {
       .should('be.visible')
       .and('contain', i18n.global.t('results.emptyStateChallengeResults'));
     cy.dataCy('table-challenge-results-name').should('not.exist');
+  });
+
+  it('renders export results button', () => {
+    const competitionName = 'Test competition';
+    cy.fixture('apiGetCompetitionResultsResponse').then((response) => {
+      cy.mount(TableChallengeResults, {
+        props: {
+          rows: response.results,
+          competitionType: CompetitionType.frequency,
+          competitionName: competitionName,
+        },
+      });
+      cy.dataCy('organization-challenge-results-button-export')
+        .should('be.visible')
+        .and(
+          'contain',
+          i18n.global.t(
+            'tableOrganizationChallengeResult.buttonExportOrganizationChallengeResult',
+          ),
+        )
+        .click();
+      const downloadsFolder = Cypress.config('downloadsFolder');
+      ['xls', 'ods', 'csv'].forEach((exportFileExt) => {
+        cy.dataCy(
+          `organization-challenge-results-button-export-${exportFileExt}`,
+        )
+          .should('be.visible')
+          .click();
+        cy.readFile(
+          `${downloadsFolder}/${normalizeFileName(competitionName)}.${exportFileExt}`,
+        ).should('exist');
+        cy.dataCy('organization-challenge-results-button-export').click();
+      });
+    });
   });
 }
