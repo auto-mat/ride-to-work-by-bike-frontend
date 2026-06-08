@@ -81,7 +81,7 @@
   "dependencies": {
     "@certible/use-matomo": "^1.1.0",
     "@originjs/vite-plugin-content": "^1.0.1",
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^2.0.0",
     "axios": "^1.7.7",
     "exceljs": "^4.4.0",
     "fs-extra": "^11.2.0",

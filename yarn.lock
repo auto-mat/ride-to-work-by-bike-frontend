@@ -679,10 +679,10 @@
     vite "^2.9.13"
     webpack-merge "^5.8.0"
 
-"@quasar/extras@^1.0.0":
-  version "1.16.15"
-  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-1.16.15.tgz#b0a7f9153008038f1dbeef56b3fbdb7baf0a6b13"
-  integrity sha512-ZM8rUAagZ3Gm7Thu6DjKdGfkyFBv61RaCeVSIWdve6+q300yN+6aouxttf2RmxCk12RsSqEyzBnIg7BlF1s7MA==
+"@quasar/extras@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@quasar/extras/-/extras-2.0.0.tgz#28fa58eef562a1045d07ba7223cc7e80983cfbf1"
+  integrity sha512-JiVq65j28Rp5AFLVpHBSv+MUV+NpE4x8cSGyfWquakOZe8FCV1E6qmbCDQhPY/e2fheFhaN8uGl1R3UbC8BxZw==
 
 "@quasar/quasar-app-extension-qcalendar@^4.0.0-beta.15":
   version "4.0.0-beta.16"
