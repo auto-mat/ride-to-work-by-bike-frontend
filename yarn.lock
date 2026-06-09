@@ -5183,9 +5183,9 @@ object-inspect@^1.13.3:
   integrity sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==
 
 odf-kit@^0.13.4:
-  version "0.13.5"
-  resolved "https://registry.yarnpkg.com/odf-kit/-/odf-kit-0.13.5.tgz#19e3c6f6f62fe03caaa22fccae062ddd9decce7b"
-  integrity sha512-VTn4Eqk9kcZSDAkqhiikxJnTwQsVrM0ivS6NdXV0BXpNJVcbEW9LfjoDpIAauRenVGhr99J+p9rLAv7eRjab+g==
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/odf-kit/-/odf-kit-0.13.6.tgz#9791c2c665e7c0a9c005ef505782f90273b28c0f"
+  integrity sha512-ID315Vh0P6Bqq82ZSVeAQ1qRXAQXc5vIy1ecYiHpHEk+SyMWEcB51IZFwCiIjIzJhWgLwE49ITFh7RbgoRBfTQ==
   dependencies:
     fflate "^0.8.2"
     marked "^18.0.0"
