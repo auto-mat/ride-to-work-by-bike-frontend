@@ -599,7 +599,7 @@ function coreTests() {
     });
   });
 
-  it.only('shows previous team and excludes new team in dropdown after team change', () => {
+  it('shows previous team and excludes new team in dropdown after team change', () => {
     cy.get('@config').then((config) => {
       cy.get('@i18n').then((i18n) => {
         cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
