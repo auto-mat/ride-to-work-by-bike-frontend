@@ -73,6 +73,49 @@ describe('<FormUpdateTeam>', () => {
 
     coreTests();
   });
+
+  context('with current team assigned', () => {
+    // init test teams for store
+    const teams = [
+      { id: 1, name: 'Alpha Team', subsidiary: 1, members: 2, maxMembers: 5 },
+      { id: 2, name: 'Beta Team', subsidiary: 1, members: 3, maxMembers: 5 },
+      { id: 3, name: 'Gamma Team', subsidiary: 1, members: 1, maxMembers: 5 },
+    ];
+
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.mount(FormUpdateTeam, {
+        props: {
+          ...vModelAdapter(model),
+        },
+      });
+      cy.viewport('macbook-16');
+    });
+
+    it('does not show current team (1) in dropdown options', () => {
+      cy.wrap(setModelValue(1));
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        registerChallengeStore.setTeams(teams);
+      });
+      cy.dataCy('form-select').click();
+      cy.get('.q-menu').should('be.visible');
+      cy.get('.q-menu .q-item__label').should('not.contain', 'Alpha Team');
+      cy.get('.q-menu .q-item__label').should('contain', 'Beta Team');
+      cy.get('.q-menu .q-item__label').should('contain', 'Gamma Team');
+    });
+
+    it('does not show current team (2) in dropdown options', () => {
+      cy.wrap(setModelValue(2));
+      cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+        registerChallengeStore.setTeams(teams);
+      });
+      cy.dataCy('form-select').click();
+      cy.get('.q-menu').should('be.visible');
+      cy.get('.q-menu .q-item__label').should('contain', 'Alpha Team');
+      cy.get('.q-menu .q-item__label').should('not.contain', 'Beta Team');
+      cy.get('.q-menu .q-item__label').should('contain', 'Gamma Team');
+    });
+  });
 });
 
 function coreTests() {

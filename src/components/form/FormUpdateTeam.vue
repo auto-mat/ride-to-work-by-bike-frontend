@@ -18,7 +18,7 @@
  */
 
 // libraries
-import { defineComponent, onMounted, ref, computed, inject } from 'vue';
+import { defineComponent, ref, computed, inject } from 'vue';
 import { Notify } from 'quasar';
 
 // components
@@ -69,16 +69,6 @@ export default defineComponent({
     const selectedTeam = ref<FormSelectTableOption | null>(null);
     const isCreateMode = ref<boolean>(false);
     const teamNew = ref<FormTeamFields>({ name: '' });
-
-    onMounted(() => {
-      // initialize selected team
-      const selectedTeamOption = options.value.find(
-        (team) => team.value === props.modelValue,
-      );
-      if (selectedTeamOption) {
-        selectedTeam.value = selectedTeamOption;
-      }
-    });
 
     const closeDialog = (): void => {
       // reset mode when closing dialog
@@ -138,7 +128,9 @@ export default defineComponent({
     const isLoading = computed(() => registerChallengeStore.isLoadingTeams);
     const teams = computed(() => registerChallengeStore.getTeams);
     const options = computed<FormSelectTableOption[]>(() =>
-      teams.value.map(mapTeamToOption),
+      teams.value
+        .map(mapTeamToOption)
+        .filter((option) => option.value !== props.modelValue),
     );
 
     const { optionsFiltered, onFilter } = useSelectSearch(options);

@@ -599,6 +599,116 @@ function coreTests() {
     });
   });
 
+  it.only('shows previous team and excludes new team in dropdown after team change', () => {
+    cy.get('@config').then((config) => {
+      cy.get('@i18n').then((i18n) => {
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          cy.fixture('apiGetRegisterChallengeProfileUpdatedTeam.json').then(
+            (responseNew) => {
+              cy.fixture('apiGetTeamsResponse.json').then((teamsResponse) => {
+                cy.fixture('apiGetTeamsResponseNextFullTeam.json').then(
+                  (teamsResponseNextFullTeam) => {
+                    // wait for initial page load
+                    cy.waitForRegisterChallengeGetApi(response);
+                    cy.waitForMyTeamGetApi();
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    // team showing on page
+                    cy.dataCy(selectorTeam)
+                      .find(dataSelectorValue)
+                      .should('contain', teamsResponse.results[0].name);
+                    // open edit dialog
+                    cy.dataCy(selectorTeam)
+                      .find(dataSelectorEdit)
+                      .should('be.visible')
+                      .click();
+                    // intercept PUT and GET for after change
+                    cy.interceptRegisterChallengePutApi(
+                      config,
+                      i18n,
+                      response.results[0].personal_details.id,
+                      responseNew,
+                    );
+                    cy.interceptRegisterChallengeGetApi(
+                      config,
+                      i18n,
+                      responseNew,
+                    );
+                    // open dropdown
+                    cy.dataCy('profile-details-form-team')
+                      .find('.q-field__append')
+                      .should('be.visible')
+                      .click();
+                    cy.get('.q-menu')
+                      .should('be.visible')
+                      .within(() => {
+                        // current team is not in dropdown
+                        cy.contains(teamsResponse.results[0].name).should(
+                          'not.exist',
+                        );
+                        cy.contains(teamsResponse.results[1].name).should(
+                          'be.visible',
+                        );
+                        cy.contains(
+                          teamsResponseNextFullTeam.results[0].name,
+                        ).should('be.visible');
+                      });
+                    // select second team (IT Běžci)
+                    cy.contains(teamsResponse.results[1].name)
+                      .should('be.visible')
+                      .click();
+                    // save
+                    cy.dataCy('profile-details-form-team')
+                      .find(dataSelectorButtonSave)
+                      .click();
+                    // wait for APIs triggered by team change
+                    cy.waitForMyTeamGetApi();
+                    cy.waitForTeamsGetApi(
+                      teamsResponse,
+                      teamsResponseNextFullTeam,
+                    );
+                    cy.waitForRegisterChallengeGetApi(responseNew);
+                    // verify profile shows new team
+                    cy.dataCy(selectorTeam)
+                      .find(dataSelectorValue)
+                      .should('contain', teamsResponse.results[1].name);
+                    // open edit dialog
+                    cy.dataCy(selectorTeam)
+                      .find(dataSelectorEdit)
+                      .should('be.visible')
+                      .click();
+                    // open dropdown
+                    cy.dataCy('profile-details-form-team')
+                      .find('.q-field__append')
+                      .should('be.visible')
+                      .click();
+                    cy.get('.q-menu')
+                      .should('be.visible')
+                      .within(() => {
+                        // previous team is in dropdown
+                        cy.contains(teamsResponse.results[0].name).should(
+                          'be.visible',
+                        );
+                        // new team is not in dropdown
+                        cy.contains(teamsResponse.results[1].name).should(
+                          'not.exist',
+                        );
+                        cy.contains(
+                          teamsResponseNextFullTeam.results[0].name,
+                        ).should('be.visible');
+                      });
+                  },
+                );
+              });
+            },
+          );
+        });
+      });
+    });
+  });
+
   it("does not allow to change team if new team's max team members is reached", () => {
     cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
       cy.fixture('apiGetRegisterChallengeProfileUpdatedTeam.json').then(
