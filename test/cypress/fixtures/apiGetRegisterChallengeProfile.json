@@ -22,7 +22,8 @@
         "payment_subject": "company",
         "payment_type": "fc",
         "payment_status": "done",
-        "payment_amount": 390
+        "payment_amount": 390,
+        "diploma": "https://example.com/diploma.pdf"
       },
       "city_slug": "praha",
       "city_wp_slug": "praha",
