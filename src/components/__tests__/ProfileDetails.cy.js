@@ -641,6 +641,19 @@ describe('<ProfileDetails>', () => {
       cy.viewport('macbook-16');
     });
 
+    it('renders results section with download diploma button', () => {
+      cy.dataCy(selectorTitleResults)
+        .should('be.visible')
+        .within(() => {
+          cy.dataCy('section-heading-title')
+            .should('be.visible')
+            .and('contain', i18n.global.t('profile.titleResults'));
+        });
+      cy.dataCy(selectorButtonDownloadDiploma)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.buttonDownloadDiploma'));
+    });
+
     it('opens diploma URL in new tab when download button is clicked', () => {
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
@@ -1620,19 +1633,6 @@ function coreTests() {
     // cy.dataCy(selectorDownloadInvoice)
     //   .should('be.visible')
     //   .and('contain', i18n.global.t('profile.buttonDownloadInvoice'));
-  });
-
-  it('renders results section with download diploma button', () => {
-    cy.dataCy(selectorTitleResults)
-      .should('be.visible')
-      .within(() => {
-        cy.dataCy('section-heading-title')
-          .should('be.visible')
-          .and('contain', i18n.global.t('profile.titleResults'));
-      });
-    cy.dataCy(selectorButtonDownloadDiploma)
-      .should('be.visible')
-      .and('contain', i18n.global.t('profile.buttonDownloadDiploma'));
   });
 
   it.skip('renders delete account section', () => {
