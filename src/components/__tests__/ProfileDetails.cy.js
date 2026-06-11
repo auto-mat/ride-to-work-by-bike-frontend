@@ -47,9 +47,11 @@ const selectorTeam = 'profile-details-team';
 const selectorTelephoneOptIn = 'profile-details-telephone-opt-in';
 const selectorDeleteAccount = 'delete-account';
 // const selectorTrackingNumber = 'profile-details-tracking-number';
+const selectorButtonDownloadDiploma = 'profile-details-button-download-diploma';
 const selectorTitleChallengeDetails = 'profile-title-challenge-details';
 const selectorTitlePersonalDetails = 'profile-title-personal-details';
 const selectorTitleRegistrationDetails = 'profile-title-registration-details';
+const selectorTitleResults = 'profile-title-results';
 const selectorTitleStarterPackage = 'profile-title-starter-package';
 const dataSelectorButtonCancel = '[data-cy="form-button-cancel"]';
 const dataSelectorButtonSave = '[data-cy="form-button-save"]';
@@ -71,6 +73,7 @@ describe('<ProfileDetails>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
       [
+        'buttonDownloadDiploma',
         'buttonDownloadInvoice',
         'inviteTeamMembers',
         'descriptionNickname',
@@ -106,6 +109,7 @@ describe('<ProfileDetails>', () => {
         'titleUpdateNickname',
         'titleUpdateTeam',
         'titleRegistrationDetails',
+        'titleResults',
       ],
       'profile',
       i18n,
@@ -580,6 +584,89 @@ describe('<ProfileDetails>', () => {
       cy.dataCy(selectorSize)
         .should('be.visible')
         .and('contain', i18n.global.t('profile.labelNoValue'));
+    });
+  });
+
+  context('diploma - not available', () => {
+    it('does not render results section when diploma is empty', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseRegisterChallenge) => {
+          responseRegisterChallenge.results[0].personal_details.diploma = '';
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, { props: {} });
+      cy.viewport('macbook-16');
+      cy.dataCy(selectorTitleResults).should('not.exist');
+      cy.dataCy(selectorButtonDownloadDiploma).should('not.exist');
+    });
+
+    it('does not render results section when diploma is null', () => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseRegisterChallenge) => {
+          responseRegisterChallenge.results[0].personal_details.diploma = null;
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, { props: {} });
+      cy.viewport('macbook-16');
+      cy.dataCy(selectorTitleResults).should('not.exist');
+      cy.dataCy(selectorButtonDownloadDiploma).should('not.exist');
+    });
+  });
+
+  context('diploma - available', () => {
+    beforeEach(() => {
+      setActivePinia(createPinia());
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseRegisterChallenge) => {
+          cy.interceptRegisterChallengeGetApi(
+            rideToWorkByBikeConfig,
+            i18n,
+            responseRegisterChallenge,
+          );
+        },
+      );
+      cy.mount(ProfileDetails, { props: {} });
+      cy.viewport('macbook-16');
+    });
+
+    it('renders results section and download button when diploma URL is set', () => {
+      cy.dataCy(selectorTitleResults)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.titleResults'));
+      cy.dataCy(selectorButtonDownloadDiploma)
+        .should('be.visible')
+        .and('contain', i18n.global.t('profile.buttonDownloadDiploma'));
+    });
+
+    it('opens diploma URL in new tab when download button is clicked', () => {
+      cy.fixture('apiGetRegisterChallengeProfile.json').then(
+        (responseRegisterChallenge) => {
+          const diplomaUrl =
+            responseRegisterChallenge.results[0].personal_details.diploma;
+          // stub window.open
+          cy.window().then((win) => {
+            cy.stub(win, 'open').as('windowOpen');
+          });
+          cy.dataCy(selectorButtonDownloadDiploma).click();
+          cy.get('@windowOpen').should(
+            'have.been.calledWith',
+            diplomaUrl,
+            '_blank',
+          );
+        },
+      );
     });
   });
 
@@ -1542,6 +1629,19 @@ function coreTests() {
     // cy.dataCy(selectorDownloadInvoice)
     //   .should('be.visible')
     //   .and('contain', i18n.global.t('profile.buttonDownloadInvoice'));
+  });
+
+  it('renders results section with download diploma button', () => {
+    cy.dataCy(selectorTitleResults)
+      .should('be.visible')
+      .within(() => {
+        cy.dataCy('section-heading-title')
+          .should('be.visible')
+          .and('contain', i18n.global.t('profile.titleResults'));
+      });
+    cy.dataCy(selectorButtonDownloadDiploma)
+      .should('be.visible')
+      .and('contain', i18n.global.t('profile.buttonDownloadDiploma'));
   });
 
   it.skip('renders delete account section', () => {

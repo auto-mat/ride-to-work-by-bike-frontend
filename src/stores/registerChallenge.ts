@@ -112,6 +112,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     ),
     telephone: '',
     telephoneOptIn: false,
+    diploma: null as string | null,
     language: defaultLocale,
     isLoadingRegisterChallenge: false,
     isLoadingSubsidiaries: false,
@@ -170,6 +171,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.formRegisterCoordinator,
     getTelephone: (state): string => state.telephone,
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
+    getDiploma: (state): string | null => state.diploma,
     getLanguage: (state): string => state.language,
     getRegistrationId: (state): number | null => {
       return state.personalDetails.id || null;
@@ -466,6 +468,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setTelephoneOptIn(telephoneOptIn: boolean) {
       this.telephoneOptIn = telephoneOptIn;
     },
+    setDiploma(diploma: string | null) {
+      this.diploma = diploma;
+    },
     setLanguage(language: string) {
       this.language = language;
     },
@@ -668,6 +673,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.$log?.debug(
         `Telephone opt-in store updated to <${this.getTelephoneOptIn}>.`,
       );
+      this.setDiploma(parsedResponse.diploma);
+      this.$log?.debug(`Diploma store updated to <${this.getDiploma}>.`);
       this.setCitySlug(parsedResponse.citySlug);
       this.$log?.debug(`City slug store updated to <${this.getCitySlug}>.`);
       this.setCityWpSlug(parsedResponse.cityWpSlug);

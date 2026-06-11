@@ -934,6 +934,7 @@ messageUserNotApproved = "Nemôžete zapísať jazdy, kým nie ste schválený a
 
 [profile]
 buttonDeleteAccount = "Zmazať"
+buttonDownloadDiploma = "Stiahnuť diplom"
 buttonDownloadInvoice = "Stiahnutie potvrzenia o platbe"
 buttonFillQuestionnaire = "Vyplniť dotazník"
 descriptionNickname = "Zobrazuje sa vo verejných výsledkoch namiesto vášho mena"
@@ -979,6 +980,7 @@ titleDialogDeleteAccount = "Zmazanie účtu"
 titlePersonalDetails = "Osobné údaje"
 titleProfile = "Profil"
 titleRegistrationDetails = "Registrácia"
+titleResults = "Výsledky"
 titleStarterPackage = "Účastnícky balíček"
 titleUpdateEmail = "Upraviť e-mail"
 titleUpdateGender = "Upraviť kategóriu výkonu"
