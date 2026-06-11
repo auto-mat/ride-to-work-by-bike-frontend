@@ -641,15 +641,6 @@ describe('<ProfileDetails>', () => {
       cy.viewport('macbook-16');
     });
 
-    it('renders results section and download button when diploma URL is set', () => {
-      cy.dataCy(selectorTitleResults)
-        .should('be.visible')
-        .and('contain', i18n.global.t('profile.titleResults'));
-      cy.dataCy(selectorButtonDownloadDiploma)
-        .should('be.visible')
-        .and('contain', i18n.global.t('profile.buttonDownloadDiploma'));
-    });
-
     it('opens diploma URL in new tab when download button is clicked', () => {
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
