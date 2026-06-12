@@ -827,6 +827,10 @@ apiMessageErrorWithMessage = "Přihlášení se nezdařilo. Chyba: {error}"
 messagePopupFailedToOpen = "Nepodařilo se otevřít okno pro přihlášení přes Google."
 messagePopupClosed = "Okno pro přihlášení přes Google bylo zavřeno před dokončením přihlášení."
 
+[logout]
+apiMessageError = "Odhlášení se nezdařilo. Prosím, zkuste to znovu později."
+apiMessageErrorWithMessage = "Odhlášení se nezdařilo. Chyba: {error}"
+
 [loginRegisterMobileMenu]
 labelHelp = "Nápověda"
 labelLanguage = "Jazyk"

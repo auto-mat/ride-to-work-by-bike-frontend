@@ -98,6 +98,7 @@ export interface ConfigGlobal {
   urlApiIsUserOrganizationAdmin: string;
   urlApiLogin: string;
   urlApiLoginGoogle: string;
+  urlApiLogout: string;
   urlApiOrganizations: string;
   urlApiLoginFacebook: string;
   urlApiMerchandise: string;

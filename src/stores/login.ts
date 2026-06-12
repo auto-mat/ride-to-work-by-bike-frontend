@@ -8,7 +8,11 @@ import { CallbackTypes } from 'vue3-google-login';
 import { i18n } from '../boot/i18n';
 import { useApi } from '../composables/useApi';
 import { useJwt } from '../composables/useJwt';
-import { timestampToDatetimeString } from 'src/utils';
+import {
+  timestampToDatetimeString,
+  requestDefaultHeader,
+  requestTokenHeader,
+} from 'src/utils';
 import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 
 // config
@@ -348,10 +352,30 @@ export const useLoginStore = defineStore('login', {
     },
     /**
      * Logout user
+     * Calls logout API to invalidate server-side token.
      * Sets the access token, refresh token and user to empty values.
      */
-    logout(): void {
+    async logout(): Promise<void> {
       this.$log?.debug(`Logout user <${this.getUser.email}>.`);
+      // invalidate token
+      const logoutTokenHeader = { ...requestTokenHeader };
+      logoutTokenHeader.Authorization += this.getAccessToken;
+      const { data } = await apiFetch<{ detail: string }>({
+        endpoint: rideToWorkByBikeConfig.urlApiLogout,
+        method: 'post',
+        translationKey: 'logout',
+        logger: this.$log,
+        showSuccessMessage: false,
+        showErrorMessage: true,
+        headers: Object.assign(requestDefaultHeader(), logoutTokenHeader),
+      });
+      if (data?.detail) {
+        Notify.create({
+          message: data.detail,
+          color: 'positive',
+        });
+      }
+      // clear local state
       this.setAccessToken('');
       this.setRefreshToken('');
       this.setJwtExpiration(null);
