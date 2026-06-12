@@ -824,6 +824,10 @@ apiMessageErrorWithMessage = "Login failed. Error: {error}"
 messagePopupFailedToOpen = "Failed to open Google login window."
 messagePopupClosed = "Google login window was closed before completing the login."
 
+[logout]
+apiMessageError = "Logout failed. Please try again later."
+apiMessageErrorWithMessage = "Logout failed. Error: {error}"
+
 [loginRegisterMobileMenu]
 labelHelp = "Help"
 labelLanguage = "Language"
