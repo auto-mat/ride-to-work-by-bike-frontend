@@ -353,7 +353,7 @@ export const useLoginStore = defineStore('login', {
     /**
      * Logout user
      * Calls logout API to invalidate server-side token.
-     * Clears local state and redirects to the login page.
+     * Sets the access token, refresh token and user to empty values.
      */
     async logout(): Promise<void> {
       this.$log?.debug(`Logout user <${this.getUser.email}>.`);
