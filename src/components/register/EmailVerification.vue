@@ -109,12 +109,12 @@ export default defineComponent({
       rideToWorkByBikeConfig.colorWhiteBackgroundOpacity,
     );
 
-    const onRegisterAgain = (): void => {
+    const onRegisterAgain = async (): Promise<void> => {
       logger?.debug(
         `User clicked register again button, logout user and redirect to <${routesConf['register']['path']}> URL.`,
       );
-      // logout current user
-      loginStore.logout();
+      // logout current user (await so the token is cleared before redirecting)
+      await loginStore.logout();
       // redirect to register page
       router.push(routesConf['register']['path']);
     };
