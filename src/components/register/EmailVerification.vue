@@ -113,7 +113,7 @@ export default defineComponent({
       logger?.debug(
         `User clicked register again button, logout user and redirect to <${routesConf['register']['path']}> URL.`,
       );
-      // logout current user (await so the token is cleared before redirecting)
+      // logout current user
       await loginStore.logout();
       // redirect to register page
       router.push(routesConf['register']['path']);
