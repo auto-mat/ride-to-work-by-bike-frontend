@@ -33,11 +33,9 @@ interface TasksData {
 }
 
 const getTasksData = async (): TasksData => {
-  const localesFiles = await import.meta.glob(
+  const localesFiles = import.meta.glob(
     './../../data/coordinator_tasks/[A-Za-z0-9-_,s]+.toml',
-    {
-      eager: true,
-    },
+    { eager: true },
   );
   const tasks = {};
   for (const localeFile of Object.keys(localesFiles)) {
@@ -46,9 +44,7 @@ const getTasksData = async (): TasksData => {
       const locale = matched[1];
       // Dynamic import TOML translation file content
       if (locale === i18n.global.locale) {
-        await localesFiles[localeFile]().then((content) => {
-          tasks[locale] = content.default;
-        });
+        tasks[locale] = localesFiles[localeFile].default;
         break;
       }
     }
