@@ -39,7 +39,7 @@ const getTasksData = async (): TasksData => {
       eager: true,
     },
   );
-  let tasks = {};
+  const tasks = {};
   for (const localeFile of Object.keys(localesFiles)) {
     const matched = localeFile.match(/([a-z0-9-_]+)\./i);
     if (matched && matched.length > 1) {
