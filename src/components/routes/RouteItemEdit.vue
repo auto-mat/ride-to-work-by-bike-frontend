@@ -270,7 +270,7 @@ export default defineComponent({
       return Screen.gt.sm;
     });
 
-    let videoContainerWidth = computed((): string => {
+    const videoContainerWidth = computed((): string => {
       return isLargeScreen.value ? '50vw' : '100vw';
     });
 

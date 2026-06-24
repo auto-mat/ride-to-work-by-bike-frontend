@@ -170,7 +170,6 @@ function coreTests() {
           url: href,
           failOnStatusCode: failOnStatusCode,
           headers: { ...userAgentHeader },
-          headers: { ...userAgentHeader },
         }).then((resp) => {
           if (resp.status === httpTooManyRequestsStatus) {
             cy.log(httpTooManyRequestsStatusMessage);
@@ -207,7 +206,6 @@ function coreTests() {
         cy.request({
           url: href,
           failOnStatusCode: failOnStatusCode,
-          headers: { ...userAgentHeader },
           headers: { ...userAgentHeader },
         }).then((resp) => {
           if (resp.status === httpTooManyRequestsStatus) {

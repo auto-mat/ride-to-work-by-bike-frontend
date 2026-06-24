@@ -1,8 +1,8 @@
 import { routesConf } from '../../../src/router/routes_conf';
 import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
-import { bearerTokeAuth } from 'src/utils';
+import { bearerTokeAuth } from '../../../src/utils';
 import { defaultLocale } from '../../../src/i18n/def_locale';
-import { useMenu } from 'src/composables/useMenu';
+import { useMenu } from '../../../src/composables/useMenu';
 
 const { getMenuTop, getMenuBottom } = useMenu();
 
@@ -17,7 +17,7 @@ import type { ConfigGlobal } from '../../../src/components/types/Config';
 import type {
   GetOrganizationsResponse,
   OrganizationType,
-} from 'src/components/types/Organization';
+} from '../../../src/components/types/Organization';
 
 type AUTWindow = Window & typeof globalThis & ApplicationWindow;
 

@@ -4,7 +4,7 @@ import { testBackgroundImage } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 import { HttpStatusCode } from 'axios';
 
-import { rgbaColorObjectToString } from 'src/utils';
+import { rgbaColorObjectToString } from '../../../src/utils';
 
 const { hexToRgb } = colors;
 

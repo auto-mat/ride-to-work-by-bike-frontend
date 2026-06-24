@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 import { HttpStatusCode } from 'axios';
 
-import { rgbaColorObjectToString } from 'src/utils';
+import { rgbaColorObjectToString } from '../../../src/utils';
 import {
   testLanguageSwitcher,
   testBackgroundImage,
