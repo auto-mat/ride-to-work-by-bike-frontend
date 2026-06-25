@@ -112,7 +112,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     ),
     telephone: '',
     telephoneOptIn: false,
-    diploma: null as string | null,
+    diploma: '',
     language: defaultLocale,
     isLoadingRegisterChallenge: false,
     isLoadingSubsidiaries: false,
@@ -171,7 +171,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       state.formRegisterCoordinator,
     getTelephone: (state): string => state.telephone,
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
-    getDiploma: (state): string | null => state.diploma,
+    getDiploma: (state): string => state.diploma,
     getLanguage: (state): string => state.language,
     getRegistrationId: (state): number | null => {
       return state.personalDetails.id || null;
@@ -468,7 +468,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setTelephoneOptIn(telephoneOptIn: boolean) {
       this.telephoneOptIn = telephoneOptIn;
     },
-    setDiploma(diploma: string | null) {
+    setDiploma(diploma: string) {
       this.diploma = diploma;
     },
     setLanguage(language: string) {

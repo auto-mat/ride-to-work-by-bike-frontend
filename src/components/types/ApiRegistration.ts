@@ -36,7 +36,7 @@ export type PersonalDetails = CorePersonalDetails & {
   approved_for_team: TeamMemberStatus;
   is_payment_with_reward: boolean | null;
   thirdparty_voucher?: ThirdPartyVoucher[];
-  diploma?: string | null;
+  diploma: string;
 };
 
 export type ThirdPartyVoucher = {

@@ -605,24 +605,6 @@ describe('<ProfileDetails>', () => {
       cy.dataCy(selectorTitleResults).should('not.exist');
       cy.dataCy(selectorButtonDownloadDiploma).should('not.exist');
     });
-
-    it('does not render results section when diploma is null', () => {
-      setActivePinia(createPinia());
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          responseRegisterChallenge.results[0].personal_details.diploma = null;
-          cy.interceptRegisterChallengeGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            responseRegisterChallenge,
-          );
-        },
-      );
-      cy.mount(ProfileDetails, { props: {} });
-      cy.viewport('macbook-16');
-      cy.dataCy(selectorTitleResults).should('not.exist');
-      cy.dataCy(selectorButtonDownloadDiploma).should('not.exist');
-    });
   });
 
   context('diploma - available', () => {

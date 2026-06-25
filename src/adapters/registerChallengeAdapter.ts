@@ -59,7 +59,7 @@ export const registerChallengeAdapter = {
       voucher: apiData.personal_details.discount_coupon,
       citySlug: apiData.city_slug,
       cityWpSlug: apiData.city_wp_slug,
-      diploma: apiData.personal_details.diploma ?? null,
+      diploma: apiData.personal_details.diploma,
       isPaymentWithReward:
         typeof apiData.personal_details.is_payment_with_reward === 'boolean'
           ? apiData.personal_details.is_payment_with_reward
