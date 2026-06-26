@@ -33,20 +33,23 @@ const clickTrackEvt = {
         }),
       );
     };
+    if (!window.Cypress) {
+      // Store the handler on the element to clean up later
+      el._clickTrackHandler = onClickTrack;
 
-    // Store the handler on the element to clean up later
-    el._clickTrackHandler = onClickTrack;
-
-    // Add the event listener to the document
-    el.addEventListener('click', onClickTrack);
-    el.addEventListener('touchstart', onClickTrack);
+      // Add the event listener to the document
+      el.addEventListener('click', onClickTrack);
+      el.addEventListener('touchstart', onClickTrack);
+    }
   },
 
   unmounted(el) {
-    // Clean up remove the event listener when the element is unmounted
-    document.removeEventListener('click', el._clickTrackHandler);
-    document.removeEventListener('touchstart', el._clickTrackHandler);
-    delete el._clickTrackHandler; // Avoid memory leaks
+    if (!window.Cypress) {
+      // Clean up remove the event listener when the element is unmounted
+      document.removeEventListener('click', el._clickTrackHandler);
+      document.removeEventListener('touchstart', el._clickTrackHandler);
+      delete el._clickTrackHandler; // Avoid memory leaks
+    }
   },
 };
 

@@ -12,23 +12,25 @@ type EventTrack = {
 };
 
 const onTrack = (evt: EventTrack): void => {
-  const dateTime = timestampToDatetimeString(evt.detail.timestamp / 1000.0);
-  logger.debug(
-    `Tracking event detail <${dateTime}>,` +
-      ` <${evt.detail.targetName}>, <${evt.detail.value}>`,
-  );
-  if (
-    rideToWorkByBikeConfig.urlMatomoAnalytics !== 'disable' &&
-    rideToWorkByBikeConfig.matomoAnalyticsEnableRegisterChallengeTrackingEvent !==
-      'disable'
-  ) {
-    let value;
-    if (evt.detail.value) {
-      value = `${dateTime}, ${evt.detail.value}`;
-    } else {
-      value = `${dateTime}`;
+  if (!window.Cypress) {
+    const dateTime = timestampToDatetimeString(evt.detail.timestamp / 1000.0);
+    logger.debug(
+      `Tracking event detail <${dateTime}>,` +
+        ` <${evt.detail.targetName}>, <${evt.detail.value}>`,
+    );
+    if (
+      rideToWorkByBikeConfig.urlMatomoAnalytics !== 'disable' &&
+      rideToWorkByBikeConfig.matomoAnalyticsEnableRegisterChallengeTrackingEvent !==
+        'disable'
+    ) {
+      let value;
+      if (evt.detail.value) {
+        value = `${dateTime}, ${evt.detail.value}`;
+      } else {
+        value = `${dateTime}`;
+      }
+      matomo.trackEvent(evt.detail.targetName, 'click', value);
     }
-    matomo.trackEvent(evt.detail.targetName, 'click', value);
   }
 };
 export { onTrack };
