@@ -3950,6 +3950,60 @@ describe('Register Challenge page', () => {
           });
         });
       });
+
+      it('sets merch ID to null when switchnig to with-reward', () => {
+        cy.get('@config').then((config) => {
+          cy.window().should('have.property', 'i18n');
+          cy.window().then((win) => {
+            cy.fixture('apiGetRegisterChallengeCompanyWaiting.json').then(
+              (registerChallengeResponse) => {
+                cy.fixture('apiGetMyOrganizationAdmin.json').then((data) => {
+                  cy.interceptMyOrganizationAdminGetApi(config, win.i18n, data);
+                  cy.testRegisterChallengeLoadedStepOne(
+                    win.i18n,
+                    registerChallengeResponse,
+                  );
+                  // pass to last step
+                  cy.dataCy('step-1-continue').should('be.visible').click();
+                  cy.dataCy('step-2-continue')
+                    .should('be.visible')
+                    .and('not.be.disabled')
+                    .click();
+                  cy.testRegisterChallengeLoadedStepsThreeToFive(
+                    win.i18n,
+                    registerChallengeResponse,
+                  );
+                  cy.testRegisterChallengeLoadedStepSix(
+                    win.i18n,
+                    registerChallengeResponse,
+                  );
+                  // go back to step 2
+                  cy.dataCy('step-2').should('be.visible').click();
+                  // switch between with-reward and without-reward
+                  cy.switchToPaymentWithoutReward();
+                  cy.switchToPaymentWithReward();
+                  cy.get('.q-notification').should('have.length.at.most', 1);
+                  // merch ID should be null
+                  cy.dataCy('step-2-continue')
+                    .should('be.visible')
+                    .and('not.be.disabled')
+                    .click();
+                  cy.testRegisterChallengeLoadedStepsThreeToFive(
+                    win.i18n,
+                    registerChallengeResponse,
+                  );
+                  // merch list visible, no selected item
+                  cy.dataCy('list-merch').should('be.visible');
+                  cy.dataCy('form-card-merch-female')
+                    .first()
+                    .find('[data-cy="button-selected"]')
+                    .should('not.exist');
+                });
+              },
+            );
+          });
+        });
+      });
     },
   );
 

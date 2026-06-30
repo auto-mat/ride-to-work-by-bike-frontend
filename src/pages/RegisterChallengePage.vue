@@ -819,7 +819,8 @@ export default defineComponent({
             step-name="merchStep"
           >
             <q-form ref="stepMerchRef">
-              <form-field-list-merch />
+              <!-- v-if forces re-render to prevent stale state -->
+              <form-field-list-merch v-if="step === 6" />
             </q-form>
             <q-stepper-navigation class="flex justify-end">
               <q-btn
