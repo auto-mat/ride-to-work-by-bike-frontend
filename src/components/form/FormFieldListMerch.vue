@@ -473,6 +473,7 @@ export default defineComponent({
     watch(selectedSizeTrack, (val) => {
       const size =
         merchandiseItems.value.find((item) => item.id === val) || null;
+      if (!size) return;
       onTrack({
         detail: {
           targetName: 'selectedSize',
