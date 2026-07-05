@@ -13,7 +13,7 @@ import { OrganizationType } from '../../../src/components/types/Organization';
 import { getRadioOption } from '../../../test/cypress/utils';
 import { PaymentSubject } from '../../../src/components/enums/Payment';
 import { defLocale } from '../../../src/i18n/def_locale';
-import { getCurrentPriceLevelsUtil } from 'src/utils/price_levels';
+import { getCurrentPriceLevelsUtil } from '../../../src/utils/price_levels';
 import { getCurrentPriceLevelsUtilWithReward } from '../../../src/utils/price_levels_with_reward';
 import { PriceLevelCategory } from '../../../src/components/enums/Challenge';
 import { HttpStatusCode } from 'axios';
