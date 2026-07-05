@@ -4311,6 +4311,7 @@ Cypress.Commands.add(
     const selectorPlayVideoBtn = 'play-video-btn';
 
     const checkModalVideoDialog = () => {
+      cy.dataCy('overlayed-text').should('be.visible');
       cy.dataCy(selectorPlayVideoModalDialog)
         .should('be.visible')
         .then(() => {
@@ -4331,7 +4332,6 @@ Cypress.Commands.add(
         );
       });
     cy.dataCy(selectorPlayVideoBtn).click();
-    cy.dataCy('overlayed-text').should('be.visible');
     if (!closestElement) checkModalVideoDialog();
     else {
       cy.root()
