@@ -60,7 +60,8 @@ export const useApiGetTrips = (logger: Logger | null): UseApiGetTripsReturn => {
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization = `${(requestTokenHeader_.Authorization as string) || ''} ${await loginStore.getAccessTokenWithRefresh()}`;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // fetch trips
     const { data } = await apiFetch<GetTripsResponse>({
@@ -98,7 +99,8 @@ export const useApiGetTrips = (logger: Logger | null): UseApiGetTripsReturn => {
     logger?.debug(`Fetching next page of trips from <${url}>.`);
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
-    requestTokenHeader_.Authorization = `${(requestTokenHeader_.Authorization as string) || ''} ${await loginStore.getAccessTokenWithRefresh()}`;
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     // fetch next page
     const { data } = await apiFetch<GetTripsResponse>({
