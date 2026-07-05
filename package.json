@@ -76,9 +76,7 @@
     "test:e2e:ci:parallel:chrome": "npx cypress-parallel -s test:e2e:ci:chrome -d ./test/cypress/e2e/",
     "test:e2e:ci:parallel:edge": "npx cypress-parallel -s test:e2e:ci:edge -d ./test/cypress/e2e/",
     "prepare": "husky install",
-    "create:component": "npx tsc ./src/utils/create_component_file/index.ts && node ./src/utils/create_component_file/index.js",
-    "test:e2e": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/cypress/tsconfig.json start-test \"quasar dev\" http-get://127.0.0.1:8080 \"cypress open --e2e\"",
-    "test:component": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/cypress/tsconfig.json cypress open --component"
+    "create:component": "npx tsc ./src/utils/create_component_file/index.ts && node ./src/utils/create_component_file/index.js"
   },
   "dependencies": {
     "@certible/use-matomo": "^1.1.0",
