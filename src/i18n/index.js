@@ -9,7 +9,7 @@ export const loadLocaleMessages = async () => {
     const matched = localeFile.match(/([a-z0-9-_]+)\./i);
     if (matched && matched.length > 1) {
       const locale = matched[1];
-      // With eager: true, content is already loaded, no need to call as function
+      // Using `eager: true` => content is loaded and localesFiles var is ready
       messages[locale] = localesFiles[localeFile].default;
     }
   }
