@@ -385,11 +385,7 @@ Cypress.Commands.add(
   'verifyRouteAccessAllowedFromInitial',
   (targetRouteName, initialRouteName) => {
     cy.visit('#' + routesConf[targetRouteName]['children']['fullPath']);
-    cy.url().should(
-      'include',
-      routesConf[targetRouteName]['children']['fullPath'],
-    );
-    cy.url().then((url) => {
+    cy.url().should((url) => {
       const currentPath = url.split('#')[1] || '';
       const targetFullPath =
         routesConf[targetRouteName]['children']['fullPath'];
@@ -411,7 +407,7 @@ Cypress.Commands.add(
   'verifyRouteAccessDeniedFromInitial',
   (targetRouteName, initialRouteName) => {
     cy.visit('#' + routesConf[targetRouteName]['children']['fullPath']);
-    cy.url().then((url) => {
+    cy.url().should((url) => {
       const currentPath = url.split('#')[1] || '';
       const targetFullPath =
         routesConf[targetRouteName]['children']['fullPath'];
