@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as fs from 'fs';
 import { injectQuasarDevServerConfig } from '@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server';
 import { defineConfig } from 'cypress';
@@ -65,8 +64,6 @@ export default defineConfig({
     devServer: injectQuasarDevServerConfig(),
     defaultCommandTimeout: 60000,
     excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'],
-    // @ts-expect-error -- If not set it will break tests related to components that load public assets. See https://github.com/quasarframework/quasar-testing/issues/379
-    devServerPublicPathRoute: '',
   },
 });
 
