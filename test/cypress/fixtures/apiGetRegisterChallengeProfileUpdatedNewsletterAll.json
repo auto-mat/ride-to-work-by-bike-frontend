@@ -7,6 +7,7 @@
       "personal_details": {
         "first_name": "Foo",
         "last_name": "Bar",
+        "email": "foo@bar.org",
         "id": 123,
         "nickname": "FB",
         "sex": "male",
@@ -21,8 +22,11 @@
         "payment_subject": "company",
         "payment_type": "fc",
         "payment_status": "done",
-        "payment_amount": 390
+        "payment_amount": 390,
+        "diploma": "https://example.com/diploma.pdf"
       },
+      "city_slug": "praha",
+      "city_wp_slug": "praha",
       "organization_type": "company",
       "team_id": 2451,
       "organization_id": 987,
