@@ -36,13 +36,9 @@ describe('Register Challenge - Merch Options No Price', () => {
         cy.visit('#' + routesConf['register_challenge']['path']);
         cy.viewport('macbook-16');
       });
-      // we are on step 2
       cy.moveThroughStep2();
-      // we are on step 3
       cy.moveThroughStep3();
-      // we are on step 4
       cy.moveThroughStep4();
-      // we are on step 5
       cy.moveThroughStep5();
       // second teams request is to refresh availability
       cy.waitForTeamsGetApi();
