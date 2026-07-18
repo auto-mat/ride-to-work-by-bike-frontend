@@ -190,7 +190,6 @@ export default defineComponent({
     />
     <form-field-company-address
       v-model="subsidiaryId"
-      data-cy="form-company-address"
       @close:addSubsidiaryDialog="onCloseAddSubsidiaryDialog"
     />
   </div>
