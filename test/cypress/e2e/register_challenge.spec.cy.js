@@ -4522,34 +4522,9 @@ describe('Register Challenge page', () => {
 
     it('allows to pass on full team if user is already a member', () => {
       cy.fixture('apiGetTeamsResponse.json').then((responseTeams) => {
-        // we are on step 2
-        cy.dataCy('step-2')
-          .find('.q-stepper__step-content')
-          .should('be.visible');
-        // go to step 3
-        cy.dataCy('step-2-continue')
-          .should('be.visible')
-          .and('not.contain', 'q-spinner')
-          .click();
-        // we are on step 3
-        cy.dataCy('step-3')
-          .find('.q-stepper__step-content')
-          .should('be.visible');
-        // go to step 4
-        cy.dataCy('step-3-continue')
-          .should('be.visible')
-          .and('not.contain', 'q-spinner')
-          .click();
-        // we are on step 4
-        cy.dataCy('step-4')
-          .find('.q-stepper__step-content')
-          .should('be.visible');
-        // go to step 5
-        cy.dataCy('step-4-continue')
-          .should('be.visible')
-          .and('not.contain', 'q-spinner')
-          .click();
-        // we are on step 5
+        cy.moveThroughStep2();
+        cy.moveThroughStep3();
+        cy.moveThroughStep4();
         cy.dataCy('step-5')
           .find('.q-stepper__step-content')
           .should('be.visible');
@@ -4594,34 +4569,9 @@ describe('Register Challenge page', () => {
               cy.fixture('apiGetTeamsResponse.json').then((responseTeams) => {
                 // intercept my_team GET API call
                 cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
-                // we are on step 2
-                cy.dataCy('step-2')
-                  .find('.q-stepper__step-content')
-                  .should('be.visible');
-                // go to step 3
-                cy.dataCy('step-2-continue')
-                  .should('be.visible')
-                  .and('not.contain', 'q-spinner')
-                  .click();
-                // we are on step 3
-                cy.dataCy('step-3')
-                  .find('.q-stepper__step-content')
-                  .should('be.visible');
-                // go to step 4
-                cy.dataCy('step-3-continue')
-                  .should('be.visible')
-                  .and('not.contain', 'q-spinner')
-                  .click();
-                // we are on step 4
-                cy.dataCy('step-4')
-                  .find('.q-stepper__step-content')
-                  .should('be.visible');
-                // go to step 5
-                cy.dataCy('step-4-continue')
-                  .should('be.visible')
-                  .and('not.contain', 'q-spinner')
-                  .click();
-                // we are on step 5
+                cy.moveThroughStep2();
+                cy.moveThroughStep3();
+                cy.moveThroughStep4();
                 cy.dataCy('step-5')
                   .find('.q-stepper__step-content')
                   .should('be.visible');
@@ -4906,25 +4856,9 @@ describe('Register Challenge page', () => {
 
       it('shows empty merch options when not available', () => {
         cy.fixture('apiGetTeamsResponse.json').then((responseTeams) => {
-          // we are on step 2
-          cy.dataCy('step-2')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-          // go to step 3
-          cy.dataCy('step-2-continue').click();
-          // we are on step 3
-          cy.dataCy('step-3')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-          // go to step 4
-          cy.dataCy('step-3-continue').click();
-          // we are on step 4
-          cy.dataCy('step-4')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-          // go to step 5
-          cy.dataCy('step-4-continue').click();
-          // we are on step 5
+          cy.moveThroughStep2();
+          cy.moveThroughStep3();
+          cy.moveThroughStep4();
           cy.dataCy('step-5')
             .find('.q-stepper__step-content')
             .should('be.visible');

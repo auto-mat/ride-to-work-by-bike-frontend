@@ -83,10 +83,7 @@ describe('Register Challenge - Merch unavailable', () => {
     });
 
     it('continue button is enabled and proceeds to step 7', () => {
-      cy.dataCy('step-6-continue')
-        .should('be.visible')
-        .and('not.be.disabled')
-        .click();
+      cy.moveThroughStep6();
       cy.dataCy('step-7').find('.q-stepper__step-content').should('be.visible');
     });
   });
