@@ -2496,12 +2496,14 @@ Cypress.Commands.add('moveThroughStep1', () => {
 
 Cypress.Commands.add('moveThroughStep2', () => {
   cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
+  cy.get('.q-spinner').should('not.exist');
   cy.dataCy('step-2-continue').should('be.visible').and('not.be.disabled');
   cy.dataCy('step-2-continue').click({ force: true });
 });
 
 Cypress.Commands.add('moveThroughStep3', () => {
   cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
+  cy.get('.q-spinner').should('not.exist');
   cy.dataCy('step-3-continue').should('be.visible').and('not.be.disabled');
   cy.dataCy('step-3-continue').click({ force: true });
 });
