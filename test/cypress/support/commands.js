@@ -2570,8 +2570,7 @@ Cypress.Commands.add('passToStep2', () => {
         .find('.q-checkbox__inner')
         .first()
         .click();
-      cy.dataCy('step-1-continue').should('be.visible').click();
-      cy.dataCy('step-1-continue').find('.q-spinner').should('be.visible');
+      cy.moveThroughStep1();
       // on step 2
       cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
     },
