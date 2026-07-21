@@ -189,9 +189,9 @@
   integrity sha512-BvAMfS6LrgZiryOAZ4pBYucu4wG/Ei/9o9DZ9akbREnMLbPJiom2i8b9C8IsKErQoiKqVhrerzt3kOT/RrzLHg==
 
 "@certible/use-matomo@^1.1.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@certible/use-matomo/-/use-matomo-1.2.0.tgz#d093744228617318465781efba568e042631b8ac"
-  integrity sha512-nluZyxwwLsH9P4IRw8e4PQ9G0Gh1fx2UYrrmWtYXSni9AVXTaN3fXL03OJjIiV6kP/bqFebAUhmz/pxnvxIb1w==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@certible/use-matomo/-/use-matomo-1.2.1.tgz#9e8405bce6a03e12621f6d15e4ae721665217c02"
+  integrity sha512-ez0Xf+0U3MSWQ16hUz4+HQYdyntUKi0rB0pATaYQG3590VUjFpWkB9fFSPOtsBrzjvSsY+Z66y06fbcUobc3og==
 
 "@colors/colors@1.5.0":
   version "1.5.0"
