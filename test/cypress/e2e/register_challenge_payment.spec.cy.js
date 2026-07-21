@@ -20,6 +20,7 @@ describe('Register Challenge - Payment step', () => {
       cy.interceptRegisterChallengePostApi(config, defLocale, {});
       cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
       cy.interceptMyTeamGetApi(config, defLocale);
+      cy.interceptIsUserOrganizationAdminGetApi(config, defLocale);
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
         // alias i18n

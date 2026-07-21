@@ -481,7 +481,7 @@ describe('<FormLogin>', () => {
       ).then(() => {
         cy.get(classSelectorQNotificationMessage)
           .should('be.visible')
-          .and('contain', i18n.global.t('login.apiMessageError'));
+          .and('contain', i18n.global.t('login.apiMessageErrorWithMessage'));
       });
     });
   });

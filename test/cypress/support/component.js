@@ -7,7 +7,7 @@
 //
 // You can change the location of this file or turn off
 // automatically serving support files with the
-// 'supportFile' configuration option.
+// 'component.supportFile' configuration option.
 //
 // You can read more here:
 // https://on.cypress.io/configuration
@@ -20,10 +20,10 @@ import installLogsCollector from 'cypress-terminal-report/src/installLogsCollect
 addMatchImageSnapshotCommand();
 installLogsCollector();
 
-// Change this if you have a different entrypoint for the main scss.
-import 'src/css/app.scss';
 // Quasar styles
-import 'quasar/src/css/index.sass';
+import 'quasar/src/css/index.sass'; // Or 'quasar/dist/quasar.prod.css' if no CSS preprocessor is installed
+// Change this if you have a different entrypoint for the main scss.
+import '../../../src/css/app.scss'; // Or 'src/css/app.css' if no CSS preprocessor is installed
 
 // ICON SETS
 // If you use multiple or different icon-sets then the default, be sure to import them here.
@@ -44,7 +44,7 @@ import VuePlugin from '@quasar/quasar-ui-qcalendar';
 import '@quasar/quasar-ui-qcalendar/dist/QCalendarMonth.css';
 import { createPinia } from 'pinia';
 
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 import OpenLayersMap from 'vue3-openlayers';
 
 // Since Cypress v10 we cannot import `config` directly from VTU as Cypress bundles its own version of it
@@ -87,7 +87,7 @@ import { i18n as i18nApp } from '../../../src/boot/i18n';
 import { bus } from '../../../src/boot/bus';
 // Import Vue router
 import route from '../../../src/router';
-import { initVars } from 'src/boot/global_vars';
+import { initVars } from '../../../src/boot/global_vars';
 
 // Initialize global variables
 initVars();

@@ -17,6 +17,7 @@ describe('Register Challenge - Merch Options No Price', () => {
       cy.fixture('apiGetMerchandiseResponseEmpty.json').then((response) => {
         cy.interceptMerchandiseGetApi(config, defLocale, response);
       });
+      cy.interceptIsUserOrganizationAdminGetApi(config, defLocale);
       cy.window().should('have.property', 'i18n');
       cy.window().then((win) => {
         // alias i18n
@@ -35,29 +36,10 @@ describe('Register Challenge - Merch Options No Price', () => {
         cy.visit('#' + routesConf['register_challenge']['path']);
         cy.viewport('macbook-16');
       });
-      // we are on step 2
-      cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
-      // go to step 3
-      cy.dataCy('step-2-continue').click();
-      // we are on step 3
-      cy.dataCy('step-3').find('.q-stepper__step-content').should('be.visible');
-      // go to step 4
-      cy.dataCy('step-3-continue').click();
-      // we are on step 4
-      cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
-      // go to step 5
-      cy.dataCy('step-4-continue').click();
-      // we are on step 5
-      cy.dataCy('step-5').find('.q-stepper__step-content').should('be.visible');
-      // first teams request is to show teams in the table
-      cy.waitForTeamsGetApi();
-      // check that first team (full) is selected
-      cy.dataCy('form-select-table-option')
-        .first()
-        .find('.q-radio__inner')
-        .should('have.class', 'q-radio__inner--truthy');
-      // click continue button
-      cy.dataCy('step-5-continue').click();
+      cy.moveThroughStep2();
+      cy.moveThroughStep3();
+      cy.moveThroughStep4();
+      cy.moveThroughStep5();
       // second teams request is to refresh availability
       cy.waitForTeamsGetApi();
       // wait for my_team GET API call

@@ -85,7 +85,7 @@ export default defineComponent({
       return registerChallengeStore.getIsCurrentUserApproved;
     });
 
-    let activeTab = ref(RouteTab.list);
+    const activeTab = ref(RouteTab.list);
     if (isLargeScreen.value) {
       activeTab.value = RouteTab.calendar;
     }

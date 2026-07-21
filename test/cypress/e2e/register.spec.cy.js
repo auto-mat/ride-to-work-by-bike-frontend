@@ -8,7 +8,7 @@ import {
 } from '../support/commonTests';
 import { routesConf } from '../../../src/router/routes_conf';
 
-import { rgbaColorObjectToString } from 'src/utils';
+import { rgbaColorObjectToString } from '../../../src/utils';
 /**
  * Required for localization REST API URL during e2e tests for
  * intercepting API before visiting app URL page when i18n locale

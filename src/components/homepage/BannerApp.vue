@@ -56,7 +56,7 @@ export default defineComponent({
       }
 
       // check if banner data exists
-      if (!parsedStorageData.hasOwnProperty('showAppBanner')) {
+      if (!Object.hasOwn(parsedStorageData, 'showAppBanner')) {
         return true;
       }
 

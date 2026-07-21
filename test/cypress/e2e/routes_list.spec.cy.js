@@ -3,7 +3,7 @@ import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import logRouteFromDayBeforeTestData from '../fixtures/logRouteFromDayBeforeTestData.json';
 import testDataUploadFile from '../fixtures/routesUploadFileTestData.json';
-import { RouteInputType } from 'src/components/types/Route';
+import { RouteInputType } from '../../../src/components/types/Route';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 

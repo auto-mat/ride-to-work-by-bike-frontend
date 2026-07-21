@@ -88,8 +88,7 @@ describe('<BannerRoutes>', () => {
     beforeEach(() => {
       cy.mount(BannerRoutes, {
         props: {
-          routesCount,
-          variant: 'start',
+          dateEnd: entryPhaseEnd,
         },
       });
       cy.viewport('macbook-16');

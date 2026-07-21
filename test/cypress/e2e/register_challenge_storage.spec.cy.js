@@ -182,6 +182,9 @@ describe('Register challenge storage', () => {
         .click();
     });
 
+    // wait for logout (login page shows)
+    cy.dataCy('login-register-header').should('be.visible');
+
     // verify that persistent properties of registerChallenge store are empty
     cy.window().then((win) => {
       const store = JSON.parse(win.localStorage.getItem('registerChallenge'));

@@ -2,7 +2,14 @@ import { createPinia, setActivePinia } from 'pinia';
 import UserSelect from '../global/UserSelect.vue';
 import { i18n } from '../../boot/i18n';
 import { emptyUser, useLoginStore } from '../../stores/login';
-import { fixtureTokenExpirationTime } from '../../../test/cypress/support/commonTests';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import {
+  fixtureTokenExpirationTime,
+  httpSuccessfullStatus,
+} from '../../../test/cypress/support/commonTests';
+
+const { apiBase, apiDefaultLang, urlApiLogout } = rideToWorkByBikeConfig;
 
 // selectors
 const selectorUserSelectInput = 'user-select-input';
@@ -54,6 +61,18 @@ describe('<UserSelect>', () => {
       cy.fixture('loginRegisterResponseChallengeActive.json').then(
         (loginResponse) => {
           cy.fixture('loggedUser').then((user) => {
+            // intercept logout API call
+            const apiBaseUrl = getApiBaseUrlWithLang(
+              null,
+              apiBase,
+              apiDefaultLang,
+              i18n,
+            );
+            const apiLogoutUrl = `${apiBaseUrl}${urlApiLogout}`;
+            cy.intercept('POST', apiLogoutUrl, {
+              statusCode: httpSuccessfullStatus,
+              body: { detail: 'Successfully logged out.' },
+            }).as('logoutRequest');
             const loginStore = useLoginStore();
             loginStore.setAccessToken(loginResponse.access);
             loginStore.setRefreshToken(loginResponse.refresh);
@@ -77,14 +96,8 @@ describe('<UserSelect>', () => {
             cy.dataCy('menu-item')
               .contains(i18n.global.t('userSelect.logout'))
               .click();
-            cy.wrap(() => {
-              // prevent race condition between modifying and accessing store
-              return new Cypress.Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                }, 500);
-              });
-            }).then(() => {
+            // wait for logout API call to complete before checking store state
+            cy.wait('@logoutRequest').then(() => {
               // check if we are logged out
               cy.wrap(loginStore.getAccessToken).should('be.empty');
               cy.wrap(loginStore.getRefreshToken).should('be.empty');

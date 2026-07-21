@@ -17,7 +17,7 @@ import { useLoginStore } from '../stores/login';
 import type { Ref } from 'vue';
 import type { Trip, GetTripsResponse } from '../components/types/Trip';
 import type { Logger } from '../components/types/Logger';
-import type { RouteItem } from 'src/components/types/Route';
+import type { RouteItem } from '../components/types/Route';
 type UseApiGetTripsReturn = {
   trips: Ref<Trip[]>;
   isLoading: Ref<boolean>;

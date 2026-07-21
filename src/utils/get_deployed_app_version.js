@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { parse } = require('toml');
 const { existsSync, readFileSync } = require('fs-extra');
 

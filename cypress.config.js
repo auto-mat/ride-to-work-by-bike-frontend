@@ -1,17 +1,14 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import * as fs from 'fs';
+import { injectQuasarDevServerConfig } from '@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server';
+import { defineConfig } from 'cypress';
+import path from 'path';
+import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin';
 
-const {
-  injectQuasarDevServerConfig,
-} = require('@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server');
-const { defineConfig } = require('cypress');
-const {
-  addMatchImageSnapshotPlugin,
-} = require('cypress-image-snapshot/plugin');
+const { getAppConfig } = require(
+  path.join(__dirname, 'src/utils/get_app_conf'),
+);
 
-const { getAppConfig } = require('src/utils/get_app_conf');
-
-module.exports = defineConfig({
+export default defineConfig({
   fixturesFolder: 'test/cypress/fixtures',
   screenshotsFolder: 'test/cypress/screenshots',
   videosFolder: 'test/cypress/videos',
@@ -66,7 +63,7 @@ module.exports = defineConfig({
     indexHtmlFile: 'test/cypress/support/component-index.html',
     devServer: injectQuasarDevServerConfig(),
     defaultCommandTimeout: 60000,
-    excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'], // RoutesMap.cy.js file tests REQUIRE REVIEW/REFACTOR/EXTENDS tests
+    excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'],
   },
 });
 
