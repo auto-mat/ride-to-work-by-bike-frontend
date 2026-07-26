@@ -215,6 +215,7 @@ export default defineComponent({
           <!-- Team header row -->
           <q-tr
             v-if="props.row.isFirst"
+            :key="`header-${props.row.teamId}`"
             class="bg-primary text-weight-bold text-white"
             data-cy="table-results-team-header"
           >
@@ -249,6 +250,7 @@ export default defineComponent({
           <!-- Member data row -->
           <q-tr
             v-if="!props.row.isEmpty"
+            :key="`row-${props.row.memberId}`"
             :props="props"
             class="text-grey-10"
             data-cy="table-results-row"

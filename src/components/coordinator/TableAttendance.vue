@@ -635,6 +635,7 @@ export default defineComponent({
           <!-- Group header -->
           <q-tr
             v-if="props.row.isFirst"
+            :key="`header-${props.row.teamId}`"
             class="bg-primary text-weight-bold text-white"
             data-cy="table-attendance-team-header"
           >
@@ -694,6 +695,7 @@ export default defineComponent({
           <!-- Row -->
           <q-tr
             v-if="!props.row.isEmpty"
+            :key="`row-${props.row.memberId}`"
             :props="props"
             class="text-grey-10"
             data-cy="table-attendance-row"
