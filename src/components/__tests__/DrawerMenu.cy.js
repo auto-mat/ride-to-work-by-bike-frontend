@@ -47,6 +47,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -87,6 +88,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -131,6 +133,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: false,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -184,6 +187,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -255,6 +259,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: false,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -289,6 +294,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {
@@ -323,6 +329,7 @@ describe('DrawerMenu', () => {
           isEntryEnabled: true,
           isResultsEnabled: false,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }),
       ).then((menuTop) => {
         cy.mount(DrawerMenu, {

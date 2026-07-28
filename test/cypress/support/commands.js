@@ -2925,6 +2925,7 @@ Cypress.Commands.add(
         isEntryEnabled: true,
         isResultsEnabled: true,
         getHasOrganizationAdmin: true,
+        challengeMonth: 'may',
       }),
     ).then((menuTop) => {
       cy.wrap(getMenuBottom(urlDonate, urlContact)).then((menuBottom) => {

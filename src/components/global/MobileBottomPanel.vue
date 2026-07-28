@@ -54,7 +54,8 @@ export default defineComponent({
     const { isEntryEnabled, isResultsEnabled } = useRoutes();
     const { getMenuTop, getMenuBottom } = useMenu();
 
-    const { mobileBottomPanelVisibleItems } = rideToWorkByBikeConfig;
+    const { challengeMonth, mobileBottomPanelVisibleItems } =
+      rideToWorkByBikeConfig;
     const logger = inject('vuejs3-logger') as Logger | null;
 
     const {
@@ -79,6 +80,7 @@ export default defineComponent({
         isEntryEnabled,
         isResultsEnabled,
         getHasOrganizationAdmin,
+        challengeMonth,
       });
     });
     const menuPanel = computed((): Link[] => {

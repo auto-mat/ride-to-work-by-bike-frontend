@@ -3,7 +3,6 @@ import { unref } from 'vue';
 
 // config
 import { routesConf } from '../router/routes_conf';
-import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // types
 import type { ComputedRef } from 'vue';
@@ -25,7 +24,7 @@ export const useMenu = () => {
    * @param {ComputedRef<boolean | null> | boolean | null}
    *   getHasOrganizationAdmin - Whether the organization has an admin
    * @param {'may' | 'october' | 'september' | 'january'}
-   *   challengeMonth - Challenge month (defaults to config value)
+   *   challengeMonth - Challenge month
    * @returns {Link[]} - Array of top menu items
    */
   const getMenuTop = ({
@@ -35,7 +34,7 @@ export const useMenu = () => {
     isEntryEnabled,
     isResultsEnabled,
     getHasOrganizationAdmin,
-    challengeMonth = rideToWorkByBikeConfig.challengeMonth,
+    challengeMonth,
   }: {
     isUserOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
     isUserStaff: ComputedRef<boolean | null> | boolean | null;
@@ -43,7 +42,7 @@ export const useMenu = () => {
     isEntryEnabled: ComputedRef<boolean | null> | boolean | null;
     isResultsEnabled: ComputedRef<boolean | null> | boolean | null;
     getHasOrganizationAdmin: ComputedRef<boolean | null> | boolean | null;
-    challengeMonth?: 'may' | 'october' | 'september' | 'january';
+    challengeMonth: 'may' | 'october' | 'september' | 'january';
   }): Link[] => {
     let menuTop: Link[] = [
       {
@@ -68,7 +67,7 @@ export const useMenu = () => {
       },
     ];
 
-    // prizes/discounts menu item is hidden for september challenge
+    // prizes/discounts item is hidden for september challenge
     if (challengeMonth !== 'september') {
       menuTop = [
         ...menuTop,

@@ -1,8 +1,9 @@
 import { useMenu } from '../useMenu';
 
+// composables
 const { getMenuTop } = useMenu();
 
-// test parameters for getMenuTop
+// default params
 const defaultMenuParams = {
   isUserOrganizationAdmin: false,
   isUserStaff: false,
@@ -10,12 +11,13 @@ const defaultMenuParams = {
   isEntryEnabled: true,
   isResultsEnabled: true,
   getHasOrganizationAdmin: true,
+  challengeMonth: 'may',
 };
 
-describe('useMenu composable', () => {
-  describe('getMenuTop - prizes/discounts menu item visibility', () => {
-    context('when challengeMonth is may', () => {
-      it('includes the discounts menu item', () => {
+describe('useMenu', () => {
+  describe('"prizes/discounts" item visibility', () => {
+    context('when challengeMonth is "may"', () => {
+      it('shows "discounts" menu item', () => {
         const menuTop = getMenuTop({
           ...defaultMenuParams,
           challengeMonth: 'may',
@@ -26,8 +28,8 @@ describe('useMenu composable', () => {
       });
     });
 
-    context('when challengeMonth is october', () => {
-      it('includes the discounts menu item', () => {
+    context('when challengeMonth is "october"', () => {
+      it('shows "discounts" menu item', () => {
         const menuTop = getMenuTop({
           ...defaultMenuParams,
           challengeMonth: 'october',
@@ -38,8 +40,8 @@ describe('useMenu composable', () => {
       });
     });
 
-    context('when challengeMonth is january', () => {
-      it('includes the discounts menu item', () => {
+    context('when challengeMonth is "january"', () => {
+      it('shows "discounts" menu item', () => {
         const menuTop = getMenuTop({
           ...defaultMenuParams,
           challengeMonth: 'january',
@@ -50,8 +52,8 @@ describe('useMenu composable', () => {
       });
     });
 
-    context('when challengeMonth is september', () => {
-      it('does NOT include the discounts menu item', () => {
+    context('when challengeMonth is "september"', () => {
+      it('does NOT show "discounts" menu item', () => {
         const menuTop = getMenuTop({
           ...defaultMenuParams,
           challengeMonth: 'september',
@@ -60,20 +62,5 @@ describe('useMenu composable', () => {
         expect(discountsItem).to.not.exist;
       });
     });
-
-    context(
-      'when challengeMonth is not provided (uses default from config)',
-      () => {
-        it('returns menu items (discounts visibility depends on config)', () => {
-          const menuTop = getMenuTop(defaultMenuParams);
-          // verify basic menu structure exists
-          expect(menuTop).to.be.an('array');
-          expect(menuTop.length).to.be.greaterThan(0);
-          // home item should always be present
-          const homeItem = menuTop.find((item) => item.name === 'home');
-          expect(homeItem).to.exist;
-        });
-      },
-    );
   });
 });

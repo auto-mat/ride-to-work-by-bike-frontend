@@ -159,6 +159,7 @@ export const testDesktopSidebar = (): void => {
           isEntryEnabled: true,
           isResultsEnabled: true,
           getHasOrganizationAdmin: true,
+          challengeMonth: 'may',
         }).length > 0
       ) {
         cy.dataCy(selectorDrawerMenuTop).should('be.visible');

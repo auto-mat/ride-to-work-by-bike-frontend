@@ -97,6 +97,7 @@ export default defineComponent({
     const { isEntryEnabled, isResultsEnabled } = useRoutes();
 
     const {
+      challengeMonth,
       urlRideToWorkByBikeOldFrontendDjangoApp,
       urlRideToWorkByBikeOldFrontendDjangoAppAdmin,
     } = rideToWorkByBikeConfig;
@@ -118,6 +119,7 @@ export default defineComponent({
         isEntryEnabled,
         isResultsEnabled,
         getHasOrganizationAdmin,
+        challengeMonth,
       });
     });
 
