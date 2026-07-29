@@ -90,6 +90,37 @@ describe('<CoordinatorTabs>', () => {
     });
   });
 
+  context('packages tab disabled - october challenge', () => {
+    const originalChallengeMonth = rideToWorkByBikeConfig.challengeMonth;
+
+    beforeEach(() => {
+      rideToWorkByBikeConfig.challengeMonth = 'october';
+      cy.mount(CoordinatorTabs, {
+        props: {},
+      });
+      cy.viewport('macbook-16');
+    });
+
+    afterEach(() => {
+      rideToWorkByBikeConfig.challengeMonth = originalChallengeMonth;
+    });
+
+    it('packages tab is visible but disabled', () => {
+      cy.dataCy(selectorButtonPackages)
+        .should('be.visible')
+        .and('have.class', 'disabled');
+    });
+
+    it('packages tab does not navigate when clicked', () => {
+      cy.dataCy(selectorButtonTasks).click();
+      cy.dataCy(selectorPanelTasks).should('be.visible');
+      cy.dataCy(selectorButtonPackages).click();
+      // panel should not change - tasks panel still visible
+      cy.dataCy(selectorPanelTasks).should('be.visible');
+      cy.dataCy(selectorPanelPackages).should('not.exist');
+    });
+  });
+
   context('packages tab enabled - may challenge', () => {
     const originalChallengeMonth = rideToWorkByBikeConfig.challengeMonth;
 

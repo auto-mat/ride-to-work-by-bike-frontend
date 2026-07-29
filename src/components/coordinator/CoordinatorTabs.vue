@@ -74,9 +74,11 @@ export default defineComponent({
     onBeforeUnmount(() => {
       bus.off('request-edit-organization', onEditOrganizationRequested);
     });
-    // september challenge does not have packages
+    // september/october challenge does not have packages
     const isPackagesTabDisabled = computed(
-      () => rideToWorkByBikeConfig.challengeMonth === 'september',
+      () =>
+        rideToWorkByBikeConfig.challengeMonth === 'september' ||
+        rideToWorkByBikeConfig.challengeMonth === 'october',
     );
 
     return {
