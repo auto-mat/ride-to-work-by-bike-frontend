@@ -1,7 +1,7 @@
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 export const loadLocaleMessages = async () => {
-  const localesFiles = await import.meta.glob('./[A-Za-z0-9-_,s]+.toml', {
+  const localesFiles = await import.meta.glob('./*.toml', {
     eager: true,
   });
   let messages = {};
