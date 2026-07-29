@@ -29,14 +29,13 @@ describe('useMenu', () => {
     });
 
     context('when challengeMonth is "october"', () => {
-      it('shows "discounts" menu item', () => {
+      it('does NOT show "discounts" menu item', () => {
         const menuTop = getMenuTop({
           ...defaultMenuParams,
           challengeMonth: 'october',
         });
         const discountsItem = menuTop.find((item) => item.name === 'discounts');
-        expect(discountsItem).to.exist;
-        expect(discountsItem.title).to.equal('discounts');
+        expect(discountsItem).to.not.exist;
       });
     });
 

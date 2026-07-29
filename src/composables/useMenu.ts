@@ -67,8 +67,8 @@ export const useMenu = () => {
       },
     ];
 
-    // prizes/discounts item is hidden for september challenge
-    if (challengeMonth !== 'september') {
+    // prizes/discounts item is hidden for september/october challenge
+    if (challengeMonth !== 'september' && challengeMonth !== 'october') {
       menuTop = [
         ...menuTop,
         {
