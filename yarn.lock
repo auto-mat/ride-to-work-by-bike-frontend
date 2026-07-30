@@ -720,35 +720,35 @@
   resolved "https://registry.yarnpkg.com/@inquirer/type/-/type-4.0.7.tgz#9c6f0d857fe6ad549a3a932343b64e76acb34b10"
   integrity sha512-t28inv14nMQ1PhKpsJPY+kEs/c00qzeCOS2gTNRyTjG5d6qsVA2fItxW4hkvGZ5lvanGLdtCzVIx5dwdRpN1+g==
 
-"@intlify/core-base@11.4.7":
-  version "11.4.7"
-  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-11.4.7.tgz#2392ba421ae32275c2d8ce1d6f21833029dbfd10"
-  integrity sha512-MSB/sBKwEWJTILvQIhg2rnIcwPpLayo3wGwvVA+dJTNeUBD9GoqQgAaSOLdI9iOPDHCm9YoVnLqpfzza98MpkQ==
+"@intlify/core-base@11.4.8":
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-11.4.8.tgz#1cbb60e2cad25a88a7db8896f6d5652c9792c16e"
+  integrity sha512-A+Q7SKm5oEcy1E/cghqd7n/St4XjTqLhiiyDuieNcMrJcrHlkY5n0jp7Q9dD3txvVHzvsmBVV5M9wD5/s1zfzw==
   dependencies:
-    "@intlify/devtools-types" "11.4.7"
-    "@intlify/message-compiler" "11.4.7"
-    "@intlify/shared" "11.4.7"
+    "@intlify/devtools-types" "11.4.8"
+    "@intlify/message-compiler" "11.4.8"
+    "@intlify/shared" "11.4.8"
 
-"@intlify/devtools-types@11.4.7":
-  version "11.4.7"
-  resolved "https://registry.yarnpkg.com/@intlify/devtools-types/-/devtools-types-11.4.7.tgz#2ebb66cb801476f1bcd18dec432af4d1a0e0aa3f"
-  integrity sha512-GSz+J+hqH+AEpAHIYya6fSufS30OaMnG39HiZX7DmGKi3+aaLvassCfsXENEc4Wr4m68q2YP0QdMdB3D9UeAXg==
+"@intlify/devtools-types@11.4.8":
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/@intlify/devtools-types/-/devtools-types-11.4.8.tgz#c71d284e218159aa11eaae4ec9166f15fc21fb37"
+  integrity sha512-MGpID+rlfzGUbNcnC20bm5NMSBHPrvx0atLTfv9dftn3kjXw1hGKDcIcwrO99tSrZEc2i+hczRL7ks8qXsHPkQ==
   dependencies:
-    "@intlify/core-base" "11.4.7"
-    "@intlify/shared" "11.4.7"
+    "@intlify/core-base" "11.4.8"
+    "@intlify/shared" "11.4.8"
 
-"@intlify/message-compiler@11.4.7":
-  version "11.4.7"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-11.4.7.tgz#9a6236c3aa063331a09381ea08c9c0aaea879534"
-  integrity sha512-bHxmh7n94N4N1evADeb7XTkc3jTw6Ki5biMFZVSX6Jmk+iehy8/maeH2XUsBI27rtKIK+Hzc6QnVAKggUwylKw==
+"@intlify/message-compiler@11.4.8":
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-11.4.8.tgz#4f8ef43a1076899102335d456f8309d3c1666510"
+  integrity sha512-vbzk17dYwduYiv52EK61+FDCyhfVg1uPUtPmiD/d45W99uJIcXywrweOBcHv7n9/iEqmXiMGT52bgJbZDQqK3w==
   dependencies:
-    "@intlify/shared" "11.4.7"
+    "@intlify/shared" "11.4.8"
     source-map-js "^1.0.2"
 
-"@intlify/shared@11.4.7":
-  version "11.4.7"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-11.4.7.tgz#795a8101cab827845e5c3f0694fd9d9dc95351c8"
-  integrity sha512-OtjPZan3No2OZZFnMUiCVsXC6+j+XRwEywaFDk0AoayAbLuPesyDloXhJZLl9JUl5vHZeQUkYSbEA8VX+CWMjg==
+"@intlify/shared@11.4.8":
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-11.4.8.tgz#3c62c7882d07f4ab0f909760308accdc1465ea3d"
+  integrity sha512-XbRgrv+XEuvDr7UCY55oibVrh+o4u+A0VB6nSL0F5Z8LcZxE/8j573LYG6bCrOigIcHdGpSNI7Rh5UpC5/B/eg==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -7838,13 +7838,13 @@ vue-facebook-login-component-next@^1.0.4:
   integrity sha512-yKVcBxpQ57pt8Vh/1asuJxzZ3Dx0yy2fWXZy/fTWkoJMBFI6sG4yhdfK5pSxFGExDoyOoiTsD4EKv3GG5XEcvw==
 
 vue-i18n@^11.0.0:
-  version "11.4.7"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.4.7.tgz#b20dda80ed81924ea068c539ad915f79feed54c2"
-  integrity sha512-j6RyshdPPzqLiMAUpnpvZGFPM+rRoWi14Sl5yTsquvoW0/56DWyvhAj2o9TO2YXGvb6teg8T0xrYO9jR3urvdw==
+  version "11.4.8"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.4.8.tgz#2f2d9fa43d668dcafdc20875d5d15073bdc64ead"
+  integrity sha512-0ULeHP6Z9CGvAm67S77ZEp41cfGXIREGL8qfhos2BMgcQQewtQcDKuojt6jjasAD/S8GwfTp2ySPmDSpwvrCMQ==
   dependencies:
-    "@intlify/core-base" "11.4.7"
-    "@intlify/devtools-types" "11.4.7"
-    "@intlify/shared" "11.4.7"
+    "@intlify/core-base" "11.4.8"
+    "@intlify/devtools-types" "11.4.8"
+    "@intlify/shared" "11.4.8"
     "@vue/devtools-api" "^6.5.0"
 
 vue-responsive-video-background-player@^2.4.1:
