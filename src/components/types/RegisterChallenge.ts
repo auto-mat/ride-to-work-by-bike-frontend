@@ -7,7 +7,7 @@ import type { Gender } from './Profile';
 
 interface BasePersonalDetails {
   ageGroup?: number;
-  jobTitle?: string;
+  occupation?: number | null;
   language?: string;
   nickname?: string;
   phone?: string;

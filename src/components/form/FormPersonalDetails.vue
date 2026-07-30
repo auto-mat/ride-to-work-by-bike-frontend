@@ -32,6 +32,7 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
+import { useSelectSearch } from 'src/composables/useSelectSearch';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
@@ -137,6 +138,20 @@ export default defineComponent({
       });
     });
 
+    const ageGroups = computed(() => store.getAgeGroups);
+
+    const {
+      filteredOptions: filteredAgeGroups,
+      filterFn: filterAgeGroups,
+    } = useSelectSearch(ageGroups);
+
+    const occupations = computed(() => store.getOccupations);
+
+    const {
+      filteredOptions: filteredOccupations,
+      filterFn: filterOccupations,
+    } = useSelectSearch(occupations);
+
     return {
       challengeAllowRegisterOrganizationAdmin,
       getHasOrganizationAdmin,
@@ -148,6 +163,10 @@ export default defineComponent({
       urlAppDataPrivacyPolicy,
       urlAppDataTermsOfService,
       urlRegisterAsCoordinator,
+      filteredAgeGroups,
+      filterAgeGroups,
+      filteredOccupations,
+      filterOccupations,
       onTrack,
     };
   },
@@ -219,6 +238,72 @@ export default defineComponent({
           :hint="$t('form.personalDetails.hintGender')"
           class="q-mt-sm"
         />
+      </div>
+      <!-- Input: Age Group (Birth Year) -->
+      <div class="col-12" data-cy="form-personal-details-age-group">
+        <label for="form-age-group" class="text-grey-10 text-caption text-bold">
+          {{ $t('form.labelAgeGroup') }}
+        </label>
+        <q-field
+          dense
+          borderless
+          hide-bottom-space
+          :model-value="personalDetails.ageGroup"
+          :rules="[(val) => val != null || $t('form.messageFieldRequired')]"
+        >
+          <q-select
+            dense
+            outlined
+            use-input
+            input-debounce="0"
+            v-model="personalDetails.ageGroup"
+            :options="filteredAgeGroups"
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
+            @filter="filterAgeGroups"
+            id="form-age-group"
+            class="q-mt-sm"
+            data-cy="form-personal-details-age-group-input"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="ageGroup"
+          />
+        </q-field>
+      </div>
+      <!-- Input: Occupation -->
+      <div class="col-12" data-cy="form-personal-details-occupation">
+        <label for="form-occupation" class="text-grey-10 text-caption text-bold">
+          {{ $t('form.labelOccupation') }}
+        </label>
+        <q-field
+          dense
+          borderless
+          hide-bottom-space
+          :model-value="personalDetails.occupation"
+          :rules="[(val) => val != null || $t('form.messageFieldRequired')]"
+        >
+          <q-select
+            dense
+            outlined
+            use-input
+            input-debounce="0"
+            v-model="personalDetails.occupation"
+            :options="filteredOccupations"
+            option-value="value"
+            option-label="label"
+            emit-value
+            map-options
+            @filter="filterOccupations"
+            id="form-occupation"
+            class="q-mt-sm"
+            data-cy="form-personal-details-occupation-input"
+            v-click-track-evt
+            @click-track="onTrack"
+            name="occupation"
+          />
+        </q-field>
       </div>
       <!-- Link: Register as coordinator -->
       <template

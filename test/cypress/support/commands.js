@@ -2004,6 +2004,54 @@ Cypress.Commands.add('waitForMerchandiseNoneApi', () => {
 });
 
 /**
+ * Intercept age groups GET API
+ * @param {object} config - App configuration
+ * @param {string} defLocale - Default locale
+ * @param {Array} response - Fixture response data
+ */
+Cypress.Commands.add('interceptAgeGroupsGetApi', (config, defLocale, response) => {
+  const { apiBase, apiDefaultLang, urlApiAgeGroups } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, defLocale);
+  const urlApiAgeGroupsLocalized = `${apiBaseUrl}${urlApiAgeGroups}`;
+
+  cy.intercept('GET', urlApiAgeGroupsLocalized, {
+    statusCode: httpSuccessfullStatus,
+    body: response,
+  }).as('ageGroupsGetApi');
+});
+
+/**
+ * Wait for age groups API response
+ */
+Cypress.Commands.add('waitForAgeGroupsApi', () => {
+  cy.wait('@ageGroupsGetApi');
+});
+
+/**
+ * Intercept occupations GET API
+ * @param {object} config - App configuration
+ * @param {string} defLocale - Default locale
+ * @param {Array} response - Fixture response data
+ */
+Cypress.Commands.add('interceptOccupationsGetApi', (config, defLocale, response) => {
+  const { apiBase, apiDefaultLang, urlApiOccupations } = config;
+  const apiBaseUrl = getApiBaseUrlWithLang(null, apiBase, apiDefaultLang, defLocale);
+  const urlApiOccupationsLocalized = `${apiBaseUrl}${urlApiOccupations}`;
+
+  cy.intercept('GET', urlApiOccupationsLocalized, {
+    statusCode: httpSuccessfullStatus,
+    body: response,
+  }).as('occupationsGetApi');
+});
+
+/**
+ * Wait for occupations API response
+ */
+Cypress.Commands.add('waitForOccupationsApi', () => {
+  cy.wait('@occupationsGetApi');
+});
+
+/**
  * Wait for PayU create order API call and compare request/response object
  * Wait for `@postPayuCreateOrder` intercept
  * @param {Object} requestBody - Expected request body override
@@ -2089,6 +2137,14 @@ Cypress.Commands.add(
           i18n,
           formOrganizationOptions[0].subsidiaries[0].id,
         );
+        // intercept age groups
+        cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+          cy.interceptAgeGroupsGetApi(config, defLocale, response);
+        });
+        // intercept occupations
+        cy.fixture('apiGetOccupationsResponse').then((response) => {
+          cy.interceptOccupationsGetApi(config, defLocale, response);
+        });
         cy.interceptMerchandiseGetApi(config, i18n);
       });
     });
@@ -2557,6 +2613,16 @@ Cypress.Commands.add('passToStep2', () => {
         .find('.q-radio__label')
         .first()
         .click();
+      // select age group (birth year)
+      cy.dataCy('form-personal-details-age-group')
+        .should('be.visible')
+        .click();
+      cy.get('.q-menu .q-item').contains('1990').click();
+      // select occupation
+      cy.dataCy('form-personal-details-occupation')
+        .should('be.visible')
+        .click();
+      cy.get('.q-menu .q-item').contains('IT').click();
       // fill phone number
       cy.dataCy('form-personal-details-phone-input')
         .should('be.visible')

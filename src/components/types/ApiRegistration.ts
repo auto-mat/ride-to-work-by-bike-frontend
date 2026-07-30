@@ -7,6 +7,17 @@ import type { RegisterChallengePersonalDetailsForm } from './RegisterChallenge';
 import type { PaymentSubject } from '../enums/Payment';
 import type { PaymentCategory, PayuProduct } from './ApiPayu';
 
+// API object types for age group and occupation
+export type AgeGroupApiObject = {
+  id: number;
+  value: string;
+};
+
+export type OccupationApiObject = {
+  id: number;
+  value: string;
+};
+
 // subset of personal details that can be sent in POST requests
 export type CorePersonalDetails = {
   first_name: string;
@@ -19,8 +30,8 @@ export type CorePersonalDetails = {
   telephone: string;
   telephone_opt_in: boolean;
   language: string;
-  occupation: string;
-  age_group: number | null;
+  occupation: OccupationApiObject | null;
+  age_group: AgeGroupApiObject | null;
   newsletter: string;
   personal_data_opt_in: boolean;
   discount_coupon: string;
@@ -75,7 +86,7 @@ export type RegisterChallengePostPayload = {
   telephone?: string;
   telephone_opt_in?: boolean;
   language?: string;
-  occupation?: string;
+  occupation?: number | null;
   age_group?: number | null;
   newsletter?: string;
   personal_data_opt_in?: boolean;

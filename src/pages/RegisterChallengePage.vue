@@ -163,6 +163,8 @@ export default defineComponent({
         await challengeStore.loadPhaseSet();
       }
       await registerChallengeStore.loadRegisterChallengeToStore();
+      await registerChallengeStore.loadAgeGroupsToStore(logger);
+      await registerChallengeStore.loadOccupationsToStore(logger);
       /**
        * Depending on whether payment is successful,
        * and isPayuTransactionInitiated flag

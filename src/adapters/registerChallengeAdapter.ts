@@ -33,6 +33,8 @@ export const registerChallengeAdapter = {
       isStaff: apiData.personal_details.is_staff,
       nickname: apiData.personal_details.nickname || '',
       gender: apiData.personal_details.sex as Gender,
+      ageGroup: apiData.personal_details.age_group?.id ?? null,
+      occupation: apiData.personal_details.occupation?.id ?? null,
       newsletter: newsletterAdapter.parseNewsletterValues(
         apiData.personal_details.newsletter,
       ),
@@ -100,6 +102,12 @@ export const registerChallengeAdapter = {
       }
       if (storePersonalDetails.gender !== undefined) {
         payload.sex = storePersonalDetails.gender as Gender;
+      }
+      if (storePersonalDetails.ageGroup !== undefined) {
+        payload.age_group = storePersonalDetails.ageGroup;
+      }
+      if (storePersonalDetails.occupation !== undefined) {
+        payload.occupation = storePersonalDetails.occupation;
       }
       if (storePersonalDetails.language !== undefined) {
         payload.language = storePersonalDetails.language;

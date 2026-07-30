@@ -16,6 +16,8 @@ import { useApiGetRegisterChallenge } from 'src/composables/useApiGetRegisterCha
 import { useApiGetSubsidiaries } from 'src/composables/useApiGetSubsidiaries';
 import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
 import { useApiGetTeams } from 'src/composables/useApiGetTeams';
+import { useApiGetAgeGroups } from 'src/composables/useApiGetAgeGroups';
+import { useApiGetOccupations } from 'src/composables/useApiGetOccupations';
 import { useApiGetMerchandise } from 'src/composables/useApiGetMerchandise';
 import { useApiGetFilteredMerchandise } from 'src/composables/useApiGetFilteredMerchandise';
 import { useApiPostRegisterChallenge } from '../composables/useApiPostRegisterChallenge';
@@ -47,6 +49,7 @@ import { useLoginStore } from './login';
 
 // types
 import type { Logger } from '../components/types/Logger';
+import type { FormOption } from '../components/types/Form';
 import type {
   RegisterChallengeCoordinatorForm,
   RegisterChallengePersonalDetailsForm,
@@ -102,6 +105,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     subsidiaries: [] as OrganizationSubsidiary[],
     organizations: [] as OrganizationOption[],
     teams: [] as OrganizationTeam[],
+    ageGroups: [] as FormOption[],
+    occupations: [] as FormOption[],
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
     myTeam: null as MyTeamResults | null,
@@ -118,6 +123,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isLoadingSubsidiaries: false,
     isLoadingOrganizations: false,
     isLoadingTeams: false,
+    isLoadingAgeGroups: false,
+    isLoadingOccupations: false,
     isLoadingMerchandise: false,
     isLoadingFilteredMerchandise: false,
     isLoadingPayuOrder: false,
@@ -154,6 +161,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getSubsidiaries: (state): OrganizationSubsidiary[] => state.subsidiaries,
     getOrganizations: (state): OrganizationOption[] => state.organizations,
     getTeams: (state): OrganizationTeam[] => state.teams,
+    getAgeGroups: (state): FormOption[] => state.ageGroups,
+    getOccupations: (state): FormOption[] => state.occupations,
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,
@@ -302,6 +311,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.getPersonalDetails.firstName !== '' &&
         this.getPersonalDetails.lastName !== '' &&
         this.getPersonalDetails.gender !== Gender.none &&
+        this.getPersonalDetails.ageGroup != null &&
+        this.getPersonalDetails.occupation != null &&
         this.getPersonalDetails.terms === true
       );
     },
@@ -958,6 +969,28 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.isLoadingTeams = false;
       }
     },
+    async loadAgeGroupsToStore(logger: Logger | null) {
+      const { ageGroups, loadAgeGroups } = useApiGetAgeGroups(logger);
+      logger?.info('Loading age groups data into store.');
+      this.isLoadingAgeGroups = true;
+      await loadAgeGroups();
+      this.ageGroups = ageGroups.value;
+      logger?.debug(
+        `Loaded age groups <${this.ageGroups.length}> saved into store.`,
+      );
+      this.isLoadingAgeGroups = false;
+    },
+    async loadOccupationsToStore(logger: Logger | null) {
+      const { occupations, loadOccupations } = useApiGetOccupations(logger);
+      logger?.info('Loading occupations data into store.');
+      this.isLoadingOccupations = true;
+      await loadOccupations();
+      this.occupations = occupations.value;
+      logger?.debug(
+        `Loaded occupations <${this.occupations.length}> saved into store.`,
+      );
+      this.isLoadingOccupations = false;
+    },
     async loadMyTeamToStore(logger: Logger | null) {
       const { team, loadTeam } = useApiGetMyTeam(logger);
       if (this.teamId) {
@@ -1284,12 +1317,16 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'subsidiaries',
       'organizations',
       'teams',
+      'ageGroups',
+      'occupations',
       'merchandiseItems',
       'merchandiseCards',
       'isLoadingRegisterChallenge',
       'isLoadingSubsidiaries',
       'isLoadingOrganizations',
       'isLoadingTeams',
+      'isLoadingAgeGroups',
+      'isLoadingOccupations',
       'isLoadingMerchandise',
       'isLoadingFilteredMerchandise',
       'isLoadingPayuOrder',

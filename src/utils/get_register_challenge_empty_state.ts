@@ -24,6 +24,8 @@ export const emptyFormPersonalDetails: RegisterChallengePersonalDetailsForm = {
   newsletter: [] as NewsletterType[],
   nickname: '',
   gender: null as Gender | null,
+  ageGroup: null,
+  occupation: null,
   terms: false,
 };
 
