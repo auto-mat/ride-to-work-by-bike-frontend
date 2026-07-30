@@ -7326,9 +7326,9 @@ svg-pathdata@^6.0.3:
   integrity sha512-qsjeeq5YjBZ5eMdFuUa4ZosMLxgr5RZ+F+Y1OrDhuOCEInRMA3x74XdBtggJcj9kOeInz0WE+LgCPDkZFlBYJw==
 
 swiper@^14.0.0:
-  version "14.0.6"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-14.0.6.tgz#41e4498d74a0d11dc93b4d74f25dc6214ba012e5"
-  integrity sha512-ArptjmcZMBvpLCbvzSKuqvQpjjITCbZdymiGOrbZQffQ3ZSjgpvMByXX0WZBUt+FV4PPIumdYfZ9ZdBbFsdH6g==
+  version "14.0.7"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-14.0.7.tgz#cfdae71aec6174f01fc456d06f6e9703d6cf62a4"
+  integrity sha512-PDMY+8hNQBh4kAYdfKIF1GNS7u3hg4xl3NVKBey0rENnpUpTsiE/aCcbgpmm1PIf4RMI7loO3XhW9BdxLzQw0A==
 
 sync-child-process@^1.0.2:
   version "1.0.2"
