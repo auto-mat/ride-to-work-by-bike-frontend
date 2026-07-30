@@ -6,6 +6,7 @@ export interface Link {
   disabled?: boolean;
   target?: '_blank' | '_self' | '_parent' | '_top';
   href?: string;
+  action?: () => void;
 }
 
 export enum SocialLinkId {

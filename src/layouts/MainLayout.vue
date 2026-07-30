@@ -11,7 +11,7 @@ import DrawerHeader from 'components/global/DrawerHeader.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
-import UserSelect from 'components/global/UserSelect.vue';
+import UserProfileLink from 'components/global/UserProfileLink.vue';
 
 // composables
 import { useMenu } from 'src/composables/useMenu';
@@ -26,6 +26,7 @@ import type { Link } from 'components/types';
 import type { Logger } from 'components/types/Logger';
 
 // stores
+import { useLoginStore } from 'src/stores/login';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // utils
@@ -50,11 +51,12 @@ export default defineComponent({
     DrawerMenu,
     FooterBar,
     MobileBottomPanel,
-    UserSelect,
+    UserProfileLink,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const route = useRoute();
+    const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
 
     const isHomePage = computed(
@@ -85,7 +87,9 @@ export default defineComponent({
       );
     });
     const menuBottom = computed(() => {
-      return getMenuBottom(urlDonate.value, urlContact.value);
+      return getMenuBottom(urlDonate.value, urlContact.value, () =>
+        loginStore.logout(),
+      );
     });
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,
@@ -160,8 +164,11 @@ export default defineComponent({
       <div class="q-px-lg">
         <!-- Logo + Buttons (help, notification) -->
         <drawer-header data-cy="drawer-header" />
-        <!-- User options dropdown -->
-        <user-select class="q-pt-lg" data-cy="user-select-desktop" />
+        <!-- User profile link -->
+        <user-profile-link
+          class="q-pt-lg"
+          data-cy="user-profile-link-desktop"
+        />
       </div>
       <!-- Navigation menu -->
       <drawer-menu :items="menuTop" class="q-pt-lg" data-cy="drawer-menu-top" />

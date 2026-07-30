@@ -17,7 +17,7 @@
  * - `ButtonNotifications` Component to render notifications.
  * - `HeaderLogo` Component to render logo.
  * - `HelpButton` Component to render help button.
- * - `UserSelect` Component to render user menu.
+ * - `UserProfileLink` Component to render user profile link.
  *
  * @example
  * <drawer-header :showLogo="isLogoShown" />
@@ -32,7 +32,7 @@ import { defineComponent, computed } from 'vue';
 import ButtonNotifications from './ButtonNotifications.vue';
 import HeaderLogo from './HeaderLogo.vue';
 import HelpButton from './HelpButton.vue';
-import UserSelect from './UserSelect.vue';
+import UserProfileLink from './UserProfileLink.vue';
 
 export default defineComponent({
   name: 'DrawerHeader',
@@ -40,7 +40,7 @@ export default defineComponent({
     ButtonNotifications,
     HeaderLogo,
     HelpButton,
-    UserSelect,
+    UserProfileLink,
   },
   props: {
     showLogo: {
@@ -100,12 +100,12 @@ export default defineComponent({
       </help-button>
       <!-- Notification icon link -->
       <button-notifications />
-      <!-- User menu dropdown -->
-      <user-select
+      <!-- User profile link -->
+      <user-profile-link
         v-if="mobile"
         variant="mobile"
         class="lt-md"
-        data-cy="user-select-mobile"
+        data-cy="user-profile-link-mobile"
       />
     </div>
   </div>

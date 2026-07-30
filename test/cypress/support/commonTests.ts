@@ -124,12 +124,10 @@ export const testPasswordInputReveal = (identifier: string): void => {
   });
 };
 
-const selectorUserSelectInput = 'user-select-input';
-
 export const testDesktopSidebar = (): void => {
   const selectorDrawer = 'q-drawer';
   const selectorDrawerHeader = 'drawer-header';
-  const selectorUserSelectDesktop = 'user-select-desktop';
+  const selectorUserProfileLinkDesktop = 'user-profile-link-desktop';
   const selectorDrawerMenuTop = 'drawer-menu-top';
   const selectorDrawerMenuBottom = 'drawer-menu-bottom';
   const selectorAutomatLogoBanner = 'automat-logo-banner';
@@ -138,7 +136,7 @@ export const testDesktopSidebar = (): void => {
     cy.task('getAppConfig', process).then((config) => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
-      cy.dataCy(selectorUserSelectDesktop).should('be.visible');
+      cy.dataCy(selectorUserProfileLinkDesktop).should('be.visible');
 
       const {
         urlRideToWorkByBikeOldFrontendDjangoApp,
@@ -183,57 +181,31 @@ export const testDesktopSidebar = (): void => {
     });
   });
 
-  testUserSelect(selectorUserSelectDesktop);
+  testUserProfileLink(selectorUserProfileLinkDesktop);
 };
 
 export const testMobileHeader = (): void => {
   const selectorButtonHelp = 'button-help';
-  const selectorUserSelect = 'user-select-mobile';
+  const selectorUserProfileLink = 'user-profile-link-mobile';
 
   it('renders mobile header', () => {
     // TODO: enable when help dialog is implemented
     cy.dataCy(selectorButtonHelp).should('not.exist');
-    cy.dataCy(selectorUserSelect).should('be.visible');
+    cy.dataCy(selectorUserProfileLink).should('be.visible');
   });
 
-  testUserSelect(selectorUserSelect);
+  testUserProfileLink(selectorUserProfileLink);
 };
 
-export const testUserSelect = (selector: string): void => {
-  const classSelectorMenu = '.q-menu';
-  const selectorMenuItem = 'menu-item';
-
-  it('renders user select', () => {
+export const testUserProfileLink = (selector: string): void => {
+  it('renders user profile link', () => {
     cy.dataCy(selector).should('be.visible');
   });
 
-  it('checks navigation links in the menu', () => {
-    const menuItems = [
-      { url: routesConf['profile_details']['children']['fullPath'] },
-      // { url: routesConf['profile_newsletter']['children']['fullPath'] },
-      // { url: routesConf['routes_app']['children']['fullPath'] },
-      // {
-      //   url: routesConf['profile_notifications']['children']['fullPath'],
-      // },
-      // { url: routesConf['coordinator']['children']['fullPath'] },
-    ];
-
-    cy.dataCy(selector).within(() => {
-      cy.dataCy(selectorUserSelectInput).should('be.visible').click();
-    });
-    cy.get(classSelectorMenu)
-      .should('exist')
-      .and('not.have.class', 'q-transition--fade-enter-from')
-      .and('be.visible')
-      .within(() => {
-        menuItems.forEach((item, index) => {
-          cy.dataCy(selectorMenuItem)
-            .eq(index)
-            .invoke('attr', 'href')
-            .should('contain', item.url);
-        });
-      });
-    cy.dataCy(selector).click();
+  it('links to profile details page', () => {
+    cy.dataCy(selector)
+      .invoke('attr', 'href')
+      .should('contain', routesConf['profile_details']['children']['fullPath']);
   });
 };
 

@@ -433,6 +433,17 @@ describe('DrawerMenu', () => {
           });
         });
     });
+
+    it('renders logout item with correct icon', () => {
+      cy.dataCy(selectorDrawerMenuItem)
+        .contains(i18n.global.t('drawerMenu.logout'))
+        .should('be.visible')
+        .within(() => {
+          cy.dataCy(selectorDrawerMenuItemIcon)
+            .invoke('attr', 'data-icon')
+            .should('contain', 'lucide-log-out');
+        });
+    });
   });
 
   context('menu bottom - change lang to en lang', () => {

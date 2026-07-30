@@ -332,13 +332,10 @@ describe('Login page', () => {
         // wait for trips API call
         cy.wait('@getTrips');
         cy.wait('@getTripsNextPage');
-        // click on user select
-        cy.dataCy('user-select-desktop').within(() => {
-          cy.dataCy('user-select-input').should('be.visible').click();
-        });
-        // logout
-        cy.dataCy('menu-item')
-          .contains(i18n?.global.t('userSelect.logout'))
+        // logout via drawer menu
+        cy.dataCy('drawer-menu-item')
+          .contains(i18n?.global.t('drawerMenu.logout'))
+          .should('be.visible')
           .click();
         // redirected to login page
         cy.url().should('include', routesConf['login']['path']);

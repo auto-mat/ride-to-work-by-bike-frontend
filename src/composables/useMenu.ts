@@ -130,9 +130,14 @@ export const useMenu = () => {
    * Get the bottom menu items
    * @param {string} urlDonate - The URL of the donate page
    * @param {string} urlContact - The URL of the contact page
+   * @param {() => void} logoutAction - Optional logout action callback
    * @returns {Link[]} - Array of bottom menu items
    */
-  const getMenuBottom = (urlDonate: string, urlContact: string): Link[] => {
+  const getMenuBottom = (
+    urlDonate: string,
+    urlContact: string,
+    logoutAction?: () => void,
+  ): Link[] => {
     const menuBottom: Link[] = [
       {
         url: '',
@@ -147,6 +152,13 @@ export const useMenu = () => {
         name: 'contact',
         title: 'contact',
         href: urlContact,
+      },
+      {
+        url: '',
+        icon: 'svguse:icons/drawer_menu/icons.svg#lucide-log-out',
+        name: 'logout',
+        title: 'logout',
+        action: logoutAction,
       },
     ];
 
