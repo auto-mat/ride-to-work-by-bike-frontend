@@ -2,21 +2,20 @@
 /**
  * UserProfileLink Component
  *
- * The `UserProfileLink` component provides a simple link to the user's
- * profile page, displaying their avatar and email.
+ * Use `UserProfileLink` component to show user name, email and avatar.
  *
  * @description
  * This component renders a clickable link to the profile details page.
- * It displays the user's avatar and email (desktop only).
+ * It displays the user's avatar, name, and email.
  *
  * @props
  * - `variant` (String: 'mobile' | 'desktop', default: 'desktop'):
- *   Determines the display style of the component.
+ *   Determines the display style of the component (avatar size).
  *
  * @example
  * <user-profile-link variant="desktop" />
  *
- * @see [Figma Design](https://www.figma.com/file/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?type=design&node-id=4858%3A103890&mode=dev)
+ * @see [Figma Design](https://www.figma.com/design/L8dVREySVXxh3X12TcFDdR/Do-pr%C3%A1ce-na-kole?node-id=4858-104854&t=kp1Z2vv2Dow2rIyb-1)
  */
 
 // libraries
@@ -55,11 +54,15 @@ export default defineComponent({
 
 <template>
   <router-link
-    :to="profileDetailsPath"
+    :to="profileDetailsPath ? profileDetailsPath : ''"
     class="user-profile-link"
     data-cy="user-profile-link"
   >
-    <div class="flex items-center no-wrap">
+    <q-item
+      dense
+      clickable
+      class="flex items-center no-wrap q-pa-none rounded-borders"
+    >
       <!-- User avatar -->
       <q-avatar :size="size" color="white" data-cy="avatar">
         <q-img
@@ -72,11 +75,24 @@ export default defineComponent({
           data-cy="avatar-image"
         />
       </q-avatar>
-      <!-- User email (desktop only) -->
-      <div v-if="variant !== 'mobile'" class="col text-left q-ml-md ellipsis">
-        {{ user.email }}
-      </div>
-    </div>
+      <!-- User info -->
+      <q-item-section class="q-ml-md">
+        <!-- User name -->
+        <q-item-label
+          class="text-body1 text-white ellipsis"
+          data-cy="profile-name"
+          >{{ user?.first_name + ' ' + user?.last_name }}</q-item-label
+        >
+        <!-- User email -->
+        <q-item-label
+          caption
+          lines="1"
+          class="text-white"
+          data-cy="profile-email"
+          >{{ user?.email }}</q-item-label
+        >
+      </q-item-section>
+    </q-item>
   </router-link>
 </template>
 

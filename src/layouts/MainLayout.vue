@@ -140,7 +140,7 @@ export default defineComponent({
 <template>
   <q-layout view="hHh lpR fFf">
     <!-- Top bar: (mobile) -->
-    <q-header reveal class="lt-md bg-white">
+    <q-header reveal class="lt-md bg-primary">
       <q-toolbar>
         <!-- Logo + Buttons (help, notification) -->
         <drawer-header

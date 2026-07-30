@@ -26,11 +26,15 @@ describe('<UserProfileLink>', () => {
 
     coreTests();
 
-    it('shows user email', () => {
+    it('shows user name and email', () => {
       cy.fixture('loggedUser').then((user) => {
         const loginStore = useLoginStore();
         loginStore.setUser(user);
-        cy.dataCy('user-profile-link').should('contain', user.email);
+        const fullName = `${user.first_name} ${user.last_name}`;
+        cy.dataCy('profile-name').should('be.visible').and('contain', fullName);
+        cy.dataCy('profile-email')
+          .should('be.visible')
+          .and('contain', user.email);
       });
     });
 
@@ -61,19 +65,23 @@ describe('<UserProfileLink>', () => {
 
     coreTests();
 
+    it('shows user name and email', () => {
+      cy.fixture('loggedUser').then((user) => {
+        const loginStore = useLoginStore();
+        loginStore.setUser(user);
+        const fullName = `${user.first_name} ${user.last_name}`;
+        cy.dataCy('profile-name').should('be.visible').and('contain', fullName);
+        cy.dataCy('profile-email')
+          .should('be.visible')
+          .and('contain', user.email);
+      });
+    });
+
     it('renders avatar with correct size', () => {
       cy.dataCy('avatar').invoke('width').should('equal', avatarSizeSm);
       cy.dataCy('avatar').invoke('height').should('equal', avatarSizeSm);
       cy.dataCy('avatar-image').invoke('width').should('equal', avatarSizeSm);
       cy.dataCy('avatar-image').invoke('height').should('equal', avatarSizeSm);
-    });
-
-    it('does not show user email', () => {
-      cy.fixture('loggedUser').then((user) => {
-        const loginStore = useLoginStore();
-        loginStore.setUser(user);
-        cy.dataCy('user-profile-link').should('not.contain', user.email);
-      });
     });
   });
 

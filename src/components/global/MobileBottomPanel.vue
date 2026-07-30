@@ -31,6 +31,7 @@ import { useRoutes } from 'src/composables/useRoutes';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
+import { useLoginStore } from 'src/stores/login';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
@@ -43,6 +44,7 @@ import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 export default defineComponent({
   name: 'MobileBottomPanel',
   setup() {
+    const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
     const isUserOrganizationAdmin = computed(
       () => registerChallengeStore.isUserOrganizationAdmin,
@@ -105,7 +107,9 @@ export default defineComponent({
       );
     });
     const menuBottom = computed(() => {
-      return getMenuBottom(urlDonate.value, urlContact.value);
+      return getMenuBottom(urlDonate.value, urlContact.value, () =>
+        loginStore.logout(),
+      );
     });
 
     return {
@@ -226,6 +230,7 @@ export default defineComponent({
         }"
         class="q-py-sm q-px-md items-center"
         active-class="text-grey-10"
+        @click="item.action ? item.action() : undefined"
       >
         <!-- Icon -->
         <q-item-section avatar>

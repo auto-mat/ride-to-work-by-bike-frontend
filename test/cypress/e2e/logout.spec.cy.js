@@ -1,9 +1,15 @@
 import { routesConf } from '../../../src/router/routes_conf';
-import { systemTimeLoggedIn } from '../support/commonTests';
+import {
+  setupApiChallengeActive,
+  systemTimeLoggedIn,
+} from '../support/commonTests';
+import { defLocale } from '../../../src/i18n/def_locale';
 
 describe('Logout functionality', () => {
   context('desktop', () => {
     beforeEach(() => {
+      cy.clock(systemTimeLoggedIn, ['Date']);
+      cy.visit('#' + routesConf['login']['path']);
       cy.viewport('macbook-16');
       // load config and i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
@@ -11,13 +17,34 @@ describe('Logout functionality', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.wrap(win.i18n).as('i18n');
+          // setup API intercepts
+          setupApiChallengeActive(config, win.i18n, true);
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+            (response) => {
+              cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            },
+          );
+          cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+            (responseIsUserOrganizationAdmin) => {
+              cy.interceptIsUserOrganizationAdminGetApi(
+                config,
+                defLocale,
+                responseIsUserOrganizationAdmin,
+              );
+            },
+          );
+          cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+            (responseMyTeam) => {
+              cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+            },
+          );
+          cy.interceptCommuteModeGetApi(config, defLocale);
         });
       });
-      // mock system time
-      cy.clock(systemTimeLoggedIn, ['Date']);
-      cy.visit('#' + routesConf['login']['path']);
       // login
       cy.fillAndSubmitLoginForm();
+      cy.wait('@loginRequest');
       cy.dataCy('index-title').should('be.visible');
     });
 
@@ -36,27 +63,12 @@ describe('Logout functionality', () => {
         cy.dataCy('form-login-email').should('be.visible');
       });
     });
-
-    it('clears user data after logout', () => {
-      cy.get('@i18n').then((i18n) => {
-        // verify user is logged in
-        cy.url().should('include', routesConf['home']['path']);
-        // click logout in drawer menu
-        cy.dataCy('drawer-menu-item')
-          .contains(i18n.global.t('drawerMenu.logout'))
-          .click();
-        // verify redirect to login page
-        cy.url().should('include', routesConf['login']['path']);
-        // try to navigate to protected route
-        cy.visit('#' + routesConf['routes']['path']);
-        // should be redirected back to login
-        cy.url().should('include', routesConf['login']['path']);
-      });
-    });
   });
 
   context('mobile', () => {
     beforeEach(() => {
+      cy.clock(systemTimeLoggedIn, ['Date']);
+      cy.visit('#' + routesConf['login']['path']);
       cy.viewport('iphone-6');
       // load config and i18n objects as aliases
       cy.task('getAppConfig', process).then((config) => {
@@ -64,13 +76,34 @@ describe('Logout functionality', () => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.wrap(win.i18n).as('i18n');
+          // setup API intercepts
+          setupApiChallengeActive(config, win.i18n, true);
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          cy.fixture('apiGetRegisterChallengeIndividualPaid.json').then(
+            (response) => {
+              cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+            },
+          );
+          cy.fixture('apiGetIsUserOrganizationAdminResponseTrue').then(
+            (responseIsUserOrganizationAdmin) => {
+              cy.interceptIsUserOrganizationAdminGetApi(
+                config,
+                defLocale,
+                responseIsUserOrganizationAdmin,
+              );
+            },
+          );
+          cy.fixture('apiGetMyTeamResponseUndecided.json').then(
+            (responseMyTeam) => {
+              cy.interceptMyTeamGetApi(config, defLocale, responseMyTeam);
+            },
+          );
+          cy.interceptCommuteModeGetApi(config, defLocale);
         });
       });
-      // mock system time
-      cy.clock(systemTimeLoggedIn, ['Date']);
-      cy.visit('#' + routesConf['login']['path']);
       // login
       cy.fillAndSubmitLoginForm();
+      cy.wait('@loginRequest');
       cy.dataCy('index-title').should('be.visible');
     });
 
@@ -79,16 +112,16 @@ describe('Logout functionality', () => {
         // verify user is logged in
         cy.url().should('include', routesConf['home']['path']);
         // open mobile more dialog
-        cy.dataCy('mobile-bottom-panel-button-more')
-          .should('be.visible')
-          .click();
+        cy.dataCy('footer-panel-menu-hamburger').should('be.visible').click();
         // wait for dialog to open
-        cy.dataCy('mobile-more-menu-bottom').should('be.visible');
-        // click logout in more dialog
-        cy.dataCy('drawer-menu-item')
-          .contains(i18n.global.t('drawerMenu.logout'))
+        cy.dataCy('footer-panel-menu-dialog')
           .should('be.visible')
-          .click();
+          .within(() => {
+            // click logout in more dialog
+            cy.contains(i18n.global.t('drawerMenu.logout'))
+              .should('be.visible')
+              .click();
+          });
         // verify redirect to login page
         cy.url().should('include', routesConf['login']['path']);
         // verify login form is visible

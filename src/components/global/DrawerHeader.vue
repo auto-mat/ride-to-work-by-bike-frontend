@@ -54,7 +54,7 @@ export default defineComponent({
   },
   setup(props) {
     const classes = computed((): string => {
-      return props.showLogo ? 'justify-between' : 'justify-end';
+      return props.showLogo ? 'justify-between' : 'justify-start q-px-md';
     });
 
     const iconSize = '18px';
@@ -68,10 +68,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    class="full-width flex items-center justify-between q-py-sm"
-    :class="classes"
-  >
+  <div class="full-width flex items-center q-py-sm" :class="classes">
     <!-- RTWBB logo -->
     <div>
       <header-logo v-if="showLogo" data-cy="header-logo" />
