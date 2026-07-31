@@ -5,7 +5,7 @@ import {
 } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 
-describe('Logout functionality', () => {
+describe('Logout', () => {
   context('desktop', () => {
     beforeEach(() => {
       cy.clock(systemTimeLoggedIn, ['Date']);
@@ -107,17 +107,16 @@ describe('Logout functionality', () => {
       cy.dataCy('index-title').should('be.visible');
     });
 
-    it('logs out user when clicking logout in mobile more dialog', () => {
+    it('logs out user when clicking logout in mobile menu dialog', () => {
       cy.get('@i18n').then((i18n) => {
         // verify user is logged in
         cy.url().should('include', routesConf['home']['path']);
-        // open mobile more dialog
+        // open mobile menu dialog
         cy.dataCy('footer-panel-menu-hamburger').should('be.visible').click();
-        // wait for dialog to open
         cy.dataCy('footer-panel-menu-dialog')
           .should('be.visible')
           .within(() => {
-            // click logout in more dialog
+            // click logout in mobile menu dialog
             cy.contains(i18n.global.t('drawerMenu.logout'))
               .should('be.visible')
               .click();
