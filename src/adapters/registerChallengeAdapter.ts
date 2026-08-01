@@ -107,7 +107,7 @@ export const registerChallengeAdapter = {
         payload.age_group = storePersonalDetails.ageGroup;
       }
       if (storePersonalDetails.occupation !== undefined) {
-        payload.occupation = storePersonalDetails.occupation;
+        payload.occupation_id = storePersonalDetails.occupation;
       }
       if (storePersonalDetails.language !== undefined) {
         payload.language = storePersonalDetails.language;

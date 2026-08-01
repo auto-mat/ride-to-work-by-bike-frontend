@@ -22,6 +22,11 @@ export type FormSelectOption = {
   value: string | number;
 };
 
+export type FormSelectOptionNumberValue = {
+  label: string;
+  value: number;
+};
+
 export type FormCompanyFields = {
   name: string;
   vatId: string;

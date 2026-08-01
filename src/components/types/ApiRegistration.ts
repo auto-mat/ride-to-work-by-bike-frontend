@@ -86,7 +86,7 @@ export type RegisterChallengePostPayload = {
   telephone?: string;
   telephone_opt_in?: boolean;
   language?: string;
-  occupation?: number | null;
+  occupation_id?: number | null;
   age_group?: number | null;
   newsletter?: string;
   personal_data_opt_in?: boolean;

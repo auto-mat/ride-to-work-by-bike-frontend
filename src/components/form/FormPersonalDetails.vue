@@ -45,7 +45,10 @@ import { Gender } from 'src/components/types/Profile';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // types
-import type { FormOption } from 'src/components/types/Form';
+import type {
+  FormOption,
+  FormSelectOptionNumberValue,
+} from 'src/components/types/Form';
 import type { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
 import type { Logger } from '../types/Logger';
 
@@ -138,19 +141,57 @@ export default defineComponent({
       });
     });
 
-    const ageGroups = computed(() => store.getAgeGroups);
+    const ageGroups = computed<FormSelectOptionNumberValue[]>(
+      () => store.getAgeGroups,
+    );
+    const { optionsFiltered: filteredAgeGroups, onFilter: filterAgeGroups } =
+      useSelectSearch(ageGroups);
 
+    const selectedAgeGroup = computed<FormSelectOptionNumberValue | null>({
+      get: () => {
+        if (ageGroups.value?.length && personalDetails.value.ageGroup != null) {
+          return (
+            ageGroups.value.find(
+              (option) => option.value === personalDetails.value.ageGroup,
+            ) || null
+          );
+        }
+        return null;
+      },
+      set: (newValue) => {
+        personalDetails.value.ageGroup = newValue?.value ?? null;
+      },
+    });
+
+    const occupations = computed<FormSelectOptionNumberValue[]>(
+      () => store.getOccupations,
+    );
     const {
-      filteredOptions: filteredAgeGroups,
-      filterFn: filterAgeGroups,
-    } = useSelectSearch(ageGroups);
-
-    const occupations = computed(() => store.getOccupations);
-
-    const {
-      filteredOptions: filteredOccupations,
-      filterFn: filterOccupations,
+      optionsFiltered: filteredOccupations,
+      onFilter: filterOccupations,
     } = useSelectSearch(occupations);
+
+    const selectedOccupation = computed<FormSelectOptionNumberValue | null>({
+      get: () => {
+        if (
+          occupations.value?.length &&
+          personalDetails.value.occupation != null
+        ) {
+          return (
+            occupations.value.find(
+              (option) => option.value === personalDetails.value.occupation,
+            ) || null
+          );
+        }
+        return null;
+      },
+      set: (newValue) => {
+        personalDetails.value.occupation = newValue?.value ?? null;
+      },
+    });
+
+    const isLoadingAgeGroups = computed(() => store.isLoadingAgeGroups);
+    const isLoadingOccupations = computed(() => store.isLoadingOccupations);
 
     return {
       challengeAllowRegisterOrganizationAdmin,
@@ -165,8 +206,12 @@ export default defineComponent({
       urlRegisterAsCoordinator,
       filteredAgeGroups,
       filterAgeGroups,
+      selectedAgeGroup,
+      isLoadingAgeGroups,
       filteredOccupations,
       filterOccupations,
+      selectedOccupation,
+      isLoadingOccupations,
       onTrack,
     };
   },
@@ -240,70 +285,61 @@ export default defineComponent({
         />
       </div>
       <!-- Input: Age Group (Birth Year) -->
-      <div class="col-12" data-cy="form-personal-details-age-group">
+      <div class="col-12 col-sm-6" data-cy="form-personal-details-age-group">
         <label for="form-age-group" class="text-grey-10 text-caption text-bold">
           {{ $t('form.labelAgeGroup') }}
         </label>
-        <q-field
+        <q-select
           dense
-          borderless
+          outlined
+          use-input
+          hide-selected
+          fill-input
+          clearable
           hide-bottom-space
-          :model-value="personalDetails.ageGroup"
+          input-debounce="0"
+          v-model="selectedAgeGroup"
+          :options="filteredAgeGroups"
+          :loading="isLoadingAgeGroups"
           :rules="[(val) => val != null || $t('form.messageFieldRequired')]"
-        >
-          <q-select
-            dense
-            outlined
-            use-input
-            input-debounce="0"
-            v-model="personalDetails.ageGroup"
-            :options="filteredAgeGroups"
-            option-value="value"
-            option-label="label"
-            emit-value
-            map-options
-            @filter="filterAgeGroups"
-            id="form-age-group"
-            class="q-mt-sm"
-            data-cy="form-personal-details-age-group-input"
-            v-click-track-evt
-            @click-track="onTrack"
-            name="ageGroup"
-          />
-        </q-field>
+          @filter="filterAgeGroups"
+          id="form-age-group"
+          class="q-mt-sm"
+          data-cy="form-personal-details-age-group-input"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="ageGroup"
+        />
       </div>
       <!-- Input: Occupation -->
-      <div class="col-12" data-cy="form-personal-details-occupation">
-        <label for="form-occupation" class="text-grey-10 text-caption text-bold">
+      <div class="col-12 col-sm-6" data-cy="form-personal-details-occupation">
+        <label
+          for="form-occupation"
+          class="text-grey-10 text-caption text-bold"
+        >
           {{ $t('form.labelOccupation') }}
         </label>
-        <q-field
+        <q-select
           dense
-          borderless
+          outlined
+          use-input
+          hide-selected
+          fill-input
+          clearable
           hide-bottom-space
-          :model-value="personalDetails.occupation"
+          input-debounce="0"
+          v-model="selectedOccupation"
+          :options="filteredOccupations"
+          :loading="isLoadingOccupations"
           :rules="[(val) => val != null || $t('form.messageFieldRequired')]"
-        >
-          <q-select
-            dense
-            outlined
-            use-input
-            input-debounce="0"
-            v-model="personalDetails.occupation"
-            :options="filteredOccupations"
-            option-value="value"
-            option-label="label"
-            emit-value
-            map-options
-            @filter="filterOccupations"
-            id="form-occupation"
-            class="q-mt-sm"
-            data-cy="form-personal-details-occupation-input"
-            v-click-track-evt
-            @click-track="onTrack"
-            name="occupation"
-          />
-        </q-field>
+          @filter="filterOccupations"
+          id="form-occupation"
+          class="q-mt-sm"
+          data-cy="form-personal-details-occupation-input"
+          v-click-track-evt
+          @click-track="onTrack"
+          name="occupation"
+        />
       </div>
       <!-- Link: Register as coordinator -->
       <template

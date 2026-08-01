@@ -83,6 +83,7 @@ export interface ConfigGlobal {
   apiDefaultVersion: string;
   apiVersion2: string;
   apiDefaultLang: string;
+  urlApiAgeGroups: string;
   urlApiCommuteMode: string;
   urlApiCoordinatorMakeInvoice: string;
   urlApiCoordinatorMember: string;
@@ -99,6 +100,7 @@ export interface ConfigGlobal {
   urlApiLogin: string;
   urlApiLoginGoogle: string;
   urlApiLogout: string;
+  urlApiOccupations: string;
   urlApiOrganizations: string;
   urlApiLoginFacebook: string;
   urlApiMerchandise: string;

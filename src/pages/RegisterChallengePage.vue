@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 import { QForm, QStepper, colors } from 'quasar';
 import { useRouter } from 'vue-router';
 
@@ -62,6 +62,9 @@ import { useChallengeStore } from 'src/stores/challenge';
 import { useLoginStore } from 'src/stores/login';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
+// types
+import type { Logger } from 'src/components/types/Logger';
+
 export default defineComponent({
   emits: ['custom-event'],
   name: 'RegisterChallengePage',
@@ -79,6 +82,7 @@ export default defineComponent({
     RegisterChallengePaymentMessages,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const challengeMonth = rideToWorkByBikeConfig.challengeMonth;
     const containerFormWidth = rideToWorkByBikeConfig.containerFormWidth;
     const urlDonateJanuaryChallenge =
@@ -162,9 +166,11 @@ export default defineComponent({
       if (!challengeStore.getPriceLevel.length) {
         await challengeStore.loadPhaseSet();
       }
-      await registerChallengeStore.loadRegisterChallengeToStore();
-      await registerChallengeStore.loadAgeGroupsToStore(logger);
-      await registerChallengeStore.loadOccupationsToStore(logger);
+      await Promise.all([
+        registerChallengeStore.loadRegisterChallengeToStore(),
+        registerChallengeStore.loadAgeGroupsToStore(logger),
+        registerChallengeStore.loadOccupationsToStore(logger),
+      ]);
       /**
        * Depending on whether payment is successful,
        * and isPayuTransactionInitiated flag

@@ -12,13 +12,13 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { FormOption } from '../components/types/Form';
+import type { FormSelectOptionNumberValue } from '../components/types/Form';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiGetAgeGroupsReturn = {
-  ageGroups: Ref<FormOption[]>;
+  ageGroups: Ref<FormSelectOptionNumberValue[]>;
   isLoading: Ref<boolean>;
   loadAgeGroups: () => Promise<void>;
 };
@@ -32,7 +32,7 @@ type UseApiGetAgeGroupsReturn = {
 export const useApiGetAgeGroups = (
   logger: Logger | null,
 ): UseApiGetAgeGroupsReturn => {
-  const ageGroups = ref<FormOption[]>([]);
+  const ageGroups = ref<FormSelectOptionNumberValue[]>([]);
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
@@ -63,7 +63,7 @@ export const useApiGetAgeGroups = (
 
     if (data) {
       // transform [[2026, 2026], ...] to [{ value: 2026, label: "2026" }, ...]
-      ageGroups.value = data.map(([year]) => ({
+      ageGroups.value = data.map(([year]): FormSelectOptionNumberValue => ({
         value: year,
         label: String(year),
       }));

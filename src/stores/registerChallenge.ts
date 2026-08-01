@@ -49,7 +49,7 @@ import { useLoginStore } from './login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { FormOption } from '../components/types/Form';
+import type { FormSelectOptionNumberValue } from '../components/types/Form';
 import type {
   RegisterChallengeCoordinatorForm,
   RegisterChallengePersonalDetailsForm,
@@ -105,8 +105,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     subsidiaries: [] as OrganizationSubsidiary[],
     organizations: [] as OrganizationOption[],
     teams: [] as OrganizationTeam[],
-    ageGroups: [] as FormOption[],
-    occupations: [] as FormOption[],
+    ageGroups: [] as FormSelectOptionNumberValue[],
+    occupations: [] as FormSelectOptionNumberValue[],
     merchandiseItems: [] as MerchandiseItem[],
     merchandiseCards: {} as Record<Gender, MerchandiseCard[]>,
     myTeam: null as MyTeamResults | null,
@@ -161,8 +161,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getSubsidiaries: (state): OrganizationSubsidiary[] => state.subsidiaries,
     getOrganizations: (state): OrganizationOption[] => state.organizations,
     getTeams: (state): OrganizationTeam[] => state.teams,
-    getAgeGroups: (state): FormOption[] => state.ageGroups,
-    getOccupations: (state): FormOption[] => state.occupations,
+    getAgeGroups: (state): FormSelectOptionNumberValue[] => state.ageGroups,
+    getOccupations: (state): FormSelectOptionNumberValue[] => state.occupations,
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
     getMerchandiseCards: (state): Record<Gender, MerchandiseCard[]> =>
       state.merchandiseCards,

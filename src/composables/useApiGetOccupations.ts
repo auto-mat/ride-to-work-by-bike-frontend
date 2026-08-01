@@ -12,13 +12,13 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { FormOption } from '../components/types/Form';
+import type { FormSelectOptionNumberValue } from '../components/types/Form';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiGetOccupationsReturn = {
-  occupations: Ref<FormOption[]>;
+  occupations: Ref<FormSelectOptionNumberValue[]>;
   isLoading: Ref<boolean>;
   loadOccupations: () => Promise<void>;
 };
@@ -32,7 +32,7 @@ type UseApiGetOccupationsReturn = {
 export const useApiGetOccupations = (
   logger: Logger | null,
 ): UseApiGetOccupationsReturn => {
-  const occupations = ref<FormOption[]>([]);
+  const occupations = ref<FormSelectOptionNumberValue[]>([]);
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
@@ -63,10 +63,12 @@ export const useApiGetOccupations = (
 
     if (data) {
       // transform [[138, "IT"], ...] to [{ value: 138, label: "IT" }, ...]
-      occupations.value = data.map(([id, label]) => ({
-        value: id,
-        label: label,
-      }));
+      occupations.value = data.map(
+        ([id, label]): FormSelectOptionNumberValue => ({
+          value: id,
+          label: label,
+        }),
+      );
     }
 
     isLoading.value = false;
