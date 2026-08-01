@@ -7,12 +7,15 @@ import { useApi } from './useApi';
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
+// stores
+import { useLoginStore } from '../stores/login';
+
 // types
 import type { Logger } from '../components/types/Logger';
 import type { FormOption } from '../components/types/Form';
 
 // utils
-import { requestDefaultHeader } from '../utils';
+import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
 type UseApiGetAgeGroupsReturn = {
   ageGroups: Ref<FormOption[]>;
@@ -31,6 +34,7 @@ export const useApiGetAgeGroups = (
 ): UseApiGetAgeGroupsReturn => {
   const ageGroups = ref<FormOption[]>([]);
   const isLoading = ref<boolean>(false);
+  const loginStore = useLoginStore();
   const { apiFetch } = useApi();
 
   /**
@@ -43,13 +47,17 @@ export const useApiGetAgeGroups = (
 
     logger?.info('Get age groups from the API.');
     isLoading.value = true;
+    // append access token into HTTP header
+    const requestTokenHeader_ = { ...requestTokenHeader };
+    requestTokenHeader_.Authorization +=
+      await loginStore.getAccessTokenWithRefresh();
 
     const { data } = await apiFetch<number[][]>({
       endpoint: `${rideToWorkByBikeConfig.urlApiAgeGroups}`,
       method: 'get',
       translationKey: 'getAgeGroups',
       showSuccessMessage: false,
-      headers: requestDefaultHeader(),
+      headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
       logger,
     });
 
