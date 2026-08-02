@@ -2632,61 +2632,43 @@ Cypress.Commands.add('passToStep2', (options = {}) => {
   const { skipNickname = false } = options;
   cy.fixture('apiPostRegisterChallengePersonalDetailsRequest').then(
     (personalDetailsRequest) => {
-      cy.wait('@ageGroupsGetApi').then(() => {
-        cy.wait('@occupationsGetApi').then(() => {
-          cy.dataCy('form-firstName-input').type(
-            personalDetailsRequest.first_name,
-          );
-          cy.dataCy('form-lastName-input').type(
-            personalDetailsRequest.last_name,
-          );
-          if (!skipNickname) {
-            cy.dataCy('form-nickname-input').type(
-              personalDetailsRequest.nickname,
-            );
-          }
-          cy.dataCy('newsletter-option').each((newsletterOption) => {
-            cy.wrap(newsletterOption).click();
-          });
-          cy.dataCy('form-personal-details-gender')
-            .find('.q-radio__label')
-            .first()
-            .click();
-          // select age group
-          cy.selectDropdownMenuByLabel(
-            'form-personal-details-age-group',
-            '1990',
-          );
-          // select occupation
-          cy.selectDropdownMenuByLabel(
-            'form-personal-details-occupation',
-            'IT',
-          );
-          // fill phone number
-          cy.dataCy('form-personal-details-phone-input')
-            .find('input')
-            .should('be.enabled')
-            .type(personalDetailsRequest.telephone, { force: true });
-          // opt in to info phone calls
-          cy.dataCy('form-personal-details-phone-opt-in-input')
-            .should('be.visible')
-            .click();
-          cy.dataCy('form-personal-details-terms')
-            .find('.q-checkbox__inner')
-            .first()
-            .click();
-          // move to next step
-          cy.get('.q-spinner').should('not.exist');
-          cy.dataCy('step-1-continue')
-            .should('be.visible')
-            .and('not.be.disabled');
-          cy.dataCy('step-1-continue').click({ force: true });
-          // on step 2
-          cy.dataCy('step-2')
-            .find('.q-stepper__step-content')
-            .should('be.visible');
-        });
+      cy.dataCy('form-firstName-input').type(personalDetailsRequest.first_name);
+      cy.dataCy('form-lastName-input').type(personalDetailsRequest.last_name);
+      if (!skipNickname) {
+        cy.dataCy('form-nickname-input').type(personalDetailsRequest.nickname);
+      }
+      cy.dataCy('newsletter-option').each((newsletterOption) => {
+        cy.wrap(newsletterOption).click();
       });
+      cy.dataCy('form-personal-details-gender')
+        .find('.q-radio__label')
+        .first()
+        .click();
+      // select age group
+      cy.wait('@ageGroupsGetApi');
+      cy.selectDropdownMenuByLabel('form-personal-details-age-group', '1990');
+      // select occupation
+      cy.wait('@occupationsGetApi');
+      cy.selectDropdownMenuByLabel('form-personal-details-occupation', 'IT');
+      // fill phone number
+      cy.dataCy('form-personal-details-phone-input')
+        .find('input')
+        .should('be.enabled')
+        .type(personalDetailsRequest.telephone, { force: true });
+      // opt in to info phone calls
+      cy.dataCy('form-personal-details-phone-opt-in-input')
+        .should('be.visible')
+        .click();
+      cy.dataCy('form-personal-details-terms')
+        .find('.q-checkbox__inner')
+        .first()
+        .click();
+      // move to next step
+      cy.get('.q-spinner').should('not.exist');
+      cy.dataCy('step-1-continue').should('be.visible').and('not.be.disabled');
+      cy.dataCy('step-1-continue').click({ force: true });
+      // on step 2
+      cy.dataCy('step-2').find('.q-stepper__step-content').should('be.visible');
     },
   );
 });

@@ -62,10 +62,9 @@ export const useApiGetOccupations = (
     });
 
     if (data) {
-      // transform [[138, "IT"], ...] to [{ value: 138, label: "IT" }, ...]
       occupations.value = data.map(
-        ([id, label]): FormSelectOptionNumberValue => ({
-          value: id,
+        ([value, label]): FormSelectOptionNumberValue => ({
+          value: value,
           label: label,
         }),
       );

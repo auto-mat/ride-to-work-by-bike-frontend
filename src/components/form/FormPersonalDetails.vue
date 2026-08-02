@@ -146,7 +146,10 @@ export default defineComponent({
     );
     const { optionsFiltered: filteredAgeGroups, onFilter: filterAgeGroups } =
       useSelectSearch(ageGroups);
-
+    /**
+     * Computed ensures personalDetails.ageGroup reactivity.
+     * V-model can fail to update if options are loaded later than value.
+     */
     const selectedAgeGroup = computed<FormSelectOptionNumberValue | null>({
       get: () => {
         if (ageGroups.value?.length && personalDetails.value.ageGroup != null) {
@@ -170,7 +173,10 @@ export default defineComponent({
       optionsFiltered: filteredOccupations,
       onFilter: filterOccupations,
     } = useSelectSearch(occupations);
-
+    /**
+     * Computed ensures personalDetails.occupation reactivity.
+     * V-model can fail to update if options are loaded later than value.
+     */
     const selectedOccupation = computed<FormSelectOptionNumberValue | null>({
       get: () => {
         if (
@@ -284,7 +290,7 @@ export default defineComponent({
           class="q-mt-sm"
         />
       </div>
-      <!-- Input: Age Group (Birth Year) -->
+      <!-- Input: Age Group -->
       <div class="col-12 col-sm-6" data-cy="form-personal-details-age-group">
         <label for="form-age-group" class="text-grey-10 text-caption text-bold">
           {{ $t('form.labelAgeGroup') }}

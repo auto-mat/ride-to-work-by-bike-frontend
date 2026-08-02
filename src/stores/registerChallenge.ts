@@ -311,8 +311,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         this.getPersonalDetails.firstName !== '' &&
         this.getPersonalDetails.lastName !== '' &&
         this.getPersonalDetails.gender !== Gender.none &&
-        this.getPersonalDetails.ageGroup != null &&
-        this.getPersonalDetails.occupation != null &&
+        this.getPersonalDetails.ageGroup !== null &&
+        this.getPersonalDetails.occupation !== null &&
         this.getPersonalDetails.terms === true
       );
     },

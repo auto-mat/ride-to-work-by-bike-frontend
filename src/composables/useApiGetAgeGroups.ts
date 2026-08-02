@@ -62,11 +62,12 @@ export const useApiGetAgeGroups = (
     });
 
     if (data) {
-      // transform [[2026, 2026], ...] to [{ value: 2026, label: "2026" }, ...]
-      ageGroups.value = data.map(([year]): FormSelectOptionNumberValue => ({
-        value: year,
-        label: String(year),
-      }));
+      ageGroups.value = data.map(
+        ([value, label]): FormSelectOptionNumberValue => ({
+          value: value,
+          label: String(label),
+        }),
+      );
     }
 
     isLoading.value = false;
