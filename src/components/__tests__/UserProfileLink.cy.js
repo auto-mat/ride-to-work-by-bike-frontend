@@ -7,8 +7,6 @@ import { routesConf } from '../../router/routes_conf';
 // variables
 const avatarSizeLg = 40;
 const avatarSizeSm = 32;
-const profileDetailsPath =
-  routesConf['profile_details']['children']['fullPath'];
 
 describe('<UserProfileLink>', () => {
   it('has translation for all strings', () => {
@@ -105,7 +103,7 @@ describe('<UserProfileLink>', () => {
     it('navigates to profile details on click', () => {
       cy.dataCy('user-profile-link')
         .should('have.attr', 'href')
-        .and('include', profileDetailsPath);
+        .and('include', routesConf['profile_details']['children']['fullPath']);
     });
   }
 });
