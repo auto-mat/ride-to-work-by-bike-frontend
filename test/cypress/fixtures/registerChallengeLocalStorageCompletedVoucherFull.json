@@ -1,5 +1,6 @@
 {
   "personalDetails": {
+    "ageGroup": 1990,
     "firstName": "John",
     "lastName": "Doe",
     "email": "",
@@ -8,6 +9,7 @@
     "newsletter": ["challenge", "events", "mobility"],
     "nickname": "JD",
     "gender": "male",
+    "occupation": 138,
     "terms": true
   },
   "paymentAmount": 0,

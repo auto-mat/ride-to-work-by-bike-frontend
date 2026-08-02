@@ -23,7 +23,14 @@ describe('<FormPersonalDetails>', () => {
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(['man', 'woman'], 'global', i18n);
     cy.testLanguageStringsInContext(
-      ['hintNickname', 'messageOptionRequired', 'messageTermsRequired'],
+      [
+        'hintNickname',
+        'labelAgeGroup',
+        'labelOccupation',
+        'messageFieldRequired',
+        'messageOptionRequired',
+        'messageTermsRequired',
+      ],
       'form',
       i18n,
     );
@@ -46,6 +53,20 @@ describe('<FormPersonalDetails>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
+      cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+        cy.interceptAgeGroupsGetApi(
+          rideToWorkByBikeConfig,
+          defaultLocale,
+          response,
+        );
+      });
+      cy.fixture('apiGetOccupationsResponse').then((response) => {
+        cy.interceptOccupationsGetApi(
+          rideToWorkByBikeConfig,
+          defaultLocale,
+          response,
+        );
+      });
       cy.mount(FormPersonalDetails, {
         props: {
           formValues: {
@@ -89,6 +110,24 @@ describe('<FormPersonalDetails>', () => {
         'contain',
         i18n.global.t('form.personalDetails.hintGender'),
       );
+    });
+
+    it('renders age group select', () => {
+      cy.dataCy('form-personal-details-age-group')
+        .should('be.visible')
+        .find('label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '12px');
+    });
+
+    it('renders occupation select', () => {
+      cy.dataCy('form-personal-details-occupation')
+        .should('be.visible')
+        .find('label')
+        .should('be.visible')
+        .and('have.color', grey10)
+        .and('have.css', 'font-size', '12px');
     });
 
     if (

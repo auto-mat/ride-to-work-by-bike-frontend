@@ -4,6 +4,8 @@
   "email": "",
   "nickname": "JD",
   "sex": "male",
+  "age_group": 1990,
+  "occupation_id": 138,
   "newsletter": "",
   "personal_data_opt_in": true,
   "language": "cs",

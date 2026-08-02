@@ -26,6 +26,14 @@ describe('Register challenge storage', () => {
             (registerChallengeResponse) => {
               cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
                 (responseIsUserOrganizationAdminFalse) => {
+                  // intercept age groups
+                  cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+                    cy.interceptAgeGroupsGetApi(config, defLocale, response);
+                  });
+                  // intercept occupations
+                  cy.fixture('apiGetOccupationsResponse').then((response) => {
+                    cy.interceptOccupationsGetApi(config, defLocale, response);
+                  });
                   interceptOrganizationsApi(
                     config,
                     defLocale,
