@@ -26,29 +26,11 @@ describe('<UserProfileLink>', () => {
 
     coreTests();
 
-    it('shows user name and email', () => {
-      cy.fixture('loggedUser').then((user) => {
-        const loginStore = useLoginStore();
-        loginStore.setUser(user);
-        const fullName = `${user.first_name} ${user.last_name}`;
-        cy.dataCy('profile-name').should('be.visible').and('contain', fullName);
-        cy.dataCy('profile-email')
-          .should('be.visible')
-          .and('contain', user.email);
-      });
-    });
-
     it('renders avatar with correct size', () => {
       cy.dataCy('avatar').invoke('height').should('equal', avatarSizeLg);
       cy.dataCy('avatar').invoke('width').should('equal', avatarSizeLg);
       cy.dataCy('avatar-image').invoke('width').should('equal', avatarSizeLg);
       cy.dataCy('avatar-image').invoke('height').should('equal', avatarSizeLg);
-    });
-
-    it('navigates to profile details on click', () => {
-      cy.dataCy('user-profile-link')
-        .should('have.attr', 'href')
-        .and('include', profileDetailsPath);
     });
   });
 
@@ -65,18 +47,6 @@ describe('<UserProfileLink>', () => {
 
     coreTests();
 
-    it('shows user name and email', () => {
-      cy.fixture('loggedUser').then((user) => {
-        const loginStore = useLoginStore();
-        loginStore.setUser(user);
-        const fullName = `${user.first_name} ${user.last_name}`;
-        cy.dataCy('profile-name').should('be.visible').and('contain', fullName);
-        cy.dataCy('profile-email')
-          .should('be.visible')
-          .and('contain', user.email);
-      });
-    });
-
     it('renders avatar with correct size', () => {
       cy.dataCy('avatar').invoke('width').should('equal', avatarSizeSm);
       cy.dataCy('avatar').invoke('height').should('equal', avatarSizeSm);
@@ -88,6 +58,18 @@ describe('<UserProfileLink>', () => {
   function coreTests() {
     it('renders component', () => {
       cy.dataCy('user-profile-link').should('be.visible');
+    });
+
+    it('shows user name and email', () => {
+      cy.fixture('loggedUser').then((user) => {
+        const loginStore = useLoginStore();
+        loginStore.setUser(user);
+        const fullName = `${user.first_name} ${user.last_name}`;
+        cy.dataCy('profile-name').should('be.visible').and('contain', fullName);
+        cy.dataCy('profile-email')
+          .should('be.visible')
+          .and('contain', user.email);
+      });
     });
 
     it('renders rounded avatar with alt text', () => {
@@ -118,6 +100,12 @@ describe('<UserProfileLink>', () => {
           .invoke('attr', 'alt')
           .should('eq', `${user.first_name} ${user.last_name}`);
       });
+    });
+
+    it('navigates to profile details on click', () => {
+      cy.dataCy('user-profile-link')
+        .should('have.attr', 'href')
+        .and('include', profileDetailsPath);
     });
   }
 });
