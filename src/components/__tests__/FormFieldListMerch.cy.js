@@ -29,6 +29,7 @@ describe('<FormFieldListMerch>', () => {
         'labelPhoneOptInWithMerch',
         'labelUrlSizeConversionChartLink',
         'textMerchUnavailable',
+        'textMerchUnavailableSeptember',
       ],
       'form.merch',
       i18n,
@@ -514,6 +515,62 @@ describe('<FormFieldListMerch>', () => {
         cy.dataCy('list-merch-option-group').children(),
         100,
       );
+    });
+  });
+
+  ['september', 'october'].forEach((challengeMonth) => {
+    context(`desktop - merch unavailable - ${challengeMonth} challenge`, () => {
+      const originalChallengeMonth = rideToWorkByBikeConfig.challengeMonth;
+
+      beforeEach(() => {
+        setActivePinia(createPinia());
+        rideToWorkByBikeConfig.challengeMonth = challengeMonth;
+        cy.fixture('apiGetMerchandiseResponseUnavailable').then((response) => {
+          cy.fixture('apiGetMerchandiseResponseUnavailableNext').then(
+            (responseNext) => {
+              cy.interceptMerchandiseGetApi(
+                rideToWorkByBikeConfig,
+                i18n,
+                response,
+                responseNext,
+              );
+              cy.mount(FormFieldListMerch, {
+                props: {},
+              });
+              cy.fixture('apiGetThisCampaign.json').then((response) => {
+                cy.wrap(useChallengeStore()).then((storeChallenge) => {
+                  storeChallenge.setPriceLevel(response.results[0].price_level);
+                });
+              });
+              cy.waitForMerchandiseApi(response, responseNext);
+            },
+          );
+        });
+      });
+
+      afterEach(() => {
+        rideToWorkByBikeConfig.challengeMonth = originalChallengeMonth;
+      });
+
+      it('shows september-specific unavailable message', () => {
+        cy.viewport('macbook-16');
+        cy.fixture('apiGetThisCampaign.json').then((response) => {
+          cy.wrap(useChallengeStore()).then((store) => {
+            store.setPriceLevel(response.results[0].price_level);
+          });
+        });
+        const bannerHtml = i18n.global.t(
+          'form.merch.textMerchUnavailableSeptember',
+          {
+            url: rideToWorkByBikeConfig.urlAutoMatShop,
+          },
+        );
+        cy.stripHtmlTags(bannerHtml).then((bannerText) => {
+          cy.dataCy('text-merch-unavailable')
+            .should('be.visible')
+            .and('contain', bannerText);
+        });
+      });
     });
   });
 });

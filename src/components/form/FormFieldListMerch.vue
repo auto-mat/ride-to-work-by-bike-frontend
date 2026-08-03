@@ -483,6 +483,13 @@ export default defineComponent({
       });
     });
 
+    const isSeptemberChallenge = computed((): boolean => {
+      return (
+        rideToWorkByBikeConfig.challengeMonth === 'september' ||
+        rideToWorkByBikeConfig.challengeMonth === 'october'
+      );
+    });
+
     return {
       currentItemLabelSize,
       currentDialogCard,
@@ -490,6 +497,7 @@ export default defineComponent({
       formMerchRef,
       Gender,
       isOpen,
+      isSeptemberChallenge,
       isShowingBottomSizeInput,
       optionsFemale,
       optionsMale,
@@ -546,7 +554,18 @@ export default defineComponent({
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-merch-unavailable"
   >
+    <!-- September/October challenge message -->
     <div
+      v-if="isSeptemberChallenge"
+      v-html="
+        $t('form.merch.textMerchUnavailableSeptember', {
+          url: rideToWorkByBikeConfig.urlAutoMatShop,
+        })
+      "
+    />
+    <!-- Default message with shop discount details -->
+    <div
+      v-else
       v-html="
         $t('form.merch.textMerchUnavailable', {
           url: rideToWorkByBikeConfig.urlAutoMatShop,

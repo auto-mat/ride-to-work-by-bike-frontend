@@ -31,6 +31,7 @@ import {
 import DialogDefault from '../global/DialogDefault.vue';
 
 // composables
+import { i18n } from '../../boot/i18n';
 import {
   paginationLabel,
   selectedRowsLabel,
@@ -161,6 +162,23 @@ export default defineComponent({
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
+    const isSeptemberChallenge = computed((): boolean => {
+      return (
+        rideToWorkByBikeConfig.challengeMonth === 'september' ||
+        rideToWorkByBikeConfig.challengeMonth === 'october'
+      );
+    });
+
+    const tooltipMerchNotAvailableText = computed((): string => {
+      if (isSeptemberChallenge.value) {
+        return i18n.global.t(
+          'register.challenge.tooltipMerchNotAvailableSeptember',
+        );
+      } else {
+        return i18n.global.t('register.challenge.tooltipMerchNotAvailable');
+      }
+    });
+
     return {
       borderRadius,
       columns,
@@ -168,6 +186,7 @@ export default defineComponent({
       isLoading,
       isLoadingApprovePayments,
       isMerchandiseAvailable,
+      tooltipMerchNotAvailableText,
       isLoadingDisapprovePayments,
       selected,
       tableRef,
@@ -198,7 +217,7 @@ export default defineComponent({
       class="q-mb-md"
       data-cy="table-fee-approval-merch-unavailable"
     >
-      {{ $t('register.challenge.tooltipMerchNotAvailable') }}
+      {{ tooltipMerchNotAvailableText }}
     </q-chip>
     <div>
       <!-- Table -->

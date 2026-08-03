@@ -62,7 +62,7 @@ describe('<TableFeeApproval>', () => {
       i18n,
     );
     cy.testLanguageStringsInContext(
-      ['tooltipMerchNotAvailable'],
+      ['tooltipMerchNotAvailable', 'tooltipMerchNotAvailableSeptember'],
       'register.challenge',
       i18n,
     );
@@ -1038,6 +1038,48 @@ describe('<TableFeeApproval>', () => {
           );
         },
       );
+    });
+  });
+
+  ['september', 'october'].forEach((challengeMonth) => {
+    context(`merchandise unavailable - ${challengeMonth} challenge`, () => {
+      const originalChallengeMonth = rideToWorkByBikeConfig.challengeMonth;
+
+      beforeEach(() => {
+        rideToWorkByBikeConfig.challengeMonth = challengeMonth;
+      });
+
+      afterEach(() => {
+        rideToWorkByBikeConfig.challengeMonth = originalChallengeMonth;
+      });
+
+      it('shows september-specific banner when merch not available', () => {
+        cy.viewport('macbook-16');
+        setActivePinia(createPinia());
+        cy.mount(TableFeeApproval, {
+          props: { approved: false },
+        });
+        cy.fixture('tableFeeApprovalTestData').then(
+          (tableFeeApprovalTestData) => {
+            cy.wrap(useAdminOrganisationStore()).then(
+              (adminOrganisationStore) => {
+                cy.setAdminOrganisationStoreState({
+                  store: adminOrganisationStore,
+                  organizations: tableFeeApprovalTestData.storeData,
+                });
+              },
+            );
+            cy.dataCy(selectorMerchUnavailable)
+              .should('be.visible')
+              .and(
+                'contain',
+                i18n.global.t(
+                  'register.challenge.tooltipMerchNotAvailableSeptember',
+                ),
+              );
+          },
+        );
+      });
     });
   });
 });

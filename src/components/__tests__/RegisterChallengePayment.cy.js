@@ -109,6 +109,7 @@ describe('<RegisterChallengePayment>', () => {
         'textPaymentMinimum',
         'textPaymentOrganizer',
         'tooltipMerchNotAvailable',
+        'tooltipMerchNotAvailableSeptember',
       ].concat(optionsPaymentSubject),
       'register.challenge',
       i18n,

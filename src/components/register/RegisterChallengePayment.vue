@@ -263,7 +263,7 @@ export default defineComponent({
       }
       if (showMerchNotAvailableTooltip.value) {
         Notify.create({
-          message: i18n.global.t('register.challenge.tooltipMerchNotAvailable'),
+          message: tooltipMerchNotAvailableText.value,
           type: 'warning',
         });
       }
@@ -721,6 +721,23 @@ export default defineComponent({
       );
     });
 
+    const isSeptemberChallenge = computed((): boolean => {
+      return (
+        rideToWorkByBikeConfig.challengeMonth === 'september' ||
+        rideToWorkByBikeConfig.challengeMonth === 'october'
+      );
+    });
+
+    const tooltipMerchNotAvailableText = computed((): string => {
+      if (isSeptemberChallenge.value) {
+        return i18n.global.t(
+          'register.challenge.tooltipMerchNotAvailableSeptember',
+        );
+      } else {
+        return i18n.global.t('register.challenge.tooltipMerchNotAvailable');
+      }
+    });
+
     return {
       borderRadius,
       computedCurrentValue,
@@ -732,6 +749,7 @@ export default defineComponent({
       isPriceLevelSwitchDisabled,
       isPaymentWithReward,
       showMerchNotAvailableTooltip,
+      tooltipMerchNotAvailableText,
       isRegistrationCoordinator,
       optionsPaymentAmountComputed,
       optionsPaymentSubject,
@@ -1020,7 +1038,7 @@ export default defineComponent({
         <!-- Tooltip: Merchandise not available -->
         <q-tooltip v-if="showMerchNotAvailableTooltip">
           <span data-cy="tooltip-merch-not-available">
-            {{ $t('register.challenge.tooltipMerchNotAvailable') }}
+            {{ tooltipMerchNotAvailableText }}
           </span>
         </q-tooltip>
       </span>
