@@ -1874,6 +1874,69 @@ Cypress.Commands.add(
 );
 
 /**
+ * Intercept validate invitation POST API call
+ * Provides `@postValidateTeamMembershipInvitationEmail` alias
+ * @param {Config} config - App global config
+ * @param {I18n|String} i18n - i18n instance or locale lang string e.g. en
+ * @param {Object} responseBody - Override default response body
+ * @param {Number} responseStatusCode - Override default response HTTP status code
+ */
+Cypress.Commands.add(
+  'interceptValidateTeamMembershipInvitationEmailPostApi',
+  (config, i18n, responseBody = null, responseStatusCode = null) => {
+    const {
+      apiBase,
+      apiDefaultLang,
+      urlApiValidateTeamMembershipInvitationEmail,
+    } = config;
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    const urlApiValidateTeamMembershipInvitationEmailLocalized = `${apiBaseUrl}${urlApiValidateTeamMembershipInvitationEmail}`;
+
+    cy.fixture('apiPostValidateTeamMembershipInvitationEmailResponse').then(
+      (validationResponse) => {
+        cy.intercept(
+          'POST',
+          urlApiValidateTeamMembershipInvitationEmailLocalized,
+          {
+            statusCode: responseStatusCode
+              ? responseStatusCode
+              : httpSuccessfullStatus,
+            body: responseBody ? responseBody : validationResponse,
+          },
+        ).as('postValidateTeamMembershipInvitationEmail');
+      },
+    );
+  },
+);
+
+/**
+ * Wait for validate invitation POST API call + compare request/response object
+ * Wait for `@postValidateTeamMembershipInvitationEmail` intercept
+ * @param {Object} validationRequest - Request data
+ * @param {Object} validationResponse - Response data
+ */
+Cypress.Commands.add(
+  'waitForValidateTeamMembershipInvitationEmailPostApi',
+  (validationRequest, validationResponse = null) => {
+    cy.wait('@postValidateTeamMembershipInvitationEmail').then(
+      ({ request, response }) => {
+        expect(request.body).to.deep.equal(validationRequest);
+        // allow to test only request
+        if (response && validationResponse) {
+          expect(response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(response.body).to.deep.equal(validationResponse);
+        }
+      },
+    );
+  },
+);
+
+/**
  * Intercept register challenge GET API call
  * Provides `@getRegisterChallenge` alias
  * @param {Config} config - App global config
@@ -2148,6 +2211,7 @@ Cypress.Commands.add(
           cy.interceptOccupationsGetApi(config, defLocale, response);
         });
         cy.interceptMerchandiseGetApi(config, i18n);
+        cy.interceptValidateTeamMembershipInvitationEmailPostApi(config, i18n);
       });
     });
   },

@@ -1325,6 +1325,12 @@ apiMessageError = "Chyba pri odosielaní pozvánky. Skontrolujte si prosím zada
 apiMessageErrorWithMessage = "Chyba pri odosielaní pozvánky. Chyba: {error}"
 apiMessageSuccess = "Pozvánka bola úspešne odoslaná"
 
+[validateTeamMembershipInvitationEmail]
+apiMessageError = "Validácia pozvánky do tímu zlyhala."
+apiMessageErrorWithMessage = "Validácia pozvánky do tímu zlyhala. Chyba: {error}"
+apiMessageSuccess = "Pozvánka do tímu bola úspešne validovaná"
+validationFailed = "Odkaz pozvánky je neplatný alebo vypršal. Požiadajte prosím o novú pozvánku."
+
 [statsBar]
 labelFrequency = "pravidelnosť"
 labelSustainableRoutes = "udržateľných trás"

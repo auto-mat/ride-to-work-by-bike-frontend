@@ -48,6 +48,7 @@ import RegisterChallengePaymentMessages from '../components/register/RegisterCha
 import { useStepperValidation } from 'src/composables/useStepperValidation';
 import { useOrganizations } from 'src/composables/useOrganizations';
 import { useCompetitionPhase } from 'src/composables/useCompetitionPhase';
+import { useInvitationToken } from 'src/composables/useInvitationToken';
 
 import { onTrack } from '../utils/track';
 
@@ -63,7 +64,7 @@ import { useLoginStore } from 'src/stores/login';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // types
-import type { Logger } from 'src/components/types/Logger';
+import type { Logger } from '../components/types/Logger';
 
 export default defineComponent({
   emits: ['custom-event'],
@@ -147,6 +148,7 @@ export default defineComponent({
     }`;
     const doneIconImgSrcStepper7 = doneIcon;
 
+    const router = useRouter();
     const challengeStore = useChallengeStore();
     const registerChallengeStore = useRegisterChallengeStore();
     const competitionStart = computed(() => challengeStore.getCompetitionStart);
@@ -155,9 +157,11 @@ export default defineComponent({
       () => registerChallengeStore.getIsPayuTransactionInitiated,
     );
 
-    const router = useRouter();
+    const { processInvitation } = useInvitationToken(logger);
 
     onMounted(async () => {
+      // process invitation token if present in URL
+      await processInvitation();
       // check if user is organization admin
       if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
         await registerChallengeStore.checkIsUserOrganizationAdmin();

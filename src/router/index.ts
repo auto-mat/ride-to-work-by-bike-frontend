@@ -161,14 +161,15 @@ export default route(function (/* { store, ssrContext } */) {
   if (
     !window.Cypress ||
     window.Cypress.spec.name === 'register.spec.cy.js' ||
-    window.Cypress.spec.name === 'router_rules.cy.js'
+    window.Cypress.spec.name === 'router_rules.cy.js' ||
+    window.Cypress.spec.name === 'register_challenge_invitation.spec.cy.js'
   ) {
     Router.afterEach(async (from, to) => {
       const logger = inject('vuejs3-logger') as Logger | null;
       const redirect = to.query && to.query.redirect;
       if (redirect) {
         logger?.debug(`Follow URL path redirection to the <${redirect}> path.`);
-        Router.push({ path: String(redirect) });
+        Router.push(String(redirect));
       }
     });
     Router.beforeEach(async (to, from, next) => {

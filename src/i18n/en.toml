@@ -1325,6 +1325,12 @@ apiMessageError = "Error sending invitation. Please check the entered addresses.
 apiMessageErrorWithMessage = "Error sending invitation. Error: {error}"
 apiMessageSuccess = "Invitation has been sent successfully"
 
+[validateTeamMembershipInvitationEmail]
+apiMessageError = "Team invitation validation failed."
+apiMessageErrorWithMessage = "Team invitation validation failed. Error: {error}"
+apiMessageSuccess = "Team invitation validated successfully"
+validationFailed = "The invitation link is invalid or has expired. Please request a new invitation."
+
 [statsBar]
 labelFrequency = "regularity"
 labelSustainableRoutes = "sustainable routes"
