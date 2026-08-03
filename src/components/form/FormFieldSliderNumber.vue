@@ -67,10 +67,14 @@ export default defineComponent({
       if (configAmount && configAmount > 0) {
         return configAmount;
       }
-      if (registerChallengeStore.getIsPaymentWithReward) {
-        return defaultPaymentAmountMinComputedWithReward(
-          challengeStore.getCurrentPriceLevelsWithReward,
-        );
+      const withRewardPrice = defaultPaymentAmountMinComputedWithReward(
+        challengeStore.getCurrentPriceLevelsWithReward,
+      );
+      if (
+        registerChallengeStore.getIsPaymentWithReward &&
+        withRewardPrice > 0
+      ) {
+        return withRewardPrice;
       } else {
         return defaultPaymentAmountMinComputed(
           challengeStore.getCurrentPriceLevels,

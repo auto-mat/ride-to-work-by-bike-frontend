@@ -97,10 +97,14 @@ export default defineComponent({
     logger?.debug(`Default max. payment amount <${defaultPaymentAmountMax}>.`);
     // get default min price from store with merch preference
     const defaultPaymentAmountMin = computed(() => {
-      if (registerChallengeStore.getIsPaymentWithReward) {
-        return defaultPaymentAmountMinComputedWithReward(
-          challengeStore.getCurrentPriceLevelsWithReward,
-        );
+      const withRewardPrice = defaultPaymentAmountMinComputedWithReward(
+        challengeStore.getCurrentPriceLevelsWithReward,
+      );
+      if (
+        registerChallengeStore.getIsPaymentWithReward &&
+        withRewardPrice > 0
+      ) {
+        return withRewardPrice;
       } else {
         return defaultPaymentAmountMinComputed(
           challengeStore.getCurrentPriceLevels,
@@ -192,7 +196,9 @@ export default defineComponent({
     );
     const donationAmount = ref<number>(0);
     const paymentAmountMax = ref<number>(defaultPaymentAmountMax);
-    const paymentAmountMin = ref<number>(defaultPaymentAmountMin.value);
+    const paymentAmountMin = computed<number>(
+      () => defaultPaymentAmountMin.value,
+    );
 
     // with-reward toggle state
     const isPaymentWithReward = computed<boolean>({

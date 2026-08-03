@@ -4248,39 +4248,44 @@ Cypress.Commands.add(
  * @param {Object} i18n - Internationalization object
  * @returns {void}
  */
-Cypress.Commands.add('performAuthenticatedLogin', (config, i18n) => {
-  // Load required fixtures
-  cy.fixture('refreshTokensResponseChallengeActive').then(
-    (refreshTokensResponseChallengeActive) => {
-      cy.fixture('loginRegisterResponseChallengeActive').then(
-        (loginRegisterResponseChallengeActive) => {
-          // set up API intercepts
-          cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
-            config,
-            i18n,
-            loginRegisterResponseChallengeActive,
-            null,
-            refreshTokensResponseChallengeActive,
-            null,
-            { has_user_verified_email_address: true },
-          );
-          // intercept APIs that get called after login
-          cy.interceptMyTeamGetApi(config, i18n);
-          // perform login
-          cy.fillAndSubmitLoginForm(config, i18n);
-          // wait for authentication flow to complete
-          cy.wait([
-            '@loginRequest',
-            '@verifyEmailRequest',
-            '@thisCampaignRequest',
-          ]);
-          // confirm we are on home page
-          cy.dataCy('index-title').should('be.visible');
-        },
-      );
-    },
-  );
-});
+Cypress.Commands.add(
+  'performAuthenticatedLogin',
+  (config, i18n, campaignBody = null) => {
+    // Load required fixtures
+    cy.fixture('refreshTokensResponseChallengeActive').then(
+      (refreshTokensResponseChallengeActive) => {
+        cy.fixture('loginRegisterResponseChallengeActive').then(
+          (loginRegisterResponseChallengeActive) => {
+            // set up API intercepts
+            cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+              config,
+              i18n,
+              loginRegisterResponseChallengeActive,
+              null,
+              refreshTokensResponseChallengeActive,
+              null,
+              { has_user_verified_email_address: true },
+              null,
+              campaignBody,
+            );
+            // intercept APIs that get called after login
+            cy.interceptMyTeamGetApi(config, i18n);
+            // perform login
+            cy.fillAndSubmitLoginForm(config, i18n);
+            // wait for authentication flow to complete
+            cy.wait([
+              '@loginRequest',
+              '@verifyEmailRequest',
+              '@thisCampaignRequest',
+            ]);
+            // confirm we are on home page
+            cy.dataCy('index-title').should('be.visible');
+          },
+        );
+      },
+    );
+  },
+);
 
 /**
  * Setup authenticated coordinator test environment

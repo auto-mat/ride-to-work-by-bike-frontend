@@ -1,0 +1,75 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "phase_set": [
+        {
+          "phase_type": "registration",
+          "date_from": "2025-01-28",
+          "date_to": "2025-06-01"
+        },
+        {
+          "phase_type": "competition",
+          "date_from": "2025-05-01",
+          "date_to": "2025-06-01"
+        },
+        {
+          "phase_type": "entry_enabled",
+          "date_from": "2025-05-01",
+          "date_to": "2025-06-03"
+        },
+        {
+          "phase_type": "payment",
+          "date_from": "2025-01-28",
+          "date_to": "2025-06-01"
+        },
+        {
+          "phase_type": "invoices",
+          "date_from": "2025-02-01",
+          "date_to": "2025-06-04"
+        },
+        {
+          "phase_type": "results",
+          "date_from": "2025-05-01",
+          "date_to": "2025-06-30"
+        },
+        {
+          "phase_type": "admissions",
+          "date_from": "2025-02-01",
+          "date_to": "2025-06-03"
+        }
+      ],
+      "price_level": [
+        {
+          "name": "bez balíčku",
+          "price": 150.0,
+          "category": "basic",
+          "takes_effect_on": "2024-07-01"
+        },
+        {
+          "name": "firmy bez balíčku",
+          "price": 150.0,
+          "category": "company",
+          "takes_effect_on": "2024-07-01"
+        },
+        {
+          "name": "školy bez balíčku",
+          "price": 150.0,
+          "category": "school",
+          "takes_effect_on": "2024-07-01"
+        }
+      ],
+      "id": 20,
+      "slug": "test",
+      "days_active": 15,
+      "year": "2019",
+      "campaign_type": "https://test.dopracenakole.net/rest/coordinator/campaign_type/1/",
+      "max_team_members": 5,
+      "description": "<h1>Chystáme pro vás Zářijovú výzvu Do práce na kole, pěšky či poklusem 2026.</h1><p>Výzva jednotlivců se uskuteční v termínu 10.07.2026 – 30.09.2026.</p><p>Účast je placená, registraci otevíráme 10. 7. 2026 zde.</p>",
+      "benefitial_admission_fee": 500,
+      "benefitial_admission_fee_company": 500
+    }
+  ]
+}
