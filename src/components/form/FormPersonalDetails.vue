@@ -162,6 +162,12 @@ export default defineComponent({
         return null;
       },
       set: (newValue) => {
+        onTrack({
+          detail: {
+            targetName: 'chooseAgeGroupId',
+            timestamp: Date.now(),
+          },
+        });
         personalDetails.value.ageGroup = newValue?.value ?? null;
       },
     });
@@ -192,6 +198,12 @@ export default defineComponent({
         return null;
       },
       set: (newValue) => {
+        onTrack({
+          detail: {
+            targetName: 'chooseOccupationId',
+            timestamp: Date.now(),
+          },
+        });
         personalDetails.value.occupation = newValue?.value ?? null;
       },
     });
@@ -312,8 +324,6 @@ export default defineComponent({
           id="form-age-group"
           class="q-mt-sm"
           data-cy="form-personal-details-age-group-input"
-          v-click-track-evt
-          @click-track="onTrack"
           name="ageGroup"
         />
       </div>
@@ -342,8 +352,6 @@ export default defineComponent({
           id="form-occupation"
           class="q-mt-sm"
           data-cy="form-personal-details-occupation-input"
-          v-click-track-evt
-          @click-track="onTrack"
           name="occupation"
         />
       </div>
