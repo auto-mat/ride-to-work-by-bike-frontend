@@ -553,7 +553,7 @@ export default defineComponent({
     class="bg-warning text-grey-10 rounded-borders q-mb-md"
     data-cy="text-merch-unavailable"
   >
-    <!-- September/October unavailable message -->
+    <!-- September/October merch unavailable message -->
     <div
       v-if="isSeptemberChallenge"
       v-html="
@@ -562,7 +562,7 @@ export default defineComponent({
         })
       "
     />
-    <!-- May "sold out" message -->
+    <!-- May merch "sold out" message -->
     <div
       v-else
       v-html="
