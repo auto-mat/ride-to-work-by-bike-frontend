@@ -43,6 +43,7 @@ jobs:
       - name: Checkout app repository code
         uses: actions/checkout@v7
         with:
+          allow-unsafe-pr-checkout: true
           ref: ${{ github.event.pull_request.head.sha }}
 
       # - name: Make cypress dir required for cypress-parallel parallel-weights.json file
@@ -178,6 +179,7 @@ jobs:
       - name: Checkout app repository code
         uses: actions/checkout@v7
         with:
+          allow-unsafe-pr-checkout: true
           ref: ${{ github.event.pull_request.head.sha }}
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
