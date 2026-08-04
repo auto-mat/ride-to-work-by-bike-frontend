@@ -19,7 +19,7 @@
  */
 
 // libraries
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, reactive } from 'vue';
 
 // config
 import { routesConf } from '../../router/routes_conf';
@@ -43,7 +43,17 @@ export default defineComponent({
       routesConf['profile_details']['children']['fullPath'];
     const size = computed(() => (props.variant === 'mobile' ? '32px' : '40px'));
 
+    const qItemCssClass = reactive({
+      flex: true,
+      'items-center': true,
+      'no-wrap': true,
+      'q-pa-none': true,
+      'rounded-borders': true,
+      'bg-black': window.Cypress,
+    });
+
     return {
+      qItemCssClass,
       profileDetailsPath,
       size,
       user,
@@ -58,11 +68,7 @@ export default defineComponent({
     class="user-profile-link"
     data-cy="user-profile-link"
   >
-    <q-item
-      dense
-      clickable
-      class="flex items-center no-wrap q-pa-none rounded-borders"
-    >
+    <q-item dense clickable :class="qItemCssClass">
       <!-- User avatar -->
       <q-avatar :size="size" color="white" data-cy="avatar">
         <q-img
