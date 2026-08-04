@@ -11,7 +11,7 @@ Installing and activating [Node Version Manager](https://github.com/nvm-sh/nvm/b
 Installing `nvm`:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
 ```
 
 Activating `nvm` (add these lines to your `~/.bashrc`, `~/.profile`, or `~/.zshrc` file)
