@@ -49,6 +49,9 @@ import type { TableFeeApprovalRow } from '../../components/types/AdminOrganisati
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// utils
+import { isSeptemberChallenge } from '../../utils/challenge';
+
 export default defineComponent({
   name: 'TableFeeApproval',
   components: {
@@ -162,15 +165,8 @@ export default defineComponent({
 
     const borderRadius = rideToWorkByBikeConfig.borderRadiusCardSmall;
 
-    const isSeptemberChallenge = computed((): boolean => {
-      return (
-        rideToWorkByBikeConfig.challengeMonth === 'september' ||
-        rideToWorkByBikeConfig.challengeMonth === 'october'
-      );
-    });
-
     const tooltipMerchNotAvailableText = computed((): string => {
-      if (isSeptemberChallenge.value) {
+      if (isSeptemberChallenge()) {
         return i18n.global.t(
           'register.challenge.tooltipMerchNotAvailableSeptember',
         );

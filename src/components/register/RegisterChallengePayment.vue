@@ -71,7 +71,9 @@ import type { Logger } from '../types/Logger';
 import type { ValidatedCoupon } from '../types/Coupon';
 import { tShirtSizeOrder } from '../types/Merchandise';
 
+// utils
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+import { isSeptemberChallenge } from '../../utils/challenge';
 import { onTrack } from '../../utils/track';
 
 export default defineComponent({
@@ -721,15 +723,8 @@ export default defineComponent({
       );
     });
 
-    const isSeptemberChallenge = computed((): boolean => {
-      return (
-        rideToWorkByBikeConfig.challengeMonth === 'september' ||
-        rideToWorkByBikeConfig.challengeMonth === 'october'
-      );
-    });
-
     const tooltipMerchNotAvailableText = computed((): string => {
-      if (isSeptemberChallenge.value) {
+      if (isSeptemberChallenge()) {
         return i18n.global.t(
           'register.challenge.tooltipMerchNotAvailableSeptember',
         );

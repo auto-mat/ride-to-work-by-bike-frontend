@@ -59,7 +59,9 @@ import type { FormOption } from '../types/Form';
 import type { MerchandiseCard, MerchandiseItem } from '../types/Merchandise';
 import type { Logger } from '../types/Logger';
 
+// utils
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
+import { isSeptemberChallenge } from '../../utils/challenge';
 
 export default defineComponent({
   name: 'FormFieldListMerch',
@@ -483,12 +485,9 @@ export default defineComponent({
       });
     });
 
-    const isSeptemberChallenge = computed((): boolean => {
-      return (
-        rideToWorkByBikeConfig.challengeMonth === 'september' ||
-        rideToWorkByBikeConfig.challengeMonth === 'october'
-      );
-    });
+    const isSeptemberChallengeComputed = computed((): boolean =>
+      isSeptemberChallenge(),
+    );
 
     return {
       currentItemLabelSize,
@@ -497,7 +496,7 @@ export default defineComponent({
       formMerchRef,
       Gender,
       isOpen,
-      isSeptemberChallenge,
+      isSeptemberChallenge: isSeptemberChallengeComputed,
       isShowingBottomSizeInput,
       optionsFemale,
       optionsMale,

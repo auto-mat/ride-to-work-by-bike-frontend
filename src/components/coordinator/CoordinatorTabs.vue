@@ -20,8 +20,8 @@ import { EventBus } from 'quasar';
 import { computed, defineComponent, inject, onBeforeUnmount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// config
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+// utils
+import { isSeptemberChallenge } from '../../utils/challenge';
 
 // components
 import TabCoordinatorAttendance from './TabCoordinatorAttendance.vue';
@@ -75,11 +75,7 @@ export default defineComponent({
       bus.off('request-edit-organization', onEditOrganizationRequested);
     });
     // september/october challenge does not have packages
-    const isPackagesTabDisabled = computed(
-      () =>
-        rideToWorkByBikeConfig.challengeMonth === 'september' ||
-        rideToWorkByBikeConfig.challengeMonth === 'october',
-    );
+    const isPackagesTabDisabled = computed(() => isSeptemberChallenge());
 
     return {
       activeTab,
