@@ -23,7 +23,7 @@
  */
 
 // libraries
-import { computed, defineComponent, inject, onMounted, ref } from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 import { QForm, QStepper, colors } from 'quasar';
 import { useRouter } from 'vue-router';
 
@@ -49,6 +49,7 @@ import { useStepperValidation } from 'src/composables/useStepperValidation';
 import { useOrganizations } from 'src/composables/useOrganizations';
 import { useCompetitionPhase } from 'src/composables/useCompetitionPhase';
 import { useInvitationToken } from 'src/composables/useInvitationToken';
+import { useInvitationPrefill } from 'src/composables/useInvitationPrefill';
 
 import { onTrack } from '../utils/track';
 
@@ -158,6 +159,11 @@ export default defineComponent({
     );
 
     const { processInvitation } = useInvitationToken(logger);
+    const {
+      prefillOrganizationType,
+      prefillOrganizationAndSubsidiary,
+      prefillTeam,
+    } = useInvitationPrefill(logger);
 
     onMounted(async () => {
       // process invitation token if present in URL
@@ -258,6 +264,17 @@ export default defineComponent({
       stepPersonalDetailsRef,
       stepTeamRef,
       stepMerchRef,
+    });
+
+    // watch step changes for invitation pre-fill
+    watch(step, async (newStep) => {
+      if (newStep === RegisterChallengeStep.participation) {
+        await prefillOrganizationType();
+      } else if (newStep === RegisterChallengeStep.company) {
+        await prefillOrganizationAndSubsidiary();
+      } else if (newStep === RegisterChallengeStep.team) {
+        await prefillTeam();
+      }
     });
 
     const onCompleteRegistration = () => {

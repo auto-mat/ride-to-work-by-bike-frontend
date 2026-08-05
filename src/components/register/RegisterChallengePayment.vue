@@ -39,6 +39,7 @@ import {
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
 import { useFormatPrice } from '../../composables/useFormatPrice';
+import { useInvitationPrefill } from '../../composables/useInvitationPrefill';
 
 // components
 import FormFieldCompany from '../global/FormFieldCompany.vue';
@@ -91,6 +92,7 @@ export default defineComponent({
     const logger = inject('vuejs3-logger') as Logger | null;
     const challengeStore = useChallengeStore();
     const registerChallengeStore = useRegisterChallengeStore();
+    const { prefillOrganizationForPayment } = useInvitationPrefill(logger);
 
     // constants
     const defaultPaymentAmountMax = parseInt(
@@ -324,6 +326,13 @@ export default defineComponent({
       );
       // when switching payment subject, always clear the organizationId
       selectedCompany.value = null;
+      // prefill organization from invitation if applicable
+      if (
+        newVal === PaymentSubject.company ||
+        newVal === PaymentSubject.school
+      ) {
+        prefillOrganizationForPayment(newVal);
+      }
     });
     const organizationType = computed<OrganizationType>(() => {
       return registerChallengeStore.getOrganizationType;

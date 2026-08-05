@@ -65,18 +65,18 @@ export const useInvitationToken = (
     logger?.debug(
       `Invitation token validated. Team ID: ${validationResponse.token.team_id}`,
     );
-    // update store with IDs
-    registerChallengeStore.setOrganizationId(
+    // update store with invitation IDs
+    registerChallengeStore.setInvitationOrganizationId(
       validationResponse.token.company_id,
     );
-    registerChallengeStore.setSubsidiaryId(
+    registerChallengeStore.setInvitationSubsidiaryId(
       validationResponse.token.subsidiary_id,
     );
-    registerChallengeStore.setTeamId(validationResponse.token.team_id);
+    registerChallengeStore.setInvitationTeamId(validationResponse.token.team_id);
     logger?.debug(
-      `Updated store: organizationId=${validationResponse.token.company_id}, ` +
-        `subsidiaryId=${validationResponse.token.subsidiary_id}, ` +
-        `teamId=${validationResponse.token.team_id}`,
+      `Updated store: invitationOrganizationId=${validationResponse.token.company_id}, ` +
+        `invitationSubsidiaryId=${validationResponse.token.subsidiary_id}, ` +
+        `invitationTeamId=${validationResponse.token.team_id}`,
     );
     // post team ID to backend
     const postResponse = await registerChallengeStore.postRegisterChallenge({
