@@ -553,7 +553,7 @@ export default defineComponent({
         :label="$t('profile.labelLanguage')"
         :value="formPersonalDetails.language"
         :empty-label="$t('profile.labelLanguageEmpty')"
-        class="col-12"
+        class="q-mb-lg"
         data-cy="profile-details-language"
       >
         <template #value>
