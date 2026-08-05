@@ -167,7 +167,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTeams: (state): OrganizationTeam[] => state.teams,
     getAgeGroups: (state): FormSelectOptionNumberValue[] => state.ageGroups,
     getOccupations: (state): FormSelectOptionNumberValue[] => state.occupations,
-    getAgeGroupObject: (state): AgeGroupApiObject | null => state.ageGroupObject,
+    getAgeGroupObject: (state): AgeGroupApiObject | null =>
+      state.ageGroupObject,
     getOccupationObject: (state): OccupationApiObject | null =>
       state.occupationObject,
     getMerchandiseItems: (state): MerchandiseItem[] => state.merchandiseItems,
@@ -521,6 +522,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setThirdPartyVouchers(vouchers: ThirdPartyVoucher[]) {
       this.thirdPartyVouchers = vouchers;
     },
+    setAgeGroupObject(ageGroupObject: AgeGroupApiObject | null) {
+      this.ageGroupObject = ageGroupObject;
+    },
+    setOccupationObject(occupationObject: OccupationApiObject | null) {
+      this.occupationObject = occupationObject;
+    },
     /**
      * Switch between regular and with-reward price sets
      * Handle side effects (clear voucher, reset payment amount)
@@ -706,6 +713,14 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.setThirdPartyVouchers(parsedResponse.thirdPartyVouchers);
       this.$log?.debug(
         `Third-party vouchers store updated to <${JSON.stringify(this.getThirdPartyVouchers)}>.`,
+      );
+      this.setAgeGroupObject(parsedResponse.ageGroupObject);
+      this.$log?.debug(
+        `Age group object store updated to <${JSON.stringify(this.getAgeGroupObject)}>.`,
+      );
+      this.setOccupationObject(parsedResponse.occupationObject);
+      this.$log?.debug(
+        `Occupation object store updated to <${JSON.stringify(this.getOccupationObject)}>.`,
       );
     },
     /**
@@ -1326,8 +1341,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'teams',
       'ageGroups',
       'occupations',
-      'ageGroupObject',
-      'occupationObject',
       'merchandiseItems',
       'merchandiseCards',
       'isLoadingRegisterChallenge',

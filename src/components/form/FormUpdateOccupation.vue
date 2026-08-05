@@ -21,7 +21,6 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 
 // composables
-import { i18n } from '../../boot/i18n';
 import { useSelectSearch } from 'src/composables/useSelectSearch';
 
 // stores
@@ -35,7 +34,7 @@ export default defineComponent({
   name: 'FormUpdateOccupation',
   props: {
     value: {
-      type: Number,
+      type: [Number, null],
       required: false,
       default: null,
     },
@@ -112,10 +111,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-form
-    @submit.prevent="onUpdateOccupation"
-    data-cy="form-update-occupation"
-  >
+  <q-form @submit.prevent="onUpdateOccupation" data-cy="form-update-occupation">
     <!-- Label -->
     <label
       for="form-occupation"

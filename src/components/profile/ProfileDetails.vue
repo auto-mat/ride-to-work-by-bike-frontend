@@ -134,14 +134,6 @@ export default defineComponent({
       if (!registerChallengeStore.getMerchandiseItems.length) {
         registerChallengeStore.loadMerchandiseToStore(logger);
       }
-      // load age groups if not available
-      if (!registerChallengeStore.getAgeGroups.length) {
-        registerChallengeStore.loadAgeGroupsToStore(logger);
-      }
-      // load occupations if not available
-      if (!registerChallengeStore.getOccupations.length) {
-        registerChallengeStore.loadOccupationsToStore(logger);
-      }
     });
 
     // max team
@@ -513,7 +505,7 @@ export default defineComponent({
         :value="ageGroupLabel"
         :dialog-title="$t('profile.titleUpdateAgeGroup')"
         :empty-label="$t('profile.labelAgeGroupEmpty')"
-        class="col-12 col-sm-6"
+        class="q-mb-lg"
         data-cy="profile-details-age-group"
       >
         <template #form="{ close }">
@@ -538,7 +530,7 @@ export default defineComponent({
         :value="occupationLabel"
         :dialog-title="$t('profile.titleUpdateOccupation')"
         :empty-label="$t('profile.labelOccupationEmpty')"
-        class="col-12 col-sm-6"
+        class="q-mb-lg"
         data-cy="profile-details-occupation"
       >
         <template #form="{ close }">
