@@ -68,25 +68,27 @@ describe('<FormUpdateAgeGroup>', () => {
       setActivePinia(createPinia());
       cy.fixture('apiGetAgeGroupsResponse').then((response) => {
         cy.interceptAgeGroupsGetApi(rideToWorkByBikeConfig, i18n, response);
-      });
-      const closeSpy = cy.spy().as('closeSpy');
-      const updateValueSpy = cy.spy().as('updateValueSpy');
-      cy.mount(FormUpdateAgeGroup, {
-        props: {
-          value: 1990,
-          onClose: closeSpy,
-          'onUpdate:value': updateValueSpy,
-        },
+        const closeSpy = cy.spy().as('closeSpy');
+        const updateValueSpy = cy.spy().as('updateValueSpy');
+        cy.mount(FormUpdateAgeGroup, {
+          props: {
+            value: response[0][0],
+            onClose: closeSpy,
+            'onUpdate:value': updateValueSpy,
+          },
+        });
       });
       cy.viewport('macbook-16');
     });
 
     it('displays selected value', () => {
-      cy.wait('@ageGroupsGetApi');
-      cy.dataCy('form-update-age-group')
-        .find('input')
-        .invoke('val')
-        .should('contain', '1990');
+      cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+        cy.wait('@ageGroupsGetApi');
+        cy.dataCy('form-update-age-group')
+          .find('input')
+          .invoke('val')
+          .should('contain', response[0][1]);
+      });
     });
   });
 });
@@ -132,32 +134,38 @@ function coreTests() {
   });
 
   it('allows user to select age group', () => {
-    cy.wait('@ageGroupsGetApi');
-    cy.dataCy('form-age-group-select').click();
-    cy.get('.q-menu').should('be.visible');
-    cy.get('.q-menu .q-item').first().click();
-    cy.dataCy('form-update-age-group')
-      .find('input')
-      .invoke('val')
-      .should('contain', '2026');
+    cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+      cy.wait('@ageGroupsGetApi');
+      cy.dataCy('form-age-group-select').click();
+      cy.get('.q-menu').should('be.visible');
+      cy.get('.q-menu .q-item').first().click();
+      cy.dataCy('form-update-age-group')
+        .find('input')
+        .invoke('val')
+        .should('contain', response[0][1]);
+    });
   });
 
   it('emits correct ID value on submit', () => {
-    cy.wait('@ageGroupsGetApi');
-    cy.dataCy('form-age-group-select').click();
-    cy.get('.q-menu .q-item').first().click();
-    cy.dataCy('form-button-save').click();
-    cy.get('@updateValueSpy').should('have.been.calledOnce');
-    cy.get('@updateValueSpy').should('have.been.calledWith', 2026);
-    cy.get('@closeSpy').should('have.been.calledOnce');
+    cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+      cy.wait('@ageGroupsGetApi');
+      cy.dataCy('form-age-group-select').click();
+      cy.get('.q-menu .q-item').first().click();
+      cy.dataCy('form-button-save').click();
+      cy.get('@updateValueSpy').should('have.been.calledOnce');
+      cy.get('@updateValueSpy').should('have.been.calledWith', response[0][0]);
+      cy.get('@closeSpy').should('have.been.calledOnce');
+    });
   });
 
   it('allows filtering age groups', () => {
-    cy.wait('@ageGroupsGetApi');
-    cy.dataCy('form-update-age-group').find('input').type('1990');
-    cy.get('.q-menu').should('be.visible');
-    cy.get('.q-menu .q-item').should('have.length', 1);
-    cy.get('.q-menu .q-item').first().should('contain', '1990');
+    cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+      cy.wait('@ageGroupsGetApi');
+      cy.dataCy('form-update-age-group').find('input').type(response[0][1]);
+      cy.get('.q-menu').should('be.visible');
+      cy.get('.q-menu .q-item').should('have.length', 1);
+      cy.get('.q-menu .q-item').first().should('contain', response[0][1]);
+    });
   });
 
   it('calls onClose when cancel is clicked', () => {
