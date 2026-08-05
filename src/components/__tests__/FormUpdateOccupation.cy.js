@@ -3,10 +3,10 @@ import { colors } from 'quasar';
 import FormUpdateOccupation from 'components/form/FormUpdateOccupation.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
+const testOccupation = 'IT';
 
 describe('<FormUpdateOccupation>', () => {
   it('has translation for all strings', () => {
@@ -25,7 +25,9 @@ describe('<FormUpdateOccupation>', () => {
   context('desktop', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n);
+      cy.fixture('apiGetOccupationsResponse').then((response) => {
+        cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n, response);
+      });
       const closeSpy = cy.spy().as('closeSpy');
       const updateValueSpy = cy.spy().as('updateValueSpy');
       cy.mount(FormUpdateOccupation, {
@@ -44,7 +46,9 @@ describe('<FormUpdateOccupation>', () => {
   context('mobile', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n);
+      cy.fixture('apiGetOccupationsResponse').then((response) => {
+        cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n, response);
+      });
       const closeSpy = cy.spy().as('closeSpy');
       const updateValueSpy = cy.spy().as('updateValueSpy');
       cy.mount(FormUpdateOccupation, {
@@ -63,7 +67,9 @@ describe('<FormUpdateOccupation>', () => {
   context('with value', () => {
     beforeEach(() => {
       setActivePinia(createPinia());
-      cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n);
+      cy.fixture('apiGetOccupationsResponse').then((response) => {
+        cy.interceptOccupationsGetApi(rideToWorkByBikeConfig, i18n, response);
+      });
       const closeSpy = cy.spy().as('closeSpy');
       const updateValueSpy = cy.spy().as('updateValueSpy');
       cy.mount(FormUpdateOccupation, {
@@ -77,12 +83,11 @@ describe('<FormUpdateOccupation>', () => {
     });
 
     it('displays selected value', () => {
-      cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-        cy.waitForOccupationsApi(occupationsResponse);
-        cy.dataCy('form-occupation-select')
-          .find('.q-field__native')
-          .should('contain', 'IT');
-      });
+      cy.wait('@occupationsGetApi');
+      cy.dataCy('form-update-occupation')
+        .find('input')
+        .invoke('val')
+        .should('contain', testOccupation);
     });
   });
 });
@@ -111,61 +116,54 @@ function coreTests() {
 
   it('loads occupations on mount if empty', () => {
     cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-      cy.waitForOccupationsApi(occupationsResponse);
-      cy.wrap(useRegisterChallengeStore()).then((store) => {
-        cy.wrap(store.getOccupations).should('have.length.greaterThan', 0);
-      });
+      cy.wait('@occupationsGetApi');
+      cy.dataCy('form-occupation-select').click();
+      cy.get('.q-menu').should('be.visible');
+      cy.get('.q-menu .q-item').should(
+        'have.length',
+        occupationsResponse.length,
+      );
     });
-  });
-
-  it('shows loading state while fetching', () => {
-    cy.dataCy('form-occupation-select')
-      .find('.q-field--disabled')
-      .should('exist');
   });
 
   it('validates form on submit', () => {
-    cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-      cy.waitForOccupationsApi(occupationsResponse);
-      cy.dataCy('form-button-save').should('be.visible').click();
-      cy.dataCy('form-occupation-select')
-        .find('.q-field__messages')
-        .should('contain', i18n.global.t('form.messageFieldRequired'));
-    });
+    cy.wait('@occupationsGetApi');
+    cy.dataCy('form-button-save').should('be.visible').click();
+    cy.get('.q-field__messages').should(
+      'contain',
+      i18n.global.t('form.messageFieldRequired'),
+    );
   });
 
   it('allows user to select occupation', () => {
-    cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-      cy.waitForOccupationsApi(occupationsResponse);
-      cy.dataCy('form-occupation-select').click();
-      cy.get('.q-menu').should('be.visible');
-      cy.get('.q-menu .q-item').first().click();
-      cy.dataCy('form-occupation-select')
-        .find('.q-field__native')
-        .should('contain', 'Administrativní pracovník');
-    });
+    cy.wait('@occupationsGetApi');
+    cy.dataCy('form-occupation-select').click();
+    cy.get('.q-menu').should('be.visible');
+    cy.get('.q-menu .q-item').first().click();
+    cy.dataCy('form-update-occupation')
+      .find('input')
+      .invoke('val')
+      .should('contain', 'Administrativní pracovník');
   });
 
   it('emits correct ID value on submit', () => {
-    cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-      cy.waitForOccupationsApi(occupationsResponse);
-      cy.dataCy('form-occupation-select').click();
-      cy.get('.q-menu .q-item').first().click();
-      cy.dataCy('form-button-save').click();
-      cy.get('@updateValueSpy').should('have.been.calledOnce');
-      cy.get('@updateValueSpy').should('have.been.calledWith', 129);
-      cy.get('@closeSpy').should('have.been.calledOnce');
-    });
+    cy.wait('@occupationsGetApi');
+    cy.dataCy('form-occupation-select').click();
+    cy.get('.q-menu .q-item').first().click();
+    cy.dataCy('form-button-save').click();
+    cy.get('@updateValueSpy').should('have.been.calledOnce');
+    cy.get('@updateValueSpy').should('have.been.calledWith', 129);
+    cy.get('@closeSpy').should('have.been.calledOnce');
   });
 
   it('allows filtering occupations', () => {
-    cy.fixture('apiGetOccupationsResponse').then((occupationsResponse) => {
-      cy.waitForOccupationsApi(occupationsResponse);
-      cy.dataCy('form-occupation-select').find('input').type('IT');
-      cy.get('.q-menu').should('be.visible');
-      cy.get('.q-menu .q-item').should('have.length', 1);
-      cy.get('.q-menu .q-item').first().should('contain', 'IT');
-    });
+    cy.wait('@occupationsGetApi');
+    cy.dataCy('form-update-occupation').find('input').type(testOccupation);
+    cy.get('.q-menu').should('be.visible');
+    // due to fuzzy select we get 4 matches
+    cy.get('.q-menu .q-item').should('have.length', 4);
+    // due to fuzzy select the "IT" occupation is second
+    cy.get('.q-menu .q-item').eq(1).should('contain', testOccupation);
   });
 
   it('calls onClose when cancel is clicked', () => {

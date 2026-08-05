@@ -124,8 +124,12 @@ describe('Profile page', () => {
             responseRegisterChallenge.results[0].team_id,
           );
           // intercept age groups and occupations API
-          cy.interceptAgeGroupsGetApi(config, defLocale);
-          cy.interceptOccupationsGetApi(config, defLocale);
+          cy.fixture('apiGetAgeGroupsResponse').then((response) => {
+            cy.interceptAgeGroupsGetApi(config, defLocale, response);
+          });
+          cy.fixture('apiGetOccupationsResponse').then((response) => {
+            cy.interceptOccupationsGetApi(config, defLocale, response);
+          });
         },
       );
       cy.clock(new Date(systemTimeChallengeActive), ['Date']);
@@ -1052,44 +1056,44 @@ function coreTests() {
         (responseAgeGroup) => {
           cy.get('@config').then((config) => {
             cy.get('@i18n').then((i18n) => {
-              cy.interceptAgeGroupsGetApi(config, i18n);
               cy.waitForRegisterChallengeGetApi(response);
-              cy.fixture('apiGetAgeGroupsResponse').then((ageGroupsResponse) => {
-                cy.waitForAgeGroupsApi(ageGroupsResponse);
-                const personalDetails = response.results[0].personal_details;
-                cy.dataCy('profile-details-age-group')
-                  .find(dataSelectorValue)
-                  .should('have.text', personalDetails.age_group.value);
-                cy.dataCy('profile-details-age-group')
-                  .find(dataSelectorEdit)
-                  .click();
-                cy.dataCy('profile-details-form-age-group').should('be.visible');
-                cy.interceptRegisterChallengePutApi(
-                  config,
-                  i18n,
-                  personalDetails.id,
-                  responseAgeGroup,
+              const personalDetails = response.results[0].personal_details;
+              cy.dataCy('profile-details-age-group')
+                .find(dataSelectorValue)
+                .should('have.text', personalDetails.age_group.value);
+              cy.dataCy('profile-details-age-group')
+                .find(dataSelectorEdit)
+                .click();
+              cy.dataCy('profile-details-form-age-group').should('be.visible');
+              cy.interceptRegisterChallengePutApi(
+                config,
+                i18n,
+                personalDetails.id,
+                responseAgeGroup,
+              );
+              cy.interceptRegisterChallengeGetApi(
+                config,
+                i18n,
+                responseAgeGroup,
+              );
+              cy.wait('@ageGroupsGetApi');
+              cy.dataCy('profile-details-form-age-group')
+                .find('.q-spinner')
+                .should('not.exist');
+              cy.dataCy('profile-details-form-age-group')
+                .find('.q-field__append')
+                .click();
+              cy.get('.q-menu .q-item').first().click();
+              cy.dataCy('profile-details-form-age-group')
+                .find(dataSelectorButtonSave)
+                .click();
+              cy.waitForRegisterChallengeGetApi(responseAgeGroup);
+              cy.dataCy('profile-details-age-group')
+                .find(dataSelectorValue)
+                .should(
+                  'have.text',
+                  responseAgeGroup.results[0].personal_details.age_group.value,
                 );
-                cy.interceptRegisterChallengeGetApi(
-                  config,
-                  i18n,
-                  responseAgeGroup,
-                );
-                cy.dataCy('profile-details-form-age-group')
-                  .find('.q-field__append')
-                  .click();
-                cy.get('.q-menu .q-item').first().click();
-                cy.dataCy('profile-details-form-age-group')
-                  .find(dataSelectorButtonSave)
-                  .click();
-                cy.waitForRegisterChallengeGetApi(responseAgeGroup);
-                cy.dataCy('profile-details-age-group')
-                  .find(dataSelectorValue)
-                  .should(
-                    'have.text',
-                    responseAgeGroup.results[0].personal_details.age_group.value,
-                  );
-              });
             });
           });
         },
@@ -1103,49 +1107,45 @@ function coreTests() {
         (responseOccupation) => {
           cy.get('@config').then((config) => {
             cy.get('@i18n').then((i18n) => {
-              cy.interceptOccupationsGetApi(config, i18n);
               cy.waitForRegisterChallengeGetApi(response);
-              cy.fixture('apiGetOccupationsResponse').then(
-                (occupationsResponse) => {
-                  cy.waitForOccupationsApi(occupationsResponse);
-                  const personalDetails = response.results[0].personal_details;
-                  cy.dataCy('profile-details-occupation')
-                    .find(dataSelectorValue)
-                    .should('have.text', personalDetails.occupation.value);
-                  cy.dataCy('profile-details-occupation')
-                    .find(dataSelectorEdit)
-                    .click();
-                  cy.dataCy('profile-details-form-occupation').should(
-                    'be.visible',
-                  );
-                  cy.interceptRegisterChallengePutApi(
-                    config,
-                    i18n,
-                    personalDetails.id,
-                    responseOccupation,
-                  );
-                  cy.interceptRegisterChallengeGetApi(
-                    config,
-                    i18n,
-                    responseOccupation,
-                  );
-                  cy.dataCy('profile-details-form-occupation')
-                    .find('.q-field__append')
-                    .click();
-                  cy.get('.q-menu .q-item').first().click();
-                  cy.dataCy('profile-details-form-occupation')
-                    .find(dataSelectorButtonSave)
-                    .click();
-                  cy.waitForRegisterChallengeGetApi(responseOccupation);
-                  cy.dataCy('profile-details-occupation')
-                    .find(dataSelectorValue)
-                    .should(
-                      'have.text',
-                      responseOccupation.results[0].personal_details.occupation
-                        .value,
-                    );
-                },
+              const personalDetails = response.results[0].personal_details;
+              cy.dataCy('profile-details-occupation')
+                .find(dataSelectorValue)
+                .should('have.text', personalDetails.occupation.value);
+              cy.dataCy('profile-details-occupation')
+                .find(dataSelectorEdit)
+                .click();
+              cy.dataCy('profile-details-form-occupation').should('be.visible');
+              cy.interceptRegisterChallengePutApi(
+                config,
+                i18n,
+                personalDetails.id,
+                responseOccupation,
               );
+              cy.interceptRegisterChallengeGetApi(
+                config,
+                i18n,
+                responseOccupation,
+              );
+              cy.wait('@occupationsGetApi');
+              cy.dataCy('profile-details-form-occupation')
+                .find('.q-spinner')
+                .should('not.exist');
+              cy.dataCy('profile-details-form-occupation')
+                .find('.q-field__append')
+                .click();
+              cy.get('.q-menu .q-item').first().click();
+              cy.dataCy('profile-details-form-occupation')
+                .find(dataSelectorButtonSave)
+                .click();
+              cy.waitForRegisterChallengeGetApi(responseOccupation);
+              cy.dataCy('profile-details-occupation')
+                .find(dataSelectorValue)
+                .should(
+                  'have.text',
+                  responseOccupation.results[0].personal_details.occupation
+                    .value,
+                );
             });
           });
         },
