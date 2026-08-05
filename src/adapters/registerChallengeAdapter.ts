@@ -67,6 +67,8 @@ export const registerChallengeAdapter = {
           ? apiData.personal_details.is_payment_with_reward
           : true,
       thirdPartyVouchers: apiData.personal_details.thirdparty_voucher ?? [],
+      ageGroupObject: apiData.personal_details.age_group ?? null,
+      occupationObject: apiData.personal_details.occupation ?? null,
     };
   },
 

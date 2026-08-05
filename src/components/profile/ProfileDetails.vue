@@ -35,9 +35,11 @@ import { subsidiaryAdapter } from '../../adapters/subsidiaryAdapter';
 // components
 import BannerTeamMemberApprove from '../global/BannerTeamMemberApprove.vue';
 import DetailsItem from '../profile/DetailsItem.vue';
+import FormUpdateAgeGroup from '../form/FormUpdateAgeGroup.vue';
 import FormUpdateEmail from '../form/FormUpdateEmail.vue';
 import FormUpdateGender from '../form/FormUpdateGender.vue';
 import FormUpdateNickname from '../form/FormUpdateNickname.vue';
+import FormUpdateOccupation from '../form/FormUpdateOccupation.vue';
 import FormUpdatePhone from '../form/FormUpdatePhone.vue';
 import FormUpdateTeam from '../form/FormUpdateTeam.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
@@ -76,9 +78,11 @@ export default defineComponent({
   components: {
     BannerTeamMemberApprove,
     DetailsItem,
+    FormUpdateAgeGroup,
     FormUpdateEmail,
     FormUpdateGender,
     FormUpdateNickname,
+    FormUpdateOccupation,
     FormUpdatePhone,
     FormUpdateTeam,
     LanguageSwitcher,
@@ -129,6 +133,14 @@ export default defineComponent({
       // load merchandise items data if not available
       if (!registerChallengeStore.getMerchandiseItems.length) {
         registerChallengeStore.loadMerchandiseToStore(logger);
+      }
+      // load age groups if not available
+      if (!registerChallengeStore.getAgeGroups.length) {
+        registerChallengeStore.loadAgeGroupsToStore(logger);
+      }
+      // load occupations if not available
+      if (!registerChallengeStore.getOccupations.length) {
+        registerChallengeStore.loadOccupationsToStore(logger);
       }
     });
 
@@ -214,6 +226,22 @@ export default defineComponent({
 
     const phone = computed(() => {
       return registerChallengeStore.getTelephone;
+    });
+
+    const ageGroupLabel = computed(() => {
+      return registerChallengeStore.getAgeGroupObject?.value ?? '';
+    });
+
+    const ageGroupId = computed(() => {
+      return registerChallengeStore.getPersonalDetails.ageGroup;
+    });
+
+    const occupationLabel = computed(() => {
+      return registerChallengeStore.getOccupationObject?.value ?? '';
+    });
+
+    const occupationId = computed(() => {
+      return registerChallengeStore.getPersonalDetails.occupation;
     });
 
     const diploma = computed(() => {
@@ -370,6 +398,10 @@ export default defineComponent({
       organization,
       organizationType,
       phone,
+      ageGroupLabel,
+      ageGroupId,
+      occupationLabel,
+      occupationId,
       diploma,
       profile,
       subsidiary,
@@ -474,12 +506,62 @@ export default defineComponent({
           />
         </template>
       </details-item>
+      <!-- Age Group -->
+      <details-item
+        editable
+        :label="$t('profile.labelAgeGroup')"
+        :value="ageGroupLabel"
+        :dialog-title="$t('profile.titleUpdateAgeGroup')"
+        :empty-label="$t('profile.labelAgeGroupEmpty')"
+        class="col-12 col-sm-6"
+        data-cy="profile-details-age-group"
+      >
+        <template #form="{ close }">
+          <!-- Form: Update age group -->
+          <form-update-age-group
+            :on-close="close"
+            :value="ageGroupId"
+            :loading="isLoading"
+            @update:value="
+              onUpdateRegisterChallengeDetails({
+                personalDetails: { ageGroup: $event },
+              })
+            "
+            data-cy="profile-details-form-age-group"
+          />
+        </template>
+      </details-item>
+      <!-- Occupation -->
+      <details-item
+        editable
+        :label="$t('profile.labelOccupation')"
+        :value="occupationLabel"
+        :dialog-title="$t('profile.titleUpdateOccupation')"
+        :empty-label="$t('profile.labelOccupationEmpty')"
+        class="col-12 col-sm-6"
+        data-cy="profile-details-occupation"
+      >
+        <template #form="{ close }">
+          <!-- Form: Update occupation -->
+          <form-update-occupation
+            :on-close="close"
+            :value="occupationId"
+            :loading="isLoading"
+            @update:value="
+              onUpdateRegisterChallengeDetails({
+                personalDetails: { occupation: $event },
+              })
+            "
+            data-cy="profile-details-form-occupation"
+          />
+        </template>
+      </details-item>
       <!-- Language -->
       <details-item
         :label="$t('profile.labelLanguage')"
         :value="formPersonalDetails.language"
         :empty-label="$t('profile.labelLanguageEmpty')"
-        class="q-mb-lg"
+        class="col-12"
         data-cy="profile-details-language"
       >
         <template #value>
