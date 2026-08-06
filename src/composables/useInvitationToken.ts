@@ -72,11 +72,17 @@ export const useInvitationToken = (
     registerChallengeStore.setInvitationSubsidiaryId(
       validationResponse.token.subsidiary_id,
     );
-    registerChallengeStore.setInvitationTeamId(validationResponse.token.team_id);
+    registerChallengeStore.setInvitationTeamId(
+      validationResponse.token.team_id,
+    );
+    registerChallengeStore.setInvitationOrganizationType(
+      validationResponse.token.company_type,
+    );
     logger?.debug(
       `Updated store: invitationOrganizationId=${validationResponse.token.company_id}, ` +
         `invitationSubsidiaryId=${validationResponse.token.subsidiary_id}, ` +
-        `invitationTeamId=${validationResponse.token.team_id}`,
+        `invitationTeamId=${validationResponse.token.team_id}, ` +
+        `invitationOrganizationType=${validationResponse.token.company_type}`,
     );
     // post team ID to backend
     const postResponse = await registerChallengeStore.postRegisterChallenge({

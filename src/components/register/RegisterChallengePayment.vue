@@ -265,6 +265,9 @@ export default defineComponent({
         }
       },
     });
+    const handleOrganizationsLoaded = (): void => {
+      prefillOrganizationForPayment();
+    };
     onMounted(async () => {
       registerChallengeStore.checkOrganizationHasCoordinator();
       // load merchandise if data not available
@@ -326,13 +329,7 @@ export default defineComponent({
       );
       // when switching payment subject, always clear the organizationId
       selectedCompany.value = null;
-      // prefill organization from invitation if applicable
-      if (
-        newVal === PaymentSubject.company ||
-        newVal === PaymentSubject.school
-      ) {
-        prefillOrganizationForPayment(newVal);
-      }
+      // pre-fill will be handled by organizations-loaded event from FormFieldCompany
     });
     const organizationType = computed<OrganizationType>(() => {
       return registerChallengeStore.getOrganizationType;
@@ -755,6 +752,7 @@ export default defineComponent({
       defaultPaymentAmountMin,
       donationAmount,
       formRegisterCoordinator,
+      handleOrganizationsLoaded,
       hasOrganizationAdmin,
       isPriceLevelSwitchDisabled,
       isPaymentWithReward,
@@ -862,6 +860,7 @@ export default defineComponent({
       <form-field-company
         v-model="selectedCompany"
         :organization-type="organizationType"
+        @organizations-loaded="handleOrganizationsLoaded"
         class="text-grey-10"
         data-cy="form-field-company"
       />

@@ -18,6 +18,13 @@
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
+ * - `organizations-loaded`: Emitted after organizations are loaded from API.
+ *
+ * @side-effects
+ * - Updates `registerChallengeStore.organizations` array after loading organizations.
+ *   This is required for invitation pre-fill in register challenge flow.
+ *   In other contexts (coordinator registration), this update is harmless
+ *   but unnecessary.
  *
  * @components
  * - `DialogDefault`: Used to render a dialog window with form as content.
@@ -30,15 +37,7 @@
  */
 
 // libraries
-import {
-  computed,
-  defineComponent,
-  inject,
-  onMounted,
-  ref,
-  watch,
-  toRef,
-} from 'vue';
+import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 import { QForm } from 'quasar';
 
 // components
@@ -51,6 +50,9 @@ import { useApiPostOrganization } from 'src/composables/useApiPostOrganization';
 import { useOrganizations } from 'src/composables/useOrganizations';
 import { useValidation } from 'src/composables/useValidation';
 import { useSelectSearch } from 'src/composables/useSelectSearch';
+
+// stores
+import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // enums
 import { FormAddCompanyVariantProp } from '../enums/Form';
@@ -92,6 +94,7 @@ export default defineComponent({
     DialogDefault,
     FormAddCompany,
   },
+  emits: ['update:modelValue', 'organizations-loaded'],
   props: {
     modelValue: {
       type: [Number],
@@ -108,8 +111,10 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const logger = inject('vuejs3-logger') as Logger | null;
+    const registerChallengeStore = useRegisterChallengeStore();
     const {
       options,
+      organizations,
       isLoading: isLoadingGetOrganization,
       loadOrganizations,
     } = useApiGetOrganizations(logger);
@@ -121,30 +126,60 @@ export default defineComponent({
 
     const { optionsFiltered, onFilter } = useSelectSearch(options);
 
+    // load organizations helper function
+    const loadAndEmit = async (orgType: OrganizationType) => {
+      await loadOrganizations(orgType);
+      // side effect - see header comment for @side-effects
+      registerChallengeStore.setOrganizations(organizations.value);
+      emit('organizations-loaded');
+    };
+
     // load options on component mount
     onMounted(async () => {
-      await loadOrganizations(props.organizationType);
-      setSelectedOrganization();
+      await loadAndEmit(props.organizationType);
     });
 
-    const selectedOrganization = ref<FormSelectOption | null>(null);
-    const setSelectedOrganization = (): void => {
-      if (options.value?.length) {
-        selectedOrganization.value =
-          options.value.find((option) => option.value === props.modelValue) ||
-          null;
+    // reload when organization type changes
+    const organizationType = computed(() => props.organizationType);
+    watch(organizationType, async (newType, oldType) => {
+      if (newType !== oldType) {
+        logger?.debug(
+          `Changed organizationType, new value is  <${newType}>, old value was <${oldType}>.`,
+        );
+        // Clear select organization widget value
+        selectedOrganization.value = null;
+        logger?.debug(
+          `Clear selectedOrganization value <${selectedOrganization.value}>.`,
+        );
+        // load new organizations and emit event
+        await loadAndEmit(newType);
       }
-    };
-    watch(selectedOrganization, (newValue, oldValue) => {
-      logger?.debug(
-        `Selected organization changed from <${JSON.stringify(oldValue, null, 2)}>` +
-          ` to <${JSON.stringify(newValue, null, 2)}>.`,
-      );
-      if (newValue) {
-        emit('update:modelValue', parseInt(newValue.value as string));
-      } else {
-        emit('update:modelValue', null);
-      }
+    });
+
+    /**
+     * Computed ensures selectedOrganization reactivity.
+     * V-model can fail to update if options are loaded later than value.
+     */
+    const selectedOrganization = computed<FormSelectOption | null>({
+      get: () => {
+        if (options.value?.length && props.modelValue != null) {
+          return (
+            options.value.find((option) => option.value === props.modelValue) ||
+            null
+          );
+        }
+        return null;
+      },
+      set: (newValue) => {
+        logger?.debug(
+          `Selected organization changed to <${JSON.stringify(newValue, null, 2)}>.`,
+        );
+        if (newValue) {
+          emit('update:modelValue', parseInt(newValue.value as string));
+        } else {
+          emit('update:modelValue', null);
+        }
+      },
     });
 
     /**
@@ -259,20 +294,6 @@ export default defineComponent({
 
     const messageNoResult = computed(() => {
       return getOrganizationLabels(props.organizationType).messageNoResult;
-    });
-
-    const organizationType = toRef(props, 'organizationType');
-    watch(organizationType, (newValue, oldValue) => {
-      logger?.debug(
-        `New organization type was selected, new value is  <${newValue}>, old value was <${oldValue}>.`,
-      );
-      // Erase select organization widget value
-      selectedOrganization.value = null;
-      logger?.debug(
-        `Erase select organization widget value <${selectedOrganization.value}>.`,
-      );
-      // Organization type changed, load new options
-      loadOrganizations(newValue);
     });
 
     return {

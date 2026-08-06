@@ -106,6 +106,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     invitationOrganizationId: null as number | null,
     invitationSubsidiaryId: null as number | null,
     invitationTeamId: null as number | null,
+    invitationOrganizationType: null as OrganizationType | null,
     merchId: null as number | null,
     voucher: null as ValidatedCoupon | null,
     subsidiaries: [] as OrganizationSubsidiary[],
@@ -167,6 +168,8 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getInvitationSubsidiaryId: (state): number | null =>
       state.invitationSubsidiaryId,
     getInvitationTeamId: (state): number | null => state.invitationTeamId,
+    getInvitationOrganizationType: (state): OrganizationType | null =>
+      state.invitationOrganizationType,
     getMerchId: (state): number | null => state.merchId,
     getPaymentSubject: (state): PaymentSubject => state.paymentSubject,
     getPaymentAmount: (state): number | null => state.paymentAmount,
@@ -451,6 +454,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setInvitationTeamId(id: number | null) {
       this.invitationTeamId = id;
+    },
+    setInvitationOrganizationType(type: OrganizationType | null) {
+      this.invitationOrganizationType = type;
     },
     setMerchId(merchId: number | null) {
       this.merchId = merchId;

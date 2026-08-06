@@ -268,11 +268,16 @@ export default defineComponent({
 
     // watch step changes for invitation pre-fill
     watch(step, async (newStep) => {
-      if (newStep === RegisterChallengeStep.participation) {
+      // step 3 = participation (organization type selection)
+      if (newStep === 3) {
         await prefillOrganizationType();
-      } else if (newStep === RegisterChallengeStep.company) {
+      }
+      // step 4 = organization (organization and subsidiary selection)
+      else if (newStep === 4) {
         await prefillOrganizationAndSubsidiary();
-      } else if (newStep === RegisterChallengeStep.team) {
+      }
+      // step 5 = team selection
+      else if (newStep === 5) {
         await prefillTeam();
       }
     });

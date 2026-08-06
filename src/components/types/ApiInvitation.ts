@@ -1,10 +1,12 @@
 // types
 import type { Ref } from 'vue';
+import type { OrganizationType } from './Organization';
 
 export interface InvitationTokenData {
   team_id: number;
   subsidiary_id: number;
   company_id: number;
+  company_type: OrganizationType;
   campaign_id: number;
   exp: number;
 }

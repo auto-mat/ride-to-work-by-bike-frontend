@@ -24,91 +24,77 @@ export const useInvitationPrefill = (logger: Logger | null) => {
    * Pre-fill organization when user selects company/school payment
    * Called when paymentSubject changes to company or school
    */
-  const prefillOrganizationForPayment = async (
-    paymentSubject: PaymentSubject,
-  ): Promise<void> => {
-    const invitationOrgId = registerChallengeStore.invitationOrganizationId;
-    if (!invitationOrgId) return;
-    if (registerChallengeStore.organizationId !== null) return;
-    // wait for organizations to load
-    if (registerChallengeStore.isLoadingOrganizations) {
-      const stopWatch = watch(
-        () => registerChallengeStore.isLoadingOrganizations,
-        (isLoading) => {
-          if (
-            !isLoading &&
-            registerChallengeStore.organizations.length > 0
-          ) {
-            stopWatch();
-            applyOrganizationPrefillForPayment(paymentSubject, invitationOrgId);
-          }
-        },
-      );
-    } else if (registerChallengeStore.organizations.length > 0) {
-      applyOrganizationPrefillForPayment(paymentSubject, invitationOrgId);
-    }
-  };
-
-  const applyOrganizationPrefillForPayment = (
-    paymentSubject: PaymentSubject,
-    invitationOrgId: number,
-  ): void => {
-    // find invitation organization
-    const invitationOrg = registerChallengeStore.organizations.find(
-      (org) => org.id === invitationOrgId,
-    );
-    if (!invitationOrg) return;
-    // check type compatibility
-    const isCompatible =
+  const prefillOrganizationForPayment = async (): Promise<void> => {
+    const invitationOrganizationId =
+      registerChallengeStore.getInvitationOrganizationId;
+    const invitationOrganizationType =
+      registerChallengeStore.getInvitationOrganizationType;
+    const organizationId = registerChallengeStore.organizationId;
+    const paymentSubject = registerChallengeStore.getPaymentSubject;
+    const isPaymentSubjectMatching =
       (paymentSubject === PaymentSubject.company &&
-        invitationOrg.type === OrganizationType.company) ||
+        invitationOrganizationType === OrganizationType.company) ||
       (paymentSubject === PaymentSubject.school &&
-        invitationOrg.type === OrganizationType.school);
-    if (isCompatible) {
-      registerChallengeStore.setOrganizationId(invitationOrgId);
+        invitationOrganizationType === OrganizationType.school);
+    logger?.debug(
+      `prefillOrganizationForPayment: orgId=<${invitationOrganizationId}>, type=<${invitationOrganizationType}>, payment=<${paymentSubject}>, match=<${isPaymentSubjectMatching}>`,
+    );
+    // skip if no invitation data or organization already selected
+    if (
+      !invitationOrganizationId ||
+      !invitationOrganizationType ||
+      organizationId ||
+      !paymentSubject
+    )
+      return;
+    // skip if payment subject does not equal invitation organization type
+    if (!isPaymentSubjectMatching) {
       logger?.info(
-        `Pre-filled organization ${invitationOrgId} for ${paymentSubject} payment`,
+        `Type mismatch: <${invitationOrganizationType}> vs <${paymentSubject}>, skipping org pre-fill`,
       );
+      return;
     }
+    // check if invitation organization exists in the filtered array
+    const invitationOrg = registerChallengeStore.organizations.find(
+      (org) => org.id === invitationOrganizationId,
+    );
+    if (!invitationOrg) {
+      logger?.info(
+        `Organization <${invitationOrganizationId}> not found, skipping pre-fill`,
+      );
+      return;
+    }
+    registerChallengeStore.setOrganizationId(invitationOrganizationId);
+    logger?.info(`Pre-filled organization <${invitationOrganizationId}>`);
   };
 
   /**
    * Pre-fill organization type when user reaches participation step
    * Called when step becomes 3
+   * Only pre-fill when payment subject is individual or voucher
    */
   const prefillOrganizationType = async (): Promise<void> => {
-    const invitationOrgId = registerChallengeStore.invitationOrganizationId;
-    if (!invitationOrgId) return;
+    const invitationOrganizationType =
+      registerChallengeStore.getInvitationOrganizationType;
+    const paymentSubject = registerChallengeStore.getPaymentSubject;
+    // skip if no invitation organization type
+    if (!invitationOrganizationType) return;
+    // skip if organization type already selected
     if (registerChallengeStore.organizationType !== OrganizationType.none)
       return;
-    // wait for organizations to load
-    if (registerChallengeStore.isLoadingOrganizations) {
-      const stopWatch = watch(
-        () => registerChallengeStore.isLoadingOrganizations,
-        (isLoading) => {
-          if (
-            !isLoading &&
-            registerChallengeStore.organizations.length > 0
-          ) {
-            stopWatch();
-            applyOrganizationTypePrefill(invitationOrgId);
-          }
-        },
+    // only pre-fill when payment is individual or voucher
+    if (
+      paymentSubject !== PaymentSubject.individual &&
+      paymentSubject !== PaymentSubject.voucher
+    ) {
+      logger?.info(
+        `Payment subject <${paymentSubject}> type locked, skipping pre-fill`,
       );
-    } else if (registerChallengeStore.organizations.length > 0) {
-      applyOrganizationTypePrefill(invitationOrgId);
+      return;
     }
-  };
-
-  const applyOrganizationTypePrefill = (invitationOrgId: number): void => {
-    // find invitation organization
-    const invitationOrg = registerChallengeStore.organizations.find(
-      (org) => org.id === invitationOrgId,
-    );
-    if (!invitationOrg) return;
-    registerChallengeStore.setOrganizationType(invitationOrg.type);
+    registerChallengeStore.setOrganizationType(invitationOrganizationType);
     logger?.info(
-      `Pre-filled organization type ${invitationOrg.type} from invitation`,
+      `Pre-filled organization type <${invitationOrganizationType}>`,
     );
   };
 
@@ -117,26 +103,24 @@ export const useInvitationPrefill = (logger: Logger | null) => {
    * Called when step becomes 4
    */
   const prefillOrganizationAndSubsidiary = async (): Promise<void> => {
-    const invitationOrgId = registerChallengeStore.invitationOrganizationId;
-    const invitationSubId = registerChallengeStore.invitationSubsidiaryId;
+    const invitationOrgId = registerChallengeStore.getInvitationOrganizationId;
+    const invitationSubId = registerChallengeStore.getInvitationSubsidiaryId;
     if (!invitationOrgId || !invitationSubId) return;
-    // wait for organizations and subsidiaries to load
+    // check if we can pre-fill immediately
     if (
-      registerChallengeStore.isLoadingOrganizations ||
-      registerChallengeStore.isLoadingSubsidiaries
+      registerChallengeStore.organizations.length > 0 &&
+      registerChallengeStore.subsidiaries.length > 0
     ) {
+      applyOrganizationAndSubsidiaryPrefill(invitationOrgId, invitationSubId);
+    } else {
+      // wait for both arrays to have data
       const stopWatch = watch(
         () => [
-          registerChallengeStore.isLoadingOrganizations,
-          registerChallengeStore.isLoadingSubsidiaries,
+          registerChallengeStore.organizations.length,
+          registerChallengeStore.subsidiaries.length,
         ],
-        ([isLoadingOrgs, isLoadingSubs]) => {
-          if (
-            !isLoadingOrgs &&
-            !isLoadingSubs &&
-            registerChallengeStore.organizations.length > 0 &&
-            registerChallengeStore.subsidiaries.length > 0
-          ) {
+        ([orgsLength, subsLength]) => {
+          if (orgsLength > 0 && subsLength > 0) {
             stopWatch();
             applyOrganizationAndSubsidiaryPrefill(
               invitationOrgId,
@@ -145,11 +129,6 @@ export const useInvitationPrefill = (logger: Logger | null) => {
           }
         },
       );
-    } else if (
-      registerChallengeStore.organizations.length > 0 &&
-      registerChallengeStore.subsidiaries.length > 0
-    ) {
-      applyOrganizationAndSubsidiaryPrefill(invitationOrgId, invitationSubId);
     }
   };
 
@@ -165,12 +144,12 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       );
       if (invitationOrg) {
         registerChallengeStore.setOrganizationId(invitationOrgId);
-        logger?.info(`Pre-filled organization ${invitationOrgId}`);
+        logger?.info(`Pre-filled organization <${invitationOrgId}>`);
       }
     } else if (currentOrgId !== invitationOrgId) {
       // organization mismatch - stop pre-filling subsidiary
       logger?.info(
-        `Organization mismatch (current: ${currentOrgId}, invitation: ${invitationOrgId}) - skipping subsidiary pre-fill`,
+        `Org mismatch <${currentOrgId}> vs <${invitationOrgId}>, skipping subsidiary`,
       );
       return;
     }
@@ -181,7 +160,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       );
       if (invitationSub) {
         registerChallengeStore.setSubsidiaryId(invitationSubId);
-        logger?.info(`Pre-filled subsidiary ${invitationSubId}`);
+        logger?.info(`Pre-filled subsidiary <${invitationSubId}>`);
       }
     }
   };
@@ -191,17 +170,20 @@ export const useInvitationPrefill = (logger: Logger | null) => {
    * Called when step becomes 5
    */
   const prefillTeam = async (): Promise<void> => {
-    const invitationTeamId = registerChallengeStore.invitationTeamId;
-    const invitationOrgId = registerChallengeStore.invitationOrganizationId;
-    const invitationSubId = registerChallengeStore.invitationSubsidiaryId;
+    const invitationTeamId = registerChallengeStore.getInvitationTeamId;
+    const invitationOrgId = registerChallengeStore.getInvitationOrganizationId;
+    const invitationSubId = registerChallengeStore.getInvitationSubsidiaryId;
     if (!invitationTeamId) return;
     if (registerChallengeStore.teamId !== null) return;
-    // wait for teams to load
-    if (registerChallengeStore.isLoadingTeams) {
+    // check if we can pre-fill immediately
+    if (registerChallengeStore.teams.length > 0) {
+      applyTeamPrefill(invitationTeamId, invitationOrgId, invitationSubId);
+    } else {
+      // wait for teams array to populate
       const stopWatch = watch(
-        () => registerChallengeStore.isLoadingTeams,
-        (isLoading) => {
-          if (!isLoading && registerChallengeStore.teams.length > 0) {
+        () => registerChallengeStore.teams.length,
+        (teamsLength) => {
+          if (teamsLength > 0) {
             stopWatch();
             applyTeamPrefill(
               invitationTeamId,
@@ -211,8 +193,6 @@ export const useInvitationPrefill = (logger: Logger | null) => {
           }
         },
       );
-    } else if (registerChallengeStore.teams.length > 0) {
-      applyTeamPrefill(invitationTeamId, invitationOrgId, invitationSubId);
     }
   };
 
@@ -230,7 +210,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       currentOrgId !== invitationOrgId
     ) {
       logger?.info(
-        `Organization mismatch (current: ${currentOrgId}, invitation: ${invitationOrgId}) - skipping team pre-fill`,
+        `Org mismatch <${currentOrgId}> vs <${invitationOrgId}>, skipping team`,
       );
       return;
     }
@@ -241,7 +221,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       currentSubId !== invitationSubId
     ) {
       logger?.info(
-        `Subsidiary mismatch (current: ${currentSubId}, invitation: ${invitationSubId}) - skipping team pre-fill`,
+        `Subsidiary mismatch <${currentSubId}> vs <${invitationSubId}>, skipping team`,
       );
       return;
     }
@@ -251,7 +231,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     );
     if (!invitationTeam) return;
     registerChallengeStore.setTeamId(invitationTeamId);
-    logger?.info(`Pre-filled team ${invitationTeamId}`);
+    logger?.info(`Pre-filled team <${invitationTeamId}>`);
   };
 
   return {
