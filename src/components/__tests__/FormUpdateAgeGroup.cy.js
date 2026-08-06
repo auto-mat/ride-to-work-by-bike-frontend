@@ -152,8 +152,10 @@ function coreTests() {
       cy.dataCy('form-age-group-select').click();
       cy.get('.q-menu .q-item').first().click();
       cy.dataCy('form-button-save').click();
-      cy.get('@updateValueSpy').should('have.been.calledOnce');
-      cy.get('@updateValueSpy').should('have.been.calledWith', response[0][0]);
+      cy.get('@updateValueSpy').should(
+        'have.been.calledOnceWith',
+        response[0][0],
+      );
       cy.get('@closeSpy').should('have.been.calledOnce');
     });
   });
