@@ -86,13 +86,13 @@ export default defineComponent({
       }
     });
 
-    const closeDialog = (): void => {
+    const onCloseDialog = (): void => {
       props.onClose();
     };
 
     const onUpdateAgeGroup = (): void => {
       emit('update:value', inputValue.value);
-      props.onClose();
+      onCloseDialog();
     };
 
     return {
@@ -101,7 +101,7 @@ export default defineComponent({
       filterAgeGroups,
       selectedAgeGroup,
       isLoadingAgeGroups,
-      closeDialog,
+      onCloseDialog,
       onUpdateAgeGroup,
     };
   },
@@ -145,7 +145,7 @@ export default defineComponent({
         outline
         color="primary"
         :label="$t('navigation.discardChanges')"
-        @click.prevent="closeDialog"
+        @click.prevent="onCloseDialog"
         data-cy="form-button-cancel"
       />
       <!-- Button: Save -->

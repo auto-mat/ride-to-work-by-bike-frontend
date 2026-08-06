@@ -88,13 +88,13 @@ export default defineComponent({
       }
     });
 
-    const closeDialog = (): void => {
+    const onCloseDialog = (): void => {
       props.onClose();
     };
 
     const onUpdateOccupation = (): void => {
       emit('update:value', inputValue.value);
-      props.onClose();
+      onCloseDialog();
     };
 
     return {
@@ -103,7 +103,7 @@ export default defineComponent({
       filterOccupations,
       selectedOccupation,
       isLoadingOccupations,
-      closeDialog,
+      onCloseDialog,
       onUpdateOccupation,
     };
   },
@@ -147,7 +147,7 @@ export default defineComponent({
         outline
         color="primary"
         :label="$t('navigation.discardChanges')"
-        @click.prevent="closeDialog"
+        @click.prevent="onCloseDialog"
         data-cy="form-button-cancel"
       />
       <!-- Button: Save -->
