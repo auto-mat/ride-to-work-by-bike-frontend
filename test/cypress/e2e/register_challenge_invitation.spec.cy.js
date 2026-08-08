@@ -122,7 +122,7 @@ describe('Register Challenge - Invitation token flow', () => {
     });
 
     context('pre-fill with company payment', () => {
-      it('pre-fills payment subject, organization and team', () => {
+      it('pre-fills payment subject, organization subsidiary and team', () => {
         cy.passToStep2();
         // wait for payment options to be visible
         cy.dataCy('form-field-payment-subject').should('be.visible');
@@ -145,6 +145,38 @@ describe('Register Challenge - Invitation token flow', () => {
           .should('contain', 'IT Běžci');
         // allows to move to step 6
         cy.moveThroughStep5();
+      });
+    });
+
+    context('pre-fill with voucher payment', () => {
+      it('pre-fills organization type, subsidiary, organization and team', () => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            cy.passToStep2();
+            // wait for payment options to be visible
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            // select voucher payment
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            // apply FULL voucher
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            // ensure step 3 is pre-selected
+            cy.moveThroughStep3();
+            // ensure step 4 is pre-selected (company, subsidiary)
+            cy.moveThroughStep4();
+            // ensure step 5 is pre-selected (team)
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', 'IT Běžci');
+            // allows to move to step 6
+            cy.moveThroughStep5();
+          });
+        });
       });
     });
   });

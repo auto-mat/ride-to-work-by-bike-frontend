@@ -107,22 +107,19 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const invitationSubId = registerChallengeStore.getInvitationSubsidiaryId;
     if (!invitationOrgId || !invitationSubId) return;
     // check if we can pre-fill immediately
-    if (
-      registerChallengeStore.organizations.length > 0 &&
-      registerChallengeStore.subsidiaries.length > 0
-    ) {
-      applyOrganizationAndSubsidiaryPrefill(invitationOrgId, invitationSubId);
+    if (registerChallengeStore.organizations.length > 0) {
+      await applyOrganizationAndSubsidiaryPrefill(
+        invitationOrgId,
+        invitationSubId,
+      );
     } else {
-      // wait for both arrays to have data
+      // wait for organizations array to have data
       const stopWatch = watch(
-        () => [
-          registerChallengeStore.organizations.length,
-          registerChallengeStore.subsidiaries.length,
-        ],
-        ([orgsLength, subsLength]) => {
-          if (orgsLength > 0 && subsLength > 0) {
+        () => registerChallengeStore.organizations.length,
+        async (orgsLength) => {
+          if (orgsLength > 0) {
             stopWatch();
-            applyOrganizationAndSubsidiaryPrefill(
+            await applyOrganizationAndSubsidiaryPrefill(
               invitationOrgId,
               invitationSubId,
             );
@@ -132,10 +129,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     }
   };
 
-  const applyOrganizationAndSubsidiaryPrefill = (
+  const applyOrganizationAndSubsidiaryPrefill = async (
     invitationOrgId: number,
     invitationSubId: number,
-  ): void => {
+  ): Promise<void> => {
     const currentOrgId = registerChallengeStore.organizationId;
     // pre-fill organization if null
     if (currentOrgId === null) {
@@ -145,15 +142,24 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       if (invitationOrg) {
         registerChallengeStore.setOrganizationId(invitationOrgId);
         logger?.info(`Pre-filled organization <${invitationOrgId}>`);
+        // load subsidiaries for the pre-filled organization
+        await registerChallengeStore.loadSubsidiariesToStore(logger);
+        logger?.info('Loaded subsidiaries for pre-filled organization');
       }
     } else if (currentOrgId !== invitationOrgId) {
-      // organization mismatch - stop pre-filling subsidiary
+      // different organization ID filled, exit
       logger?.info(
         `Org mismatch <${currentOrgId}> vs <${invitationOrgId}>, skipping subsidiary`,
       );
       return;
+    } else {
+      // correct organization ID filled, ensure subsidiaries are loaded
+      if (registerChallengeStore.subsidiaries.length === 0) {
+        await registerChallengeStore.loadSubsidiariesToStore(logger);
+        logger?.info('Loaded subsidiaries for pre-filled organization');
+      }
     }
-    // pre-fill subsidiary if null (only if organization matches)
+    // pre-fill subsidiary if null and if organization matches
     if (registerChallengeStore.subsidiaryId === null) {
       const invitationSub = registerChallengeStore.subsidiaries.find(
         (sub) => sub.id === invitationSubId,
@@ -203,7 +209,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
   ): void => {
     const currentOrgId = registerChallengeStore.organizationId;
     const currentSubId = registerChallengeStore.subsidiaryId;
-    // validate organization matches (if set)
+    // validate that organization matches if set
     if (
       invitationOrgId !== null &&
       currentOrgId !== null &&
@@ -214,7 +220,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       );
       return;
     }
-    // validate subsidiary matches (if set)
+    // validate that subsidiary matches if set
     if (
       invitationSubId !== null &&
       currentSubId !== null &&
