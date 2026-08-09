@@ -51,7 +51,10 @@ export const registerChallengeAdapter = {
       paymentAmount: apiData.personal_details.payment_amount,
       paymentCategory: apiData.personal_details
         .payment_category as PaymentCategory,
-      organizationType: apiData.organization_type as OrganizationType,
+      organizationType:
+        apiData.organization_type === 'none'
+          ? OrganizationType.none
+          : (apiData.organization_type as OrganizationType),
       subsidiaryId: apiData.subsidiary_id,
       teamId: apiData.team_id,
       merchId: apiData.t_shirt_size_id,

@@ -178,7 +178,7 @@ export default defineComponent({
             'border-style': 'solid',
             'border-color': opt.value === organizationType ? primary : grey3,
           }"
-          data-cy="form-field-option"
+          :data-cy="`form-participation-${opt.value}`"
         >
           <!-- First column: Icon -->
           <div v-if="opt.label" class="col-auto q-mr-md">
