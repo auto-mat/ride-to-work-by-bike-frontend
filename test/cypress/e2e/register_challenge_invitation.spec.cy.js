@@ -179,6 +179,226 @@ describe('Register Challenge - Invitation token flow', () => {
         });
       });
     });
+
+    context('user overrides invitation values', () => {
+      it('persists value for user-selected team', () => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            cy.passToStep2();
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            cy.moveThroughStep3();
+            cy.moveThroughStep4();
+            // verify team from invitation in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  '1358',
+                );
+                cy.dataCy('debug-team-id-value').should('contain', '2452');
+              });
+            // verify team from invitation in UI
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', 'IT Běžci');
+            // change team to different one
+            cy.dataCy('form-select-table-team')
+              .find('.q-radio')
+              .eq(2)
+              .find('.q-radio__bg')
+              .click({ force: true });
+            // navigate back and forward
+            cy.dataCy('step-5-back').should('be.visible').click();
+            cy.dataCy('step-4-continue').should('be.visible').click();
+            // verify user-selected team in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  '1358',
+                );
+                cy.dataCy('debug-team-id-value').should('contain', '2453');
+              });
+            // verify user-selected team in UI
+            cy.dataCy('form-select-table-team')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .first()
+              .siblings('.q-radio__label')
+              .should('contain', 'Marketing na kolech');
+          });
+        });
+      });
+
+      it('persists value for user-selected subsidiary', () => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            cy.passToStep2();
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            cy.moveThroughStep3();
+            cy.moveThroughStep4();
+            // go back to step 4
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // verify subsidiary from invitation in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  '1358',
+                );
+                cy.dataCy('debug-team-id-value').should('contain', '2452');
+              });
+            // verify subsidiary is pre-filled from invitation
+            cy.dataCy('form-company-address')
+              .find('.q-field__input')
+              .invoke('val')
+              .should('contain', 'Krkonošská, 177');
+            // change to a different subsidiary (third one in list)
+            cy.selectDropdownMenu('form-company-address', 2);
+            // verify subsidiary and team from invitation in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should('contain', '888');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            // continue to step 5
+            cy.dataCy('step-4-continue').should('be.visible').click();
+            // verify team is not pre-filled (unavailable)
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('not.exist');
+            // navigate back to step 4
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // verify subsidiary and team from invitation in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should('contain', '888');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            // verify user's subsidiary choice persists (NOT re-filled from invitation)
+            cy.dataCy('form-company-address')
+              .find('.q-field__input')
+              .invoke('val')
+              .should('not.contain', 'Krkonošská, 177')
+              .should('contain', '1.Máje');
+          });
+        });
+      });
+
+      it('persists value for user-selected organization', () => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.get('@i18n').then((i18n) => {
+            cy.passToStep2();
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            cy.moveThroughStep3();
+            cy.moveThroughStep4();
+            // go back to step 4
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // verify organization from invitation in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '987',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  '1358',
+                );
+                cy.dataCy('debug-team-id-value').should('contain', '2452');
+              });
+            // verify organization from invitation in UI
+            cy.dataCy('form-select-table-company')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', '100MEGA Distribution s.r.o.');
+            // change organization to different one
+            cy.dataCy('form-select-table-company')
+              .find('.q-radio')
+              .eq(1)
+              .find('.q-radio__bg')
+              .click({ force: true });
+            // verify subsidiary and team are reset in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '774',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should('be.empty');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            cy.dataCy('step-4-back').should('be.visible').click();
+            cy.dataCy('step-3-continue').should('be.visible').click();
+            // verify subsidiary and team are reset in debug component
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  '774',
+                );
+                cy.dataCy('debug-subsidiary-id-value').should('be.empty');
+                cy.dataCy('debug-team-id-value').should('be.empty');
+              });
+            // verify organization from invitation in UI
+            cy.dataCy('form-select-table-company')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', '13. Základní škola Plzeň');
+          });
+        });
+      });
+    });
   });
 
   context('user with already paid individual registration', () => {
