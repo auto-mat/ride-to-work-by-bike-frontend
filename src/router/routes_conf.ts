@@ -128,6 +128,13 @@ const routesConf: RoutesConf = {
       name: 'results-detail-performance',
     },
   },
+  diplomas: {
+    path: '/diplomas',
+    children: {
+      fullPath: '/diplomas',
+      name: 'diplomas',
+    },
+  },
   routes: {
     path: '/routes',
     children: {

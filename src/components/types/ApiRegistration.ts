@@ -59,6 +59,13 @@ export type ThirdPartyVoucher = {
   voucher_type_image: string;
 };
 
+// diploma earned for a single challenge participation
+export type Diploma = {
+  year: string;
+  name: string;
+  url: string;
+};
+
 export type RegisterChallengeResult = {
   personal_details: PersonalDetails;
   team_id: number | null;
@@ -68,6 +75,7 @@ export type RegisterChallengeResult = {
   organization_type: string;
   city_slug: string | null;
   city_wp_slug: string | null;
+  diplomas: Diploma[];
 };
 
 export type RegisterChallengeResponse = {

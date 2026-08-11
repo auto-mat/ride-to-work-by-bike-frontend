@@ -112,6 +112,7 @@ buttonCityAdministration = "Správa mesta"
 community = "Komunita"
 contact = "Kontakt"
 coordinator = "Firemný koordinátor"
+diplomas = "Diplomy"
 discounts = "Zľavy a ceny"
 donate = "Darujte"
 home = "Domov"
@@ -950,7 +951,6 @@ messageUserNotApproved = "Nemôžete zapísať jazdy, kým nie ste schválený a
 
 [profile]
 buttonDeleteAccount = "Zmazať"
-buttonDownloadDiploma = "Stiahnuť diplom"
 buttonDownloadInvoice = "Stiahnutie potvrzenia o platbe"
 buttonFillQuestionnaire = "Vyplniť dotazník"
 descriptionNickname = "Zobrazuje sa vo verejných výsledkoch namiesto vášho mena"
@@ -996,7 +996,6 @@ titleDialogDeleteAccount = "Zmazanie účtu"
 titlePersonalDetails = "Osobné údaje"
 titleProfile = "Profil"
 titleRegistrationDetails = "Registrácia"
-titleResults = "Výsledky"
 titleUpdateAgeGroup = "Upraviť rok narodenia"
 titleUpdateOccupation = "Upraviť povolanie"
 labelAgeGroup = "Rok narodenia"
@@ -1206,6 +1205,11 @@ labelColumnPlace = "Poradie"
 labelColumnFrequency = "Pravidelnosť"
 labelColumnDistance = "Zelené kilometre"
 labelColumnCo2 = "Ušetrené emisie CO₂"
+
+[diplomas]
+titleDiplomas = "Diplomy"
+textEmptyState = "Zatiaľ nemáte žiadne diplomy."
+buttonDownload = "Stiahnuť"
 
 [results.reportType]
 tachometers = "Tachometry"

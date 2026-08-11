@@ -68,6 +68,7 @@ import { i18n } from '../boot/i18n';
 import { PriceLevelCategory } from '../components/enums/Challenge';
 import type {
   AgeGroupApiObject,
+  Diploma,
   OccupationApiObject,
   RegisterChallengePostPayload,
   RegisterChallengePostResponse,
@@ -122,6 +123,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     telephone: '',
     telephoneOptIn: false,
     diploma: '',
+    diplomas: [] as Diploma[],
     language: defaultLocale,
     isLoadingRegisterChallenge: false,
     isLoadingSubsidiaries: false,
@@ -189,6 +191,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTelephone: (state): string => state.telephone,
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
     getDiploma: (state): string => state.diploma,
+    getDiplomas: (state): Diploma[] => state.diplomas,
     getLanguage: (state): string => state.language,
     getRegistrationId: (state): number | null => {
       return state.personalDetails.id || null;
@@ -490,6 +493,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setDiploma(diploma: string) {
       this.diploma = diploma;
     },
+    setDiplomas(diplomas: Diploma[]) {
+      this.diplomas = diplomas;
+    },
     setLanguage(language: string) {
       this.language = language;
     },
@@ -700,6 +706,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       );
       this.setDiploma(parsedResponse.diploma);
       this.$log?.debug(`Diploma store updated to <${this.getDiploma}>.`);
+      this.setDiplomas(parsedResponse.diplomas);
+      this.$log?.debug(
+        `Diplomas store updated to <${JSON.stringify(this.getDiplomas)}>.`,
+      );
       this.setCitySlug(parsedResponse.citySlug);
       this.$log?.debug(`City slug store updated to <${this.getCitySlug}>.`);
       this.setCityWpSlug(parsedResponse.cityWpSlug);

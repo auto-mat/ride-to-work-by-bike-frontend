@@ -248,6 +248,18 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  // diplomas
+  {
+    path: routesConf['diplomas']['path'],
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: routesConf['diplomas']['children']['name'],
+        component: () => import('pages/DiplomasPage.vue'),
+      },
+    ],
+  },
   // profile
   {
     path: routesConf['profile']['path'],

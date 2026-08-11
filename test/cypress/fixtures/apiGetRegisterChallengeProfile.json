@@ -14,8 +14,8 @@
         "telephone": "736123456",
         "telephone_opt_in": false,
         "language": "cs",
-        "occupation": {"id": 138, "value": "IT"},
-        "age_group": {"id": 1990, "value": "1990"},
+        "occupation": { "id": 138, "value": "IT" },
+        "age_group": { "id": 1990, "value": "1990" },
         "newsletter": "challenge",
         "personal_data_opt_in": true,
         "discount_coupon": "",
@@ -31,7 +31,19 @@
       "team_id": 2451,
       "organization_id": 987,
       "subsidiary_id": 1358,
-      "t_shirt_size_id": 133
+      "t_shirt_size_id": 133,
+      "diplomas": [
+        {
+          "year": "2024",
+          "name": "Do práce na kole 2024",
+          "url": "https://example.com/diplomas/2024.pdf"
+        },
+        {
+          "year": "2023",
+          "name": "Zářijová výzva 2023",
+          "url": "https://example.com/diplomas/2023-september.pdf"
+        }
+      ]
     }
   ]
 }

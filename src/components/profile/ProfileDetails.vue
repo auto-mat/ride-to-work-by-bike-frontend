@@ -236,16 +236,6 @@ export default defineComponent({
       return registerChallengeStore.getPersonalDetails.occupation;
     });
 
-    const diploma = computed(() => {
-      return registerChallengeStore.getDiploma;
-    });
-
-    const onDownloadDiploma = () => {
-      if (diploma.value) {
-        window.open(diploma.value, '_blank');
-      }
-    };
-
     const isPaymentComplete = computed(() => {
       return registerChallengeStore.getIsPaymentComplete;
     });
@@ -394,12 +384,10 @@ export default defineComponent({
       ageGroupId,
       occupationLabel,
       occupationId,
-      diploma,
       profile,
       subsidiary,
       team,
       teamId,
-      onDownloadDiploma,
       onDownloadInvoice,
       onUpdateRegisterChallengeDetails,
       onUpdateEmail,
@@ -742,28 +730,6 @@ export default defineComponent({
         </div>
       </div>
     </div>
-
-    <!-- Results section -->
-    <template v-if="diploma">
-      <!-- Title -->
-      <section-heading class="q-mt-xl" data-cy="profile-title-results">
-        {{ $t('profile.titleResults') }}
-      </section-heading>
-      <!-- Button: Download diploma -->
-      <div class="q-mt-lg">
-        <q-btn
-          unelevated
-          rounded
-          outline
-          color="primary"
-          data-cy="profile-details-button-download-diploma"
-          @click="onDownloadDiploma"
-        >
-          <q-icon name="mdi-download" :size="iconSize" class="q-mr-sm" />
-          {{ $t('profile.buttonDownloadDiploma') }}
-        </q-btn>
-      </div>
-    </template>
 
     <!-- Contact participation -->
     <div class="q-mt-xl">

@@ -65,6 +65,12 @@ export const useMenu = () => {
         title: 'results',
         disabled: !unref(isResultsEnabled),
       },
+      {
+        url: routesConf['diplomas']['children']['fullPath'],
+        icon: 'svguse:icons/drawer_menu/icons.svg#lucide-award',
+        name: 'diplomas',
+        title: 'diplomas',
+      },
     ];
 
     // prizes/discounts item is hidden for september/october challenge

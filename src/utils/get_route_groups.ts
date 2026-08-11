@@ -8,6 +8,7 @@ export const ROUTE_GROUPS = {
   FULL_APP: [
     'home',
     'community',
+    'diplomas',
     'prizes',
     'results',
     'results_detail',
