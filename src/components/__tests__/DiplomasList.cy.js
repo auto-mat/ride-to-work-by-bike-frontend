@@ -25,7 +25,7 @@ describe('<DiplomasList>', () => {
       setActivePinia(createPinia());
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
-          responseRegisterChallenge.results[0].diplomas = [];
+          responseRegisterChallenge.results[0].personal_details.diplomas = [];
           cy.interceptRegisterChallengeGetApi(
             rideToWorkByBikeConfig,
             i18n,
@@ -64,7 +64,8 @@ describe('<DiplomasList>', () => {
     it('renders a card for each diploma with name, year and download button', () => {
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
-          const diplomas = responseRegisterChallenge.results[0].diplomas;
+          const diplomas =
+            responseRegisterChallenge.results[0].personal_details.diplomas;
           cy.dataCy(selectorEmptyState).should('not.exist');
           cy.dataCy(selectorCard).should('have.length', diplomas.length);
           diplomas.forEach((diploma, index) => {
@@ -86,7 +87,8 @@ describe('<DiplomasList>', () => {
     it('opens diploma URL in new tab when download button is clicked', () => {
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
-          const diploma = responseRegisterChallenge.results[0].diplomas[0];
+          const diploma =
+            responseRegisterChallenge.results[0].personal_details.diplomas[0];
           // stub window.open
           cy.window().then((win) => {
             cy.stub(win, 'open').as('windowOpen');
@@ -107,7 +109,8 @@ describe('<DiplomasList>', () => {
       setActivePinia(createPinia());
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
-          responseRegisterChallenge.results[0].diplomas[0].url = '';
+          responseRegisterChallenge.results[0].personal_details.diplomas[0].url =
+            '';
           cy.interceptRegisterChallengeGetApi(
             rideToWorkByBikeConfig,
             i18n,

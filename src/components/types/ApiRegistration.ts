@@ -48,6 +48,7 @@ export type PersonalDetails = CorePersonalDetails & {
   is_payment_with_reward: boolean | null;
   thirdparty_voucher?: ThirdPartyVoucher[];
   diploma: string;
+  diplomas: Diploma[];
 };
 
 export type ThirdPartyVoucher = {
@@ -75,7 +76,6 @@ export type RegisterChallengeResult = {
   organization_type: string;
   city_slug: string | null;
   city_wp_slug: string | null;
-  diplomas: Diploma[];
 };
 
 export type RegisterChallengeResponse = {

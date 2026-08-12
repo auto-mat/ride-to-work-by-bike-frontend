@@ -91,7 +91,7 @@ describe('Diplomas page', () => {
             cy.fixture('apiGetRegisterChallengeProfile').then((response) => {
               cy.fixture('apiGetRegisterChallengeProfile.json').then(
                 (response) => {
-                  response.results[0].diplomas = [];
+                  response.results[0].personal_details.diplomas = [];
                   cy.interceptRegisterChallengeGetApi(
                     config,
                     defLocale,
@@ -155,7 +155,7 @@ function coreTests() {
         .should('be.visible')
         .and('contain', i18n.global.t('diplomas.titleDiplomas'));
       cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
-        const diplomas = response.results[0].diplomas;
+        const diplomas = response.results[0].personal_details.diplomas;
         cy.dataCy('diplomas-list-card')
           .should('be.visible')
           .and('have.length', diplomas.length);
