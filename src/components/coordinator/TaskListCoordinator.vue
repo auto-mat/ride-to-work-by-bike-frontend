@@ -34,7 +34,7 @@ interface TasksData {
 
 const getTasksData = async (): TasksData => {
   const localesFiles = import.meta.glob(
-    './../../data/coordinator_tasks/[A-Za-z0-9-_,s]+.toml',
+    './../../data/coordinator_tasks/*.toml',
     { eager: true },
   );
   const tasks = {};
