@@ -40,6 +40,7 @@ export const useChallengeStore = defineStore('challenge', {
     priceLevel: [] as PriceLevel[],
     description: '',
     campaignId: null as number | null,
+    benefitialAdmissionFeeCompany: null as number | null,
   }),
 
   getters: {
@@ -100,6 +101,9 @@ export const useChallengeStore = defineStore('challenge', {
     getCampaignId(): number | null {
       return this.campaignId;
     },
+    getBenefitialAdmissionFeeCompany(): number | null {
+      return this.benefitialAdmissionFeeCompany;
+    },
   },
 
   actions: {
@@ -120,6 +124,11 @@ export const useChallengeStore = defineStore('challenge', {
     },
     setCampaignId(campaignId: number | null): void {
       this.campaignId = campaignId;
+    },
+    setBenefitialAdmissionFeeCompany(
+      benefitialAdmissionFeeCompany: number | null,
+    ): void {
+      this.benefitialAdmissionFeeCompany = benefitialAdmissionFeeCompany;
     },
     async loadPhaseSet(): Promise<void> {
       const { campaigns, loadCampaign } = useApiGetCampaign(this.$log);
@@ -185,6 +194,27 @@ export const useChallengeStore = defineStore('challenge', {
         this.$log?.debug(`New campaign ID value <${this.campaignId}>.`);
       } else {
         this.$log?.info('No campaign ID found.');
+      }
+
+      if (
+        campaigns.value.length &&
+        campaigns.value[0]?.benefitial_admission_fee_company
+      ) {
+        this.$log?.debug(
+          'Set store this campaign benefitial admission fee company' +
+            ` <${campaigns.value[0].benefitial_admission_fee_company}>.`,
+        );
+        this.setBenefitialAdmissionFeeCompany(
+          campaigns.value[0].benefitial_admission_fee_company,
+        );
+        this.$log?.debug(
+          'New this campaign benefitial admission fee company value' +
+            ` <${this.benefitialAdmissionFeeCompany}>.`,
+        );
+      } else {
+        this.$log?.info(
+          'No this campaign benefitial admission fee company found.',
+        );
       }
     },
     /**
@@ -254,6 +284,7 @@ export const useChallengeStore = defineStore('challenge', {
       this.priceLevel = [];
       this.description = '';
       this.campaignId = null;
+      this.benefitialAdmissionFeeCompany = null;
     },
   },
 

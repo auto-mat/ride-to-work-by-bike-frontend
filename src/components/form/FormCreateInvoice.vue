@@ -33,6 +33,7 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // stores
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useChallengeStore } from 'src/stores/challenge';
 
 // types
 import type { AdminOrganisation } from '../types/AdminOrganisation';
@@ -134,6 +135,11 @@ export default defineComponent({
         ),
     });
 
+    const challengeStore = useChallengeStore();
+    const benefitialAdmissionFee = computed<string>(() => {
+      return String(challengeStore.getBenefitialAdmissionFeeCompany);
+    });
+
     const isBaseOrganizationComplete = computed<boolean>(
       () => adminOrganisationStore.getIsBaseOrganizationComplete,
     );
@@ -159,6 +165,7 @@ export default defineComponent({
       subsidiaries,
       selectedMembers,
       isBillingFormExpanded,
+      benefitialAdmissionFee,
       billingStreet,
       billingStreetNumber,
       billingCity,
@@ -365,7 +372,9 @@ export default defineComponent({
       <q-toggle
         dense
         v-model="isDonorEntryFee"
-        :label="$t('form.labelDonorEntryFee')"
+        :label="
+          $t('form.labelDonorEntryFee', { amount: benefitialAdmissionFee })
+        "
         name="confirm-billing-details"
         color="primary"
         class="q-mt-lg"

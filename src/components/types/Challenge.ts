@@ -47,6 +47,8 @@ export interface Campaign {
   campaign_type: string;
   max_team_members: number;
   description: string;
+  benefitial_admission_fee: number;
+  benefitial_admission_fee_company: number;
 }
 
 export interface ThisCampaignResponse {

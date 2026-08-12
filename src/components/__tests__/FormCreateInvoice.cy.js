@@ -1,7 +1,9 @@
+import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import FormCreateInvoice from 'components/form/FormCreateInvoice.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useChallengeStore } from 'src/stores/challenge';
 
 describe('<FormCreateInvoice>', () => {
   it('has translation for all strings', () => {
@@ -48,6 +50,7 @@ describe('<FormCreateInvoice>', () => {
 
 function coreTests() {
   it('renders component', () => {
+    const beneficialAdmissionAmount = 500;
     cy.fixture('createInvoiceTestData.json').then((testData) => {
       cy.wrap(useAdminOrganisationStore()).then((adminOrganisationStore) => {
         cy.setAdminOrganisationStoreState({
@@ -55,6 +58,17 @@ function coreTests() {
           organizations: testData.storeDataInitial.organizations,
           invoices: testData.storeDataInitial.invoices,
         });
+      });
+      cy.wrap(useChallengeStore()).then((challengeStore) => {
+        const beneficialAdmission = computed(
+          () => challengeStore.getBenefitialAdmissionFeeCompany,
+        );
+        challengeStore.setBenefitialAdmissionFeeCompany(
+          beneficialAdmissionAmount,
+        );
+        cy.wrap(beneficialAdmission)
+          .its('value')
+          .should('equal', beneficialAdmissionAmount);
       });
 
       // component
@@ -148,7 +162,12 @@ function coreTests() {
       // entry fee toggle
       cy.dataCy('form-create-invoice-donor-entry-fee-toggle')
         .should('be.visible')
-        .and('contain', i18n.global.t('form.labelDonorEntryFee'));
+        .and(
+          'contain',
+          i18n.global.t('form.labelDonorEntryFee', {
+            amount: beneficialAdmissionAmount,
+          }),
+        );
     });
   });
 
