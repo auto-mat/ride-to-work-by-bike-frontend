@@ -13,8 +13,7 @@ import { useRegisterChallengeStore } from '../stores/registerChallenge';
 import type { Logger } from '../components/types/Logger';
 
 /**
- * Invitation pre-fill orchestration composable
- * Coordinates pre-filling logic at registration checkpoints
+ * Coordinates pre-filling logic inside registration
  * @param {Logger | null} logger - Logger
  * @returns {Object} - Composable return object
  */
@@ -49,7 +48,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       !paymentSubject
     )
       return;
-    // check pre-fill condition: null OR step2 not yet left this session
+    // value is empty or step2 has not been visited
     const shouldPrefill =
       organizationId === null || step2State !== StepVisitState.dirty;
     if (!shouldPrefill) {
@@ -83,7 +82,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
    * Pre-fill organization type when user reaches participation step
    * Called when step becomes 3
    * Only pre-fill when payment subject is individual or voucher
-   * Prefill when value is empty or step3 has not been visited
+   * Pre-fill when value is empty or step3 has not been visited
    */
   const prefillOrganizationType = async (): Promise<void> => {
     const invitationOrganizationType =
@@ -161,7 +160,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const shouldPrefillOrg =
       currentOrgId === null || step4State !== StepVisitState.dirty;
     if (shouldPrefillOrg) {
-      // pre-fill organization
+      // pre-fill if we find organization
       const invitationOrganization = registerChallengeStore.organizations.find(
         (organization) => organization.id === invitationOrgId,
       );
@@ -190,8 +189,9 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     // pre-fill if value is empty or step4 has not been visited
     const shouldPrefillSub =
       currentSubId === null || step4State !== StepVisitState.dirty;
-    // pre-fill if subsidiary ID matches
+    // check if organization ID matches
     if (shouldPrefillSub && updatedOrgId === invitationOrgId) {
+      // pre-fill if we find subsidiary
       const invitationSubsidiary = registerChallengeStore.subsidiaries.find(
         (subsidiary) => subsidiary.id === invitationSubId,
       );
@@ -241,7 +241,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const currentSubId = registerChallengeStore.subsidiaryId;
     const currentTeamId = registerChallengeStore.teamId;
     const step5State = registerChallengeStore.getVisitedSteps.step5;
-    // check pre-fill condition: null OR step5 not yet left this session
+    // pre-fill if value is empty or step5 has not been visited
     const shouldPrefill =
       currentTeamId === null || step5State !== StepVisitState.dirty;
     if (!shouldPrefill) {

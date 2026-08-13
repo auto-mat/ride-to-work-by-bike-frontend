@@ -329,7 +329,6 @@ export default defineComponent({
       );
       // when switching payment subject, always clear the organizationId
       selectedCompany.value = null;
-      // pre-fill will be handled by organizations-loaded event from FormFieldCompany
     });
     const organizationType = computed<OrganizationType>(() => {
       return registerChallengeStore.getOrganizationType;

@@ -23,8 +23,8 @@
  * @side-effects
  * - Updates `registerChallengeStore.organizations` array after loading organizations.
  *   This is required for invitation pre-fill in register challenge flow.
- *   In other contexts (coordinator registration), this update is harmless
- *   but unnecessary.
+ *   In other contexts (coordinator registration), this update is unnecessary
+ *   but harmless.
  *
  * @components
  * - `DialogDefault`: Used to render a dialog window with form as content.

@@ -23,7 +23,7 @@
         "payment_amount": 390,
         "payment_category": "entry_fee"
       },
-      "organization_type": "none",
+      "organization_type": "",
       "team_id": null,
       "organization_id": null,
       "subsidiary_id": null,
