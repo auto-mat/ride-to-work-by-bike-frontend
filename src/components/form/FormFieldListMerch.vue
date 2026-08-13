@@ -559,6 +559,10 @@ export default defineComponent({
       v-html="
         $t('form.merch.textMerchUnavailableSeptember', {
           url: rideToWorkByBikeConfig.urlAutoMatShop,
+          shopDiscountAmount: shopDiscountAmountFormatted,
+          shopDiscountMinOrder: shopDiscountMinOrderFormatted,
+          shopDiscountValidUntil: shopDiscountValidUntilFormatted,
+          shopVoucherCode: rideToWorkByBikeConfig.shopVoucherCode,
         })
       "
     />

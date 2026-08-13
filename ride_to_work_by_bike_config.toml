@@ -272,6 +272,6 @@ mapSourceOsm = "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 # AUTO*MAT E-SHOP DISCOUNT COUPON SETTINGS
 
 shopDiscountAmount = 150
-shopDiscountMinOrder = 600
-shopDiscountValidUntil = "2026-06-30"
-shopVoucherCode = "KVDPNK2026"
+shopDiscountMinOrder = 200
+shopDiscountValidUntil = "2026-11-30"
+shopVoucherCode = "DPNKZARI26"

@@ -308,7 +308,7 @@ titleLocations = "Zajímavosti poblíž vaší cesty"
 
 [companyCoordinator]
 labelRegisterCoordinator = "Chci se stát firemním koordinátorem*kou"
-textBecomeCoordinator = "<p>Vaše organizace <b>{organizationName}</b> zatím nemá žádného koordinátora*ku. Můžete se jí*m stát právě vy!</p><p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat zaměstnavatele, aby uhradil účastnický poplatek.</li><li>Zajišťovat správnost a úplnost údajů v systému (fakturační údaje, adresy na balíčcích/pobočky).</li><li>Rozdělit balíčky účastníkům.</li><li>Vypsat případné vnitrofiremní výzvy.</li><li>Průběžně schvalovat platby za vaše zaměstnance a následně vygenerovat fakturu.</li></ul><p>Také budete mít přístup do systému Do práce na kole, kde najdete informace o účasti a výsledcích vaší organizace, včetně týmů a jednotlivých účastníků*nic.</p><p><b>Účastníky nebudete registrovat sám*sama, jen je můžete oslovit, aby se přihlásili.</b></p>"
+textBecomeCoordinator = "<p>Vaše organizace <b>{organizationName}</b> zatím nemá žádného koordinátora*ku. Můžete se jí*m stát právě vy!</p><p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat zaměstnavatele, aby uhradil účastnický poplatek.</li><li>Zajišťovat správnost a úplnost údajů v systému (fakturační údaje, doručovací adresy pro balíčky, adresy poboček).</li><li>Rozdělovat účastnické balíčky (platí pouze pro Květnovou výzvu).</li><li>Vypisovat případné vnitrofiremní výzvy.</li><li>Průběžně schvalovat platby za vaše zaměstnance a následně vygenerovat fakturu.</li></ul><p>Také budete mít přístup do systému Do práce na kole, kde najdete informace o účasti a výsledcích vaší organizace, včetně týmů a jednotlivých účastníků*nic.</p><p><b>Účastníky nebudete registrovat sám*sama, jen je můžete oslovit, aby se přihlásili.</b></p>"
 titleBecomeCoordinator = "Stát se firemní*m koordinátorem*kou"
 
 [coordinator]
@@ -606,8 +606,8 @@ labelSizeUnisex = "Velikost – unisex:"
 labelTrackDelivery = "Chci dostat zprávu o stavu doručování mého účastnického balíčku."
 labelVariant = "Varianta"
 labelUrlSizeConversionChartLink = "Tabulka velikosti"
-textMerchUnavailable = "V rámci dodatečné registrace do Květnové výzvy Do práce na kole již nerozesíláme účastnické balíčky. Máte však nárok na slevu {shopDiscountAmount} na našem benefičním e-shopu, kde máme trička i ponožky z mnoha ročníků. Sleva platí na každý nákup nad {shopDiscountMinOrder} a to do {shopDiscountValidUntil}. V košíku zadejte slevový kupón: {shopVoucherCode}. <a href='{url}' target='_blank'>Benefiční obchod AutoMat</a>"
-textMerchUnavailableSeptember = "Během Zářijové výzvy odměny nerozesíláme, ale máme pro vás něco lepšího - zavítejte na náš <a href='{url}' target='_blank'>benefiční eshop</a> a doplňte si třeba svoji sbírku triček Do práce na kole za super ceny"
+textMerchUnavailable = "V rámci dodatečné registrace do Květnové výzvy Do práce na kole již nerozesíláme účastnické balíčky. Máte však nárok na slevu {shopDiscountAmount} na našem benefičním e-shopu, kde máme trička i ponožky z mnoha ročníků. Sleva platí na každý nákup nad {shopDiscountMinOrder} a to do {shopDiscountValidUntil}. V košíku zadejte slevový kupón: {shopVoucherCode}. <a href='{url}' target='_blank'>Benefiční obchod AutoMat</a>."
+textMerchUnavailableSeptember = "Během Zářijové výzvy účastnické balíčky nerozesíláme, ale máme pro vás něco lepšího - zavítejte na náš <a href='{url}' target='_blank'>benefiční AutoMat e-shop</a> a využijte slevu {shopDiscountAmount} Kč na všechny položky Do práce na kole. Slevový kód {shopVoucherCode} je možné uplatnit na všechny objednávky v minimální hodnotě {shopDiscountMinOrder} Kč a to až do konce {shopDiscountValidUntil}."
 textNoMerchSelected = "Zvolili jste možnost 'bez balíčku', takže tento krok není potřeba vyplňovat. Registraci dokončíte kliknutím na tlačítko 'Pokračovat'."
 textMerchDisabled = "Tato výzva nenabízí účastnický balíček."
 
@@ -1109,7 +1109,7 @@ textCountdown.october = "Do Říjnové výzvy zbývá {days} dní a {hours}:{min
 textCountdown.may = "Do Květnové výzvy zbývá {days} dní a {hours}:{minutes}:{seconds} hodin!"
 textGender.male = "Muž"
 textGender.female = "Žena"
-textPaymentMinimum = "<b>Minimální účastnický poplatek je {amount}</b>. Umožňujete nám Výzvu provozovat, poskytovat během ní podporu a poskytnout vám účastnický balíček. Pokud nás chcete podpořit, budeme rádi za vyšší částky."
+textPaymentMinimum = "<b>Minimální účastnický poplatek je {amount}</b>. Umožňujete nám Výzvu provozovat, poskytovat během ní podporu a rozesílat účastnické balíčky (platí pro Květnovou výzvu). Pokud nás chcete podpořit ještě více, budeme rádi za vyšší benefiční příspěvek."
 textPaymentOrganizer = "<p>Výzvu Do práce na kole pro vás pořádá spolek AutoMat, který kontinuálně pracuje na zlepšování podmínek pro pěší a lidi na kolech v Česku.</p><p>Pokud nás v našem úsilí chcete podpořit, můžete svůj účastnický poplatek do výzvy navýšit o benefiční příspěvek v libovolné výši. Pomůžete tak dalšímu udržitelnému rozvoji našich měst. Děkujeme.</p>"
 textFreeRegistration = "Lednová výzva je zdarma. Pokud si přejete podpořit činnost Automatu, můžete tak udělat na <a href='{url}' target='_blank'>{linkText}</a>."
 textPayuPaymentFailed = "Vaše platba byla zrušena nebo zamítnuta.  Můžete se pokusit zaplatit znovu, nebo zvolit jinou formu platby."

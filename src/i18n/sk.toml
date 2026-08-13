@@ -606,7 +606,7 @@ labelTrackDelivery = "Rád by som dostal správu o stave doručenia môjho úča
 labelVariant = "Variant"
 labelUrlSizeConversionChartLink = "Tabuľka veľkostí"
 textMerchUnavailable = "V rámci dodatočnej registrácie do Májovej výzvy Do práce na bicykli už nerozposielame účastnícke balíčky. Máte však nárok na zľavu {shopDiscountAmount} v našom benefičnom e-shope, kde máme tričká aj ponožky z mnohých ročníkov. Zľava platí na každý nákup nad {shopDiscountMinOrder} a to do {shopDiscountValidUntil}. Do košíka zadajte zľavový kupón: {shopVoucherCode}. <a href='{url}' target='_blank'>Benefičný obchod AutoMat</a>"
-textMerchUnavailableSeptember = "Počas Septembrová výzvy odmeny nerozosielame, ale máme pre vás niečo lepšie - navštívte náš <a href='{url}' target='_blank'>benefičný eshop</a> a doplňte si napríklad svoju zbierku tričiek Do práce na bicykli za skvelé ceny"
+textMerchUnavailableSeptember = "Počas Septembrovej výzvy účastnícke balíčky nerozosielame, ale máme pre vás niečo lepšie - zavítajte na náš <a href='{url}' target='_blank'>benefičný AutoMat e-shop</a> a využite zľavu {shopDiscountAmount} Kč na všechny položky Do práce na kole. Zľavový kód {shopVoucherCode} je možné uplatniť na všetky objednávky v minimálnej hodnote {shopDiscountMinOrder} Kč a to až do konca {shopDiscountValidUntil}."
 textNoMerchSelected = "Zvolili ste možnosť 'bez balíčka', takže tento krok nie je potrebné vypĺňať. Registráciu dokončíte kliknutím na tlačidlo 'Pokračovať'."
 textMerchDisabled = "Táto výzva neponúka účastnícky balíček."
 
@@ -1108,7 +1108,7 @@ textCountdown.october = "Do Októbrovej výzvy zostáva {days} dní a {hours}:{m
 textCountdown.may = "Do Májovej výzvy zostáva {days} dní a {hours}:{minutes}:{seconds} hodín!"
 textGender.male = "Muž"
 textGender.female = "Žena"
-textPaymentMinimum = "<b>Minimálny účastnícky poplatok je {amount}</b>. Umožníte nám viesť výzvu, poskytovať podporu počas výzvy a poskytnúť vám účastnícky balíček. Ak nás chcete podporiť, budeme radi aj za vyššie sumy."
+textPaymentMinimum = "<b>Minimálny účastnícky poplatok je {amount}</b>. Umožňujete nám Výzvu prevádzkovať, poskytovať počas nej podporu a rozosielať účastnícke balíčky (platí pre Májovú výzvu). Ak nás chcete podporiť ešte viac, budeme radi za vyšší benefičný príspevok."
 textPaymentOrganizer = "<p>Výzvu Do práce na bicykli organizuje spoločnosť AutoMat, ktorá sa neustále snaží zlepšovať podmienky pre chodcov a ľudí na bicykloch v Českej republike.</p><p>Ak nás chcete v našom úsilí podporiť, môžete si účastnícky poplatok na výzvu navýšiť o charitatívny príspevok v ľubovoľnej výške. Pomôžete tak ďalšiemu udržateľnému rozvoju našich miest. Ďakujeme.</p>"
 textFreeRegistration = "Januárová výzva je zdarma. Ak si želáte podporiť činnosť Automatu, môžete tak urobiť na <a href='{url}' target='_blank'>{linkText}</a>."
 textPayuPaymentFailed = "Vaša platba bola zrušená alebo zamietnutá. Môžete sa pokúsiť zaplatiť znovu, alebo zvoliť inú formu platby."
