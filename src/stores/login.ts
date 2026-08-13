@@ -345,9 +345,14 @@ export const useLoginStore = defineStore('login', {
         'Check the organization coordinator status from the API.',
       );
       await registerChallengeStore.checkOrganizationHasCoordinator();
-      // redirect to home page
+      // redirect to home page, or to pending redirect target
       if (this.$router) {
-        this.$router.push(routesConf['home']['path']);
+        const redirect = this.$router.currentRoute.value.query.redirect;
+        if (redirect) {
+          this.$router.push(String(redirect));
+        } else {
+          this.$router.push(routesConf['home']['path']);
+        }
       }
     },
     /**

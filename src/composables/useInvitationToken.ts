@@ -65,6 +65,19 @@ export const useInvitationToken = (
     logger?.debug(
       `Invitation token validated. Team ID: ${validationResponse.token.team_id}`,
     );
+    // warn user if existing team selection will be replaced by the invitation
+    if (
+      registerChallengeStore.organizationId !== null ||
+      registerChallengeStore.subsidiaryId !== null ||
+      registerChallengeStore.teamId !== null
+    ) {
+      Notify.create({
+        message: i18n.global.t(
+          'validateTeamMembershipInvitationEmail.overwriteWarning',
+        ),
+        color: 'warning',
+      });
+    }
     // update store with invitation IDs
     registerChallengeStore.setInvitationOrganizationId(
       validationResponse.token.company_id,

@@ -68,10 +68,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       return;
     }
     // check if invitation organization exists in the filtered array
-    const invitationOrg = registerChallengeStore.organizations.find(
-      (org) => org.id === invitationOrganizationId,
+    const invitationOrganization = registerChallengeStore.organizations.find(
+      (organization) => organization.id === invitationOrganizationId,
     );
-    if (!invitationOrg) {
+    if (!invitationOrganization) {
       logger?.info(
         `Organization <${invitationOrganizationId}> not found, skipping pre-fill`,
       );
@@ -166,10 +166,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       (invitationOrgId !== null && step4State === StepVisitState.notVisited);
     if (shouldPrefillOrg) {
       // pre-fill organization
-      const invitationOrg = registerChallengeStore.organizations.find(
-        (org) => org.id === invitationOrgId,
+      const invitationOrganization = registerChallengeStore.organizations.find(
+        (organization) => organization.id === invitationOrgId,
       );
-      if (invitationOrg) {
+      if (invitationOrganization) {
         registerChallengeStore.setOrganizationId(invitationOrgId);
         logger?.info(`Pre-filled organization <${invitationOrgId}>`);
         // load subsidiaries for the pre-filled organization
@@ -197,10 +197,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       (invitationSubId !== null && step4State === StepVisitState.notVisited);
     // pre-fill subsidiary if condition met and organization matches
     if (shouldPrefillSub && updatedOrgId === invitationOrgId) {
-      const invitationSub = registerChallengeStore.subsidiaries.find(
-        (sub) => sub.id === invitationSubId,
+      const invitationSubsidiary = registerChallengeStore.subsidiaries.find(
+        (subsidiary) => subsidiary.id === invitationSubId,
       );
-      if (invitationSub) {
+      if (invitationSubsidiary) {
         registerChallengeStore.setSubsidiaryId(invitationSubId);
         logger?.info(`Pre-filled subsidiary <${invitationSubId}>`);
       }
