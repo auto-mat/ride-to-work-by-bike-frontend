@@ -209,7 +209,7 @@ export const useChallengeStore = defineStore('challenge', {
         );
         this.$log?.debug(
           'New this campaign benefitial admission fee company value' +
-            ` <${this.benefitialAdmissionFeeCompany}>.`,
+            ` <${this.getBenefitialAdmissionFeeCompany}>.`,
         );
       } else {
         this.$log?.info(
