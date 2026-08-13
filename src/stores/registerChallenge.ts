@@ -599,18 +599,6 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       }
     },
     /**
-     * Reset visited steps to initial not-visited state
-     */
-    resetVisitedSteps(): void {
-      this.visitedSteps = {
-        step2: StepVisitState.notVisited,
-        step3: StepVisitState.notVisited,
-        step4: StepVisitState.notVisited,
-        step5: StepVisitState.notVisited,
-      };
-      this.$log?.debug('Visited steps reset to not-visited state.');
-    },
-    /**
      * Switch between regular and with-reward price sets
      * Handle side effects (clear voucher, reset payment amount)
      * @param {boolean} isWithReward - with/without reward setting value
