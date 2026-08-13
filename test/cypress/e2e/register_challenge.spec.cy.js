@@ -723,7 +723,7 @@ describe('Register Challenge page', () => {
       cy.dataCy('step-3-continue').should('be.visible').click();
       // not on step 4
       cy.dataCy('step-4').find('.q-stepper__step-content').should('not.exist');
-      cy.dataCy('form-field-option-group').find('.q-radio').first().click();
+      cy.dataCy('form-field-option').first().click();
       cy.dataCy('step-3-continue').should('be.visible').click();
       // on step 4
       cy.dataCy('step-4').find('.q-stepper__step-content').should('be.visible');
@@ -1339,7 +1339,7 @@ describe('Register Challenge page', () => {
         // go to step participation (organization type)
         cy.passToStep3();
         // select company
-        cy.dataCy('form-field-option-group')
+        cy.dataCy('form-field-option')
           .contains(i18n.global.t('form.participation.labelColleagues'))
           .click();
         // title company (visible even if step is not active)
@@ -1351,7 +1351,7 @@ describe('Register Challenge page', () => {
         // no title family
         cy.contains(i18n.global.t('form.labelFamilyShort')).should('not.exist');
         // select school
-        cy.dataCy('form-field-option-group')
+        cy.dataCy('form-field-option')
           .contains(i18n.global.t('form.participation.labelSchoolmates'))
           .click();
         // no title company
@@ -1365,7 +1365,7 @@ describe('Register Challenge page', () => {
         // no title family
         cy.contains(i18n.global.t('form.labelFamilyShort')).should('not.exist');
         // select family
-        cy.dataCy('form-field-option-group')
+        cy.dataCy('form-field-option')
           .contains(i18n.global.t('form.participation.labelFamily'))
           .click();
         // no title company
@@ -1580,7 +1580,7 @@ describe('Register Challenge page', () => {
             cy.dataCy('step-5-back').should('be.visible').click();
             cy.dataCy('step-4-back').should('be.visible').click();
             // select a different organization type
-            cy.dataCy('form-field-option-group').find('.q-radio').eq(1).click();
+            cy.dataCy('form-field-option').eq(1).click();
             // organization, subsidiary and team are reset (check debug component)
             cy.dataCy('debug-register-challenge-ids')
               .should('be.visible')
@@ -1774,7 +1774,7 @@ describe('Register Challenge page', () => {
             },
           );
           // select participation - continue
-          cy.dataCy('form-field-option-group').find('.q-radio').first().click();
+          cy.dataCy('form-field-option').should('be.visible').first().click();
           cy.dataCy('step-3-continue').should('be.visible').click();
           // select company
           cy.dataCy('form-select-table-company')
@@ -2342,7 +2342,7 @@ describe('Register Challenge page', () => {
             },
           );
           // select participation - company
-          cy.dataCy('form-field-option-group').find('.q-radio').first().click();
+          cy.dataCy('form-field-option').should('be.visible').first().click();
           // go to next step
           cy.dataCy('step-3-continue').should('be.visible').click();
           // select company

@@ -524,10 +524,15 @@ describe('Register Challenge - Invitation token flow', () => {
             .find('.q-stepper__step-content')
             .should('be.visible');
           // verify company radio is selected
-          cy.dataCy('form-participation-company')
-            .closest('.q-radio')
-            .find('.q-radio__inner')
-            .should('have.class', 'q-radio__inner--truthy');
+          cy.get('@i18n').then((i18n) => {
+            cy.dataCy('form-field-option-group')
+              .contains(
+                '.q-radio',
+                i18n.global.t('form.participation.labelColleagues'),
+              )
+              .find('.q-radio__inner')
+              .should('have.class', 'q-radio__inner--truthy');
+          });
           cy.dataCy('step-3-continue')
             .should('be.visible')
             .and('not.be.disabled')
@@ -682,8 +687,11 @@ describe('Register Challenge - Invitation token flow', () => {
               .find('.q-stepper__step-content')
               .should('be.visible');
             // verify company type is pre-filled from invitation (not existing value)
-            cy.dataCy('form-participation-company')
-              .closest('.q-radio')
+            cy.dataCy('form-field-option-group')
+              .contains(
+                '.q-radio',
+                i18n.global.t('form.participation.labelColleagues'),
+              )
               .find('.q-radio__inner')
               .should('have.class', 'q-radio__inner--truthy');
             cy.dataCy('step-3-continue')
