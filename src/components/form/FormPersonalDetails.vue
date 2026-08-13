@@ -347,7 +347,6 @@ export default defineComponent({
           v-model="selectedOccupation"
           :options="filteredOccupations"
           :loading="isLoadingOccupations"
-          :rules="[(val) => val != null || $t('form.messageFieldRequired')]"
           @filter="filterOccupations"
           id="form-occupation"
           class="q-mt-sm"
