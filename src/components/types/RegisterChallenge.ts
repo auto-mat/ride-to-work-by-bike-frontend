@@ -1,5 +1,6 @@
 // enums
 import { TeamMemberStatus } from '../enums/TeamMember';
+import { StepVisitState } from '../enums/RegisterChallenge';
 
 // types
 import type { NewsletterType } from './Newsletter';
@@ -53,4 +54,15 @@ export interface RegisterChallengePostRequest {
   teamId?: number | null;
   telephone?: string;
   telephoneOptIn?: boolean;
+}
+
+/**
+ * Tracks which registration steps have been visited in current session
+ * Used to determine when invitation values should override existing values
+ */
+export interface VisitedSteps {
+  step2: StepVisitState;
+  step3: StepVisitState;
+  step4: StepVisitState;
+  step5: StepVisitState;
 }

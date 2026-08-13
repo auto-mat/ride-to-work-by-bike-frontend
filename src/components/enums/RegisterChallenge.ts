@@ -7,3 +7,9 @@ export enum RegisterChallengeStep {
   merch = 'merch',
   summary = 'summary',
 }
+
+export enum StepVisitState {
+  notVisited = 'not-visited',
+  active = 'active',
+  dirty = 'dirty',
+}

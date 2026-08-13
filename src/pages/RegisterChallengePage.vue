@@ -266,18 +266,19 @@ export default defineComponent({
       stepMerchRef,
     });
 
-    // watch step changes for invitation pre-fill
+    // watch step changes for invitation pre-fill and visit state tracking
     watch(step, async (newStep) => {
-      // step 3 = participation (organization type selection)
-      if (newStep === 3) {
+      // transition step state: mark previous active as dirty, mark new as active
+      if (newStep === 2) {
+        registerChallengeStore.transitionStepToActive('step2');
+      } else if (newStep === 3) {
+        registerChallengeStore.transitionStepToActive('step3');
         await prefillOrganizationType();
-      }
-      // step 4 = organization (organization and subsidiary selection)
-      else if (newStep === 4) {
+      } else if (newStep === 4) {
+        registerChallengeStore.transitionStepToActive('step4');
         await prefillOrganizationAndSubsidiary();
-      }
-      // step 5 = team selection
-      else if (newStep === 5) {
+      } else if (newStep === 5) {
+        registerChallengeStore.transitionStepToActive('step5');
         await prefillTeam();
       }
     });

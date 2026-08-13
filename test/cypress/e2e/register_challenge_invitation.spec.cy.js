@@ -569,4 +569,248 @@ describe('Register Challenge - Invitation token flow', () => {
       });
     });
   });
+
+  context('user with existing registration receives invitation', () => {
+    beforeEach(() => {
+      // set system time to be in the correct active token window
+      cy.viewport('macbook-16');
+      cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          // load fixture with existing registration (different org/sub/team than invitation)
+          cy.fixture('apiGetRegisterChallengeExistingOrgSubTeam.json').then(
+            (registerChallengeResponse) => {
+              cy.fixture(
+                'apiPostValidateTeamMembershipInvitationEmailRequest.json',
+              ).then((validationRequest) => {
+                cy.fixture(
+                  'apiPostValidateTeamMembershipInvitationEmailResponse.json',
+                ).then((validationResponse) => {
+                  cy.fixture('refreshTokensResponseChallengeActive').then(
+                    (refreshTokensResponseChallengeActive) => {
+                      cy.fixture('loginRegisterResponseChallengeActive').then(
+                        (loginRegisterResponseChallengeActive) => {
+                          // setup ALL API intercepts BEFORE any visit
+                          cy.interceptRegisterChallengeGetApi(
+                            config,
+                            defLocale,
+                            registerChallengeResponse,
+                          );
+                          cy.interceptRegisterChallengePostApi(
+                            config,
+                            defLocale,
+                            {},
+                          );
+                          cy.interceptRegisterChallengeCoreApiRequests(
+                            config,
+                            defLocale,
+                          );
+                          cy.interceptIsUserOrganizationAdminGetApi(
+                            config,
+                            defLocale,
+                          );
+                          cy.interceptValidateTeamMembershipInvitationEmailPostApi(
+                            config,
+                            defLocale,
+                            validationResponse,
+                          );
+                          cy.interceptLoginRefreshAuthTokenVerifyEmailVerifyCampaignPhaseApi(
+                            config,
+                            defLocale,
+                            loginRegisterResponseChallengeActive,
+                            null,
+                            refreshTokensResponseChallengeActive,
+                            null,
+                            { has_user_verified_email_address: true },
+                          );
+                          // login with redirect and invitation token
+                          const invitationToken = validationRequest.token;
+                          const redirectUrl = `${routesConf['register_challenge']['path']}?invitationToken=${invitationToken}`;
+                          cy.visit(
+                            `#${routesConf['login']['path']}?redirect=${encodeURIComponent(redirectUrl)}`,
+                          );
+                          cy.window().should('have.property', 'i18n');
+                          cy.window().then((win) => {
+                            cy.wrap(win.i18n).as('i18n');
+                          });
+                          cy.fillAndSubmitLoginForm(config, defLocale);
+                          cy.wait([
+                            '@loginRequest',
+                            '@verifyEmailRequest',
+                            '@thisCampaignRequest',
+                          ]);
+                          // router redirects with invitation token
+                          cy.url().should(
+                            'include',
+                            routesConf['register_challenge']['path'],
+                          );
+                          cy.url().should(
+                            'include',
+                            `invitationToken=${invitationToken}`,
+                          );
+                          // verify page is loaded
+                          cy.dataCy('step-1')
+                            .find('.q-stepper__step-content')
+                            .should('be.visible');
+                        },
+                      );
+                    },
+                  );
+                });
+              });
+            },
+          );
+        });
+      });
+    });
+
+    it('overwrites existing values with invitation on first visit to each step', () => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture(
+            'apiPostValidateTeamMembershipInvitationEmailResponse.json',
+          ).then((validationResponse) => {
+            // verify invitation was processed
+            cy.url().should('not.include', 'invitationToken');
+            cy.moveThroughStep1();
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            // select voucher payment
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            // step 3: organization type should be overwritten on first visit
+            cy.dataCy('step-3')
+              .find('.q-stepper__step-content')
+              .should('be.visible');
+            // verify company type is pre-filled from invitation (not existing value)
+            cy.dataCy('form-participation-company')
+              .closest('.q-radio')
+              .find('.q-radio__inner')
+              .should('have.class', 'q-radio__inner--truthy');
+            cy.dataCy('step-3-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click({ force: true });
+            // step 4: organization and subsidiary should be overwritten on first visit
+            cy.wait('@getOrganizations');
+            cy.wait('@getSubsidiaries');
+            cy.dataCy('step-4')
+              .find('.q-stepper__step-content')
+              .should('be.visible');
+            cy.get('.q-spinner').should('not.exist');
+            // verify invitation organization is pre-filled
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  validationResponse.token.company_id.toString(),
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  validationResponse.token.subsidiary_id.toString(),
+                );
+              });
+            cy.dataCy('step-4-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click({ force: true });
+            // step 5: team should be overwritten on first visit
+            cy.dataCy('step-5')
+              .find('.q-stepper__step-content')
+              .should('be.visible');
+            cy.get('.q-spinner').should('not.exist');
+            // verify invitation team is pre-filled
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', 'IT Běžci');
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-team-id-value').should(
+                  'contain',
+                  validationResponse.token.team_id.toString(),
+                );
+              });
+          });
+        });
+      });
+    });
+
+    it('preserves user changes when returning to visited steps', () => {
+      cy.task('getAppConfig', process).then((config) => {
+        cy.get('@i18n').then((i18n) => {
+          cy.fixture(
+            'apiPostValidateTeamMembershipInvitationEmailResponse.json',
+          ).then((validationResponse) => {
+            cy.moveThroughStep1();
+            cy.dataCy('form-field-payment-subject').should('be.visible');
+            // select voucher payment
+            cy.dataCy(getRadioOption(PaymentSubject.voucher))
+              .should('be.visible')
+              .click();
+            cy.applyFullVoucher(config, i18n);
+            cy.moveThroughStep2();
+            cy.moveThroughStep3();
+            cy.moveThroughStep4();
+            // step 5: verify invitation team is pre-filled
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .should('exist')
+              .siblings('.q-radio__label')
+              .should('contain', 'IT Běžci');
+            // user selects different team (third team)
+            cy.dataCy('form-select-table-team')
+              .find('.q-radio')
+              .eq(2)
+              .find('.q-radio__bg')
+              .click({ force: true });
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-team-id-value').should('contain', '2453');
+              });
+            // navigate back to step 4
+            cy.dataCy('step-5-back').should('be.visible').click();
+            // verify organization and subsidiary from invitation still selected
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-organization-id-value').should(
+                  'contain',
+                  validationResponse.token.company_id.toString(),
+                );
+                cy.dataCy('debug-subsidiary-id-value').should(
+                  'contain',
+                  validationResponse.token.subsidiary_id.toString(),
+                );
+              });
+            // navigate forward to step 5 again
+            cy.dataCy('step-4-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click({ force: true });
+            // verify user's team choice persists (NOT invitation team)
+            cy.dataCy('form-select-table-team')
+              .should('be.visible')
+              .find('.q-radio__inner.q-radio__inner--truthy')
+              .first()
+              .siblings('.q-radio__label')
+              .should('contain', 'Marketing na kolech')
+              .and('not.contain', 'IT Běžci');
+            cy.dataCy('debug-register-challenge-ids')
+              .should('be.visible')
+              .within(() => {
+                cy.dataCy('debug-team-id-value').should('contain', '2453');
+              });
+          });
+        });
+      });
+    });
+  });
 });

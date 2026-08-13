@@ -38,7 +38,10 @@ import {
   OrganizationTeam,
 } from '../components/types/Organization';
 import { PaymentSubject } from '../components/enums/Payment';
-import { RegisterChallengeStep } from '../components/enums/RegisterChallenge';
+import {
+  RegisterChallengeStep,
+  StepVisitState,
+} from '../components/enums/RegisterChallenge';
 import { PaymentCategory } from '../components/types/ApiPayu';
 import { TeamMemberStatus } from 'src/components/enums/TeamMember';
 
@@ -53,6 +56,7 @@ import type { FormSelectOptionNumberValue } from '../components/types/Form';
 import type {
   RegisterChallengeCoordinatorForm,
   RegisterChallengePersonalDetailsForm,
+  VisitedSteps,
 } from '../components/types/RegisterChallenge';
 import type { ValidatedCoupon } from '../components/types/Coupon';
 import type {
@@ -152,6 +156,12 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     isMerchandiseSavedIntoDb: true,
     isPaymentWithReward: true,
     thirdPartyVouchers: [] as ThirdPartyVoucher[],
+    visitedSteps: {
+      step2: StepVisitState.notVisited,
+      step3: StepVisitState.notVisited,
+      step4: StepVisitState.notVisited,
+      step5: StepVisitState.notVisited,
+    } as VisitedSteps,
   }),
 
   getters: {
@@ -428,6 +438,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     getThirdPartyVouchers: (state): ThirdPartyVoucher[] =>
       state.thirdPartyVouchers,
+    getVisitedSteps: (state): VisitedSteps => state.visitedSteps,
   },
 
   actions: {
@@ -556,6 +567,45 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     setOccupationObject(occupationObject: OccupationApiObject | null) {
       this.occupationObject = occupationObject;
+    },
+    /**
+     * Set visit state for a specific step
+     * @param {keyof VisitedSteps} step - Step identifier (step2, step3, step4, step5)
+     * @param {StepVisitState} state - New state ('not-visited', 'active', 'dirty')
+     */
+    setStepVisitState(step: keyof VisitedSteps, state: StepVisitState): void {
+      this.visitedSteps[step] = state;
+      this.$log?.debug(`Step <${step}> visit state set to <${state}>.`);
+    },
+    /**
+     * Transition a step to active state and mark previous active step as dirty
+     * @param {keyof VisitedSteps} step - Step to activate
+     */
+    transitionStepToActive(step: keyof VisitedSteps): void {
+      // mark all active steps as dirty
+      (Object.keys(this.visitedSteps) as Array<keyof VisitedSteps>).forEach(
+        (stepKey) => {
+          if (this.visitedSteps[stepKey] === StepVisitState.active) {
+            this.visitedSteps[stepKey] = StepVisitState.dirty;
+            this.$log?.debug(`Step <${stepKey}> transitioned to dirty.`);
+          }
+        },
+      );
+      // mark target step as active
+      this.visitedSteps[step] = StepVisitState.active;
+      this.$log?.debug(`Step <${step}> transitioned to active.`);
+    },
+    /**
+     * Reset visited steps to initial not-visited state
+     */
+    resetVisitedSteps(): void {
+      this.visitedSteps = {
+        step2: StepVisitState.notVisited,
+        step3: StepVisitState.notVisited,
+        step4: StepVisitState.notVisited,
+        step5: StepVisitState.notVisited,
+      };
+      this.$log?.debug('Visited steps reset to not-visited state.');
     },
     /**
      * Switch between regular and with-reward price sets
@@ -1388,6 +1438,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       'isPeriodicCheckInProgress',
       'checkPaymentStatusRepetitionCount',
       'isLoadingUserOrganizationAdmin',
+      'visitedSteps',
     ],
   },
 });
