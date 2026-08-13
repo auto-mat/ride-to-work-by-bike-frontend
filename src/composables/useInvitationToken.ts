@@ -17,10 +17,7 @@ import type { Ref } from 'vue';
 import type { Logger } from '../components/types/Logger';
 
 /**
- * Invitation token orchestration composable
- * Coordinates the invitation flow: validation and store updates
- * Backend sync of the team ID happens later, through the normal
- * team-step submission (see registerChallenge.ts payloadMap)
+ * Processes the invitation token and handles the returned data
  * @param {Logger | null} logger - Logger
  * @returns {Object} - Composable return object
  */
