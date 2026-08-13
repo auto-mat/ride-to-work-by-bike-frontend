@@ -24,7 +24,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
   /**
    * Pre-fill organization when user selects company/school payment
    * Called when paymentSubject changes to company or school
-   * Only pre-fills if: organizationId is null OR (invitation exists AND step2 is not-visited)
+   * Pre-fill when value is empty or step2 has not been visited
    */
   const prefillOrganizationForPayment = async (): Promise<void> => {
     const invitationOrganizationId =
@@ -49,11 +49,9 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       !paymentSubject
     )
       return;
-    // check pre-fill condition: null OR (invitation exists AND not-visited)
+    // check pre-fill condition: null OR step2 not yet left this session
     const shouldPrefill =
-      organizationId === null ||
-      (invitationOrganizationId !== null &&
-        step2State === StepVisitState.notVisited);
+      organizationId === null || step2State !== StepVisitState.dirty;
     if (!shouldPrefill) {
       logger?.info(
         `Step2 already visited or org set, skipping pre-fill (orgId=<${organizationId}>, step2=<${step2State}>)`,
@@ -85,7 +83,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
    * Pre-fill organization type when user reaches participation step
    * Called when step becomes 3
    * Only pre-fill when payment subject is individual or voucher
-   * Only pre-fills if: organizationType is none OR (invitation exists AND step3 is not-visited)
+   * Prefill when value is empty or step3 has not been visited
    */
   const prefillOrganizationType = async (): Promise<void> => {
     const invitationOrganizationType =
@@ -95,11 +93,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const step3State = registerChallengeStore.getVisitedSteps.step3;
     // skip if no invitation organization type
     if (!invitationOrganizationType) return;
-    // check pre-fill condition: none OR (invitation exists AND not-visited)
+    // check pre-fill condition: none OR step3 not yet left this session
     const shouldPrefill =
       organizationType === OrganizationType.none ||
-      (invitationOrganizationType !== null &&
-        step3State === StepVisitState.notVisited);
+      step3State !== StepVisitState.dirty;
     if (!shouldPrefill) {
       logger?.info(
         `Step3 already visited or type set, skipping pre-fill (type=<${organizationType}>, step3=<${step3State}>)`,
@@ -160,10 +157,9 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const currentOrgId = registerChallengeStore.organizationId;
     const currentSubId = registerChallengeStore.subsidiaryId;
     const step4State = registerChallengeStore.getVisitedSteps.step4;
-    // check pre-fill condition for organization: null OR (invitation exists AND not-visited)
+    // pre-fill if value is empty or step4 has not been visited
     const shouldPrefillOrg =
-      currentOrgId === null ||
-      (invitationOrgId !== null && step4State === StepVisitState.notVisited);
+      currentOrgId === null || step4State !== StepVisitState.dirty;
     if (shouldPrefillOrg) {
       // pre-fill organization
       const invitationOrganization = registerChallengeStore.organizations.find(
@@ -191,11 +187,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     }
     // re-read organizationId after potential update
     const updatedOrgId = registerChallengeStore.organizationId;
-    // check pre-fill condition for subsidiary: null OR (invitation exists AND not-visited)
+    // pre-fill if value is empty or step4 has not been visited
     const shouldPrefillSub =
-      currentSubId === null ||
-      (invitationSubId !== null && step4State === StepVisitState.notVisited);
-    // pre-fill subsidiary if condition met and organization matches
+      currentSubId === null || step4State !== StepVisitState.dirty;
+    // pre-fill if subsidiary ID matches
     if (shouldPrefillSub && updatedOrgId === invitationOrgId) {
       const invitationSubsidiary = registerChallengeStore.subsidiaries.find(
         (subsidiary) => subsidiary.id === invitationSubId,
@@ -216,7 +211,6 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const invitationOrgId = registerChallengeStore.getInvitationOrganizationId;
     const invitationSubId = registerChallengeStore.getInvitationSubsidiaryId;
     if (!invitationTeamId) return;
-    if (registerChallengeStore.teamId !== null) return;
     // check if we can pre-fill immediately
     if (registerChallengeStore.teams.length > 0) {
       applyTeamPrefill(invitationTeamId, invitationOrgId, invitationSubId);
@@ -247,10 +241,9 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const currentSubId = registerChallengeStore.subsidiaryId;
     const currentTeamId = registerChallengeStore.teamId;
     const step5State = registerChallengeStore.getVisitedSteps.step5;
-    // check pre-fill condition: null OR (invitation exists AND not-visited)
+    // check pre-fill condition: null OR step5 not yet left this session
     const shouldPrefill =
-      currentTeamId === null ||
-      (invitationTeamId !== null && step5State === StepVisitState.notVisited);
+      currentTeamId === null || step5State !== StepVisitState.dirty;
     if (!shouldPrefill) {
       logger?.info(
         `Step5 already visited or team set, skipping pre-fill (teamId=<${currentTeamId}>, step5=<${step5State}>)`,

@@ -1,6 +1,10 @@
 // libraries
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Notify } from 'quasar';
+
+// boot
+import { i18n } from '../boot/i18n';
 
 // composables
 import { useApiPostValidateTeamMembershipInvitationEmail } from './useApiPostValidateTeamMembershipInvitationEmail';
@@ -14,7 +18,9 @@ import type { Logger } from '../components/types/Logger';
 
 /**
  * Invitation token orchestration composable
- * Coordinates the entire invitation flow: validation, store updates, and backend sync
+ * Coordinates the invitation flow: validation and store updates
+ * Backend sync of the team ID happens later, through the normal
+ * team-step submission (see registerChallenge.ts payloadMap)
  * @param {Logger | null} logger - Logger
  * @returns {Object} - Composable return object
  */
@@ -33,7 +39,7 @@ export const useInvitationToken = (
 
   /**
    * Process invitation token from URL
-   * Validates token, updates store, syncs to backend, and removes token from URL
+   * Validates token, updates store, and removes token from URL
    * @returns {Promise<void>}
    */
   const processInvitation = async (): Promise<void> => {
@@ -97,16 +103,6 @@ export const useInvitationToken = (
         `invitationTeamId=${validationResponse.token.team_id}, ` +
         `invitationOrganizationType=${validationResponse.token.company_type}`,
     );
-    // post team ID to backend
-    const postResponse = await registerChallengeStore.postRegisterChallenge({
-      team_id: validationResponse.token.team_id,
-    });
-    if (!postResponse) {
-      logger?.info('Failed to post team ID to backend.');
-      isLoading.value = false;
-      return;
-    }
-    logger?.debug('Posted team ID to backend.');
     // remove invitation token from URL
     const query = { ...route.query };
     delete query.invitationToken;

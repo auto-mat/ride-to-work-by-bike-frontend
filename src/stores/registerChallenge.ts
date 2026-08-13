@@ -579,6 +579,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     },
     /**
      * Transition a step to active state and mark previous active step as dirty
+     * The "dirty" state holds for the rest of the session
      * @param {keyof VisitedSteps} step - Step to activate
      */
     transitionStepToActive(step: keyof VisitedSteps): void {
@@ -591,9 +592,11 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           }
         },
       );
-      // mark target step as active
-      this.visitedSteps[step] = StepVisitState.active;
-      this.$log?.debug(`Step <${step}> transitioned to active.`);
+      // mark target step as active, unless it was already left before
+      if (this.visitedSteps[step] !== StepVisitState.dirty) {
+        this.visitedSteps[step] = StepVisitState.active;
+        this.$log?.debug(`Step <${step}> transitioned to active.`);
+      }
     },
     /**
      * Reset visited steps to initial not-visited state

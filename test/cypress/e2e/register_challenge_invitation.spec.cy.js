@@ -98,7 +98,7 @@ describe('Register Challenge - Invitation token flow', () => {
       });
     });
 
-    it('processes invitation token and sends team ID to backend', () => {
+    it('processes invitation token and removes it from the URL', () => {
       cy.fixture(
         'apiPostValidateTeamMembershipInvitationEmailRequest.json',
       ).then((validationRequest) => {
@@ -110,10 +110,6 @@ describe('Register Challenge - Invitation token flow', () => {
             validationRequest,
             validationResponse,
           );
-          // wait for register challenge POST with team ID
-          cy.waitForRegisterChallengePostApi({
-            team_id: validationResponse.token.team_id,
-          });
           // verify token removed from URL
           cy.url().should('not.include', 'invitationToken');
           cy.url().should('include', routesConf['register_challenge']['path']);
@@ -510,6 +506,7 @@ describe('Register Challenge - Invitation token flow', () => {
           // verify token removed from URL
           cy.url().should('not.include', 'invitationToken');
           cy.url().should('include', routesConf['register_challenge']['path']);
+          cy.wait('@postRegisterChallenge');
           // wait for step 2 to be active
           cy.dataCy('step-2')
             .find('.q-stepper__step-content')
@@ -521,6 +518,7 @@ describe('Register Challenge - Invitation token flow', () => {
             .should('be.visible')
             .and('not.be.disabled')
             .click();
+          cy.wait('@postRegisterChallenge');
           // step 3 should have organization type pre-filled to company
           cy.dataCy('step-3')
             .find('.q-stepper__step-content')
