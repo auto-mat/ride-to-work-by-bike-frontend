@@ -1140,8 +1140,9 @@ parseEntryFeePaymentOptionsError = "Error parsing participation fee payment opti
 [register.coordinator]
 title.may = "Coordinator registration for&nbsp;the&nbsp;May Challenge"
 title.october = "Coordinator registration for&nbsp;the&nbsp;October Challenge"
+title.september = "Corporate coordinator registration"
 titleInfo = "Duties of the coordinator"
-info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting employers or school directors to pay the participation fee.</li><li>Ensuring the accuracy and completeness of data in the system (billing information, addresses on packages/branches).</li><li>Distributing participation packs to participants.</li><li>Organizing any internal company challenges.</li><li>Regularly approving payments for your employees and subsequently generating an invoice.</li></ul><p>You will also have access to the Bike to Work system, where you can find information about your organization's participation and results, including teams and individual participants.</p><p><strong>You will not register participants yourself, you can only approach them to sign up.</strong></p>"
+info = "<p>As a coordinator, you will be responsible for:</p><ul><li>Requesting employers or school directors to pay the participation fee.</li><li>Ensuring the accuracy and completeness of data in the system (invoicing information, delivery addresses for packages, subsidiaries addresses).</li><li>Distributing participant packages (applies only to the May Challenge).</li><li>Organizing any internal company challenges.</li><li>Regularly approving payments for your employees and subsequently generating an invoice.</li></ul><p>You will also have access to the Bike to Work system, where you can find information about your organization's participation and results, including teams and individual participants.</p><p><strong>You will not register participants yourself, you can only approach them to sign up.</strong></p>"
 
 [register.coordinator.form]
 title = "Registration"

@@ -1141,8 +1141,9 @@ parseEntryFeePaymentOptionsError = "Chyba zpracování hodnot možností platby 
 [register.coordinator]
 title.may = "Registrace koordinátora do&nbsp;Květnové výzvy"
 title.october = "Registrace koordinátora do&nbsp;Říjnové výzvy"
+title.september = "Registrace firemní*ho koordinátora*ky"
 titleInfo = "Povinnosti koordinátora*ky"
-info = "<p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat zaměstnavatele či ředitele školy, aby uhradil účastnický poplatek.</li><li>Zajišťovat správnost a úplnost údajů v systému (fakturační údaje, adresy na balíčcích/pobočky).</li><li>Rozdělit účastnické balíčky účastníkům.</li><li>Vypsat případné vnitrofiremní výzvy.</li><li>Průběžně schvalovat platby za vaše zaměstnance a následně vygenerovat fakturu.</li></ul><p>Také budete mít přístup do systému Do práce na kole, kde najdete informace o účasti a výsledcích vaší organizace, včetně týmů a jednotlivých účastníků*nic.</p><p><strong>Účastníky nebudete registrovat sám*sama, jen je můžete oslovit, aby se přihlásili.</strong></p>"
+info = "<p>Jako koordinátor*ka budete mít na starosti:</p><ul><li>Požádat zaměstnavatele či ředitele školy, aby uhradil účastnický poplatek.</li><li>Zajišťovat správnost a úplnost údajů v systému (fakturační údaje, doručovací adresy pro balíčky, adresy poboček).</li><li>Rozdělovat účastnické balíčky (platí pouze pro Květnovou výzvu).</li><li>Vypisovat případné vnitrofiremní výzvy.</li><li>Průběžně schvalovat platby za vaše zaměstnance a následně vygenerovat fakturu.</li></ul><p>Také budete mít přístup do systému Do práce na kole, kde najdete informace o účasti a výsledcích vaší organizace, včetně týmů a jednotlivých účastníků*nic.</p><p><strong>Účastníky nebudete registrovat sám*sama, jen je můžete oslovit, aby se přihlásili.</strong></p>"
 
 [register.coordinator.form]
 title = "Registrace"

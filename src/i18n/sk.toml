@@ -308,7 +308,7 @@ titleLocations = "Zaujímavosti v blízkosti vašej cesty"
 
 [companyCoordinator]
 labelRegisterCoordinator = "Chcem sa stať firemným koordinátorom"
-textBecomeCoordinator = "<p>Vaša organizácia <b>{organizationName}</b> zatiaľ nemá žiadneho koordinátora. Môžete sa ním stať!</p><p>Ako koordinátor budete zodpovedný za:</p><ul><li>Požiadať zamestnávateľov alebo riaditeľov škôl, aby uhradili účastnícky poplatok.</li><li>Zabezpečovať správnosť a úplnosť údajov v systéme (fakturačné údaje, adresy na balíčkoch/pobočky).</li><li>Rozdeliť balíčky účastníkom.</li><li>Vypísať prípadné vnútrofiremné výzvy.</li><li>Pravidelne schvaľovať platby za vašich zamestnancov a následne generovať faktúru.</li></ul><p>Získate tiež prístup do systému Do práce na bicykli, kde nájdete informácie o účasti a výsledkoch vašej organizácie vrátane tímov a jednotlivých účastníkov.</p><p><b>Účastníkov nebudete registrovať sami, môžete ich len požiadať, aby sa zaregistrovali.</b></p>"
+textBecomeCoordinator = "<p>Vaša organizácia <b>{organizationName}</b> zatiaľ nemá žiadneho koordinátora. Môžete sa ním stať!</p><p>Ako koordinátor budete zodpovedný za:</p><ul><li>Požiadať zamestnávateľov alebo riaditeľov škôl, aby uhradili účastnícky poplatok.</li><li>Zabezpečovať správnosť a úplnosť údajov v systéme (fakturačné údaje, doručovacie adresy pre balíčky, adresy pobočiek).</li><li>Rozdeľovať účastnícke balíčky (platí len pre Májovú výzvu).</li><li>Vypisovať prípadné vnútrofiremné výzvy.</li><li>Pravidelne schvaľovať platby za vašich zamestnancov a následne generovať faktúru.</li></ul><p>Získate tiež prístup do systému Do práce na bicykli, kde nájdete informácie o účasti a výsledkoch vašej organizácie vrátane tímov a jednotlivých účastníkov.</p><p><b>Účastníkov nebudete registrovať sami, môžete ich len požiadať, aby sa zaregistrovali.</b></p>"
 titleBecomeCoordinator = "Staňte sa firemným koordinátorom"
 
 [coordinator]
@@ -1140,8 +1140,9 @@ parseEntryFeePaymentOptionsError = "Chyba spracovania hodnôt možností platby 
 [register.coordinator]
 title.may = "Registrácia koordinátora na&nbsp;Májovú výzvu"
 title.october = "Registrácia koordinátora na&nbsp;Októbrovú výzvu"
+title.september = "Registrácia firemného koordinátora*ky"
 titleInfo = "Povinnosti koordinátora"
-info = "<p>Ako koordinátor*ka budete zodpovedný*á za:</p><ul><li>Požiadať zamestnávateľov alebo riaditeľov škôl, aby uhradili účastnícky poplatok.</li><li>Zabezpečovať správnosť a úplnosť údajov v systéme (fakturačné údaje, adresy na balíčkoch/pobočky).</li><li>Rozdeliť účastnícke balíčky účastníkom.</li><li>Vypísať prípadné vnútrofiremné výzvy.</li><li>Pravidelne schvaľovať platby za vašich zamestnancov a následne generovať faktúru.</li></ul><p>Tiež budete mať prístup do systému Do práce na bicykli, kde nájdete informácie o účasti a výsledkoch vašej organizácie, vrátane tímov a jednotlivých účastníkov.</p><p><strong>Účastníkov nebudete registrovať sami, len ich môžete osloviť, aby sa prihlásili.</strong></p>"
+info = "<p>Ako koordinátor*ka budete zodpovedný*á za:</p><ul><li>Požiadať zamestnávateľov alebo riaditeľov škôl, aby uhradili účastnícky poplatok.</li><li>Zabezpečovať správnosť a úplnosť údajov v systéme (fakturačné údaje, doručovacie adresy pre balíčky, adresy pobočiek).</li><li>Rozdeľovať účastnícke balíčky (platí len pre Májovú výzvu).</li><li>Vypisovať prípadné vnútrofiremné výzvy.</li><li>Pravidelne schvaľovať platby za vašich zamestnancov a následne generovať faktúru.</li></ul><p>Tiež budete mať prístup do systému Do práce na bicykli, kde nájdete informácie o účasti a výsledkoch vašej organizácie, vrátane tímov a jednotlivých účastníkov.</p><p><strong>Účastníkov nebudete registrovať sami, len ich môžete osloviť, aby sa prihlásili.</strong></p>"
 
 [register.coordinator.form]
 title = "Registrácia"
