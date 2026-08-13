@@ -1330,6 +1330,7 @@ apiMessageError = "Validácia pozvánky do tímu zlyhala."
 apiMessageErrorWithMessage = "Validácia pozvánky do tímu zlyhala. Chyba: {error}"
 apiMessageSuccess = "Pozvánka do tímu bola úspešne validovaná"
 validationFailed = "Odkaz pozvánky je neplatný alebo vypršal. Požiadajte prosím o novú pozvánku."
+overwriteWarning = "Niektoré vaše nastavenia sa zmenia podľa tejto pozvánky."
 
 [statsBar]
 labelFrequency = "pravidelnosť"

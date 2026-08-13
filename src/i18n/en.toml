@@ -1330,6 +1330,7 @@ apiMessageError = "Team invitation validation failed."
 apiMessageErrorWithMessage = "Team invitation validation failed. Error: {error}"
 apiMessageSuccess = "Team invitation validated successfully"
 validationFailed = "The invitation link is invalid or has expired. Please request a new invitation."
+overwriteWarning = "Some of your settings will change with this invitation."
 
 [statsBar]
 labelFrequency = "regularity"
