@@ -86,7 +86,7 @@ export default defineComponent({
     >
       <q-card
         v-for="diploma in diplomas"
-        :key="diploma.url"
+        :key="diploma.id"
         class="full-height"
         :style="{ 'border-radius': borderRadius }"
         flat

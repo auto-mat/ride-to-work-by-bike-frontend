@@ -62,6 +62,7 @@ export type ThirdPartyVoucher = {
 
 // diploma earned for a single challenge participation
 export type Diploma = {
+  id: number;
   year: string;
   name: string;
   url: string;
