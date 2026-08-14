@@ -1,9 +1,9 @@
-import { createPinia, setActivePinia } from 'pinia';
 import { useLoginStore, emptyUser } from '../../stores/login';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
 import { httpSuccessfullStatus } from '../../../test/cypress/support/commonTests';
+import UserProfileLink from '../global/UserProfileLink.vue';
 
 const { apiBase, apiDefaultLang, urlApiLogout } = rideToWorkByBikeConfig;
 const logoutSuccessDetail = 'Successfully logged out.';
@@ -19,7 +19,7 @@ describe('loginStore logout()', () => {
 
   context('successful logout', () => {
     beforeEach(() => {
-      setActivePinia(createPinia());
+      cy.mount(UserProfileLink);
       const apiBaseUrl = getApiBaseUrlWithLang(
         null,
         apiBase,
