@@ -213,6 +213,14 @@ describe('Company coordinator fee approval page', () => {
                 .find('.q-checkbox__inner')
                 .click();
             });
+          // verify reward state
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy');
+            });
           // verify amount changed
           cy.contains(memberName)
             .parent('tr')
@@ -233,6 +241,14 @@ describe('Company coordinator fee approval page', () => {
                 .find('.q-checkbox__inner')
                 .click();
             });
+          // verify reward state
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy');
+            });
           // verify original amount
           cy.contains(memberName)
             .parent('tr')
@@ -252,6 +268,14 @@ describe('Company coordinator fee approval page', () => {
               cy.dataCy('table-fee-approval-reward-checkbox')
                 .find('.q-checkbox__inner')
                 .click();
+            });
+          // verify reward state
+          cy.contains(memberName)
+            .parent('tr')
+            .within(() => {
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy');
             });
           // verify amount
           cy.contains(memberName)
