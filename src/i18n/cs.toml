@@ -608,7 +608,7 @@ labelTrackDelivery = "Chci dostat zprávu o stavu doručování mého účastnic
 labelVariant = "Varianta"
 labelUrlSizeConversionChartLink = "Tabulka velikosti"
 textMerchUnavailable = "V rámci dodatečné registrace do Květnové výzvy Do práce na kole již nerozesíláme účastnické balíčky. Máte však nárok na slevu {shopDiscountAmount} na našem benefičním e-shopu, kde máme trička i ponožky z mnoha ročníků. Sleva platí na každý nákup nad {shopDiscountMinOrder} a to do {shopDiscountValidUntil}. V košíku zadejte slevový kupón: {shopVoucherCode}. <a href='{url}' target='_blank'>Benefiční obchod AutoMat</a>."
-textMerchUnavailableSeptember = "Během Zářijové výzvy účastnické balíčky nerozesíláme, ale máme pro vás něco lepšího - zavítejte na náš <a href='{url}' target='_blank'>benefiční AutoMat e-shop</a> a využijte slevu {shopDiscountAmount} Kč na všechny položky Do práce na kole. Slevový kód {shopVoucherCode} je možné uplatnit na všechny objednávky v minimální hodnotě {shopDiscountMinOrder} Kč a to až do konce {shopDiscountValidUntil}."
+textMerchUnavailableSeptember = "Během Zářijové výzvy účastnické balíčky nerozesíláme, ale máme pro vás něco lepšího - zavítejte na náš <a href='{url}' target='_blank'>benefiční AutoMat e-shop</a> a využijte slevu {shopDiscountAmount} na všechny položky Do práce na kole. Slevový kód {shopVoucherCode} je možné uplatnit na všechny objednávky v minimální hodnotě {shopDiscountMinOrder} a to až do {shopDiscountValidUntil}."
 textNoMerchSelected = "Zvolili jste možnost 'bez balíčku', takže tento krok není potřeba vyplňovat. Registraci dokončíte kliknutím na tlačítko 'Pokračovat'."
 textMerchDisabled = "Tato výzva nenabízí účastnický balíček."
 
