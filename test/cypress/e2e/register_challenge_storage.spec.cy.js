@@ -181,12 +181,9 @@ describe('Register challenge storage', () => {
     cy.dataCy('page-heading-title').should('be.visible');
 
     // log out
-    cy.dataCy('user-select-desktop').within(() => {
-      cy.dataCy('user-select-input').should('be.visible').click();
-    });
     cy.get('@i18n').then((i18n) => {
-      cy.dataCy('menu-item')
-        .contains(i18n.global.t('userSelect.logout'))
+      cy.dataCy('drawer-menu-item')
+        .contains(i18n.global.t('drawerMenu.logout'))
         .click();
     });
 

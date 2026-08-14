@@ -308,14 +308,12 @@ describe('Router rules', () => {
               cy.url().should('not.include', routesConf['routes']['path']);
               // redirects to home page
               cy.dataCy('index-title').should('be.visible');
-              // click on user select
-              cy.dataCy('user-select-desktop').within(() => {
-                cy.dataCy('user-select-input').should('be.visible').click();
+              // log out
+              cy.get('@i18n').then((i18n) => {
+                cy.dataCy('drawer-menu-item')
+                  .contains(i18n.global.t('drawerMenu.logout'))
+                  .click();
               });
-              // logout
-              cy.dataCy('menu-item')
-                .contains(i18n?.global.t('userSelect.logout'))
-                .click();
               // redirected to login page
               cy.url().should('include', routesConf['login']['path']);
               // login
