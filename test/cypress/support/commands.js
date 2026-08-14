@@ -3822,6 +3822,8 @@ Cypress.Commands.add(
         firstName: 'Test',
         lastName: 'User',
         gender: Gender.male,
+        ageGroup: 1,
+        occupation: 1,
         terms: true,
         email: 'test@example.com',
         nickname: '',
