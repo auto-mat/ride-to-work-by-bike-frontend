@@ -559,10 +559,27 @@ describe('<FormFieldListMerch>', () => {
             store.setPriceLevel(response.results[0].price_level);
           });
         });
+        const { formatPriceCurrency } = useFormatPrice();
+        const shopDiscountAmountFormatted = formatPriceCurrency(
+          rideToWorkByBikeConfig.shopDiscountAmount,
+          Currency.CZK,
+        );
+        const shopDiscountMinOrderFormatted = formatPriceCurrency(
+          rideToWorkByBikeConfig.shopDiscountMinOrder,
+          Currency.CZK,
+        );
+        const shopDiscountValidUntilFormatted = i18n.global.d(
+          new Date(rideToWorkByBikeConfig.shopDiscountValidUntil),
+          'numeric',
+        );
         const bannerHtml = i18n.global.t(
           'form.merch.textMerchUnavailableSeptember',
           {
             url: rideToWorkByBikeConfig.urlAutoMatShop,
+            shopDiscountAmount: shopDiscountAmountFormatted,
+            shopDiscountMinOrder: shopDiscountMinOrderFormatted,
+            shopDiscountValidUntil: shopDiscountValidUntilFormatted,
+            shopVoucherCode: rideToWorkByBikeConfig.shopVoucherCode,
           },
         );
         cy.stripHtmlTags(bannerHtml).then((bannerText) => {
