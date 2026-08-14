@@ -144,12 +144,12 @@ export default defineComponent({
     watch(organizationType, async (newType, oldType) => {
       if (newType !== oldType) {
         logger?.debug(
-          `Changed organizationType, new value is  <${newType}>, old value was <${oldType}>.`,
+          `Organization type changed, from the <${oldType}> to the <${newType}>.`,
         );
         // Clear select organization widget value
         selectedOrganization.value = null;
         logger?.debug(
-          `Clear selectedOrganization value <${selectedOrganization.value}>.`,
+          `Clear selected organization value <${selectedOrganization.value}>.`,
         );
         // load new organizations and emit event
         await loadAndEmit(newType);

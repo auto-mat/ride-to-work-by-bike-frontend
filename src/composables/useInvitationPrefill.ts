@@ -39,7 +39,11 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       (paymentSubject === PaymentSubject.school &&
         invitationOrganizationType === OrganizationType.school);
     logger?.debug(
-      `prefillOrganizationForPayment: orgId=<${invitationOrganizationId}>, type=<${invitationOrganizationType}>, payment=<${paymentSubject}>, match=<${isPaymentSubjectMatching}>, step2=<${step2State}>`,
+      `Prefill organization for payment step, invitation organization ID is` +
+        ` <${invitationOrganizationId}>, invitation organization type is` +
+        ` <${invitationOrganizationType}>, payment subject is <${paymentSubject}>,` +
+        ` is payment subject matching <${isPaymentSubjectMatching}>, registration step no. 2` +
+        ` payment state is <${step2State}>.`,
     );
     // skip if no invitation data
     if (
@@ -52,15 +56,18 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const shouldPrefill =
       organizationId === null || step2State !== StepVisitState.dirty;
     if (!shouldPrefill) {
-      logger?.info(
-        `Step2 already visited or org set, skipping pre-fill (orgId=<${organizationId}>, step2=<${step2State}>)`,
+      logger?.debug(
+        `Registration step no. 2 payment is already visited <${step2State}>` +
+          ` or organization ID was set <${organizationId}>, skipping pre-fill of` +
+          ` organization.`,
       );
       return;
     }
     // skip if payment subject does not equal invitation organization type
     if (!isPaymentSubjectMatching) {
-      logger?.info(
-        `Type mismatch: <${invitationOrganizationType}> vs <${paymentSubject}>, skipping org pre-fill`,
+      logger?.debug(
+        `Invitation organization type <${invitationOrganizationType}> is not equal` +
+          ` payment subject <${paymentSubject}>, skipping pre-fill of organization.`,
       );
       return;
     }
@@ -69,13 +76,14 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       (organization) => organization.id === invitationOrganizationId,
     );
     if (!invitationOrganization) {
-      logger?.info(
-        `Organization <${invitationOrganizationId}> not found, skipping pre-fill`,
+      logger?.debug(
+        `Organization ID <${invitationOrganizationId}> not found,` +
+          ` skipping pre-fill of organization.`,
       );
       return;
     }
     registerChallengeStore.setOrganizationId(invitationOrganizationId);
-    logger?.info(`Pre-filled organization <${invitationOrganizationId}>`);
+    logger?.debug(`Pre-filled organization ID <${invitationOrganizationId}>.`);
   };
 
   /**
@@ -97,8 +105,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       organizationType === OrganizationType.none ||
       step3State !== StepVisitState.dirty;
     if (!shouldPrefill) {
-      logger?.info(
-        `Step3 already visited or type set, skipping pre-fill (type=<${organizationType}>, step3=<${step3State}>)`,
+      logger?.debug(
+        `Registration step no. 3 participation was already visited` +
+          ` <${step3State}> or organization type was set <${organizationType}>,` +
+          ` skipping pre-fill of organization.`,
       );
       return;
     }
@@ -107,14 +117,15 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       paymentSubject !== PaymentSubject.individual &&
       paymentSubject !== PaymentSubject.voucher
     ) {
-      logger?.info(
-        `Payment subject <${paymentSubject}> type locked, skipping pre-fill`,
+      logger?.debug(
+        `Payment subject <${paymentSubject}> type is locked, skipping pre-fill` +
+          ` of organization type.`,
       );
       return;
     }
     registerChallengeStore.setOrganizationType(invitationOrganizationType);
-    logger?.info(
-      `Pre-filled organization type <${invitationOrganizationType}>`,
+    logger?.debug(
+      `Pre-filled organization type <${invitationOrganizationType}>.`,
     );
   };
 
@@ -166,22 +177,28 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       );
       if (invitationOrganization) {
         registerChallengeStore.setOrganizationId(invitationOrgId);
-        logger?.info(`Pre-filled organization <${invitationOrgId}>`);
+        logger?.debug(`Pre-filled organization ID <${invitationOrgId}>.`);
         // load subsidiaries for the pre-filled organization
         await registerChallengeStore.loadSubsidiariesToStore(logger);
-        logger?.info('Loaded subsidiaries for pre-filled organization');
+        logger?.debug(
+          `Loaded subsidiaries for pre-filled organization ID` +
+            ` <${invitationOrgId}>.`,
+        );
       }
     } else if (currentOrgId !== invitationOrgId) {
       // different organization ID filled, exit
-      logger?.info(
-        `Org mismatch <${currentOrgId}> vs <${invitationOrgId}>, skipping subsidiary`,
+      logger?.debug(
+        `Organization ID <${currentOrgId}> is not equal` +
+          ` invitation organization ID <${invitationOrgId}>,` +
+          ` skipping pre-fill of subsidiary.`,
       );
       return;
     } else {
       // correct organization ID filled, ensure subsidiaries are loaded
       if (registerChallengeStore.subsidiaries.length === 0) {
         await registerChallengeStore.loadSubsidiariesToStore(logger);
-        logger?.info('Loaded subsidiaries for pre-filled organization');
+        logger?.debug(`
+          Loaded subsidiaries for pre-filled organization ID <${invitationOrgId}>.`);
       }
     }
     // re-read organizationId after potential update
@@ -197,7 +214,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       );
       if (invitationSubsidiary) {
         registerChallengeStore.setSubsidiaryId(invitationSubId);
-        logger?.info(`Pre-filled subsidiary <${invitationSubId}>`);
+        logger?.debug(`Pre-filled subsidiary ID <${invitationSubId}>.`);
       }
     }
   };
@@ -245,8 +262,9 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     const shouldPrefill =
       currentTeamId === null || step5State !== StepVisitState.dirty;
     if (!shouldPrefill) {
-      logger?.info(
-        `Step5 already visited or team set, skipping pre-fill (teamId=<${currentTeamId}>, step5=<${step5State}>)`,
+      logger?.debug(
+        `Registration step no. 5 choose team was already visited <${step5State}>` +
+          ` or team was set <${currentTeamId}>, skipping pre-fill of team.`,
       );
       return;
     }
@@ -256,8 +274,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       currentOrgId !== null &&
       currentOrgId !== invitationOrgId
     ) {
-      logger?.info(
-        `Org mismatch <${currentOrgId}> vs <${invitationOrgId}>, skipping team`,
+      logger?.debug(
+        `Organization ID  <${currentOrgId}> is not equal` +
+          ` invitation organization ID <${invitationOrgId}>,` +
+          ` skipping pre-fill of team.`,
       );
       return;
     }
@@ -267,8 +287,10 @@ export const useInvitationPrefill = (logger: Logger | null) => {
       currentSubId !== null &&
       currentSubId !== invitationSubId
     ) {
-      logger?.info(
-        `Subsidiary mismatch <${currentSubId}> vs <${invitationSubId}>, skipping team`,
+      logger?.debug(
+        `Subsidiary ID <${currentSubId}> is not equal` +
+          ` invitation subsidairy ID <${invitationSubId}>,` +
+          ` skipping pre-fill of team.`,
       );
       return;
     }
@@ -278,7 +300,7 @@ export const useInvitationPrefill = (logger: Logger | null) => {
     );
     if (!invitationTeam) return;
     registerChallengeStore.setTeamId(invitationTeamId);
-    logger?.info(`Pre-filled team <${invitationTeamId}>`);
+    logger?.debug(`Pre-filled team ID <${invitationTeamId}>.`);
   };
 
   return {
