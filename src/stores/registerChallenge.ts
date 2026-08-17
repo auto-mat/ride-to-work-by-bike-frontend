@@ -588,14 +588,14 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
         (stepKey) => {
           if (this.visitedSteps[stepKey] === StepVisitState.active) {
             this.visitedSteps[stepKey] = StepVisitState.dirty;
-            this.$log?.debug(`Step <${stepKey}> transitioned to dirty.`);
+            this.$log?.debug(`Step <${stepKey}> transitioned to dirty state.`);
           }
         },
       );
       // mark target step as active, unless it was already left before
       if (this.visitedSteps[step] !== StepVisitState.dirty) {
         this.visitedSteps[step] = StepVisitState.active;
-        this.$log?.debug(`Step <${step}> transitioned to active.`);
+        this.$log?.debug(`Target step <${step}> transitioned to active state.`);
       }
     },
     /**

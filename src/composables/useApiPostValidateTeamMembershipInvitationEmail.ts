@@ -50,7 +50,7 @@ export const useApiPostValidateTeamMembershipInvitationEmail = (
     payload: ValidateInvitationTokenRequest,
   ): Promise<ValidateInvitationTokenResponse | null> => {
     logger?.info(
-      'Validate team membership invitation email request to the API.',
+      'Validate team membership invitation e-mail request to the API.',
     );
     isLoading.value = true;
     // append access token into HTTP header

@@ -46,14 +46,16 @@ export const useInvitationToken = (
     }
     // read token from URL query params
     logger?.debug(
-      `processInvitation called - route.query: ${JSON.stringify(route.query)}`,
+      `Read team invitation token URL query <${JSON.stringify(route.query)}>.`,
     );
     const invitationToken = route.query.invitationToken as string | undefined;
     if (!invitationToken) {
-      logger?.debug('No invitation token found in URL.');
+      logger?.debug(
+        `URL does not have team invitation token parameter argument <${invitationToken}>.`,
+      );
       return;
     }
-    logger?.debug(`Processing invitation token: ${invitationToken}`);
+    logger?.debug(`Processing team invitation token <${invitationToken}>.`);
     // post invitation token to validate
     isLoading.value = true;
     const validationResponse = await postValidateTeamMembershipInvitationEmail({
@@ -66,7 +68,7 @@ export const useInvitationToken = (
     }
     // successful validation
     logger?.debug(
-      `Invitation token validated. Team ID: ${validationResponse.token.team_id}`,
+      `Invitation token validated. Team ID <${validationResponse.token.team_id}>.`,
     );
     // warn user if existing team selection will be replaced by the invitation
     if (
@@ -85,20 +87,30 @@ export const useInvitationToken = (
     registerChallengeStore.setInvitationOrganizationId(
       validationResponse.token.company_id,
     );
+    logger?.debug(
+      `Set register challenge store invitation organization ID` +
+        ` <${registerChallengeStore.getInvitationOrganizationId}>.`,
+    );
     registerChallengeStore.setInvitationSubsidiaryId(
       validationResponse.token.subsidiary_id,
     );
+    logger?.debug(
+      `Set register challenge store invitation subsidiary ID` +
+        ` <${registerChallengeStore.getInvitationSubsidiaryId}>.`,
+    );
     registerChallengeStore.setInvitationTeamId(
       validationResponse.token.team_id,
+    );
+    logger?.debug(
+      `Set register challenge store invitation team ID` +
+        ` <${registerChallengeStore.getInvitationTeamId}>.`,
     );
     registerChallengeStore.setInvitationOrganizationType(
       validationResponse.token.company_type,
     );
     logger?.debug(
-      `Updated store: invitationOrganizationId=${validationResponse.token.company_id}, ` +
-        `invitationSubsidiaryId=${validationResponse.token.subsidiary_id}, ` +
-        `invitationTeamId=${validationResponse.token.team_id}, ` +
-        `invitationOrganizationType=${validationResponse.token.company_type}`,
+      `Set register challenge store invitation organization type` +
+        ` <${registerChallengeStore.getInvitationOrganizationType}>.`,
     );
     // remove invitation token from URL
     const query = { ...route.query };
