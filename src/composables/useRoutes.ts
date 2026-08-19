@@ -213,6 +213,29 @@ export const useRoutes = () => {
   };
 
   /**
+   * Returns an array of RouteDay objects for each day vacation can be
+   * marked on - today through the end of the competition phase, ordered
+   * chronologically ascending (today first, then forward into the future).
+   * This is the reverse of `getLoggableDaysWithRoutes`'s most-recent-first
+   * order, since users planning vacation are looking forward, not back.
+   * @param {RouteItem[]} routes - Array of logged routes.
+   * @return {RouteDay[]} - The array representing days with routes.
+   */
+  const getVacationLoggableDaysWithRoutes = (
+    routes: RouteItem[],
+  ): RouteDay[] => {
+    if (!dateCompetitionPhaseTo.value) {
+      return [];
+    }
+    const dateToday = new Date();
+    return createDaysArrayWithRoutes(
+      date.subtractFromDate(dateToday, { days: 1 }),
+      dateCompetitionPhaseTo.value,
+      routes,
+    ).reverse();
+  };
+
+  /**
    * Returns an array of RouteDay which represents days of competition phase,
    * which precede the logging window and can no longer be logged.
    * @param {RouteItem[]} routes - Array of logged routes.
@@ -380,6 +403,7 @@ export const useRoutes = () => {
     isEntryEnabled,
     isResultsEnabled,
     getLoggableDaysWithRoutes,
+    getVacationLoggableDaysWithRoutes,
     getUnloggableDaysWithRoutes,
     getCompetitionDaysWithRoutes,
     createDaysArrayWithRoutes,

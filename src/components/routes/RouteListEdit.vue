@@ -16,7 +16,7 @@
  */
 
 // libraries
-import { Notify, Screen } from 'quasar';
+import { colors, Notify, Screen } from 'quasar';
 import { computed, defineComponent, inject, ref, watch } from 'vue';
 import type { QForm } from 'quasar';
 
@@ -25,6 +25,7 @@ import { tripsAdapter } from '../../adapters/tripsAdapter';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
+import RouteItemDisplay from './RouteItemDisplay.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
@@ -32,7 +33,7 @@ import { useApiPostTrips } from '../../composables/useApiPostTrips';
 import { useRoutes } from 'src/composables/useRoutes';
 
 // enums
-import { TransportDirection } from '../types/Route';
+import { TransportDirection, TransportType } from '../types/Route';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
@@ -46,6 +47,7 @@ export default defineComponent({
   name: 'RouteListEdit',
   components: {
     RouteItemEdit,
+    RouteItemDisplay,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
@@ -54,6 +56,9 @@ export default defineComponent({
     const isLoadingTrips = computed((): boolean => {
       return tripsStore.getIsLoading;
     });
+
+    const { getPaletteColor } = colors;
+    const primary = getPaletteColor('primary');
 
     const isVacationMode = computed<boolean>({
       get: (): boolean => tripsStore.getVacationMode,
@@ -64,6 +69,7 @@ export default defineComponent({
     const {
       isEntryEnabled,
       getLoggableDaysWithRoutes,
+      getVacationLoggableDaysWithRoutes,
       formatDate,
       formatDateName,
     } = useRoutes();
@@ -74,15 +80,41 @@ export default defineComponent({
     // get route items from store
     const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
 
-    const days = ref<RouteDay[]>(getLoggableDaysWithRoutes(routeItems.value));
-    // update current days when route items change in store
-    watch(routeItems, () => {
-      days.value = getLoggableDaysWithRoutes(routeItems.value);
+    /**
+     * Returns the day range for the current mode - trip mode shows the
+     * backdating logging window, vacation mode shows today through the end
+     * of the competition (see `getVacationLoggableDaysWithRoutes`).
+     * @return {RouteDay[]}
+     */
+    const getDaysForMode = (): RouteDay[] =>
+      isVacationMode.value
+        ? getVacationLoggableDaysWithRoutes(routeItems.value)
+        : getLoggableDaysWithRoutes(routeItems.value);
+
+    const days = ref<RouteDay[]>(getDaysForMode());
+    // update current days when route items or vacation mode change
+    watch([routeItems, isVacationMode], () => {
+      days.value = getDaysForMode();
     });
 
     const isLargeScreen = computed((): boolean => {
       return Screen.gt.sm;
     });
+
+    /**
+     * Checks whether a route should be shown as read-only for the current
+     * mode - a route with an already logged trip is read-only in vacation
+     * mode, and a route already marked as vacation is read-only in trip
+     * mode. Mirrors `isRouteDisabledForMode` in `RoutesCalendar.vue`.
+     * @param {RouteItem | null} route - Route to check.
+     * @return {boolean}
+     */
+    const isRouteDisabledForMode = (route: RouteItem | null): boolean => {
+      if (!route?.transport) return false;
+      return isVacationMode.value
+        ? route.transport !== TransportType.vacation
+        : route.transport === TransportType.vacation;
+    };
 
     /**
      * Get all route items that are dirty
@@ -163,7 +195,9 @@ export default defineComponent({
       formatDateName,
       isLargeScreen,
       isLoadingTrips,
+      isRouteDisabledForMode,
       onSave,
+      primary,
       routeItemsDirty,
       TransportDirection,
       isVacationMode,
@@ -185,10 +219,12 @@ export default defineComponent({
         <q-btn-toggle
           v-model="isVacationMode"
           no-caps
+          rounded
           unelevated
           toggle-color="primary"
           color="white"
           text-color="primary"
+          :style="{ border: `1px solid ${primary}` }"
           :options="[
             { label: $t('routes.labelTripMode'), value: false },
             { label: $t('routes.vacation.modeToggle'), value: true },
@@ -238,7 +274,16 @@ export default defineComponent({
           <div class="row q-col-gutter-lg">
             <!-- Item: Route to work -->
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
+              <route-item-display
+                v-if="isRouteDisabledForMode(day.toWork)"
+                :route="day.toWork"
+                class="full-height"
+                data-cy="route-list-item"
+                :data-direction="TransportDirection.toWork"
+                :data-id="day.toWork?.id"
+              />
               <route-item-edit
+                v-else
                 :route="day.toWork"
                 :edited-routes="routeItemsDirty"
                 class="full-height"
@@ -250,7 +295,16 @@ export default defineComponent({
             </div>
             <!-- Item: Route from work -->
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
+              <route-item-display
+                v-if="isRouteDisabledForMode(day.fromWork)"
+                :route="day.fromWork"
+                class="full-height"
+                data-cy="route-list-item"
+                :data-direction="TransportDirection.fromWork"
+                :data-id="day.fromWork?.id"
+              />
               <route-item-edit
+                v-else
                 :route="day.fromWork"
                 :edited-routes="routeItemsDirty"
                 class="full-height"

@@ -3,7 +3,10 @@ import { testDesktopSidebar } from '../support/commonTests';
 import { defLocale } from '../../../src/i18n/def_locale';
 import logRouteFromDayBeforeTestData from '../fixtures/logRouteFromDayBeforeTestData.json';
 import testDataUploadFile from '../fixtures/routesUploadFileTestData.json';
-import { RouteInputType } from '../../../src/components/types/Route';
+import {
+  RouteInputType,
+  TransportDirection,
+} from '../../../src/components/types/Route';
 
 const dateWithLoggedRoute = new Date(2025, 4, 26);
 
@@ -603,6 +606,241 @@ describe('Routes list page', () => {
       cy.visit('#' + routesConf['profile_details']['children']['fullPath']);
       cy.dataCy('profile-page-title').should('be.visible');
       cy.dataCy('footer-routes-list-spacer').should('not.exist');
+    });
+  });
+  context('desktop - vacation mode', () => {
+    beforeEach(() => {
+      cy.get('@config').then((config) => {
+        cy.interceptCommuteModeGetApi(config, defLocale);
+        cy.interceptTripsGetApi(config, defLocale);
+        cy.visit('#' + routesConf['routes_list']['children']['fullPath']);
+        cy.dataCy('routes-page-title').should('be.visible');
+        cy.waitForCommuteModeApi();
+        cy.waitForTripsApi();
+      });
+    });
+
+    it.only('shows the vacation date range: today - end of challenge', () => {
+      cy.get('@i18n').then((i18n) => {
+        const dateToday = '2025-05-26';
+        const dateFuture = '2025-05-28';
+        const dateCompetitionEnd = '2025-06-01';
+        const dateAfterCompetitionEnd = '2025-06-02';
+        // future date is not rendered
+        cy.get(`[data-date="${dateFuture}"]`).should('not.exist');
+        // switch to vacation mode
+        cy.dataCy('vacation-mode-toggle')
+          .contains(i18n.global.t('routes.vacation.modeToggle'))
+          .click({ force: true });
+        // future date is rendered
+        cy.get(`[data-date="${dateToday}"]`).should('be.visible');
+        cy.get(`[data-date="${dateFuture}"]`).should('be.visible');
+        cy.get(`[data-date="${dateCompetitionEnd}"]`).should('be.visible');
+        // date after competition end is not rendered
+        cy.get(`[data-date="${dateAfterCompetitionEnd}"]`).should('not.exist');
+      });
+    });
+
+    it.only('orders days chronologically ascending (today first, future after), unlike trip mode', () => {
+      cy.get('@i18n').then((i18n) => {
+        // most recent date is first, goes into the past
+        cy.get('[data-date]')
+          .first()
+          .should('have.attr', 'data-date', '2025-05-26');
+        cy.get('[data-date]')
+          .eq(1)
+          .should('have.attr', 'data-date', '2025-05-25');
+        // switch to vacation mode
+        cy.dataCy('vacation-mode-toggle')
+          .contains(i18n.global.t('routes.vacation.modeToggle'))
+          .click({ force: true });
+        // most recent date is again first, goes into the future
+        cy.get('[data-date]')
+          .first()
+          .should('have.attr', 'data-date', '2025-05-26');
+        cy.get('[data-date]')
+          .eq(1)
+          .should('have.attr', 'data-date', '2025-05-27');
+      });
+    });
+
+    it.only('shows a read-only card instead of an editable one for a route already marked as vacation, in trip mode', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          const testCaseDate = '2025-05-26';
+          const requestBody = {
+            trips: [
+              {
+                trip_date: testCaseDate,
+                direction: 'trip_to',
+                commuteMode: 'vacation',
+                distanceMeters: 0,
+                sourceApplication: config.apiTripsSourceApplicationId,
+              },
+            ],
+          };
+          const responseBody = {
+            trips: requestBody.trips.map((trip, index) => ({
+              id: index + 1,
+              ...trip,
+              durationSeconds: null,
+              sourceId: null,
+              file: null,
+              description: '',
+              track: null,
+            })),
+          };
+          cy.interceptPostTripsApi(config, i18n, responseBody);
+          // mark to-work as vacation
+          cy.dataCy('vacation-mode-toggle')
+            .contains(i18n.global.t('routes.vacation.modeToggle'))
+            .click({ force: true });
+          cy.get(`[data-date="${testCaseDate}"]`)
+            .find(`[data-direction="${TransportDirection.toWork}"]`)
+            .find('[data-cy="button-toggle-transport"]')
+            .should('exist');
+          cy.get(`[data-date="${testCaseDate}"]`)
+            .find(`[data-direction="${TransportDirection.toWork}"]`)
+            .within(() => {
+              cy.dataCy('section-transport')
+                .find(`[data-value="vacation"]`)
+                .click();
+            });
+          cy.dataCy('button-save-bottom').click();
+          cy.waitForPostTripsApi(requestBody, responseBody);
+          // switch back to trip mode
+          cy.dataCy('vacation-mode-toggle')
+            .contains(i18n.global.t('routes.labelTripMode'))
+            .click({ force: true });
+          // vacation route is read-only
+          cy.get(`[data-date="${testCaseDate}"]`)
+            .find(`[data-direction="${TransportDirection.toWork}"]`)
+            .find('[data-cy="avatar-transport"]')
+            .should('exist');
+          cy.get(`[data-date="${testCaseDate}"]`)
+            .find(`[data-direction="${TransportDirection.toWork}"]`)
+            .find('[data-cy="button-toggle-transport"]')
+            .should('not.exist');
+          // empty from-work route is editable
+          cy.get(`[data-date="${testCaseDate}"]`)
+            .find(`[data-direction="${TransportDirection.fromWork}"]`)
+            .find('[data-cy="button-toggle-transport"]')
+            .should('exist');
+        });
+      });
+    });
+  });
+
+  context('desktop - vacation mode with existing trip', () => {
+    beforeEach(() => {
+      cy.get('@config').then((config) => {
+        cy.interceptCommuteModeGetApi(config, defLocale);
+        cy.fixture('apiGetTripsResponseCalendar.json').then((trips) => {
+          // move trip date to "today" - clock is set to 2025-05-26
+          trips.results[0].trip_date = '2025-05-26';
+          cy.fixture('apiGetTripsResponseCalendarNext.json').then(
+            (tripsNext) => {
+              cy.interceptTripsGetApi(config, defLocale, trips, tripsNext);
+              cy.visit('#' + routesConf['routes_list']['children']['fullPath']);
+              cy.dataCy('routes-page-title').should('be.visible');
+              cy.waitForCommuteModeApi();
+              cy.waitForTripsApi(trips, tripsNext);
+            },
+          );
+        });
+      });
+    });
+
+    it.only('shows a read-only card instead of an editable one for a route with an existing trip, in vacation mode', () => {
+      cy.get('@i18n').then((i18n) => {
+        const testCaseDate = '2025-05-26';
+        // trip mode - route is editable
+        cy.get(`[data-date="${testCaseDate}"]`)
+          .find(`[data-direction="${TransportDirection.toWork}"]`)
+          .find('[data-cy="button-toggle-transport"]')
+          .should('exist');
+        // switch to vacation mode
+        cy.dataCy('vacation-mode-toggle')
+          .contains(i18n.global.t('routes.vacation.modeToggle'))
+          .click({ force: true });
+        // route with a logged trip is now read-only
+        cy.get(`[data-date="${testCaseDate}"]`)
+          .find(`[data-direction="${TransportDirection.toWork}"]`)
+          .find('[data-cy="avatar-transport"]')
+          .should('exist');
+        cy.get(`[data-date="${testCaseDate}"]`)
+          .find(`[data-direction="${TransportDirection.toWork}"]`)
+          .find('[data-cy="button-toggle-transport"]')
+          .should('not.exist');
+        // empty from-work route is still editable
+        cy.get(`[data-date="${testCaseDate}"]`)
+          .find(`[data-direction="${TransportDirection.fromWork}"]`)
+          .find('[data-cy="button-toggle-transport"]')
+          .should('exist');
+      });
+    });
+
+    it.only('marks selected routes as vacation and saves them, without touching a route that already has a trip logged', () => {
+      cy.get('@i18n').then((i18n) => {
+        cy.get('@config').then((config) => {
+          const dateWithExistingTrip = '2025-05-26';
+          const dateEmpty = '2025-05-27';
+          const requestBody = {
+            trips: [
+              {
+                trip_date: dateWithExistingTrip,
+                direction: 'trip_from',
+                commuteMode: 'vacation',
+                distanceMeters: 0,
+                sourceApplication: config.apiTripsSourceApplicationId,
+              },
+              {
+                trip_date: dateEmpty,
+                direction: 'trip_to',
+                commuteMode: 'vacation',
+                distanceMeters: 0,
+                sourceApplication: config.apiTripsSourceApplicationId,
+              },
+            ],
+          };
+          const responseBody = {
+            trips: requestBody.trips.map((trip, index) => ({
+              id: index + 1,
+              ...trip,
+              durationSeconds: null,
+              sourceId: null,
+              file: null,
+              description: '',
+              track: null,
+            })),
+          };
+          cy.interceptPostTripsApi(config, i18n, responseBody);
+          // switch to vacation mode
+          cy.dataCy('vacation-mode-toggle')
+            .contains(i18n.global.t('routes.vacation.modeToggle'))
+            .click({ force: true });
+          // log from-work vacation
+          cy.get(`[data-date="${dateWithExistingTrip}"]`)
+            .find(`[data-direction="${TransportDirection.fromWork}"]`)
+            .within(() => {
+              cy.dataCy('section-transport')
+                .find('[data-value="vacation"]')
+                .click();
+            });
+          // log to-work vacation
+          cy.get(`[data-date="${dateEmpty}"]`)
+            .find(`[data-direction="${TransportDirection.toWork}"]`)
+            .within(() => {
+              cy.dataCy('section-transport')
+                .find('[data-value="vacation"]')
+                .click();
+            });
+          // save
+          cy.dataCy('button-save-bottom').click();
+          // verify API request
+          cy.waitForPostTripsApi(requestBody, responseBody);
+        });
+      });
     });
   });
 });
