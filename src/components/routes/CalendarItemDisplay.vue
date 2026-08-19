@@ -93,6 +93,10 @@ export default defineComponent({
       return !!route.value?.id && route.value?.transport !== null;
     });
 
+    const isVacation = computed((): boolean => {
+      return route.value?.transport === TransportType.vacation;
+    });
+
     const { getRouteDistance, getRouteIcon } = useRoutes();
 
     const customSVGIconsFilePath = 'icons/routes_calendar/icons.svg';
@@ -109,6 +113,7 @@ export default defineComponent({
       getRouteIcon,
       onClick,
       isLogged,
+      isVacation,
     };
   },
 });
@@ -121,6 +126,7 @@ export default defineComponent({
       :active="active"
       :clickable="!disabled"
       :v-ripple="!disabled"
+      :style="{ opacity: disabled ? 0.5 : 1 }"
       class="relative-position flex justify-center items-center text-center gap-8"
       @click.prevent="onClick()"
       data-cy="calendar-item-display-item"
@@ -138,7 +144,7 @@ export default defineComponent({
         <!-- Icon: To work - logged -->
         <q-icon
           v-else-if="route && isLogged"
-          color="secondary"
+          :color="isVacation ? 'positive' : 'secondary'"
           class="full-width full-height absolute-full"
           :name="`svguse:${customSVGIconsFilePath}#route-bg-towork-logged|${customSVGIconViewPort}`"
           style="opacity: 0.4"
@@ -167,7 +173,7 @@ export default defineComponent({
         <!-- Icon: From work - logged -->
         <q-icon
           v-else-if="route && isLogged"
-          color="secondary"
+          :color="isVacation ? 'positive' : 'secondary'"
           class="full-width full-height absolute-full"
           :name="`svguse:${customSVGIconsFilePath}#route-bg-fromwork-logged|${customSVGIconViewPort}`"
           style="opacity: 0.4"
@@ -188,7 +194,7 @@ export default defineComponent({
       <template v-if="route && isLogged">
         <!-- Icon: Transport type -->
         <q-icon
-          :color="active ? 'white' : 'primary'"
+          :color="active ? 'white' : isVacation ? 'grey-8' : 'primary'"
           :name="getRouteIcon(route.transport)"
           :size="iconSize"
           data-cy="calendar-item-icon-transport"

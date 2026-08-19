@@ -1257,6 +1257,7 @@ labelLastSync = "Synchronizováno"
 labelStart = "Start"
 labelSyncAll = "Synchronizovat i soukromé jízdy a zóny"
 labelTransportType = "Typ dopravy"
+labelTripMode = "Zápis jízd"
 labelUploadFile = "Soubor s trasou"
 labelValidationDistance = "Vzdálenost"
 messageCopyNoDistance = "Předešlý den nemá zadanou vzdálenost."
@@ -1426,6 +1427,13 @@ walk = "Pěšky"
 bus = "Hromadnou dopravou"
 home = "Home office"
 unknown = "Nevyplněno"
+vacation = "Dovolená"
+
+[routes.vacation]
+modeToggle = "Zápis dovolené"
+markButton = "Označit jako dovolenou"
+remove = "Odstranit dovolenou"
+readOnlyMessage = "Den dovolené - pro úpravu přepněte do režimu zápisu dovolené"
 
 [socialBar]
 title = "Sledujte nás na sociálních sítích"

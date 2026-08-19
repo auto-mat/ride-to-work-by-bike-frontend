@@ -152,6 +152,85 @@ describe('<CalendarItemDisplay>', () => {
 
     emptyTests({ active: false });
   });
+
+  context('toWork - vacation logged', () => {
+    beforeEach(() => {
+      const day = {
+        id: '10001',
+        date: '2025-05-24',
+        toWork: {
+          id: '00001',
+          date: '2025-05-24',
+          transport: 'vacation',
+          distance: '0.00',
+          direction: 'toWork',
+        },
+        fromWork: {
+          id: '00002',
+          date: '2025-05-24',
+          transport: 'vacation',
+          distance: '0.00',
+          direction: 'fromWork',
+        },
+      };
+      cy.mount(CalendarItemDisplay, {
+        props: {
+          direction: TransportDirection.toWork,
+          day,
+        },
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('renders vacation background and icon', () => {
+      cy.dataCy('calendar-item-icon-towork-logged')
+        .should('be.visible')
+        .and('have.color', getPaletteColor('positive'));
+      cy.dataCy('calendar-item-icon-transport').should('be.visible');
+      // distance is empty for vacation entries (0 distance)
+      cy.dataCy('calendar-item-distance').should('have.text', '');
+    });
+  });
+
+  context('toWork - vacation logged active', () => {
+    beforeEach(() => {
+      const day = {
+        id: '10001',
+        date: '2025-05-24',
+        toWork: {
+          id: '00001',
+          date: '2025-05-24',
+          transport: 'vacation',
+          distance: '0.00',
+          direction: 'toWork',
+        },
+        fromWork: {
+          id: '00002',
+          date: '2025-05-24',
+          transport: 'vacation',
+          distance: '0.00',
+          direction: 'fromWork',
+        },
+      };
+      cy.mount(CalendarItemDisplay, {
+        props: {
+          active: true,
+          direction: TransportDirection.toWork,
+          day,
+        },
+      });
+      cy.viewport('iphone-6');
+    });
+
+    it('renders selected background and icon same as other transport types', () => {
+      cy.dataCy('calendar-item-icon-towork-active')
+        .should('be.visible')
+        .and('have.color', primary);
+      cy.dataCy('calendar-item-icon-transport')
+        .should('be.visible')
+        .and('have.color', white);
+    });
+  });
 });
 
 function coreTests() {

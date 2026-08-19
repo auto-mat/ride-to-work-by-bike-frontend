@@ -224,8 +224,11 @@ export default defineComponent({
     const onUpdateTransportType = (transportTypeNew: TransportType): void => {
       // compare new transport type with the transport type from the store
       const dirty = transportTypeNew !== routeStateDefault.value?.transport;
-      // if transport type is change to TransportType.none, set distance to 0
-      if (transportTypeNew === TransportType.none) {
+      // if transport type is changed to a distance-less type, set distance to 0
+      if (
+        transportTypeNew === TransportType.none ||
+        transportTypeNew === TransportType.vacation
+      ) {
         const { defaultDistanceZero } = rideToWorkByBikeConfig;
         emit('update:route', {
           ...props.route,

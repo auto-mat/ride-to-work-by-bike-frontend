@@ -40,7 +40,7 @@ import { useRoutes } from '../../composables/useRoutes';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // enums
-import { TransportDirection } from '../types/Route';
+import { TransportDirection, TransportType } from '../types/Route';
 
 // stores
 import { useTripsStore } from '../../stores/trips';
@@ -71,7 +71,14 @@ export default defineComponent({
       dateLoggingEnd,
     } = useRoutes();
 
-    const disabledBefore = computed((): string | null => {
+    const tripsStore = useTripsStore();
+
+    const isVacationMode = computed<boolean>({
+      get: (): boolean => tripsStore.getVacationMode,
+      set: (value: boolean): void => tripsStore.setVacationMode(value),
+    });
+
+    const disabledBeforeTrips = computed((): string | null => {
       const dateMinusOneDay = dateLoggingStart.value
         ? date.subtractFromDate(dateLoggingStart.value, {
             days: 1,
@@ -81,7 +88,16 @@ export default defineComponent({
         ? date.formatDate(dateMinusOneDay, apiDateFormat)
         : null;
     });
-    const disabledAfter = computed((): string | null => {
+    const disabledBeforeVacation = computed((): string => {
+      const dateYesterday = date.subtractFromDate(new Date(), { days: 1 });
+      return date.formatDate(dateYesterday, apiDateFormat);
+    });
+    const disabledBefore = computed((): string | null =>
+      isVacationMode.value
+        ? disabledBeforeVacation.value
+        : disabledBeforeTrips.value,
+    );
+    const disabledAfterTrips = computed((): string | null => {
       const datePlusOneDay = dateLoggingEnd.value
         ? date.addToDate(dateLoggingEnd.value, { days: 1 })
         : null;
@@ -89,13 +105,27 @@ export default defineComponent({
         ? date.formatDate(datePlusOneDay, apiDateFormat)
         : null;
     });
+    const disabledAfterVacation = computed((): string | null => {
+      const datePlusOneDay = dateCompetitionPhaseTo.value
+        ? date.addToDate(dateCompetitionPhaseTo.value, { days: 1 })
+        : null;
+      return datePlusOneDay
+        ? date.formatDate(datePlusOneDay, apiDateFormat)
+        : null;
+    });
+    const disabledAfter = computed((): string | null =>
+      isVacationMode.value
+        ? disabledAfterVacation.value
+        : disabledAfterTrips.value,
+    );
 
     // Define calendar CSS vars for calendar theme
     const { getPaletteColor } = colors;
+    const primary = getPaletteColor('primary');
     const theme = {
-      '--calendar-active-date-color': getPaletteColor('primary'),
-      '--calendar-current-color': getPaletteColor('primary'),
-      '--calendar-border-current': `${getPaletteColor('primary')} 2px solid`,
+      '--calendar-active-date-color': primary,
+      '--calendar-current-color': primary,
+      '--calendar-border-current': `${primary} 2px solid`,
     };
 
     // Compute month name and year for title
@@ -121,7 +151,6 @@ export default defineComponent({
     }
 
     // Get data for calendar
-    const tripsStore = useTripsStore();
     const { getCompetitionDaysWithRoutes } = useRoutes();
     const days = computed<RouteDay[]>(() =>
       getCompetitionDaysWithRoutes(tripsStore.getRouteItems),
@@ -141,9 +170,59 @@ export default defineComponent({
     } = useCalendarRoutes(days);
 
     /**
+     * Checks if a given route direction has a logged trip
+     * @param {string} dateString - Date to check (API date format).
+     * @param {TransportDirection} direction - Direction to check.
+     * @return {boolean}
+     */
+    function routeHasLoggedTrip(
+      dateString: string,
+      direction: TransportDirection,
+    ): boolean {
+      const day = routesMap.value[dateString];
+      const route =
+        direction === TransportDirection.toWork ? day?.toWork : day?.fromWork;
+      return !!route?.transport && route.transport !== TransportType.vacation;
+    }
+
+    /**
+     * Checks if a given route direction has a logged vacation entry.
+     * @param {string} dateString - Date to check (API date format).
+     * @param {TransportDirection} direction - Direction to check.
+     * @return {boolean}
+     */
+    function routeHasVacation(
+      dateString: string,
+      direction: TransportDirection,
+    ): boolean {
+      const day = routesMap.value[dateString];
+      const route =
+        direction === TransportDirection.toWork ? day?.toWork : day?.fromWork;
+      return route?.transport === TransportType.vacation;
+    }
+
+    /**
+     * Checks whether a route direction should be disabled
+     * @param {string} dateString - Date to check (API date format).
+     * @param {TransportDirection} direction - Direction to check.
+     * @return {boolean}
+     */
+    function isRouteDisabledForMode(
+      dateString: string,
+      direction: TransportDirection,
+    ): boolean {
+      return isVacationMode.value
+        ? routeHasLoggedTrip(dateString, direction)
+        : routeHasVacation(dateString, direction);
+    }
+
+    /**
      * Handles click on route item within a day frame.
-     * It triggers active state on that day.
+     * It triggers active state on that item.
      * It controls content of the route-logging dialog panel.
+     * Allows to select multiple empty items.
+     * Allows to select single logged trip (non-vacation).
+     * Allows to select multiple logged vacations (unambiguous).
      * @param {Object} { timestamp: Timestamp; direction: TransportDirection }
      * @return {void}
      */
@@ -157,11 +236,17 @@ export default defineComponent({
       if (isActive({ timestamp, direction })) {
         activeRoutes.value.splice(getActiveIndex({ timestamp, direction }), 1);
       } else {
-        if (
-          isActiveRouteLogged.value ||
-          isCalendarRouteLogged({ timestamp, direction })
-        ) {
-          // do not allow selecting multiple logged routes
+        const clickedIsLogged = isCalendarRouteLogged({ timestamp, direction });
+        if (isVacationMode.value) {
+          if (
+            activeRoutes.value.length > 0 &&
+            isActiveRouteLogged.value !== clickedIsLogged
+          ) {
+            // reset between empty and logged items
+            activeRoutes.value = [];
+          }
+        } else if (isActiveRouteLogged.value || clickedIsLogged) {
+          // trip mode: do not allow selecting multiple logged routes
           activeRoutes.value = [];
         }
         activeRoutes.value.push({ timestamp, direction });
@@ -224,11 +309,14 @@ export default defineComponent({
       isLoadingRoutes,
       locale,
       monthNameAndYear,
+      primary,
       routesMap,
       selectedDate,
       theme,
       TransportDirection,
+      isVacationMode,
       isActive,
+      isRouteDisabledForMode,
       isTimestampInCompetitionPhase,
       onClickItem,
       onNext,
@@ -257,6 +345,24 @@ export default defineComponent({
         @prev="onPrev"
         @today="onToday"
         class="col-12 col-sm"
+      />
+    </div>
+    <!-- Vacation mode toggle -->
+    <div class="row q-mb-md" data-cy="vacation-mode-toggle-wrapper">
+      <q-btn-toggle
+        v-model="isVacationMode"
+        no-caps
+        rounded
+        unelevated
+        toggle-color="primary"
+        color="white"
+        text-color="primary"
+        :style="{ border: `1px solid ${primary}` }"
+        :options="[
+          { label: $t('routes.labelTripMode'), value: false },
+          { label: $t('routes.vacation.modeToggle'), value: true },
+        ]"
+        data-cy="vacation-mode-toggle"
       />
     </div>
     <!-- Calendar -->
@@ -294,7 +400,13 @@ export default defineComponent({
               :active="
                 isActive({ timestamp, direction: TransportDirection.toWork })
               "
-              :disabled="timestamp.disabled"
+              :disabled="
+                timestamp.disabled ||
+                isRouteDisabledForMode(
+                  timestamp.date,
+                  TransportDirection.toWork,
+                )
+              "
               :direction="TransportDirection.toWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"
@@ -306,7 +418,13 @@ export default defineComponent({
               :active="
                 isActive({ timestamp, direction: TransportDirection.fromWork })
               "
-              :disabled="timestamp.disabled"
+              :disabled="
+                timestamp.disabled ||
+                isRouteDisabledForMode(
+                  timestamp.date,
+                  TransportDirection.fromWork,
+                )
+              "
               :direction="TransportDirection.fromWork"
               :day="routesMap[timestamp.date]"
               :timestamp="timestamp"

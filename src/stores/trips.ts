@@ -22,6 +22,7 @@ interface TripsState {
   urlAppCyclers: string;
   urlAppNaKolePrahou: string;
   isLoadingOpenAppWithRestToken: boolean;
+  isVacationMode: boolean;
 }
 
 export const useTripsStore = defineStore('trips', {
@@ -34,6 +35,7 @@ export const useTripsStore = defineStore('trips', {
     urlAppCyclers: '',
     urlAppNaKolePrahou: '',
     isLoadingOpenAppWithRestToken: false,
+    isVacationMode: false,
   }),
 
   getters: {
@@ -72,6 +74,7 @@ export const useTripsStore = defineStore('trips', {
     getUrlAppNaKolePrahou: (state) => state.urlAppNaKolePrahou,
     getIsLoadingOpenAppWithRestToken: (state) =>
       state.isLoadingOpenAppWithRestToken,
+    getVacationMode: (state): boolean => state.isVacationMode,
   },
 
   actions: {
@@ -90,6 +93,14 @@ export const useTripsStore = defineStore('trips', {
      */
     setCommuteModes(modes: CommuteMode[]): void {
       this.commuteModes = modes;
+    },
+    /**
+     * Set vacation entry mode state
+     * @param {boolean} isVacationMode - New vacation entry mode state
+     * @returns {void}
+     */
+    setVacationMode(isVacationMode: boolean): void {
+      this.isVacationMode = isVacationMode;
     },
     /**
      * Set route items

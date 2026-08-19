@@ -1256,6 +1256,7 @@ labelLastSync = "Last sync"
 labelStart = "Start"
 labelSyncAll = "Sync private rides and zones as well"
 labelTransportType = "Transport type"
+labelTripMode = "Trip entry"
 labelUploadFile = "Route file"
 labelValidationDistance = "Distance"
 messageCopyNoDistance = "Previous day has no distance entered."
@@ -1425,6 +1426,13 @@ walk = "On foot"
 bus = "By public transport"
 home = "Home office"
 unknown = "Not logged"
+vacation = "Vacation"
+
+[routes.vacation]
+modeToggle = "Vacation entry"
+markButton = "Mark as Vacation"
+remove = "Remove vacation"
+readOnlyMessage = "Vacation day - switch to vacation mode to edit"
 
 [socialBar]
 title = "Follow us on social media"

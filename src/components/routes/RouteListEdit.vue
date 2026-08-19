@@ -55,6 +55,11 @@ export default defineComponent({
       return tripsStore.getIsLoading;
     });
 
+    const isVacationMode = computed<boolean>({
+      get: (): boolean => tripsStore.getVacationMode,
+      set: (value: boolean): void => tripsStore.setVacationMode(value),
+    });
+
     // route composables
     const {
       isEntryEnabled,
@@ -161,6 +166,7 @@ export default defineComponent({
       onSave,
       routeItemsDirty,
       TransportDirection,
+      isVacationMode,
       formRef,
     };
   },
@@ -170,6 +176,26 @@ export default defineComponent({
 <template>
   <div>
     <q-form ref="formRef" data-cy="route-list-edit">
+      <!-- Vacation mode toggle -->
+      <div
+        class="row q-mb-md sticky-top bg-white q-py-sm"
+        style="position: sticky; top: 0; z-index: 1"
+        data-cy="vacation-mode-toggle-wrapper"
+      >
+        <q-btn-toggle
+          v-model="isVacationMode"
+          no-caps
+          unelevated
+          toggle-color="primary"
+          color="white"
+          text-color="primary"
+          :options="[
+            { label: $t('routes.labelTripMode'), value: false },
+            { label: $t('routes.vacation.modeToggle'), value: true },
+          ]"
+          data-cy="vacation-mode-toggle"
+        />
+      </div>
       <!-- First save routes button on the large screen -->
       <div
         v-if="isLargeScreen"

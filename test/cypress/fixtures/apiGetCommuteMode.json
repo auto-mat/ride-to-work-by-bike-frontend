@@ -1,5 +1,5 @@
 {
-  "count": 6,
+  "count": 7,
   "next": null,
   "previous": null,
   "results": [
@@ -97,6 +97,22 @@
       "icon": null,
       "name_en": "No trip",
       "name_cs": "Žádná cesta",
+      "points": 0
+    },
+    {
+      "id": 7,
+      "slug": "vacation",
+      "does_count": false,
+      "eco": false,
+      "distance_important": false,
+      "duration_important": false,
+      "minimum_distance": 0.0,
+      "minimum_duration": 0,
+      "description_en": null,
+      "description_cs": null,
+      "icon": null,
+      "name_en": "Vacation",
+      "name_cs": "Dovolená",
       "points": 0
     }
   ]

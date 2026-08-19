@@ -56,7 +56,10 @@ export default defineComponent({
 
     const optionsTransport = computed(() => {
       const modes = tripsStore.getCommuteModes;
-      return modes.map((mode) => ({
+      const modesForCurrentMode = tripsStore.getVacationMode
+        ? modes.filter((mode) => mode.slug === TransportType.vacation)
+        : modes.filter((mode) => mode.slug !== TransportType.vacation);
+      return modesForCurrentMode.map((mode) => ({
         value: mode.slug,
         icon: getRouteIcon(mode.slug),
         eco: mode.eco,

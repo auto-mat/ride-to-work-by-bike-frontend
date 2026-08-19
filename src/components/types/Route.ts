@@ -21,6 +21,7 @@ export enum TransportType {
   bus = 'hromadna',
   home = 'telecommute',
   none = 'no_work',
+  vacation = 'vacation',
 }
 
 export enum RouteTab {

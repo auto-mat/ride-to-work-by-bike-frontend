@@ -46,6 +46,8 @@ export const useRoutes = () => {
         return `svguse:${customSVGIconsFilePath}#lucide-home`;
       case TransportType.none:
         return `svguse:${customSVGIconsFilePath}#lucide-ban`;
+      case TransportType.vacation:
+        return `svguse:${customSVGIconsFilePath}#lucide-tree-palm`;
       default:
         return `svguse:${customSVGIconsFilePath}#question-mark`;
     }
@@ -73,6 +75,8 @@ export const useRoutes = () => {
         return i18n.global.t('routes.transport.home');
       case TransportType.none:
         return i18n.global.t('routes.transport.none');
+      case TransportType.vacation:
+        return i18n.global.t('routes.transport.vacation');
       default:
         return i18n.global.t('routes.transport.unknown');
     }
