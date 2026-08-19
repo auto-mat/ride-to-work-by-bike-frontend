@@ -620,7 +620,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it.only('shows the vacation date range: today - end of challenge', () => {
+    it('shows the vacation date range: today - end of challenge', () => {
       cy.get('@i18n').then((i18n) => {
         const dateToday = '2025-05-26';
         const dateFuture = '2025-05-28';
@@ -641,7 +641,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it.only('orders days chronologically ascending (today first, future after), unlike trip mode', () => {
+    it('orders days chronologically ascending (today first, future after), unlike trip mode', () => {
       cy.get('@i18n').then((i18n) => {
         // most recent date is first, goes into the past
         cy.get('[data-date]')
@@ -664,7 +664,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it.only('shows a read-only card instead of an editable one for a route already marked as vacation, in trip mode', () => {
+    it('shows a read-only card instead of an editable one for a route already marked as vacation, in trip mode', () => {
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
           const testCaseDate = '2025-05-26';
@@ -751,7 +751,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it.only('shows a read-only card instead of an editable one for a route with an existing trip, in vacation mode', () => {
+    it('shows a read-only card instead of an editable one for a route with an existing trip, in vacation mode', () => {
       cy.get('@i18n').then((i18n) => {
         const testCaseDate = '2025-05-26';
         // trip mode - route is editable
@@ -780,7 +780,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it.only('marks selected routes as vacation and saves them, without touching a route that already has a trip logged', () => {
+    it('marks selected routes as vacation and saves them, without touching a route that already has a trip logged', () => {
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
           const dateWithExistingTrip = '2025-05-26';
