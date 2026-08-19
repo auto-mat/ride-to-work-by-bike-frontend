@@ -2872,6 +2872,83 @@ describe('Register Challenge page', () => {
     });
   });
 
+  context(
+    'registration in progress, individual payment "done", occupation not filled',
+    () => {
+      beforeEach(() => {
+        cy.task('getAppConfig', process).then((config) => {
+          cy.wrap(config).as('config');
+          cy.interceptThisCampaignGetApi(config, defLocale);
+          // visit challenge inactive page to load campaign data
+          cy.visit('#' + routesConf['challenge_inactive']['path']);
+          cy.waitForThisCampaignApi();
+          cy.fixture(
+            'apiGetRegisterChallengeIndividualPaidNoOccupation.json',
+          ).then((response) => {
+            cy.interceptRegisterChallengeGetApi(config, defLocale, response);
+          });
+          // intercept common response (not currently used)
+          cy.interceptRegisterChallengePostApi(config, defLocale);
+          cy.interceptRegisterChallengeCoreApiRequests(config, defLocale);
+        });
+        cy.viewport('macbook-16');
+      });
+
+      it('allows to complete registration without occupation filled', () => {
+        // visit page
+        cy.visit('#' + routesConf['register_challenge']['path']);
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.fixture(
+            'apiGetRegisterChallengeIndividualPaidNoOccupation.json',
+          ).then((response) => {
+            cy.testRegisterChallengePaymentMessage(
+              response,
+              'step-2-paid-message',
+            );
+            cy.dataCy('register-challenge-payment').should('not.exist');
+            cy.dataCy('step-2-continue')
+              .should('be.visible')
+              .and('not.be.disabled');
+            cy.dataCy('step-2-continue').should('be.visible').click();
+            cy.testRegisterChallengeLoadedStepsThreeToFive(win.i18n, response);
+            // select merch
+            cy.dataCy('form-card-merch-female')
+              .first()
+              .find('[data-cy="button-more-info"]')
+              .click();
+            // select size
+            cy.dataCy('form-field-merch-size').within(() => {
+              cy.get('.q-radio')
+                .should('exist')
+                .and('be.visible')
+                .first()
+                .click();
+            });
+            // submit dialog
+            cy.dataCy('button-submit-merch').click();
+            // next step button is enabled
+            cy.dataCy('step-6-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // go to next step
+            cy.dataCy('step-6')
+              .find('.q-stepper__step-content')
+              .should('not.exist');
+            // button complete registration is visible
+            cy.dataCy('step-7-continue')
+              .should('be.visible')
+              .and('not.be.disabled')
+              .click();
+            // button complete registration redirects to homepage
+            cy.dataCy('index-title').should('be.visible');
+          });
+        });
+      });
+    },
+  );
+
   context('registration in progress, individual payment "no_admission"', () => {
     beforeEach(() => {
       cy.task('getAppConfig', process).then((config) => {
