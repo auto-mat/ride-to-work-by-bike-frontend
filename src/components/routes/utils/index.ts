@@ -1,6 +1,6 @@
 import { i18n } from '../../../boot/i18n';
 
-import { RouteInputType } from '../../types/Route';
+import { RouteInputType, TransportType } from '../../types/Route';
 import type { FormOption } from '../../types/Form';
 
 const getRouteFormFieldOptions = (): FormOption[] => [
@@ -14,4 +14,16 @@ const getRouteFormFieldOptions = (): FormOption[] => [
   },
 ];
 
-export { getRouteFormFieldOptions };
+/**
+ * Returns allowed transport types based on the given mode.
+ * @param {boolean} isVacationMode - Whether vacation mode is active.
+ * @return {TransportType[]} - The allowed transport types for the mode.
+ */
+const getAllowedTransportTypes = (isVacationMode: boolean): TransportType[] =>
+  isVacationMode
+    ? [TransportType.vacation, TransportType.none]
+    : Object.values(TransportType).filter(
+        (type) => type !== TransportType.vacation,
+      );
+
+export { getRouteFormFieldOptions, getAllowedTransportTypes };

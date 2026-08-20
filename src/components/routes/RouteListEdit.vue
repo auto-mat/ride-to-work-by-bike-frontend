@@ -25,7 +25,6 @@ import { tripsAdapter } from '../../adapters/tripsAdapter';
 
 // component
 import RouteItemEdit from './RouteItemEdit.vue';
-import RouteItemDisplay from './RouteItemDisplay.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
@@ -33,7 +32,7 @@ import { useApiPostTrips } from '../../composables/useApiPostTrips';
 import { useRoutes } from 'src/composables/useRoutes';
 
 // enums
-import { TransportDirection, TransportType } from '../types/Route';
+import { TransportDirection } from '../types/Route';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
@@ -47,7 +46,6 @@ export default defineComponent({
   name: 'RouteListEdit',
   components: {
     RouteItemEdit,
-    RouteItemDisplay,
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
@@ -102,18 +100,56 @@ export default defineComponent({
     });
 
     /**
-     * Checks whether a route should be shown as read-only for the current
-     * mode - a route with an already logged trip is read-only in vacation
-     * mode, and a route already marked as vacation is read-only in trip
-     * mode. Mirrors `isRouteDisabledForMode` in `RoutesCalendar.vue`.
-     * @param {RouteItem | null} route - Route to check.
-     * @return {boolean}
+     * Returns transport type of a given logged route or `null` if no route
+     * @param {string} routeId - Id of the route to look up.
+     * @return {TransportType | null}
      */
-    const isRouteDisabledForMode = (route: RouteItem | null): boolean => {
-      if (!route?.transport) return false;
-      return isVacationMode.value
-        ? route.transport !== TransportType.vacation
-        : route.transport === TransportType.vacation;
+    const getStoredTransport = (routeId: string) => {
+      const storedRoute = tripsStore.getRouteItems.find(
+        (route) => route.id === routeId,
+      );
+      return storedRoute ? storedRoute.transport : null;
+    };
+
+    /**
+     * Handles route transport type update for a direction.
+     * In vacation mode, it syncs selection to the other direction of the same
+     * day. Computes the dirty trip counter to manage save button state.
+     * @param {RouteDay} day - Updated day.
+     * @param {TransportDirection} direction - Updated direction.
+     * @param {RouteItem} updatedRoute - New value.
+     * @return {void}
+     */
+    const onUpdateRoute = (
+      day: RouteDay,
+      direction: TransportDirection,
+      updatedRoute: RouteItem,
+    ): void => {
+      if (direction === TransportDirection.toWork) {
+        day.toWork = updatedRoute;
+      } else {
+        day.fromWork = updatedRoute;
+      }
+      if (!isVacationMode.value) return;
+      // sync directions in vacation mode
+      const otherRoute =
+        direction === TransportDirection.toWork ? day.fromWork : day.toWork;
+      if (otherRoute.transport === updatedRoute.transport) return;
+      // check dirty state for the other direction (distance is not relevant)
+      const isOtherRouteDirty =
+        updatedRoute.transport !== getStoredTransport(otherRoute.id);
+      const mirroredRoute: RouteItem = {
+        ...otherRoute,
+        transport: updatedRoute.transport,
+        distance: updatedRoute.distance,
+        dirty: isOtherRouteDirty,
+      };
+      // update the other direction
+      if (direction === TransportDirection.toWork) {
+        day.fromWork = mirroredRoute;
+      } else {
+        day.toWork = mirroredRoute;
+      }
     };
 
     /**
@@ -195,8 +231,8 @@ export default defineComponent({
       formatDateName,
       isLargeScreen,
       isLoadingTrips,
-      isRouteDisabledForMode,
       onSave,
+      onUpdateRoute,
       primary,
       routeItemsDirty,
       TransportDirection,
@@ -274,44 +310,30 @@ export default defineComponent({
           <div class="row q-col-gutter-lg">
             <!-- Item: Route to work -->
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
-              <route-item-display
-                v-if="isRouteDisabledForMode(day.toWork)"
-                :route="day.toWork"
-                class="full-height"
-                data-cy="route-list-item"
-                :data-direction="TransportDirection.toWork"
-                :data-id="day.toWork?.id"
-              />
               <route-item-edit
-                v-else
                 :route="day.toWork"
                 :edited-routes="routeItemsDirty"
                 class="full-height"
                 data-cy="route-list-item"
                 :data-direction="TransportDirection.toWork"
                 :data-id="day.toWork?.id"
-                @update:route="day.toWork = $event"
+                @update:route="
+                  onUpdateRoute(day, TransportDirection.toWork, $event)
+                "
               />
             </div>
             <!-- Item: Route from work -->
             <div class="col-12 col-sm-6" data-cy="route-list-item-wrapper">
-              <route-item-display
-                v-if="isRouteDisabledForMode(day.fromWork)"
-                :route="day.fromWork"
-                class="full-height"
-                data-cy="route-list-item"
-                :data-direction="TransportDirection.fromWork"
-                :data-id="day.fromWork?.id"
-              />
               <route-item-edit
-                v-else
                 :route="day.fromWork"
                 :edited-routes="routeItemsDirty"
                 class="full-height"
                 data-cy="route-list-item"
                 :data-direction="TransportDirection.fromWork"
                 :data-id="day.fromWork?.id"
-                @update:route="day.fromWork = $event"
+                @update:route="
+                  onUpdateRoute(day, TransportDirection.fromWork, $event)
+                "
               />
             </div>
           </div>

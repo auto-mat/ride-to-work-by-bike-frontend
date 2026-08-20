@@ -131,34 +131,18 @@ export default defineComponent({
     const isVacationMode = computed((): boolean => tripsStore.getVacationMode);
 
     /**
-     * Whether selected routes are already logged as vacation.
-     * Switches UI copy for confirmation panel (add/remove vacation).
-     */
-    const isRemovingVacation = computed((): boolean => {
-      return (
-        routes.value.length > 0 &&
-        routes.value.every(
-          (route) => route.transport === TransportType.vacation,
-        )
-      );
-    });
-
-    /**
-     * Resets `transportType` value on context change.
-     * Determines value for removing vacation days (`none`)
-     * and for adding vacation days (`vacation`).
-     * The `routes` is observed to override `useLogRoutes` routes watcher
-     * which defaults `transportType` to `bike`.
+     * Defaults an unmarked day to `vacation`, or load selected days's
+     * transport type.
      */
     watch(
-      [isVacationMode, isRemovingVacation, routes],
+      [isVacationMode, routes],
       (): void => {
         if (!isVacationMode.value) return;
-        transportType.value = isRemovingVacation.value
-          ? TransportType.none
+        // check if route is logged
+        const loggedRoute = routes.value.find((route) => route.id !== '');
+        transportType.value = loggedRoute
+          ? loggedRoute.transport
           : TransportType.vacation;
-        distance.value = defaultDistanceZero;
-        file.value = null;
       },
       { immediate: true },
     );
@@ -166,13 +150,12 @@ export default defineComponent({
     // Determines if save button should be disabled.
     const isSaveBtnDisabled = computed((): boolean => {
       const noRoutes = routesCount.value === 0;
-      if (isVacationMode.value) {
-        return noRoutes || tripsStore.getIsLoading;
-      }
       const noTransport = transportType.value === null;
       const noDistance =
-        isShownDistance.value && distance.value === defaultDistanceZero;
-      const noFile = file.value === null;
+        !isVacationMode.value &&
+        isShownDistance.value &&
+        distance.value === defaultDistanceZero;
+      const noFile = !isVacationMode.value && file.value === null;
       return (
         noRoutes ||
         (noDistance && noFile) ||
@@ -258,7 +241,6 @@ export default defineComponent({
       file,
       routesCount,
       isOpen,
-      isRemovingVacation,
       isSaveBtnDisabled,
       isShownDistance,
       isVacationMode,
@@ -308,80 +290,65 @@ export default defineComponent({
         </h3>
       </q-card-section>
       <q-card-section class="q-pa-lg">
-        <div class="row q-col-gutter-lg items-start" data-cy="dialog-body">
-          <template v-if="!isVacationMode">
-            <!-- Input: Transport type -->
-            <div class="col-12 col-sm-auto" data-cy="section-transport">
-              <route-input-transport-type
-                v-model="transportType"
-                data-cy="route-input-transport-type"
-              />
-            </div>
-            <!-- Input: Distance (or link to map) -->
-            <div class="col-12 col-sm" data-cy="section-distance">
-              <route-input-distance
-                v-show="isShownDistance"
-                v-model="distance"
-                :modelFile="file"
-                :modelAction="action"
-                :optionsAction="optionsAction"
-                @update:modelAction="action = $event"
-                @update:modelFile="file = $event"
-                class="q-mt-none"
-                data-cy="route-input-distance"
-              />
-              <!-- Play video modal dialog -->
-              <play-video-modal-dialog
-                :btnLabel="$t('routes.logRouterPlayVideoBtnLabel')"
-                :videoUrl="urlLogRouteCalendarNumberVideo"
-                btnIconName="info"
-                videoContainerWidth="100vw"
-              >
-                <template v-slot:overlayedText>
-                  <div
-                    class="bg-grey-1w q-px-md video-overlayed-text-linear-gradient"
-                    v-html="
-                      $t('routes.logRouterCalendarNumberText', {
-                        expectedFloatNum0: $n(
-                          2.55,
-                          'routeDistanceDecimalNumber',
-                        ),
-                        typedIntNum0: '255',
-                        expectedFloatNum1: $n(
-                          14.56,
-                          'routeDistanceDecimalNumber',
-                        ),
-                        typedIntNum1: '1456',
-                        expectedFloatNum2: $n(
-                          0.34,
-                          'routeDistanceDecimalNumber',
-                        ),
-                        typedIntNum2: '034',
-                        expectedFloatNum3: $n(
-                          0.09,
-                          'routeDistanceDecimalNumber',
-                        ),
-                        typedIntNum3: '009',
-                      })
-                    "
-                    data-cy="overlayed-text"
-                  ></div>
-                </template>
-              </play-video-modal-dialog>
-            </div>
-          </template>
-          <!-- Vacation entry confirmation -->
-          <div v-else class="col-12 col-sm" data-cy="section-vacation">
-            <div
-              class="text-subtitle2 text-grey-10"
-              data-cy="text-vacation-confirm"
+        <div
+          class="row q-col-gutter-lg items-start"
+          :class="{ 'justify-between': isVacationMode }"
+          data-cy="dialog-body"
+        >
+          <!-- Input: Transport type -->
+          <div class="col-12 col-sm-auto" data-cy="section-transport">
+            <route-input-transport-type
+              v-model="transportType"
+              :isVacationMode="isVacationMode"
+              data-cy="route-input-transport-type"
+            />
+          </div>
+          <!-- Input: Distance (or link to map) -->
+          <div
+            v-if="!isVacationMode"
+            class="col-12 col-sm"
+            data-cy="section-distance"
+          >
+            <route-input-distance
+              v-show="isShownDistance"
+              v-model="distance"
+              :modelFile="file"
+              :modelAction="action"
+              :optionsAction="optionsAction"
+              @update:modelAction="action = $event"
+              @update:modelFile="file = $event"
+              class="q-mt-none"
+              data-cy="route-input-distance"
+            />
+            <!-- Play video modal dialog -->
+            <play-video-modal-dialog
+              :btnLabel="$t('routes.logRouterPlayVideoBtnLabel')"
+              :videoUrl="urlLogRouteCalendarNumberVideo"
+              btnIconName="info"
+              videoContainerWidth="100vw"
             >
-              {{
-                isRemovingVacation
-                  ? $t('routes.vacation.remove')
-                  : $t('routes.vacation.markButton')
-              }}
-            </div>
+              <template v-slot:overlayedText>
+                <div
+                  class="bg-grey-1w q-px-md video-overlayed-text-linear-gradient"
+                  v-html="
+                    $t('routes.logRouterCalendarNumberText', {
+                      expectedFloatNum0: $n(2.55, 'routeDistanceDecimalNumber'),
+                      typedIntNum0: '255',
+                      expectedFloatNum1: $n(
+                        14.56,
+                        'routeDistanceDecimalNumber',
+                      ),
+                      typedIntNum1: '1456',
+                      expectedFloatNum2: $n(0.34, 'routeDistanceDecimalNumber'),
+                      typedIntNum2: '034',
+                      expectedFloatNum3: $n(0.09, 'routeDistanceDecimalNumber'),
+                      typedIntNum3: '009',
+                    })
+                  "
+                  data-cy="overlayed-text"
+                ></div>
+              </template>
+            </play-video-modal-dialog>
           </div>
 
           <!-- Button: Save -->

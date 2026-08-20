@@ -3708,20 +3708,20 @@ Cypress.Commands.add(
   'waitForTripsApi',
   (response = null, responseNext = null) => {
     cy.fixture('apiGetTripsResponse').then((defaultResponse) => {
-      cy.fixture('apiGetTripsResponseNext').then((defaultResponseNext) => {
-        cy.wait(['@getTrips', '@getTripsNextPage']).spread(
-          (getTrips, getTripsNextPage) => {
-            expect(getTrips.request.headers.authorization).to.include(
-              bearerTokeAuth,
-            );
-            if (getTrips.response) {
-              expect(getTrips.response.statusCode).to.equal(
-                httpSuccessfullStatus,
-              );
-              expect(getTrips.response.body).to.deep.equal(
-                response || defaultResponse,
-              );
-            }
+      const responseBody = response || defaultResponse;
+      cy.wait('@getTrips').then((getTrips) => {
+        expect(getTrips.request.headers.authorization).to.include(
+          bearerTokeAuth,
+        );
+        if (getTrips.response) {
+          expect(getTrips.response.statusCode).to.equal(httpSuccessfullStatus);
+          expect(getTrips.response.body).to.deep.equal(responseBody);
+        }
+      });
+      // only wait for next page intercept if response has a next page
+      if (responseBody.next) {
+        cy.fixture('apiGetTripsResponseNext').then((defaultResponseNext) => {
+          cy.wait('@getTripsNextPage').then((getTripsNextPage) => {
             expect(getTripsNextPage.request.headers.authorization).to.include(
               bearerTokeAuth,
             );
@@ -3733,9 +3733,9 @@ Cypress.Commands.add(
                 responseNext || defaultResponseNext,
               );
             }
-          },
-        );
-      });
+          });
+        });
+      }
     });
   },
 );

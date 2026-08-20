@@ -129,6 +129,8 @@ export default defineComponent({
     const { action, distance, file, transportType, isShownDistance } =
       useLogRoutes(routes);
 
+    const isVacationMode = computed((): boolean => tripsStore.getVacationMode);
+
     const onUpdateAction = (actionNew: RouteInputType): void => {
       /**
        * If action is changed to `copy-yesterday`, check if the day before
@@ -287,6 +289,7 @@ export default defineComponent({
 
     return {
       action,
+      isVacationMode,
       borderRadius,
       borderColor,
       defaultDistanceZero,
@@ -379,6 +382,7 @@ export default defineComponent({
         <route-input-transport-type
           horizontal
           :modelValue="transportType"
+          :isVacationMode="isVacationMode"
           @update:modelValue="onUpdateTransportType"
           class="q-mt-sm"
           data-cy="section-transport"

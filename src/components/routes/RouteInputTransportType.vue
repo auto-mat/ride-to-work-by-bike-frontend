@@ -11,6 +11,9 @@
  *   It should be of type `string`.
  * - `horizontal` (boolean, default: false): Whether the buttons and label
  *   should be displayed side by side in a row.
+ * - `isVacationMode` (boolean, default: false): Whether vacation mode is
+ *   active. Determines the offered options via `getAllowedTransportTypes()`
+ *   in `./utils/`.
  *
  * @events
  * - `update:modelValue`: Emitted as a part of v-model structure.
@@ -36,6 +39,9 @@ import { useTripsStore } from '../../stores/trips';
 // enums
 import { TransportType } from '../types/Route';
 
+// utils
+import { getAllowedTransportTypes } from './utils/';
+
 export default defineComponent({
   name: 'RouteInputTransportType',
   props: {
@@ -44,6 +50,10 @@ export default defineComponent({
       required: true,
     },
     horizontal: {
+      type: Boolean,
+      default: false,
+    },
+    isVacationMode: {
       type: Boolean,
       default: false,
     },
@@ -56,9 +66,10 @@ export default defineComponent({
 
     const optionsTransport = computed(() => {
       const modes = tripsStore.getCommuteModes;
-      const modesForCurrentMode = tripsStore.getVacationMode
-        ? modes.filter((mode) => mode.slug === TransportType.vacation)
-        : modes.filter((mode) => mode.slug !== TransportType.vacation);
+      const allowedTypes = getAllowedTransportTypes(props.isVacationMode);
+      const modesForCurrentMode = modes.filter((mode) =>
+        allowedTypes.includes(mode.slug),
+      );
       return modesForCurrentMode.map((mode) => ({
         value: mode.slug,
         icon: getRouteIcon(mode.slug),

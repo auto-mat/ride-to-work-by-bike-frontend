@@ -110,21 +110,25 @@ describe('<RouteInputTransportType>', () => {
         cy.mount(RouteInputTransportType, {
           props: {
             modelValue: TransportType.vacation,
+            isVacationMode: true,
           },
-        }).then(() => {
-          const tripsStore = useTripsStore();
-          tripsStore.setVacationMode(true);
         });
         cy.setupTripsStoreWithCommuteModes(useTripsStore, commuteModeResponse);
       });
       cy.viewport('macbook-16');
     });
 
-    it('shows only vacation as a selectable transport option', () => {
-      cy.dataCy(selectorButtonToggleTransport).should('have.length', 1);
+    it('shows only the allowed transport options', () => {
+      cy.dataCy(selectorButtonToggleTransport).should('have.length', 2);
       cy.dataCy(selectorButtonToggleTransport)
         .filter(`[data-value="${TransportType.vacation}"]`)
         .should('exist');
+      cy.dataCy(selectorButtonToggleTransport)
+        .filter(`[data-value="${TransportType.none}"]`)
+        .should('exist');
+      cy.dataCy(selectorButtonToggleTransport)
+        .filter(`[data-value="${TransportType.bike}"]`)
+        .should('not.exist');
     });
   });
 

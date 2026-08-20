@@ -137,10 +137,13 @@ describe('<RouteItemEdit>', () => {
         .and('contain', i18n.global.t('routes.transport.unknown'))
         .within(() => {
           cy.fixture('apiGetCommuteMode').then((commuteModes) => {
-            // all buttons are rendered
+            // all buttons are rendered except vacation, which is not selectable in trip mode
+            const modesWithoutVacation = commuteModes.results.filter(
+              (mode) => mode.slug !== 'vacation',
+            );
             cy.dataCy('button-toggle-transport')
               .should('be.visible')
-              .and('have.length', commuteModes.results.length);
+              .and('have.length', modesWithoutVacation.length);
             // no button is selected
             cy.dataCy('button-toggle-transport')
               .find('.q-avatar')
@@ -178,10 +181,13 @@ describe('<RouteItemEdit>', () => {
         .and('contain', i18n.global.t('routes.transport.unknown'))
         .within(() => {
           cy.fixture('apiGetCommuteMode').then((commuteModes) => {
-            // all buttons are rendered
+            // all buttons are rendered except vacation, which is not selectable in trip mode
+            const modesWithoutVacation = commuteModes.results.filter(
+              (mode) => mode.slug !== 'vacation',
+            );
             cy.dataCy('button-toggle-transport')
               .should('be.visible')
-              .and('have.length', commuteModes.results.length);
+              .and('have.length', modesWithoutVacation.length);
             // no button is selected
             cy.dataCy('button-toggle-transport')
               .find('.q-avatar')
