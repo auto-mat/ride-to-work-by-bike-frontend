@@ -61,7 +61,7 @@ jobs:
       - run: node -v
 
       - name: Run Cypress e2e test on Mozilla Firefox/OS ${{ matrix.os }}
-        uses: cypress-io/github-action@v7.4.0
+        uses: cypress-io/github-action@v7.4.3
         env:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
