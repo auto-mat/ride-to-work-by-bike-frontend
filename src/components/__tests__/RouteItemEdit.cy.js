@@ -139,7 +139,7 @@ describe('<RouteItemEdit>', () => {
           cy.fixture('apiGetCommuteMode').then((commuteModes) => {
             // all buttons are rendered except vacation, which is not selectable in trip mode
             const modesWithoutVacation = commuteModes.results.filter(
-              (mode) => mode.slug !== 'vacation',
+              (mode) => mode.slug !== TransportType.vacation,
             );
             cy.dataCy('button-toggle-transport')
               .should('be.visible')
