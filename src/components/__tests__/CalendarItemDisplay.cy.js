@@ -8,6 +8,25 @@ const { getPaletteColor } = colors;
 const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 
+const day = {
+  id: '10001',
+  date: '2025-05-24',
+  toWork: {
+    id: '00001',
+    date: '2025-05-24',
+    transport: 'vacation',
+    distance: '0.00',
+    direction: 'toWork',
+  },
+  fromWork: {
+    id: '00002',
+    date: '2025-05-24',
+    transport: 'vacation',
+    distance: '0.00',
+    direction: 'fromWork',
+  },
+};
+
 describe('<CalendarItemDisplay>', () => {
   context('toWork - logged active', () => {
     beforeEach(() => {
@@ -155,24 +174,6 @@ describe('<CalendarItemDisplay>', () => {
 
   context('toWork - vacation logged', () => {
     beforeEach(() => {
-      const day = {
-        id: '10001',
-        date: '2025-05-24',
-        toWork: {
-          id: '00001',
-          date: '2025-05-24',
-          transport: 'vacation',
-          distance: '0.00',
-          direction: 'toWork',
-        },
-        fromWork: {
-          id: '00002',
-          date: '2025-05-24',
-          transport: 'vacation',
-          distance: '0.00',
-          direction: 'fromWork',
-        },
-      };
       cy.mount(CalendarItemDisplay, {
         props: {
           direction: TransportDirection.toWork,
@@ -194,24 +195,6 @@ describe('<CalendarItemDisplay>', () => {
 
   context('toWork - vacation logged active', () => {
     beforeEach(() => {
-      const day = {
-        id: '10001',
-        date: '2025-05-24',
-        toWork: {
-          id: '00001',
-          date: '2025-05-24',
-          transport: 'vacation',
-          distance: '0.00',
-          direction: 'toWork',
-        },
-        fromWork: {
-          id: '00002',
-          date: '2025-05-24',
-          transport: 'vacation',
-          distance: '0.00',
-          direction: 'fromWork',
-        },
-      };
       cy.mount(CalendarItemDisplay, {
         props: {
           active: true,
