@@ -667,7 +667,7 @@ describe('Routes list page', () => {
       });
     });
 
-    it('shows vacation and no_work in transport type select, no default', () => {
+    it('shows vacation and no_work transport type toggle buttons, no default', () => {
       cy.get('@i18n').then((i18n) => {
         const testCaseDate = '2025-05-27';
         // switch to vacation mode

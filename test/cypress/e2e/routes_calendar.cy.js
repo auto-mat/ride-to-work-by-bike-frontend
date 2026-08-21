@@ -601,7 +601,7 @@ describe('Routes calendar page', () => {
       });
     });
 
-    it('allows updating a marked vacation to "none"', () => {
+    it('allows updating a marked vacation to "none" (no_work commute mode)', () => {
       cy.get('@i18n').then((i18n) => {
         cy.get('@config').then((config) => {
           const testCaseDate = '2025-05-27';
@@ -687,7 +687,7 @@ describe('Routes calendar page', () => {
       });
     });
 
-    it('does not show vacation in trip mode', () => {
+    it('does not show vacation transport type toggle button in trip mode', () => {
       cy.get('@i18n').then((i18n) => {
         // trip mode: vacation does not show
         const dateYesterday = '2025-05-25';
