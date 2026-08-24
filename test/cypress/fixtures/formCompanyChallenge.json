@@ -15,7 +15,7 @@
       "name": "Test Company Challenge",
       "competition_type": "frequency",
       "competitor_type": "single_user",
-      "commute_modes": [1, 2],
+      "commute_modes": [7, 1, 2],
       "date_from": "2024-09-16",
       "date_to": "2024-09-29"
     },
@@ -120,7 +120,7 @@
       "description": "Challenge between company subsidiaries",
       "competition_type": "frequency",
       "competitor_type": "subsidiary",
-      "commute_modes": [1],
+      "commute_modes": [7, 1],
       "date_from": "2024-09-16",
       "date_to": "2024-09-25"
     },
