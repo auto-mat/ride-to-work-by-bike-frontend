@@ -65,7 +65,7 @@
       "description": "This is a team distance challenge with all transport modes",
       "competition_type": "length",
       "competitor_type": "team",
-      "commute_modes": [1, 2, 5],
+      "commute_modes": [7, 1, 2, 5],
       "date_from": "2024-09-20",
       "date_to": "2024-09-29"
     },
