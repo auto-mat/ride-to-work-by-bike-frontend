@@ -1476,3 +1476,13 @@ IP address is shortened before analysis so that it can no longer be clearly assi
 
 [tableOrganizationChallengeResult]
 buttonExportOrganizationChallengeResult = "Export results"
+
+[impersonation]
+viewingAsUser = "Viewing as: {email}"
+exitButton = "Exit Impersonation"
+errorInvalidLink = "Invalid impersonation link"
+errorAlreadyImpersonating = "You are already impersonating a user. Exit current impersonation first."
+errorSessionExpired = "Impersonation session expired. Returning to your admin account."
+errorAdminSessionExpired = "Your admin session expired. Please log in again."
+errorLoadingUserData = "Failed to load impersonated user data. Returning to your admin account."
+

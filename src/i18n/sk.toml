@@ -1474,3 +1474,12 @@ sa pred analýzou skráti, aby ju už nebolo možné jednoznačne priradiť k v�
 
 [tableOrganizationChallengeResult]
 buttonExportOrganizationChallengeResult = "Exportovať výsledky"
+
+[impersonation]
+viewingAsUser = "Náhľad používateľa: {email}"
+exitButton = "Ukončiť náhľad"
+errorInvalidLink = "Neplatný odkaz pre náhľad za používateľa"
+errorAlreadyImpersonating = "Už si prezeráte účet iného používateľa. Najprv ukončite aktuálny náhľad."
+errorSessionExpired = "Náhľad vypršal. Návrat k vášmu účtu."
+errorAdminSessionExpired = "Vaša relácia vypršala. Prihláste sa prosím znovu."
+errorLoadingUserData = "Nepodarilo sa načítať údaje používateľa. Návrat k vášmu účtu."

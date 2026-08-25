@@ -27,9 +27,15 @@
  */
 
 // libraries
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { i18n } from '../boot/i18n';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
+
+// components
+import ImpersonationBanner from 'components/global/ImpersonationBanner.vue';
+
+// composables
+import { useImpersonation } from 'src/composables/useImpersonation';
 
 // set global i18n object (for test purposes)
 if (window.Cypress) {
@@ -38,9 +44,18 @@ if (window.Cypress) {
 
 export default defineComponent({
   name: 'LoginLayout',
+  components: {
+    ImpersonationBanner,
+  },
   setup() {
     const imageMask = `url(${new URL('../assets/svg/image-mask.svg', import.meta.url).href})`;
     const imageUrl = rideToWorkByBikeConfig.urlLoginRegisterBackgroundImage;
+    const { processImpersonation } = useImpersonation();
+
+    // process impersonation tokens on mount
+    onMounted(() => {
+      processImpersonation();
+    });
 
     return {
       imageMask,
@@ -51,6 +66,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <impersonation-banner />
   <q-layout class="bg-primary" view="hHh lpR fFf">
     <!-- Background image -->
     <div

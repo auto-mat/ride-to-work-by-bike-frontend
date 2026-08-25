@@ -1478,3 +1478,12 @@ adresa je před analýzou zkrácena, aby ji již nebylo možné jednoznačně p�
 
 [tableOrganizationChallengeResult]
 buttonExportOrganizationChallengeResult = "Exportovat výsledky"
+
+[impersonation]
+viewingAsUser = "Náhled uživatele: {email}"
+exitButton = "Ukončit náhled"
+errorInvalidLink = "Neplatný odkaz pro náhled za uživatele"
+errorAlreadyImpersonating = "Již si prohlížíte účet jiného uživatele. Nejprve ukončete aktuální náhled."
+errorSessionExpired = "Náhled vypršel. Návrat k vašemu účtu."
+errorAdminSessionExpired = "Vaše relace vypršela. Přihlaste se prosím znovu."
+errorLoadingUserData = "Nepodařilo se načíst data uživatele. Návrat k vašemu účtu."

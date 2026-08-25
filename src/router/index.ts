@@ -178,6 +178,15 @@ export default route(function (/* { store, ssrContext } */) {
       const loginStore = useLoginStore();
       const registerStore = useRegisterStore();
       const registerChallengeStore = useRegisterChallengeStore();
+      /**
+       * Exception for impersonation flow
+       * We need to handle impersonation tokens first.
+       * Otherwise the guard will redirect removing the tokens from URL.
+       */
+      if (to.query.refreshToken && to.query.accessToken) {
+        next();
+        return;
+      }
 
       const state: RouterState = {
         isAuthenticated: await loginStore.validateAccessToken(),

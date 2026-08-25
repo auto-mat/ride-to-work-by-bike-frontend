@@ -33,6 +33,7 @@ registerCommands();
 import './commands/coordinator_commands';
 import './commands/register_challenge_commands';
 import './commands/store_commands';
+import './commands/impersonation_commands';
 
 import { computed } from 'vue';
 import {

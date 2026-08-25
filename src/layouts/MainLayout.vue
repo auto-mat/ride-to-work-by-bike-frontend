@@ -1,6 +1,6 @@
 <script lang="ts">
 // libraries
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 import { i18n } from '../boot/i18n';
 import { defaultLocale } from '../i18n/def_locale';
 import { useRoute } from 'vue-router';
@@ -10,10 +10,12 @@ import AutomatLogoBanner from 'components/global/AutomatLogoBanner.vue';
 import DrawerHeader from 'components/global/DrawerHeader.vue';
 import DrawerMenu from 'components/global/DrawerMenu.vue';
 import FooterBar from 'components/global/FooterBar.vue';
+import ImpersonationBanner from 'components/global/ImpersonationBanner.vue';
 import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
 import UserProfileLink from 'components/global/UserProfileLink.vue';
 
 // composables
+import { useImpersonation } from 'src/composables/useImpersonation';
 import { useMenu } from 'src/composables/useMenu';
 import { useRoutes } from 'src/composables/useRoutes';
 
@@ -50,6 +52,7 @@ export default defineComponent({
     DrawerHeader,
     DrawerMenu,
     FooterBar,
+    ImpersonationBanner,
     MobileBottomPanel,
     UserProfileLink,
   },
@@ -58,6 +61,15 @@ export default defineComponent({
     const route = useRoute();
     const loginStore = useLoginStore();
     const registerChallengeStore = useRegisterChallengeStore();
+    const { processImpersonation } = useImpersonation();
+
+    // process impersonation tokens on mount
+    onMounted(() => {
+      processImpersonation();
+    });
+
+    // prevent q-header from being covered by impersonation banner
+    const isImpersonating = computed(() => loginStore.impersonation.isActive);
 
     const isHomePage = computed(
       () => route.path === routesConf['home']['path'],
@@ -131,6 +143,7 @@ export default defineComponent({
       menuBottom,
       menuTop,
       isHomePage,
+      isImpersonating,
       maxWidth,
     };
   },
@@ -138,9 +151,14 @@ export default defineComponent({
 </script>
 
 <template>
+  <impersonation-banner />
   <q-layout view="hHh lpR fFf">
     <!-- Top bar: (mobile) -->
-    <q-header reveal class="lt-md bg-primary">
+    <q-header
+      reveal
+      class="lt-md bg-primary"
+      :style="isImpersonating ? { top: '52px' } : undefined"
+    >
       <q-toolbar>
         <!-- Logo + Buttons (help, notification) -->
         <drawer-header

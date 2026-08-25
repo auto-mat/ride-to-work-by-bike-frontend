@@ -38,6 +38,7 @@ import type {
   LoginResponse,
   LoginOptions,
 } from 'src/components/types/Login';
+import type { ImpersonationState } from '../components/types/Impersonation';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../utils';
@@ -91,6 +92,12 @@ export const useLoginStore = defineStore('login', {
     refreshTokenTimeout: null as NodeJS.Timeout | null, // unit: seconds
     loginFormState: LoginFormState.login,
     passwordResetEmail: '',
+    impersonation: {
+      isActive: false,
+      originalAdmin: null,
+      impersonatedUser: null,
+    } as ImpersonationState, // persisted
+    isExitingImpersonation: false,
   }),
 
   getters: {
@@ -621,9 +628,95 @@ export const useLoginStore = defineStore('login', {
 
       return data;
     },
+    /**
+     * Set impersonation state
+     * @param {ImpersonationState} state - Impersonation state
+     */
+    setImpersonation(state: ImpersonationState): void {
+      this.impersonation = state;
+    },
+    /**
+     * Clear impersonation state
+     */
+    clearImpersonation(): void {
+      this.impersonation = {
+        isActive: false,
+        originalAdmin: null,
+        impersonatedUser: null,
+      };
+    },
+    /**
+     * Exit impersonation mode
+     * Restores the original admin session and clears impersonation state
+     */
+    async exitImpersonation(): Promise<void> {
+      // prevent concurrent exit operations
+      if (this.isExitingImpersonation) {
+        return;
+      }
+      this.isExitingImpersonation = true;
+      this.$log?.info('Exiting impersonation mode.');
+      // save original admin data before resetting stores
+      const originalAdmin = this.impersonation.originalAdmin;
+      if (!originalAdmin) {
+        this.$log?.info('No original admin data found, redirecting to login.');
+        // no admin session to restore, redirect to login
+        this.clearImpersonation();
+        this.isExitingImpersonation = false;
+        if (this.$router) {
+          this.$router.push(routesConf['login']['path']);
+        }
+        return;
+      }
+      // reset all Pinia stores (clears impersonated user data)
+      const pinia = this.$pinia;
+      if (pinia) {
+        pinia._s.forEach((store) => {
+          if (store.$id !== 'login') {
+            store.$reset();
+          }
+        });
+      }
+      // restore admin tokens from saved data
+      this.setAccessToken(originalAdmin.accessToken);
+      this.setRefreshToken(originalAdmin.refreshToken);
+      this.setUser(originalAdmin.user);
+      this.setJwtExpiration(originalAdmin.jwtExpiration);
+      // clear impersonation state
+      this.clearImpersonation();
+      // validate admin access token, attempt refresh if expired
+      const isValid = await this.validateAccessToken();
+      if (!isValid) {
+        // admin token expired, redirect to login
+        this.$log?.info('Admin token expired, redirecting to login.');
+        Notify.create({
+          message: i18n.global.t('impersonation.errorAdminSessionExpired'),
+          color: 'negative',
+        });
+        this.isExitingImpersonation = false;
+        if (this.$router) {
+          this.$router.push(routesConf['login']['path']);
+        }
+        return;
+      }
+      // reload admin data
+      this.$log?.info('Reloading admin data after exiting impersonation.');
+      try {
+        await this.redirectHomeAfterLogin();
+      } catch {
+        this.$log?.error(
+          'Failed to reload admin data after exiting impersonation.',
+        );
+        Notify.create({
+          message: i18n.global.t('impersonation.errorLoadingUserData'),
+          color: 'negative',
+        });
+      }
+      this.isExitingImpersonation = false;
+    },
   },
 
   persist: {
-    pick: ['user', 'refreshToken', 'jwtExpiration'],
+    pick: ['user', 'refreshToken', 'jwtExpiration', 'impersonation'],
   },
 });

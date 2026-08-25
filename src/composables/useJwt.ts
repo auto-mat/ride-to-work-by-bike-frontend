@@ -5,6 +5,8 @@ import { Notify } from 'quasar';
 import { i18n } from '../boot/i18n';
 
 // types
+import type { UserLogin } from '../components/types/User';
+
 interface JwtParts {
   header: string;
   payload: string;
@@ -45,6 +47,26 @@ export const useJwt = () => {
           color: 'negative',
         });
       }
+      return null;
+    }
+  };
+
+  /**
+   * Get user data embedded in JWT token (if available)
+   * @param {string} token - JWT token
+   * @return {UserLogin | null} User data or null if not available/invalid
+   */
+  const readJwtUser = (token: string): UserLogin | null => {
+    try {
+      const { payload } = parseJwt(token);
+      const decodedPayload = decodePayload(payload);
+      // extract the user object from payload
+      const user = decodedPayload.user;
+      if (!user) {
+        return null;
+      }
+      return user as UserLogin;
+    } catch {
       return null;
     }
   };
@@ -97,6 +119,7 @@ export const useJwt = () => {
 
   return {
     readJwtExpiration,
+    readJwtUser,
     parseJwt,
     decodePayload,
     base64UrlDecode,
