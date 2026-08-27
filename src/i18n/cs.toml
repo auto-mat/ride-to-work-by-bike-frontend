@@ -839,6 +839,7 @@ apiMessageError = "Přihlášení se nezdařilo. Prosím, zkuste to znovu pozdě
 apiMessageErrorWithMessage = "Přihlášení se nezdařilo. Chyba: {error}"
 messagePopupFailedToOpen = "Nepodařilo se otevřít okno pro přihlášení přes Google."
 messagePopupClosed = "Okno pro přihlášení přes Google bylo zavřeno před dokončením přihlášení."
+showLoggedUserNotifyMessage = "Aktuálně přihlášený uživatel {user}."
 
 [logout]
 apiMessageError = "Odhlášení se nezdařilo. Prosím, zkuste to znovu později."

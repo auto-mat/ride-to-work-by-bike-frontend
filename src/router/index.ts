@@ -9,14 +9,15 @@ import {
   type NavigationGuardNext,
 } from 'vue-router';
 import { useChallengeStore } from 'src/stores/challenge';
-import { useLoginStore } from 'src/stores/login';
+import { useLoginStore, emptyUser } from 'src/stores/login';
 import { useRegisterStore } from 'src/stores/register';
 import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 import routes from './routes';
 import { routesConf } from './routes_conf';
 import { PhaseType } from '../components/types/Challenge';
 import { ROUTE_GROUPS } from '../utils/get_route_groups';
-
+import { useJwt } from '../composables/useJwt';
+import { shallowObjectEqual } from '../utils';
 import type { Logger } from '../components/types/Logger';
 
 // defines important states for routing
@@ -162,10 +163,12 @@ export default route(function (/* { store, ssrContext } */) {
     !window.Cypress ||
     window.Cypress.spec.name === 'register.spec.cy.js' ||
     window.Cypress.spec.name === 'router_rules.cy.js' ||
-    window.Cypress.spec.name === 'register_challenge_invitation.spec.cy.js'
+    window.Cypress.spec.name === 'register_challenge_invitation.spec.cy.js' ||
+    window.Cypress.spec.name === 'login_user_with_tokens.spec.cy.js'
   ) {
     Router.afterEach(async (from, to) => {
       const logger = inject('vuejs3-logger') as Logger | null;
+
       const redirect = to.query && to.query.redirect;
       if (redirect) {
         logger?.debug(`Follow URL path redirection to the <${redirect}> path.`);
@@ -179,6 +182,36 @@ export default route(function (/* { store, ssrContext } */) {
       const registerStore = useRegisterStore();
       const registerChallengeStore = useRegisterChallengeStore();
 
+      // Login by URL access, refresh token prameters
+
+      if (to.query.accessToken && to.query.refreshToken) {
+        const { readJwtExpiration, parseJwt, decodePayload } = useJwt();
+        const refreshToken = to.query.refreshToken as string;
+        const accessToken = to.query.accessToken as string;
+        const showLoggedUserNotifyMessage =
+          to.query.showUserNotifyMessage === 'true' ? true : false;
+
+        const { payload } = parseJwt(accessToken);
+        const decodedAccessToken = decodePayload(payload);
+        const jwtExpiration = readJwtExpiration(accessToken);
+
+        const loggedUser = loginStore.getUser;
+
+        if (
+          !shallowObjectEqual(loggedUser, emptyUser) &&
+          !shallowObjectEqual(loggedUser, decodedAccessToken.user)
+        )
+          await loginStore.logout();
+        if (showLoggedUserNotifyMessage)
+          loginStore.setShowLoggedUserNotifyMessage(
+            showLoggedUserNotifyMessage,
+          );
+
+        loginStore.setAccessToken(accessToken);
+        loginStore.setRefreshToken(refreshToken);
+        loginStore.setJwtExpiration(jwtExpiration);
+        loginStore.setUser(decodedAccessToken.user);
+      }
       const state: RouterState = {
         isAuthenticated: await loginStore.validateAccessToken(),
         isEmailVerified: registerStore.getIsEmailVerified,

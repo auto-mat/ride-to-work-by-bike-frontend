@@ -91,6 +91,7 @@ export const useLoginStore = defineStore('login', {
     refreshTokenTimeout: null as NodeJS.Timeout | null, // unit: seconds
     loginFormState: LoginFormState.login,
     passwordResetEmail: '',
+    showLoggedUserNotifyMessage: false as boolean,
   }),
 
   getters: {
@@ -102,6 +103,8 @@ export const useLoginStore = defineStore('login', {
     getPasswordResetEmail: (state): string => state.passwordResetEmail,
     getRefreshTokenTimeout: (state): NodeJS.Timeout | null =>
       state.refreshTokenTimeout,
+    getShowLoggedUserNotifyMessage: (state): boolean =>
+      state.showLoggedUserNotifyMessage,
     getUserEmail: (state): string => state.user.email,
     isUserLoggedIn: (state): boolean => (state.user.email ? true : false),
   },
@@ -127,6 +130,9 @@ export const useLoginStore = defineStore('login', {
     },
     setRefreshTokenTimeout(timeout: NodeJS.Timeout | null): void {
       this.refreshTokenTimeout = timeout;
+    },
+    setShowLoggedUserNotifyMessage(show: boolean): void {
+      this.showLoggedUserNotifyMessage = show;
     },
     clearRefreshTokenTimeout(): void {
       if (this.refreshTokenTimeout) {
@@ -383,6 +389,7 @@ export const useLoginStore = defineStore('login', {
       // clear local state
       this.setAccessToken('');
       this.setRefreshToken('');
+      this.setShowLoggedUserNotifyMessage(false);
       this.setJwtExpiration(null);
       this.setUser(deepObjectWithSimplePropsCopy(emptyUser) as UserLogin);
       this.clearRefreshTokenTimeout();
@@ -396,6 +403,9 @@ export const useLoginStore = defineStore('login', {
       );
       this.$log?.debug(
         `Login store refresh token timeout <${this.getRefreshTokenTimeout}>.`,
+      );
+      this.$log?.debug(
+        `Login show logged user notify message <${this.getShowLoggedUserNotifyMessage}>.`,
       );
       // clear registerChallenge store
       const registerChallengeStore = useRegisterChallengeStore();
@@ -624,6 +634,12 @@ export const useLoginStore = defineStore('login', {
   },
 
   persist: {
-    pick: ['user', 'refreshToken', 'jwtExpiration'],
+    pick: [
+      'user',
+      'refreshToken',
+      'jwtExpiration',
+      'accessToken',
+      'showLoggedUserNotifyMessage',
+    ],
   },
 });

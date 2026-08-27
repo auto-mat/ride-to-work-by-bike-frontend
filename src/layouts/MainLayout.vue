@@ -1,6 +1,7 @@
 <script lang="ts">
 // libraries
 import { computed, defineComponent, inject } from 'vue';
+import { Notify } from 'quasar';
 import { i18n } from '../boot/i18n';
 import { defaultLocale } from '../i18n/def_locale';
 import { useRoute } from 'vue-router';
@@ -31,6 +32,7 @@ import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
 
 // utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';
+import { getLoggedUserNotifyMessageConf } from '../utils/notify';
 
 declare global {
   interface Window {
@@ -126,7 +128,21 @@ export default defineComponent({
         challengeMonth,
       });
     });
-
+    if (loginStore.getShowLoggedUserNotifyMessage) {
+      const loggedUser = loginStore.getUser;
+      let user;
+      if (loggedUser.first_name && loggedUser.last_name) {
+        user = `${loggedUser.first_name} ${loggedUser.last_name}, ${loggedUser.email}`;
+      } else {
+        user = loggedUser.email;
+      }
+      const message = computed(() =>
+        i18n.global.t('login.showLoggedUserNotifyMessage', {
+          user: user,
+        }),
+      );
+      Notify.create(getLoggedUserNotifyMessageConf(message));
+    }
     return {
       menuBottom,
       menuTop,

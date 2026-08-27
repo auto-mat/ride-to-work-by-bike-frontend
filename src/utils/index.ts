@@ -232,6 +232,25 @@ const normalizeFileName = (
   return removeAccents(fileName).replace(/\s/g, replaceSpaceChar).toLowerCase();
 };
 
+/**
+ * Shallow equal two objects
+ *
+ * @param {object} obj1 - First object
+ * @param {object} obj2 - Second object
+ *
+ * @returns {boolean} - True if two objects equal, otherwise false
+ */
+const shallowObjectEqual = <T extends object>(obj1: T, obj2: T): boolean => {
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  if (keys1.length !== keys2.length) return false;
+  return keys1.every(
+    (key) =>
+      (obj1 as Record<string, unknown>)[key] ===
+      (obj2 as Record<string, unknown>)[key],
+  );
+};
+
 export {
   calculateCountdownIntervals,
   bearerTokeAuth,
@@ -245,6 +264,7 @@ export {
   requestTokenHeader,
   rgbaColorObjectToString,
   removeAccents,
+  shallowObjectEqual,
   timestampToDatetimeString,
   triggerFileDownload,
 };
