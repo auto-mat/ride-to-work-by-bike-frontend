@@ -28,7 +28,7 @@
 
 // libraries
 import { Notify } from 'quasar';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, watch } from 'vue';
 import { i18n } from '../boot/i18n';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
@@ -60,7 +60,17 @@ export default defineComponent({
           user: user,
         }),
       );
-      Notify.create(getLoggedUserNotifyMessageConf(message));
+      const dismissMessage = Notify.create(
+        getLoggedUserNotifyMessageConf(message),
+      );
+      watch(
+        () => loginStore.getRestoreLoggedUser,
+        () => {
+          if (!loginStore.getRestoreLoggedUser) {
+            dismissMessage();
+          }
+        },
+      );
     }
     return {
       imageMask,

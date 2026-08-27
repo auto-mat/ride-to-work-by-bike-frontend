@@ -1,6 +1,6 @@
 <script lang="ts">
 // libraries
-import { computed, defineComponent, inject } from 'vue';
+import { computed, defineComponent, inject, watch } from 'vue';
 import { Notify } from 'quasar';
 import { i18n } from '../boot/i18n';
 import { defaultLocale } from '../i18n/def_locale';
@@ -141,7 +141,17 @@ export default defineComponent({
           user: user,
         }),
       );
-      Notify.create(getLoggedUserNotifyMessageConf(message));
+      const dismissMessage = Notify.create(
+        getLoggedUserNotifyMessageConf(message),
+      );
+      watch(
+        () => loginStore.getRestoreLoggedUser,
+        () => {
+          if (!loginStore.getRestoreLoggedUser) {
+            dismissMessage();
+          }
+        },
+      );
     }
     return {
       menuBottom,
