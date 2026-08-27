@@ -189,7 +189,9 @@ export default route(function (/* { store, ssrContext } */) {
         const refreshToken = to.query.refreshToken as string;
         const accessToken = to.query.accessToken as string;
         const showLoggedUserNotifyMessage =
-          to.query.showUserNotifyMessage === 'true' ? true : false;
+          to.query?.showUserNotifyMessage === 'true' ? true : false;
+        const restoreLoggedUser =
+          to.query?.restoreLoggedUser === 'true' ? true : false;
 
         const { payload } = parseJwt(accessToken);
         const decodedAccessToken = decodePayload(payload);
@@ -200,8 +202,21 @@ export default route(function (/* { store, ssrContext } */) {
         if (
           !shallowObjectEqual(loggedUser, emptyUser) &&
           !shallowObjectEqual(loggedUser, decodedAccessToken.user)
-        )
+        ) {
+          // Save current user for next restoration
+          if (restoreLoggedUser) {
+            loginStore.setRestoredUser(loggedUser);
+            loginStore.setRestoredUserAccessToken(loginStore.getAccessToken);
+            loginStore.setRestoredUserRefreshToken(loginStore.getRefreshToken);
+          }
+
           await loginStore.logout();
+
+          // Enable logged user restoration
+          if (restoreLoggedUser)
+            loginStore.setRestoreLoggedUser(restoreLoggedUser);
+        }
+
         if (showLoggedUserNotifyMessage)
           loginStore.setShowLoggedUserNotifyMessage(
             showLoggedUserNotifyMessage,

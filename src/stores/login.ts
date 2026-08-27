@@ -92,6 +92,10 @@ export const useLoginStore = defineStore('login', {
     loginFormState: LoginFormState.login,
     passwordResetEmail: '',
     showLoggedUserNotifyMessage: false as boolean,
+    restoreLoggedUser: false as boolean,
+    restoredUser: deepObjectWithSimplePropsCopy(emptyUser) as UserLogin,
+    restoredUserAccessToken: '',
+    restoredUserRefreshToken: '',
   }),
 
   getters: {
@@ -103,6 +107,12 @@ export const useLoginStore = defineStore('login', {
     getPasswordResetEmail: (state): string => state.passwordResetEmail,
     getRefreshTokenTimeout: (state): NodeJS.Timeout | null =>
       state.refreshTokenTimeout,
+    getRestoreLoggedUser: (state): boolean => state.restoreLoggedUser,
+    getRestoredUser: (state): UserLogin => state.restoredUser,
+    getRestoredUserAccessToken: (state): string =>
+      state.restoredUserAccessToken,
+    getRestoredUserRefreshToken: (state): string =>
+      state.restoredUserRefreshToken,
     getShowLoggedUserNotifyMessage: (state): boolean =>
       state.showLoggedUserNotifyMessage,
     getUserEmail: (state): string => state.user.email,
@@ -127,6 +137,18 @@ export const useLoginStore = defineStore('login', {
     },
     setPasswordResetEmail(email: string): void {
       this.passwordResetEmail = email;
+    },
+    setRestoreLoggedUser(restore: boolean): void {
+      this.restoreLoggedUser = restore;
+    },
+    setRestoredUser(user: UserLogin): void {
+      this.restoredUser = user;
+    },
+    setRestoredUserAccessToken(token: string): void {
+      this.restoredUserAccessToken = token;
+    },
+    setRestoredUserRefreshToken(token: string): void {
+      this.restoredUserRefreshToken = token;
     },
     setRefreshTokenTimeout(timeout: NodeJS.Timeout | null): void {
       this.refreshTokenTimeout = timeout;
@@ -428,12 +450,22 @@ export const useLoginStore = defineStore('login', {
       // clear admin challenge store
       const adminCompetitionStore = useAdminCompetitionStore();
       adminCompetitionStore.clearStore();
-      // redirect to login page
-      if (this.$router) {
+
+      if (this.getRestoreLoggedUser) {
+        this.$log?.info('Restore logged user data.');
+        this.restoreLoggedUserData();
         this.$log?.debug(
-          `Logout was successfull, redirect to <${routesConf['login']['path']}> URL.`,
+          `Restored logged user was successfull, redirect to <${routesConf['home']['path']}> URL.`,
         );
-        this.$router.push(routesConf['login']['path']);
+        this.$router.push(routesConf['home']['path']);
+      } else {
+        // redirect to login page
+        if (this.$router) {
+          this.$log?.debug(
+            `Logout was successfull, redirect to <${routesConf['login']['path']}> URL.`,
+          );
+          this.$router.push(routesConf['login']['path']);
+        }
       }
     },
     /**
@@ -631,6 +663,60 @@ export const useLoginStore = defineStore('login', {
 
       return data;
     },
+    /**
+     * Restore logged user
+     *
+     * After another user will be logged with URL JWT tokens
+     * parameters
+     *
+     * @return {void}
+     */
+    async restoreLoggedUserData() {
+      // Restore user
+      this.setUser(this.getRestoredUser);
+      this.$log?.debug(`Set restored user <${JSON.stringify(this.getUser)}>.`);
+      this.setRestoredUser(
+        deepObjectWithSimplePropsCopy(emptyUser) as UserLogin,
+      );
+      this.$log?.debug(
+        `Erase restored user <${JSON.stringify(this.getRestoredUser)}>.`,
+      );
+
+      // Restore user access token
+      this.setAccessToken(this.getRestoredUserAccessToken);
+      this.$log?.debug(
+        `Set restored user access token <${this.getAccessToken}>.`,
+      );
+      this.setRestoredUserAccessToken('');
+      this.$log?.debug(
+        `Erase restored user access token <${this.getRestoredUserAccessToken}>.`,
+      );
+
+      // Restore use refresh token
+      this.setRefreshToken(this.getRestoredUserRefreshToken);
+      this.$log?.debug(
+        `Set restored user refresh token <${this.getRefreshToken}>.`,
+      );
+      this.setRestoredUserRefreshToken('');
+      this.$log?.debug(
+        `Erase restored user refresh token <${this.getRestoredUserRefreshToken}>.`,
+      );
+
+      // Set restored access token expiration
+      const { readJwtExpiration } = useJwt();
+      const jwtExpiration = readJwtExpiration(this.getAccessToken);
+      this.setJwtExpiration(jwtExpiration);
+      this.$log?.debug(
+        `Set JWT access token expiration` +
+          ` <${this.getJwtExpiration ? timestampToDatetimeString(this.getJwtExpiration) : null}>.`,
+      );
+
+      // Disable restore logged user
+      this.setRestoreLoggedUser(false);
+      this.$log?.debug(
+        `Disable restore logged user <${this.getRestoreLoggedUser}>.`,
+      );
+    },
   },
 
   persist: {
@@ -639,6 +725,10 @@ export const useLoginStore = defineStore('login', {
       'refreshToken',
       'jwtExpiration',
       'accessToken',
+      'restoreLoggedUser',
+      'restoredUser',
+      'restoredUserAccessToken',
+      'restoredUserRefreshToken',
       'showLoggedUserNotifyMessage',
     ],
   },
