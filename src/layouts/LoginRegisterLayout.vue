@@ -64,9 +64,9 @@ export default defineComponent({
         getLoggedUserNotifyMessageConf(message),
       );
       watch(
-        () => loginStore.getRestoreLoggedUser,
+        () => loginStore.getShowLoggedUserNotifyMessage,
         () => {
-          if (!loginStore.getRestoreLoggedUser) {
+          if (!loginStore.getShowLoggedUserNotifyMessage) {
             dismissMessage();
           }
         },
