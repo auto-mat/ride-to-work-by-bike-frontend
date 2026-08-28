@@ -209,8 +209,10 @@ export default route(function (/* { store, ssrContext } */) {
             loginStore.setRestoredUserAccessToken(loginStore.getAccessToken);
             loginStore.setRestoredUserRefreshToken(loginStore.getRefreshToken);
           }
-
-          await loginStore.logout();
+          const restoreUser =
+            restoreLoggedUser &&
+            !shallowObjectEqual(loginStore.getRestoredUser, loggedUser);
+          await loginStore.logout(restoreUser);
 
           // Enable logged user restoration
           if (restoreLoggedUser)

@@ -387,8 +387,12 @@ export const useLoginStore = defineStore('login', {
      * Logout user
      * Calls logout API to invalidate server-side token.
      * Sets the access token, refresh token and user to empty values.
+     *
+     * @param {boolean} [restoreUser=true] restoreUser - Allow restore previously
+     *                                                   logged user
+     * @returns Promise
      */
-    async logout(): Promise<void> {
+    async logout(restoreUser: boolean = true): Promise<void> {
       this.$log?.debug(`Logout user <${this.getUser.email}>.`);
       // invalidate token
       const logoutTokenHeader = { ...requestTokenHeader };
@@ -451,7 +455,7 @@ export const useLoginStore = defineStore('login', {
       const adminCompetitionStore = useAdminCompetitionStore();
       adminCompetitionStore.clearStore();
 
-      if (this.getRestoreLoggedUser) {
+      if (restoreUser && this.restoreLoggedUser) {
         this.$log?.info('Restore logged user data.');
         this.restoreLoggedUserData();
         this.$log?.debug(
