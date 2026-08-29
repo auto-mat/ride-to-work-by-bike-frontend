@@ -214,20 +214,19 @@ export const useRoutes = () => {
 
   /**
    * Returns an array of RouteDay objects for each day vacation can be
-   * marked on - tomorrow through the end of the competition phase, ordered
-   * chronologically ascending.
+   * marked on - start with last allowed past day through the end of the
+   * competition phase, ordered chronologically ascending.
    * @param {RouteItem[]} routes - Array of logged routes.
    * @return {RouteDay[]} - The array representing days with routes.
    */
   const getVacationLoggableDaysWithRoutes = (
     routes: RouteItem[],
   ): RouteDay[] => {
-    if (!dateCompetitionPhaseTo.value) {
+    if (!dateCompetitionPhaseTo.value || !dateLoggingStart.value) {
       return [];
     }
-    const dateToday = new Date();
     return createDaysArrayWithRoutes(
-      dateToday,
+      date.subtractFromDate(dateLoggingStart.value, { days: 1 }),
       dateCompetitionPhaseTo.value,
       routes,
     ).reverse();

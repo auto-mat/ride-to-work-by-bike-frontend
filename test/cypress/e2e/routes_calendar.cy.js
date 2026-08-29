@@ -715,6 +715,7 @@ describe('Routes calendar page', () => {
         // clock at dateWithLoggedRoute - 2025-05-26
         const dateToday = '2025-05-26';
         const dateTomorrow = '2025-05-27';
+        const dateYesterday = '2025-05-25';
         // today is enabled in trip mode
         cy.get(`[data-date="${dateToday}"]`)
           .find('[data-cy="calendar-item-display-item"]')
@@ -724,15 +725,24 @@ describe('Routes calendar page', () => {
         cy.dataCy('vacation-mode-toggle')
           .contains(i18n.global.t('routes.vacation.modeToggle'))
           .click({ force: true });
-        // today is disabled in vacation mode
+        // yesterday is enabled in vacation mode
+        cy.get(`[data-date="${dateYesterday}"]`)
+          .find('[data-cy="calendar-item-display-item"]')
+          .first()
+          .should('have.css', 'opacity', '1');
+        cy.get(`[data-date="${dateYesterday}"]`)
+          .find('[data-cy="calendar-item-icon-towork-empty"]')
+          .click({ force: true });
+        cy.dataCy('route-calendar-panel').should('exist');
+        // today is enabled in vacation mode
         cy.get(`[data-date="${dateToday}"]`)
           .find('[data-cy="calendar-item-display-item"]')
           .first()
-          .should('have.css', 'opacity', '0.5');
+          .should('have.css', 'opacity', '1');
         cy.get(`[data-date="${dateToday}"]`)
           .find('[data-cy="calendar-item-icon-towork-empty"]')
           .click({ force: true });
-        cy.dataCy('route-calendar-panel').should('not.exist');
+        cy.dataCy('route-calendar-panel').should('exist');
         // tomorrow is enabled in vacation mode
         cy.get(`[data-date="${dateTomorrow}"]`)
           .find('[data-cy="calendar-item-display-item"]')

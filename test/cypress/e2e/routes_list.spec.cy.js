@@ -51,7 +51,6 @@ describe('Routes list page', () => {
       });
     });
   });
-
   context('desktop - no logged routes', () => {
     beforeEach(() => {
       cy.get('@config').then((config) => {
@@ -608,6 +607,7 @@ describe('Routes list page', () => {
       cy.dataCy('footer-routes-list-spacer').should('not.exist');
     });
   });
+
   context('desktop - vacation mode', () => {
     beforeEach(() => {
       cy.get('@config').then((config) => {
@@ -622,8 +622,8 @@ describe('Routes list page', () => {
 
     it('shows the vacation date range from tomorrow to end of challenge', () => {
       cy.get('@i18n').then((i18n) => {
+        const dateYesterday = '2025-05-25';
         const dateToday = '2025-05-26';
-        const dateTomorrow = '2025-05-27';
         const dateFuture = '2025-05-28';
         const dateCompetitionEnd = '2025-06-01';
         const dateAfterCompetitionEnd = '2025-06-02';
@@ -633,18 +633,20 @@ describe('Routes list page', () => {
         cy.dataCy('vacation-mode-toggle')
           .contains(i18n.global.t('routes.vacation.modeToggle'))
           .click({ force: true });
-        // today only exists in trip mode
-        cy.get(`[data-date="${dateToday}"]`).should('not.exist');
+        // yesterday exists in vaccation mode
+        cy.get(`[data-date="${dateYesterday}"]`).should('exist');
+        // today exists in vaccation mode
+        cy.get(`[data-date="${dateToday}"]`).should('exist');
         // tomorrow through end of competition is rendered
-        cy.get(`[data-date="${dateTomorrow}"]`).should('be.visible');
-        cy.get(`[data-date="${dateFuture}"]`).should('be.visible');
+        cy.get(`[data-date="${dateToday}"]`).should('be.visible');
+        cy.get(`[data-date="${dateFuture}"]`).should('exist');
         cy.get(`[data-date="${dateCompetitionEnd}"]`).should('be.visible');
         // date after competition end is not rendered
         cy.get(`[data-date="${dateAfterCompetitionEnd}"]`).should('not.exist');
       });
     });
 
-    it('orders days chronologically ascending (tomorrow first)', () => {
+    it('orders days chronologically ascending (today first)', () => {
       cy.get('@i18n').then((i18n) => {
         // most recent date is first, goes into the past
         cy.get('[data-date]')
@@ -657,13 +659,13 @@ describe('Routes list page', () => {
         cy.dataCy('vacation-mode-toggle')
           .contains(i18n.global.t('routes.vacation.modeToggle'))
           .click({ force: true });
-        // tomorrow is first, goes into the future
+        // start with first allowed past day goes into the future
         cy.get('[data-date]')
           .first()
-          .should('have.attr', 'data-date', '2025-05-27');
+          .should('have.attr', 'data-date', '2025-05-12');
         cy.get('[data-date]')
           .eq(1)
-          .should('have.attr', 'data-date', '2025-05-28');
+          .should('have.attr', 'data-date', '2025-05-13');
       });
     });
 

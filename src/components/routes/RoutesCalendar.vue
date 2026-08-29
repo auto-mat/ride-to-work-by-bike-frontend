@@ -89,7 +89,7 @@ export default defineComponent({
         : null;
     });
     const disabledBeforeVacation = computed((): string => {
-      return date.formatDate(new Date(), apiDateFormat);
+      return disabledBeforeTrips.value;
     });
     const disabledBefore = computed((): string | null =>
       isVacationMode.value
