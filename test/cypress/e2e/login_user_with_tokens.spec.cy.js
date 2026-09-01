@@ -12,8 +12,10 @@ const exp = Math.floor(Date.now() / 1000) + 60 * 60;
 describe('Login user with tokens', () => {
   context('Register challenge page', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.visit('#' + routesConf['login']['path']);
+      cy.reload(true);
+      cy.dataCy('form-email-input').should('be.visible');
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.viewport('macbook-16');
       cy.task('getAppConfig', process).then((config) => {
         cy.window().should('have.property', 'i18n');
@@ -43,8 +45,10 @@ describe('Login user with tokens', () => {
 
   context('Home page', () => {
     beforeEach(() => {
-      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.visit('#' + routesConf['login']['path']);
+      cy.reload(true);
+      cy.dataCy('form-email-input').should('be.visible');
+      cy.clock(systemTimeChallengeActive, ['Date']);
       cy.viewport('macbook-16');
       cy.task('getAppConfig', process).then((config) => {
         cy.window().should('have.property', 'i18n');
