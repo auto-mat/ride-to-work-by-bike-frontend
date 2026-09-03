@@ -194,17 +194,55 @@ describe('Company coordinator fee approval page', () => {
         const memberId = 20001;
         const originalAmount = 400;
         const amountWithoutReward = 350;
+
+        cy.dataCy('table-fee-approval-not-approved')
+          .find('tbody tr')
+          .should('have.length', 2)
+          .should('be.visible');
+
         cy.dataCy('table-fee-approval-not-approved').within(() => {
           // verify initial state
           cy.contains(memberName)
             .parent('tr')
+            .should('have.length', 1)
+            .should('be.visible')
             .within(() => {
+              // eslint-disable-next-line cypress/no-unnecessary-waiting
+              cy.wait(800); // require for fix reward checkbox element checking/unchecking event bug after loading table row
               // amount
               cy.dataCy('table-fee-approval-amount').should(
                 'contain',
                 originalAmount,
               );
-              // reward checkbox
+              // toggle reward OFF;
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .should('be.visible')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy')
+                .click();
+              // verify reward state
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy');
+              // verify amount changed
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                amountWithoutReward,
+              );
+              // toggle reward NO
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--falsy')
+                .click();
+              // verify reward state
+              cy.dataCy('table-fee-approval-reward-checkbox')
+                .find('.q-checkbox__inner')
+                .should('have.class', 'q-checkbox__inner--truthy');
+              // verify original amount
+              cy.dataCy('table-fee-approval-amount').should(
+                'contain',
+                originalAmount,
+              );
               cy.dataCy('table-fee-approval-reward-checkbox')
                 .find('.q-checkbox__inner')
                 .should('have.class', 'q-checkbox__inner--truthy');
@@ -212,75 +250,11 @@ describe('Company coordinator fee approval page', () => {
               cy.dataCy('table-fee-approval-reward-checkbox')
                 .find('.q-checkbox__inner')
                 .click();
-            });
-          // verify reward state
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
+              // verify reward state
               cy.dataCy('table-fee-approval-reward-checkbox')
                 .find('.q-checkbox__inner')
                 .should('have.class', 'q-checkbox__inner--falsy');
-            });
-          // verify amount changed
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-amount').should(
-                'contain',
-                amountWithoutReward,
-              );
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .should('have.class', 'q-checkbox__inner--falsy');
-            });
-          // toggle reward NO
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .click();
-            });
-          // verify reward state
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .should('have.class', 'q-checkbox__inner--truthy');
-            });
-          // verify original amount
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-amount').should(
-                'contain',
-                originalAmount,
-              );
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .should('have.class', 'q-checkbox__inner--truthy');
-            });
-          // toggle reward OFF
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .click();
-            });
-          // verify reward state
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
-              cy.dataCy('table-fee-approval-reward-checkbox')
-                .find('.q-checkbox__inner')
-                .should('have.class', 'q-checkbox__inner--falsy');
-            });
-          // verify amount
-          cy.contains(memberName)
-            .parent('tr')
-            .within(() => {
+              // verify amount
               cy.dataCy('table-fee-approval-amount').should(
                 'contain',
                 amountWithoutReward,
