@@ -782,6 +782,7 @@ describe('Company coordinator user attendance page', () => {
                 config,
                 'apiGetAdminOrganisationResponseUpdatedBoxAddressee.json',
               );
+              cy.waitForCitiesApi();
               // click edit button
               cy.dataCy('table-attendance-subsidiary-header')
                 .contains(subsidiaryName)
