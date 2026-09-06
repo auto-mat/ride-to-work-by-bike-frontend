@@ -26,6 +26,7 @@ import { routesConf } from '../../router/routes_conf';
 
 // stores
 import { useLoginStore } from '../../stores/login';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 export default defineComponent({
   name: 'UserProfileLink',
@@ -38,7 +39,9 @@ export default defineComponent({
   },
   setup(props) {
     const loginStore = useLoginStore();
+    const registerChallengeStore = useRegisterChallengeStore();
     const user = computed(() => loginStore.getUser);
+    const photoUrl = computed(() => registerChallengeStore.getPhoto?.url);
     const profileDetailsPath =
       routesConf['profile_details']['children']['fullPath'];
     const size = computed(() => (props.variant === 'mobile' ? '32px' : '40px'));
@@ -57,6 +60,7 @@ export default defineComponent({
       profileDetailsPath,
       size,
       user,
+      photoUrl,
     };
   },
 });
@@ -72,7 +76,7 @@ export default defineComponent({
       <!-- User avatar -->
       <q-avatar :size="size" color="white" data-cy="avatar">
         <q-img
-          :src="user?.image?.src"
+          :src="photoUrl"
           :alt="user?.first_name + ' ' + user?.last_name"
           :width="size"
           :height="size"

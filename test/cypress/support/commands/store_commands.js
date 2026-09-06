@@ -43,3 +43,22 @@ Cypress.Commands.add(
     });
   },
 );
+
+/**
+ * Set photo value in register challenge store
+ * @param {function} useRegisterChallengeStore - `useRegisterChallengeStore` function
+ *                                                to initialize register challenge store
+ * @param {object | null} photo - photo object to set (or `null` to clear it)
+ */
+Cypress.Commands.add(
+  'setPhotoStoreState',
+  (useRegisterChallengeStore, photo) => {
+    cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
+      const storedPhoto = computed(() => registerChallengeStore.getPhoto);
+      registerChallengeStore.setPhoto(photo);
+      cy.wrap(storedPhoto).should((currentStoredPhoto) => {
+        expect(currentStoredPhoto.value).to.deep.equal(photo);
+      });
+    });
+  },
+);

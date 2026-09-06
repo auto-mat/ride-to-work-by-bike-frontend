@@ -391,6 +391,16 @@ apiMessageError = "Zmazanie firemnej výzvy zlyhalo."
 apiMessageErrorWithMessage = "Zmazanie firemnej výzvy zlyhalo. Chyba: {error}"
 apiMessageSuccess = "Firemná výzva bola úspešne zmazaná."
 
+[uploadPhoto]
+apiMessageError = "Nahratie fotky zlyhalo."
+apiMessageErrorWithMessage = "Nahratie fotky zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Fotka bola úspešne nahraná."
+
+[deletePhoto]
+apiMessageError = "Odstránenie fotky zlyhalo."
+apiMessageErrorWithMessage = "Odstránenie fotky zlyhalo. Chyba: {error}"
+apiMessageSuccess = "Fotka bola úspešne odstránená."
+
 [updateCompetition]
 apiMessageError = "Aktualizácia firemnej výzvy zlyhala."
 apiMessageErrorWithMessage = "Aktualizácia firemnej výzvy zlyhala. Chyba: {error}"
@@ -1009,6 +1019,13 @@ titleUpdateGender = "Upraviť kategóriu výkonu"
 titleUpdateNickname = "Upraviť prezývku"
 titleUpdatePhone = "Upraviť telefónne číslo"
 titleUpdateTeam = "Zmeniť tím"
+buttonUploadPhoto = "Nahrať novú fotku"
+buttonRemovePhoto = "Odstrániť"
+titleUpdatePhoto = "Upraviť profilovú fotku"
+titleDialogRemovePhoto = "Odstrániť profilovú fotku"
+labelRemovePhotoDescription = "Vaša profilová fotka bude odstránená. Chcete pokračovať?"
+messagePhotoInvalidFormat = "Neplatný formát súboru. Povolené formáty: {formats}"
+messagePhotoTooLarge = "Súbor je príliš veľký. Maximálna veľkosť je {size}."
 
 [putRegisterChallenge]
 apiMessageError = "Chyba pri aktualizácii profilu."

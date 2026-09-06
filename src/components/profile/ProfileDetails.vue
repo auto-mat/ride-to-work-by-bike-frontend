@@ -43,6 +43,7 @@ import FormUpdateOccupation from '../form/FormUpdateOccupation.vue';
 import FormUpdatePhone from '../form/FormUpdatePhone.vue';
 import FormUpdateTeam from '../form/FormUpdateTeam.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
+import ProfileAvatar from './ProfileAvatar.vue';
 import ProfileCoordinatorContact from './ProfileCoordinatorContact.vue';
 import SectionHeading from '../global/SectionHeading.vue';
 import DeleteAccount from './DeleteAccount.vue';
@@ -86,6 +87,7 @@ export default defineComponent({
     FormUpdatePhone,
     FormUpdateTeam,
     LanguageSwitcher,
+    ProfileAvatar,
     ProfileCoordinatorContact,
     SectionHeading,
     DeleteAccount,
@@ -408,6 +410,8 @@ export default defineComponent({
   <div data-cy="profile-details">
     <!-- Banner team member approve -->
     <banner-team-member-approve class="q-mb-lg" />
+    <!-- Avatar -->
+    <profile-avatar class="q-mb-lg" data-cy="profile-details-avatar" />
     <!-- Title -->
     <section-heading data-cy="profile-title-personal-details">
       {{ $t('profile.titlePersonalDetails') }}

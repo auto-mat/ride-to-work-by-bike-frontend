@@ -1,8 +1,13 @@
 // libraries
 import { watch } from 'vue';
 
+// utils
+import { getApiBaseUrlWithLang } from '../../../src/utils/get_api_base_url_with_lang';
+
 // types
 import type { Ref } from 'vue';
+import type { I18n } from 'vue-i18n';
+import type { Config } from '../../../src/components/types/Config';
 
 const whiteColor = 'rgb(255, 255, 255)';
 const transparentColor = 'rgba(0, 0, 0, 0)';
@@ -45,8 +50,45 @@ function vModelAdapter<T>(modelRef: Ref<T>, modelName = 'modelValue') {
  */
 const getRadioOption = (val: string): string => `radio-option-${val}`;
 
+/**
+ * Returns the localized photo API URL.
+ * @param {Config} config - app config
+ * @param {I18n | string} i18n - i18n instance or locale string
+ * @returns {String} - localized photo API URL
+ */
+const getPhotoApiUrl = (config: Config, i18n: I18n | string): string => {
+  const apiBaseUrl = getApiBaseUrlWithLang(
+    null,
+    config.apiBase,
+    config.apiDefaultLang,
+    i18n,
+  );
+  return `${apiBaseUrl}${config.urlApiPhoto}`;
+};
+
+/**
+ * Returns the localized register challenge API URL.
+ * @param {Config} config - app config
+ * @param {I18n | string} i18n - i18n instance or locale string
+ * @returns {String} - localized register challenge API URL
+ */
+const getRegisterChallengeApiUrl = (
+  config: Config,
+  i18n: I18n | string,
+): string => {
+  const apiBaseUrl = getApiBaseUrlWithLang(
+    null,
+    config.apiBase,
+    config.apiDefaultLang,
+    i18n,
+  );
+  return `${apiBaseUrl}${config.urlApiRegisterChallenge}`;
+};
+
 export {
+  getPhotoApiUrl,
   getRadioOption,
+  getRegisterChallengeApiUrl,
   hexToRgb,
   negativeColor,
   positiveColor,

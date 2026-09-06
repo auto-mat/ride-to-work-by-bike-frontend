@@ -63,6 +63,7 @@ export const registerChallengeAdapter = {
       cityWpSlug: apiData.city_wp_slug,
       diploma: apiData.personal_details.diploma,
       diplomas: apiData.personal_details.diplomas ?? [],
+      photo: apiData.personal_details.photo ?? null,
       isPaymentWithReward:
         typeof apiData.personal_details.is_payment_with_reward === 'boolean'
           ? apiData.personal_details.is_payment_with_reward

@@ -8,6 +8,7 @@ import {
 } from '../support/commonTests';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { TeamMemberStatus } from '../../../src/components/enums/TeamMember';
+import { getPhotoApiUrl, getRegisterChallengeApiUrl } from '../utils';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
@@ -245,6 +246,125 @@ describe('Profile page', () => {
           });
         },
       );
+    });
+  });
+
+  context('change photo', () => {
+    beforeEach(() => {
+      cy.clock(new Date(systemTimeChallengeActive), ['Date']).then(() => {
+        // go to login page
+        cy.visit('#' + routesConf['login']['children']['fullPath']);
+        // login
+        cy.fillAndSubmitLoginForm();
+        // wait for homepage to load
+        cy.dataCy('index-title').should('be.visible');
+        // go to profile page
+        cy.visit('#' + routesConf['profile']['children']['fullPath']);
+        cy.viewport('macbook-16');
+        // alias i18n
+        cy.window().should('have.property', 'i18n');
+        cy.window().then((win) => {
+          cy.wrap(win.i18n).as('i18n');
+        });
+      });
+    });
+
+    it('allows to upload photo and shows it in profile and drawer', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          // wait for initial GET request
+          cy.waitForRegisterChallengeGetApi(response);
+          // intercept photo upload
+          cy.intercept('POST', getPhotoApiUrl(config, defLocale), {
+            statusCode: 201,
+            body: { id: 99, url: 'https://example.com/new-photo.jpg' },
+          }).as('postPhoto');
+          // intercept refetch with new photo
+          const responseWithNewPhoto = JSON.parse(JSON.stringify(response));
+          responseWithNewPhoto.results[0].personal_details.photo = {
+            id: 99,
+            url: 'https://example.com/new-photo.jpg',
+          };
+          cy.intercept('GET', getRegisterChallengeApiUrl(config, defLocale), {
+            statusCode: 200,
+            body: responseWithNewPhoto,
+          }).as('getRegisterChallengeAfterUpload');
+          // stub photo
+          cy.intercept('GET', 'https://example.com/*', {
+            fixture: 'route.jpg',
+          });
+          // upload new photo
+          cy.dataCy('profile-avatar-edit-button').click();
+          cy.dataCy('profile-avatar-input-file').selectFile(
+            'test/cypress/fixtures/route.jpg',
+            { force: true },
+          );
+          cy.dataCy('profile-avatar-dialog-save').click();
+          cy.wait('@postPhoto');
+          cy.wait('@getRegisterChallengeAfterUpload');
+          // profile page shows new photo
+          cy.dataCy('profile-avatar-img')
+            .find('img')
+            .invoke('attr', 'src')
+            .should('eq', 'https://example.com/new-photo.jpg');
+          // drawer shows new photo
+          cy.dataCy(selectorQDrawer).within(() => {
+            cy.dataCy('avatar-image')
+              .find('img')
+              .invoke('attr', 'src')
+              .should('eq', 'https://example.com/new-photo.jpg');
+          });
+        });
+      });
+    });
+
+    it('allows to delete photo and shows placeholder instead', () => {
+      cy.get('@config').then((config) => {
+        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
+          // wait for initial GET request
+          cy.waitForRegisterChallengeGetApi(response);
+          const photo = response.results[0].personal_details.photo;
+          // stub photo
+          cy.intercept('GET', 'https://example.com/photo.jpg', {
+            fixture: 'route.jpg',
+          });
+          // profile page shows current photo
+          cy.dataCy('profile-avatar-img')
+            .find('img')
+            .invoke('attr', 'src')
+            .should('eq', photo.url);
+          // intercept photo removal
+          cy.intercept(
+            'DELETE',
+            `${getPhotoApiUrl(config, defLocale)}${photo.id}`,
+            { statusCode: 204, body: {} },
+          ).as('deletePhoto');
+          // intercept refetch without photo
+          const responseWithoutPhoto = JSON.parse(JSON.stringify(response));
+          responseWithoutPhoto.results[0].personal_details.photo = null;
+          cy.intercept('GET', getRegisterChallengeApiUrl(config, defLocale), {
+            statusCode: 200,
+            body: responseWithoutPhoto,
+          }).as('getRegisterChallengeAfterDelete');
+          // delete photo
+          cy.dataCy('profile-avatar-remove-button').click();
+          cy.dataCy('profile-avatar-dialog-remove-confirm').click();
+          cy.wait('@deletePhoto');
+          cy.wait('@getRegisterChallengeAfterDelete');
+          // profile page shows placeholder
+          cy.dataCy('profile-avatar-img')
+            .find('img')
+            .invoke('attr', 'src')
+            .should('contain', 'profile-placeholder');
+          // drawer shows placeholder
+          cy.dataCy(selectorQDrawer).within(() => {
+            cy.dataCy('avatar-image')
+              .find('img')
+              .invoke('attr', 'src')
+              .should('contain', 'profile-placeholder');
+          });
+        });
+      });
     });
   });
 

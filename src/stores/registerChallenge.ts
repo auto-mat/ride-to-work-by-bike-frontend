@@ -74,6 +74,7 @@ import type {
   AgeGroupApiObject,
   Diploma,
   OccupationApiObject,
+  Photo,
   RegisterChallengePostPayload,
   RegisterChallengePostResponse,
   RegisterChallengeResult,
@@ -132,6 +133,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     telephoneOptIn: false,
     diploma: '',
     diplomas: [] as Diploma[],
+    photo: null as Photo | null,
     language: defaultLocale,
     isLoadingRegisterChallenge: false,
     isLoadingSubsidiaries: false,
@@ -213,6 +215,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     getTelephoneOptIn: (state): boolean => state.telephoneOptIn,
     getDiploma: (state): string => state.diploma,
     getDiplomas: (state): Diploma[] => state.diplomas,
+    getPhoto: (state): Photo | null => state.photo,
     getLanguage: (state): string => state.language,
     getRegistrationId: (state): number | null => {
       return state.personalDetails.id || null;
@@ -529,6 +532,9 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
     setDiplomas(diplomas: Diploma[]) {
       this.diplomas = diplomas;
     },
+    setPhoto(photo: Photo | null) {
+      this.photo = photo;
+    },
     setLanguage(language: string) {
       this.language = language;
     },
@@ -772,6 +778,10 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       this.setDiplomas(parsedResponse.diplomas);
       this.$log?.debug(
         `Diplomas store updated to <${JSON.stringify(this.getDiplomas)}>.`,
+      );
+      this.setPhoto(parsedResponse.photo);
+      this.$log?.debug(
+        `Photo store updated to <${JSON.stringify(this.getPhoto)}>.`,
       );
       this.setCitySlug(parsedResponse.citySlug);
       this.$log?.debug(`City slug store updated to <${this.getCitySlug}>.`);
