@@ -23,6 +23,7 @@ import DialogDefault from '../global/DialogDefault.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
+import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useApiDeleteAvatar } from '../../composables/useApiDeleteAvatar';
 import { useApiPostAvatar } from '../../composables/useApiPostAvatar';
 import { useApiPutAvatar } from '../../composables/useApiPutAvatar';
@@ -42,7 +43,8 @@ export default defineComponent({
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
     const avatarStore = useAvatarStore();
-    const maxFileSizeMegabytes = 5;
+    const maxFileSizeMegabytes =
+      rideToWorkByBikeConfig.profileAvatarMaxFileSizeMegabytes;
     const maxFileSizeBytes = maxFileSizeMegabytes * 1024 * 1024;
     const acceptedFileFormats = '.jpg, .jpeg, .png, .webp';
 

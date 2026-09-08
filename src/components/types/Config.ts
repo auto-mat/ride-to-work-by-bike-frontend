@@ -68,6 +68,7 @@ export interface ConfigGlobal {
   checkRegisterChallengeStatusIntervalSeconds: number;
   checkRegisterChallengeStatusMaxRepetitions: number;
   tripMaxFileUploadSizeMegabytes: number;
+  profileAvatarMaxFileSizeMegabytes: number;
   feedRefreshCachedPostsIntervalHours: number;
   apiFeedMaxOffersNumber: number;
   apiFeedMaxPrizesNumber: number;
