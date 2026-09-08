@@ -16,30 +16,30 @@ import type { Logger } from '../components/types/Logger';
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-interface UseApiDeletePhotoReturn {
+interface UseApiDeleteAvatarReturn {
   isLoading: Ref<boolean>;
-  deletePhoto: (id: number) => Promise<boolean>;
+  deleteAvatar: (id: number) => Promise<boolean>;
 }
 
 /**
- * Composable for deleting a profile photo
+ * Composable for deleting an avatar
  * @param {Logger | null} logger - Logger
- * @returns {UseApiDeletePhotoReturn}
+ * @returns {UseApiDeleteAvatarReturn}
  */
-export const useApiDeletePhoto = (
+export const useApiDeleteAvatar = (
   logger: Logger | null,
-): UseApiDeletePhotoReturn => {
+): UseApiDeleteAvatarReturn => {
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
 
   /**
-   * Delete profile photo with given ID
-   * @param {number} id - Photo ID
+   * Delete avatar with given ID
+   * @param {number} id - Avatar ID
    * @returns {Promise<boolean>} - Success status
    */
-  const deletePhoto = async (id: number): Promise<boolean> => {
-    logger?.debug(`Delete profile photo with ID <${id}>.`);
+  const deleteAvatar = async (id: number): Promise<boolean> => {
+    logger?.debug(`Delete avatar with ID <${id}>.`);
     isLoading.value = true;
 
     // append access token into HTTP header
@@ -47,11 +47,11 @@ export const useApiDeletePhoto = (
     requestTokenHeader_.Authorization +=
       await loginStore.getAccessTokenWithRefresh();
 
-    // delete photo
+    // delete avatar
     const { success } = await apiFetch<Record<string, never>>({
-      endpoint: `${rideToWorkByBikeConfig.urlApiPhoto}${id}`,
+      endpoint: `${rideToWorkByBikeConfig.urlApiAvatar}${id}/`,
       method: 'delete',
-      translationKey: 'deletePhoto',
+      translationKey: 'deleteAvatar',
       headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
       logger,
     });
@@ -60,5 +60,5 @@ export const useApiDeletePhoto = (
     return success;
   };
 
-  return { isLoading, deletePhoto };
+  return { isLoading, deleteAvatar };
 };

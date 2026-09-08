@@ -1,0 +1,9 @@
+{
+  "message": "You haven't uploaded an avatar yet. Please upload one now.",
+  "default_avatar": {
+    "src": "https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp",
+    "width": "80",
+    "height": "80",
+    "alt": "User Avatar"
+  }
+}

@@ -12,55 +12,48 @@ import { useLoginStore } from '../stores/login';
 
 // types
 import type { Logger } from '../components/types/Logger';
-import type { Photo } from '../components/types/ApiRegistration';
+import type { ApiAvatarGetResponse } from '../components/types/ApiAvatar';
 
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-const photoCaption = 'Profile photo';
-
-interface UseApiPostPhotoReturn {
+interface UseApiGetAvatarReturn {
   isLoading: Ref<boolean>;
-  postPhoto: (file: File) => Promise<Photo | null>;
+  getAvatar: () => Promise<ApiAvatarGetResponse | null>;
 }
 
 /**
- * Composable for uploading a profile photo
+ * Composable for getting the user's avatar(s)
  * @param {Logger | null} logger - Logger
- * @returns {UseApiPostPhotoReturn}
+ * @returns {UseApiGetAvatarReturn}
  */
-export const useApiPostPhoto = (
+export const useApiGetAvatar = (
   logger: Logger | null,
-): UseApiPostPhotoReturn => {
+): UseApiGetAvatarReturn => {
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
 
   /**
-   * Upload a profile photo
-   * @param {File} file - Image file to upload
-   * @returns {Promise<Photo | null>} - Uploaded photo data
+   * Get the user's avatar(s)
+   * @returns {Promise<ApiAvatarGetResponse | null>} - Avatar list or default avatar response
    */
-  const postPhoto = async (file: File): Promise<Photo | null> => {
-    logger?.debug(`Upload profile photo <${file.name}>.`);
+  const getAvatar = async (): Promise<ApiAvatarGetResponse | null> => {
+    logger?.debug('Get user avatar.');
     isLoading.value = true;
-
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('caption', photoCaption);
 
     // append access token into HTTP header
     const requestTokenHeader_ = { ...requestTokenHeader };
     requestTokenHeader_.Authorization +=
       await loginStore.getAccessTokenWithRefresh();
 
-    // post photo
-    const { data } = await apiFetch<Photo>({
-      endpoint: rideToWorkByBikeConfig.urlApiPhoto,
-      method: 'post',
-      translationKey: 'uploadPhoto',
+    // get avatar
+    const { data } = await apiFetch<ApiAvatarGetResponse>({
+      endpoint: rideToWorkByBikeConfig.urlApiAvatar,
+      method: 'get',
+      translationKey: 'getAvatar',
+      showSuccessMessage: false,
       headers: Object.assign(requestDefaultHeader(), requestTokenHeader_),
-      payload: formData,
       logger,
     });
 
@@ -68,5 +61,5 @@ export const useApiPostPhoto = (
     return data;
   };
 
-  return { isLoading, postPhoto };
+  return { isLoading, getAvatar };
 };

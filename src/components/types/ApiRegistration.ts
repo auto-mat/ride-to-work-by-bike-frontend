@@ -49,7 +49,6 @@ export type PersonalDetails = CorePersonalDetails & {
   thirdparty_voucher?: ThirdPartyVoucher[];
   diploma: string;
   diplomas: Diploma[];
-  photo: Photo | null;
 };
 
 export type ThirdPartyVoucher = {
@@ -66,12 +65,6 @@ export type Diploma = {
   id: number;
   year: string;
   name: string;
-  url: string;
-};
-
-// user's profile photo
-export type Photo = {
-  id: number;
   url: string;
 };
 

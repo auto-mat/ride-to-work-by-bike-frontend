@@ -107,7 +107,8 @@ export interface ConfigGlobal {
   urlApiMyTeam: string;
   urlApiMyOrganizationAdmin: string;
   urlApiPayuCreateOrder: string;
-  urlApiPhoto: string;
+  urlApiAvatar: string;
+  avatarRenderSize: number;
   urlAppDataPrivacyPolicy: string;
   urlAppDataTermsOfService: string;
   urlApiRefresh: string;

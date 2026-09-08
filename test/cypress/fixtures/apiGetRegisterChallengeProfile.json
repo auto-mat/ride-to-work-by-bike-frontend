@@ -37,11 +37,7 @@
             "name": "Zářijová výzva 2023",
             "url": "https://example.com/diplomas/2023-september.pdf"
           }
-        ],
-        "photo": {
-          "id": 42,
-          "url": "https://example.com/photo.jpg"
-        }
+        ]
       },
       "city_slug": "praha",
       "city_wp_slug": "praha",

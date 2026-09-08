@@ -2,10 +2,10 @@ import { createPinia, setActivePinia } from 'pinia';
 import ProfileAvatar from 'components/profile/ProfileAvatar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { useAvatarStore } from '../../stores/avatar';
 import {
-  getPhotoApiUrl,
-  getRegisterChallengeApiUrl,
+  getAvatarApiUrl,
+  getAvatarRenderApiUrl,
 } from '../../../test/cypress/utils';
 
 describe('<ProfileAvatar>', () => {
@@ -25,111 +25,104 @@ describe('<ProfileAvatar>', () => {
     );
   });
 
-  context('photo already exists', () => {
+  context('avatar already exists', () => {
+    const avatarId = 22;
+    const avatarUrl =
+      'https://dpnk-test.s3.amazonaws.com/avatars/33669/resized/80/80/profile_2024_crop.png';
+
     beforeEach(() => {
       cy.viewport('macbook-16');
       setActivePinia(createPinia());
-      // stub photo
+      // stub avatar image
+      cy.intercept('GET', 'https://dpnk-test.s3.amazonaws.com/**', {
+        fixture: 'route.jpg',
+      });
+      // stub new avatar image served after upload/replace
       cy.intercept('GET', 'https://example.com/*', {
         fixture: 'route.jpg',
       });
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          cy.interceptRegisterChallengeGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            responseRegisterChallenge,
-          );
-        },
-      );
       cy.mount(ProfileAvatar, { props: {} });
-      // set photo in store
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          cy.setPhotoStoreState(
-            useRegisterChallengeStore,
-            responseRegisterChallenge.results[0].personal_details.photo,
-          );
-        },
-      );
+      // set avatar in store
+      cy.setAvatarStoreState(useAvatarStore, avatarId, avatarUrl);
     });
 
-    it('renders the photo image', () => {
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          const photo =
-            responseRegisterChallenge.results[0].personal_details.photo;
-          cy.dataCy('profile-avatar-img')
-            .find('img')
-            .invoke('attr', 'src')
-            .should('eq', photo.url);
-        },
-      );
+    it('renders the avatar image', () => {
+      cy.dataCy('profile-avatar-img')
+        .find('img')
+        .invoke('attr', 'src')
+        .should('eq', avatarUrl);
     });
 
-    it('shows edit and remove buttons on the avatar', () => {
+    it('shows edit and remove buttons', () => {
       cy.dataCy('profile-avatar-edit-button').should('be.visible');
       cy.dataCy('profile-avatar-remove-button').should('be.visible');
     });
 
-    it('opens edit dialog with a disabled save button until a file is staged', () => {
+    it('opens edit dialog for file upload', () => {
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-dialog').should('be.visible');
       cy.dataCy('profile-avatar-dialog-save').should('be.disabled');
     });
 
-    it('uploads staged file only after confirming with save', () => {
-      // intercept photo upload
-      cy.intercept('POST', getPhotoApiUrl(rideToWorkByBikeConfig, i18n), {
-        statusCode: 201,
-        body: { id: 99, url: 'https://example.com/new-photo.jpg' },
-      }).as('postPhoto');
-      // intercept GET register challenge after upload
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          const responseWithNewPhoto = JSON.parse(
-            JSON.stringify(responseRegisterChallenge),
-          );
-          responseWithNewPhoto.results[0].personal_details.photo = {
-            id: 99,
-            url: 'https://example.com/new-photo.jpg',
-          };
-          // create unique alias for reliable comparison
-          cy.intercept(
-            'GET',
-            getRegisterChallengeApiUrl(rideToWorkByBikeConfig, i18n),
-            {
-              statusCode: 200,
-              body: responseWithNewPhoto,
+    it('sends put request after file upload', () => {
+      // intercept avatar replace
+      cy.intercept(
+        'PUT',
+        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
+        {
+          statusCode: 200,
+          body: {
+            message: 'Successfully uploaded a new avatar.',
+            data: {
+              id: avatarId,
+              avatar_url: 'https://example.com/avatar-detail/',
+              avatar: 'https://example.com/new-avatar-raw.jpg',
+              primary: true,
             },
-          ).as('getRegisterChallengeAfterUpload');
+          },
         },
-      );
+      ).as('putAvatar');
+      // intercept refetch after replace
+      cy.fixture('apiGetAvatarList.json').then((avatarList) => {
+        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
+          statusCode: 200,
+          body: avatarList,
+        }).as('getAvatarAfterReplace');
+      });
+      cy.intercept(
+        'GET',
+        `${getAvatarRenderApiUrl(rideToWorkByBikeConfig, i18n)}*`,
+        {
+          statusCode: 200,
+          body: { image_url: 'https://example.com/new-avatar.png' },
+        },
+      ).as('getAvatarRenderAfterReplace');
+
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-input-file').selectFile(
         'test/cypress/fixtures/route.jpg',
         { force: true },
       );
       // file is not uploaded yet
-      cy.get('@postPhoto.all').should('have.length', 0);
+      cy.get('@putAvatar.all').should('have.length', 0);
       cy.dataCy('profile-avatar-dialog-save').should('not.be.disabled');
       cy.dataCy('profile-avatar-dialog-save').click();
-      cy.wait('@postPhoto');
-      cy.wait('@getRegisterChallengeAfterUpload');
+      cy.wait('@putAvatar');
+      cy.wait('@getAvatarAfterReplace');
+      cy.wait('@getAvatarRenderAfterReplace');
       cy.dataCy('profile-avatar-dialog').should('not.exist');
       cy.dataCy('profile-avatar-img')
         .find('img')
         .invoke('attr', 'src')
-        .should('eq', 'https://example.com/new-photo.jpg');
+        .should('eq', 'https://example.com/new-avatar.png');
     });
 
-    it('discards the staged file when the dialog is closed via cancel', () => {
-      // intercept photo upload
-      cy.intercept('POST', getPhotoApiUrl(rideToWorkByBikeConfig, i18n), {
-        statusCode: 201,
-        body: { id: 99, url: 'https://example.com/new-photo.jpg' },
-      }).as('postPhoto');
-      // upload file
+    it('does not send uploaded files if user cancels dialog', () => {
+      cy.intercept(
+        'PUT',
+        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
+        { statusCode: 200, body: {} },
+      ).as('putAvatar');
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-input-file').selectFile(
         'test/cypress/fixtures/route.jpg',
@@ -137,82 +130,109 @@ describe('<ProfileAvatar>', () => {
       );
       cy.dataCy('profile-avatar-dialog-cancel').click();
       cy.dataCy('profile-avatar-dialog').should('not.exist');
-      cy.get('@postPhoto.all').should('have.length', 0);
+      cy.get('@putAvatar.all').should('have.length', 0);
       // on dialog reopen, file picker should be empty
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-dialog-save').should('be.disabled');
     });
 
-    it('shows confirm dialog and removes photo on confirm', () => {
-      // intercept photo delete
+    it('shows confirm dialog and removes avatar on confirm', () => {
+      // intercept avatar delete
       cy.intercept(
         'DELETE',
-        `${getPhotoApiUrl(rideToWorkByBikeConfig, i18n)}42`,
-        {
-          statusCode: 204,
-          body: {},
-        },
-      ).as('deletePhoto');
-      // intercept GET register challenge after delete
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          const noPhotoResponse = JSON.parse(
-            JSON.stringify(responseRegisterChallenge),
-          );
-          noPhotoResponse.results[0].personal_details.photo = null;
-          // create unique alias for reliable comparison
-          cy.intercept(
-            'GET',
-            getRegisterChallengeApiUrl(rideToWorkByBikeConfig, i18n),
-            {
-              statusCode: 200,
-              body: noPhotoResponse,
-            },
-          ).as('getRegisterChallengeAfterDelete');
-        },
-      );
+        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
+        { statusCode: 204, body: {} },
+      ).as('deleteAvatar');
+      // intercept refetch after delete
+      cy.fixture('apiGetAvatarDefault.json').then((defaultAvatar) => {
+        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
+          statusCode: 200,
+          body: defaultAvatar,
+        }).as('getAvatarAfterDelete');
+      });
       // click remove button and confirm
       cy.dataCy('profile-avatar-remove-button').click();
       cy.dataCy('profile-avatar-dialog-remove').should('be.visible');
       cy.dataCy('profile-avatar-dialog-remove-confirm').click();
-      cy.wait('@deletePhoto');
-      cy.wait('@getRegisterChallengeAfterDelete');
+      cy.wait('@deleteAvatar');
+      cy.wait('@getAvatarAfterDelete');
       cy.dataCy('profile-avatar-dialog-remove').should('not.exist');
       cy.dataCy('profile-avatar-remove-button').should('not.exist');
     });
 
-    it('closes remove confirm dialog on cancel without deleting', () => {
+    it('does not delete if user cancels remove dialog', () => {
       cy.dataCy('profile-avatar-remove-button').click();
       cy.dataCy('profile-avatar-dialog-remove-cancel').click();
       cy.dataCy('profile-avatar-dialog-remove').should('not.exist');
     });
   });
 
-  context('photo is not set', () => {
+  context('avatar is not set', () => {
+    const defaultAvatarUrl =
+      'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp';
+
     beforeEach(() => {
       cy.viewport('macbook-16');
       setActivePinia(createPinia());
-      cy.fixture('apiGetRegisterChallengeProfile.json').then(
-        (responseRegisterChallenge) => {
-          responseRegisterChallenge.results[0].personal_details.photo = null;
-          cy.interceptRegisterChallengeGetApi(
-            rideToWorkByBikeConfig,
-            i18n,
-            responseRegisterChallenge,
-          );
-        },
-      );
+      // stub new avatar image served after upload
+      cy.intercept('GET', 'https://example.com/*', {
+        fixture: 'route.jpg',
+      });
       cy.mount(ProfileAvatar, { props: {} });
-      // set photo in store
-      cy.setPhotoStoreState(useRegisterChallengeStore, null);
+      // set fallback avatar state in store
+      cy.setAvatarStoreState(useAvatarStore, null, defaultAvatarUrl);
     });
 
-    it('shows placeholder image and no remove button', () => {
+    it('shows fallback image and no remove button', () => {
       cy.dataCy('profile-avatar-img')
         .find('img')
         .invoke('attr', 'src')
-        .should('contain', 'profile-placeholder');
+        .should('eq', defaultAvatarUrl);
       cy.dataCy('profile-avatar-remove-button').should('not.exist');
+    });
+
+    it('sends uploaded file with POST', () => {
+      cy.intercept('POST', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
+        statusCode: 201,
+        body: {
+          message: 'Successfully uploaded a new avatar.',
+          data: {
+            id: 99,
+            avatar_url: 'https://example.com/avatar-detail/',
+            avatar: 'https://example.com/new-avatar-raw.jpg',
+            primary: true,
+          },
+        },
+      }).as('postAvatar');
+      cy.fixture('apiGetAvatarList.json').then((avatarList) => {
+        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
+          statusCode: 200,
+          body: avatarList,
+        }).as('getAvatarAfterUpload');
+      });
+      cy.intercept(
+        'GET',
+        `${getAvatarRenderApiUrl(rideToWorkByBikeConfig, i18n)}*`,
+        {
+          statusCode: 200,
+          body: { image_url: 'https://example.com/new-avatar.png' },
+        },
+      ).as('getAvatarRenderAfterUpload');
+
+      cy.dataCy('profile-avatar-edit-button').click();
+      cy.dataCy('profile-avatar-input-file').selectFile(
+        'test/cypress/fixtures/route.jpg',
+        { force: true },
+      );
+      cy.dataCy('profile-avatar-dialog-save').click();
+      cy.wait('@postAvatar');
+      cy.wait('@getAvatarAfterUpload');
+      cy.wait('@getAvatarRenderAfterUpload');
+      cy.dataCy('profile-avatar-dialog').should('not.exist');
+      cy.dataCy('profile-avatar-img')
+        .find('img')
+        .invoke('attr', 'src')
+        .should('eq', 'https://example.com/new-avatar.png');
     });
   });
 });

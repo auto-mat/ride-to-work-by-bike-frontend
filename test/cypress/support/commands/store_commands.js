@@ -45,20 +45,17 @@ Cypress.Commands.add(
 );
 
 /**
- * Set photo value in register challenge store
- * @param {function} useRegisterChallengeStore - `useRegisterChallengeStore` function
- *                                                to initialize register challenge store
- * @param {object | null} photo - photo object to set (or `null` to clear it)
+ * Set avatar value in avatar store
+ * @param {function} useAvatarStore - `useAvatarStore` function to initialize avatar store
+ * @param {number | null} id - avatar ID (or `null` for default/fallback state)
+ * @param {string | null} url - avatar image URL to display
  */
-Cypress.Commands.add(
-  'setPhotoStoreState',
-  (useRegisterChallengeStore, photo) => {
-    cy.wrap(useRegisterChallengeStore()).then((registerChallengeStore) => {
-      const storedPhoto = computed(() => registerChallengeStore.getPhoto);
-      registerChallengeStore.setPhoto(photo);
-      cy.wrap(storedPhoto).should((currentStoredPhoto) => {
-        expect(currentStoredPhoto.value).to.deep.equal(photo);
-      });
+Cypress.Commands.add('setAvatarStoreState', (useAvatarStore, id, url) => {
+  cy.wrap(useAvatarStore()).then((avatarStore) => {
+    const storedId = computed(() => avatarStore.getId);
+    avatarStore.setAvatar(id, url);
+    cy.wrap(storedId).should((currentStoredId) => {
+      expect(currentStoredId.value).to.equal(id);
     });
-  },
-);
+  });
+});

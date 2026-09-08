@@ -391,15 +391,25 @@ apiMessageError = "Smazání firemní výzvy selhalo."
 apiMessageErrorWithMessage = "Smazání firemní výzvy selhalo. Chyba: {error}"
 apiMessageSuccess = "Firemní výzva byla úspěšně smazána."
 
-[uploadPhoto]
+[uploadAvatar]
 apiMessageError = "Nahrání fotky se nezdařilo."
 apiMessageErrorWithMessage = "Nahrání fotky se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Fotka byla úspěšně nahrána."
 
-[deletePhoto]
+[replaceAvatar]
+apiMessageError = "Změna fotky se nezdařila."
+apiMessageErrorWithMessage = "Změna fotky se nezdařila. Chyba: {error}"
+apiMessageSuccess = "Fotka byla úspěšně změněna."
+
+[deleteAvatar]
 apiMessageError = "Odebrání fotky se nezdařilo."
 apiMessageErrorWithMessage = "Odebrání fotky se nezdařilo. Chyba: {error}"
 apiMessageSuccess = "Fotka byla úspěšně odebrána."
+
+[getAvatar]
+apiMessageError = "Fotku se nepodařilo načíst."
+apiMessageErrorWithMessage = "Fotku se nepodařilo načíst. Chyba: {error}"
+apiMessageSuccess = "Fotka byla úspěšně načtena."
 
 [updateCompetition]
 apiMessageError = "Aktualizace firemní výzvy selhala."

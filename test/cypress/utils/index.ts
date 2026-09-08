@@ -51,44 +51,34 @@ function vModelAdapter<T>(modelRef: Ref<T>, modelName = 'modelValue') {
 const getRadioOption = (val: string): string => `radio-option-${val}`;
 
 /**
- * Returns the localized photo API URL.
+ * Returns the localized avatar API URL.
  * @param {Config} config - app config
  * @param {I18n | string} i18n - i18n instance or locale string
- * @returns {String} - localized photo API URL
+ * @returns {String} - localized avatar API URL
  */
-const getPhotoApiUrl = (config: Config, i18n: I18n | string): string => {
+const getAvatarApiUrl = (config: Config, i18n: I18n | string): string => {
   const apiBaseUrl = getApiBaseUrlWithLang(
     null,
     config.apiBase,
     config.apiDefaultLang,
     i18n,
   );
-  return `${apiBaseUrl}${config.urlApiPhoto}`;
+  return `${apiBaseUrl}${config.urlApiAvatar}`;
 };
 
 /**
- * Returns the localized register challenge API URL.
+ * Returns the localized avatar render_primary API URL.
  * @param {Config} config - app config
  * @param {I18n | string} i18n - i18n instance or locale string
- * @returns {String} - localized register challenge API URL
+ * @returns {String} - localized avatar render_primary API URL
  */
-const getRegisterChallengeApiUrl = (
-  config: Config,
-  i18n: I18n | string,
-): string => {
-  const apiBaseUrl = getApiBaseUrlWithLang(
-    null,
-    config.apiBase,
-    config.apiDefaultLang,
-    i18n,
-  );
-  return `${apiBaseUrl}${config.urlApiRegisterChallenge}`;
-};
+const getAvatarRenderApiUrl = (config: Config, i18n: I18n | string): string =>
+  `${getAvatarApiUrl(config, i18n)}render_primary/`;
 
 export {
-  getPhotoApiUrl,
+  getAvatarApiUrl,
+  getAvatarRenderApiUrl,
   getRadioOption,
-  getRegisterChallengeApiUrl,
   hexToRgb,
   negativeColor,
   positiveColor,

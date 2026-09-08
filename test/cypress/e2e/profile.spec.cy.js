@@ -8,7 +8,7 @@ import {
 } from '../support/commonTests';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { TeamMemberStatus } from '../../../src/components/enums/TeamMember';
-import { getPhotoApiUrl, getRegisterChallengeApiUrl } from '../utils';
+import { getAvatarApiUrl, getAvatarRenderApiUrl } from '../utils';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
@@ -133,6 +133,23 @@ describe('Profile page', () => {
           });
         },
       );
+      // intercept avatar bootstrap load (login) with an existing avatar
+      cy.fixture('apiGetAvatarList.json').then((avatarList) => {
+        cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
+          statusCode: 200,
+          body: avatarList,
+        }).as('getAvatar');
+      });
+      cy.fixture('apiGetAvatarRenderPrimary.json').then((avatarRender) => {
+        cy.intercept('GET', `${getAvatarRenderApiUrl(config, defLocale)}*`, {
+          statusCode: 200,
+          body: avatarRender,
+        }).as('getAvatarRender');
+      });
+      // stub avatar image
+      cy.intercept('GET', 'https://dpnk-test.s3.amazonaws.com/**', {
+        fixture: 'route.jpg',
+      });
       cy.clock(new Date(systemTimeChallengeActive), ['Date']);
     });
   });
@@ -269,100 +286,116 @@ describe('Profile page', () => {
       });
     });
 
-    it('allows to upload photo and shows it in profile and drawer', () => {
+    it('allows to replace photo and shows it in profile and drawer', () => {
       cy.get('@config').then((config) => {
-        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
-          // wait for initial GET request
-          cy.waitForRegisterChallengeGetApi(response);
-          // intercept photo upload
-          cy.intercept('POST', getPhotoApiUrl(config, defLocale), {
-            statusCode: 201,
-            body: { id: 99, url: 'https://example.com/new-photo.jpg' },
-          }).as('postPhoto');
-          // intercept refetch with new photo
-          const responseWithNewPhoto = JSON.parse(JSON.stringify(response));
-          responseWithNewPhoto.results[0].personal_details.photo = {
-            id: 99,
-            url: 'https://example.com/new-photo.jpg',
-          };
-          cy.intercept('GET', getRegisterChallengeApiUrl(config, defLocale), {
+        cy.wait('@getAvatar');
+        cy.wait('@getAvatarRender');
+        const avatarId = 22;
+        // intercept avatar replace
+        cy.intercept(
+          'PUT',
+          `${getAvatarApiUrl(config, defLocale)}${avatarId}/`,
+          {
             statusCode: 200,
-            body: responseWithNewPhoto,
-          }).as('getRegisterChallengeAfterUpload');
-          // stub photo
-          cy.intercept('GET', 'https://example.com/*', {
-            fixture: 'route.jpg',
-          });
-          // upload new photo
-          cy.dataCy('profile-avatar-edit-button').click();
-          cy.dataCy('profile-avatar-input-file').selectFile(
-            'test/cypress/fixtures/route.jpg',
-            { force: true },
-          );
-          cy.dataCy('profile-avatar-dialog-save').click();
-          cy.wait('@postPhoto');
-          cy.wait('@getRegisterChallengeAfterUpload');
-          // profile page shows new photo
-          cy.dataCy('profile-avatar-img')
+            body: {
+              message: 'Successfully uploaded a new avatar.',
+              data: {
+                id: avatarId,
+                avatar_url: 'https://example.com/avatar-detail/',
+                avatar: 'https://example.com/new-avatar-raw.jpg',
+                primary: true,
+              },
+            },
+          },
+        ).as('putAvatar');
+        // intercept refetch with new avatar
+        cy.fixture('apiGetAvatarList.json').then((avatarList) => {
+          cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
+            statusCode: 200,
+            body: avatarList,
+          }).as('getAvatarAfterReplace');
+        });
+        cy.intercept('GET', `${getAvatarRenderApiUrl(config, defLocale)}*`, {
+          statusCode: 200,
+          body: { image_url: 'https://example.com/new-photo.jpg' },
+        }).as('getAvatarRenderAfterReplace');
+        // stub photo
+        cy.intercept('GET', 'https://example.com/*', {
+          fixture: 'route.jpg',
+        });
+        // upload new photo
+        cy.dataCy('profile-avatar-edit-button').click();
+        cy.dataCy('profile-avatar-input-file').selectFile(
+          'test/cypress/fixtures/route.jpg',
+          { force: true },
+        );
+        cy.dataCy('profile-avatar-dialog-save').click();
+        cy.wait('@putAvatar');
+        cy.wait('@getAvatarAfterReplace');
+        cy.wait('@getAvatarRenderAfterReplace');
+        // profile page shows new photo
+        cy.dataCy('profile-avatar-img')
+          .find('img')
+          .invoke('attr', 'src')
+          .should('eq', 'https://example.com/new-photo.jpg');
+        // drawer shows new photo
+        cy.dataCy(selectorQDrawer).within(() => {
+          cy.dataCy('avatar-image')
             .find('img')
             .invoke('attr', 'src')
             .should('eq', 'https://example.com/new-photo.jpg');
-          // drawer shows new photo
-          cy.dataCy(selectorQDrawer).within(() => {
-            cy.dataCy('avatar-image')
-              .find('img')
-              .invoke('attr', 'src')
-              .should('eq', 'https://example.com/new-photo.jpg');
-          });
         });
       });
     });
 
     it('allows to delete photo and shows placeholder instead', () => {
       cy.get('@config').then((config) => {
-        cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {
-          // wait for initial GET request
-          cy.waitForRegisterChallengeGetApi(response);
-          const photo = response.results[0].personal_details.photo;
-          // stub photo
-          cy.intercept('GET', 'https://example.com/photo.jpg', {
-            fixture: 'route.jpg',
-          });
-          // profile page shows current photo
-          cy.dataCy('profile-avatar-img')
-            .find('img')
-            .invoke('attr', 'src')
-            .should('eq', photo.url);
-          // intercept photo removal
-          cy.intercept(
-            'DELETE',
-            `${getPhotoApiUrl(config, defLocale)}${photo.id}`,
-            { statusCode: 204, body: {} },
-          ).as('deletePhoto');
-          // intercept refetch without photo
-          const responseWithoutPhoto = JSON.parse(JSON.stringify(response));
-          responseWithoutPhoto.results[0].personal_details.photo = null;
-          cy.intercept('GET', getRegisterChallengeApiUrl(config, defLocale), {
+        cy.wait('@getAvatar');
+        cy.wait('@getAvatarRender');
+        const avatarId = 22;
+        // profile page shows current photo
+        cy.dataCy('profile-avatar-img')
+          .find('img')
+          .invoke('attr', 'src')
+          .should(
+            'eq',
+            'https://dpnk-test.s3.amazonaws.com/avatars/33669/resized/80/80/profile_2024_crop.png',
+          );
+        // intercept avatar removal
+        cy.intercept(
+          'DELETE',
+          `${getAvatarApiUrl(config, defLocale)}${avatarId}/`,
+          { statusCode: 204, body: {} },
+        ).as('deleteAvatar');
+        // intercept refetch without avatar
+        cy.fixture('apiGetAvatarDefault.json').then((defaultAvatar) => {
+          cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
             statusCode: 200,
-            body: responseWithoutPhoto,
-          }).as('getRegisterChallengeAfterDelete');
-          // delete photo
-          cy.dataCy('profile-avatar-remove-button').click();
-          cy.dataCy('profile-avatar-dialog-remove-confirm').click();
-          cy.wait('@deletePhoto');
-          cy.wait('@getRegisterChallengeAfterDelete');
-          // profile page shows placeholder
-          cy.dataCy('profile-avatar-img')
+            body: defaultAvatar,
+          }).as('getAvatarAfterDelete');
+        });
+        // delete photo
+        cy.dataCy('profile-avatar-remove-button').click();
+        cy.dataCy('profile-avatar-dialog-remove-confirm').click();
+        cy.wait('@deleteAvatar');
+        cy.wait('@getAvatarAfterDelete');
+        // profile page shows fallback image
+        cy.dataCy('profile-avatar-img')
+          .find('img')
+          .invoke('attr', 'src')
+          .should(
+            'eq',
+            'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp',
+          );
+        // drawer shows fallback image
+        cy.dataCy(selectorQDrawer).within(() => {
+          cy.dataCy('avatar-image')
             .find('img')
             .invoke('attr', 'src')
-            .should('contain', 'profile-placeholder');
-          // drawer shows placeholder
-          cy.dataCy(selectorQDrawer).within(() => {
-            cy.dataCy('avatar-image')
-              .find('img')
-              .invoke('attr', 'src')
-              .should('contain', 'profile-placeholder');
-          });
+            .should(
+              'eq',
+              'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp',
+            );
         });
       });
     });

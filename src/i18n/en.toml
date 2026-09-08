@@ -396,15 +396,25 @@ apiMessageError = "Company challenge deletion failed."
 apiMessageErrorWithMessage = "Company challenge deletion failed. Error: {error}"
 apiMessageSuccess = "Company challenge was successfully deleted."
 
-[uploadPhoto]
+[uploadAvatar]
 apiMessageError = "Photo upload failed."
 apiMessageErrorWithMessage = "Photo upload failed. Error: {error}"
 apiMessageSuccess = "Photo was successfully uploaded."
 
-[deletePhoto]
+[replaceAvatar]
+apiMessageError = "Photo replacement failed."
+apiMessageErrorWithMessage = "Photo replacement failed. Error: {error}"
+apiMessageSuccess = "Photo was successfully replaced."
+
+[deleteAvatar]
 apiMessageError = "Photo removal failed."
 apiMessageErrorWithMessage = "Photo removal failed. Error: {error}"
 apiMessageSuccess = "Photo was successfully removed."
+
+[getAvatar]
+apiMessageError = "Could not load photo."
+apiMessageErrorWithMessage = "Could not load photo. Error: {error}"
+apiMessageSuccess = "Photo was successfully loaded."
 
 [moveCoordinatorMember]
 apiMessageError = "Failed to move team member."

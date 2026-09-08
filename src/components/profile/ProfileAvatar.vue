@@ -2,7 +2,7 @@
 /**
  * ProfileAvatar Component
  *
- * @description Use this component to display and edit the user's profile photo
+ * @description Use this component to display and edit the user's profile avatar
  * Note: This component is used on `ProfileDetails` component.
  *
  * @components
@@ -23,11 +23,12 @@ import DialogDefault from '../global/DialogDefault.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
-import { useApiDeletePhoto } from '../../composables/useApiDeletePhoto';
-import { useApiPostPhoto } from '../../composables/useApiPostPhoto';
+import { useApiDeleteAvatar } from '../../composables/useApiDeleteAvatar';
+import { useApiPostAvatar } from '../../composables/useApiPostAvatar';
+import { useApiPutAvatar } from '../../composables/useApiPutAvatar';
 
 // stores
-import { useRegisterChallengeStore } from '../../stores/registerChallenge';
+import { useAvatarStore } from '../../stores/avatar';
 
 // types
 import type { Logger } from '../types/Logger';
@@ -40,7 +41,7 @@ export default defineComponent({
   },
   setup() {
     const logger = inject('vuejs3-logger') as Logger | null;
-    const registerChallengeStore = useRegisterChallengeStore();
+    const avatarStore = useAvatarStore();
     const maxFileSizeMegabytes = 5;
     const maxFileSizeBytes = maxFileSizeMegabytes * 1024 * 1024;
     const acceptedFileFormats = '.jpg, .jpeg, .png, .webp';
@@ -48,13 +49,22 @@ export default defineComponent({
     const isDialogOpen = ref(false);
     const isDialogRemoveOpen = ref(false);
     const fileToUpload = ref<File | null>(null);
-    const photo = computed(() => registerChallengeStore.getPhoto);
+    const avatarId = computed(() => avatarStore.getId);
+    const avatarUrl = computed(() => avatarStore.getUrl);
+    const avatarImgClass = computed(() =>
+      avatarId.value ? 'avatar-cover' : 'avatar-contain',
+    );
 
-    const { isLoading: isLoadingUpload, postPhoto } = useApiPostPhoto(logger);
-    const { isLoading: isLoadingDelete, deletePhoto } =
-      useApiDeletePhoto(logger);
+    const { isLoading: isLoadingPost, postAvatar } = useApiPostAvatar(logger);
+    const { isLoading: isLoadingPut, putAvatar } = useApiPutAvatar(logger);
+    const { isLoading: isLoadingDelete, deleteAvatar } =
+      useApiDeleteAvatar(logger);
     const isLoading = computed(
-      () => isLoadingUpload.value || isLoadingDelete.value,
+      () =>
+        isLoadingPost.value ||
+        isLoadingPut.value ||
+        isLoadingDelete.value ||
+        avatarStore.getIsLoading,
     );
 
     // discard the staged file when dialog is closed
@@ -90,27 +100,32 @@ export default defineComponent({
       if (!fileToUpload.value) {
         return;
       }
-      const result = await postPhoto(fileToUpload.value);
+      const result = avatarId.value
+        ? await putAvatar(avatarId.value, fileToUpload.value)
+        : await postAvatar(fileToUpload.value);
       if (result) {
         fileToUpload.value = null;
-        await registerChallengeStore.loadRegisterChallengeToStore();
+        await avatarStore.loadAvatar();
         isDialogOpen.value = false;
       }
     };
 
     const onRemovePhoto = async (): Promise<void> => {
-      if (!photo.value) {
+      if (!avatarId.value) {
         return;
       }
-      const success = await deletePhoto(photo.value.id);
+      const success = await deleteAvatar(avatarId.value);
       if (success) {
-        await registerChallengeStore.loadRegisterChallengeToStore();
+        await avatarStore.loadAvatar();
         isDialogRemoveOpen.value = false;
       }
     };
 
     return {
       acceptedFileFormats,
+      avatarId,
+      avatarImgClass,
+      avatarUrl,
       fileToUpload,
       isDialogOpen,
       isDialogRemoveOpen,
@@ -119,7 +134,6 @@ export default defineComponent({
       onFileRejected,
       onRemovePhoto,
       onSavePhoto,
-      photo,
     };
   },
 });
@@ -131,8 +145,9 @@ export default defineComponent({
       <!-- Avatar -->
       <q-avatar size="96px" color="white" data-cy="profile-avatar-image">
         <q-img
-          :src="photo?.url"
+          :src="avatarUrl"
           :ratio="1"
+          :img-class="avatarImgClass"
           placeholder-src="~assets/svg/profile-placeholder.svg"
           data-cy="profile-avatar-img"
         />
@@ -154,7 +169,7 @@ export default defineComponent({
       />
       <!-- Button: Remove -->
       <q-btn
-        v-if="photo"
+        v-if="avatarId"
         round
         unelevated
         color="negative"
@@ -264,3 +279,12 @@ export default defineComponent({
     </dialog-default>
   </div>
 </template>
+
+<style scoped lang="scss">
+:deep(.avatar-cover) {
+  object-fit: cover;
+}
+:deep(.avatar-contain) {
+  object-fit: contain;
+}
+</style>

@@ -22,6 +22,7 @@ import { routesConf } from '../router/routes_conf';
 // stores
 import { useAdminOrganisationStore } from './adminOrganisation';
 import { useAdminCompetitionStore } from './adminCompetition';
+import { useAvatarStore } from './avatar';
 import { useRegisterStore } from './register';
 import { useChallengeStore } from './challenge';
 import { useFeedStore } from './feed';
@@ -338,6 +339,7 @@ export const useLoginStore = defineStore('login', {
       const registerStore = useRegisterStore();
       const challengeStore = useChallengeStore();
       const registerChallengeStore = useRegisterChallengeStore();
+      const avatarStore = useAvatarStore();
       /**
        * Check if user email address is verified from the API,
        * to prevent to show use confirming email page.
@@ -373,6 +375,11 @@ export const useLoginStore = defineStore('login', {
         'Check the organization coordinator status from the API.',
       );
       await registerChallengeStore.checkOrganizationHasCoordinator();
+      /**
+       * Load user avatar from the API
+       */
+      this.$log?.info('Load the user avatar from the API.');
+      await avatarStore.loadAvatar();
       // redirect to home page, or to pending redirect target
       if (this.$router) {
         const redirect = this.$router.currentRoute.value.query.redirect;
@@ -439,6 +446,9 @@ export const useLoginStore = defineStore('login', {
       // clear challenge store
       const challengeStore = useChallengeStore();
       challengeStore.resetPersistentProperties();
+      // clear avatar store
+      const avatarStore = useAvatarStore();
+      avatarStore.resetPersistentProperties();
       // clear feed store on logout
       const feedStore = useFeedStore();
       feedStore.clearStore();
