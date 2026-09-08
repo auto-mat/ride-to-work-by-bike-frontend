@@ -336,6 +336,10 @@ function dataDisplayTests() {
           .should('deep.equal', tableAttendanceTestData.storeData);
       });
       const display = tableAttendanceTestData.displayData;
+      cy.dataCy('table-attendance')
+        .find('tbody tr')
+        .should('have.length', 9)
+        .should('be.visible');
       // address
       cy.dataCy(selectorSubsidiaryHeader)
         .should('be.visible')
