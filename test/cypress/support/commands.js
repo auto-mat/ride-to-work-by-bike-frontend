@@ -4562,3 +4562,64 @@ Cypress.Commands.add(
     }
   },
 );
+
+/**
+ * Intercept avatar (GET|POST|PUT|DELETE) API calls
+ *
+ * Provides allias according `interceptAlias` param arg
+ *
+ * @param {object} config - App global config
+ * @param {object|string} i18n - i18n instance or locale lang string e.g. en
+ * @param {string} requestType -Request type string e.g. 'GET'
+ * @param {string} interceptUrlType - Request URL type string, for getting correct URL,
+ *                                    if `renderPrimary` arg is used, API URL `urlApiAvatarRenderPrimary`
+ *                                    is used, otherwise API URL `urlApiAvatar` is used
+ * @param {number} avatarId - Existed avatar image ID, for 'PUT', 'DELETE' request type
+ * @param {string} interceptAlias - Intercept alias for waiting
+ * @param {object} body - Intercept request body object
+ * @param {number} statusCode - Intercept response HTTP status code, default
+ *                              value is 200 OK Status Code
+ */
+Cypress.Commands.add(
+  'interceptAvatarApi',
+  ({
+    config,
+    i18n,
+    requestType,
+    interceptUrlType,
+    avatarId,
+    interceptAlias,
+    body,
+    statusCode,
+  }) => {
+    if (!statusCode) statusCode = httpSuccessfullStatus;
+    let urlApi;
+    if (!interceptUrlType) {
+      const { urlApiAvatar } = config;
+      urlApi = urlApiAvatar;
+    } else if (interceptUrlType === 'renderPrimary') {
+      const { urlApiAvatarRenderPrimary } = config;
+      urlApi = `${urlApiAvatarRenderPrimary}*`;
+    }
+
+    const { apiBase, apiDefaultLang } = config;
+
+    const apiBaseUrl = getApiBaseUrlWithLang(
+      null,
+      apiBase,
+      apiDefaultLang,
+      i18n,
+    );
+    let urlApiAvatarLocalized;
+    if (['DELETE', 'PUT'].includes(requestType)) {
+      urlApiAvatarLocalized = `${apiBaseUrl}${urlApi}${avatarId}/`;
+    } else {
+      urlApiAvatarLocalized = `${apiBaseUrl}${urlApi}`;
+    }
+
+    cy.intercept(requestType, urlApiAvatarLocalized, {
+      statusCode: statusCode,
+      body: body,
+    }).as(interceptAlias);
+  },
+);

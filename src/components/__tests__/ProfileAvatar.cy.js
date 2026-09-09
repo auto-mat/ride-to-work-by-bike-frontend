@@ -4,9 +4,13 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useAvatarStore } from '../../stores/avatar';
 import {
-  getAvatarApiUrl,
-  getAvatarRenderApiUrl,
-} from '../../../test/cypress/utils';
+  httpCreatedSuccessfullStatus,
+  httpNoContentSuccessfullStatus,
+} from '../../../test/cypress/support/commonTests';
+
+const avatarDetailUrl = 'https://example.com/avatar-detail/';
+const avatarUrl = 'https://example.com/new-avatar-raw.jpg';
+const exampleDomainUrl = 'https://example.com/*';
 
 describe('<ProfileAvatar>', () => {
   it('has translation for all strings', () => {
@@ -38,7 +42,7 @@ describe('<ProfileAvatar>', () => {
         fixture: 'route.jpg',
       });
       // stub new avatar image served after upload/replace
-      cy.intercept('GET', 'https://example.com/*', {
+      cy.intercept('GET', exampleDomainUrl, {
         fixture: 'route.jpg',
       });
       cy.mount(ProfileAvatar, { props: {} });
@@ -66,37 +70,40 @@ describe('<ProfileAvatar>', () => {
 
     it('sends put request after file upload', () => {
       // intercept avatar replace
-      cy.intercept(
-        'PUT',
-        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
-        {
-          statusCode: 200,
-          body: {
-            message: 'Successfully uploaded a new avatar.',
-            data: {
-              id: avatarId,
-              avatar_url: 'https://example.com/avatar-detail/',
-              avatar: 'https://example.com/new-avatar-raw.jpg',
-              primary: true,
-            },
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'PUT',
+        interceptAlias: 'putAvatar',
+        avatarId: avatarId,
+        body: {
+          message: 'Successfully uploaded a new avatar.',
+          data: {
+            id: avatarId,
+            avatar_url: avatarDetailUrl,
+            avatar: avatarUrl,
+            primary: true,
           },
         },
-      ).as('putAvatar');
+      });
       // intercept refetch after replace
       cy.fixture('apiGetAvatarList.json').then((avatarList) => {
-        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
-          statusCode: 200,
+        cy.interceptAvatarApi({
+          config: rideToWorkByBikeConfig,
+          i18n: i18n,
+          requestType: 'GET',
+          interceptAlias: 'getAvatarAfterReplace',
           body: avatarList,
-        }).as('getAvatarAfterReplace');
+        });
       });
-      cy.intercept(
-        'GET',
-        `${getAvatarRenderApiUrl(rideToWorkByBikeConfig, i18n)}*`,
-        {
-          statusCode: 200,
-          body: { image_url: 'https://example.com/new-avatar.png' },
-        },
-      ).as('getAvatarRenderAfterReplace');
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'GET',
+        interceptUrlType: 'renderPrimary',
+        interceptAlias: 'getAvatarRenderAfterReplace',
+        body: { image_url: avatarUrl },
+      });
 
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-input-file').selectFile(
@@ -114,15 +121,18 @@ describe('<ProfileAvatar>', () => {
       cy.dataCy('profile-avatar-img')
         .find('img')
         .invoke('attr', 'src')
-        .should('eq', 'https://example.com/new-avatar.png');
+        .should('eq', avatarUrl);
     });
 
     it('does not send uploaded files if user cancels dialog', () => {
-      cy.intercept(
-        'PUT',
-        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
-        { statusCode: 200, body: {} },
-      ).as('putAvatar');
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'PUT',
+        interceptAlias: 'putAvatar',
+        avatarId: avatarId,
+        body: {},
+      });
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-input-file').selectFile(
         'test/cypress/fixtures/route.jpg',
@@ -138,17 +148,24 @@ describe('<ProfileAvatar>', () => {
 
     it('shows confirm dialog and removes avatar on confirm', () => {
       // intercept avatar delete
-      cy.intercept(
-        'DELETE',
-        `${getAvatarApiUrl(rideToWorkByBikeConfig, i18n)}${avatarId}/`,
-        { statusCode: 204, body: {} },
-      ).as('deleteAvatar');
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'DELETE',
+        interceptAlias: 'deleteAvatar',
+        avatarId: avatarId,
+        body: {},
+        statusCode: httpNoContentSuccessfullStatus,
+      });
       // intercept refetch after delete
       cy.fixture('apiGetAvatarDefault.json').then((defaultAvatar) => {
-        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
-          statusCode: 200,
+        cy.interceptAvatarApi({
+          config: rideToWorkByBikeConfig,
+          i18n: i18n,
+          requestType: 'GET',
+          interceptAlias: 'getAvatarAfterDelete',
           body: defaultAvatar,
-        }).as('getAvatarAfterDelete');
+        });
       });
       // click remove button and confirm
       cy.dataCy('profile-avatar-remove-button').click();
@@ -175,7 +192,7 @@ describe('<ProfileAvatar>', () => {
       cy.viewport('macbook-16');
       setActivePinia(createPinia());
       // stub new avatar image served after upload
-      cy.intercept('GET', 'https://example.com/*', {
+      cy.intercept('GET', exampleDomainUrl, {
         fixture: 'route.jpg',
       });
       cy.mount(ProfileAvatar, { props: {} });
@@ -192,33 +209,39 @@ describe('<ProfileAvatar>', () => {
     });
 
     it('sends uploaded file with POST', () => {
-      cy.intercept('POST', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
-        statusCode: 201,
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'POST',
+        interceptAlias: 'postAvatar',
         body: {
           message: 'Successfully uploaded a new avatar.',
           data: {
             id: 99,
-            avatar_url: 'https://example.com/avatar-detail/',
-            avatar: 'https://example.com/new-avatar-raw.jpg',
+            avatar_url: avatarDetailUrl,
+            avatar: avatarUrl,
             primary: true,
           },
         },
-      }).as('postAvatar');
-      cy.fixture('apiGetAvatarList.json').then((avatarList) => {
-        cy.intercept('GET', getAvatarApiUrl(rideToWorkByBikeConfig, i18n), {
-          statusCode: 200,
-          body: avatarList,
-        }).as('getAvatarAfterUpload');
+        statusCode: httpCreatedSuccessfullStatus,
       });
-      cy.intercept(
-        'GET',
-        `${getAvatarRenderApiUrl(rideToWorkByBikeConfig, i18n)}*`,
-        {
-          statusCode: 200,
-          body: { image_url: 'https://example.com/new-avatar.png' },
-        },
-      ).as('getAvatarRenderAfterUpload');
-
+      cy.fixture('apiGetAvatarList.json').then((avatarList) => {
+        cy.interceptAvatarApi({
+          config: rideToWorkByBikeConfig,
+          i18n: i18n,
+          requestType: 'GET',
+          interceptAlias: 'getAvatarAfterUpload',
+          body: avatarList,
+        });
+      });
+      cy.interceptAvatarApi({
+        config: rideToWorkByBikeConfig,
+        i18n: i18n,
+        requestType: 'GET',
+        interceptUrlType: 'renderPrimary',
+        interceptAlias: 'getAvatarRenderAfterUpload',
+        body: { image_url: avatarUrl },
+      });
       cy.dataCy('profile-avatar-edit-button').click();
       cy.dataCy('profile-avatar-input-file').selectFile(
         'test/cypress/fixtures/route.jpg',
@@ -232,7 +255,7 @@ describe('<ProfileAvatar>', () => {
       cy.dataCy('profile-avatar-img')
         .find('img')
         .invoke('attr', 'src')
-        .should('eq', 'https://example.com/new-avatar.png');
+        .should('eq', avatarUrl);
     });
   });
 });

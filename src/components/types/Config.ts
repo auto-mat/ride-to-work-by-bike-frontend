@@ -109,7 +109,7 @@ export interface ConfigGlobal {
   urlApiMyOrganizationAdmin: string;
   urlApiPayuCreateOrder: string;
   urlApiAvatar: string;
-  avatarRenderSize: number;
+  urlApiAvatarRenderPrimary: string;
   urlAppDataPrivacyPolicy: string;
   urlAppDataTermsOfService: string;
   urlApiRefresh: string;
@@ -170,6 +170,7 @@ export interface ConfigGlobal {
   matomoAnalyticsEnableRegisterChallengeTrackingEvent: string;
   urlLogRouteCalendarNumberVideo: string;
   urlLogRouteListNumberVideo: string;
+  profileAvatarRenderSize: number;
 }
 
 export interface ConfigAppVersion {

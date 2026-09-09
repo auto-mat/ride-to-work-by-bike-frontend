@@ -35,7 +35,7 @@ export const useApiGetAvatarRender = (
   const { apiFetch } = useApi();
 
   /**
-   * Get the primary avatar image URL rendered at `avatarRenderSize`
+   * Get the primary avatar image URL rendered at `profileAvatarRenderSize`
    * @returns {Promise<string | null>} - Rendered avatar image URL
    */
   const getAvatarRender = async (): Promise<string | null> => {
@@ -47,7 +47,7 @@ export const useApiGetAvatarRender = (
     requestTokenHeader_.Authorization +=
       await loginStore.getAccessTokenWithRefresh();
 
-    const size = String(rideToWorkByBikeConfig.avatarRenderSize);
+    const size = String(rideToWorkByBikeConfig.profileAvatarRenderSize);
 
     // get rendered primary avatar
     const { data } = await apiFetch<ApiAvatarRenderResponse>({

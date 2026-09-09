@@ -103,6 +103,7 @@ rtwbbDonationOrderedProductName = "RTWBB donation"
 checkRegisterChallengeStatusIntervalSeconds = 20
 checkRegisterChallengeStatusMaxRepetitions = 5
 tripMaxFileUploadSizeMegabytes = 1
+profileAvatarRenderSize = 120
 profileAvatarMaxFileSizeMegabytes = 8
 voucherWithoutRewardPattern = "^[A-Z]{2}NRWD"
 
@@ -154,7 +155,7 @@ urlApiCoordinatorOrganization = "coordinator/organization/"
 urlApiCoordinatorOrganizationExport = "coordinator/organization/export/"
 urlApiPayuCreateOrder = "payu-create-order/"
 urlApiAvatar = "user-profile-avatar/avatar/"
-avatarRenderSize = 120
+urlApiAvatarRenderPrimary = "user-profile-avatar/avatar/render_primary/"
 urlApiRefresh = "auth/token/refresh/"
 urlApiRegister = "auth/registration/"
 urlApiRegisterChallenge = "register-challenge/"
