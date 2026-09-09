@@ -39,7 +39,7 @@ export const useApiGetAvatarRender = (
    * @returns {Promise<string | null>} - Rendered avatar image URL
    */
   const getAvatarRender = async (): Promise<string | null> => {
-    logger?.debug('Get rendered primary avatar.');
+    logger?.debug('Get rendered user profile primary avatar image.');
     isLoading.value = true;
 
     // append access token into HTTP header

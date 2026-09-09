@@ -42,7 +42,7 @@ export const useApiPostAvatar = (
   const postAvatar = async (
     file: File,
   ): Promise<ApiAvatarMutationResponse | null> => {
-    logger?.debug(`Upload avatar <${file.name}>.`);
+    logger?.debug(`Upload user profile avatar image file <${file.name}>.`);
     isLoading.value = true;
 
     const formData = new FormData();

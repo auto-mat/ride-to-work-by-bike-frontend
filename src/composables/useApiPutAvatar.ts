@@ -47,7 +47,9 @@ export const useApiPutAvatar = (
     id: number,
     file: File,
   ): Promise<ApiAvatarMutationResponse | null> => {
-    logger?.debug(`Replace avatar with ID <${id}> using <${file.name}>.`);
+    logger?.debug(
+      `Replace user profile avatar image with ID <${id}> with new image file <${file.name}>.`,
+    );
     isLoading.value = true;
 
     const formData = new FormData();

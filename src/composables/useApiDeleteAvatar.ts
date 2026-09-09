@@ -39,7 +39,7 @@ export const useApiDeleteAvatar = (
    * @returns {Promise<boolean>} - Success status
    */
   const deleteAvatar = async (id: number): Promise<boolean> => {
-    logger?.debug(`Delete avatar with ID <${id}>.`);
+    logger?.debug(`Delete user profile avatar image with ID <${id}>.`);
     isLoading.value = true;
 
     // append access token into HTTP header
