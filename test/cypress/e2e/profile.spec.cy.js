@@ -5,10 +5,10 @@ import { getGenderLabel } from '../../../src/utils/get_gender_label';
 import {
   interceptOrganizationsApi,
   systemTimeChallengeActive,
+  httpNoContentSuccessfullStatus,
 } from '../support/commonTests';
 import { OrganizationType } from '../../../src/components/types/Organization';
 import { TeamMemberStatus } from '../../../src/components/enums/TeamMember';
-import { getAvatarApiUrl, getAvatarRenderApiUrl } from '../utils';
 
 // selectors
 const classSelectorToggleInner = '.q-toggle__inner';
@@ -48,6 +48,9 @@ const selectorTeam = 'profile-details-team';
 // variables
 const password = '123456a';
 const genderFemaleKey = 'global.woman';
+const avatarDetailUrl = 'https://example.com/avatar-detail/';
+const avatarUrl = 'https://example.com/new-avatar-raw.jpg';
+const exampleDomainUrl = 'https://example.com/*';
 
 describe('Profile page', () => {
   beforeEach(() => {
@@ -135,16 +138,23 @@ describe('Profile page', () => {
       );
       // intercept avatar bootstrap load (login) with an existing avatar
       cy.fixture('apiGetAvatarList.json').then((avatarList) => {
-        cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
-          statusCode: 200,
+        cy.interceptAvatarApi({
+          config: config,
+          i18n: defLocale,
+          requestType: 'GET',
+          interceptAlias: 'getAvatar',
           body: avatarList,
-        }).as('getAvatar');
+        });
       });
       cy.fixture('apiGetAvatarRenderPrimary.json').then((avatarRender) => {
-        cy.intercept('GET', `${getAvatarRenderApiUrl(config, defLocale)}*`, {
-          statusCode: 200,
+        cy.interceptAvatarApi({
+          config: config,
+          i18n: defLocale,
+          requestType: 'GET',
+          interceptUrlType: 'renderPrimary',
+          interceptAlias: 'getAvatarRender',
           body: avatarRender,
-        }).as('getAvatarRender');
+        });
       });
       // stub avatar image
       cy.intercept('GET', 'https://dpnk-test.s3.amazonaws.com/**', {
@@ -292,35 +302,42 @@ describe('Profile page', () => {
         cy.wait('@getAvatarRender');
         const avatarId = 22;
         // intercept avatar replace
-        cy.intercept(
-          'PUT',
-          `${getAvatarApiUrl(config, defLocale)}${avatarId}/`,
-          {
-            statusCode: 200,
-            body: {
-              message: 'Successfully uploaded a new avatar.',
-              data: {
-                id: avatarId,
-                avatar_url: 'https://example.com/avatar-detail/',
-                avatar: 'https://example.com/new-avatar-raw.jpg',
-                primary: true,
-              },
+        cy.interceptAvatarApi({
+          config: config,
+          i18n: defLocale,
+          requestType: 'PUT',
+          interceptAlias: 'putAvatar',
+          avatarId: avatarId,
+          body: {
+            message: 'Successfully uploaded a new avatar.',
+            data: {
+              id: avatarId,
+              avatar_url: avatarDetailUrl,
+              avatar: avatarUrl,
+              primary: true,
             },
           },
-        ).as('putAvatar');
+        });
         // intercept refetch with new avatar
         cy.fixture('apiGetAvatarList.json').then((avatarList) => {
-          cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
-            statusCode: 200,
+          cy.interceptAvatarApi({
+            config: config,
+            i18n: defLocale,
+            requestType: 'GET',
+            interceptAlias: 'getAvatarAfterReplace',
             body: avatarList,
-          }).as('getAvatarAfterReplace');
+          });
         });
-        cy.intercept('GET', `${getAvatarRenderApiUrl(config, defLocale)}*`, {
-          statusCode: 200,
-          body: { image_url: 'https://example.com/new-photo.jpg' },
-        }).as('getAvatarRenderAfterReplace');
+        cy.interceptAvatarApi({
+          config: config,
+          i18n: defLocale,
+          requestType: 'GET',
+          interceptUrlType: 'renderPrimary',
+          interceptAlias: 'getAvatarRenderAfterReplace',
+          body: { image_url: avatarUrl },
+        });
         // stub photo
-        cy.intercept('GET', 'https://example.com/*', {
+        cy.intercept('GET', exampleDomainUrl, {
           fixture: 'route.jpg',
         });
         // upload new photo
@@ -337,18 +354,20 @@ describe('Profile page', () => {
         cy.dataCy('profile-avatar-img')
           .find('img')
           .invoke('attr', 'src')
-          .should('eq', 'https://example.com/new-photo.jpg');
+          .should('eq', avatarUrl);
         // drawer shows new photo
         cy.dataCy(selectorQDrawer).within(() => {
           cy.dataCy('avatar-image')
             .find('img')
             .invoke('attr', 'src')
-            .should('eq', 'https://example.com/new-photo.jpg');
+            .should('eq', avatarUrl);
         });
       });
     });
 
     it('allows to delete photo and shows placeholder instead', () => {
+      const defaultAvatarUrl =
+        'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp';
       cy.get('@config').then((config) => {
         cy.wait('@getAvatar');
         cy.wait('@getAvatarRender');
@@ -362,17 +381,24 @@ describe('Profile page', () => {
             'https://dpnk-test.s3.amazonaws.com/avatars/33669/resized/80/80/profile_2024_crop.png',
           );
         // intercept avatar removal
-        cy.intercept(
-          'DELETE',
-          `${getAvatarApiUrl(config, defLocale)}${avatarId}/`,
-          { statusCode: 204, body: {} },
-        ).as('deleteAvatar');
+        cy.interceptAvatarApi({
+          config: config,
+          i18n: defLocale,
+          requestType: 'DELETE',
+          interceptAlias: 'deleteAvatar',
+          avatarId: avatarId,
+          body: {},
+          statusCode: httpNoContentSuccessfullStatus,
+        });
         // intercept refetch without avatar
         cy.fixture('apiGetAvatarDefault.json').then((defaultAvatar) => {
-          cy.intercept('GET', getAvatarApiUrl(config, defLocale), {
-            statusCode: 200,
+          cy.interceptAvatarApi({
+            config: config,
+            i18n: defLocale,
+            requestType: 'GET',
+            interceptAlias: 'getAvatarAfterDelete',
             body: defaultAvatar,
-          }).as('getAvatarAfterDelete');
+          });
         });
         // delete photo
         cy.dataCy('profile-avatar-remove-button').click();
@@ -383,19 +409,13 @@ describe('Profile page', () => {
         cy.dataCy('profile-avatar-img')
           .find('img')
           .invoke('attr', 'src')
-          .should(
-            'eq',
-            'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp',
-          );
+          .should('eq', defaultAvatarUrl);
         // drawer shows fallback image
         cy.dataCy(selectorQDrawer).within(() => {
           cy.dataCy('avatar-image')
             .find('img')
             .invoke('attr', 'src')
-            .should(
-              'eq',
-              'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp',
-            );
+            .should('eq', defaultAvatarUrl);
         });
       });
     });
