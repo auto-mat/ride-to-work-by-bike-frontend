@@ -463,7 +463,10 @@ function dataDisplayTests() {
                 .should('be.visible')
                 .and(
                   'contain',
-                  display.orderedMembers[index].tShirtSizeUpdated,
+                  i18n.global.d(
+                    new Date(display.orderedMembers[index].tShirtSizeUpdated),
+                    'monthDayHourMinute',
+                  ),
                 );
             } else {
               cy.dataCy(selectorTableTShirtSizeUpdated).should('be.visible');

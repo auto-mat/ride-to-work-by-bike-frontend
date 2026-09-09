@@ -32,7 +32,7 @@
                   "name": "Jan Novák",
                   "name_for_trusted": "Jan Novák (jnovak)",
                   "nickname": "jnovak",
-                  "date_of_challenge_registration": "2025-01-15T10:30:00.000000",
+                  "date_of_challenge_registration": "2025-01-15T10:30:00.000000Z",
                   "email": "jan.novak@cerny.cz",
                   "telephone": "123456789",
                   "sex": "male",
@@ -46,14 +46,14 @@
                   "discount_coupon": "",
                   "user_profile_id": 50001,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2025-01-20T14:30:00.000000+01:00"
+                  "t_shirt_size_updated": "2025-01-20T14:30:00.000000Z"
                 },
                 {
                   "id": 10002,
                   "name": "Petra Svobodová",
                   "name_for_trusted": "Petra Svobodová",
                   "nickname": null,
-                  "date_of_challenge_registration": "2025-01-16T09:15:00.000000",
+                  "date_of_challenge_registration": "2025-01-16T09:15:00.000000Z",
                   "email": "petra.svobodova@cerny.cz",
                   "telephone": "123456790",
                   "sex": "female",
@@ -67,7 +67,7 @@
                   "discount_coupon": "",
                   "user_profile_id": 50002,
                   "is_payment_with_reward": null,
-                  "t_shirt_size_updated": "2025-01-17T13:45:00.000000+01:00"
+                  "t_shirt_size_updated": "2025-01-17T13:45:00.000000Z"
                 }
               ],
               "members_with_paid_entry_fee_by_org_coord": [
@@ -76,7 +76,7 @@
                   "name": "Martin Dvořák",
                   "name_for_trusted": "Martin Dvořák (mdvorak)",
                   "nickname": "mdvorak",
-                  "date_of_challenge_registration": "2025-01-10T14:20:00.000000",
+                  "date_of_challenge_registration": "2025-01-10T14:20:00.000000Z",
                   "email": "martin.dvorak@cerny.cz",
                   "telephone": "123456791",
                   "sex": "male",
@@ -90,7 +90,7 @@
                   "discount_coupon": "",
                   "user_profile_id": 50003,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2025-01-18T09:15:00.000000+01:00"
+                  "t_shirt_size_updated": "2025-01-18T09:15:00.000000Z"
                 }
               ],
               "other_members": [
@@ -99,7 +99,7 @@
                   "name": "Alena Procházková",
                   "name_for_trusted": "Alena Procházková (aprochazka)",
                   "nickname": "aprochazka",
-                  "date_of_challenge_registration": "2024-12-20T11:00:00.000000",
+                  "date_of_challenge_registration": "2024-12-20T11:00:00.000000Z",
                   "email": "alena.prochazkova@cerny.cz",
                   "telephone": "",
                   "sex": "female",
@@ -112,14 +112,14 @@
                   "discount_coupon": "DISC-001",
                   "user_profile_id": 50004,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2024-12-25T16:45:00.000000+01:00"
+                  "t_shirt_size_updated": "2024-12-25T16:45:00.000000Z"
                 },
                 {
                   "id": 10005,
                   "name": "Tomáš Kučera",
                   "name_for_trusted": "Tomáš Kučera",
                   "nickname": null,
-                  "date_of_challenge_registration": "2024-12-22T13:45:00.000000",
+                  "date_of_challenge_registration": "2024-12-22T13:45:00.000000Z",
                   "email": "tomas.kucera@cerny.cz",
                   "telephone": "123456793",
                   "sex": "male",
@@ -133,7 +133,7 @@
                   "discount_coupon": "",
                   "user_profile_id": 50005,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2024-12-23T08:30:00.000000+01:00"
+                  "t_shirt_size_updated": "2024-12-23T08:30:00.000000Z"
                 }
               ]
             },
@@ -149,7 +149,7 @@
                   "name": "Eva Marková",
                   "name_for_trusted": "Eva Marková (emarkova)",
                   "nickname": "emarkova",
-                  "date_of_challenge_registration": "2025-01-12T08:30:00.000000",
+                  "date_of_challenge_registration": "2025-01-12T08:30:00.000000Z",
                   "email": "eva.markova@cerny.cz",
                   "telephone": "123456794",
                   "sex": "female",
@@ -163,7 +163,7 @@
                   "discount_coupon": "",
                   "user_profile_id": 50006,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2025-01-22T11:20:00.000000+01:00"
+                  "t_shirt_size_updated": "2025-01-22T11:20:00.000000Z"
                 }
               ],
               "other_members": [
@@ -172,7 +172,7 @@
                   "name": "František Veselý",
                   "name_for_trusted": "František Veselý",
                   "nickname": null,
-                  "date_of_challenge_registration": "2024-12-18T16:20:00.000000",
+                  "date_of_challenge_registration": "2024-12-18T16:20:00.000000Z",
                   "email": "",
                   "telephone": "123456795",
                   "sex": "male",
@@ -186,7 +186,7 @@
                   "discount_coupon": "DISC-002",
                   "user_profile_id": 50007,
                   "is_payment_with_reward": true,
-                  "t_shirt_size_updated": "2024-12-19T10:15:00.000000+01:00"
+                  "t_shirt_size_updated": "2024-12-19T10:15:00.000000Z"
                 }
               ]
             }
@@ -212,7 +212,7 @@
         "approved": true,
         "paymentType": "payment.labelOrganization",
         "paymentState": "payment.labelWaiting",
-        "tShirtSizeUpdated": "22. 1. 11:20"
+        "tShirtSizeUpdated": "2025-01-22T11:20:00.000000Z"
       },
       {
         "name": "František Veselý",
@@ -224,7 +224,7 @@
         "approved": true,
         "paymentType": "payment.labelRegistration",
         "paymentState": "payment.labelDone",
-        "tShirtSizeUpdated": "19. 12. 10:15"
+        "tShirtSizeUpdated": "2024-12-19T10:15:00.000000Z"
       },
       {
         "name": "Alena Procházková",
@@ -236,7 +236,7 @@
         "approved": true,
         "paymentType": "payment.labelRegistration",
         "paymentState": "payment.labelUnknown",
-        "tShirtSizeUpdated": "25. 12. 16:45"
+        "tShirtSizeUpdated": "2024-12-25T16:45:00.000000Z"
       },
       {
         "name": "Jan Novák",
@@ -248,7 +248,7 @@
         "approved": false,
         "paymentType": "payment.labelOrganization",
         "paymentState": "payment.labelWaiting",
-        "tShirtSizeUpdated": "20. 1. 14:30"
+        "tShirtSizeUpdated": "2025-01-20T14:30:00.000000Z"
       }
     ]
   }
