@@ -366,20 +366,19 @@ describe('Profile page', () => {
     });
 
     it('allows to delete photo and shows placeholder instead', () => {
-      const defaultAvatarUrl =
-        'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp';
       cy.get('@config').then((config) => {
         cy.wait('@getAvatar');
         cy.wait('@getAvatarRender');
         const avatarId = 22;
-        // profile page shows current photo
-        cy.dataCy('profile-avatar-img')
-          .find('img')
-          .invoke('attr', 'src')
-          .should(
-            'eq',
-            'https://dpnk-test.s3.amazonaws.com/avatars/33669/resized/80/80/profile_2024_crop.png',
-          );
+        cy.fixture('apiGetAvatarRenderPrimary').then(
+          (apiGetAvatarRenderPrimary) => {
+            // profile page shows current photo
+            cy.dataCy('profile-avatar-img')
+              .find('img')
+              .invoke('attr', 'src')
+              .should('eq', apiGetAvatarRenderPrimary['image_url']);
+          },
+        );
         // intercept avatar removal
         cy.interceptAvatarApi({
           config: config,
@@ -406,16 +405,18 @@ describe('Profile page', () => {
         cy.wait('@deleteAvatar');
         cy.wait('@getAvatarAfterDelete');
         // profile page shows fallback image
-        cy.dataCy('profile-avatar-img')
-          .find('img')
-          .invoke('attr', 'src')
-          .should('eq', defaultAvatarUrl);
-        // drawer shows fallback image
-        cy.dataCy(selectorQDrawer).within(() => {
-          cy.dataCy('avatar-image')
+        cy.fixture('apiGetAvatarDefault').then((apiGetAvatarDefault) => {
+          cy.dataCy('profile-avatar-img')
             .find('img')
             .invoke('attr', 'src')
-            .should('eq', defaultAvatarUrl);
+            .should('eq', apiGetAvatarDefault['default_avatar']['src']);
+          // drawer shows fallback image
+          cy.dataCy(selectorQDrawer).within(() => {
+            cy.dataCy('avatar-image')
+              .find('img')
+              .invoke('attr', 'src')
+              .should('eq', apiGetAvatarDefault['default_avatar']['src']);
+          });
         });
       });
     });
