@@ -31,8 +31,6 @@ describe('<ProfileAvatar>', () => {
 
   context('avatar already exists', () => {
     const avatarId = 22;
-    const avatarUrl =
-      'https://dpnk-test.s3.amazonaws.com/avatars/33669/resized/80/80/profile_2024_crop.png';
 
     beforeEach(() => {
       cy.viewport('macbook-16');
@@ -46,15 +44,27 @@ describe('<ProfileAvatar>', () => {
         fixture: 'route.jpg',
       });
       cy.mount(ProfileAvatar, { props: {} });
-      // set avatar in store
-      cy.setAvatarStoreState(useAvatarStore, avatarId, avatarUrl);
+      cy.fixture('apiGetAvatarRenderPrimary').then(
+        (apiGetAvatarRenderPrimary) => {
+          // set avatar in store
+          cy.setAvatarStoreState(
+            useAvatarStore,
+            avatarId,
+            apiGetAvatarRenderPrimary['image_url'],
+          );
+        },
+      );
     });
 
     it('renders the avatar image', () => {
-      cy.dataCy('profile-avatar-img')
-        .find('img')
-        .invoke('attr', 'src')
-        .should('eq', avatarUrl);
+      cy.fixture('apiGetAvatarRenderPrimary').then(
+        (apiGetAvatarRenderPrimary) => {
+          cy.dataCy('profile-avatar-img')
+            .find('img')
+            .invoke('attr', 'src')
+            .should('eq', apiGetAvatarRenderPrimary['image_url']);
+        },
+      );
     });
 
     it('shows edit and remove buttons', () => {
@@ -185,9 +195,6 @@ describe('<ProfileAvatar>', () => {
   });
 
   context('avatar is not set', () => {
-    const defaultAvatarUrl =
-      'https://www.gravatar.com/avatar/3aec98e9a73692849051404abcddc564/?s=80&d=mp';
-
     beforeEach(() => {
       cy.viewport('macbook-16');
       setActivePinia(createPinia());
@@ -196,16 +203,24 @@ describe('<ProfileAvatar>', () => {
         fixture: 'route.jpg',
       });
       cy.mount(ProfileAvatar, { props: {} });
-      // set fallback avatar state in store
-      cy.setAvatarStoreState(useAvatarStore, null, defaultAvatarUrl);
+      cy.fixture('apiGetAvatarDefault').then((apiGetAvatarDefault) => {
+        // set fallback avatar state in store
+        cy.setAvatarStoreState(
+          useAvatarStore,
+          null,
+          apiGetAvatarDefault['default_avatar']['src'],
+        );
+      });
     });
 
     it('shows fallback image and no remove button', () => {
-      cy.dataCy('profile-avatar-img')
-        .find('img')
-        .invoke('attr', 'src')
-        .should('eq', defaultAvatarUrl);
-      cy.dataCy('profile-avatar-remove-button').should('not.exist');
+      cy.fixture('apiGetAvatarDefault').then((apiGetAvatarDefault) => {
+        cy.dataCy('profile-avatar-img')
+          .find('img')
+          .invoke('attr', 'src')
+          .should('eq', apiGetAvatarDefault['default_avatar']['src']);
+        cy.dataCy('profile-avatar-remove-button').should('not.exist');
+      });
     });
 
     it('sends uploaded file with POST', () => {
