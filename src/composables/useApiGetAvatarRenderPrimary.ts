@@ -17,7 +17,7 @@ import type { ApiAvatarRenderResponse } from '../components/types/ApiAvatar';
 // utils
 import { requestDefaultHeader, requestTokenHeader } from '../utils';
 
-interface UseApiGetAvatarRenderReturn {
+interface UseApiGetAvatarRenderPrimaryReturn {
   isLoading: Ref<boolean>;
   getAvatarRender: () => Promise<string | null>;
 }
@@ -25,11 +25,11 @@ interface UseApiGetAvatarRenderReturn {
 /**
  * Composable for getting the primary avatar rendered at the configured size
  * @param {Logger | null} logger - Logger
- * @returns {UseApiGetAvatarRenderReturn}
+ * @returns {UseApiGetAvatarRenderPrimaryReturn}
  */
-export const useApiGetAvatarRender = (
+export const useApiGetAvatarRenderPrimary = (
   logger: Logger | null,
-): UseApiGetAvatarRenderReturn => {
+): UseApiGetAvatarRenderPrimaryReturn => {
   const isLoading = ref<boolean>(false);
   const loginStore = useLoginStore();
   const { apiFetch } = useApi();
