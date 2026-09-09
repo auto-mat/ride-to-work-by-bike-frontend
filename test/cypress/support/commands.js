@@ -4599,6 +4599,8 @@ Cypress.Commands.add(
       urlApi = urlApiAvatar;
     } else if (interceptUrlType === 'renderPrimary') {
       const { urlApiAvatarRenderPrimary } = config;
+      // URL aste risk symbol '*' means include image size URL parameters
+      // `?width=width_size&height=height_size`
       urlApi = `${urlApiAvatarRenderPrimary}*`;
     }
 
