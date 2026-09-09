@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 
 // composables
 import { useApiGetAvatar } from '../composables/useApiGetAvatar';
-import { useApiGetAvatarRender } from '../composables/useApiGetAvatarRender';
+import { useApiGetAvatarRenderPrimary } from '../composables/useApiGetAvatarRenderPrimary';
 
 // types
 import type { Logger } from '../components/types/Logger';
@@ -53,7 +53,7 @@ export const useAvatarStore = defineStore('avatar', {
       if (response && 'results' in response) {
         const primaryAvatar = response.results.find((avatar) => avatar.primary);
         if (primaryAvatar) {
-          const { getAvatarRender } = useApiGetAvatarRender(this.$log);
+          const { getAvatarRender } = useApiGetAvatarRenderPrimary(this.$log);
           const renderUrl = await getAvatarRender();
           this.setAvatar(primaryAvatar.id, renderUrl);
         } else {
