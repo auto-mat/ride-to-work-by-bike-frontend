@@ -51,7 +51,7 @@ export const useApiGetAvatarRender = (
 
     // get rendered primary avatar
     const { data } = await apiFetch<ApiAvatarRenderResponse>({
-      endpoint: `${rideToWorkByBikeConfig.urlApiAvatar}render_primary/`,
+      endpoint: rideToWorkByBikeConfig.urlApiAvatarRenderPrimary,
       method: 'get',
       translationKey: 'getAvatar',
       showSuccessMessage: false,
