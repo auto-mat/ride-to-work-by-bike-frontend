@@ -171,6 +171,7 @@ export interface ConfigGlobal {
   urlLogRouteCalendarNumberVideo: string;
   urlLogRouteListNumberVideo: string;
   profileAvatarRenderSize: number;
+  profileAvatarImageAcceptedFileFormats: string;
 }
 
 export interface ConfigAppVersion {

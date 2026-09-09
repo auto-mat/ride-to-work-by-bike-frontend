@@ -105,6 +105,7 @@ checkRegisterChallengeStatusMaxRepetitions = 5
 tripMaxFileUploadSizeMegabytes = 1
 profileAvatarRenderSize = 120
 profileAvatarMaxFileSizeMegabytes = 8
+profileAvatarImageAcceptedFileFormats = ".jpg, .jpeg, .png, .webp"
 voucherWithoutRewardPattern = "^[A-Z]{2}NRWD"
 
 

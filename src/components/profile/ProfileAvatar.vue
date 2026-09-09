@@ -46,7 +46,7 @@ export default defineComponent({
     const maxFileSizeMegabytes =
       rideToWorkByBikeConfig.profileAvatarMaxFileSizeMegabytes;
     const maxFileSizeBytes = maxFileSizeMegabytes * 1024 * 1024;
-    const acceptedFileFormats = '.jpg, .jpeg, .png, .webp';
+    const { profileAvatarImageAcceptedFileFormats } = rideToWorkByBikeConfig;
 
     const isDialogOpen = ref(false);
     const isDialogRemoveOpen = ref(false);
@@ -92,7 +92,7 @@ export default defineComponent({
         Notify.create({
           type: 'negative',
           message: i18n.global.t('profile.messagePhotoInvalidFormat', {
-            formats: acceptedFileFormats,
+            formats: profileAvatarImageAcceptedFileFormats,
           }),
         });
       }
@@ -124,7 +124,7 @@ export default defineComponent({
     };
 
     return {
-      acceptedFileFormats,
+      profileAvatarImageAcceptedFileFormats,
       avatarId,
       avatarImgClass,
       avatarUrl,
@@ -199,7 +199,7 @@ export default defineComponent({
           outlined
           v-model="fileToUpload"
           :label="$t('profile.buttonUploadPhoto')"
-          :accept="acceptedFileFormats"
+          :accept="profileAvatarImageAcceptedFileFormats"
           :max-file-size="maxFileSizeBytes"
           :disable="isLoading"
           @rejected="onFileRejected"
