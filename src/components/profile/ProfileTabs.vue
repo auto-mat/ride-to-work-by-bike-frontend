@@ -6,7 +6,6 @@
  * Note: Used on `ProfilePage`.
  *
  * @components
- * - `NewsletterFeature`: Component to display a newsletter section.
  * - `ProfileDetails`: Component to display a ProfileDetails section.
  * - `ProfileQuestionnaires`: Component to display a table of questionnaires.
  * - `TableNotifications`: Component to display a table of notifications.
@@ -21,7 +20,6 @@
 import { defineComponent, ref } from 'vue';
 
 // components
-import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import ProfileDetails from './ProfileDetails.vue';
 import ProfileQuestionnaires from './ProfileQuestionnaires.vue';
 import TableNotifications from './TableNotifications.vue';
@@ -32,7 +30,6 @@ import { routesConf } from '../../router/routes_conf';
 enum tabsProfile {
   details = 'details',
   questionnaires = 'questionnaires',
-  newsletter = 'newsletter',
   notifications = 'notifications',
   none = '',
 }
@@ -40,7 +37,6 @@ enum tabsProfile {
 export default defineComponent({
   name: 'ProfileTabs',
   components: {
-    NewsletterFeature,
     ProfileDetails,
     ProfileQuestionnaires,
     TableNotifications,
@@ -48,13 +44,11 @@ export default defineComponent({
   setup() {
     const activeTab = ref(tabsProfile.none);
 
-    const isEnabledNewsletter = false;
     const isEnabledQuestionnaires = false;
     const isEnabledNotifications = false;
 
     return {
       activeTab,
-      isEnabledNewsletter,
       isEnabledQuestionnaires,
       isEnabledNotifications,
       routesConf,
@@ -90,13 +84,6 @@ export default defineComponent({
         data-cy="profile-tabs-button-questionnaires"
       />
       <q-route-tab
-        v-if="isEnabledNewsletter"
-        :to="routesConf['profile_newsletter'].path"
-        :name="tabsProfile.newsletter"
-        :label="$t('profile.tabNewsletter')"
-        data-cy="profile-tabs-button-newsletter"
-      />
-      <q-route-tab
         v-if="isEnabledNotifications"
         :to="routesConf['profile_notifications'].path"
         :name="tabsProfile.notifications"
@@ -123,14 +110,6 @@ export default defineComponent({
         data-cy="profile-tabs-panel-questionnaires"
       >
         <profile-questionnaires />
-      </q-tab-panel>
-      <!-- Panel: Newsletter -->
-      <q-tab-panel
-        v-if="isEnabledNewsletter"
-        :name="tabsProfile.newsletter"
-        data-cy="profile-tabs-panel-newsletter"
-      >
-        <newsletter-feature class="q-mt-lg" />
       </q-tab-panel>
       <!-- Panel: Notifications -->
       <q-tab-panel

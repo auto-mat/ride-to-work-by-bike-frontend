@@ -137,7 +137,6 @@
           class="q-my-xl"
           data-cy="list-post"
         />
-        <newsletter-feature class="q-my-xl" data-cy="newsletter-feature" />
         <list-card-follow class="q-mt-xl" data-cy="list-card-follow" />
       </div>
     </div>
@@ -167,7 +166,6 @@ import ListCardOffer from 'components/homepage/ListCardOffer.vue';
 import ListCardPost from 'components/homepage/ListCardPost.vue';
 import ListCardProgress from 'components/homepage/ListCardProgress.vue';
 import ListChallenges from '../components/global/ListChallenges.vue';
-import NewsletterFeature from 'components/homepage/NewsletterFeature.vue';
 import PageHeading from 'src/components/global/PageHeading.vue';
 import SectionColumns from 'components/homepage/SectionColumns.vue';
 import SectionHeading from 'src/components/global/SectionHeading.vue';
@@ -220,7 +218,6 @@ export default defineComponent({
     ListCardPost,
     ListCardProgress,
     ListChallenges,
-    NewsletterFeature,
     PageHeading,
     SectionColumns,
     SectionHeading,

@@ -11,6 +11,8 @@
  * @props
  * - `title`: (string) Custom title for the newsletter section.
  * - `description`: (string) Custom description for the newsletter section.
+ * - `hideTitle`: (boolean) Hide the built-in title, e.g. when the parent
+ * renders its own section heading instead. Defaults to false.
  *
  * @components
  * - `NewsletterItem`: Component to render individual newsletter details.
@@ -23,7 +25,7 @@
 
 // libraries
 import { Notify, Screen } from 'quasar';
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';
@@ -55,18 +57,16 @@ export default defineComponent({
       type: String,
       required: false,
     },
+    hideTitle: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     NewsletterItem,
   },
   setup(props) {
     const registerChallengeStore = useRegisterChallengeStore();
-
-    onMounted(async () => {
-      if (!registerChallengeStore.getRegistrationId) {
-        await registerChallengeStore.loadRegisterChallengeToStore();
-      }
-    });
 
     const getRegistrationId = computed((): number | null => {
       return registerChallengeStore.getRegistrationId;
@@ -153,6 +153,7 @@ export default defineComponent({
     <div class="col-12 col-md-9" data-cy="newsletter-col-content">
       <!-- Title -->
       <h2
+        v-if="!hideTitle"
         class="text-h5 text-weight-bold text-primary text-balance q-my-none"
         :style="{ maxWidth: `${headingMaxWidth}px` }"
         data-cy="section-heading-title"

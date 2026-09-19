@@ -48,6 +48,8 @@ const selectorTelephoneOptIn = 'profile-details-telephone-opt-in';
 const selectorDeleteAccount = 'delete-account';
 // const selectorTrackingNumber = 'profile-details-tracking-number';
 const selectorTitleChallengeDetails = 'profile-title-challenge-details';
+const selectorTitleCommunicationPreferences =
+  'profile-title-communication-preferences';
 const selectorTitlePersonalDetails = 'profile-title-personal-details';
 const selectorTitleRegistrationDetails = 'profile-title-registration-details';
 const selectorTitleStarterPackage = 'profile-title-starter-package';
@@ -100,6 +102,7 @@ describe('<ProfileDetails>', () => {
         'labelTrackingNumber',
         'messageProfileIdMissing',
         'titleChallengeDetails',
+        'titleCommunicationPreferences',
         'titlePersonalDetails',
         'titleUpdateEmail',
         'titleUpdateGender',
@@ -822,6 +825,17 @@ function coreTests() {
       cy.dataCy(selectorPhone)
         .find(dataSelectorValue)
         .should('contain', response.results[0].personal_details.telephone);
+      // title communication preferences
+      cy.dataCy(selectorTitleCommunicationPreferences)
+        .should('be.visible')
+        .within(() => {
+          cy.dataCy('section-heading-title')
+            .should('be.visible')
+            .and(
+              'contain',
+              i18n.global.t('profile.titleCommunicationPreferences'),
+            );
+        });
       // contact participation
       cy.dataCy(selectorTelephoneOptIn)
         .should('be.visible')

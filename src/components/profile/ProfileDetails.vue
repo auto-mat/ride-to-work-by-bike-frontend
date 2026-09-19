@@ -43,6 +43,7 @@ import FormUpdateOccupation from '../form/FormUpdateOccupation.vue';
 import FormUpdatePhone from '../form/FormUpdatePhone.vue';
 import FormUpdateTeam from '../form/FormUpdateTeam.vue';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
+import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import ProfileAvatar from './ProfileAvatar.vue';
 import ProfileCoordinatorContact from './ProfileCoordinatorContact.vue';
 import SectionHeading from '../global/SectionHeading.vue';
@@ -87,6 +88,7 @@ export default defineComponent({
     FormUpdatePhone,
     FormUpdateTeam,
     LanguageSwitcher,
+    NewsletterFeature,
     ProfileAvatar,
     ProfileCoordinatorContact,
     SectionHeading,
@@ -734,6 +736,20 @@ export default defineComponent({
         </div>
       </div>
     </div>
+
+    <!-- Title -->
+    <section-heading
+      class="q-mt-xl"
+      data-cy="profile-title-communication-preferences"
+    >
+      {{ $t('profile.titleCommunicationPreferences') }}
+    </section-heading>
+    <!-- Communication preferences -->
+    <newsletter-feature
+      class="q-mt-lg"
+      hide-title
+      data-cy="profile-details-newsletter-feature"
+    />
 
     <!-- Contact participation -->
     <div class="q-mt-xl">

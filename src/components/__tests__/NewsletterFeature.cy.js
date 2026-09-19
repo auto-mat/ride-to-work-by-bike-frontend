@@ -4,6 +4,7 @@ import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
 import { defLocale } from '../../i18n/def_locale';
 import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // colors
 const { getPaletteColor } = colors;
@@ -49,7 +50,7 @@ describe('<NewsletterFeature>', () => {
   });
 
   context('API', () => {
-    it('loads newsletter settings from API', () => {
+    it('allows to display and update newsletter settings', () => {
       setActivePinia(createPinia());
       cy.viewport('macbook-16');
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
@@ -76,24 +77,22 @@ describe('<NewsletterFeature>', () => {
       cy.mount(NewsletterFeature, {
         props: {},
       });
-      // wait for register-challenge GET request
-      cy.get('@putRegisterChallenge.all').should('have.length', 0);
-      cy.get('@getRegisterChallenge.all').should('have.length', 1);
       cy.fixture('apiGetRegisterChallengeProfile.json').then(
         (responseRegisterChallenge) => {
-          // check loaded data
-          cy.waitForRegisterChallengeGetApi(responseRegisterChallenge);
+          cy.then(() =>
+            useRegisterChallengeStore().setRegisterChallengeFromApi(
+              responseRegisterChallenge.results[0],
+            ),
+          );
         },
       );
+      cy.get('@getRegisterChallenge.all').should('have.length', 0);
+      cy.get('@putRegisterChallenge.all').should('have.length', 0);
       // UI shows newsletter challenge is enabled
       cy.dataCy('newsletter-feature-item')
         .filter('[data-id="challenge"]')
         .find('.q-toggle__inner')
         .should('have.class', 'q-toggle__inner--truthy');
-      cy.dataCy('newsletter-feature-item')
-        .filter('[data-id="events"]')
-        .find('.q-toggle__inner')
-        .should('have.class', 'q-toggle__inner--falsy');
       cy.dataCy('newsletter-feature-item')
         .filter('[data-id="mobility"]')
         .find('.q-toggle__inner')
@@ -123,7 +122,7 @@ describe('<NewsletterFeature>', () => {
           ).then((request) => {
             cy.waitForRegisterChallengePutApi(request);
           });
-          cy.get('@getRegisterChallenge.all').should('have.length', 2);
+          cy.get('@getRegisterChallenge.all').should('have.length', 1);
           // wait for GET request
           cy.waitForRegisterChallengeGetApi(responseUpdated);
           // verify that mobility state changed to enabled
@@ -132,58 +131,9 @@ describe('<NewsletterFeature>', () => {
             .find('.q-toggle__inner')
             .should('have.class', 'q-toggle__inner--truthy');
           cy.dataCy('newsletter-feature-item')
-            .filter('[data-id="events"]')
-            .find('.q-toggle__inner')
-            .should('have.class', 'q-toggle__inner--falsy');
-          cy.dataCy('newsletter-feature-item')
             .filter('[data-id="mobility"]')
             .find('.q-toggle__inner')
             .should('have.class', 'q-toggle__inner--truthy');
-          // override GET request for updated state
-          cy.fixture(
-            'apiGetRegisterChallengeProfileUpdatedNewsletterAll.json',
-          ).then((responseUpdatedAll) => {
-            cy.interceptRegisterChallengeGetApi(
-              rideToWorkByBikeConfig,
-              defLocale,
-              responseUpdatedAll,
-            );
-            // set newsletter events to enabled
-            cy.dataCy('newsletter-feature-item')
-              .filter('[data-id="events"]')
-              .find('.q-toggle__inner')
-              .click();
-            // verify that events state changed to enabled
-            cy.dataCy('newsletter-feature-item')
-              .filter('[data-id="events"]')
-              .find('.q-toggle__inner')
-              .should('have.class', 'q-toggle__inner--truthy');
-            // wait for PUT request
-            cy.get('@putRegisterChallenge.all').should('have.length', 2);
-            // check sent data
-            cy.fixture(
-              'apiPostRegisterChallengeNewsletterAllRequest.json',
-            ).then((request) => {
-              cy.waitForRegisterChallengePutApi(request);
-            });
-            // wait for GET request
-            cy.get('@getRegisterChallenge.all').should('have.length', 3);
-            // check loaded data
-            cy.waitForRegisterChallengeGetApi(responseUpdatedAll);
-            // verify that events state changed to enabled
-            cy.dataCy('newsletter-feature-item')
-              .filter('[data-id="challenge"]')
-              .find('.q-toggle__inner')
-              .should('have.class', 'q-toggle__inner--truthy');
-            cy.dataCy('newsletter-feature-item')
-              .filter('[data-id="events"]')
-              .find('.q-toggle__inner')
-              .should('have.class', 'q-toggle__inner--truthy');
-            cy.dataCy('newsletter-feature-item')
-              .filter('[data-id="mobility"]')
-              .find('.q-toggle__inner')
-              .should('have.class', 'q-toggle__inner--truthy');
-          });
         },
       );
     });
@@ -216,7 +166,7 @@ describe('<NewsletterFeature>', () => {
     it('renders correct number of items', () => {
       cy.window().then(() => {
         cy.dataCy(selectorNewsletterFeatureItem)
-          .should('have.length', 3)
+          .should('have.length', 2)
           .each(($item) => {
             cy.wrap($item).should('be.visible');
           });
@@ -227,7 +177,7 @@ describe('<NewsletterFeature>', () => {
       cy.window().then(() => {
         cy.dataCy(selectorNewsletterFeatureSeparator)
           .should('be.visible')
-          .and('have.length', 2)
+          .and('have.length', 1)
           .and('have.css', 'margin-top', marginMd)
           .and('have.css', 'margin-bottom', marginMd);
       });

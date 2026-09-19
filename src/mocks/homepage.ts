@@ -306,11 +306,6 @@ export const newsletterItems = computed<NewsletterItem[]>(() => [
     icon: 'svguse:icons/newsletter_item/icons.svg#lucide-bike',
   },
   {
-    id: NewsletterType.event,
-    title: i18n.global.t('index.newsletterFeature.aboutEvents'),
-    icon: 'svguse:icons/newsletter_item/icons.svg#tabler-calendar',
-  },
-  {
     id: NewsletterType.mobility,
     title: i18n.global.t('index.newsletterFeature.aboutMobility'),
     icon: 'svguse:icons/newsletter_item/icons.svg#tabler-leaf',

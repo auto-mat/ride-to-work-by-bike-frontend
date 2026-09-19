@@ -103,7 +103,6 @@ export default defineComponent({
     const isPassword = ref<boolean>(true);
     const isPasswordConfirm = ref<boolean>(true);
     const isPrivacyConsent = ref<boolean>(false);
-    const isNewsletterSubscription = ref<boolean>(false);
 
     const { isEmail, isFilled, isIdentical, isStrongPassword } =
       useValidation();
@@ -156,7 +155,6 @@ export default defineComponent({
       isPassword,
       isPasswordConfirm,
       isPrivacyConsent,
-      isNewsletterSubscription,
       isEmail,
       isFilled,
       isIdentical,

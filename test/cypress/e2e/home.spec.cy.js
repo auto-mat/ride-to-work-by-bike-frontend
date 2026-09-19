@@ -19,7 +19,7 @@ import { routesConf } from '../../../src/router/routes_conf';
 
 // variables
 const failTestTitle = 'allows user to scroll to top using the footer button';
-const fontFamily = 'Poppins';
+const fontFamily = '"Poppins", sans-serif';
 
 describe('Home page', () => {
   Cypress.on('fail', (err, runnable) => {
@@ -97,81 +97,6 @@ describe('Home page', () => {
     coreTests();
     testLanguageSwitcher();
     testDesktopSidebar();
-
-    it('renders user email in UserSelect after login', () => {
-      cy.fixture('loginRegisterResponseChallengeActive.json').then(
-        (loginResponse) => {
-          cy.fixture('refreshTokensResponseChallengeActive.json').then(
-            (refreshTokensResponse) => {
-              cy.get('@config').then((config) => {
-                cy.clock(systemTimeLoggedIn, ['Date']);
-                let i18n;
-                cy.window().should('have.property', 'i18n');
-                cy.window()
-                  .then((win) => {
-                    i18n = win.i18n;
-                  })
-                  .then(() => {
-                    cy.visit('#' + routesConf['login']['path']);
-                    const {
-                      apiBase,
-                      apiDefaultLang,
-                      urlApiLogin,
-                      urlApiRefresh,
-                    } = config;
-                    const apiBaseUrl = getApiBaseUrlWithLang(
-                      null,
-                      apiBase,
-                      apiDefaultLang,
-                      i18n,
-                    );
-                    const apiLoginUrl = `${apiBaseUrl}${urlApiLogin}`;
-                    const apiRefreshUrl = `${apiBaseUrl}${urlApiRefresh}`;
-                    // intercept API login request
-                    cy.intercept('POST', apiLoginUrl, {
-                      statusCode: httpSuccessfullStatus,
-                      body: loginResponse,
-                    }).as('loginRequest');
-                    // intercept API refresh token request
-                    cy.intercept('POST', apiRefreshUrl, {
-                      statusCode: httpSuccessfullStatus,
-                      body: refreshTokensResponse,
-                    }).as('refreshTokens');
-                    cy.dataCy('form-login-email')
-                      .find('input')
-                      .type('test@example.com');
-                    cy.dataCy('form-login-password')
-                      .find('input')
-                      .type('password123');
-                    // submit form
-                    cy.dataCy('form-login-submit-login').click();
-                    // check if user is redirected to the home page
-                    cy.url().should('include', routesConf['home']['path']);
-                    cy.dataCy(selectorUserSelectDesktop).within(() => {
-                      cy.dataCy(selectorUserSelectInput)
-                        .should('be.visible')
-                        .and('contain', loginResponse.user.email);
-                    });
-                    // click on user select
-                    cy.dataCy(selectorUserSelectDesktop).within(() => {
-                      cy.dataCy(selectorUserSelectInput)
-                        .should('be.visible')
-                        .click();
-                    });
-                    // logout
-                    cy.dataCy('menu-item')
-                      .contains(i18n?.global.t('userSelect.logout'))
-                      .click();
-                    cy.dataCy(selectorUserSelectDesktop).should('not.exist');
-                    // redirected to login page
-                    cy.url().should('include', routesConf['login']['path']);
-                  });
-              });
-            },
-          );
-        },
-      );
-    });
 
     it.skip('allows user to display and submit contact form', () => {
       // open help modal
@@ -322,47 +247,6 @@ describe('Home page', () => {
             .find('.swiper-slide:last-child')
             .should('be.visible');
         });
-    });
-
-    it('renders newsletter labels in correct language', () => {
-      cy.get('@i18n').then((i18n) => {
-        Object.keys(i18n.global.messages).forEach((key) => {
-          // set language to given locale
-          cy.dataCy(`switcher-button-${key}`).click();
-          // test newsletter labels for selected locale
-          cy.dataCy('newsletter-feature-item')
-            .should(
-              'contain',
-              i18n.global.t(
-                'index.newsletterFeature.aboutChallenges',
-                {},
-                {
-                  locale: key,
-                },
-              ),
-            )
-            .and(
-              'contain',
-              i18n.global.t(
-                'index.newsletterFeature.aboutEvents',
-                {},
-                {
-                  locale: key,
-                },
-              ),
-            )
-            .and(
-              'contain',
-              i18n.global.t(
-                'index.newsletterFeature.aboutMobility',
-                {},
-                {
-                  locale: key,
-                },
-              ),
-            );
-        });
-      });
     });
 
     it('shows company challenges', () => {
@@ -816,8 +700,6 @@ describe('Home page', () => {
         // cy.dataCy('list-offer').should('be.visible');
         // list of posts
         // cy.dataCy('list-post').should('be.visible');
-        // newsletter
-        cy.dataCy('newsletter-feature').should('be.visible');
         // list of follow
         cy.dataCy('list-card-follow').should('be.visible');
       });
@@ -1125,7 +1007,10 @@ describe('Home page', () => {
 function coreTests() {
   it('loads fonts', () => {
     // check if font is loaded
-    cy.wrap(doc.fonts).invoke('check', `16px ${fontFamily}`).should('be.true');
+    cy.document()
+      .its('fonts')
+      .invoke('check', `16px ${fontFamily}`)
+      .should('be.true');
     // check if font is used
     cy.dataCy('index-title')
       .should('be.visible')

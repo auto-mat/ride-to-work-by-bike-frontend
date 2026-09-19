@@ -20,7 +20,6 @@ describe('<FormFieldNewsletter>', () => {
         'titleNewsletter',
         'labelNewsletterAll',
         'labelNewsletterChallenges',
-        'labelNewsletterEvents',
         'labelNewsletterMobility',
       ],
       'form.personalDetails',
@@ -68,7 +67,7 @@ function coreTests() {
   it('renders all newsletter options', () => {
     model.value = [];
     nextTick();
-    cy.dataCy(selectorNewsletterOption).should('have.length', 3);
+    cy.dataCy(selectorNewsletterOption).should('have.length', 2);
   });
 
   it('updates v-model when options are selected', () => {
@@ -85,23 +84,19 @@ function coreTests() {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterAll).click();
-    cy.wrap(model)
-      .its('value')
-      .should('have.length', Object.keys(NewsletterType).length);
+    cy.wrap(model).its('value').should('have.length', 2);
   });
 
   it('deselects all options when "all" is unclicked', () => {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterOption)
-      .should('have.length', 3)
+      .should('have.length', 2)
       .each(($el) => {
         cy.wrap($el).click();
       });
     nextTick();
-    cy.wrap(model)
-      .its('value')
-      .should('have.length', Object.keys(NewsletterType).length);
+    cy.wrap(model).its('value').should('have.length', 2);
     cy.dataCy(selectorNewsletterAll).click();
     nextTick();
     cy.wrap(model).its('value').should('have.length', 0);
@@ -111,10 +106,20 @@ function coreTests() {
     model.value = [];
     nextTick();
     cy.dataCy(selectorNewsletterOption)
-      .should('have.length', Object.keys(NewsletterType).length)
+      .should('have.length', 2)
       .each(($el) => {
         cy.wrap($el).click();
       });
     cy.dataCy(selectorNewsletterAll).should('be.checked');
+  });
+
+  it('preserves a hidden legacy value not represented in the UI', () => {
+    model.value = [NewsletterType.event];
+    nextTick();
+    cy.dataCy(selectorNewsletterOption).eq(0).click();
+    nextTick();
+    cy.wrap(model)
+      .its('value')
+      .should('have.members', [NewsletterType.challenge, NewsletterType.event]);
   });
 }

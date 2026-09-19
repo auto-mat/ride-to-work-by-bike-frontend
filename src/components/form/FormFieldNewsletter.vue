@@ -35,14 +35,11 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
+    // hidden option `events` stays on backend but is not shown
     const newsletterOptions = [
       {
         label: 'form.personalDetails.labelNewsletterChallenges',
         value: NewsletterType.challenge,
-      },
-      {
-        label: 'form.personalDetails.labelNewsletterEvents',
-        value: NewsletterType.event,
       },
       {
         label: 'form.personalDetails.labelNewsletterMobility',
@@ -50,30 +47,23 @@ export default defineComponent({
       },
     ];
 
-    const isNewsletterAll = ref(false);
-    watch(isNewsletterAll, (newVal) => {
-      if (newVal) {
-        newsletter.value = [
-          NewsletterType.challenge,
-          NewsletterType.event,
-          NewsletterType.mobility,
-        ];
-      } else {
-        newsletter.value = [];
-      }
-    });
+    const visibleValues = newsletterOptions.map((option) => option.value);
 
     const newsletter = computed({
       get: () => props.modelValue,
       set: (value) => {
-        // control "all" option
-        if (value.length === 3) {
-          isNewsletterAll.value = true;
-        } else {
-          isNewsletterAll.value = false;
-        }
+        isNewsletterAll.value = visibleValues.every((visibleValue) =>
+          value.includes(visibleValue),
+        );
         emit('update:modelValue', value);
       },
+    });
+
+    const isNewsletterAll = ref(false);
+    watch(isNewsletterAll, (newVal) => {
+      newsletter.value = newVal
+        ? [...visibleValues]
+        : newsletter.value.filter((value) => !visibleValues.includes(value));
     });
 
     return {

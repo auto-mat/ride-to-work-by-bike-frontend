@@ -415,7 +415,7 @@ export default defineComponent({
           v-model="telephoneOptIn"
           :false-value="false"
           :true-value="true"
-          :label="$t('form.merch.labelPhoneOptIn')"
+          :label="$t('profile.labelTelephoneOptIn')"
           color="primary"
           style="align-items: flex-start"
           data-cy="form-personal-details-phone-opt-in-input"

@@ -25,8 +25,6 @@ describe('<FormFieldListMerch>', () => {
         'hintNoMerch',
         'hintPhoneNoMerch',
         'hintPhoneWithMerch',
-        'labelPhoneOptInNoMerch',
-        'labelPhoneOptInWithMerch',
         'labelUrlSizeConversionChartLink',
         'textMerchUnavailable',
         'textMerchUnavailableSeptember',
