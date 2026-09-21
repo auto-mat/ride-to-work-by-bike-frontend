@@ -6,7 +6,7 @@
     "email": "",
     "id": null,
     "isStaff": false,
-    "newsletter": ["challenge", "events", "mobility"],
+    "newsletter": ["challenge", "mobility"],
     "nickname": "JD",
     "gender": "male",
     "occupation": 138,
