@@ -272,14 +272,14 @@ export default defineComponent({
       if (registerChallengeStore.getIsUserOrganizationAdmin === null) {
         await registerChallengeStore.checkIsUserOrganizationAdmin();
       }
-      // load my team data if not available
-      if (!registerChallengeStore.getMyTeam) {
-        logger?.info('My team data is not available, loading my team data.');
-        await registerChallengeStore.loadMyTeamToStore(logger);
-      }
       // if citySlug is not available, try reloading register challenge data
       if (!registerChallengeStore.getCityWpSlug) {
         await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      // load my team data if not available (requires teamId from register challenge data)
+      if (!registerChallengeStore.getMyTeam) {
+        logger?.info('My team data is not available, loading my team data.');
+        await registerChallengeStore.loadMyTeamToStore(logger);
       }
       // if citySlug is available, load posts, else we can't load posts
       if (isSectionOffersEnabled && registerChallengeStore.getCityWpSlug) {
