@@ -1480,10 +1480,14 @@ function coreTests() {
       .should('be.visible')
       .and('have.css', 'font-size', '14px')
       .then(($el) => {
-        cy.stripHtmlTags(
-          i18n.global.t('companyCoordinator.textBecomeCoordinator'),
-        ).then((translation) => {
-          expect($el.text()).to.eq(translation);
+        cy.fixture('formFieldCompany').then((organizations) => {
+          cy.stripHtmlTags(
+            i18n.global.t('companyCoordinator.textBecomeCoordinator', {
+              organizationName: organizations.results[1].name,
+            }),
+          ).then((translation) => {
+            expect($el.text()).to.eq(translation);
+          });
         });
       });
     // input phone label
