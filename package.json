@@ -128,7 +128,7 @@
     "lint-staged": "^16.0.0",
     "prettier": "3",
     "typescript": "^5.0.0",
-    "vite-plugin-checker": "^0.10.2",
+    "vite-plugin-checker": "^0.14.0",
     "vite-plugin-top-level-await": "^1.4.4",
     "vue-tsc": "^3.0.6"
   },
