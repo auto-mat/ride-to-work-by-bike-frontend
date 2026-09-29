@@ -23,6 +23,9 @@
 // libraries
 import { computed, defineComponent, ref, watch } from 'vue';
 
+// composables
+import { useSelectSearch } from '../../composables/useSelectSearch';
+
 // types
 import type { FormOption } from '../../components/types/Form';
 import type { City } from '../types/City';
@@ -71,9 +74,13 @@ export default defineComponent({
       emit('update:modelValue', newValue?.slug ?? null);
     });
 
+    const { optionsFiltered, onFilter } = useSelectSearch(options);
+
     return {
       city,
       options,
+      optionsFiltered,
+      onFilter,
     };
   },
 });
@@ -91,13 +98,19 @@ export default defineComponent({
     <q-select
       dense
       outlined
+      use-input
+      hide-selected
+      fill-input
+      hide-bottom-space
+      input-debounce="0"
       v-model="city"
       :loading="loading"
-      :options="options"
+      :options="optionsFiltered"
       :style="{ 'min-width': '160px' }"
       class="col-auto"
       id="form-select-city"
       data-cy="form-select-city"
+      @filter="onFilter"
     />
   </div>
 </template>
