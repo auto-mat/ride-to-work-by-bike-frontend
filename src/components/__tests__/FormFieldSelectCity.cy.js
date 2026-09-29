@@ -93,6 +93,19 @@ function coreTests() {
     });
   });
 
+  it('allows to search through options', () => {
+    cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
+      cy.dataCy('form-field-select-city')
+        .find('.q-field__append')
+        .type(citiesResponse.results[6].name);
+      cy.get('.q-menu').should('be.visible');
+      // filtered results contain only the searched city
+      cy.get('.q-menu .q-item').should('have.length', 1);
+      cy.get('.q-menu .q-item').first().click();
+      cy.get('.q-menu').should('not.exist');
+    });
+  });
+
   it('works correctly with non-unique wp_slug', () => {
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
       // choose city with different slug and wp_slug
@@ -107,10 +120,10 @@ function coreTests() {
         .its('value')
         .should('eq', citiesResponse.results[6].wp_slug);
       // select contains chosen city name
-      cy.dataCy('form-select-city').should(
-        'contain',
-        citiesResponse.results[6].name,
-      );
+      cy.dataCy('form-field-select-city')
+        .find('input')
+        .invoke('val')
+        .should('eq', citiesResponse.results[6].name);
       // choose city with same wp_slug as previous city
       cy.dataCy('form-select-city').click();
       cy.get('.q-menu')
@@ -123,10 +136,10 @@ function coreTests() {
         .its('value')
         .should('eq', citiesResponse.results[12].wp_slug);
       // select contains chosen city name
-      cy.dataCy('form-select-city').should(
-        'contain',
-        citiesResponse.results[12].name,
-      );
+      cy.dataCy('form-field-select-city')
+        .find('input')
+        .invoke('val')
+        .should('eq', citiesResponse.results[12].name);
     });
   });
 }
