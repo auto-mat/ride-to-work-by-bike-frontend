@@ -28,7 +28,7 @@
 import { computed, defineComponent } from 'vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 
 export default defineComponent({
   name: 'FormFieldPhone',

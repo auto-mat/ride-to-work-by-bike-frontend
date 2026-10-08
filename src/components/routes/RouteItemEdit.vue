@@ -48,11 +48,11 @@ import {
 } from '../types/Route';
 
 // stores
-import { useTripsStore } from 'src/stores/trips';
+import { useTripsStore } from '@/stores/trips';
 
 // utils
 import { getRouteFormFieldOptions } from './utils/';
-import { localizedFloatNumStrToFloatNumber } from 'src/utils';
+import { localizedFloatNumStrToFloatNumber } from '@/utils';
 
 // types
 import type { FormOption } from '../types/Form';

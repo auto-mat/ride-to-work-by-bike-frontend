@@ -15,8 +15,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import PageHeading from 'components/global/PageHeading.vue';
-import ResultsTabs from 'components/results/ResultsTabs.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
+import ResultsTabs from '@/components/results/ResultsTabs.vue';
 
 export default defineComponent({
   name: 'ResultsPage',

@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia';
-import TabCoordinatorInvoices from 'components/coordinator/TabCoordinatorInvoices.vue';
+import TabCoordinatorInvoices from '@/components/coordinator/TabCoordinatorInvoices.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import { useChallengeStore } from '../../stores/challenge';

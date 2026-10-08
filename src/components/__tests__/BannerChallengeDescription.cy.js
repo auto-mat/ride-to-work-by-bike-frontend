@@ -1,4 +1,4 @@
-import BannerChallengeDescription from 'components/results/BannerChallengeDescription.vue';
+import BannerChallengeDescription from '@/components/results/BannerChallengeDescription.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<BannerChallengeDescription>', () => {

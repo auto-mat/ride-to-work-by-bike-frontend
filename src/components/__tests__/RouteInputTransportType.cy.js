@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
+import FormFieldTestWrapper from '@/components/global/FormFieldTestWrapper.vue';
 import RouteInputTransportType from '../routes/RouteInputTransportType.vue';
 import { i18n } from '../../boot/i18n';
 import { TransportType } from '../types/Route';

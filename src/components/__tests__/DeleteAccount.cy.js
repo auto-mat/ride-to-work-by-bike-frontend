@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import DeleteAccount from 'components/profile/DeleteAccount.vue';
+import DeleteAccount from '@/components/profile/DeleteAccount.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

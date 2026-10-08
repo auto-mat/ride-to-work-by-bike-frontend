@@ -15,7 +15,7 @@ import { Screen } from 'quasar';
 import { computed, defineComponent, onMounted, ref } from 'vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // stores
 import { useStravaStore } from '../../stores/strava';

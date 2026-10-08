@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import FormUpdatePhone from 'components/form/FormUpdatePhone.vue';
+import FormUpdatePhone from '@/components/form/FormUpdatePhone.vue';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
 

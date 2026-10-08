@@ -41,18 +41,18 @@ import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 import { QForm } from 'quasar';
 
 // components
-import DialogDefault from 'src/components/global/DialogDefault.vue';
-import FormAddCompany from 'src/components/form/FormAddCompany.vue';
+import DialogDefault from '@/components/global/DialogDefault.vue';
+import FormAddCompany from '@/components/form/FormAddCompany.vue';
 
 // composables
-import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
-import { useApiPostOrganization } from 'src/composables/useApiPostOrganization';
-import { useOrganizations } from 'src/composables/useOrganizations';
-import { useValidation } from 'src/composables/useValidation';
-import { useSelectSearch } from 'src/composables/useSelectSearch';
+import { useApiGetOrganizations } from '@/composables/useApiGetOrganizations';
+import { useApiPostOrganization } from '@/composables/useApiPostOrganization';
+import { useOrganizations } from '@/composables/useOrganizations';
+import { useValidation } from '@/composables/useValidation';
+import { useSelectSearch } from '@/composables/useSelectSearch';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // enums
 import { FormAddCompanyVariantProp } from '../enums/Form';
@@ -62,11 +62,11 @@ import { OrganizationType } from '../types/Organization';
 import type {
   FormCompanyFields,
   FormSelectOption,
-} from 'src/components/types/Form';
-import type { Logger } from 'src/components/types/Logger';
+} from '@/components/types/Form';
+import type { Logger } from '@/components/types/Logger';
 
 // utils
-import { deepObjectWithSimplePropsCopy } from 'src/utils';
+import { deepObjectWithSimplePropsCopy } from '@/utils';
 import { onTrack } from '../../utils/track';
 
 export const emptyFormCompanyFields: FormCompanyFields = {

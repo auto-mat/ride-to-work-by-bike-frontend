@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia';
-import CoordinatorRegistrationLink from 'components/coordinator/CoordinatorRegistrationLink.vue';
+import CoordinatorRegistrationLink from '@/components/coordinator/CoordinatorRegistrationLink.vue';
 import { i18n } from '../../boot/i18n';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 

@@ -29,7 +29,7 @@
 import { defineComponent, computed, defineExpose, ref } from 'vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 
 import type { QInput } from 'quasar';
 

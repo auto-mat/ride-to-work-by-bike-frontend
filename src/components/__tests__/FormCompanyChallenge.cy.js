@@ -1,7 +1,7 @@
-import FormCompanyChallenge from 'components/form/FormCompanyChallenge.vue';
+import FormCompanyChallenge from '@/components/form/FormCompanyChallenge.vue';
 import { i18n } from '../../boot/i18n';
 import { TransportType } from '../types/Route';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 describe('<FormCompanyChallenge>', () => {
   it('has translation for all strings', () => {

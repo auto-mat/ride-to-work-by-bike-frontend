@@ -2,17 +2,17 @@
 import { computed } from 'vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
 
 // types
 import type { Ref } from 'vue';
 import type {
   Box,
   PackageTransaction,
-} from 'src/components/types/AdminOrganisation';
+} from '@/components/types/AdminOrganisation';
 
 export interface TableBoxRow {
   trackingNumber: string;

@@ -25,7 +25,7 @@ import SectionColumns from '../homepage/SectionColumns.vue';
 import TableChallengeResults from '../results/TableChallengeResults.vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 import { useApiGetCompetitionResults } from '../../composables/useApiGetCompetitionResults';
 import { useRoutes } from '../../composables/useRoutes';
 

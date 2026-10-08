@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import ChallengeInactiveInfo from 'components/homepage/ChallengeInactiveInfo.vue';
+import ChallengeInactiveInfo from '@/components/homepage/ChallengeInactiveInfo.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

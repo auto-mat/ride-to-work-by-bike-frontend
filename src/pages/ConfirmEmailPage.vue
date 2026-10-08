@@ -21,8 +21,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import EmailConfirmation from 'components/register/EmailConfirmation.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import EmailConfirmation from '@/components/register/EmailConfirmation.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'ConfirmEmailPage',

@@ -22,8 +22,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import EmailVerification from 'components/register/EmailVerification.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import EmailVerification from '@/components/register/EmailVerification.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'VerifyEmailPage',

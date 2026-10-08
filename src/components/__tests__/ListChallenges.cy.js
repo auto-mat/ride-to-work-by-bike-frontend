@@ -1,8 +1,8 @@
 import { createPinia, setActivePinia } from 'pinia';
-import ListChallenges from 'components/global/ListChallenges.vue';
+import ListChallenges from '@/components/global/ListChallenges.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminCompetitionStore } from '../../stores/adminCompetition';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 describe('<ListChallenges>', () => {
   it('has translation for all strings', () => {

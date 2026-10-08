@@ -21,8 +21,8 @@ import { QForm } from 'quasar';
 import { computed, defineComponent, ref } from 'vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
-import { useValidation } from 'src/composables/useValidation';
+import { i18n } from '@/boot/i18n';
+import { useValidation } from '@/composables/useValidation';
 
 // types
 import type { FormOption } from '../types/Form';

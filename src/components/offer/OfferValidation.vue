@@ -17,7 +17,7 @@ import { colors } from 'quasar';
 import { defineComponent } from 'vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 export default defineComponent({
   name: 'OfferValidation',

@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
-import FormUpdateOccupation from 'components/form/FormUpdateOccupation.vue';
+import FormUpdateOccupation from '@/components/form/FormUpdateOccupation.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

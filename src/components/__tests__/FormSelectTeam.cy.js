@@ -1,10 +1,10 @@
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import FormSelectTeam from 'components/form/FormSelectTeam.vue';
+import FormSelectTeam from '@/components/form/FormSelectTeam.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { useChallengeStore } from 'src/stores/challenge';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 const subsidiaryIdDefault = 1972;
 

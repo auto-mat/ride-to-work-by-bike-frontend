@@ -37,8 +37,8 @@ import TableInvoices from './TableInvoices.vue';
 import { PhaseType } from '../types/Challenge';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
+import { useChallengeStore } from '@/stores/challenge';
 
 export default defineComponent({
   name: 'TabCoordinatorInvoices',

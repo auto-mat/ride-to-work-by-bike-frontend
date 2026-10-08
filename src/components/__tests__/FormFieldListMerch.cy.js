@@ -1,12 +1,12 @@
 import { createPinia, setActivePinia } from 'pinia';
-import FormFieldListMerch from 'components/form/FormFieldListMerch.vue';
+import FormFieldListMerch from '@/components/form/FormFieldListMerch.vue';
 import { i18n } from '../../boot/i18n';
-import { Gender } from 'components/types/Profile';
+import { Gender } from '@/components/types/Profile';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useFormatPrice, Currency } from '../../composables/useFormatPrice';
 import { useChallengeStore } from '../../stores/challenge';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '@/i18n/def_locale';
+import { getApiBaseUrlWithLang } from '@/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,

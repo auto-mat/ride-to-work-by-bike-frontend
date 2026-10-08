@@ -28,16 +28,16 @@ import { colors } from 'quasar';
 import { defineComponent, computed, inject } from 'vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
-import { i18n } from 'src/boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useValidation } from '@/composables/useValidation';
+import { i18n } from '@/boot/i18n';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 import { onTrack } from '../../utils/track';
 
 // enums
-import { OrganizationType } from 'src/components/types/Organization';
-import { PaymentSubject } from 'src/components/enums/Payment';
+import { OrganizationType } from '@/components/types/Organization';
+import { PaymentSubject } from '@/components/enums/Payment';
 
 // types
 import type { FormOption } from '../../components/types/Form';

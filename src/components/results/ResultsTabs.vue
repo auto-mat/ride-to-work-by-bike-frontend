@@ -12,19 +12,19 @@
 import { computed, defineComponent, onMounted, ref } from 'vue';
 
 // components
-import ResultsTachometersReport from 'src/components/results/ResultsTachometersReport.vue';
+import ResultsTachometersReport from '@/components/results/ResultsTachometersReport.vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
 import {
   ResultsReportType,
   ResultsReportTypeByChallenge,
-} from 'src/components/enums/Results';
+} from '@/components/enums/Results';
 
 // stores
-import { useResultsStore } from 'src/stores/results';
+import { useResultsStore } from '@/stores/results';
 
 export default defineComponent({
   name: 'ResultsTabs',

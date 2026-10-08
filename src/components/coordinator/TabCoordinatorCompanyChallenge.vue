@@ -25,7 +25,7 @@ import FormCompanyChallenge from '../form/FormCompanyChallenge.vue';
 import TableCompanyChallenge from './TableCompanyChallenge.vue';
 
 // stores
-import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
+import { useAdminCompetitionStore } from '@/stores/adminCompetition';
 
 // types
 import type { TableCompanyChallengeRow } from '../../composables/useTableCompanyChallengeData';

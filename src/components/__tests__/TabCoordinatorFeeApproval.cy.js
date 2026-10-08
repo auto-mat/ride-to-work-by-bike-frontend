@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import TabCoordinatorFeeApproval from 'components/coordinator/TabCoordinatorFeeApproval.vue';
+import TabCoordinatorFeeApproval from '@/components/coordinator/TabCoordinatorFeeApproval.vue';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import { i18n } from '../../boot/i18n';
 

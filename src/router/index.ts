@@ -8,10 +8,10 @@ import {
   type RouteLocationNormalized,
   type NavigationGuardNext,
 } from 'vue-router';
-import { useChallengeStore } from 'src/stores/challenge';
-import { useLoginStore, emptyUser } from 'src/stores/login';
-import { useRegisterStore } from 'src/stores/register';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
+import { useLoginStore, emptyUser } from '@/stores/login';
+import { useRegisterStore } from '@/stores/register';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 import routes from './routes';
 import { routesConf } from './routes_conf';
 import { PhaseType } from '../components/types/Challenge';

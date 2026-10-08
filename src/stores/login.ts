@@ -12,7 +12,7 @@ import {
   timestampToDatetimeString,
   requestDefaultHeader,
   requestTokenHeader,
-} from 'src/utils';
+} from '@/utils';
 import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 
 // config
@@ -38,7 +38,7 @@ import type {
   LoginPayload,
   LoginResponse,
   LoginOptions,
-} from 'src/components/types/Login';
+} from '@/components/types/Login';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../utils';

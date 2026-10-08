@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import RoutesMapToolbar from 'components/routes/RoutesMapToolbar.vue';
+import RoutesMapToolbar from '@/components/routes/RoutesMapToolbar.vue';
 import { i18n } from '../../boot/i18n';
 
 // selectors

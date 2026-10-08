@@ -2,8 +2,8 @@ import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import LanguageSwitcher from '../global/LanguageSwitcher.vue';
 import { i18n } from '../../boot/i18n';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { defaultLocale } from '@/i18n/def_locale';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 const { getPaletteColor } = colors;

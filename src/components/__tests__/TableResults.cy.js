@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import TableResults from 'components/coordinator/TableResults.vue';
+import TableResults from '@/components/coordinator/TableResults.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';

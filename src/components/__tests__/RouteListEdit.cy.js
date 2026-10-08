@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { date, colors } from 'quasar';
 import { computed } from 'vue';
-import RouteListEdit from 'components/routes/RouteListEdit.vue';
+import RouteListEdit from '@/components/routes/RouteListEdit.vue';
 import { i18n } from '../../boot/i18n';
 import {
   testRouteListDayDate,

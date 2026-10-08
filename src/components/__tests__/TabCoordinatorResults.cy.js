@@ -1,9 +1,9 @@
 import { createPinia, setActivePinia } from 'pinia';
-import TabCoordinatorResults from 'components/coordinator/TabCoordinatorResults.vue';
+import TabCoordinatorResults from '@/components/coordinator/TabCoordinatorResults.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
-import { ResultsReportType } from 'src/components/enums/Results';
+import { ResultsReportType } from '@/components/enums/Results';
 
 describe('<TabCoordinatorResults>', () => {
   it('has translation for all strings', () => {

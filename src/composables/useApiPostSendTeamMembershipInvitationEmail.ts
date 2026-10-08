@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { useApi } from './useApi';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
 import { ApiBaseUrl } from '../components/enums/Api';

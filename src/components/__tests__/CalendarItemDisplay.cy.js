@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import CalendarItemDisplay from 'components/routes/CalendarItemDisplay.vue';
+import CalendarItemDisplay from '@/components/routes/CalendarItemDisplay.vue';
 import { i18n } from '../../boot/i18n';
 import { TransportDirection } from '../../../src/components/types/Route';
 

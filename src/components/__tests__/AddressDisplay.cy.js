@@ -1,4 +1,4 @@
-import AddressDisplay from 'components/global/AddressDisplay.vue';
+import AddressDisplay from '@/components/global/AddressDisplay.vue';
 import { i18n } from '../../boot/i18n';
 
 // selectors

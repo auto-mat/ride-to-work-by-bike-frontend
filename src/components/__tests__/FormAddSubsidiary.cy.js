@@ -1,11 +1,11 @@
 import { ref } from 'vue';
-import FormAddSubsidiary from 'components/form/FormAddSubsidiary.vue';
+import FormAddSubsidiary from '@/components/form/FormAddSubsidiary.vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { deepObjectWithSimplePropsCopy } from '../../../src/utils';
-import { OrganizationType } from 'src/components/types/Organization';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { OrganizationType } from '@/components/types/Organization';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // selectors
 const selectorFormStreet = 'form-add-subsidiary-street';

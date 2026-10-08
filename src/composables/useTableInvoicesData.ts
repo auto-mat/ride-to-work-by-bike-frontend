@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
 
 // types
 import type { Ref } from 'vue';
-import type { Invoice, InvoiceResult } from 'src/components/types/Invoice';
+import type { Invoice, InvoiceResult } from '@/components/types/Invoice';
 
 export interface TableInvoiceRow {
   exposureDate: string;

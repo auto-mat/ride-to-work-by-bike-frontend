@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 
 // enums
-import { TeamMemberStatus } from 'src/components/enums/TeamMember';
-import { PaymentState, PaymentType } from 'src/components/enums/Payment';
+import { TeamMemberStatus } from '@/components/enums/TeamMember';
+import { PaymentState, PaymentType } from '@/components/enums/Payment';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
 
 // types
 import type { Ref } from 'vue';
@@ -14,7 +14,7 @@ import type {
   AdminSubsidiary,
   AdminTeam,
   AdminTeamMember,
-} from 'src/components/types/AdminOrganisation';
+} from '@/components/types/AdminOrganisation';
 
 export interface TableAttendanceRow {
   name: string;

@@ -19,7 +19,7 @@
 import { defineComponent, computed } from 'vue';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 export default defineComponent({
   name: 'ShowRegisterChallengeStoreValues',

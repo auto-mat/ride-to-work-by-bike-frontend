@@ -1,6 +1,6 @@
-import ResultsTachometersReport from 'components/results/ResultsTachometersReport.vue';
+import ResultsTachometersReport from '@/components/results/ResultsTachometersReport.vue';
 import { i18n } from '../../boot/i18n';
-import { ResultsReportType } from 'src/components/enums/Results';
+import { ResultsReportType } from '@/components/enums/Results';
 
 describe('<ResultsTachometersReport>', () => {
   it('has translation for all strings', () => {

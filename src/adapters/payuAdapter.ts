@@ -6,14 +6,14 @@ import { PaymentSubject } from '../components/enums/Payment';
 import { PaymentCategory } from '../components/types/ApiPayu';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
+import { useChallengeStore } from '@/stores/challenge';
 
 // types
 import type {
   PayuCreateOrderPayload,
   PayuProduct,
 } from '../components/types/ApiPayu';
-import type { ValidatedCoupon } from 'src/components/types/Coupon';
+import type { ValidatedCoupon } from '@/components/types/Coupon';
 
 // utils
 import { defaultPaymentAmountMinComputed } from '../utils/price_levels';

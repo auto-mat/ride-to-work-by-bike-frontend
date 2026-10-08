@@ -32,37 +32,37 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { routesConf } from '../router/routes_conf';
 
 // components
-import FormFieldListMerch from 'src/components/form/FormFieldListMerch.vue';
-import FormFieldOptionGroup from 'src/components/form/FormFieldOptionGroup.vue';
-import FormPersonalDetails from 'src/components/form/FormPersonalDetails.vue';
-import FormSelectOrganization from 'src/components/form/FormSelectOrganization.vue';
-import FormSelectTeam from 'src/components/form/FormSelectTeam.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
-import RegisterChallengePayment from 'src/components/register/RegisterChallengePayment.vue';
-import RegisterChallengeSummary from 'src/components/register/RegisterChallengeSummary.vue';
-import ShowOrganizationIds from 'src/components/debug/ShowOrganizationIds.vue';
-import TopBarCountdown from 'src/components/global/TopBarCountdown.vue';
+import FormFieldListMerch from '@/components/form/FormFieldListMerch.vue';
+import FormFieldOptionGroup from '@/components/form/FormFieldOptionGroup.vue';
+import FormPersonalDetails from '@/components/form/FormPersonalDetails.vue';
+import FormSelectOrganization from '@/components/form/FormSelectOrganization.vue';
+import FormSelectTeam from '@/components/form/FormSelectTeam.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
+import RegisterChallengePayment from '@/components/register/RegisterChallengePayment.vue';
+import RegisterChallengeSummary from '@/components/register/RegisterChallengeSummary.vue';
+import ShowOrganizationIds from '@/components/debug/ShowOrganizationIds.vue';
+import TopBarCountdown from '@/components/global/TopBarCountdown.vue';
 import RegisterChallengePaymentMessages from '../components/register/RegisterChallengePaymentMessages.vue';
 
 // composables
-import { useStepperValidation } from 'src/composables/useStepperValidation';
-import { useOrganizations } from 'src/composables/useOrganizations';
-import { useCompetitionPhase } from 'src/composables/useCompetitionPhase';
-import { useInvitationToken } from 'src/composables/useInvitationToken';
-import { useInvitationPrefill } from 'src/composables/useInvitationPrefill';
+import { useStepperValidation } from '@/composables/useStepperValidation';
+import { useOrganizations } from '@/composables/useOrganizations';
+import { useCompetitionPhase } from '@/composables/useCompetitionPhase';
+import { useInvitationToken } from '@/composables/useInvitationToken';
+import { useInvitationPrefill } from '@/composables/useInvitationPrefill';
 
 import { onTrack } from '../utils/track';
 
 // enums
-import { OrganizationType } from 'src/components/types/Organization';
-import { PaymentState, PaymentSubject } from 'src/components/enums/Payment';
-import { RegisterChallengeStep } from 'src/components/enums/RegisterChallenge';
-import { PaymentCategory } from 'src/components/types/ApiPayu';
+import { OrganizationType } from '@/components/types/Organization';
+import { PaymentState, PaymentSubject } from '@/components/enums/Payment';
+import { RegisterChallengeStep } from '@/components/enums/RegisterChallenge';
+import { PaymentCategory } from '@/components/types/ApiPayu';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
-import { useLoginStore } from 'src/stores/login';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
+import { useLoginStore } from '@/stores/login';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // types
 import type { Logger } from '../components/types/Logger';

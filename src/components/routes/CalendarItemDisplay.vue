@@ -36,7 +36,7 @@
 import { computed, defineComponent } from 'vue';
 
 // composables
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '@/composables/useRoutes';
 
 // enums
 import { TransportDirection, TransportType } from '../types/Route';

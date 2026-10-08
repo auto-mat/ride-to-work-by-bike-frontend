@@ -34,8 +34,8 @@ import SectionHeading from '../global/SectionHeading.vue';
 import SectionColumns from '../homepage/SectionColumns.vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { routesConf } from 'src/router/routes_conf';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { routesConf } from '@/router/routes_conf';
 
 // types
 import type { CardOffer as CardOfferType } from '../types';

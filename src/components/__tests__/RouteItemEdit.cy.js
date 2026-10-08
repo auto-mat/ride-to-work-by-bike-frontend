@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
-import { hexToRgb } from 'app/test/cypress/utils';
+import { hexToRgb } from '@/../test/cypress/utils';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import RouteItemEdit from '../../components/routes/RouteItemEdit.vue';
 import { i18n } from '../../boot/i18n';

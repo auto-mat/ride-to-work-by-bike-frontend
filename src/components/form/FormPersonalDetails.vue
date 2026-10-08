@@ -32,14 +32,14 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
-import { useSelectSearch } from 'src/composables/useSelectSearch';
+import { useSelectSearch } from '@/composables/useSelectSearch';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // enums
-import { Gender } from 'src/components/types/Profile';
+import { Gender } from '@/components/types/Profile';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
@@ -48,8 +48,8 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import type {
   FormOption,
   FormSelectOptionNumberValue,
-} from 'src/components/types/Form';
-import type { RegisterChallengePersonalDetailsForm } from 'src/components/types/RegisterChallenge';
+} from '@/components/types/Form';
+import type { RegisterChallengePersonalDetailsForm } from '@/components/types/RegisterChallenge';
 import type { Logger } from '../types/Logger';
 
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';

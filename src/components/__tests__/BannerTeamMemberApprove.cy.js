@@ -1,10 +1,10 @@
 import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import BannerTeamMemberApprove from 'components/global/BannerTeamMemberApprove.vue';
+import BannerTeamMemberApprove from '@/components/global/BannerTeamMemberApprove.vue';
 import { i18n } from '../../boot/i18n';
-import { useChallengeStore } from 'stores/challenge';
-import { useRegisterChallengeStore } from 'stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // colors
 const { changeAlpha, getPaletteColor } = colors;

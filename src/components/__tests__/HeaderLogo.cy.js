@@ -1,4 +1,4 @@
-import HeaderLogo from 'components/global/HeaderLogo.vue';
+import HeaderLogo from '@/components/global/HeaderLogo.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

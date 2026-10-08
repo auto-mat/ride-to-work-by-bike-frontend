@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import FormFieldCompany from 'components/global/FormFieldCompany.vue';
+import FormFieldCompany from '@/components/global/FormFieldCompany.vue';
 import { vModelAdapter } from '../../../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';

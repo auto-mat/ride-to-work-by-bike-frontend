@@ -1,8 +1,8 @@
 import { createPinia, setActivePinia } from 'pinia';
-import RegisterChallengePaymentMessages from 'components/register/RegisterChallengePaymentMessages.vue';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import { useLoginStore } from 'src/stores/login';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import RegisterChallengePaymentMessages from '@/components/register/RegisterChallengePaymentMessages.vue';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { useLoginStore } from '@/stores/login';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { i18n } from '../../boot/i18n';
 
 describe('<RegisterChallengePaymentMessages>', () => {

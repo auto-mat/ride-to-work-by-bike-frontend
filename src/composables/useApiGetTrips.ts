@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 // adapters
-import { tripsAdapter } from 'src/adapters/tripsAdapter';
+import { tripsAdapter } from '@/adapters/tripsAdapter';
 
 // composables
 import { useApi } from './useApi';

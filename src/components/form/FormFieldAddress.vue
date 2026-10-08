@@ -41,7 +41,7 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import { onTrack } from '../../utils/track';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 
 // enums
 import { FormAddressFields } from '../enums/Form';

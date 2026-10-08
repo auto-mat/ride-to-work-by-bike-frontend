@@ -73,7 +73,7 @@ export default defineComponent({
         data-cy="banner-app-buttons-google-play"
       >
         <q-img
-          src="~assets/svg/googleplay.svg"
+          src="~@/assets/svg/googleplay.svg"
           :ratio="3.375"
           height="40px"
           width="135px"
@@ -87,7 +87,7 @@ export default defineComponent({
         data-cy="banner-app-buttons-app-store"
       >
         <q-img
-          src="~assets/svg/appstore.svg"
+          src="~@/assets/svg/appstore.svg"
           :ratio="3"
           height="40px"
           width="120px"

@@ -14,8 +14,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import PageHeading from 'components/global/PageHeading.vue';
-import DiplomasList from 'components/diplomas/DiplomasList.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
+import DiplomasList from '@/components/diplomas/DiplomasList.vue';
 
 export default defineComponent({
   name: 'DiplomasPage',

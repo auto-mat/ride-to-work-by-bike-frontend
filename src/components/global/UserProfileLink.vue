@@ -81,7 +81,7 @@ export default defineComponent({
           :width="size"
           :height="size"
           img-class="object-contain"
-          placeholder-src="~assets/svg/profile-placeholder.svg"
+          placeholder-src="~@/assets/svg/profile-placeholder.svg"
           data-cy="avatar-image"
         />
       </q-avatar>

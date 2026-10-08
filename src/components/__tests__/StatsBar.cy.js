@@ -1,8 +1,8 @@
 import { colors } from 'quasar';
-import StatsBar from 'components/global/StatsBar.vue';
+import StatsBar from '@/components/global/StatsBar.vue';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { i18n } from '../../boot/i18n';
-import { StatisticsId } from 'components/types/Statistics';
+import { StatisticsId } from '@/components/types/Statistics';
 
 // colors
 const { getPaletteColor } = colors;

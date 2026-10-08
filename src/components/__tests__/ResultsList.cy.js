@@ -1,4 +1,4 @@
-import ResultsList from 'components/results/ResultsList.vue';
+import ResultsList from '@/components/results/ResultsList.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ResultsList>', () => {

@@ -61,7 +61,7 @@ export default defineComponent({
         <q-img
           ratio="1"
           :src="coordinator.image.src"
-          placeholder-src="~assets/svg/profile-placeholder.svg"
+          placeholder-src="~@/assets/svg/profile-placeholder.svg"
           :alt="coordinator.name"
         />
       </q-avatar>

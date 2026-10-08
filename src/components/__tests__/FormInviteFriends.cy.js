@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 
-import FormInviteFriends from 'components/form/FormInviteFriends.vue';
+import FormInviteFriends from '@/components/form/FormInviteFriends.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

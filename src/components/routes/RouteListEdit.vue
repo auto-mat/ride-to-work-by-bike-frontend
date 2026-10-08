@@ -29,14 +29,14 @@ import RouteItemEdit from './RouteItemEdit.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '@/composables/useRoutes';
 
 // enums
 import { TransportDirection } from '../types/Route';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
-import { useTripsStore } from 'src/stores/trips';
+import { useTripsStore } from '@/stores/trips';
 
 // types
 import type { Logger } from '../types/Logger';

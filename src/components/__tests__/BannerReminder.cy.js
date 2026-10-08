@@ -1,4 +1,4 @@
-import BannerReminder from 'components/global/BannerReminder.vue';
+import BannerReminder from '@/components/global/BannerReminder.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<BannerReminder>', () => {

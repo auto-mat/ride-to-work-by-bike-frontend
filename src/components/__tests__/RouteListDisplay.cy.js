@@ -1,7 +1,7 @@
 import { colors, date } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 import { computed } from 'vue';
-import RouteListDisplay from 'components/routes/RouteListDisplay.vue';
+import RouteListDisplay from '@/components/routes/RouteListDisplay.vue';
 import { i18n } from '../../boot/i18n';
 import { testRouteListDayDate } from '../../../test/cypress/support/commonTests';
 import { useRoutes } from '../../../src/composables/useRoutes';

@@ -1,10 +1,10 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
-import RouteCalendarPanel from 'components/routes/RouteCalendarPanel.vue';
+import RouteCalendarPanel from '@/components/routes/RouteCalendarPanel.vue';
 import { i18n } from '../../boot/i18n';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
-import { useChallengeStore } from 'src/stores/challenge';
-import { useTripsStore } from 'src/stores/trips';
+import { useChallengeStore } from '@/stores/challenge';
+import { useTripsStore } from '@/stores/trips';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { systemTimeLoggingRoutes } from '../../../test/cypress/support/commonTests';
 import testData from '../../../test/cypress/fixtures/routeCalendarPanelInputTest.json';

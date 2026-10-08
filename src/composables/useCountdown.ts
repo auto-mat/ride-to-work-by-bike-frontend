@@ -3,7 +3,7 @@ import { ref, watchEffect, onBeforeUnmount, Ref, ComputedRef } from 'vue';
 import { date } from 'quasar';
 
 // types
-import { Countdown } from 'src/components/types';
+import { Countdown } from '@/components/types';
 import { calculateCountdownIntervals } from '../utils';
 
 export const useCountdown = (

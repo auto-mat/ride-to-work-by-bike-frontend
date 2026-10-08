@@ -28,12 +28,12 @@ import { computed, defineComponent, nextTick, ref } from 'vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // i18n
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 import { onTrack } from '../../utils/track';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
+import { useChallengeStore } from '@/stores/challenge';
 
 // types
 import type { FormTeamFields } from '../types/Form';

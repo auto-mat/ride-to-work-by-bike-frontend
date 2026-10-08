@@ -1,5 +1,5 @@
 import { colors, getCssVar } from 'quasar';
-import ResetPassword from 'components/register/ResetPassword.vue';
+import ResetPassword from '@/components/register/ResetPassword.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { testPasswordInputReveal } from '../../../test/cypress/support/commonTests';

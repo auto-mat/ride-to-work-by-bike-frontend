@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { setActivePinia, createPinia } from 'pinia';
 import { colors } from 'quasar';
-import FormFieldSliderNumber from 'components/form/FormFieldSliderNumber.vue';
+import FormFieldSliderNumber from '@/components/form/FormFieldSliderNumber.vue';
 import { i18n } from '../../boot/i18n';
 import { useChallengeStore } from '../../stores/challenge';
 import { vModelAdapter } from '../../../test/cypress/utils';

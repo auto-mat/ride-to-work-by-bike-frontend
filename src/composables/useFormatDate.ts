@@ -2,7 +2,7 @@
 import { date } from 'quasar';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // enums
 enum TimeState {

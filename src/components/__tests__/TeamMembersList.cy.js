@@ -1,10 +1,10 @@
 import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import TeamMembersList from 'components/profile/TeamMembersList.vue';
+import TeamMembersList from '@/components/profile/TeamMembersList.vue';
 import { i18n } from '../../boot/i18n';
-import { useRegisterChallengeStore } from 'stores/registerChallenge';
-import { TeamMemberStatus } from 'components/enums/TeamMember';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { TeamMemberStatus } from '@/components/enums/TeamMember';
 
 // colors
 const { getPaletteColor } = colors;

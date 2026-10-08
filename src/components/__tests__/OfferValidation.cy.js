@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import OfferValidation from 'components/offer/OfferValidation.vue';
+import OfferValidation from '@/components/offer/OfferValidation.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

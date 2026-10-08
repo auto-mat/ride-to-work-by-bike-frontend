@@ -1,6 +1,6 @@
 // types
-import type { DiscountCouponResponse } from 'src/components/types/Coupon';
-import type { ValidatedCoupon } from 'src/components/types/Coupon';
+import type { DiscountCouponResponse } from '@/components/types/Coupon';
+import type { ValidatedCoupon } from '@/components/types/Coupon';
 
 export const couponAdapter = {
   /**

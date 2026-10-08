@@ -24,7 +24,7 @@ import { defineComponent, computed } from 'vue';
 import { Notify } from 'quasar';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 import { useExportOrganizationChallengeTable } from '../../composables/useExportOrganizationChallengeResultsTable';
 import { useExportTable } from '../../composables/useExportTable';
 

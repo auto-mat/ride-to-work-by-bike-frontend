@@ -29,29 +29,29 @@ import { QForm } from 'quasar';
 import { computed, defineComponent, inject, onMounted, ref, watch } from 'vue';
 
 // adapters
-import { subsidiaryAdapter } from 'src/adapters/subsidiaryAdapter';
+import { subsidiaryAdapter } from '@/adapters/subsidiaryAdapter';
 
 // components
-import DialogDefault from 'src/components/global/DialogDefault.vue';
-import FormAddSubsidiary from 'src/components/form/FormAddSubsidiary.vue';
+import DialogDefault from '@/components/global/DialogDefault.vue';
+import FormAddSubsidiary from '@/components/form/FormAddSubsidiary.vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 import { useApiPostSubsidiary } from '../../composables/useApiPostSubsidiary';
 import { useOrganizations } from '../../composables/useOrganizations';
 import { useSelectSearch } from '../../composables/useSelectSearch';
 
 // enums
-import { OrganizationType } from 'src/components/types/Organization';
+import { OrganizationType } from '@/components/types/Organization';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // types
-import type { FormCompanyAddressFields } from 'src/components/types/Form';
-import type { FormSelectOption } from 'src/components/types/Form';
-import type { Logger } from 'src/components/types/Logger';
-import type { OrganizationSubsidiary } from 'src/components/types/Organization';
+import type { FormCompanyAddressFields } from '@/components/types/Form';
+import type { FormSelectOption } from '@/components/types/Form';
+import type { Logger } from '@/components/types/Logger';
+import type { OrganizationSubsidiary } from '@/components/types/Organization';
 
 // utils
 import { deepObjectWithSimplePropsCopy } from '../../utils';

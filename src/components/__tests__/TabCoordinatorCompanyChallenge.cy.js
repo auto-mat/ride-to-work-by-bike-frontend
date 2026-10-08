@@ -1,9 +1,9 @@
 import { createPinia, setActivePinia } from 'pinia';
-import TabCoordinatorCompanyChallenge from 'components/coordinator/TabCoordinatorCompanyChallenge.vue';
+import TabCoordinatorCompanyChallenge from '@/components/coordinator/TabCoordinatorCompanyChallenge.vue';
 import { i18n } from '../../boot/i18n';
 import { useChallengeStore } from '../../stores/challenge';
 import { systemTimeRegistrationPhaseActive } from '../../../test/cypress/support/commonTests';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // variables
 const iconSize = 18;

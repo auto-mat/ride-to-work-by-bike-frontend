@@ -1,5 +1,5 @@
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // enums
 import { Colors } from '../components/enums/Colors';

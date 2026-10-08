@@ -1,4 +1,4 @@
-import RoutesMap from 'components/routes/RoutesMap.vue';
+import RoutesMap from '@/components/routes/RoutesMap.vue';
 import { i18n } from '../../boot/i18n';
 
 // selectors

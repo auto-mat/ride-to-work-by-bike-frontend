@@ -24,7 +24,7 @@ import { defineComponent, inject, ref } from 'vue';
 import FormFieldEmail from '../global/FormFieldEmail.vue';
 
 // composables
-import { useApiPostSendTeamMembershipInvitationEmail } from 'src/composables/useApiPostSendTeamMembershipInvitationEmail';
+import { useApiPostSendTeamMembershipInvitationEmail } from '@/composables/useApiPostSendTeamMembershipInvitationEmail';
 
 // types
 import type { Logger } from '../types/Logger';

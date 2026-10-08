@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import FormInviteToTeam from 'components/profile/FormInviteToTeam.vue';
+import FormInviteToTeam from '@/components/profile/FormInviteToTeam.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

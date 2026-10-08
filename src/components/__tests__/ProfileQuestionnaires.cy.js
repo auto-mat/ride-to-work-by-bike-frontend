@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import ProfileQuestionnaires from 'components/profile/ProfileQuestionnaires.vue';
+import ProfileQuestionnaires from '@/components/profile/ProfileQuestionnaires.vue';
 import { i18n } from '../../boot/i18n';
 import {
   failOnStatusCode,

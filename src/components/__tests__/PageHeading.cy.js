@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import PageHeading from 'components/global/PageHeading.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

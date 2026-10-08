@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import EmailVerification from 'components/register/EmailVerification.vue';
+import EmailVerification from '@/components/register/EmailVerification.vue';
 import { i18n } from '../../boot/i18n';
 import { useRegisterStore } from '../../stores/register';
 import { routesConf } from '../../router/routes_conf';

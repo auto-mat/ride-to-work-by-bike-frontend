@@ -25,22 +25,22 @@ import { Notify } from 'quasar';
 import FormAddTeam from './FormAddTeam.vue';
 
 // composables
-import { useApiGetTeams } from 'src/composables/useApiGetTeams';
-import { useApiPostTeam } from 'src/composables/useApiPostTeam';
-import { useSelectSearch } from 'src/composables/useSelectSearch';
+import { useApiGetTeams } from '@/composables/useApiGetTeams';
+import { useApiPostTeam } from '@/composables/useApiPostTeam';
+import { useSelectSearch } from '@/composables/useSelectSearch';
 
 // i18n
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // types
 import type {
   FormSelectTableOption,
   FormTeamFields,
-} from 'src/components/types/Form';
-import type { Logger } from 'src/components/types/Logger';
+} from '@/components/types/Form';
+import type { Logger } from '@/components/types/Logger';
 
 export default defineComponent({
   name: 'FormUpdateTeam',

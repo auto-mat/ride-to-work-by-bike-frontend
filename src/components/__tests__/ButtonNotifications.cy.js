@@ -1,4 +1,4 @@
-import ButtonNotifications from 'components/global/ButtonNotifications.vue';
+import ButtonNotifications from '@/components/global/ButtonNotifications.vue';
 import { i18n } from '../../boot/i18n';
 import { colors } from 'quasar';
 import { routesConf } from '../../router/routes_conf';

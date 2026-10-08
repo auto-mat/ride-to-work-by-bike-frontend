@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 
 import TopBarCountdown from '../global/TopBarCountdown.vue';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

@@ -18,8 +18,8 @@
  * // routes.ts
  * {
  *   path: '/login',
- *   component: () => import('layouts/LoginRegisterLayout.vue'),
- *   children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+ *   component: () => import('@/layouts/LoginRegisterLayout.vue'),
+ *   children: [{ path: '', component: () => import('@/pages/LoginPage.vue') }],
  * },
  * ```
  *
@@ -32,7 +32,7 @@ import { computed, defineComponent, watch } from 'vue';
 import { i18n } from '../boot/i18n';
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
-import { useLoginStore } from 'src/stores/login';
+import { useLoginStore } from '@/stores/login';
 import { getLoggedUserNotifyMessageConf } from '../utils/notify';
 
 // set global i18n object (for test purposes)

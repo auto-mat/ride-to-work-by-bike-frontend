@@ -1,7 +1,7 @@
 import { colors, getCssVar } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
 
-import { useLoginStore } from 'src/stores/login';
+import { useLoginStore } from '@/stores/login';
 import FormLogin from '../login/FormLogin.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';

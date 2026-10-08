@@ -1,4 +1,4 @@
-import ResultsChallengeUpcoming from 'components/results/ResultsChallengeUpcoming.vue';
+import ResultsChallengeUpcoming from '@/components/results/ResultsChallengeUpcoming.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ResultsChallengeUpcoming>', () => {

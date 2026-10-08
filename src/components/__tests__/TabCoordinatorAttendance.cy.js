@@ -1,4 +1,4 @@
-import TabCoordinatorAttendance from 'components/coordinator/TabCoordinatorAttendance.vue';
+import TabCoordinatorAttendance from '@/components/coordinator/TabCoordinatorAttendance.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<TabCoordinatorAttendance>', () => {

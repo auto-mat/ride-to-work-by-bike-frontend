@@ -1,8 +1,8 @@
 import { colors } from 'quasar';
 import CardEvent from '../homepage/CardEvent.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { hexToRgb } from 'app/test/cypress/utils';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { hexToRgb } from '@/../test/cypress/utils';
 
 // colors
 const { getPaletteColor } = colors;

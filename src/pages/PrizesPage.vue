@@ -29,11 +29,11 @@ import { feedAdapter } from '../adapters/feedAdapter';
 // components
 import CardOffer from '../components/homepage/CardOffer.vue';
 import CardOfferSkeleton from '../components/skeletons/CardOfferSkeleton.vue';
-import CardPrize from 'src/components/global/CardPrize.vue';
-import CardPrizeSkeleton from 'src/components/skeletons/CardPrizeSkeleton.vue';
-import FormFieldSelectCity from 'src/components/form/FormFieldSelectCity.vue';
+import CardPrize from '@/components/global/CardPrize.vue';
+import CardPrizeSkeleton from '@/components/skeletons/CardPrizeSkeleton.vue';
+import FormFieldSelectCity from '@/components/form/FormFieldSelectCity.vue';
 import ListPartners from '../components/global/ListPartners.vue';
-import PageHeading from 'components/global/PageHeading.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
 import SectionColumns from '../components/homepage/SectionColumns.vue';
 import SectionHeading from '../components/global/SectionHeading.vue';
 

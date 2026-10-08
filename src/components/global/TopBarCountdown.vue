@@ -20,9 +20,9 @@
 import { computed, defineComponent } from 'vue';
 
 // composables
-import { useCountdown } from 'src/composables/useCountdown';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { i18n } from 'src/boot/i18n';
+import { useCountdown } from '@/composables/useCountdown';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { i18n } from '@/boot/i18n';
 
 export default defineComponent({
   name: 'TopBarCountdown',

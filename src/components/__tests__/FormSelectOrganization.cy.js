@@ -1,11 +1,11 @@
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import FormSelectOrganization from 'components/form/FormSelectOrganization.vue';
+import FormSelectOrganization from '@/components/form/FormSelectOrganization.vue';
 import { i18n } from '../../boot/i18n';
-import { OrganizationType } from 'src/components/types/Organization';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { OrganizationType } from '@/components/types/Organization';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // selectors
 const selectorFormFieldCompanyAddress = 'form-company-address';

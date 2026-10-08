@@ -66,7 +66,7 @@ export default defineComponent({
       :width="width"
       :height="height"
       fit="contain"
-      src="~assets/svg/logo-white.svg"
+      src="~@/assets/svg/logo-white.svg"
       :alt="$t('index.logoAltText')"
       data-cy="header-logo-image"
     />

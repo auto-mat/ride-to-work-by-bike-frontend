@@ -1,4 +1,4 @@
-import ResultsChallengeOngoing from 'components/results/ResultsChallengeOngoing.vue';
+import ResultsChallengeOngoing from '@/components/results/ResultsChallengeOngoing.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ResultsChallengeOngoing>', () => {

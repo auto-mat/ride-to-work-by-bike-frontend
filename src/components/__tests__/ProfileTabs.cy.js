@@ -1,6 +1,6 @@
-import ProfileTabs from 'components/profile/ProfileTabs.vue';
+import ProfileTabs from '@/components/profile/ProfileTabs.vue';
 import { i18n } from '../../boot/i18n';
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // selectors
 const selectorProfileTabs = 'profile-tabs';

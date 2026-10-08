@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import BannerRoutesApp from 'components/routes/BannerRoutesApp.vue';
+import BannerRoutesApp from '@/components/routes/BannerRoutesApp.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

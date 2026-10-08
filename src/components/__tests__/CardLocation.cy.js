@@ -1,6 +1,6 @@
-import CardLocation from 'components/global/CardLocation.vue';
+import CardLocation from '@/components/global/CardLocation.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 const { borderRadiusCard } = rideToWorkByBikeConfig;
 

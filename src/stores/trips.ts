@@ -6,7 +6,7 @@ import { rideToWorkByBikeConfig } from '../boot/global_vars';
 
 // composables
 import { useApiGetCommuteMode } from '../composables/useApiGetCommuteMode';
-import { useApiGetTrips } from 'src/composables/useApiGetTrips';
+import { useApiGetTrips } from '@/composables/useApiGetTrips';
 import { useApiGetOpenAppWithRestToken } from '../composables/useApiGetOpenAppWithRestToken';
 
 // types

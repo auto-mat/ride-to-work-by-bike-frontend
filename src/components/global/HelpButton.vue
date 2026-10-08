@@ -35,7 +35,7 @@ import { defineComponent, ref } from 'vue';
 
 // types
 import type { Ref } from 'vue';
-import type { DialogStates } from 'components/types';
+import type { DialogStates } from '@/components/types';
 
 // components
 import ContactForm from './ContactForm.vue';

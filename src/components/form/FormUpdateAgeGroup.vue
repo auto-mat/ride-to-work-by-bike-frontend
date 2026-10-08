@@ -21,7 +21,7 @@
 import { computed, defineComponent, inject, onMounted, ref } from 'vue';
 
 // composables
-import { useSelectSearch } from 'src/composables/useSelectSearch';
+import { useSelectSearch } from '@/composables/useSelectSearch';
 
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';

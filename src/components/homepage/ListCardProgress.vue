@@ -45,7 +45,7 @@ import SectionHeading from '../global/SectionHeading.vue';
 import StatsBar from '../global/StatsBar.vue';
 
 // composables
-import { useStats } from 'src/composables/useStats';
+import { useStats } from '@/composables/useStats';
 
 // enums
 import { StatisticsId } from '../types/Statistics';

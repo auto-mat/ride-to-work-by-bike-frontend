@@ -7,28 +7,28 @@ import { defaultLocale } from '../i18n/def_locale';
 import { useRoute } from 'vue-router';
 
 // components
-import AutomatLogoBanner from 'components/global/AutomatLogoBanner.vue';
-import DrawerHeader from 'components/global/DrawerHeader.vue';
-import DrawerMenu from 'components/global/DrawerMenu.vue';
-import FooterBar from 'components/global/FooterBar.vue';
-import MobileBottomPanel from 'components/global/MobileBottomPanel.vue';
-import UserProfileLink from 'components/global/UserProfileLink.vue';
+import AutomatLogoBanner from '@/components/global/AutomatLogoBanner.vue';
+import DrawerHeader from '@/components/global/DrawerHeader.vue';
+import DrawerMenu from '@/components/global/DrawerMenu.vue';
+import FooterBar from '@/components/global/FooterBar.vue';
+import MobileBottomPanel from '@/components/global/MobileBottomPanel.vue';
+import UserProfileLink from '@/components/global/UserProfileLink.vue';
 
 // composables
-import { useMenu } from 'src/composables/useMenu';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useMenu } from '@/composables/useMenu';
+import { useRoutes } from '@/composables/useRoutes';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
 import { routesConf } from '../router/routes_conf';
 
 // types
-import type { Link } from 'components/types';
-import type { Logger } from 'components/types/Logger';
+import type { Link } from '@/components/types';
+import type { Logger } from '@/components/types/Logger';
 
 // stores
-import { useLoginStore } from 'src/stores/login';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useLoginStore } from '@/stores/login';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // utils
 import { getApiBaseUrlWithLang } from '../utils/get_api_base_url_with_lang';

@@ -22,7 +22,7 @@ import { defineComponent } from 'vue';
 import SectionHeading from '../global/SectionHeading.vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // types
 import type { ItemStatistics } from '../types/Item';

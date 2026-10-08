@@ -19,19 +19,19 @@ import { computed, defineComponent, ref, onMounted } from 'vue';
 
 // components
 import CardEvent from '../components/homepage/CardEvent.vue';
-import FormFieldSelectCity from 'src/components/form/FormFieldSelectCity.vue';
-import ForumPostList from 'src/components/community/ForumPostList.vue';
+import FormFieldSelectCity from '@/components/form/FormFieldSelectCity.vue';
+import ForumPostList from '@/components/community/ForumPostList.vue';
 import ListCardFollow from '../components/homepage/ListCardFollow.vue';
-import ListCardPost from 'src/components/homepage/ListCardPost.vue';
+import ListCardPost from '@/components/homepage/ListCardPost.vue';
 import ListCardSlider from '../components/global/ListCardSlider.vue';
-import PageHeading from 'src/components/global/PageHeading.vue';
-import SectionHeading from 'src/components/global/SectionHeading.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
+import SectionHeading from '@/components/global/SectionHeading.vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // config
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // fixtures
 import events from '../../test/cypress/fixtures/listCardsEvent.json';
@@ -47,7 +47,7 @@ import type {
   CardPost,
   CardFollow,
   CardLocationType,
-} from 'src/components/types';
+} from '@/components/types';
 
 export default defineComponent({
   name: 'CommunityPage',

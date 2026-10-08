@@ -31,7 +31,7 @@ import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
-import { useStravaStore } from 'src/stores/strava';
+import { useStravaStore } from '@/stores/strava';
 import { useTripsStore } from '../../stores/trips';
 
 // types
@@ -163,7 +163,7 @@ export default defineComponent({
           data-cy="routes-apps-google-play"
         >
           <q-img
-            src="~assets/svg/googleplay.svg"
+            src="~@/assets/svg/googleplay.svg"
             :ratio="3.375"
             height="40px"
             width="135px"
@@ -173,7 +173,7 @@ export default defineComponent({
         <!-- Button: App Store -->
         <a :href="urlAppStore" target="_blank" data-cy="routes-apps-app-store">
           <q-img
-            src="~assets/svg/appstore.svg"
+            src="~@/assets/svg/appstore.svg"
             :ratio="3"
             height="40px"
             width="120px"

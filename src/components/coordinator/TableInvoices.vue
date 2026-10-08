@@ -27,7 +27,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { InvoicesTableColumns } from '../../components/types/Table';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
 
 export default defineComponent({
   name: 'TableInvoices',

@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import HeaderOrganization from 'components/coordinator/HeaderOrganization.vue';
+import HeaderOrganization from '@/components/coordinator/HeaderOrganization.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';

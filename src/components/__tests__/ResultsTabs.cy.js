@@ -1,9 +1,9 @@
 import { createPinia, setActivePinia } from 'pinia';
-import ResultsTabs from 'src/components/results/ResultsTabs.vue';
+import ResultsTabs from '@/components/results/ResultsTabs.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
-import { ResultsReportType } from 'src/components/enums/Results';
+import { ResultsReportType } from '@/components/enums/Results';
 
 describe('<ResultsTabs>', () => {
   beforeEach(() => {

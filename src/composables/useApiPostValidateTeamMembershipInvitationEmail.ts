@@ -9,7 +9,7 @@ import { useApi } from './useApi';
 import { i18n } from '../boot/i18n';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
 import { ApiBaseUrl } from '../components/enums/Api';

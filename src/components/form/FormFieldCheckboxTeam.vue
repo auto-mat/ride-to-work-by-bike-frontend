@@ -25,7 +25,7 @@
 import { computed, defineComponent, ref, watch } from 'vue';
 
 // composables
-import { useFormatPrice } from 'src/composables/useFormatPrice';
+import { useFormatPrice } from '@/composables/useFormatPrice';
 
 // enums
 import { Currency } from '../../composables/useFormatPrice';

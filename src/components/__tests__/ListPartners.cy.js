@@ -1,4 +1,4 @@
-import ListPartners from 'components/global/ListPartners.vue';
+import ListPartners from '@/components/global/ListPartners.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ListPartners>', () => {

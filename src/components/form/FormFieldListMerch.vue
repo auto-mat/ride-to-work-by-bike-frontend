@@ -46,8 +46,8 @@ import { useFormatPrice, Currency } from '../../composables/useFormatPrice';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
 
 import { onTrack } from '../../utils/track';
 

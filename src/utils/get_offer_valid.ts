@@ -2,8 +2,8 @@
 import { date } from 'quasar';
 
 // types
-import { Offer } from 'src/components/types/Offer';
-import { CardOffer as CardOfferType } from 'src/components/types/Card';
+import { Offer } from '@/components/types/Offer';
+import { CardOffer as CardOfferType } from '@/components/types/Card';
 
 /**
  * Check if given offer is valid more than one day.

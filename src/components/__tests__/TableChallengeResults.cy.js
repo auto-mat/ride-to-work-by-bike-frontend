@@ -1,4 +1,4 @@
-import TableChallengeResults from 'components/results/TableChallengeResults.vue';
+import TableChallengeResults from '@/components/results/TableChallengeResults.vue';
 import { i18n } from '../../boot/i18n';
 import { CompetitionType } from '../enums/Challenge';
 

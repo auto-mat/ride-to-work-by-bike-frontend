@@ -1,4 +1,4 @@
-import SliderMerch from 'components/form/SliderMerch.vue';
+import SliderMerch from '@/components/form/SliderMerch.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

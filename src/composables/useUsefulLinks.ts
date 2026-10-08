@@ -3,7 +3,7 @@ import { i18n } from '../boot/i18n';
 import { defaultLocale } from '../i18n/def_locale';
 
 // enums
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { UsefulLinkId } from '../components/types/Link';
 
 // fixtures

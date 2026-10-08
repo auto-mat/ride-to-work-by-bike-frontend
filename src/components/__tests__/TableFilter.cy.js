@@ -1,4 +1,4 @@
-import TableFilter from 'components/global/TableFilter.vue';
+import TableFilter from '@/components/global/TableFilter.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<TableFilter>', () => {

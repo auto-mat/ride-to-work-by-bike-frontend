@@ -19,10 +19,10 @@ import { colors, date, Screen } from 'quasar';
 import { computed, defineComponent } from 'vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // routes
 import { routesConf } from '../../router/routes_conf';
@@ -79,7 +79,7 @@ export default defineComponent({
         <!-- Image -->
         <q-img
           class="col-12 col-md-auto"
-          src="~assets/svg/banner-routes.svg"
+          src="~@/assets/svg/banner-routes.svg"
           width="70px"
           height="102px"
           alt=""

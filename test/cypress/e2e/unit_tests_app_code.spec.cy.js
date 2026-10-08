@@ -2,7 +2,7 @@ describe('Component Boilerplate function', function () {
   const componentName = 'TestComponent';
   const componentOutputDir = 'global';
   const importPath = `components/${componentOutputDir}/${componentName}`;
-  const componentsDir = 'src/components';
+  const componentsDir = '@/components';
 
   before(() => {
     // Pre-test setup to ensure a clean state and run the script
@@ -26,7 +26,6 @@ describe('Component Boilerplate function', function () {
       'fileExists',
       `${componentsDir}/${componentOutputDir}/${componentName}.vue`,
     ).then((exists) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(exists).to.be.true;
     });
   });
@@ -37,7 +36,6 @@ describe('Component Boilerplate function', function () {
       'fileExists',
       `${componentsDir}/__tests__/${componentName}.cy.js`,
     ).then((exists) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       expect(exists).to.be.true;
     });
   });
@@ -45,7 +43,7 @@ describe('Component Boilerplate function', function () {
   it('should create a Vue file with correct content', () => {
     cy.task(
       'readFile',
-      'src/utils/create_component_file/templates/template_component.txt',
+      '@/utils/create_component_file/templates/template_component.txt',
     ).then((componentTemplate) => {
       const vueFilePath = `${componentsDir}/${componentOutputDir}/${componentName}.vue`;
       // Read the .cy.js file
@@ -63,7 +61,7 @@ describe('Component Boilerplate function', function () {
   it('should create a Cypress test file with correct content', () => {
     cy.task(
       'readFile',
-      'src/utils/create_component_file/templates/template_test.txt',
+      '@/utils/create_component_file/templates/template_test.txt',
     ).then((testTemplate) => {
       const testFilePath = `src/components/__tests__/${componentName}.cy.js`;
       // Read the .cy.js file

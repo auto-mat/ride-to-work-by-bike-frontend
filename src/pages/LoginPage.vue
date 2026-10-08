@@ -23,9 +23,9 @@
 import { defineComponent } from 'vue';
 
 // components
-import FormLogin from 'components/login/FormLogin.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
-import PrivacyLink from 'components/global/PrivacyLink.vue';
+import FormLogin from '@/components/login/FormLogin.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
+import PrivacyLink from '@/components/global/PrivacyLink.vue';
 
 export default defineComponent({
   name: 'LoginPage',

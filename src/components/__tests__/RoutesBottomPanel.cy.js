@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
-import RoutesBottomPanel from 'components/routes/RoutesBottomPanel.vue';
+import RoutesBottomPanel from '@/components/routes/RoutesBottomPanel.vue';
 import { i18n } from '../../boot/i18n';
-import { useTripsStore } from 'src/stores/trips';
+import { useTripsStore } from '@/stores/trips';
 
 const routeSingle = 1;
 const routeMultiple = 2;

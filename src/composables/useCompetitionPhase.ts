@@ -3,7 +3,7 @@ import { computed, onBeforeUnmount, ref } from 'vue';
 import { date } from 'quasar';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
+import { useChallengeStore } from '@/stores/challenge';
 
 // types
 import type { Ref } from 'vue';

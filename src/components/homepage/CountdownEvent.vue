@@ -28,7 +28,7 @@ import { defineComponent, computed } from 'vue';
 import { useCountdown } from '../../composables/useCountdown';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 export default defineComponent({
   name: 'CountdownEvent',

@@ -1,10 +1,10 @@
 import { colors } from 'quasar';
-import RegisterChallengeSummary from 'components/register/RegisterChallengeSummary.vue';
+import RegisterChallengeSummary from '@/components/register/RegisterChallengeSummary.vue';
 import { i18n } from '../../boot/i18n';
 import { createPinia, setActivePinia } from 'pinia';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useLoginStore } from '../../stores/login';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // colors
 const { getPaletteColor } = colors;

@@ -1,4 +1,4 @@
-import ForumPostList from 'components/community/ForumPostList.vue';
+import ForumPostList from '@/components/community/ForumPostList.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ForumPostList>', () => {

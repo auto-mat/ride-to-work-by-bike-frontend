@@ -89,7 +89,7 @@ export default defineComponent({
       :width="width"
       :height="height"
       fit="contain"
-      src="~assets/svg/logo-automat-white.svg"
+      src="~@/assets/svg/logo-automat-white.svg"
       :alt="$t('index.logoAutomatAltText')"
       data-cy="automat-logo-image"
     />
@@ -99,7 +99,7 @@ export default defineComponent({
       :width="width"
       :height="height"
       fit="contain"
-      src="~assets/svg/logo-automat.svg"
+      src="~@/assets/svg/logo-automat.svg"
       :alt="$t('index.logoAutomatAltText')"
       data-cy="automat-logo-image"
     />

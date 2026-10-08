@@ -141,7 +141,7 @@ export default defineComponent({
       <div class="q-px-lg">
         <!-- Image -->
         <q-img
-          src="~assets/image/newsletter-feature/newsletter.webp"
+          src="~@/assets/image/newsletter-feature/newsletter.webp"
           ratio="1"
           fit="contain"
           data-cy="newsletter-feature-image"

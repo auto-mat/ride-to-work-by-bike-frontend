@@ -5,7 +5,7 @@ import { i18n } from '../boot/i18n';
 import { SocialLinkId } from '../components/types/Link';
 
 // fixtures
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import socialLinksFixture from '../../test/cypress/fixtures/socialLinks.json';
 
 // types

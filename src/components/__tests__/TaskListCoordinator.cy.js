@@ -1,4 +1,4 @@
-import TaskListCoordinator from 'components/coordinator/TaskListCoordinator.vue';
+import TaskListCoordinator from '@/components/coordinator/TaskListCoordinator.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<TaskListCoordinator>', () => {

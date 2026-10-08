@@ -24,18 +24,18 @@ import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
 
 // composables
-import { useMenu } from 'src/composables/useMenu';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useMenu } from '@/composables/useMenu';
+import { useRoutes } from '@/composables/useRoutes';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // stores
-import { useLoginStore } from 'src/stores/login';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useLoginStore } from '@/stores/login';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // types
-import type { Link } from 'components/types';
+import type { Link } from '@/components/types';
 import type { Logger } from '../types/Logger';
 
 // utils

@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia';
-import RoutesApps from 'components/routes/RoutesApps.vue';
+import RoutesApps from '@/components/routes/RoutesApps.vue';
 import { i18n } from '../../boot/i18n';
-import { useTripsStore } from 'src/stores/trips';
+import { useTripsStore } from '@/stores/trips';
 
 // const urlAppStore = rideToWorkByBikeConfig.urlAppStore;
 // const urlGooglePlay = rideToWorkByBikeConfig.urlGooglePlay;

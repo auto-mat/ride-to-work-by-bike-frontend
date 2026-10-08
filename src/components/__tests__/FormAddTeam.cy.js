@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
-import FormAddTeam from 'components/form/FormAddTeam.vue';
+import FormAddTeam from '@/components/form/FormAddTeam.vue';
 import { i18n } from '../../boot/i18n';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useChallengeStore } from '@/stores/challenge';
 
 describe('<FormAddTeam>', () => {
   beforeEach(() => {

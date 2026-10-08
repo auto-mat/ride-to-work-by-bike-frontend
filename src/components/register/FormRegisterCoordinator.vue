@@ -26,7 +26,7 @@ import { Notify } from 'quasar';
 import { defineComponent, inject, reactive, computed, watch } from 'vue';
 
 // adapters
-import { registerCoordinatorAdapter } from 'src/adapters/registerCoordinatorAdapter';
+import { registerCoordinatorAdapter } from '@/adapters/registerCoordinatorAdapter';
 
 // components
 import FormFieldCheckboxRequired from './../form/FormFieldCheckboxRequired.vue';
@@ -38,7 +38,7 @@ import FormFieldNewsletter from '../form/FormFieldNewsletter.vue';
 // composables
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
-import { useOrganizations } from 'src/composables/useOrganizations';
+import { useOrganizations } from '@/composables/useOrganizations';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';

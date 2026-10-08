@@ -19,7 +19,7 @@ import { defineComponent, computed, inject, ref, watch } from 'vue';
 import { useApiGetMyOrganizationAdmin } from '../../composables/useApiGetMyOrganizationAdmin';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
 import { PaymentState } from '../../components/enums/Payment';

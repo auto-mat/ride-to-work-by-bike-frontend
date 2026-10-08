@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import FormUpdateNickname from 'components/form/FormUpdateNickname.vue';
+import FormUpdateNickname from '@/components/form/FormUpdateNickname.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

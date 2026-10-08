@@ -15,9 +15,9 @@
 import { defineComponent } from 'vue';
 
 // components
-import BreadcrumbTitle from 'src/components/global/BreadcrumbTitle.vue';
+import BreadcrumbTitle from '@/components/global/BreadcrumbTitle.vue';
 import ListCardSlider from '../components/global/ListCardSlider.vue';
-import PageHeading from 'src/components/global/PageHeading.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
 import ResultsList from '../components/results/ResultsList.vue';
 import ResultsTabs from '../components/results/ResultsTabs.vue';
 

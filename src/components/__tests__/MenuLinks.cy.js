@@ -4,8 +4,8 @@ import { i18n } from '../../boot/i18n';
 import MenuLinks from '../global/MenuLinks.vue';
 import { useSocialLinks } from '../../composables/useSocialLinks';
 import { useUsefulLinks } from '../../composables/useUsefulLinks';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '@/i18n/def_locale';
+import { getApiBaseUrlWithLang } from '@/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,
@@ -13,7 +13,7 @@ import {
   httpTooManyRequestsStatusMessage,
   userAgentHeader,
 } from '../../../test/cypress/support/commonTests';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // colors
 const { getPaletteColor } = colors;

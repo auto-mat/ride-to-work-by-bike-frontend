@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import FormFieldBusinessVatId from 'components/form/FormFieldBusinessVatId.vue';
+import FormFieldBusinessVatId from '@/components/form/FormFieldBusinessVatId.vue';
 import { i18n } from '../../boot/i18n';
 import { vModelAdapter } from '../../../test/cypress/utils';
 

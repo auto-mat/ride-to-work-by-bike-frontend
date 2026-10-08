@@ -1,5 +1,5 @@
-import CardOfferSkeleton from 'src/components/skeletons/CardOfferSkeleton.vue';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import CardOfferSkeleton from '@/components/skeletons/CardOfferSkeleton.vue';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 describe('<CardOfferSkeleton>', () => {
   context('desktop', () => {

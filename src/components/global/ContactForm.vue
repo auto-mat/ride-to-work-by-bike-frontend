@@ -28,7 +28,7 @@ import FormFieldEmail from './../global/FormFieldEmail.vue';
 import FormFieldTextRequired from './FormFieldTextRequired.vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 
 export default defineComponent({
   name: 'ContactForm',

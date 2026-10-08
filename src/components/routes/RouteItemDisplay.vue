@@ -21,7 +21,7 @@
 import { defineComponent } from 'vue';
 
 // composables
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '@/composables/useRoutes';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';

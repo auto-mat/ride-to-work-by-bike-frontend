@@ -21,10 +21,10 @@ import { QStepper } from 'quasar';
 import { defineComponent, ref } from 'vue';
 
 // components
-import FormInviteFriends from 'components/form/FormInviteFriends.vue';
+import FormInviteFriends from '@/components/form/FormInviteFriends.vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 export default defineComponent({
   name: 'OnboardingStepper',

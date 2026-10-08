@@ -38,7 +38,7 @@ import PlayVideoModalDialog from '../global/PlayVideoModalDialog.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
-import { useRoutes } from 'src/composables/useRoutes';
+import { useRoutes } from '@/composables/useRoutes';
 import { useLogRoutes } from '../../composables/useLogRoutes';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
 

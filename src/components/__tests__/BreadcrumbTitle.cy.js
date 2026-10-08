@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import BreadcrumbTitle from 'components/global/BreadcrumbTitle.vue';
+import BreadcrumbTitle from '@/components/global/BreadcrumbTitle.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

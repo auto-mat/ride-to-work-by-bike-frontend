@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import TableCompanyChallenge from 'components/coordinator/TableCompanyChallenge.vue';
+import TableCompanyChallenge from '@/components/coordinator/TableCompanyChallenge.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/tableCompanyChallengeTestData.json';
@@ -177,9 +177,8 @@ describe('<TableCompanyChallenge>', () => {
         useAdminCompetitionStore,
         'tableCompanyChallengeTestData',
       );
-      const competitions = testData.results.sort(
-        (competitionA, competitionB) =>
-          competitionA.name.localeCompare(competitionB.name),
+      const competitions = testData.results.sort((competitionA, competitionB) =>
+        competitionA.name.localeCompare(competitionB.name),
       );
       const firstCompetition = competitions[0];
       // delete first challenge

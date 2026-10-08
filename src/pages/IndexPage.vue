@@ -152,35 +152,35 @@ import { computed, defineComponent, inject, onMounted } from 'vue';
 import { feedAdapter } from '../adapters/feedAdapter';
 
 // components
-import BannerApp from 'components/homepage/BannerApp.vue';
-import ResultsTachometersReport from 'src/components/results/ResultsTachometersReport.vue';
-import BannerImage from 'components/homepage/BannerImage.vue';
-import BannerRoutes from 'components/homepage/BannerRoutes.vue';
-import BannerTeamMemberApprove from 'components/global/BannerTeamMemberApprove.vue';
-import CardChallenge from 'components/homepage/CardChallenge.vue';
-import CardEvent from 'components/homepage/CardEvent.vue';
-import CountdownEvent from 'components/homepage/CountdownEvent.vue';
-import HeadingBackground from 'components/homepage/HeadingBackground.vue';
-import ListCardFollow from 'components/homepage/ListCardFollow.vue';
-import ListCardOffer from 'components/homepage/ListCardOffer.vue';
-import ListCardPost from 'components/homepage/ListCardPost.vue';
-import ListCardProgress from 'components/homepage/ListCardProgress.vue';
+import BannerApp from '@/components/homepage/BannerApp.vue';
+import ResultsTachometersReport from '@/components/results/ResultsTachometersReport.vue';
+import BannerImage from '@/components/homepage/BannerImage.vue';
+import BannerRoutes from '@/components/homepage/BannerRoutes.vue';
+import BannerTeamMemberApprove from '@/components/global/BannerTeamMemberApprove.vue';
+import CardChallenge from '@/components/homepage/CardChallenge.vue';
+import CardEvent from '@/components/homepage/CardEvent.vue';
+import CountdownEvent from '@/components/homepage/CountdownEvent.vue';
+import HeadingBackground from '@/components/homepage/HeadingBackground.vue';
+import ListCardFollow from '@/components/homepage/ListCardFollow.vue';
+import ListCardOffer from '@/components/homepage/ListCardOffer.vue';
+import ListCardPost from '@/components/homepage/ListCardPost.vue';
+import ListCardProgress from '@/components/homepage/ListCardProgress.vue';
 import ListChallenges from '../components/global/ListChallenges.vue';
-import PageHeading from 'src/components/global/PageHeading.vue';
-import SectionColumns from 'components/homepage/SectionColumns.vue';
-import SectionHeading from 'src/components/global/SectionHeading.vue';
-import SliderProgress from 'components/homepage/SliderProgress.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
+import SectionColumns from '@/components/homepage/SectionColumns.vue';
+import SectionHeading from '@/components/global/SectionHeading.vue';
+import SliderProgress from '@/components/homepage/SliderProgress.vue';
 
 // composables
 import { useCompetitionPhase } from '../composables/useCompetitionPhase';
 
 // config
 import { routesConf } from '../router/routes_conf';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
-import { ChallengeStatus as ChallengeStatusEnum } from 'src/components/enums/Challenge';
-import { ResultsReportType } from 'src/components/enums/Results';
+import { ChallengeStatus as ChallengeStatusEnum } from '@/components/enums/Challenge';
+import { ResultsReportType } from '@/components/enums/Results';
 
 // fixtures
 import listCardsFollow from '../../test/cypress/fixtures/listCardsFollow.json';
@@ -191,9 +191,9 @@ import cardsProgressSlider from '../../test/cypress/fixtures/cardsProgress.json'
 import * as homepage from '../mocks/homepage';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import { useResultsStore } from 'src/stores/results';
+import { useChallengeStore } from '@/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { useResultsStore } from '@/stores/results';
 import { useFeedStore } from '../stores/feed';
 import { useAdminCompetitionStore } from '../stores/adminCompetition';
 

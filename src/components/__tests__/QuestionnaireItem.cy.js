@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import QuestionnaireItem from 'components/profile/QuestionnaireItem.vue';
+import QuestionnaireItem from '@/components/profile/QuestionnaireItem.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

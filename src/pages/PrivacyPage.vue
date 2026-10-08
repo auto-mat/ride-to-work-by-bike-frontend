@@ -20,8 +20,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import PrivacyRules from 'components/global/PrivacyRules.vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import PrivacyRules from '@/components/global/PrivacyRules.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
 
 export default defineComponent({
   name: 'PrivacyPage',

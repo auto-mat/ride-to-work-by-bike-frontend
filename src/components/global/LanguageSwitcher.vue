@@ -26,7 +26,7 @@
 // libraries
 import { computed, defineComponent, onMounted, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
-import { defaultLocale } from 'src/i18n/def_locale';
+import { defaultLocale } from '@/i18n/def_locale';
 
 // adapters
 import { registerChallengeAdapter } from '../../adapters/registerChallengeAdapter';

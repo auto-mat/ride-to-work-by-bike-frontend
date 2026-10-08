@@ -1,4 +1,4 @@
-import DrawerToggleButtons from 'components/global/DrawerToggleButtons.vue';
+import DrawerToggleButtons from '@/components/global/DrawerToggleButtons.vue';
 import { i18n } from '../../boot/i18n';
 
 // selectors

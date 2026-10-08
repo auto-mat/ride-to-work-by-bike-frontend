@@ -2,15 +2,12 @@
 import { computed } from 'vue';
 
 // stores
-import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
+import { useAdminCompetitionStore } from '@/stores/adminCompetition';
 
 // types
 import type { Ref } from 'vue';
-import type { Competition } from 'src/components/types/Competition';
-import {
-  CompetitionType,
-  CompetitorType,
-} from 'src/components/enums/Challenge';
+import type { Competition } from '@/components/types/Competition';
+import { CompetitionType, CompetitorType } from '@/components/enums/Challenge';
 
 export interface TableCompanyChallengeRow {
   id: number;

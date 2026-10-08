@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import LinearProgressNumbers from 'components/global/LinearProgressNumbers.vue';
+import LinearProgressNumbers from '@/components/global/LinearProgressNumbers.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

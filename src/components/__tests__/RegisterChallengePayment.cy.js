@@ -1,12 +1,12 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { computed } from 'vue';
-import RegisterChallengePayment from 'components/register/RegisterChallengePayment.vue';
+import RegisterChallengePayment from '@/components/register/RegisterChallengePayment.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { PaymentAmount, PaymentSubject } from '../enums/Payment';
-import { useRegisterChallengeStore } from 'stores/registerChallenge';
-import { useChallengeStore } from 'stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
 import { getRadioOption } from '../../../test/cypress/utils';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../types/Organization';
@@ -14,8 +14,8 @@ import { getCurrentPriceLevelsUtil } from '../../utils/price_levels';
 import { getCurrentPriceLevelsUtilWithReward } from '../../utils/price_levels_with_reward';
 import { PriceLevelCategory } from '../../components/enums/Challenge';
 import { Currency, useFormatPrice } from '../../composables/useFormatPrice';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '@/i18n/def_locale';
+import { getApiBaseUrlWithLang } from '@/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,

@@ -1,12 +1,12 @@
 import { ref } from 'vue';
 import { colors } from 'quasar';
-import FormFieldCompanyAddress from 'components/form/FormFieldCompanyAddress.vue';
+import FormFieldCompanyAddress from '@/components/form/FormFieldCompanyAddress.vue';
 import { i18n } from '../../boot/i18n';
-import { vModelAdapter } from 'app/test/cypress/utils';
+import { vModelAdapter } from '@/../test/cypress/utils';
 import { createPinia, setActivePinia } from 'pinia';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { OrganizationType } from 'src/components/types/Organization';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { OrganizationType } from '@/components/types/Organization';
 const { getPaletteColor } = colors;
 const grey10 = getPaletteColor('grey-10');
 

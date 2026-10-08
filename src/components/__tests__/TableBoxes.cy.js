@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 import { computed } from 'vue';
-import TableBoxes from 'components/coordinator/TableBoxes.vue';
+import TableBoxes from '@/components/coordinator/TableBoxes.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/tableBoxesTestData.json';

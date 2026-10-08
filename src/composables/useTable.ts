@@ -3,7 +3,7 @@ import { date } from 'quasar';
 import { computed, ref } from 'vue';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 // TODO: import format price
 
 // enums

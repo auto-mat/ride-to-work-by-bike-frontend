@@ -1,6 +1,6 @@
-import RouteLockedContent from 'components/routes/RouteLockedContent.vue';
+import RouteLockedContent from '@/components/routes/RouteLockedContent.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 describe('<RouteLockedContent>', () => {
   it('has translation for all strings', () => {

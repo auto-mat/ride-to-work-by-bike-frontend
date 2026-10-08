@@ -1,12 +1,12 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import FormPersonalDetails from 'components/form/FormPersonalDetails.vue';
+import FormPersonalDetails from '@/components/form/FormPersonalDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { routesConf } from '../../router/routes_conf';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '@/i18n/def_locale';
+import { getApiBaseUrlWithLang } from '@/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,

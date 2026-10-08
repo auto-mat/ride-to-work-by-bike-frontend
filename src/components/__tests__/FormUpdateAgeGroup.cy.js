@@ -1,6 +1,6 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
-import FormUpdateAgeGroup from 'components/form/FormUpdateAgeGroup.vue';
+import FormUpdateAgeGroup from '@/components/form/FormUpdateAgeGroup.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

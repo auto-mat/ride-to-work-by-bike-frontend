@@ -1,19 +1,19 @@
 import { ref } from 'vue';
 import { colors } from 'quasar';
-import FormFieldSelectTable from 'components/form/FormFieldSelectTable.vue';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import FormFieldSelectTable from '@/components/form/FormFieldSelectTable.vue';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { i18n } from '../../boot/i18n';
-import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
+import { useApiGetOrganizations } from '@/composables/useApiGetOrganizations';
 import { createPinia, setActivePinia } from 'pinia';
 import {
   OrganizationLevel,
   OrganizationType,
-} from 'src/components/types/Organization';
+} from '@/components/types/Organization';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
-import { vModelAdapter } from 'app/test/cypress/utils';
-import { useChallengeStore } from 'src/stores/challenge';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
-import { useApiGetTeams } from 'src/composables/useApiGetTeams';
+import { vModelAdapter } from '@/../test/cypress/utils';
+import { useChallengeStore } from '@/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
+import { useApiGetTeams } from '@/composables/useApiGetTeams';
 
 // variables
 const { contactEmail } = rideToWorkByBikeConfig;

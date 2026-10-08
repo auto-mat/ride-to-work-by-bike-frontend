@@ -150,7 +150,7 @@ export default defineComponent({
           :src="avatarUrl"
           :ratio="1"
           :img-class="avatarImgClass"
-          placeholder-src="~assets/svg/profile-placeholder.svg"
+          placeholder-src="~@/assets/svg/profile-placeholder.svg"
           data-cy="profile-avatar-img"
         />
         <!-- Loading spinner -->

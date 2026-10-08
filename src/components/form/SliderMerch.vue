@@ -22,7 +22,7 @@ import { defineComponent } from 'vue';
 import { rideToWorkByBikeConfig } from '../../../src/boot/global_vars';
 
 // types
-import { Image } from 'components/types';
+import { Image } from '@/components/types';
 
 export default defineComponent({
   name: 'SliderMerch',

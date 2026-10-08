@@ -1,4 +1,4 @@
-import ListCardSlider from 'components/global/ListCardSlider.vue';
+import ListCardSlider from '@/components/global/ListCardSlider.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<ListCardSlider>', () => {

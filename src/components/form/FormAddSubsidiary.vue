@@ -30,12 +30,12 @@ import { computed, defineComponent, inject, nextTick, onMounted } from 'vue';
 import FormFieldAddress from './FormFieldAddress.vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 import { useApiGetCities } from '../../composables/useApiGetCities';
 import { useOrganizations } from '../../composables/useOrganizations';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 import { onTrack } from '../../utils/track';
 
@@ -46,7 +46,7 @@ import type { Logger } from '../types/Logger';
 
 // enums
 import { FormSubsidiaryFields } from '../enums/Form';
-import { OrganizationType } from 'src/components/types/Organization';
+import { OrganizationType } from '@/components/types/Organization';
 
 export default defineComponent({
   name: 'FormAddSubsidiary',

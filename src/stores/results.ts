@@ -3,9 +3,9 @@ import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 
 // composables
-import { i18n } from 'src/boot/i18n';
-import { useApiGetResults } from 'src/composables/useApiGetResults';
-import { useApiGetResultsByChallenge } from 'src/composables/useApiGetResultsByChallenge';
+import { i18n } from '@/boot/i18n';
+import { useApiGetResults } from '@/composables/useApiGetResults';
+import { useApiGetResultsByChallenge } from '@/composables/useApiGetResultsByChallenge';
 
 // stores
 import { useRegisterChallengeStore } from './registerChallenge';
@@ -41,8 +41,7 @@ export const useResultsStore = defineStore('results', {
     getIsLoading: (state) => state.isLoading,
     getAvailableReportTypes: (state) =>
       Object.keys(state.resultsUrls) as (
-        | ResultsReportType
-        | ResultsReportTypeByChallenge
+        ResultsReportType | ResultsReportTypeByChallenge
       )[],
     getReportTypeLabels: () => {
       const labels: Record<

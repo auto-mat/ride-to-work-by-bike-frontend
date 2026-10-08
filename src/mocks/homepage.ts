@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // types
 import {
@@ -12,7 +12,7 @@ import {
   NewsletterItem,
   CardOffer,
   NewsletterType,
-} from 'components/types';
+} from '@/components/types';
 
 export const headingBgTitle =
   'Zapojte se do komunity Do práce na kole ve svém městě';

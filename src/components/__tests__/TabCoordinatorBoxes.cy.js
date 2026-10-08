@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import TabCoordinatorBoxes from 'components/coordinator/TabCoordinatorBoxes.vue';
+import TabCoordinatorBoxes from '@/components/coordinator/TabCoordinatorBoxes.vue';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import { i18n } from '../../boot/i18n';
 import testData from '../../../test/cypress/fixtures/tableBoxesTestData.json';

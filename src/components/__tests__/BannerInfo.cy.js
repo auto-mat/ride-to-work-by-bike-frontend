@@ -1,4 +1,4 @@
-import BannerInfo from 'components/global/BannerInfo.vue';
+import BannerInfo from '@/components/global/BannerInfo.vue';
 import { i18n } from '../../boot/i18n';
 
 // variables

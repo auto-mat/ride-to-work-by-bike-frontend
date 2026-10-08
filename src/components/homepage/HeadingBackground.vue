@@ -62,7 +62,7 @@ export default defineComponent({
     </div>
     <div class="col-12 col-lg" data-cy="section-image">
       <q-img
-        src="~assets/image/heading-background/rtwbb-community.webp"
+        src="~@/assets/image/heading-background/rtwbb-community.webp"
         :ratio="4.5"
         height="117px"
         fit="contain"

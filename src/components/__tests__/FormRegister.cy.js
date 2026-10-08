@@ -10,8 +10,8 @@ import registerRequest from '../../../test/cypress/fixtures/registerRequest.json
 import { useChallengeStore } from '../../stores/challenge';
 import { useRegisterStore } from '../../stores/register';
 import { useLoginStore } from '../../stores/login';
-import { defaultLocale } from 'src/i18n/def_locale';
-import { getApiBaseUrlWithLang } from 'src/utils/get_api_base_url_with_lang';
+import { defaultLocale } from '@/i18n/def_locale';
+import { getApiBaseUrlWithLang } from '@/utils/get_api_base_url_with_lang';
 import {
   failOnStatusCode,
   httpSuccessfullStatus,

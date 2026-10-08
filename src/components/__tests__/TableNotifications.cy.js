@@ -1,5 +1,5 @@
 import { colors, date } from 'quasar';
-import TableNotifications from 'components/profile/TableNotifications.vue';
+import TableNotifications from '@/components/profile/TableNotifications.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

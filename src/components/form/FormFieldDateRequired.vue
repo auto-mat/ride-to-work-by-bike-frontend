@@ -31,7 +31,7 @@ import { computed, defineComponent } from 'vue';
 import { date } from 'quasar';
 
 // composables
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 import { useValidation } from '../../composables/useValidation';
 
 export default defineComponent({

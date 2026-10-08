@@ -33,10 +33,10 @@ import type { Logger } from '../types/Logger';
 import type { PostOrganizationResponse } from '../types/apiOrganization';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 // composables
-import { useApiGetOrganizations } from 'src/composables/useApiGetOrganizations';
+import { useApiGetOrganizations } from '@/composables/useApiGetOrganizations';
 
 import { onTrack } from '../../utils/track';
 

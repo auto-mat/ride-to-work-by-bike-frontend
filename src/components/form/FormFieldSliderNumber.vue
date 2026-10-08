@@ -26,7 +26,7 @@
 import { computed, defineComponent } from 'vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // stores
 import { useChallengeStore } from '../../stores/challenge';

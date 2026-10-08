@@ -18,16 +18,16 @@
 import { computed, defineComponent, onMounted, ref } from 'vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // components
 import TableResults from './TableResults.vue';
 
 // enums
-import { ResultsReportType } from 'src/components/enums/Results';
+import { ResultsReportType } from '@/components/enums/Results';
 
 // stores
-import { useResultsStore } from 'src/stores/results';
+import { useResultsStore } from '@/stores/results';
 
 enum SubTabsCoordinatorResults {
   summary = 'summary',

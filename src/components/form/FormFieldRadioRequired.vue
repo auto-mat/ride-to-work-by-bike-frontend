@@ -30,11 +30,11 @@
 import { computed, defineComponent } from 'vue';
 
 // composables
-import { useValidation } from 'src/composables/useValidation';
+import { useValidation } from '@/composables/useValidation';
 
 // types
 import type { PropType } from 'vue';
-import type { FormOption } from 'src/components/types/Form';
+import type { FormOption } from '@/components/types/Form';
 
 export default defineComponent({
   name: 'FormFieldRadioRequired',

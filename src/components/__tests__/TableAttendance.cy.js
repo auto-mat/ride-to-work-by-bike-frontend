@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import TableAttendance from 'components/coordinator/TableAttendance.vue';
+import TableAttendance from '@/components/coordinator/TableAttendance.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';

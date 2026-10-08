@@ -1,7 +1,7 @@
-import CoordinatorTabs from 'components/coordinator/CoordinatorTabs.vue';
+import CoordinatorTabs from '@/components/coordinator/CoordinatorTabs.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // selectors
 const selectorCoordinatorTabs = 'coordinator-tabs';

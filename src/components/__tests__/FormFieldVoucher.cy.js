@@ -1,10 +1,10 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { colors } from 'quasar';
-import FormFieldVoucher from 'components/form/FormFieldVoucher.vue';
+import FormFieldVoucher from '@/components/form/FormFieldVoucher.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { couponAdapter } from '../../adapters/couponAdapter';
-import { useFormatPrice, Currency } from 'src/composables/useFormatPrice';
+import { useFormatPrice, Currency } from '@/composables/useFormatPrice';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useChallengeStore } from '../../stores/challenge';
 import { getCurrentPriceLevelsUtilWithReward } from '../../utils/price_levels_with_reward';

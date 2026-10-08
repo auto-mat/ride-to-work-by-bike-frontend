@@ -22,7 +22,7 @@
 import { computed, defineComponent, onUnmounted, ref, watch } from 'vue';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // components
 import FormFieldSliderNumber from './FormFieldSliderNumber.vue';

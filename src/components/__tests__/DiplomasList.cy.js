@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia';
-import DiplomasList from 'components/diplomas/DiplomasList.vue';
+import DiplomasList from '@/components/diplomas/DiplomasList.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

@@ -1,7 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia';
 import { colors } from 'quasar';
 import { useLoginStore } from '../../stores/login';
-import LoginRegisterButtons from 'components/global/LoginRegisterButtons.vue';
+import LoginRegisterButtons from '@/components/global/LoginRegisterButtons.vue';
 import { i18n } from '../../boot/i18n';
 import {
   httpSuccessfullStatus,

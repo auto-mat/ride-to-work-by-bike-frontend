@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import AutomatLogoBanner from 'components/global/AutomatLogoBanner.vue';
+import AutomatLogoBanner from '@/components/global/AutomatLogoBanner.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { rgbaColorObjectToString } from '../../utils';

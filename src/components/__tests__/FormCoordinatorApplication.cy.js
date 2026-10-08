@@ -1,4 +1,4 @@
-import FormCoordinatorApplication from 'components/form/FormCoordinatorApplication.vue';
+import FormCoordinatorApplication from '@/components/form/FormCoordinatorApplication.vue';
 import { i18n } from '../../boot/i18n';
 
 describe('<FormCoordinatorApplication>', () => {

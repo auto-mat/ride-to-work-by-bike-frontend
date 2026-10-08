@@ -8,7 +8,7 @@ import {
   loadLocaleMessages,
   pluralizationRuleCsSkLang,
 } from '../i18n';
-import { defaultLocale, fallbackLocale } from 'src/i18n/def_locale';
+import { defaultLocale, fallbackLocale } from '@/i18n/def_locale';
 
 const messages = await loadLocaleMessages();
 const datetimeFormats = getDateTimeFormats(Object.keys(messages));

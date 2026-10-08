@@ -31,8 +31,8 @@ import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 import { useRoutes } from '../../composables/useRoutes';
 
 // stores
-import { useAdminCompetitionStore } from 'src/stores/adminCompetition';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useAdminCompetitionStore } from '@/stores/adminCompetition';
+import { useChallengeStore } from '@/stores/challenge';
 import { useTripsStore } from '../../stores/trips';
 
 // enums

@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import BannerAppButtons from 'components/login/BannerAppButtons.vue';
+import BannerAppButtons from '@/components/login/BannerAppButtons.vue';
 import { i18n } from '../../boot/i18n';
 
 import {

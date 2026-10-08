@@ -32,8 +32,8 @@ import FormFieldBusinessVatId from './FormFieldBusinessVatId.vue';
 import FormFieldTextRequired from '../global/FormFieldTextRequired.vue';
 
 // stores
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
+import { useChallengeStore } from '@/stores/challenge';
 
 // types
 import type { AdminOrganisation } from '../types/AdminOrganisation';

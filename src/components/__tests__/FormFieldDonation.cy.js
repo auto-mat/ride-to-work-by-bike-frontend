@@ -1,5 +1,5 @@
 import { setActivePinia, createPinia } from 'pinia';
-import FormFieldDonation from 'components/form/FormFieldDonation.vue';
+import FormFieldDonation from '@/components/form/FormFieldDonation.vue';
 import { i18n } from '../../boot/i18n';
 import { useChallengeStore } from '../../stores/challenge';
 

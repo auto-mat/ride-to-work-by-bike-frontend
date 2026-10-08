@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import DetailsItem from 'components/profile/DetailsItem.vue';
+import DetailsItem from '@/components/profile/DetailsItem.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;

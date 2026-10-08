@@ -1,5 +1,5 @@
 import { nextTick, ref } from 'vue';
-import FormFieldNewsletter from 'components/form/FormFieldNewsletter.vue';
+import FormFieldNewsletter from '@/components/form/FormFieldNewsletter.vue';
 import { i18n } from '../../boot/i18n';
 import { NewsletterType } from '../../components/types/Newsletter';
 import { vModelAdapter } from '../../../test/cypress/utils';

@@ -1,4 +1,4 @@
-import FormFieldTestWrapper from 'components/global/FormFieldTestWrapper.vue';
+import FormFieldTestWrapper from '@/components/global/FormFieldTestWrapper.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

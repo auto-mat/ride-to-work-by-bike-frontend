@@ -3,11 +3,11 @@ import { defineStore } from 'pinia';
 import { Router } from 'vue-router';
 
 // composables
-import { useApi } from 'src/composables/useApi';
+import { useApi } from '@/composables/useApi';
 import { setAccessRefreshTokens } from '../utils/set_access_refresh_tokens';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { routesConf } from '../router/routes_conf';
 
 // stores
@@ -23,7 +23,7 @@ import type {
 } from '../components/types/Register';
 
 // utils
-import { requestDefaultHeader, requestTokenHeader } from 'src/utils';
+import { requestDefaultHeader, requestTokenHeader } from '@/utils';
 
 declare module 'pinia' {
   export interface PiniaCustomProperties {

@@ -21,15 +21,15 @@ import { defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 // components
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
-import FormRegisterCoordinator from 'components/register/FormRegisterCoordinator.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
+import FormRegisterCoordinator from '@/components/register/FormRegisterCoordinator.vue';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // stores
-import { useRegisterChallengeStore } from 'stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 import { onTrack } from '../utils/track';
 

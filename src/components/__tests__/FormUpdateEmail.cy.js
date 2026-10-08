@@ -1,4 +1,4 @@
-import FormUpdateEmail from 'components/form/FormUpdateEmail.vue';
+import FormUpdateEmail from '@/components/form/FormUpdateEmail.vue';
 import { i18n } from '../../boot/i18n';
 
 // selectors

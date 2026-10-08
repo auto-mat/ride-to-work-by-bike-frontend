@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { ref } from 'vue';
 import { colors } from 'quasar';
-import FormUpdateTeam from 'components/form/FormUpdateTeam.vue';
+import FormUpdateTeam from '@/components/form/FormUpdateTeam.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';

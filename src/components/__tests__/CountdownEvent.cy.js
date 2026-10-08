@@ -1,7 +1,7 @@
 import { colors } from 'quasar';
 import CountdownEvent from '../homepage/CountdownEvent.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // colors
 const { getPaletteColor, changeAlpha } = colors;

@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import BannerImage from '../homepage/BannerImage.vue';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 const { getPaletteColor, textToRgb } = colors;
 const white = getPaletteColor('white');

@@ -1,13 +1,13 @@
 import { colors } from 'quasar';
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import TableFeeApproval from 'components/coordinator/TableFeeApproval.vue';
+import TableFeeApproval from '@/components/coordinator/TableFeeApproval.vue';
 import { i18n } from '../../boot/i18n';
 import { useAdminOrganisationStore } from '../../stores/adminOrganisation';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import testData from '../../../test/cypress/fixtures/headerOrganizationTestData.json';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { useTable } from 'src/composables/useTable';
+import { useTable } from '@/composables/useTable';
 
 // colors
 const { getPaletteColor } = colors;

@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from 'pinia';
-import ProfileAvatar from 'components/profile/ProfileAvatar.vue';
+import ProfileAvatar from '@/components/profile/ProfileAvatar.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useAvatarStore } from '../../stores/avatar';

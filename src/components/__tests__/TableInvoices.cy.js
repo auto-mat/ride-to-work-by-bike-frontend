@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import TableInvoices from 'components/coordinator/TableInvoices.vue';
+import TableInvoices from '@/components/coordinator/TableInvoices.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import testData from '../../../test/cypress/fixtures/tableInvoicesTestData.json';

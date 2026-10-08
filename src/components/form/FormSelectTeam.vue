@@ -25,17 +25,17 @@ import FormFieldSelectTable from './FormFieldSelectTable.vue';
 import { useApiGetTeams } from '../../composables/useApiGetTeams';
 
 // enums
-import { OrganizationLevel } from 'src/components/types/Organization';
+import { OrganizationLevel } from '@/components/types/Organization';
 
 // config
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // i18n
-import { i18n } from 'src/boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useChallengeStore } from '@/stores/challenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 import { onTrack } from '../../utils/track';
 

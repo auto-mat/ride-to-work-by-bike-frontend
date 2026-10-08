@@ -1,6 +1,6 @@
-import CardPrizeSkeleton from 'src/components/skeletons/CardPrizeSkeleton.vue';
+import CardPrizeSkeleton from '@/components/skeletons/CardPrizeSkeleton.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 describe('<CardPrizeSkeleton>', () => {
   it('has translation for all strings', () => {

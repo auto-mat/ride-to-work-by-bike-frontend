@@ -1,8 +1,8 @@
 import { colors } from 'quasar';
 import CardFollow from '../homepage/CardFollow.vue';
-import { hexToRgb } from 'app/test/cypress/utils';
+import { hexToRgb } from '@/../test/cypress/utils';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // colors
 const { getPaletteColor } = colors;

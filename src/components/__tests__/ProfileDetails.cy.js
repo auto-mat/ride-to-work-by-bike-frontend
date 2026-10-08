@@ -1,13 +1,13 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { colors } from 'quasar';
 // import { computed } from 'vue';
-import ProfileDetails from 'components/profile/ProfileDetails.vue';
+import ProfileDetails from '@/components/profile/ProfileDetails.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { useLoginStore } from '../../stores/login';
 import { getGenderLabel } from '../../utils/get_gender_label';
 import { useOrganizations } from '../../composables/useOrganizations';
-// import { useRegisterChallengeStore } from 'stores/registerChallenge';
+// import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 import { interceptOrganizationsApi } from '../../../test/cypress/support/commonTests';
 import { OrganizationType } from '../../components/types/Organization';
 import { useChallengeStore } from '../../stores/challenge';

@@ -1,6 +1,6 @@
 import { colors } from 'quasar';
 import { nextTick } from 'vue';
-import LoginRegisterHeader from 'components/global/LoginRegisterHeader.vue';
+import LoginRegisterHeader from '@/components/global/LoginRegisterHeader.vue';
 import { i18n } from '../../boot/i18n';
 import { useLoginStore } from '../../stores/login';
 

@@ -19,7 +19,7 @@ import { defineComponent } from 'vue';
 
 import { useRouter } from 'vue-router';
 
-import ShowCurrentDatetime from 'components/debug/ShowCurrentDatetime.vue';
+import ShowCurrentDatetime from '@/components/debug/ShowCurrentDatetime.vue';
 import { routesConf } from '../../router/routes_conf';
 import { useChallengeStore } from '../../stores/challenge';
 import { i18n } from '../../boot/i18n';

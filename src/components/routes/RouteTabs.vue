@@ -41,10 +41,10 @@ import RoutesMap from './RoutesMap.vue';
 import { RouteTab } from '../types/Route';
 
 // routes
-import { routesConf } from 'src/router/routes_conf';
+import { routesConf } from '@/router/routes_conf';
 
 // stores
-import { useRegisterChallengeStore } from 'src/stores/registerChallenge';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 export default defineComponent({
   name: 'RouteTabs',

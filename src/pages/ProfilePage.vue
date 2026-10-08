@@ -18,7 +18,7 @@ import { defineComponent } from 'vue';
 
 // components
 import CoordinatorRegistrationLink from '../components/coordinator/CoordinatorRegistrationLink.vue';
-import PageHeading from 'components/global/PageHeading.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
 import ProfileTabs from '../components/profile/ProfileTabs.vue';
 
 export default defineComponent({

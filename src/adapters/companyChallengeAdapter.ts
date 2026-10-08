@@ -2,7 +2,7 @@
 import { date } from 'quasar';
 
 // composables
-import { i18n } from 'boot/i18n';
+import { i18n } from '@/boot/i18n';
 
 // config
 import { rideToWorkByBikeConfig } from '../boot/global_vars';

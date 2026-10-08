@@ -14,8 +14,8 @@
 import { defineComponent } from 'vue';
 
 // components
-import FormCoordinatorApplication from 'components/form/FormCoordinatorApplication.vue';
-import PageHeading from 'components/global/PageHeading.vue';
+import FormCoordinatorApplication from '@/components/form/FormCoordinatorApplication.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
 
 export default defineComponent({
   name: 'BecomeCoordinatorPage',

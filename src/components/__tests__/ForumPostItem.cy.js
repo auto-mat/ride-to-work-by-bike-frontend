@@ -1,5 +1,5 @@
 import { date } from 'quasar';
-import ForumPostItem from 'components/community/ForumPostItem.vue';
+import ForumPostItem from '@/components/community/ForumPostItem.vue';
 import { i18n } from '../../boot/i18n';
 import { defaultDateFormat } from '../../composables/useFormatDate';
 

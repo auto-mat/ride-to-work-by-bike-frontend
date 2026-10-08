@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from 'pinia';
-import StravaApp from 'components/routes/StravaApp.vue';
+import StravaApp from '@/components/routes/StravaApp.vue';
 import { i18n } from '../../boot/i18n';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import stravaAppStateTestData from '../../../test/cypress/fixtures/stravaAppStateTestData.json';
 
 describe('<StravaApp>', () => {

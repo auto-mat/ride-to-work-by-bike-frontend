@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { colors } from 'quasar';
 import { createPinia, setActivePinia } from 'pinia';
-import LoginRegisterMobileMenu from 'components/global/LoginRegisterMobileMenu.vue';
+import LoginRegisterMobileMenu from '@/components/global/LoginRegisterMobileMenu.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { emptyUser, useLoginStore } from '../../stores/login';

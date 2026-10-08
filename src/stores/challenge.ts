@@ -7,7 +7,7 @@ import { PhaseType } from '../components/types/Challenge';
 import { useApiGetCampaign } from '../composables/useApiGetCampaign';
 
 // utils
-import { timestampToDatetimeString } from 'src/utils';
+import { timestampToDatetimeString } from '@/utils';
 import { getCurrentPriceLevelsUtil } from '../utils/price_levels';
 import { getCurrentPriceLevelsUtilWithReward } from '../utils/price_levels_with_reward';
 

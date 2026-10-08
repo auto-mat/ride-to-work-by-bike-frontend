@@ -39,7 +39,7 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { RouteInputType } from '../types/Route';
 
 // utils
-import { localizedFloatNumStrToFloatNumber } from 'src/utils';
+import { localizedFloatNumStrToFloatNumber } from '@/utils';
 
 // types
 import type { QRejectedEntry } from 'quasar';

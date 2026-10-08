@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import SectionHeading from 'components/global/SectionHeading.vue';
+import SectionHeading from '@/components/global/SectionHeading.vue';
 import { i18n } from '../../boot/i18n';
 
 // colors

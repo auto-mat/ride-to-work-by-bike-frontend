@@ -3,7 +3,7 @@ import { colors } from 'quasar';
 import NewsletterFeature from '../homepage/NewsletterFeature.vue';
 import { i18n } from '../../boot/i18n';
 import { defLocale } from '../../i18n/def_locale';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
 // colors

@@ -1,10 +1,10 @@
 import { colors } from 'quasar';
 
-import RouteItemDisplay from 'components/routes/RouteItemDisplay.vue';
+import RouteItemDisplay from '@/components/routes/RouteItemDisplay.vue';
 import { i18n } from '../../boot/i18n';
-import { hexToRgb } from 'app/test/cypress/utils';
-import { rideToWorkByBikeConfig } from 'src/boot/global_vars';
-import { useRoutes } from 'src/composables/useRoutes';
+import { hexToRgb } from '@/../test/cypress/utils';
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
+import { useRoutes } from '@/composables/useRoutes';
 
 // composables
 const { getPaletteColor } = colors;

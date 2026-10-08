@@ -32,15 +32,15 @@
 import { computed, defineComponent, onMounted } from 'vue';
 
 // components
-import PageHeading from 'src/components/global/PageHeading.vue';
-import RouteTabs from 'src/components/routes/RouteTabs.vue';
+import PageHeading from '@/components/global/PageHeading.vue';
+import RouteTabs from '@/components/routes/RouteTabs.vue';
 
 // enums
-import { RouteTab } from 'src/components/types/Route';
+import { RouteTab } from '@/components/types/Route';
 
 // stores
-import { useChallengeStore } from 'src/stores/challenge';
-import { useTripsStore } from 'src/stores/trips';
+import { useChallengeStore } from '@/stores/challenge';
+import { useTripsStore } from '@/stores/trips';
 
 export default defineComponent({
   name: 'RoutesPage',

@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import CalendarNavigation from 'components/routes/CalendarNavigation.vue';
+import CalendarNavigation from '@/components/routes/CalendarNavigation.vue';
 import { i18n } from '../../boot/i18n';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 

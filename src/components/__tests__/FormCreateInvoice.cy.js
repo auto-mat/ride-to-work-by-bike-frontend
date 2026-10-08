@@ -1,9 +1,9 @@
 import { computed } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
-import FormCreateInvoice from 'components/form/FormCreateInvoice.vue';
+import FormCreateInvoice from '@/components/form/FormCreateInvoice.vue';
 import { i18n } from '../../boot/i18n';
-import { useAdminOrganisationStore } from 'src/stores/adminOrganisation';
-import { useChallengeStore } from 'src/stores/challenge';
+import { useAdminOrganisationStore } from '@/stores/adminOrganisation';
+import { useChallengeStore } from '@/stores/challenge';
 
 describe('<FormCreateInvoice>', () => {
   it('has translation for all strings', () => {

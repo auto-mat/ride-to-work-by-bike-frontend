@@ -1,5 +1,5 @@
 // types
-import { NewsletterType } from 'src/components/types';
+import { NewsletterType } from '@/components/types';
 
 /**
  * Adapter for converting API and local format of newsletter selection.

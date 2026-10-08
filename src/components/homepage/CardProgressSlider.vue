@@ -201,7 +201,7 @@ export default defineComponent({
             fit="cover"
             position="50% 100%"
             class="full-width full-height"
-            src="~assets/image/card-progress-slider/bike.webp"
+            src="~@/assets/image/card-progress-slider/bike.webp"
             :img-style="{
               maskImage: imageMask,
               maskRepeat: 'no-repeat',

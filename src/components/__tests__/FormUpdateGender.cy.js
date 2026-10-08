@@ -1,5 +1,5 @@
 import { colors } from 'quasar';
-import FormUpdateGender from 'components/form/FormUpdateGender.vue';
+import FormUpdateGender from '@/components/form/FormUpdateGender.vue';
 import { i18n } from '../../boot/i18n';
 
 const { getPaletteColor } = colors;
