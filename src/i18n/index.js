@@ -36,7 +36,7 @@ export const getDateTimeFormats = (locales) => {
   locales.forEach((locale) => {
     dateTimeFormats[locale] = dateTimeFormatsAllLocales;
   });
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.log(
       `Set date time formats for available locales <${locales.join(', ')}>.`,
     );
@@ -67,7 +67,7 @@ export const getNumberFormats = (locales) => {
   locales.forEach((locale) => {
     numberFormats[locale] = numberFormatsAllLocales;
   });
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.log(
       `Set number formats for available locales <${locales.join(', ')}>.`,
     );

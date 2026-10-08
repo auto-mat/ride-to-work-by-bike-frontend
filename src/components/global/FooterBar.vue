@@ -44,9 +44,8 @@ import { ConfigAppVersion } from '../types/Config';
 import { Logger } from '../types/Logger';
 
 // Deployed app version
-const rideToWorkByBikeDeployedAppVersion: ConfigAppVersion = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION,
-);
+const rideToWorkByBikeDeployedAppVersion: ConfigAppVersion = import.meta.env
+  .RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION;
 
 let deployedAppVersionFixture;
 if (window.Cypress)

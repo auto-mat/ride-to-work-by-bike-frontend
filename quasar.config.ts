@@ -67,11 +67,9 @@ export default defineConfig((ctx) => {
         node: 'node16',
       },
 
-      env: {
-        RIDE_TO_WORK_BY_BIKE_CONFIG: JSON.stringify(getAppConfig(process)),
-        RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION: JSON.stringify(
-          getDeployedAppVersion(),
-        ),
+      defineEnv: {
+        RIDE_TO_WORK_BY_BIKE_CONFIG: getAppConfig(process),
+        RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION: getDeployedAppVersion(),
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'

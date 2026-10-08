@@ -5,9 +5,8 @@ import { boot } from 'quasar/wrappers';
 import { ConfigGlobal } from '../components/types';
 
 // config
-const rideToWorkByBikeConfig: ConfigGlobal = JSON.parse(
-  process.env.RIDE_TO_WORK_BY_BIKE_CONFIG,
-);
+const rideToWorkByBikeConfig: ConfigGlobal = import.meta.env
+  .RIDE_TO_WORK_BY_BIKE_CONFIG;
 
 const initVars = (): void => {
   setCssVar('white', rideToWorkByBikeConfig.colorWhite);

@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers';
 
 import VueLogger from 'vuejs3-logger';
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = import.meta.env.PROD;
 
 export const options = {
   // https://github.com/MarcSchaetz/vuejs3-logger#properties

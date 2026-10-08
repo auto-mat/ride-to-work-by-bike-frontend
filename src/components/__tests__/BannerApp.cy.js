@@ -7,7 +7,7 @@ const { getPaletteColor } = colors;
 const white = getPaletteColor('white');
 const blueGrey8 = getPaletteColor('blue-grey-8');
 
-const config = JSON.parse(process.env.RIDE_TO_WORK_BY_BIKE_CONFIG);
+const config = import.meta.env.RIDE_TO_WORK_BY_BIKE_CONFIG;
 
 describe('<BannerApp>', () => {
   context('desktop', () => {
