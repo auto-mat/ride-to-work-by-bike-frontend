@@ -1,23 +1,18 @@
-/* eslint-env node */
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
  * the ES6 features that are supported by your Node version. https://node.green/
  */
 
 // Configuration for your app
-// https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
+// https://quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers');
+import { defineConfig } from '#q-app';
 
-const { getAppConfig } = require('./src/utils/get_app_conf');
-const {
-  getDeployedAppVersion,
-} = require('./src/utils/get_deployed_app_version');
+import { getAppConfig } from './src/utils/get_app_conf.js';
+import { getDeployedAppVersion } from './src/utils/get_deployed_app_version.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-module.exports = configure(function (ctx) {
+export default defineConfig((ctx) => {
   return {
     eslint: {
       // fix: true,
@@ -34,7 +29,18 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['bus', 'directives', 'global_vars', 'google_login', 'i18n', 'logger', 'pinia', 'swiper', 'matomo', 'video_player'],
+    boot: [
+      'bus',
+      'directives',
+      'global_vars',
+      'google_login',
+      'i18n',
+      'logger',
+      'pinia',
+      'swiper',
+      'matomo',
+      'video_player',
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ['app.scss'],
@@ -89,8 +95,8 @@ module.exports = configure(function (ctx) {
         viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
         viteConf.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
         // Fix dynamic import for SVG files which breaks tests
-        viteConf.build = viteConf.build || {}
-        viteConf.build.assetsInlineLimit = 0
+        viteConf.build = viteConf.build || {};
+        viteConf.build.assetsInlineLimit = 0;
       },
 
       viteVuePluginOptions: {
@@ -113,18 +119,23 @@ module.exports = configure(function (ctx) {
             promiseImportName: (i) => `__tla_${i}`,
           },
         ],
-        ['vite-plugin-checker', {
-          vueTsc: false,
-          eslint: {
-            lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
-            useFlatConfig: true
-          }
-        }, { server: false }]
+        [
+          'vite-plugin-checker',
+          {
+            vueTsc: false,
+            eslint: {
+              lintCommand:
+                'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
+              useFlatConfig: true,
+            },
+          },
+          { server: false },
+        ],
       ],
 
       typescript: {
         vueShim: true,
-      }
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
