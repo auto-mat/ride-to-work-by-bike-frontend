@@ -37,6 +37,12 @@ import { useApiPutRegisterChallenge } from '../../composables/useApiPutRegisterC
 // stores
 import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 
+// types
+import type { Composer } from 'vue-i18n';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
+
 export default defineComponent({
   name: 'LanguageSwitcher',
   props: {
@@ -49,7 +55,7 @@ export default defineComponent({
     const registerChallengeStore = useRegisterChallengeStore();
 
     const locales = computed(() => {
-      return Object.keys(i18n.global.messages);
+      return globalI18n.availableLocales;
     });
 
     const registrationId = computed(() => {
@@ -58,9 +64,9 @@ export default defineComponent({
 
     onMounted(async () => {
       if (registerChallengeStore.getLanguage) {
-        i18n.global.locale = registerChallengeStore.getLanguage;
+        globalI18n.locale.value = registerChallengeStore.getLanguage;
       } else {
-        i18n.global.locale = defaultLocale;
+        globalI18n.locale.value = defaultLocale;
       }
     });
     /**
@@ -70,12 +76,12 @@ export default defineComponent({
     watch(
       () => registerChallengeStore.getLanguage,
       (newVal: string) => {
-        i18n.global.locale = newVal;
+        globalI18n.locale.value = newVal;
       },
     );
 
     const isActive = (item: string): boolean => {
-      return i18n.global.locale === item;
+      return globalI18n.locale.value === item;
     };
 
     const getButtonClasses = (item: string): string => {
@@ -98,7 +104,7 @@ export default defineComponent({
       registerChallengeStore.$log,
     );
     const onSetLanguage = async (item: string) => {
-      i18n.global.locale = item;
+      globalI18n.locale.value = item;
       registerChallengeStore.setLanguage(item);
       /**
        * Registraion ID may not be available (if user is not logged in)
