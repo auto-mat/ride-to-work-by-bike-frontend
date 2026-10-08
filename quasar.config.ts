@@ -77,7 +77,9 @@ export default defineConfig((ctx) => {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
-      // vueOptionsAPI: false,
+      // vueOptionsAPI defaults to false in Quasar v3; kept enabled because
+      // vue-facebook-login-component-next ships an Options API component.
+      vueOptionsAPI: true,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
