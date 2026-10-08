@@ -63,7 +63,7 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
+        browser: ['es2022', 'edge89', 'firefox89', 'chrome89', 'safari15'],
         node: 'node16',
       },
 
@@ -110,15 +110,6 @@ export default defineConfig((ctx) => {
 
       vitePlugins: [
         ['@originjs/vite-plugin-content', {}],
-        [
-          'vite-plugin-top-level-await',
-          {
-            // The export name of top-level await promise for each chunk module
-            promiseExportName: '__tla',
-            // The function to generate import names of top-level await promise in each chunk module
-            promiseImportName: (i) => `__tla_${i}`,
-          },
-        ],
         [
           'vite-plugin-checker',
           {
