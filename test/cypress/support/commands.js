@@ -29,6 +29,26 @@
 import { registerCommands } from '@quasar/quasar-app-extension-testing-e2e-cypress';
 registerCommands();
 
+// QSelect now puts `role=listbox` on `.q-menu`. This breaks the test extension
+// (v7.0.0). We need to extend its `.q-menu:has([role=listbox])` selector
+Cypress.Commands.overwrite('withinSelectMenu', (originalFn, fnOrOptions) => {
+  const defaultSelector = '.q-menu[role=listbox], .q-menu:has([role=listbox])';
+  const {
+    dataCy,
+    persistent = false,
+    selector = defaultSelector,
+    fn,
+  } = typeof fnOrOptions === 'function' ? { fn: fnOrOptions } : fnOrOptions;
+
+  const portalSelector = dataCy ? `[data-cy="${dataCy}"]` : selector;
+
+  return cy.withinPortal(portalSelector, fn).then(($el) => {
+    if (!persistent) {
+      cy.wrap($el).should('not.exist');
+    }
+  });
+});
+
 // Import modular command files
 import './commands/coordinator_commands';
 import './commands/register_challenge_commands';
