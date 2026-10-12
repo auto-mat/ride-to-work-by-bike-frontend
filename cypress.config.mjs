@@ -69,6 +69,8 @@ export default defineConfig({
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
     indexHtmlFile: 'test/cypress/support/component-index.html',
     ...quasarComponentTestingConfig(),
+    // restore Cypress default, the extension's '' value breaks cy.intercept
+    devServerPublicPathRoute: '/__cypress/src',
     defaultCommandTimeout: 60000,
     excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'],
   },
