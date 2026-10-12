@@ -15,7 +15,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const templatesDir = 'templates';
-const componentsDir = '@/components';
+const componentsDir = 'src/components';
 
 const componentTemplate = fs.readFileSync(
   path.join(__dirname, templatesDir, 'template_component.txt'),
