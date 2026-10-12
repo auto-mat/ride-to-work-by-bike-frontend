@@ -101,7 +101,7 @@ Cypress.Commands.add(
   'testLanguageStringsInContext',
   (translationStrings, translationContext, i18n) => {
     // store original locale
-    const originalLocale = i18n.global.locale;
+    const originalLocale = i18n.global.locale.value;
 
     const translationKeyList = translationStrings.map(
       (item) => `${translationContext}.${item}`,
@@ -109,7 +109,7 @@ Cypress.Commands.add(
 
     translationKeyList.forEach((translationKey) => {
       // set global locale to English
-      i18n.global.locale = 'en';
+      i18n.global.locale.value = 'en';
       const defaultEnglishString = i18n.global.t(
         translationKey,
         {},
@@ -121,7 +121,7 @@ Cypress.Commands.add(
         .filter((locale) => locale !== 'en')
         .forEach((locale) => {
           // set to the tested locale
-          i18n.global.locale = locale;
+          i18n.global.locale.value = locale;
 
           const translatedString = i18n.global.t(
             translationKey,
@@ -137,7 +137,7 @@ Cypress.Commands.add(
     });
 
     // restore original locale
-    i18n.global.locale = originalLocale;
+    i18n.global.locale.value = originalLocale;
   },
 );
 

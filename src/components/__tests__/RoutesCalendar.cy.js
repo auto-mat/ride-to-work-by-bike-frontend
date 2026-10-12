@@ -348,7 +348,7 @@ function coreTests() {
 
   it('renders top title with month and year', () => {
     cy.get('@now').then((now) => {
-      const locale = i18n.global.locale;
+      const locale = i18n.global.locale.value;
       const month = now.toLocaleString(locale, { month: 'long' });
       const year = now.toLocaleString(locale, { year: 'numeric' });
       const title = `${month} ${year}`;
