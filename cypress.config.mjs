@@ -3,6 +3,7 @@ import { quasarComponentTestingConfig } from '@quasar/quasar-app-extension-testi
 import { defineConfig } from 'cypress';
 import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin';
 import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter';
+import vitePreprocessor from 'cypress-vite';
 import { getAppConfig } from './src/utils/get_app_conf.js';
 
 export default defineConfig({
@@ -12,7 +13,16 @@ export default defineConfig({
   video: true,
   requestTimeout: 12000,
   e2e: {
-    setupNodeEvents(on, config) {
+    async setupNodeEvents(on, config) {
+      // fixes default value for the NODE_ENV variable to prevent crash
+      // with the `process is not defined` message
+      if (process.env.NODE_ENV === undefined) {
+        process.env.NODE_ENV = 'test';
+      }
+      // build e2e specs with app's Vite config
+      const { getTestingConfig } = await import('@quasar/app-vite/testing');
+      const viteConfig = await getTestingConfig();
+      on('file:preprocessor', vitePreprocessor(viteConfig));
       addMatchImageSnapshotPlugin(on, config);
       installLogsPrinter(on, {
         printLogsToConsole: 'onFail',
