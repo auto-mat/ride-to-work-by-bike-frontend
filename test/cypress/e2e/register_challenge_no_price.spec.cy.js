@@ -3,7 +3,7 @@ import { defLocale } from '../../../src/i18n/def_locale';
 
 describe('Register Challenge - Merch Options No Price', () => {
   beforeEach(() => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignJanuary.json').then((response) => {
         cy.interceptThisCampaignGetApi(config, defLocale, response);

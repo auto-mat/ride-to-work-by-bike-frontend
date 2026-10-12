@@ -25,7 +25,7 @@ describe('Login page', () => {
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -96,7 +96,7 @@ describe('Login page', () => {
     });
 
     it('check custom form field validation error color', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         const customFormFieldValidationErrColor = rgbaColorObjectToString(
           hexToRgb(config.colorCustomFormFieldValidationErr),
           true,
@@ -246,7 +246,7 @@ describe('Login page', () => {
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -387,7 +387,7 @@ describe('Login page', () => {
         cy.wrap(clock).as('clock');
       });
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.visit('#' + routesConf['login']['path']);

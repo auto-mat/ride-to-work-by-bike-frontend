@@ -81,7 +81,7 @@ export const testLanguageSwitcher = (): void => {
  */
 export const testBackgroundImage = (): void => {
   it('should have a background image', () => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       cy.dataCy(layoutBackgroundImageSelector)
         .invoke('width')
         .should('be.greaterThan', 0);
@@ -133,7 +133,7 @@ export const testDesktopSidebar = (): void => {
   const selectorAutomatLogoBanner = 'automat-logo-banner';
 
   it('renders left drawer', () => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       cy.dataCy(selectorDrawer).should('be.visible');
       cy.dataCy(selectorDrawerHeader).should('be.visible');
       cy.dataCy(selectorUserProfileLinkDesktop).should('be.visible');

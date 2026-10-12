@@ -11,7 +11,7 @@ import { isOfferValidMoreThanOneDay } from '../../../src/utils/get_offer_valid';
 describe('Prizes page', () => {
   beforeEach(() => {
     // load config an i18n objects as aliases
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       // alias config
       cy.wrap(config).as('config');
       cy.fixture('apiGetRegisterChallengeProfile.json').then((response) => {

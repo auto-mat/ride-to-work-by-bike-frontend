@@ -24,7 +24,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -486,7 +486,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -570,7 +570,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -611,7 +611,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeInvoicesPhaseInactive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -647,7 +647,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -697,7 +697,7 @@ describe('Company coordinator invoices page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);

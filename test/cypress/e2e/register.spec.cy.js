@@ -32,7 +32,7 @@ describe('Register page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['register']['path']);
       cy.viewport('macbook-16');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -79,7 +79,7 @@ describe('Register page', () => {
     });
 
     it('check custom form field validation error color', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         const customFormFieldValidationErrColor = rgbaColorObjectToString(
           hexToRgb(config.colorCustomFormFieldValidationErr),
           true,
@@ -103,7 +103,7 @@ describe('Register page', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('macbook-16');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           /**
            * Call intercept this camapaign API, before visit URL page,
            * see FormRegister component OnMounted() callback
@@ -116,7 +116,7 @@ describe('Register page', () => {
     });
 
     it('shows error message on registration failure', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();
@@ -142,7 +142,7 @@ describe('Register page', () => {
     });
 
     it('redirects to campaign inactive page after registering and verifying email', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();
@@ -210,7 +210,7 @@ describe('Register page', () => {
     beforeEach(() => {
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
         cy.viewport('macbook-16');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           /**
            * Call intercept this camapaign API, before visit URL page,
            * see FormRegister component OnMounted() callback
@@ -224,7 +224,7 @@ describe('Register page', () => {
 
     // ! router redirection rules are enabled for this file in /router/index.ts
     it('allows user to register with valid credentials and requires email verification to access other pages', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();
@@ -303,7 +303,7 @@ describe('Register page', () => {
     });
 
     it('displays a logout button on the verify email page and allows to logout', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();
@@ -360,7 +360,7 @@ describe('Register page', () => {
     });
 
     it('redirects to home page after registering and verifying email and allows logout', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();
@@ -429,7 +429,7 @@ describe('Register page', () => {
     });
 
     it('allows user to stop registration process before email verification and register again', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.waitForThisCampaignApi();

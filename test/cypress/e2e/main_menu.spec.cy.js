@@ -7,7 +7,7 @@ describe('Profile page', () => {
   context('desktop - challenge may', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // intercept this campaign API
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);
@@ -63,7 +63,7 @@ describe('Profile page', () => {
   context('mobile - challenge may', () => {
     beforeEach(() => {
       cy.viewport('iphone-6');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // intercept this campaign API
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);

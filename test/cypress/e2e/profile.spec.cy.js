@@ -54,7 +54,7 @@ const exampleDomainUrl = 'https://example.com/*';
 
 describe('Profile page', () => {
   beforeEach(() => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       cy.wrap(config).as('config');
       // intercept register challenge API
       cy.fixture('refreshTokensResponseChallengeActive').then(
@@ -424,7 +424,7 @@ describe('Profile page', () => {
 
   context('desktop - user team state is "undecided"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         // intercept my team API
         cy.fixture('apiGetMyTeamResponseUndecided.json').then(
@@ -449,7 +449,7 @@ describe('Profile page', () => {
 
   context('desktop - user team state is "approved"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         // intercept my team GET API
         cy.fixture('apiGetMyTeamResponseApproved.json').then(
@@ -482,7 +482,7 @@ describe('Profile page', () => {
 
   context('desktop - my team is full', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.fixture('apiGetMyTeamResponseFullTeam.json').then(
           (responseMyTeam) => {

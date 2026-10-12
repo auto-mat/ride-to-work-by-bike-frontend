@@ -10,7 +10,7 @@ import { systemTimeChallengeActive } from '../support/commonTests';
 describe('Register Challenge - Payment step', () => {
   context('May challenge', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.fixture('apiGetThisCampaign.json').then((response) => {
           cy.interceptThisCampaignGetApi(config, defLocale, response);
@@ -379,7 +379,7 @@ describe('Register Challenge - Payment step', () => {
     const tolerance = 5;
 
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
           // visit the login page to initialize i18n

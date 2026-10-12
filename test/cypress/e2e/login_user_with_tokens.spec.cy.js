@@ -17,7 +17,7 @@ describe('Login user with tokens', () => {
       cy.dataCy('form-email-input').should('be.visible');
       cy.clock(systemTimeChallengeActive, ['Date']);
       cy.viewport('macbook-16');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
 
         cy.interceptLoginUserWithTokensRegisterChallengeOrHomePage(
@@ -50,7 +50,7 @@ describe('Login user with tokens', () => {
       cy.dataCy('form-email-input').should('be.visible');
       cy.clock(systemTimeChallengeActive, ['Date']);
       cy.viewport('macbook-16');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           cy.wrap(win.i18n).as('i18n');

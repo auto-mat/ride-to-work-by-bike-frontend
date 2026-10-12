@@ -31,7 +31,7 @@ describe('Reset Password', () => {
       cy.viewport('macbook-16');
 
       // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
@@ -86,7 +86,7 @@ describe('Reset Password', () => {
     });
 
     it('check custom form field validation error color', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         const customFormFieldValidationErrColor = rgbaColorObjectToString(
           hexToRgb(config.colorCustomFormFieldValidationErr),
           true,

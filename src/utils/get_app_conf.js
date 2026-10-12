@@ -1,7 +1,7 @@
 const { parse } = require('toml');
 const { readFileSync } = require('fs-extra');
 
-const getAppConfig = (process) => {
+const getAppConfig = (process = globalThis.process) => {
   let config = parse(
     readFileSync('./ride_to_work_by_bike_config.toml').toString(),
   );

@@ -12,7 +12,7 @@ describe('Register challenge storage', () => {
     // clear local storage
     cy.clearLocalStorage();
     // load config
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       // alias config
       cy.wrap(config).as('config');
 

@@ -8,7 +8,7 @@ const invalidCode = 'example_invalid_code';
 
 context('Strava Integration', () => {
   beforeEach(() => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       // alias config
       cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {

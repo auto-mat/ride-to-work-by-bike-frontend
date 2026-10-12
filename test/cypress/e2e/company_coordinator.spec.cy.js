@@ -29,7 +29,7 @@ describe('Company Coordinator Page', () => {
       cy.viewport('macbook-16');
 
       // load config and i18n object as alias
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -164,7 +164,7 @@ describe('Company Coordinator Page', () => {
       cy.viewport('macbook-16');
 
       // load config and i18n object as alias
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');

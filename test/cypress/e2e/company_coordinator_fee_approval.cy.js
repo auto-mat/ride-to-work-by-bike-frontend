@@ -14,7 +14,7 @@ describe('Company coordinator fee approval page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -161,7 +161,7 @@ describe('Company coordinator fee approval page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -292,7 +292,7 @@ describe('Company coordinator fee approval page', () => {
   context('refreshing fee approval data', () => {
     beforeEach(() => {
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.visit('#' + routesConf['login']['path']);
           cy.window().should('have.property', 'i18n');
@@ -397,7 +397,7 @@ describe('Company coordinator fee approval page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);

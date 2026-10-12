@@ -12,7 +12,7 @@ describe('Logout', () => {
       cy.visit('#' + routesConf['login']['path']);
       cy.viewport('macbook-16');
       // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
@@ -71,7 +71,7 @@ describe('Logout', () => {
       cy.visit('#' + routesConf['login']['path']);
       cy.viewport('iphone-6');
       // load config and i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {

@@ -5,7 +5,7 @@ import { defLocale } from '../../../src/i18n/def_locale';
 describe('Routes page', () => {
   beforeEach(() => {
     // load config an i18n objects as aliases
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       // alias config
       cy.wrap(config).as('config');
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
@@ -45,7 +45,7 @@ describe('Routes page', () => {
     beforeEach(() => {
       cy.viewport('macbook-16');
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // intercept my team GET API
         cy.interceptMyTeamGetApi(config, defLocale);
         cy.interceptCommuteModeGetApi(config, defLocale);
@@ -167,7 +167,7 @@ describe('Routes page', () => {
     beforeEach(() => {
       cy.viewport('iphone-6');
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // intercept my team GET API
         cy.interceptMyTeamGetApi(config, defLocale);
         cy.interceptCommuteModeGetApi(config, defLocale);

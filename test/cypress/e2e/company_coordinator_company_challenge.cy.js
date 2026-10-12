@@ -38,7 +38,7 @@ describe('Company coordinator company challenge page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in registration phase
       cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -290,7 +290,7 @@ describe('Company coordinator company challenge page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in registration phase
       cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -395,7 +395,7 @@ describe('Company coordinator company challenge page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in registration phase
       cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -682,7 +682,7 @@ describe('Company coordinator company challenge page', () => {
       cy.viewport(1920, 2500);
       // set system time to be in registration phase
       cy.clock(systemTimeRegistrationPhaseActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);

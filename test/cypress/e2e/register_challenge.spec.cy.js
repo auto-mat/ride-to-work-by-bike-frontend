@@ -119,14 +119,14 @@ describe('Register Challenge page', () => {
       defaultPaymentAmountMinWithReward =
         currentPriceLevelsWithReward[PriceLevelCategory.basicWithReward].price;
     });
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       prices = config.entryFeePaymentOptions.split(',');
       paymentAmountDonation = prices[0];
     });
   });
 
   beforeEach(() => {
-    cy.task('getAppConfig', process).then((config) => {
+    cy.task('getAppConfig').then((config) => {
       cy.interceptMyTeamGetApi(config, defLocale);
       cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
         (response) => {
@@ -150,7 +150,7 @@ describe('Register Challenge page', () => {
 
   context('desktop', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.interceptThisCampaignGetApi(config, defLocale);
         cy.interceptRegisterChallengeGetApi(config, defLocale);
         cy.fixture('apiGetIsUserOrganizationAdminResponseFalse').then(
@@ -2779,7 +2779,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, individual payment "done"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -2876,7 +2876,7 @@ describe('Register Challenge page', () => {
     'registration in progress, individual payment "done", occupation not filled',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
@@ -2951,7 +2951,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, individual payment "no_admission"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3019,7 +3019,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, individual payment "unknown"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3064,7 +3064,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, individual payment "none"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3117,7 +3117,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, individual payment "paid"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3181,7 +3181,7 @@ describe('Register Challenge page', () => {
     'registration in progress, individual payment "done" (without-reward)',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
@@ -3227,7 +3227,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, voucher payment FULL', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.setupVoucherTestEnvironment({
           config,
@@ -3260,7 +3260,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, voucher payment FULL + donation', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.setupVoucherTestEnvironment({
           config,
@@ -3305,7 +3305,7 @@ describe('Register Challenge page', () => {
     'registration in progress, voucher payment FULL without-reward',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.setupVoucherTestEnvironment({
             config,
@@ -3360,7 +3360,7 @@ describe('Register Challenge page', () => {
     'registration in progress, voucher payment HALF without-reward',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.setupVoucherTestEnvironment({
             config,
@@ -3405,7 +3405,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, voucher payment HALF', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.setupVoucherTestEnvironment({
           config,
@@ -3432,7 +3432,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, voucher payment HALF + donation', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.setupVoucherTestEnvironment({
           config,
@@ -3469,7 +3469,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, voucher payment FULL ONE-TIME', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.setupVoucherTestEnvironment({
           config,
@@ -3501,7 +3501,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, company payment "unknown"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3546,7 +3546,7 @@ describe('Register Challenge page', () => {
 
   context('registration in progress, company payment "waiting"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -3815,7 +3815,7 @@ describe('Register Challenge page', () => {
     'registration in progress, company payment "waiting" + no coordinator',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
           cy.visit('#' + routesConf['challenge_inactive']['path']);
@@ -3918,7 +3918,7 @@ describe('Register Challenge page', () => {
     'registration in progress, company payment "waiting" + donation',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
@@ -3982,7 +3982,7 @@ describe('Register Challenge page', () => {
     'registration in progress, company payment "waiting" (without-reward)',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
@@ -4058,7 +4058,7 @@ describe('Register Challenge page', () => {
     'registration in progress, company payment "waiting" + I dont want merch',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data
@@ -4215,7 +4215,7 @@ describe('Register Challenge page', () => {
    */
   context('registration in progress, company payment "no_admission"', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -4285,7 +4285,7 @@ describe('Register Challenge page', () => {
 
   context('specific time before challenge', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -4353,7 +4353,7 @@ describe('Register Challenge page', () => {
   context('registration with payment voucher 95% discount', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhase1May, ['Date']);
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);
@@ -4476,7 +4476,7 @@ describe('Register Challenge page', () => {
   context('registration with payment voucher 95% discount', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhase1May, ['Date']);
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);
@@ -4598,7 +4598,7 @@ describe('Register Challenge page', () => {
 
   context('registration with selected full team', () => {
     beforeEach(() => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.interceptThisCampaignGetApi(config, defLocale);
         // visit challenge inactive page to load campaign data
@@ -4741,7 +4741,7 @@ describe('Register Challenge page', () => {
         'clearInterval',
       ]).then((clock) => {
         cy.wrap(clock).as('clock');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // intercept register challenge API
           cy.fixture('refreshTokensResponseChallengeActive').then(
@@ -4875,7 +4875,7 @@ describe('Register Challenge page', () => {
   context('Countdown before competition phase', () => {
     beforeEach(() => {
       cy.clock(systemTimeBeforeCompetitionStart, ['Date']);
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
           cy.interceptThisCampaignGetApi(config, defLocale, campaign);
@@ -4917,7 +4917,7 @@ describe('Register Challenge page', () => {
     'registration with unavailable merchandise (empty merch options)',
     () => {
       beforeEach(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           cy.interceptThisCampaignGetApi(config, defLocale);
           // visit challenge inactive page to load campaign data

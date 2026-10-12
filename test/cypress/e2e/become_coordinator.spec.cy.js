@@ -12,7 +12,7 @@ describe('Become coordinator page', () => {
       cy.viewport('macbook-16');
 
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -33,7 +33,7 @@ describe('Become coordinator page', () => {
       cy.viewport('iphone-6');
 
       // load config an i18n objects as aliases
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -52,7 +52,7 @@ describe('Become coordinator page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -136,7 +136,7 @@ describe('Become coordinator page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -184,7 +184,7 @@ describe('Become coordinator page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);

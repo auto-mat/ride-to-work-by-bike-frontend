@@ -10,7 +10,7 @@ describe('Register Challenge - Invitation token flow', () => {
       // set system time to be in the correct active token window
       cy.viewport('macbook-16');
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           // load all required fixtures
           cy.fixture('apiGetRegisterChallengeEmpty.json').then(
             (registerChallengeResponse) => {
@@ -146,7 +146,7 @@ describe('Register Challenge - Invitation token flow', () => {
 
     context('pre-fill with voucher payment', () => {
       it('pre-fills organization type, subsidiary, organization and team', () => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.passToStep2();
             // wait for payment options to be visible
@@ -178,7 +178,7 @@ describe('Register Challenge - Invitation token flow', () => {
 
     context('user overrides invitation values', () => {
       it('persists value for user-selected team', () => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.passToStep2();
             cy.dataCy('form-field-payment-subject').should('be.visible');
@@ -244,7 +244,7 @@ describe('Register Challenge - Invitation token flow', () => {
       });
 
       it('persists value for user-selected subsidiary', () => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.passToStep2();
             cy.dataCy('form-field-payment-subject').should('be.visible');
@@ -320,7 +320,7 @@ describe('Register Challenge - Invitation token flow', () => {
       });
 
       it('persists value for user-selected organization', () => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.passToStep2();
             cy.dataCy('form-field-payment-subject').should('be.visible');
@@ -402,7 +402,7 @@ describe('Register Challenge - Invitation token flow', () => {
       // set system time to be in the correct active token window
       cy.viewport('macbook-16');
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           // load all required fixtures
           cy.fixture('apiGetRegisterChallengeIndividualPaidNoTeam.json').then(
             (registerChallengeResponse) => {
@@ -578,7 +578,7 @@ describe('Register Challenge - Invitation token flow', () => {
       // set system time to be in the correct active token window
       cy.viewport('macbook-16');
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           // load fixture with existing registration (different org/sub/team than invitation)
           cy.fixture('apiGetRegisterChallengeExistingOrgSubTeam.json').then(
             (registerChallengeResponse) => {
@@ -667,7 +667,7 @@ describe('Register Challenge - Invitation token flow', () => {
     });
 
     it('overwrites existing values with invitation on first visit to each step', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture(
             'apiPostValidateTeamMembershipInvitationEmailResponse.json',
@@ -748,7 +748,7 @@ describe('Register Challenge - Invitation token flow', () => {
     });
 
     it('preserves user changes when returning to visited steps', () => {
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.get('@i18n').then((i18n) => {
           cy.fixture(
             'apiPostValidateTeamMembershipInvitationEmailResponse.json',

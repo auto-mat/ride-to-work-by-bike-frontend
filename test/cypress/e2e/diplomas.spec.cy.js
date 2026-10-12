@@ -11,7 +11,7 @@ describe('Diplomas page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -49,7 +49,7 @@ describe('Diplomas page', () => {
     context('desktop', () => {
       beforeEach(() => {
         cy.viewport('macbook-16');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.performAuthenticatedLogin(config, i18n);
             cy.visit('#' + routesConf['diplomas']['path']);
@@ -64,7 +64,7 @@ describe('Diplomas page', () => {
     context('mobile', () => {
       beforeEach(() => {
         cy.viewport('iphone-6');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.performAuthenticatedLogin(config, i18n);
             cy.visit('#' + routesConf['diplomas']['path']);
@@ -81,7 +81,7 @@ describe('Diplomas page', () => {
     beforeEach(() => {
       // set system time to be in the correct active token window
       cy.clock(systemTimeChallengeActive, ['Date']).then(() => {
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.wrap(config).as('config');
           // visit the login page to initialize i18n
           cy.visit('#' + routesConf['login']['path']);
@@ -128,7 +128,7 @@ describe('Diplomas page', () => {
     context('desktop', () => {
       beforeEach(() => {
         cy.viewport('macbook-16');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.get('@i18n').then((i18n) => {
             cy.performAuthenticatedLogin(config, i18n);
             cy.visit('#' + routesConf['diplomas']['path']);

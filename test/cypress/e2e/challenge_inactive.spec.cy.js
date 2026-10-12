@@ -25,7 +25,7 @@ describe('Challenge Inactive page', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('macbook-16');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
           // Visit the challenge inactive page
           cy.visit('#' + routesConf['challenge_inactive']['path']);
@@ -57,7 +57,7 @@ describe('Challenge Inactive page', () => {
     beforeEach(() => {
       cy.clock(systemTimeRegistrationPhaseInactive, ['Date']).then(() => {
         cy.viewport('iphone-6');
-        cy.task('getAppConfig', process).then((config) => {
+        cy.task('getAppConfig').then((config) => {
           cy.interceptThisCampaignGetApi(config, defLocale);
           cy.visit('#' + routesConf['challenge_inactive']['path']);
           cy.wrap(config).as('config');

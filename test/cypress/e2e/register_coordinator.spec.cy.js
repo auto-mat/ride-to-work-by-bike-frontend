@@ -16,7 +16,7 @@ describe('Login page', () => {
     beforeEach(() => {
       cy.visit('#' + routesConf['register_coordinator']['path']);
       cy.viewport('macbook-16');
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
         cy.window().should('have.property', 'i18n');
@@ -111,7 +111,7 @@ describe('Login page', () => {
        * Visit login page so that we can setup the API intercepts.
        * The setup needs config and i18n objects to be initialized.
        */
-      cy.task('getAppConfig', process).then((config) => {
+      cy.task('getAppConfig').then((config) => {
         cy.wrap(config).as('config');
         // Visit the login page to initialize i18n
         cy.visit('#' + routesConf['login']['path']);
