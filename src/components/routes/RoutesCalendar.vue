@@ -23,7 +23,7 @@
 
 // libraries
 import { colors, date } from 'quasar';
-import { QCalendarMonth, today } from '@quasar/quasar-ui-qcalendar';
+import { QCalendarMonth } from '@quasar/quasar-ui-qcalendar';
 import { defineComponent, computed, ref, watch } from 'vue';
 import { i18n } from '../../boot/i18n';
 
@@ -62,7 +62,7 @@ export default defineComponent({
   },
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
-    const selectedDate = ref<string>(today());
+    const selectedDate = ref<string>(date.formatDate(Date.now(), 'YYYY-MM-DD'));
     const locale = computed((): string => {
       return globalI18n.locale.value;
     });
