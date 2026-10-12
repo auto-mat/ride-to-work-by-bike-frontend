@@ -200,7 +200,7 @@ describe('<RegisterChallengePayment>', () => {
   context('desktop - change lang to en lang', () => {
     beforeEach(() => {
       const enLangCode = 'en';
-      i18n.global.locale = enLangCode;
+      i18n.global.locale.value = enLangCode;
       setActivePinia(createPinia());
       interceptOrganizationsApi(
         rideToWorkByBikeConfig,

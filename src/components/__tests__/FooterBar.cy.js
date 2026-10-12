@@ -196,8 +196,8 @@ function coreTests() {
 
   it('renders Auto*Mat logo with separator and text, validate URL link - en lang (localized URL link)', () => {
     const enLangCode = 'en';
-    const defLocale = i18n.global.locale;
-    i18n.global.locale = enLangCode;
+    const defLocale = i18n.global.locale.value;
+    i18n.global.locale.value = enLangCode;
 
     cy.window().then(() => {
       // link
@@ -227,7 +227,7 @@ function coreTests() {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
       cy.dataCy(selectorFooterAutoMatLogo)
         .should('be.visible')
@@ -271,8 +271,8 @@ function coreTests() {
 
   it('renders RTWBB logo, validate URL link - en lang (localized URL link)', () => {
     const enLangCode = 'en';
-    const defLocale = i18n.global.locale;
-    i18n.global.locale = enLangCode;
+    const defLocale = i18n.global.locale.value;
+    i18n.global.locale.value = enLangCode;
 
     cy.window().then(() => {
       // link
@@ -302,7 +302,7 @@ function coreTests() {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
   });

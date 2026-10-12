@@ -331,8 +331,8 @@ describe('<FormRegister>', () => {
 
     it('renders link to privacy policy - en lang (localized URL link)', () => {
       const enLangCode = 'en';
-      const defLocale = i18n.global.locale;
-      i18n.global.locale = enLangCode;
+      const defLocale = i18n.global.locale.value;
+      i18n.global.locale.value = enLangCode;
 
       cy.waitForThisCampaignApi();
       cy.clock()
@@ -367,7 +367,7 @@ describe('<FormRegister>', () => {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
     it('renders link to login page', () => {

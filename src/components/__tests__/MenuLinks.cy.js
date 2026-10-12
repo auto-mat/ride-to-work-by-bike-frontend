@@ -153,8 +153,8 @@ describe('<MenuLinks>', () => {
 
     it('provides valid URLs for buttons (useful links variant) - en lang (localized URL link)', () => {
       const enLangCode = 'en';
-      const defLocale = i18n.global.locale;
-      i18n.global.locale = enLangCode;
+      const defLocale = i18n.global.locale.value;
+      i18n.global.locale.value = enLangCode;
       const { usefulLinks } = useUsefulLinks();
 
       cy.wrap(nextTick())
@@ -195,7 +195,7 @@ describe('<MenuLinks>', () => {
             });
         })
         .then(() => {
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
   });

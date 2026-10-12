@@ -182,8 +182,8 @@ function coreTests() {
 
   it('renders button - en lang (localized URL link)', () => {
     const enLangCode = 'en';
-    const defLocale = i18n.global.locale;
-    i18n.global.locale = enLangCode;
+    const defLocale = i18n.global.locale.value;
+    i18n.global.locale.value = enLangCode;
 
     cy.dataCy('card-list-post-button')
       .should('be.visible')
@@ -214,7 +214,7 @@ function coreTests() {
           }
           expect(resp.status).to.eq(httpSuccessfullStatus);
         });
-        i18n.global.locale = defLocale;
+        i18n.global.locale.value = defLocale;
       });
   });
 }

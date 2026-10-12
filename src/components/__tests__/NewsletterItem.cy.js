@@ -83,7 +83,7 @@ describe('<NewsletterItem>', () => {
 
   context('desktop - change default lang to the en lang', () => {
     beforeEach(() => {
-      i18n.global.locale = 'en';
+      i18n.global.locale.value = 'en';
       cy.mount(NewsletterItem, {
         props: {
           item: newsletterItems.value[0],
@@ -93,7 +93,7 @@ describe('<NewsletterItem>', () => {
       cy.viewport('macbook-16');
     });
     afterEach(() => {
-      i18n.global.locale = defaultLocale;
+      i18n.global.locale.value = defaultLocale;
     });
 
     it('renders title', () => {
@@ -105,13 +105,13 @@ describe('<NewsletterItem>', () => {
           .and(
             'contain',
             i18n.global.t('index.newsletterFeature.aboutChallenges', {
-              locale: i18n.global.locale,
+              locale: i18n.global.locale.value,
             }),
           )
           .then(($title) => {
             expect($title.text()).to.equal(
               i18n.global.t('index.newsletterFeature.aboutChallenges', {
-                locale: i18n.global.locale,
+                locale: i18n.global.locale.value,
               }),
             );
           });

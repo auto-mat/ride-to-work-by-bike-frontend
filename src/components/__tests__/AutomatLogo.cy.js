@@ -82,8 +82,8 @@ function coreTests() {
 
   it('has correct link to AutoMat website - en lang (localized URL link)', () => {
     const enLangCode = 'en';
-    const defLocale = i18n.global.locale;
-    i18n.global.locale = enLangCode;
+    const defLocale = i18n.global.locale.value;
+    i18n.global.locale.value = enLangCode;
 
     cy.dataCy(selectorAutomatLogoButton)
       .should(
@@ -112,7 +112,7 @@ function coreTests() {
           }
           expect(resp.status).to.eq(httpSuccessfullStatus);
         });
-        i18n.global.locale = defLocale;
+        i18n.global.locale.value = defLocale;
       });
   });
 

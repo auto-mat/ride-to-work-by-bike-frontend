@@ -114,8 +114,8 @@ describe('<FormFieldListMerch>', () => {
     });
     it('renders link to size converion chart image - en lang (localized URL link)', () => {
       const enLangCode = 'en';
-      const defLocale = i18n.global.locale;
-      i18n.global.locale = enLangCode;
+      const defLocale = i18n.global.locale.value;
+      i18n.global.locale.value = enLangCode;
 
       cy.dataCy('form-merch-size-conversion-chart-link')
         .should('be.visible')
@@ -147,7 +147,7 @@ describe('<FormFieldListMerch>', () => {
               return;
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
-            i18n.global.locale = defLocale;
+            i18n.global.locale.value = defLocale;
           });
         });
     });

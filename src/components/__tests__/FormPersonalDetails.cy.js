@@ -243,8 +243,8 @@ describe('<FormPersonalDetails>', () => {
 
     it('renders link to data privacy policy - en lang (localized URL link)', () => {
       const enLangCode = 'en';
-      const defLocale = i18n.global.locale;
-      i18n.global.locale = enLangCode;
+      const defLocale = i18n.global.locale.value;
+      i18n.global.locale.value = enLangCode;
 
       cy.dataCy('form-terms-link')
         .should('be.visible')
@@ -273,7 +273,7 @@ describe('<FormPersonalDetails>', () => {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
 
@@ -309,8 +309,8 @@ describe('<FormPersonalDetails>', () => {
 
     it('renders link to terms of service - en lang (localized URL link)', () => {
       const enLangCode = 'en';
-      const defLocale = i18n.global.locale;
-      i18n.global.locale = enLangCode;
+      const defLocale = i18n.global.locale.value;
+      i18n.global.locale.value = enLangCode;
 
       cy.dataCy('form-service-link')
         .should('be.visible')
@@ -339,7 +339,7 @@ describe('<FormPersonalDetails>', () => {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
   });

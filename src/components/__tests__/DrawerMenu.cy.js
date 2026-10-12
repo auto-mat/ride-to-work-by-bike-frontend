@@ -452,7 +452,7 @@ describe('DrawerMenu', () => {
   context('menu bottom - change lang to en lang', () => {
     beforeEach(() => {
       const enLangCode = 'en';
-      i18n.global.locale = enLangCode;
+      i18n.global.locale.value = enLangCode;
 
       const urlDonate = getApiBaseUrlWithLang(
         null,

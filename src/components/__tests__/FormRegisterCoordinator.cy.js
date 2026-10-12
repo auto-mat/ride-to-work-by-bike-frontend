@@ -285,8 +285,8 @@ function coreTests() {
 
   it('renders checkbox terms - en lang (localized URL link)', () => {
     const enLangCode = 'en';
-    const defLocale = i18n.global.locale;
-    i18n.global.locale = enLangCode;
+    const defLocale = i18n.global.locale.value;
+    i18n.global.locale.value = enLangCode;
 
     // checkbox visible
     cy.dataCy('form-register-coordinator-terms')
@@ -341,7 +341,7 @@ function coreTests() {
             }
             expect(resp.status).to.eq(httpSuccessfullStatus);
           });
-          i18n.global.locale = defLocale;
+          i18n.global.locale.value = defLocale;
         });
     });
     // test checking the checkbox
