@@ -224,9 +224,13 @@ function coreTests() {
       cy.fixture('apiGetThisCampaignMay.json').then((campaign) => {
         cy.dataCy('routes-page-instructions').should(
           'contain',
-          i18n.global.t('routes.instructionRouteLogTimeframe', {
-            days: campaign.results[0].days_active,
-          }),
+          i18n.global.t(
+            'routes.instructionRouteLogTimeframe',
+            {
+              days: campaign.results[0].days_active,
+            },
+            campaign.results[0].days_active,
+          ),
         );
         cy.dataCy('routes-page-instructions').should(
           'contain',
