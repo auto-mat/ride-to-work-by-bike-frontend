@@ -1,12 +1,9 @@
 import * as fs from 'fs';
-import { injectQuasarDevServerConfig } from '@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server';
+import { quasarComponentTestingConfig } from '@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server';
 import { defineConfig } from 'cypress';
-import path from 'path';
 import { addMatchImageSnapshotPlugin } from 'cypress-image-snapshot/plugin';
-
-const { getAppConfig } = require(
-  path.join(__dirname, 'src/utils/get_app_conf'),
-);
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter';
+import { getAppConfig } from './src/utils/get_app_conf.js';
 
 export default defineConfig({
   fixturesFolder: 'test/cypress/fixtures',
@@ -17,7 +14,7 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config);
-      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+      installLogsPrinter(on, {
         printLogsToConsole: 'onFail',
         includeSuccessfulHookLogs: false,
         printLogsToFile: 'onFail',
@@ -43,7 +40,7 @@ export default defineConfig({
   component: {
     setupNodeEvents(on, config) {
       addMatchImageSnapshotPlugin(on, config);
-      require('cypress-terminal-report/src/installLogsPrinter')(on, {
+      installLogsPrinter(on, {
         printLogsToConsole: 'onFail',
         includeSuccessfulHookLogs: false,
         printLogsToFile: 'onFail',
@@ -61,7 +58,7 @@ export default defineConfig({
     supportFile: 'test/cypress/support/component.js',
     specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
     indexHtmlFile: 'test/cypress/support/component-index.html',
-    devServer: injectQuasarDevServerConfig(),
+    ...quasarComponentTestingConfig(),
     defaultCommandTimeout: 60000,
     excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'],
   },
