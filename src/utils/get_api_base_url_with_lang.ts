@@ -53,7 +53,7 @@ export const getApiBaseUrlWithLang = (
      */
     if (![apiDefaultLang, 'sk'].includes(i18n as string)) {
       const apiBaseUrl = new URL(apiBase);
-      return `${apiBaseUrl.origin}/${i18n}/${apiBaseUrl.pathname}`;
+      return `${apiBaseUrl.origin}/${i18n}${apiBaseUrl.pathname}`;
     } else {
       return apiBase;
     }
