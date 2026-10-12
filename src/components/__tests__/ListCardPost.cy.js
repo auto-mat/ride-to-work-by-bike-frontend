@@ -31,6 +31,7 @@ describe('<ListCardPost>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.viewport('macbook-16');
       cy.fixture('listCardsPost').then((cards) => {
         cy.mount(ListCardPost, {
           props: {
@@ -39,8 +40,6 @@ describe('<ListCardPost>', () => {
           },
         });
       });
-
-      cy.viewport('macbook-16');
     });
 
     coreTests();
