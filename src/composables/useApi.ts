@@ -17,6 +17,10 @@ const { apiDefaultLang, apiBase, apiBaseRtwbbFeed, apiBaseIpAddress } =
 // types
 import type { AxiosRequestHeaders, Method, ResponseType } from 'axios';
 import type { Logger } from '../components/types/Logger';
+import type { Composer } from 'vue-i18n';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
 
 export interface ApiResponse<T> {
   data: T | null;
@@ -101,7 +105,7 @@ const injectAxioBaseApiUrlWithLang = (
   logger: Logger | null,
 ): void => {
   logger?.debug(
-    `Injected base API URL <${baseUrl}> with language <${i18n.global.locale}>.`,
+    `Injected base API URL <${baseUrl}> with language <${globalI18n.locale.value}>.`,
   );
   api.defaults.baseURL = getApiBaseUrlWithLang(
     logger,

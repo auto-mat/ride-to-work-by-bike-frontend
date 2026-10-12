@@ -1,4 +1,4 @@
-import type { I18n } from 'vue-i18n';
+import type { Composer, I18n } from 'vue-i18n';
 import type { Logger } from '../components/types/Logger';
 
 /*
@@ -26,17 +26,19 @@ export const getApiBaseUrlWithLang = (
   i18n: I18n | string,
 ): string => {
   if (typeof i18n !== 'string') {
+    // correctly type the global i18n object
+    const globalI18n = i18n.global as unknown as Composer;
     // Use same API default cs lang for sk lang
-    if (![apiDefaultLang, 'sk'].includes(i18n.global.locale as string)) {
+    if (![apiDefaultLang, 'sk'].includes(globalI18n.locale.value)) {
       logger?.info(
         'Inject Axios base API URL with language (internationalization).',
       );
       const apiBaseUrl = new URL(apiBase);
-      logger?.debug(`Available locales <${i18n.global.availableLocales}>.`);
+      logger?.debug(`Available locales <${globalI18n.availableLocales}>.`);
       logger?.debug(
-        `Injected base API URL with language <${i18n.global.locale}>.`,
+        `Injected base API URL with language <${globalI18n.locale.value}>.`,
       );
-      return `${apiBaseUrl.origin}/${i18n.global.locale}${apiBaseUrl.pathname}`;
+      return `${apiBaseUrl.origin}/${globalI18n.locale.value}${apiBaseUrl.pathname}`;
     } else {
       logger?.debug(
         `Reset injected base API URL to default language <${apiDefaultLang}>.`,

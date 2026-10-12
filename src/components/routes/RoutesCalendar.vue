@@ -48,6 +48,10 @@ import { useTripsStore } from '../../stores/trips';
 // types
 import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
 import type { RouteDay } from '../types/Route';
+import type { Composer } from 'vue-i18n';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
 
 export default defineComponent({
   name: 'RoutesCalendar',
@@ -60,7 +64,7 @@ export default defineComponent({
     const calendar = ref<typeof QCalendarMonth | null>(null);
     const selectedDate = ref<string>(today());
     const locale = computed((): string => {
-      return i18n.global.locale;
+      return globalI18n.locale.value;
     });
 
     const { apiDateFormat } = rideToWorkByBikeConfig;

@@ -80,6 +80,7 @@ import type {
   ThirdPartyVoucher,
   ToApiPayloadStoreState,
 } from '../components/types/ApiRegistration';
+import type { Composer } from 'vue-i18n';
 
 // utils
 import { defaultLocale } from '@/i18n/def_locale';
@@ -90,6 +91,9 @@ import {
   emptyFormRegisterCoordinator,
   getRegisterChallengeEmptyPersistentState,
 } from '@/utils/get_register_challenge_empty_state';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
 
 /**
  * Store for the register challenge page.
@@ -1222,7 +1226,7 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
           `PayU transaction initiated flag set to ${this.isPayuTransactionInitiated}.`,
         );
         // localize the URI
-        const redirectUriLocalized = `${response.redirectUri}&lang=${i18n.global.locale}`;
+        const redirectUriLocalized = `${response.redirectUri}&lang=${globalI18n.locale.value}`;
         window.location.href = redirectUriLocalized;
       } else {
         Notify.create({

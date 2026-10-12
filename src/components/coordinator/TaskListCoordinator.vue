@@ -24,6 +24,10 @@ import { i18n } from '../../boot/i18n';
 // types
 import type { TaskCoordinator } from '../types/Task';
 import type { Logger } from '../types/Logger';
+import type { Composer } from 'vue-i18n';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
 
 interface TasksData {
   [id: string]: string;
@@ -43,13 +47,13 @@ const getTasksData = async (): TasksData => {
     if (matched && matched.length > 1) {
       const locale = matched[1];
       // Dynamic import TOML translation file content
-      if (locale === i18n.global.locale) {
+      if (locale === globalI18n.locale.value) {
         tasks[locale] = localesFiles[localeFile].default;
         break;
       }
     }
   }
-  return tasks[i18n.global.locale]['tasks'];
+  return tasks[globalI18n.locale.value]['tasks'];
 };
 
 export default defineComponent({
@@ -69,7 +73,7 @@ export default defineComponent({
 
     // If locale lang is changed, we need reload tasks data
     watch(
-      () => i18n.global.locale,
+      () => globalI18n.locale.value,
       async (newVal) => {
         logger?.info(
           `Locale lang is changed to <${newVal}>, reload organization` +

@@ -26,12 +26,16 @@ import { useValidation } from '@/composables/useValidation';
 
 // types
 import type { FormOption } from '../types/Form';
+import type { Composer } from 'vue-i18n';
+
+// correctly type the global i18n object
+const globalI18n = i18n.global as unknown as Composer;
 
 export default defineComponent({
   name: 'FormInviteFriends',
   setup() {
     const emailAddresses = ref<string>('');
-    const language = ref<string>(i18n.global.locale);
+    const language = ref<string>(globalI18n.locale.value);
 
     // dynamically build array of language options
     const optionsLanguage = computed((): FormOption[] => {
