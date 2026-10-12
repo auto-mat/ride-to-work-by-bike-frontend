@@ -48,6 +48,7 @@ describe('<SliderProgress>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.viewport('macbook-16');
       cy.mount(SliderProgress, {
         props: {
           title: i18n.global.t('index.progressSlider.title'),
@@ -59,7 +60,6 @@ describe('<SliderProgress>', () => {
           },
         },
       });
-      cy.viewport('macbook-16');
     });
 
     coreTests();
@@ -68,6 +68,7 @@ describe('<SliderProgress>', () => {
 
   context('mobile', () => {
     beforeEach(() => {
+      cy.viewport('iphone-6');
       cy.mount(SliderProgress, {
         props: {
           title: i18n.global.t('index.progressSlider.title'),
@@ -79,7 +80,6 @@ describe('<SliderProgress>', () => {
           },
         },
       });
-      cy.viewport('iphone-6');
     });
     coreTests();
     mobileTests();

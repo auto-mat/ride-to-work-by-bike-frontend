@@ -32,6 +32,7 @@ describe('<RouteTabs>', () => {
 
   context('desktop', () => {
     beforeEach(() => {
+      cy.viewport('macbook-16');
       cy.mount(RouteTabs, {
         props: {},
       });
@@ -45,7 +46,6 @@ describe('<RouteTabs>', () => {
       cy.setupTripsStoreWithCommuteModes(useTripsStore);
       // setup store with register challenge team approval status
       cy.setupRegisterChallengeTeamApprovalStatus(useRegisterChallengeStore);
-      cy.viewport('macbook-16');
     });
 
     coreTests();
