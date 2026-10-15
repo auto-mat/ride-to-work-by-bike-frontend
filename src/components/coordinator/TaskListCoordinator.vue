@@ -25,19 +25,16 @@ import { i18n } from '../../boot/i18n';
 import type { TaskCoordinator } from '../types/Task';
 import type { Logger } from '../types/Logger';
 
-interface TasksData {
-  [id: string]: string;
-  [date: string]: string;
-  [title: string]: string;
-  [body: string]: string;
+interface TasksFile {
+  tasks: TaskCoordinator[];
 }
 
-const getTasksData = async (): TasksData => {
-  const localesFiles = import.meta.glob(
+const getTasksData = async (): Promise<TaskCoordinator[]> => {
+  const localesFiles = import.meta.glob<{ default: TasksFile }>(
     './../../data/coordinator_tasks/*.toml',
     { eager: true },
   );
-  const tasks = {};
+  const tasks: Record<string, TasksFile> = {};
   for (const localeFile of Object.keys(localesFiles)) {
     const matched = localeFile.match(/([a-z0-9-_]+)\./i);
     if (matched && matched.length > 1) {
