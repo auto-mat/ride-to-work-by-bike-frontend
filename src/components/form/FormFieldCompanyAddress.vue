@@ -275,7 +275,6 @@ export default defineComponent({
           value: selectedSubsidiary.value.value,
         },
       });
-      onUpdate();
     };
 
     return {
