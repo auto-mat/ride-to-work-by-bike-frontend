@@ -316,9 +316,7 @@ function coreTests() {
         .and('have.color', grey10)
         .and(
           'contain',
-          i18n.global.t('routes.titleBottomPanel', routes.length, {
-            count: routes.length,
-          }),
+          i18n.global.t('routes.titleBottomPanel', routes.length),
         );
       cy.dataCy(selectorSectionDistance).should('be.visible');
       cy.dataCy(selectorSectionTransport).should('be.visible');

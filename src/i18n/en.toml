@@ -774,7 +774,6 @@ perex = "You can help us decide what to spend more time on next time and what sh
 buttonQuestionnaire = "Answer questionnaire"
 
 [index.bannerRoutes]
-title = "You have {n} route left to log in the last week. | You have {n} routes left to log in the last week."
 titleDefault = "The challenge is currently running. You can log rides until {date}."
 titleStart = "The October challenge has started!"
 addRoutes = "Log routes"

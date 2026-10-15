@@ -777,7 +777,6 @@ perex = "Pomůžete nám rozhodnout, čemu příště věnovat více času a co 
 buttonQuestionnaire = "Vyplnit dotazník"
 
 [index.bannerRoutes]
-title = "Za poslední týden vám zbývá zapsat {n} cesta | Za poslední týden vám zbývá zapsat {n} cest"
 titleDefault = "Výzva právě probíhá. Cesty můžete zapisovat do {date}."
 titleStart = "Říjnová výzva byla zahájena!"
 addRoutes = "Zapište trasy"

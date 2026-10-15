@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { ComponentCustomProperties } from 'vue';
+import type { ComponentCustomProperties as VueCustomPropertiesObject } from 'vue';
 
 /// <reference types="vite/client" />
 
@@ -10,8 +10,11 @@ declare module '*.vue' {
   export default component;
 }
 
+/**
+ * Shares types between `vue` and `@vue/runtime-core` packages.
+ * This way the types are available for all libraries regardless of where they
+ * import types from.
+ */
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $t: (key: string, ...args: any[]) => string;
-  }
+  interface ComponentCustomProperties extends VueCustomPropertiesObject {}
 }

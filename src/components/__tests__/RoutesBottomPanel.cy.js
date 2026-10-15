@@ -50,9 +50,7 @@ describe('<RoutesBottomPanel>', () => {
         .should('be.visible')
         .and(
           'contain',
-          i18n.global.t('routes.titleBottomPanel', routeMultiple, {
-            count: routeMultiple,
-          }),
+          i18n.global.t('routes.titleBottomPanel', routeMultiple),
         );
     });
   });
@@ -95,11 +93,6 @@ function singleRouteTests() {
     // title visible
     cy.dataCy('section-heading-title')
       .should('be.visible')
-      .and(
-        'contain',
-        i18n.global.t('routes.titleBottomPanel', routeSingle, {
-          count: routeSingle,
-        }),
-      );
+      .and('contain', i18n.global.t('routes.titleBottomPanel', routeSingle));
   });
 }

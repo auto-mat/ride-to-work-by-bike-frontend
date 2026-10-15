@@ -285,11 +285,7 @@ export default defineComponent({
           data-cy="button-save-top"
           @click.prevent="onSave"
         >
-          {{
-            $t('routes.buttonSaveChangesCount', dirtyCount, {
-              count: dirtyCount,
-            })
-          }}
+          {{ $t('routes.buttonSaveChangesCount', dirtyCount) }}
         </q-btn>
       </div>
       <!-- Item: Day -->
@@ -353,11 +349,7 @@ export default defineComponent({
           data-cy="button-save-bottom"
           @click.prevent="onSave"
         >
-          {{
-            $t('routes.buttonSaveChangesCount', dirtyCount, {
-              count: dirtyCount,
-            })
-          }}
+          {{ $t('routes.buttonSaveChangesCount', dirtyCount) }}
         </q-btn>
       </div>
       <!-- Sticky save routes button on the mobile screen -->
@@ -377,11 +369,7 @@ export default defineComponent({
                 data-cy="button-save-sticky"
                 @click.prevent="onSave"
               >
-                {{
-                  $t('routes.buttonSaveChangesCount', dirtyCount, {
-                    count: dirtyCount,
-                  })
-                }}
+                {{ $t('routes.buttonSaveChangesCount', dirtyCount) }}
               </q-btn>
             </div>
           </q-page-sticky>

@@ -278,11 +278,7 @@ export default defineComponent({
           data-cy="dialog-title"
         >
           <template v-if="routesCount > 0">
-            {{
-              $t('routes.titleBottomPanel', routesCount, {
-                count: routesCount,
-              })
-            }}
+            {{ $t('routes.titleBottomPanel', routesCount) }}
           </template>
           <template v-else>
             {{ $t('routes.titleBottomPanelNoRoutes') }}

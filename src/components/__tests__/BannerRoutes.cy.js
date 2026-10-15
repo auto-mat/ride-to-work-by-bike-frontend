@@ -40,7 +40,7 @@ describe('<BannerRoutes>', () => {
 
   it('has translation for all strings', () => {
     cy.testLanguageStringsInContext(
-      ['title', 'titleStart', 'addRoutes', 'addFirstRoutes'],
+      ['titleStart', 'addRoutes', 'addFirstRoutes'],
       'index.bannerRoutes',
       i18n,
     );

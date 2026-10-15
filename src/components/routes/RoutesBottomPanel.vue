@@ -88,7 +88,7 @@ export default defineComponent({
       <div class="row justify-between">
         <!-- Title -->
         <section-heading>
-          {{ $t('routes.titleBottomPanel', routeCount, { count: routeCount }) }}
+          {{ $t('routes.titleBottomPanel', routeCount) }}
         </section-heading>
         <!-- Button: Close -->
         <q-btn

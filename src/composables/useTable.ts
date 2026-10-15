@@ -43,9 +43,7 @@ export const paginationLabel = (
 };
 
 export const selectedRowsLabel = (numberOfRows: number): string => {
-  return i18n.global.t('table.textSelectedRows', numberOfRows, {
-    count: numberOfRows,
-  });
+  return i18n.global.t('table.textSelectedRows', numberOfRows);
 };
 
 export const useTable = () => {

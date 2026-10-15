@@ -507,9 +507,7 @@ function coreTests() {
       .should('be.visible')
       .and(
         'contain',
-        i18n.global.t('routes.titleBottomPanel', routeCountSingle, {
-          count: routeCountSingle,
-        }),
+        i18n.global.t('routes.titleBottomPanel', routeCountSingle),
       );
     cy.dataCy(selectorRouteCalendarPanel)
       .find(dataSelectorInputTransportType)
@@ -520,9 +518,7 @@ function coreTests() {
       .should('be.visible')
       .and(
         'contain',
-        i18n.global.t('routes.titleBottomPanel', routeCountMultiple, {
-          count: routeCountMultiple,
-        }),
+        i18n.global.t('routes.titleBottomPanel', routeCountMultiple),
       );
     cy.get(classSelectorCurrentDay).find(dataSelectorItemToWork).click();
     cy.get(classSelectorCurrentDay).find(dataSelectorItemFromWork).click();
@@ -541,9 +537,7 @@ function coreTests() {
         .should('be.visible')
         .and(
           'contain',
-          i18n.global.t('routes.titleBottomPanel', routeCountSingle, {
-            count: routeCountSingle,
-          }),
+          i18n.global.t('routes.titleBottomPanel', routeCountSingle),
         );
       cy.dataCy(selectorRouteCalendarPanel)
         .find(dataSelectorInputTransportType)
@@ -598,9 +592,7 @@ function coreTests() {
       .should('be.visible')
       .and(
         'contain',
-        i18n.global.t('routes.titleBottomPanel', routeCountSingle, {
-          count: routeCountSingle,
-        }),
+        i18n.global.t('routes.titleBottomPanel', routeCountSingle),
       );
     // close button
     cy.dataCy(selectorRouteCalendarPanel).find(dataSelectorDialogClose).click();
@@ -615,9 +607,7 @@ function coreTests() {
       .should('be.visible')
       .and(
         'contain',
-        i18n.global.t('routes.titleBottomPanel', routeCountMultiple, {
-          count: routeCountMultiple,
-        }),
+        i18n.global.t('routes.titleBottomPanel', routeCountMultiple),
       );
   });
 }
