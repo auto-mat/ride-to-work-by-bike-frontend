@@ -7,6 +7,7 @@ import {
   vueTsConfigs,
 } from '@vue/eslint-config-typescript';
 import pluginCypress from 'eslint-plugin-cypress';
+import computedOnlyWatched from './eslint-rules/computed-only-watched.js';
 
 // the following is optional, if you want prettier too:
 import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
@@ -77,6 +78,11 @@ export default defineConfigWithVueTs(
       },
     },
 
+    // project-specific rules, see ./eslint-rules
+    plugins: {
+      local: { rules: { 'computed-only-watched': computedOnlyWatched } },
+    },
+
     // add your custom rules here
     rules: {
       'prefer-promise-reject-errors': 'off',
@@ -95,6 +101,9 @@ export default defineConfigWithVueTs(
 
       // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+      // disallow computed vars used only as a watch source
+      'local/computed-only-watched': 'error',
     },
   },
 
