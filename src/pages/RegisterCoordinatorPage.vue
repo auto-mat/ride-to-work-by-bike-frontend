@@ -17,7 +17,7 @@
  */
 
 // libraries
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, inject, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
 // components
@@ -33,6 +33,9 @@ import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 
 import { onTrack } from '../utils/track';
 
+// types
+import type { Logger } from '../components/types/Logger';
+
 export default defineComponent({
   name: 'RegisterCoordinatorPage',
   components: {
@@ -40,6 +43,7 @@ export default defineComponent({
     FormRegisterCoordinator,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const registerChallengeStore = useRegisterChallengeStore();
     const router = useRouter();
 
