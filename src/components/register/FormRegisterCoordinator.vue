@@ -141,67 +141,66 @@ export default defineComponent({
       );
     });
 
-    const newsletterTrack = computed({
-      get: () => formRegisterCoordinator.newsletter,
-    });
+    watch(
+      () => formRegisterCoordinator.newsletter,
+      () => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorNewsletter',
+            timestamp: Date.now(),
+          },
+        });
+      },
+    );
 
-    watch(newsletterTrack, () => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorNewsletter',
-          timestamp: Date.now(),
-        },
-      });
-    });
+    watch(
+      () => formRegisterCoordinator.responsibility,
+      () => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorResponsibility',
+            timestamp: Date.now(),
+          },
+        });
+      },
+    );
 
-    const responsibilityTrack = computed({
-      get: () => formRegisterCoordinator.responsibility,
-    });
+    watch(
+      () => formRegisterCoordinator.terms,
+      () => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorTerms',
+            timestamp: Date.now(),
+          },
+        });
+      },
+    );
 
-    watch(responsibilityTrack, () => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorResponsibility',
-          timestamp: Date.now(),
-        },
-      });
-    });
-    const termsTrack = computed({
-      get: () => formRegisterCoordinator.terms,
-    });
-    watch(termsTrack, () => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorTerms',
-          timestamp: Date.now(),
-        },
-      });
-    });
+    watch(
+      () => formRegisterCoordinator.organizationType,
+      () => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorOrganizationTypeTrack',
+            timestamp: Date.now(),
+          },
+        });
+      },
+    );
 
-    const organizationTypeTrack = computed({
-      get: () => formRegisterCoordinator.organizationType,
-    });
-    watch(organizationTypeTrack, () => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorOrganizationTypeTrack',
-          timestamp: Date.now(),
-        },
-      });
-    });
-
-    const organizationIdTrack = computed({
-      get: () => formRegisterCoordinator.organizationId,
-    });
-    watch(organizationIdTrack, (val) => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorSelectedOrganizationId',
-          timestamp: Date.now(),
-          value: val,
-        },
-      });
-    });
+    watch(
+      () => formRegisterCoordinator.organizationId,
+      (val) => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorSelectedOrganizationId',
+            timestamp: Date.now(),
+            value: val ? String(val) : undefined,
+          },
+        });
+      },
+    );
 
     return {
       fieldOrganizationLabel,

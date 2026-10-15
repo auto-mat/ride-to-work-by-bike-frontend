@@ -123,23 +123,21 @@ export default defineComponent({
     const { challengeAllowRegisterOrganizationAdmin } = rideToWorkByBikeConfig;
     const urlRegisterAsCoordinator = routesConf['register_coordinator'].path;
 
-    const personalDetailsGenderTrack = computed({
-      get: () => personalDetails.value.gender,
-    });
+    watch(
+      () => personalDetails.value.gender,
+      () => {
+        onTrack({ detail: { targetName: 'gender', timestamp: Date.now() } });
+      },
+    );
 
-    const personalDetailsNewsletterTrack = computed({
-      get: () => personalDetails.value.newsletter,
-    });
-
-    watch(personalDetailsGenderTrack, () => {
-      onTrack({ detail: { targetName: 'gender', timestamp: Date.now() } });
-    });
-
-    watch(personalDetailsNewsletterTrack, () => {
-      onTrack({
-        detail: { targetName: 'newsletter', timestamp: Date.now() },
-      });
-    });
+    watch(
+      () => personalDetails.value.newsletter,
+      () => {
+        onTrack({
+          detail: { targetName: 'newsletter', timestamp: Date.now() },
+        });
+      },
+    );
 
     const ageGroups = computed<FormSelectOptionNumberValue[]>(
       () => store.getAgeGroups,

@@ -23,7 +23,7 @@
 
 // libraries
 import { QForm, Notify } from 'quasar';
-import { computed, defineComponent, ref, inject, reactive, watch } from 'vue';
+import { defineComponent, ref, inject, reactive, watch } from 'vue';
 
 // adapters
 import { registerCoordinatorAdapter } from '../../adapters/registerCoordinatorAdapter';
@@ -131,18 +131,17 @@ export default defineComponent({
       formCoordinatorData.phone = '';
       formCoordinatorData.responsibility = false;
     };
-    const responsibilityTrack = computed({
-      get: () => formCoordinatorData.responsibility,
-    });
-
-    watch(responsibilityTrack, () => {
-      onTrack({
-        detail: {
-          targetName: 'orgCoordinatorResponsibility',
-          timestamp: Date.now(),
-        },
-      });
-    });
+    watch(
+      () => formCoordinatorData.responsibility,
+      () => {
+        onTrack({
+          detail: {
+            targetName: 'orgCoordinatorResponsibility',
+            timestamp: Date.now(),
+          },
+        });
+      },
+    );
     return {
       challengeMonth,
       formCoordinatorApplicationRef,

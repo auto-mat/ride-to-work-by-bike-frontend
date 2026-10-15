@@ -468,11 +468,7 @@ export default defineComponent({
       }
     });
 
-    const selectedSizeTrack = computed({
-      get: () => selectedSize.value,
-    });
-
-    watch(selectedSizeTrack, (val) => {
+    watch(selectedSize, (val) => {
       const size =
         merchandiseItems.value.find((item) => item.id === val) || null;
       if (!size) return;

@@ -140,21 +140,23 @@ export default defineComponent({
     });
 
     // reload when organization type changes
-    const organizationType = computed(() => props.organizationType);
-    watch(organizationType, async (newType, oldType) => {
-      if (newType !== oldType) {
-        logger?.debug(
-          `Organization type changed, from the <${oldType}> to the <${newType}>.`,
-        );
-        // Clear select organization widget value
-        selectedOrganization.value = null;
-        logger?.debug(
-          `Clear selected organization value <${selectedOrganization.value}>.`,
-        );
-        // load new organizations and emit event
-        await loadAndEmit(newType);
-      }
-    });
+    watch(
+      () => props.organizationType,
+      async (newType, oldType) => {
+        if (newType !== oldType) {
+          logger?.debug(
+            `Organization type changed, from the <${oldType}> to the <${newType}>.`,
+          );
+          // Clear select organization widget value
+          selectedOrganization.value = null;
+          logger?.debug(
+            `Clear selected organization value <${selectedOrganization.value}>.`,
+          );
+          // load new organizations and emit event
+          await loadAndEmit(newType);
+        }
+      },
+    );
 
     /**
      * Computed ensures selectedOrganization reactivity.
