@@ -62,7 +62,7 @@ export default defineComponent({
   },
   setup() {
     const calendar = ref<typeof QCalendarMonth | null>(null);
-    const selectedDate = ref<string>(date.formatDate(Date.now(), 'YYYY-MM-DD'));
+    const selectedDate = ref<string | null>(null);
     const locale = computed((): string => {
       return globalI18n.locale.value;
     });
@@ -133,10 +133,7 @@ export default defineComponent({
 
     // Compute month name and year for title
     const monthNameAndYear = computed((): string => {
-      if (!selectedDate.value) {
-        return '';
-      }
-      const date = new Date(selectedDate.value);
+      const date = new Date();
       const month = date.toLocaleString(locale.value, { month: 'long' });
       const year = date.toLocaleString(locale.value, { year: 'numeric' });
       return `${month} ${year}`;
