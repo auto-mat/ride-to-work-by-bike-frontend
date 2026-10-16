@@ -31,10 +31,15 @@ import { useRoutes } from '../../composables/useRoutes';
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// enums
+import { CompanyChallengeTableColumns } from '@/components/types/Table';
+
+// stores
 import { useAdminCompetitionStore } from '../../stores/adminCompetition';
 
 // types
-import { CompanyChallengeTableColumns } from '../../components/types/Table';
+import type { Competition } from '@/components/types/Competition';
+import type { Logger } from '@/components/types/Logger';
 import type { TableCompanyChallengeRow } from '../../composables/useTableCompanyChallengeData';
 
 export default defineComponent({

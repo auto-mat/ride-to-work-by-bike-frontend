@@ -35,7 +35,11 @@ import FormFieldEmail from '../global/FormFieldEmail.vue';
 import LoginRegisterButtons from '../global/LoginRegisterButtons.vue';
 
 // composables
+import { matomo } from '@/boot/matomo';
 import { useValidation } from '../../composables/useValidation';
+
+// config
+import { rideToWorkByBikeConfig } from '@/boot/global_vars';
 
 // enums
 import { LoginFormState } from '../../stores/login';
@@ -43,10 +47,10 @@ import { LoginFormState } from '../../stores/login';
 // stores
 import { useLoginStore } from '../../stores/login';
 
-// config
-import { rideToWorkByBikeConfig } from '../../boot/global_vars';
-import { matomo } from '../../boot/matomo';
+// types
+import type { Logger } from '@/components/types/Logger';
 
+// utils
 import { formFieldCustomValidationErrCssClass } from '../../utils';
 
 export default defineComponent({

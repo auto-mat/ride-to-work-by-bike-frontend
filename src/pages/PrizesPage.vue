@@ -41,6 +41,9 @@ import SectionHeading from '../components/global/SectionHeading.vue';
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
 import { useFeedStore } from '../stores/feed';
 
+// types
+import type { City } from '@/components/types/City';
+
 export default defineComponent({
   name: 'PrizesPage',
   components: {

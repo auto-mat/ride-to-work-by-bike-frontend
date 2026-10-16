@@ -42,12 +42,14 @@ import listCardsPost from '../../test/cypress/fixtures/listCardsPost.json';
 // stores
 import { useFeedStore } from '../stores/feed';
 import { useRegisterChallengeStore } from '../stores/registerChallenge';
+
 // types
 import type {
   CardPost,
   CardFollow,
   CardLocationType,
 } from '@/components/types';
+import type { City } from '@/components/types/City';
 
 export default defineComponent({
   name: 'CommunityPage',

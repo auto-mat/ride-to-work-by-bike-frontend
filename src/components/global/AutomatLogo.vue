@@ -22,13 +22,16 @@
 // libraries
 import { computed, defineComponent, inject } from 'vue';
 
+// composables
 import { i18n } from '../../boot/i18n';
 import { defaultLocale } from '../../i18n/def_locale';
-
 import { getApiBaseUrlWithLang } from '../../utils/get_api_base_url_with_lang';
 
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
+
+// types
+import type { Logger } from '@/components/types/Logger';
 
 export default defineComponent({
   name: 'AutomatLogo',
