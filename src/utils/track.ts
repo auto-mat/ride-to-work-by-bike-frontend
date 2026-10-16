@@ -7,7 +7,7 @@ type EventTrack = {
   detail: {
     targetName: string;
     timestamp: number;
-    value?: string;
+    value?: string | number | null;
   };
 };
 

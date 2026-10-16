@@ -107,7 +107,7 @@ export default defineComponent({
         detail: {
           targetName: `selectOrganization${name.charAt(0).toUpperCase()}${name.slice(1)}`,
           timestamp: Date.now(),
-          value: company.value.subsidiaryAddress.cityChallenge,
+          value: company.value.subsidiaryAddress?.cityChallenge,
         },
       });
       onUpdate();

@@ -196,7 +196,7 @@ export default defineComponent({
           detail: {
             targetName: 'orgCoordinatorSelectedOrganizationId',
             timestamp: Date.now(),
-            value: val ? String(val) : undefined,
+            value: val,
           },
         });
       },
