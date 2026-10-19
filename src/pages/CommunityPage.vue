@@ -48,8 +48,8 @@ import type {
   CardPost,
   CardFollow,
   CardLocationType,
+  City,
 } from '@/components/types';
-import type { City } from '@/components/types/City';
 
 export default defineComponent({
   name: 'CommunityPage',
