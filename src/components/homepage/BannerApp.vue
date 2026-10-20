@@ -48,7 +48,7 @@ export default defineComponent({
       if (!localStorageData) return true;
 
       // try parsing data as JSON
-      let parsedStorageData = null;
+      let parsedStorageData;
       try {
         parsedStorageData = JSON.parse(localStorageData);
       } catch {

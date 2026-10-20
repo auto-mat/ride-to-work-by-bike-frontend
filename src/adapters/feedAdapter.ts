@@ -178,8 +178,7 @@ const buildOfferMetadata = (
   // disregard timezone data
   const startDateLocal = post.start_date.replace('Z', '');
   // format dates
-  let startDateFormatted: string = '';
-  startDateFormatted = startDateLocal
+  const startDateFormatted: string = startDateLocal
     ? i18n.global.d(new Date(startDateLocal), 'monthDay')
     : '';
   const endDateFormatted: string = post.end_date
