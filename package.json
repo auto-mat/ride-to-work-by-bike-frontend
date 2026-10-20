@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "npx quasar dev",
     "build": "npx quasar build",
-    "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
+    "lint": "eslint -c ./eslint.config.mjs \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
     "test:e2e:ci": "cross-env NODE_ENV=test TS_NODE_PROJECT=test/cypress/tsconfig.json start-test \"quasar dev\" http-get://127.0.0.1:8080 \"cypress run --e2e\"",
@@ -104,7 +104,7 @@
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "^10.0.1",
     "@quasar/app-vite": "^3.0.0",
     "@quasar/quasar-app-extension-qcalendar": "^5.3.1",
     "@quasar/quasar-app-extension-testing-e2e-cypress": "^7.0.0",
@@ -120,15 +120,15 @@
     "cypress-parallel": "^0.15.0",
     "cypress-terminal-report": "^7.0.4",
     "cypress-vite": "^1.10.2",
-    "eslint": "^9.33.0",
-    "eslint-plugin-cypress": "^4.2.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-cypress": "^7.0.2",
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^17.0.0",
     "husky": "^9.0.0",
     "lint-staged": "^16.0.0",
     "prettier": "3",
     "typescript": "^5.0.0",
-    "vite-plugin-checker": "^0.10.2",
+    "vite-plugin-checker": "^0.14.0",
     "vue-tsc": "^3.0.6"
   },
   "engines": {

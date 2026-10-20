@@ -6,7 +6,7 @@ import {
   defineConfigWithVueTs,
   vueTsConfigs,
 } from '@vue/eslint-config-typescript';
-import pluginCypress from 'eslint-plugin-cypress/flat';
+import pluginCypress from 'eslint-plugin-cypress';
 
 // the following is optional, if you want prettier too:
 import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
