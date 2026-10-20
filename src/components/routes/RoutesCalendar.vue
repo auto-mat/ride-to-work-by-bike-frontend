@@ -46,7 +46,7 @@ import { TransportDirection } from '../types/Route';
 import { useTripsStore } from '../../stores/trips';
 
 // types
-import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
+import type { Timestamp } from '@timestamp-js/core';
 import type { RouteDay } from '../types/Route';
 import type { Composer } from 'vue-i18n';
 

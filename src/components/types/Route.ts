@@ -1,5 +1,5 @@
 // types
-import type { TimestampOrNull } from '@quasar/quasar-ui-qcalendar';
+import type { Timestamp } from '@timestamp-js/core';
 import type { Feature } from 'ol';
 
 export enum RouteInputType {
@@ -51,7 +51,7 @@ export type RouteDay = {
 };
 
 export type RouteCalendarActive = {
-  timestamp: TimestampOrNull;
+  timestamp: Timestamp | null;
   direction: TransportDirection;
 };
 

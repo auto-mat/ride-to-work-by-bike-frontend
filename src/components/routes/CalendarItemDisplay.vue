@@ -42,7 +42,7 @@ import { useRoutes } from '@/composables/useRoutes';
 import { TransportDirection, TransportType } from '../types/Route';
 
 // types
-import type { Timestamp } from '@quasar/quasar-ui-qcalendar';
+import type { Timestamp } from '@timestamp-js/core';
 import type { RouteDay, RouteItem } from '../types/Route';
 
 export default defineComponent({
