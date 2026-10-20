@@ -402,6 +402,21 @@ export const useRegisterChallengeStore = defineStore('registerChallenge', {
       return this.getMerchId !== null;
     },
     getIsRegistrationComplete(): boolean {
+      this.$log?.debug(
+        `Personal details is complete <${this.getIsPersonalDetailsComplete}>.`,
+      );
+      this.$log?.debug(`Payment is complete <${this.getIsPaymentComplete}>.`);
+      this.$log?.debug(
+        `Organization type is complete <${this.getIsOrganizationTypeComplete}>.`,
+      );
+      this.$log?.debug(
+        `Subsidiary ID is complete <${this.getIsSubsidiaryIdComplete}>.`,
+      );
+      this.$log?.debug(`Team ID is complete <${this.getIsTeamIdComplete}>`);
+      this.$log?.debug(`Merch ID is complete <${this.getIsMerchIdComplete}>.`);
+      this.$log?.debug(
+        `Merch is saved into DB is complete <${this.getIsMerchandiseSavedIntoDb}>.`,
+      );
       return (
         this.getIsPersonalDetailsComplete &&
         this.getIsPaymentComplete &&

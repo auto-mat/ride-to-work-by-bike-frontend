@@ -471,7 +471,7 @@ export const useLoginStore = defineStore('login', {
         this.$log?.debug(
           `Restored logged user was successfull, redirect to <${routesConf['home']['path']}> URL.`,
         );
-        this.$router.push(routesConf['home']['path']);
+        this.redirectHomeAfterLogin();
       } else {
         // redirect to login page
         if (this.$router) {

@@ -36,7 +36,9 @@ describe('Login user with tokens', () => {
           '#' +
             `?refreshToken=${encodeURIComponent(token)}&accessToken=${encodeURIComponent(token)}&showUserNotifyMessage=true`,
         );
-        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage();
+        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage(
+          'registerChallenge',
+        );
         cy.reload();
         cy.checkLoggedUserNotifyMessage(user);
       });
@@ -71,7 +73,9 @@ describe('Login user with tokens', () => {
           '#' +
             `?refreshToken=${encodeURIComponent(token)}&accessToken=${encodeURIComponent(token)}&showUserNotifyMessage=true`,
         );
-        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage();
+        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage(
+          'homePage',
+        );
         cy.reload();
         cy.checkLoggedUserNotifyMessage(user);
         cy.dataCy('profile-name').then(($el) => {
@@ -93,7 +97,9 @@ describe('Login user with tokens', () => {
           '#' +
             `?refreshToken=${encodeURIComponent(token)}&accessToken=${encodeURIComponent(token)}&showUserNotifyMessage=true&restoreLoggedUser=true`,
         );
-        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage();
+        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage(
+          'homePage',
+        );
         cy.reload();
         cy.checkLoggedUserNotifyMessage(user);
         cy.dataCy('profile-name').then(($el) => {
@@ -138,7 +144,6 @@ describe('Login user with tokens', () => {
               .contains(i18n.global.t('drawerMenu.logout'))
               .click();
           });
-          cy.reload();
 
           // Notify message of logged user 0 does not exists
           cy.get('[role="showUserNotifyMessage"]').should('not.exists');

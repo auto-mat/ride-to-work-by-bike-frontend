@@ -49,32 +49,46 @@ Cypress.Commands.add(
  */
 Cypress.Commands.add(
   'waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage',
-  () => {
+  (page) => {
     cy.wait(['@verifyEmailRequest', '@thisCampaignRequest']);
-    cy.wait([
-      '@getRegisterChallenge',
-      '@getIsUserOrganizationAdmin',
-      '@occupationsGetApi',
-      '@ageGroupsGetApi',
-    ]).spread(
-      (
-        getRegisterChallenge,
-        getIsUserOrganizationAdmin,
-        occupationsGetApi,
-        ageGroupsGetApi,
-      ) => {
-        [
+    if (page === 'registerChallenge') {
+      cy.wait([
+        '@getRegisterChallenge',
+        '@getIsUserOrganizationAdmin',
+        '@occupationsGetApi',
+        '@ageGroupsGetApi',
+      ]).spread(
+        (
           getRegisterChallenge,
           getIsUserOrganizationAdmin,
           occupationsGetApi,
           ageGroupsGetApi,
-        ].forEach((interception) => {
-          expect(interception.request.headers.authorization).to.include(
-            bearerTokeAuth,
+        ) => {
+          [
+            getRegisterChallenge,
+            getIsUserOrganizationAdmin,
+            occupationsGetApi,
+            ageGroupsGetApi,
+          ].forEach((interception) => {
+            expect(interception.request.headers.authorization).to.include(
+              bearerTokeAuth,
+            );
+          });
+        },
+      );
+    } else if (page === 'homePage') {
+      cy.wait(['@getRegisterChallenge', '@getIsUserOrganizationAdmin']).spread(
+        (getRegisterChallenge, getIsUserOrganizationAdmin) => {
+          [getRegisterChallenge, getIsUserOrganizationAdmin].forEach(
+            (interception) => {
+              expect(interception.request.headers.authorization).to.include(
+                bearerTokeAuth,
+              );
+            },
           );
-        });
-      },
-    );
+        },
+      );
+    }
   },
 );
 

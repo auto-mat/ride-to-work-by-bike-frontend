@@ -228,6 +228,7 @@ export default route(function (/* { store, ssrContext } */) {
         loginStore.setRefreshToken(refreshToken);
         loginStore.setJwtExpiration(jwtExpiration);
         loginStore.setUser(decodedAccessToken.user);
+        await loginStore.redirectHomeAfterLogin();
       }
       const state: RouterState = {
         isAuthenticated: await loginStore.validateAccessToken(),
@@ -246,7 +247,6 @@ export default route(function (/* { store, ssrContext } */) {
         hasOrganizationAdmin:
           registerChallengeStore.getHasOrganizationAdmin || false,
       };
-
       logRouterState(logger, to, from, state);
       if (
         to.path.includes(routesConf['privacy_rules']['path']) &&
