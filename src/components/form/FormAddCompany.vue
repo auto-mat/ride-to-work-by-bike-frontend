@@ -113,6 +113,16 @@ export default defineComponent({
       onUpdate();
     };
 
+    const onUpdateDifferentAddress = (isDifferent: boolean): void => {
+      onTrack({
+        detail: {
+          targetName: 'checkboxDiffAddress',
+          timestamp: Date.now(),
+          value: String(isDifferent),
+        },
+      });
+    };
+
     const { isFilled } = useValidation();
 
     const isCompany = computed((): boolean => {
@@ -163,19 +173,7 @@ export default defineComponent({
 
     // sync company address to subsidiary when addresses should be the same
     watch(
-      [
-        isDifferentSubsidiaryAddress,
-        () => {
-          onTrack({
-            detail: {
-              targetName: 'checkboxDiffAddress',
-              timestamp: Date.now(),
-              value: isDifferentSubsidiaryAddress.value,
-            },
-          });
-          return company.value.orgAddress;
-        },
-      ],
+      [isDifferentSubsidiaryAddress, () => company.value.orgAddress],
       ([isDifferent, orgAddress]) => {
         if (!isDifferent && company.value.subsidiaryAddress && orgAddress) {
           // copy orgAddress fields to subsidiaryAddress
@@ -216,6 +214,7 @@ export default defineComponent({
       showFullSubsidiaryFields,
       FormSubsidiaryFields,
       onUpdateCityChallenge,
+      onUpdateDifferentAddress,
       onTrack,
     };
   },
@@ -311,6 +310,7 @@ export default defineComponent({
         <q-checkbox
           dense
           v-model="isDifferentSubsidiaryAddress"
+          @update:model-value="onUpdateDifferentAddress"
           color="primary"
           :label="$t('form.company.labelSubsidiaryAddressDifferent')"
           data-cy="form-add-company-checkbox-different-address"
