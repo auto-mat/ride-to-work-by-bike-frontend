@@ -10,7 +10,7 @@ import type { Countdown } from '../components/types/Countdown';
  * command.
  */
 const getAppConfig = (): ConfigGlobal => {
-  return import.meta.env.RIDE_TO_WORK_BY_BIKE_CONFIG as ConfigGlobal;
+  return import.meta.env.RIDE_TO_WORK_BY_BIKE_CONFIG;
 };
 
 interface RgbaI {

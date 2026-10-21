@@ -72,6 +72,23 @@ export default defineConfig((ctx) => {
         RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION: getDeployedAppVersion(),
       },
 
+      /**
+       * Ignore automatically inferring and declaring types for these variables.
+       * Variables can come from process.env (terminal variables) or
+       * dotenv files or quasar.config > build > define/defineEnv.
+       *
+       * Use the full variable name as transformed in the code.
+       * @example 'all' to ignore all variables
+       * @example ['import.meta.env.OTHER_VAR', '__SOME_VAR__'] to ignore specific variables.
+       * @source https://quasar.dev/quasar-cli-vite/handling-import-meta-env#configuring-dotenv-files
+       */
+      env: {
+        ignoreType: [
+          'import.meta.env.RIDE_TO_WORK_BY_BIKE_CONFIG',
+          'import.meta.env.RIDE_TO_WORK_BY_BIKE_DEPLOYED_VERSION',
+        ],
+      },
+
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
