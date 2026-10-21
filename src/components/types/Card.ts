@@ -93,4 +93,5 @@ export interface StatList {
 export interface StatsItem {
   id: string;
   text: string;
+  icon?: string;
 }

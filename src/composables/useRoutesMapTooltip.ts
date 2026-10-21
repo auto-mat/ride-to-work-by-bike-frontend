@@ -43,7 +43,7 @@ export const useRoutesMapTooltip = ({
   const moreRoutesCount = computed((): number => routes.value.length - 1);
   const tooltipText = computed((): string => {
     const textMoreRoutes = moreRoutesCount.value
-      ? ` (+${moreRoutesCount.value} ${i18n.global.tc('global.routes', moreRoutesCount.value)})`
+      ? ` (+${moreRoutesCount.value} ${i18n.global.t('global.routes', moreRoutesCount.value)})`
       : '';
     return `
       <div>

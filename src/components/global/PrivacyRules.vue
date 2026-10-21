@@ -24,7 +24,7 @@ export default defineComponent({
   name: 'PrivacyRules',
   props: {},
   setup() {
-    const matomoRules = computed((): boolean => {
+    const matomoRules = computed((): string => {
       return i18n.global.t('privacy.matomoRules', {
         url: rideToWorkByBikeConfig.urlMatomoAnalyticsHomePage,
       });

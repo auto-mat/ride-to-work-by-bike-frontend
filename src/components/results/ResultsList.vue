@@ -24,9 +24,6 @@ import SectionHeading from '../global/SectionHeading.vue';
 // composables
 import { i18n } from '@/boot/i18n';
 
-// types
-import type { ItemStatistics } from '../types/Item';
-
 const { formatDate } = date;
 
 export default defineComponent({
@@ -61,7 +58,7 @@ export default defineComponent({
           label: i18n.global.t('results.labelCo2Saved'),
           value: `420 ${i18n.global.t('global.weightUnitGram')}`,
         },
-      ] as ItemStatistics[],
+      ],
     };
   },
 });

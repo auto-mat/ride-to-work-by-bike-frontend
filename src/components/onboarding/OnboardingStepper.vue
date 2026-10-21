@@ -35,7 +35,7 @@ export default defineComponent({
     const step = ref<number>(1);
     const stepper = ref<InstanceType<typeof QStepper> | null>(null);
 
-    const iconSize = 18;
+    const iconSize = '18px';
 
     const { urlVideoOnboarding } = rideToWorkByBikeConfig;
 

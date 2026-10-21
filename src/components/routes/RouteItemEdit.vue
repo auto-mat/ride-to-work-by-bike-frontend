@@ -26,7 +26,7 @@
 
 // libraries
 import { date, Notify, Screen } from 'quasar';
-import { computed, defineComponent, inject, watch } from 'vue';
+import { computed, defineComponent, inject } from 'vue';
 
 // components
 import RouteInputDistance from './RouteInputDistance.vue';
@@ -277,14 +277,6 @@ export default defineComponent({
 
     const videoContainerWidth = computed((): string => {
       return isLargeScreen.value ? '50vw' : '100vw';
-    });
-
-    watch(isLargeScreen, (isLargeScreen) => {
-      if (isLargeScreen) {
-        videoContainerWidth.value = '50vw';
-      } else {
-        videoContainerWidth.value = '100vw';
-      }
     });
 
     return {
