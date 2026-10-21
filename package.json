@@ -114,7 +114,7 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "autoprefixer": "^10.4.2",
-    "cypress": "^15.14.0",
+    "cypress": "^16.0.0",
     "cypress-image-snapshot": "^4.0.1",
     "cypress-multi-reporters": "^2.0.0",
     "cypress-parallel": "^0.15.0",
