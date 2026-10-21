@@ -4,14 +4,14 @@ A Ride to work by bike web app is based on the [Quasar framework](https://quasar
 ([Vue.js version 3](https://vuejs.org/), [TypeScript](https://www.typescriptlang.org/),
 [TOML](https://toml.io)).
 
-Tested with Node.js [LTS Jod](https://nodejs.org/en/download/releases) version.
+Tested with Node.js [v26](https://nodejs.org/en/download/releases) version.
 
 Installing and activating [Node Version Manager](https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating) `nvm`:
 
 Installing `nvm`:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 ```
 
 Activating `nvm` (add these lines to your `~/.bashrc`, `~/.profile`, or `~/.zshrc` file)
@@ -25,8 +25,8 @@ Using `nvm`:
 
 ```bash
 nmv list
-nvm install lts/jod
-nvm use lts/jod
+nvm install v26
+nvm use v26
 ```
 
 ## Install the dependencies
