@@ -45,16 +45,15 @@ import { useRoutesMapVectorLayer } from '../../composables/useRoutesMapVectorLay
 // config
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
+// enums
+import { TransportType } from '../types/Route';
+
 // types
 import type { Ref } from 'vue';
 import type { DrawEvent } from 'ol/interaction/Draw';
 import type { ModifyEvent } from 'ol/interaction/Modify';
 import type { RouteFeature, RouteItem } from '../types/Route';
-import type { TransportType } from '../types/Route';
 import type XYZ from 'ol/source/XYZ';
-
-// fixtures
-import selectedRoutesFixture from '../../../test/cypress/fixtures/routeListSelected.json';
 
 export default defineComponent({
   name: 'RoutesMap',
@@ -120,12 +119,10 @@ export default defineComponent({
     const deleteEnabled = ref<boolean>(false);
     // by default, edited routes are those selected in the calendar.
 
-    const editedRoutes = ref<RouteItem[]>(
-      props.selectedRoutes.length
-        ? props.selectedRoutes
-        : (selectedRoutesFixture as RouteItem[]),
-    ) as Ref<RouteItem[]>;
-    const transportType = ref<TransportType>('bike');
+    const editedRoutes = ref<RouteItem[]>(props.selectedRoutes) as Ref<
+      RouteItem[]
+    >;
+    const transportType = ref<TransportType>(TransportType.bike);
 
     // geocoding
     const { getRouteNames } = useGeocoding();

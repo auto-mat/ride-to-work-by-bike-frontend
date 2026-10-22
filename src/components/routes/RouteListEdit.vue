@@ -18,7 +18,6 @@
 // libraries
 import { colors, Notify, Screen } from 'quasar';
 import { computed, defineComponent, inject, ref, watch } from 'vue';
-import type { QForm } from 'quasar';
 
 // adapters
 import { tripsAdapter } from '../../adapters/tripsAdapter';
@@ -39,6 +38,8 @@ import { useRegisterChallengeStore } from '../../stores/registerChallenge';
 import { useTripsStore } from '@/stores/trips';
 
 // types
+import type { Ref } from 'vue';
+import type { QForm } from 'quasar';
 import type { Logger } from '../types/Logger';
 import type { RouteItem, RouteDay } from '../types/Route';
 
@@ -89,7 +90,7 @@ export default defineComponent({
         ? getVacationLoggableDaysWithRoutes(routeItems.value)
         : getLoggableDaysWithRoutes(routeItems.value);
 
-    const days = ref<RouteDay[]>(getDaysForMode());
+    const days = ref<RouteDay[]>(getDaysForMode()) as Ref<RouteDay[]>;
     // update current days when route items or vacation mode change
     watch([routeItems, isVacationMode], () => {
       days.value = getDaysForMode();
