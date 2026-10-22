@@ -10,7 +10,7 @@ import { OdsDocument } from 'odf-kit';
 export const useExportTable = () => {
   const downloadCsvFileFormat = async (
     fileName: string,
-    dataRows: (number | string)[],
+    dataRows: (number | string)[][],
   ): Promise<boolean | Error> => {
     const csvContent = dataRows.join('\r\n');
     return exportFile(fileName, csvContent, 'text/csv');
@@ -18,7 +18,7 @@ export const useExportTable = () => {
 
   const downloadXlsFileFormat = async (
     fileName: string,
-    data: (number | string)[],
+    data: (number | string)[][],
     sheetName: string,
   ): Promise<boolean | Error> => {
     const workbook = new ExcelJS.Workbook();

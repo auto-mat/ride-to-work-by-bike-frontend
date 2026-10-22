@@ -19,6 +19,7 @@ import { ROUTE_GROUPS } from '../utils/get_route_groups';
 import { useJwt } from '../composables/useJwt';
 import { shallowObjectEqual } from '../utils';
 import type { Logger } from '../components/types/Logger';
+import type { UserLogin } from '../components/types/User';
 
 // defines important states for routing
 interface RouterState {
@@ -194,7 +195,7 @@ export default route(function (/* { store, ssrContext } */) {
           to.query?.restoreLoggedUser === 'true' ? true : false;
 
         const { payload } = parseJwt(accessToken);
-        const decodedAccessToken = decodePayload(payload);
+        const decodedAccessToken = decodePayload<{ user: UserLogin }>(payload);
         const jwtExpiration = readJwtExpiration(accessToken);
 
         const loggedUser = loginStore.getUser;

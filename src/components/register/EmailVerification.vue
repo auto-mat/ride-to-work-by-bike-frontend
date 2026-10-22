@@ -6,7 +6,7 @@
  * prompting user to confirm their address by clicking the link in the email.
  *
  * @props
- * - `fixture` (LoginResponse): The object representing
+ * - `fixture` ({ loginResponse: LoginResponse }): The object wrapping
  *   Cypress loginRegisterResponseChallengeActive.json fixture file.
  *   It is used by Cypress component test to load user data and save
  *   into login store.
@@ -41,7 +41,7 @@ import type { LoginResponse } from '../types/Login';
 export default defineComponent({
   name: 'EmailVerification',
   props: {
-    fixture: Object as () => LoginResponse,
+    fixture: Object as () => { loginResponse: LoginResponse },
   },
   setup(props) {
     const logger = inject('vuejs3-logger') as Logger | null;

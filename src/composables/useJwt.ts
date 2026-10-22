@@ -70,11 +70,11 @@ export const useJwt = () => {
   /**
    * Decode JWT payload
    * @param {string} payload - Base64Url encoded JWT payload
-   * @return {Record<string, unknown>} Decoded payload as a JavaScript object
+   * @return {T} Decoded payload as a JavaScript object, typed by the caller
    */
-  const decodePayload = (payload: string): Record<string, unknown> => {
+  const decodePayload = <T = Record<string, unknown>>(payload: string): T => {
     const jsonPayload = base64UrlDecode(payload);
-    return JSON.parse(jsonPayload) as Record<string, unknown>;
+    return JSON.parse(jsonPayload) as T;
   };
 
   /**
