@@ -381,12 +381,7 @@ function coreTests() {
   it('allows to filter the list of offers by selecting a city', () => {
     cy.waitForOffersApi();
     cy.dataCy('form-field-select-city').should('be.visible');
-    cy.dataCy('form-field-select-city').find('.q-field__append').click();
-    cy.get('.q-menu')
-      .should('be.visible')
-      .within(() => {
-        cy.get('.q-item').first().click();
-      });
+    cy.selectDropdownMenu('form-field-select-city', 0);
     cy.fixture('apiGetOffersResponseAlternative.json').then((offers) => {
       cy.waitForOffersApi(offers);
       // display list of offers
