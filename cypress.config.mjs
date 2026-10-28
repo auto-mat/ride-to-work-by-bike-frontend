@@ -46,6 +46,7 @@ export default defineConfig({
     supportFile: 'test/cypress/support/e2e.js',
     specPattern: 'test/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     defaultCommandTimeout: 60000,
+    modifyObstructiveCode: false,
   },
   component: {
     setupNodeEvents(on, config) {
@@ -73,6 +74,7 @@ export default defineConfig({
     devServerPublicPathRoute: '/__cypress/src',
     defaultCommandTimeout: 60000,
     excludeSpecPattern: ['*/*/**/RoutesMap.cy.js'],
+    modifyObstructiveCode: false,
   },
 });
 
