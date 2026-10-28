@@ -86,8 +86,9 @@ describe('<RouteInputDistance>', () => {
     it('renders inputs side by side (align-bottom)', () => {
       // input type is input distance
       cy.dataCy(selectorSelectAction)
+        .closest('.q-select')
         .should('be.visible')
-        .find('input')
+        .find('.q-select__focus-target')
         .should('have.value', i18n.global.t('routes.actionInputDistance'));
       // input type and input distance are on the same line
       cy.testElementsSideBySide(
@@ -115,8 +116,9 @@ describe('<RouteInputDistance>', () => {
     it('renders inputs side by side (align-bottom)', () => {
       // input type is input distance
       cy.dataCy(selectorSelectAction)
+        .closest('.q-select')
         .should('be.visible')
-        .find('input')
+        .find('.q-select__focus-target')
         .should('have.value', i18n.global.t('routes.actionTraceMap'));
       // input type and input distance are on the same line
       cy.testElementsSideBySide(
@@ -250,7 +252,10 @@ describe('<RouteInputDistance>', () => {
     });
 
     it('renders the number of action options passed in props', () => {
-      cy.dataCy(selectorSelectAction).should('be.visible').click();
+      cy.dataCy(selectorSelectAction)
+        .closest('.q-select')
+        .should('be.visible')
+        .click();
       cy.get('.q-menu').within(() => {
         cy.get('.q-item').should(
           'have.length',
@@ -274,7 +279,7 @@ function coreTests() {
       .and('have.css', 'font-weight', '700')
       .and('have.color', grey10);
     // select action
-    cy.dataCy(selectorSelectAction).should('be.visible');
+    cy.dataCy(selectorSelectAction).closest('.q-select').should('be.visible');
   });
 }
 

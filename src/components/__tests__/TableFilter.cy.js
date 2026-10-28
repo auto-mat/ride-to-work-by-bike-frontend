@@ -35,7 +35,7 @@ function coreTests() {
     cy.dataCy('table-filter').should('be.visible');
     cy.dataCy('table-filter-table').should('be.visible');
     cy.dataCy('table-filter-search').should('be.visible');
-    cy.dataCy('table-filter-select').should('be.visible');
+    cy.dataCy('table-filter-select').closest('.q-select').should('be.visible');
     cy.dataCy('table-button-download')
       .should('be.visible')
       .and('contain', 'download');

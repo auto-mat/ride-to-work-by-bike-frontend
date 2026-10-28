@@ -252,7 +252,9 @@ describe('Routes calendar page', () => {
               .find('[data-value="bicycle"]')
               .click();
             // select upload file action
-            cy.dataCy('select-action').should('be.visible');
+            cy.dataCy('select-action')
+              .closest('.q-select')
+              .should('be.visible');
             cy.dataCy('select-action').select(
               i18n.global.t('routes.actionUploadFile'),
             );
@@ -1088,7 +1090,9 @@ describe('Routes calendar page', () => {
                 .click({ force: true });
               if (inputValue.inputType === RouteInputType.uploadFile) {
                 // select upload file action
-                cy.dataCy('select-action').should('be.visible');
+                cy.dataCy('select-action')
+                  .closest('.q-select')
+                  .should('be.visible');
                 cy.dataCy('select-action').select(
                   i18n.global.t('routes.actionUploadFile'),
                 );
@@ -1099,7 +1103,9 @@ describe('Routes calendar page', () => {
                 );
               } else if (inputValue.inputType === RouteInputType.inputNumber) {
                 // select input number action
-                cy.dataCy('select-action').should('be.visible');
+                cy.dataCy('select-action')
+                  .closest('.q-select')
+                  .should('be.visible');
                 cy.dataCy('select-action').select(
                   i18n.global.t('routes.actionInputDistance'),
                 );

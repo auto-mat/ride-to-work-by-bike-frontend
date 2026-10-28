@@ -263,8 +263,9 @@ function coreTests() {
   it.skip('allows to switch input type', () => {
     // input type is input distance
     cy.dataCy('select-action')
+      .closest('.q-select')
       .should('be.visible')
-      .find('input')
+      .find('.q-select__focus-target')
       .should('have.value', i18n.global.t('routes.actionInputDistance'));
     cy.dataCy('button-trace-map').should('not.exist');
     cy.dataCy('input-distance').should('be.visible');
