@@ -397,9 +397,14 @@ export const useLoginStore = defineStore('login', {
      *
      * @param {boolean} [restoreUser=true] restoreUser - Allow restore previously
      *                                                   logged user
+     * @param {boolean} [redirect=true] redirect - Redirect to the login page
+     *                                             after logout
      * @returns Promise
      */
-    async logout(restoreUser: boolean = true): Promise<void> {
+    async logout(
+      restoreUser: boolean = true,
+      redirect: boolean = true,
+    ): Promise<void> {
       this.$log?.debug(`Logout user <${this.getUser.email}>.`);
       // invalidate token
       const logoutTokenHeader = { ...requestTokenHeader };
@@ -474,7 +479,7 @@ export const useLoginStore = defineStore('login', {
         this.redirectHomeAfterLogin();
       } else {
         // redirect to login page
-        if (this.$router) {
+        if (this.$router && redirect) {
           this.$log?.debug(
             `Logout was successfull, redirect to <${routesConf['login']['path']}> URL.`,
           );

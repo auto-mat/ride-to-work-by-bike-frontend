@@ -212,7 +212,8 @@ export default route(function (/* { store, ssrContext } */) {
           const restoreUser =
             restoreLoggedUser &&
             !shallowObjectEqual(loginStore.getRestoredUser, loggedUser);
-          await loginStore.logout(restoreUser);
+          // Skip redirect to login page, redirect is handled below
+          await loginStore.logout(restoreUser, false);
 
           // Enable logged user restoration
           if (restoreLoggedUser)
