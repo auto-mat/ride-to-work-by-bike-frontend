@@ -71,8 +71,6 @@ export default defineComponent({
             user: user,
           }),
         );
-        // Notify.create() shows message and returns a function to close it
-        // https://quasar.dev/quasar-plugins/notify#programmatically-closing
         dismiss = Notify.create(getLoggedUserNotifyMessageConf(message));
       },
       { immediate: true },
