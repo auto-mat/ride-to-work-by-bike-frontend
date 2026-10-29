@@ -47,31 +47,36 @@ export default defineComponent({
     const imageUrl = rideToWorkByBikeConfig.urlLoginRegisterBackgroundImage;
 
     const loginStore = useLoginStore();
-    if (loginStore.getShowLoggedUserNotifyMessage) {
-      const loggedUser = loginStore.getUser;
-      let user;
-      if (loggedUser.first_name && loggedUser.last_name) {
-        user = `${loggedUser.first_name} ${loggedUser.last_name}, ${loggedUser.email}`;
-      } else {
-        user = loggedUser.email;
-      }
-      const message = computed(() =>
-        i18n.global.t('login.showLoggedUserNotifyMessage', {
-          user: user,
-        }),
-      );
-      const dismissMessage = Notify.create(
-        getLoggedUserNotifyMessageConf(message),
-      );
-      watch(
-        () => loginStore.getShowLoggedUserNotifyMessage,
-        () => {
-          if (!loginStore.getShowLoggedUserNotifyMessage) {
-            dismissMessage();
-          }
-        },
-      );
-    }
+    // function container to dismiss message
+    let dismiss = () => {};
+    // update logged user notify message when state changess
+    watch(
+      () => [
+        loginStore.getShowLoggedUserNotifyMessage,
+        loginStore.getUser.email,
+      ],
+      () => {
+        // dismiss old message if it exists
+        dismiss();
+        if (!loginStore.getShowLoggedUserNotifyMessage) return;
+        const loggedUser = loginStore.getUser;
+        let user;
+        if (loggedUser.first_name && loggedUser.last_name) {
+          user = `${loggedUser.first_name} ${loggedUser.last_name}, ${loggedUser.email}`;
+        } else {
+          user = loggedUser.email;
+        }
+        const message = computed(() =>
+          i18n.global.t('login.showLoggedUserNotifyMessage', {
+            user: user,
+          }),
+        );
+        // Notify.create() shows message and returns a function to close it
+        // https://quasar.dev/quasar-plugins/notify#programmatically-closing
+        dismiss = Notify.create(getLoggedUserNotifyMessageConf(message));
+      },
+      { immediate: true },
+    );
     return {
       imageMask,
       imageUrl,
