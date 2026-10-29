@@ -149,12 +149,12 @@ describe('Login user with tokens', () => {
           cy.get('[role="showUserNotifyMessage"]').should('not.exists');
 
           // Check it if user 0 is logged
-          cy.dataCy('profile-name').then(($el) => {
+          cy.dataCy('profile-name').should(($el) => {
             expect($el.text()).to.contain(
               `${user.first_name} ${user.last_name}`,
             );
           });
-          cy.dataCy('profile-email').then(($el) => {
+          cy.dataCy('profile-email').should(($el) => {
             expect($el.text()).to.contain(user.email);
           });
           // Logout user 0
