@@ -163,8 +163,8 @@ export default defineComponent({
           // we do not emit `actionNew` - we keep `input-number` action
           return;
         }
-        // type-agnostic comparison - if no distance, return with message
-        if (dayBeforeRoute.distance == 0) {
+        // if no distance, return with message
+        if (localizedFloatNumStrToFloatNumber(dayBeforeRoute.distance) === 0) {
           Notify.create({
             type: 'warning',
             message: i18n.global.t('routes.messageCopyNoDistance'),
@@ -199,8 +199,7 @@ export default defineComponent({
       /**
        * Compare new distance with FLOAT NUMBER TYPE with
        * the distance from the store with FLOAT NUMBER STRING TYPE
-       *
-       * Usage '!=' provide type conversion
+       * converted to FLOAT NUMBER TYPE
        *
        * (see ./src/components/adapters/tripsAdapter.ts
        *  `tripsAdapter` object `toRouteItem()` func,
@@ -211,7 +210,10 @@ export default defineComponent({
        *   app global config ride_to_work_by_bike_config.toml file.
        * )
        */
-      const dirty = distanceNewFormatted != routeStateDefault.value?.distance;
+      const distanceDefault = routeStateDefault.value
+        ? localizedFloatNumStrToFloatNumber(routeStateDefault.value.distance)
+        : null;
+      const dirty = distanceNewFormatted !== distanceDefault;
       emit('update:route', {
         ...props.route,
         distance: distanceNew,
