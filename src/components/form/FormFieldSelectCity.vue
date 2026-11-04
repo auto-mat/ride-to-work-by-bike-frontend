@@ -27,8 +27,10 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import { useSelectSearch } from '../../composables/useSelectSearch';
 
 // types
-import type { FormOption } from '../../components/types/Form';
+import type { FormSelectOption } from '../../components/types/Form';
 import type { City } from '../types/City';
+
+type CityOption = FormSelectOption & { slug: string };
 
 export default defineComponent({
   name: 'FormFieldSelectCity',
@@ -49,9 +51,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const city = ref<FormOption | null>(null);
+    const city = ref<CityOption | null>(null);
 
-    const options = computed<FormOption[]>(() =>
+    const options = computed<CityOption[]>(() =>
       props.cities.map((city) => ({
         label: city.name,
         value: city.slug,

@@ -48,8 +48,8 @@ import type {
   CardPost,
   CardFollow,
   CardLocationType,
-  City,
 } from '@/components/types';
+import type { City } from '@/components/types/City';
 
 export default defineComponent({
   name: 'CommunityPage',
@@ -70,7 +70,7 @@ export default defineComponent({
       () => feedStore.getIsLoadingCities,
     );
     const cities = computed<City[]>(() => feedStore.getCities);
-    const city = ref<number | null>(null);
+    const city = ref<string | null>(null);
 
     const cardsFollow = listCardsFollow as CardFollow[];
     const cardsPost = listCardsPost as CardPost[];
