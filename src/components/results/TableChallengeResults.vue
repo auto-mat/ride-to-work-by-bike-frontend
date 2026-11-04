@@ -127,7 +127,7 @@ export default defineComponent({
 
       const fileName = normalizeFileName(props.competitionName);
 
-      const dataRows: string[] = getChallengeResultData(
+      const dataRows = getChallengeResultData(
         fileType,
         columns.value,
         props.rows,
