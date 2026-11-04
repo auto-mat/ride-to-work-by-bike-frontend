@@ -155,8 +155,7 @@ export default defineComponent({
             !memberDecisions.value.has(member.id) && member.id !== memberId;
           // also for all denied members who are currently missing a reason
           const memberDeniedAndMissingReason =
-            memberDecisions.value.get(member.id) ===
-              TeamMemberStatus.undecided &&
+            memberDecisions.value.get(member.id) === TeamMemberStatus.denied &&
             !memberDenialReasons.value.get(member.id);
           // set the status to denied and show automatic denial reason
           if (memberDeniedAndNotCurrent || memberDeniedAndMissingReason) {
