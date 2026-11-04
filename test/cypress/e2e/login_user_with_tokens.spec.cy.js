@@ -87,6 +87,57 @@ describe('Login user with tokens', () => {
       });
     });
 
+    it('login as another user does not redirect through login page', () => {
+      // log in as original user
+      cy.createFakeJwtToken({
+        user: user,
+        exp,
+      }).then((token) => {
+        cy.visit(
+          '#' +
+            `?refreshToken=${encodeURIComponent(token)}&accessToken=${encodeURIComponent(token)}&showUserNotifyMessage=true&restoreLoggedUser=true`,
+        );
+        cy.waitInterceptLoginUserWithTokensRegisterChallengeOrHomePage(
+          'homePage',
+        );
+        cy.reload();
+        cy.checkLoggedUserNotifyMessage(user);
+        cy.dataCy('profile-email').should('contain', user.email);
+
+        // log in as another user
+        const newUser = {
+          pk: 1,
+          email: 'fake1@fake1.org',
+          first_name: 'Login as',
+          last_name: 'user 1',
+        };
+        cy.createFakeJwtToken({
+          user: newUser,
+          exp,
+        }).then((token) => {
+          // record URLs
+          const visitedUrls = [];
+          cy.on('url:changed', (url) => visitedUrls.push(url));
+          cy.visit(
+            '#' +
+              `?refreshToken=${encodeURIComponent(token)}&accessToken=${encodeURIComponent(token)}&showUserNotifyMessage=true&restoreLoggedUser=true`,
+          );
+          cy.dataCy('profile-email').should('contain', newUser.email);
+          // user should go straight to home URL
+          cy.wrap(visitedUrls).should((urls) => {
+            // get only paths
+            const paths = urls.map((url) => url.split('#')[1].split('?')[0]);
+            expect(paths).to.not.be.empty;
+            // check that all paths after login are home
+            paths.forEach((path) => {
+              expect(path).to.equal(routesConf['home']['path']);
+            });
+          });
+          cy.checkLoggedUserNotifyMessage(newUser);
+        });
+      });
+    });
+
     it('restore logged user', () => {
       // Login user 0
       cy.createFakeJwtToken({
