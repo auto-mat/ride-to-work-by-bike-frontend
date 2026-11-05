@@ -109,7 +109,9 @@ export default defineConfig((ctx) => {
 
       extendViteConf(viteConf) {
         // Fix dynamic module import error during Cypress component tests on the OS MS Windows
+        viteConf.optimizeDeps = viteConf.optimizeDeps || {};
         viteConf.optimizeDeps.entries = ['index.html', 'src/**/*.cy.js'];
+        viteConf.define = viteConf.define || {};
         viteConf.define.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
         // Fix dynamic import for SVG files which breaks tests
         viteConf.build = viteConf.build || {};
@@ -158,7 +160,6 @@ export default defineConfig((ctx) => {
         notify: {
           position: getAppConfig(process)['notifyMessagePosition'],
         },
-        screen: true,
       },
 
       iconSet: 'material-icons', // Quasar icon set
@@ -214,7 +215,7 @@ export default defineConfig((ctx) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'generateSW', // or 'injectManifest'
+      workboxMode: 'GenerateSW', // or 'InjectManifest'
       injectPwaMetaTags: true,
       swFilename: 'sw.js',
       manifestFilename: 'manifest.json',
@@ -265,9 +266,9 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
     bex: {
-      contentScripts: ['my-content-script'],
+      extraScripts: [],
 
-      // extendBexScriptsConf (esbuildConf) {}
+      // extendBexScriptsConf (config) {}
       // extendBexManifestJson (json) {}
     },
   };
