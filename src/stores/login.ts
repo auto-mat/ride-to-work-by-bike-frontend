@@ -335,7 +335,9 @@ export const useLoginStore = defineStore('login', {
      * Then redirects to home page.
      * (Possible redirection is handled by router guards.)
      */
-    async redirectHomeAfterLogin(): Promise<void> {
+    async redirectHomeAfterLogin(
+      defaultRouterPathName: string = 'home',
+    ): Promise<void> {
       const registerStore = useRegisterStore();
       const challengeStore = useChallengeStore();
       const registerChallengeStore = useRegisterChallengeStore();
@@ -386,7 +388,7 @@ export const useLoginStore = defineStore('login', {
         if (redirect) {
           this.$router.push(String(redirect));
         } else {
-          this.$router.push(routesConf['home']['path']);
+          this.$router.push(routesConf[defaultRouterPathName]['path']);
         }
       }
     },
@@ -472,11 +474,11 @@ export const useLoginStore = defineStore('login', {
 
       if (restoreUser && this.restoreLoggedUser) {
         this.$log?.info('Restore logged user data.');
-        this.restoreLoggedUserData();
+        await this.restoreLoggedUserData();
         this.$log?.debug(
           `Restored logged user was successfull, redirect to <${routesConf['home']['path']}> URL.`,
         );
-        this.redirectHomeAfterLogin();
+        await this.redirectHomeAfterLogin('login');
       } else {
         // redirect to login page
         if (this.$router && redirect) {
