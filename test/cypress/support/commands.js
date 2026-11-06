@@ -2413,8 +2413,10 @@ Cypress.Commands.add('selectDropdownMenu', (dataCy, index = 0, length = 0) => {
   if (length > 0) {
     cy.get('.q-menu .q-item').should('have.length', length);
   }
-  // select option
-  cy.get('.q-menu .q-item').eq(index).click();
+  // scroll to top of menu in case of virtual scroll
+  cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
+  // uses WAI-ARIA attribute to select first item
+  cy.get(`.q-menu [role="option"][aria-posinset="${index + 1}"]`).click();
   cy.get('.q-menu').should('not.exist');
 });
 
