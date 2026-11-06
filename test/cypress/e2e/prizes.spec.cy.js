@@ -225,7 +225,7 @@ describe('Prizes page', () => {
 
   context('mobile', () => {
     beforeEach(() => {
-      cy.viewport(320, 2000);
+      cy.viewport('iphone-6');
       cy.visit('#' + routesConf['prizes']['path']);
       // alias i18n
       cy.window().should('have.property', 'i18n');
@@ -284,36 +284,23 @@ function coreTests() {
               cy.wrap(item).click();
               cy.dataCy('dialog-offer').should('be.visible');
               if (displayedOffers[index].content) {
-                cy.dataCy('dialog-content')
-                  .should('be.visible')
-                  .then(($el) => {
-                    const textContent = $el.text();
-                    cy.stripHtmlTags(displayedOffers[index].content).then(
-                      (text) => {
-                        cy.decodeHtmlEntities(text).then((elementText) => {
-                          expect(textContent).to.contain(elementText);
-                        });
-                      },
-                    );
-                  });
+                checkDialogHtmlContent(
+                  'dialog-content',
+                  displayedOffers[index].content,
+                );
               }
               if (displayedOffers[index].mobileapppopismista) {
-                cy.dataCy('dialog-description')
-                  .should('be.visible')
-                  .then(($el) => {
-                    const textContent = $el.text();
-                    cy.stripHtmlTags(
-                      displayedOffers[index].mobileapppopismista,
-                    ).then((text) => {
-                      cy.decodeHtmlEntities(text).then((elementText) => {
-                        expect(textContent).to.contain(elementText);
-                      });
-                    });
-                  });
+                checkDialogHtmlContent(
+                  'dialog-description',
+                  displayedOffers[index].mobileapppopismista,
+                );
               }
               // validation
               if (parseInt(displayedOffers[index].akce_na_triko)) {
-                cy.dataCy('offer-validation').should('be.visible');
+                cy.dataCy('offer-validation').should(($el) => {
+                  $el[0].scrollIntoView();
+                  expect($el).to.be.visible;
+                });
               } else {
                 cy.dataCy('offer-validation').should('not.exist');
               }
@@ -343,7 +330,10 @@ function coreTests() {
           .and('contain', offers[1].title);
         // has link
         cy.dataCy('dialog-offer-link')
-          .should('be.visible')
+          .should(($el) => {
+            $el[0].scrollIntoView();
+            expect($el).to.be.visible;
+          })
           .and('have.attr', 'href', offers[1].voucher_url);
       });
     });
@@ -381,12 +371,7 @@ function coreTests() {
   it('allows to filter the list of offers by selecting a city', () => {
     cy.waitForOffersApi();
     cy.dataCy('form-field-select-city').should('be.visible');
-    cy.dataCy('form-field-select-city').find('.q-field__append').click();
-    cy.get('.q-menu')
-      .should('be.visible')
-      .within(() => {
-        cy.get('.q-item').first().click();
-      });
+    cy.selectDropdownMenu('form-field-select-city', 0);
     cy.fixture('apiGetOffersResponseAlternative.json').then((offers) => {
       cy.waitForOffersApi(offers);
       // display list of offers
@@ -456,31 +441,14 @@ function coreTests() {
           cy.wrap(item).click();
           // content
           if (prizes[index].content) {
-            cy.dataCy('dialog-content')
-              .should('be.visible')
-              .then(($el) => {
-                const textContent = $el.text();
-                cy.stripHtmlTags(prizes[index].content).then((text) => {
-                  cy.decodeHtmlEntities(text).then((elementText) => {
-                    expect(textContent).to.contain(elementText);
-                  });
-                });
-              });
+            checkDialogHtmlContent('dialog-content', prizes[index].content);
           }
           // description
           if (prizes[index].mobileapppopismista) {
-            cy.dataCy('dialog-description')
-              .should('be.visible')
-              .then(($el) => {
-                const textContent = $el.text();
-                cy.stripHtmlTags(prizes[index].mobileapppopismista).then(
-                  (text) => {
-                    cy.decodeHtmlEntities(text).then((elementText) => {
-                      expect(textContent).to.contain(elementText);
-                    });
-                  },
-                );
-              });
+            checkDialogHtmlContent(
+              'dialog-description',
+              prizes[index].mobileapppopismista,
+            );
           }
           cy.dataCy('dialog-close').should('be.visible').click();
         });
@@ -491,12 +459,7 @@ function coreTests() {
   it('allows to filter the list of prizes by selecting a city', () => {
     cy.waitForPrizesApi();
     cy.dataCy('form-field-select-city').should('be.visible');
-    cy.dataCy('form-field-select-city').find('.q-field__append').click();
-    cy.get('.q-menu')
-      .should('be.visible')
-      .within(() => {
-        cy.get('.q-item').first().click();
-      });
+    cy.selectDropdownMenu('form-field-select-city', 0);
     cy.fixture('apiGetPrizesResponseAlternative.json').then((prizes) => {
       cy.waitForPrizesApi(prizes);
       // display list of prizes
@@ -570,12 +533,7 @@ function coreTests() {
   it('allows to filter the list of events by selecting a city', () => {
     cy.waitForOffersApi();
     cy.dataCy('form-field-select-city').should('be.visible');
-    cy.dataCy('form-field-select-city').find('.q-field__append').click();
-    cy.get('.q-menu')
-      .should('be.visible')
-      .within(() => {
-        cy.get('.q-item').first().click();
-      });
+    cy.selectDropdownMenu('form-field-select-city', 0);
     cy.fixture('apiGetOffersResponseAlternative.json').then((posts) => {
       cy.waitForOffersApi(posts);
       // display list of events
@@ -598,4 +556,28 @@ function coreTests() {
   it.skip('renders a list of partners', () => {
     cy.dataCy('list-partners').should('be.visible');
   });
+}
+
+/**
+ * Check that dialog block is visible and contains text with given HTML.
+ * We check first child of the block, because if the block is taller
+ * than the height of the dialog, it never passes as visible.
+ * @param {string} dataCy - data-cy selector for element
+ * @param {string} html - HTML content
+ */
+function checkDialogHtmlContent(dataCy, html) {
+  cy.dataCy(dataCy)
+    .should(($el) => {
+      const $firstChild = $el.children().first();
+      $firstChild[0].scrollIntoView();
+      expect($firstChild).to.be.visible;
+    })
+    .then(($el) => {
+      const textContent = $el.text();
+      cy.stripHtmlTags(html).then((text) => {
+        cy.decodeHtmlEntities(text).then((elementText) => {
+          expect(textContent).to.contain(elementText);
+        });
+      });
+    });
 }
