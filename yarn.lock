@@ -851,11 +851,11 @@
   integrity sha512-ZM8rUAagZ3Gm7Thu6DjKdGfkyFBv61RaCeVSIWdve6+q300yN+6aouxttf2RmxCk12RsSqEyzBnIg7BlF1s7MA==
 
 "@quasar/quasar-app-extension-qcalendar@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qcalendar/-/quasar-app-extension-qcalendar-5.3.1.tgz#bb5bc5198a693e3b343a985accde8c64afbefc4b"
-  integrity sha512-dfo6Dh/5cY11gMwL91hwjpUepm7/T/00ROMYr5CyZLBvd6NduOrDGJCVkPH+Y+7UtJlHycRs3xBVuRYXiZDJoQ==
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-app-extension-qcalendar/-/quasar-app-extension-qcalendar-5.4.0.tgz#6ae106031c5784458fd6f276a73bd923547e459f"
+  integrity sha512-iso60zKnG8uZ4W22m14RT3LzYPbGichl/umj76KqspHb0+L6aNpsTva1kLb6v1ZFP2mSbxg0uTB1ODWqwFOo7Q==
   dependencies:
-    "@quasar/quasar-ui-qcalendar" "^5.3.1"
+    "@quasar/quasar-ui-qcalendar" "^5.4.0"
 
 "@quasar/quasar-app-extension-testing-e2e-cypress@^7.0.0":
   version "7.0.0"
@@ -866,10 +866,10 @@
     es-toolkit "^1.42.0"
     vite-plugin-istanbul "^9.0.1"
 
-"@quasar/quasar-ui-qcalendar@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qcalendar/-/quasar-ui-qcalendar-5.3.1.tgz#524452fbb455759446ee56deaedc157f5ae9be56"
-  integrity sha512-35O6LkFzcUUOphrsIk35uZ5HCO0AOjtdYD37LG9riYxEodk4Cv/2B0QysY13rKhcAS91dKtQcpeZpR6slBt5FQ==
+"@quasar/quasar-ui-qcalendar@^5.4.0":
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/@quasar/quasar-ui-qcalendar/-/quasar-ui-qcalendar-5.4.0.tgz#1192dbb70dc988559d4c43bac11000034e4cee1d"
+  integrity sha512-9HqCozpNqYW2lH3rpG79RXtEIvAQ6RjE80hnnnYdiRmOqBWXz6nSP7YB0EQ8JiaoGFHSb0vWiiFpv+gr3cQm2A==
   dependencies:
     "@timestamp-js/core" "1.0.0"
 
