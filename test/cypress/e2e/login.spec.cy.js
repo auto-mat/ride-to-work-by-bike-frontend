@@ -242,8 +242,8 @@ describe('Login page', () => {
       cy.clock(systemTimeLoggedIn, ['Date', 'setTimeout']).then((clock) => {
         cy.wrap(clock).as('clock');
       });
-      cy.visit('#' + routesConf['login']['path']);
       cy.viewport('macbook-16');
+      cy.visit('#' + routesConf['login']['path']);
 
       // load config an i18n objects as aliases
       cy.task('getAppConfig').then((config) => {
@@ -390,8 +390,8 @@ describe('Login page', () => {
       cy.task('getAppConfig').then((config) => {
         // alias config
         cy.wrap(config).as('config');
-        cy.visit('#' + routesConf['login']['path']);
         cy.viewport('macbook-16');
+        cy.visit('#' + routesConf['login']['path']);
         cy.window().should('have.property', 'i18n');
         cy.window().then((win) => {
           // alias i18n
