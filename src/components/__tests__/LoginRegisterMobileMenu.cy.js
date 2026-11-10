@@ -8,7 +8,7 @@ import { emptyUser, useLoginStore } from '../../stores/login';
 import { rgbaColorObjectToString } from '../../utils';
 
 // colors
-const { getPaletteColor, changeAlpha, hexToRgb } = colors;
+const { getPaletteColor, hexToRgb } = colors;
 const primary = getPaletteColor('primary');
 const white = getPaletteColor('white');
 
@@ -32,7 +32,10 @@ const selectorMobileMenu = 'login-register-mobile-menu';
 
 // variables
 const fontWeightBold = 700;
-const border = `1px solid ${rgbaColorObjectToString(hexToRgb(changeAlpha(white, colorWhiteBackgroundOpacity)))}`;
+const border = `1px solid ${rgbaColorObjectToString({
+  ...hexToRgb(white),
+  a: colorWhiteBackgroundOpacity * 100,
+})}`;
 
 describe('<LoginRegisterMobileMenu>', () => {
   beforeEach(() => {
