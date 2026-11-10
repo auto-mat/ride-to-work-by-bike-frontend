@@ -2415,8 +2415,8 @@ Cypress.Commands.add('selectDropdownMenu', (dataCy, index = 0, length = 0) => {
   }
   // scroll to top of menu in case of virtual scroll
   cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
-  // uses WAI-ARIA attribute to select first item
-  cy.get(`.q-menu [role="option"][aria-posinset="${index + 1}"]`).click();
+  // select option by index in the whole list
+  cy.get(`.q-menu [role="option"][id$="_${index}"]`).click();
   cy.get('.q-menu').should('not.exist');
 });
 
