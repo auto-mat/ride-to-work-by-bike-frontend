@@ -115,55 +115,63 @@ function coreTests() {
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('abc.example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('a@b@c@example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('a"b(c)d,e:f;g<h>i[jk]l@example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('just"not"right@example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('this is"notallowed@example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type('this still"not\\allowed@example.com');
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type(
       '1234567890123456789012345678901234567890123456789012345678901234+x@example.com',
     );
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // invalid email
     cy.dataCy('form-email-input').type(
       'i.like.underscores@but_they_are_not_allowed_in_this_part',
     );
+    cy.dataCy('form-email-input').blur();
     cy.dataCy('form-email')
       .find('.q-field__messages')
-      .and('contain', i18n.global.t('form.messageEmailInvalid'));
+      .should('contain', i18n.global.t('form.messageEmailInvalid'));
     cy.dataCy('form-email-input').clear();
     // valid email
     cy.dataCy('form-email-input').type('simple@example.com');

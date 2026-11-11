@@ -11,7 +11,17 @@ export const useValidation = () => {
      */
     const regex =
       /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
-    return regex.test(value);
+    // validate regex
+    if (!regex.test(value)) {
+      return false;
+    }
+    // validate email address length
+    const emailTotalLength = 254;
+    const localPartLength = 64;
+    const localPart = value.split('@')[0];
+    return (
+      value.length <= emailTotalLength && localPart.length <= localPartLength
+    );
   };
 
   const isEmailList = (value: string): boolean => {
