@@ -5,9 +5,12 @@ import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 import { rgbaColorObjectToString } from '../../utils';
 
 const { borderRadiusCard, colorWhiteBorderOpacity } = rideToWorkByBikeConfig;
-const { getPaletteColor, changeAlpha, hexToRgb } = colors;
+const { getPaletteColor, hexToRgb } = colors;
 const white = getPaletteColor('white');
-const border = `1px solid ${rgbaColorObjectToString(hexToRgb(changeAlpha(white, colorWhiteBorderOpacity)))}`;
+const border = `1px solid ${rgbaColorObjectToString({
+  ...hexToRgb(white),
+  a: colorWhiteBorderOpacity * 100,
+})}`;
 
 describe('<AutomatLogoBanner>', () => {
   it('has translation for all strings', () => {
