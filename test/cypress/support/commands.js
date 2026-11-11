@@ -275,13 +275,11 @@ Cypress.Commands.add(
   'testElementsSideBySide',
   (elementSelector, siblingElementSelector) => {
     cy.dataCy(elementSelector).then((element) => {
-      const offsetTop = element[0].offsetTop;
-      const offsetHeight = element[0].offsetHeight;
+      const rect = element[0].getBoundingClientRect();
       cy.dataCy(siblingElementSelector).then((sibling) => {
-        const siblingOffsetTop = sibling[0].offsetTop;
-        const siblingOffsetHeight = sibling[0].offsetHeight;
-        expect(Math.round(offsetTop + offsetHeight / 2)).to.be.eq(
-          Math.round(siblingOffsetTop + siblingOffsetHeight / 2),
+        const siblingRect = sibling[0].getBoundingClientRect();
+        expect(Math.round(rect.top + rect.height / 2)).to.be.eq(
+          Math.round(siblingRect.top + siblingRect.height / 2),
         );
       });
     });
@@ -292,13 +290,10 @@ Cypress.Commands.add(
   'testElementsStacked',
   (elementSelector, siblingElementSelector) => {
     cy.dataCy(elementSelector).then((element) => {
-      const offsetTop = element[0].offsetTop;
-      const offsetHeight = element[0].offsetHeight;
+      const rect = element[0].getBoundingClientRect();
       cy.dataCy(siblingElementSelector).then((sibling) => {
-        const siblingOffsetTop = sibling[0].offsetTop;
-        expect(Math.round(offsetTop + offsetHeight)).to.be.lte(
-          Math.round(siblingOffsetTop),
-        );
+        const siblingRect = sibling[0].getBoundingClientRect();
+        expect(Math.round(rect.bottom)).to.be.lte(Math.round(siblingRect.top));
       });
     });
   },
