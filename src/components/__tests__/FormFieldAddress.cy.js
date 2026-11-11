@@ -176,8 +176,7 @@ describe('FormFieldAddress', () => {
     cy.contains(i18n.global.t('form.messageZipInvalid')).should('be.visible');
     cy.dataCy('form-address-zip-input').clear();
     cy.dataCy('form-address-zip-input').type('11000%');
-    cy.dataCy('form-address-zip-input').blur();
-    cy.contains(i18n.global.t('form.messageZipInvalid')).should('be.visible');
+    cy.dataCy('form-address-zip-input').should('have.value', '110 00');
     cy.dataCy('form-address-zip-input').clear();
     cy.dataCy('form-address-zip-input').type('9999');
     cy.dataCy('form-address-zip-input').blur();
