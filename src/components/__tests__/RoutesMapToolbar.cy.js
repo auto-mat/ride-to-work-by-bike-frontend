@@ -131,6 +131,7 @@ describe('<RoutesMapToolbar>', () => {
       cy.dataCy(selectorAddRouteAvatar).should('have.backgroundColor', grey3);
       cy.dataCy(selectorAddRouteIcon).should('have.color', primary);
       cy.dataCy(selectorAddRouteAvatar).trigger('mouseenter');
+      cy.dataCy(selectorAddRouteAvatar).trigger('pointerenter');
       cy.dataCy(selectorTooltipAddRouteDisabled)
         .should('be.visible')
         .and('contain', i18n.global.t('routes.tooltipDrawDisabled'));
@@ -146,6 +147,7 @@ describe('<RoutesMapToolbar>', () => {
       );
       cy.dataCy(selectorDeleteRouteIcon).should('have.color', primary);
       cy.dataCy(selectorDeleteRouteAvatar).trigger('mouseenter');
+      cy.dataCy(selectorDeleteRouteAvatar).trigger('pointerenter');
       cy.dataCy(selectorTooltipDeleteRouteDisabled)
         .should('be.visible')
         .and('contain', i18n.global.t('routes.tooltipDeleteDisabled'));
@@ -272,7 +274,7 @@ function coreTests() {
       .invoke('width')
       .should('be.equal', iconSize);
     // source select
-    cy.dataCy(selectorSource).should('be.visible');
+    cy.dataCy(selectorSource).closest('.q-select').should('be.visible');
     cy.dataCy(selectorSource).click();
     cy.get('.q-menu')
       .find('.q-item')
@@ -287,6 +289,7 @@ function activeDrawTest() {
     cy.dataCy(selectorAddRouteAvatar).should('have.backgroundColor', primary);
     cy.dataCy(selectorAddRouteIcon).should('have.color', white);
     cy.dataCy(selectorAddRouteButton).trigger('mouseenter');
+    cy.dataCy(selectorAddRouteButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipAddRouteDisable)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipDrawDisable'));
@@ -301,6 +304,7 @@ function activeDeleteTest() {
     );
     cy.dataCy(selectorDeleteRouteIcon).should('have.color', white);
     cy.dataCy(selectorDeleteRouteButton).trigger('mouseenter');
+    cy.dataCy(selectorDeleteRouteButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipDeleteRouteDisable)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipDeleteDisable'));
@@ -312,6 +316,7 @@ function inactiveDeleteTest() {
     cy.dataCy(selectorDeleteRouteAvatar).should('have.backgroundColor', grey3);
     cy.dataCy(selectorDeleteRouteIcon).should('have.color', primary);
     cy.dataCy(selectorDeleteRouteButton).trigger('mouseenter');
+    cy.dataCy(selectorDeleteRouteButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipDeleteRouteEnable)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipDeleteEnable'));
@@ -323,6 +328,7 @@ function inactiveDrawTest() {
     cy.dataCy(selectorAddRouteAvatar).should('have.backgroundColor', grey3);
     cy.dataCy(selectorAddRouteIcon).should('have.color', primary);
     cy.dataCy(selectorAddRouteButton).trigger('mouseenter');
+    cy.dataCy(selectorAddRouteButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipAddRouteEnable)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipDrawEnable'));
@@ -334,6 +340,7 @@ function inactiveUndoTest() {
     cy.dataCy(selectorUndoAvatar).should('have.backgroundColor', grey3);
     cy.dataCy(selectorUndoIcon).should('have.color', primary);
     cy.dataCy(selectorUndoButton).trigger('mouseenter');
+    cy.dataCy(selectorUndoButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipUndo)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipUndo'));
@@ -345,6 +352,7 @@ function inactiveSaveTest() {
     cy.dataCy(selectorSaveRouteAvatar).should('have.backgroundColor', grey3);
     cy.dataCy(selectorSaveRouteIcon).should('have.color', primary);
     cy.dataCy(selectorSaveRouteButton).trigger('mouseenter');
+    cy.dataCy(selectorSaveRouteButton).trigger('pointerenter');
     cy.dataCy(selectorTooltipSave)
       .should('be.visible')
       .and('contain', i18n.global.t('routes.tooltipSave'));
