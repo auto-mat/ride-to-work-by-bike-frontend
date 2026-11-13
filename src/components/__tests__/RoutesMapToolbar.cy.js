@@ -274,7 +274,7 @@ function coreTests() {
       .invoke('width')
       .should('be.equal', iconSize);
     // source select
-    cy.dataCy(selectorSource).closest('.q-select').should('be.visible');
+    cy.dataCy(selectorSource).should('be.visible');
     cy.dataCy(selectorSource).click();
     cy.get('.q-menu')
       .find('.q-item')
