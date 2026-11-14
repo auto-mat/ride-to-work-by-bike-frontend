@@ -2409,12 +2409,17 @@ Cypress.Commands.add('selectDropdownMenu', (dataCy, index = 0, length = 0) => {
     .and('have.class', 'q-select__dropdown-icon');
   // click dropdown icon
   cy.dataCy(dataCy).find('.q-field__append').last().click();
-  cy.get('.q-menu').should('be.visible');
+  // do not check visibility since menu may overflow the viewport
+  cy.get('.q-menu').should('exist');
   if (length > 0) {
     cy.get('.q-menu .q-item').should('have.length', length);
   }
-  // select option
-  cy.get('.q-menu .q-item').eq(index).click();
+  // scroll to top of menu in case of virtual scroll
+  cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
+  // select option by index in the whole list
+  cy.get(`.q-menu [role="option"][id$="_${index}"]`)
+    .should('be.visible')
+    .click();
   cy.get('.q-menu').should('not.exist');
 });
 
