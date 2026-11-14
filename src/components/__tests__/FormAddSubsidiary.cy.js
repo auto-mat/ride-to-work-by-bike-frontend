@@ -99,7 +99,9 @@ function coreTests() {
     cy.dataCy(selectorFormHouseNumber).should('be.visible');
     cy.dataCy(selectorFormCity).should('be.visible');
     cy.dataCy(selectorFormZip).should('be.visible');
-    cy.dataCy(selectorFormCityChallenge).should('be.visible');
+    cy.dataCy(selectorFormCityChallenge)
+      .closest('.q-select')
+      .should('be.visible');
     cy.dataCy(selectorFormDepartment).should('be.visible');
   });
 
