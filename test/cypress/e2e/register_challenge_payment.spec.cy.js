@@ -203,6 +203,7 @@ describe('Register Challenge - Payment step', () => {
             ).should('be.visible');
             // trigger tooltip
             cy.dataCy('checkbox-payment-with-reward').trigger('mouseenter');
+            cy.dataCy('checkbox-payment-with-reward').trigger('pointerenter');
             // verify tooltip message
             cy.dataCy('tooltip-merch-not-available')
               .should('exist')
@@ -239,6 +240,7 @@ describe('Register Challenge - Payment step', () => {
             ).should('be.visible');
             // trigger hover - no tooltip
             cy.dataCy('checkbox-payment-with-reward').trigger('mouseenter');
+            cy.dataCy('checkbox-payment-with-reward').trigger('pointerenter');
             cy.dataCy('tooltip-merch-not-available').should('not.exist');
           });
         });
