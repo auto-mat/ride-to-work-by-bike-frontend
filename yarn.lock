@@ -4350,9 +4350,9 @@ magic-string@^1.4.5:
     "@jridgewell/sourcemap-codec" "^1.6.0"
 
 marked@^18.0.0:
-  version "18.1.1"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-18.1.1.tgz#dd6288f8217971f7b0beefcabc52c92a6519b3e3"
-  integrity sha512-zEGgrtUG8crk+TrMacJSVABU4DYDDkS8uqgU3ohrn/2fW9C2AEfUrO3m6IhpIpQpl7YcVpiXXC9cSMWDANT3dg==
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-18.2.0.tgz#58d7f91aa57cab1591bce1be264b1251694a63f3"
+  integrity sha512-KaeL+tAbtvI930q7HE2PN5lYXYdT8EiSmxHlN6F3rsfb57wd5mp5W5TLazpdj4inTQBJdgjYwbs40W/0VUGU+Q==
 
 math-intrinsics@^1.1.0:
   version "1.1.0"
@@ -4609,9 +4609,9 @@ object-inspect@^1.13.3, object-inspect@^1.13.4:
   integrity sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==
 
 odf-kit@^0.14.0:
-  version "0.14.5"
-  resolved "https://registry.yarnpkg.com/odf-kit/-/odf-kit-0.14.5.tgz#1ee664cbd2d3250bfe0297e713e7606e7d2f5dd4"
-  integrity sha512-oc2+fr0ox6xm+ayZC13lAxX4R5rU1qUkacsy0xQASSO7CRg2PMCY77TkluIFYsAmct18lvcJH1KJRqUpFaF0cQ==
+  version "0.14.6"
+  resolved "https://registry.yarnpkg.com/odf-kit/-/odf-kit-0.14.6.tgz#8bcd491ec0f9f3122e4d26063491f8c8fb83dc06"
+  integrity sha512-3ErRFWKvN1tF/KeATZmxAvTTs3xa4VeZOW71xVIgyjG9ForapkOkkwdRbA9iDAlXjp/ZKW4HCmN/jkzkEgFu+A==
   dependencies:
     fflate "^0.8.2"
     marked "^18.0.0"
