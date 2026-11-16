@@ -84,7 +84,11 @@ export default defineComponent({
         <!-- Icon -->
         <q-icon :name="item.icon" size="xs" color="blue-grey-3"></q-icon>
         <!-- Label -->
-        <span v-if="item.title" class="inline-block text-black q-pl-sm">
+        <span
+          v-if="item.title"
+          class="inline-block text-black q-pl-sm"
+          data-cy="button-menu-links-label"
+        >
           {{ item.title }}
         </span>
       </q-btn>

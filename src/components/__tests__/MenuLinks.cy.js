@@ -55,7 +55,7 @@ describe('<MenuLinks>', () => {
         .and('have.backgroundColor', blueGrey1)
         .and('have.css', 'border-radius', '28px')
         .and('have.css', 'margin-top', '16px')
-        .find('.q-btn__content span')
+        .find('[data-cy="button-menu-links-label"]')
         .then(($el) => {
           cy.wrap($el).should('have.color', black);
         });
@@ -105,7 +105,7 @@ describe('<MenuLinks>', () => {
         .and('have.backgroundColor', blueGrey1)
         .and('have.css', 'border-radius', '28px')
         .and('have.css', 'margin-top', '16px')
-        .find('.q-btn__content span')
+        .find('[data-cy="button-menu-links-label"]')
         .then(($el) => {
           cy.wrap($el).should('have.color', black);
         });
