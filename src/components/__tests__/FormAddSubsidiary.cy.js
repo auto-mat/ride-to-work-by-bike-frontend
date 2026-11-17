@@ -150,18 +150,14 @@ function coreTests() {
     // ZIP
     cy.dataCy(selectorFormZip).find('input').type(testData.zip);
     cy.wrap(model).its('value.zip').should('equal', testData.zip);
-    // city challenge
-    cy.dataCy(selectorFormCityChallenge).click();
-    // test loaded city options
+    // city challenge - verify options and select first
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
       cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
-        cy.get('.q-menu .q-item__label')
-          .should('be.visible')
-          .and(
-            'have.length',
-            citiesResponse.results.length + citiesResponseNext.results.length,
-          );
-        cy.get('.q-menu .q-item__label').first().click();
+        cy.selectDropdownMenu(
+          selectorFormWidgetSubsidiaryCityChallenge,
+          0,
+          citiesResponse.results.length + citiesResponseNext.results.length,
+        );
         cy.wrap(model)
           .its('value.cityChallenge')
           .should('equal', citiesResponse.results[0].id);

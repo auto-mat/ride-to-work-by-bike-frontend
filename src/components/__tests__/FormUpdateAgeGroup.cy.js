@@ -120,7 +120,7 @@ function coreTests() {
       cy.wait('@ageGroupsGetApi');
       cy.dataCy('form-age-group-select').click();
       cy.get('.q-menu').should('be.visible');
-      cy.get('.q-menu .q-item').should('have.length', ageGroupsResponse.length);
+      cy.testDropdownMenuOptionsLength(ageGroupsResponse.length);
     });
   });
 
