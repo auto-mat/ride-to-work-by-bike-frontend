@@ -2444,13 +2444,22 @@ Cypress.Commands.add('selectDropdownMenuByLabel', (dataCy, label) => {
  * @param {Number} length - expected number of options
  */
 Cypress.Commands.add('testDropdownMenuOptionsLength', (length) => {
-  // first option
-  cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
-  cy.get('.q-menu [role="option"][id$="_0"]').should('exist');
-  // last option
-  cy.get('.q-menu').scrollTo('bottom', { ensureScrollable: false });
-  cy.get(`.q-menu [role="option"][id$="_${length - 1}"]`).should('exist');
-  cy.get(`.q-menu [role="option"][id$="_${length}"]`).should('not.exist');
+  // scroll inside `should` so it retries
+  cy.get('.q-menu').should(($menu) => {
+    // scroll to top
+    $menu[0].scrollTop = 0;
+    // verify first item
+    expect($menu.find('[role="option"][id$="_0"]')).to.exist;
+  });
+  // scroll inside `should` so it retries
+  cy.get('.q-menu').should(($menu) => {
+    // scroll to bottom (using the element height)
+    $menu[0].scrollTop = $menu[0].scrollHeight;
+    // verify last item
+    expect($menu.find(`[role="option"][id$="_${length - 1}"]`)).to.exist;
+    // verify no item after last
+    expect($menu.find(`[role="option"][id$="_${length}"]`)).not.to.exist;
+  });
 });
 
 /**
