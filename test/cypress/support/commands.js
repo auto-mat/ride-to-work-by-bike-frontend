@@ -2407,7 +2407,7 @@ Cypress.Commands.add('selectDropdownMenu', (dataCy, index = 0, length = 0) => {
   // do not check visibility since menu may overflow the viewport
   cy.get('.q-menu').should('exist');
   if (length > 0) {
-    cy.get('.q-menu .q-item').should('have.length', length);
+    cy.testDropdownMenuOptionsLength(length);
   }
   // scroll to top of menu in case of virtual scroll
   cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
@@ -2437,6 +2437,20 @@ Cypress.Commands.add('selectDropdownMenuByLabel', (dataCy, label) => {
   // select option
   cy.get('.q-menu .q-item').contains(label).click();
   cy.get('.q-menu').should('not.exist');
+});
+
+/**
+ * Test number of options in an open dropdown menu
+ * @param {Number} length - expected number of options
+ */
+Cypress.Commands.add('testDropdownMenuOptionsLength', (length) => {
+  // first option
+  cy.get('.q-menu').scrollTo('top', { ensureScrollable: false });
+  cy.get('.q-menu [role="option"][id$="_0"]').should('exist');
+  // last option
+  cy.get('.q-menu').scrollTo('bottom', { ensureScrollable: false });
+  cy.get(`.q-menu [role="option"][id$="_${length - 1}"]`).should('exist');
+  cy.get(`.q-menu [role="option"][id$="_${length}"]`).should('not.exist');
 });
 
 /**

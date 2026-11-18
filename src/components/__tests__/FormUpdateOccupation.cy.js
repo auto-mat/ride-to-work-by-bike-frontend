@@ -120,7 +120,7 @@ function coreTests() {
       cy.wait('@occupationsGetApi');
       cy.dataCy('form-occupation-select').click();
       cy.get('.q-menu').should('be.visible');
-      cy.get('.q-menu .q-item').should('have.length', response.length);
+      cy.testDropdownMenuOptionsLength(response.length);
     });
   });
 

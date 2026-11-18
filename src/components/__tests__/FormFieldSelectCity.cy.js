@@ -69,12 +69,10 @@ function coreTests() {
     // check if all cities are visible
     cy.fixture('apiGetCitiesResponse').then((citiesResponse) => {
       cy.fixture('apiGetCitiesResponseNext').then((citiesResponseNext) => {
-        cy.get('.q-menu .q-item__label')
-          .should('be.visible')
-          .and(
-            'have.length',
-            citiesResponse.results.length + citiesResponseNext.results.length,
-          );
+        cy.get('.q-menu .q-item__label').should('be.visible');
+        cy.testDropdownMenuOptionsLength(
+          citiesResponse.results.length + citiesResponseNext.results.length,
+        );
       });
     });
   });
