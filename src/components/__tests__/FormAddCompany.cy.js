@@ -215,6 +215,11 @@ describe('<FormAddCompany>', () => {
           .type(companyAddress.orgAddress.zip);
         // check the checkbox to show full subsidiary address fields
         cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+        // wait until options are loaded
+        cy.dataCy(selectorFormCityChallenge)
+          .closest('.q-select')
+          .find('.q-spinner')
+          .should('not.exist');
         // clear and fill in subsidiary address fields (fields are prepopulated with org address)
         cy.dataCy(selectorFormStreet).find('input').clear();
         cy.dataCy(selectorFormStreet)
