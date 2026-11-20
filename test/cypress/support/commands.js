@@ -1694,6 +1694,11 @@ Cypress.Commands.add(
       .type(formFieldCompanyCreateRequest.address.zip);
     // check checkbox different subsidiary address
     cy.dataCy('form-add-company-checkbox-different-address').click();
+    // wait until options are loaded
+    cy.dataCy('form-add-subsidiary-city-challenge')
+      .closest('.q-select')
+      .find('.q-spinner')
+      .should('not.exist');
     // fill subsidiary address data
     cy.dataCy('form-add-subsidiary-street').find('input').clear();
     cy.dataCy('form-add-subsidiary-street')
@@ -1715,8 +1720,7 @@ Cypress.Commands.add(
       apiPostSubsidiaryRequest.address.recipient,
     );
     // select city challenge
-    cy.dataCy('form-add-subsidiary-city-challenge').click();
-    cy.get('.q-menu').should('be.visible').find('.q-item').first().click();
+    cy.selectDropdownMenu('form-widget-subsidiary-city-challenge', 0);
   },
 );
 

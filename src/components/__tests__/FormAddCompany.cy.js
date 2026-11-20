@@ -9,8 +9,6 @@ import { FormAddCompanyVariantProp } from '../enums/Form';
 import { rideToWorkByBikeConfig } from '../../boot/global_vars';
 
 // selectors
-const classSelectorDropdownItem = '.q-item';
-const classSelectorDropdownMenu = '.q-menu';
 const selectorFormTitle = 'form-add-company-title';
 const selectorFormPermission = 'form-add-company-permission';
 const selectorFormName = 'form-add-company-name';
@@ -26,6 +24,7 @@ const selectorFormHouseNumber = 'form-add-subsidiary-house-number';
 const selectorFormCity = 'form-add-subsidiary-city';
 const selectorFormZip = 'form-add-subsidiary-zip';
 const selectorFormCityChallenge = 'form-add-subsidiary-city-challenge';
+const selectorFormWidgetCityChallenge = 'form-widget-subsidiary-city-challenge';
 const selectorFormDepartment = 'form-add-subsidiary-department';
 const selectorFormSectionSubsidiaryTitle =
   'form-add-company-section-subsidiary-title';
@@ -215,6 +214,11 @@ describe('<FormAddCompany>', () => {
           .type(companyAddress.orgAddress.zip);
         // check the checkbox to show full subsidiary address fields
         cy.dataCy(selectorFormCheckboxDifferentAddress).click();
+        // wait until options are loaded
+        cy.dataCy(selectorFormCityChallenge)
+          .closest('.q-select')
+          .find('.q-spinner')
+          .should('not.exist');
         // clear and fill in subsidiary address fields (fields are prepopulated with org address)
         cy.dataCy(selectorFormStreet).find('input').clear();
         cy.dataCy(selectorFormStreet)
@@ -232,12 +236,7 @@ describe('<FormAddCompany>', () => {
         cy.dataCy(selectorFormZip)
           .find('input')
           .type(companyAddress.subsidiaryAddress.zip);
-        cy.dataCy(selectorFormCityChallenge).click();
-        cy.get(classSelectorDropdownMenu)
-          .should('be.visible')
-          .within(() => {
-            cy.get(classSelectorDropdownItem).first().click();
-          });
+        cy.selectDropdownMenu(selectorFormWidgetCityChallenge, 0);
         cy.dataCy(selectorFormDepartment).type(
           companyAddress.subsidiaryAddress.department,
         );
