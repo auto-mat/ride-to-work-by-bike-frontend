@@ -2888,9 +2888,9 @@ eslint-config-prettier@^10.0.1:
   integrity sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==
 
 eslint-plugin-cypress@^7.0.2:
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-7.0.5.tgz#ed67b34e26f0230078ddfd27c27f2ca13019db42"
-  integrity sha512-jKIvdyl4hDIaj/CZIGbfk/XTNEQ9IrBEcT9VQwJc8cT/shYhg4kc1euCTIEFxWcq7d1CuUauK/BLf8Gw/uDBWg==
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-cypress/-/eslint-plugin-cypress-7.2.0.tgz#407b9c7f765960ed2328556b965a0edee55350a1"
+  integrity sha512-R3PMPaQyVvscLo9ZgDNl4S2FSdqroBv3kagMZK/iS7uoji0hzku6TpUmhGL3POSU/Phn+gbMA6Dk2agvTBY+lA==
   dependencies:
     globals "^17.14.0"
 
