@@ -1275,6 +1275,7 @@ instructionRouteCombination = "If you combine vehicles, record the longest part,
 labelDistance = "Route"
 labelDirectionFromWork = "From work"
 labelDirectionToWork = "To work"
+labelEvents = "Events:"
 labelFinish = "Finish"
 labelLastSync = "Last sync"
 labelStart = "Start"

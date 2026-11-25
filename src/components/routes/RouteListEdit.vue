@@ -8,6 +8,7 @@
  *
  * @components
  * - `RouteItemEdit`: Component to render a single route in edit mode.
+ * - `EventLinkList`: Component to render city events of a day.
  *
  * @example
  * <route-list-edit :routes="routes" />
@@ -23,11 +24,13 @@ import { computed, defineComponent, inject, ref, watch } from 'vue';
 import { tripsAdapter } from '../../adapters/tripsAdapter';
 
 // component
+import EventLinkList from './EventLinkList.vue';
 import RouteItemEdit from './RouteItemEdit.vue';
 
 // composables
 import { i18n } from '../../boot/i18n';
 import { useApiPostTrips } from '../../composables/useApiPostTrips';
+import { useCalendarEvents } from '../../composables/useCalendarEvents';
 import { useRoutes } from '@/composables/useRoutes';
 
 // enums
@@ -46,6 +49,7 @@ import type { RouteItem, RouteDay } from '../types/Route';
 export default defineComponent({
   name: 'RouteListEdit',
   components: {
+    EventLinkList,
     RouteItemEdit,
   },
   setup() {
@@ -75,6 +79,8 @@ export default defineComponent({
 
     // initialize API composable
     const { postTrips } = useApiPostTrips(logger);
+
+    const { eventsMap } = useCalendarEvents();
 
     // get route items from store
     const routeItems = computed<RouteItem[]>(() => tripsStore.getRouteItems);
@@ -228,6 +234,7 @@ export default defineComponent({
     return {
       days,
       dirtyCount,
+      eventsMap,
       formatDate,
       formatDateName,
       isLargeScreen,
@@ -334,6 +341,11 @@ export default defineComponent({
               />
             </div>
           </div>
+          <!-- City events -->
+          <event-link-list
+            :events="eventsMap[day.date] ?? []"
+            class="q-mt-md"
+          />
         </div>
       </div>
       <!-- Save routes button on the large screen -->

@@ -1276,6 +1276,7 @@ instructionRouteCombination = "Pokud kombinujete dopravní prostředky, zapište
 labelDistance = "Trasa"
 labelDirectionFromWork = "Z práce"
 labelDirectionToWork = "Do práce"
+labelEvents = "Akce:"
 labelFinish = "Cíl"
 labelLastSync = "Synchronizováno"
 labelStart = "Start"

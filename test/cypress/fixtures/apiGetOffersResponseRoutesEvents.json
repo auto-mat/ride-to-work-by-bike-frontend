@@ -1,0 +1,90 @@
+[
+  {
+    "id": 90001,
+    "title": "Veřejná cyklodílna – květen",
+    "url": "https://dopracenakole.cz/mesto/praha/verejna-cyklodilna-kveten",
+    "published": "2025-03-10",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-27 17:00",
+    "end_date": "",
+    "categories": [
+      {
+        "name": "cykloservis",
+        "slug": "cykloservis",
+        "url": "https://dopracenakole.cz/kategorie/cykloservis"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "mobileapppopismista": "<p>Něco vám na kole rachtá a potřebovali byste to poladit? Zastavte se u kavárny Družba v Sedláčkově ul. 19. Na místě budou naši mechanici a kolo vám omrknou, pomohou s opravami nebo poradí. Pokud potřebujete vyměnit duši, řetěz apod., přivezte si potřebné věci s sebou. Těšíme se na vás.</p>\n<p>Akce probíhá od 17.00 do 18.30 h.</p>\n",
+    "image": "https://dopracenakole.cz/app/uploads/cyklodilna-1-600x399.jpg"
+  },
+  {
+    "id": 90002,
+    "title": "Cyklojízda kolem centra",
+    "url": "https://dopracenakole.cz/mesto/praha/cyklojizda-kolem-centra",
+    "published": "2025-03-10",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-25 17:00",
+    "end_date": "2025-05-25",
+    "categories": [
+      {
+        "name": "cykloservis",
+        "slug": "cykloservis",
+        "url": "https://dopracenakole.cz/kategorie/cykloservis"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "mobileapppopismista": "<p>Něco vám na kole rachtá a potřebovali byste to poladit? Zastavte se u kavárny Družba v Sedláčkově ul. 19. Na místě budou naši mechanici a kolo vám omrknou, pomohou s opravami nebo poradí. Pokud potřebujete vyměnit duši, řetěz apod., přivezte si potřebné věci s sebou. Těšíme se na vás.</p>\n<p>Akce probíhá od 17.00 do 18.30 h.</p>\n",
+    "image": "https://dopracenakole.cz/app/uploads/cyklodilna-1-600x399.jpg"
+  },
+  {
+    "id": 90003,
+    "title": "Snídaně na náměstí",
+    "url": "https://dopracenakole.cz/mesto/praha/snidane-na-namesti",
+    "published": "2025-03-10",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-10 08:00",
+    "end_date": "",
+    "categories": [
+      {
+        "name": "cykloservis",
+        "slug": "cykloservis",
+        "url": "https://dopracenakole.cz/kategorie/cykloservis"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "mobileapppopismista": "<p>Něco vám na kole rachtá a potřebovali byste to poladit? Zastavte se u kavárny Družba v Sedláčkově ul. 19. Na místě budou naši mechanici a kolo vám omrknou, pomohou s opravami nebo poradí. Pokud potřebujete vyměnit duši, řetěz apod., přivezte si potřebné věci s sebou. Těšíme se na vás.</p>\n<p>Akce probíhá od 17.00 do 18.30 h.</p>\n",
+    "image": "https://dopracenakole.cz/app/uploads/cyklodilna-1-600x399.jpg"
+  },
+  {
+    "id": 90004,
+    "title": "Pivo na triko",
+    "url": "https://dopracenakole.cz/mesto/hradec-kralove/male-pivo-na-triko",
+    "published": "2025-03-05",
+    "voucher": "",
+    "voucher_url": "",
+    "akce_na_triko": "1",
+    "start_date": "2025-05-01 00:00",
+    "end_date": "2025-05-31",
+    "categories": [
+      {
+        "name": "alko nápoje",
+        "slug": "alko",
+        "url": "https://dopracenakole.cz/kategorie/alko"
+      }
+    ],
+    "excerpt": "",
+    "content": "",
+    "mobileapppopismista": "<p>Pokud <a href=\"http://www.hradeckepivo.cz\" target=\"_blank\"><b>Rodinný pivovar 713</b></a> navštívíte v tričku DPNK, dostanete k objednávce jedno pivo zdarma!<br />\r\nOtevřeno v úterý a pátek odpoledne.</p>\r\n<p>A jestli přijedete na pivo na kole, nezapomeňte domů jít pěkně pěšky vedle kola ;)</p>\r\n<p><i>(Akce na triko mohou registrovaní účastníci a účastnice využít i se starším trikem, nákrčníkem, nebo když se prokážou systémem DPNK a svým aktivním profilem v něm.)</i></p>\r\n",
+    "image": "https://dopracenakole.cz/app/uploads/DPNK_Akce713a-600x451.jpg"
+  }
+]

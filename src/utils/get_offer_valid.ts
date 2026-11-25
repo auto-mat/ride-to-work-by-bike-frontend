@@ -34,6 +34,37 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
 };
 
 /**
+ * Parse offer date as local time ignoring timezone
+ * @param {string} value - Date string, e.g. `2026-05-05T17:00:00.000` or `2026-05-31`
+ * @returns {Date} - Parsed date
+ */
+export const parseOfferLocalDate = (value: string): Date => {
+  return new Date(value.trim().replace('Z', ''));
+};
+
+/**
+ * Check if event (offer) is single day
+ * - valid start date
+ * - end date empty or same day
+ * @param {Offer} post - Offer object
+ * @returns {boolean} - Whether offer is a single-day event
+ */
+export const isOfferSingleDayEvent = (post: Offer): boolean => {
+  const startDate = parseOfferLocalDate(post.start_date);
+  if (!post.start_date.trim() || isNaN(startDate.getTime())) {
+    return false;
+  }
+  if (!post.end_date) {
+    return true;
+  }
+  const endDate = parseOfferLocalDate(post.end_date);
+  if (isNaN(endDate.getTime())) {
+    return false;
+  }
+  return date.isSameDate(startDate, endDate, 'day');
+};
+
+/**
  * Check if given offer is past its end date.
  * Returns true only if the offer has an end date and that date is in the past.
  * Returns false in all other cases (no end date, or end date is in future).
