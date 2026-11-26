@@ -60,8 +60,7 @@ export default defineComponent({
   <div v-if="events.length" class="text-caption" data-cy="event-link-list">
     <span class="text-grey-7" data-cy="event-link-list-label">{{
       $t('routes.labelEvents')
-    }}</span>{{ ' '
-    }}<template v-for="(event, index) in events" :key="event.id"
+    }}</span>&nbsp;<template v-for="(event, index) in events" :key="event.id"
       ><a
         href="#"
         class="text-primary"
