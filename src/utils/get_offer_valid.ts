@@ -24,7 +24,7 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
   const startDate = new Date(post.start_date);
   const endDate = new Date(post.end_date);
   // check if dates are valid
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
     return false;
   }
   // compare dates without time component
@@ -51,14 +51,14 @@ export const parseOfferLocalDate = (value: string): Date => {
  */
 export const isOfferSingleDayEvent = (post: Offer): boolean => {
   const startDate = parseOfferLocalDate(post.start_date);
-  if (!post.start_date.trim() || isNaN(startDate.getTime())) {
+  if (!post.start_date.trim() || Number.isNaN(startDate.getTime())) {
     return false;
   }
   if (!post.end_date) {
     return true;
   }
   const endDate = parseOfferLocalDate(post.end_date);
-  if (isNaN(endDate.getTime())) {
+  if (Number.isNaN(endDate.getTime())) {
     return false;
   }
   return date.isSameDate(startDate, endDate, 'day');
