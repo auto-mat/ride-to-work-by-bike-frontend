@@ -29,7 +29,7 @@
 
 <script lang="ts">
 // libraries
-import { computed, defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, inject, onMounted } from 'vue';
 
 // components
 import PageHeading from '@/components/global/PageHeading.vue';
@@ -40,7 +40,12 @@ import { RouteTab } from '@/components/types/Route';
 
 // stores
 import { useChallengeStore } from '@/stores/challenge';
+import { useFeedStore } from '@/stores/feed';
+import { useRegisterChallengeStore } from '@/stores/registerChallenge';
 import { useTripsStore } from '@/stores/trips';
+
+// types
+import type { Logger } from '@/components/types/Logger';
 
 export default defineComponent({
   name: 'RoutesPage',
@@ -49,7 +54,10 @@ export default defineComponent({
     PageHeading,
   },
   setup() {
+    const logger = inject('vuejs3-logger') as Logger | null;
     const challengeStore = useChallengeStore();
+    const feedStore = useFeedStore();
+    const registerChallengeStore = useRegisterChallengeStore();
     const tripsStore = useTripsStore();
 
     const daysActive = computed<number>(() => {
@@ -63,6 +71,17 @@ export default defineComponent({
       // if no trips, try to load them
       if (!tripsStore.routeItems.length) {
         await tripsStore.loadRoutesToStore();
+      }
+      // city events require city slug from register challenge data
+      if (!registerChallengeStore.getCityWpSlug) {
+        await registerChallengeStore.loadRegisterChallengeToStore();
+      }
+      if (registerChallengeStore.getCityWpSlug) {
+        await feedStore.attemptFeedRefresh(
+          registerChallengeStore.getCityWpSlug,
+        );
+      } else {
+        logger?.info('No city WP slug available, city events are not loaded.');
       }
     });
 

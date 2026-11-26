@@ -24,13 +24,44 @@ export const isOfferValidMoreThanOneDay = (post: Offer): boolean => {
   const startDate = new Date(post.start_date);
   const endDate = new Date(post.end_date);
   // check if dates are valid
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
     return false;
   }
   // compare dates without time component
   const start = date.startOfDate(startDate, 'day');
   const end = date.startOfDate(endDate, 'day');
   return date.getDateDiff(end, start, 'days') > 0;
+};
+
+/**
+ * Parse offer date as local time ignoring timezone
+ * @param {string} value - Date string, e.g. `2026-05-05T17:00:00.000` or `2026-05-31`
+ * @returns {Date} - Parsed date
+ */
+export const parseOfferLocalDate = (value: string): Date => {
+  return new Date(value.trim().replace('Z', ''));
+};
+
+/**
+ * Check if event (offer) is single day
+ * - valid start date
+ * - end date empty or same day
+ * @param {Offer} post - Offer object
+ * @returns {boolean} - Whether offer is a single-day event
+ */
+export const isOfferSingleDayEvent = (post: Offer): boolean => {
+  const startDate = parseOfferLocalDate(post.start_date);
+  if (!post.start_date.trim() || Number.isNaN(startDate.getTime())) {
+    return false;
+  }
+  if (!post.end_date) {
+    return true;
+  }
+  const endDate = parseOfferLocalDate(post.end_date);
+  if (Number.isNaN(endDate.getTime())) {
+    return false;
+  }
+  return date.isSameDate(startDate, endDate, 'day');
 };
 
 /**

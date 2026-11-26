@@ -1275,6 +1275,7 @@ instructionRouteCombination = "Ak kombinujete vozidlá, zaznamenajte najdlhšiu 
 labelDistance = "Trasa"
 labelDirectionFromWork = "Z práce"
 labelDirectionToWork = "Do práce"
+labelEvents = "Akcie:"
 labelFinish = "Cieľ"
 labelLastSync = "Synchronizované"
 labelStart = "Start"

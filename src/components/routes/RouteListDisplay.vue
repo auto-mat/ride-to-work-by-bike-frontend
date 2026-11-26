@@ -11,6 +11,7 @@
  *
  * @components
  * - `RouteItemDisplay`: Component to render a single route in display mode.
+ * - `EventLinkList`: Component to render city events of a day.
  *
  * @example
  * <route-list-display :routes="routes" />
@@ -22,9 +23,11 @@
 import { computed, defineComponent } from 'vue';
 
 // components
+import EventLinkList from './EventLinkList.vue';
 import RouteItemDisplay from './RouteItemDisplay.vue';
 
 // composables
+import { useCalendarEvents } from '../../composables/useCalendarEvents';
 import { useRoutes } from '../../composables/useRoutes';
 
 // stores
@@ -36,6 +39,7 @@ import type { RouteItem, RouteDay } from '../types/Route';
 export default defineComponent({
   name: 'RouteListDisplay',
   components: {
+    EventLinkList,
     RouteItemDisplay,
   },
   setup() {
@@ -55,8 +59,11 @@ export default defineComponent({
       getUnloggableDaysWithRoutes(routeItems.value),
     );
 
+    const { eventsMap } = useCalendarEvents();
+
     return {
       days,
+      eventsMap,
       isLoadingRoutes,
       formatDate,
       formatDateName,
@@ -108,6 +115,8 @@ export default defineComponent({
             />
           </div>
         </div>
+        <!-- City events -->
+        <event-link-list :events="eventsMap[day.date] ?? []" class="q-mt-md" />
       </div>
     </div>
     <!-- Loading spinner -->

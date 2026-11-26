@@ -10,6 +10,7 @@
  * @components
  * - `CalendarNavigation`: Component to render navigation buttons.
  * - `CalendarItemDisplay`: Component to render calendar items.
+ * - `EventLinkList`: Component to render city events of a day.
  * - `RouteCalendarPanel`: Component to render dialog panel.
  *
  * @props
@@ -30,9 +31,11 @@ import { i18n } from '../../boot/i18n';
 // components
 import CalendarItemDisplay from './CalendarItemDisplay.vue';
 import CalendarNavigation from './CalendarNavigation.vue';
+import EventLinkList from './EventLinkList.vue';
 import RouteCalendarPanel from './RouteCalendarPanel.vue';
 
 // composables
+import { useCalendarEvents } from '../../composables/useCalendarEvents';
 import { useCalendarRoutes } from '../../composables/useCalendarRoutes';
 import { useRoutes } from '../../composables/useRoutes';
 
@@ -58,6 +61,7 @@ export default defineComponent({
   components: {
     CalendarItemDisplay,
     CalendarNavigation,
+    EventLinkList,
     RouteCalendarPanel,
   },
   setup() {
@@ -168,6 +172,8 @@ export default defineComponent({
       isActive,
       isCalendarRouteLogged,
     } = useCalendarRoutes(days);
+
+    const { eventsMap } = useCalendarEvents();
 
     // clear selection on mode switch
     watch(isVacationMode, (): void => {
@@ -284,6 +290,7 @@ export default defineComponent({
       calendar,
       disabledAfter,
       disabledBefore,
+      eventsMap,
       isPanelOpen,
       isActiveRouteLogged,
       isLoadingRoutes,
@@ -397,6 +404,11 @@ export default defineComponent({
               :timestamp="timestamp"
               @item-click="onClickItem"
               data-cy="calendar-item-display-from-work"
+            />
+            <!-- City events -->
+            <event-link-list
+              :events="eventsMap[timestamp.date] ?? []"
+              class="q-mt-xs q-px-sm"
             />
           </div>
         </template>
